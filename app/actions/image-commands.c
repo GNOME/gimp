@@ -183,8 +183,8 @@ static GimpPalette           *image_convert_indexed_custom_palette = NULL;
 /*  public functions  */
 
 void
-image_new_cmd_callback (GtkAction *action,
-                        gpointer   data)
+image_new_cmd_callback (GimpAction *action,
+                        gpointer    data)
 {
   GtkWidget *widget;
   GtkWidget *dialog;
@@ -207,8 +207,8 @@ image_new_cmd_callback (GtkAction *action,
 }
 
 void
-image_duplicate_cmd_callback (GtkAction *action,
-                              gpointer   data)
+image_duplicate_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpDisplay      *display;
   GimpImage        *image;
@@ -229,9 +229,9 @@ image_duplicate_cmd_callback (GtkAction *action,
 }
 
 void
-image_convert_base_type_cmd_callback (GtkAction *action,
-                                      GtkAction *current,
-                                      gpointer   data)
+image_convert_base_type_cmd_callback (GimpAction *action,
+                                      GimpAction *current,
+                                      gpointer    data)
 {
   GimpImage         *image;
   GimpDisplay       *display;
@@ -344,9 +344,9 @@ image_convert_base_type_cmd_callback (GtkAction *action,
 }
 
 void
-image_convert_precision_cmd_callback (GtkAction *action,
-                                      GtkAction *current,
-                                      gpointer   data)
+image_convert_precision_cmd_callback (GimpAction *action,
+                                      GimpAction *current,
+                                      gpointer    data)
 {
   GimpImage         *image;
   GimpDisplay       *display;
@@ -395,9 +395,9 @@ image_convert_precision_cmd_callback (GtkAction *action,
 }
 
 void
-image_convert_trc_cmd_callback (GtkAction *action,
-                                GtkAction *current,
-                                gpointer   data)
+image_convert_trc_cmd_callback (GimpAction *action,
+                                GimpAction *current,
+                                gpointer    data)
 {
   GimpImage     *image;
   GimpDisplay   *display;
@@ -424,8 +424,8 @@ image_convert_trc_cmd_callback (GtkAction *action,
 }
 
 void
-image_color_profile_use_srgb_cmd_callback (GtkAction *action,
-                                           gpointer   data)
+image_color_profile_use_srgb_cmd_callback (GimpAction *action,
+                                           gpointer    data)
 {
   GimpImage *image;
   gboolean   use_srgb;
@@ -441,8 +441,8 @@ image_color_profile_use_srgb_cmd_callback (GtkAction *action,
 }
 
 void
-image_color_profile_assign_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+image_color_profile_assign_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -482,8 +482,8 @@ image_color_profile_assign_cmd_callback (GtkAction *action,
 }
 
 void
-image_color_profile_convert_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+image_color_profile_convert_cmd_callback (GimpAction *action,
+                                          gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -525,8 +525,8 @@ image_color_profile_convert_cmd_callback (GtkAction *action,
 }
 
 void
-image_color_profile_discard_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+image_color_profile_discard_cmd_callback (GimpAction *action,
+                                          gpointer    data)
 {
   GimpImage *image;
   return_if_no_image (image, data);
@@ -570,8 +570,8 @@ image_profile_save_dialog_response (GtkWidget *dialog,
 }
 
 void
-image_color_profile_save_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+image_color_profile_save_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -619,8 +619,8 @@ image_color_profile_save_cmd_callback (GtkAction *action,
 }
 
 void
-image_resize_cmd_callback (GtkAction *action,
-                           gpointer   data)
+image_resize_cmd_callback (GimpAction *action,
+                           gpointer    data)
 {
   GimpImage   *image;
   GtkWidget   *widget;
@@ -662,8 +662,8 @@ image_resize_cmd_callback (GtkAction *action,
 }
 
 void
-image_resize_to_layers_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+image_resize_to_layers_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpDisplay  *display;
   GimpImage    *image;
@@ -686,8 +686,8 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
 }
 
 void
-image_resize_to_selection_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+image_resize_to_selection_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpDisplay  *display;
   GimpImage    *image;
@@ -710,8 +710,8 @@ image_resize_to_selection_cmd_callback (GtkAction *action,
 }
 
 void
-image_print_size_cmd_callback (GtkAction *action,
-                               gpointer   data)
+image_print_size_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -745,8 +745,8 @@ image_print_size_cmd_callback (GtkAction *action,
 }
 
 void
-image_scale_cmd_callback (GtkAction *action,
-                          gpointer   data)
+image_scale_cmd_callback (GimpAction *action,
+                          gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -784,9 +784,9 @@ image_scale_cmd_callback (GtkAction *action,
 }
 
 void
-image_flip_cmd_callback (GtkAction *action,
-                         gint       value,
-                         gpointer   data)
+image_flip_cmd_callback (GimpAction *action,
+                         gint        value,
+                         gpointer    data)
 {
   GimpDisplay  *display;
   GimpImage    *image;
@@ -808,9 +808,9 @@ image_flip_cmd_callback (GtkAction *action,
 }
 
 void
-image_rotate_cmd_callback (GtkAction *action,
-                           gint       value,
-                           gpointer   data)
+image_rotate_cmd_callback (GimpAction *action,
+                           gint        value,
+                           gpointer    data)
 {
   GimpDisplay  *display;
   GimpImage    *image;
@@ -832,8 +832,8 @@ image_rotate_cmd_callback (GtkAction *action,
 }
 
 void
-image_crop_to_selection_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+image_crop_to_selection_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -859,8 +859,8 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
 }
 
 void
-image_crop_to_content_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+image_crop_to_content_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -898,8 +898,8 @@ image_crop_to_content_cmd_callback (GtkAction *action,
 }
 
 void
-image_merge_layers_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+image_merge_layers_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GtkWidget   *dialog;
   GimpImage   *image;
@@ -933,8 +933,8 @@ image_merge_layers_cmd_callback (GtkAction *action,
 }
 
 void
-image_flatten_image_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+image_flatten_image_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -958,8 +958,8 @@ image_flatten_image_cmd_callback (GtkAction *action,
 }
 
 void
-image_configure_grid_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+image_configure_grid_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -987,8 +987,8 @@ image_configure_grid_cmd_callback (GtkAction *action,
 }
 
 void
-image_properties_cmd_callback (GtkAction *action,
-                               gpointer   data)
+image_properties_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;

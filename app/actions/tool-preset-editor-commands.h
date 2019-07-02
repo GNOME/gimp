@@ -19,10 +19,10 @@
 #define __TOOL_PRESET_EDITOR_COMMANDS_H__
 
 
-void   tool_preset_editor_save_cmd_callback    (GtkAction *action,
-                                                gpointer   data);
-void   tool_preset_editor_restore_cmd_callback (GtkAction *action,
-                                                gpointer   data);
+void   tool_preset_editor_save_cmd_callback    (GimpAction *action,
+                                                gpointer    data);
+void   tool_preset_editor_restore_cmd_callback (GimpAction *action,
+                                                gpointer    data);
 
 
 #endif /* __TOOL_PRESET_EDITOR_COMMANDS_H__ */

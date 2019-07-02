@@ -47,8 +47,8 @@ static void   error_console_save_response (GtkWidget        *dialog,
 /*  public functions  */
 
 void
-error_console_clear_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+error_console_clear_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   GtkTextIter       start_iter;
@@ -59,8 +59,8 @@ error_console_clear_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_select_all_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+error_console_select_all_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   GtkTextIter       start_iter;
@@ -71,9 +71,9 @@ error_console_select_all_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_save_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+error_console_save_cmd_callback (GimpAction *action,
+                                 gint        value,
+                                 gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
 
@@ -133,8 +133,8 @@ error_console_save_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_highlight_error_cmd_callback (GtkAction *action,
-                                            gpointer   data)
+error_console_highlight_error_cmd_callback (GimpAction *action,
+                                            gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          active;
@@ -145,8 +145,8 @@ error_console_highlight_error_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_highlight_warning_cmd_callback (GtkAction *action,
-                                              gpointer   data)
+error_console_highlight_warning_cmd_callback (GimpAction *action,
+                                              gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          active;
@@ -157,8 +157,8 @@ error_console_highlight_warning_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_highlight_info_cmd_callback (GtkAction *action,
-                                           gpointer   data)
+error_console_highlight_info_cmd_callback (GimpAction *action,
+                                           gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          active;

@@ -19,28 +19,27 @@
 #define __WINDOWS_COMMANDS_H__
 
 
-void  windows_hide_docks_cmd_callback             (GtkAction *action,
-                                                   gpointer   data);
+void  windows_hide_docks_cmd_callback             (GimpAction *action,
+                                                   gpointer    data);
+void  windows_use_single_window_mode_cmd_callback (GimpAction *action,
+                                                   gpointer    data);
 
-void  windows_show_tabs_cmd_callback              (GtkAction *action,
-                                                   gpointer data);
+void  windows_show_tabs_cmd_callback              (GimpAction *action,
+                                                   gpointer    data);
+void  windows_set_tabs_position_cmd_callback      (GimpAction *action,
+                                                   GimpAction *current,
+                                                   gpointer    data);
 
-void  windows_set_tabs_position_cmd_callback      (GtkAction *action,
-                                                   GtkAction *current,
-                                                   gpointer   data);
-void  windows_use_single_window_mode_cmd_callback (GtkAction *action,
-                                                   gpointer   data);
-
-void  windows_show_display_next_cmd_callback      (GtkAction *action,
-                                                   gpointer   data);
-void  windows_show_display_previous_cmd_callback  (GtkAction *action,
-                                                   gpointer   data);
-void  windows_show_display_cmd_callback           (GtkAction *action,
-                                                   gpointer   data);
-void  windows_show_dock_cmd_callback              (GtkAction *action,
-                                                   gpointer   data);
-void  windows_open_recent_cmd_callback            (GtkAction *action,
-                                                   gpointer   data);
+void  windows_show_display_next_cmd_callback      (GimpAction *action,
+                                                   gpointer    data);
+void  windows_show_display_previous_cmd_callback  (GimpAction *action,
+                                                   gpointer    data);
+void  windows_show_display_cmd_callback           (GimpAction *action,
+                                                   gpointer    data);
+void  windows_show_dock_cmd_callback              (GimpAction *action,
+                                                   gpointer    data);
+void  windows_open_recent_cmd_callback            (GimpAction *action,
+                                                   gpointer    data);
 
 
 #endif /* __WINDOWS_COMMANDS_H__ */

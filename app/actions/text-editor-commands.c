@@ -48,8 +48,8 @@ static void   text_editor_load_response (GtkWidget      *dialog,
 /*  public functions  */
 
 void
-text_editor_load_cmd_callback (GtkAction *action,
-                               gpointer   data)
+text_editor_load_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
 
@@ -92,8 +92,8 @@ text_editor_load_cmd_callback (GtkAction *action,
 }
 
 void
-text_editor_clear_cmd_callback (GtkAction *action,
-                                gpointer   data)
+text_editor_clear_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
   GtkTextBuffer  *buffer;
@@ -104,9 +104,9 @@ text_editor_clear_cmd_callback (GtkAction *action,
 }
 
 void
-text_editor_direction_cmd_callback (GtkAction *action,
-                                    GtkAction *current,
-                                    gpointer   data)
+text_editor_direction_cmd_callback (GimpAction *action,
+                                    GimpAction *current,
+                                    gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
   gint            value;

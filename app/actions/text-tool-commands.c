@@ -55,8 +55,8 @@ static void   text_tool_load_dialog_response (GtkWidget    *dialog,
 /*  public functions  */
 
 void
-text_tool_cut_cmd_callback (GtkAction *action,
-                            gpointer   data)
+text_tool_cut_cmd_callback (GimpAction *action,
+                            gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
@@ -64,8 +64,8 @@ text_tool_cut_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_copy_cmd_callback (GtkAction *action,
-                             gpointer   data)
+text_tool_copy_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
@@ -73,8 +73,8 @@ text_tool_copy_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_paste_cmd_callback (GtkAction *action,
-                              gpointer   data)
+text_tool_paste_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
@@ -82,8 +82,8 @@ text_tool_paste_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_delete_cmd_callback (GtkAction *action,
-                               gpointer   data)
+text_tool_delete_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
@@ -91,8 +91,8 @@ text_tool_delete_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_load_cmd_callback (GtkAction *action,
-                             gpointer   data)
+text_tool_load_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
   GtkWidget    *dialog;
@@ -145,8 +145,8 @@ text_tool_load_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_clear_cmd_callback (GtkAction *action,
-                              gpointer   data)
+text_tool_clear_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpTextTool  *text_tool = GIMP_TEXT_TOOL (data);
   GtkTextBuffer *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -158,8 +158,8 @@ text_tool_clear_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_text_to_path_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+text_tool_text_to_path_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
@@ -167,8 +167,8 @@ text_tool_text_to_path_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_text_along_path_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+text_tool_text_along_path_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
 
@@ -176,9 +176,9 @@ text_tool_text_along_path_cmd_callback (GtkAction *action,
 }
 
 void
-text_tool_direction_cmd_callback (GtkAction *action,
-                                  GtkAction *current,
-                                  gpointer   data)
+text_tool_direction_cmd_callback (GimpAction *action,
+                                  GimpAction *current,
+                                  gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
   gint          value;

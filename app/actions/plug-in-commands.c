@@ -67,7 +67,7 @@ static void   plug_in_reset_all_response (GtkWidget *dialog,
 /*  public functions  */
 
 void
-plug_in_run_cmd_callback (GtkAction     *action,
+plug_in_run_cmd_callback (GimpAction    *action,
                           GimpProcedure *procedure,
                           gpointer       data)
 {
@@ -157,8 +157,8 @@ plug_in_run_cmd_callback (GtkAction     *action,
 }
 
 void
-plug_in_reset_all_cmd_callback (GtkAction *action,
-                                gpointer   data)
+plug_in_reset_all_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   Gimp      *gimp;
   GtkWidget *dialog;

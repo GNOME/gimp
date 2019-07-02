@@ -48,8 +48,8 @@
 /*  public functions  */
 
 void
-drawable_equalize_cmd_callback (GtkAction *action,
-                                gpointer   data)
+drawable_equalize_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -60,8 +60,8 @@ drawable_equalize_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_levels_stretch_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+drawable_levels_stretch_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -85,8 +85,8 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_linked_cmd_callback (GtkAction *action,
-                              gpointer   data)
+drawable_linked_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -116,8 +116,8 @@ drawable_linked_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_visible_cmd_callback (GtkAction *action,
-                               gpointer   data)
+drawable_visible_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -147,8 +147,8 @@ drawable_visible_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_lock_content_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+drawable_lock_content_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -182,8 +182,8 @@ drawable_lock_content_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_lock_position_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+drawable_lock_position_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -213,9 +213,9 @@ drawable_lock_position_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_flip_cmd_callback (GtkAction *action,
-                            gint       value,
-                            gpointer   data)
+drawable_flip_cmd_callback (GimpAction *action,
+                            gint        value,
+                            gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -259,9 +259,9 @@ drawable_flip_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_rotate_cmd_callback (GtkAction *action,
-                              gint       value,
-                              gpointer   data)
+drawable_rotate_cmd_callback (GimpAction *action,
+                              gint        value,
+                              gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;

@@ -19,10 +19,10 @@
 #define __DIALOGS_COMMANDS_H__
 
 
-void   dialogs_create_toplevel_cmd_callback (GtkAction   *action,
+void   dialogs_create_toplevel_cmd_callback (GimpAction  *action,
                                              const gchar *value,
                                              gpointer     data);
-void   dialogs_create_dockable_cmd_callback (GtkAction   *action,
+void   dialogs_create_dockable_cmd_callback (GimpAction  *action,
                                              const gchar *value,
                                              gpointer     data);
 

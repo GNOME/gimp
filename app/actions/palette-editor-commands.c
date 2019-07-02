@@ -34,8 +34,8 @@
 /*  public functions  */
 
 void
-palette_editor_edit_color_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+palette_editor_edit_color_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
@@ -43,9 +43,9 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
 }
 
 void
-palette_editor_new_color_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+palette_editor_new_color_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
@@ -67,8 +67,8 @@ palette_editor_new_color_cmd_callback (GtkAction *action,
 }
 
 void
-palette_editor_delete_color_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+palette_editor_delete_color_cmd_callback (GimpAction *action,
+                                          gpointer    data)
 {
   GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
@@ -82,9 +82,9 @@ palette_editor_delete_color_cmd_callback (GtkAction *action,
 }
 
 void
-palette_editor_zoom_cmd_callback (GtkAction *action,
-                                  gint       value,
-                                  gpointer   data)
+palette_editor_zoom_cmd_callback (GimpAction *action,
+                                  gint        value,
+                                  gpointer    data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 

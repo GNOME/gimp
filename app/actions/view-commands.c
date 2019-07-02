@@ -94,8 +94,8 @@ static void   view_padding_color_dialog_update (GimpColorDialog          *dialog
 /*  public functions  */
 
 void
-view_new_cmd_callback (GtkAction *action,
-                       gpointer   data)
+view_new_cmd_callback (GimpAction *action,
+                       gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -110,8 +110,8 @@ view_new_cmd_callback (GtkAction *action,
 }
 
 void
-view_close_cmd_callback (GtkAction *action,
-                         gpointer   data)
+view_close_cmd_callback (GimpAction *action,
+                         gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -127,8 +127,8 @@ view_close_cmd_callback (GtkAction *action,
 }
 
 void
-view_scroll_center_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+view_scroll_center_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpDisplay *display;
   return_if_no_display (display, data);
@@ -138,8 +138,8 @@ view_scroll_center_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_fit_in_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_zoom_fit_in_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplay *display;
   return_if_no_display (display, data);
@@ -148,8 +148,8 @@ view_zoom_fit_in_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_fill_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_zoom_fill_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpDisplay *display;
   return_if_no_display (display, data);
@@ -158,8 +158,8 @@ view_zoom_fill_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_selection_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+view_zoom_selection_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -177,8 +177,8 @@ view_zoom_selection_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_revert_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_zoom_revert_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplay *display;
   return_if_no_display (display, data);
@@ -187,9 +187,9 @@ view_zoom_revert_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_cmd_callback (GtkAction *action,
-                        gint       value,
-                        gpointer   data)
+view_zoom_cmd_callback (GimpAction *action,
+                        gint        value,
+                        gpointer    data)
 {
   GimpDisplayShell *shell;
   return_if_no_shell (shell, data);
@@ -262,9 +262,9 @@ view_zoom_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_explicit_cmd_callback (GtkAction *action,
-                                 GtkAction *current,
-                                 gpointer   data)
+view_zoom_explicit_cmd_callback (GimpAction *action,
+                                 GimpAction *current,
+                                 gpointer    data)
 {
   GimpDisplayShell *shell;
   gint              value;
@@ -283,8 +283,8 @@ view_zoom_explicit_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_other_cmd_callback (GtkAction *action,
-                              gpointer   data)
+view_zoom_other_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpDisplayShell *shell;
   return_if_no_shell (shell, data);
@@ -300,8 +300,8 @@ view_zoom_other_cmd_callback (GtkAction *action,
 }
 
 void
-view_dot_for_dot_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_dot_for_dot_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -329,8 +329,8 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
 }
 
 void
-view_flip_horizontally_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+view_flip_horizontally_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -348,8 +348,8 @@ view_flip_horizontally_cmd_callback (GtkAction *action,
 }
 
 void
-view_flip_vertically_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+view_flip_vertically_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -367,9 +367,9 @@ view_flip_vertically_cmd_callback (GtkAction *action,
 }
 
 void
-view_rotate_absolute_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+view_rotate_absolute_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -391,9 +391,9 @@ view_rotate_absolute_cmd_callback (GtkAction *action,
 }
 
 void
-view_rotate_relative_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+view_rotate_relative_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -412,8 +412,8 @@ view_rotate_relative_cmd_callback (GtkAction *action,
 }
 
 void
-view_rotate_other_cmd_callback (GtkAction *action,
-                                gpointer   data)
+view_rotate_other_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -425,9 +425,9 @@ view_rotate_other_cmd_callback (GtkAction *action,
 }
 
 void
-view_scroll_horizontal_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+view_scroll_horizontal_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpDisplayShell *shell;
   gdouble           offset;
@@ -449,9 +449,9 @@ view_scroll_horizontal_cmd_callback (GtkAction *action,
 }
 
 void
-view_scroll_vertical_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+view_scroll_vertical_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpDisplayShell *shell;
   gdouble           offset;
@@ -473,8 +473,8 @@ view_scroll_vertical_cmd_callback (GtkAction *action,
 }
 
 void
-view_navigation_window_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+view_navigation_window_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   Gimp             *gimp;
   GimpDisplayShell *shell;
@@ -489,8 +489,8 @@ view_navigation_window_cmd_callback (GtkAction *action,
 }
 
 void
-view_display_filters_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+view_display_filters_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDisplayShell *shell;
   GtkWidget        *dialog;
@@ -511,8 +511,8 @@ view_display_filters_cmd_callback (GtkAction *action,
 }
 
 void
-view_color_management_reset_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+view_color_management_reset_cmd_callback (GimpAction *action,
+                                          gpointer    data)
 {
   GimpDisplayShell *shell;
   GimpColorConfig  *global_config;
@@ -529,8 +529,8 @@ view_color_management_reset_cmd_callback (GtkAction *action,
 }
 
 void
-view_color_management_enable_cmd_callback (GtkAction *action,
-                                           gpointer   data)
+view_color_management_enable_cmd_callback (GimpAction *action,
+                                           gpointer    data)
 {
   GimpDisplayShell        *shell;
   GimpColorConfig         *color_config;
@@ -564,8 +564,8 @@ view_color_management_enable_cmd_callback (GtkAction *action,
 }
 
 void
-view_color_management_softproof_cmd_callback (GtkAction *action,
-                                              gpointer   data)
+view_color_management_softproof_cmd_callback (GimpAction *action,
+                                              gpointer    data)
 {
   GimpDisplayShell        *shell;
   GimpColorConfig         *color_config;
@@ -599,9 +599,9 @@ view_color_management_softproof_cmd_callback (GtkAction *action,
 }
 
 void
-view_display_intent_cmd_callback (GtkAction *action,
-                                  GtkAction *current,
-                                  gpointer   data)
+view_display_intent_cmd_callback (GimpAction *action,
+                                  GimpAction *current,
+                                  gpointer    data)
 {
   GimpDisplayShell          *shell;
   GimpColorConfig           *color_config;
@@ -622,8 +622,8 @@ view_display_intent_cmd_callback (GtkAction *action,
 }
 
 void
-view_display_bpc_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_display_bpc_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplayShell *shell;
   GimpColorConfig  *color_config;
@@ -644,8 +644,8 @@ view_display_bpc_cmd_callback (GtkAction *action,
 }
 
 void
-view_softproof_profile_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+view_softproof_profile_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpImage        *image;
   GimpDisplayShell *shell;
@@ -685,9 +685,9 @@ view_softproof_profile_cmd_callback (GtkAction *action,
 }
 
 void
-view_softproof_intent_cmd_callback (GtkAction *action,
-                                    GtkAction *current,
-                                    gpointer   data)
+view_softproof_intent_cmd_callback (GimpAction *action,
+                                    GimpAction *current,
+                                    gpointer    data)
 {
   GimpDisplayShell          *shell;
   GimpColorConfig           *color_config;
@@ -708,8 +708,8 @@ view_softproof_intent_cmd_callback (GtkAction *action,
 }
 
 void
-view_softproof_bpc_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+view_softproof_bpc_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpDisplayShell *shell;
   GimpColorConfig  *color_config;
@@ -730,8 +730,8 @@ view_softproof_bpc_cmd_callback (GtkAction *action,
 }
 
 void
-view_softproof_gamut_check_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+view_softproof_gamut_check_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpDisplayShell *shell;
   GimpColorConfig  *color_config;
@@ -752,8 +752,8 @@ view_softproof_gamut_check_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_selection_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+view_toggle_selection_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -768,8 +768,8 @@ view_toggle_selection_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_layer_boundary_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+view_toggle_layer_boundary_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -784,8 +784,8 @@ view_toggle_layer_boundary_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_menubar_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+view_toggle_menubar_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -800,8 +800,8 @@ view_toggle_menubar_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_rulers_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+view_toggle_rulers_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -816,8 +816,8 @@ view_toggle_rulers_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_scrollbars_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+view_toggle_scrollbars_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -832,8 +832,8 @@ view_toggle_scrollbars_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_statusbar_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+view_toggle_statusbar_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -848,8 +848,8 @@ view_toggle_statusbar_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_guides_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+view_toggle_guides_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -864,8 +864,8 @@ view_toggle_guides_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_grid_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_toggle_grid_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -880,8 +880,8 @@ view_toggle_grid_cmd_callback (GtkAction *action,
 }
 
 void
-view_toggle_sample_points_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+view_toggle_sample_points_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -896,8 +896,8 @@ view_toggle_sample_points_cmd_callback (GtkAction *action,
 }
 
 void
-view_snap_to_guides_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+view_snap_to_guides_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -912,8 +912,8 @@ view_snap_to_guides_cmd_callback (GtkAction *action,
 }
 
 void
-view_snap_to_grid_cmd_callback (GtkAction *action,
-                                gpointer   data)
+view_snap_to_grid_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -928,8 +928,8 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
 }
 
 void
-view_snap_to_canvas_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+view_snap_to_canvas_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -944,8 +944,8 @@ view_snap_to_canvas_cmd_callback (GtkAction *action,
 }
 
 void
-view_snap_to_vectors_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+view_snap_to_vectors_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDisplayShell *shell;
   gboolean          active;
@@ -960,9 +960,9 @@ view_snap_to_vectors_cmd_callback (GtkAction *action,
 }
 
 void
-view_padding_color_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+view_padding_color_cmd_callback (GimpAction *action,
+                                 gint        value,
+                                 gpointer    data)
 {
   GimpDisplay        *display;
   GimpImageWindow    *window;
@@ -1064,8 +1064,8 @@ view_padding_color_cmd_callback (GtkAction *action,
 }
 
 void
-view_shrink_wrap_cmd_callback (GtkAction *action,
-                               gpointer   data)
+view_shrink_wrap_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpDisplayShell *shell;
   return_if_no_shell (shell, data);
@@ -1074,8 +1074,8 @@ view_shrink_wrap_cmd_callback (GtkAction *action,
 }
 
 void
-view_fullscreen_cmd_callback (GtkAction *action,
-                              gpointer   data)
+view_fullscreen_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;

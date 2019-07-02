@@ -81,8 +81,8 @@ static GimpColormapEditor * context_get_colormap_editor (void);
 /*  public functions  */
 
 void
-context_colors_default_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+context_colors_default_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -91,8 +91,8 @@ context_colors_default_cmd_callback (GtkAction *action,
 }
 
 void
-context_colors_swap_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+context_colors_swap_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -102,9 +102,9 @@ context_colors_swap_cmd_callback (GtkAction *action,
 
 #define SELECT_COLOR_CMD_CALLBACK(name, fgbg, use_colormap, use_palette) \
 void \
-context_##name##_##fgbg##ground_cmd_callback (GtkAction *action, \
-                                              gint       value, \
-                                              gpointer   data) \
+context_##name##_##fgbg##ground_cmd_callback (GimpAction *action, \
+                                              gint        value, \
+                                              gpointer    data) \
 { \
   GimpContext *context; \
   GimpRGB      color; \
@@ -124,9 +124,9 @@ SELECT_COLOR_CMD_CALLBACK (swatch,   fore, TRUE,  TRUE)
 SELECT_COLOR_CMD_CALLBACK (swatch,   back, TRUE,  TRUE)
 
 void
-context_foreground_red_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_foreground_red_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -141,9 +141,9 @@ context_foreground_red_cmd_callback (GtkAction *action,
 }
 
 void
-context_foreground_green_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+context_foreground_green_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -158,9 +158,9 @@ context_foreground_green_cmd_callback (GtkAction *action,
 }
 
 void
-context_foreground_blue_cmd_callback (GtkAction *action,
-                                      gint       value,
-                                      gpointer   data)
+context_foreground_blue_cmd_callback (GimpAction *action,
+                                      gint        value,
+                                      gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -175,9 +175,9 @@ context_foreground_blue_cmd_callback (GtkAction *action,
 }
 
 void
-context_background_red_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_background_red_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -192,9 +192,9 @@ context_background_red_cmd_callback (GtkAction *action,
 }
 
 void
-context_background_green_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+context_background_green_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -209,9 +209,9 @@ context_background_green_cmd_callback (GtkAction *action,
 }
 
 void
-context_background_blue_cmd_callback (GtkAction *action,
-                                      gint       value,
-                                      gpointer   data)
+context_background_blue_cmd_callback (GimpAction *action,
+                                      gint        value,
+                                      gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -226,9 +226,9 @@ context_background_blue_cmd_callback (GtkAction *action,
 }
 
 void
-context_foreground_hue_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_foreground_hue_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -246,9 +246,9 @@ context_foreground_hue_cmd_callback (GtkAction *action,
 }
 
 void
-context_foreground_saturation_cmd_callback (GtkAction *action,
-                                            gint       value,
-                                            gpointer   data)
+context_foreground_saturation_cmd_callback (GimpAction *action,
+                                            gint        value,
+                                            gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -266,9 +266,9 @@ context_foreground_saturation_cmd_callback (GtkAction *action,
 }
 
 void
-context_foreground_value_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+context_foreground_value_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -286,9 +286,9 @@ context_foreground_value_cmd_callback (GtkAction *action,
 }
 
 void
-context_background_hue_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_background_hue_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -306,9 +306,9 @@ context_background_hue_cmd_callback (GtkAction *action,
 }
 
 void
-context_background_saturation_cmd_callback (GtkAction *action,
-                                            gint       value,
-                                            gpointer   data)
+context_background_saturation_cmd_callback (GimpAction *action,
+                                            gint        value,
+                                            gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -326,9 +326,9 @@ context_background_saturation_cmd_callback (GtkAction *action,
 }
 
 void
-context_background_value_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+context_background_value_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpContext *context;
   GimpRGB      color;
@@ -346,9 +346,9 @@ context_background_value_cmd_callback (GtkAction *action,
 }
 
 void
-context_opacity_cmd_callback (GtkAction *action,
-                              gint       value,
-                              gpointer   data)
+context_opacity_cmd_callback (GimpAction *action,
+                              gint        value,
+                              gpointer    data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -367,9 +367,9 @@ context_opacity_cmd_callback (GtkAction *action,
 }
 
 void
-context_paint_mode_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+context_paint_mode_cmd_callback (GimpAction *action,
+                                 gint        value,
+                                 gpointer    data)
 {
   GimpContext   *context;
   GimpToolInfo  *tool_info;
@@ -414,9 +414,9 @@ context_paint_mode_cmd_callback (GtkAction *action,
 }
 
 void
-context_tool_select_cmd_callback (GtkAction *action,
-                                  gint       value,
-                                  gpointer   data)
+context_tool_select_cmd_callback (GimpAction *action,
+                                  gint        value,
+                                  gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -426,9 +426,9 @@ context_tool_select_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_select_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+context_brush_select_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -438,9 +438,9 @@ context_brush_select_cmd_callback (GtkAction *action,
 }
 
 void
-context_pattern_select_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_pattern_select_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -450,9 +450,9 @@ context_pattern_select_cmd_callback (GtkAction *action,
 }
 
 void
-context_palette_select_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_palette_select_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -462,9 +462,9 @@ context_palette_select_cmd_callback (GtkAction *action,
 }
 
 void
-context_gradient_select_cmd_callback (GtkAction *action,
-                                      gint       value,
-                                      gpointer   data)
+context_gradient_select_cmd_callback (GimpAction *action,
+                                      gint        value,
+                                      gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -474,9 +474,9 @@ context_gradient_select_cmd_callback (GtkAction *action,
 }
 
 void
-context_font_select_cmd_callback (GtkAction *action,
-                                  gint       value,
-                                  gpointer   data)
+context_font_select_cmd_callback (GimpAction *action,
+                                  gint        value,
+                                  gpointer    data)
 {
   GimpContext *context;
   return_if_no_context (context, data);
@@ -486,9 +486,9 @@ context_font_select_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_spacing_cmd_callback (GtkAction *action,
-                                    gint       value,
-                                    gpointer   data)
+context_brush_spacing_cmd_callback (GimpAction *action,
+                                    gint        value,
+                                    gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;
@@ -507,9 +507,9 @@ context_brush_spacing_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_shape_cmd_callback (GtkAction *action,
-                                  gint       value,
-                                  gpointer   data)
+context_brush_shape_cmd_callback (GimpAction *action,
+                                  gint        value,
+                                  gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;
@@ -540,9 +540,9 @@ context_brush_shape_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_radius_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+context_brush_radius_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;
@@ -600,9 +600,9 @@ context_brush_radius_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_spikes_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+context_brush_spikes_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;
@@ -622,9 +622,9 @@ context_brush_spikes_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_hardness_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+context_brush_hardness_cmd_callback (GimpAction *action,
+                                     gint        value,
+                                     gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;
@@ -644,9 +644,9 @@ context_brush_hardness_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_aspect_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+context_brush_aspect_cmd_callback (GimpAction *action,
+                                   gint        value,
+                                   gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;
@@ -666,9 +666,9 @@ context_brush_aspect_cmd_callback (GtkAction *action,
 }
 
 void
-context_brush_angle_cmd_callback (GtkAction *action,
-                                  gint       value,
-                                  gpointer   data)
+context_brush_angle_cmd_callback (GimpAction *action,
+                                  gint        value,
+                                  gpointer    data)
 {
   GimpContext *context;
   GimpBrush   *brush;

@@ -54,9 +54,9 @@ static void   dashboard_log_add_marker_response (GtkWidget     *dialog,
 
 
 void
-dashboard_update_interval_cmd_callback (GtkAction *action,
-                                        GtkAction *current,
-                                        gpointer   data)
+dashboard_update_interval_cmd_callback (GimpAction *action,
+                                        GimpAction *current,
+                                        gpointer    data)
 {
   GimpDashboard              *dashboard = GIMP_DASHBOARD (data);
   GimpDashboardUpdateInteval  update_interval;
@@ -68,9 +68,9 @@ dashboard_update_interval_cmd_callback (GtkAction *action,
 }
 
 void
-dashboard_history_duration_cmd_callback (GtkAction *action,
-                                         GtkAction *current,
-                                         gpointer   data)
+dashboard_history_duration_cmd_callback (GimpAction *action,
+                                         GimpAction *current,
+                                         gpointer    data)
 {
   GimpDashboard                *dashboard = GIMP_DASHBOARD (data);
   GimpDashboardHistoryDuration  history_duration;
@@ -82,8 +82,8 @@ dashboard_history_duration_cmd_callback (GtkAction *action,
 }
 
 void
-dashboard_log_record_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+dashboard_log_record_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
 
@@ -185,8 +185,8 @@ dashboard_log_record_cmd_callback (GtkAction *action,
 }
 
 void
-dashboard_log_add_marker_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+dashboard_log_add_marker_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
   GtkWidget     *dialog;
@@ -215,8 +215,8 @@ dashboard_log_add_marker_cmd_callback (GtkAction *action,
 }
 
 void
-dashboard_log_add_empty_marker_cmd_callback (GtkAction *action,
-                                             gpointer   data)
+dashboard_log_add_empty_marker_cmd_callback (GimpAction *action,
+                                             gpointer    data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
 
@@ -224,8 +224,8 @@ dashboard_log_add_empty_marker_cmd_callback (GtkAction *action,
 }
 
 void
-dashboard_reset_cmd_callback (GtkAction *action,
-                              gpointer   data)
+dashboard_reset_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
 
@@ -233,8 +233,8 @@ dashboard_reset_cmd_callback (GtkAction *action,
 }
 
 void
-dashboard_low_swap_space_warning_cmd_callback (GtkAction *action,
-                                               gpointer   data)
+dashboard_low_swap_space_warning_cmd_callback (GimpAction *action,
+                                               gpointer    data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
   gboolean       low_swap_space_warning;

@@ -40,8 +40,8 @@
 /*  public functions  */
 
 void
-tool_preset_editor_save_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+tool_preset_editor_save_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpDataEditor *editor  = GIMP_DATA_EDITOR (data);
   GimpContext    *context = editor->context;
@@ -74,8 +74,8 @@ tool_preset_editor_save_cmd_callback (GtkAction *action,
 }
 
 void
-tool_preset_editor_restore_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+tool_preset_editor_restore_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpDataEditor *editor  = GIMP_DATA_EDITOR (data);
   GimpContext    *context = editor->context;

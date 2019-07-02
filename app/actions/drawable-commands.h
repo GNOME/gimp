@@ -19,26 +19,26 @@
 #define __DRAWABLE_COMMANDS_H__
 
 
-void   drawable_equalize_cmd_callback       (GtkAction *action,
-                                             gpointer   data);
-void   drawable_levels_stretch_cmd_callback (GtkAction *action,
-                                             gpointer   data);
+void   drawable_equalize_cmd_callback       (GimpAction *action,
+                                             gpointer    data);
+void   drawable_levels_stretch_cmd_callback (GimpAction *action,
+                                             gpointer    data);
 
-void   drawable_linked_cmd_callback         (GtkAction *action,
-                                             gpointer   data);
-void   drawable_visible_cmd_callback        (GtkAction *action,
-                                             gpointer   data);
-void   drawable_lock_content_cmd_callback   (GtkAction *action,
-                                             gpointer   data);
-void   drawable_lock_position_cmd_callback  (GtkAction *action,
-                                             gpointer   data);
+void   drawable_linked_cmd_callback         (GimpAction *action,
+                                             gpointer    data);
+void   drawable_visible_cmd_callback        (GimpAction *action,
+                                             gpointer    data);
+void   drawable_lock_content_cmd_callback   (GimpAction *action,
+                                             gpointer    data);
+void   drawable_lock_position_cmd_callback  (GimpAction *action,
+                                             gpointer    data);
 
-void   drawable_flip_cmd_callback           (GtkAction *action,
-                                             gint       value,
-                                             gpointer   data);
-void   drawable_rotate_cmd_callback         (GtkAction *action,
-                                             gint       value,
-                                             gpointer   data);
+void   drawable_flip_cmd_callback           (GimpAction *action,
+                                             gint        value,
+                                             gpointer    data);
+void   drawable_rotate_cmd_callback         (GimpAction *action,
+                                             gint        value,
+                                             gpointer    data);
 
 
 #endif /* __DRAWABLE_COMMANDS_H__ */

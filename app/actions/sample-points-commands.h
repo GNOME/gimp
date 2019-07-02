@@ -19,8 +19,8 @@
 #define __SAMPLE_POINTS_COMMANDS_H__
 
 
-void   sample_points_sample_merged_cmd_callback (GtkAction *action,
-                                                 gpointer   data);
+void   sample_points_sample_merged_cmd_callback (GimpAction *action,
+                                                 gpointer    data);
 
 
 #endif /* __SAMPLE_POINTS_COMMANDS_H__ */

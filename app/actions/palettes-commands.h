@@ -19,10 +19,10 @@
 #define __PALETTES_COMMANDS_H__
 
 
-void   palettes_import_cmd_callback (GtkAction *action,
-                                     gpointer   data);
-void   palettes_merge_cmd_callback  (GtkAction *action,
-                                     gpointer   data);
+void   palettes_import_cmd_callback (GimpAction *action,
+                                     gpointer    data);
+void   palettes_merge_cmd_callback  (GimpAction *action,
+                                     gpointer    data);
 
 
 #endif /* __PALETTES_COMMANDS_H__ */

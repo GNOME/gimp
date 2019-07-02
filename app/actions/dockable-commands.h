@@ -19,26 +19,26 @@
 #define __DOCKABLE_COMMANDS_H__
 
 
-void   dockable_add_tab_cmd_callback         (GtkAction   *action,
+void   dockable_add_tab_cmd_callback         (GimpAction  *action,
                                               const gchar *value,
                                               gpointer     data);
-void   dockable_close_tab_cmd_callback       (GtkAction   *action,
+void   dockable_close_tab_cmd_callback       (GimpAction  *action,
                                               gpointer     data);
-void   dockable_detach_tab_cmd_callback      (GtkAction   *action,
+void   dockable_detach_tab_cmd_callback      (GimpAction  *action,
                                               gpointer     data);
-void   dockable_lock_tab_cmd_callback        (GtkAction   *action,
+void   dockable_lock_tab_cmd_callback        (GimpAction  *action,
                                               gpointer     data);
 
-void   dockable_toggle_view_cmd_callback     (GtkAction   *action,
-                                              GtkAction   *current,
+void   dockable_toggle_view_cmd_callback     (GimpAction  *action,
+                                              GimpAction  *current,
                                               gpointer     data);
-void   dockable_view_size_cmd_callback       (GtkAction   *action,
-                                              GtkAction   *current,
+void   dockable_view_size_cmd_callback       (GimpAction  *action,
+                                              GimpAction  *current,
                                               gpointer     data);
-void   dockable_tab_style_cmd_callback       (GtkAction   *action,
-                                              GtkAction   *current,
+void   dockable_tab_style_cmd_callback       (GimpAction  *action,
+                                              GimpAction  *current,
                                               gpointer     data);
-void   dockable_show_button_bar_cmd_callback (GtkAction   *action,
+void   dockable_show_button_bar_cmd_callback (GimpAction  *action,
                                               gpointer     data);
 
 

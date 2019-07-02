@@ -75,8 +75,8 @@ static void   documents_raise_display (GimpDisplay   *display,
 /*  public functions */
 
 void
-documents_open_cmd_callback (GtkAction *action,
-                             gpointer   data)
+documents_open_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -99,8 +99,8 @@ documents_open_cmd_callback (GtkAction *action,
 }
 
 void
-documents_raise_or_open_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+documents_raise_or_open_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -129,8 +129,8 @@ documents_raise_or_open_cmd_callback (GtkAction *action,
 }
 
 void
-documents_file_open_dialog_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+documents_file_open_dialog_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -151,8 +151,8 @@ documents_file_open_dialog_cmd_callback (GtkAction *action,
 }
 
 void
-documents_copy_location_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+documents_copy_location_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -167,8 +167,8 @@ documents_copy_location_cmd_callback (GtkAction *action,
 }
 
 void
-documents_show_in_file_manager_cmd_callback (GtkAction *action,
-                                             gpointer   data)
+documents_show_in_file_manager_cmd_callback (GimpAction *action,
+                                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -196,8 +196,8 @@ documents_show_in_file_manager_cmd_callback (GtkAction *action,
 }
 
 void
-documents_remove_cmd_callback (GtkAction *action,
-                               gpointer   data)
+documents_remove_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context = gimp_container_view_get_context (editor->view);
@@ -212,8 +212,8 @@ documents_remove_cmd_callback (GtkAction *action,
 }
 
 void
-documents_clear_cmd_callback (GtkAction *action,
-                              gpointer   data)
+documents_clear_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context = gimp_container_view_get_context (editor->view);
@@ -282,8 +282,8 @@ documents_clear_cmd_callback (GtkAction *action,
 }
 
 void
-documents_recreate_preview_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+documents_recreate_preview_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -313,8 +313,8 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
 }
 
 void
-documents_reload_previews_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+documents_reload_previews_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -344,8 +344,8 @@ documents_remove_dangling_foreach (GimpImagefile *imagefile,
 }
 
 void
-documents_remove_dangling_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+documents_remove_dangling_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;

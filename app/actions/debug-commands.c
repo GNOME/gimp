@@ -72,15 +72,15 @@ static gboolean  debug_accel_find_func         (GtkAccelKey *key,
 /*  public functions  */
 
 void
-debug_gtk_inspector_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+debug_gtk_inspector_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   gtk_window_set_interactive_debugging (TRUE);
 }
 
 void
-debug_mem_profile_cmd_callback (GtkAction *action,
-                                gpointer   data)
+debug_mem_profile_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   extern gboolean  gimp_debug_memsize;
   Gimp            *gimp;
@@ -94,8 +94,8 @@ debug_mem_profile_cmd_callback (GtkAction *action,
 }
 
 void
-debug_benchmark_projection_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+debug_benchmark_projection_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpDisplay *display;
   return_if_no_display (display, data);
@@ -104,8 +104,8 @@ debug_benchmark_projection_cmd_callback (GtkAction *action,
 }
 
 void
-debug_show_image_graph_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+debug_show_image_graph_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpImage *source_image = NULL;
   return_if_no_image (source_image, data);
@@ -114,8 +114,8 @@ debug_show_image_graph_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_menus_cmd_callback (GtkAction *action,
-                               gpointer   data)
+debug_dump_menus_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GList *list;
 
@@ -155,8 +155,8 @@ debug_dump_menus_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_managers_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+debug_dump_managers_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GList *list;
 
@@ -183,8 +183,8 @@ debug_dump_managers_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
-                                            gpointer   data)
+debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
+                                            gpointer    data)
 {
   GimpDisplay      *display;
   GimpImageWindow  *window;
@@ -272,8 +272,8 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_attached_data_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+debug_dump_attached_data_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   Gimp        *gimp         = action_data_get_gimp (data);
   GimpContext *user_context = gimp_get_user_context (gimp);
