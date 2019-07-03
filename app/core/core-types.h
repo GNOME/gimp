@@ -90,6 +90,7 @@ typedef struct _GimpViewable                    GimpViewable;
 typedef struct _GimpFilter                      GimpFilter;
 typedef struct _GimpItem                        GimpItem;
 typedef struct _GimpAuxItem                     GimpAuxItem;
+typedef struct _GimpLink                        GimpLink;
 
 typedef struct _Gimp                            Gimp;
 typedef struct _GimpImage                       GimpImage;
