@@ -56,27 +56,32 @@ struct _GimpActionGroupClass
                          GimpAction      *action);
 };
 
+
+typedef void (* GimpActionCallback) (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data);
+
 struct _GimpActionEntry
 {
-  const gchar *name;
-  const gchar *icon_name;
-  const gchar *label;
-  const gchar *accelerator;
-  const gchar *tooltip;
-  GCallback    callback;
+  const gchar        *name;
+  const gchar        *icon_name;
+  const gchar        *label;
+  const gchar        *accelerator;
+  const gchar        *tooltip;
+  GimpActionCallback  callback;
 
-  const gchar *help_id;
+  const gchar        *help_id;
 };
 
 struct _GimpToggleActionEntry
 {
-  const gchar *name;
-  const gchar *icon_name;
-  const gchar *label;
-  const gchar *accelerator;
-  const gchar *tooltip;
-  GCallback    callback;
-  gboolean     is_active;
+  const gchar        *name;
+  const gchar        *icon_name;
+  const gchar        *label;
+  const gchar        *accelerator;
+  const gchar        *tooltip;
+  GimpActionCallback  callback;
+  gboolean            is_active;
 
   const gchar *help_id;
 };
@@ -173,21 +178,21 @@ GSList *gimp_action_group_add_radio_actions   (GimpActionGroup             *grou
                                                guint                        n_entries,
                                                GSList                      *radio_group,
                                                gint                         value,
-                                               GCallback                    callback);
+                                               GimpActionCallback           callback);
 void   gimp_action_group_add_enum_actions     (GimpActionGroup             *group,
                                                const gchar                 *msg_context,
                                                const GimpEnumActionEntry   *entries,
                                                guint                        n_entries,
-                                               GCallback                    callback);
+                                               GimpActionCallback           callback);
 void   gimp_action_group_add_string_actions   (GimpActionGroup             *group,
                                                const gchar                 *msg_context,
                                                const GimpStringActionEntry *entries,
                                                guint                        n_entries,
-                                               GCallback                    callback);
+                                               GimpActionCallback           callback);
 void   gimp_action_group_add_procedure_actions(GimpActionGroup             *group,
                                                const GimpProcedureActionEntry *entries,
                                                guint                        n_entries,
-                                               GCallback                    callback);
+                                               GimpActionCallback           callback);
 
 void   gimp_action_group_remove_action_and_accel (GimpActionGroup          *group,
                                                   GimpAction               *action);

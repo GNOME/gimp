@@ -37,36 +37,42 @@
 /*  public functions  */
 
 void
-dialogs_create_toplevel_cmd_callback (GimpAction  *action,
-                                      const gchar *value,
-                                      gpointer     data)
+dialogs_create_toplevel_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
-  GtkWidget *widget;
+  GtkWidget   *widget;
+  const gchar *identifier;
   return_if_no_widget (widget, data);
 
-  if (value)
+  identifier = g_variant_get_string (value, NULL);
+
+  if (identifier)
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
                                     gimp_widget_get_monitor (widget),
                                     NULL /*ui_manager*/,
-                                    value, -1, TRUE);
+                                    identifier, -1, TRUE);
 }
 
 void
-dialogs_create_dockable_cmd_callback (GimpAction  *action,
-                                      const gchar *value,
-                                      gpointer     data)
+dialogs_create_dockable_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
-  Gimp      *gimp;
-  GtkWidget *widget;
+  Gimp        *gimp;
+  GtkWidget   *widget;
+  const gchar *identifier;
   return_if_no_gimp   (gimp, data);
   return_if_no_widget (widget, data);
 
-  if (value)
+  identifier = g_variant_get_string (value, NULL);
+
+  if (identifier)
     gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
                                                gimp,
                                                gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (widget),
                                                gimp_widget_get_monitor (widget),
-                                               value);
+                                               identifier);
 }

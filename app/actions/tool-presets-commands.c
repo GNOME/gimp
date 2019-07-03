@@ -42,6 +42,7 @@
 
 void
 tool_presets_save_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -78,6 +79,7 @@ tool_presets_save_cmd_callback (GimpAction *action,
 
 void
 tool_presets_restore_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
                                    gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);

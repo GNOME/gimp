@@ -56,6 +56,7 @@
 
 void
 data_open_as_image_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
                                  gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -96,6 +97,7 @@ data_open_as_image_cmd_callback (GimpAction *action,
 
 void
 data_new_cmd_callback (GimpAction *action,
+                       GVariant   *value,
                        gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -126,6 +128,7 @@ data_new_cmd_callback (GimpAction *action,
 
 void
 data_duplicate_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -157,6 +160,7 @@ data_duplicate_cmd_callback (GimpAction *action,
 
 void
 data_copy_location_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
                                  gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -185,6 +189,7 @@ data_copy_location_cmd_callback (GimpAction *action,
 
 void
 data_show_in_file_manager_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -219,6 +224,7 @@ data_show_in_file_manager_cmd_callback (GimpAction *action,
 
 void
 data_delete_cmd_callback (GimpAction *action,
+                          GVariant   *value,
                           gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -249,6 +255,7 @@ data_delete_cmd_callback (GimpAction *action,
 
 void
 data_refresh_cmd_callback (GimpAction *action,
+                           GVariant   *value,
                            gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
@@ -262,9 +269,9 @@ data_refresh_cmd_callback (GimpAction *action,
 }
 
 void
-data_edit_cmd_callback (GimpAction  *action,
-                        const gchar *value,
-                        gpointer     user_data)
+data_edit_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    user_data)
 {
   GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
   GimpContext         *context;
@@ -288,7 +295,8 @@ data_edit_cmd_callback (GimpAction  *action,
                                                    gimp_dialog_factory_get_singleton (),
                                                    screen,
                                                    monitor,
-                                                   value);
+                                                   g_variant_get_string (value,
+                                                                         NULL));
 
       gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
                                  data);

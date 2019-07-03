@@ -67,14 +67,20 @@ static void   plug_in_reset_all_response (GtkWidget *dialog,
 /*  public functions  */
 
 void
-plug_in_run_cmd_callback (GimpAction    *action,
-                          GimpProcedure *procedure,
-                          gpointer       data)
+plug_in_run_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   Gimp           *gimp;
   GimpValueArray *args    = NULL;
   GimpDisplay    *display = NULL;
+  GimpProcedure  *procedure;
+  gsize           hack;
   return_if_no_gimp (gimp, data);
+
+  hack = g_variant_get_uint64 (value);
+
+  procedure = GSIZE_TO_POINTER (hack);
 
   switch (procedure->proc_type)
     {
@@ -158,6 +164,7 @@ plug_in_run_cmd_callback (GimpAction    *action,
 
 void
 plug_in_reset_all_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   Gimp      *gimp;

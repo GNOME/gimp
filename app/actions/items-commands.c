@@ -33,8 +33,6 @@
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
 
-#include "widgets/gimptoggleaction.h"
-
 #include "dialogs/dialogs.h"
 #include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"
@@ -65,12 +63,11 @@ static void   items_stroke_callback (GtkWidget         *dialog,
 
 void
 items_visible_cmd_callback (GimpAction *action,
+                            GVariant   *value,
                             GimpImage  *image,
                             GimpItem   *item)
 {
-  gboolean visible;
-
-  visible = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  gboolean visible = g_variant_get_boolean (value);
 
   if (visible != gimp_item_get_visible (item))
     {
@@ -90,12 +87,11 @@ items_visible_cmd_callback (GimpAction *action,
 
 void
 items_linked_cmd_callback (GimpAction *action,
+                           GVariant   *value,
                            GimpImage  *image,
                            GimpItem   *item)
 {
-  gboolean linked;
-
-  linked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  gboolean linked = g_variant_get_boolean (value);
 
   if (linked != gimp_item_get_linked (item))
     {
@@ -115,12 +111,11 @@ items_linked_cmd_callback (GimpAction *action,
 
 void
 items_lock_content_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
                                  GimpImage  *image,
                                  GimpItem   *item)
 {
-  gboolean locked;
-
-  locked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  gboolean locked = g_variant_get_boolean (value);
 
   if (locked != gimp_item_get_lock_content (item))
     {
@@ -140,12 +135,11 @@ items_lock_content_cmd_callback (GimpAction *action,
 
 void
 items_lock_position_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
                                   GimpImage  *image,
                                   GimpItem   *item)
 {
-  gboolean locked;
-
-  locked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  gboolean locked = g_variant_get_boolean (value);
 
   if (locked != gimp_item_get_lock_position (item))
     {

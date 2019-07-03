@@ -47,14 +47,14 @@
 
 void
 buffers_paste_cmd_callback (GimpAction *action,
-                            gint        value,
+                            GVariant   *value,
                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
   GimpContext         *context;
   GimpBuffer          *buffer;
-  GimpPasteType        paste_type = (GimpPasteType) value;
+  GimpPasteType        paste_type = (GimpPasteType) g_variant_get_int32 (value);
 
   container = gimp_container_view_get_container (editor->view);
   context   = gimp_container_view_get_context (editor->view);
@@ -97,6 +97,7 @@ buffers_paste_cmd_callback (GimpAction *action,
 
 void
 buffers_paste_as_new_image_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -126,6 +127,7 @@ buffers_paste_as_new_image_cmd_callback (GimpAction *action,
 
 void
 buffers_delete_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);

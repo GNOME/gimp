@@ -63,6 +63,7 @@ static void   tool_options_show_preset_editor (Gimp           *gimp,
 
 void
 tool_options_save_new_preset_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
                                            gpointer    user_data)
 {
   GimpEditor  *editor  = GIMP_EDITOR (user_data);
@@ -78,7 +79,7 @@ tool_options_save_new_preset_cmd_callback (GimpAction *action,
 
 void
 tool_options_save_preset_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
@@ -86,9 +87,12 @@ tool_options_save_preset_cmd_callback (GimpAction *action,
   GimpContext    *context   = gimp_get_user_context (gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
+  gint            index;
+
+  index = g_variant_get_int32 (value);
 
   preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, value);
+    gimp_container_get_child_by_index (tool_info->presets, index);
 
   if (preset)
     {
@@ -101,7 +105,7 @@ tool_options_save_preset_cmd_callback (GimpAction *action,
 
 void
 tool_options_restore_preset_cmd_callback (GimpAction *action,
-                                          gint        value,
+                                          GVariant   *value,
                                           gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
@@ -109,9 +113,12 @@ tool_options_restore_preset_cmd_callback (GimpAction *action,
   GimpContext    *context   = gimp_get_user_context (gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
+  gint            index;
+
+  index = g_variant_get_int32 (value);
 
   preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, value);
+    gimp_container_get_child_by_index (tool_info->presets, index);
 
   if (preset)
     {
@@ -124,7 +131,7 @@ tool_options_restore_preset_cmd_callback (GimpAction *action,
 
 void
 tool_options_edit_preset_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
@@ -132,9 +139,12 @@ tool_options_edit_preset_cmd_callback (GimpAction *action,
   GimpContext    *context   = gimp_get_user_context (gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
+  gint            index;
+
+  index = g_variant_get_int32 (value);
 
   preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, value);
+    gimp_container_get_child_by_index (tool_info->presets, index);
 
   if (preset)
     {
@@ -144,16 +154,19 @@ tool_options_edit_preset_cmd_callback (GimpAction *action,
 
 void
 tool_options_delete_preset_cmd_callback (GimpAction *action,
-                                         gint        value,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
   GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
   GimpToolInfo   *tool_info = gimp_context_get_tool (context);
   GimpToolPreset *preset;
+  gint            index;
+
+  index = g_variant_get_int32 (value);
 
   preset = (GimpToolPreset *)
-    gimp_container_get_child_by_index (tool_info->presets, value);
+    gimp_container_get_child_by_index (tool_info->presets, index);
 
   if (preset &&
       gimp_data_is_deletable (GIMP_DATA (preset)))
@@ -169,6 +182,7 @@ tool_options_delete_preset_cmd_callback (GimpAction *action,
 
 void
 tool_options_reset_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
                                  gpointer    data)
 {
   GimpEditor   *editor    = GIMP_EDITOR (data);
@@ -180,6 +194,7 @@ tool_options_reset_cmd_callback (GimpAction *action,
 
 void
 tool_options_reset_all_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpEditor *editor = GIMP_EDITOR (data);

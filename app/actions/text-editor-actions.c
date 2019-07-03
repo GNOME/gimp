@@ -43,13 +43,13 @@ static const GimpActionEntry text_editor_actions[] =
   { "text-editor-load", GIMP_ICON_DOCUMENT_OPEN,
     NC_("text-editor-action", "Open"), NULL,
     NC_("text-editor-action", "Load text from file"),
-    G_CALLBACK (text_editor_load_cmd_callback),
+    text_editor_load_cmd_callback,
     NULL },
 
   { "text-editor-clear", GIMP_ICON_EDIT_CLEAR,
     NC_("text-editor-action", "Clear"), NULL,
     NC_("text-editor-action", "Clear all text"),
-    G_CALLBACK (text_editor_clear_cmd_callback),
+    text_editor_clear_cmd_callback,
     NULL }
 };
 
@@ -105,7 +105,7 @@ text_editor_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (text_editor_direction_actions),
                                        NULL,
                                        GIMP_TEXT_DIRECTION_LTR,
-                                       G_CALLBACK (text_editor_direction_cmd_callback));
+                                       text_editor_direction_cmd_callback);
 }
 
 void

@@ -91,6 +91,7 @@ static void   channels_edit_attributes_callback (GtkWidget     *dialog,
 
 void
 channels_edit_attributes_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   GimpImage   *image;
@@ -137,6 +138,7 @@ channels_edit_attributes_cmd_callback (GimpAction *action,
 
 void
 channels_new_cmd_callback (GimpAction *action,
+                           GVariant   *value,
                            gpointer    data)
 {
   GimpImage *image;
@@ -182,6 +184,7 @@ channels_new_cmd_callback (GimpAction *action,
 
 void
 channels_new_last_vals_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpImage        *image;
@@ -208,6 +211,7 @@ channels_new_last_vals_cmd_callback (GimpAction *action,
 
 void
 channels_raise_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpImage   *image;
@@ -220,6 +224,7 @@ channels_raise_cmd_callback (GimpAction *action,
 
 void
 channels_raise_to_top_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
                                     gpointer    data)
 {
   GimpImage   *image;
@@ -232,6 +237,7 @@ channels_raise_to_top_cmd_callback (GimpAction *action,
 
 void
 channels_lower_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpImage   *image;
@@ -244,6 +250,7 @@ channels_lower_cmd_callback (GimpAction *action,
 
 void
 channels_lower_to_bottom_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   GimpImage   *image;
@@ -256,6 +263,7 @@ channels_lower_to_bottom_cmd_callback (GimpAction *action,
 
 void
 channels_duplicate_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
                                  gpointer    data)
 {
   GimpImage   *image;
@@ -308,6 +316,7 @@ channels_duplicate_cmd_callback (GimpAction *action,
 
 void
 channels_delete_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpImage   *image;
@@ -320,13 +329,13 @@ channels_delete_cmd_callback (GimpAction *action,
 
 void
 channels_to_selection_cmd_callback (GimpAction *action,
-                                    gint        value,
+                                    GVariant   *value,
                                     gpointer    data)
 {
   GimpChannelOps  op;
   GimpImage      *image;
 
-  op = (GimpChannelOps) value;
+  op = (GimpChannelOps) g_variant_get_int32 (value);
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -352,75 +361,84 @@ channels_to_selection_cmd_callback (GimpAction *action,
 
 void
 channels_visible_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_visible_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_visible_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
 channels_linked_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_linked_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_linked_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
 channels_lock_content_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
                                     gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_lock_content_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_lock_content_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
 channels_lock_position_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_lock_position_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_lock_position_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
 channels_color_tag_cmd_callback (GimpAction *action,
-                                 gint        value,
+                                 GVariant   *value,
                                  gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
+  GimpImage    *image;
+  GimpChannel  *channel;
+  GimpColorTag  color_tag;
   return_if_no_channel (image, channel, data);
 
+  color_tag = (GimpColorTag) g_variant_get_int32 (value);
+
   items_color_tag_cmd_callback (action, image, GIMP_ITEM (channel),
-                                (GimpColorTag) value);
+                                color_tag);
 }
 
 void
 channels_select_cmd_callback (GimpAction *action,
-                              gint        value,
+                              GVariant   *value,
                               gpointer    data)
 {
-  GimpImage      *image;
-  GimpChannel    *channel;
-  GimpChannel    *channel2;
-  GimpContainer  *container;
+  GimpImage            *image;
+  GimpChannel          *channel;
+  GimpChannel          *channel2;
+  GimpContainer        *container;
+  GimpActionSelectType  type;
   return_if_no_channel (image, channel, data);
 
+  type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   container = gimp_image_get_channels (image);
-  channel2 = (GimpChannel *) action_select_object ((GimpActionSelectType) value,
-                                                   container,
+  channel2 = (GimpChannel *) action_select_object (type, container,
                                                    (GimpObject *) channel);
 
   if (channel2 && channel2 != channel)

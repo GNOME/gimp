@@ -19,46 +19,59 @@
 #define __CHANNELS_COMMANDS_H__
 
 
-void   channels_edit_attributes_cmd_callback (GimpAction   *action,
-                                              gpointer      data);
-void   channels_new_cmd_callback             (GimpAction   *action,
-                                              gpointer      data);
-void   channels_new_last_vals_cmd_callback   (GimpAction   *action,
-                                              gpointer      data);
+void   channels_edit_attributes_cmd_callback (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_new_cmd_callback             (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_new_last_vals_cmd_callback   (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
-void   channels_raise_cmd_callback           (GimpAction   *action,
-                                              gpointer      data);
-void   channels_raise_to_top_cmd_callback    (GimpAction   *action,
-                                              gpointer      data);
-void   channels_lower_cmd_callback           (GimpAction   *action,
-                                              gpointer      data);
-void   channels_lower_to_bottom_cmd_callback (GimpAction   *action,
-                                              gpointer      data);
+void   channels_raise_cmd_callback           (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_raise_to_top_cmd_callback    (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_lower_cmd_callback           (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_lower_to_bottom_cmd_callback (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
-void   channels_duplicate_cmd_callback       (GimpAction   *action,
-                                              gpointer      data);
-void   channels_delete_cmd_callback          (GimpAction   *action,
-                                              gpointer      data);
-void   channels_to_selection_cmd_callback    (GimpAction   *action,
-                                              gint          value,
-                                              gpointer      data);
+void   channels_duplicate_cmd_callback       (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_delete_cmd_callback          (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_to_selection_cmd_callback    (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
-void   channels_visible_cmd_callback         (GimpAction   *action,
-                                              gpointer      data);
-void   channels_linked_cmd_callback          (GimpAction   *action,
-                                              gpointer      data);
-void   channels_lock_content_cmd_callback    (GimpAction   *action,
-                                              gpointer      data);
-void   channels_lock_position_cmd_callback   (GimpAction   *action,
-                                              gpointer      data);
+void   channels_visible_cmd_callback         (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_linked_cmd_callback          (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_lock_content_cmd_callback    (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   channels_lock_position_cmd_callback   (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
-void   channels_color_tag_cmd_callback       (GimpAction   *action,
-                                              gint          value,
-                                              gpointer      data);
+void   channels_color_tag_cmd_callback       (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
-void   channels_select_cmd_callback          (GimpAction   *action,
-                                              gint          value,
-                                              gpointer      data);
+void   channels_select_cmd_callback          (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
 
 #endif /* __CHANNELS_COMMANDS_H__ */

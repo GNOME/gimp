@@ -20,6 +20,7 @@
 
 
 void   sample_points_sample_merged_cmd_callback (GimpAction *action,
+                                                 GVariant   *value,
                                                  gpointer    data);
 
 

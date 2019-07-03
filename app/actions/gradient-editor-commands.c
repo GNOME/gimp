@@ -31,7 +31,6 @@
 
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpradioaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -54,6 +53,7 @@ static void   gradient_editor_replicate_response     (GtkWidget           *widge
 
 void
 gradient_editor_left_color_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
@@ -63,7 +63,7 @@ gradient_editor_left_color_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_left_color_type_cmd_callback (GimpAction *action,
-                                              GimpAction *current,
+                                              GVariant   *value,
                                               gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -71,9 +71,9 @@ gradient_editor_left_color_type_cmd_callback (GimpAction *action,
   GimpGradientSegment *left;
   GimpGradientColor    color_type;
 
-  gimp_gradient_editor_get_selection (editor, &gradient, &left, NULL);
+  color_type = (GimpGradientColor) g_variant_get_int32 (value);
 
-  color_type = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  gimp_gradient_editor_get_selection (editor, &gradient, &left, NULL);
 
   if (gradient        &&
       color_type >= 0 &&
@@ -99,7 +99,7 @@ gradient_editor_left_color_type_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_load_left_cmd_callback (GimpAction *action,
-                                        gint        value,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
@@ -110,10 +110,11 @@ gradient_editor_load_left_cmd_callback (GimpAction *action,
   GimpGradientSegment *seg;
   GimpRGB              color;
   GimpGradientColor    color_type = GIMP_GRADIENT_COLOR_FIXED;
+  gint                 index      = g_variant_get_int32 (value);
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
-  switch (value)
+  switch (index)
     {
     case GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT:
       if (left->prev != NULL)
@@ -139,7 +140,7 @@ gradient_editor_load_left_cmd_callback (GimpAction *action,
       break;
 
     default: /* Load a color */
-      color = editor->saved_colors[value - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
+      color = editor->saved_colors[index - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
       break;
     }
 
@@ -156,21 +157,23 @@ gradient_editor_load_left_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_save_left_cmd_callback (GimpAction *action,
-                                        gint        value,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient        *gradient;
   GimpGradientSegment *left;
+  gint                 index = g_variant_get_int32 (value);
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, NULL);
 
   gimp_gradient_segment_get_left_color (gradient, left,
-                                        &editor->saved_colors[value]);
+                                        &editor->saved_colors[index]);
 }
 
 void
 gradient_editor_right_color_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
                                           gpointer    data)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
@@ -180,7 +183,7 @@ gradient_editor_right_color_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_right_color_type_cmd_callback (GimpAction *action,
-                                               GimpAction *current,
+                                               GVariant   *value,
                                                gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -188,9 +191,9 @@ gradient_editor_right_color_type_cmd_callback (GimpAction *action,
   GimpGradientSegment *right;
   GimpGradientColor    color_type;
 
-  gimp_gradient_editor_get_selection (editor, &gradient, NULL, &right);
+  color_type = (GimpGradientColor) g_variant_get_int32 (value);
 
-  color_type = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  gimp_gradient_editor_get_selection (editor, &gradient, NULL, &right);
 
   if (gradient        &&
       color_type >= 0 &&
@@ -216,7 +219,7 @@ gradient_editor_right_color_type_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_load_right_cmd_callback (GimpAction *action,
-                                         gint        value,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
@@ -227,10 +230,11 @@ gradient_editor_load_right_cmd_callback (GimpAction *action,
   GimpGradientSegment *seg;
   GimpRGB              color;
   GimpGradientColor    color_type = GIMP_GRADIENT_COLOR_FIXED;
+  gint                 index      = g_variant_get_int32 (value);
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
-  switch (value)
+  switch (index)
     {
     case GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT:
       if (right->next != NULL)
@@ -256,7 +260,7 @@ gradient_editor_load_right_cmd_callback (GimpAction *action,
       break;
 
     default: /* Load a color */
-      color = editor->saved_colors[value - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
+      color = editor->saved_colors[index - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
       break;
     }
 
@@ -273,22 +277,23 @@ gradient_editor_load_right_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_save_right_cmd_callback (GimpAction *action,
-                                         gint        value,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient        *gradient;
   GimpGradientSegment *right;
+  gint                 index = g_variant_get_int32 (value);
 
   gimp_gradient_editor_get_selection (editor, &gradient, NULL, &right);
 
   gimp_gradient_segment_get_right_color (gradient, right,
-                                         &editor->saved_colors[value]);
+                                         &editor->saved_colors[index]);
 }
 
 void
 gradient_editor_blending_func_cmd_callback (GimpAction *action,
-                                            GimpAction *current,
+                                            GVariant   *value,
                                             gpointer    data)
 {
   GimpGradientEditor      *editor = GIMP_GRADIENT_EDITOR (data);
@@ -298,9 +303,9 @@ gradient_editor_blending_func_cmd_callback (GimpAction *action,
   GEnumClass              *enum_class = NULL;
   GimpGradientSegmentType  type;
 
-  gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
+  type = (GimpGradientSegmentType) g_variant_get_int32 (value);
 
-  type = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
   enum_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
 
@@ -316,7 +321,7 @@ gradient_editor_blending_func_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_coloring_type_cmd_callback (GimpAction *action,
-                                            GimpAction *current,
+                                            GVariant   *value,
                                             gpointer    data)
 {
   GimpGradientEditor       *editor = GIMP_GRADIENT_EDITOR (data);
@@ -326,9 +331,9 @@ gradient_editor_coloring_type_cmd_callback (GimpAction *action,
   GEnumClass               *enum_class = NULL;
   GimpGradientSegmentColor  color;
 
-  gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
+  color = (GimpGradientSegmentColor) g_variant_get_int32 (value);
 
-  color = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
   enum_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_COLOR);
 
@@ -344,6 +349,7 @@ gradient_editor_coloring_type_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_flip_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
                                    gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -362,6 +368,7 @@ gradient_editor_flip_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_replicate_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
@@ -450,6 +457,7 @@ gradient_editor_replicate_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_split_midpoint_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data)
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
@@ -471,6 +479,7 @@ gradient_editor_split_midpoint_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
+                                              GVariant   *value,
                                               gpointer    data)
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
@@ -560,6 +569,7 @@ gradient_editor_split_uniformly_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_delete_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -578,6 +588,7 @@ gradient_editor_delete_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_recenter_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -592,6 +603,7 @@ gradient_editor_recenter_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_redistribute_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
                                            gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -606,6 +618,7 @@ gradient_editor_redistribute_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_blend_color_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
                                           gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -623,6 +636,7 @@ gradient_editor_blend_color_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_blend_opacity_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
                                             gpointer    data)
 {
   GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
@@ -640,12 +654,13 @@ gradient_editor_blend_opacity_cmd_callback (GimpAction *action,
 
 void
 gradient_editor_zoom_cmd_callback (GimpAction *action,
-                                   gint        value,
+                                   GVariant   *value,
                                    gpointer    data)
 {
-  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradientEditor *editor    = GIMP_GRADIENT_EDITOR (data);
+  GimpZoomType        zoom_type = (GimpZoomType) g_variant_get_int32 (value);
 
-  gimp_gradient_editor_zoom (editor, (GimpZoomType) value);
+  gimp_gradient_editor_zoom (editor, zoom_type);
 }
 
 

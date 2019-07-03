@@ -20,8 +20,10 @@
 
 
 void   tool_preset_editor_save_cmd_callback    (GimpAction *action,
+                                                GVariant   *value,
                                                 gpointer    data);
 void   tool_preset_editor_restore_cmd_callback (GimpAction *action,
+                                                GVariant   *value,
                                                 gpointer    data);
 
 

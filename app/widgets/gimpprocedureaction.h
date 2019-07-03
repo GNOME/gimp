@@ -45,23 +45,17 @@ struct _GimpProcedureAction
 struct _GimpProcedureActionClass
 {
   GimpActionImplClass parent_class;
-
-  void (* selected) (GimpProcedureAction *action,
-                     GimpProcedure       *procedure);
 };
 
 
 GType                 gimp_procedure_action_get_type (void) G_GNUC_CONST;
 
-GimpProcedureAction * gimp_procedure_action_new      (const gchar         *name,
-                                                      const gchar         *label,
-                                                      const gchar         *tooltip,
-                                                      const gchar         *icon_name,
-                                                      const gchar         *help_id,
-                                                      GimpProcedure       *procedure);
-
-void                  gimp_procedure_action_selected (GimpProcedureAction *action,
-                                                      GimpProcedure       *procedure);
+GimpProcedureAction * gimp_procedure_action_new      (const gchar   *name,
+                                                      const gchar   *label,
+                                                      const gchar   *tooltip,
+                                                      const gchar   *icon_name,
+                                                      const gchar   *help_id,
+                                                      GimpProcedure *procedure);
 
 
 #endif  /* __GIMP_PROCEDURE_ACTION_H__ */

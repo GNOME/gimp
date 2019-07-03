@@ -35,6 +35,7 @@
 
 void
 palette_editor_edit_color_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
@@ -44,11 +45,12 @@ palette_editor_edit_color_cmd_callback (GimpAction *action,
 
 void
 palette_editor_new_color_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
+  gboolean           background  = (gboolean) g_variant_get_int32 (value);
 
   if (data_editor->data_editable)
     {
@@ -56,7 +58,7 @@ palette_editor_new_color_cmd_callback (GimpAction *action,
       GimpPaletteEntry *entry;
       GimpRGB           color;
 
-      if (value)
+      if (background)
         gimp_context_get_background (data_editor->context, &color);
       else
         gimp_context_get_foreground (data_editor->context, &color);
@@ -68,6 +70,7 @@ palette_editor_new_color_cmd_callback (GimpAction *action,
 
 void
 palette_editor_delete_color_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
                                           gpointer    data)
 {
   GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
@@ -83,10 +86,11 @@ palette_editor_delete_color_cmd_callback (GimpAction *action,
 
 void
 palette_editor_zoom_cmd_callback (GimpAction *action,
-                                  gint        value,
+                                  GVariant   *value,
                                   gpointer    data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  GimpPaletteEditor *editor    = GIMP_PALETTE_EDITOR (data);
+  GimpZoomType       zoom_type = (GimpZoomType) g_variant_get_int32 (value);
 
-  gimp_palette_editor_zoom (editor, (GimpZoomType) value);
+  gimp_palette_editor_zoom (editor, zoom_type);
 }

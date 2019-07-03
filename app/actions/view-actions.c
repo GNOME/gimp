@@ -88,86 +88,86 @@ static const GimpActionEntry view_actions[] =
   { "view-new", GIMP_ICON_WINDOW_NEW,
     NC_("view-action", "_New View"), NULL,
     NC_("view-action", "Create another view on this image"),
-    G_CALLBACK (view_new_cmd_callback),
+    view_new_cmd_callback,
     GIMP_HELP_VIEW_NEW },
 
   { "view-close", GIMP_ICON_WINDOW_CLOSE,
     NC_("view-action",  "_Close View"), "<primary>W",
     NC_("view-action", "Close the active image view"),
-    G_CALLBACK (view_close_cmd_callback),
+    view_close_cmd_callback,
     GIMP_HELP_FILE_CLOSE },
 
   { "view-scroll-center", GIMP_ICON_CENTER,
     NC_("view-action", "Center Image in Window"), "<shift>J",
     NC_("view-action", "Scroll the image so that it is centered in the window"),
-    G_CALLBACK (view_scroll_center_cmd_callback),
+    view_scroll_center_cmd_callback,
     GIMP_HELP_VIEW_SCROLL_CENTER },
 
   { "view-zoom-fit-in", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
-    G_CALLBACK (view_zoom_fit_in_cmd_callback),
+    view_zoom_fit_in_cmd_callback,
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
   { "view-zoom-fill", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "Fi_ll Window"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the entire window is used"),
-    G_CALLBACK (view_zoom_fill_cmd_callback),
+    view_zoom_fill_cmd_callback,
     GIMP_HELP_VIEW_ZOOM_FILL },
 
   { "view-zoom-selection", GIMP_ICON_SELECTION,
     NC_("view-action", "Zoom to _Selection"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the selection fills the window"),
-    G_CALLBACK (view_zoom_selection_cmd_callback),
+    view_zoom_selection_cmd_callback,
     GIMP_HELP_VIEW_ZOOM_SELECTION },
 
   { "view-zoom-revert", NULL,
     NC_("view-action", "Re_vert Zoom"), "grave",
     NC_("view-action", "Restore the previous zoom level"),
-    G_CALLBACK (view_zoom_revert_cmd_callback),
+    view_zoom_revert_cmd_callback,
     GIMP_HELP_VIEW_ZOOM_REVERT },
 
   { "view-rotate-other", NULL,
     NC_("view-action", "Othe_r rotation angle..."), NULL,
     NC_("view-action", "Set a custom rotation angle"),
-    G_CALLBACK (view_rotate_other_cmd_callback),
+    view_rotate_other_cmd_callback,
     GIMP_HELP_VIEW_ROTATE_OTHER },
 
   { "view-navigation-window", GIMP_ICON_DIALOG_NAVIGATION,
     NC_("view-action", "Na_vigation Window"), NULL,
     NC_("view-action", "Show an overview window for this image"),
-    G_CALLBACK (view_navigation_window_cmd_callback),
+    view_navigation_window_cmd_callback,
     GIMP_HELP_NAVIGATION_DIALOG },
 
   { "view-display-filters", GIMP_ICON_DISPLAY_FILTER,
     NC_("view-action", "Display _Filters..."), NULL,
     NC_("view-action", "Configure filters applied to this view"),
-    G_CALLBACK (view_display_filters_cmd_callback),
+    view_display_filters_cmd_callback,
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
   { "view-color-management-reset", GIMP_ICON_RESET,
     NC_("view-action", "As in _Preferences"), NULL,
     NC_("view-action",
         "Reset color management to what's configured in preferences"),
-    G_CALLBACK (view_color_management_reset_cmd_callback),
+    view_color_management_reset_cmd_callback,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-profile", NULL,
     NC_("view-action", "Soft-_Proofing Profile..."), NULL,
     NC_("view-action", "Set the soft-proofing profile"),
-    G_CALLBACK (view_softproof_profile_cmd_callback),
+    view_softproof_profile_cmd_callback,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-shrink-wrap", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "Shrink _Wrap"), "<primary>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
-    G_CALLBACK (view_shrink_wrap_cmd_callback),
+    view_shrink_wrap_cmd_callback,
     GIMP_HELP_VIEW_SHRINK_WRAP },
 
   { "view-open-display", NULL,
     NC_("view-action", "_Open Display..."), NULL,
     NC_("view-action", "Connect to another display"),
-    G_CALLBACK (window_open_display_cmd_callback),
+    window_open_display_cmd_callback,
     NULL }
 };
 
@@ -176,35 +176,35 @@ static const GimpToggleActionEntry view_toggle_actions[] =
   { "view-dot-for-dot", NULL,
     NC_("view-action", "_Dot for Dot"), NULL,
     NC_("view-action", "A pixel on the screen represents an image pixel"),
-    G_CALLBACK (view_dot_for_dot_cmd_callback),
+    view_dot_for_dot_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
   { "view-color-management-enable", NULL,
     NC_("view-action", "_Color-Manage this View"), NULL,
     NC_("view-action", "Use color management for this view"),
-    G_CALLBACK (view_color_management_enable_cmd_callback),
+    view_color_management_enable_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-color-management-softproof", NULL,
     NC_("view-action", "_Proof Colors"), NULL,
     NC_("view-action", "Use this view for soft-proofing"),
-    G_CALLBACK (view_color_management_softproof_cmd_callback),
+    view_color_management_softproof_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-display-black-point-compensation", NULL,
     NC_("view-action", "_Black Point Compensation"), NULL,
     NC_("view-action", "Use black point compensation for image display"),
-    G_CALLBACK (view_display_bpc_cmd_callback),
+    view_display_bpc_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-softproof-black-point-compensation", NULL,
     NC_("view-action", "_Black Point Compensation"), NULL,
     NC_("view-action", "Use black point compensation for soft-proofing"),
-    G_CALLBACK (view_softproof_bpc_cmd_callback),
+    view_softproof_bpc_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
@@ -212,105 +212,105 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     NC_("view-action", "_Mark Out Of Gamut Colors"), NULL,
     NC_("view-action", "When soft-proofing, mark colors which cannot "
         "be represented in the target color space"),
-    G_CALLBACK (view_softproof_gamut_check_cmd_callback),
+    view_softproof_gamut_check_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
   { "view-show-selection", NULL,
     NC_("view-action", "Show _Selection"), "<primary>T",
     NC_("view-action", "Display the selection outline"),
-    G_CALLBACK (view_toggle_selection_cmd_callback),
+    view_toggle_selection_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_SELECTION },
 
   { "view-show-layer-boundary", NULL,
     NC_("view-action", "Show _Layer Boundary"), NULL,
     NC_("view-action", "Draw a border around the active layer"),
-    G_CALLBACK (view_toggle_layer_boundary_cmd_callback),
+    view_toggle_layer_boundary_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY },
 
   { "view-show-guides", NULL,
     NC_("view-action", "Show _Guides"), "<primary><shift>T",
     NC_("view-action", "Display the image's guides"),
-    G_CALLBACK (view_toggle_guides_cmd_callback),
+    view_toggle_guides_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_GUIDES },
 
   { "view-show-grid", NULL,
     NC_("view-action", "S_how Grid"), NULL,
     NC_("view-action", "Display the image's grid"),
-    G_CALLBACK (view_toggle_grid_cmd_callback),
+    view_toggle_grid_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_SHOW_GRID },
 
   { "view-show-sample-points", NULL,
     NC_("view-action", "Show Sample Points"), NULL,
     NC_("view-action", "Display the image's color sample points"),
-    G_CALLBACK (view_toggle_sample_points_cmd_callback),
+    view_toggle_sample_points_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_SAMPLE_POINTS },
 
   { "view-snap-to-guides", NULL,
     NC_("view-action", "Sn_ap to Guides"), NULL,
     NC_("view-action", "Tool operations snap to guides"),
-    G_CALLBACK (view_snap_to_guides_cmd_callback),
+    view_snap_to_guides_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SNAP_TO_GUIDES },
 
   { "view-snap-to-grid", NULL,
     NC_("view-action", "Sna_p to Grid"), NULL,
     NC_("view-action", "Tool operations snap to the grid"),
-    G_CALLBACK (view_snap_to_grid_cmd_callback),
+    view_snap_to_grid_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_GRID },
 
   { "view-snap-to-canvas", NULL,
     NC_("view-action", "Snap to _Canvas Edges"), NULL,
     NC_("view-action", "Tool operations snap to the canvas edges"),
-    G_CALLBACK (view_snap_to_canvas_cmd_callback),
+    view_snap_to_canvas_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_CANVAS },
 
   { "view-snap-to-vectors", NULL,
     NC_("view-action", "Snap t_o Active Path"), NULL,
     NC_("view-action", "Tool operations snap to the active path"),
-    G_CALLBACK (view_snap_to_vectors_cmd_callback),
+    view_snap_to_vectors_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_SNAP_TO_VECTORS },
 
   { "view-show-menubar", NULL,
     NC_("view-action", "Show _Menubar"), NULL,
     NC_("view-action", "Show this window's menubar"),
-    G_CALLBACK (view_toggle_menubar_cmd_callback),
+    view_toggle_menubar_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_MENUBAR },
 
   { "view-show-rulers", NULL,
     NC_("view-action", "Show R_ulers"), "<primary><shift>R",
     NC_("view-action", "Show this window's rulers"),
-    G_CALLBACK (view_toggle_rulers_cmd_callback),
+    view_toggle_rulers_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_RULERS },
 
   { "view-show-scrollbars", NULL,
     NC_("view-action", "Show Scroll_bars"), NULL,
     NC_("view-action", "Show this window's scrollbars"),
-    G_CALLBACK (view_toggle_scrollbars_cmd_callback),
+    view_toggle_scrollbars_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_SCROLLBARS },
 
   { "view-show-statusbar", NULL,
     NC_("view-action", "Show S_tatusbar"), NULL,
     NC_("view-action", "Show this window's statusbar"),
-    G_CALLBACK (view_toggle_statusbar_cmd_callback),
+    view_toggle_statusbar_cmd_callback,
     TRUE,
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
   { "view-fullscreen", GIMP_ICON_VIEW_FULLSCREEN,
     NC_("view-action", "Fullscr_een"), "F11",
     NC_("view-action", "Toggle fullscreen view"),
-    G_CALLBACK (view_fullscreen_cmd_callback),
+    view_fullscreen_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_FULLSCREEN }
 };
@@ -465,14 +465,14 @@ static const GimpToggleActionEntry view_flip_actions[] =
   { "view-flip-horizontally", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     NC_("view-action", "Flip Horizontally"), NULL,
     NC_("view-action", "Flip the view horizontally"),
-    G_CALLBACK (view_flip_horizontally_cmd_callback),
+    view_flip_horizontally_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_FLIP },
 
   { "view-flip-vertically", GIMP_ICON_OBJECT_FLIP_VERTICAL,
     NC_("view-action", "Flip Vertically"), NULL,
     NC_("view-action", "Flip the view vertically"),
-    G_CALLBACK (view_flip_vertically_cmd_callback),
+    view_flip_vertically_cmd_callback,
     FALSE,
     GIMP_HELP_VIEW_FLIP }
 };
@@ -706,14 +706,14 @@ view_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "view-zoom-action",
                                       view_zoom_actions,
                                       G_N_ELEMENTS (view_zoom_actions),
-                                      G_CALLBACK (view_zoom_cmd_callback));
+                                      view_zoom_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "view-zoom-action",
                                        view_zoom_explicit_actions,
                                        G_N_ELEMENTS (view_zoom_explicit_actions),
                                        NULL,
                                        10000,
-                                       G_CALLBACK (view_zoom_explicit_cmd_callback));
+                                       view_zoom_explicit_cmd_callback);
 
   gimp_action_group_add_toggle_actions (group, "view-action",
                                         view_flip_actions,
@@ -722,41 +722,41 @@ view_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_rotate_absolute_actions,
                                       G_N_ELEMENTS (view_rotate_absolute_actions),
-                                      G_CALLBACK (view_rotate_absolute_cmd_callback));
+                                      view_rotate_absolute_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_rotate_relative_actions,
                                       G_N_ELEMENTS (view_rotate_relative_actions),
-                                      G_CALLBACK (view_rotate_relative_cmd_callback));
+                                      view_rotate_relative_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "view-action",
                                        view_display_intent_actions,
                                        G_N_ELEMENTS (view_display_intent_actions),
                                        NULL,
                                        GIMP_COLOR_MANAGEMENT_DISPLAY,
-                                       G_CALLBACK (view_display_intent_cmd_callback));
+                                       view_display_intent_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "view-action",
                                        view_softproof_intent_actions,
                                        G_N_ELEMENTS (view_softproof_intent_actions),
                                        NULL,
                                        GIMP_COLOR_MANAGEMENT_DISPLAY,
-                                       G_CALLBACK (view_softproof_intent_cmd_callback));
+                                       view_softproof_intent_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "view-padding-color",
                                       view_padding_color_actions,
                                       G_N_ELEMENTS (view_padding_color_actions),
-                                      G_CALLBACK (view_padding_color_cmd_callback));
+                                      view_padding_color_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_scroll_horizontal_actions,
                                       G_N_ELEMENTS (view_scroll_horizontal_actions),
-                                      G_CALLBACK (view_scroll_horizontal_cmd_callback));
+                                      view_scroll_horizontal_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_scroll_vertical_actions,
                                       G_N_ELEMENTS (view_scroll_vertical_actions),
-                                      G_CALLBACK (view_scroll_vertical_cmd_callback));
+                                      view_scroll_vertical_cmd_callback);
 
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group

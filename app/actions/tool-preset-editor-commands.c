@@ -41,6 +41,7 @@
 
 void
 tool_preset_editor_save_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
                                       gpointer    data)
 {
   GimpDataEditor *editor  = GIMP_DATA_EDITOR (data);
@@ -75,6 +76,7 @@ tool_preset_editor_save_cmd_callback (GimpAction *action,
 
 void
 tool_preset_editor_restore_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpDataEditor *editor  = GIMP_DATA_EDITOR (data);

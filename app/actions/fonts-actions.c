@@ -47,7 +47,7 @@ static const GimpActionEntry fonts_actions[] =
   { "fonts-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("fonts-action", "_Rescan Font List"), NULL,
     NC_("fonts-action", "Rescan the installed fonts"),
-    G_CALLBACK (data_refresh_cmd_callback),
+    data_refresh_cmd_callback,
     GIMP_HELP_FONT_REFRESH }
 };
 

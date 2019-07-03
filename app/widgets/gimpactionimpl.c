@@ -72,10 +72,12 @@ static void   gimp_action_impl_connect_proxy (GtkAction      *action,
 static void   gimp_action_impl_set_proxy     (GimpActionImpl *impl,
                                               GtkWidget      *proxy);
 
+
 G_DEFINE_TYPE_WITH_CODE (GimpActionImpl, gimp_action_impl, GTK_TYPE_ACTION,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
 
 #define parent_class gimp_action_impl_parent_class
+
 
 static void
 gimp_action_impl_class_init (GimpActionImplClass *klass)
@@ -239,6 +241,8 @@ gimp_action_impl_activate (GtkAction *action)
 {
   if (GTK_ACTION_CLASS (parent_class)->activate)
     GTK_ACTION_CLASS (parent_class)->activate (action);
+
+  gimp_action_emit_activate (GIMP_ACTION (action), NULL);
 
   gimp_action_history_action_activated (GIMP_ACTION (action));
 }

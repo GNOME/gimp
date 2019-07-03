@@ -361,8 +361,8 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
                 {
                   gdouble value = g_value_get_double (&event->value.value);
 
-                  gimp_enum_action_selected (GIMP_ENUM_ACTION (action),
-                                             value * 1000);
+                  gimp_action_emit_activate (GIMP_ACTION (action),
+                                             g_variant_new_int32 (value * 1000));
 
                   break;
                 }

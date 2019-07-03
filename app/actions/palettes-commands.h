@@ -20,8 +20,10 @@
 
 
 void   palettes_import_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data);
 void   palettes_merge_cmd_callback  (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data);
 
 

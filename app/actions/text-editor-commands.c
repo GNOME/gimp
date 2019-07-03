@@ -28,7 +28,6 @@
 #include "core/gimp.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpradioaction.h"
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpuimanager.h"
@@ -49,6 +48,7 @@ static void   text_editor_load_response (GtkWidget      *dialog,
 
 void
 text_editor_load_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
@@ -93,6 +93,7 @@ text_editor_load_cmd_callback (GimpAction *action,
 
 void
 text_editor_clear_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
@@ -105,15 +106,15 @@ text_editor_clear_cmd_callback (GimpAction *action,
 
 void
 text_editor_direction_cmd_callback (GimpAction *action,
-                                    GimpAction *current,
+                                    GVariant   *value,
                                     gpointer    data)
 {
-  GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
-  gint            value;
+  GimpTextEditor    *editor = GIMP_TEXT_EDITOR (data);
+  GimpTextDirection  direction;
 
-  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  direction = (GimpTextDirection) g_variant_get_int32 (value);
 
-  gimp_text_editor_set_direction (editor, (GimpTextDirection) value);
+  gimp_text_editor_set_direction (editor, direction);
 }
 
 

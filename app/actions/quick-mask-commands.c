@@ -31,8 +31,6 @@
 #include "core/gimpimage-quick-mask.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpradioaction.h"
-#include "widgets/gimptoggleaction.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/channel-options-dialog.h"
@@ -68,13 +66,14 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
 
 void
 quick_mask_toggle_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   GimpImage *image;
   gboolean   active;
   return_if_no_image (image, data);
 
-  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  active = g_variant_get_boolean (value);
 
   if (active != gimp_image_get_quick_mask_state (image))
     {
@@ -85,16 +84,16 @@ quick_mask_toggle_cmd_callback (GimpAction *action,
 
 void
 quick_mask_invert_cmd_callback (GimpAction *action,
-                                GimpAction *current,
+                                GVariant   *value,
                                 gpointer    data)
 {
   GimpImage *image;
-  gint       value;
+  gboolean   inverted;
   return_if_no_image (image, data);
 
-  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  inverted = (gboolean) g_variant_get_int32 (value);
 
-  if (value != gimp_image_get_quick_mask_inverted (image))
+  if (inverted != gimp_image_get_quick_mask_inverted (image))
     {
       gimp_image_quick_mask_invert (image);
       gimp_image_flush (image);
@@ -103,6 +102,7 @@ quick_mask_invert_cmd_callback (GimpAction *action,
 
 void
 quick_mask_configure_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
                                    gpointer    data)
 {
   GimpImage *image;

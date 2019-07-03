@@ -42,6 +42,7 @@
 
 void
 images_raise_views_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
                                  gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -72,6 +73,7 @@ images_raise_views_cmd_callback (GimpAction *action,
 
 void
 images_new_view_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -94,6 +96,7 @@ images_new_view_cmd_callback (GimpAction *action,
 
 void
 images_delete_image_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
                                   gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);

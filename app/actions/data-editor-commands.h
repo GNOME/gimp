@@ -20,6 +20,7 @@
 
 
 void   data_editor_edit_active_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 

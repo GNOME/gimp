@@ -76,6 +76,7 @@ static void   documents_raise_display (GimpDisplay   *display,
 
 void
 documents_open_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -100,6 +101,7 @@ documents_open_cmd_callback (GimpAction *action,
 
 void
 documents_raise_or_open_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
                                       gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -130,6 +132,7 @@ documents_raise_or_open_cmd_callback (GimpAction *action,
 
 void
 documents_file_open_dialog_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -152,6 +155,7 @@ documents_file_open_dialog_cmd_callback (GimpAction *action,
 
 void
 documents_copy_location_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
                                       gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -168,6 +172,7 @@ documents_copy_location_cmd_callback (GimpAction *action,
 
 void
 documents_show_in_file_manager_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -197,6 +202,7 @@ documents_show_in_file_manager_cmd_callback (GimpAction *action,
 
 void
 documents_remove_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
@@ -213,6 +219,7 @@ documents_remove_cmd_callback (GimpAction *action,
 
 void
 documents_clear_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
@@ -283,6 +290,7 @@ documents_clear_cmd_callback (GimpAction *action,
 
 void
 documents_recreate_preview_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -314,6 +322,7 @@ documents_recreate_preview_cmd_callback (GimpAction *action,
 
 void
 documents_reload_previews_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -345,6 +354,7 @@ documents_remove_dangling_foreach (GimpImagefile *imagefile,
 
 void
 documents_remove_dangling_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
