@@ -20,12 +20,13 @@
 
 
 void   colormap_edit_color_cmd_callback   (GimpAction *action,
+                                           GVariant   *value,
                                            gpointer    data);
 void   colormap_add_color_cmd_callback    (GimpAction *action,
-                                           gint        value,
+                                           GVariant   *value,
                                            gpointer    data);
 void   colormap_to_selection_cmd_callback (GimpAction *action,
-                                           gint        value,
+                                           GVariant   *value,
                                            gpointer    data);
 
 

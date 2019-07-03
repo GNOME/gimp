@@ -20,11 +20,13 @@
 
 
 void   text_editor_load_cmd_callback      (GimpAction *action,
+                                           GVariant   *value,
                                            gpointer    data);
 void   text_editor_clear_cmd_callback     (GimpAction *action,
+                                           GVariant   *value,
                                            gpointer    data);
 void   text_editor_direction_cmd_callback (GimpAction *action,
-                                           GimpAction *current,
+                                           GVariant   *value,
                                            gpointer    data);
 
 

@@ -417,8 +417,8 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
                                      entries[i].help_id);
 
       if (entries[i].callback)
-        g_signal_connect (action, "activate",
-                          entries[i].callback,
+        g_signal_connect (action, "gimp-activate",
+                          G_CALLBACK (entries[i].callback),
                           group->user_data);
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
@@ -465,11 +465,12 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
                                        entries[i].icon_name,
                                        entries[i].help_id);
 
-      gtk_toggle_action_set_active (action, entries[i].is_active);
+      gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                     entries[i].is_active);
 
       if (entries[i].callback)
-        g_signal_connect (action, "toggled",
-                          entries[i].callback,
+        g_signal_connect (action, "gimp-change-state",
+                          G_CALLBACK (entries[i].callback),
                           group->user_data);
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
@@ -487,7 +488,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
                                      guint                       n_entries,
                                      GSList                     *radio_group,
                                      gint                        value,
-                                     GCallback                   callback)
+                                     GimpActionCallback          callback)
 {
   GtkRadioAction *first_action = NULL;
   gint            i;
@@ -538,8 +539,8 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
     }
 
   if (callback && first_action)
-    g_signal_connect (first_action, "changed",
-                      callback,
+    g_signal_connect (first_action, "gimp-change-state",
+                      G_CALLBACK (callback),
                       group->user_data);
 
   return radio_group;
@@ -550,7 +551,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                                     const gchar               *msg_context,
                                     const GimpEnumActionEntry *entries,
                                     guint                      n_entries,
-                                    GCallback                  callback)
+                                    GimpActionCallback         callback)
 {
   gint i;
 
@@ -585,8 +586,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                                      entries[i].value_variable);
 
       if (callback)
-        g_signal_connect (action, "selected",
-                          callback,
+        g_signal_connect (action, "gimp-activate",
+                          G_CALLBACK (callback),
                           group->user_data);
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
@@ -602,7 +603,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                                       const gchar                 *msg_context,
                                       const GimpStringActionEntry *entries,
                                       guint                        n_entries,
-                                      GCallback                    callback)
+                                      GimpActionCallback           callback)
 {
   gint i;
 
@@ -636,8 +637,8 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                                        entries[i].value);
 
       if (callback)
-        g_signal_connect (action, "selected",
-                          callback,
+        g_signal_connect (action, "gimp-activate",
+                          G_CALLBACK (callback),
                           group->user_data);
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
@@ -652,7 +653,7 @@ void
 gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                          const GimpProcedureActionEntry *entries,
                                          guint                           n_entries,
-                                         GCallback                       callback)
+                                         GimpActionCallback              callback)
 {
   gint i;
 
@@ -673,8 +674,8 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                           entries[i].procedure);
 
       if (callback)
-        g_signal_connect (action, "selected",
-                          callback,
+        g_signal_connect (action, "gimp-activate",
+                          G_CALLBACK (callback),
                           group->user_data);
 
       gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),

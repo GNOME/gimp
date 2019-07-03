@@ -73,6 +73,7 @@ static void   select_shrink_callback  (GtkWidget *widget,
 
 void
 select_all_cmd_callback (GimpAction *action,
+                         GVariant   *value,
                          gpointer    data)
 {
   GimpImage *image;
@@ -84,6 +85,7 @@ select_all_cmd_callback (GimpAction *action,
 
 void
 select_none_cmd_callback (GimpAction *action,
+                          GVariant   *value,
                           gpointer    data)
 {
   GimpImage *image;
@@ -95,6 +97,7 @@ select_none_cmd_callback (GimpAction *action,
 
 void
 select_invert_cmd_callback (GimpAction *action,
+                            GVariant   *value,
                             gpointer    data)
 {
   GimpImage *image;
@@ -106,6 +109,7 @@ select_invert_cmd_callback (GimpAction *action,
 
 void
 select_float_cmd_callback (GimpAction *action,
+                           GVariant   *value,
                            gpointer    data)
 {
   GimpImage *image;
@@ -132,6 +136,7 @@ select_float_cmd_callback (GimpAction *action,
 
 void
 select_feather_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpDisplay *display;
@@ -187,6 +192,7 @@ select_feather_cmd_callback (GimpAction *action,
 
 void
 select_sharpen_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpImage *image;
@@ -198,6 +204,7 @@ select_sharpen_cmd_callback (GimpAction *action,
 
 void
 select_shrink_cmd_callback (GimpAction *action,
+                            GVariant   *value,
                             gpointer    data)
 {
   GimpDisplay *display;
@@ -261,6 +268,7 @@ select_shrink_cmd_callback (GimpAction *action,
 
 void
 select_grow_cmd_callback (GimpAction *action,
+                          GVariant   *value,
                           gpointer    data)
 {
   GimpDisplay *display;
@@ -310,6 +318,7 @@ select_grow_cmd_callback (GimpAction *action,
 
 void
 select_border_cmd_callback (GimpAction *action,
+                            GVariant   *value,
                             gpointer    data)
 {
   GimpDisplay *display;
@@ -387,6 +396,7 @@ select_border_cmd_callback (GimpAction *action,
 
 void
 select_flood_cmd_callback (GimpAction *action,
+                           GVariant   *value,
                            gpointer    data)
 {
   GimpImage *image;
@@ -398,6 +408,7 @@ select_flood_cmd_callback (GimpAction *action,
 
 void
 select_save_cmd_callback (GimpAction *action,
+                          GVariant   *value,
                           gpointer    data)
 {
   GimpImage   *image;
@@ -425,6 +436,7 @@ select_save_cmd_callback (GimpAction *action,
 
 void
 select_fill_cmd_callback (GimpAction *action,
+                          GVariant   *value,
                           gpointer    data)
 {
   GimpImage *image;
@@ -441,6 +453,7 @@ select_fill_cmd_callback (GimpAction *action,
 
 void
 select_fill_last_vals_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
                                     gpointer    data)
 {
   GimpImage *image;
@@ -454,6 +467,7 @@ select_fill_last_vals_cmd_callback (GimpAction *action,
 
 void
 select_stroke_cmd_callback (GimpAction *action,
+                            GVariant   *value,
                             gpointer    data)
 {
   GimpImage *image;
@@ -470,6 +484,7 @@ select_stroke_cmd_callback (GimpAction *action,
 
 void
 select_stroke_last_vals_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
                                       gpointer    data)
 {
   GimpImage *image;

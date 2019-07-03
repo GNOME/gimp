@@ -19,12 +19,13 @@
 #define __PLUG_IN_COMMANDS_H__
 
 
-void   plug_in_run_cmd_callback       (GimpAction    *action,
-                                       GimpProcedure *proc,
-                                       gpointer       data);
+void   plug_in_run_cmd_callback       (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);
 
-void   plug_in_reset_all_cmd_callback (GimpAction    *action,
-                                       gpointer       data);
+void   plug_in_reset_all_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);
 
 
 #endif /* __PLUG_IN_COMMANDS_H__ */

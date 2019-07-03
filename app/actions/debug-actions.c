@@ -38,12 +38,12 @@ static const GimpActionEntry debug_actions[] =
 
   { "debug-gtk-inspector", NULL,
     "Start _GtkInspector", NULL, NULL,
-    G_CALLBACK (debug_gtk_inspector_cmd_callback),
+    debug_gtk_inspector_cmd_callback,
     NULL },
 
   { "debug-mem-profile", NULL,
     "_Memory Profile", NULL, NULL,
-    G_CALLBACK (debug_mem_profile_cmd_callback),
+    debug_mem_profile_cmd_callback,
     NULL },
 
   { "debug-benchmark-projection", NULL,
@@ -51,33 +51,33 @@ static const GimpActionEntry debug_actions[] =
     "Invalidates the entire projection, measures the time it takes to "
     "validate (render) the part that is visible in the active display, "
     "and print the result to stdout.",
-    G_CALLBACK (debug_benchmark_projection_cmd_callback),
+    debug_benchmark_projection_cmd_callback,
     NULL },
 
   { "debug-show-image-graph", NULL,
     "Show Image _Graph", NULL,
     "Creates a new image showing the GEGL graph of this image",
-    G_CALLBACK (debug_show_image_graph_cmd_callback),
+    debug_show_image_graph_cmd_callback,
     NULL },
 
   { "debug-dump-items", NULL,
     "_Dump Items", NULL, NULL,
-    G_CALLBACK (debug_dump_menus_cmd_callback),
+    debug_dump_menus_cmd_callback,
     NULL },
 
   { "debug-dump-managers", NULL,
     "Dump _UI Managers", NULL, NULL,
-    G_CALLBACK (debug_dump_managers_cmd_callback),
+    debug_dump_managers_cmd_callback,
     NULL },
 
   { "debug-dump-keyboard-shortcuts", NULL,
     "Dump _Keyboard Shortcuts", NULL, NULL,
-    G_CALLBACK (debug_dump_keyboard_shortcuts_cmd_callback),
+    debug_dump_keyboard_shortcuts_cmd_callback,
     NULL },
 
   { "debug-dump-attached-data", NULL,
     "Dump Attached Data", NULL, NULL,
-    G_CALLBACK (debug_dump_attached_data_cmd_callback),
+    debug_dump_attached_data_cmd_callback,
     NULL }
 };
 

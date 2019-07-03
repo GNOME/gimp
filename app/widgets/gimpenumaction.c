@@ -27,14 +27,9 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpaction.h"
+#include "gimpaction-history.h"
 #include "gimpenumaction.h"
 
-
-enum
-{
-  SELECTED,
-  LAST_SIGNAL
-};
 
 enum
 {
@@ -58,10 +53,7 @@ static void   gimp_enum_action_activate     (GtkAction    *action);
 
 G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION_IMPL)
 
-
 #define parent_class gimp_enum_action_parent_class
-
-static guint action_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
@@ -86,16 +78,6 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  action_signals[SELECTED] =
-    g_signal_new ("selected",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpEnumActionClass, selected),
-                  NULL, NULL,
-                  gimp_marshal_VOID__INT,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_INT);
 }
 
 static void
@@ -177,16 +159,8 @@ gimp_enum_action_activate (GtkAction *action)
 {
   GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
 
-  GTK_ACTION_CLASS (parent_class)->activate (action);
+  gimp_action_emit_activate (GIMP_ACTION (enum_action),
+                             g_variant_new_int32 (enum_action->value));
 
-  gimp_enum_action_selected (enum_action, enum_action->value);
-}
-
-void
-gimp_enum_action_selected (GimpEnumAction *action,
-                           gint            value)
-{
-  g_return_if_fail (GIMP_IS_ENUM_ACTION (action));
-
-  g_signal_emit (action, action_signals[SELECTED], 0, value);
+  gimp_action_history_action_activated (GIMP_ACTION (action));
 }

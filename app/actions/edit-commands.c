@@ -84,6 +84,7 @@ static void       copy_named_visible_buffer_callback (GtkWidget     *widget,
 
 void
 edit_undo_cmd_callback (GimpAction *action,
+                        GVariant   *value,
                         gpointer    data)
 {
   GimpImage   *image;
@@ -100,6 +101,7 @@ edit_undo_cmd_callback (GimpAction *action,
 
 void
 edit_redo_cmd_callback (GimpAction *action,
+                        GVariant   *value,
                         gpointer    data)
 {
   GimpImage   *image;
@@ -116,6 +118,7 @@ edit_redo_cmd_callback (GimpAction *action,
 
 void
 edit_strong_undo_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GimpImage *image;
@@ -127,6 +130,7 @@ edit_strong_undo_cmd_callback (GimpAction *action,
 
 void
 edit_strong_redo_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GimpImage *image;
@@ -138,6 +142,7 @@ edit_strong_redo_cmd_callback (GimpAction *action,
 
 void
 edit_undo_clear_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpImage     *image;
@@ -207,6 +212,7 @@ edit_undo_clear_cmd_callback (GimpAction *action,
 
 void
 edit_cut_cmd_callback (GimpAction *action,
+                       GVariant   *value,
                        gpointer    data)
 {
   GimpImage    *image;
@@ -246,6 +252,7 @@ edit_cut_cmd_callback (GimpAction *action,
 
 void
 edit_copy_cmd_callback (GimpAction *action,
+                        GVariant   *value,
                         gpointer    data)
 {
   GimpImage    *image;
@@ -282,6 +289,7 @@ edit_copy_cmd_callback (GimpAction *action,
 
 void
 edit_copy_visible_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   GimpImage *image;
@@ -311,17 +319,17 @@ edit_copy_visible_cmd_callback (GimpAction *action,
 
 void
 edit_paste_cmd_callback (GimpAction *action,
-                         gint        value,
+                         GVariant   *value,
                          gpointer    data)
 {
   GimpDisplay   *display    = action_data_get_display (data);
-  GimpPasteType  paste_type = (GimpPasteType) value;
+  GimpPasteType  paste_type = (GimpPasteType) g_variant_get_int32 (value);
 
   if (paste_type == GIMP_PASTE_TYPE_FLOATING)
     {
       if (! display || ! gimp_display_get_image (display))
         {
-          edit_paste_as_new_image_cmd_callback (action, data);
+          edit_paste_as_new_image_cmd_callback (action, value, data);
           return;
         }
     }
@@ -347,6 +355,7 @@ edit_paste_cmd_callback (GimpAction *action,
 
 void
 edit_paste_as_new_image_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
                                       gpointer    data)
 {
   Gimp       *gimp;
@@ -380,6 +389,7 @@ edit_paste_as_new_image_cmd_callback (GimpAction *action,
 
 void
 edit_named_cut_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpImage *image;
@@ -400,6 +410,7 @@ edit_named_cut_cmd_callback (GimpAction *action,
 
 void
 edit_named_copy_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpImage *image;
@@ -420,6 +431,7 @@ edit_named_copy_cmd_callback (GimpAction *action,
 
 void
 edit_named_copy_visible_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
                                       gpointer    data)
 {
   GimpImage *image;
@@ -440,6 +452,7 @@ edit_named_copy_visible_cmd_callback (GimpAction *action,
 
 void
 edit_named_paste_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   Gimp      *gimp;
@@ -456,6 +469,7 @@ edit_named_paste_cmd_callback (GimpAction *action,
 
 void
 edit_clear_cmd_callback (GimpAction *action,
+                         GVariant   *value,
                          gpointer    data)
 {
   GimpImage    *image;
@@ -471,7 +485,7 @@ edit_clear_cmd_callback (GimpAction *action,
 
 void
 edit_fill_cmd_callback (GimpAction *action,
-                        gint        value,
+                        GVariant   *value,
                         gpointer    data)
 {
   GimpImage       *image;
@@ -481,7 +495,7 @@ edit_fill_cmd_callback (GimpAction *action,
   GError          *error = NULL;
   return_if_no_drawable (image, drawable, data);
 
-  fill_type = (GimpFillType) value;
+  fill_type = (GimpFillType) g_variant_get_int32 (value);
 
   options = gimp_fill_options_new (action_data_get_gimp (data), NULL, FALSE);
 

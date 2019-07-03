@@ -50,6 +50,7 @@ static void   gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 
 void
 gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);

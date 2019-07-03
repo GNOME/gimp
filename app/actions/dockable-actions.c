@@ -59,12 +59,12 @@ static const GimpActionEntry dockable_actions[] =
 
   { "dockable-close-tab", "window-close",
     NC_("dockable-action", "_Close Tab"), "", NULL,
-    G_CALLBACK (dockable_close_tab_cmd_callback),
+    dockable_close_tab_cmd_callback,
     GIMP_HELP_DOCK_TAB_CLOSE },
 
   { "dockable-detach-tab", GIMP_ICON_DETACH,
     NC_("dockable-action", "_Detach Tab"), "", NULL,
-    G_CALLBACK (dockable_detach_tab_cmd_callback),
+    dockable_detach_tab_cmd_callback,
     GIMP_HELP_DOCK_TAB_DETACH }
 };
 
@@ -125,13 +125,13 @@ static const GimpToggleActionEntry dockable_toggle_actions[] =
     NC_("dockable-action", "Loc_k Tab to Dock"), NULL,
     NC_("dockable-action",
         "Protect this tab from being dragged with the mouse pointer"),
-    G_CALLBACK (dockable_lock_tab_cmd_callback),
+    dockable_lock_tab_cmd_callback,
     FALSE,
     GIMP_HELP_DOCK_TAB_LOCK },
 
   { "dockable-show-button-bar", NULL,
     NC_("dockable-action", "Show _Button Bar"), NULL, NULL,
-    G_CALLBACK (dockable_show_button_bar_cmd_callback),
+    dockable_show_button_bar_cmd_callback,
     TRUE,
     GIMP_HELP_DOCK_SHOW_BUTTON_BAR }
 };
@@ -164,28 +164,28 @@ dockable_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "dialogs-action",
                                         dialogs_dockable_actions,
                                         n_dialogs_dockable_actions,
-                                        G_CALLBACK (dockable_add_tab_cmd_callback));
+                                        dockable_add_tab_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "preview-size",
                                        dockable_view_size_actions,
                                        G_N_ELEMENTS (dockable_view_size_actions),
                                        NULL,
                                        GIMP_VIEW_SIZE_MEDIUM,
-                                       G_CALLBACK (dockable_view_size_cmd_callback));
+                                       dockable_view_size_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "tab-style",
                                        dockable_tab_style_actions,
                                        G_N_ELEMENTS (dockable_tab_style_actions),
                                        NULL,
                                        GIMP_TAB_STYLE_PREVIEW,
-                                       G_CALLBACK (dockable_tab_style_cmd_callback));
+                                       dockable_tab_style_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "dockable-action",
                                        dockable_view_type_actions,
                                        G_N_ELEMENTS (dockable_view_type_actions),
                                        NULL,
                                        GIMP_VIEW_TYPE_LIST,
-                                       G_CALLBACK (dockable_toggle_view_cmd_callback));
+                                       dockable_toggle_view_cmd_callback);
 }
 
 void

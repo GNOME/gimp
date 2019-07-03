@@ -29,7 +29,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpradioaction.h"
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -56,6 +55,7 @@ static void   text_tool_load_dialog_response (GtkWidget    *dialog,
 
 void
 text_tool_cut_cmd_callback (GimpAction *action,
+                            GVariant   *value,
                             gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -65,6 +65,7 @@ text_tool_cut_cmd_callback (GimpAction *action,
 
 void
 text_tool_copy_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -74,6 +75,7 @@ text_tool_copy_cmd_callback (GimpAction *action,
 
 void
 text_tool_paste_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -83,6 +85,7 @@ text_tool_paste_cmd_callback (GimpAction *action,
 
 void
 text_tool_delete_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -92,6 +95,7 @@ text_tool_delete_cmd_callback (GimpAction *action,
 
 void
 text_tool_load_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -146,6 +150,7 @@ text_tool_load_cmd_callback (GimpAction *action,
 
 void
 text_tool_clear_cmd_callback (GimpAction *action,
+                              GVariant   *value,
                               gpointer    data)
 {
   GimpTextTool  *text_tool = GIMP_TEXT_TOOL (data);
@@ -159,6 +164,7 @@ text_tool_clear_cmd_callback (GimpAction *action,
 
 void
 text_tool_text_to_path_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -168,6 +174,7 @@ text_tool_text_to_path_cmd_callback (GimpAction *action,
 
 void
 text_tool_text_along_path_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
                                         gpointer    data)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
@@ -177,16 +184,16 @@ text_tool_text_along_path_cmd_callback (GimpAction *action,
 
 void
 text_tool_direction_cmd_callback (GimpAction *action,
-                                  GimpAction *current,
+                                  GVariant   *value,
                                   gpointer    data)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
-  gint          value;
+  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (data);
+  GimpTextDirection  direction;
 
-  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
+  direction = (GimpTextDirection) g_variant_get_int32 (value);
 
   g_object_set (text_tool->proxy,
-                "base-direction", (GimpTextDirection) value,
+                "base-direction", direction,
                 NULL);
 }
 

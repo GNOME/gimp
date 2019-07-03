@@ -34,6 +34,7 @@
 
 void
 help_help_cmd_callback (GimpAction *action,
+                        GVariant   *value,
                         gpointer    data)
 {
   Gimp        *gimp;
@@ -46,6 +47,7 @@ help_help_cmd_callback (GimpAction *action,
 
 void
 help_context_help_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   GtkWidget *widget;

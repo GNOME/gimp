@@ -20,42 +20,56 @@
 
 
 void   edit_undo_cmd_callback               (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_redo_cmd_callback               (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_strong_undo_cmd_callback        (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_strong_redo_cmd_callback        (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_undo_clear_cmd_callback         (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 void   edit_cut_cmd_callback                (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_copy_cmd_callback               (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_copy_visible_cmd_callback       (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 void   edit_paste_cmd_callback              (GimpAction *action,
-                                             gint        value,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_paste_as_new_image_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 void   edit_named_cut_cmd_callback          (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_named_copy_cmd_callback         (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_named_copy_visible_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_named_paste_cmd_callback        (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 void   edit_clear_cmd_callback              (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   edit_fill_cmd_callback               (GimpAction *action,
-                                             gint        value,
+                                             GVariant   *value,
                                              gpointer    data);
 
 

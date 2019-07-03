@@ -26,7 +26,6 @@
 
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimpdockwindow.h"
-#include "widgets/gimptoggleaction.h"
 
 #include "actions.h"
 #include "dock-commands.h"
@@ -49,6 +48,7 @@ dock_commands_get_dock_window_from_widget (GtkWidget *widget)
 
 void
 dock_toggle_image_menu_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GtkWidget      *widget      = NULL;
@@ -59,8 +59,7 @@ dock_toggle_image_menu_cmd_callback (GimpAction *action,
 
   if (dock_window)
     {
-      gboolean active =
-        gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_dock_window_set_show_image_menu (dock_window, active);
     }
@@ -68,6 +67,7 @@ dock_toggle_image_menu_cmd_callback (GimpAction *action,
 
 void
 dock_toggle_auto_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GtkWidget      *widget      = NULL;
@@ -78,8 +78,7 @@ dock_toggle_auto_cmd_callback (GimpAction *action,
 
   if (dock_window)
     {
-      gboolean active =
-        gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_dock_window_set_auto_follow_active (dock_window, active);
     }

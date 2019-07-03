@@ -19,19 +19,19 @@
 #define __FILTERS_COMMANDS_H__
 
 
-void   filters_apply_cmd_callback             (GimpAction    *action,
-                                               const gchar   *operation,
-                                               gpointer       data);
-void   filters_apply_interactive_cmd_callback (GimpAction    *action,
-                                               const gchar   *operation,
-                                               gpointer       data);
+void   filters_apply_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   filters_apply_interactive_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   filters_repeat_cmd_callback            (GimpAction    *action,
-                                               gint           value,
-                                               gpointer       data);
-void   filters_history_cmd_callback           (GimpAction    *action,
-                                               GimpProcedure *procedure,
-                                               gpointer       data);
+void   filters_repeat_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   filters_history_cmd_callback           (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
 
 #endif /* __FILTERS_COMMANDS_H__ */

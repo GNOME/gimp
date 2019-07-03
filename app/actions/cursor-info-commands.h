@@ -20,6 +20,7 @@
 
 
 void   cursor_info_sample_merged_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
                                                gpointer    data);
 
 

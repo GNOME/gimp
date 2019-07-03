@@ -20,23 +20,28 @@
 
 
 void   dashboard_update_interval_cmd_callback        (GimpAction *action,
-                                                      GimpAction *current,
+                                                      GVariant   *value,
                                                       gpointer    data);
 void   dashboard_history_duration_cmd_callback       (GimpAction *action,
-                                                      GimpAction *current,
+                                                      GVariant   *value,
                                                       gpointer    data);
 
 void   dashboard_log_record_cmd_callback             (GimpAction *action,
+                                                      GVariant   *value,
                                                       gpointer    data);
 void   dashboard_log_add_marker_cmd_callback         (GimpAction *action,
+                                                      GVariant   *value,
                                                       gpointer    data);
 void   dashboard_log_add_empty_marker_cmd_callback   (GimpAction *action,
+                                                      GVariant   *value,
                                                       gpointer    data);
 
 void   dashboard_reset_cmd_callback                  (GimpAction *action,
+                                                      GVariant   *value,
                                                       gpointer    data);
 
 void   dashboard_low_swap_space_warning_cmd_callback (GimpAction *action,
+                                                      GVariant   *value,
                                                       gpointer    data);
 
 

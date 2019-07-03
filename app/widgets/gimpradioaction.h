@@ -45,18 +45,14 @@ struct _GimpRadioActionClass
 };
 
 
-GType            gimp_radio_action_get_type          (void) G_GNUC_CONST;
+GType            gimp_radio_action_get_type (void) G_GNUC_CONST;
 
-GtkRadioAction * gimp_radio_action_new               (const gchar *name,
-                                                      const gchar *label,
-                                                      const gchar *tooltip,
-                                                      const gchar *icon_name,
-                                                      const gchar *help_id,
-                                                      gint         value);
-
-void             gimp_radio_action_set_current_value (GimpRadioAction *action,
-                                                      gint              value);
-gint             gimp_radio_action_get_current_value (GimpRadioAction *action);
+GtkRadioAction * gimp_radio_action_new      (const gchar *name,
+                                             const gchar *label,
+                                             const gchar *tooltip,
+                                             const gchar *icon_name,
+                                             const gchar *help_id,
+                                             gint         value);
 
 
 #endif  /* __GIMP_RADIO_ACTION_H__ */

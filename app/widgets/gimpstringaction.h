@@ -39,29 +39,23 @@ struct _GimpStringAction
 {
   GimpActionImpl  parent_instance;
 
-  gchar      *value;
+  gchar          *value;
 };
 
 struct _GimpStringActionClass
 {
   GimpActionImplClass parent_class;
-
-  void (* selected) (GimpStringAction *action,
-                     const gchar      *value);
 };
 
 
 GType              gimp_string_action_get_type (void) G_GNUC_CONST;
 
-GimpStringAction * gimp_string_action_new      (const gchar      *name,
-                                                const gchar      *label,
-                                                const gchar      *tooltip,
-                                                const gchar      *icon_name,
-                                                const gchar      *help_id,
-                                                const gchar      *value);
-
-void               gimp_string_action_selected (GimpStringAction *action,
-                                                const gchar      *value);
+GimpStringAction * gimp_string_action_new      (const gchar *name,
+                                                const gchar *label,
+                                                const gchar *tooltip,
+                                                const gchar *icon_name,
+                                                const gchar *help_id,
+                                                const gchar *value);
 
 
 #endif  /* __GIMP_STRING_ACTION_H__ */

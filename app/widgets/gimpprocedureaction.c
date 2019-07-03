@@ -25,20 +25,13 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "pdb/gimpprocedure.h"
 
 #include "gimpaction.h"
+#include "gimpaction-history.h"
 #include "gimpprocedureaction.h"
 #include "gimpwidgets-utils.h"
 
-
-enum
-{
-  SELECTED,
-  LAST_SIGNAL
-};
 
 enum
 {
@@ -67,8 +60,6 @@ G_DEFINE_TYPE (GimpProcedureAction, gimp_procedure_action,
 
 #define parent_class gimp_procedure_action_parent_class
 
-static guint action_signals[LAST_SIGNAL] = { 0 };
-
 
 static void
 gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
@@ -88,16 +79,6 @@ gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_PROCEDURE,
                                                         GIMP_PARAM_READWRITE));
-
-  action_signals[SELECTED] =
-    g_signal_new ("selected",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProcedureActionClass, selected),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_PROCEDURE);
 }
 
 static void
@@ -162,15 +143,19 @@ gimp_procedure_action_activate (GtkAction *action)
 {
   GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
 
-  GTK_ACTION_CLASS (parent_class)->activate (action);
-
   /* Not all actions have procedures associated with them, for example
    * unused "filters-recent-[N]" actions, so check for NULL before we
    * invoke the action
    */
   if (procedure_action->procedure)
-    gimp_procedure_action_selected (procedure_action,
-                                    procedure_action->procedure);
+    {
+      gsize hack = GPOINTER_TO_SIZE (procedure_action->procedure);
+
+      gimp_action_emit_activate (GIMP_ACTION (action),
+                                 g_variant_new_uint64 (hack));
+
+      gimp_action_history_action_activated (GIMP_ACTION (action));
+    }
 }
 
 static void
@@ -239,13 +224,4 @@ gimp_procedure_action_new (const gchar   *name,
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);
 
   return action;
-}
-
-void
-gimp_procedure_action_selected (GimpProcedureAction *action,
-                                GimpProcedure       *procedure)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE_ACTION (action));
-
-  g_signal_emit (action, action_signals[SELECTED], 0, procedure);
 }

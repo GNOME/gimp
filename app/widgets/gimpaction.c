@@ -27,7 +27,17 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimpaction.h"
+
+
+enum
+{
+  ACTIVATE,
+  CHANGE_STATE,
+  LAST_SIGNAL
+};
 
 
 static void   gimp_action_set_proxy_tooltip (GimpAction       *action,
@@ -39,11 +49,34 @@ static void   gimp_action_tooltip_notify    (GimpAction       *action,
                                              const GParamSpec *pspec,
                                              gpointer          data);
 
+
 G_DEFINE_INTERFACE (GimpAction, gimp_action, GTK_TYPE_ACTION)
+
+static guint action_signals[LAST_SIGNAL];
+
 
 static void
 gimp_action_default_init (GimpActionInterface *iface)
 {
+  action_signals[ACTIVATE] =
+    g_signal_new ("gimp-activate",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpActionInterface, activate),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VARIANT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_VARIANT);
+
+  action_signals[CHANGE_STATE] =
+    g_signal_new ("gimp-change-state",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpActionInterface, change_state),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VARIANT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_VARIANT);
 }
 
 void
@@ -63,6 +96,36 @@ gimp_action_init (GimpAction *action)
 /*  public functions  */
 
 void
+gimp_action_emit_activate (GimpAction *action,
+                           GVariant   *value)
+{
+  g_return_if_fail (GIMP_IS_ACTION (action));
+
+  if (value)
+    g_variant_ref_sink (value);
+
+  g_signal_emit (action, action_signals[ACTIVATE], 0, value);
+
+  if (value)
+    g_variant_unref (value);
+}
+
+void
+gimp_action_emit_change_state (GimpAction *action,
+                               GVariant   *value)
+{
+  g_return_if_fail (GIMP_IS_ACTION (action));
+
+  if (value)
+    g_variant_ref_sink (value);
+
+  g_signal_emit (action, action_signals[CHANGE_STATE], 0, value);
+
+  if (value)
+    g_variant_unref (value);
+}
+
+void
 gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
@@ -71,7 +134,6 @@ gimp_action_set_proxy (GimpAction *action,
 
   gimp_action_set_proxy_tooltip (action, proxy);
 }
-
 
 const gchar *
 gimp_action_get_name (GimpAction *action)

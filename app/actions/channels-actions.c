@@ -52,58 +52,58 @@ static const GimpActionEntry channels_actions[] =
   { "channels-edit-attributes", GIMP_ICON_EDIT,
     NC_("channels-action", "_Edit Channel Attributes..."), NULL,
     NC_("channels-action", "Edit the channel's name, color and opacity"),
-    G_CALLBACK (channels_edit_attributes_cmd_callback),
+    channels_edit_attributes_cmd_callback,
     GIMP_HELP_CHANNEL_EDIT },
 
   { "channels-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("channels-action", "_New Channel..."), NULL,
     NC_("channels-action", "Create a new channel"),
-    G_CALLBACK (channels_new_cmd_callback),
+    channels_new_cmd_callback,
     GIMP_HELP_CHANNEL_NEW },
 
   { "channels-new-last-values", GIMP_ICON_DOCUMENT_NEW,
     NC_("channels-action", "_New Channel"), NULL,
     NC_("channels-action", "Create a new channel with last used values"),
-    G_CALLBACK (channels_new_last_vals_cmd_callback),
+    channels_new_last_vals_cmd_callback,
     GIMP_HELP_CHANNEL_NEW },
 
   { "channels-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("channels-action", "D_uplicate Channel"), NULL,
     NC_("channels-action",
         "Create a duplicate of this channel and add it to the image"),
-    G_CALLBACK (channels_duplicate_cmd_callback),
+    channels_duplicate_cmd_callback,
     GIMP_HELP_CHANNEL_DUPLICATE },
 
   { "channels-delete", GIMP_ICON_EDIT_DELETE,
     NC_("channels-action", "_Delete Channel"), NULL,
     NC_("channels-action", "Delete this channel"),
-    G_CALLBACK (channels_delete_cmd_callback),
+    channels_delete_cmd_callback,
     GIMP_HELP_CHANNEL_DELETE },
 
   { "channels-raise", GIMP_ICON_GO_UP,
     NC_("channels-action", "_Raise Channel"), NULL,
     NC_("channels-action", "Raise this channel one step in the channel stack"),
-    G_CALLBACK (channels_raise_cmd_callback),
+    channels_raise_cmd_callback,
     GIMP_HELP_CHANNEL_RAISE },
 
   { "channels-raise-to-top", GIMP_ICON_GO_TOP,
     NC_("channels-action", "Raise Channel to _Top"), NULL,
     NC_("channels-action",
         "Raise this channel to the top of the channel stack"),
-    G_CALLBACK (channels_raise_to_top_cmd_callback),
+    channels_raise_to_top_cmd_callback,
     GIMP_HELP_CHANNEL_RAISE_TO_TOP },
 
   { "channels-lower", GIMP_ICON_GO_DOWN,
     NC_("channels-action", "_Lower Channel"), NULL,
     NC_("channels-action", "Lower this channel one step in the channel stack"),
-    G_CALLBACK (channels_lower_cmd_callback),
+    channels_lower_cmd_callback,
     GIMP_HELP_CHANNEL_LOWER },
 
   { "channels-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
     NC_("channels-action", "Lower Channel to _Bottom"), NULL,
     NC_("channels-action",
         "Lower this channel to the bottom of the channel stack"),
-    G_CALLBACK (channels_lower_to_bottom_cmd_callback),
+    channels_lower_to_bottom_cmd_callback,
     GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
 
@@ -111,25 +111,25 @@ static const GimpToggleActionEntry channels_toggle_actions[] =
 {
   { "channels-visible", GIMP_ICON_VISIBLE,
     NC_("channels-action", "Toggle Channel _Visibility"), NULL, NULL,
-    G_CALLBACK (channels_visible_cmd_callback),
+    channels_visible_cmd_callback,
     FALSE,
     GIMP_HELP_CHANNEL_VISIBLE },
 
   { "channels-linked", GIMP_ICON_LINKED,
     NC_("channels-action", "Toggle Channel _Linked State"), NULL, NULL,
-    G_CALLBACK (channels_linked_cmd_callback),
+    channels_linked_cmd_callback,
     FALSE,
     GIMP_HELP_CHANNEL_LINKED },
 
   { "channels-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("channels-action", "L_ock Pixels of Channel"), NULL, NULL,
-    G_CALLBACK (channels_lock_content_cmd_callback),
+    channels_lock_content_cmd_callback,
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_PIXELS },
 
   { "channels-lock-position", GIMP_ICON_TOOL_MOVE,
     NC_("channels-action", "L_ock Position of Channel"), NULL, NULL,
-    G_CALLBACK (channels_lock_position_cmd_callback),
+    channels_lock_position_cmd_callback,
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_POSITION }
 };
@@ -260,17 +260,17 @@ channels_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "channels-action",
                                       channels_color_tag_actions,
                                       G_N_ELEMENTS (channels_color_tag_actions),
-                                      G_CALLBACK (channels_color_tag_cmd_callback));
+                                      channels_color_tag_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "channels-action",
                                       channels_to_selection_actions,
                                       G_N_ELEMENTS (channels_to_selection_actions),
-                                      G_CALLBACK (channels_to_selection_cmd_callback));
+                                      channels_to_selection_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "channels-action",
                                       channels_select_actions,
                                       G_N_ELEMENTS (channels_select_actions),
-                                      G_CALLBACK (channels_select_cmd_callback));
+                                      channels_select_cmd_callback);
 
   items_actions_setup (group, "channels");
 }

@@ -20,6 +20,7 @@
 
 
 void   gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
                                                gpointer    data);
 
 

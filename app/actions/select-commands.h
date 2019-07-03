@@ -20,35 +20,50 @@
 
 
 void   select_all_cmd_callback              (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_none_cmd_callback             (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_invert_cmd_callback           (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_float_cmd_callback            (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_feather_cmd_callback          (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_sharpen_cmd_callback          (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_shrink_cmd_callback           (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_grow_cmd_callback             (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_border_cmd_callback           (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_flood_cmd_callback            (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_save_cmd_callback             (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 void   select_fill_cmd_callback             (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_fill_last_vals_cmd_callback   (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_stroke_cmd_callback           (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 void   select_stroke_last_vals_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
                                              gpointer    data);
 
 

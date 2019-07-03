@@ -20,11 +20,13 @@
 
 
 void   quick_mask_toggle_cmd_callback    (GimpAction *action,
+                                          GVariant   *value,
                                           gpointer    data);
 void   quick_mask_invert_cmd_callback    (GimpAction *action,
-                                          GimpAction *current,
+                                          GVariant   *value,
                                           gpointer    data);
 void   quick_mask_configure_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
                                           gpointer    data);
 
 

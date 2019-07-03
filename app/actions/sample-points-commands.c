@@ -23,7 +23,6 @@
 #include "actions-types.h"
 
 #include "widgets/gimpsamplepointeditor.h"
-#include "widgets/gimptoggleaction.h"
 
 #include "sample-points-commands.h"
 
@@ -32,12 +31,11 @@
 
 void
 sample_points_sample_merged_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
                                           gpointer    data)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (data);
-  gboolean               active;
-
-  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  gboolean               active = g_variant_get_boolean (value);
 
   gimp_sample_point_editor_set_sample_merged (editor, active);
 }

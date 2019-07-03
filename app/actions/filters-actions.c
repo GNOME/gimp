@@ -766,28 +766,28 @@ filters_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
                                         G_N_ELEMENTS (filters_actions),
-                                        G_CALLBACK (filters_apply_cmd_callback));
+                                        filters_apply_cmd_callback);
   filters_actions_set_tooltips (group, filters_actions,
                                 G_N_ELEMENTS (filters_actions));
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_settings_actions,
                                         G_N_ELEMENTS (filters_settings_actions),
-                                        G_CALLBACK (filters_apply_cmd_callback));
+                                        filters_apply_cmd_callback);
   filters_actions_set_tooltips (group, filters_settings_actions,
                                 G_N_ELEMENTS (filters_settings_actions));
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_interactive_actions,
                                         G_N_ELEMENTS (filters_interactive_actions),
-                                        G_CALLBACK (filters_apply_interactive_cmd_callback));
+                                        filters_apply_interactive_cmd_callback);
   filters_actions_set_tooltips (group, filters_interactive_actions,
                                 G_N_ELEMENTS (filters_interactive_actions));
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
                                       G_N_ELEMENTS (filters_repeat_actions),
-                                      G_CALLBACK (filters_repeat_cmd_callback));
+                                      filters_repeat_cmd_callback);
 
   n_entries = gimp_filter_history_size (group->gimp);
 
@@ -805,7 +805,7 @@ filters_actions_setup (GimpActionGroup *group)
     }
 
   gimp_action_group_add_procedure_actions (group, entries, n_entries,
-                                           G_CALLBACK (filters_history_cmd_callback));
+                                           filters_history_cmd_callback);
 
   for (i = 0; i < n_entries; i++)
     {

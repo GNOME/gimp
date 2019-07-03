@@ -50,25 +50,25 @@ static const GimpActionEntry dashboard_actions[] =
   { "dashboard-log-record", GIMP_ICON_RECORD,
     NC_("dashboard-action", "_Start/Stop Recording..."), NULL,
     NC_("dashboard-action", "Start/stop recording performance log"),
-    G_CALLBACK (dashboard_log_record_cmd_callback),
+    dashboard_log_record_cmd_callback,
     GIMP_HELP_DASHBOARD_LOG_RECORD },
   { "dashboard-log-add-marker", GIMP_ICON_MARKER,
     NC_("dashboard-action", "_Add Marker..."), NULL,
     NC_("dashboard-action", "Add an event marker "
                             "to the performance log"),
-    G_CALLBACK (dashboard_log_add_marker_cmd_callback),
+    dashboard_log_add_marker_cmd_callback,
     GIMP_HELP_DASHBOARD_LOG_ADD_MARKER },
   { "dashboard-log-add-empty-marker", GIMP_ICON_MARKER,
     NC_("dashboard-action", "Add _Empty Marker"), NULL,
     NC_("dashboard-action", "Add an empty event marker "
                             "to the performance log"),
-    G_CALLBACK (dashboard_log_add_empty_marker_cmd_callback),
+    dashboard_log_add_empty_marker_cmd_callback,
     GIMP_HELP_DASHBOARD_LOG_ADD_EMPTY_MARKER },
 
   { "dashboard-reset", GIMP_ICON_RESET,
     NC_("dashboard-action", "_Reset"), NULL,
     NC_("dashboard-action", "Reset cumulative data"),
-    G_CALLBACK (dashboard_reset_cmd_callback),
+    dashboard_reset_cmd_callback,
     GIMP_HELP_DASHBOARD_RESET },
 };
 
@@ -78,7 +78,7 @@ static const GimpToggleActionEntry dashboard_toggle_actions[] =
     NC_("dashboard-action", "_Low Swap Space Warning"), NULL,
     NC_("dashboard-action", "Raise the dashboard when "
                             "the swap size approaches its limit"),
-    G_CALLBACK (dashboard_low_swap_space_warning_cmd_callback),
+    dashboard_low_swap_space_warning_cmd_callback,
     FALSE,
     GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING }
 };
@@ -156,14 +156,14 @@ dashboard_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (dashboard_update_interval_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (dashboard_update_interval_cmd_callback));
+                                       dashboard_update_interval_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "dashboard-history-duration",
                                        dashboard_history_duration_actions,
                                        G_N_ELEMENTS (dashboard_history_duration_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (dashboard_history_duration_cmd_callback));
+                                       dashboard_history_duration_cmd_callback);
 }
 
 void

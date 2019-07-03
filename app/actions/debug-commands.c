@@ -73,6 +73,7 @@ static gboolean  debug_accel_find_func         (GtkAccelKey *key,
 
 void
 debug_gtk_inspector_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
                                   gpointer    data)
 {
   gtk_window_set_interactive_debugging (TRUE);
@@ -80,6 +81,7 @@ debug_gtk_inspector_cmd_callback (GimpAction *action,
 
 void
 debug_mem_profile_cmd_callback (GimpAction *action,
+                                GVariant   *value,
                                 gpointer    data)
 {
   extern gboolean  gimp_debug_memsize;
@@ -95,6 +97,7 @@ debug_mem_profile_cmd_callback (GimpAction *action,
 
 void
 debug_benchmark_projection_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
                                          gpointer    data)
 {
   GimpDisplay *display;
@@ -105,6 +108,7 @@ debug_benchmark_projection_cmd_callback (GimpAction *action,
 
 void
 debug_show_image_graph_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpImage *source_image = NULL;
@@ -115,6 +119,7 @@ debug_show_image_graph_cmd_callback (GimpAction *action,
 
 void
 debug_dump_menus_cmd_callback (GimpAction *action,
+                               GVariant   *value,
                                gpointer    data)
 {
   GList *list;
@@ -156,6 +161,7 @@ debug_dump_menus_cmd_callback (GimpAction *action,
 
 void
 debug_dump_managers_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
                                   gpointer    data)
 {
   GList *list;
@@ -184,6 +190,7 @@ debug_dump_managers_cmd_callback (GimpAction *action,
 
 void
 debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
                                             gpointer    data)
 {
   GimpDisplay      *display;
@@ -273,6 +280,7 @@ debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
 
 void
 debug_dump_attached_data_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
                                        gpointer    data)
 {
   Gimp        *gimp         = action_data_get_gimp (data);

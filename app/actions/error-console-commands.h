@@ -20,18 +20,23 @@
 
 
 void   error_console_clear_cmd_callback             (GimpAction *action,
+                                                     GVariant   *value,
                                                      gpointer    data);
 void   error_console_select_all_cmd_callback        (GimpAction *action,
+                                                     GVariant   *value,
                                                      gpointer    data);
 void   error_console_save_cmd_callback              (GimpAction *action,
-                                                     gint        value,
+                                                     GVariant   *value,
                                                      gpointer    data);
 
 void   error_console_highlight_error_cmd_callback   (GimpAction *action,
+                                                     GVariant   *value,
                                                      gpointer    data);
 void   error_console_highlight_warning_cmd_callback (GimpAction *action,
+                                                     GVariant   *value,
                                                      gpointer    data);
 void   error_console_highlight_info_cmd_callback    (GimpAction *action,
+                                                     GVariant   *value,
                                                      gpointer    data);
 
 

@@ -342,12 +342,12 @@ dialogs_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "dialogs-action",
                                         dialogs_dockable_actions,
                                         G_N_ELEMENTS (dialogs_dockable_actions),
-                                        G_CALLBACK (dialogs_create_dockable_cmd_callback));
+                                        dialogs_create_dockable_cmd_callback);
 
   gimp_action_group_add_string_actions (group, "dialogs-action",
                                         dialogs_toplevel_actions,
                                         G_N_ELEMENTS (dialogs_toplevel_actions),
-                                        G_CALLBACK (dialogs_create_toplevel_cmd_callback));
+                                        dialogs_create_toplevel_cmd_callback);
 }
 
 void

@@ -32,8 +32,11 @@
 #include "gimpradioaction.h"
 
 
-static void   gimp_radio_action_connect_proxy (GtkAction *action,
-                                               GtkWidget *proxy);
+static void   gimp_radio_action_connect_proxy (GtkAction      *action,
+                                               GtkWidget      *proxy);
+
+static void   gimp_radio_action_changed       (GtkRadioAction *action,
+                                               GtkRadioAction *current);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
@@ -46,9 +49,12 @@ G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
 static void
 gimp_radio_action_class_init (GimpRadioActionClass *klass)
 {
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GtkActionClass      *action_class = GTK_ACTION_CLASS (klass);
+  GtkRadioActionClass *radio_class  = GTK_RADIO_ACTION_CLASS (klass);
 
   action_class->connect_proxy = gimp_radio_action_connect_proxy;
+
+  radio_class->changed        = gimp_radio_action_changed;
 }
 
 static void
@@ -64,6 +70,18 @@ gimp_radio_action_connect_proxy (GtkAction *action,
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
   gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+}
+
+static void
+gimp_radio_action_changed (GtkRadioAction *action,
+                           GtkRadioAction *current)
+{
+  gint value;
+
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  gimp_action_emit_change_state (GIMP_ACTION (action),
+                                 g_variant_new_int32 (value));
 }
 
 
@@ -90,17 +108,4 @@ gimp_radio_action_new (const gchar *name,
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);
 
   return action;
-}
-
-void
-gimp_radio_action_set_current_value (GimpRadioAction *action,
-                                     gint              value)
-{
-  gtk_radio_action_set_current_value ((GtkRadioAction *) action, value);
-}
-
-gint
-gimp_radio_action_get_current_value (GimpRadioAction *action)
-{
-  return gtk_radio_action_get_current_value ((GtkRadioAction *) action);
 }

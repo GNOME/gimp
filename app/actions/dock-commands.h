@@ -20,8 +20,10 @@
 
 
 void   dock_toggle_image_menu_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
                                             gpointer    data);
 void   dock_toggle_auto_cmd_callback       (GimpAction *action,
+                                            GVariant   *value,
                                             gpointer    data);
 
 

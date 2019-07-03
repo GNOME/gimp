@@ -82,6 +82,7 @@ static GimpColormapEditor * context_get_colormap_editor (void);
 
 void
 context_colors_default_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
                                      gpointer    data)
 {
   GimpContext *context;
@@ -92,6 +93,7 @@ context_colors_default_cmd_callback (GimpAction *action,
 
 void
 context_colors_swap_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
                                   gpointer    data)
 {
   GimpContext *context;
@@ -103,15 +105,18 @@ context_colors_swap_cmd_callback (GimpAction *action,
 #define SELECT_COLOR_CMD_CALLBACK(name, fgbg, use_colormap, use_palette) \
 void \
 context_##name##_##fgbg##ground_cmd_callback (GimpAction *action, \
-                                              gint        value, \
+                                              GVariant   *value, \
                                               gpointer    data) \
 { \
-  GimpContext *context; \
-  GimpRGB      color; \
+  GimpContext          *context; \
+  GimpRGB               color; \
+  GimpActionSelectType  select_type; \
   return_if_no_context (context, data); \
-\
+  \
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value); \
+  \
   gimp_context_get_##fgbg##ground (context, &color); \
-  context_select_color ((GimpActionSelectType) value, &color, \
+  context_select_color (select_type, &color, \
                         use_colormap, use_palette); \
   gimp_context_set_##fgbg##ground (context, &color); \
 }
@@ -125,15 +130,18 @@ SELECT_COLOR_CMD_CALLBACK (swatch,   back, TRUE,  TRUE)
 
 void
 context_foreground_red_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   gimp_context_get_foreground (context, &color);
-  color.r = action_select_value ((GimpActionSelectType) value,
+  color.r = action_select_value (select_type,
                                  color.r,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -142,15 +150,18 @@ context_foreground_red_cmd_callback (GimpAction *action,
 
 void
 context_foreground_green_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   gimp_context_get_foreground (context, &color);
-  color.g = action_select_value ((GimpActionSelectType) value,
+  color.g = action_select_value (select_type,
                                  color.g,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -159,15 +170,18 @@ context_foreground_green_cmd_callback (GimpAction *action,
 
 void
 context_foreground_blue_cmd_callback (GimpAction *action,
-                                      gint        value,
+                                      GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   gimp_context_get_foreground (context, &color);
-  color.b = action_select_value ((GimpActionSelectType) value,
+  color.b = action_select_value (select_type,
                                  color.b,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -176,15 +190,18 @@ context_foreground_blue_cmd_callback (GimpAction *action,
 
 void
 context_background_red_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   gimp_context_get_background (context, &color);
-  color.r = action_select_value ((GimpActionSelectType) value,
+  color.r = action_select_value (select_type,
                                  color.r,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -193,15 +210,18 @@ context_background_red_cmd_callback (GimpAction *action,
 
 void
 context_background_green_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   gimp_context_get_background (context, &color);
-  color.g = action_select_value ((GimpActionSelectType) value,
+  color.g = action_select_value (select_type,
                                  color.g,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -210,15 +230,18 @@ context_background_green_cmd_callback (GimpAction *action,
 
 void
 context_background_blue_cmd_callback (GimpAction *action,
-                                      gint        value,
+                                      GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   gimp_context_get_background (context, &color);
-  color.b = action_select_value ((GimpActionSelectType) value,
+  color.b = action_select_value (select_type,
                                  color.b,
                                  0.0, 1.0, 1.0,
                                  1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
@@ -227,17 +250,20 @@ context_background_blue_cmd_callback (GimpAction *action,
 
 void
 context_foreground_hue_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
-  GimpHSV      hsv;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpHSV               hsv;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   gimp_context_get_foreground (context, &color);
   gimp_rgb_to_hsv (&color, &hsv);
-  hsv.h = action_select_value ((GimpActionSelectType) value,
+  hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
                                1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
@@ -247,17 +273,20 @@ context_foreground_hue_cmd_callback (GimpAction *action,
 
 void
 context_foreground_saturation_cmd_callback (GimpAction *action,
-                                            gint        value,
+                                            GVariant   *value,
                                             gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
-  GimpHSV      hsv;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpHSV               hsv;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   gimp_context_get_foreground (context, &color);
   gimp_rgb_to_hsv (&color, &hsv);
-  hsv.s = action_select_value ((GimpActionSelectType) value,
+  hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
@@ -267,17 +296,20 @@ context_foreground_saturation_cmd_callback (GimpAction *action,
 
 void
 context_foreground_value_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
-  GimpHSV      hsv;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpHSV               hsv;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   gimp_context_get_foreground (context, &color);
   gimp_rgb_to_hsv (&color, &hsv);
-  hsv.v = action_select_value ((GimpActionSelectType) value,
+  hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
@@ -287,17 +319,20 @@ context_foreground_value_cmd_callback (GimpAction *action,
 
 void
 context_background_hue_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
-  GimpHSV      hsv;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpHSV               hsv;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   gimp_context_get_background (context, &color);
   gimp_rgb_to_hsv (&color, &hsv);
-  hsv.h = action_select_value ((GimpActionSelectType) value,
+  hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
                                1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
@@ -307,17 +342,20 @@ context_background_hue_cmd_callback (GimpAction *action,
 
 void
 context_background_saturation_cmd_callback (GimpAction *action,
-                                            gint        value,
+                                            GVariant   *value,
                                             gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
-  GimpHSV      hsv;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpHSV               hsv;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   gimp_context_get_background (context, &color);
   gimp_rgb_to_hsv (&color, &hsv);
-  hsv.s = action_select_value ((GimpActionSelectType) value,
+  hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
@@ -327,17 +365,20 @@ context_background_saturation_cmd_callback (GimpAction *action,
 
 void
 context_background_value_cmd_callback (GimpAction *action,
-                                       gint        value,
+                                       GVariant   *value,
                                        gpointer    data)
 {
-  GimpContext *context;
-  GimpRGB      color;
-  GimpHSV      hsv;
+  GimpContext          *context;
+  GimpRGB               color;
+  GimpHSV               hsv;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   gimp_context_get_background (context, &color);
   gimp_rgb_to_hsv (&color, &hsv);
-  hsv.v = action_select_value ((GimpActionSelectType) value,
+  hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
                                0.01, 0.01, 0.1, 0.0, FALSE);
@@ -347,18 +388,21 @@ context_background_value_cmd_callback (GimpAction *action,
 
 void
 context_opacity_cmd_callback (GimpAction *action,
-                              gint        value,
+                              GVariant   *value,
                               gpointer    data)
 {
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   tool_info = gimp_context_get_tool (context);
 
   if (tool_info && GIMP_IS_TOOL_OPTIONS (tool_info->tool_options))
     {
-      action_select_property ((GimpActionSelectType) value,
+      action_select_property (select_type,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "opacity",
@@ -368,16 +412,19 @@ context_opacity_cmd_callback (GimpAction *action,
 
 void
 context_paint_mode_cmd_callback (GimpAction *action,
-                                 gint        value,
+                                 GVariant   *value,
                                  gpointer    data)
 {
-  GimpContext   *context;
-  GimpToolInfo  *tool_info;
-  GimpLayerMode *modes;
-  gint           n_modes;
-  GimpLayerMode  paint_mode;
-  gint           index;
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  GimpLayerMode        *modes;
+  gint                  n_modes;
+  GimpLayerMode         paint_mode;
+  gint                  index;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   paint_mode = gimp_context_get_paint_mode (context);
 
@@ -385,7 +432,7 @@ context_paint_mode_cmd_callback (GimpAction *action,
                                              GIMP_LAYER_MODE_CONTEXT_PAINT,
                                              &n_modes);
   index = context_paint_mode_index (paint_mode, modes, n_modes);
-  index = action_select_value ((GimpActionSelectType) value,
+  index = action_select_value (select_type,
                                index, 0, n_modes - 1, 0,
                                0.0, 1.0, 1.0, 0.0, FALSE);
   paint_mode = modes[index];
@@ -415,90 +462,116 @@ context_paint_mode_cmd_callback (GimpAction *action,
 
 void
 context_tool_select_cmd_callback (GimpAction *action,
-                                  gint        value,
+                                  GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext *context;
+  GimpContext          *context;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  context_select_object ((GimpActionSelectType) value,
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  context_select_object (select_type,
                          context, context->gimp->tool_info_list);
 }
 
 void
 context_brush_select_cmd_callback (GimpAction *action,
-                                   gint        value,
+                                   GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext *context;
+  GimpContext          *context;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  context_select_object ((GimpActionSelectType) value,
-                         context, gimp_data_factory_get_container (context->gimp->brush_factory));
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  context_select_object (select_type,
+                         context,
+                         gimp_data_factory_get_container (context->gimp->brush_factory));
 }
 
 void
 context_pattern_select_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
+  GimpContext          *context;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  context_select_object ((GimpActionSelectType) value,
-                         context, gimp_data_factory_get_container (context->gimp->pattern_factory));
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  context_select_object (select_type,
+                         context,
+                         gimp_data_factory_get_container (context->gimp->pattern_factory));
 }
 
 void
 context_palette_select_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
+  GimpContext          *context;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  context_select_object ((GimpActionSelectType) value,
-                         context, gimp_data_factory_get_container (context->gimp->palette_factory));
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  context_select_object (select_type,
+                         context,
+                         gimp_data_factory_get_container (context->gimp->palette_factory));
 }
 
 void
 context_gradient_select_cmd_callback (GimpAction *action,
-                                      gint        value,
+                                      GVariant   *value,
                                       gpointer    data)
 {
-  GimpContext *context;
+  GimpContext          *context;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  context_select_object ((GimpActionSelectType) value,
-                         context, gimp_data_factory_get_container (context->gimp->gradient_factory));
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  context_select_object (select_type,
+                         context,
+                         gimp_data_factory_get_container (context->gimp->gradient_factory));
 }
 
 void
 context_font_select_cmd_callback (GimpAction *action,
-                                  gint        value,
+                                  GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext *context;
+  GimpContext          *context;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
 
-  context_select_object ((GimpActionSelectType) value,
-                         context, gimp_data_factory_get_container (context->gimp->font_factory));
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
+
+  context_select_object (select_type,
+                         context,
+                         gimp_data_factory_get_container (context->gimp->font_factory));
 }
 
 void
 context_brush_spacing_cmd_callback (GimpAction *action,
-                                    gint        value,
+                                    GVariant   *value,
                                     gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext          *context;
+  GimpBrush            *brush;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
   if (GIMP_IS_BRUSH (brush) && gimp_data_is_writable (GIMP_DATA (brush)))
     {
-      action_select_property ((GimpActionSelectType) value,
+      action_select_property (select_type,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "spacing",
@@ -508,12 +581,15 @@ context_brush_spacing_cmd_callback (GimpAction *action,
 
 void
 context_brush_shape_cmd_callback (GimpAction *action,
-                                  gint        value,
+                                  GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext             *context;
+  GimpBrush               *brush;
+  GimpBrushGeneratedShape  shape;
   return_if_no_context (context, data);
+
+  shape = (GimpBrushGeneratedShape) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
@@ -524,10 +600,9 @@ context_brush_shape_cmd_callback (GimpAction *action,
       GimpDisplay        *display;
       const char         *value_desc;
 
-      gimp_brush_generated_set_shape (generated,
-                                      (GimpBrushGeneratedShape) value);
+      gimp_brush_generated_set_shape (generated, shape);
 
-      gimp_enum_get_value (GIMP_TYPE_BRUSH_GENERATED_SHAPE, value,
+      gimp_enum_get_value (GIMP_TYPE_BRUSH_GENERATED_SHAPE, shape,
                            NULL, NULL, &value_desc, NULL);
       display = action_data_get_display (data);
 
@@ -541,12 +616,15 @@ context_brush_shape_cmd_callback (GimpAction *action,
 
 void
 context_brush_radius_cmd_callback (GimpAction *action,
-                                   gint        value,
+                                   GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext          *context;
+  GimpBrush            *brush;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
@@ -566,7 +644,7 @@ context_brush_radius_cmd_callback (GimpAction *action,
        * is less than 1.0 px. This prevents irritating 0.1, 1.1, 2.1 etc
        * radius sequences when 1.0 px steps are used.
        */
-      switch ((GimpActionSelectType) value)
+      switch (select_type)
         {
         case GIMP_ACTION_SELECT_SMALL_PREVIOUS:
         case GIMP_ACTION_SELECT_SMALL_NEXT:
@@ -583,7 +661,7 @@ context_brush_radius_cmd_callback (GimpAction *action,
           break;
         }
 
-      radius = action_select_value ((GimpActionSelectType) value,
+      radius = action_select_value (select_type,
                                     radius,
                                     min_radius, 4000.0, min_radius,
                                     0.1, 1.0, 10.0, 0.05, FALSE);
@@ -601,19 +679,22 @@ context_brush_radius_cmd_callback (GimpAction *action,
 
 void
 context_brush_spikes_cmd_callback (GimpAction *action,
-                                   gint        value,
+                                   GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext          *context;
+  GimpBrush            *brush;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
   if (GIMP_IS_BRUSH_GENERATED (brush) &&
       gimp_data_is_writable (GIMP_DATA (brush)))
     {
-      action_select_property ((GimpActionSelectType) value,
+      action_select_property (select_type,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "spikes",
@@ -623,19 +704,22 @@ context_brush_spikes_cmd_callback (GimpAction *action,
 
 void
 context_brush_hardness_cmd_callback (GimpAction *action,
-                                     gint        value,
+                                     GVariant   *value,
                                      gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext          *context;
+  GimpBrush            *brush;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
   if (GIMP_IS_BRUSH_GENERATED (brush) &&
       gimp_data_is_writable (GIMP_DATA (brush)))
     {
-      action_select_property ((GimpActionSelectType) value,
+      action_select_property (select_type,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "hardness",
@@ -645,19 +729,22 @@ context_brush_hardness_cmd_callback (GimpAction *action,
 
 void
 context_brush_aspect_cmd_callback (GimpAction *action,
-                                   gint        value,
+                                   GVariant   *value,
                                    gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext          *context;
+  GimpBrush            *brush;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
   if (GIMP_IS_BRUSH_GENERATED (brush) &&
       gimp_data_is_writable (GIMP_DATA (brush)))
     {
-      action_select_property ((GimpActionSelectType) value,
+      action_select_property (select_type,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "aspect-ratio",
@@ -667,12 +754,15 @@ context_brush_aspect_cmd_callback (GimpAction *action,
 
 void
 context_brush_angle_cmd_callback (GimpAction *action,
-                                  gint        value,
+                                  GVariant   *value,
                                   gpointer    data)
 {
-  GimpContext *context;
-  GimpBrush   *brush;
+  GimpContext          *context;
+  GimpBrush            *brush;
+  GimpActionSelectType  select_type;
   return_if_no_context (context, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   brush = gimp_context_get_brush (context);
 
@@ -685,12 +775,12 @@ context_brush_angle_cmd_callback (GimpAction *action,
 
       angle = gimp_brush_generated_get_angle (generated);
 
-      if (value == GIMP_ACTION_SELECT_FIRST)
+      if (select_type == GIMP_ACTION_SELECT_FIRST)
         angle = 0.0;
-      else if (value == GIMP_ACTION_SELECT_LAST)
+      else if (select_type == GIMP_ACTION_SELECT_LAST)
         angle = 90.0;
       else
-        angle = action_select_value ((GimpActionSelectType) value,
+        angle = action_select_value (select_type,
                                      angle,
                                      0.0, 180.0, 0.0,
                                      0.1, 1.0, 15.0, 0.1, TRUE);
@@ -717,14 +807,16 @@ context_select_object (GimpActionSelectType  select_type,
 {
   GimpObject *current;
 
-  current = gimp_context_get_by_type (context,
-                                      gimp_container_get_children_type (container));
+  current =
+    gimp_context_get_by_type (context,
+                              gimp_container_get_children_type (container));
 
   current = action_select_object (select_type, container, current);
 
   if (current)
     gimp_context_set_by_type (context,
-                              gimp_container_get_children_type (container), current);
+                              gimp_container_get_children_type (container),
+                              current);
 }
 
 static gint

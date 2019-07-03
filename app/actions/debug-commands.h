@@ -20,22 +20,29 @@
 
 
 void   debug_gtk_inspector_cmd_callback           (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_mem_profile_cmd_callback             (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_benchmark_projection_cmd_callback    (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_show_image_graph_cmd_callback        (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_dump_menus_cmd_callback              (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_dump_managers_cmd_callback           (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
 void   debug_dump_attached_data_cmd_callback      (GimpAction *action,
+                                                   GVariant   *value,
                                                    gpointer    data);
-void   debug_benchmark_projection_cmd_callback    (GimpAction *action,
-                                                   gpointer    data);
+
 
 #endif /* __DEBUG_COMMANDS_H__ */

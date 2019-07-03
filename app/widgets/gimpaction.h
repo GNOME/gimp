@@ -33,12 +33,22 @@ typedef struct _GimpActionInterface GimpActionInterface;
 struct _GimpActionInterface
 {
   GTypeInterface base_interface;
+
+  void (* activate)     (GimpAction *action,
+                         GVariant   *value);
+  void (* change_state) (GimpAction *action,
+                         GVariant   *value);
 };
 
 
 GType         gimp_action_get_type            (void) G_GNUC_CONST;
 
 void          gimp_action_init                (GimpAction    *action);
+
+void          gimp_action_emit_activate       (GimpAction    *action,
+                                               GVariant      *value);
+void          gimp_action_emit_change_state   (GimpAction    *action,
+                                               GVariant      *value);
 
 void          gimp_action_set_proxy           (GimpAction    *action,
                                                GtkWidget     *proxy);

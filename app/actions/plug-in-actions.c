@@ -83,7 +83,7 @@ static const GimpActionEntry plug_in_actions[] =
   { "plug-in-reset-all", GIMP_ICON_RESET,
     NC_("plug-in-action", "Reset all _Filters"), NULL,
     NC_("plug-in-action", "Reset all plug-ins to their default settings"),
-    G_CALLBACK (plug_in_reset_all_cmd_callback),
+    plug_in_reset_all_cmd_callback,
     GIMP_HELP_FILTER_RESET_ALL }
 };
 
@@ -313,7 +313,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   entry.help_id     = gimp_procedure_get_help_id (GIMP_PROCEDURE (proc));
 
   gimp_action_group_add_procedure_actions (group, &entry, 1,
-                                           G_CALLBACK (plug_in_run_cmd_callback));
+                                           plug_in_run_cmd_callback);
 
   for (list = proc->menu_paths; list; list = g_list_next (list))
     {
