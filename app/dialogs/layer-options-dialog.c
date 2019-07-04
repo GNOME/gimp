@@ -32,12 +32,15 @@
 #include "core/gimpdrawable-filters.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplink.h"
+#include "core/gimplinklayer.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimplayermodebox.h"
+#include "widgets/gimpopendialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "item-options-dialog.h"
@@ -50,6 +53,7 @@ typedef struct _LayerOptionsDialog LayerOptionsDialog;
 
 struct _LayerOptionsDialog
 {
+  Gimp                     *gimp;
   GimpLayer                *layer;
   GimpLayerMode             mode;
   GimpLayerColorSpace       blend_space;
@@ -68,6 +72,8 @@ struct _LayerOptionsDialog
   GtkWidget                *composite_mode_combo;
   GtkWidget                *size_se;
   GtkWidget                *offset_se;
+
+  GimpLink                 *link;
 };
 
 
@@ -93,6 +99,11 @@ static void   layer_options_dialog_mode_notify    (GtkWidget          *widget,
 static void   layer_options_dialog_rename_toggled (GtkWidget          *widget,
                                                    LayerOptionsDialog *private);
 
+
+static void   layer_options_fill_changed          (GtkWidget            *combo,
+                                                   GtkWidget            *file_select);
+static void   layer_options_file_set              (GtkFileChooserButton *widget,
+                                                   LayerOptionsDialog   *private);
 
 /*  public functions  */
 
@@ -127,6 +138,7 @@ layer_options_dialog_new (GimpImage                *image,
   GtkWidget            *grid;
   GtkListStore         *space_model;
   GtkWidget            *combo;
+  GtkWidget            *file_select;
   GtkWidget            *scale;
   GtkWidget            *label;
   GtkAdjustment        *adjustment;
@@ -144,6 +156,7 @@ layer_options_dialog_new (GimpImage                *image,
 
   private = g_slice_new0 (LayerOptionsDialog);
 
+  private->gimp               = image->gimp;
   private->layer              = layer;
   private->mode               = layer_mode;
   private->blend_space        = layer_blend_space;
@@ -374,15 +387,35 @@ layer_options_dialog_new (GimpImage                *image,
 
   if (! layer)
     {
+      GtkWidget *right_vbox = item_options_dialog_get_right_vbox (dialog);
+      GtkWidget *open_dialog;
+
       /*  The fill type  */
       combo = gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row,
                                 _("_Fill with:"), 0.0, 0.5,
                                 combo, 1);
+
+      /* File chooser dialog. */
+      open_dialog = gimp_open_dialog_new (private->gimp);
+      gtk_window_set_title (GTK_WINDOW (open_dialog),
+                            _("Select Linked Image"));
+
+      /* File chooser button. */
+      file_select = gtk_file_chooser_button_new_with_dialog (open_dialog);
+      gtk_box_pack_end (GTK_BOX (right_vbox), file_select, FALSE, FALSE, 1);
+
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->fill_type,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
                                   &private->fill_type, NULL);
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (layer_options_fill_changed),
+                        file_select);
+      g_signal_connect (file_select, "file-set",
+                        G_CALLBACK (layer_options_file_set),
+                        private);
+      layer_options_fill_changed (combo, file_select);
     }
 
   if (layer)
@@ -402,6 +435,31 @@ layer_options_dialog_new (GimpImage                *image,
                                            GIMP_VIEW_SIZE_SMALL, 0);
       gtk_container_add (GTK_CONTAINER (frame), view);
       gtk_widget_show (view);
+
+      if (GIMP_IS_LINK_LAYER (layer))
+        {
+          GtkWidget *open_dialog;
+          GimpLink  *link;
+
+          /* File chooser dialog. */
+          open_dialog = gimp_open_dialog_new (private->gimp);
+          gtk_window_set_title (GTK_WINDOW (open_dialog),
+                                _("Select Linked Image"));
+
+          /* File chooser button. */
+          file_select = gtk_file_chooser_button_new_with_dialog (open_dialog);
+          link = gimp_link_layer_get_link (GIMP_LINK_LAYER (layer));
+          gtk_file_chooser_set_file (GTK_FILE_CHOOSER (file_select),
+                                     gimp_link_get_file (link), NULL);
+          gtk_widget_show (file_select);
+          gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    _("_Linked image:"), 0.0, 0.5,
+                                    file_select, 1);
+
+          g_signal_connect (file_select, "file-set",
+                            G_CALLBACK (layer_options_file_set),
+                            private);
+        }
     }
 
   button = item_options_dialog_get_lock_position (dialog);
@@ -502,6 +560,7 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                      private->composite_mode,
                      private->opacity / 100.0,
                      private->fill_type,
+                     private->link,
                      width,
                      height,
                      offset_x,
@@ -573,4 +632,45 @@ layer_options_dialog_rename_toggled (GtkWidget          *widget,
           g_free (name);
         }
     }
+}
+
+static void
+layer_options_fill_changed (GtkWidget *combo,
+                            GtkWidget *file_select)
+{
+  gint value = GIMP_FILL_FOREGROUND;
+
+  g_return_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo));
+  g_return_if_fail (GTK_IS_WIDGET (file_select));
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value);
+  gtk_widget_set_visible (file_select, (value == GIMP_FILL_LINK));
+}
+
+static void
+layer_options_file_set (GtkFileChooserButton *widget,
+                        LayerOptionsDialog   *private)
+{
+  GimpLink *link = NULL;
+  GFile    *file;
+
+  file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (widget));
+  if (file)
+    {
+      link = gimp_link_new (private->gimp, file);
+      if (gimp_link_is_broken (link, TRUE))
+        {
+          g_clear_object (&link);
+          g_signal_handlers_block_by_func (widget,
+                                           G_CALLBACK (layer_options_file_set),
+                                           private);
+          gtk_file_chooser_unselect_file (GTK_FILE_CHOOSER (widget), file);
+          g_signal_handlers_unblock_by_func (widget,
+                                             G_CALLBACK (layer_options_file_set),
+                                             private);
+        }
+    }
+  g_clear_object (&file);
+
+  private->link = link;
 }

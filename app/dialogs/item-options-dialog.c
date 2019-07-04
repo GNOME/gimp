@@ -323,6 +323,21 @@ item_options_dialog_get_vbox (GtkWidget *dialog)
 }
 
 GtkWidget *
+item_options_dialog_get_right_vbox (GtkWidget *dialog)
+{
+  ItemOptionsDialog *private;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog), NULL);
+
+  private = g_object_get_data (G_OBJECT (dialog),
+                               "item-options-dialog-private");
+
+  g_return_val_if_fail (private != NULL, NULL);
+
+  return private->right_vbox;
+}
+
+GtkWidget *
 item_options_dialog_get_grid (GtkWidget *dialog,
                               gint      *next_row)
 {

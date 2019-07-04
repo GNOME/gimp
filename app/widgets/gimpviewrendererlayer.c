@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimplinklayer.h"
 
 #include "text/gimptextlayer.h"
 
@@ -71,7 +72,8 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
     {
       icon_name = GIMP_ICON_LAYER_FLOATING_SELECTION;
     }
-  else if (gimp_item_is_text_layer (GIMP_ITEM (renderer->viewable)))
+  else if (gimp_item_is_text_layer (GIMP_ITEM (renderer->viewable)) ||
+           gimp_item_is_link_layer (GIMP_ITEM (renderer->viewable)))
     {
       icon_name = gimp_viewable_get_icon_name (renderer->viewable);
     }
