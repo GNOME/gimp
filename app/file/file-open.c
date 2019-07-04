@@ -84,6 +84,7 @@ file_open_image (Gimp                *gimp,
   GFile          *local_file  = NULL;
   gchar          *path        = NULL;
   gchar          *entered_uri = NULL;
+  gboolean        mounted     = TRUE;
   GError         *my_error    = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -150,18 +151,27 @@ file_open_image (Gimp                *gimp,
       ! file_remote_mount_file (gimp, file, progress, &my_error))
     {
       if (my_error)
-        g_propagate_error (error, my_error);
-      else
-        *status = GIMP_PDB_CANCEL;
+        {
+          g_printerr ("%s: mounting remote volume failed, trying to download"
+                      "the file: %s\n",
+                      G_STRFUNC, my_error->message);
+          g_clear_error (&my_error);
 
-      return NULL;
+          mounted = FALSE;
+        }
+      else
+        {
+          *status = GIMP_PDB_CANCEL;
+
+          return NULL;
+        }
     }
 
-  if (! file_proc || ! file_proc->handles_uri)
+  if (! file_proc || ! file_proc->handles_uri || ! mounted)
     {
-      path = g_file_get_path (file);
+      gchar *my_path = g_file_get_path (file);
 
-      if (! path)
+      if (! my_path)
         {
           local_file = file_remote_download_image (gimp, file, progress,
                                                    &my_error);
@@ -192,12 +202,22 @@ file_open_image (Gimp                *gimp,
               return NULL;
             }
 
-          path = g_file_get_path (local_file);
+          if (file_proc->handles_uri)
+            path = g_file_get_uri (local_file);
+          else
+            path = g_file_get_path (local_file);
         }
+
+      g_free (my_path);
     }
 
   if (! path)
-    path = g_file_get_uri (file);
+    {
+      if (file_proc->handles_uri)
+        path = g_file_get_uri (file);
+      else
+        path = g_file_get_path (file);
+    }
 
   entered_uri = g_file_get_uri (entered_file);
 
