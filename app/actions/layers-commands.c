@@ -48,6 +48,8 @@
 #include "core/gimplayerpropundo.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
+#include "core/gimplink.h"
+#include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
@@ -68,6 +70,7 @@
 #include "widgets/gimpaction.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpopendialog.h"
 #include "widgets/gimpprogressdialog.h"
 
 #include "display/gimpdisplay.h"
@@ -105,6 +108,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                GimpLayerCompositeMode layer_composite_mode,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
+                                               GimpLink              *link,
                                                gint                   layer_width,
                                                gint                   layer_height,
                                                gint                   layer_offset_x,
@@ -128,6 +132,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                GimpLayerCompositeMode layer_composite_mode,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
+                                               GimpLink              *link,
                                                gint                   layer_width,
                                                gint                   layer_height,
                                                gint                   layer_offset_x,
@@ -176,6 +181,9 @@ static gint   layers_mode_index               (GimpLayerMode          layer_mode
                                                const GimpLayerMode   *modes,
                                                gint                   n_modes);
 
+static void   layers_link_dialog_response     (GtkDialog             *dialog,
+                                               gint                   response_id,
+                                               GimpImage             *image);
 
 /*  private variables  */
 
@@ -478,6 +486,22 @@ layers_new_last_vals_cmd_callback (GimpAction *action,
   if (gimp_image_get_floating_selection (image))
     {
       layers_new_cmd_callback (action, value, data);
+      return;
+    }
+
+  if (config->layer_new_fill_type == GIMP_FILL_LINK)
+    {
+      GtkWidget *dialog;
+
+      dialog = gimp_open_dialog_new (image->gimp);
+      gtk_window_set_title (GTK_WINDOW (dialog), _("Select Linked Image"));
+      gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), FALSE);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (layers_link_dialog_response),
+                        image);
+      gtk_widget_show (dialog);
+
       return;
     }
 
@@ -1097,6 +1121,32 @@ layers_delete_cmd_callback (GimpAction *action,
   g_list_free (removed_layers);
 
   gimp_image_flush (image);
+}
+
+void
+layers_link_discard_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  if (GIMP_IS_LINK_LAYER (layer))
+    gimp_link_layer_discard (GIMP_LINK_LAYER (layer));
+}
+
+void
+layers_link_monitor_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  if (GIMP_IS_LINK_LAYER (layer))
+    gimp_link_layer_monitor (GIMP_LINK_LAYER (layer));
 }
 
 void
@@ -2317,6 +2367,7 @@ layers_new_callback (GtkWidget              *dialog,
                      GimpLayerCompositeMode  layer_composite_mode,
                      gdouble                 layer_opacity,
                      GimpFillType            layer_fill_type,
+                     GimpLink               *link,
                      gint                    layer_width,
                      gint                    layer_height,
                      gint                    layer_offset_x,
@@ -2378,17 +2429,31 @@ layers_new_callback (GtkWidget              *dialog,
           position = 0;
         }
 
-      layer = gimp_layer_new (image, layer_width, layer_height,
-                              gimp_image_get_layer_format (image, TRUE),
-                              config->layer_new_name,
-                              config->layer_new_opacity,
-                              config->layer_new_mode);
+      if (layer_fill_type == GIMP_FILL_LINK)
+        {
+          if (link)
+            {
+              layer = gimp_link_layer_new (image, link);
+
+              if (layer_mode != gimp_layer_get_mode (layer))
+                gimp_layer_set_mode (layer, layer_mode, TRUE);
+            }
+        }
+      else
+        {
+          layer = gimp_layer_new (image, layer_width, layer_height,
+                                  gimp_image_get_layer_format (image, TRUE),
+                                  config->layer_new_name,
+                                  config->layer_new_opacity,
+                                  config->layer_new_mode);
+        }
 
       if (layer)
         {
           gimp_item_set_offset (GIMP_ITEM (layer), layer_offset_x, layer_offset_y);
-          gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
-                              config->layer_new_fill_type);
+          if (layer_fill_type != GIMP_FILL_LINK)
+            gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
+                                config->layer_new_fill_type);
           gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
           gimp_item_set_color_tag (GIMP_ITEM (layer), layer_color_tag, FALSE);
           gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
@@ -2406,6 +2471,16 @@ layers_new_callback (GtkWidget              *dialog,
           gimp_image_flush (image);
 
           new_layers = g_list_prepend (new_layers, layer);
+        }
+      else if (layer_fill_type == GIMP_FILL_LINK)
+        {
+          /* We special-case the link layers because chances of failure are
+           * higher and especially source of failure may be user choices.
+           * For such case, we don't want to generate WARNINGS (which are
+           * for code bugs), but an error dialog instead.
+           */
+          gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                                _("Invalid image file"));
         }
       else
         {
@@ -2433,6 +2508,7 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
                                  GimpLayerCompositeMode  layer_composite_mode,
                                  gdouble                 layer_opacity,
                                  GimpFillType            unused1,
+                                 GimpLink               *link,
                                  gint                    unused2,
                                  gint                    unused3,
                                  gint                    layer_offset_x,
@@ -2461,7 +2537,8 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       layer_lock_pixels     != gimp_item_get_lock_content (item)      ||
       layer_lock_position   != gimp_item_get_lock_position (item)     ||
       layer_lock_visibility != gimp_item_get_lock_visibility (item)   ||
-      layer_lock_alpha      != gimp_layer_get_lock_alpha (layer))
+      layer_lock_alpha      != gimp_layer_get_lock_alpha (layer)      ||
+      link)
     {
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_ITEM_PROPERTIES,
@@ -2521,6 +2598,9 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
 
       if (layer_lock_alpha != gimp_layer_get_lock_alpha (layer))
         gimp_layer_set_lock_alpha (layer, layer_lock_alpha, TRUE);
+
+      if (GIMP_IS_LINK_LAYER (layer) && link)
+        gimp_link_layer_set_link (GIMP_LINK_LAYER (layer), link, TRUE);
 
       gimp_image_undo_group_end (image);
       gimp_image_flush (image);
@@ -2752,4 +2832,46 @@ layers_mode_index (GimpLayerMode         layer_mode,
     i++;
 
   return i;
+}
+
+static void
+layers_link_dialog_response (GtkDialog *dialog,
+                             gint       response_id,
+                             GimpImage *image)
+{
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GFile *file;
+
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
+      if (file)
+        {
+          GimpLayer *layer;
+          GimpLink  *link;
+
+          link  = gimp_link_new (image->gimp, file);
+          layer = gimp_link_layer_new (image, link);
+
+          if (layer)
+            {
+              GimpDialogConfig *config;
+
+              config = GIMP_DIALOG_CONFIG (image->gimp->config);
+              gimp_layer_set_blend_space (layer,
+                                          config->layer_new_blend_space, FALSE);
+              gimp_layer_set_composite_space (layer,
+                                              config->layer_new_composite_space, FALSE);
+              gimp_layer_set_composite_mode (layer,
+                                             config->layer_new_composite_mode, FALSE);
+
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD,
+                                           _("Add Link Layer"));
+              gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+              gimp_image_undo_group_end (image);
+              gimp_image_flush (image);
+            }
+        }
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
 }

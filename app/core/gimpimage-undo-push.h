@@ -214,6 +214,11 @@ GimpUndo * gimp_image_undo_push_text_layer_convert  (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpTextLayer *layer);
 
+/*  link layer undos  */
+
+GimpUndo * gimp_image_undo_push_link_layer          (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpLinkLayer *layer);
 
 /*  vector layer undos  */
 

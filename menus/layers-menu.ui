@@ -60,6 +60,10 @@
         <item><attribute name="action">app.layers-delete</attribute></item>
       </section>
       <section>
+        <item><attribute name="action">app.layers-link-discard</attribute></item>
+        <item><attribute name="action">app.layers-link-monitor</attribute></item>
+      </section>
+      <section>
         <item><attribute name="action">app.layers-text-discard</attribute></item>
         <item><attribute name="action">app.layers-text-to-path</attribute></item>
         <item><attribute name="action">app.layers-text-along-path</attribute></item>

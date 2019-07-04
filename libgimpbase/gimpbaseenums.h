@@ -368,6 +368,7 @@ typedef enum
  * @GIMP_FILL_WHITE:              White
  * @GIMP_FILL_TRANSPARENT:        Transparency
  * @GIMP_FILL_PATTERN:            Pattern
+ * @GIMP_FILL_LINK:               Image link
  *
  * Types of filling.
  **/
@@ -382,7 +383,8 @@ typedef enum
   GIMP_FILL_CIELAB_MIDDLE_GRAY, /*< desc="Middle Gray (CIELAB)" >*/
   GIMP_FILL_WHITE,              /*< desc="White"            >*/
   GIMP_FILL_TRANSPARENT,        /*< desc="Transparency"     >*/
-  GIMP_FILL_PATTERN             /*< desc="Pattern"          >*/
+  GIMP_FILL_PATTERN,            /*< desc="Pattern"          >*/
+  GIMP_FILL_LINK                /*< desc="Image link"       >*/
 } GimpFillType;
 
 

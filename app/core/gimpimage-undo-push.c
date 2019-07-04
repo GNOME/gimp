@@ -48,6 +48,8 @@
 #include "gimplayermaskundo.h"
 #include "gimplayerpropundo.h"
 #include "gimplayerundo.h"
+#include "gimplinklayer.h"
+#include "gimplinklayerundo.h"
 #include "gimpmaskundo.h"
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
@@ -878,6 +880,25 @@ gimp_image_undo_push_text_layer_convert (GimpImage     *image,
                                NULL);
 }
 
+/**********************/
+/*  Link Layer Undos  */
+/**********************/
+
+GimpUndo *
+gimp_image_undo_push_link_layer (GimpImage     *image,
+                                 const gchar   *undo_desc,
+                                 GimpLinkLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_LINK_LAYER (layer), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_LINK_LAYER_UNDO,
+                               GIMP_UNDO_LINK_LAYER, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  layer,
+                               NULL);
+}
 
 /************************/
 /*  Vector Layer Undos  */
