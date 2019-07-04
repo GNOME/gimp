@@ -573,7 +573,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "Stroke the current selection",
                                      "This procedure strokes the current selection, painting along the selection boundary with the active paint method and brush, or using a plain line with configurable properties. The paint is applied to the specified drawable regardless of the active selection.\n"
                                      "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings.",
+                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings, 'gimp-context-set-antialias'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -598,7 +598,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "Stroke the specified item",
                                      "This procedure strokes the specified item, painting along its outline (e.g. along a path, or along a channel's boundary), with the active paint method and brush, or using a plain line with configurable properties.\n"
                                      "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings.",
+                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings, 'gimp-context-set-antialias'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2018",

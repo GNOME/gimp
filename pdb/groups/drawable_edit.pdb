@@ -317,7 +317,8 @@ gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
 gimp_context_set_foreground(),
 gimp_context_set_brush() and all brush property settings,
 gimp_context_set_gradient() and all gradient property settings,
-gimp_context_set_line_width() and all line property settings.
+gimp_context_set_line_width() and all line property settings,
+gimp_context_set_antialias().
 HELP
 
     &std_pdb_misc;
@@ -374,7 +375,8 @@ gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
 gimp_context_set_foreground(),
 gimp_context_set_brush() and all brush property settings,
 gimp_context_set_gradient() and all gradient property settings,
-gimp_context_set_line_width() and all line property settings.
+gimp_context_set_line_width() and all line property settings,
+gimp_context_set_antialias().
 HELP
 
     &mitch_pdb_misc('2018', '2.10');

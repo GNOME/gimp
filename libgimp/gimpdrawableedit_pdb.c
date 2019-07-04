@@ -251,7 +251,7 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
  * gimp_context_set_foreground(), gimp_context_set_brush() and all
  * brush property settings, gimp_context_set_gradient() and all
  * gradient property settings, gimp_context_set_line_width() and all
- * line property settings.
+ * line property settings, gimp_context_set_antialias().
  *
  * Returns: TRUE on success.
  **/
@@ -292,7 +292,7 @@ gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
  * gimp_context_set_foreground(), gimp_context_set_brush() and all
  * brush property settings, gimp_context_set_gradient() and all
  * gradient property settings, gimp_context_set_line_width() and all
- * line property settings.
+ * line property settings, gimp_context_set_antialias().
  *
  * Returns: TRUE on success.
  *

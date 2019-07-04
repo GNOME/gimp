@@ -2114,7 +2114,8 @@ This setting affects the following procedures:
 gimp_image_select_color(), gimp_image_select_contiguous_color(),
 gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
 gimp_image_select_polygon(), gimp_image_select_item(),
-gimp_drawable_edit_bucket_fill().
+gimp_drawable_edit_bucket_fill(), gimp_drawable_edit_stroke_item(),
+gimp_drawable_edit_stroke_selection().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');

@@ -2402,7 +2402,8 @@ gimp_context_get_antialias (void)
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
  * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
  * gimp_image_select_polygon(), gimp_image_select_item(),
- * gimp_drawable_edit_bucket_fill().
+ * gimp_drawable_edit_bucket_fill(), gimp_drawable_edit_stroke_item(),
+ * gimp_drawable_edit_stroke_selection().
  *
  * Returns: TRUE on success.
  *
