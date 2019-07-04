@@ -69,6 +69,7 @@ file_save (Gimp                *gimp,
   GFile             *local_file = NULL;
   gchar             *path       = NULL;
   gchar             *uri        = NULL;
+  gboolean           mounted    = TRUE;
   gint32             image_ID;
   gint32             drawable_ID;
   GError            *my_error   = NULL;
@@ -144,18 +145,27 @@ file_save (Gimp                *gimp,
       ! file_remote_mount_file (gimp, file, progress, &my_error))
     {
       if (my_error)
-        g_propagate_error (error, my_error);
-      else
-        status = GIMP_PDB_CANCEL;
+        {
+          g_printerr ("%s: mounting remote volume failed, trying to upload"
+                      "the file: %s\n",
+                      G_STRFUNC, my_error->message);
+          g_clear_error (&my_error);
 
-      goto out;
+          mounted = FALSE;
+        }
+      else
+        {
+          status = GIMP_PDB_CANCEL;
+
+          goto out;
+        }
     }
 
-  if (! file_proc->handles_uri)
+  if (! file_proc->handles_uri || ! mounted)
     {
-      path = g_file_get_path (file);
+      gchar *my_path = g_file_get_path (file);
 
-      if (! path)
+      if (! my_path)
         {
           local_file = file_remote_upload_image_prepare (gimp, file, progress,
                                                          &my_error);
@@ -170,12 +180,22 @@ file_save (Gimp                *gimp,
               goto out;
             }
 
-          path = g_file_get_path (local_file);
+          if (file_proc->handles_uri)
+            path = g_file_get_uri (local_file);
+          else
+            path = g_file_get_path (local_file);
         }
+
+      g_free (my_path);
     }
 
   if (! path)
-    path = g_file_get_uri (file);
+    {
+      if (file_proc->handles_uri)
+        path = g_file_get_uri (file);
+      else
+        path = g_file_get_path (file);
+    }
 
   uri = g_file_get_uri (file);
 
