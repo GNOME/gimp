@@ -340,8 +340,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 static void
 gimp_search_popup_constructed (GObject *object)
 {
-  GimpSearchPopup *popup  = GIMP_SEARCH_POPUP (object);
-  GdkScreen       *screen = gdk_screen_get_default ();
+  GimpSearchPopup *popup = GIMP_SEARCH_POPUP (object);
   GtkWidget       *main_vbox;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -385,11 +384,6 @@ gimp_search_popup_constructed (GObject *object)
   g_signal_connect (popup->priv->results_list, "row-activated",
                     G_CALLBACK (results_list_row_activated),
                     popup);
-
-  /* Default size of the search popup showing the result list is half
-   * the screen. */
-  if (window_height == 0)
-    window_height = gdk_screen_get_height (screen) / 2;
 }
 
 static void
@@ -449,19 +443,26 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
   GimpSearchPopup *popup = GIMP_SEARCH_POPUP (widget);
+  GdkRectangle     workarea;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (widget),
+                            &workarea);
+
+  if (window_height == 0)
+    {
+      /* Default to half the monitor */
+      window_height = workarea.height / 2;
+    }
 
   if (gtk_widget_get_visible (widget) &&
       gtk_widget_get_visible (popup->priv->list_view))
     {
-      GdkScreen *screen = gdk_screen_get_default ();
-
       /* Save the window height when results are shown so that resizes
        * by the user are saved across searches.
        */
-      window_height = MAX (gdk_screen_get_height (screen) / 4,
-                           allocation->height);
+      window_height = MAX (workarea.height / 4, allocation->height);
     }
 }
 
