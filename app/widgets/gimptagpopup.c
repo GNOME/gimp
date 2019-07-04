@@ -26,6 +26,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
@@ -175,19 +177,21 @@ gimp_tag_popup_init (GimpTagPopup *popup)
   gtk_container_add (GTK_CONTAINER (popup), popup->frame);
   gtk_widget_show (popup->frame);
 
-  popup->alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_container_add (GTK_CONTAINER (popup->frame), popup->alignment);
-  gtk_widget_show (popup->alignment);
+  popup->border_area = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (popup->frame), popup->border_area);
+  gtk_widget_show (popup->border_area);
 
   popup->tag_area = gtk_drawing_area_new ();
+  gtk_widget_set_halign (popup->border_area, GTK_ALIGN_FILL);
+  gtk_widget_set_valign (popup->border_area, GTK_ALIGN_FILL);
   gtk_widget_add_events (popup->tag_area,
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_POINTER_MOTION_MASK);
-  gtk_container_add (GTK_CONTAINER (popup->alignment), popup->tag_area);
+  gtk_container_add (GTK_CONTAINER (popup->border_area), popup->tag_area);
   gtk_widget_show (popup->tag_area);
 
-  g_signal_connect (popup->alignment, "draw",
+  g_signal_connect (popup->border_area, "draw",
                     G_CALLBACK (gimp_tag_popup_border_draw),
                     popup);
   g_signal_connect (popup, "event",
@@ -222,7 +226,7 @@ gimp_tag_popup_constructed (GObject *object)
   GList               *tag_iterator;
   gint                 i;
   gint                 max_height;
-  gint                 screen_height;
+  GdkRectangle         workarea;
   gchar              **current_tags;
   gint                 current_count;
   GdkRectangle         popup_rects[2]; /* variants of popup placement */
@@ -309,7 +313,7 @@ gimp_tag_popup_constructed (GObject *object)
 
   max_height = entry_allocation.height * 10;
 
-  screen_height = gdk_screen_get_height (gtk_widget_get_screen (entry));
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (entry), &workarea);
 
   popup_height = MIN (height, max_height);
 
@@ -321,7 +325,7 @@ gimp_tag_popup_constructed (GObject *object)
   popup_rects[1].x      = x;
   popup_rects[1].y      = y;
   popup_rects[1].width  = popup_rects[0].width;
-  popup_rects[1].height = screen_height - popup_rects[0].height;
+  popup_rects[1].height = workarea.height - popup_rects[0].height;
 
   if (popup_rects[0].height >= popup_height)
     {
@@ -355,9 +359,10 @@ gimp_tag_popup_constructed (GObject *object)
       popup->arrows_visible    = TRUE;
       popup->upper_arrow_state = GTK_STATE_INSENSITIVE;
 
-      gtk_alignment_set_padding (GTK_ALIGNMENT (popup->alignment),
-                                 popup->scroll_arrow_height + 2,
-                                 popup->scroll_arrow_height + 2, 0, 0);
+      gtk_widget_set_margin_top    (popup->tag_area,
+                                    popup->scroll_arrow_height + 2);
+      gtk_widget_set_margin_bottom (popup->tag_area,
+                                    popup->scroll_arrow_height + 2);
 
       popup_height -= 2 * popup->scroll_arrow_height + 4;
 
@@ -1501,17 +1506,12 @@ get_arrows_visible_area (GimpTagPopup *popup,
                          GdkRectangle *lower,
                          gint         *arrow_space)
 {
-  GtkWidget *widget = GTK_WIDGET (popup->alignment);
-  guint      padding_top;
-  guint      padding_bottom;
-  guint      padding_left;
-  guint      padding_right;
+  gint padding_top    = gtk_widget_get_margin_top    (popup->tag_area);
+  gint padding_bottom = gtk_widget_get_margin_bottom (popup->tag_area);
+  gint padding_left   = gtk_widget_get_margin_start  (popup->tag_area);
+  gint padding_right  = gtk_widget_get_margin_end    (popup->tag_area);
 
-  gtk_alignment_get_padding (GTK_ALIGNMENT (popup->alignment),
-                             &padding_top, &padding_bottom,
-                             &padding_left, &padding_right);
-
-  gtk_widget_get_allocation (widget, border);
+  gtk_widget_get_allocation (popup->border_area, border);
 
   upper->x      = border->x + padding_left;
   upper->y      = border->y;

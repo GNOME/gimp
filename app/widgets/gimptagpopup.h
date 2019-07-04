@@ -41,7 +41,7 @@ struct _GimpTagPopup
   GimpComboTagEntry *combo_entry;
 
   GtkWidget         *frame;
-  GtkWidget         *alignment;
+  GtkWidget         *border_area;
   GtkWidget         *tag_area;
 
   PangoLayout       *layout;
