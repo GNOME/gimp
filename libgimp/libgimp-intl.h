@@ -26,9 +26,25 @@
 #endif
 
 #include <libintl.h>
+extern gboolean wlbr;
 
+static inline char *shadow_dgettext(const char *package, const char *str)
+{
+  char *ret = dgettext (package, str);
+  if (!wlbr)
+    return ret;
+  if (strstr (ret, "GIMP"))
+  {
+    char *my_ret = g_strdup (ret);
+    while (strstr (my_ret, "GIMP"))
+      memcpy (strstr (my_ret, "GIMP"), "WLBR", 4);
+    ret = (char*)g_intern_string (my_ret);
+    free (my_ret);
+  }
+  return ret;
+}
 
-#define  _(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
+#define  _(String) shadow_dgettext (GETTEXT_PACKAGE "-libgimp", String)
 #define Q_(String) g_dpgettext (GETTEXT_PACKAGE "-libgimp", String, 0)
 #define C_(Context,String) g_dpgettext (GETTEXT_PACKAGE "-libgimp", Context "\004" String, strlen (Context) + 1)
 

@@ -11,6 +11,7 @@ color_selector_libs = [
   libgimpwidgets,
 ]
 controller_libs = [
+  libgimpbase,
   libgimpmodule,
   libgimpwidgets,
 ]
