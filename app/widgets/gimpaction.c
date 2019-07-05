@@ -167,10 +167,30 @@ gimp_action_get_tooltip (GimpAction *action)
   return gtk_action_get_tooltip ((GtkAction *) action);
 }
 
+void
+gimp_action_set_icon_name (GimpAction  *action,
+                           const gchar *icon_name)
+{
+  gtk_action_set_icon_name ((GtkAction *) action, icon_name);
+}
+
 const gchar *
 gimp_action_get_icon_name (GimpAction *action)
 {
   return gtk_action_get_icon_name ((GtkAction *) action);
+}
+
+void
+gimp_action_set_gicon (GimpAction *action,
+                       GIcon      *icon)
+{
+  gtk_action_set_gicon ((GtkAction *) action, icon);
+}
+
+GIcon *
+gimp_action_get_gicon (GimpAction *action)
+{
+  return gtk_action_get_gicon ((GtkAction *) action);
 }
 
 void
@@ -260,6 +280,12 @@ void
 gimp_action_connect_accelerator (GimpAction  *action)
 {
   gtk_action_connect_accelerator ((GtkAction *) action);
+}
+
+GSList *
+gimp_action_get_proxies (GimpAction *action)
+{
+  return gtk_action_get_proxies ((GtkAction *) action);
 }
 
 void
@@ -363,7 +389,7 @@ gimp_action_label_notify (GimpAction       *action,
 {
   GSList *list;
 
-  for (list = gtk_action_get_proxies (GTK_ACTION (action));
+  for (list = gimp_action_get_proxies (action);
        list;
        list = g_slist_next (list))
     {
@@ -378,7 +404,7 @@ gimp_action_label_notify (GimpAction       *action,
 
               if (GTK_IS_LABEL (child))
                 gtk_label_set_text (GTK_LABEL (child),
-                                    gtk_action_get_label (GTK_ACTION (action)));
+                                    gimp_action_get_label (action));
             }
         }
     }
@@ -391,7 +417,7 @@ gimp_action_tooltip_notify (GimpAction       *action,
 {
   GSList *list;
 
-  for (list = gtk_action_get_proxies (GTK_ACTION (action));
+  for (list = gimp_action_get_proxies (action);
        list;
        list = g_slist_next (list))
     {

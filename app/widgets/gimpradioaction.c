@@ -76,9 +76,7 @@ static void
 gimp_radio_action_changed (GtkRadioAction *action,
                            GtkRadioAction *current)
 {
-  gint value;
-
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  gint value = gtk_radio_action_get_current_value (action);
 
   gimp_action_emit_change_state (GIMP_ACTION (action),
                                  g_variant_new_int32 (value));

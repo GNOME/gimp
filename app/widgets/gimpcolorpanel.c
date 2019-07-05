@@ -31,6 +31,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpaction.h"
+#include "gimpactiongroup.h"
 #include "gimpactionimpl.h"
 #include "gimpcolordialog.h"
 #include "gimpcolorpanel.h"
@@ -128,8 +130,8 @@ gimp_color_panel_button_press (GtkWidget      *widget,
       GimpColorButton *color_button;
       GimpColorPanel  *color_panel;
       GtkUIManager    *ui_manager;
-      GtkActionGroup  *group;
-      GtkAction       *action;
+      GimpActionGroup *group;
+      GimpAction      *action;
       GimpRGB          color;
 
       color_button = GIMP_COLOR_BUTTON (widget);
@@ -138,32 +140,32 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 
       group = gtk_ui_manager_get_action_groups (ui_manager)->data;
 
-      action = gtk_action_group_get_action (group,
-                                            "color-button-use-foreground");
-      gtk_action_set_visible (action, color_panel->context != NULL);
+      action = gimp_action_group_get_action (group,
+                                             "color-button-use-foreground");
+      gimp_action_set_visible (action, color_panel->context != NULL);
 
-      action = gtk_action_group_get_action (group,
-                                            "color-button-use-background");
-      gtk_action_set_visible (action, color_panel->context != NULL);
+      action = gimp_action_group_get_action (group,
+                                             "color-button-use-background");
+      gimp_action_set_visible (action, color_panel->context != NULL);
 
       if (color_panel->context)
         {
-          action = gtk_action_group_get_action (group,
-                                                "color-button-use-foreground");
+          action = gimp_action_group_get_action (group,
+                                                 "color-button-use-foreground");
           gimp_context_get_foreground (color_panel->context, &color);
           g_object_set (action, "color", &color, NULL);
 
-          action = gtk_action_group_get_action (group,
-                                                "color-button-use-background");
+          action = gimp_action_group_get_action (group,
+                                                 "color-button-use-background");
           gimp_context_get_background (color_panel->context, &color);
           g_object_set (action, "color", &color, NULL);
         }
 
-      action = gtk_action_group_get_action (group, "color-button-use-black");
+      action = gimp_action_group_get_action (group, "color-button-use-black");
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
       g_object_set (action, "color", &color, NULL);
 
-      action = gtk_action_group_get_action (group, "color-button-use-white");
+      action = gimp_action_group_get_action (group, "color-button-use-white");
       gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       g_object_set (action, "color", &color, NULL);
     }
