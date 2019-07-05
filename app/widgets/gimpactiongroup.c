@@ -694,7 +694,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
  * This function removes @action from @group and clean any
  * accelerator this action may have set.
  * If you wish to only remove the action from the group, use
- * gtk_action_group_remove_action() instead.
+ * gimp_action_group_remove_action() instead.
  */
 void
 gimp_action_group_remove_action_and_accel (GimpActionGroup *group,
@@ -857,7 +857,7 @@ gimp_action_group_set_action_pixbuf (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_gicon (GTK_ACTION (action), G_ICON (pixbuf));
+  gimp_action_set_gicon (action, G_ICON (pixbuf));
 }
 
 
@@ -1064,5 +1064,5 @@ gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_always_show_image (GTK_ACTION (action), always_show_image);
+  gtk_action_set_always_show_image ((GtkAction *) action, always_show_image);
 }

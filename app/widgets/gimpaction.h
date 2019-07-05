@@ -67,6 +67,10 @@ void          gimp_action_set_icon_name       (GimpAction    *action,
                                                const gchar   *icon_name);
 const gchar * gimp_action_get_icon_name       (GimpAction    *action);
 
+void          gimp_action_set_gicon           (GimpAction    *action,
+                                               GIcon         *icon);
+GIcon       * gimp_action_get_gicon           (GimpAction    *action);
+
 void          gimp_action_set_help_id         (GimpAction    *action,
                                                const gchar   *help_id);
 const gchar * gimp_action_get_help_id         (GimpAction    *action);
@@ -90,6 +94,8 @@ const gchar * gimp_action_get_accel_path      (GimpAction    *action);
 void          gimp_action_set_accel_group     (GimpAction    *action,
                                                GtkAccelGroup *accel_group);
 void          gimp_action_connect_accelerator (GimpAction    *action);
+
+GSList      * gimp_action_get_proxies         (GimpAction    *action);
 
 void          gimp_action_activate            (GimpAction    *action);
 

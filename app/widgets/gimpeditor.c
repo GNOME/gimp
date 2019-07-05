@@ -674,8 +674,8 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gtk_activatable_set_related_action (GTK_ACTIVATABLE (button),
-                                      GTK_ACTION (action));
+  gtk_activatable_set_related_action ((GtkActivatable *) button,
+                                      (GtkAction *) action);
   gtk_box_pack_start (GTK_BOX (editor->priv->button_box), button,
                       TRUE, TRUE, 0);
   gtk_widget_show (button);

@@ -227,7 +227,7 @@ gimp_action_impl_set_property (GObject      *object,
     {
       GSList *list;
 
-      for (list = gtk_action_get_proxies (GTK_ACTION (impl));
+      for (list = gimp_action_get_proxies (GIMP_ACTION (impl));
            list;
            list = g_slist_next (list))
         {
