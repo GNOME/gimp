@@ -77,6 +77,7 @@ void          gimp_path_free                   (GList        *path);
 
 gchar       * gimp_path_get_user_writable_dir  (GList        *path) G_GNUC_MALLOC;
 
+extern gboolean wlbr;
 
 G_END_DECLS
 

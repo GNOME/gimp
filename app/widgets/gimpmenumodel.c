@@ -756,9 +756,16 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                   model->priv->path ? model->priv->path : "",
                                   canon_label);
           g_free (canon_label);
-
           submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path);
-          item     = g_menu_item_new_submenu (label, G_MENU_MODEL (submodel));
+          gchar *copy = NULL;
+          if (wlbr && strstr (label, "GIMP"))
+          {
+            copy = g_strdup (label);
+            memcpy (strstr (copy, "GIMP"), "WLBR", 4);
+          }
+          item     = g_menu_item_new_submenu (copy?copy:label, G_MENU_MODEL (submodel));
+          if (copy)
+            g_free (copy);
 
           en_label_copy = g_strdup (en_label);
           g_object_set_data_full (G_OBJECT (submodel), "gimp-menu-model-en-label",

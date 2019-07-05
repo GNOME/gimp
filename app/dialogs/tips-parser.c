@@ -311,6 +311,11 @@ tips_parser_end_element (GMarkupParseContext *context,
       break;
 
     case TIPS_IN_TIP:
+      while (strstr (parser->current_tip->text, "GIMP"))
+      {
+        memcpy (strstr (parser->current_tip->text, "GIMP"), "WLBR", 4);
+      }
+
       parser->tips = g_list_prepend (parser->tips, parser->current_tip);
       parser->current_tip = NULL;
       parser->state = TIPS_IN_TIPS;

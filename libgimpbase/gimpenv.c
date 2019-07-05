@@ -105,6 +105,7 @@ const guint gimp_major_version = GIMP_MAJOR_VERSION;
 const guint gimp_minor_version = GIMP_MINOR_VERSION;
 const guint gimp_micro_version = GIMP_MICRO_VERSION;
 
+gboolean wlbr = FALSE;
 
 /**
  * gimp_env_init:
@@ -176,6 +177,9 @@ gimp_env_init (gboolean plug_in)
                      data_home, g_strerror (errno));
         }
     }
+
+  if (g_getenv ("WLBR_IS_GIMP"))
+    wlbr = TRUE;
 }
 
 /**

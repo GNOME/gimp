@@ -545,6 +545,10 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
 
   branch->menu_path  = g_strdup (menu_path);
   branch->menu_label = g_strdup (menu_label);
+  if (strstr (menu_label, "GIMP"))
+  {
+    memcpy (strstr (branch->menu_label, "GIMP"), "WLBR", 4);
+  }
 
   priv->menu_branches = g_list_append (priv->menu_branches, branch);
 }

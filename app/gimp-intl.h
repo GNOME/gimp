@@ -22,4 +22,24 @@
 #error "config.h must be included prior to gimp-intl.h"
 #endif
 
+extern gboolean wlbr;
 #include <glib/gi18n.h>
+static inline gchar *shadow_dgettext(const char *package, const char *str)
+{
+  char *ret = dgettext (package, str);
+  if (!wlbr)
+    return ret;
+  if (strstr (ret, "GIMP"))
+  {
+    char *my_ret = g_strdup (ret);
+    while (strstr (my_ret, "GIMP"))
+      memcpy (strstr (my_ret, "GIMP"), "WLBR", 4);
+    ret = (char*)g_intern_string (my_ret);
+    free (my_ret);
+  }
+  return ret;
+}
+
+#undef _
+#define _(String) ((char *) shadow_dgettext (GETTEXT_PACKAGE, String))
+

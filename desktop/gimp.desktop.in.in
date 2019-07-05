@@ -10,7 +10,7 @@ Comment=Create images and edit photographs
 # 3. Keep "GIMP" in the list as-is so that people can search with the
 #    original acronym too, though you may add translated version of the
 #    name when relevant (it's OK if a localization has more keywords).
-Keywords=GIMP;graphic;design;illustration;painting;
+Keywords=GIMP;graphic;design;illustration;painting;wlbr
 Exec=@GIMP_COMMAND@ %U
 TryExec=gimp-@GIMP_APP_VERSION@
 Icon=gimp
