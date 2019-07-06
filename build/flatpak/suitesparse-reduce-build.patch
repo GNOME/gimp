@@ -1,0 +1,65 @@
+diff --git a/Makefile b/Makefile
+index 7d7d12d665bd..e7ec5c048309 100644
+--- a/Makefile
++++ b/Makefile
+@@ -38,8 +38,8 @@
+ # (note that CSparse is not installed; CXSparse is installed instead)
+ install: metisinstall
+ 	( cd SuiteSparse_config && $(MAKE) install )
+-	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
+-	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
++#	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
++#	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
+ 	( cd AMD && $(MAKE) install )
+ 	( cd BTF && $(MAKE) install )
+ 	( cd CAMD && $(MAKE) install )
+@@ -47,15 +47,15 @@
+ 	( cd COLAMD && $(MAKE) install )
+ 	( cd CHOLMOD && $(MAKE) install )
+ 	( cd CXSparse && $(MAKE) install )
+-	( cd LDL && $(MAKE) install )
++#	( cd LDL && $(MAKE) install )
+ 	( cd KLU && $(MAKE) install )
+ 	( cd UMFPACK && $(MAKE) install )
+-	( cd RBio && $(MAKE) install )
++#	( cd RBio && $(MAKE) install )
+ ifneq (,$(GPU_CONFIG))
+ 	( cd SuiteSparse_GPURuntime && $(MAKE) install )
+ 	( cd GPUQREngine && $(MAKE) install )
+ endif
+-	( cd SPQR && $(MAKE) install )
++#	( cd SPQR && $(MAKE) install )
+ #	( cd PIRO_BAND && $(MAKE) install )
+ #	( cd SKYLINE_SVD && $(MAKE) install )
+ 	$(CP) README.txt $(INSTALL_DOC)/SuiteSparse_README.txt
+@@ -116,8 +116,8 @@
+ # the static library
+ library: metis
+ 	( cd SuiteSparse_config && $(MAKE) )
+-	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
+-	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
++#	( cd GraphBLAS && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
++#	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' library )
+ 	( cd AMD && $(MAKE) library )
+ 	( cd BTF && $(MAKE) library )
+ 	( cd CAMD && $(MAKE) library )
+@@ -125,16 +125,16 @@
+ 	( cd COLAMD && $(MAKE) library )
+ 	( cd CHOLMOD && $(MAKE) library )
+ 	( cd KLU && $(MAKE) library )
+-	( cd LDL && $(MAKE) library )
++#	( cd LDL && $(MAKE) library )
+ 	( cd UMFPACK && $(MAKE) library )
+ 	( cd CSparse && $(MAKE) library )
+ 	( cd CXSparse && $(MAKE) library )
+-	( cd RBio && $(MAKE) library )
++#	( cd RBio && $(MAKE) library )
+ ifneq (,$(GPU_CONFIG))
+ 	( cd SuiteSparse_GPURuntime && $(MAKE) library )
+ 	( cd GPUQREngine && $(MAKE) library )
+ endif
+-	( cd SPQR && $(MAKE) library )
++#	( cd SPQR && $(MAKE) library )
+ #	( cd PIRO_BAND && $(MAKE) library )
+ #	( cd SKYLINE_SVD && $(MAKE) library )
+ 

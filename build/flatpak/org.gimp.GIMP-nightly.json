@@ -226,7 +226,7 @@
                 },
                 {
                     "type": "patch",
-                    "path": "patches/suitesparse-reduce-build.patch"
+                    "path": "suitesparse-reduce-build.patch"
                 }
             ],
             "modules": [
