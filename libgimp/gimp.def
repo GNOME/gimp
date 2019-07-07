@@ -645,11 +645,6 @@ EXPORTS
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
 	gimp_register_thumbnail_loader
-	gimp_rgn_iterate1
-	gimp_rgn_iterate2
-	gimp_rgn_iterator_dest
-	gimp_rgn_iterator_free
-	gimp_rgn_iterator_new
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_selection_all

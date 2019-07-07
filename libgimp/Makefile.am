@@ -238,8 +238,6 @@ libgimp_sources = \
 	gimpproceduraldb.h	\
 	gimpprogress.c		\
 	gimpprogress.h		\
-	gimpregioniterator.c	\
-	gimpregioniterator.h	\
 	gimpselection.c		\
 	gimpselection.h		\
 	gimptile.c		\
@@ -328,7 +326,6 @@ gimpinclude_HEADERS = \
 	gimpplugin.h			\
 	gimpproceduraldb.h		\
 	gimpprogress.h			\
-	gimpregioniterator.h		\
 	gimpselection.h			\
 	gimptile.h			\
 	\
