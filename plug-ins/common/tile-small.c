@@ -83,8 +83,6 @@ static TileItInterface tint =
   NULL
 };
 
-static GimpDrawable *tileitdrawable;
-static gint          img_bpp;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -93,7 +91,7 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  tileit_dialog          (void);
+static gboolean  tileit_dialog          (gint32         drawable_ID);
 
 static void      tileit_scale_update    (GtkAdjustment *adjustment,
                                          gpointer       data);
@@ -110,7 +108,7 @@ static void      tileit_radio_update    (GtkWidget     *widget,
 static void      tileit_hvtoggle_update (GtkWidget     *widget,
                                          gpointer       data);
 
-static void      do_tiles               (void);
+static void      do_tiles               (gint32         drawable_ID);
 static gint      tiles_xy               (gint           width,
                                          gint           height,
                                          gint           x,
@@ -122,7 +120,7 @@ static void      alt_update             (void);
 static void      explicit_update        (gboolean);
 
 static void      dialog_update_preview  (void);
-static void      cache_preview          (void);
+static void      cache_preview          (gint32         drawable_ID);
 static gboolean  tileit_preview_expose  (GtkWidget     *widget,
                                          GdkEvent      *event);
 static gboolean  tileit_preview_events  (GtkWidget     *widget,
@@ -239,15 +237,14 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-
-  gint pwidth, pheight;
-
-  run_mode = param[0].data.d_int32;
+  gint               pwidth;
+  gint               pheight;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -255,13 +252,12 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  tileitdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
 
-  gimp_tile_cache_ntiles (drawable->ntile_cols + 1);
+  has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  has_alpha = gimp_drawable_has_alpha (tileitdrawable->drawable_id);
-
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_ID,
                                       &sel_x1,    &sel_y1,
                                       &sel_width, &sel_height))
     {
@@ -292,11 +288,8 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &itvals);
-      if (! tileit_dialog ())
-        {
-          gimp_drawable_detach (drawable);
-          return;
-        }
+      if (! tileit_dialog (drawable_ID))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -318,14 +311,14 @@ run (const gchar      *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-      gimp_drawable_is_gray (drawable->drawable_id))
+  if (gimp_drawable_is_rgb (drawable_ID) ||
+      gimp_drawable_is_gray (drawable_ID))
     {
       /* Set the tile cache size */
 
       gimp_progress_init (_("Tiling"));
 
-      do_tiles ();
+      do_tiles (drawable_ID);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -339,12 +332,10 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 static gboolean
-tileit_dialog (void)
+tileit_dialog (gint drawable_ID)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -364,7 +355,7 @@ tileit_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  cache_preview (); /* Get the preview image */
+  cache_preview (drawable_ID); /* Get the preview image */
 
   dlg = gimp_dialog_new (_("Small Tiles"), PLUG_IN_ROLE,
                          NULL, 0,
@@ -598,7 +589,7 @@ tileit_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gtk_widget_set_sensitive (table2, has_alpha);
+  gtk_widget_set_sensitive (table2, gimp_drawable_has_alpha (drawable_ID));
 
   scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                 "_n²", SCALE_WIDTH, -1,
@@ -893,124 +884,114 @@ tileit_exp_update_f (GtkWidget *widget,
 /* The preview_cache will contain the small image */
 
 static void
-cache_preview (void)
+cache_preview (gint32 drawable_ID)
 {
-  GimpPixelRgn src_rgn;
-  gint y,x;
-  guchar *src_rows;
-  guchar *p;
-  gboolean isgrey = FALSE;
+  GeglBuffer *buffer = gimp_drawable_get_buffer (drawable_ID);
+  const Babl *format;
+  gdouble     scale;
 
-  gimp_pixel_rgn_init (&src_rgn, tileitdrawable,
-                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
+  if (gimp_drawable_has_alpha (drawable_ID))
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
 
-  src_rows = g_new (guchar, sel_width * 4);
-  p = tint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
+  tint.img_bpp = babl_format_get_bytes_per_pixel (format);
 
-  tint.img_bpp = gimp_drawable_bpp (tileitdrawable->drawable_id);
+  tint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  if (tint.img_bpp < 3)
-    {
-      tint.img_bpp = 3 + (has_alpha ? 1 : 0);
-    }
+  scale = (gdouble) preview_width / (gdouble) sel_width;
 
-  isgrey = gimp_drawable_is_gray (tileitdrawable->drawable_id);
+  gegl_buffer_get (buffer, GEGL_RECTANGLE (scale * sel_x1, scale * sel_y1,
+                                           preview_width, preview_height),
+                   scale,
+                   format, tint.pv_cache,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  for (y = 0; y < preview_height; y++)
-    {
-      gimp_pixel_rgn_get_row (&src_rgn,
-                              src_rows,
-                              sel_x1,
-                              sel_y1 + (y * sel_height) / preview_height,
-                              sel_width);
-
-      for (x = 0; x < (preview_width); x ++)
-        {
-          /* Get the pixels of each col */
-          gint i;
-          for (i = 0 ; i < 3; i++)
-            p[x * tint.img_bpp + i] =
-              src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
-                      ((isgrey) ? 0 : i)];
-          if (has_alpha)
-            p[x * tint.img_bpp + 3] =
-              src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
-                      ((isgrey) ? 1 : 3)];
-        }
-      p += (preview_width * tint.img_bpp);
-    }
-  g_free (src_rows);
+  g_object_unref (buffer);
 }
 
 static void
-do_tiles(void)
+do_tiles (gint32 drawable_ID)
 {
-  GimpPixelRgn      dest_rgn;
-  gpointer          pr;
-  gint              progress, max_progress;
-  guchar           *dest_row;
-  guchar           *dest;
-  gint              row, col;
-  gint              bpp;
-  guchar            pixel[4];
-  gint              nc, nr;
-  gint              i;
-  GimpPixelFetcher *pft;
+  GeglBuffer         *src_buffer;
+  GeglBuffer         *dest_buffer;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gboolean            has_alpha;
+  gint                progress, max_progress;
+  gint                bpp;
+  guchar              pixel[4];
+  gint                nc, nr;
+  gint                i;
 
-  /* Initialize pixel region */
+  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
 
-  pft = gimp_pixel_fetcher_new (tileitdrawable, FALSE);
+  has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  gimp_pixel_rgn_init (&dest_rgn, tileitdrawable,
-                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  if (has_alpha)
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
+
+  bpp = babl_format_get_bytes_per_pixel (format);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  img_bpp = gimp_drawable_bpp (tileitdrawable->drawable_id);
+  iter = gegl_buffer_iterator_new (dest_buffer,
+                                   GEGL_RECTANGLE (sel_x1, sel_y1,
+                                                   sel_width, sel_height), 0,
+                                   format,
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
 
-  bpp = (has_alpha) ? img_bpp - 1 : img_bpp;
 
-  for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process(pr))
+  while (gegl_buffer_iterator_next (iter))
     {
-      dest_row = dest_rgn.data;
+      GeglRectangle  dest_roi = iter->items[0].roi;
+      guchar        *dest_row = iter->items[0].data;
+      gint           row;
 
-      for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++)
+      for (row = dest_roi.y; row < (dest_roi.y + dest_roi.height); row++)
         {
-          dest = dest_row;
+          guchar *dest = dest_row;
+          gint    col;
 
-          for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
+          for (col = dest_roi.x; col < (dest_roi.x + dest_roi.width); col++)
             {
               tiles_xy (sel_width,
                         sel_height,
-                        col-sel_x1,row-sel_y1,
-                        &nc,&nr);
+                        col - sel_x1,
+                        row - sel_y1,
+                        &nc, &nr);
 
-              gimp_pixel_fetcher_get_pixel (pft, nc + sel_x1, nr + sel_y1,
-                                            pixel);
+              gegl_buffer_sample (src_buffer, nc + sel_x1, nr + sel_y1, NULL,
+                                  pixel, format,
+                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
               for (i = 0; i < bpp; i++)
-                *dest++ = pixel[i];
+                dest[i] = pixel[i];
 
               if (has_alpha)
-                *dest++ = (pixel[bpp] * opacity) / 100;
+                dest[bpp - 1] = (pixel[bpp - 1] * opacity) / 100;
+
+              dest += bpp;
             }
 
-          dest_row += dest_rgn.rowstride;
+          dest_row += dest_roi.width * bpp;
         }
 
-      progress += dest_rgn.w * dest_rgn.h;
+      progress += dest_roi.width * dest_roi.height;
       gimp_progress_update ((double) progress / max_progress);
     }
+
   gimp_progress_update (1.0);
 
-  gimp_pixel_fetcher_destroy (pft);
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
-  gimp_drawable_flush (tileitdrawable);
-  gimp_drawable_merge_shadow (tileitdrawable->drawable_id, TRUE);
-  gimp_drawable_update (tileitdrawable->drawable_id,
+  gimp_drawable_merge_shadow (drawable_ID, TRUE);
+  gimp_drawable_update (drawable_ID,
                         sel_x1, sel_y1, sel_width, sel_height);
 }
 
