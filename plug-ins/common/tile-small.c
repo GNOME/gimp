@@ -123,8 +123,8 @@ static void      explicit_update        (gboolean);
 
 static void      dialog_update_preview  (void);
 static void      cache_preview          (void);
-static gboolean  tileit_preview_expose  (GtkWidget     *widget,
-                                         GdkEvent      *event);
+static gboolean  tileit_preview_draw    (GtkWidget     *widget,
+                                         cairo_t       *cr);
 static gboolean  tileit_preview_events  (GtkWidget     *widget,
                                          GdkEvent      *event);
 
@@ -430,8 +430,8 @@ tileit_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), tint.preview);
   gtk_widget_show (tint.preview);
 
-  g_signal_connect_after (tint.preview, "expose-event",
-                          G_CALLBACK (tileit_preview_expose),
+  g_signal_connect_after (tint.preview, "draw",
+                          G_CALLBACK (tileit_preview_draw),
                           NULL);
   g_signal_connect (tint.preview, "event",
                     G_CALLBACK (tileit_preview_events),
@@ -665,15 +665,14 @@ tileit_hvtoggle_update (GtkWidget *widget,
 }
 
 static gboolean
-tileit_preview_expose (GtkWidget *widget,
-                       GdkEvent  *event)
+tileit_preview_draw (GtkWidget *widget,
+                     cairo_t   *cr)
 {
   if (exp_call.type == EXPLICIT)
     {
-      cairo_t  *cr     = gdk_cairo_create (gtk_widget_get_window (tint.preview));
-      gdouble   width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
-      gdouble   height = (gdouble) preview_height / (gdouble) itvals.numtiles;
-      gdouble   x , y;
+      gdouble width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
+      gdouble height = (gdouble) preview_height / (gdouble) itvals.numtiles;
+      gdouble x , y;
 
       x = width  * (exp_call.x - 1);
       y = height * (exp_call.y - 1);
@@ -687,8 +686,6 @@ tileit_preview_expose (GtkWidget *widget,
       cairo_set_line_width (cr, 1.0);
       cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
       cairo_stroke_preserve (cr);
-
-      cairo_destroy (cr);
     }
 
   return FALSE;
