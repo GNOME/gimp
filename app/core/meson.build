@@ -254,5 +254,7 @@ libappcore = static_library('appcore',
     gexiv2,
     appstream_glib,
     math,
+    dl,
+    libunwind,
   ],
 )
