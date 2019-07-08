@@ -10,11 +10,6 @@ common_exes_list = [
     [ 'animation-optimize.c', ],
     [ gtk3, gegl, gdk_pixbuf, cairo ],
   ],
-  # [
-  #   'animation-play',
-  #   [ 'animation-play.c', ],
-  #   [ gtk3, gegl, gdk_pixbuf, ],
-  # ],
   [
     'blinds',
     [ 'blinds.c', ],
@@ -85,11 +80,11 @@ common_exes_list = [
     [ 'crop-zealous.c', ],
     [ gtk3, gegl, gdk_pixbuf, cairo, ],
   ],
-  # [
-  #   'curve-bend',
-  #   [ 'curve-bend.c', ],
-  #   [ gtk3, gegl, gdk_pixbuf, ],
-  # ],
+  [
+    'curve-bend',
+    [ 'curve-bend.c', ],
+    [ gtk3, gegl, gdk_pixbuf, ],
+  ],
   [
     'decompose',
     [ 'decompose.c', ],
@@ -291,11 +286,6 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'fractal-trace',
-    [ 'fractal-trace.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'goat-exercise',
     [ 'goat-exercise.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
@@ -408,11 +398,6 @@ common_exes_list = [
   [
     'unit-editor',
     [ 'unit-editor.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'unsharp-mask',
-    [ 'unsharp-mask.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [

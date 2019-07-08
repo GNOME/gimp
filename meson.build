@@ -125,6 +125,10 @@ conf.set10('ARCH_PPC64',  arch_ppc64)
 host_os = host_machine.system().to_lower()
 message('Host os: ' + host_os)
 
+platform_linux = (
+  host_os.contains('linux')
+)
+
 platform_win32 = (
   host_os.contains('mingw') or
   host_os.contains('cygwin') or
@@ -223,9 +227,6 @@ if (get_option('buildtype') == 'release' or
 
 endif
 
-################################################################################
-# Mandatory Dependencies
-
 ######
 #     # ###### #####  ###### #    # #####  ###### #    #  ####  # ######  ####
 #     # #      #    # #      ##   # #    # #      ##   # #    # # #      #
@@ -234,13 +235,27 @@ endif
 #     # #      #      #      #   ## #    # #      #   ## #    # # #      #    #
 ######  ###### #      ###### #    # #####  ###### #    #  ####  # ######  ####
 
+<<<<<<< HEAD
+=======
+no_dep = dependency('', required: false)
+
+################################################################################
+# Mandatory Dependencies
+
+relocatable_bundle = get_option('relocatable-bundle')
+conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
+>>>>>>> e7cbd98f5e... Update from autotools
 
 
 math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
+<<<<<<< HEAD
 babl              = dependency('babl',               version: '>=0.1.51')
+=======
+babl              = dependency('babl',               version: '>=0.1.66')
+>>>>>>> e7cbd98f5e... Update from autotools
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -254,7 +269,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.3')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.16')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -283,11 +298,16 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
 
+<<<<<<< HEAD
 libmypaint_brushes_bundled = get_option('with-bundled-mypaint-brushes')
 conf.set('ENABLE_BUNDLED_MYPAINT_BRUSHES', libmypaint_brushes_bundled)
 
 if libmypaint_brushes_bundled
   libmypaint_brushes = dependency('', required: false)
+=======
+if relocatable_bundle
+  libmypaint_brushes = no_dep
+>>>>>>> e7cbd98f5e... Update from autotools
   libmypaint_brushes_dir = join_paths(
     '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
   )
@@ -368,11 +388,49 @@ endif
 libsocket         = cc.find_library('socket', required: false)
 conf.set('HAVE_LIBSOCKET', libsocket.found())
 
+################################################################################
+# Check for extension support
+
+appstream_glib = dependency('appstream-glib',     version: '>=0.7.7')
+
+libarchive = dependency('libarchive')
+
 
 ################################################################################
-# Check for Dr. Mingw
+# Check for debug console (Win32)
 
-drmingw = dependency('', required: false)
+if platform_win32
+  conf.set('ENABLE_WIN32_DEBUG_CONSOLE', get_option('win32-debug-console'))
+endif
+
+################################################################################
+# Check for 32-bit DLLs (Win32 64-bit)
+
+if platform_win32 and arch_x86_64
+  conf.set('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
+endif
+
+################################################################################
+# Check for detailed backtraces support
+
+## Check for libbacktrace
+
+libbacktrace = ( get_option('libbacktrace')
+  ? cc.find_library('backtrace', has_headers: 'backtrace.h', required: false)
+  : no_dep
+)
+conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
+
+## Check for libunwind
+libunwind = ( get_option('libunwind')
+  ? dependency('libunwind', version: '>=1.1.0', required: false)
+  : no_dep
+)
+conf.set('HAVE_LIBUNWIND', libunwind.found())
+
+
+## Check for Dr. Mingw
+drmingw = no_dep
 if platform_win32
   exchndl = cc.find_library('exchndl')
   exchndl_fn = cc.has_function('ExcHndlSetLogFileNameA', dependencies: exchndl)
@@ -382,6 +440,12 @@ if platform_win32
 endif
 conf.set('HAVE_EXCHNDL', drmingw.found())
 
+
+detailed_backtraces = (
+  libbacktrace.found() or
+  libunwind.found() or
+  drmingw.found()
+)
 
 ################################################################################
 # Check for x11 support
@@ -510,7 +574,9 @@ if libwebp.found() and libwebpmux.found() and libwebpdemux.found()
 endif
 
 
-libheif = dependency('libheif', version: '>=1.1.0', required: get_option('heif'))
+libheif = dependency('libheif', version: '>=1.3.2', required: get_option('heif'))
+conf.set('HAVE_LIBHEIF_4_1_0', libheif.version().version_compare('>=1.4.0'))
+
 if libheif.found()
   MIMEtypes += [
     'image/heif',
@@ -526,8 +592,8 @@ if get_option('poppler')
   # All modern distributions have at least this version and CJK/Cyrillic
   # support should not be considered as "second-zone citizen".
   poppler = [
-    dependency('poppler-glib', version: '>=0.44.0'),
-    dependency('poppler-data', version: '>=0.4.7'),
+    dependency('poppler-glib', version: '>=0.69.0'),
+    dependency('poppler-data', version: '>=0.4.9'),
   ]
 else
   poppler = dependency('', required: false)
@@ -717,6 +783,8 @@ if have_vector_icons
     shared_mime_info = dependency('shared-mime-info')
   endif
 endif
+
+gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg', required: true)
 
 xvfb_run = find_program('xvfb-run', required: get_option('xvfb-run'))
 conf.set('HAVE_XVFB_RUN', xvfb_run.found())
@@ -1434,8 +1502,10 @@ Optional Features:
   Language selection:  @0@'''.format(isocodes.found()) +'''
   Vector icons:        @0@'''.format(have_vector_icons) +'''
   Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
-  Bundled MyPaint Brushes: @0@ (at @1@)'''.format('enable_bundled_mypaint_brushes', libmypaint_brushes_dir)+'''
-  Default ICC directory:   @0@'''.format(icc_directory)+'''
+  Relocatable Bundle:  @0@'''.format(relocatable_bundle)+'''
+  Default ICC directory:     @0@'''.format(icc_directory)+'''
+  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder'))+'''
+  Detailed backtraces:       @0@'''.format(detailed_backtraces) +'''
 
 Optional Plug-Ins:
   Ascii Art:           @0@'''.format(libaa.found()) +'''

@@ -1,28 +1,29 @@
-plugins_scripts = [
-  'colorxhtml.py',
-  'file-openraster.py',
-  'foggify.py',
-  'gradients-save-as-css.py',
-  'histogram-export.py',
-  'palette-offset.py',
-  'palette-sort.py',
-  'palette-to-gradient.py',
-  'py-slice.py',
-  'python-eval.py',
+plugins_subdirs = [
+  'colorxhtml',
+  'file-openraster',
+  'foggify',
+  'gradients-save-as-css',
+  'histogram-export',
+  'palette-offset',
+  'palette-sort',
+  'palette-to-gradient',
+  'py-slice',
+  'python-eval',
+  'spyro_plus',
 ]
 
 if not stable
-  plugins_scripts += [
-    'benchmark-foreground-extract.py',
-    'clothify.py',
-    'shadow_bevel.py',
-    'sphere.py',
-    'whirlpinch.py',
+  plugins_subdirs += [
+    'benchmark-foreground-extract',
+    'clothify',
+    'shadow_bevel',
+    'sphere',
+    'whirlpinch',
   ]
 endif
 
 
-install_data(plugins_scripts,
+install_subdir(plugins_subdirs,
   install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )
 install_data([

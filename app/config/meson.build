@@ -42,6 +42,7 @@ test('app-config',
 
     dependencies: [
       gegl, gio, gio_specific,
+      appstream_glib,
     ],
     link_with: [
       libgimpbase,
