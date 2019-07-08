@@ -63,6 +63,8 @@
 #include "core/gimplayer-new.h"
 #include "core/gimplayer-xcf.h"
 #include "core/gimplayermask.h"
+#include "core/gimplink.h"
+#include "core/gimplinklayer.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
@@ -163,7 +165,8 @@ static gboolean        xcf_load_layer_props   (XcfInfo       *info,
 static gboolean        xcf_check_layer_props  (XcfInfo       *info,
                                                GList        **item_path,
                                                gboolean      *is_group_layer,
-                                               gboolean      *is_text_layer);
+                                               gboolean      *is_text_layer,
+                                               gboolean      *is_link_layer);
 static gboolean        xcf_load_channel_props (XcfInfo       *info,
                                                GimpImage     *image,
                                                GimpChannel  **channel,
@@ -2172,6 +2175,29 @@ xcf_load_layer_props (XcfInfo    *info,
                                     "gimp-vector-layer-data", data,
                                     (GDestroyNotify) xcf_load_free_vector_data);
           }
+
+        case PROP_LINK_LAYER_DATA:
+            {
+              GimpLink *link;
+              gchar    *path;
+              guint32   flags;
+              gboolean  is_selected_layer;
+
+              xcf_read_int32 (info, &flags, 1);
+              xcf_read_string (info, &path, 1);
+
+              link = gimp_link_new (info->gimp, g_file_new_for_path (path));
+              g_free (path);
+
+              is_selected_layer = (g_list_find (info->selected_layers, *layer ) != NULL);
+              if (is_selected_layer)
+                info->selected_layers = g_list_remove (info->selected_layers, *layer);
+
+              gimp_link_layer_from_layer (layer, link, flags);
+
+              if (is_selected_layer)
+                info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+            }
           break;
 
         case PROP_GROUP_ITEM:

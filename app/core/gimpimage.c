@@ -71,6 +71,7 @@
 #include "gimplayer-floating-selection.h"
 #include "gimplayermask.h"
 #include "gimplayerstack.h"
+#include "gimplinklayer.h"
 #include "gimpmarshal.h"
 #include "gimppalette.h"
 #include "gimpparasitelist.h"
@@ -3024,6 +3025,14 @@ gimp_image_get_xcf_version (GimpImage    *image,
                                        "GIMP 3.2"));
           version = MAX (24, version);
         }
+
+      /* Need version 25 for link layers. */
+      if (GIMP_IS_LINK_LAYER (layer))
+        {
+          ADD_REASON (g_strdup_printf (_("Link layers were added in %s"),
+                                       "GIMP 3.2"));
+          version = MAX (25, version);
+        }
     }
   g_list_free (items);
 
@@ -3204,6 +3213,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (version_string) *version_string = "GIMP 3.0";
       break;
     case 24:
+    case 25:
       if (gimp_version)   *gimp_version   = 320;
       if (version_string) *version_string = "GIMP 3.2";
       break;
