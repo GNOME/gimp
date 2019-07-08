@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -234,6 +234,7 @@ static const GimpDialogFactoryEntry entries[] =
   FOREIGN ("gimp-hue-saturation-tool-dialog",      TRUE,  FALSE),
   FOREIGN ("gimp-levels-tool-dialog",              TRUE,  TRUE),
   FOREIGN ("gimp-measure-tool-dialog",             TRUE,  FALSE),
+  FOREIGN ("gimp-offset-tool-dialog",              TRUE,  FALSE),
   FOREIGN ("gimp-operation-tool-dialog",           TRUE,  FALSE),
   FOREIGN ("gimp-posterize-tool-dialog",           TRUE,  FALSE),
   FOREIGN ("gimp-rotate-tool-dialog",              TRUE,  FALSE),
@@ -249,6 +250,7 @@ static const GimpDialogFactoryEntry entries[] =
   FOREIGN ("gimp-gradient-editor-color-dialog",    TRUE,  FALSE),
   FOREIGN ("gimp-palette-editor-color-dialog",     TRUE,  FALSE),
   FOREIGN ("gimp-colormap-editor-color-dialog",    TRUE,  FALSE),
+  FOREIGN ("gimp-colormap-selection-color-dialog", TRUE,  FALSE),
 
   FOREIGN ("gimp-controller-editor-dialog",        FALSE, TRUE),
   FOREIGN ("gimp-controller-action-dialog",        FALSE, TRUE),
@@ -290,6 +292,8 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_close_all_get,          TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-quit-dialog",
             dialogs_quit_get,               TRUE, FALSE, FALSE),
+  TOPLEVEL ("gimp-extensions-dialog",
+            dialogs_extensions_get,         TRUE, TRUE,  TRUE),
 
   /*  docks  */
   DOCK ("gimp-dock",

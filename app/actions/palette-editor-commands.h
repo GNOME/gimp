@@ -12,24 +12,26 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __PALETTE_EDITOR_COMMANDS_H__
 #define __PALETTE_EDITOR_COMMANDS_H__
 
 
-void   palette_editor_edit_color_cmd_callback   (GtkAction *action,
-                                                 gpointer   data);
-void   palette_editor_new_color_cmd_callback    (GtkAction *action,
-                                                 gint       value,
-                                                 gpointer   data);
-void   palette_editor_delete_color_cmd_callback (GtkAction *action,
-                                                 gpointer   data);
+void   palette_editor_edit_color_cmd_callback   (GimpAction *action,
+                                                 GVariant   *value,
+                                                 gpointer    data);
+void   palette_editor_new_color_cmd_callback    (GimpAction *action,
+                                                 GVariant   *value,
+                                                 gpointer    data);
+void   palette_editor_delete_color_cmd_callback (GimpAction *action,
+                                                 GVariant   *value,
+                                                 gpointer    data);
 
-void   palette_editor_zoom_cmd_callback         (GtkAction *action,
-                                                 gint       value,
-                                                 gpointer   data);
+void   palette_editor_zoom_cmd_callback         (GimpAction *action,
+                                                 GVariant   *value,
+                                                 gpointer    data);
 
 
 #endif /* __PALETTE_EDITOR_COMMANDS_H__ */

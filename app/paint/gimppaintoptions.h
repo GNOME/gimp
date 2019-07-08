@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PAINT_OPTIONS_H__
@@ -54,7 +54,7 @@ struct _GimpGradientPaintOptions
 {
   gboolean                    gradient_reverse;
   GimpGradientBlendColorSpace gradient_blend_color_space;
-  GimpRepeatMode              gradient_repeat;
+  GimpRepeatMode              gradient_repeat; /* only used by gradient tool */
 };
 
 struct _GimpSmoothingOptions

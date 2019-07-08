@@ -205,7 +205,6 @@ EXPORTS
 	gimp_drawable_free_shadow
 	gimp_drawable_get
 	gimp_drawable_get_buffer
-	gimp_drawable_get_color_uchar
 	gimp_drawable_get_format
 	gimp_drawable_get_pixel
 	gimp_drawable_get_shadow_buffer
@@ -214,7 +213,6 @@ EXPORTS
 	gimp_drawable_get_thumbnail
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_tile
-	gimp_drawable_get_tile2
 	gimp_drawable_has_alpha
 	gimp_drawable_height
 	gimp_drawable_histogram
@@ -279,7 +277,6 @@ EXPORTS
 	gimp_get_color_configuration
 	gimp_get_default_comment
 	gimp_get_default_unit
-	gimp_get_icon_theme_dir
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
 	gimp_get_parasite
@@ -287,7 +284,6 @@ EXPORTS
 	gimp_get_pdb_error
 	gimp_get_pdb_status
 	gimp_get_progname
-	gimp_get_theme_dir
 	gimp_getpid
 	gimp_gimprc_query
 	gimp_gimprc_set
@@ -642,17 +638,13 @@ EXPORTS
 	gimp_quit
 	gimp_read_expect_msg
 	gimp_register_file_handler_mime
+	gimp_register_file_handler_priority
 	gimp_register_file_handler_raw
 	gimp_register_file_handler_uri
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
 	gimp_register_thumbnail_loader
-	gimp_rgn_iterate1
-	gimp_rgn_iterate2
-	gimp_rgn_iterator_dest
-	gimp_rgn_iterator_free
-	gimp_rgn_iterator_new
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_selection_all

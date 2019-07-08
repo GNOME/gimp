@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -405,11 +405,11 @@ gauss (gdouble f)
 }
 
 /* set up lookup table */
-static guchar *
+static gfloat *
 gimp_brush_generated_calc_lut (gdouble radius,
                                gdouble hardness)
 {
-  guchar  *lookup;
+  gfloat  *lookup;
   gint     length;
   gint     x;
   gdouble  d;
@@ -419,7 +419,7 @@ gimp_brush_generated_calc_lut (gdouble radius,
 
   length = OVERSAMPLING * ceil (1 + sqrt (2 * SQR (ceil (radius + 1.0))));
 
-  lookup = g_malloc (length);
+  lookup = gegl_scratch_new (gfloat, length);
   sum = 0.0;
 
   if ((1.0 - hardness) < 0.0000004)
@@ -449,12 +449,12 @@ gimp_brush_generated_calc_lut (gdouble radius,
         buffer[x % OVERSAMPLING] = gauss (pow (d / radius, exponent));
 
       sum += buffer[x % OVERSAMPLING];
-      lookup[x++] = RINT (sum * (255.0 / OVERSAMPLING));
+      lookup[x++] = sum / OVERSAMPLING;
     }
 
   while (x < length)
     {
-      lookup[x++] = 0;
+      lookup[x++] = 0.0f;
     }
 
   return lookup;
@@ -472,9 +472,9 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                            GimpVector2             *xaxis,
                            GimpVector2             *yaxis)
 {
-  guchar      *centerp;
-  guchar      *lookup;
-  guchar       a;
+  gfloat      *centerp;
+  gfloat      *lookup;
+  gfloat       a;
   gint         x, y;
   gdouble      c, s, cs, ss;
   GimpVector2  x_axis;
@@ -497,12 +497,12 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                                  &s, &c, &x_axis, &y_axis);
 
   mask = gimp_temp_buf_new (width, height,
-                            babl_format ("Y u8"));
+                            babl_format ("Y float"));
 
   half_width  = width  / 2;
   half_height = height / 2;
 
-  centerp = gimp_temp_buf_get_data (mask) +
+  centerp = (gfloat *) gimp_temp_buf_get_data (mask) +
             half_height * width + half_width;
 
   lookup = gimp_brush_generated_calc_lut (radius, hardness);
@@ -553,7 +553,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
           if (d < radius + 1)
             a = lookup[(gint) RINT (d * OVERSAMPLING)];
           else
-            a = 0;
+            a = 0.0f;
 
           centerp[y * width + x] = a;
 
@@ -562,7 +562,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
         }
     }
 
-  g_free (lookup);
+  gegl_scratch_free (lookup);
 
   if (xaxis)
     *xaxis = x_axis;

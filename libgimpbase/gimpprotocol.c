@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -539,6 +539,16 @@ _gp_config_read (GIOChannel      *channel,
   if (! _gimp_wire_read_string (channel,
                                 &config->icon_theme_dir, 1, user_data))
     goto cleanup;
+  if (! _gimp_wire_read_int64 (channel,
+                               &config->tile_cache_size, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_string (channel,
+                                &config->swap_path, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_int32 (channel,
+                               (guint32 *) &config->num_processors, 1,
+                               user_data))
+    goto cleanup;
 
   msg->data = config;
   return;
@@ -548,6 +558,7 @@ _gp_config_read (GIOChannel      *channel,
   g_free (config->wm_class);
   g_free (config->display_name);
   g_free (config->icon_theme_dir);
+  g_free (config->swap_path);
   g_slice_free (GPConfig, config);
 }
 
@@ -628,6 +639,16 @@ _gp_config_write (GIOChannel      *channel,
   if (! _gimp_wire_write_string (channel,
                                  &config->icon_theme_dir, 1, user_data))
     return;
+  if (! _gimp_wire_write_int64 (channel,
+                                &config->tile_cache_size, 1, user_data))
+    return;
+  if (! _gimp_wire_write_string (channel,
+                                 &config->swap_path, 1, user_data))
+    return;
+  if (! _gimp_wire_write_int32 (channel,
+                                (const guint32 *) &config->num_processors, 1,
+                                user_data))
+    return;
 }
 
 static void
@@ -640,6 +661,8 @@ _gp_config_destroy (GimpWireMessage *msg)
       g_free (config->app_name);
       g_free (config->wm_class);
       g_free (config->display_name);
+      g_free (config->icon_theme_dir);
+      g_free (config->swap_path);
       g_slice_free (GPConfig, config);
     }
 }
@@ -1012,7 +1035,7 @@ _gp_proc_install_read (GIOChannel      *channel,
                                 &proc_install->date, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_string (channel,
-                                &proc_install->menu_path, 1, user_data))
+                                &proc_install->menu_label, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_string (channel,
                                 &proc_install->image_types, 1, user_data))
@@ -1074,7 +1097,7 @@ _gp_proc_install_read (GIOChannel      *channel,
   g_free (proc_install->author);
   g_free (proc_install->copyright);
   g_free (proc_install->date);
-  g_free (proc_install->menu_path);
+  g_free (proc_install->menu_label);
   g_free (proc_install->image_types);
 
   if (proc_install->params)
@@ -1136,7 +1159,7 @@ _gp_proc_install_write (GIOChannel      *channel,
                                  &proc_install->date, 1, user_data))
     return;
   if (! _gimp_wire_write_string (channel,
-                                 &proc_install->menu_path, 1, user_data))
+                                 &proc_install->menu_label, 1, user_data))
     return;
   if (! _gimp_wire_write_string (channel,
                                  &proc_install->image_types, 1, user_data))
@@ -1200,7 +1223,7 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
       g_free (proc_install->author);
       g_free (proc_install->copyright);
       g_free (proc_install->date);
-      g_free (proc_install->menu_path);
+      g_free (proc_install->menu_label);
       g_free (proc_install->image_types);
 
       for (i = 0; i < proc_install->nparams; i++)

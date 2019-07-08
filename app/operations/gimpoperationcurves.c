@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -70,12 +70,13 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
   point_class->process = gimp_operation_curves_process;
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_LINEAR,
-                                   g_param_spec_boolean ("linear",
-                                                         "Linear",
-                                                         "Whether to operate on linear RGB",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
+                                   GIMP_OPERATION_POINT_FILTER_PROP_TRC,
+                                   g_param_spec_enum ("trc",
+                                                      "Linear/Percptual",
+                                                      "What TRC to operate on",
+                                                      GIMP_TYPE_TRC_TYPE,
+                                                      GIMP_TRC_NON_LINEAR,
+                                                      G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,

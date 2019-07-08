@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -119,6 +119,8 @@ static void   gimp_display_shell_sample_point_move_handler  (GimpImage        *i
                                                              GimpSamplePoint  *sample_point,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_mode_changed_handler       (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_precision_changed_handler  (GimpImage        *image,
                                                              GimpDisplayShell *shell);
@@ -262,14 +264,14 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "invalidate-preview",
                     G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
                     shell);
+  g_signal_connect (image, "mode-changed",
+                    G_CALLBACK (gimp_display_shell_mode_changed_handler),
+                    shell);
   g_signal_connect (image, "precision-changed",
                     G_CALLBACK (gimp_display_shell_precision_changed_handler),
                     shell);
   g_signal_connect (image, "profile-changed",
                     G_CALLBACK (gimp_display_shell_profile_changed_handler),
-                    shell);
-  g_signal_connect (image, "precision-changed",
-                    G_CALLBACK (gimp_display_shell_precision_changed_handler),
                     shell);
   g_signal_connect (image, "saved",
                     G_CALLBACK (gimp_display_shell_saved_handler),
@@ -481,6 +483,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_precision_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_mode_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_invalidate_preview_handler,
@@ -843,6 +848,13 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
   gimp_display_shell_icon_update (shell);
+}
+
+static void
+gimp_display_shell_mode_changed_handler (GimpImage        *image,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_profile_update (shell);
 }
 
 static void

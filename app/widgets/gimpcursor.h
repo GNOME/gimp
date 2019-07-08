@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CURSOR_H__
 #define __GIMP_CURSOR_H__
 
 
-GdkCursor      * gimp_cursor_new    (GdkDisplay         *display,
+GdkCursor      * gimp_cursor_new    (GdkWindow          *window,
                                      GimpHandedness      cursor_handedness,
                                      GimpCursorType      cursor_type,
                                      GimpToolCursorType  tool_cursor,

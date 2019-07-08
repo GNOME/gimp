@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -54,9 +54,7 @@ struct _GimpCanvasPenPrivate
 };
 
 #define GET_PRIVATE(pen) \
-        G_TYPE_INSTANCE_GET_PRIVATE (pen, \
-                                     GIMP_TYPE_CANVAS_PEN, \
-                                     GimpCanvasPenPrivate)
+        ((GimpCanvasPenPrivate *) gimp_canvas_pen_get_instance_private ((GimpCanvasPen *) (pen)))
 
 
 /*  local function prototypes  */
@@ -74,8 +72,8 @@ static void             gimp_canvas_pen_stroke       (GimpCanvasItem *item,
                                                       cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpCanvasPen, gimp_canvas_pen,
-               GIMP_TYPE_CANVAS_POLYGON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasPen, gimp_canvas_pen,
+                            GIMP_TYPE_CANVAS_POLYGON)
 
 #define parent_class gimp_canvas_pen_parent_class
 
@@ -101,8 +99,6 @@ gimp_canvas_pen_class_init (GimpCanvasPenClass *klass)
                                    g_param_spec_int ("width", NULL, NULL,
                                                      1, G_MAXINT, 1,
                                                      GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasPenPrivate));
 }
 
 static void

@@ -15,7 +15,6 @@ endif
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Config\"				\
 	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"	\
-	-DGIMPDATADIR=\""$(datadir)"\"				\
 	-I$(top_builddir)					\
 	-I$(top_srcdir)						\
 	-I$(top_builddir)/app					\
@@ -105,6 +104,7 @@ test_config_LDADD = \
 	../vectors/libappvectors.a					\
 	../core/libappcore.a						\
 	../file/libappfile.a						\
+	../file-data/libappfile-data.a					\
 	../text/libapptext.a						\
 	../paint/libapppaint.a						\
 	../gegl/libappgegl.a						\
@@ -120,6 +120,7 @@ test_config_LDADD = \
 	$(libgimpmath)							\
 	$(libgimpconfig)						\
 	$(libgimpbase)							\
+	$(APPSTREAM_GLIB_LIBS)						\
 	$(PANGOCAIRO_LIBS)						\
 	$(HARFBUZZ_LIBS)						\
 	$(GDK_PIXBUF_LIBS)						\
@@ -128,6 +129,7 @@ test_config_LDADD = \
 	$(GEXIV2_LIBS)							\
 	$(Z_LIBS)							\
 	$(JSON_C_LIBS)							\
+	$(LIBARCHIVE_LIBS)						\
 	$(LIBMYPAINT_LIBS)						\
 	$(libm)
 

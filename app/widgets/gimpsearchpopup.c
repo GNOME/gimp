@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -35,6 +35,7 @@
 #include "gimpaction.h"
 #include "gimppopup.h"
 #include "gimpsearchpopup.h"
+#include "gimptoggleaction.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
@@ -109,13 +110,13 @@ static void       gimp_search_popup_run_selected         (GimpSearchPopup   *pop
 static void       gimp_search_popup_setup_results        (GtkWidget        **results_list,
                                                           GtkWidget        **list_view);
 
-static gchar    * gimp_search_popup_find_accel_label     (GtkAction         *action);
+static gchar    * gimp_search_popup_find_accel_label     (GimpAction        *action);
 static gboolean   gimp_search_popup_view_accel_find_func (GtkAccelKey       *key,
                                                           GClosure          *closure,
                                                           gpointer           data);
 
 
-G_DEFINE_TYPE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
 
 #define parent_class gimp_search_popup_parent_class
 
@@ -166,16 +167,12 @@ gimp_search_popup_class_init (GimpSearchPopupClass *klass)
                                    g_param_spec_pointer ("callback-data", NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpSearchPopupPrivate));
 }
 
 static void
 gimp_search_popup_init (GimpSearchPopup *search_popup)
 {
-  search_popup->priv = G_TYPE_INSTANCE_GET_PRIVATE (search_popup,
-                                                    GIMP_TYPE_SEARCH_POPUP,
-                                                    GimpSearchPopupPrivate);
+  search_popup->priv = gimp_search_popup_get_instance_private (search_popup);
 }
 
 /************ Public Functions ****************/
@@ -197,10 +194,11 @@ gimp_search_popup_new (Gimp                    *gimp,
                        GimpSearchPopupCallback  callback,
                        gpointer                 callback_data)
 {
-  GtkWidget    *widget;
+  GtkWidget *widget;
 
   widget = g_object_new (GIMP_TYPE_SEARCH_POPUP,
                          "type",          GTK_WINDOW_TOPLEVEL,
+                         "type-hint",     GDK_WINDOW_TYPE_HINT_DIALOG,
                          "decorated",     TRUE,
                          "modal",         TRUE,
                          "role",          role,
@@ -210,6 +208,7 @@ gimp_search_popup_new (Gimp                    *gimp,
                          "callback",      callback,
                          "callback-data", callback_data,
                          NULL);
+  gtk_window_set_modal (GTK_WINDOW (widget), FALSE);
 
 
   return widget;
@@ -218,7 +217,7 @@ gimp_search_popup_new (Gimp                    *gimp,
 /**
  * gimp_search_popup_add_result:
  * @popup:   the #GimpSearchPopup.
- * @action:  a #GtkAction to add in results list.
+ * @action:  a #GimpAction to add in results list.
  * @section: the section to add @action.
  *
  * Adds @action in the @popup's results at @section.
@@ -227,7 +226,7 @@ gimp_search_popup_new (Gimp                    *gimp,
  */
 void
 gimp_search_popup_add_result (GimpSearchPopup *popup,
-                              GtkAction       *action,
+                              GimpAction      *action,
                               gint             section)
 {
   GtkTreeIter   iter;
@@ -246,7 +245,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
   gchar        *escaped_tooltip = NULL;
   gboolean      has_tooltip  = FALSE;
 
-  label = g_strstrip (gimp_strip_uline (gtk_action_get_label (action)));
+  label = g_strstrip (gimp_strip_uline (gimp_action_get_label (action)));
 
   if (! label || strlen (label) == 0)
     {
@@ -256,16 +255,16 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 
   escaped_label = g_markup_escape_text (label, -1);
 
-  if (GTK_IS_TOGGLE_ACTION (action))
+  if (GIMP_IS_TOGGLE_ACTION (action))
     {
-      if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
+      if (gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action)))
         icon_name = "gtk-ok";
       else
         icon_name = "gtk-no";
     }
   else
     {
-      icon_name = gtk_action_get_icon_name (action);
+      icon_name = gimp_action_get_icon_name (action);
     }
 
   accel_string = gimp_search_popup_find_accel_label (action);
@@ -275,7 +274,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
       has_shortcut = TRUE;
     }
 
-  tooltip = gtk_action_get_tooltip (action);
+  tooltip = gimp_action_get_tooltip (action);
   if (tooltip != NULL)
     {
       escaped_tooltip = g_markup_escape_text (tooltip, -1);
@@ -289,7 +288,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                             has_tooltip ? "\n" : "",
                             has_tooltip ? escaped_tooltip : "");
 
-  action_name = g_markup_escape_text (gtk_action_get_name (action), -1);
+  action_name = g_markup_escape_text (gimp_action_get_name (action), -1);
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (popup->priv->results_list));
   store = GTK_LIST_STORE (model);
@@ -324,7 +323,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
                       COLUMN_TOOLTIP,   action_name,
                       COLUMN_ACTION,    action,
                       COLUMN_SECTION,   section,
-                      COLUMN_SENSITIVE, gtk_action_is_sensitive (action),
+                      COLUMN_SENSITIVE, gimp_action_is_sensitive (action),
                       -1);
 
   g_free (accel_string);
@@ -341,8 +340,7 @@ gimp_search_popup_add_result (GimpSearchPopup *popup,
 static void
 gimp_search_popup_constructed (GObject *object)
 {
-  GimpSearchPopup *popup  = GIMP_SEARCH_POPUP (object);
-  GdkScreen       *screen = gdk_screen_get_default ();
+  GimpSearchPopup *popup = GIMP_SEARCH_POPUP (object);
   GtkWidget       *main_vbox;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -386,11 +384,6 @@ gimp_search_popup_constructed (GObject *object)
   g_signal_connect (popup->priv->results_list, "row-activated",
                     G_CALLBACK (results_list_row_activated),
                     popup);
-
-  /* Default size of the search popup showing the result list is half
-   * the screen. */
-  if (window_height == 0)
-    window_height = gdk_screen_get_height (screen) / 2;
 }
 
 static void
@@ -450,19 +443,26 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
   GimpSearchPopup *popup = GIMP_SEARCH_POPUP (widget);
+  GdkRectangle     workarea;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (widget),
+                            &workarea);
+
+  if (window_height == 0)
+    {
+      /* Default to half the monitor */
+      window_height = workarea.height / 2;
+    }
 
   if (gtk_widget_get_visible (widget) &&
       gtk_widget_get_visible (popup->priv->list_view))
     {
-      GdkScreen *screen = gdk_screen_get_default ();
-
       /* Save the window height when results are shown so that resizes
        * by the user are saved across searches.
        */
-      window_height = MAX (gdk_screen_get_height (screen) / 4,
-                           allocation->height);
+      window_height = MAX (workarea.height / 4, allocation->height);
     }
 }
 
@@ -659,16 +659,16 @@ gimp_search_popup_run_selected (GimpSearchPopup *popup)
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      GtkAction *action;
+      GimpAction *action;
 
       gtk_tree_model_get (model, &iter, COLUMN_ACTION, &action, -1);
 
-      if (gtk_action_is_sensitive (action))
+      if (gimp_action_is_sensitive (action))
         {
           /* Close the search popup on activation. */
           GIMP_POPUP_CLASS (parent_class)->cancel (GIMP_POPUP (popup));
 
-          gtk_action_activate (action);
+          gimp_action_activate (action);
         }
 
       g_object_unref (action);
@@ -689,7 +689,7 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
-                              GTK_TYPE_ACTION,
+                              GIMP_TYPE_ACTION,
                               G_TYPE_BOOLEAN,
                               G_TYPE_INT);
   *results_list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -724,7 +724,7 @@ gimp_search_popup_setup_results (GtkWidget **results_list,
 }
 
 static gchar *
-gimp_search_popup_find_accel_label (GtkAction *action)
+gimp_search_popup_find_accel_label (GimpAction *action)
 {
   guint            accel_key     = 0;
   GdkModifierType  accel_mask    = 0;
@@ -734,8 +734,8 @@ gimp_search_popup_find_accel_label (GtkAction *action)
   GimpUIManager   *manager;
 
   manager       = gimp_ui_managers_from_name ("<Image>")->data;
-  accel_group   = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
-  accel_closure = gtk_action_get_accel_closure (action);
+  accel_group   = gimp_ui_manager_get_accel_group (manager);
+  accel_closure = gimp_action_get_accel_closure (action);
 
   if (accel_closure)
     {
@@ -760,8 +760,7 @@ gimp_search_popup_find_accel_label (GtkAction *action)
       /* The value returned by gtk_accelerator_get_label() must be
        * freed after use.
        */
-      g_free (accel_string);
-      accel_string = NULL;
+      g_clear_pointer (&accel_string, g_free);
     }
 
   return accel_string;

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  * Ported from the semi-flatten plug-in
  * by Adam D. Moss, adam@foxbox.org.  1998/01/27
@@ -92,8 +92,8 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
 
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
-                                                        "Color",
-                                                        "The color",
+                                                        _("Color"),
+                                                        _("The color"),
                                                         FALSE, &white,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -147,8 +147,9 @@ gimp_operation_semi_flatten_set_property (GObject      *object,
 static void
 gimp_operation_semi_flatten_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("RGBA float"));
-  gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  gegl_operation_set_format (operation, "input",  babl_format_with_space ("RGBA float", space));
+  gegl_operation_set_format (operation, "output", babl_format_with_space ("RGBA float", space));
 }
 
 static gboolean

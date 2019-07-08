@@ -115,38 +115,6 @@ gimp_brush_generated_shape_get_type (void)
 }
 
 GType
-gimp_bucket_fill_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_BUCKET_FILL_FG, "GIMP_BUCKET_FILL_FG", "fg" },
-    { GIMP_BUCKET_FILL_BG, "GIMP_BUCKET_FILL_BG", "bg" },
-    { GIMP_BUCKET_FILL_PATTERN, "GIMP_BUCKET_FILL_PATTERN", "pattern" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_BUCKET_FILL_FG, NC_("bucket-fill-mode", "FG color fill"), NULL },
-    { GIMP_BUCKET_FILL_BG, NC_("bucket-fill-mode", "BG color fill"), NULL },
-    { GIMP_BUCKET_FILL_PATTERN, NC_("bucket-fill-mode", "Pattern fill"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpBucketFillMode", values);
-      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
-      gimp_type_set_translation_context (type, "bucket-fill-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_cap_style_get_type (void)
 {
   static const GEnumValue values[] =
@@ -708,6 +676,7 @@ gimp_gradient_segment_type_get_type (void)
     { GIMP_GRADIENT_SEGMENT_SINE, "GIMP_GRADIENT_SEGMENT_SINE", "sine" },
     { GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING, "GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING", "sphere-increasing" },
     { GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING, "GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING", "sphere-decreasing" },
+    { GIMP_GRADIENT_SEGMENT_STEP, "GIMP_GRADIENT_SEGMENT_STEP", "step" },
     { 0, NULL, NULL }
   };
 
@@ -724,6 +693,7 @@ gimp_gradient_segment_type_get_type (void)
     /* Translators: this is an abbreviated version of "Spherical (decreasing)".
        Keep it short. */
     { GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING, NC_("gradient-segment-type", "Spherical (dec)"), NULL },
+    { GIMP_GRADIENT_SEGMENT_STEP, NC_("gradient-segment-type", "Step"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1181,6 +1151,7 @@ gimp_offset_type_get_type (void)
   {
     { GIMP_OFFSET_BACKGROUND, "GIMP_OFFSET_BACKGROUND", "background" },
     { GIMP_OFFSET_TRANSPARENT, "GIMP_OFFSET_TRANSPARENT", "transparent" },
+    { GIMP_OFFSET_WRAP_AROUND, "GIMP_OFFSET_WRAP_AROUND", "wrap-around" },
     { 0, NULL, NULL }
   };
 
@@ -1188,6 +1159,7 @@ gimp_offset_type_get_type (void)
   {
     { GIMP_OFFSET_BACKGROUND, "GIMP_OFFSET_BACKGROUND", NULL },
     { GIMP_OFFSET_TRANSPARENT, "GIMP_OFFSET_TRANSPARENT", NULL },
+    { GIMP_OFFSET_WRAP_AROUND, "GIMP_OFFSET_WRAP_AROUND", NULL },
     { 0, NULL, NULL }
   };
 
@@ -1444,16 +1416,28 @@ gimp_precision_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_PRECISION_U8_LINEAR, "GIMP_PRECISION_U8_LINEAR", "u8-linear" },
-    { GIMP_PRECISION_U8_GAMMA, "GIMP_PRECISION_U8_GAMMA", "u8-gamma" },
+    { GIMP_PRECISION_U8_NON_LINEAR, "GIMP_PRECISION_U8_NON_LINEAR", "u8-non-linear" },
+    { GIMP_PRECISION_U8_PERCEPTUAL, "GIMP_PRECISION_U8_PERCEPTUAL", "u8-perceptual" },
     { GIMP_PRECISION_U16_LINEAR, "GIMP_PRECISION_U16_LINEAR", "u16-linear" },
-    { GIMP_PRECISION_U16_GAMMA, "GIMP_PRECISION_U16_GAMMA", "u16-gamma" },
+    { GIMP_PRECISION_U16_NON_LINEAR, "GIMP_PRECISION_U16_NON_LINEAR", "u16-non-linear" },
+    { GIMP_PRECISION_U16_PERCEPTUAL, "GIMP_PRECISION_U16_PERCEPTUAL", "u16-perceptual" },
     { GIMP_PRECISION_U32_LINEAR, "GIMP_PRECISION_U32_LINEAR", "u32-linear" },
-    { GIMP_PRECISION_U32_GAMMA, "GIMP_PRECISION_U32_GAMMA", "u32-gamma" },
+    { GIMP_PRECISION_U32_NON_LINEAR, "GIMP_PRECISION_U32_NON_LINEAR", "u32-non-linear" },
+    { GIMP_PRECISION_U32_PERCEPTUAL, "GIMP_PRECISION_U32_PERCEPTUAL", "u32-perceptual" },
     { GIMP_PRECISION_HALF_LINEAR, "GIMP_PRECISION_HALF_LINEAR", "half-linear" },
-    { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", "half-gamma" },
+    { GIMP_PRECISION_HALF_NON_LINEAR, "GIMP_PRECISION_HALF_NON_LINEAR", "half-non-linear" },
+    { GIMP_PRECISION_HALF_PERCEPTUAL, "GIMP_PRECISION_HALF_PERCEPTUAL", "half-perceptual" },
     { GIMP_PRECISION_FLOAT_LINEAR, "GIMP_PRECISION_FLOAT_LINEAR", "float-linear" },
-    { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", "float-gamma" },
+    { GIMP_PRECISION_FLOAT_NON_LINEAR, "GIMP_PRECISION_FLOAT_NON_LINEAR", "float-non-linear" },
+    { GIMP_PRECISION_FLOAT_PERCEPTUAL, "GIMP_PRECISION_FLOAT_PERCEPTUAL", "float-perceptual" },
     { GIMP_PRECISION_DOUBLE_LINEAR, "GIMP_PRECISION_DOUBLE_LINEAR", "double-linear" },
+    { GIMP_PRECISION_DOUBLE_NON_LINEAR, "GIMP_PRECISION_DOUBLE_NON_LINEAR", "double-non-linear" },
+    { GIMP_PRECISION_DOUBLE_PERCEPTUAL, "GIMP_PRECISION_DOUBLE_PERCEPTUAL", "double-perceptual" },
+    { GIMP_PRECISION_U8_GAMMA, "GIMP_PRECISION_U8_GAMMA", "u8-gamma" },
+    { GIMP_PRECISION_U16_GAMMA, "GIMP_PRECISION_U16_GAMMA", "u16-gamma" },
+    { GIMP_PRECISION_U32_GAMMA, "GIMP_PRECISION_U32_GAMMA", "u32-gamma" },
+    { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", "half-gamma" },
+    { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", "float-gamma" },
     { GIMP_PRECISION_DOUBLE_GAMMA, "GIMP_PRECISION_DOUBLE_GAMMA", "double-gamma" },
     { 0, NULL, NULL }
   };
@@ -1461,17 +1445,29 @@ gimp_precision_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_PRECISION_U8_LINEAR, NC_("precision", "8-bit linear integer"), NULL },
-    { GIMP_PRECISION_U8_GAMMA, NC_("precision", "8-bit gamma integer"), NULL },
+    { GIMP_PRECISION_U8_NON_LINEAR, NC_("precision", "8-bit non-linear integer"), NULL },
+    { GIMP_PRECISION_U8_PERCEPTUAL, NC_("precision", "8-bit perceptual integer"), NULL },
     { GIMP_PRECISION_U16_LINEAR, NC_("precision", "16-bit linear integer"), NULL },
-    { GIMP_PRECISION_U16_GAMMA, NC_("precision", "16-bit gamma integer"), NULL },
+    { GIMP_PRECISION_U16_NON_LINEAR, NC_("precision", "16-bit non-linear integer"), NULL },
+    { GIMP_PRECISION_U16_PERCEPTUAL, NC_("precision", "16-bit perceptual integer"), NULL },
     { GIMP_PRECISION_U32_LINEAR, NC_("precision", "32-bit linear integer"), NULL },
-    { GIMP_PRECISION_U32_GAMMA, NC_("precision", "32-bit gamma integer"), NULL },
+    { GIMP_PRECISION_U32_NON_LINEAR, NC_("precision", "32-bit non-linear integer"), NULL },
+    { GIMP_PRECISION_U32_PERCEPTUAL, NC_("precision", "32-bit perceptual integer"), NULL },
     { GIMP_PRECISION_HALF_LINEAR, NC_("precision", "16-bit linear floating point"), NULL },
-    { GIMP_PRECISION_HALF_GAMMA, NC_("precision", "16-bit gamma floating point"), NULL },
+    { GIMP_PRECISION_HALF_NON_LINEAR, NC_("precision", "16-bit non-linear floating point"), NULL },
+    { GIMP_PRECISION_HALF_PERCEPTUAL, NC_("precision", "16-bit perceptual floating point"), NULL },
     { GIMP_PRECISION_FLOAT_LINEAR, NC_("precision", "32-bit linear floating point"), NULL },
-    { GIMP_PRECISION_FLOAT_GAMMA, NC_("precision", "32-bit gamma floating point"), NULL },
+    { GIMP_PRECISION_FLOAT_NON_LINEAR, NC_("precision", "32-bit non-linear floating point"), NULL },
+    { GIMP_PRECISION_FLOAT_PERCEPTUAL, NC_("precision", "32-bit perceptual floating point"), NULL },
     { GIMP_PRECISION_DOUBLE_LINEAR, NC_("precision", "64-bit linear floating point"), NULL },
-    { GIMP_PRECISION_DOUBLE_GAMMA, NC_("precision", "64-bit gamma floating point"), NULL },
+    { GIMP_PRECISION_DOUBLE_NON_LINEAR, NC_("precision", "64-bit non-linear floating point"), NULL },
+    { GIMP_PRECISION_DOUBLE_PERCEPTUAL, NC_("precision", "64-bit perceptual floating point"), NULL },
+    { GIMP_PRECISION_U8_GAMMA, "GIMP_PRECISION_U8_GAMMA", NULL },
+    { GIMP_PRECISION_U16_GAMMA, "GIMP_PRECISION_U16_GAMMA", NULL },
+    { GIMP_PRECISION_U32_GAMMA, "GIMP_PRECISION_U32_GAMMA", NULL },
+    { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", NULL },
+    { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", NULL },
+    { GIMP_PRECISION_DOUBLE_GAMMA, "GIMP_PRECISION_DOUBLE_GAMMA", NULL },
     { 0, NULL, NULL }
   };
 
@@ -1649,13 +1645,13 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_R, NC_("select-criterion", "Red"), NULL },
     { GIMP_SELECT_CRITERION_G, NC_("select-criterion", "Green"), NULL },
     { GIMP_SELECT_CRITERION_B, NC_("select-criterion", "Blue"), NULL },
-    { GIMP_SELECT_CRITERION_H, NC_("select-criterion", "Hue (HSV)"), NULL },
-    { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "Saturation (HSV)"), NULL },
-    { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "Value (HSV)"), NULL },
+    { GIMP_SELECT_CRITERION_H, NC_("select-criterion", "HSV Hue"), NULL },
+    { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "HSV Saturation"), NULL },
+    { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "HSV Value"), NULL },
     { GIMP_SELECT_CRITERION_A, NC_("select-criterion", "Alpha"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "Lightness (LCH)"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "Chroma (LCH)"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "Hue (LCH)"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "LCh Lightness"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "LCh Chroma"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "LCh Hue"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1771,6 +1767,10 @@ gimp_text_direction_get_type (void)
   {
     { GIMP_TEXT_DIRECTION_LTR, "GIMP_TEXT_DIRECTION_LTR", "ltr" },
     { GIMP_TEXT_DIRECTION_RTL, "GIMP_TEXT_DIRECTION_RTL", "rtl" },
+    { GIMP_TEXT_DIRECTION_TTB_RTL, "GIMP_TEXT_DIRECTION_TTB_RTL", "ttb-rtl" },
+    { GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT, "GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT", "ttb-rtl-upright" },
+    { GIMP_TEXT_DIRECTION_TTB_LTR, "GIMP_TEXT_DIRECTION_TTB_LTR", "ttb-ltr" },
+    { GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT, "GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT", "ttb-ltr-upright" },
     { 0, NULL, NULL }
   };
 
@@ -1778,6 +1778,10 @@ gimp_text_direction_get_type (void)
   {
     { GIMP_TEXT_DIRECTION_LTR, NC_("text-direction", "From left to right"), NULL },
     { GIMP_TEXT_DIRECTION_RTL, NC_("text-direction", "From right to left"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_RTL, NC_("text-direction", "Vertical, right to left (mixed orientation)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT, NC_("text-direction", "Vertical, right to left (upright orientation)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_LTR, NC_("text-direction", "Vertical, left to right (mixed orientation)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT, NC_("text-direction", "Vertical, left to right (upright orientation)"), NULL },
     { 0, NULL, NULL }
   };
 

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -224,6 +224,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
+  /* see issue #2642 */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (statusbar->unit_combo), 1);
+
   gtk_widget_set_can_focus (statusbar->unit_combo, FALSE);
   g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->unit_combo,
@@ -269,7 +272,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->horizontal_flip_icon);
 
-  image = gtk_image_new_from_icon_name ("gimp-flip-horizontal",
+  image = gtk_image_new_from_icon_name ("object-flip-horizontal",
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->horizontal_flip_icon), image);
   gtk_widget_show (image);
@@ -283,7 +286,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->vertical_flip_icon);
 
-  image = gtk_image_new_from_icon_name ("gimp-flip-vertical",
+  image = gtk_image_new_from_icon_name ("object-flip-vertical",
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->vertical_flip_icon), image);
   gtk_widget_show (image);
@@ -294,7 +297,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   statusbar->label = gtk_label_new ("");
   gtk_label_set_ellipsize (GTK_LABEL (statusbar->label), PANGO_ELLIPSIZE_END);
-  gtk_widget_set_halign (GTK_WIDGET (statusbar->label), GTK_ALIGN_START);
+  gtk_label_set_justify (GTK_LABEL (statusbar->label), GTK_JUSTIFY_LEFT);
+  gtk_widget_set_halign (statusbar->label, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
   gtk_widget_show (statusbar->label);
 
@@ -387,10 +391,15 @@ static void
 gimp_statusbar_style_updated (GtkWidget *widget)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
+  PangoLayout   *layout;
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
 
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+  layout = gtk_widget_create_pango_layout (widget, " ");
+  pango_layout_get_pixel_size (layout, &statusbar->icon_space_width, NULL);
+  g_object_unref (layout);
 }
 
 static GimpProgress *
@@ -402,8 +411,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
 
   if (! statusbar->progress_active)
     {
-      GtkWidget     *bar = statusbar->progressbar;
-      GtkAllocation  allocation;
+      GtkWidget *bar = statusbar->progressbar;
 
       statusbar->progress_active           = TRUE;
       statusbar->progress_value            = 0.0;
@@ -427,18 +435,8 @@ gimp_statusbar_progress_start (GimpProgress *progress,
           gtk_widget_show (statusbar->cancel_button);
         }
 
-      gtk_widget_get_allocation (statusbar->label, &allocation);
-
       gtk_widget_show (statusbar->progressbar);
       gtk_widget_hide (statusbar->label);
-
-      /*  This shit is needed so that the progress bar is drawn in the
-       *  correct place in the cases where we suck completely and run
-       *  an operation that blocks the GUI and doesn't let the main
-       *  loop run.
-       */
-      gtk_container_resize_children (GTK_CONTAINER (statusbar));
-      gtk_widget_size_allocate (statusbar->progressbar, &allocation);
 
       if (! gtk_widget_get_visible (GTK_WIDGET (statusbar)))
         {
@@ -446,10 +444,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
           statusbar->progress_shown = TRUE;
         }
 
-#if 0
-      /* FIXME flush_expose */
-      gimp_widget_flush_expose (bar);
-#endif
+      gimp_widget_flush_expose ();
 
       gimp_statusbar_override_window_title (statusbar);
 
@@ -508,10 +503,7 @@ gimp_statusbar_progress_set_text (GimpProgress *progress,
     {
       gimp_statusbar_replace (statusbar, "progress", NULL, "%s", message);
 
-#if 0
-      /* FIXME flush_expose */
-      gimp_widget_flush_expose (bar);
-#endif
+      gimp_widget_flush_expose ();
 
       gimp_statusbar_override_window_title (statusbar);
     }
@@ -549,10 +541,7 @@ gimp_statusbar_progress_set_value (GimpProgress *progress,
               gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar),
                                              percentage);
 
-#if 0
-              /* FIXME flush_expose */
-              gimp_widget_flush_expose (bar);
-#endif
+              gimp_widget_flush_expose ();
             }
         }
     }
@@ -587,10 +576,7 @@ gimp_statusbar_progress_pulse (GimpProgress *progress)
 
           gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
-#if 0
-          /* FIXME flush_expose */
-          gimp_widget_flush_expose (bar);
-#endif
+          gimp_widget_flush_expose ();
         }
     }
 }
@@ -630,10 +616,12 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
           if (icon_name)
             {
               GdkPixbuf *pixbuf;
+              gint       scale_factor;
 
               pixbuf = gimp_statusbar_load_icon (statusbar, icon_name);
 
-              width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf);
+              scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
+              width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf) / scale_factor;
 
               g_object_unref (pixbuf);
 
@@ -681,35 +669,32 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
 
       if (statusbar->icon)
         {
-          PangoAttrList  *attrs;
-          PangoAttribute *attr;
-          PangoRectangle  rect;
-          gchar          *tmp;
+          gchar *tmp;
+          gint   scale_factor;
+          gint   n_spaces;
+          gchar  spaces[] = "                                 ";
 
-          tmp = g_strconcat (" ", text, NULL);
+          scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
+
+          /* Make sure icon_space_width has been initialized to avoid a
+           * division by zero.
+           */
+          if (statusbar->icon_space_width == 0)
+            gimp_statusbar_style_updated (GTK_WIDGET (statusbar));
+          g_return_if_fail (statusbar->icon_space_width != 0);
+
+          /* prepend enough spaces for the icon plus one space */
+          n_spaces = (gdk_pixbuf_get_width (statusbar->icon) / scale_factor +
+                      ICON_SPACING) / statusbar->icon_space_width;
+          n_spaces++;
+
+          tmp = g_strconcat (spaces + strlen (spaces) - n_spaces, text, NULL);
           gtk_label_set_text (GTK_LABEL (statusbar->label), tmp);
           g_free (tmp);
-
-          rect.x      = 0;
-          rect.y      = 0;
-          rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) +
-                                       ICON_SPACING);
-          rect.height = 0;
-
-          attrs = pango_attr_list_new ();
-
-          attr = pango_attr_shape_new (&rect, &rect);
-          attr->start_index = 0;
-          attr->end_index   = 1;
-          pango_attr_list_insert (attrs, attr);
-
-          gtk_label_set_attributes (GTK_LABEL (statusbar->label), attrs);
-          pango_attr_list_unref (attrs);
         }
       else
         {
           gtk_label_set_text (GTK_LABEL (statusbar->label), text);
-          gtk_label_set_attributes (GTK_LABEL (statusbar->label), NULL);
         }
     }
 }
@@ -1283,9 +1268,11 @@ gimp_statusbar_label_draw (GtkWidget     *widget,
 {
   if (statusbar->icon)
     {
-      PangoRectangle  rect;
-      GtkAllocation   allocation;
-      gint            x, y;
+      cairo_surface_t *surface;
+      PangoRectangle   rect;
+      GtkAllocation    allocation;
+      gint             scale_factor;
+      gint             x, y;
 
       gtk_label_get_layout_offsets (GTK_LABEL (widget), &x, &y);
 
@@ -1301,7 +1288,12 @@ gimp_statusbar_label_draw (GtkWidget     *widget,
                                     PANGO_PIXELS (rect.width) : 0);
       y += PANGO_PIXELS (rect.y);
 
-      gdk_cairo_set_source_pixbuf (cr, statusbar->icon, x, y);
+      scale_factor = gtk_widget_get_scale_factor (widget);
+      surface = gdk_cairo_surface_create_from_pixbuf (statusbar->icon,
+                                                      scale_factor, NULL);
+      cairo_set_source_surface (cr, surface, x, y);
+      cairo_surface_destroy (surface);
+
       cairo_paint (cr);
     }
 

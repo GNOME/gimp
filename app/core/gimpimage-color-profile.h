@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpimage-color-profile.h
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015-2018 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_COLOR_PROFILE_H__
@@ -25,9 +25,14 @@
 #define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
 
 
-gboolean             gimp_image_get_is_color_managed   (GimpImage           *image);
-void                 gimp_image_set_is_color_managed   (GimpImage           *image,
-                                                        gboolean             is_color_managed,
+gboolean             gimp_image_get_use_srgb_profile   (GimpImage           *image,
+                                                        gboolean            *hidden_profile);
+void                 gimp_image_set_use_srgb_profile   (GimpImage           *image,
+                                                        gboolean             use_srgb);
+
+GimpColorProfile   * _gimp_image_get_hidden_profile    (GimpImage           *image);
+void                 _gimp_image_set_hidden_profile    (GimpImage           *image,
+                                                        GimpColorProfile    *profile,
                                                         gboolean             push_undo);
 
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
@@ -67,6 +72,11 @@ gboolean             gimp_image_validate_color_profile_by_format
 
 GimpColorProfile   * gimp_image_get_builtin_color_profile
                                                        (GimpImage           *image);
+
+gboolean             gimp_image_assign_color_profile   (GimpImage           *image,
+                                                        GimpColorProfile    *dest_profile,
+                                                        GimpProgress        *progress,
+                                                        GError             **error);
 
 gboolean             gimp_image_convert_color_profile  (GimpImage           *image,
                                                         GimpColorProfile    *dest_profile,

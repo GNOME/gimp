@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DIALOG_CONFIG_H__
@@ -96,6 +96,7 @@ struct _GimpDialogConfig
   gboolean                  vectors_import_scale;
 
   gdouble                   selection_feather_radius;
+  gboolean                  selection_feather_edge_lock;
 
   gdouble                   selection_grow_radius;
 

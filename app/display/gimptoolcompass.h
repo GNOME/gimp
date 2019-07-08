@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOOL_COMPASS_H__
@@ -58,14 +58,15 @@ struct _GimpToolCompassClass
 
 GType            gimp_tool_compass_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_compass_new      (GimpDisplayShell *shell,
-                                             gint              n_points,
-                                             gint              x1,
-                                             gint              y1,
-                                             gint              x2,
-                                             gint              y2,
-                                             gint              y3,
-                                             gint              x3);
+GimpToolWidget * gimp_tool_compass_new      (GimpDisplayShell       *shell,
+                                             GimpCompassOrientation  orinetation,
+                                             gint                    n_points,
+                                             gint                    x1,
+                                             gint                    y1,
+                                             gint                    x2,
+                                             gint                    y2,
+                                             gint                    y3,
+                                             gint                    x3);
 
 
 #endif /* __GIMP_TOOL_COMPASS_H__ */

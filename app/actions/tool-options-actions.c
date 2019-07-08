@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -40,13 +40,13 @@
 
 /*  local function prototypes  */
 
-static void tool_options_actions_update_presets (GimpActionGroup *group,
-                                                 const gchar     *action_prefix,
-                                                 GCallback        callback,
-                                                 const gchar     *help_id,
-                                                 GimpContainer   *presets,
-                                                 gboolean         need_writable,
-                                                 gboolean         need_deletable);
+static void tool_options_actions_update_presets (GimpActionGroup    *group,
+                                                 const gchar        *action_prefix,
+                                                 GimpActionCallback  callback,
+                                                 const gchar        *help_id,
+                                                 GimpContainer      *presets,
+                                                 gboolean            need_writable,
+                                                 gboolean            need_deletable);
 
 
 /*  global variables  */
@@ -75,19 +75,19 @@ static const GimpActionEntry tool_options_actions[] =
 
   { "tool-options-save-new-preset", GIMP_ICON_DOCUMENT_NEW,
     NC_("tool-options-action", "_New Tool Preset..."), "", NULL,
-    G_CALLBACK (tool_options_save_new_preset_cmd_callback),
+    tool_options_save_new_preset_cmd_callback,
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
   { "tool-options-reset", GIMP_ICON_RESET,
     NC_("tool-options-action", "R_eset Tool Options"), NULL,
     NC_("tool-options-action", "Reset to default values"),
-    G_CALLBACK (tool_options_reset_cmd_callback),
+    tool_options_reset_cmd_callback,
     GIMP_HELP_TOOL_OPTIONS_RESET },
 
   { "tool-options-reset-all", GIMP_ICON_RESET,
     NC_("tool-options-action", "Reset _all Tool Options"), NULL,
     NC_("tool-options-action", "Reset all tool options"),
-    G_CALLBACK (tool_options_reset_all_cmd_callback),
+    tool_options_reset_all_cmd_callback,
     GIMP_HELP_TOOL_OPTIONS_RESET }
 };
 
@@ -126,28 +126,28 @@ tool_options_actions_update (GimpActionGroup *group,
   SET_VISIBLE ("tool-options-delete-preset-menu",  tool_info->presets);
 
   tool_options_actions_update_presets (group, "tool-options-save-preset",
-                                       G_CALLBACK (tool_options_save_preset_cmd_callback),
+                                       tool_options_save_preset_cmd_callback,
                                        GIMP_HELP_TOOL_OPTIONS_SAVE,
                                        tool_info->presets,
                                        TRUE /* writable */,
                                        FALSE /* deletable */);
 
   tool_options_actions_update_presets (group, "tool-options-restore-preset",
-                                       G_CALLBACK (tool_options_restore_preset_cmd_callback),
+                                       tool_options_restore_preset_cmd_callback,
                                        GIMP_HELP_TOOL_OPTIONS_RESTORE,
                                        tool_info->presets,
                                        FALSE /* writable */,
                                        FALSE /* deletable */);
 
   tool_options_actions_update_presets (group, "tool-options-edit-preset",
-                                       G_CALLBACK (tool_options_edit_preset_cmd_callback),
+                                       tool_options_edit_preset_cmd_callback,
                                        GIMP_HELP_TOOL_OPTIONS_EDIT,
                                        tool_info->presets,
                                        FALSE /* writable */,
                                        FALSE /* deletable */);
 
   tool_options_actions_update_presets (group, "tool-options-delete-preset",
-                                       G_CALLBACK (tool_options_delete_preset_cmd_callback),
+                                       tool_options_delete_preset_cmd_callback,
                                        GIMP_HELP_TOOL_OPTIONS_DELETE,
                                        tool_info->presets,
                                        FALSE /* writable */,
@@ -158,13 +158,13 @@ tool_options_actions_update (GimpActionGroup *group,
 /*  private function  */
 
 static void
-tool_options_actions_update_presets (GimpActionGroup *group,
-                                     const gchar     *action_prefix,
-                                     GCallback        callback,
-                                     const gchar     *help_id,
-                                     GimpContainer   *presets,
-                                     gboolean         need_writable,
-                                     gboolean         need_deletable)
+tool_options_actions_update_presets (GimpActionGroup    *group,
+                                     const gchar        *action_prefix,
+                                     GimpActionCallback  callback,
+                                     const gchar        *help_id,
+                                     GimpContainer      *presets,
+                                     gboolean            need_writable,
+                                     gboolean            need_deletable)
 {
   GList *list;
   gint   n_children = 0;
@@ -172,18 +172,17 @@ tool_options_actions_update_presets (GimpActionGroup *group,
 
   for (i = 0; ; i++)
     {
-      gchar     *action_name;
-      GtkAction *action;
+      gchar      *action_name;
+      GimpAction *action;
 
       action_name = g_strdup_printf ("%s-%03d", action_prefix, i);
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            action_name);
+      action = gimp_action_group_get_action (group, action_name);
       g_free (action_name);
 
       if (! action)
         break;
 
-      gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+      gimp_action_group_remove_action (group, action);
     }
 
   if (presets)

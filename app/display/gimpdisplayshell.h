@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DISPLAY_SHELL_H__
@@ -161,6 +161,7 @@ struct _GimpDisplayShell
 
   GimpColorTransform *filter_transform;
   const Babl         *filter_format;   /*  filter_buffer's format             */
+  GimpColorProfile   *filter_profile;  /*  filter_format's profile            */
   GeglBuffer         *filter_buffer;   /*  buffer for display filters         */
   guchar             *filter_data;     /*  filter_buffer's pixels             */
   gint                filter_stride;   /*  filter_buffer's stride             */
@@ -207,6 +208,8 @@ struct _GimpDisplayShell
   gdouble            rotate_drag_angle;
   gboolean           scaling;
   gpointer           scroll_info;
+  gboolean           layer_picking;
+  GimpLayer         *picked_layer;
 
   GeglBuffer        *mask;
   gint               mask_offset_x;

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -99,7 +99,7 @@ gimp_action_view_dispose (GObject *object)
         {
           GtkAccelGroup *group;
 
-          group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (view->manager));
+          group = gimp_ui_manager_get_accel_group (view->manager);
 
           g_signal_handlers_disconnect_by_func (group,
                                                 gimp_action_view_accel_changed,
@@ -122,69 +122,6 @@ gimp_action_view_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gboolean
-idle_start_editing (GtkTreeView *tree_view)
-{
-  GtkTreePath *path;
-
-  path = g_object_get_data (G_OBJECT (tree_view), "start-editing-path");
-
-  if (path)
-    {
-      gtk_widget_grab_focus (GTK_WIDGET (tree_view));
-
-      gtk_tree_view_set_cursor (tree_view, path,
-                                gtk_tree_view_get_column (tree_view, 1),
-                                TRUE);
-
-      g_object_set_data (G_OBJECT (tree_view), "start-editing-path", NULL);
-    }
-
-  return FALSE;
-}
-
-static gboolean
-gimp_action_view_button_press (GtkWidget      *widget,
-                               GdkEventButton *event)
-{
-  GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
-  GtkTreePath *path;
-
-  if (event->window != gtk_tree_view_get_bin_window (tree_view))
-    return FALSE;
-
-  if (gtk_tree_view_get_path_at_pos (tree_view,
-                                     (gint) event->x,
-                                     (gint) event->y,
-                                     &path, NULL,
-                                     NULL, NULL))
-    {
-      GClosure *closure;
-      GSource  *source;
-
-      if (gtk_tree_path_get_depth (path) == 1)
-        {
-          gtk_tree_path_free (path);
-          return FALSE;
-        }
-
-      g_object_set_data_full (G_OBJECT (tree_view), "start-editing-path",
-                              path, (GDestroyNotify) gtk_tree_path_free);
-
-      g_signal_stop_emission_by_name (tree_view, "button-press-event");
-
-      closure = g_cclosure_new_object (G_CALLBACK (idle_start_editing),
-                                       G_OBJECT (tree_view));
-
-      source = g_idle_source_new ();
-      g_source_set_closure (source, closure);
-      g_source_attach (source, NULL);
-      g_source_unref (source);
-    }
-
-  return TRUE;
-}
-
 GtkWidget *
 gimp_action_view_new (GimpUIManager *manager,
                       const gchar   *select_action,
@@ -203,7 +140,7 @@ gimp_action_view_new (GimpUIManager *manager,
 
   store = gtk_tree_store_new (GIMP_ACTION_VIEW_N_COLUMNS,
                               G_TYPE_BOOLEAN,         /* COLUMN_VISIBLE        */
-                              GTK_TYPE_ACTION,        /* COLUMN_ACTION         */
+                              GIMP_TYPE_ACTION,       /* COLUMN_ACTION         */
                               G_TYPE_STRING,          /* COLUMN_ICON_NAME      */
                               G_TYPE_STRING,          /* COLUMN_LABEL          */
                               G_TYPE_STRING,          /* COLUMN_LABEL_CASEFOLD */
@@ -212,9 +149,9 @@ gimp_action_view_new (GimpUIManager *manager,
                               GDK_TYPE_MODIFIER_TYPE, /* COLUMN_ACCEL_MASK     */
                               G_TYPE_CLOSURE);        /* COLUMN_ACCEL_CLOSURE  */
 
-  accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
+  accel_group = gimp_ui_manager_get_accel_group (manager);
 
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+  for (list = gimp_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
     {
@@ -230,15 +167,15 @@ gimp_action_view_new (GimpUIManager *manager,
                           GIMP_ACTION_VIEW_COLUMN_LABEL,     group->label,
                           -1);
 
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      actions = gimp_action_group_list_actions (group);
 
       actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
 
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
-          GtkAction       *action        = list2->data;
-          const gchar     *name          = gtk_action_get_name (action);
-          const gchar     *icon_name     = gtk_action_get_icon_name (action);
+          GimpAction      *action        = list2->data;
+          const gchar     *name          = gimp_action_get_name (action);
+          const gchar     *icon_name     = gimp_action_get_icon_name (action);
           gchar           *label;
           gchar           *label_casefold;
           guint            accel_key     = 0;
@@ -249,7 +186,7 @@ gimp_action_view_new (GimpUIManager *manager,
           if (gimp_action_is_gui_blacklisted (name))
             continue;
 
-          label = gimp_strip_uline (gtk_action_get_label (action));
+          label = gimp_strip_uline (gimp_action_get_label (action));
 
           if (! (label && strlen (label)))
             {
@@ -261,7 +198,7 @@ gimp_action_view_new (GimpUIManager *manager,
 
           if (show_shortcuts)
             {
-              accel_closure = gtk_action_get_accel_closure (action);
+              accel_closure = gimp_action_get_accel_closure (action);
 
               if (accel_closure)
                 {
@@ -349,10 +286,6 @@ gimp_action_view_new (GimpUIManager *manager,
 
   if (show_shortcuts)
     {
-      g_signal_connect (view, "button-press-event",
-                        G_CALLBACK (gimp_action_view_button_press),
-                        NULL);
-
       g_signal_connect (accel_group, "accel-changed",
                         G_CALLBACK (gimp_action_view_accel_changed),
                         view);
@@ -423,8 +356,7 @@ gimp_action_view_set_filter (GimpActionView *view,
   if (filter && ! strlen (filter))
     filter = NULL;
 
-  g_free (view->filter);
-  view->filter = NULL;
+  g_clear_pointer (&view->filter, g_free);
 
   if (filter)
     view->filter = g_utf8_casefold (filter, -1);
@@ -635,7 +567,7 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
 
 static void
 gimp_action_view_conflict_confirm (GimpActionView  *view,
-                                   GtkAction       *action,
+                                   GimpAction      *action,
                                    guint            accel_key,
                                    GdkModifierType  accel_mask,
                                    const gchar     *accel_path)
@@ -649,7 +581,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 
   g_object_get (action, "action-group", &group, NULL);
 
-  label = gimp_strip_uline (gtk_action_get_label (action));
+  label = gimp_strip_uline (gimp_action_get_label (action));
 
   accel_string = gtk_accelerator_get_label (accel_key, accel_mask);
 
@@ -702,7 +634,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 static const gchar *
 gimp_action_view_get_accel_action (GimpActionView  *view,
                                    const gchar     *path_string,
-                                   GtkAction      **action_return,
+                                   GimpAction     **action_return,
                                    guint           *action_accel_key,
                                    GdkModifierType *action_accel_mask)
 {
@@ -718,7 +650,7 @@ gimp_action_view_get_accel_action (GimpActionView  *view,
 
   if (gtk_tree_model_get_iter (model, &iter, path))
     {
-      GtkAction *action;
+      GimpAction *action;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_ACTION_VIEW_COLUMN_ACTION,     &action,
@@ -734,7 +666,7 @@ gimp_action_view_get_accel_action (GimpActionView  *view,
 
       *action_return = action;
 
-      return gtk_action_get_accel_path (action);
+      return gimp_action_get_accel_path (action);
     }
 
  done:
@@ -751,7 +683,7 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
                                guint                 hardware_keycode,
                                GimpActionView       *view)
 {
-  GtkAction       *action;
+  GimpAction      *action;
   guint            action_accel_key;
   GdkModifierType  action_accel_mask;
   const gchar     *accel_path;
@@ -806,7 +738,7 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
                                          accel_key, accel_mask, FALSE))
     {
       GtkTreeModel *model;
-      GtkAction    *conflict_action = NULL;
+      GimpAction   *conflict_action = NULL;
       GtkTreeIter   iter;
       gboolean      iter_valid;
 
@@ -876,7 +808,7 @@ gimp_action_view_accel_cleared (GtkCellRendererAccel *accel,
                                 const char           *path_string,
                                 GimpActionView       *view)
 {
-  GtkAction       *action;
+  GimpAction      *action;
   guint            action_accel_key;
   GdkModifierType  action_accel_mask;
   const gchar     *accel_path;

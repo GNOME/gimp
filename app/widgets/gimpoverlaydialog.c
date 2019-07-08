@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -286,17 +286,8 @@ gimp_overlay_dialog_finalize (GObject *object)
 {
   GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
 
-  if (dialog->title)
-    {
-      g_free (dialog->title);
-      dialog->title = NULL;
-    }
-
-  if (dialog->icon_name)
-    {
-      g_free (dialog->icon_name);
-      dialog->icon_name = NULL;
-    }
+  g_clear_pointer (&dialog->title,     g_free);
+  g_clear_pointer (&dialog->icon_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_BASE_ENUMS_H__
@@ -102,26 +102,6 @@ typedef enum
   GIMP_BRUSH_GENERATED_SQUARE,  /*< desc="Square"  >*/
   GIMP_BRUSH_GENERATED_DIAMOND  /*< desc="Diamond" >*/
 } GimpBrushGeneratedShape;
-
-
-/**
- * GimpBucketFillMode:
- * @GIMP_BUCKET_FILL_FG:      FG color fill
- * @GIMP_BUCKET_FILL_BG:      BG color fill
- * @GIMP_BUCKET_FILL_PATTERN: Pattern fill
- *
- * Bucket fill modes.
- */
-#define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
-
-GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BUCKET_FILL_FG,      /*< desc="FG color fill" >*/
-  GIMP_BUCKET_FILL_BG,      /*< desc="BG color fill" >*/
-  GIMP_BUCKET_FILL_PATTERN  /*< desc="Pattern fill"  >*/
-} GimpBucketFillMode;
 
 
 /**
@@ -506,7 +486,8 @@ typedef enum
   GIMP_GRADIENT_SEGMENT_CURVED,             /*< desc="Curved"                                           >*/
   GIMP_GRADIENT_SEGMENT_SINE,               /*< desc="Sinusoidal"                                       >*/
   GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,  /*< desc="Spherical (increasing)", abbrev="Spherical (inc)" >*/
-  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING   /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
+  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,  /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
+  GIMP_GRADIENT_SEGMENT_STEP                /*< desc="Step"                                             >*/
 } GimpGradientSegmentType;
 
 
@@ -792,6 +773,7 @@ typedef enum
  * GimpOffsetType:
  * @GIMP_OFFSET_BACKGROUND:  Background
  * @GIMP_OFFSET_TRANSPARENT: Transparent
+ * @GIMP_OFFSET_WRAP_AROUND: Wrap image around
  *
  * Background fill types for the offset operation.
  **/
@@ -802,7 +784,8 @@ GType gimp_offset_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_OFFSET_BACKGROUND,
-  GIMP_OFFSET_TRANSPARENT
+  GIMP_OFFSET_TRANSPARENT,
+  GIMP_OFFSET_WRAP_AROUND
 } GimpOffsetType;
 
 
@@ -812,7 +795,7 @@ typedef enum
  * @GIMP_ORIENTATION_VERTICAL:   Vertical
  * @GIMP_ORIENTATION_UNKNOWN:    Unknown
  *
- * Orientations for verious purposes.
+ * Orientations for various purposes.
  **/
 #define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
 
@@ -970,18 +953,37 @@ typedef enum
 
 /**
  * GimpPrecision:
- * @GIMP_PRECISION_U8_LINEAR:     8-bit linear integer
- * @GIMP_PRECISION_U8_GAMMA:      8-bit gamma integer
- * @GIMP_PRECISION_U16_LINEAR:    16-bit linear integer
- * @GIMP_PRECISION_U16_GAMMA:     16-bit gamma integer
- * @GIMP_PRECISION_U32_LINEAR:    32-bit linear integer
- * @GIMP_PRECISION_U32_GAMMA:     32-bit gamma integer
- * @GIMP_PRECISION_HALF_LINEAR:   16-bit linear floating point
- * @GIMP_PRECISION_HALF_GAMMA:    16-bit gamma floating point
- * @GIMP_PRECISION_FLOAT_LINEAR:  32-bit linear floating point
- * @GIMP_PRECISION_FLOAT_GAMMA:   32-bit gamma floating point
- * @GIMP_PRECISION_DOUBLE_LINEAR: 64-bit linear floating point
- * @GIMP_PRECISION_DOUBLE_GAMMA:  64-bit gamma floating point
+ * @GIMP_PRECISION_U8_LINEAR:         8-bit linear integer
+ * @GIMP_PRECISION_U8_NON_LINEAR:     8-bit non-linear integer
+ * @GIMP_PRECISION_U8_PERCEPTUAL:     8-bit perceptual integer
+ * @GIMP_PRECISION_U16_LINEAR:        16-bit linear integer
+ * @GIMP_PRECISION_U16_NON_LINEAR:    16-bit non-linear integer
+ * @GIMP_PRECISION_U16_PERCEPTUAL:    16-bit perceptual integer
+ * @GIMP_PRECISION_U32_LINEAR:        32-bit linear integer
+ * @GIMP_PRECISION_U32_NON_LINEAR:    32-bit non-linear integer
+ * @GIMP_PRECISION_U32_PERCEPTUAL:    32-bit perceptual integer
+ * @GIMP_PRECISION_HALF_LINEAR:       16-bit linear floating point
+ * @GIMP_PRECISION_HALF_NON_LINEAR:   16-bit non-linear floating point
+ * @GIMP_PRECISION_HALF_PERCEPTUAL:   16-bit perceptual floating point
+ * @GIMP_PRECISION_FLOAT_LINEAR:      32-bit linear floating point
+ * @GIMP_PRECISION_FLOAT_NON_LINEAR:  32-bit non-linear floating point
+ * @GIMP_PRECISION_FLOAT_PERCEPTUAL:  32-bit perceptual floating point
+ * @GIMP_PRECISION_DOUBLE_LINEAR:     64-bit linear floating point
+ * @GIMP_PRECISION_DOUBLE_NON_LINEAR: 64-bit non-linear floating point
+ * @GIMP_PRECISION_DOUBLE_PERCEPTUAL: 64-bit perceptual floating point
+ *
+ * @GIMP_PRECISION_U8_GAMMA:      deprecated alias for
+ *                                @GIMP_PRECISION_U8_NON_LINEAR
+ * @GIMP_PRECISION_U16_GAMMA:     deprecated alias for
+ *                                @GIMP_PRECISION_U16_NON_LINEAR
+ * @GIMP_PRECISION_U32_GAMMA:     deprecated alias for
+ *                                @GIMP_PRECISION_U32_NON_LINEAR
+ * @GIMP_PRECISION_HALF_GAMMA:    deprecated alias for
+ *                                @GIMP_PRECISION_HALF_NON_LINEAR
+ * @GIMP_PRECISION_FLOAT_GAMMA:   deprecated alias for
+ *                                @GIMP_PRECISION_FLOAT_NON_LINEAR
+ * @GIMP_PRECISION_DOUBLE_GAMMA:  deprecated alias for
+ *                                @GIMP_PRECISION_DOUBLE_NON_LINEAR
  *
  * Precisions for pixel encoding.
  *
@@ -993,18 +995,33 @@ GType gimp_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_PRECISION_U8_LINEAR     = 100, /*< desc="8-bit linear integer"         >*/
-  GIMP_PRECISION_U8_GAMMA      = 150, /*< desc="8-bit gamma integer"          >*/
-  GIMP_PRECISION_U16_LINEAR    = 200, /*< desc="16-bit linear integer"        >*/
-  GIMP_PRECISION_U16_GAMMA     = 250, /*< desc="16-bit gamma integer"         >*/
-  GIMP_PRECISION_U32_LINEAR    = 300, /*< desc="32-bit linear integer"        >*/
-  GIMP_PRECISION_U32_GAMMA     = 350, /*< desc="32-bit gamma integer"         >*/
-  GIMP_PRECISION_HALF_LINEAR   = 500, /*< desc="16-bit linear floating point" >*/
-  GIMP_PRECISION_HALF_GAMMA    = 550, /*< desc="16-bit gamma floating point"  >*/
-  GIMP_PRECISION_FLOAT_LINEAR  = 600, /*< desc="32-bit linear floating point" >*/
-  GIMP_PRECISION_FLOAT_GAMMA   = 650, /*< desc="32-bit gamma floating point"  >*/
-  GIMP_PRECISION_DOUBLE_LINEAR = 700, /*< desc="64-bit linear floating point" >*/
-  GIMP_PRECISION_DOUBLE_GAMMA  = 750  /*< desc="64-bit gamma floating point"  >*/
+  GIMP_PRECISION_U8_LINEAR         = 100, /*< desc="8-bit linear integer"         >*/
+  GIMP_PRECISION_U8_NON_LINEAR     = 150, /*< desc="8-bit non-linear integer"          >*/
+  GIMP_PRECISION_U8_PERCEPTUAL     = 175, /*< desc="8-bit perceptual integer"          >*/
+  GIMP_PRECISION_U16_LINEAR        = 200, /*< desc="16-bit linear integer"        >*/
+  GIMP_PRECISION_U16_NON_LINEAR    = 250, /*< desc="16-bit non-linear integer"         >*/
+  GIMP_PRECISION_U16_PERCEPTUAL    = 275, /*< desc="16-bit perceptual integer"         >*/
+  GIMP_PRECISION_U32_LINEAR        = 300, /*< desc="32-bit linear integer"        >*/
+  GIMP_PRECISION_U32_NON_LINEAR    = 350, /*< desc="32-bit non-linear integer"         >*/
+  GIMP_PRECISION_U32_PERCEPTUAL    = 375, /*< desc="32-bit perceptual integer"         >*/
+  GIMP_PRECISION_HALF_LINEAR       = 500, /*< desc="16-bit linear floating point" >*/
+  GIMP_PRECISION_HALF_NON_LINEAR   = 550, /*< desc="16-bit non-linear floating point"  >*/
+  GIMP_PRECISION_HALF_PERCEPTUAL   = 575, /*< desc="16-bit perceptual floating point"  >*/
+  GIMP_PRECISION_FLOAT_LINEAR      = 600, /*< desc="32-bit linear floating point" >*/
+  GIMP_PRECISION_FLOAT_NON_LINEAR  = 650, /*< desc="32-bit non-linear floating point"  >*/
+  GIMP_PRECISION_FLOAT_PERCEPTUAL  = 675, /*< desc="32-bit perceptual floating point"  >*/
+  GIMP_PRECISION_DOUBLE_LINEAR     = 700, /*< desc="64-bit linear floating point" >*/
+  GIMP_PRECISION_DOUBLE_NON_LINEAR = 750, /*< desc="64-bit non-linear floating point"  >*/
+  GIMP_PRECISION_DOUBLE_PERCEPTUAL = 775, /*< desc="64-bit perceptual floating point"  >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_PRECISION_U8_GAMMA      = GIMP_PRECISION_U8_NON_LINEAR,
+  GIMP_PRECISION_U16_GAMMA     = GIMP_PRECISION_U16_NON_LINEAR,
+  GIMP_PRECISION_U32_GAMMA     = GIMP_PRECISION_U32_NON_LINEAR,
+  GIMP_PRECISION_HALF_GAMMA    = GIMP_PRECISION_HALF_NON_LINEAR,
+  GIMP_PRECISION_FLOAT_GAMMA   = GIMP_PRECISION_FLOAT_NON_LINEAR,
+  GIMP_PRECISION_DOUBLE_GAMMA  = GIMP_PRECISION_DOUBLE_NON_LINEAR
+  #endif
 } GimpPrecision;
 
 
@@ -1102,13 +1119,13 @@ typedef enum
  * @GIMP_SELECT_CRITERION_R:         Red
  * @GIMP_SELECT_CRITERION_G:         Green
  * @GIMP_SELECT_CRITERION_B:         Blue
- * @GIMP_SELECT_CRITERION_H:         Hue (HSV)
- * @GIMP_SELECT_CRITERION_S:         Saturation (HSV)
- * @GIMP_SELECT_CRITERION_V:         Value (HSV)
+ * @GIMP_SELECT_CRITERION_H:         HSV Hue
+ * @GIMP_SELECT_CRITERION_S:         HSV Saturation
+ * @GIMP_SELECT_CRITERION_V:         HSV Value
  * @GIMP_SELECT_CRITERION_A:         Alpha
- * @GIMP_SELECT_CRITERION_LCH_L:     Lightness (LCH)
- * @GIMP_SELECT_CRITERION_LCH_C:     Chroma (LCH)
- * @GIMP_SELECT_CRITERION_LCH_H:     Hue (LCH)
+ * @GIMP_SELECT_CRITERION_LCH_L:     LCh Lightness
+ * @GIMP_SELECT_CRITERION_LCH_C:     LCh Chroma
+ * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue
  *
  * Criterions for color similarity.
  **/
@@ -1118,17 +1135,17 @@ GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"        >*/
-  GIMP_SELECT_CRITERION_R,          /*< desc="Red"              >*/
-  GIMP_SELECT_CRITERION_G,          /*< desc="Green"            >*/
-  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"             >*/
-  GIMP_SELECT_CRITERION_H,          /*< desc="Hue (HSV)"        >*/
-  GIMP_SELECT_CRITERION_S,          /*< desc="Saturation (HSV)" >*/
-  GIMP_SELECT_CRITERION_V,          /*< desc="Value (HSV)"      >*/
-  GIMP_SELECT_CRITERION_A,          /*< desc="Alpha"            >*/
-  GIMP_SELECT_CRITERION_LCH_L,      /*< desc="Lightness (LCH)"  >*/
-  GIMP_SELECT_CRITERION_LCH_C,      /*< desc="Chroma (LCH)"     >*/
-  GIMP_SELECT_CRITERION_LCH_H,      /*< desc="Hue (LCH)"        >*/
+  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"      >*/
+  GIMP_SELECT_CRITERION_R,          /*< desc="Red"            >*/
+  GIMP_SELECT_CRITERION_G,          /*< desc="Green"          >*/
+  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"           >*/
+  GIMP_SELECT_CRITERION_H,          /*< desc="HSV Hue"        >*/
+  GIMP_SELECT_CRITERION_S,          /*< desc="HSV Saturation" >*/
+  GIMP_SELECT_CRITERION_V,          /*< desc="HSV Value"      >*/
+  GIMP_SELECT_CRITERION_A,          /*< desc="Alpha"          >*/
+  GIMP_SELECT_CRITERION_LCH_L,      /*< desc="LCh Lightness"  >*/
+  GIMP_SELECT_CRITERION_LCH_C,      /*< desc="LCh Chroma"     >*/
+  GIMP_SELECT_CRITERION_LCH_H,      /*< desc="LCh Hue"        >*/
 } GimpSelectCriterion;
 
 
@@ -1192,6 +1209,10 @@ typedef enum
  * GimpTextDirection:
  * @GIMP_TEXT_DIRECTION_LTR: From left to right
  * @GIMP_TEXT_DIRECTION_RTL: From right to left
+ * @GIMP_TEXT_DIRECTION_TTB_RTL: Characters are from top to bottom, Lines are from right to left
+ * @GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT: Upright characters are from top to bottom, Lines are from right to left
+ * @GIMP_TEXT_DIRECTION_TTB_LTR: Characters are from top to bottom, Lines are from left to right
+ * @GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT: Upright characters are from top to bottom, Lines are from left to right
  *
  * Text directions.
  **/
@@ -1201,8 +1222,12 @@ GType gimp_text_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_DIRECTION_LTR,   /*< desc="From left to right" >*/
-  GIMP_TEXT_DIRECTION_RTL    /*< desc="From right to left" >*/
+  GIMP_TEXT_DIRECTION_LTR,              /*< desc="From left to right"                                     >*/
+  GIMP_TEXT_DIRECTION_RTL,              /*< desc="From right to left"                                     >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Vertical, right to left (mixed orientation)"  >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Vertical, right to left (upright orientation)" >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Vertical, left to right (mixed orientation)"  >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Vertical, left to right (upright orientation)" >*/
 } GimpTextDirection;
 
 

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpimage-color-profile.c
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015-2018 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -39,8 +39,8 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
-#include "gimpdrawable.h"
 #include "gimperror.h"
+#include "gimplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
@@ -68,40 +68,113 @@ static void   gimp_image_convert_profile_colormap (GimpImage                *ima
                                                    gboolean                  bpc,
                                                    GimpProgress             *progress);
 
+static void   gimp_image_fix_layer_format_spaces  (GimpImage                *image,
+                                                   GimpProgress             *progress);
+
 static void   gimp_image_create_color_transforms  (GimpImage                *image);
 
 
 /*  public functions  */
 
 gboolean
-gimp_image_get_is_color_managed (GimpImage *image)
+gimp_image_get_use_srgb_profile (GimpImage *image,
+                                 gboolean  *hidden_profile)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->is_color_managed;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (hidden_profile)
+    *hidden_profile = (private->hidden_profile != NULL);
+
+  return private->color_profile == NULL;
 }
 
 void
-gimp_image_set_is_color_managed (GimpImage *image,
-                                 gboolean   is_color_managed,
-                                 gboolean   push_undo)
+gimp_image_set_use_srgb_profile (GimpImage *image,
+                                 gboolean   use_srgb)
 {
   GimpImagePrivate *private;
+  gboolean          old_use_srgb;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  is_color_managed = is_color_managed ? TRUE : FALSE;
+  old_use_srgb = (private->color_profile == NULL);
 
-  if (is_color_managed != private->is_color_managed)
+  use_srgb = use_srgb ? TRUE : FALSE;
+
+  if (use_srgb == old_use_srgb)
+    return;
+
+  if (use_srgb)
+    {
+      GimpColorProfile *profile = gimp_image_get_color_profile (image);
+
+      if (profile)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                                       _("Enable 'Use sRGB Profile'"));
+
+          g_object_ref (profile);
+          gimp_image_assign_color_profile (image, NULL, NULL, NULL);
+          _gimp_image_set_hidden_profile (image, profile, TRUE);
+          g_object_unref (profile);
+
+          gimp_image_undo_group_end (image);
+        }
+    }
+  else
+    {
+      GimpColorProfile *hidden = _gimp_image_get_hidden_profile (image);
+
+      if (hidden)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                                       _("Disable 'Use sRGB Profile'"));
+
+          g_object_ref (hidden);
+          gimp_image_assign_color_profile (image, hidden, NULL, NULL);
+          g_object_unref (hidden);
+
+          gimp_image_undo_group_end (image);
+        }
+    }
+}
+
+GimpColorProfile *
+_gimp_image_get_hidden_profile (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return private->hidden_profile;
+}
+
+void
+_gimp_image_set_hidden_profile (GimpImage        *image,
+                                GimpColorProfile *profile,
+                                gboolean          push_undo)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (profile != private->hidden_profile)
     {
       if (push_undo)
-        gimp_image_undo_push_image_color_managed (image, NULL);
+        gimp_image_undo_push_image_hidden_profile (image, NULL);
 
-      private->is_color_managed = is_color_managed;
-
-      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+      g_set_object (&private->hidden_profile, profile);
     }
 }
 
@@ -159,11 +232,11 @@ gimp_image_set_icc_parasite (GimpImage          *image,
       g_return_if_fail (gimp_image_validate_icc_parasite (image, icc_parasite,
                                                           NULL, NULL) == TRUE);
 
-      gimp_image_parasite_attach (image, icc_parasite);
+      gimp_image_parasite_attach (image, icc_parasite, TRUE);
     }
   else
     {
-      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME, TRUE);
     }
 }
 
@@ -177,8 +250,7 @@ gimp_image_validate_icc_profile (GimpImage     *image,
   GimpColorProfile *profile;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (data != NULL, FALSE);
-  g_return_val_if_fail (length != 0, FALSE);
+  g_return_val_if_fail (data != NULL || length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   profile = gimp_color_profile_new_from_icc_profile (data, length, error);
@@ -347,9 +419,9 @@ gimp_image_validate_color_profile_by_format (const Babl         *format,
 
   if (is_builtin)
     {
-      GimpColorProfile *builtin;
-
-      builtin = gimp_babl_format_get_color_profile (format);
+      GimpColorProfile *builtin =
+        gimp_babl_get_builtin_color_profile (gimp_babl_format_get_base_type (format),
+                                             gimp_babl_format_get_trc (format));
 
       *is_builtin = gimp_color_profile_is_equal (profile, builtin);
     }
@@ -366,7 +438,60 @@ gimp_image_get_builtin_color_profile (GimpImage *image)
 
   format = gimp_image_get_layer_format (image, FALSE);
 
-  return gimp_babl_format_get_color_profile (format);
+  return gimp_babl_get_builtin_color_profile (gimp_babl_format_get_base_type (format),
+                                              gimp_babl_format_get_trc (format));
+}
+
+gboolean
+gimp_image_assign_color_profile (GimpImage         *image,
+                                 GimpColorProfile  *dest_profile,
+                                 GimpProgress      *progress,
+                                 GError           **error)
+{
+  GimpColorProfile *src_profile;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (dest_profile == NULL ||
+                        GIMP_IS_COLOR_PROFILE (dest_profile), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (dest_profile &&
+      ! gimp_image_validate_color_profile (image, dest_profile, NULL, error))
+    return FALSE;
+
+  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+  if (src_profile == dest_profile ||
+      (src_profile && dest_profile &&
+       gimp_color_profile_is_equal (src_profile, dest_profile)))
+    return TRUE;
+
+  if (progress)
+    gimp_progress_start (progress, FALSE,
+                         dest_profile ?
+                         _("Assigning color profile") :
+                         _("Discarding color profile"));
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                               dest_profile ?
+                               _("Assign color profile") :
+                               _("Discard color profile"));
+
+  _gimp_image_set_hidden_profile (image, NULL, TRUE);
+
+  gimp_image_set_color_profile (image, dest_profile, NULL);
+  /*  omg...  */
+  gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
+
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+    gimp_image_colormap_update_formats (image);
+
+  gimp_image_fix_layer_format_spaces (image, progress);
+
+  gimp_image_undo_group_end (image);
+
+  return TRUE;
 }
 
 gboolean
@@ -389,7 +514,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  if (! src_profile || gimp_color_profile_is_equal (src_profile, dest_profile))
+  if (gimp_color_profile_is_equal (src_profile, dest_profile))
     return TRUE;
 
   if (progress)
@@ -400,6 +525,15 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));
+
+  /* retain src_profile across gimp_image_set_color_profile() */
+  g_object_ref (src_profile);
+
+  _gimp_image_set_hidden_profile (image, NULL, TRUE);
+
+  gimp_image_set_color_profile (image, dest_profile, NULL);
+  /*  omg...  */
+  gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
 
   switch (gimp_image_get_base_type (image))
     {
@@ -416,13 +550,11 @@ gimp_image_convert_color_profile (GimpImage                *image,
                                            src_profile, dest_profile,
                                            intent, bpc,
                                            progress);
+      gimp_image_fix_layer_format_spaces (image, progress);
       break;
     }
 
-  gimp_image_set_is_color_managed (image, TRUE, TRUE);
-  gimp_image_set_color_profile (image, dest_profile, NULL);
-  /*  omg...  */
-  gimp_image_parasite_detach (image, "icc-profile-name");
+  g_object_unref (src_profile);
 
   gimp_image_undo_group_end (image);
 
@@ -442,8 +574,7 @@ gimp_image_import_color_profile (GimpImage    *image,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_image_get_is_color_managed (image) &&
-      gimp_image_get_color_profile (image))
+  if (gimp_image_get_color_profile (image))
     {
       GimpColorProfilePolicy     policy;
       GimpColorProfile          *dest_profile = NULL;
@@ -506,10 +637,7 @@ gimp_image_get_color_transform_to_srgb_u8 (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_to_srgb_u8;
-
-  return NULL;
+  return private->transform_to_srgb_u8;
 }
 
 GimpColorTransform *
@@ -523,10 +651,7 @@ gimp_image_get_color_transform_from_srgb_u8 (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_from_srgb_u8;
-
-  return NULL;
+  return private->transform_from_srgb_u8;
 }
 
 GimpColorTransform *
@@ -540,10 +665,7 @@ gimp_image_get_color_transform_to_srgb_double (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_to_srgb_double;
-
-  return NULL;
+  return private->transform_to_srgb_double;
 }
 
 GimpColorTransform *
@@ -557,10 +679,7 @@ gimp_image_get_color_transform_from_srgb_double (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_from_srgb_double;
-
-  return NULL;
+  return private->transform_from_srgb_double;
 }
 
 void
@@ -626,6 +745,9 @@ _gimp_image_free_color_profile (GimpImage *image)
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
   g_clear_object (&private->color_profile);
+  private->layer_space = NULL;
+
+  g_clear_object (&private->hidden_profile);
 
   _gimp_image_free_color_transforms (image);
 }
@@ -653,10 +775,23 @@ _gimp_image_update_color_profile (GimpImage          *image,
 
   if (icc_parasite)
     {
+      GError *error = NULL;
+
       private->color_profile =
         gimp_color_profile_new_from_icc_profile (gimp_parasite_data (icc_parasite),
                                                  gimp_parasite_data_size (icc_parasite),
                                                  NULL);
+
+      private->layer_space =
+        gimp_color_profile_get_space (private->color_profile,
+                                      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                      &error);
+      if (! private->layer_space)
+        {
+          g_printerr ("%s: failed to create Babl space from profile: %s\n",
+                      G_STRFUNC, error->message);
+          g_clear_error (&error);
+        }
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
@@ -693,21 +828,28 @@ gimp_image_convert_profile_layers (GimpImage                *image,
 
   while ((drawable = gimp_object_queue_pop (queue)))
     {
-      gimp_drawable_push_undo (drawable, NULL, NULL,
-                               0, 0,
-                               gimp_item_get_width  (GIMP_ITEM (drawable)),
-                               gimp_item_get_height (GIMP_ITEM (drawable)));
+      GimpItem   *item = GIMP_ITEM (drawable);
+      GeglBuffer *buffer;
+      gboolean    alpha;
+
+      alpha = gimp_drawable_has_alpha (drawable);
+
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                gimp_item_get_width  (item),
+                                                gimp_item_get_height (item)),
+                                gimp_image_get_layer_format (image, alpha));
 
       gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
                                        NULL,
                                        src_profile,
-                                       gimp_drawable_get_buffer (drawable),
+                                       buffer,
                                        NULL,
                                        dest_profile,
                                        intent, bpc,
                                        progress);
 
-      gimp_drawable_update (drawable, 0, 0, -1, -1);
+      gimp_drawable_set_buffer (drawable, TRUE, NULL, buffer);
+      g_object_unref (buffer);
     }
 
   g_object_unref (queue);
@@ -722,6 +864,8 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
                                      GimpProgress             *progress)
 {
   GimpColorTransform      *transform;
+  const Babl              *src_format;
+  const Babl              *dest_format;
   GimpColorTransformFlags  flags = 0;
   guchar                  *cmap;
   gint                     n_colors;
@@ -732,10 +876,17 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
   if (bpc)
     flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-  transform = gimp_color_transform_new (src_profile,
-                                        babl_format ("R'G'B' u8"),
-                                        dest_profile,
-                                        babl_format ("R'G'B' u8"),
+  src_format  = gimp_color_profile_get_format (src_profile,
+                                               babl_format ("R'G'B' u8"),
+                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                               NULL);
+  dest_format = gimp_color_profile_get_format (dest_profile,
+                                               babl_format ("R'G'B' u8"),
+                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                               NULL);
+
+  transform = gimp_color_transform_new (src_profile,  src_format,
+                                        dest_profile, dest_format,
                                         intent, flags);
 
   if (transform)
@@ -750,10 +901,39 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
     }
   else
     {
-      g_warning ("cmsCreateTransform() failed!");
+      g_warning ("gimp_color_transform_new() failed!");
     }
 
   g_free (cmap);
+}
+
+static void
+gimp_image_fix_layer_format_spaces (GimpImage    *image,
+                                    GimpProgress *progress)
+{
+  GimpObjectQueue *queue;
+  GList           *layers;
+  GList           *list;
+  GimpLayer       *layer;
+
+  queue = gimp_object_queue_new (progress);
+
+  layers = gimp_image_get_layer_list (image);
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      if (! gimp_viewable_get_children (list->data))
+        gimp_object_queue_push (queue, list->data);
+    }
+
+  g_list_free (layers);
+
+  while ((layer = gimp_object_queue_pop (queue)))
+    {
+      gimp_layer_fix_format_space (layer, TRUE, TRUE);
+    }
+
+  g_object_unref (queue);
 }
 
 static void

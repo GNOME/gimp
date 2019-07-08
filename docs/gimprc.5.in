@@ -283,15 +283,14 @@ are yes and no.
 
 .TP
 (default-image
-    (width 1920)
-    (height 1080)
+    (width 2001)
+    (height 1984)
     (unit pixels)
     (xresolution 300.000000)
     (yresolution 300.000000)
     (resolution-unit inches)
     (image-type rgb)
-    (precision u8-gamma)
-    (color-managed yes)
+    (precision u8-non-linear)
     (color-profile NULL)
     (fill-type background)
     (comment "Created with GIMP"))
@@ -354,6 +353,13 @@ the layers and channels dialog are nice to have but they can slow things down
 when working with large images.  Possible values are yes and no.
 
 .TP
+(group-layer-previews yes)
+
+Sets whether GIMP should create previews of layer groups. Layer group previews
+are more expensive than ordinary layer previews.  Possible values are yes and
+no.
+
+.TP
 (layer-preview-size medium)
 
 Sets the preview size used for layers and channel previews in newly created
@@ -386,8 +392,7 @@ is specified the size defaults to being specified in kilobytes.
     (simulation-use-black-point-compensation no)
     (simulation-optimize yes)
     (simulation-gamut-check no)
-    (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000))
-    (display-module "CdisplayLcms"))
+    (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000)))
 
 Defines the color management behavior.  This is a parameter list.
 
@@ -430,6 +435,11 @@ Which plug-in to use for importing raw digital camera files.  This is a single
 filename.
 
 .TP
+(export-color-profile yes)
+
+Export the image's color profile by default.  Possible values are yes and no.
+
+.TP
 (export-metadata-exif yes)
 
 Export Exif metadata by default.  Possible values are yes and no.
@@ -445,7 +455,7 @@ Export XMP metadata by default.  Possible values are yes and no.
 Export IPTC metadata by default.  Possible values are yes and no.
 
 .TP
-(debug-policy fatal)
+(debug-policy warning)
 
 Try generating debug data for bug reporting when appropriate.  Possible values
 are warning, critical, fatal and never.
@@ -561,6 +571,10 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %A  expands to (clean) if the image is clean, the empty string otherwise
 .br
+%Nx expands to x if the image is export-dirty, the empty string otherwise
+.br
+%Ex expands to x if the image is export-clean, the empty string otherwise
+.br
 %l  the number of layers
 .br
 %L  the number of layers (long form)
@@ -631,6 +645,10 @@ certain % character sequences are recognised and expanded as follows:
 %B  expands to (modified) if the image is dirty, the empty string otherwise
 .br
 %A  expands to (clean) if the image is clean, the empty string otherwise
+.br
+%Nx expands to x if the image is export-dirty, the empty string otherwise
+.br
+%Ex expands to x if the image is export-clean, the empty string otherwise
 .br
 %l  the number of layers
 .br
@@ -830,17 +848,6 @@ Possible values are yes and no.
 Save the tool options when GIMP exits.  Possible values are yes and no.
 
 .TP
-(show-tooltips yes)
-
-Show a tooltip when the pointer hovers over an item.  Possible values are yes
-and no.
-
-.TP
-(tearoff-menus yes)
-
-When enabled, menus can be torn off.  Possible values are yes and no.
-
-.TP
 (can-change-accels no)
 
 When enabled, you can change keyboard shortcuts for menu items by hitting a
@@ -910,6 +917,11 @@ search.
 The name of the theme to use.  This is a string value.
 
 .TP
+(prefer-dark-theme yes)
+
+The name of the theme to use.  Possible values are yes and no.
+
+.TP
 (icon-theme-path "${gimp_dir}/icons:${gimp_data_dir}/icons")
 
 Sets the icon theme search path.  This is a colon-separated list of folders to
@@ -921,10 +933,10 @@ search.
 The name of the icon theme to use.  This is a string value.
 
 .TP
-(icon-size auto)
+(prefer-symbolic-icons yes)
 
-The size of the icons to use.  Possible values are auto, theme, small, medium,
-large and huge.
+When enabled, symbolic icons will be preferred if available.  Possible values
+are yes and no.
 
 .TP
 (use-help yes)
@@ -971,7 +983,7 @@ When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
 
 .TP
-(user-manual-online-uri "http://docs.gimp.org/2.10")
+(user-manual-online-uri "https://docs.gimp.org/2.99")
 
 The location of the online user manual. This is used if 'user-manual-online'
 is enabled.  This is a string value.

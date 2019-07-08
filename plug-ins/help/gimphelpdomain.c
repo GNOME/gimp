@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*  This code is written so that it can also be compiled standalone.
@@ -192,7 +192,7 @@ gimp_help_domain_map (GimpHelpDomain    *domain,
                               */
                              _("Please install the additional help package "
                                "or use the online user manual at: "
-                               "http://docs.gimp.org/"));
+                               "https://docs.gimp.org/"));
                 }
               break;
 

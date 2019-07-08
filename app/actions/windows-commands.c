@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -50,14 +50,15 @@
 
 
 void
-windows_hide_docks_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+windows_hide_docks_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   Gimp     *gimp;
   gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = g_variant_get_boolean (value);
 
   if (active != GIMP_GUI_CONFIG (gimp->config)->hide_docks)
     g_object_set (gimp->config,
@@ -66,31 +67,15 @@ windows_hide_docks_cmd_callback (GtkAction *action,
 }
 
 void
-windows_set_tabs_position_cmd_callback (GtkAction *action,
-                                        GtkAction *current,
-                                        gpointer   data)
-{
-  Gimp         *gimp;
-  GimpPosition  value;
-  return_if_no_gimp (gimp, data);
-
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
-
-  if (value != GIMP_GUI_CONFIG (gimp->config)->tabs_position)
-    g_object_set (gimp->config,
-                  "tabs-position", value,
-                  NULL);
-}
-
-void
-windows_use_single_window_mode_cmd_callback (GtkAction *action,
-                                             gpointer   data)
+windows_use_single_window_mode_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
+                                             gpointer    data)
 {
   Gimp     *gimp;
   gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = g_variant_get_boolean (value);
 
   if (active != GIMP_GUI_CONFIG (gimp->config)->single_window_mode)
     g_object_set (gimp->config,
@@ -99,8 +84,44 @@ windows_use_single_window_mode_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_display_next_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+windows_show_tabs_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
+{
+  Gimp     *gimp;
+  gboolean  active;
+  return_if_no_gimp (gimp, data);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != GIMP_GUI_CONFIG (gimp->config)->show_tabs)
+    g_object_set (gimp->config,
+                  "show-tabs", active,
+                  NULL);
+}
+
+
+void
+windows_set_tabs_position_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
+{
+  Gimp         *gimp;
+  GimpPosition  position;
+  return_if_no_gimp (gimp, data);
+
+  position = (GimpPosition) g_variant_get_int32 (value);
+
+  if (position != GIMP_GUI_CONFIG (gimp->config)->tabs_position)
+    g_object_set (gimp->config,
+                  "tabs-position", position,
+                  NULL);
+}
+
+void
+windows_show_display_next_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
   GimpDisplay *display;
   Gimp        *gimp;
@@ -121,8 +142,9 @@ windows_show_display_next_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_display_previous_cmd_callback (GtkAction *action,
-                                            gpointer   data)
+windows_show_display_previous_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
+                                            gpointer    data)
 {
   GimpDisplay *display;
   Gimp        *gimp;
@@ -143,8 +165,9 @@ windows_show_display_previous_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_display_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+windows_show_display_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpDisplay *display = g_object_get_data (G_OBJECT (action), "display");
 
@@ -152,8 +175,9 @@ windows_show_display_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_dock_cmd_callback (GtkAction *action,
-                                gpointer   data)
+windows_show_dock_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GtkWindow *dock_window = g_object_get_data (G_OBJECT (action), "dock-window");
 
@@ -161,8 +185,9 @@ windows_show_dock_cmd_callback (GtkAction *action,
 }
 
 void
-windows_open_recent_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+windows_open_recent_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpSessionInfo        *info;
   GimpDialogFactoryEntry *entry;

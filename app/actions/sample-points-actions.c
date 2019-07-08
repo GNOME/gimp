@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,7 +47,7 @@ static const GimpToggleActionEntry sample_points_toggle_actions[] =
     NC_("sample-points-action", "_Sample Merged"), "",
     NC_("sample-points-action",
         "Use the composite color of all visible layers"),
-    G_CALLBACK (sample_points_sample_merged_cmd_callback),
+    sample_points_sample_merged_cmd_callback,
     TRUE,
     GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED }
 };

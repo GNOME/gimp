@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2005-03-31 09:03+0200\n"
 "Last-Translator: Canonical Ltd <translations@canonical.com>\n"

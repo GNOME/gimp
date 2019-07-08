@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SYMMETRY_H__
@@ -63,10 +63,10 @@ struct _GimpSymmetryClass
   void       (* update_strokes)             (GimpSymmetry       *symmetry,
                                              GimpDrawable       *drawable,
                                              GimpCoords         *origin);
-  GeglNode * (* get_operation)              (GimpSymmetry       *symmetry,
+  void       (* get_transform)              (GimpSymmetry       *symmetry,
                                              gint                stroke,
-                                             gint                paint_width,
-                                             gint                paint_height);
+                                             gdouble            *angle,
+                                             gboolean           *reflect);
   void       (* active_changed)             (GimpSymmetry       *symmetry);
 
   gboolean   (* update_version)             (GimpSymmetry       *symmetry);
@@ -86,10 +86,15 @@ GimpCoords   * gimp_symmetry_get_origin     (GimpSymmetry       *symmetry);
 gint           gimp_symmetry_get_size       (GimpSymmetry       *symmetry);
 GimpCoords   * gimp_symmetry_get_coords     (GimpSymmetry       *symmetry,
                                              gint                stroke);
-GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
+void           gimp_symmetry_get_transform  (GimpSymmetry       *symmetry,
                                              gint                stroke,
-                                             gint                paint_width,
-                                             gint                paint_height);
+                                             gdouble            *angle,
+                                             gboolean           *reflect);
+void           gimp_symmetry_get_matrix     (GimpSymmetry       *symmetry,
+                                             gint                stroke,
+                                             GimpMatrix3        *matrix);
+GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
+                                             gint                stroke);
 
 gchar        * gimp_symmetry_parasite_name  (GType               type);
 GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);

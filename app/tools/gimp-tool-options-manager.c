@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -33,6 +33,8 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
+
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimp-tool-options-manager.h"
 
@@ -277,7 +279,7 @@ tool_options_manager_global_notify (GimpCoreConfig         *config,
       GimpToolInfo *tool_info = list->data;
 
       /*  don't change the active tool, it is always fully connected
-       *  to the user_context anway because we set its
+       *  to the user_context anyway because we set its
        *  defined/undefined context props in tool_changed()
        */
       if (tool_info == manager->active_tool)
@@ -422,6 +424,13 @@ tool_options_manager_tool_changed (GimpContext            *user_context,
   if (manager->active_tool)
     {
       GimpToolInfo *active = manager->active_tool;
+
+      /*  make sure the tool options GUI always exists, this call
+       *  creates it if needed, so tools always have their option GUI
+       *  available even if the tool options dockable is not open, see
+       *  for example issue #3435
+       */
+      gimp_tools_get_tool_options_gui (active->tool_options);
 
       /*  copy the new tool's context properties that are not
        *  currently global to the user context, so they get used by

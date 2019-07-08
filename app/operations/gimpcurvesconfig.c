@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -39,12 +39,11 @@
 
 #include "gimp-intl.h"
 
-#include "gimp-intl.h"
-
 
 enum
 {
   PROP_0,
+  PROP_TRC,
   PROP_LINEAR,
   PROP_CHANNEL,
   PROP_CURVE
@@ -101,6 +100,14 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-curves";
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRC,
+                         "trc",
+                         _("Linear/Perceptual"),
+                         _("Work on linear or perceptual RGB"),
+                         GIMP_TYPE_TRC_TYPE,
+                         GIMP_TRC_NON_LINEAR, 0);
+
+  /* compat */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
                             "linear",
                             _("Linear"),
@@ -178,8 +185,12 @@ gimp_curves_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_TRC:
+      g_value_set_enum (value, self->trc);
+      break;
+
     case PROP_LINEAR:
-      g_value_set_boolean (value, self->linear);
+      g_value_set_boolean (value, self->trc == GIMP_TRC_LINEAR ? TRUE : FALSE);
       break;
 
     case PROP_CHANNEL:
@@ -206,8 +217,14 @@ gimp_curves_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TRC:
+      self->trc = g_value_get_enum (value);
+      break;
+
     case PROP_LINEAR:
-      self->linear = g_value_get_boolean (value);
+      self->trc = g_value_get_boolean (value) ?
+                  GIMP_TRC_LINEAR : GIMP_TRC_NON_LINEAR;
+      g_object_notify (object, "trc");
       break;
 
     case PROP_CHANNEL:
@@ -244,8 +261,8 @@ gimp_curves_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time",   writer) ||
-      ! gimp_config_serialize_property_by_name (config, "linear", writer))
+  if (! gimp_config_serialize_property_by_name (config, "time", writer) ||
+      ! gimp_config_serialize_property_by_name (config, "trc",  writer))
     return FALSE;
 
   old_channel = c_config->channel;
@@ -301,7 +318,7 @@ gimp_curves_config_equal (GimpConfig *a,
   GimpCurvesConfig     *config_b = GIMP_CURVES_CONFIG (b);
   GimpHistogramChannel  channel;
 
-  if (config_a->linear != config_b->linear)
+  if (config_a->trc != config_b->trc)
     return FALSE;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
@@ -342,7 +359,7 @@ gimp_curves_config_reset (GimpConfig *config)
       gimp_curves_config_reset_channel (c_config);
     }
 
-  gimp_config_reset_property (G_OBJECT (config), "linear");
+  gimp_config_reset_property (G_OBJECT (config), "trc");
   gimp_config_reset_property (G_OBJECT (config), "channel");
 }
 
@@ -364,10 +381,10 @@ gimp_curves_config_copy (GimpConfig  *src,
                         flags);
     }
 
-  dest_config->linear  = src_config->linear;
+  dest_config->trc     = src_config->trc;
   dest_config->channel = src_config->channel;
 
-  g_object_notify (G_OBJECT (dest), "linear");
+  g_object_notify (G_OBJECT (dest), "trc");
   g_object_notify (G_OBJECT (dest), "channel");
 
   return TRUE;
@@ -404,13 +421,10 @@ gimp_curves_config_new_spline (gint32         channel,
   gimp_data_freeze (GIMP_DATA (curve));
 
   gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-  gimp_curve_set_n_points (curve, n_points);
-
-  /*  unset the last point  */
-  gimp_curve_set_point (curve, curve->n_points - 1, -1.0, -1.0);
+  gimp_curve_clear_points (curve);
 
   for (i = 0; i < n_points; i++)
-    gimp_curve_set_point (curve, i,
+    gimp_curve_add_point (curve,
                           (gdouble) points[i * 2],
                           (gdouble) points[i * 2 + 1]);
 
@@ -600,26 +614,26 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_data_freeze (GIMP_DATA (curve));
 
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-      gimp_curve_set_n_points (curve, GIMP_CURVE_N_CRUFT_POINTS);
-
-      gimp_curve_reset (curve, FALSE);
+      gimp_curve_clear_points (curve);
 
       for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
-          if (index[i][j] < 0 || value[i][j] < 0)
-            gimp_curve_set_point (curve, j, -1.0, -1.0);
-          else
-            gimp_curve_set_point (curve, j,
-                                  (gdouble) index[i][j] / 255.0,
-                                  (gdouble) value[i][j] / 255.0);
+          gdouble x;
+          gdouble y;
+
+          x = (gdouble) index[i][j] / 255.0;
+          y = (gdouble) value[i][j] / 255.0;
+
+          if (x >= 0.0)
+            gimp_curve_add_point (curve, x, y);
         }
 
       gimp_data_thaw (GIMP_DATA (curve));
     }
 
-  config->linear = FALSE;
+  config->trc = GIMP_TRC_NON_LINEAR;
 
-  g_object_notify (G_OBJECT (config), "linear");
+  g_object_notify (G_OBJECT (config), "trc");
 
   g_object_thaw_notify (G_OBJECT (config));
 
@@ -645,53 +659,39 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
       GimpCurve *curve = config->curve[i];
       gint       j;
 
-      if (curve->curve_type == GIMP_CURVE_FREE)
+      if (curve->curve_type == GIMP_CURVE_SMOOTH)
         {
-          gint n_points;
+          g_object_ref (curve);
+        }
+      else
+        {
+          curve = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (curve)));
 
-          for (j = 0; j < curve->n_points; j++)
-            {
-              curve->points[j].x = -1;
-              curve->points[j].y = -1;
-            }
-
-          /* pick some points from the curve and make them control
-           * points
-           */
-          n_points = CLAMP (9, curve->n_points / 2, curve->n_points);
-
-          for (j = 0; j < n_points; j++)
-            {
-              gint sample = j * (curve->n_samples - 1) / (n_points - 1);
-              gint point  = j * (curve->n_points  - 1) / (n_points - 1);
-
-              curve->points[point].x = ((gdouble) sample /
-                                        (gdouble) (curve->n_samples - 1));
-              curve->points[point].y = curve->samples[sample];
-            }
+          gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
         }
 
-      for (j = 0; j < curve->n_points; j++)
+      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
-          /* don't use gimp_curve_get_point() because that doesn't
-           * work when the curve type is GIMP_CURVE_FREE
-           */
-          gdouble x = curve->points[j].x;
-          gdouble y = curve->points[j].y;
+          gint x = -1;
+          gint y = -1;
 
-          if (x < 0.0 || y < 0.0)
+          if (j < gimp_curve_get_n_points (curve))
             {
-              g_string_append_printf (string, "%d %d ", -1, -1);
+              gdouble point_x;
+              gdouble point_y;
+
+              gimp_curve_get_point (curve, j, &point_x, &point_y);
+
+              x = floor (point_x * 255.999);
+              y = floor (point_y * 255.999);
             }
-          else
-            {
-              g_string_append_printf (string, "%d %d ",
-                                      (gint) (x * 255.999),
-                                      (gint) (y * 255.999));
-            }
+
+          g_string_append_printf (string, "%d %d ", x, y);
         }
 
       g_string_append_printf (string, "\n");
+
+      g_object_unref (curve);
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SOURCE_TOOL_H__
@@ -37,20 +37,21 @@ typedef struct _GimpSourceToolClass GimpSourceToolClass;
 
 struct _GimpSourceTool
 {
-  GimpBrushTool   parent_instance;
+  GimpBrushTool        parent_instance;
 
-  GimpDisplay    *src_display;
-  gint            src_x;
-  gint            src_y;
+  GimpDisplay         *src_display;
+  gint                 src_x;
+  gint                 src_y;
 
-  gboolean        show_source_outline;
+  gboolean             show_source_outline;
+  GimpCursorPrecision  saved_precision;
 
-  GimpCanvasItem *src_handle;
-  GimpCanvasItem *src_outline;
+  GimpCanvasItem      *src_handle;
+  GimpCanvasItem      *src_outline;
 
-  const gchar    *status_paint;
-  const gchar    *status_set_source;
-  const gchar    *status_set_source_ctrl;
+  const gchar         *status_paint;
+  const gchar         *status_set_source;
+  const gchar         *status_set_source_ctrl;
 };
 
 struct _GimpSourceToolClass

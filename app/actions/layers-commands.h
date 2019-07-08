@@ -12,126 +12,162 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __LAYERS_COMMANDS_H__
 #define __LAYERS_COMMANDS_H__
 
 
-void   layers_edit_cmd_callback               (GtkAction   *action,
-                                               gpointer     data);
-void   layers_edit_text_cmd_callback          (GtkAction   *action,
-                                               gpointer     data);
-void   layers_edit_attributes_cmd_callback    (GtkAction   *action,
-                                               gpointer     data);
+void   layers_edit_cmd_callback               (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_edit_text_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_edit_attributes_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_new_cmd_callback                (GtkAction   *action,
-                                               gpointer     data);
-void   layers_new_last_vals_cmd_callback      (GtkAction   *action,
-                                               gpointer     data);
-void   layers_new_from_visible_cmd_callback   (GtkAction   *action,
-                                               gpointer     data);
+void   layers_new_cmd_callback                (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_new_last_vals_cmd_callback      (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_new_from_visible_cmd_callback   (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_new_group_cmd_callback          (GtkAction   *action,
-                                               gpointer     data);
+void   layers_new_group_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_select_cmd_callback             (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
+void   layers_select_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_raise_cmd_callback              (GtkAction   *action,
-                                               gpointer     data);
-void   layers_raise_to_top_cmd_callback       (GtkAction   *action,
-                                               gpointer     data);
-void   layers_lower_cmd_callback              (GtkAction   *action,
-                                               gpointer     data);
-void   layers_lower_to_bottom_cmd_callback    (GtkAction   *action,
-                                               gpointer     data);
+void   layers_raise_cmd_callback              (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_raise_to_top_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_lower_cmd_callback              (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_lower_to_bottom_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_duplicate_cmd_callback          (GtkAction   *action,
-                                               gpointer     data);
-void   layers_anchor_cmd_callback             (GtkAction   *action,
-                                               gpointer     data);
-void   layers_merge_down_cmd_callback         (GtkAction   *action,
-                                               gpointer     data);
-void   layers_merge_group_cmd_callback        (GtkAction   *action,
-                                               gpointer     data);
-void   layers_delete_cmd_callback             (GtkAction   *action,
-                                               gpointer     data);
-void   layers_text_discard_cmd_callback       (GtkAction   *action,
-                                               gpointer     data);
-void   layers_text_to_vectors_cmd_callback    (GtkAction   *action,
-                                               gpointer     data);
-void   layers_text_along_vectors_cmd_callback (GtkAction   *action,
-                                               gpointer     data);
+void   layers_duplicate_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_anchor_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_merge_down_cmd_callback         (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_merge_group_cmd_callback        (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_delete_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_text_discard_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_text_to_vectors_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_text_along_vectors_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_resize_cmd_callback             (GtkAction   *action,
-                                               gpointer     data);
-void   layers_resize_to_image_cmd_callback    (GtkAction   *action,
-                                               gpointer     data);
-void   layers_scale_cmd_callback              (GtkAction   *action,
-                                               gpointer     data);
-void   layers_crop_to_selection_cmd_callback  (GtkAction   *action,
-                                               gpointer     data);
-void   layers_crop_to_content_cmd_callback    (GtkAction   *action,
-                                               gpointer     data);
+void   layers_resize_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_resize_to_image_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_scale_cmd_callback              (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_crop_to_selection_cmd_callback  (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_crop_to_content_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_mask_add_cmd_callback           (GtkAction   *action,
-                                               gpointer     data);
-void   layers_mask_add_last_vals_cmd_callback (GtkAction   *action,
-                                               gpointer     data);
-void   layers_mask_apply_cmd_callback         (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
-void   layers_mask_edit_cmd_callback          (GtkAction   *action,
-                                               gpointer     data);
-void   layers_mask_show_cmd_callback          (GtkAction   *action,
-                                               gpointer     data);
-void   layers_mask_disable_cmd_callback       (GtkAction   *action,
-                                               gpointer     data);
-void   layers_mask_to_selection_cmd_callback  (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
+void   layers_mask_add_cmd_callback           (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mask_add_last_vals_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mask_apply_cmd_callback         (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mask_edit_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mask_show_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mask_disable_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mask_to_selection_cmd_callback  (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_alpha_add_cmd_callback          (GtkAction   *action,
-                                               gpointer     data);
-void   layers_alpha_remove_cmd_callback       (GtkAction   *action,
-                                               gpointer     data);
-void   layers_alpha_to_selection_cmd_callback (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
+void   layers_alpha_add_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_alpha_remove_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_alpha_to_selection_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_opacity_cmd_callback            (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
-void   layers_mode_cmd_callback               (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
-void   layers_blend_space_cmd_callback        (GtkAction   *action,
-                                               GtkAction   *current,
-                                               gpointer     data);
-void   layers_composite_space_cmd_callback    (GtkAction   *action,
-                                               GtkAction   *current,
-                                               gpointer     data);
-void   layers_composite_mode_cmd_callback     (GtkAction   *action,
-                                               GtkAction   *current,
-                                               gpointer     data);
+void   layers_opacity_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_mode_cmd_callback               (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_blend_space_cmd_callback        (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_composite_space_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_composite_mode_cmd_callback     (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_visible_cmd_callback            (GtkAction   *action,
-                                               gpointer     data);
-void   layers_linked_cmd_callback             (GtkAction   *action,
-                                               gpointer     data);
-void   layers_lock_content_cmd_callback       (GtkAction   *action,
-                                               gpointer     data);
-void   layers_lock_position_cmd_callback      (GtkAction   *action,
-                                               gpointer     data);
-void   layers_lock_alpha_cmd_callback         (GtkAction   *action,
-                                               gpointer     data);
+void   layers_visible_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_linked_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_lock_content_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_lock_position_cmd_callback      (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   layers_lock_alpha_cmd_callback         (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   layers_color_tag_cmd_callback          (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
+void   layers_color_tag_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
 
 #endif /* __LAYERS_COMMANDS_H__ */

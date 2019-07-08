@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -27,6 +27,7 @@
 
 #include "paint-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 
 #include "core/gimp.h"
@@ -168,35 +169,28 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
   if (gimp_source_core_use_source (source_core, source_options))
     {
-      gimp_gegl_buffer_copy (src_buffer,
-                             GEGL_RECTANGLE (src_rect->x,
-                                             src_rect->y,
-                                             paint_area_width,
-                                             paint_area_height),
-                             GEGL_ABYSS_NONE,
-                             paint_buffer,
-                             GEGL_RECTANGLE (paint_area_offset_x,
-                                             paint_area_offset_y,
-                                             0, 0));
-      if (op)
+      if (! op)
         {
-          GeglNode    *graph, *source, *target;
-
-          graph    = gegl_node_new ();
-          source   = gegl_node_new_child (graph,
-                                          "operation", "gegl:buffer-source",
-                                          "buffer", paint_buffer,
-                                          NULL);
-          gegl_node_add_child (graph, op);
-          target  = gegl_node_new_child (graph,
-                                         "operation", "gegl:write-buffer",
-                                         "buffer", paint_buffer,
-                                         NULL);
-
-          gegl_node_link_many (source, op, target, NULL);
-          gegl_node_process (target);
-
-          g_object_unref (graph);
+          gimp_gegl_buffer_copy (src_buffer,
+                                 GEGL_RECTANGLE (src_rect->x,
+                                                 src_rect->y,
+                                                 paint_area_width,
+                                                 paint_area_height),
+                                 GEGL_ABYSS_NONE,
+                                 paint_buffer,
+                                 GEGL_RECTANGLE (paint_area_offset_x,
+                                                 paint_area_offset_y,
+                                                 0, 0));
+        }
+      else
+        {
+          gimp_gegl_apply_operation (src_buffer, NULL, NULL, op,
+                                     paint_buffer,
+                                     GEGL_RECTANGLE (paint_area_offset_x,
+                                                     paint_area_offset_y,
+                                                     paint_area_width,
+                                                     paint_area_height),
+                                     FALSE);
         }
     }
   else if (options->clone_type == GIMP_CLONE_PATTERN)
@@ -251,8 +245,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                  */
                                 source_options->align_mode ==
                                 GIMP_SOURCE_ALIGN_FIXED ?
-                                GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT,
-                                NULL);
+                                GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
 }
 
 static gboolean

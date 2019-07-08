@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -71,7 +71,7 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
 
   operation_class->prepare            = gimp_operation_cage_coef_calc_prepare;
   operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;
-  operation_class->no_cache           = FALSE;
+  operation_class->cache_policy       = GEGL_CACHE_POLICY_ALWAYS;
   operation_class->get_cached_region  = NULL;
 
   source_class->process               = gimp_operation_cage_coef_calc_process;
@@ -212,17 +212,17 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
   n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
   it = gegl_buffer_iterator_new (output, roi, 0, format,
-                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (it))
     {
       /* iterate inside the roi */
       gint  n_pixels = it->length;
-      gint  x = it->roi->x; /* initial x                   */
-      gint  y = it->roi->y; /*           and y coordinates */
+      gint  x = it->items[0].roi.x; /* initial x                   */
+      gint  y = it->items[0].roi.y; /*           and y coordinates */
       gint  j;
 
-      gfloat      *coef = it->data[0];
+      gfloat      *coef = it->items[0].data;
 
       while(n_pixels--)
         {
@@ -282,9 +282,9 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
 
           /* update x and y coordinates */
           x++;
-          if (x >= (it->roi->x + it->roi->width))
+          if (x >= (it->items[0].roi.x + it->items[0].roi.width))
             {
-              x = it->roi->x;
+              x = it->items[0].roi.x;
               y++;
             }
         }

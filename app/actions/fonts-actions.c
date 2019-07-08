@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,7 +47,7 @@ static const GimpActionEntry fonts_actions[] =
   { "fonts-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("fonts-action", "_Rescan Font List"), NULL,
     NC_("fonts-action", "Rescan the installed fonts"),
-    G_CALLBACK (data_refresh_cmd_callback),
+    data_refresh_cmd_callback,
     GIMP_HELP_FONT_REFRESH }
 };
 

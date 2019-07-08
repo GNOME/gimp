@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -89,8 +89,8 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer    *cell,
 
 
 
-G_DEFINE_TYPE (GimpCellRendererColor, gimp_cell_renderer_color,
-               GTK_TYPE_CELL_RENDERER)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCellRendererColor, gimp_cell_renderer_color,
+                            GTK_TYPE_CELL_RENDERER)
 
 #define parent_class gimp_cell_renderer_color_parent_class
 
@@ -130,16 +130,12 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
                                                      DEFAULT_ICON_SIZE,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (object_class, sizeof (GimpCellRendererColorPrivate));
 }
 
 static void
 gimp_cell_renderer_color_init (GimpCellRendererColor *cell)
 {
-  cell->priv = G_TYPE_INSTANCE_GET_PRIVATE (cell,
-                                            GIMP_TYPE_CELL_RENDERER_COLOR,
-                                            GimpCellRendererColorPrivate);
+  cell->priv = gimp_cell_renderer_color_get_instance_private (cell);
 
   gimp_rgba_set (&cell->priv->color, 0.0, 0.0, 0.0, 1.0);
 }

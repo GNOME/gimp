@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_ERASER_H__
 #define __GIMP_ERASER_H__
 
 
-#include "gimpbrushcore.h"
+#include "gimppaintbrush.h"
 
 
 #define GIMP_TYPE_ERASER            (gimp_eraser_get_type ())
@@ -34,12 +34,12 @@ typedef struct _GimpEraserClass GimpEraserClass;
 
 struct _GimpEraser
 {
-  GimpBrushCore  parent_instance;
+  GimpPaintbrush  parent_instance;
 };
 
 struct _GimpEraserClass
 {
-  GimpBrushCoreClass  parent_class;
+  GimpPaintbrushClass  parent_class;
 };
 
 

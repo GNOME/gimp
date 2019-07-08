@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -28,19 +28,20 @@
 
 #include "widgets-types.h"
 
+#include "gimpaction.h"
 #include "gimpradioaction.h"
 
 
-static void   gimp_radio_action_connect_proxy     (GtkAction        *action,
-                                                   GtkWidget        *proxy);
-static void   gimp_radio_action_set_proxy_tooltip (GimpRadioAction  *action,
-                                                   GtkWidget        *proxy);
-static void   gimp_radio_action_tooltip_notify    (GimpRadioAction  *action,
-                                                   const GParamSpec *pspec,
-                                                   gpointer          data);
+static void   gimp_radio_action_connect_proxy (GtkAction      *action,
+                                               GtkWidget      *proxy);
+
+static void   gimp_radio_action_changed       (GtkRadioAction *action,
+                                               GtkRadioAction *current);
 
 
-G_DEFINE_TYPE (GimpRadioAction, gimp_radio_action, GTK_TYPE_RADIO_ACTION)
+G_DEFINE_TYPE_WITH_CODE (GimpRadioAction, gimp_radio_action,
+                         GTK_TYPE_RADIO_ACTION,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
 
 #define parent_class gimp_radio_action_parent_class
 
@@ -48,17 +49,18 @@ G_DEFINE_TYPE (GimpRadioAction, gimp_radio_action, GTK_TYPE_RADIO_ACTION)
 static void
 gimp_radio_action_class_init (GimpRadioActionClass *klass)
 {
-  GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
+  GtkActionClass      *action_class = GTK_ACTION_CLASS (klass);
+  GtkRadioActionClass *radio_class  = GTK_RADIO_ACTION_CLASS (klass);
 
   action_class->connect_proxy = gimp_radio_action_connect_proxy;
+
+  radio_class->changed        = gimp_radio_action_changed;
 }
 
 static void
 gimp_radio_action_init (GimpRadioAction *action)
 {
-  g_signal_connect (action, "notify::tooltip",
-                    G_CALLBACK (gimp_radio_action_tooltip_notify),
-                    NULL);
+  gimp_action_init (GIMP_ACTION (action));
 }
 
 static void
@@ -67,7 +69,17 @@ gimp_radio_action_connect_proxy (GtkAction *action,
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_radio_action_set_proxy_tooltip (GIMP_RADIO_ACTION (action), proxy);
+  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+}
+
+static void
+gimp_radio_action_changed (GtkRadioAction *action,
+                           GtkRadioAction *current)
+{
+  gint value = gtk_radio_action_get_current_value (action);
+
+  gimp_action_emit_change_state (GIMP_ACTION (action),
+                                 g_variant_new_int32 (value));
 }
 
 
@@ -78,6 +90,7 @@ gimp_radio_action_new (const gchar *name,
                        const gchar *label,
                        const gchar *tooltip,
                        const gchar *icon_name,
+                       const gchar *help_id,
                        gint         value)
 {
   GtkRadioAction *action;
@@ -90,36 +103,7 @@ gimp_radio_action_new (const gchar *name,
                          "value",     value,
                          NULL);
 
+  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+
   return action;
-}
-
-
-/*  private functions  */
-
-
-static void
-gimp_radio_action_set_proxy_tooltip (GimpRadioAction *action,
-                                     GtkWidget       *proxy)
-{
-  const gchar *tooltip = gtk_action_get_tooltip (GTK_ACTION (action));
-
-  if (tooltip)
-    gimp_help_set_help_data (proxy, tooltip,
-                             g_object_get_qdata (G_OBJECT (proxy),
-                                                 GIMP_HELP_ID));
-}
-
-static void
-gimp_radio_action_tooltip_notify (GimpRadioAction  *action,
-                                  const GParamSpec *pspec,
-                                  gpointer          data)
-{
-  GSList *list;
-
-  for (list = gtk_action_get_proxies (GTK_ACTION (action));
-       list;
-       list = g_slist_next (list))
-    {
-      gimp_radio_action_set_proxy_tooltip (action, list->data);
-    }
 }

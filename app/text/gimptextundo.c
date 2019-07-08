@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -274,7 +274,7 @@ gimp_text_undo_pop (GimpUndo            *undo,
                                     gimp_babl_format_get_base_type (text_undo->format),
                                     gimp_babl_format_get_precision (text_undo->format),
                                     babl_format_has_alpha (text_undo->format),
-                                    NULL,
+                                    NULL, NULL,
                                     GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                     FALSE, NULL);
         text_undo->format = format;

@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_BRUSH_PIPE_H__
@@ -61,6 +61,8 @@ struct _GimpBrushPipe
                                  * ranks in some odd special case */
   GimpBrush       **brushes;
   GimpBrush        *current;    /* Currently selected brush */
+
+  gchar            *params;     /* For pipe <-> image conversion */
 };
 
 struct _GimpBrushPipeClass
@@ -69,7 +71,10 @@ struct _GimpBrushPipeClass
 };
 
 
-GType   gimp_brush_pipe_get_type (void) G_GNUC_CONST;
+GType      gimp_brush_pipe_get_type   (void) G_GNUC_CONST;
+
+gboolean   gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
+                                       const gchar   *paramstring);
 
 
 #endif  /* __GIMP_BRUSH_PIPE_H__ */

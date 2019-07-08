@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -105,13 +105,12 @@ static void   gimp_tool_editor_reset_clicked
                                             GimpToolEditor        *tool_editor);
 
 
-G_DEFINE_TYPE (GimpToolEditor, gimp_tool_editor, GIMP_TYPE_CONTAINER_TREE_VIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolEditor, gimp_tool_editor,
+                            GIMP_TYPE_CONTAINER_TREE_VIEW)
 
 #define parent_class gimp_tool_editor_parent_class
 
-#define GIMP_TOOL_EDITOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                           GIMP_TYPE_TOOL_EDITOR, \
-                                           GimpToolEditorPrivate))
+#define GIMP_TOOL_EDITOR_GET_PRIVATE(obj) ((GimpToolEditorPrivate *) gimp_tool_editor_get_instance_private ((GimpToolEditor *) (obj)))
 
 
 static void
@@ -121,8 +120,6 @@ gimp_tool_editor_class_init (GimpToolEditorClass *klass)
 
   object_class->dispose  = gimp_tool_editor_dispose;
   object_class->finalize = gimp_tool_editor_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpToolEditorPrivate));
 }
 
 static void
@@ -189,8 +186,7 @@ gimp_tool_editor_finalize (GObject *object)
           g_free (priv->initial_tool_order[i]);
         }
 
-      g_free (priv->initial_tool_order);
-      priv->initial_tool_order      = NULL;
+      g_clear_pointer (&priv->initial_tool_order, g_free);
     }
 
   if (priv->initial_tool_visibility)
@@ -259,7 +255,7 @@ gimp_tool_editor_new (GimpContainer *container,
     GtkTreeViewColumn     *column;
     GtkCellRenderer       *eye_cell;
     GtkBorder              border;
-    GtkIconSize            icon_size;
+    gint                   icon_size;
 
     tree_style = gtk_widget_get_style_context (tree_widget);
     gtk_style_context_get_border (tree_style, 0, &border);
@@ -269,13 +265,11 @@ gimp_tool_editor_new (GimpContainer *container,
 
     eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
 
-    icon_size = gimp_get_icon_size (GTK_WIDGET (tool_editor),
-                                    GIMP_ICON_VISIBLE,
-                                    GTK_ICON_SIZE_BUTTON,
-                                    view_size - (border.left + border.right),
-                                    view_size - (border.top + border.bottom));
+    g_object_get (eye_cell, "icon-size", &icon_size, NULL);
+    icon_size = MIN (icon_size, MAX (view_size - (border.left + border.right),
+                                     view_size - (border.top + border.bottom)));
+    g_object_set (eye_cell, "icon-size", icon_size, NULL);
 
-    g_object_set (eye_cell, "stock-size", icon_size, NULL);
     gtk_tree_view_column_pack_start (column, eye_cell, FALSE);
     gtk_tree_view_column_set_cell_data_func  (column, eye_cell,
                                               gimp_tool_editor_eye_data_func,

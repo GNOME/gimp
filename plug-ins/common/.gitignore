@@ -6,8 +6,6 @@
 /align-layers.exe
 /animation-optimize
 /animation-optimize.exe
-/animation-play
-/animation-play.exe
 /blinds
 /blinds.exe
 /blur
@@ -126,8 +124,6 @@
 /film.exe
 /filter-pack
 /filter-pack.exe
-/fractal-trace
-/fractal-trace.exe
 /goat-exercise
 /goat-exercise.exe
 /gradient-map
@@ -176,8 +172,6 @@
 /tile-small.exe
 /unit-editor
 /unit-editor.exe
-/unsharp-mask
-/unsharp-mask.exe
 /van-gogh-lic
 /van-gogh-lic.exe
 /warp

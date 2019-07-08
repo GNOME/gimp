@@ -14,7 +14,7 @@
  * for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  * Contents:
  *
@@ -458,8 +458,8 @@ load_image (const gchar  *filename,
 
       for (i = 0; i < sgip->zsize; i ++)
         if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
-          printf("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
-                 sgip->ysize - 1 - y, i);
+          g_printerr ("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
+                      sgip->ysize - 1 - y, i);
 
       if (sgip->bpp == 1)
         {

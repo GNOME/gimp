@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -513,8 +513,8 @@ gimp_config_writer_data (GimpConfigWriter *writer,
   gint i;
 
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (length > 0);
-  g_return_if_fail (data != NULL);
+  g_return_if_fail (length >= 0);
+  g_return_if_fail (data != NULL || length == 0);
 
   if (writer->error)
     return;
@@ -760,6 +760,13 @@ gimp_config_writer_close_output (GimpConfigWriter  *writer,
 
   if (writer->error)
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (writer->output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (writer->output);
       writer->output = NULL;
 

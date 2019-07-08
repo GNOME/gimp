@@ -15,14 +15,19 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOOL_TRANSFORM_GRID_H__
 #define __GIMP_TOOL_TRANSFORM_GRID_H__
 
 
+#include "gimpcanvashandle.h"
 #include "gimptoolwidget.h"
+
+
+#define GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE \
+  (1.5 * GIMP_CANVAS_HANDLE_SIZE_LARGE)
 
 
 typedef enum

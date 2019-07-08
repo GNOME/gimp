@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,6 +32,9 @@
 #include "gimp-intl.h"
 
 
+static void            gimp_layer_mask_preview_freeze     (GimpViewable      *viewable);
+static void            gimp_layer_mask_preview_thaw       (GimpViewable      *viewable);
+
 static gboolean        gimp_layer_mask_is_attached        (GimpItem          *item);
 static gboolean        gimp_layer_mask_is_content_locked  (GimpItem          *item);
 static gboolean        gimp_layer_mask_is_position_locked (GimpItem          *item);
@@ -46,6 +49,7 @@ static gboolean        gimp_layer_mask_rename             (GimpItem          *it
 static void            gimp_layer_mask_convert_type       (GimpDrawable      *drawable,
                                                            GimpImage         *dest_image,
                                                            const Babl        *new_format,
+                                                           GimpColorProfile  *src_profile,
                                                            GimpColorProfile  *dest_profile,
                                                            GeglDitherMethod   layer_dither_type,
                                                            GeglDitherMethod   mask_dither_type,
@@ -67,6 +71,9 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   viewable_class->default_icon_name = "gimp-layer-mask";
 
+  viewable_class->preview_freeze = gimp_layer_mask_preview_freeze;
+  viewable_class->preview_thaw   = gimp_layer_mask_preview_thaw;
+
   item_class->is_attached        = gimp_layer_mask_is_attached;
   item_class->is_content_locked  = gimp_layer_mask_is_content_locked;
   item_class->is_position_locked = gimp_layer_mask_is_position_locked;
@@ -83,6 +90,42 @@ static void
 gimp_layer_mask_init (GimpLayerMask *layer_mask)
 {
   layer_mask->layer = NULL;
+}
+
+static void
+gimp_layer_mask_preview_freeze (GimpViewable *viewable)
+{
+  GimpLayerMask *mask  = GIMP_LAYER_MASK (viewable);
+  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+
+  if (layer)
+    {
+      GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
+
+      if (! parent && gimp_item_is_attached (GIMP_ITEM (layer)))
+        parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (layer)));
+
+      if (parent)
+        gimp_viewable_preview_freeze (parent);
+    }
+}
+
+static void
+gimp_layer_mask_preview_thaw (GimpViewable *viewable)
+{
+  GimpLayerMask *mask  = GIMP_LAYER_MASK (viewable);
+  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+
+  if (layer)
+    {
+      GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
+
+      if (! parent && gimp_item_is_attached (GIMP_ITEM (layer)))
+        parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (layer)));
+
+      if (parent)
+        gimp_viewable_preview_thaw (parent);
+    }
 }
 
 static gboolean
@@ -158,6 +201,7 @@ static void
 gimp_layer_mask_convert_type (GimpDrawable      *drawable,
                               GimpImage         *dest_image,
                               const Babl        *new_format,
+                              GimpColorProfile  *src_profile,
                               GimpColorProfile  *dest_profile,
                               GeglDitherMethod   layer_dither_type,
                               GeglDitherMethod   mask_dither_type,
@@ -169,6 +213,7 @@ gimp_layer_mask_convert_type (GimpDrawable      *drawable,
 
   GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                     new_format,
+                                                    src_profile,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,

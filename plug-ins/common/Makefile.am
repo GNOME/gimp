@@ -48,7 +48,6 @@ AM_CPPFLAGS = \
 
 align_layers_libexecdir = $(gimpplugindir)/plug-ins/align-layers
 animation_optimize_libexecdir = $(gimpplugindir)/plug-ins/animation-optimize
-#animation_play_libexecdir = $(gimpplugindir)/plug-ins/animation-play
 blinds_libexecdir = $(gimpplugindir)/plug-ins/blinds
 blur_libexecdir = $(gimpplugindir)/plug-ins/blur
 border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
@@ -63,7 +62,7 @@ compose_libexecdir = $(gimpplugindir)/plug-ins/compose
 contrast_normalize_libexecdir = $(gimpplugindir)/plug-ins/contrast-normalize
 contrast_retinex_libexecdir = $(gimpplugindir)/plug-ins/contrast-retinex
 crop_zealous_libexecdir = $(gimpplugindir)/plug-ins/crop-zealous
-#curve_bend_libexecdir = $(gimpplugindir)/plug-ins/curve-bend
+curve_bend_libexecdir = $(gimpplugindir)/plug-ins/curve-bend
 decompose_libexecdir = $(gimpplugindir)/plug-ins/decompose
 depth_merge_libexecdir = $(gimpplugindir)/plug-ins/depth-merge
 despeckle_libexecdir = $(gimpplugindir)/plug-ins/despeckle
@@ -108,7 +107,6 @@ file_xpm_libexecdir = $(gimpplugindir)/plug-ins/file-xpm
 file_xwd_libexecdir = $(gimpplugindir)/plug-ins/file-xwd
 film_libexecdir = $(gimpplugindir)/plug-ins/film
 filter_pack_libexecdir = $(gimpplugindir)/plug-ins/filter-pack
-fractal_trace_libexecdir = $(gimpplugindir)/plug-ins/fractal-trace
 goat_exercise_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise
 gradient_map_libexecdir = $(gimpplugindir)/plug-ins/gradient-map
 grid_libexecdir = $(gimpplugindir)/plug-ins/grid
@@ -133,7 +131,6 @@ sphere_designer_libexecdir = $(gimpplugindir)/plug-ins/sphere-designer
 tile_libexecdir = $(gimpplugindir)/plug-ins/tile
 tile_small_libexecdir = $(gimpplugindir)/plug-ins/tile-small
 unit_editor_libexecdir = $(gimpplugindir)/plug-ins/unit-editor
-unsharp_mask_libexecdir = $(gimpplugindir)/plug-ins/unsharp-mask
 van_gogh_lic_libexecdir = $(gimpplugindir)/plug-ins/van-gogh-lic
 warp_libexecdir = $(gimpplugindir)/plug-ins/warp
 wavelet_decompose_libexecdir = $(gimpplugindir)/plug-ins/wavelet-decompose
@@ -143,7 +140,6 @@ web_page_libexecdir = $(gimpplugindir)/plug-ins/web-page
 
 align_layers_libexec_PROGRAMS = align-layers
 animation_optimize_libexec_PROGRAMS = animation-optimize
-#animation_play_libexec_PROGRAMS = animation-play
 blinds_libexec_PROGRAMS = blinds
 blur_libexec_PROGRAMS = blur
 border_average_libexec_PROGRAMS = border-average
@@ -158,7 +154,7 @@ compose_libexec_PROGRAMS = compose
 contrast_normalize_libexec_PROGRAMS = contrast-normalize
 contrast_retinex_libexec_PROGRAMS = contrast-retinex
 crop_zealous_libexec_PROGRAMS = crop-zealous
-#curve_bend_libexec_PROGRAMS = curve-bend
+curve_bend_libexec_PROGRAMS = curve-bend
 decompose_libexec_PROGRAMS = decompose
 depth_merge_libexec_PROGRAMS = depth-merge
 despeckle_libexec_PROGRAMS = despeckle
@@ -203,7 +199,6 @@ file_xpm_libexec_PROGRAMS = $(FILE_XPM)
 file_xwd_libexec_PROGRAMS = file-xwd
 film_libexec_PROGRAMS = film
 filter_pack_libexec_PROGRAMS = filter-pack
-fractal_trace_libexec_PROGRAMS = fractal-trace
 goat_exercise_libexec_PROGRAMS = goat-exercise
 gradient_map_libexec_PROGRAMS = gradient-map
 grid_libexec_PROGRAMS = grid
@@ -228,7 +223,6 @@ sphere_designer_libexec_PROGRAMS = sphere-designer
 tile_libexec_PROGRAMS = tile
 tile_small_libexec_PROGRAMS = tile-small
 unit_editor_libexec_PROGRAMS = unit-editor
-unsharp_mask_libexec_PROGRAMS = unsharp-mask
 van_gogh_lic_libexec_PROGRAMS = van-gogh-lic
 warp_libexec_PROGRAMS = warp
 wavelet_decompose_libexec_PROGRAMS = wavelet-decompose
@@ -293,24 +287,6 @@ animation_optimize_LDADD = \
 	$(INTLLIBS)		\
 	$(animation_optimize_RC)
 
-animation_play_SOURCES = \
-	animation-play.c
-
-animation_play_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(animation_play_RC)
-
 blinds_SOURCES = \
 	blinds.c
 
@@ -324,6 +300,7 @@ blinds_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blinds_RC)
@@ -409,6 +386,7 @@ checkerboard_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(checkerboard_RC)
@@ -1352,6 +1330,7 @@ film_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(film_RC)
@@ -1372,23 +1351,6 @@ filter_pack_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(filter_pack_RC)
-
-fractal_trace_SOURCES = \
-	fractal-trace.c
-
-fractal_trace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(fractal_trace_RC)
 
 goat_exercise_SOURCES = \
 	goat-exercise.c
@@ -1484,6 +1446,7 @@ jigsaw_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
@@ -1552,6 +1515,7 @@ nl_filter_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
@@ -1776,6 +1740,7 @@ tile_small_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(tile_small_RC)
@@ -1796,23 +1761,6 @@ unit_editor_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(unit_editor_RC)
-
-unsharp_mask_SOURCES = \
-	unsharp-mask.c
-
-unsharp_mask_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(unsharp_mask_RC)
 
 van_gogh_lic_SOURCES = \
 	van-gogh-lic.c

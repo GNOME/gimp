@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PAINTBRUSH_H__
@@ -34,12 +34,30 @@ typedef struct _GimpPaintbrushClass GimpPaintbrushClass;
 
 struct _GimpPaintbrush
 {
-  GimpBrushCore  parent_instance;
+  GimpBrushCore      parent_instance;
+
+  GeglBuffer        *paint_buffer;
+  const GimpTempBuf *paint_pixmap;
+  GimpRGB            paint_color;
 };
 
 struct _GimpPaintbrushClass
 {
   GimpBrushCoreClass  parent_class;
+
+  /*  virtual functions  */
+  gboolean   (* get_color_history_color) (GimpPaintbrush            *paintbrush,
+                                          GimpDrawable              *drawable,
+                                          GimpPaintOptions          *paint_options,
+                                          GimpRGB                   *color);
+  void       (* get_paint_params)        (GimpPaintbrush            *paintbrush,
+                                          GimpDrawable              *drawable,
+                                          GimpPaintOptions          *paint_options,
+                                          GimpSymmetry              *sym,
+                                          GimpLayerMode             *paint_mode,
+                                          GimpPaintApplicationMode  *paint_appl_mode,
+                                          const GimpTempBuf        **paint_pixmap,
+                                          GimpRGB                   *paint_color);
 };
 
 

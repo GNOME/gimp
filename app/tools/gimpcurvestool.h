@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CURVES_TOOL_H__
@@ -37,12 +37,17 @@ struct _GimpCurvesTool
   GimpFilterTool  parent_instance;
 
   /* dialog */
+  gdouble           scale;
   gdouble           picked_color[5];
 
   GtkWidget        *channel_menu;
   GtkWidget        *xrange;
   GtkWidget        *yrange;
   GtkWidget        *graph;
+  GtkWidget        *point_box;
+  GtkWidget        *point_input;
+  GtkWidget        *point_output;
+  GtkWidget        *point_type;
   GtkWidget        *curve_type;
 
   /* export dialog */

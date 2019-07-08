@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -55,9 +55,7 @@ enum
 };
 
 
-static void   gimp_gegl_config_class_init   (GimpGeglConfigClass *klass);
-static void   gimp_gegl_config_init         (GimpGeglConfig      *config,
-                                             GimpGeglConfigClass *klass);
+static void   gimp_gegl_config_constructed  (GObject             *object);
 static void   gimp_gegl_config_finalize     (GObject             *object);
 static void   gimp_gegl_config_set_property (GObject             *object,
                                              guint                property_id,
@@ -69,36 +67,10 @@ static void   gimp_gegl_config_get_property (GObject             *object,
                                              GParamSpec          *pspec);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE (GimpGeglConfig, gimp_gegl_config, G_TYPE_OBJECT)
 
+#define parent_class gimp_gegl_config_parent_class
 
-GType
-gimp_gegl_config_get_type (void)
-{
-  static GType config_type = 0;
-
-  if (! config_type)
-    {
-      const GTypeInfo config_info =
-      {
-        sizeof (GimpGeglConfigClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_gegl_config_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpGeglConfig),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_gegl_config_init,
-      };
-
-      config_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpGeglConfig",
-                                            &config_info, 0);
-    }
-
-  return config_type;
-}
 
 static void
 gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
@@ -110,6 +82,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructed  = gimp_gegl_config_constructed;
   object_class->finalize     = gimp_gegl_config_finalize;
   object_class->set_property = gimp_gegl_config_set_property;
   object_class->get_property = gimp_gegl_config_get_property;
@@ -119,7 +92,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                          "Temp path",
                          TEMP_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR,
-                         "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
+                         "${gimp_temp_dir}",
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
@@ -128,7 +101,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                          "Swap path",
                          SWAP_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR,
-                         "${gimp_dir}",
+                         "${gimp_cache_dir}",
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
@@ -182,10 +155,16 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 }
 
 static void
-gimp_gegl_config_init (GimpGeglConfig      *config,
-                       GimpGeglConfigClass *klass)
+gimp_gegl_config_init (GimpGeglConfig *config)
 {
-  gimp_debug_add_instance (G_OBJECT (config), G_OBJECT_CLASS (klass));
+}
+
+static void
+gimp_gegl_config_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_debug_add_instance (object, G_OBJECT_GET_CLASS (object));
 }
 
 static void

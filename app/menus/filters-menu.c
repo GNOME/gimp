@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -42,7 +42,7 @@ filters_menu_setup (GimpUIManager *manager,
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id = gimp_ui_manager_new_merge_id (manager);
 
   for (i = 0; i < gimp_filter_history_size (manager->gimp); i++)
     {
@@ -53,10 +53,10 @@ filters_menu_setup (GimpUIManager *manager,
       action_path = g_strdup_printf ("%s/Filters/Recently Used/Filters",
                                      ui_path);
 
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                             action_path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
+      gimp_ui_manager_add_ui (manager, merge_id,
+                              action_path, action_name, action_name,
+                              GTK_UI_MANAGER_MENUITEM,
+                              FALSE);
 
       g_free (action_name);
       g_free (action_path);

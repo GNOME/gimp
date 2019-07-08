@@ -15,14 +15,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_ENUM_ACTION_H__
 #define __GIMP_ENUM_ACTION_H__
 
 
-#include "gimpaction.h"
+#include "gimpactionimpl.h"
 
 
 #define GIMP_TYPE_ENUM_ACTION            (gimp_enum_action_get_type ())
@@ -37,31 +37,27 @@ typedef struct _GimpEnumActionClass GimpEnumActionClass;
 
 struct _GimpEnumAction
 {
-  GimpAction parent_instance;
+  GimpActionImpl parent_instance;
 
-  gint       value;
-  gboolean   value_variable;
+  gint           value;
+  gboolean       value_variable;
 };
 
 struct _GimpEnumActionClass
 {
-  GimpActionClass parent_class;
-
-  void (* selected) (GimpEnumAction *action,
-                     gint            value);
+  GimpActionImplClass parent_class;
 };
 
 
 GType            gimp_enum_action_get_type (void) G_GNUC_CONST;
 
-GimpEnumAction * gimp_enum_action_new      (const gchar    *name,
-                                            const gchar    *label,
-                                            const gchar    *tooltip,
-                                            const gchar    *icon_name,
-                                            gint            value,
-                                            gboolean        value_variable);
-void             gimp_enum_action_selected (GimpEnumAction *action,
-                                            gint            value);
+GimpEnumAction * gimp_enum_action_new      (const gchar *name,
+                                            const gchar *label,
+                                            const gchar *tooltip,
+                                            const gchar *icon_name,
+                                            const gchar *help_id,
+                                            gint         value,
+                                            gboolean     value_variable);
 
 
 #endif  /* __GIMP_ENUM_ACTION_H__ */

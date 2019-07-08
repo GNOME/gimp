@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -48,13 +48,13 @@ static const GimpActionEntry tool_preset_editor_actions[] =
     NC_("tool-preset-editor-action", "_Save Tool Options to Preset"), NULL,
     NC_("tool-preset-editor-action", "Save the active tool options to this "
         "tool preset"),
-    G_CALLBACK (tool_preset_editor_save_cmd_callback),
+    tool_preset_editor_save_cmd_callback,
     GIMP_HELP_TOOL_PRESET_SAVE },
 
   { "tool-preset-editor-restore", GIMP_ICON_DOCUMENT_REVERT,
     NC_("tool-preset-editor-action", "_Restore Tool Preset"), NULL,
     NC_("tool-preset-editor-action", "Restore this tool preset"),
-    G_CALLBACK (tool_preset_editor_restore_cmd_callback),
+    tool_preset_editor_restore_cmd_callback,
     GIMP_HELP_TOOL_PRESET_RESTORE }
 };
 
@@ -63,7 +63,7 @@ static const GimpToggleActionEntry tool_preset_editor_toggle_actions[] =
 {
   { "tool-preset-editor-edit-active", GIMP_ICON_LINKED,
     NC_("tool-preset-editor-action", "Edit Active Tool Preset"), NULL, NULL,
-    G_CALLBACK (data_editor_edit_active_cmd_callback),
+    data_editor_edit_active_cmd_callback,
     FALSE,
     GIMP_HELP_TOOL_PRESET_EDITOR_EDIT_ACTIVE }
 };

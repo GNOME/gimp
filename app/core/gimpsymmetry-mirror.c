@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -71,13 +71,10 @@ static void       gimp_mirror_get_property            (GObject             *obje
 static void       gimp_mirror_update_strokes          (GimpSymmetry        *mirror,
                                                        GimpDrawable        *drawable,
                                                        GimpCoords          *origin);
-static void       gimp_mirror_prepare_operations      (GimpMirror          *mirror,
-                                                       gint                 paint_width,
-                                                       gint                 paint_height);
-static GeglNode * gimp_mirror_get_operation           (GimpSymmetry        *mirror,
+static void       gimp_mirror_get_transform           (GimpSymmetry        *mirror,
                                                        gint                 stroke,
-                                                       gint                 paint_width,
-                                                       gint                 paint_height);
+                                                       gdouble             *angle,
+                                                       gboolean            *reflect);
 static void       gimp_mirror_reset                   (GimpMirror          *mirror);
 static void       gimp_mirror_add_guide               (GimpMirror          *mirror,
                                                        GimpOrientationType  orientation);
@@ -122,7 +119,7 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 
   symmetry_class->label             = _("Mirror");
   symmetry_class->update_strokes    = gimp_mirror_update_strokes;
-  symmetry_class->get_operation     = gimp_mirror_get_operation;
+  symmetry_class->get_transform     = gimp_mirror_get_transform;
   symmetry_class->active_changed    = gimp_mirror_active_changed;
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
@@ -204,10 +201,6 @@ gimp_mirror_finalize (GObject *object)
 
   g_clear_object (&mirror->horizontal_guide);
   g_clear_object (&mirror->vertical_guide);
-
-  g_clear_object (&mirror->horizontal_op);
-  g_clear_object (&mirror->vertical_op);
-  g_clear_object (&mirror->central_op);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -365,78 +358,47 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
 }
 
 static void
-gimp_mirror_prepare_operations (GimpMirror *mirror,
-                                gint        paint_width,
-                                gint        paint_height)
-{
-  if (paint_width == mirror->last_paint_width &&
-      paint_height == mirror->last_paint_height)
-    return;
-
-  mirror->last_paint_width  = paint_width;
-  mirror->last_paint_height = paint_height;
-
-  if (mirror->horizontal_op)
-    g_object_unref (mirror->horizontal_op);
-
-  mirror->horizontal_op = gegl_node_new_child (NULL,
-                                               "operation", "gegl:reflect",
-                                               "origin-x",  0.0,
-                                               "origin-y",  paint_height / 2.0,
-                                               "x",         1.0,
-                                               "y",         0.0,
-                                               NULL);
-
-  if (mirror->vertical_op)
-    g_object_unref (mirror->vertical_op);
-
-  mirror->vertical_op = gegl_node_new_child (NULL,
-                                             "operation", "gegl:reflect",
-                                             "origin-x",  paint_width / 2.0,
-                                             "origin-y",  0.0,
-                                             "x",         0.0,
-                                             "y",         1.0,
-                                             NULL);
-
-  if (mirror->central_op)
-    g_object_unref (mirror->central_op);
-
-  mirror->central_op = gegl_node_new_child (NULL,
-                                            "operation", "gegl:rotate",
-                                            "origin-x",  paint_width / 2.0,
-                                            "origin-y",  paint_height / 2.0,
-                                            "degrees",   180.0,
-                                            NULL);
-}
-
-static GeglNode *
-gimp_mirror_get_operation (GimpSymmetry *sym,
+gimp_mirror_get_transform (GimpSymmetry *sym,
                            gint          stroke,
-                           gint          paint_width,
-                           gint          paint_height)
+                           gdouble      *angle,
+                           gboolean     *reflect)
 {
   GimpMirror *mirror = GIMP_MIRROR (sym);
-  GeglNode   *op;
 
-  g_return_val_if_fail (stroke >= 0 &&
-                        stroke < g_list_length (sym->strokes), NULL);
+  if (mirror->disable_transformation)
+    return;
 
-  gimp_mirror_prepare_operations (mirror, paint_width, paint_height);
+  if (! mirror->horizontal_mirror && stroke >= 1)
+    stroke++;
 
-  if (mirror->disable_transformation || stroke == 0 ||
-      paint_width == 0 || paint_height == 0)
-    op = NULL;
-  else if (stroke == 1 && mirror->horizontal_mirror)
-    op = g_object_ref (mirror->horizontal_op);
-  else if ((stroke == 2 && mirror->horizontal_mirror &&
-            mirror->vertical_mirror) ||
-           (stroke == 1 && mirror->vertical_mirror &&
-            !  mirror->horizontal_mirror))
-    op = g_object_ref (mirror->vertical_op);
-  else
-    op = g_object_ref (mirror->central_op);
+  if (! mirror->vertical_mirror && stroke >= 2)
+    stroke++;
 
-  return op;
+  switch (stroke)
+    {
+    /* original */
+    case 0:
+      break;
+
+    /* horizontal */
+    case 1:
+      *angle   = 180.0;
+      *reflect = TRUE;
+      break;
+
+    /* vertical */
+    case 2:
+      *reflect = TRUE;
+      break;
+
+    /* central */
+    case 3:
+      *angle   = 180.0;
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
 }
 
 static void

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -62,27 +62,28 @@ load_image (const gchar  *filename,
             gboolean     *resolution_loaded,
             GError      **error)
 {
-  gint32 volatile  image_ID;
-  gint32           layer_ID;
+  gint32 volatile    image_ID;
+  gint32             layer_ID;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   jpeg_saved_marker_ptr         marker;
-  FILE            *infile;
-  guchar          *buf;
-  guchar         **rowbuf;
-  GimpImageBaseType image_type;
-  GimpImageType    layer_type;
-  GeglBuffer      *buffer = NULL;
-  const Babl      *format;
-  gint             tile_height;
-  gint             i;
-  cmsHTRANSFORM    cmyk_transform = NULL;
+  FILE              *infile;
+  guchar            *buf;
+  guchar           **rowbuf;
+  GimpImageBaseType  image_type;
+  GimpImageType      layer_type;
+  GeglBuffer        *buffer = NULL;
+  const Babl        *format;
+  const gchar       *layer_name = NULL;
+  gint               tile_height;
+  gint               i;
+  cmsHTRANSFORM      cmyk_transform = NULL;
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
-  if (!preview)
+  if (! preview)
     {
       jerr.pub.output_message = my_output_message;
 
@@ -212,44 +213,25 @@ load_image (const gchar  *filename,
 
   if (preview)
     {
+      layer_name = _("JPEG preview");
+
       image_ID = preview_image_ID;
     }
   else
     {
-      image_ID = gimp_image_new_with_precision (cinfo.output_width,
-                                                cinfo.output_height,
-                                                image_type,
-                                                GIMP_PRECISION_U8_GAMMA);
-
-      gimp_image_undo_disable (image_ID);
-      gimp_image_set_filename (image_ID, filename);
-    }
-
-  if (preview)
-    {
-      preview_layer_ID = gimp_layer_new (preview_image_ID, _("JPEG preview"),
-                                         cinfo.output_width,
-                                         cinfo.output_height,
-                                         layer_type,
-                                         100,
-                                         gimp_image_get_default_new_layer_mode (preview_image_ID));
-      layer_ID = preview_layer_ID;
-    }
-  else
-    {
-      layer_ID = gimp_layer_new (image_ID, _("Background"),
-                                 cinfo.output_width,
-                                 cinfo.output_height,
-                                 layer_type,
-                                 100,
-                                 gimp_image_get_default_new_layer_mode (image_ID));
-    }
-
-  if (! preview)
-    {
       GString *comment_buffer = NULL;
       guint8  *icc_data       = NULL;
       guint    icc_length     = 0;
+
+      layer_name = _("Background");
+
+      image_ID = gimp_image_new_with_precision (cinfo.output_width,
+                                                cinfo.output_height,
+                                                image_type,
+                                                GIMP_PRECISION_U8_NON_LINEAR);
+
+      gimp_image_undo_disable (image_ID);
+      gimp_image_set_filename (image_ID, filename);
 
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image_ID);
@@ -339,6 +321,16 @@ load_image (const gchar  *filename,
        */
     }
 
+  layer_ID = gimp_layer_new (image_ID, layer_name,
+                             cinfo.output_width,
+                             cinfo.output_height,
+                             layer_type,
+                             100,
+                             gimp_image_get_default_new_layer_mode (image_ID));
+
+  if (preview)
+    preview_layer_ID = layer_ID;
+
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
 
@@ -347,7 +339,10 @@ load_image (const gchar  *filename,
    */
 
   buffer = gimp_drawable_get_buffer (layer_ID);
-  format = babl_format (image_type == GIMP_RGB ? "R'G'B' u8" : "Y' u8");
+
+  format = babl_format_with_space (image_type == GIMP_RGB ?
+                                   "R'G'B' u8" : "Y' u8",
+                                   gimp_drawable_get_format (layer_ID));
 
   while (cinfo.output_scanline < cinfo.output_height)
     {
@@ -500,11 +495,13 @@ jpeg_load_resolution (gint32                         image_ID,
 static void
 jpeg_load_sanitize_comment (gchar *comment)
 {
-  if (! g_utf8_validate (comment, -1, NULL))
-    {
-      gchar *c;
+  const gchar *start_invalid;
 
-      for (c = comment; *c; c++)
+  if (! g_utf8_validate (comment, -1, &start_invalid))
+    {
+      guchar *c;
+
+      for (c = (guchar *) start_invalid; *c; c++)
         {
           if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
             *c = '?';

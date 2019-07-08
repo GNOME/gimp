@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -26,6 +26,8 @@
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
+
+#include "gegl/gimp-babl.h"
 
 #include "gimp.h"
 #include "gimpcontainer.h"
@@ -41,8 +43,9 @@
 
 /*  local function prototype  */
 
-static void   gimp_image_colormap_set_palette_entry (GimpImage *image,
-                                                     gint       index);
+static void   gimp_image_colormap_set_palette_entry (GimpImage     *image,
+                                                     const GimpRGB *color,
+                                                     gint           index);
 
 
 /*  public functions  */
@@ -72,17 +75,7 @@ gimp_image_colormap_init (GimpImage *image)
   private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
   private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
-  if (! private->babl_palette_rgb)
-    {
-      gchar *format_name = g_strdup_printf ("-gimp-indexed-format-%d",
-                                            gimp_image_get_ID (image));
-
-      babl_new_palette (format_name,
-                        &private->babl_palette_rgb,
-                        &private->babl_palette_rgba);
-
-      g_free (format_name);
-    }
+  gimp_image_colormap_update_formats (image);
 
   gimp_palette_set_columns (private->palette, 16);
 
@@ -133,6 +126,45 @@ gimp_image_colormap_free (GimpImage *image)
    * buffers with that palette on the undo stack, and on undoing the
    * image back to indexed, we must have exactly these palettes around
    */
+}
+
+void
+gimp_image_colormap_update_formats (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  const Babl       *space;
+  gchar            *format_name;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  space = gimp_image_get_layer_space (image);
+
+  format_name = g_strdup_printf ("-gimp-indexed-format-%d",
+                                 gimp_image_get_ID (image));
+
+  babl_new_palette_with_space (format_name, space,
+                               &private->babl_palette_rgb,
+                               &private->babl_palette_rgba);
+
+  g_free (format_name);
+
+  if (private->colormap && private->n_colors > 0)
+    {
+      babl_palette_set_palette (private->babl_palette_rgb,
+                                gimp_babl_format (GIMP_RGB,
+                                                  private->precision, FALSE,
+                                                  space),
+                                private->colormap,
+                                private->n_colors);
+      babl_palette_set_palette (private->babl_palette_rgba,
+                                gimp_babl_format (GIMP_RGB,
+                                                  private->precision, FALSE,
+                                                  space),
+                                private->colormap,
+                                private->n_colors);
+    }
 }
 
 const Babl *
@@ -213,7 +245,7 @@ gimp_image_set_colormap (GimpImage    *image,
     gimp_palette_delete_entry (private->palette, entry);
 
   for (i = 0; i < private->n_colors; i++)
-    gimp_image_colormap_set_palette_entry (image, i);
+    gimp_image_colormap_set_palette_entry (image, NULL, i);
 
   gimp_data_thaw (GIMP_DATA (private->palette));
 
@@ -293,7 +325,7 @@ gimp_image_set_colormap_entry (GimpImage     *image,
                       &private->colormap[color_index * 3 + 2]);
 
   if (private->palette)
-    gimp_image_colormap_set_palette_entry (image, color_index);
+    gimp_image_colormap_set_palette_entry (image, color, color_index);
 
   gimp_image_colormap_changed (image, color_index);
 }
@@ -323,7 +355,7 @@ gimp_image_add_colormap_entry (GimpImage     *image,
   private->n_colors++;
 
   if (private->palette)
-    gimp_image_colormap_set_palette_entry (image, private->n_colors - 1);
+    gimp_image_colormap_set_palette_entry (image, color, private->n_colors - 1);
 
   gimp_image_colormap_changed (image, -1);
 }
@@ -332,18 +364,25 @@ gimp_image_add_colormap_entry (GimpImage     *image,
 /*  private functions  */
 
 static void
-gimp_image_colormap_set_palette_entry (GimpImage *image,
-                                       gint       index)
+gimp_image_colormap_set_palette_entry (GimpImage     *image,
+                                       const GimpRGB *c,
+                                       gint           index)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GimpRGB           color;
   gchar             name[64];
 
-  gimp_rgba_set_uchar (&color,
-                       private->colormap[3 * index + 0],
-                       private->colormap[3 * index + 1],
-                       private->colormap[3 * index + 2],
-                       255);
+  /* Avoid converting to char then back to double if we have the
+   * original GimpRGB color.
+   */
+  if (c)
+    color = *c;
+  else
+    gimp_rgba_set_uchar (&color,
+                         private->colormap[3 * index + 0],
+                         private->colormap[3 * index + 1],
+                         private->colormap[3 * index + 2],
+                         255);
 
   g_snprintf (name, sizeof (name), "#%d", index);
 

@@ -12,33 +12,43 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __DOCUMENTS_COMMANDS_H__
 #define __DOCUMENTS_COMMANDS_H__
 
 
-void   documents_open_cmd_callback                 (GtkAction *action,
-                                                    gpointer   data);
-void   documents_raise_or_open_cmd_callback        (GtkAction *action,
-                                                    gpointer   data);
-void   documents_file_open_dialog_cmd_callback     (GtkAction *action,
-                                                    gpointer   data);
-void   documents_copy_location_cmd_callback        (GtkAction *action,
-                                                    gpointer   data);
-void   documents_show_in_file_manager_cmd_callback (GtkAction *action,
-                                                    gpointer   data);
-void   documents_remove_cmd_callback               (GtkAction *action,
-                                                    gpointer   data);
-void   documents_clear_cmd_callback                (GtkAction *action,
-                                                    gpointer   data);
-void   documents_recreate_preview_cmd_callback     (GtkAction *action,
-                                                    gpointer   data);
-void   documents_reload_previews_cmd_callback      (GtkAction *action,
-                                                    gpointer   data);
-void   documents_remove_dangling_cmd_callback      (GtkAction *action,
-                                                    gpointer   data);
+void   documents_open_cmd_callback                 (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_raise_or_open_cmd_callback        (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_file_open_dialog_cmd_callback     (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_copy_location_cmd_callback        (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_show_in_file_manager_cmd_callback (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_remove_cmd_callback               (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_clear_cmd_callback                (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_recreate_preview_cmd_callback     (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_reload_previews_cmd_callback      (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
+void   documents_remove_dangling_cmd_callback      (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
 
 
 #endif /* __DOCUMENTS_COMMANDS_H__ */

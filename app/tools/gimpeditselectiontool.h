@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_EDIT_SELECTION_TOOL_H__
@@ -43,7 +43,8 @@ gboolean   gimp_edit_selection_tool_key_press (GimpTool          *tool,
 gboolean   gimp_edit_selection_tool_translate (GimpTool          *tool,
                                                GdkEventKey       *kevent,
                                                GimpTransformType  translate_type,
-                                               GimpDisplay       *display);
+                                               GimpDisplay       *display,
+                                               GtkWidget         *type_box);
 
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

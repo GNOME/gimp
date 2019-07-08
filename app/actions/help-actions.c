@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -40,13 +40,13 @@ static const GimpActionEntry help_actions[] =
   { "help-help", "gimp-prefs-help-system",
     NC_("help-action", "_Help"), "F1",
     NC_("help-action", "Open the GIMP user manual"),
-    G_CALLBACK (help_help_cmd_callback),
+    help_help_cmd_callback,
     GIMP_HELP_HELP },
 
   { "help-context-help", "gimp-prefs-help-system",
     NC_("help-action", "_Context Help"), "<shift>F1",
     NC_("help-action", "Show the help for a specific user interface item"),
-    G_CALLBACK (help_context_help_cmd_callback),
+    help_context_help_cmd_callback,
     GIMP_HELP_HELP_CONTEXT }
 };
 

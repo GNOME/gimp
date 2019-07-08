@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PROTOCOL_H__
@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0101
+#define GIMP_PROTOCOL_VERSION  0x0103
 
 
 enum
@@ -80,6 +80,9 @@ struct _GPConfig
   gint32   monitor_number;
   guint32  timestamp;
   gchar   *icon_theme_dir;
+  guint64  tile_cache_size;
+  gchar   *swap_path;
+  gint32   num_processors;
 };
 
 struct _GPTileReq
@@ -162,7 +165,7 @@ struct _GPProcInstall
   gchar      *author;
   gchar      *copyright;
   gchar      *date;
-  gchar      *menu_path;
+  gchar      *menu_label;
   gchar      *image_types;
   guint32     type;
   guint32     nparams;

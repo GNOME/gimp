@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -48,6 +48,7 @@ gimp_image_convert_type (GimpImage          *image,
                          GimpProgress       *progress,
                          GError            **error)
 {
+  GimpColorProfile  *src_profile;
   GimpImageBaseType  old_type;
   const Babl        *new_layer_format;
   GimpObjectQueue   *queue;
@@ -58,6 +59,9 @@ gimp_image_convert_type (GimpImage          *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (new_type != gimp_image_get_base_type (image), FALSE);
   g_return_val_if_fail (new_type != GIMP_INDEXED, FALSE);
+  g_return_val_if_fail (gimp_babl_is_valid (new_type,
+                                            gimp_image_get_precision (image)),
+                        FALSE);
   g_return_val_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile),
                         FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
@@ -65,7 +69,8 @@ gimp_image_convert_type (GimpImage          *image,
 
   new_layer_format = gimp_babl_format (new_type,
                                        gimp_image_get_precision (image),
-                                       TRUE);
+                                       TRUE,
+                                       gimp_image_get_layer_space (image));
 
   if (dest_profile &&
       ! gimp_image_validate_color_profile_by_format (new_layer_format,
@@ -103,6 +108,8 @@ gimp_image_convert_type (GimpImage          *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
+  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
   /*  Push the image type to the stack  */
   gimp_image_undo_push_image_type (image, NULL);
 
@@ -111,13 +118,14 @@ gimp_image_convert_type (GimpImage          *image,
 
   g_object_set (image, "base-type", new_type, NULL);
 
-  /*  When converting to/from GRAY, convert to the new type's builtin
-   *  profile if none was passed.
+  /*  When converting to/from GRAY, always convert to the new type's
+   *  builtin profile as a fallback, we need one for convert_type on
+   *  the same image
    */
   if (old_type == GIMP_GRAY ||
       new_type == GIMP_GRAY)
     {
-      if (! dest_profile && gimp_image_get_color_profile (image))
+      if (! dest_profile)
         dest_profile = gimp_image_get_builtin_color_profile (image);
     }
 
@@ -127,6 +135,7 @@ gimp_image_convert_type (GimpImage          *image,
                                   new_type,
                                   gimp_drawable_get_precision (drawable),
                                   gimp_drawable_has_alpha (drawable),
+                                  src_profile,
                                   dest_profile,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   TRUE, progress);
@@ -140,10 +149,7 @@ gimp_image_convert_type (GimpImage          *image,
   if (old_type == GIMP_GRAY ||
       new_type == GIMP_GRAY)
     {
-      if (gimp_image_get_color_profile (image))
-        gimp_image_set_color_profile (image, dest_profile, NULL);
-      else
-        gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+      gimp_image_set_color_profile (image, dest_profile, NULL);
     }
 
   gimp_image_undo_group_end (image);

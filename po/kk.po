@@ -6,8 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-03-16 10:28+0000\n"
 "PO-Revision-Date: 2017-03-17 13:31+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
@@ -94,7 +93,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 
 #: ../app/main.c:160
@@ -1972,7 +1971,7 @@ msgid "_Dilate"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:77
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr ""
 
@@ -1982,7 +1981,7 @@ msgid "E_rode"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:83
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 

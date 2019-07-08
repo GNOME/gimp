@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PLUG_IN_MANAGER_FILE_H__
@@ -30,6 +30,11 @@ gboolean   gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manage
                                                        const gchar       *name,
                                                        const gchar       *extensions,
                                                        const gchar       *prefixes);
+
+gboolean   gimp_plug_in_manager_register_priority     (GimpPlugInManager *manager,
+                                                       const gchar       *name,
+                                                       gint               priority);
+
 
 gboolean   gimp_plug_in_manager_register_mime_types   (GimpPlugInManager *manager,
                                                        const gchar       *name,

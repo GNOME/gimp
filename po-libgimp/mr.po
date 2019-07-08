@@ -1,0 +1,2892 @@
+# Marathi translation for GIMP libgimp.
+# Copyright (C) 2018 Listed translators
+# This file is distributed under the same license as the GIMP package.
+# Manish R Joshi <joshmanish@gmail.com>, 2018.
+# Snehalata B Shirude <snehalata.shirude@gmail.com>, 2018.
+# Project Developed by School of Computer Sciences, North Maharashtra University, Jalgaon MS, India, 
+# And Rajya Marathi Vikas Sanstha Mumbai, MS, India
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2018-07-07 09:45+0000\n"
+"PO-Revision-Date: 2018-07-07 14:57+0000\n"
+"Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
+"Language-Team: Marathi\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1264
+msgid "success"
+msgstr "यशस्वी"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1268
+msgid "execution error"
+msgstr "अंमलबजावणीमध्ये त्रुटी"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1272
+msgid "calling error"
+msgstr "संवाद साधण्यात त्रुटी "
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1276
+msgid "cancelled"
+msgstr "रद्द "
+
+#: ../libgimp/gimpbrushselectbutton.c:179
+msgid "Brush Selection"
+msgstr "कुंचला निवडा"
+
+#: ../libgimp/gimpbrushselectbutton.c:928
+#: ../libgimp/gimppatternselectbutton.c:726
+msgid "_Browse..."
+msgstr "दर्शक "
+
+#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:287
+#, c-format
+msgid "%s plug-in can't handle layers"
+msgstr "%s जोडणी-मध्ये स्तर हाताळू शकत नाही"
+
+#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
+msgid "Merge Visible Layers"
+msgstr "दृश्यमान स्तर विलीन करा"
+
+#: ../libgimp/gimpexport.c:260
+#, c-format
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s जोडणी-मध्ये स्तराचा संच,आकार किंवा अपारदर्शकता हाताळू शकत नाही"
+
+#: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
+#, c-format
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s जोडणी-मध्ये केवळ चलाभास चौकट म्हणून स्तर हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
+msgid "Save as Animation"
+msgstr "चलाभास जतन करा"
+
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:297
+msgid "Flatten Image"
+msgstr "प्रतिमा समतल"
+
+#: ../libgimp/gimpexport.c:296
+#, c-format
+msgid "%s plug-in can't handle transparency"
+msgstr "%s जोडणी-मध्ये पारदर्शकता हाताळू शकत नाही"
+
+#: ../libgimp/gimpexport.c:305
+#, c-format
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s जोडणी-मध्ये स्तर आच्छादक  हाताळू शकत नाही"
+
+#: ../libgimp/gimpexport.c:306
+msgid "Apply Layer Masks"
+msgstr "स्तर आच्छादक लागू करा"
+
+#: ../libgimp/gimpexport.c:314
+#, c-format
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s जोडणी-मध्ये केवळ आरजीबी प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:362
+msgid "Convert to RGB"
+msgstr "आरजीबी मध्ये रूपांतरित करा"
+
+#: ../libgimp/gimpexport.c:323
+#, c-format
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s जोडणी-मध्ये केवळ ग्रेस्केल प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:374
+msgid "Convert to Grayscale"
+msgstr "ग्रेस्केल रूपांतरित करा"
+
+#: ../libgimp/gimpexport.c:332
+#, c-format
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s जोडणी-मध्ये केवळ अनुक्रमणिकेतील प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:372
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"क्रियापूर्व सेटिंग्ज वापरून अनुक्रमणिकेमध्ये रूपांतरित करा \n"
+"(परिणाम ट्यून करण्यासाठी ते स्वतः करावे)"
+
+#: ../libgimp/gimpexport.c:342
+#, c-format
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s जोडणी-मध्ये केवळ बिटमॅप (दोन रंग) अनुक्रमणिकेतील प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:343
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"बिटमॅप क्रियापूर्व  सेटिंग्ज वापरून अनुक्रमणिकेमध्ये रूपांतरित करा\n"
+"(परिणाम ट्यून करण्यासाठी ते स्वतः करावे)"
+
+#: ../libgimp/gimpexport.c:352
+#, c-format
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s जोडणी-मध्ये केवळ आरजीबी किंवा ग्रेस्केल प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:361
+#, c-format
+msgid "%s plug-in can only handle RGB or indexed images"
+msgstr " %s जोडणी-मध्ये केवळ आरजीबी किंवा अनुक्रमणिकेतील प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:371
+#, c-format
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s जोडणी-मध्ये केवळ ग्रेस्केल किंवा अनुक्रमणिकेतील प्रतिमा हाताळू शकता"
+
+#: ../libgimp/gimpexport.c:382
+#, c-format
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s जोडणी-मध्ये अल्फा चॅनेल आवश्यक आहे"
+
+#: ../libgimp/gimpexport.c:383
+msgid "Add Alpha Channel"
+msgstr "अल्फा चॅनेल जोडा"
+
+#: ../libgimp/gimpexport.c:442
+msgid "Confirm Save"
+msgstr "जतन करण्याची पुष्टी करा"
+
+#: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
+#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:166
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:176
+#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
+msgid "_Cancel"
+msgstr "_रद्द"
+
+#: ../libgimp/gimpexport.c:448
+msgid "C_onfirm"
+msgstr "_पुष्टी करा"
+
+#: ../libgimp/gimpexport.c:524
+msgid "Export File"
+msgstr "धारिका निर्यात करा"
+
+#: ../libgimp/gimpexport.c:528
+msgid "_Ignore"
+msgstr "_दुर्लक्ष"
+
+#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+msgid "_Export"
+msgstr "_निर्यात"
+
+#. the headline
+#: ../libgimp/gimpexport.c:560
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr "खालील प्रमाणे  %s प्रतिमा जतन करण्यापूर्वी आपली प्रतिमा निर्यात करावीकारणे:"
+
+#. the footline
+#: ../libgimp/gimpexport.c:634
+msgid "The export conversion won't modify your original image."
+msgstr "निर्यात रूपांतरण आपल्या मूळ प्रतिमेत सुधारित करणार नाही."
+
+#: ../libgimp/gimpexport.c:741
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"आपण म्हणून एक स्तर आच्छादक  जतन करणार आहात %s.\n"
+"हे दृश्यमान स्तर जतन करणार नाही."
+
+#: ../libgimp/gimpexport.c:747
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"आपण  एक चॅनेल (जतन केलेली निवड) जतन करणार आहात %s.\n"
+"हे दृश्यमान स्तर  जतन करणार नाही."
+
+#: ../libgimp/gimpexport.c:1015
+msgid "Export Image as "
+msgstr "प्रतिमा निर्यात"
+
+#: ../libgimp/gimpfontselectbutton.c:139
+msgid "Font Selection"
+msgstr "टंक निवड"
+
+#: ../libgimp/gimpgradientselectbutton.c:157
+msgid "Gradient Selection"
+msgstr "रंगछटा निवड"
+
+#: ../libgimp/gimpimagemetadata.c:487
+msgid "GIMP 2.10"
+msgstr "गिम्प 2.10"
+
+#: ../libgimp/gimpimagemetadata.c:671
+msgid "Background"
+msgstr "पृष्ठभाग"
+
+#: ../libgimp/gimpimagemetadata.c:860
+#, c-format
+msgid "Rotate %s?"
+msgstr "फिरवा %s?"
+
+#: ../libgimp/gimpimagemetadata.c:866
+msgid "_Keep Original"
+msgstr "_मूळ ठेवा"
+
+#: ../libgimp/gimpimagemetadata.c:867 ../libgimpwidgets/gimpicons.c:271
+msgid "_Rotate"
+msgstr "_फिरवा"
+
+#: ../libgimp/gimpimagemetadata.c:908
+msgid "Original"
+msgstr "मूळ"
+
+#: ../libgimp/gimpimagemetadata.c:924
+msgid "Rotated"
+msgstr "फिरवलेल्या"
+
+#: ../libgimp/gimpimagemetadata.c:942
+msgid "This image contains Exif orientation metadata."
+msgstr "या प्रतिमेत Exif अभिमुखता बृहूतसाठा आहे"
+
+#: ../libgimp/gimpimagemetadata.c:960
+msgid "Would you like to rotate the image?"
+msgstr "आपण प्रतिमा फिरवू करू इच्छिता?"
+
+#: ../libgimp/gimpimagemetadata.c:972
+msgid "_Don't ask me again"
+msgstr "_मला पुन्हा विचारू नका"
+
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:253
+msgid "(Empty)"
+msgstr "(रिकामा)"
+
+#: ../libgimp/gimppaletteselectbutton.c:139
+msgid "Palette Selection"
+msgstr "रंगफळी निवड"
+
+#: ../libgimp/gimppatternselectbutton.c:165
+msgid "Pattern Selection"
+msgstr "नमुना निवड"
+
+#: ../libgimp/gimpprocbrowserdialog.c:150
+msgid "by name"
+msgstr "नावाद्वारे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:151
+msgid "by description"
+msgstr "वर्णनाद्वारे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:152
+msgid "by help"
+msgstr "मदतीद्वारे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:153
+msgid "by author"
+msgstr "लेखकाद्वारे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:154
+msgid "by copyright"
+msgstr "प्रकाशनाधिकारद्वारे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:155
+msgid "by date"
+msgstr "तारखेद्वारे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:156
+msgid "by type"
+msgstr "प्रकाराद्वारे"
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
+msgid "No matches"
+msgstr "साम्य नाहीत"
+
+#: ../libgimp/gimpprocbrowserdialog.c:398
+msgid "Search term invalid or incomplete"
+msgstr "शोध संज्ञा अवैध किंवा अपूर्ण"
+
+#: ../libgimp/gimpprocbrowserdialog.c:407
+msgid "Searching"
+msgstr "शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:418
+msgid "Searching by name"
+msgstr "नावाद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:439
+msgid "Searching by description"
+msgstr "वर्णनाद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:446
+msgid "Searching by help"
+msgstr "मदतीद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:453
+msgid "Searching by author"
+msgstr "लेखकाद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:460
+msgid "Searching by copyright"
+msgstr "प्रकाशनाधिकारद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:467
+msgid "Searching by date"
+msgstr "तारखेद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:474
+msgid "Searching by type"
+msgstr "प्रकाराद्वारे शोधत आहे"
+
+#: ../libgimp/gimpprocbrowserdialog.c:484
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d प्रक्रीया"
+msgstr[1] "%d प्रक्रीया"
+
+#: ../libgimp/gimpprocbrowserdialog.c:493
+msgid "No matches for your query"
+msgstr "प्रश्नचिन्हसाठी कोणत्याही जुळणी नाहीत"
+
+#: ../libgimp/gimpprocbrowserdialog.c:497
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "%d कार्यपद्धती आपल्या प्रश्नचिन्हशी जुळते "
+msgstr[1] "%d कार्यपद्धती आपल्या प्रश्नचिन्हशी जुळतात"
+
+#: ../libgimp/gimpprocview.c:173
+msgid "Parameters"
+msgstr "घटक"
+
+#: ../libgimp/gimpprocview.c:186
+msgid "Return Values"
+msgstr "मूल्य परत करा"
+
+#: ../libgimp/gimpprocview.c:199
+msgid "Additional Information"
+msgstr "अतिरिक्त माहिती"
+
+#: ../libgimp/gimpprocview.c:240
+msgid "Author:"
+msgstr "लेखक:"
+
+#: ../libgimp/gimpprocview.c:253
+msgid "Date:"
+msgstr "तारीख:"
+
+#: ../libgimp/gimpprocview.c:266
+msgid "Copyright:"
+msgstr "प्रकाशनाधिकार:"
+
+#: ../libgimp/gimpunitcache.c:54
+msgid "percent"
+msgstr "टक्के"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+msgctxt "add-mask-type"
+msgid "_White (full opacity)"
+msgstr "_पांढरा(पूर्ण अपारदर्शकता)"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgctxt "add-mask-type"
+msgid "_Black (full transparency)"
+msgstr "_काळा(पूर्ण पारदर्शकता)"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgctxt "add-mask-type"
+msgid "Layer's _alpha channel"
+msgstr "स्तराचे _अल्फा  चॅनेल"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgctxt "add-mask-type"
+msgid "_Transfer layer's alpha channel"
+msgstr "_रूपांतरणाच्या स्तराचे अल्फा चॅनेल"
+
+#: ../libgimpbase/gimpbaseenums.c:32
+msgctxt "add-mask-type"
+msgid "_Selection"
+msgstr "_निवड"
+
+#: ../libgimpbase/gimpbaseenums.c:33
+msgctxt "add-mask-type"
+msgid "_Grayscale copy of layer"
+msgstr "स्तराची _ग्रेस्केल प्रत"
+
+#: ../libgimpbase/gimpbaseenums.c:34
+msgctxt "add-mask-type"
+msgid "C_hannel"
+msgstr "_चॅनेल"
+
+#: ../libgimpbase/gimpbaseenums.c:65
+msgctxt "blend-mode"
+msgid "FG to BG (RGB)"
+msgstr "अग्रभागापासून ते पृष्ठभागापर्यंत (आरजीबी)"
+
+#: ../libgimpbase/gimpbaseenums.c:66
+msgctxt "blend-mode"
+msgid "FG to BG (HSV)"
+msgstr "अग्रभागापासून ते पृष्ठभागापर्यंत (एचएसव्ही)"
+
+#: ../libgimpbase/gimpbaseenums.c:67
+msgctxt "blend-mode"
+msgid "FG to transparent"
+msgstr "अग्रभागापासून पारदर्शक"
+
+#: ../libgimpbase/gimpbaseenums.c:68
+msgctxt "blend-mode"
+msgid "Custom gradient"
+msgstr "सानुकूल रंगछटा"
+
+#: ../libgimpbase/gimpbaseenums.c:98
+msgctxt "brush-generated-shape"
+msgid "Circle"
+msgstr "वर्तृळ"
+
+#: ../libgimpbase/gimpbaseenums.c:99
+msgctxt "brush-generated-shape"
+msgid "Square"
+msgstr "चौरस"
+
+#: ../libgimpbase/gimpbaseenums.c:100
+msgctxt "brush-generated-shape"
+msgid "Diamond"
+msgstr "हीरा"
+
+#: ../libgimpbase/gimpbaseenums.c:130
+msgctxt "bucket-fill-mode"
+msgid "FG color fill"
+msgstr "अग्रभागावर रंग भरा"
+
+#: ../libgimpbase/gimpbaseenums.c:131
+msgctxt "bucket-fill-mode"
+msgid "BG color fill"
+msgstr "पृष्ठभागावर रंग भरा"
+
+#: ../libgimpbase/gimpbaseenums.c:132
+msgctxt "bucket-fill-mode"
+msgid "Pattern fill"
+msgstr "नमुना भरा"
+
+#: ../libgimpbase/gimpbaseenums.c:162
+msgctxt "cap-style"
+msgid "Butt"
+msgstr "टोक"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgctxt "cap-style"
+msgid "Round"
+msgstr "गोल"
+
+#: ../libgimpbase/gimpbaseenums.c:164
+msgctxt "cap-style"
+msgid "Square"
+msgstr "चौरस"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+msgctxt "channel-ops"
+msgid "Add to the current selection"
+msgstr "सध्याच्या निवडीवर जोडा"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgctxt "channel-ops"
+msgid "Subtract from the current selection"
+msgstr "सध्याच्या निवडीमधून कमी करा"
+
+#: ../libgimpbase/gimpbaseenums.c:197
+msgctxt "channel-ops"
+msgid "Replace the current selection"
+msgstr "सध्याची निवड पुनर्स्थित करा"
+
+#: ../libgimpbase/gimpbaseenums.c:198
+msgctxt "channel-ops"
+msgid "Intersect with the current selection"
+msgstr "सध्याच्या निवडीसह चिन्हांकित करा"
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgctxt "channel-type"
+msgid "Red"
+msgstr "लाल"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgctxt "channel-type"
+msgid "Green"
+msgstr "हिरवा"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgctxt "channel-type"
+msgid "Blue"
+msgstr "निळा"
+
+#: ../libgimpbase/gimpbaseenums.c:234
+msgctxt "channel-type"
+msgid "Gray"
+msgstr "करडा"
+
+#: ../libgimpbase/gimpbaseenums.c:235
+msgctxt "channel-type"
+msgid "Indexed"
+msgstr "अनुक्रमणिका"
+
+#: ../libgimpbase/gimpbaseenums.c:236
+msgctxt "channel-type"
+msgid "Alpha"
+msgstr "अल्फा"
+
+#: ../libgimpbase/gimpbaseenums.c:266
+msgctxt "check-size"
+msgid "Small"
+msgstr "लहान"
+
+#: ../libgimpbase/gimpbaseenums.c:267
+msgctxt "check-size"
+msgid "Medium"
+msgstr "मध्यम"
+
+#: ../libgimpbase/gimpbaseenums.c:268
+msgctxt "check-size"
+msgid "Large"
+msgstr "मोठा"
+
+#: ../libgimpbase/gimpbaseenums.c:301
+msgctxt "check-type"
+msgid "Light checks"
+msgstr "प्रकाश तपासणी"
+
+#: ../libgimpbase/gimpbaseenums.c:302
+msgctxt "check-type"
+msgid "Mid-tone checks"
+msgstr "मिड-टोन तपासणी"
+
+#: ../libgimpbase/gimpbaseenums.c:303
+msgctxt "check-type"
+msgid "Dark checks"
+msgstr "गडद तपासणी"
+
+#: ../libgimpbase/gimpbaseenums.c:304
+msgctxt "check-type"
+msgid "White only"
+msgstr "केवळ पांढरा"
+
+#: ../libgimpbase/gimpbaseenums.c:305
+msgctxt "check-type"
+msgid "Gray only"
+msgstr "केवळ करडा"
+
+#: ../libgimpbase/gimpbaseenums.c:306
+msgctxt "check-type"
+msgid "Black only"
+msgstr "केवळ काळा"
+
+#: ../libgimpbase/gimpbaseenums.c:335
+msgctxt "clone-type"
+msgid "Image"
+msgstr "प्रतिमा"
+
+#: ../libgimpbase/gimpbaseenums.c:336
+msgctxt "clone-type"
+msgid "Pattern"
+msgstr "नमुना"
+
+#: ../libgimpbase/gimpbaseenums.c:372
+msgctxt "color-tag"
+msgid "None"
+msgstr "काहीही नाही"
+
+#: ../libgimpbase/gimpbaseenums.c:373
+msgctxt "color-tag"
+msgid "Blue"
+msgstr "निळा"
+
+#: ../libgimpbase/gimpbaseenums.c:374
+msgctxt "color-tag"
+msgid "Green"
+msgstr "हिरवा"
+
+#: ../libgimpbase/gimpbaseenums.c:375
+msgctxt "color-tag"
+msgid "Yellow"
+msgstr "पिवळा"
+
+#: ../libgimpbase/gimpbaseenums.c:376
+msgctxt "color-tag"
+msgid "Orange"
+msgstr "केशरी"
+
+#: ../libgimpbase/gimpbaseenums.c:377
+msgctxt "color-tag"
+msgid "Brown"
+msgstr "तपकिरी"
+
+#: ../libgimpbase/gimpbaseenums.c:378
+msgctxt "color-tag"
+msgid "Red"
+msgstr "लाल"
+
+#: ../libgimpbase/gimpbaseenums.c:379
+msgctxt "color-tag"
+msgid "Violet"
+msgstr "जांभळा"
+
+#: ../libgimpbase/gimpbaseenums.c:380
+msgctxt "color-tag"
+msgid "Gray"
+msgstr "करडा"
+
+#: ../libgimpbase/gimpbaseenums.c:413
+msgctxt "component-type"
+msgid "8-bit integer"
+msgstr "८-बिट पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:414
+msgctxt "component-type"
+msgid "16-bit integer"
+msgstr "१६-बिट पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:415
+msgctxt "component-type"
+msgid "32-bit integer"
+msgstr "३२-बिट पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:416
+msgctxt "component-type"
+msgid "16-bit floating point"
+msgstr "१६-बिट अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:417
+msgctxt "component-type"
+msgid "32-bit floating point"
+msgstr "३२-बिट अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:418
+msgctxt "component-type"
+msgid "64-bit floating point"
+msgstr "६४-बिट अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:449
+msgctxt "convert-palette-type"
+msgid "Generate optimum palette"
+msgstr "सर्वोकृष्ट रंगफळी तयार करा"
+
+#: ../libgimpbase/gimpbaseenums.c:450
+msgctxt "convert-palette-type"
+msgid "Use web-optimized palette"
+msgstr "तैलचित्राप्रमाणे बदलवा "
+
+#: ../libgimpbase/gimpbaseenums.c:451
+msgctxt "convert-palette-type"
+msgid "Use black and white (1-bit) palette"
+msgstr "काळा आणि पांढरा (1-बिट)रंगफळी वापरा"
+
+#: ../libgimpbase/gimpbaseenums.c:452
+msgctxt "convert-palette-type"
+msgid "Use custom palette"
+msgstr "सानुकूल रंगफळी वापरा"
+
+#: ../libgimpbase/gimpbaseenums.c:481
+msgctxt "convolve-type"
+msgid "Blur"
+msgstr "अस्पष्ट"
+
+#: ../libgimpbase/gimpbaseenums.c:482
+msgctxt "convolve-type"
+msgid "Sharpen"
+msgstr "तीक्ष्ण"
+
+#: ../libgimpbase/gimpbaseenums.c:514
+msgctxt "desaturate-mode"
+msgid "Lightness (HSL)"
+msgstr "चमक(एचएसएल )"
+
+#: ../libgimpbase/gimpbaseenums.c:515
+msgctxt "desaturate-mode"
+msgid "Luma"
+msgstr "लुमा"
+
+#: ../libgimpbase/gimpbaseenums.c:516
+msgctxt "desaturate-mode"
+msgid "Average (HSI Intensity)"
+msgstr "सरासरी(एचएसआय तीव्रता)"
+
+#: ../libgimpbase/gimpbaseenums.c:517
+msgctxt "desaturate-mode"
+msgid "Luminance"
+msgstr "लुमिनेन्स"
+
+#: ../libgimpbase/gimpbaseenums.c:518
+msgctxt "desaturate-mode"
+msgid "Value (HSV)"
+msgstr "मूल्य(एचएसव्ही)"
+
+#: ../libgimpbase/gimpbaseenums.c:547
+msgctxt "dodge-burn-type"
+msgid "Dodge"
+msgstr "हलका"
+
+#: ../libgimpbase/gimpbaseenums.c:548
+msgctxt "dodge-burn-type"
+msgid "Burn"
+msgstr "गडद "
+
+#: ../libgimpbase/gimpbaseenums.c:580
+msgctxt "fill-type"
+msgid "Foreground color"
+msgstr "अग्रभागाचा रंग"
+
+#: ../libgimpbase/gimpbaseenums.c:581
+msgctxt "fill-type"
+msgid "Background color"
+msgstr "पृष्ठभागाचा रंग"
+
+#: ../libgimpbase/gimpbaseenums.c:582
+msgctxt "fill-type"
+msgid "White"
+msgstr "पांढरा"
+
+#: ../libgimpbase/gimpbaseenums.c:583
+msgctxt "fill-type"
+msgid "Transparency"
+msgstr "पारदर्शकता"
+
+#: ../libgimpbase/gimpbaseenums.c:584
+msgctxt "fill-type"
+msgid "Pattern"
+msgstr "नमुना"
+
+#: ../libgimpbase/gimpbaseenums.c:644
+msgctxt "gradient-blend-color-space"
+msgid "Perceptual RGB"
+msgstr "अनुवादात्मक आरजीबी"
+
+#: ../libgimpbase/gimpbaseenums.c:645
+msgctxt "gradient-blend-color-space"
+msgid "Linear RGB"
+msgstr "रेषीय आरजीबी"
+
+#: ../libgimpbase/gimpbaseenums.c:646
+msgctxt "gradient-blend-color-space"
+msgid "CIE Lab"
+msgstr "सीआयई प्रयोगशाळा"
+
+#: ../libgimpbase/gimpbaseenums.c:676
+msgctxt "gradient-segment-color"
+msgid "RGB"
+msgstr "आरजीबी"
+
+#: ../libgimpbase/gimpbaseenums.c:677
+msgctxt "gradient-segment-color"
+msgid "HSV (counter-clockwise hue)"
+msgstr "एचएसव्ही (घड्याळाच्या-विरुद्ध दिशेने गडद रंगछटा)"
+
+#. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:680
+msgctxt "gradient-segment-color"
+msgid "HSV (ccw)"
+msgstr "एचएसव्ही (घड्याळाच्या-विरुद्ध दिशेने)"
+
+#: ../libgimpbase/gimpbaseenums.c:681
+msgctxt "gradient-segment-color"
+msgid "HSV (clockwise hue)"
+msgstr "एचएसव्ही (घड्याळाच्या दिशेने गडद रंगछटा)"
+
+#. Translators: this is an abbreviated version of "HSV (clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:684
+msgctxt "gradient-segment-color"
+msgid "HSV (cw)"
+msgstr "एचएसव्ही (घड्याळाच्या दिशेने)"
+
+#: ../libgimpbase/gimpbaseenums.c:716
+msgctxt "gradient-segment-type"
+msgid "Linear"
+msgstr "रेषीय "
+
+#: ../libgimpbase/gimpbaseenums.c:717
+msgctxt "gradient-segment-type"
+msgid "Curved"
+msgstr "वक्र"
+
+#: ../libgimpbase/gimpbaseenums.c:718
+msgctxt "gradient-segment-type"
+msgid "Sinusoidal"
+msgstr "साइनसॉइडल"
+
+#: ../libgimpbase/gimpbaseenums.c:719
+msgctxt "gradient-segment-type"
+msgid "Spherical (increasing)"
+msgstr "गोलाकार (वाढ)"
+
+#. Translators: this is an abbreviated version of "Spherical (increasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:722
+msgctxt "gradient-segment-type"
+msgid "Spherical (inc)"
+msgstr "गोलाकार (वाढ)"
+
+#: ../libgimpbase/gimpbaseenums.c:723
+msgctxt "gradient-segment-type"
+msgid "Spherical (decreasing)"
+msgstr "गोलाकार (कमी होत जाणारे)"
+
+#. Translators: this is an abbreviated version of "Spherical (decreasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:726
+msgctxt "gradient-segment-type"
+msgid "Spherical (dec)"
+msgstr "गोलाकार (कमी होत जाणारे)"
+
+#: ../libgimpbase/gimpbaseenums.c:764
+msgctxt "gradient-type"
+msgid "Linear"
+msgstr "रेषीय "
+
+#: ../libgimpbase/gimpbaseenums.c:765
+msgctxt "gradient-type"
+msgid "Bi-linear"
+msgstr "दंडगोलाकार"
+
+#: ../libgimpbase/gimpbaseenums.c:766
+msgctxt "gradient-type"
+msgid "Radial"
+msgstr "त्रिज्यात्मक"
+
+#: ../libgimpbase/gimpbaseenums.c:767
+msgctxt "gradient-type"
+msgid "Square"
+msgstr "चौरस"
+
+#: ../libgimpbase/gimpbaseenums.c:768
+msgctxt "gradient-type"
+msgid "Conical (symmetric)"
+msgstr "शंकूच्या आकाराचे (प्रमाणबद्ध)"
+
+#. Translators: this is an abbreviated version of "Conical (symmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:771
+msgctxt "gradient-type"
+msgid "Conical (sym)"
+msgstr "शंकूच्या आकाराचे (प्रमाणबद्ध)"
+
+#: ../libgimpbase/gimpbaseenums.c:772
+msgctxt "gradient-type"
+msgid "Conical (asymmetric)"
+msgstr "शंकूच्या आकाराचे(अप्रमाणबद्ध)"
+
+#. Translators: this is an abbreviated version of "Conical (asymmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:775
+msgctxt "gradient-type"
+msgid "Conical (asym)"
+msgstr "शंकूच्या आकाराचे(अप्रमाणबद्ध)"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgctxt "gradient-type"
+msgid "Shaped (angular)"
+msgstr "आकार (कोनाकृती)"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgctxt "gradient-type"
+msgid "Shaped (spherical)"
+msgstr "आकार(गोलाकार)"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgctxt "gradient-type"
+msgid "Shaped (dimpled)"
+msgstr "आकार(तवंग)"
+
+#: ../libgimpbase/gimpbaseenums.c:779
+msgctxt "gradient-type"
+msgid "Spiral (clockwise)"
+msgstr "आवर्त (घड्याळाच्या दिशेने)"
+
+#. Translators: this is an abbreviated version of "Spiral (clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:782
+msgctxt "gradient-type"
+msgid "Spiral (cw)"
+msgstr "आवर्त (घड्याळाच्या दिशेने)"
+
+#: ../libgimpbase/gimpbaseenums.c:783
+msgctxt "gradient-type"
+msgid "Spiral (counter-clockwise)"
+msgstr "आवर्त(घड्याळाच्या विरुद्ध  दिशेने)"
+
+#. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:786
+msgctxt "gradient-type"
+msgid "Spiral (ccw)"
+msgstr "आवर्त (घड्याळाच्या विरुद्ध  दिशेने)"
+
+#: ../libgimpbase/gimpbaseenums.c:818
+msgctxt "grid-style"
+msgid "Intersections (dots)"
+msgstr "छेदनबिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:819
+msgctxt "grid-style"
+msgid "Intersections (crosshairs)"
+msgstr "तिरप्या रेषा"
+
+#: ../libgimpbase/gimpbaseenums.c:820
+msgctxt "grid-style"
+msgid "Dashed"
+msgstr "तुटक"
+
+#: ../libgimpbase/gimpbaseenums.c:821
+msgctxt "grid-style"
+msgid "Double dashed"
+msgstr "दुहेरी तुटक"
+
+#: ../libgimpbase/gimpbaseenums.c:822
+msgctxt "grid-style"
+msgid "Solid"
+msgstr "घन"
+
+#: ../libgimpbase/gimpbaseenums.c:892
+msgctxt "icon-type"
+msgid "Icon name"
+msgstr "चिन्हाचे नाव"
+
+#: ../libgimpbase/gimpbaseenums.c:893
+msgctxt "icon-type"
+msgid "Inline pixbuf"
+msgstr "इनलाइन पिक्सबुफ"
+
+#: ../libgimpbase/gimpbaseenums.c:894
+msgctxt "icon-type"
+msgid "Image file"
+msgstr "प्रतिमा धारिका"
+
+#: ../libgimpbase/gimpbaseenums.c:924
+msgctxt "image-base-type"
+msgid "RGB color"
+msgstr "आरजीबी रंग"
+
+#: ../libgimpbase/gimpbaseenums.c:925
+msgctxt "image-base-type"
+msgid "Grayscale"
+msgstr "ग्रेस्केल"
+
+#: ../libgimpbase/gimpbaseenums.c:926
+msgctxt "image-base-type"
+msgid "Indexed color"
+msgstr "अनुक्रमित रंग"
+
+#: ../libgimpbase/gimpbaseenums.c:959
+msgctxt "image-type"
+msgid "RGB"
+msgstr "आरजीबी"
+
+#: ../libgimpbase/gimpbaseenums.c:960
+msgctxt "image-type"
+msgid "RGB-alpha"
+msgstr "आरजीबी-अल्फा"
+
+#: ../libgimpbase/gimpbaseenums.c:961
+msgctxt "image-type"
+msgid "Grayscale"
+msgstr "ग्रेस्केल"
+
+#: ../libgimpbase/gimpbaseenums.c:962
+msgctxt "image-type"
+msgid "Grayscale-alpha"
+msgstr "ग्रेस्केल-अल्फा"
+
+#: ../libgimpbase/gimpbaseenums.c:963
+msgctxt "image-type"
+msgid "Indexed"
+msgstr "अनुक्रमित"
+
+#: ../libgimpbase/gimpbaseenums.c:964
+msgctxt "image-type"
+msgid "Indexed-alpha"
+msgstr "अनुक्रमित-अल्फा"
+
+#: ../libgimpbase/gimpbaseenums.c:994
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "वर्तृळ"
+
+#: ../libgimpbase/gimpbaseenums.c:995
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "चौरस"
+
+#: ../libgimpbase/gimpbaseenums.c:996
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "हिरा"
+
+#: ../libgimpbase/gimpbaseenums.c:1028
+msgctxt "interpolation-type"
+msgid "None"
+msgstr "काहीही नाही"
+
+#: ../libgimpbase/gimpbaseenums.c:1029
+msgctxt "interpolation-type"
+msgid "Linear"
+msgstr "रेषीय"
+
+#: ../libgimpbase/gimpbaseenums.c:1030
+msgctxt "interpolation-type"
+msgid "Cubic"
+msgstr "घन"
+
+#: ../libgimpbase/gimpbaseenums.c:1031
+msgctxt "interpolation-type"
+msgid "NoHalo"
+msgstr "नोहालो"
+
+#: ../libgimpbase/gimpbaseenums.c:1032
+msgctxt "interpolation-type"
+msgid "LoHalo"
+msgstr "लोहलो"
+
+#: ../libgimpbase/gimpbaseenums.c:1062
+msgctxt "join-style"
+msgid "Miter"
+msgstr "मिटर"
+
+#: ../libgimpbase/gimpbaseenums.c:1063
+msgctxt "join-style"
+msgid "Round"
+msgstr "गोल"
+
+#: ../libgimpbase/gimpbaseenums.c:1064
+msgctxt "join-style"
+msgid "Bevel"
+msgstr "काटकोनी "
+
+#: ../libgimpbase/gimpbaseenums.c:1125
+msgctxt "merge-type"
+msgid "Expanded as necessary"
+msgstr "आवश्यकतेनुसार विस्तारित"
+
+#: ../libgimpbase/gimpbaseenums.c:1126
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr "कापलेल्या प्रतिमेवर"
+
+#: ../libgimpbase/gimpbaseenums.c:1127
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr "तळाच्या स्तरावर कापणे"
+
+#: ../libgimpbase/gimpbaseenums.c:1128
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr "समतल"
+
+#: ../libgimpbase/gimpbaseenums.c:1220
+msgctxt "orientation-type"
+msgid "Horizontal"
+msgstr "आडवा"
+
+#: ../libgimpbase/gimpbaseenums.c:1221
+msgctxt "orientation-type"
+msgid "Vertical"
+msgstr "उभा"
+
+#: ../libgimpbase/gimpbaseenums.c:1222
+msgctxt "orientation-type"
+msgid "Unknown"
+msgstr "अज्ञात"
+
+#: ../libgimpbase/gimpbaseenums.c:1251
+msgctxt "paint-application-mode"
+msgid "Constant"
+msgstr "स्थिर"
+
+#: ../libgimpbase/gimpbaseenums.c:1252
+msgctxt "paint-application-mode"
+msgid "Incremental"
+msgstr "वाढीव"
+
+#: ../libgimpbase/gimpbaseenums.c:1385
+msgctxt "pdb-proc-type"
+msgid "Internal GIMP procedure"
+msgstr "अंतर्गत गिम्प प्रक्रिया"
+
+#: ../libgimpbase/gimpbaseenums.c:1386
+msgctxt "pdb-proc-type"
+msgid "GIMP Plug-In"
+msgstr "गिम्प मध्ये-जोडा"
+
+#: ../libgimpbase/gimpbaseenums.c:1387
+msgctxt "pdb-proc-type"
+msgid "GIMP Extension"
+msgstr "गिम्प विस्तार"
+
+#: ../libgimpbase/gimpbaseenums.c:1388
+msgctxt "pdb-proc-type"
+msgid "Temporary Procedure"
+msgstr "तात्पुरती प्रक्रिया"
+
+#: ../libgimpbase/gimpbaseenums.c:1463
+msgctxt "precision"
+msgid "8-bit linear integer"
+msgstr "८-बिट रेषीय पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:1464
+msgctxt "precision"
+msgid "8-bit gamma integer"
+msgstr "८-बिट गामा पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:1465
+msgctxt "precision"
+msgid "16-bit linear integer"
+msgstr "१६-बिट रेषीय पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:1466
+msgctxt "precision"
+msgid "16-bit gamma integer"
+msgstr "१६-बिट गामा पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:1467
+msgctxt "precision"
+msgid "32-bit linear integer"
+msgstr "३२-बिट रेषीय पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:1468
+msgctxt "precision"
+msgid "32-bit gamma integer"
+msgstr "३२-बिट गामा पूर्णांक"
+
+#: ../libgimpbase/gimpbaseenums.c:1469
+msgctxt "precision"
+msgid "16-bit linear floating point"
+msgstr "१६-बिट रेषेचा अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:1470
+msgctxt "precision"
+msgid "16-bit gamma floating point"
+msgstr "१६-बिट गॅमा अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:1471
+msgctxt "precision"
+msgid "32-bit linear floating point"
+msgstr "३२-बिट रेखीय अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:1472
+msgctxt "precision"
+msgid "32-bit gamma floating point"
+msgstr "३२-बिट गॅमा अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:1473
+msgctxt "precision"
+msgid "64-bit linear floating point"
+msgstr "६४-बिट रेषेचा अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:1474
+msgctxt "precision"
+msgid "64-bit gamma floating point"
+msgstr "६४-बिट गॅमा अस्थिर बिंदू"
+
+#: ../libgimpbase/gimpbaseenums.c:1543
+msgctxt "repeat-mode"
+msgid "None (extend)"
+msgstr "काहीही नाही (वाढवा)"
+
+#: ../libgimpbase/gimpbaseenums.c:1544
+msgctxt "repeat-mode"
+msgid "Sawtooth wave"
+msgstr "सॉटोथ लाट"
+
+#: ../libgimpbase/gimpbaseenums.c:1545
+msgctxt "repeat-mode"
+msgid "Triangular wave"
+msgstr "त्रिकोणी लहर"
+
+#: ../libgimpbase/gimpbaseenums.c:1546
+msgctxt "repeat-mode"
+msgid "Truncate"
+msgstr "तुकडे"
+
+#: ../libgimpbase/gimpbaseenums.c:1608
+msgctxt "run-mode"
+msgid "Run interactively"
+msgstr "परस्पररित्या चालवा"
+
+#: ../libgimpbase/gimpbaseenums.c:1609
+msgctxt "run-mode"
+msgid "Run non-interactively"
+msgstr "विना-परस्पररित्या चालवा"
+
+#: ../libgimpbase/gimpbaseenums.c:1610
+msgctxt "run-mode"
+msgid "Run with last used values"
+msgstr "अंतिम वापरलेल्या मूल्यांसह चालवा"
+
+#: ../libgimpbase/gimpbaseenums.c:1648
+msgctxt "select-criterion"
+msgid "Composite"
+msgstr "संमिश्र"
+
+#: ../libgimpbase/gimpbaseenums.c:1649
+msgctxt "select-criterion"
+msgid "Red"
+msgstr "लाल"
+
+#: ../libgimpbase/gimpbaseenums.c:1650
+msgctxt "select-criterion"
+msgid "Green"
+msgstr "हिरवा"
+
+#: ../libgimpbase/gimpbaseenums.c:1651
+msgctxt "select-criterion"
+msgid "Blue"
+msgstr "निळा"
+
+#: ../libgimpbase/gimpbaseenums.c:1652
+msgctxt "select-criterion"
+msgid "Hue (HSV)"
+msgstr "गडद रंगछटा(एचएसव्ही)"
+
+#: ../libgimpbase/gimpbaseenums.c:1653
+msgctxt "select-criterion"
+msgid "Saturation (HSV)"
+msgstr "संपृक्तता(एचएसव्ही)"
+
+#: ../libgimpbase/gimpbaseenums.c:1654
+msgctxt "select-criterion"
+msgid "Value (HSV)"
+msgstr "मूल्य(एचएसव्ही)"
+
+#: ../libgimpbase/gimpbaseenums.c:1655
+msgctxt "select-criterion"
+msgid "Alpha"
+msgstr "अल्फा"
+
+#: ../libgimpbase/gimpbaseenums.c:1656
+msgctxt "select-criterion"
+msgid "Lightness (LCH)"
+msgstr "चमक (एलसीएच )"
+
+#: ../libgimpbase/gimpbaseenums.c:1657
+msgctxt "select-criterion"
+msgid "Chroma (LCH)"
+msgstr "क्रोमा (एलसीएच)"
+
+#: ../libgimpbase/gimpbaseenums.c:1658
+msgctxt "select-criterion"
+msgid "Hue (LCH)"
+msgstr "गडद रंगछटा (एलसीएच)"
+
+#: ../libgimpbase/gimpbaseenums.c:1687
+msgctxt "size-type"
+msgid "Pixels"
+msgstr "दृश्यबिंदू "
+
+#: ../libgimpbase/gimpbaseenums.c:1688
+msgctxt "size-type"
+msgid "Points"
+msgstr "बिंदू "
+
+#: ../libgimpbase/gimpbaseenums.c:1749
+msgctxt "stroke-method"
+msgid "Stroke line"
+msgstr "बाह्यरेषा"
+
+#: ../libgimpbase/gimpbaseenums.c:1750
+msgctxt "stroke-method"
+msgid "Stroke with a paint tool"
+msgstr "रंग साधनासह बाह्यरेषा"
+
+#: ../libgimpbase/gimpbaseenums.c:1779
+msgctxt "text-direction"
+msgid "From left to right"
+msgstr "डावीकडून उजवीकडे"
+
+#: ../libgimpbase/gimpbaseenums.c:1780
+msgctxt "text-direction"
+msgid "From right to left"
+msgstr "उजवीकडून डावीकडे"
+
+#: ../libgimpbase/gimpbaseenums.c:1811
+msgctxt "text-hint-style"
+msgid "None"
+msgstr "काहीही नाही"
+
+#: ../libgimpbase/gimpbaseenums.c:1812
+msgctxt "text-hint-style"
+msgid "Slight"
+msgstr "थोडेसे"
+
+#: ../libgimpbase/gimpbaseenums.c:1813
+msgctxt "text-hint-style"
+msgid "Medium"
+msgstr "मध्यम"
+
+#: ../libgimpbase/gimpbaseenums.c:1814
+msgctxt "text-hint-style"
+msgid "Full"
+msgstr "पूर्ण"
+
+#: ../libgimpbase/gimpbaseenums.c:1845
+msgctxt "text-justification"
+msgid "Left justified"
+msgstr "उजवीकडे "
+
+#: ../libgimpbase/gimpbaseenums.c:1846
+msgctxt "text-justification"
+msgid "Right justified"
+msgstr "डावीकडे"
+
+#: ../libgimpbase/gimpbaseenums.c:1847
+msgctxt "text-justification"
+msgid "Centered"
+msgstr "मध्यभागी"
+
+#: ../libgimpbase/gimpbaseenums.c:1848
+msgctxt "text-justification"
+msgid "Filled"
+msgstr "भरले"
+
+#: ../libgimpbase/gimpbaseenums.c:1878
+msgctxt "transfer-mode"
+msgid "Shadows"
+msgstr "सावली"
+
+#: ../libgimpbase/gimpbaseenums.c:1879
+msgctxt "transfer-mode"
+msgid "Midtones"
+msgstr "मिडटोन"
+
+#: ../libgimpbase/gimpbaseenums.c:1880
+msgctxt "transfer-mode"
+msgid "Highlights"
+msgstr "ठळक"
+
+#: ../libgimpbase/gimpbaseenums.c:1909
+msgctxt "transform-direction"
+msgid "Normal (Forward)"
+msgstr "सामान्य (पुढील)"
+
+#: ../libgimpbase/gimpbaseenums.c:1910
+msgctxt "transform-direction"
+msgid "Corrective (Backward)"
+msgstr "सुधारात्मक (मागे)"
+
+#: ../libgimpbase/gimpbaseenums.c:1941
+msgctxt "transform-resize"
+msgid "Adjust"
+msgstr "समायोजित"
+
+#: ../libgimpbase/gimpbaseenums.c:1942
+msgctxt "transform-resize"
+msgid "Clip"
+msgstr "कापणे"
+
+#: ../libgimpbase/gimpbaseenums.c:1943
+msgctxt "transform-resize"
+msgid "Crop to result"
+msgstr "परिणामी कापा"
+
+#: ../libgimpbase/gimpbaseenums.c:1944
+msgctxt "transform-resize"
+msgid "Crop with aspect"
+msgstr "दृश्यासह कापा"
+
+#: ../libgimpbase/gimpmetadata.c:845
+#, c-format
+msgid "Can load metadata only from local files"
+msgstr "स्थानिक धारिकावरील माहितीचा साठा भरू शकता"
+
+#: ../libgimpbase/gimpmetadata.c:859 ../libgimpbase/gimpmetadata.c:929
+#, c-format
+msgid "Conversion of the filename to system codepage failed."
+msgstr "धारिका प्रणाली सांकेतिक शब्दकोश पृष्ठावरवर रुपांतर अयशस्वी"
+
+#: ../libgimpbase/gimpmetadata.c:916
+#, c-format
+msgid "Can save metadata only to local files"
+msgstr "केवळ स्थानिक धारिकावरील बृहूतसाठा जतन करू शकता"
+
+#: ../libgimpbase/gimpmetadata.c:978
+#, fuzzy, c-format
+#| msgid "Parsing Exif data failed."
+msgid "Invalid Exif data size."
+msgstr "Exif संच विश्लेषण करणे अयशस्वी झाले."
+
+#: ../libgimpbase/gimpmetadata.c:1007
+#, c-format
+msgid "Parsing Exif data failed."
+msgstr "Exif संच विश्लेषण करणे अयशस्वी झाले."
+
+#: ../libgimpbase/gimpmetadata.c:1057
+#, c-format
+msgid "Parsing IPTC data failed."
+msgstr "आयपीटीसी संचाचे विश्लेषण अयशस्वी झाले."
+
+#: ../libgimpbase/gimpmetadata.c:1105
+#, c-format
+msgid "Parsing XMP data failed."
+msgstr "एक्सएमपी संचाचे विश्लेषित करणे अयशस्वी झाले"
+
+#: ../libgimpbase/gimputils.c:227 ../libgimpbase/gimputils.c:232
+msgid "(invalid UTF-8 string)"
+msgstr "(अवैध UTF-8 स्ट्रिंग)"
+
+#: ../libgimpbase/gimputils.c:402
+msgid "File path is NULL"
+msgstr "धारिका मार्ग निरर्थक आहे"
+
+#: ../libgimpbase/gimputils.c:411 ../libgimpbase/gimputils.c:422
+msgid "Error converting UTF-8 filename to wide char"
+msgstr "UTF-8 धारिका मोठ्या रुपात रुपांतरित करताना येणाऱ्या त्रुटी"
+
+#: ../libgimpbase/gimputils.c:430
+msgid "ILCreateFromPath() failed"
+msgstr "आयएल मार्गा पासून तयार() केलेले अयशस्वी"
+
+#: ../libgimpbase/gimputils.c:467
+#, c-format
+msgid "Cannot convert '%s' into a valid NSURL."
+msgstr "वैध NSURL '%s'मध्ये रूपांतरित करू शकत नाही."
+
+#: ../libgimpbase/gimputils.c:495
+msgid "Connecting to org.freedesktop.FileManager1 failed: "
+msgstr "Org.freedesktop.FileManager1 सह जोडणे अयशस्वी झाले:"
+
+#: ../libgimpbase/gimputils.c:519
+msgid "Calling ShowItems failed: "
+msgstr "संवाद करणे अयशस्वी झाले:"
+
+#: ../libgimpcolor/gimpcolorprofile.c:263
+#, c-format
+msgid "'%s' does not appear to be an ICC color profile"
+msgstr "'%s' आयसीसी रंग प्रोफाइल दिसत नाही"
+
+#: ../libgimpcolor/gimpcolorprofile.c:309
+msgid "Data does not appear to be an ICC color profile"
+msgstr "माहिती  आयसीसी रंग प्रोफाइल असल्याचे दिसत नाही"
+
+#: ../libgimpcolor/gimpcolorprofile.c:366
+msgid "Could not save color profile to memory"
+msgstr "रंग प्रोफाइलला मेमरीमध्ये जतन करू शकत नाही"
+
+#: ../libgimpcolor/gimpcolorprofile.c:583
+msgid "(unnamed profile)"
+msgstr "(नाव नसलेली प्रोफाइल)"
+
+#: ../libgimpcolor/gimpcolorprofile.c:625
+#, c-format
+msgid "Model: %s"
+msgstr "मॉडेल: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:634
+#, c-format
+msgid "Manufacturer: %s"
+msgstr "निर्माता: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:643
+#, c-format
+msgid "Copyright: %s"
+msgstr "प्रकाशनाधिकार : %s"
+
+#: ../libgimpconfig/gimpconfigenums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "रंग व्यवस्थापन नाही"
+
+#: ../libgimpconfig/gimpconfigenums.c:25
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr "रंग-व्यवस्थापित प्रदर्शन"
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr "मऊ -अवरोधक"
+
+#: ../libgimpconfig/gimpconfigenums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "अनुवादात्मक "
+
+#: ../libgimpconfig/gimpconfigenums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "सापेक्ष रंगमिती "
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "संपृक्तता"
+
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "परिपूर्ण रंगमिती"
+
+#. *
+#. * SECTION: gimpcolorconfig
+#. * @title: GimpColorConfig
+#. * @short_description: Color management settings.
+#. *
+#. * Color management settings.
+#. *
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "How images are displayed on screen."
+msgstr "पडद्यावरील प्रतिमा कश्या प्रदर्शित केल्या जातात"
+
+#: ../libgimpconfig/gimpcolorconfig.c:55
+msgid "The color profile of your (primary) monitor."
+msgstr "आपल्या (प्राथमिक) पडद्याचा रंग प्रोफाइल."
+
+#: ../libgimpconfig/gimpcolorconfig.c:58
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"जेव्हा सक्षम असेल,तेव्हा गिम्प प्रदर्शन रंग प्रोफाइल वापरण्याचा प्रयत्न करेलपटल प्रणाली.रचना "
+"केलेले पडदा प्रोफाइल केवळफॉलबॅक."
+
+#: ../libgimpconfig/gimpcolorconfig.c:63
+msgid ""
+"The preferred RGB working space color profile. It will be offered next to "
+"the built-in RGB profile when a color profile can be chosen."
+msgstr ""
+"पसंतीचे आरजीबी रंग प्रोफाइल.हे पुढील आरजीबी प्रोफाइल जेव्हा रंग प्रोफाइल निवडली जाऊ शकते."
+
+#: ../libgimpconfig/gimpcolorconfig.c:67
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+"कामाची जागा रंग प्रोफाइल पसंतीचे ग्रेस्केलजेव्हा रंग प्रोफाइल निवडली जाऊ शकते, तेव्हा अंगभूत "
+"ग्रेस्केल प्रोफाइलकडे."
+
+#: ../libgimpconfig/gimpcolorconfig.c:71
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "सियमवायके रंग प्रोफाइल जे आरजीबी आणि सियमवायके दरम्यान रूपांतरित होते."
+
+#: ../libgimpconfig/gimpcolorconfig.c:74
+msgid ""
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
+"device profile. "
+msgstr ""
+"तुमच्या प्रतिमेच्यारंग जागा मधून मऊ-अवरोधक वापरण्यासाठी रंग प्रोफाइल.काही इतर रंगाची "
+"जागा,मुद्रण किंवा अन्य आउटपुटमध्ये प्रतिक्षा करणेउपकरण प्रोफाईल."
+
+#: ../libgimpconfig/gimpcolorconfig.c:79
+msgid ""
+"How colors are converted from your image's color space to your display "
+"device. Relative colorimetric is usually the best choice. Unless you use a "
+"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
+"intent really gives you relative colorimetric."
+msgstr ""
+"प्रतिमेचे रंग आपल्या प्रदर्शनामध्ये रंग कसे बदलले जातात उपकरण.सापेक्ष रंगमिती सामान्यत: "
+"सर्वोत्तम पर्याय आहे आपण वापरत नाही तोपर्यंतLUT पडदा प्रोफाइल (बहुतेक पडदा प्रोफाइल्स "
+"मॅट्रिक्स आहेत),संकल्पनात्मक हेतू निवडणे खरोखर आपल्याला सापेक्ष रंगमिती देते."
+
+#: ../libgimpconfig/gimpcolorconfig.c:86
+msgid ""
+"Do use black point compensation (unless you know you have a reason not to)."
+msgstr "काळा बिंदू भरपाई वापरा(आपल्याला माहित नसल्यास)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr "अक्षम असताना,प्रतिमा प्रदर्शनाच्या वेगवान गुणवत्तेची किंमत असू शकते."
+
+#: ../libgimpconfig/gimpcolorconfig.c:94
+msgid ""
+"How colors are converted from your image's color space to the output "
+"simulation device (usually your monitor). Try them all and choose what looks "
+"the best. "
+msgstr ""
+"प्रतिमेचे रंग आउटपुटवर रंग कसे रूपांतरित केले जातात सिम्युलेशन उपकरण (सामान्यतः आपला पडदा)."
+"सर्व प्रयत्न करा आणिउत्तम.करा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:99
+msgid ""
+"Try with and without black point compensation and choose what looks best. "
+msgstr "काळा बिंदू भरपाईसह वापरून पहा आणि काय चांगले दिसते ते निवडा ."
+
+#: ../libgimpconfig/gimpcolorconfig.c:103
+msgid ""
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr "अक्षम असताना,गतिमान किंमतीत मऊ-अवरोधक चांगली गुणवत्तेची असू शकते."
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"सक्षम असताना, सॉफ्ट-अवरोधक हे रंग चिन्हांकित करेल जे असू शकत नाहीतलक्ष्य रंग जागा मध्ये "
+"दर्शविले."
+
+#: ../libgimpconfig/gimpcolorconfig.c:111
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "सक्षम केल्यावर,मऊ-अवरोधक रंग चिन्हांकित करेल जे लक्ष्य रंग जागा मध्ये दर्शविले"
+
+#: ../libgimpconfig/gimpcolorconfig.c:199
+msgid "Mode of operation"
+msgstr "प्रक्रिया रीत"
+
+#: ../libgimpconfig/gimpcolorconfig.c:207
+msgid "Preferred RGB profile"
+msgstr "प्राधान्यीकृत आरजीबी प्रोफाइल"
+
+#: ../libgimpconfig/gimpcolorconfig.c:214
+msgid "Preferred grayscale profile"
+msgstr "प्राधान्यीकृत ग्रेस्केल प्रोफाइल"
+
+#: ../libgimpconfig/gimpcolorconfig.c:221
+msgid "CMYK profile"
+msgstr "सियमवायके प्रोफाइल"
+
+#: ../libgimpconfig/gimpcolorconfig.c:228
+msgid "Monitor profile"
+msgstr "पडदा प्रोफाइल"
+
+#: ../libgimpconfig/gimpcolorconfig.c:235
+msgid "Use the system monitor profile"
+msgstr "प्रणाली पडदा प्रोफाइल वापरा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:243
+msgid "Simulation profile for soft-proofing"
+msgstr "मऊ-अवरोधकसाठी अनुकरण प्रोफाइल"
+
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Display rendering intent"
+msgstr "प्रस्तुतीकरण हेतू प्रदर्शित करा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:258
+msgid "Use black point compensation for the display"
+msgstr "प्रदर्शनासाठी काळा बिंदू भरपाई वापरा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:265
+msgid "Optimize display color transformations"
+msgstr "प्रदर्शन रंग परिवर्तने अनुकूल करा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:272
+msgid "Soft-proofing rendering intent"
+msgstr "मऊ-अवरोधक प्रस्तुतीकरण हेतू"
+
+#: ../libgimpconfig/gimpcolorconfig.c:280
+msgid "Use black point compensation for soft-proofing"
+msgstr "मऊ-अवरोधकसाठी काळाबिंदूची भरपाई वापरा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:287
+msgid "Optimize soft-proofing color transformations"
+msgstr "मऊ-अवरोधक अनुकूल रंग रूपांतर"
+
+#: ../libgimpconfig/gimpcolorconfig.c:294
+msgid "Mark out of gamut colors"
+msgstr "विन्यास रंगांमधून बाहेर ठेवा"
+
+#: ../libgimpconfig/gimpcolorconfig.c:301
+msgid "Out of gamut warning color"
+msgstr "विन्यास चेतावणी रंग बाहेर"
+
+#: ../libgimpconfig/gimpcolorconfig.c:660
+#: ../libgimpconfig/gimpcolorconfig.c:844
+#, c-format
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "रंग प्रोफाइल '%s'आरजीबी रंगासाठी जागा नाही."
+
+#: ../libgimpconfig/gimpcolorconfig.c:702
+#: ../libgimpconfig/gimpcolorconfig.c:894
+#, c-format
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr "रंग प्रोफाइल '%s' ग्रेस्केल रंगा साठी जागा नाही"
+
+#: ../libgimpconfig/gimpcolorconfig.c:744
+#: ../libgimpconfig/gimpcolorconfig.c:944
+#, c-format
+msgid "Color profile '%s' is not for CMYK color space."
+msgstr "सियमवायके रंग '%s' जागेसाठी रंग प्रोफाइल नाही"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "टोकन चे %s मूल्य वैध UTF-8 शब्दासाठी नाही"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:466
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr "बुलियन टोकनसाठी %s,'होय' किंवा 'नाही' अपेक्षित '%s'"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:568
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "टोकनसाठी '%s'अवैध मूल्य %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:583
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "टोकनसाठी '%ld' अवैध मूल्य %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:652
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "टोकन विश्लेषण करताना '%s': %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:682
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:742
+#: ../libgimpconfig/gimpscanner.c:824
+#: ../libgimpwidgets/gimpcolorprofilestore.c:710
+msgid "fatal parse error"
+msgstr "घातक विश्लेषण त्रुटी"
+
+#: ../libgimpconfig/gimpconfig-path.c:483
+msgid "File has no path representation"
+msgstr "धारिकाध्ये मार्ग प्रस्तुती नाही"
+
+#: ../libgimpconfig/gimpconfig-path.c:566
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "विस्तृत करू शकत नाही ${%s}"
+
+#: ../libgimpconfig/gimpconfigwriter.c:88
+#: ../libgimpconfig/gimpconfigwriter.c:673
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "यावर लिहिताना त्रुटी '%s': %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:183
+#, c-format
+msgid "Could not create directory '%s' for '%s': "
+msgstr "निर्देशिका तयार करणे शक्य झाले नाही '%s' for '%s':"
+
+#: ../libgimpconfig/gimpconfigwriter.c:199
+#, c-format
+msgid "Could not create temporary file for '%s': "
+msgstr "यासाठी तात्पुरती धारिका तयार करु शकले नाही '%s':"
+
+#: ../libgimpconfig/gimpconfigwriter.c:776
+#, c-format
+msgid "Error writing '%s': %s"
+msgstr "यावर लिहिताना त्रुटी '%s': %s"
+
+#: ../libgimpconfig/gimpscanner.c:408
+#, c-format
+msgid "invalid UTF-8 string"
+msgstr "अवैध UTF-8 शब्द"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:617
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "बुलियन टोकनसाठी 'होय' किंवा 'नाही' अपेक्षित आहे '%s"
+
+#: ../libgimpconfig/gimpscanner.c:851
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "ओळीमध्ये विश्लेषण '%s' करताना त्रुटी %d: %s"
+
+#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
+#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
+#: ../libgimpmodule/gimpmodule.c:442
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "मॉडेल '%s' लोड त्रुटी: %s"
+
+#: ../libgimpmodule/gimpmodule.c:384
+msgid "Module error"
+msgstr "मॉडेल त्रुटी"
+
+#: ../libgimpmodule/gimpmodule.c:385
+msgid "Loaded"
+msgstr "लोड"
+
+#: ../libgimpmodule/gimpmodule.c:386
+msgid "Load failed"
+msgstr "लोड अयशस्वी"
+
+#: ../libgimpmodule/gimpmodule.c:387
+msgid "Not loaded"
+msgstr "लोड केलेले नाही"
+
+#: ../libgimpthumb/gimpthumb-utils.c:153
+#, c-format
+msgid ""
+"Cannot determine a valid thumbnails directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"वैध लघुप्रतिमा निर्देशिका निर्धारित करू शकत नाही.\n"
+"लघुप्रतिमा त्याऐवजी त्याच्या तात्पुरत्या धारिकासाठी परिपत्रकमध्ये संचयित केल्या(%s) जातील"
+
+#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "लघुप्रतिमा संचयिका तयार करण्यात अयशस्वी '%s'."
+
+#: ../libgimpthumb/gimpthumbnail.c:508
+#, c-format
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "लघुप्रतिमामध्ये अंगठा::URI टॅग नाही"
+
+#: ../libgimpthumb/gimpthumbnail.c:905
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "लघुप्रतिमा तयार करणे शक्य नाही %s: %s"
+
+#: ../libgimpwidgets/gimpbrowser.c:114
+msgid "_Search:"
+msgstr "_शोध:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:152
+msgid "_Foreground Color"
+msgstr "_अग्रभाग रंग"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:156
+msgid "_Background Color"
+msgstr "_पृष्टभाग  रंग"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:160
+msgid "Blac_k"
+msgstr "का_ळा"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:164
+msgid "_White"
+msgstr "_पांढरा"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:571 ../libgimpwidgets/gimpicons.c:68
+msgid "_Reset"
+msgstr "_मूळ स्थिती"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:573
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:493
+msgid "_OK"
+msgstr "_ठीक"
+
+#: ../libgimpwidgets/gimpcolorhexentry.c:118
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr "एचटीएमएल  आणि सीएसएस .मध्ये वापरल्याप्रमाणे हेक्झाडेसिमल रंगांकन. सीएसएस रंग नावे."
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:101
+msgid "All files (*.*)"
+msgstr "सर्व धारिका(*.*)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:106
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "आयसीसी रंग प्रोफाइल (* .icc, * .icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:167
+msgid "_Save"
+msgstr "_जतन"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:177
+msgid "_Open"
+msgstr "_उघडा"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:339
+#: ../libgimpwidgets/gimppatheditor.c:270
+msgid "Folder"
+msgstr "संचयिका"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:344
+msgid "Not a regular file."
+msgstr "नियमित धारिका नाही."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:147
+msgid "Select color profile from disk..."
+msgstr "नियमित धारिका नाही चुंबकीय चकतीवरून रंग प्रोफाइल निवडा..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:315
+msgctxt "profile"
+msgid "None"
+msgstr "काहीही नाही"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:163
+msgid "Manufacturer: "
+msgstr "निर्माता:"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:175
+msgid "Copyright: "
+msgstr "प्रकाशनाधिकार:"
+
+#: ../libgimpwidgets/gimpcolorscales.c:205
+msgid "Scales"
+msgstr "मोजपट्टी"
+
+#: ../libgimpwidgets/gimpcolorscales.c:437
+msgid "0..100"
+msgstr "0..100"
+
+#: ../libgimpwidgets/gimpcolorscales.c:439
+msgid "0..255"
+msgstr "0..255"
+
+#: ../libgimpwidgets/gimpcolorscales.c:460
+msgid "LCH"
+msgstr "एलसीएच"
+
+#: ../libgimpwidgets/gimpcolorscales.c:462
+msgid "HSV"
+msgstr "एचएसव्ही"
+
+#: ../libgimpwidgets/gimpcolorselection.c:222
+msgid "Current:"
+msgstr "सध्याचा:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:231
+msgid "Old:"
+msgstr "जुना:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:318
+msgid "HTML _notation:"
+msgstr "एचटीएमएल  _चिह्न:"
+
+#: ../libgimpwidgets/gimpdialog.c:182
+msgid "_Help"
+msgstr "_साहय्य"
+
+#: ../libgimpwidgets/gimpfileentry.c:152
+msgid "Show file location in the file manager"
+msgstr "धारिका व्यवस्थापकामधील धारिकाचे स्थान दाखवा"
+
+#: ../libgimpwidgets/gimpfileentry.c:223
+msgid "Open a file selector to browse your folders"
+msgstr "संचयिका दर्शवन्यासाठी धारिका निवडक उघडा"
+
+#: ../libgimpwidgets/gimpfileentry.c:224
+msgid "Open a file selector to browse your files"
+msgstr "आपल्या धारिका दर्शवन्यासाठी धारिका निवडक उघडा"
+
+#: ../libgimpwidgets/gimpfileentry.c:236
+msgid "Indicates whether or not the folder exists"
+msgstr "दर्शवते की संचयिका अस्तित्वात आहे किंवा नाही"
+
+#: ../libgimpwidgets/gimpfileentry.c:237
+msgid "Indicates whether or not the file exists"
+msgstr "निर्देशित करते की धारिका अस्तित्वात आहे किंवा नाही"
+
+#: ../libgimpwidgets/gimpfileentry.c:397
+#, c-format
+msgid "Can't show file in file manager: %s"
+msgstr "धारिका व्यवस्थापकामध्ये धारिका दर्शवू शकत नाही: %s"
+
+#: ../libgimpwidgets/gimpfileentry.c:424
+msgid "Select Folder"
+msgstr "संचयिका  निवडा"
+
+#: ../libgimpwidgets/gimpfileentry.c:426
+msgid "Select File"
+msgstr "धारिका निवडा"
+
+#: ../libgimpwidgets/gimphelpui.c:433
+msgid "Press F1 for more help"
+msgstr "अधिक मदतीसाठी F1 दाबा"
+
+#: ../libgimpwidgets/gimpicons.c:62
+msgid "Anchor"
+msgstr "अँकर"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "C_enter"
+msgstr "_मध्य"
+
+#: ../libgimpwidgets/gimpicons.c:64
+msgid "_Duplicate"
+msgstr "_नक्कल"
+
+#: ../libgimpwidgets/gimpicons.c:65
+msgid "Linked"
+msgstr "जोडलेले"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste as New"
+msgstr "नवीन पेस्ट करा"
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "Paste Into"
+msgstr "यात पेस्ट करा"
+
+#: ../libgimpwidgets/gimpicons.c:69
+msgid "Visible"
+msgstr "दृश्यमान"
+
+#: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
+msgid "_Stroke"
+msgstr "_बाह्यरेषा"
+
+#: ../libgimpwidgets/gimpicons.c:121
+msgid "L_etter Spacing"
+msgstr "_अक्षरातील अंतर"
+
+#: ../libgimpwidgets/gimpicons.c:122
+msgid "L_ine Spacing"
+msgstr "_रेषेतील अंतर"
+
+#: ../libgimpwidgets/gimpicons.c:139
+msgid "Re_size"
+msgstr "_आकार बदला"
+
+#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
+msgid "_Scale"
+msgstr "_मोजपट्टी"
+
+#: ../libgimpwidgets/gimpicons.c:247
+msgid "Cr_op"
+msgstr "_वेचणे"
+
+#: ../libgimpwidgets/gimpicons.c:255
+msgid "_Select"
+msgstr "_निवडा"
+
+#: ../libgimpwidgets/gimpicons.c:267
+msgid "_Transform"
+msgstr "_रूपांतरित"
+
+#: ../libgimpwidgets/gimpicons.c:273
+msgid "_Shear"
+msgstr "_झुकावणे"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:219
+msgid "Kilobytes"
+msgstr "किलोबाइट"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
+msgid "Megabytes"
+msgstr "मेगाबाइट"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
+msgid "Gigabytes"
+msgstr "गीगाबाईट"
+
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:274
+#: ../libgimpwidgets/gimppageselector.c:1070
+msgid "Nothing selected"
+msgstr "काहीही निवडले नाही"
+
+#: ../libgimpwidgets/gimppageselector.c:292
+msgid "Select _All"
+msgstr "_सर्व निवडा"
+
+#: ../libgimpwidgets/gimppageselector.c:312
+msgid "Select _range:"
+msgstr "_श्रेणी निवडा:"
+
+#: ../libgimpwidgets/gimppageselector.c:324
+msgid "Open _pages as"
+msgstr "_पृष्ठे उघडा"
+
+#: ../libgimpwidgets/gimppageselector.c:452
+#: ../libgimpwidgets/gimppageselector.c:650
+#, c-format
+msgid "Page %d"
+msgstr "पृष्ठ %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1075
+msgid "One page selected"
+msgstr "एक पृष्ठ निवडले"
+
+#: ../libgimpwidgets/gimppageselector.c:1082
+#: ../libgimpwidgets/gimppageselector.c:1086
+#, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d पृष्ठ निवडले"
+msgstr[1] "सर्व %d पृष्ठ निवडले"
+
+#: ../libgimpwidgets/gimppatheditor.c:181
+msgid "Add a new folder"
+msgstr "नवीन संचयिका जोडा"
+
+#: ../libgimpwidgets/gimppatheditor.c:199
+msgid "Move the selected folder up"
+msgstr "निवडलेली संचयिका वर हलवा"
+
+#: ../libgimpwidgets/gimppatheditor.c:217
+msgid "Move the selected folder down"
+msgstr "निवडलेली संचयिका खाली हलवा"
+
+#: ../libgimpwidgets/gimppatheditor.c:235
+msgid "Remove the selected folder from the list"
+msgstr "निवडलेल्या संचयिका सूचीमधून काढा"
+
+#: ../libgimpwidgets/gimppatheditor.c:261
+msgid "Writable"
+msgstr "लेखनयोग्य"
+
+#: ../libgimpwidgets/gimppickbutton.c:112
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"आयड्रॉपरवर क्लिक करा, नंतर तो रंग निवडण्यासाठी आपल्या पडद्यावर कोठेही रंग क्लिक करा"
+
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:293
+msgid "_Preview"
+msgstr "_पूर्वावलोकन"
+
+#: ../libgimpwidgets/gimppreviewarea.c:126
+msgid "Check Size"
+msgstr "आकार तपासा"
+
+#: ../libgimpwidgets/gimppreviewarea.c:134
+msgid "Check Style"
+msgstr "शैली तपासा"
+
+#: ../libgimpwidgets/gimppropwidgets.c:2177
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "हा मजकूर इनपुट क्षेत्र  %d वर्णापर्यंत मर्यादित आहे."
+msgstr[1] "हे मजकूर इनपुट क्षेत्र  %d वर्णांपर्यंत मर्यादित आहे."
+
+#: ../libgimpwidgets/gimpunitmenu.c:261
+msgid "More..."
+msgstr "अधिक ..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:487
+msgid "Unit Selection"
+msgstr "एकक निवड"
+
+#: ../libgimpwidgets/gimpunitmenu.c:536
+msgid "Unit"
+msgstr "एकक"
+
+#: ../libgimpwidgets/gimpunitmenu.c:540
+msgid "Factor"
+msgstr "विभाजक"
+
+#: ../libgimpwidgets/gimpwidgets.c:521
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"यादृच्छिक संख्या जनरेटर सीड साठी हे मूल्य वापरा - हे आपल्यालादिलेले \" यादृच्छिक\"प्रक्रिया"
+
+#: ../libgimpwidgets/gimpwidgets.c:525
+msgid "_New Seed"
+msgstr "_नवीन सीड"
+
+#: ../libgimpwidgets/gimpwidgets.c:538
+msgid "Seed random number generator with a generated random number"
+msgstr "एका व्युत्पन्न यादृच्छिक क्रमांकासह सीड यादृच्छिक संख्या जनरेटर"
+
+#: ../libgimpwidgets/gimpwidgets.c:542
+msgid "_Randomize"
+msgstr "_यादृच्छिक"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "अक्षम"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "पडदा"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:52
+msgctxt "input-mode"
+msgid "Window"
+msgstr "पटल"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
+msgctxt "aspect-type"
+msgid "Square"
+msgstr "चौरस"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgctxt "aspect-type"
+msgid "Portrait"
+msgstr "उभा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgctxt "aspect-type"
+msgid "Landscape"
+msgstr "आडवा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgctxt "color-selector-channel"
+msgid "_H"
+msgstr "_एच"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "HSV Hue"
+msgstr "एचएसव्ही गडद रंगछटा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgctxt "color-selector-channel"
+msgid "_S"
+msgstr "_एस"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgid "HSV Saturation"
+msgstr "एचएसव्ही संपृक्तता"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgctxt "color-selector-channel"
+msgid "_V"
+msgstr "व्ही_"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgid "HSV Value"
+msgstr "एचएसव्ही मूल्य"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgctxt "color-selector-channel"
+msgid "_R"
+msgstr "_आर"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgid "Red"
+msgstr "लाल"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
+msgctxt "color-selector-channel"
+msgid "_G"
+msgstr "जी_"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
+msgid "Green"
+msgstr "हिरवा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
+msgctxt "color-selector-channel"
+msgid "_B"
+msgstr "बी_"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
+msgid "Blue"
+msgstr "निळा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
+msgctxt "color-selector-channel"
+msgid "_A"
+msgstr "ए_"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
+msgid "Alpha"
+msgstr "अल्फा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+msgctxt "color-selector-channel"
+msgid "_L"
+msgstr "_एल"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+msgid "LCH Lightness"
+msgstr "एलसीएच चमक"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgctxt "color-selector-channel"
+msgid "_C"
+msgstr "सी_"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgid "LCH Chroma"
+msgstr "एलसीएच क्रोमा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgid "LCH Hue"
+msgstr "एलसीएच गडद रंगछटा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "आरजीबी"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "आरजीबी रंग मॉडेल"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "एलसीएच"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIELCh color model"
+msgstr "सीआयईएलसीएच रंग मॉडेल"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "एचएसव्ही"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr "एचएसव्ही रंग मॉडेल"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:199
+msgctxt "page-selector-target"
+msgid "Layers"
+msgstr "स्तर"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:200
+msgctxt "page-selector-target"
+msgid "Images"
+msgstr "प्रतिमा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:261
+msgctxt "zoom-type"
+msgid "Zoom in"
+msgstr "प्रतिमेचे दृश्यरूप मोठे करा"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:262
+msgctxt "zoom-type"
+msgid "Zoom out"
+msgstr "प्रतिमेचे दृश्यरूप कमी करा"
+
+#: ../modules/color-selector-cmyk.c:82
+msgid "CMYK color selector (using color profile)"
+msgstr "सीएमवायके रंग निवडकर्ता (रंग प्रोफाइल वापरुन)"
+
+#: ../modules/color-selector-cmyk.c:116
+msgid "CMYK"
+msgstr "सीएमवायके"
+
+#. Cyan
+#: ../modules/color-selector-cmyk.c:138
+msgid "_C"
+msgstr "सी_"
+
+#. Magenta
+#: ../modules/color-selector-cmyk.c:140
+msgid "_M"
+msgstr "_एम"
+
+#. Yellow
+#: ../modules/color-selector-cmyk.c:142
+msgid "_Y"
+msgstr "वाय_"
+
+#. Key (Black)
+#: ../modules/color-selector-cmyk.c:144
+msgid "_K"
+msgstr "के_"
+
+#: ../modules/color-selector-cmyk.c:148
+msgid "Cyan"
+msgstr "आकाशी"
+
+#: ../modules/color-selector-cmyk.c:149
+msgid "Magenta"
+msgstr "तांबडा"
+
+#: ../modules/color-selector-cmyk.c:150
+msgid "Yellow"
+msgstr "पिवळा"
+
+#: ../modules/color-selector-cmyk.c:151
+msgid "Black"
+msgstr "काळा"
+
+#: ../modules/color-selector-cmyk.c:374
+msgid "Profile: (none)"
+msgstr "प्रोफाइल: (काहीही नाही)"
+
+#: ../modules/color-selector-cmyk.c:386
+#, c-format
+msgid "Profile: %s"
+msgstr "प्रोफाइल: %s"
+
+#: ../modules/color-selector-water.c:96
+msgid "Watercolor style color selector"
+msgstr "पाणीरंग शैली रंग निवड"
+
+#: ../modules/color-selector-water.c:130
+msgid "Watercolor"
+msgstr "पाणीरंग"
+
+#: ../modules/color-selector-water.c:200
+msgid "Pressure"
+msgstr "दाब"
+
+#: ../modules/color-selector-wheel.c:72
+msgid "HSV color wheel"
+msgstr "एचएसव्ही रंग चाक"
+
+#: ../modules/color-selector-wheel.c:104
+msgid "Wheel"
+msgstr "चाक"
+
+#: ../modules/controller-dx-dinput.c:156
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX DirectInput कार्यक्रम नियंत्रक"
+
+#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
+msgid "Device:"
+msgstr "उपकरण:"
+
+#: ../modules/controller-dx-dinput.c:197
+msgid "The device to read DirectInput events from."
+msgstr "येथून DirectInput प्रसंग वाचण्यासाठी उपकरण"
+
+#: ../modules/controller-dx-dinput.c:206
+msgid "DirectX DirectInput"
+msgstr "DirectX DirectInput"
+
+#: ../modules/controller-dx-dinput.c:419
+#, c-format
+msgid "Button %d"
+msgstr "बटण  %d"
+
+#: ../modules/controller-dx-dinput.c:422
+#, c-format
+msgid "Button %d Press"
+msgstr "बटण %d दाबा"
+
+#: ../modules/controller-dx-dinput.c:425
+#, c-format
+msgid "Button %d Release"
+msgstr "बटण  %d सोडा"
+
+#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
+msgid "X Move Left"
+msgstr "X डावीकडे वळा"
+
+#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
+msgid "X Move Right"
+msgstr "X उजवीकडे वळा"
+
+#: ../modules/controller-dx-dinput.c:451
+msgid "Y Move Away"
+msgstr "Y लांब वळा"
+
+#: ../modules/controller-dx-dinput.c:454
+msgid "Y Move Near"
+msgstr "Y जवळ वळा"
+
+#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
+msgid "Z Move Up"
+msgstr "Z वर हलवा"
+
+#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
+msgid "Z Move Down"
+msgstr "Z खाली हलवा"
+
+#: ../modules/controller-dx-dinput.c:469
+msgid "X Axis Tilt Away"
+msgstr "X अक्ष दूर झुकवा"
+
+#: ../modules/controller-dx-dinput.c:472
+msgid "X Axis Tilt Near"
+msgstr "X अक्ष जवळ झुकवा"
+
+#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
+msgid "Y Axis Tilt Right"
+msgstr "Y अक्ष उजवीकडे तिरपा करा"
+
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:100
+msgid "Y Axis Tilt Left"
+msgstr "Y अक्ष डावीकडे तिरपा करा"
+
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:101
+msgid "Z Axis Turn Left"
+msgstr "Z अक्षडावीकडे वळवा"
+
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:102
+msgid "Z Axis Turn Right"
+msgstr "Z अक्ष उजवीकडे वळवा"
+
+#: ../modules/controller-dx-dinput.c:501
+#, c-format
+msgid "Slider %d Increase"
+msgstr "सरकपट्टी  %d वाढवा"
+
+#: ../modules/controller-dx-dinput.c:504
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "सरकपट्टी  %d कमी"
+
+#: ../modules/controller-dx-dinput.c:514
+#, c-format
+msgid "POV %d X View"
+msgstr "पीओव्ही %d X दृश्य"
+
+#: ../modules/controller-dx-dinput.c:517
+#, c-format
+msgid "POV %d Y View"
+msgstr "पीओव्ही %d Y दृश्य"
+
+#: ../modules/controller-dx-dinput.c:520
+#, c-format
+msgid "POV %d Return"
+msgstr "पीओव्ही %d परत"
+
+#: ../modules/controller-dx-dinput.c:1081
+msgid "DirectInput Events"
+msgstr "DirectInput Events"
+
+#: ../modules/controller-dx-dinput.c:1092
+#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
+msgid "No device configured"
+msgstr "कोणतेही उपकरण केलेले नाही"
+
+#: ../modules/controller-dx-dinput.c:1117
+#: ../modules/controller-linux-input.c:588
+msgid "Device not available"
+msgstr "उपकरण उपलब्ध नाही"
+
+#: ../modules/controller-linux-input.c:58
+msgid "Button 0"
+msgstr "बटण ०"
+
+#: ../modules/controller-linux-input.c:59
+msgid "Button 1"
+msgstr "बटण १"
+
+#: ../modules/controller-linux-input.c:60
+msgid "Button 2"
+msgstr "बटण २"
+
+#: ../modules/controller-linux-input.c:61
+msgid "Button 3"
+msgstr "बटण ३"
+
+#: ../modules/controller-linux-input.c:62
+msgid "Button 4"
+msgstr "बटण ४"
+
+#: ../modules/controller-linux-input.c:63
+msgid "Button 5"
+msgstr "बटण ५"
+
+#: ../modules/controller-linux-input.c:64
+msgid "Button 6"
+msgstr "बटण ६"
+
+#: ../modules/controller-linux-input.c:65
+msgid "Button 7"
+msgstr "बटण ७"
+
+#: ../modules/controller-linux-input.c:66
+msgid "Button 8"
+msgstr "बटण ८"
+
+#: ../modules/controller-linux-input.c:67
+msgid "Button 9"
+msgstr "बटण ९"
+
+#: ../modules/controller-linux-input.c:68
+msgid "Button Mouse"
+msgstr "बटण माऊस"
+
+#: ../modules/controller-linux-input.c:69
+msgid "Button Left"
+msgstr "बटण डावे"
+
+#: ../modules/controller-linux-input.c:70
+msgid "Button Right"
+msgstr "बटण उजवे"
+
+#: ../modules/controller-linux-input.c:71
+msgid "Button Middle"
+msgstr "बटण मध्य"
+
+#: ../modules/controller-linux-input.c:72
+msgid "Button Side"
+msgstr "बटण बाजू"
+
+#: ../modules/controller-linux-input.c:73
+msgid "Button Extra"
+msgstr "अतिरिक्त बटण"
+
+#: ../modules/controller-linux-input.c:74
+msgid "Button Forward"
+msgstr "पुढील बटण"
+
+#: ../modules/controller-linux-input.c:75
+msgid "Button Back"
+msgstr "मागील बटण "
+
+#: ../modules/controller-linux-input.c:76
+msgid "Button Task"
+msgstr "बटण कार्य"
+
+#: ../modules/controller-linux-input.c:78
+msgid "Button Wheel"
+msgstr "बटण चाक"
+
+#: ../modules/controller-linux-input.c:81
+msgid "Button Gear Down"
+msgstr "बटण खाली गियर"
+
+#: ../modules/controller-linux-input.c:84
+msgid "Button Gear Up"
+msgstr "बटण वर गियर"
+
+#: ../modules/controller-linux-input.c:92
+msgid "Y Move Forward"
+msgstr "Y पुढे करा"
+
+#: ../modules/controller-linux-input.c:93
+msgid "Y Move Back"
+msgstr "Y मागे करा"
+
+#: ../modules/controller-linux-input.c:97
+msgid "X Axis Tilt Forward"
+msgstr "X अक्ष तिरपा पुढे करा"
+
+#: ../modules/controller-linux-input.c:98
+msgid "X Axis Tilt Back"
+msgstr "X अक्ष तिरपा मागे करा"
+
+#: ../modules/controller-linux-input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr "आडव्या चाकाचे वळण मागे करा"
+
+#: ../modules/controller-linux-input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr "आडव्या चाकाचे वळण पुढे करा"
+
+#: ../modules/controller-linux-input.c:106
+msgid "Dial Turn Left"
+msgstr "डायल वळा डावीकडे"
+
+#: ../modules/controller-linux-input.c:107
+msgid "Dial Turn Right"
+msgstr "डायल वळा उजवीकडे"
+
+#: ../modules/controller-linux-input.c:108
+msgid "Wheel Turn Left"
+msgstr "चाकाचे वळण डावीकडे"
+
+#: ../modules/controller-linux-input.c:109
+msgid "Wheel Turn Right"
+msgstr "चाकाचे वळण उजवीकडे"
+
+#: ../modules/controller-linux-input.c:178
+msgid "Linux input event controller"
+msgstr "लिनक्स  इनपुट कार्यक्रम नियंत्रक"
+
+#: ../modules/controller-linux-input.c:219
+msgid "The name of the device to read Linux Input events from."
+msgstr "लिनक्स  इनपुट कार्यक्रम वाचण्यासाठी उपकरणाचे साधनाचे नाव."
+
+#: ../modules/controller-linux-input.c:230
+msgid "Linux Input"
+msgstr "लिनक्स  इनपुट"
+
+#: ../modules/controller-linux-input.c:513
+msgid "Linux Input Events"
+msgstr "लिनक्स इनपुट कार्यक्रम"
+
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
+#, c-format
+msgid "Reading from %s"
+msgstr "पासून वाचन %s"
+
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
+#, c-format
+msgid "Device not available: %s"
+msgstr "उपकरण उपलब्ध नाही: %s"
+
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
+msgid "End of file"
+msgstr "धारिकाचा शेवट"
+
+#: ../modules/controller-midi.c:164
+msgid "MIDI event controller"
+msgstr "एमआयडीआय कार्यक्रम नियंत्रक"
+
+#: ../modules/controller-midi.c:203
+msgid "The name of the device to read MIDI events from."
+msgstr "एमआयडीआय प्रसंगवाचण्यासाठी उपकरणाचे नाव."
+
+#: ../modules/controller-midi.c:206
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "ALSA क्रमयंत्र वापरण्यासाठी 'alsa' प्रविष्ट करा."
+
+#: ../modules/controller-midi.c:221
+msgid "Channel:"
+msgstr "चॅनेल"
+
+#: ../modules/controller-midi.c:222
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr "एमआयडीआय सर्व वाचण्यासाठी -१ पासून संचिका वाचण्यासाठी एमआयडीआयचॅनेल."
+
+#: ../modules/controller-midi.c:226
+msgid "MIDI"
+msgstr "एमआयडीआय"
+
+#: ../modules/controller-midi.c:355
+#, c-format
+msgid "Note %02x on"
+msgstr "टीप %02x चालू"
+
+#: ../modules/controller-midi.c:358
+#, c-format
+msgid "Note %02x off"
+msgstr "टीप %02x बंद"
+
+#: ../modules/controller-midi.c:361
+#, c-format
+msgid "Controller %03d"
+msgstr "नियंत्रक %03d"
+
+#: ../modules/controller-midi.c:408
+msgid "MIDI Events"
+msgstr "एमआयडीआय कार्यक्रम"
+
+#: ../modules/controller-midi.c:426
+msgid "GIMP"
+msgstr "गिम्प"
+
+#: ../modules/controller-midi.c:428
+msgid "GIMP MIDI Input Controller"
+msgstr "गिम्प एमआयडीआय इनपुट नियंत्रक"
+
+#: ../modules/display-filter-clip-warning.c:120
+msgid "Clip warning color display filter"
+msgstr "कापणे चेतावणी रंग प्रदर्शन गाळणी"
+
+#: ../modules/display-filter-clip-warning.c:157
+msgid "Show shadows"
+msgstr "सावल्या दर्शवा"
+
+#: ../modules/display-filter-clip-warning.c:158
+msgid "Show warning for pixels with a negative component"
+msgstr "नकारात्मक घटक असलेल्या दृश्यबिंदू करीता चेतावणी दर्शवा"
+
+#: ../modules/display-filter-clip-warning.c:164
+msgid "Shadows color"
+msgstr "सावली रंग"
+
+#: ../modules/display-filter-clip-warning.c:165
+msgid "Shadows warning color"
+msgstr "सावली चेतावणी रंग"
+
+#: ../modules/display-filter-clip-warning.c:177
+msgid "Show highlights"
+msgstr "ठळक दर्शवा"
+
+#: ../modules/display-filter-clip-warning.c:178
+msgid "Show warning for pixels with a component greater than one"
+msgstr "एका पेक्षा जास्त घटक असलेल्या दृश्यबिंदू  करीता चेतावणी दर्शवा"
+
+#: ../modules/display-filter-clip-warning.c:184
+msgid "Highlights color"
+msgstr "ठळक रंग"
+
+#: ../modules/display-filter-clip-warning.c:185
+msgid "Highlights warning color"
+msgstr "ठळक चेतावणी रंग"
+
+#: ../modules/display-filter-clip-warning.c:197
+msgid "Show bogus"
+msgstr "बनावट दर्शवा"
+
+#: ../modules/display-filter-clip-warning.c:198
+msgid "Show warning for pixels with an infinite or NaN component"
+msgstr "असीम किंवा NaN घटक असलेल्या दृश्यबिंदूसाठी चेतावणी दर्शवा"
+
+#: ../modules/display-filter-clip-warning.c:204
+msgid "Bogus color"
+msgstr "बनावट रंग"
+
+#: ../modules/display-filter-clip-warning.c:205
+msgid "Bogus warning color"
+msgstr "बनावट चेतावणी रंग"
+
+#: ../modules/display-filter-clip-warning.c:217
+msgid "Include alpha component"
+msgstr "अल्फा घटक समाविष्ट करा"
+
+#: ../modules/display-filter-clip-warning.c:218
+msgid "Include alpha component in the warning"
+msgstr "चेतावणीमध्ये अल्फा घटक समाविष्ट करा"
+
+#: ../modules/display-filter-clip-warning.c:224
+msgid "Include transparent pixels"
+msgstr "पारदर्शी दृश्यबिंदू समाविष्ट करा"
+
+#: ../modules/display-filter-clip-warning.c:225
+msgid "Include fully transparent pixels in the warning"
+msgstr "चेतावणीमध्ये पूर्णपणे पारदर्शी दृश्यबिंदू  अंतर्भूत करा"
+
+#: ../modules/display-filter-clip-warning.c:229
+msgid "Clip Warning"
+msgstr "कापणे चेतावणी"
+
+#: ../modules/display-filter-color-blind.c:68
+msgid "Protanopia (insensitivity to red)"
+msgstr "लाल तीव्रता"
+
+#: ../modules/display-filter-color-blind.c:70
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "हिरवी तीव्रता"
+
+#: ../modules/display-filter-color-blind.c:72
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "निळी तीव्रता"
+
+#: ../modules/display-filter-color-blind.c:194
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "रंगांचा तुटीचे सिम्युलेशन गाळणी(ब्रेटेल-व्हिएट-मॉलोन गणनतंत्र)"
+
+#: ../modules/display-filter-color-blind.c:253
+msgid "Type"
+msgstr "प्रकार"
+
+#: ../modules/display-filter-color-blind.c:254
+msgid "Color vision deficiency type"
+msgstr "रंग दृष्टी कमतरतेचे प्रकार"
+
+#: ../modules/display-filter-color-blind.c:259
+msgid "Color Deficient Vision"
+msgstr "रंग कमतरता दृष्टी"
+
+#: ../modules/display-filter-gamma.c:86
+msgid "Gamma color display filter"
+msgstr "गॅमा रंग प्रदर्शन गाळणी"
+
+#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
+msgid "Gamma"
+msgstr "गॅमा"
+
+#: ../modules/display-filter-high-contrast.c:86
+msgid "High Contrast color display filter"
+msgstr "उच्च तीव्रता रंग प्रदर्शन गाळणी"
+
+#: ../modules/display-filter-high-contrast.c:123
+msgid "Contrast cycles"
+msgstr "विरोधाभास रंग चक्र"
+
+#: ../modules/display-filter-high-contrast.c:128
+msgid "Contrast"
+msgstr "विरोधाभास रंग"

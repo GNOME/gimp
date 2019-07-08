@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* Webpage plug-in.
@@ -122,7 +122,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
   static GimpParam   values[2];
   gint32             image_id;
-  WebpageSaveVals    save = {"http://www.gimp.org/", 1024, 12};
+  WebpageSaveVals    save = {"https://www.gimp.org/", 1024, 12};
 
   INIT_I18N ();
 
@@ -293,7 +293,7 @@ webpage_dialog (void)
 
   adjustment = gtk_adjustment_new (webpagevals.width,
                                    1, 8192, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);

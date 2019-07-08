@@ -6,8 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 0\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-08-25 16:05+0000\n"
 "PO-Revision-Date: 2017-08-25 20:38+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
@@ -120,7 +119,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP je slobodan softver: možete ga redistribuirati i/ili mijenjati pod "
 "uvjetima GNU Opće javne licence objavljene od Fundacije slobodnog softvera; "
@@ -131,7 +130,7 @@ msgstr ""
 "Pogledajte GNU Opću javnu licencu za više informacija.\n"
 "\n"
 "Trebali ste dobiti primjerak GNU Opće javne licence uz ovaj GIMP. Ako niste "
-"pogledajte: http://www.gnu.org/licenses/"
+"pogledajte: https://www.gnu.org/licenses/"
 
 #: ../app/main.c:160
 msgid "Show version information and exit"
@@ -4062,7 +4061,7 @@ msgid "_Dilate"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr ""
 
@@ -4072,7 +4071,7 @@ msgid "_Erode"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 
@@ -8811,17 +8810,17 @@ msgid "Toggle fullscreen view"
 msgstr ""
 
 #: ../app/actions/view-actions.c:315
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr ""
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -8856,12 +8855,12 @@ msgid "Zoom In"
 msgstr "Povećaj"
 
 #: ../app/actions/view-actions.c:354
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr ""
 
 #: ../app/actions/view-actions.c:359
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr ""
 

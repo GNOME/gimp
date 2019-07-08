@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 16.000518 16.000875"
+   id="svg7384"
+   height="16.000875"
+   width="16.000519"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="gimp-tool-offset-symbolic.svg">
+  <title
+     id="title8375">GIMP Offset Tool</title>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     id="namedview1507"
+     showgrid="false"
+     inkscape:zoom="44.310075"
+     inkscape:cx="8.0002595"
+     inkscape:cy="8.0004378"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384" />
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Offset Tool</dc:title>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386">
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient8074">
+      <stop
+         id="stop8072"
+         offset="0"
+         style="stop-color:#be00be;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7561">
+      <stop
+         id="stop7558"
+         offset="0"
+         style="stop-color:#a5a5a5;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7548">
+      <stop
+         id="stop7546"
+         offset="0"
+         style="stop-color:#ebebeb;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient7542">
+      <stop
+         id="stop7538"
+         offset="0"
+         style="stop-color:#c9c9c9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0,-735328.32,170712.69,0,2464326300,577972450)"
+       osb:paint="solid"
+       id="linearGradient19282">
+      <stop
+         id="stop19284"
+         offset="0"
+         style="stop-color:#b4b4b4;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-53.35239,564.0385)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(299.26416,297.36914)"
+       gradientUnits="userSpaceOnUse"
+       y2="305.36914"
+       x2="311.70312"
+       y1="305.36914"
+       x1="295.70312"
+       id="linearGradient7060"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="matrix(0.625,0,0,0.62500005,5.22565,3.0008792)"
+       gradientUnits="userSpaceOnUse"
+       y2="305.36914"
+       x2="311.70312"
+       y1="305.36914"
+       x1="295.70312"
+       id="linearGradient7060-0"
+       xlink:href="#linearGradient19282-4" />
+  </defs>
+  <g
+     id="gimp-tool-offset">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 1,1 V 1.5 15 H 15 V 1 Z M 2,2 H 14 V 14 H 2 Z"
+       id="rect7909"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       style="display:inline;fill:url(#linearGradient7060-0);fill-opacity:1;stroke:none;stroke-width:0.99999994"
+       d="M 8.0134312,3.000875 6.125,4.8856439 H 7.3945375 V 7.3990691 C 6.5549062,7.3927566 5.714875,7.3858816 4.875,7.3807566 V 6.134419 L 3,7.9935504 4.875,9.8795376 V 8.6258755 c 0.83985,-5.63e-5 1.6796812,-0.00188 2.5195375,0 V 9.8758751 11.128319 H 6.125 L 8.0134312,13.000875 9.875,11.128319 H 8.625 V 9.8758751 8.6258755 c 0.8333375,5.625e-4 1.666675,0.0025 2.5,0 V 9.8795376 L 13,7.9935504 11.125,6.134419 v 1.2475626 c -0.833263,0.014688 -1.6663559,0.02425 -2.5,0.021938 V 4.8856127 h 1.25 z"
+       id="path74740" />
+  </g>
+</svg>

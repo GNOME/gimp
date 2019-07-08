@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -566,6 +566,10 @@ gimp_config_path_expand_only (const gchar  *path,
                 s = gimp_sysconf_directory ();
               else if (strcmp (token, "gimp_installation_dir") == 0)
                 s = gimp_installation_directory ();
+              else if (strcmp (token, "gimp_cache_dir") == 0)
+                s = gimp_cache_directory ();
+              else if (strcmp (token, "gimp_temp_dir") == 0)
+                s = gimp_temp_directory ();
 
               if (!s)
                 s = g_getenv (token);
@@ -697,6 +701,8 @@ gimp_config_path_unexpand_only (const gchar *path)
     { "${gimp_data_dir}",         gimp_data_directory () },
     { "${gimp_sysconf_dir}",      gimp_sysconf_directory () },
     { "${gimp_installation_dir}", gimp_installation_directory () },
+    { "${gimp_cache_dir}",        gimp_cache_directory () },
+    { "${gimp_temp_dir}",         gimp_temp_directory () },
     { "${gimp_dir}",              gimp_directory () }
   };
 

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -69,7 +69,7 @@ typedef struct
   GQuark     quark;  /*  used to attach the signal id's of child signals  */
 } GimpContainerHandler;
 
-struct _GimpContainerPriv
+struct _GimpContainerPrivate
 {
   GType                children_type;
   GimpContainerPolicy  policy;
@@ -116,6 +116,7 @@ static void   gimp_container_disconnect_callback (GimpObject       *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainer, gimp_container, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpContainer)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_container_config_iface_init))
 
@@ -212,8 +213,6 @@ gimp_container_class_init (GimpContainerClass *klass)
                                                       GIMP_CONTAINER_POLICY_STRONG,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpContainerPriv));
 }
 
 static void
@@ -226,9 +225,7 @@ gimp_container_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_container_init (GimpContainer *container)
 {
-  container->priv = G_TYPE_INSTANCE_GET_PRIVATE (container,
-                                                 GIMP_TYPE_CONTAINER,
-                                                 GimpContainerPriv);
+  container->priv = gimp_container_get_instance_private (container);
   container->priv->handlers      = NULL;
   container->priv->freeze_count  = 0;
 
@@ -652,7 +649,7 @@ gimp_container_remove (GimpContainer *container,
   if (n_children == container->priv->n_children)
     {
       g_warning ("%s: GimpContainer::remove() implementation did not "
-                 "chain up. Please report this at http://www.gimp.org/bugs/",
+                 "chain up. Please report this at https://www.gimp.org/bugs/",
                  G_STRFUNC);
 
       container->priv->n_children--;

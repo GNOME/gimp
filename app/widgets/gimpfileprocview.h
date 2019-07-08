@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_FILE_PROC_VIEW_H__
@@ -55,7 +55,8 @@ GtkWidget           * gimp_file_proc_view_new         (Gimp                 *gim
                                                        const gchar          *automatic_help_id);
 
 GimpPlugInProcedure * gimp_file_proc_view_get_proc    (GimpFileProcView     *view,
-                                                       gchar               **label);
+                                                       gchar               **label,
+                                                       GtkFileFilter       **filter);
 gboolean              gimp_file_proc_view_set_proc    (GimpFileProcView     *view,
                                                        GimpPlugInProcedure  *proc);
 

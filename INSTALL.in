@@ -1,6 +1,6 @@
---------------------------------------
+---------------------------------------
 Installation instructions for GIMP @GIMP_APP_VERSION@
---------------------------------------
+---------------------------------------
 
 There are some basic steps to building and installing GIMP.
 
@@ -30,20 +30,24 @@ header files installed.
 
 
   1. You need to have installed a recent version of pkg-config (>= @GIMP_PKGCONFIG_VERSION@) available
-     from http://www.freedesktop.org/software/pkgconfig/.
+     from https://www.freedesktop.org/software/pkgconfig/.
 
   2. You need intltool (at least @INTLTOOL_REQUIRED_VERSION@, but preferably a newer version).
      Intltool can be downloaded from
-     http://ftp.gnome.org/pub/gnome/sources/intltool/
-     You are recommended to install gettext version @XGETTEXT_RECOMMENDED_VERSION@ or over. Earlier gettext had
+     https://ftp.gnome.org/pub/gnome/sources/intltool/
+     You also need gettext version @XGETTEXT_REQUIRED_VERSION@ or over. Earlier gettext had
      issues with script-fu localization, ending up in incomplete GIMP localization.
 
   3. You need to have GEGL version @GEGL_REQUIRED_VERSION@ or newer and babl version
-     @BABL_REQUIRED_VERSION@ or newer. You can get them from http://gegl.org/ or clone
+     @BABL_REQUIRED_VERSION@ or newer. You can get them from https://gegl.org/ or clone
      them from the GNOME git repository:
 
        https://gitlab.gnome.org/GNOME/babl.git
        https://gitlab.gnome.org/GNOME/gegl.git
+
+     Note: install GEGL with libumfpack (SuiteSparse) for alternative Matting
+     engine "gegl:matting-levin" and OpenEXR library for OpenEXR format
+     support.
 
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
@@ -51,7 +55,7 @@ header files installed.
      from ftp://ftp.gtk.org/.
 
   5. We use cairo >= @CAIRO_REQUIRED_VERSION@, which is hosted at
-     http://www.cairographics.org/.
+     https://www.cairographics.org/.
 
   6. We require PangoCairo, a Pango backend using Cairo. Make sure you
      have Cairo, FreeType2 and fontconfig installed before you compile
@@ -67,8 +71,8 @@ header files installed.
   7. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
-  8. For metadata access GIMP requires the gexiv2 library. It is hosted
-     at https://wiki.gnome.org/Projects/gexiv2 .
+  8. For metadata access GIMP requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library.
+     It is hosted at: https://wiki.gnome.org/Projects/gexiv2
 
   9. libpng, libjpeg, libtiff and lcms are hard dependencies that can
      not be disabled.
@@ -81,11 +85,13 @@ header files installed.
      If installing from repository, do not install the master branch!
      Checkout the tag "v1.3.0" instead, or simply install from a tarball
      or from your favorite package manager.
+     You may also checkout the "libmypaint-v1" branch, which is the
+     development branch for libmypaint v1.x and has some more recent
+     fixes.
 
- 11. We also need the mypaint-brushes data package with is currently
-     hosted by Jehan, until the MyPaint project takes care of it:
+ 11. We also need the mypaint-brushes data package:
 
-        https://github.com/Jehan/mypaint-brushes
+        https://github.com/mypaint/mypaint-brushes
 
      If installing from repository, install from branch "v1.3.x" or the
      particular tag "v1.3.0". In particular do not install from master
@@ -99,7 +105,7 @@ header files installed.
 
  12. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
-     to check that the following libraries are installed: libjasper,
+     to check that the following libraries are installed: openjpeg,
      webkit, libmng, librsvg, libwmf, libaa and libgs (Ghostscript).
 
  13. HEIF support depends on the libheif library. If you don't have
@@ -137,6 +143,7 @@ header files installed.
 
      Package Name         Version
 
+     appstream-glib       @APPSTREAM_GLIB_REQUIRED_VERSION@
      ATK                  @ATK_REQUIRED_VERSION@
      babl                 @BABL_REQUIRED_VERSION@
      cairo                @CAIRO_REQUIRED_VERSION@
@@ -144,6 +151,7 @@ header files installed.
      freetype2            @FREETYPE2_REQUIRED_VERSION@
      GDK-PixBuf           @GDK_PIXBUF_REQUIRED_VERSION@
      GEGL                 @GEGL_REQUIRED_VERSION@
+     gexiv2               @GEXIV2_REQUIRED_VERSION@
      GIO
      GLib                 @GLIB_REQUIRED_VERSION@
      glib-networking
@@ -172,13 +180,13 @@ header files installed.
      gs                  -              ghostscript
      libaa               -              ASCII art
      libheif             @LIBHEIF_REQUIRED_VERSION@          HEIF
-     libjasper           -              JPEG 2000
      libmng              -              MNG
      libwebp             @WEBP_REQUIRED_VERSION@          WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
      libwmf              @WMF_REQUIRED_VERSION@          WMF
      libXcursor          -              X11 Mouse Cursor
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
+     OpenJPEG            @OPENJPEG_REQUIRED_VERSION@          JPEG 2000
      python 2            @PYTHON2_REQUIRED_VERSION@          Python plug-ins
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
 
@@ -189,6 +197,7 @@ header files installed.
      xdg-email for sending emails
      sendmail for sending emails if --with-sendmail enabled
      gdb or lldb for our new bug-reporting dialog
+     "gegl:matting-levin" GEGL operation for alternative matting engine
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the
@@ -247,11 +256,6 @@ These are:
      ~/.config/GIMP/@GIMP_APP_VERSION@ (the directory .config/GIMP/@GIMP_APP_VERSION@
      in the user's home directory) to ~/.config/DIR/@GIMP_APP_VERSION@.
      If DIR is an absolute path, the directory will be changed to DIR.
-
-  --enable-binreloc.  When compiled for Linux with this option enabled,
-     GIMP will be binary relocatable.  Plug-ins and data files will
-     be searched relative to the gimp binary instead of in the paths
-     defined at compile time.
 
   --with-shm=[none|sysv|posix|auto].  This option allows you to specify
      how image data is transported between the core and plug-ins. Usually
@@ -370,7 +374,7 @@ When ./configure fails
 
 'configure' uses pkg-config, a tool that replaces the old foo-config
 scripts. The most recent version is available from
-	http://www.freedesktop.org/software/pkgconfig/
+	https://www.freedesktop.org/software/pkgconfig/
 
 'configure' tries to compile and run a short GTK+ program. There are
 several reasons why this might fail:

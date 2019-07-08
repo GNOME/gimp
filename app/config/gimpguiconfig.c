@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -40,12 +40,13 @@
 #endif
 
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
-  "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
+  "https://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
 
 enum
 {
   PROP_0,
+  PROP_EDIT_NON_VISIBLE,
   PROP_MOVE_TOOL_CHANGES_ACTIVE,
   PROP_FILTER_TOOL_MAX_RECENT,
   PROP_FILTER_TOOL_USE_LAST_SETTINGS,
@@ -71,6 +72,7 @@ enum
   PROP_PREFER_DARK_THEME,
   PROP_ICON_THEME_PATH,
   PROP_ICON_THEME,
+  PROP_PREFER_SYMBOLIC_ICONS,
   PROP_USE_HELP,
   PROP_SHOW_HELP_BUTTON,
   PROP_HELP_LOCALES,
@@ -87,6 +89,7 @@ enum
 
   PROP_HIDE_DOCKS,
   PROP_SINGLE_WINDOW_MODE,
+  PROP_SHOW_TABS,
   PROP_TABS_POSITION,
   PROP_LAST_TIP_SHOWN,
 
@@ -126,6 +129,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   object_class->finalize     = gimp_gui_config_finalize;
   object_class->set_property = gimp_gui_config_set_property;
   object_class->get_property = gimp_gui_config_get_property;
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EDIT_NON_VISIBLE,
+                            "edit-non-visible",
+                            "Non-visible layers can be edited",
+                            EDIT_NON_VISIBLE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
                             "move-tool-changes-active",
@@ -309,6 +319,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                            GIMP_CONFIG_DEFAULT_ICON_THEME,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_SYMBOLIC_ICONS,
+                            "prefer-symbolic-icons",
+                            "Prefer symbolic icons",
+                            PREFER_SYMBOLIC_ICONS_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                             "use-help",
                             "Use help",
@@ -413,6 +430,15 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                    g_param_spec_boolean ("single-window-mode",
                                                          NULL,
                                                          SINGLE_WINDOW_MODE_BLURB,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (object_class, PROP_SHOW_TABS,
+                                   g_param_spec_boolean ("show-tabs",
+                                                         NULL,
+                                                         SHOW_TABS_BLURB,
                                                          TRUE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
@@ -532,6 +558,9 @@ gimp_gui_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_EDIT_NON_VISIBLE:
+      gui_config->edit_non_visible = g_value_get_boolean (value);
+      break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       gui_config->move_tool_changes_active = g_value_get_boolean (value);
       break;
@@ -612,6 +641,9 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->icon_theme);
       gui_config->icon_theme = g_value_dup_string (value);
       break;
+    case PROP_PREFER_SYMBOLIC_ICONS:
+      gui_config->prefer_symbolic_icons = g_value_get_boolean (value);
+      break;
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
       break;
@@ -658,6 +690,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SINGLE_WINDOW_MODE:
       gui_config->single_window_mode = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_TABS:
+      gui_config->show_tabs = g_value_get_boolean (value);
+      break;
     case PROP_TABS_POSITION:
       gui_config->tabs_position = g_value_get_enum (value);
       break;
@@ -692,6 +727,9 @@ gimp_gui_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_EDIT_NON_VISIBLE:
+      g_value_set_boolean (value, gui_config->edit_non_visible);
+      break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       g_value_set_boolean (value, gui_config->move_tool_changes_active);
       break;
@@ -768,6 +806,9 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_ICON_THEME:
       g_value_set_string (value, gui_config->icon_theme);
       break;
+    case PROP_PREFER_SYMBOLIC_ICONS:
+      g_value_set_boolean (value, gui_config->prefer_symbolic_icons);
+      break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);
       break;
@@ -811,6 +852,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SINGLE_WINDOW_MODE:
       g_value_set_boolean (value, gui_config->single_window_mode);
+      break;
+    case PROP_SHOW_TABS:
+      g_value_set_boolean (value, gui_config->show_tabs);
       break;
     case PROP_TABS_POSITION:
       g_value_set_enum (value, gui_config->tabs_position);

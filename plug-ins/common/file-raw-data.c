@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -1383,7 +1383,7 @@ load_image (const gchar  *filename,
     data->image_id = gimp_image_new_with_precision (runtime->image_width,
                                                     runtime->image_height,
                                                     itype,
-                                                    GIMP_PRECISION_U16_GAMMA);
+                                                    GIMP_PRECISION_U16_NON_LINEAR);
   else
     data->image_id = gimp_image_new (runtime->image_width,
                                      runtime->image_height,

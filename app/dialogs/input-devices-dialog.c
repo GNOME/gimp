@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -33,6 +33,9 @@
 #include "input-devices-dialog.h"
 
 #include "gimp-intl.h"
+
+
+#define RESPONSE_SAVE 1
 
 
 /*  local function prototypes  */
@@ -59,15 +62,10 @@ input_devices_dialog_new (Gimp *gimp)
                             gimp_standard_help_func,
                             GIMP_HELP_INPUT_DEVICES,
 
+                            _("_Save"),  RESPONSE_SAVE,
                             _("_Close"), GTK_RESPONSE_CLOSE,
-                            _("_Save"),  GTK_RESPONSE_OK,
 
                             NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CLOSE,
-                                           -1);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (input_devices_dialog_response),
@@ -93,7 +91,7 @@ input_devices_dialog_response (GtkWidget *dialog,
 {
   switch (response_id)
     {
-    case GTK_RESPONSE_OK:
+    case RESPONSE_SAVE:
       gimp_devices_save (gimp, TRUE);
       break;
 

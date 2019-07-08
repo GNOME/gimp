@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
- * http://triq.net/~pearl/thumbnail-spec/
+ * https://specifications.freedesktop.org/thumbnail-spec/
  *
  * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
@@ -19,7 +19,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #if !defined (__GIMP_THUMB_H_INSIDE__) && !defined (GIMP_THUMB_COMPILATION)

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -79,7 +79,7 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
                                      GIMP_TOOL_CURSOR_PAINTBRUSH);
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (paintbrush),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
+                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static gboolean

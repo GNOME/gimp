@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -108,7 +108,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   if (gimp_display_shell_has_filter (shell))
     {
       filter_format  = shell->filter_format;
-      filter_profile = gimp_babl_format_get_color_profile (filter_format);
+      filter_profile = shell->filter_profile;
     }
   else
     {

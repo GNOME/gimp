@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PROJECTION_H__
@@ -70,7 +70,8 @@ void             gimp_projection_set_priority_rect (GimpProjection    *proj,
 void             gimp_projection_stop_rendering    (GimpProjection    *proj);
 
 void             gimp_projection_flush             (GimpProjection    *proj);
-void             gimp_projection_flush_now         (GimpProjection    *proj);
+void             gimp_projection_flush_now         (GimpProjection    *proj,
+                                                    gboolean           direct);
 void             gimp_projection_finish_draw       (GimpProjection    *proj);
 
 gint64           gimp_projection_estimate_memsize  (GimpImageBaseType  type,

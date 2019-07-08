@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOGGLE_ACTION_H__
@@ -45,12 +45,17 @@ struct _GimpToggleActionClass
 };
 
 
-GType             gimp_toggle_action_get_type (void) G_GNUC_CONST;
+GType             gimp_toggle_action_get_type  (void) G_GNUC_CONST;
 
-GtkToggleAction * gimp_toggle_action_new      (const gchar *name,
-                                               const gchar *label,
-                                               const gchar *tooltip,
-                                               const gchar *icon_name);
+GtkToggleAction * gimp_toggle_action_new       (const gchar *name,
+                                                const gchar *label,
+                                                const gchar *tooltip,
+                                                const gchar *icon_name,
+                                                const gchar *help_id);
+
+void              gimp_toggle_action_set_active (GimpToggleAction *action,
+                                                 gboolean          active);
+gboolean          gimp_toggle_action_get_active (GimpToggleAction *action);
 
 
 #endif  /* __GIMP_TOGGLE_ACTION_H__ */

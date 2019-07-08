@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -164,6 +164,7 @@ static void            gimp_dock_window_auto_clicked              (GtkWidget    
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW,
+                         G_ADD_PRIVATE (GimpDockWindow)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
                                                 gimp_dock_window_dock_container_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
@@ -242,8 +243,6 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_MENU_VIEW_SIZE,
                                                               GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDockWindowPrivate));
 }
 
 static void
@@ -252,9 +251,7 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   static gint  dock_window_ID = 1;
   gchar       *name           = NULL;
 
-  dock_window->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_window,
-                                                GIMP_TYPE_DOCK_WINDOW,
-                                                GimpDockWindowPrivate);
+  dock_window->p = gimp_dock_window_get_instance_private (dock_window);
   dock_window->p->ID                 = dock_window_ID++;
   dock_window->p->auto_follow_active = TRUE;
 
@@ -326,8 +323,7 @@ gimp_dock_window_constructed (GObject *object)
     gimp_menu_factory_manager_new (menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window);
-  accel_group =
-    gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock_window->p->ui_manager));
+  accel_group = gimp_ui_manager_get_accel_group (dock_window->p->ui_manager);
   gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
 
   g_signal_connect_object (dock_window->p->context, "display-changed",

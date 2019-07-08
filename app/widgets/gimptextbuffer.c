@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -962,7 +962,6 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
-  GdkColor    gdk_color;
   guchar      r, g, b;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
@@ -990,14 +989,10 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
   g_snprintf (name, sizeof (name), "color-#%02x%02x%02x",
               r, g, b);
 
-  gdk_color.red   = (r << 8) | r;
-  gdk_color.green = (g << 8) | g;
-  gdk_color.blue  = (b << 8) | b;
-
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "foreground-gdk", &gdk_color,
-                                    "foreground-set", TRUE,
+                                    "foreground-rgba", (GdkRGBA *) color,
+                                    "foreground-set",  TRUE,
                                     NULL);
 
   buffer->color_tags = g_list_prepend (buffer->color_tags, tag);
@@ -1048,7 +1043,6 @@ gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
-  GdkColor    gdk_color;
   guchar      r, g, b;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
@@ -1076,14 +1070,10 @@ gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
   g_snprintf (name, sizeof (name), "preedit-color-#%02x%02x%02x",
               r, g, b);
 
-  gdk_color.red   = (r << 8) | r;
-  gdk_color.green = (g << 8) | g;
-  gdk_color.blue  = (b << 8) | b;
-
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "foreground-gdk", &gdk_color,
-                                    "foreground-set", TRUE,
+                                    "foreground-rgba", (GdkRGBA *) color,
+                                    "foreground-set",  TRUE,
                                     NULL);
 
   buffer->preedit_color_tags = g_list_prepend (buffer->preedit_color_tags, tag);
@@ -1132,7 +1122,6 @@ gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
-  GdkColor    gdk_color;
   guchar      r, g, b;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
@@ -1160,14 +1149,10 @@ gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
   g_snprintf (name, sizeof (name), "bg-color-#%02x%02x%02x",
               r, g, b);
 
-  gdk_color.red   = (r << 8) | r;
-  gdk_color.green = (g << 8) | g;
-  gdk_color.blue  = (b << 8) | b;
-
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "background-gdk", &gdk_color,
-                                    "background-set", TRUE,
+                                    "background-rgba", (GdkRGBA *) color,
+                                    "background-set",  TRUE,
                                     NULL);
 
   buffer->preedit_bg_color_tags = g_list_prepend (buffer->preedit_bg_color_tags, tag);
@@ -1779,12 +1764,20 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
       if (! g_output_stream_write_all (output, text_contents, text_length,
                                        NULL, NULL, &my_error))
         {
+          GCancellable *cancellable = g_cancellable_new ();
+
           g_set_error (error, my_error->domain, my_error->code,
                        _("Writing text file '%s' failed: %s"),
                        gimp_file_get_utf8_name (file), my_error->message);
           g_clear_error (&my_error);
           g_free (text_contents);
+
+          /* Cancel the overwrite initiated by g_file_replace(). */
+          g_cancellable_cancel (cancellable);
+          g_output_stream_close (output, cancellable, NULL);
+          g_object_unref (cancellable);
           g_object_unref (output);
+
           return FALSE;
         }
 

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -67,9 +67,7 @@ struct _GimpCanvasProgressPrivate
 };
 
 #define GET_PRIVATE(progress) \
-        G_TYPE_INSTANCE_GET_PRIVATE (progress, \
-                                     GIMP_TYPE_CANVAS_PROGRESS, \
-                                     GimpCanvasProgressPrivate)
+        ((GimpCanvasProgressPrivate *) gimp_canvas_progress_get_instance_private ((GimpCanvasProgress *) (progress)))
 
 
 /*  local function prototypes  */
@@ -112,6 +110,7 @@ static gboolean         gimp_canvas_progress_message      (GimpProgress         
 
 G_DEFINE_TYPE_WITH_CODE (GimpCanvasProgress, gimp_canvas_progress,
                          GIMP_TYPE_CANVAS_ITEM,
+                         G_ADD_PRIVATE (GimpCanvasProgress)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_canvas_progress_iface_init))
 
@@ -149,8 +148,6 @@ gimp_canvas_progress_class_init (GimpCanvasProgressClass *klass)
                                                         -GIMP_MAX_IMAGE_SIZE,
                                                         GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasProgressPrivate));
 }
 
 static void
@@ -176,11 +173,7 @@ gimp_canvas_progress_finalize (GObject *object)
 {
   GimpCanvasProgressPrivate *private = GET_PRIVATE (object);
 
-  if (private->text)
-    {
-      g_free (private->text);
-      private->text = NULL;
-    }
+  g_clear_pointer (&private->text, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

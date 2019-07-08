@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DATA_FACTORY_VIEW_H__
@@ -33,14 +33,14 @@
 #define GIMP_DATA_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
 
 
-typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;
-typedef struct _GimpDataFactoryViewPriv   GimpDataFactoryViewPriv;
+typedef struct _GimpDataFactoryViewClass   GimpDataFactoryViewClass;
+typedef struct _GimpDataFactoryViewPrivate GimpDataFactoryViewPrivate;
 
 struct _GimpDataFactoryView
 {
-  GimpContainerEditor      parent_instance;
+  GimpContainerEditor         parent_instance;
 
-  GimpDataFactoryViewPriv *priv;
+  GimpDataFactoryViewPrivate *priv;
 };
 
 struct _GimpDataFactoryViewClass

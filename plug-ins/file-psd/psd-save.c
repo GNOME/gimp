@@ -22,7 +22,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
@@ -799,7 +799,7 @@ save_resources (FILE   *fd,
   {
     GimpColorProfile *profile;
 
-    profile = gimp_image_get_color_profile (image_id);
+    profile = gimp_image_get_effective_color_profile (image_id);
 
     if (profile)
       {
@@ -1467,11 +1467,11 @@ create_merged_image (gint32 image_id)
       GeglBufferIterator *iter;
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *d = iter->data[0];
+          guchar *d = iter->items[0].data;
           gint    i;
 
           for (i = 0; i < iter->length; i++)

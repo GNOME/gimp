@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -74,12 +74,13 @@ gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
 
   procedure = GIMP_PROCEDURE (file_proc);
 
-  if ((procedure->num_args   < 3)                        ||
-      (procedure->num_values < 1)                        ||
-      ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
-      ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
-      ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
-      ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
+  if (((procedure->num_args   < 3)                        ||
+       (procedure->num_values < 1)                        ||
+       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
+       ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
+       ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
+       (! file_proc->generic_file_proc &&
+        ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))))
     {
       gimp_message (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "load handler \"%s\" does not take the standard "
@@ -153,6 +154,32 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
       if (! g_slist_find (manager->export_procs, file_proc))
         manager->export_procs = g_slist_prepend (manager->export_procs, file_proc);
     }
+
+  return TRUE;
+}
+
+gboolean
+gimp_plug_in_manager_register_priority (GimpPlugInManager *manager,
+                                        const gchar       *name,
+                                        gint               priority)
+{
+  GimpPlugInProcedure *file_proc;
+  GSList              *list;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
+  g_return_val_if_fail (name != NULL, FALSE);
+
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
+  else
+    list = manager->plug_in_procedures;
+
+  file_proc = gimp_plug_in_procedure_find (list, name);
+
+  if (! file_proc)
+    return FALSE;
+
+  gimp_plug_in_procedure_set_priority (file_proc, priority);
 
   return TRUE;
 }
@@ -273,13 +300,13 @@ gimp_plug_in_manager_get_file_procedures (GimpPlugInManager      *manager,
       return NULL;
 
     case GIMP_FILE_PROCEDURE_GROUP_OPEN:
-      return manager->load_procs;
+      return manager->display_load_procs;
 
     case GIMP_FILE_PROCEDURE_GROUP_SAVE:
-      return manager->save_procs;
+      return manager->display_save_procs;
 
     case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
-      return manager->export_procs;
+      return manager->display_export_procs;
 
     default:
       g_return_val_if_reached (NULL);

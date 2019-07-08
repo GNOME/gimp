@@ -35,8 +35,8 @@ libappdialogs_a_sources = \
 	convert-precision-dialog.h	\
 	data-delete-dialog.c		\
 	data-delete-dialog.h		\
-	fade-dialog.c			\
-	fade-dialog.h			\
+	extensions-dialog.c		\
+	extensions-dialog.h		\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
 	file-open-location-dialog.c	\
@@ -69,8 +69,6 @@ libappdialogs_a_sources = \
 	lebl-dialog.h			\
 	module-dialog.c			\
 	module-dialog.h			\
-	offset-dialog.c			\
-	offset-dialog.h			\
 	palette-import-dialog.c		\
 	palette-import-dialog.h		\
 	preferences-dialog.c		\

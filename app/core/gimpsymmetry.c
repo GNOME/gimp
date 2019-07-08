@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -27,8 +27,11 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
+
+#include "gegl/gimp-gegl-nodes.h"
 
 #include "gimpdrawable.h"
 #include "gimpimage.h"
@@ -71,10 +74,10 @@ static void       gimp_symmetry_get_property        (GObject      *object,
 static void       gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
                                                      GimpDrawable *drawable,
                                                      GimpCoords   *origin);
-static GeglNode * gimp_symmetry_real_get_op         (GimpSymmetry *sym,
+static void       gimp_symmetry_real_get_transform  (GimpSymmetry *sym,
                                                      gint          stroke,
-                                                     gint          paint_width,
-                                                     gint          paint_height);
+                                                     gdouble      *angle,
+                                                     gboolean     *reflect);
 static gboolean   gimp_symmetry_real_update_version (GimpSymmetry *sym);
 
 
@@ -133,7 +136,7 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
 
   klass->label               = _("None");
   klass->update_strokes      = gimp_symmetry_real_update_strokes;
-  klass->get_operation       = gimp_symmetry_real_get_op;
+  klass->get_transform       = gimp_symmetry_real_get_transform;
   klass->active_changed      = NULL;
   klass->update_version      = gimp_symmetry_real_update_version;
 
@@ -235,15 +238,14 @@ gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
                                  g_memdup (origin, sizeof (GimpCoords)));
 }
 
-static GeglNode *
-gimp_symmetry_real_get_op (GimpSymmetry *sym,
-                           gint          stroke,
-                           gint          paint_width,
-                           gint          paint_height)
+static void
+gimp_symmetry_real_get_transform (GimpSymmetry *sym,
+                                  gint          stroke,
+                                  gdouble      *angle,
+                                  gboolean     *reflect)
 {
-  /* The basic symmetry just returns NULL, since no transformation of the
+  /* The basic symmetry does nothing, since no transformation of the
    * brush painting happen. */
-  return NULL;
 }
 
 static gboolean
@@ -396,27 +398,88 @@ gimp_symmetry_get_coords (GimpSymmetry *sym,
 }
 
 /**
+ * gimp_symmetry_get_transform:
+ * @sym:     the #GimpSymmetry
+ * @stroke:  the stroke number
+ * @angle:   output pointer to the transformation rotation angle,
+ *           in degrees (ccw)
+ * @reflect: output pointer to the transformation reflection flag
+ *
+ * Returns: the transformation to apply to the paint content for stroke
+ * number @stroke.  The transformation is comprised of rotation, possibly
+ * followed by horizontal reflection, around the stroke coordinates.
+ **/
+void
+gimp_symmetry_get_transform (GimpSymmetry *sym,
+                             gint          stroke,
+                             gdouble      *angle,
+                             gboolean     *reflect)
+{
+  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (angle != NULL);
+  g_return_if_fail (reflect != NULL);
+
+  *angle   = 0.0;
+  *reflect = FALSE;
+
+  GIMP_SYMMETRY_GET_CLASS (sym)->get_transform (sym,
+                                                stroke,
+                                                angle,
+                                                reflect);
+}
+
+/**
+ * gimp_symmetry_get_matrix:
+ * @sym:     the #GimpSymmetry
+ * @stroke:  the stroke number
+ * @matrix:  output pointer to the transformation matrix
+ *
+ * Returns: the transformation matrix to apply to the paint content for stroke
+ * number @stroke.
+ **/
+void
+gimp_symmetry_get_matrix (GimpSymmetry *sym,
+                          gint          stroke,
+                          GimpMatrix3  *matrix)
+{
+  gdouble  angle;
+  gboolean reflect;
+
+  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (matrix != NULL);
+
+  gimp_symmetry_get_transform (sym, stroke, &angle, &reflect);
+
+  gimp_matrix3_identity (matrix);
+  gimp_matrix3_rotate (matrix, -gimp_deg_to_rad (angle));
+  if (reflect)
+    gimp_matrix3_scale (matrix, -1.0, 1.0);
+}
+
+/**
  * gimp_symmetry_get_operation:
  * @sym:          the #GimpSymmetry
  * @stroke:       the stroke number
- * @paint_width:  the width of the painting area
- * @paint_height: the height of the painting area
  *
- * Returns: the operation to apply to the paint buffer for stroke number @stroke.
- * NULL means to copy the original stroke as-is.
+ * Returns: the transformation operation to apply to the paint content for
+ * stroke number @stroke, or NULL for the identity transformation.
+ *
+ * The returned #GeglNode should be freed by the caller.
  **/
 GeglNode *
 gimp_symmetry_get_operation (GimpSymmetry *sym,
-                             gint          stroke,
-                             gint          paint_width,
-                             gint          paint_height)
+                             gint          stroke)
 {
+  GimpMatrix3 matrix;
+
   g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
 
-  return GIMP_SYMMETRY_GET_CLASS (sym)->get_operation (sym,
-                                                       stroke,
-                                                       paint_width,
-                                                       paint_height);
+  gimp_symmetry_get_matrix (sym, stroke, &matrix);
+
+  if (gimp_matrix3_is_identity (&matrix))
+    return NULL;
+
+  return gimp_gegl_create_transform_node (&matrix);
 }
 
 /*
@@ -471,7 +534,13 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
                         NULL);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
+
+  if (! str)
+    {
+      g_warning ("Empty symmetry parasite \"%s\"", parasite_name);
+
+      return NULL;
+    }
 
   symmetry = gimp_image_symmetry_new (image, type);
 

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_LAYER_H__
@@ -125,6 +125,7 @@ struct _GimpLayerClass
   void     (* convert_type)              (GimpLayer              *layer,
                                           GimpImage              *dest_image,
                                           const Babl             *new_format,
+                                          GimpColorProfile       *src_profile,
                                           GimpColorProfile       *dest_profile,
                                           GeglDitherMethod        layer_dither_type,
                                           GeglDitherMethod        mask_dither_type,
@@ -142,6 +143,10 @@ struct _GimpLayerClass
 /*  function declarations  */
 
 GType           gimp_layer_get_type            (void) G_GNUC_CONST;
+
+void            gimp_layer_fix_format_space    (GimpLayer            *layer,
+                                                gboolean              copy_buffer,
+                                                gboolean              push_undo);
 
 GimpLayer     * gimp_layer_get_parent          (GimpLayer            *layer);
 

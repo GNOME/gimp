@@ -238,8 +238,6 @@ libgimp_sources = \
 	gimpproceduraldb.h	\
 	gimpprogress.c		\
 	gimpprogress.h		\
-	gimpregioniterator.c	\
-	gimpregioniterator.h	\
 	gimpselection.c		\
 	gimpselection.h		\
 	gimptile.c		\
@@ -328,7 +326,6 @@ gimpinclude_HEADERS = \
 	gimpplugin.h			\
 	gimpproceduraldb.h		\
 	gimpprogress.h			\
-	gimpregioniterator.h		\
 	gimpselection.h			\
 	gimptile.h			\
 	\
@@ -389,6 +386,10 @@ libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GTK_LIBS)		\
 	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)
+
+BUILT_SOURCES = \
+	$(libgimp_built_sources) \
+	$(libgimpui_built_sources)
 
 EXTRA_DIST = \
 	COPYING				\

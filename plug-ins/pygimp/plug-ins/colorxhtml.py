@@ -14,7 +14,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import string
 import struct
@@ -90,14 +90,11 @@ def colorxhtml(img, drawable, filename, raw_filename,
     allchars = string.maketrans('', '')
 
     goodchars = string.digits + string.ascii_letters + string.punctuation
-    badchars = ''.join([c for c in allchars if c not in goodchars])
+    badchars = ''.join(c for c in allchars if c not in goodchars)
 
     chars = chars.translate(allchars, badchars)
 
-    data = []
-
-    for c in chars:
-        data.append(escape_table.get(c, c))
+    data = [escape_table.get(c, c) for c in chars]
 
     if data:
         data.reverse()

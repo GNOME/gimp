@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -86,7 +86,8 @@ static void   gimp_pickable_popup_item_activate  (GimpContainerView *view,
                                                   GimpPickablePopup *popup);
 
 
-G_DEFINE_TYPE (GimpPickablePopup, gimp_pickable_popup, GIMP_TYPE_POPUP)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPickablePopup, gimp_pickable_popup,
+                            GIMP_TYPE_POPUP)
 
 #define parent_class gimp_pickable_popup_parent_class
 
@@ -130,16 +131,12 @@ gimp_pickable_popup_class_init (GimpPickablePopupClass *klass)
                                                      1,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpPickablePopupPrivate));
 }
 
 static void
 gimp_pickable_popup_init (GimpPickablePopup *popup)
 {
-  popup->priv = G_TYPE_INSTANCE_GET_PRIVATE (popup,
-                                             GIMP_TYPE_PICKABLE_POPUP,
-                                             GimpPickablePopupPrivate);
+  popup->priv = gimp_pickable_popup_get_instance_private (popup);
 
   popup->priv->view_size         = GIMP_VIEW_SIZE_SMALL;
   popup->priv->view_border_width = 1;

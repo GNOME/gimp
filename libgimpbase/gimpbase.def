@@ -5,7 +5,7 @@ EXPORTS
 	gimp_base_init
 	gimp_blend_mode_get_type
 	gimp_brush_generated_shape_get_type
-	gimp_bucket_fill_mode_get_type
+	gimp_cache_directory
 	gimp_canonicalize_identifier
 	gimp_cap_style_get_type
 	gimp_channel_ops_get_type
@@ -62,6 +62,7 @@ EXPORTS
 	gimp_image_type_get_type
 	gimp_ink_blob_type_get_type
 	gimp_installation_directory
+	gimp_installation_directory_file
 	gimp_interpolation_type_get_type
 	gimp_join_style_get_type
 	gimp_locale_directory
@@ -152,6 +153,7 @@ EXPORTS
 	gimp_stroke_method_get_type
 	gimp_sysconf_directory
 	gimp_sysconf_directory_file
+	gimp_temp_directory
 	gimp_text_direction_get_type
 	gimp_text_hint_style_get_type
 	gimp_text_justification_get_type

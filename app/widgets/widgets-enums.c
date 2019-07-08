@@ -98,29 +98,23 @@ gimp_color_dialog_state_get_type (void)
 }
 
 GType
-gimp_color_frame_mode_get_type (void)
+gimp_color_pick_target_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_COLOR_FRAME_MODE_PIXEL, "GIMP_COLOR_FRAME_MODE_PIXEL", "pixel" },
-    { GIMP_COLOR_FRAME_MODE_RGB_PERCENT, "GIMP_COLOR_FRAME_MODE_RGB_PERCENT", "rgb-percent" },
-    { GIMP_COLOR_FRAME_MODE_RGB_U8, "GIMP_COLOR_FRAME_MODE_RGB_U8", "rgb-u8" },
-    { GIMP_COLOR_FRAME_MODE_HSV, "GIMP_COLOR_FRAME_MODE_HSV", "hsv" },
-    { GIMP_COLOR_FRAME_MODE_LCH, "GIMP_COLOR_FRAME_MODE_LCH", "lch" },
-    { GIMP_COLOR_FRAME_MODE_LAB, "GIMP_COLOR_FRAME_MODE_LAB", "lab" },
-    { GIMP_COLOR_FRAME_MODE_CMYK, "GIMP_COLOR_FRAME_MODE_CMYK", "cmyk" },
+    { GIMP_COLOR_PICK_TARGET_NONE, "GIMP_COLOR_PICK_TARGET_NONE", "none" },
+    { GIMP_COLOR_PICK_TARGET_FOREGROUND, "GIMP_COLOR_PICK_TARGET_FOREGROUND", "foreground" },
+    { GIMP_COLOR_PICK_TARGET_BACKGROUND, "GIMP_COLOR_PICK_TARGET_BACKGROUND", "background" },
+    { GIMP_COLOR_PICK_TARGET_PALETTE, "GIMP_COLOR_PICK_TARGET_PALETTE", "palette" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_COLOR_FRAME_MODE_PIXEL, NC_("color-frame-mode", "Pixel"), NULL },
-    { GIMP_COLOR_FRAME_MODE_RGB_PERCENT, NC_("color-frame-mode", "RGB (%)"), NULL },
-    { GIMP_COLOR_FRAME_MODE_RGB_U8, NC_("color-frame-mode", "RGB (0..255)"), NULL },
-    { GIMP_COLOR_FRAME_MODE_HSV, NC_("color-frame-mode", "HSV"), NULL },
-    { GIMP_COLOR_FRAME_MODE_LCH, NC_("color-frame-mode", "CIE LCH"), NULL },
-    { GIMP_COLOR_FRAME_MODE_LAB, NC_("color-frame-mode", "CIE LAB"), NULL },
-    { GIMP_COLOR_FRAME_MODE_CMYK, NC_("color-frame-mode", "CMYK"), NULL },
+    { GIMP_COLOR_PICK_TARGET_NONE, NC_("color-pick-target", "Pick only"), NULL },
+    { GIMP_COLOR_PICK_TARGET_FOREGROUND, NC_("color-pick-target", "Set foreground color"), NULL },
+    { GIMP_COLOR_PICK_TARGET_BACKGROUND, NC_("color-pick-target", "Set background color"), NULL },
+    { GIMP_COLOR_PICK_TARGET_PALETTE, NC_("color-pick-target", "Add to palette"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -128,41 +122,8 @@ gimp_color_frame_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpColorFrameMode", values);
-      gimp_type_set_translation_context (type, "color-frame-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_color_pick_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_COLOR_PICK_MODE_NONE, "GIMP_COLOR_PICK_MODE_NONE", "none" },
-    { GIMP_COLOR_PICK_MODE_FOREGROUND, "GIMP_COLOR_PICK_MODE_FOREGROUND", "foreground" },
-    { GIMP_COLOR_PICK_MODE_BACKGROUND, "GIMP_COLOR_PICK_MODE_BACKGROUND", "background" },
-    { GIMP_COLOR_PICK_MODE_PALETTE, "GIMP_COLOR_PICK_MODE_PALETTE", "palette" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_COLOR_PICK_MODE_NONE, NC_("color-pick-mode", "Pick only"), NULL },
-    { GIMP_COLOR_PICK_MODE_FOREGROUND, NC_("color-pick-mode", "Set foreground color"), NULL },
-    { GIMP_COLOR_PICK_MODE_BACKGROUND, NC_("color-pick-mode", "Set background color"), NULL },
-    { GIMP_COLOR_PICK_MODE_PALETTE, NC_("color-pick-mode", "Add to palette"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpColorPickMode", values);
-      gimp_type_set_translation_context (type, "color-pick-mode");
+      type = g_enum_register_static ("GimpColorPickTarget", values);
+      gimp_type_set_translation_context (type, "color-pick-target");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

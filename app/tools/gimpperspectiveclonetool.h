@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PERSPECTIVE_CLONE_TOOL_H__
@@ -38,21 +38,23 @@ typedef struct _GimpPerspectiveCloneToolClass GimpPerspectiveCloneToolClass;
 
 struct _GimpPerspectiveCloneTool
 {
-  GimpBrushTool   parent_instance;
+  GimpBrushTool        parent_instance;
 
-  GimpDisplay    *src_display;
-  gint            src_x;
-  gint            src_y;
+  GimpDisplay         *src_display;
+  gint                 src_x;
+  gint                 src_y;
 
-  GimpMatrix3     transform;      /*  transformation matrix            */
-  TransInfo       trans_info;     /*  transformation info              */
-  TransInfo       old_trans_info; /*  for cancelling a drag operation  */
+  GimpMatrix3          transform;      /*  transformation matrix            */
+  TransInfo            trans_info;     /*  transformation info              */
+  TransInfo            old_trans_info; /*  for cancelling a drag operation  */
 
-  gint            x1, y1;         /*  upper left hand coordinate       */
-  gint            x2, y2;         /*  lower right hand coords          */
+  gint                 x1, y1;         /*  upper left hand coordinate       */
+  gint                 x2, y2;         /*  lower right hand coords          */
 
-  GimpToolWidget *widget;
-  GimpToolWidget *grab_widget;
+  GimpCursorPrecision  saved_precision;
+
+  GimpToolWidget      *widget;
+  GimpToolWidget      *grab_widget;
 };
 
 struct _GimpPerspectiveCloneToolClass

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -45,31 +45,31 @@ static const GimpActionEntry templates_actions[] =
   { "templates-create-image", GIMP_ICON_IMAGE,
     NC_("templates-action", "_Create Image from Template"), "",
     NC_("templates-action", "Create a new image from the selected template"),
-    G_CALLBACK (templates_create_image_cmd_callback),
+    templates_create_image_cmd_callback,
     GIMP_HELP_TEMPLATE_IMAGE_NEW },
 
   { "templates-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("templates-action", "_New Template..."), NULL,
     NC_("templates-action", "Create a new template"),
-    G_CALLBACK (templates_new_cmd_callback),
+    templates_new_cmd_callback,
     GIMP_HELP_TEMPLATE_NEW },
 
   { "templates-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("templates-action", "D_uplicate Template..."), "",
     NC_("templates-action", "Duplicate this template"),
-    G_CALLBACK (templates_duplicate_cmd_callback),
+    templates_duplicate_cmd_callback,
     GIMP_HELP_TEMPLATE_DUPLICATE },
 
   { "templates-edit", GIMP_ICON_EDIT,
     NC_("templates-action", "_Edit Template..."), NULL,
     NC_("templates-action", "Edit this template"),
-    G_CALLBACK (templates_edit_cmd_callback),
+    templates_edit_cmd_callback,
     GIMP_HELP_TEMPLATE_EDIT },
 
   { "templates-delete", GIMP_ICON_EDIT_DELETE,
     NC_("templates-action", "_Delete Template"), NULL,
     NC_("templates-action", "Delete this template"),
-    G_CALLBACK (templates_delete_cmd_callback),
+    templates_delete_cmd_callback,
     GIMP_HELP_TEMPLATE_DELETE }
 };
 

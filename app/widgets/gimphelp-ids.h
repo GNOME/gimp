@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_HELP_IDS_H__
@@ -51,7 +51,6 @@
 #define GIMP_HELP_EDIT_STRONG_UNDO                "gimp-edit-strong-undo"
 #define GIMP_HELP_EDIT_STRONG_REDO                "gimp-edit-strong-redo"
 #define GIMP_HELP_EDIT_UNDO_CLEAR                 "gimp-edit-undo-clear"
-#define GIMP_HELP_EDIT_FADE                       "gimp-edit-fade"
 #define GIMP_HELP_EDIT_CUT                        "gimp-edit-cut"
 #define GIMP_HELP_EDIT_COPY                       "gimp-edit-copy"
 #define GIMP_HELP_EDIT_COPY_VISIBLE               "gimp-edit-copy-visible"
@@ -157,10 +156,10 @@
 #define GIMP_HELP_IMAGE_CROP                      "gimp-image-crop"
 #define GIMP_HELP_IMAGE_MERGE_LAYERS              "gimp-image-merge-layers"
 #define GIMP_HELP_IMAGE_FLATTEN                   "gimp-image-flatten"
-#define GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED  "gimp-image-color-management-enabled"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN      "gimp-image-color-profile-assign"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT     "gimp-image-color-profile-convert"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD     "gimp-image-color-profile-discard"
+#define GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB    "gimp-image-color-profile-use-srgb"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE        "gimp-image-color-profile-save"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT      "gimp-image-color-profile-import"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
@@ -219,7 +218,6 @@
 #define GIMP_HELP_LAYER_ROTATE_90                 "gimp-layer-rotate-90"
 #define GIMP_HELP_LAYER_ROTATE_180                "gimp-layer-rotate-180"
 #define GIMP_HELP_LAYER_ROTATE_270                "gimp-layer-rotate-270"
-#define GIMP_HELP_LAYER_OFFSET                    "gimp-layer-offset"
 #define GIMP_HELP_LAYER_RESIZE                    "gimp-layer-resize"
 #define GIMP_HELP_LAYER_RESIZE_TO_IMAGE           "gimp-layer-resize-to-image"
 #define GIMP_HELP_LAYER_SCALE                     "gimp-layer-scale"
@@ -319,6 +317,7 @@
 #define GIMP_HELP_TOOL_MOVE                       "gimp-tool-move"
 #define GIMP_HELP_TOOL_MYPAINT_BRUSH              "gimp-tool-mypaint-brush"
 #define GIMP_HELP_TOOL_N_POINT_DEFORMATION        "gimp-tool-n-point-deformation"
+#define GIMP_HELP_TOOL_OFFSET                     "gimp-tool-offset"
 #define GIMP_HELP_TOOL_PATH                       "gimp-tool-path"
 #define GIMP_HELP_TOOL_PAINTBRUSH                 "gimp-tool-paintbrush"
 #define GIMP_HELP_TOOL_PENCIL                     "gimp-tool-pencil"
@@ -345,6 +344,7 @@
 #define GIMP_HELP_FILTER_ANTIALIAS                "gimp-filter-antialias"
 #define GIMP_HELP_FILTER_APPLY_CANVAS             "gimp-filter-apply-canvas"
 #define GIMP_HELP_FILTER_APPLY_LENS               "gimp-filter-apply-lens"
+#define GIMP_HELP_FILTER_BAYER_MATRIX             "gimp-filter-bayer-matrix"
 #define GIMP_HELP_FILTER_BUMP_MAP                 "gimp-filter-bump-map"
 #define GIMP_HELP_FILTER_C2G                      "gimp-filter-c2g"
 #define GIMP_HELP_FILTER_CARTOON                  "gimp-filter-cartoon"
@@ -391,6 +391,9 @@
 #define GIMP_HELP_FILTER_KALEIDOSCOPE             "gimp-filter-kaleidoscope"
 #define GIMP_HELP_FILTER_LENS_DISTORTION          "gimp-filter-lens-distortion"
 #define GIMP_HELP_FILTER_LENS_FLARE               "gimp-filter-lens-flare"
+#define GIMP_HELP_FILTER_LINEAR_SINUSOID          "gimp-filter-linear-sinusoid"
+#define GIMP_HELP_FILTER_LITTLE_PLANET            "gimp-filter-little-planet"
+#define GIMP_HELP_FILTER_LONG_SHADOW              "gimp-filter-long-shadow"
 #define GIMP_HELP_FILTER_MANTIUK_2006             "gimp-filter-manituk-2006"
 #define GIMP_HELP_FILTER_MAZE                     "gimp-filter-maze"
 #define GIMP_HELP_FILTER_MEDIAN_BLUR              "gimp-filter-median-blur"
@@ -672,6 +675,9 @@
 #define GIMP_HELP_DASHBOARD_GROUPS                "gimp-dashboard-groups"
 #define GIMP_HELP_DASHBOARD_UPDATE_INTERVAL       "gimp-dashboard-update-interval"
 #define GIMP_HELP_DASHBOARD_HISTORY_DURATION      "gimp-dashboard-history-duration"
+#define GIMP_HELP_DASHBOARD_LOG_RECORD            "gimp-dashboard-log-record"
+#define GIMP_HELP_DASHBOARD_LOG_ADD_MARKER        "gimp-dashboard-log-add-marker"
+#define GIMP_HELP_DASHBOARD_LOG_ADD_EMPTY_MARKER  "gimp-dashboard-log-add-empty-marker"
 #define GIMP_HELP_DASHBOARD_RESET                 "gimp-dashboard-reset"
 #define GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING "gimp-dashboard-low-swap-space-warning"
 
@@ -713,6 +719,7 @@
 
 #define GIMP_HELP_WINDOWS_SHOW_DOCK               "gimp-windows-show-dock"
 #define GIMP_HELP_WINDOWS_HIDE_DOCKS              "gimp-windows-hide-docks"
+#define GIMP_HELP_WINDOWS_SHOW_TABS               "gimp-windows-show-tabs"
 #define GIMP_HELP_WINDOWS_TABS_POSITION           "gimp-windows-tabs-position"
 #define GIMP_HELP_WINDOWS_USE_SINGLE_WINDOW_MODE  "gimp-windows-use-single-window-mode"
 #define GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK        "gimp-windows-open-recent-dock"
@@ -735,5 +742,10 @@
 #define GIMP_HELP_CONTROLLER_MIDI                 "gimp-controller-midi"
 #define GIMP_HELP_CONTROLLER_MOUSE                "gimp-controller-mouse"
 #define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
+
+#define GIMP_HELP_EXTENSIONS_DIALOG               "gimp-extensions-dialog"
+#define GIMP_HELP_EXTENSIONS_INSTALLED            "gimp-extensions-installed"
+#define GIMP_HELP_EXTENSIONS_SYSTEM               "gimp-extensions-system"
+#define GIMP_HELP_EXTENSIONS_INSTALL              "gimp-extensions-install"
 
 #endif /* __GIMP_HELP_IDS_H__ */

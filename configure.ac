@@ -43,49 +43,50 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.52])
-m4_define([gegl_major_minor_version], [0.4])
-m4_define([gegl_micro_version], [3])
-m4_define([gegl_required_version],
-          [gegl_major_minor_version.gegl_micro_version])
-m4_define([glib_required_version], [2.56.0])
+m4_define([alsa_required_version], [1.0.0])
+m4_define([appstream_glib_required_version], [0.7.7])
 m4_define([atk_required_version], [2.4.0])
-m4_define([gtk_required_version], [3.22.29])
-m4_define([gdk_pixbuf_required_version], [2.30.8])
+m4_define([babl_required_version], [0.1.66])
 m4_define([cairo_required_version], [1.14.0])
 m4_define([cairo_pdf_required_version], [1.12.2])
-m4_define([pangocairo_required_version], [1.42.0])
 m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
-m4_define([harfbuzz_required_version], [0.9.19])
-m4_define([gtkdoc_required_version], [1.0])
-m4_define([webkitgtk_required_version], [2.20.3])
-m4_define([alsa_required_version], [1.0.0])
-m4_define([rsvg_required_version], [2.40.6])
-m4_define([wmf_required_version], [0.2.8])
-m4_define([pygtk_required_version], [2.10.4])
-m4_define([pycairo_required_version], [1.0.2])
-m4_define([poppler_required_version], [0.44.0])
-m4_define([poppler_data_required_version], [0.4.7])
-m4_define([libgudev_required_version], [167])
+m4_define([gdk_pixbuf_required_version], [2.30.8])
+m4_define([gegl_major_minor_version], [0.4])
+m4_define([gegl_micro_version], [17])
+m4_define([gegl_required_version],
+          [gegl_major_minor_version.gegl_micro_version])
 m4_define([gexiv2_required_version], [0.10.6])
-m4_define([libmypaint_required_version], [1.3.0])
+m4_define([glib_required_version], [2.56.0])
+m4_define([gtk_mac_integration_required_version], [2.0.0])
+m4_define([gtk_required_version], [3.22.29])
+m4_define([gtkdoc_required_version], [1.0])
+m4_define([harfbuzz_required_version], [0.9.19])
+m4_define([intltool_required_version], [0.40.1])
 m4_define([lcms_required_version], [2.8])
-m4_define([libpng_required_version], [1.6.25])
+m4_define([libgudev_required_version], [167])
+m4_define([libheif_required_version], [1.3.2])
 m4_define([liblzma_required_version], [5.0.0])
-m4_define([appstream_glib_required_version], [0.7.7])
+m4_define([libmypaint_required_version], [1.3.0])
+m4_define([libpng_required_version], [1.6.25])
+m4_define([libunwind_required_version], [1.1.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([openjpeg_required_version], [2.1.0])
-m4_define([gtk_mac_integration_required_version], [2.0.0])
-m4_define([intltool_required_version], [0.40.1])
+m4_define([pangocairo_required_version], [1.42.0])
 m4_define([perl_required_version], [5.10.0])
+m4_define([poppler_required_version], [0.69.0])
+m4_define([poppler_data_required_version], [0.4.9])
+m4_define([pycairo_required_version], [1.0.2])
+m4_define([pygtk_required_version], [2.10.4])
 m4_define([python2_required_version], [2.5.0])
+m4_define([rsvg_required_version], [2.40.6])
+m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
-m4_define([libheif_required_version], [1.1.0])
+m4_define([wmf_required_version], [0.2.8])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
-m4_define([xgettext_recommended_version], [0.19])
+m4_define([xgettext_required_version], [0.19])
 
 AC_INIT([GIMP], [gimp_version],
         [https://gitlab.gnome.org/GNOME/gimp/issues/new],
@@ -144,69 +145,73 @@ AC_DEFINE(GIMP_PKGCONFIG_VERSION, "gimp_pkgconfig_version",
 AC_DEFINE(GIMP_TOOL_VERSION, "gimp_tool_version",
           [GIMP tools version])
 
-# These are used in the .pc files
-GLIB_REQUIRED_VERSION=glib_required_version
-GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
-GTK_REQUIRED_VERSION=gtk_required_version
-GTK_WIN32_RECOMMENDED_VERSION=gtk_win32_recommended_version
+# These are used for substitution (.pc, INSTALL, etc.).
+APPSTREAM_GLIB_REQUIRED_VERSION=appstream_glib_required_version
+ATK_REQUIRED_VERSION=atk_required_version
+BABL_REQUIRED_VERSION=babl_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 CAIRO_PDF_REQUIRED_VERSION=cairo_pdf_required_version
+FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
+FREETYPE2_REQUIRED_VERSION=freetype2_required_version
+GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GEGL_MAJOR_MINOR_VERSION=gegl_major_minor_version
 GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
+GLIB_REQUIRED_VERSION=glib_required_version
+GTK_REQUIRED_VERSION=gtk_required_version
+HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
+INTLTOOL_REQUIRED_VERSION=intltool_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
-LIBPNG_REQUIRED_VERSION=libpng_required_version
+LIBHEIF_REQUIRED_VERSION=libheif_required_version
 LIBLZMA_REQUIRED_VERSION=liblzma_required_version
 LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
+LIBPNG_REQUIRED_VERSION=libpng_required_version
+OPENEXR_REQUIRED_VERSION=openexr_required_version
+OPENJPEG_REQUIRED_VERSION=openjpeg_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
-BABL_REQUIRED_VERSION=babl_required_version
-FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
-FREETYPE2_REQUIRED_VERSION=freetype2_required_version
-HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
-WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
-ATK_REQUIRED_VERSION=atk_required_version
-RSVG_REQUIRED_VERSION=rsvg_required_version
-WMF_REQUIRED_VERSION=wmf_required_version
+PERL_REQUIRED_VERSION=perl_required_version
 POPPLER_REQUIRED_VERSION=poppler_required_version
 POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
-OPENEXR_REQUIRED_VERSION=openexr_required_version
-INTLTOOL_REQUIRED_VERSION=intltool_required_version
-PERL_REQUIRED_VERSION=perl_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
+RSVG_REQUIRED_VERSION=rsvg_required_version
+WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
-LIBHEIF_REQUIRED_VERSION=libheif_required_version
-XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
-AC_SUBST(GLIB_REQUIRED_VERSION)
-AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
-AC_SUBST(GTK_REQUIRED_VERSION)
-AC_SUBST(GTK_WIN32_RECOMMENDED_VERSION)
+WMF_REQUIRED_VERSION=wmf_required_version
+LIBUNWIND_REQUIRED_VERSION=libunwind_required_version
+XGETTEXT_REQUIRED_VERSION=xgettext_required_version
+AC_SUBST(APPSTREAM_GLIB_REQUIRED_VERSION)
+AC_SUBST(ATK_REQUIRED_VERSION)
+AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(CAIRO_PDF_REQUIRED_VERSION)
+AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
+AC_SUBST(FREETYPE2_REQUIRED_VERSION)
+AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GEGL_MAJOR_MINOR_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
 AC_SUBST(GEXIV2_REQUIRED_VERSION)
+AC_SUBST(GLIB_REQUIRED_VERSION)
+AC_SUBST(GTK_REQUIRED_VERSION)
+AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
+AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
-AC_SUBST(LIBPNG_REQUIRED_VERSION)
+AC_SUBST(LIBHEIF_REQUIRED_VERSION)
 AC_SUBST(LIBLZMA_REQUIRED_VERSION)
 AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
+AC_SUBST(LIBPNG_REQUIRED_VERSION)
+AC_SUBST(OPENEXR_REQUIRED_VERSION)
+AC_SUBST(OPENJPEG_REQUIRED_VERSION)
 AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
-AC_SUBST(BABL_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(FREETYPE2_REQUIRED_VERSION)
-AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
-AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
-AC_SUBST(ATK_REQUIRED_VERSION)
-AC_SUBST(RSVG_REQUIRED_VERSION)
-AC_SUBST(WMF_REQUIRED_VERSION)
+AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(POPPLER_REQUIRED_VERSION)
 AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
-AC_SUBST(OPENEXR_REQUIRED_VERSION)
-AC_SUBST(INTLTOOL_REQUIRED_VERSION)
-AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
+AC_SUBST(RSVG_REQUIRED_VERSION)
+AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
-AC_SUBST(LIBHEIF_REQUIRED_VERSION)
-AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
+AC_SUBST(WMF_REQUIRED_VERSION)
+AC_SUBST(LIBUNWIND_REQUIRED_VERSION)
+AC_SUBST(XGETTEXT_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -303,6 +308,23 @@ case "$host_cpu" in
     AC_MSG_RESULT([unknown])
     ;;
 esac
+
+
+#################
+# Check for Linux
+#################
+
+AC_MSG_CHECKING([if compiling for Linux])
+case "$host_os" in
+  linux*)
+    platform_linux=yes
+    ;;
+  *)
+    platform_linux=no
+    ;;
+esac
+AC_MSG_RESULT([$platform_linux])
+AM_CONDITIONAL(PLATFORM_LINUX, test "$platform_linux" = "yes")
 
 
 #################
@@ -556,21 +578,22 @@ WARNING: GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
          See https://bugzilla.gnome.org/show_bug.cgi?id=787222"
   fi
   # For GCC, use -v which has more information than --version.
-  CC_VERSION="\\\\t`$CC -v 2>&1 | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'`"
+  CC_VERSION_OPTS="-v"
 else
   # This is the list of common options used by autotools to check
   # versions for various compilers.
-  CC_VERSION="\\\\t`$CC --version 2>&1 | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'`"
-  if test $? != 0; then
-    CC_VERSION="\\\\t`$CC -v 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
-    if test $? != 0; then
-      CC_VERSION="\\\\t`$CC -V 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
-      if test $? != 0; then
-        CC_VERSION="\\\\t`$CC -qversion 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
-      fi
-    fi
-  fi
+  CC_VERSION_OPTS="--version -v -V -qversion"
 fi
+
+for CC_VERSION_OPT in $CC_VERSION_OPTS; do
+  # We run $CC, and escape and format its output, in a single step,
+  # since some shells expand escape sequences in "echo" arguments.
+  CC_VERSION="`$CC $CC_VERSION_OPT 2>&1 | sed -e 's/\\\\/\\\\\\\\/g;s/^/\\\\t/;s/$/\\\\n/' | tr -d '\n'`"
+  if test $? -eq 0; then
+    break
+  fi
+done
+
 AC_SUBST(CC_VERSION)
 
 AC_HEADER_STDC
@@ -591,9 +614,6 @@ AC_CHECK_FUNCS(difftime mmap)
 AC_CHECK_FUNCS(thr_self)
 
 
-AM_BINRELOC
-
-
 # _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
 AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])
 AC_LINK_IFELSE(
@@ -608,6 +628,20 @@ if test "$nl_ok" = "yes"; then
 	    [Define to 1 if _NL_MEASUREMENT_MEASUREMENT is available])
 fi
 
+# Macro to keep track of failed dependencies.
+
+required_deps=''
+
+# To add a required dependency error, call: add_deps_error([dependency]).
+# If details about the dependency are needed:
+# add_deps_error([dependency], [first line, second line])
+m4_define([add_deps_error], [
+  AC_MSG_NOTICE([Eeeeeeeeeeeeeeeeeeeeek! Missing dep: $1])
+  required_deps="$required_deps
+  - Error: missing dependency $1"
+  m4_foreach([more], [$2], [
+  required_deps="$required_deps
+      *** more"])])
 
 ######################
 # Internationalisation
@@ -617,35 +651,30 @@ IT_PROG_INTLTOOL(intltool_required_version)
 AM_GLIB_GNU_GETTEXT
 
 # Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
-AC_MSG_CHECKING([for recommended xgettext version (>= xgettext_recommended_version)])
-XGETTEXT_RECOMMENDED_VERSION_MAJOR=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 1; }'`
-XGETTEXT_RECOMMENDED_VERSION_MINOR_1=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 2; }'`
+AC_MSG_CHECKING([for xgettext version (>= xgettext_required_version)])
+XGETTEXT_REQUIRED_VERSION_MAJOR=`echo $XGETTEXT_REQUIRED_VERSION | awk -F. '{ print $ 1; }'`
+XGETTEXT_REQUIRED_VERSION_MINOR_1=`echo $XGETTEXT_REQUIRED_VERSION | awk -F. '{ print $ 2; }'`
 
 XGETTEXT_APPLIED_VERSION=`$XGETTEXT --version | head -1 | cut -d" " -f4`
 XGETTEXT_APPLIED_VERSION_MAJOR=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 1; }'`
 XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 2; }'`
 
-have_recommended_xgettext="no"
+have_required_xgettext="no"
 if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-    if test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-        have_recommended_xgettext="yes"
-    elif test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+    if test "$XGETTEXT_REQUIRED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+        have_required_xgettext="yes"
+    elif test "$XGETTEXT_REQUIRED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
         if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-            if test "$XGETTEXT_RECOMMENDED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-                have_recommended_xgettext="yes"
+            if test "$XGETTEXT_REQUIRED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
+                have_required_xgettext="yes"
             fi
         fi
     fi
 fi
-AC_MSG_RESULT($have_recommended_xgettext)
+AC_MSG_RESULT($have_required_xgettext)
 
-if test "x$have_recommended_xgettext" = "xno"; then
-    have_recommended_xgettext="
-WARNING: Your gettext version is $XGETTEXT_APPLIED_VERSION.
-         The recommended gettext version is $XGETTEXT_RECOMMENDED_VERSION or over.
-         If you continue without updating gettext, your build will have partially broken localization."
-else
-    have_recommended_xgettext=""
+if test "x$have_required_xgettext" = "xno"; then
+    add_deps_error([xgettext], [xgettext >= xgettext_required_version])
 fi
 
 ###########
@@ -670,19 +699,6 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 ###############################
 # Checks for required libraries
 ###############################
-
-required_deps=''
-
-# To add a required dependency error, call: add_deps_error([dependency]).
-# If details about the dependency are needed:
-# add_deps_error([dependency], [first line, second line])
-m4_define([add_deps_error], [
-  AC_MSG_NOTICE([Eeeeeeeeeeeeeeeeeeeeek! Missing dep: $1])
-  required_deps="$required_deps
-  - Error: missing dependency $1"
-  m4_foreach([more], [$2], [
-  required_deps="$required_deps
-      *** more"])])
 
 PKG_CHECK_MODULES(BABL, [babl >= babl_required_version],,
                   [add_deps_error([babl >= babl_required_version])])
@@ -745,11 +761,27 @@ WARNING: Test for glib-networking cannot be performed while cross-compiling.
          optional anymore."
 fi
 
-AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources, no)
-if test "x$GLIB_COMPILE_RESOURCES" = xno; then
-  add_deps_error([glib-compile-resources],
-                 [Could not find glib-compile-resources in your PATH.])
+# AM_PATH_GLIB_2_0 already fills in the variable GLIB_COMPILE_RESOURCES.
+# Unfortunately it looks it up using $PKG_CONFIG, which search in
+# target-installed libraries, hence it would return a tool for the
+# target architecture in case of cross-compilation (which can't be run
+# during build, unless there is some compatibility layer in the OS).
+# Therefore we make our own check.
+AC_MSG_CHECKING([for native glib-compile-resources])
+if test -z "$HOST_GLIB_COMPILE_RESOURCES"; then
+  # Do not use $PKG_CONFIG as it will search target files.
+  HOST_GLIB_COMPILE_RESOURCES=`pkg-config --variable=glib_compile_resources gio-2.0`
+  if test -z "$HOST_GLIB_COMPILE_RESOURCES"; then
+    # As fallback, search in path.
+    AC_PATH_PROG(HOST_GLIB_COMPILE_RESOURCES, glib-compile-resources, no)
+    if test "x$HOST_GLIB_COMPILE_RESOURCES" = xno; then
+      add_deps_error([glib-compile-resources],
+                     [Could not find glib-compile-resources in your PATH.])
+    fi
+  fi
 fi
+AC_MSG_RESULT($HOST_GLIB_COMPILE_RESOURCES)
+AC_SUBST(HOST_GLIB_COMPILE_RESOURCES)
 
 AC_PATH_PROG(GDBUS_CODEGEN, gdbus-codegen, no)
 if test "x$GDBUS_CODEGEN" = xno; then
@@ -781,11 +813,11 @@ LIBS=$gimp_save_LIBS
 
 AC_PATH_XTRA
 
-AM_PATH_GTK_3_0(gtk_required_version, :,
-  add_deps_error([gtk+-3.0 >= gtk_required_version],
-                 [Test for GTK+ failed.]))
+PKG_CHECK_MODULES(GTK, gtk+-3.0 >= gtk_required_version,,
+                  [add_deps_error([gtk+-3.0 >= gtk_required_version],
+                                  [Test for GTK+ failed.])])
 
-AC_PATH_PROG(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache, no)
+AC_PATH_PROGS(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache-3.0 gtk-update-icon-cache, no)
 if test "x$GTK_UPDATE_ICON_CACHE" = xno; then
   add_deps_error([gtk-update-icon-cache],
                  [Could not find gtk-update-icon-cache in your PATH.])
@@ -865,6 +897,59 @@ PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version,,
 PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version,,
                  [add_deps_error([gexiv2 >= gexiv2_required_version])])
 
+#################################
+# Check for debug console (Win32)
+#################################
+
+AC_ARG_ENABLE(win32-debug-console,
+              [  --enable-win32-debug-console
+                          open a console when starting the program
+                          (default=auto)],,
+              enable_win32_debug_console=auto)
+
+AC_MSG_CHECKING([if GIMP should open a debug console at start])
+if test "x$platform_win32" != "xyes"; then
+   enable_win32_debug_console=no
+elif test "x$enable_win32_debug_console" != xno &&
+     test "x$enable_win32_debug_console" != xyes; then
+  # By default, we enable the debug console only for unstable builds.
+   enable_win32_debug_console=gimp_unstable
+fi
+
+if test "x$enable_win32_debug_console" = "xyes"; then
+  AC_DEFINE(ENABLE_WIN32_DEBUG_CONSOLE, 1,
+            [Define to 1 if GIMP should open a debug console at start])
+fi
+AC_MSG_RESULT([$enable_win32_debug_console])
+
+######################################
+# Check for 32-bit DLLs (Win32 64-bit)
+######################################
+
+AC_ARG_WITH(win32-32bit-dll-folder,
+            [  --with-win32-32bit-dll-folder[=DIR]
+                          alternative folder with 32-bit versions of DLL libraries on Windows (default: 32/bin/)],,
+            with_win32_32bit_dll_folder="32/bin")
+
+AC_MSG_CHECKING([the alternative folder containing 32-bit DLLs on Windows])
+if test "x$platform_win32" = "xyes"; then
+  case "$host_cpu" in
+    x86_64)
+    ;;
+    *)
+    with_win32_32bit_dll_folder="no"
+    ;;
+  esac
+else
+    with_win32_32bit_dll_folder="no"
+fi
+
+if test "x$with_win32_32bit_dll_folder" != "xno"; then
+  AC_DEFINE_UNQUOTED(WIN32_32BIT_DLL_FOLDER, "$with_win32_32bit_dll_folder",
+                     [Define if 32-bit versions of libraries are packaged in an alternative folder])
+fi
+AC_MSG_RESULT([$with_win32_32bit_dll_folder])
+
 #####################
 # Check for Dr. Mingw
 #####################
@@ -888,6 +973,18 @@ AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" =
 ###########################
 
 AC_CHECK_HEADERS([execinfo.h])
+
+#########################
+# Check for Matting Levin
+#########################
+
+AC_MSG_CHECKING([for matting engine Levin])
+if $GEGL --exists "gegl:matting-levin"; then
+  have_matting_levin=yes
+else
+  have_matting_levin='no (missing GEGL operation "gegl:matting-levin")'
+fi
+AC_MSG_RESULT($have_matting_levin)
 
 ##########################################
 # Check for some special functions we need
@@ -1393,6 +1490,7 @@ if test "x$enable_relocatable_bundle" = xyes; then
   AC_DEFINE(ENABLE_RELOCATABLE_RESOURCES, 1,
             [Define to 1 if resources are considered bundled under the same prefix])
 fi
+AM_CONDITIONAL(ENABLE_RELOCATABLE_RESOURCES, test x$enable_relocatable_bundle = xyes)
 
 AC_MSG_RESULT([$enable_relocatable_bundle])
 
@@ -1430,28 +1528,8 @@ AC_SUBST(TIFF_LIBS)
 # Check for libjpeg
 ###################
 
-if test -z "$JPEG_LIBS"; then
-  AC_CHECK_LIB(jpeg, jpeg_destroy_decompress, ,
-    add_deps_error([libjpeg], [JPEG library not found]))
-  AC_MSG_CHECKING([for jpeglib.h])
-  AC_PREPROC_IFELSE(
-    [AC_LANG_SOURCE([[
-#include <stdio.h>
-#undef HAVE_STDDEF_H
-#undef HAVE_STDLIB_H
-#undef PACKAGE
-#undef VERSION
-#include <jpeglib.h>]])],
-    AC_MSG_RESULT([yes]),
-    add_deps_error([libjpeg], [JPEG header file not found]))
-  AC_CHECK_LIB(jpeg, jpeg_save_markers,
-    JPEG_LIBS='-ljpeg',
-    add_deps_error([libjpeg], [JPEG library is too old]))
-fi
-
+PKG_CHECK_MODULES(JPEG, [libjpeg],, [add_deps_error([libjpeg])])
 MIME_TYPES="$MIME_TYPES;image/jpeg"
-
-AC_SUBST(JPEG_LIBS)
 
 
 ################
@@ -1505,13 +1583,15 @@ PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,,
                  [add_deps_error([liblzma >= liblzma_required_version])])
 
 
-##########################
-# Check for appstream-glib
-##########################
+#############################
+# Check for extension support
+#############################
 
 PKG_CHECK_MODULES(APPSTREAM_GLIB, appstream-glib >= appstream_glib_required_version,,
-                 [add_deps_error([appstream-glib >= appstream_glib_required_version])])
+                  [add_deps_error([appstream-glib >= appstream_glib_required_version])])
 
+PKG_CHECK_MODULES(LIBARCHIVE, libarchive,,
+                  [add_deps_error([libarchive])])
 
 ###############################
 # Check for Ghostscript library
@@ -1696,7 +1776,10 @@ AC_ARG_WITH(libheif, [  --without-libheif       build without libheif support])
 
 have_libheif=no
 if test "x$with_libheif" != xno; then
+  have_libheif_1_4_0=yes
   have_libheif=yes
+  PKG_CHECK_MODULES(LIBHEIF, libheif >= 1.4.0,,
+    [have_libheif_1_4_0="no (libheif >= 1.4.0 not found)"])
   PKG_CHECK_MODULES(LIBHEIF, libheif >= libheif_required_version,
     FILE_HEIF='file-heif$(EXEEXT)',
     [have_libheif="no (libheif not found)"])
@@ -1708,6 +1791,86 @@ fi
 
 AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
+
+if test "x$have_libheif_1_4_0" = xyes; then
+  AC_DEFINE(HAVE_LIBHEIF_1_4_0, 1,
+            [Define to 1 if libheif >= 1.4.0 is available])
+fi
+
+
+########################
+# Check for libbacktrace
+########################
+
+AC_ARG_WITH(libbacktrace, [  --without-libbacktrace       build without libbacktrace support])
+
+have_libbacktrace=no
+if test "x$with_libbacktrace" != xno; then
+  have_libbacktrace=yes
+
+  gimp_save_LIBS=$LIBS
+  LIBS="$LIBS -lbacktrace"
+
+  AC_MSG_CHECKING([for LIBBACKTRACE])
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[#include <stddef.h>
+        #include <backtrace.h>
+        #include <backtrace-supported.h>
+
+        #if ! BACKTRACE_SUPPORTED
+        #error ! BACKTRACE_SUPPORTED
+        #endif
+      ]],
+      [[(void) backtrace_create_state (NULL, 0, NULL, NULL);]])],
+    [AC_MSG_RESULT([yes]); LIBBACKTRACE_LIBS='-lbacktrace'],
+    [AC_MSG_RESULT([no]); have_libbacktrace='no (libbacktrace is not found or not supported)'])
+
+  LIBS=$gimp_save_LIBS
+
+  AC_SUBST(LIBBACKTRACE_LIBS)
+fi
+
+if test "x$have_libbacktrace" = xyes; then
+  AC_DEFINE(HAVE_LIBBACKTRACE, 1,
+            [Define to 1 if libbacktrace is available])
+fi
+
+
+#####################
+# Check for libunwind
+#####################
+
+AC_ARG_WITH(libunwind, [  --without-libunwind       build without libunwind support])
+
+have_libunwind=no
+if test "x$with_libunwind" != xno; then
+  have_libunwind=yes
+  PKG_CHECK_MODULES(LIBUNWIND, libunwind >= libunwind_required_version,
+    [],
+    [have_libunwind="no (libunwind not found)"])
+fi
+
+if test "x$have_libunwind" = xyes; then
+  AC_DEFINE(HAVE_LIBUNWIND, 1,
+            [Define to 1 if libunwind is available])
+fi
+
+
+#######################################
+# Check for detailed backtraces support
+#######################################
+
+detailed_backtraces=no
+if test "x$platform_linux" = xyes; then
+  if test "x$have_libbacktrace" = xyes -o "x$have_libunwind" = xyes; then
+    detailed_backtraces=yes
+  else
+    detailed_backtraces='no (libbacktrace and libunwind are not found or not supported)'
+  fi
+elif test "x$platform_win32" = xyes; then
+  detailed_backtraces=$enable_drmingw
+fi
 
 
 ######################
@@ -1760,6 +1923,12 @@ PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,,
 
 MIME_TYPES="$MIME_TYPES;image/svg+xml"
 
+AC_CHECK_PROGS(GTK_ENCODE_SYMBOLIC_SVG, gtk-encode-symbolic-svg, no)
+
+if test "x$GTK_ENCODE_SYMBOLIC_SVG" = xno; then
+  add_deps_error([gtk-encode-symbolic-svg],
+                 [Could not find gtk-encode-symbolic-svg in your PATH.])
+fi
 
 ####################################
 # Allow to disable the print plug-in
@@ -1829,7 +1998,10 @@ if test "x$with_wmf" != xno; then
       WMF_LIBS=`$WMF_CONFIG --libs`
       WMF_CFLAGS=`$WMF_CONFIG --cflags`
     else
-      have_libwmf="no (libwmf is too old)"
+      have_libwmf=yes
+      PKG_CHECK_MODULES(WMF, libwmf >= wmf_required_version,
+                        FILE_WMF='file-wmf$(EXEEXT)',
+                        have_libwmf="no (libwmf not found)")
    fi
   else
     have_libwmf="no (libwmf not found)"
@@ -2199,48 +2371,44 @@ AC_ARG_ENABLE(vector-icons, [  --disable-vector-icons  use raster icons rather t
               enable_vector_icons=auto)
 
 if test "x$enable_vector_icons" != "xno"; then
-  if test "x$have_recommended_gtk" != "x"; then
-      enable_vector_icons="no (gtk+-2-0 < gtk_win32_recommended_version)"
-  else
-    have_shared_mime_info=""
-    # shared-mime-info is needed to correctly detect SVG files (except on
-    # Windows, apparently).
-    PKG_CHECK_MODULES(MIME_INFO, [shared-mime-info],
-                      have_shared_mime_info="yes", have_shared_mime_info="no")
-    if test "x$have_shared_mime_info" = "xyes" ||
-       test "x$platform_win32" = "xyes"; then
-      # Check if librsvg was built with --disable-pixbuf-loader.
-      gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-      # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
-      # error: cannot check for file existence when cross compiling
-      # So let's test files the shell way.
-      if (test "x$platform_win32" = "xyes" &&
-          test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
-         test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-        # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
-        # to make sure we use the native pkg-config (in case we cross-compile).
-        if pkg-config --atleast-version=glib_required_version glib-2.0 &&
-           pkg-config gio-2.0; then
-          NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
-          NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
-          enable_vector_icons="yes"
+  have_shared_mime_info=""
+  # shared-mime-info is needed to correctly detect SVG files (except on
+  # Windows, apparently).
+  PKG_CHECK_MODULES(MIME_INFO, [shared-mime-info],
+                    have_shared_mime_info="yes", have_shared_mime_info="no")
+  if test "x$have_shared_mime_info" = "xyes" ||
+     test "x$platform_win32" = "xyes"; then
+    # Check if librsvg was built with --disable-pixbuf-loader.
+    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+    # error: cannot check for file existence when cross compiling
+    # So let's test files the shell way.
+    if (test "x$platform_win32" = "xyes" &&
+        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+      # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+      # to make sure we use the native pkg-config (in case we cross-compile).
+      if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+         pkg-config gio-2.0; then
+        NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+        NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+        enable_vector_icons="yes"
 
-          if test "x$platform_win32" = "xyes"; then
-            warning_vector_icons_windows="
+        if test "x$platform_win32" = "xyes"; then
+          warning_vector_icons_windows="
 WARNING: You enabled vector icons on Win32. Make sure to run:
-           $ gdk-pixbuf-query-loaders.exe --update-cache
-         on the target machine (this command generates loaders.cache)
-         so that GdkPixbuf knows where to find the SVG loader."
-          fi
-        else
-          enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+         $ gdk-pixbuf-query-loaders.exe --update-cache
+       on the target machine (this command generates loaders.cache)
+       so that GdkPixbuf knows where to find the SVG loader."
         fi
       else
-        enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+        enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
       fi
     else
-      enable_vector_icons="no (missing shared-mime-info)"
+      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
     fi
+  else
+    enable_vector_icons="no (missing shared-mime-info)"
   fi
 fi
 
@@ -2614,6 +2782,7 @@ app/gegl/Makefile
 app/dialogs/Makefile
 app/display/Makefile
 app/file/Makefile
+app/file-data/Makefile
 app/gui/Makefile
 app/menus/Makefile
 app/paint/Makefile
@@ -2644,6 +2813,7 @@ build/windows/installer/Makefile
 build/windows/installer/lang/Makefile
 plug-ins/Makefile
 plug-ins/file-bmp/Makefile
+plug-ins/file-dds/Makefile
 plug-ins/file-exr/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile
@@ -2713,6 +2883,7 @@ dnl devel-docs/libgimpthumb/Makefile
 dnl devel-docs/libgimpthumb/version
 dnl devel-docs/libgimpwidgets/Makefile
 dnl devel-docs/libgimpwidgets/version
+dnl devel-docs/performance-logs/Makefile
 dnl devel-docs/tools/Makefile
 [
 docs/Makefile
@@ -2764,6 +2935,7 @@ desktop/Makefile
 desktop/gimp-data-extras.metainfo.xml.in
 desktop/gimp.desktop.in
 desktop/org.gimp.GIMP.appdata.xml.in
+desktop/test-appdata.sh
 etc/Makefile
 etc/gimprc
 m4macros/Makefile
@@ -2824,46 +2996,51 @@ generate_po_makefile([po-windows-installer])
 # Print a summary of features enabled/disabled:
 optional_deps="
 Extra Binaries:
-  gimp-console:            $enable_gimp_console
+  gimp-console:              $enable_gimp_console
 
 Optional Features:
-  Language selection:      $have_iso_codes
-  Vector icons:            $enable_vector_icons
-  Dr. Mingw (Win32):       $enable_drmingw
-  Relocatable bundle:      $enable_relocatable_bundle
-  Default ICC directory:   $with_icc_directory
+  Levin matting engine:      $have_matting_levin
+  Language selection:        $have_iso_codes
+  Vector icons:              $enable_vector_icons
+  Dr. Mingw (Win32):         $enable_drmingw
+  Relocatable bundle:        $enable_relocatable_bundle
+  Default ICC directory:     $with_icc_directory
+  Debug console (Win32):     $enable_win32_debug_console
+  32-bit DLL folder (Win32): $with_win32_32bit_dll_folder
+  Detailed backtraces:       $detailed_backtraces
 
 Optional Plug-Ins:
-  Ascii Art:               $have_libaa
-  Ghostscript:             $have_gs
-  Help Browser:            $have_webkit
-  JPEG 2000:               $have_openjpeg
-  MNG:                     $have_libmng
-  OpenEXR:                 $have_openexr
-  WebP:                    $have_webp
-  Heif:                    $have_libheif
-  PDF (export):            $have_cairo_pdf
-  Print:                   $enable_print
-  Python 2:                $enable_python
-  TWAIN (Win32):           $os_win32
-  Webpage:                 $have_webkit
-  WMF:                     $have_libwmf
-  X11 Mouse Cursor:        $have_xmc
-  XPM:                     $have_libxpm
-  Email:                   $have_email
+  Ascii Art:                 $have_libaa
+  Ghostscript:               $have_gs
+  Help Browser:              $have_webkit
+  JPEG 2000:                 $have_openjpeg
+  MNG:                       $have_libmng
+  OpenEXR:                   $have_openexr
+  WebP:                      $have_webp
+  Heif:                      $have_libheif
+  Heif >= 1.4.0:             $have_libheif_1_4_0
+  PDF (export):              $have_cairo_pdf
+  Print:                     $enable_print
+  Python 2:                  $enable_python
+  TWAIN (Win32):             $os_win32
+  Webpage:                   $have_webkit
+  WMF:                       $have_libwmf
+  X11 Mouse Cursor:          $have_xmc
+  XPM:                       $have_libxpm
+  Email:                     $have_email
 
 Optional Modules:
-  ALSA (MIDI Input):       $have_alsa
-  Linux Input:             $have_linux_input (GUdev support: $have_libgudev)
-  DirectInput (Win32):     $have_dx_dinput
+  ALSA (MIDI Input):         $have_alsa
+  Linux Input:               $have_linux_input (GUdev support: $have_libgudev)
+  DirectInput (Win32):       $have_dx_dinput
 
 Tests:
-  Use xvfb-run             $have_xvfb_run
-  Test appdata             $have_appstream_util
-  Test desktop file        $have_desktop_file_validate
+  Use xvfb-run               $have_xvfb_run
+  Test appdata               $have_appstream_util
+  Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -78,13 +78,13 @@ query (void)
                           "Adam D. Moss (adam@foxbox.org)",
                           "Adam D. Moss (adam@foxbox.org)",
                           "1998",
-                          N_("_Guillotine"),
+                          N_("Slice Using G_uides"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Transform");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Crop");
 }
 
 static void

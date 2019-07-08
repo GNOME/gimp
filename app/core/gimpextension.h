@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_EXTENSION_H__
@@ -52,6 +52,16 @@ GType           gimp_extension_get_type (void) G_GNUC_CONST;
 
 GimpExtension * gimp_extension_new                     (const gchar    *dir,
                                                         gboolean        writable);
+const gchar   * gimp_extension_get_name                (GimpExtension  *extension);
+const gchar   * gimp_extension_get_comment             (GimpExtension  *extension);
+const gchar   * gimp_extension_get_description         (GimpExtension  *extension);
+GdkPixbuf     * gimp_extension_get_screenshot          (GimpExtension  *extension,
+                                                        gint            width,
+                                                        gint            height,
+                                                        const gchar   **caption);
+const gchar   * gimp_extension_get_path                (GimpExtension  *extension);
+
+gchar         * gimp_extension_get_markup_description  (GimpExtension  *extension);
 
 gboolean        gimp_extension_load                    (GimpExtension  *extension,
                                                         GError        **error);
@@ -66,6 +76,13 @@ GList         * gimp_extension_get_pattern_paths       (GimpExtension  *extensio
 GList         * gimp_extension_get_gradient_paths      (GimpExtension  *extension);
 GList         * gimp_extension_get_palette_paths       (GimpExtension  *extension);
 GList         * gimp_extension_get_tool_preset_paths   (GimpExtension  *extension);
+GList         * gimp_extension_get_splash_paths        (GimpExtension  *extension);
+GList         * gimp_extension_get_theme_paths         (GimpExtension  *extension);
 GList         * gimp_extension_get_plug_in_paths       (GimpExtension  *extension);
+
+gint            gimp_extension_cmp                     (GimpExtension  *extension1,
+                                                        GimpExtension  *extension2);
+gint            gimp_extension_id_cmp                  (GimpExtension  *extension1,
+                                                        const gchar    *id);
 
 #endif  /* __GIMP_EXTENSION_H__ */

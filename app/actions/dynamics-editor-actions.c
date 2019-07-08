@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -49,7 +49,7 @@ static const GimpToggleActionEntry dynamics_editor_toggle_actions[] =
 {
   { "dynamics-editor-edit-active", GIMP_ICON_LINKED,
     NC_("dynamics-editor-action", "Edit Active Dynamics"), NULL, NULL,
-    G_CALLBACK (data_editor_edit_active_cmd_callback),
+    data_editor_edit_active_cmd_callback,
     FALSE,
     GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE }
 };

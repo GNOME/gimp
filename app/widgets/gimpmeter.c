@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -132,7 +132,7 @@ static void       gimp_meter_mask_sample            (GimpMeter      *meter,
                                                      gdouble        *result);
 
 
-G_DEFINE_TYPE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_meter_parent_class
 
@@ -227,16 +227,12 @@ gimp_meter_class_init (GimpMeterClass *klass)
                                                         TRUE, &(GimpRGB) {},
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpMeterPrivate));
 }
 
 static void
 gimp_meter_init (GimpMeter *meter)
 {
-  meter->priv = G_TYPE_INSTANCE_GET_PRIVATE (meter,
-                                             GIMP_TYPE_METER,
-                                             GimpMeterPrivate);
+  meter->priv = gimp_meter_get_instance_private (meter);
 
   g_mutex_init (&meter->priv->mutex);
 
@@ -572,9 +568,8 @@ gimp_meter_draw (GtkWidget *widget,
                      allocation.width - BORDER_WIDTH - 0.5 * size,
                      0.25 * size);
       cairo_close_path (cr);
-      cairo_clip (cr);
 
-      cairo_clip_extents (cr,
+      cairo_path_extents (cr,
                           &history_x1, &history_y1,
                           &history_x2, &history_y2);
 
@@ -582,6 +577,8 @@ gimp_meter_draw (GtkWidget *widget,
       history_y1 = floor (history_y1);
       history_x2 = ceil  (history_x2);
       history_y2 = ceil  (history_y2);
+
+      cairo_clip (cr);
 
       /* paint history background */
       gdk_cairo_set_source_rgba (cr, &fg);

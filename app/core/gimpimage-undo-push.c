@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -28,6 +28,7 @@
 #include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
 #include "gimpdrawablemodundo.h"
+#include "gimpdrawablepropundo.h"
 #include "gimpdrawableundo.h"
 #include "gimpfloatingselectionundo.h"
 #include "gimpgrid.h"
@@ -149,13 +150,13 @@ gimp_image_undo_push_image_colormap (GimpImage   *image,
 }
 
 GimpUndo *
-gimp_image_undo_push_image_color_managed (GimpImage   *image,
-                                          const gchar *undo_desc)
+gimp_image_undo_push_image_hidden_profile (GimpImage   *image,
+                                           const gchar *undo_desc)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
-                               GIMP_UNDO_IMAGE_COLOR_MANAGED, undo_desc,
+                               GIMP_UNDO_IMAGE_HIDDEN_PROFILE, undo_desc,
                                GIMP_DIRTY_IMAGE,
                                NULL);
 }
@@ -218,7 +219,7 @@ gimp_image_undo_push_guide (GimpImage   *image,
   return gimp_image_undo_push (image, GIMP_TYPE_GUIDE_UNDO,
                                GIMP_UNDO_GUIDE, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
-                               "guide", guide,
+                               "aux-item", guide,
                                NULL);
 }
 
@@ -228,12 +229,12 @@ gimp_image_undo_push_sample_point (GimpImage       *image,
                                    GimpSamplePoint *sample_point)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (sample_point != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_SAMPLE_POINT (sample_point), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_SAMPLE_POINT_UNDO,
                                GIMP_UNDO_SAMPLE_POINT, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
-                               "sample-point", sample_point,
+                               "aux-item", sample_point,
                                NULL);
 }
 
@@ -285,6 +286,22 @@ gimp_image_undo_push_drawable_mod (GimpImage    *image,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item",        drawable,
                                "copy-buffer", copy_buffer,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_drawable_format (GimpImage    *image,
+                                      const gchar  *undo_desc,
+                                      GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_PROP_UNDO,
+                               GIMP_UNDO_DRAWABLE_FORMAT, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item", drawable,
                                NULL);
 }
 

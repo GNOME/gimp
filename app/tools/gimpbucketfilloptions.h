@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef  __GIMP_BUCKET_FILL_OPTIONS_H__
@@ -30,21 +30,33 @@
 #define GIMP_BUCKET_FILL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUCKET_FILL_OPTIONS, GimpBucketFillOptionsClass))
 
 
-typedef struct _GimpBucketFillOptions GimpBucketFillOptions;
-typedef struct _GimpPaintOptionsClass GimpBucketFillOptionsClass;
+typedef struct _GimpBucketFillOptions        GimpBucketFillOptions;
+typedef struct _GimpBucketFillOptionsPrivate GimpBucketFillOptionsPrivate;
+typedef struct _GimpPaintOptionsClass        GimpBucketFillOptionsClass;
 
 struct _GimpBucketFillOptions
 {
-  GimpPaintOptions    paint_options;
+  GimpPaintOptions              paint_options;
 
-  GimpBucketFillMode  fill_mode;
-  gboolean            fill_selection;
-  gboolean            fill_transparent;
-  gboolean            sample_merged;
-  gboolean            diagonal_neighbors;
-  gboolean            antialias;
-  gdouble             threshold;
-  GimpSelectCriterion fill_criterion;
+  GimpBucketFillMode            fill_mode;
+  GimpBucketFillArea            fill_area;
+  gboolean                      fill_transparent;
+  gboolean                      sample_merged;
+  gboolean                      diagonal_neighbors;
+  gboolean                      antialias;
+  gboolean                      feather;
+  gdouble                       feather_radius;
+  gdouble                       threshold;
+
+  GtkWidget                    *line_art_busy_box;
+  GimpLineArtSource             line_art_source;
+  gdouble                       line_art_threshold;
+  gint                          line_art_max_grow;
+  gint                          line_art_max_gap_length;
+
+  GimpSelectCriterion           fill_criterion;
+
+  GimpBucketFillOptionsPrivate *priv;
 };
 
 

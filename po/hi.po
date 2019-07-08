@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2012-05-06 03:28+0200\n"
 "PO-Revision-Date: 2005-09-09 13:10+0530\n"
 "Last-Translator: Rajesh Ranjan <rranjan@redhat.com>\n"
@@ -56,7 +56,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 
 #: ../app/app.c:224

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -611,7 +611,7 @@ remove_substring (const gchar *string,
       gchar *p = strstr (string, substring);
       if (p)
         {
-          strcpy (p, p + strlen (substring));
+          strcpy (p, p + (gint) strlen (substring));
         }
     }
 }
@@ -1663,7 +1663,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gtk_widget_set_size_request (combo_widget, 180, height);
 
   combo_widget = builder_get_widget (builder, "Xmp.iptcExt.DigitalSourceType");
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 5; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (digitalsourcetype[i].display));
@@ -2997,7 +2997,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 {
                   gint loop;
 
-                  for (loop = 0; loop < 4; loop++)
+                  for (loop = 0; loop < 5; loop++)
                     {
                       if (! strcmp (digitalsourcetype[loop].data, value))
                         {

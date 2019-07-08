@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_MERGE_H__
@@ -23,17 +23,20 @@ GimpLayer   * gimp_image_merge_visible_layers  (GimpImage      *image,
                                                 GimpContext    *context,
                                                 GimpMergeType   merge_type,
                                                 gboolean        merge_active_group,
-                                                gboolean        discard_invisible);
+                                                gboolean        discard_invisible,
+                                                GimpProgress   *progress);
 GimpLayer   * gimp_image_merge_down            (GimpImage      *image,
                                                 GimpLayer      *current_layer,
                                                 GimpContext    *context,
                                                 GimpMergeType   merge_type,
+                                                GimpProgress   *progress,
                                                 GError        **error);
 GimpLayer   * gimp_image_merge_group_layer     (GimpImage      *image,
                                                 GimpGroupLayer *group);
 
 GimpLayer   * gimp_image_flatten               (GimpImage      *image,
                                                 GimpContext    *context,
+                                                GimpProgress   *progress,
                                                 GError        **error);
 
 GimpVectors * gimp_image_merge_visible_vectors (GimpImage      *image,

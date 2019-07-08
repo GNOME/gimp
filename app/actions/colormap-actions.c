@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -48,7 +48,7 @@ static const GimpActionEntry colormap_actions[] =
   { "colormap-edit-color", GIMP_ICON_EDIT,
     NC_("colormap-action", "_Edit Color..."), NULL,
     NC_("colormap-action", "Edit this color"),
-    G_CALLBACK (colormap_edit_color_cmd_callback),
+    colormap_edit_color_cmd_callback,
     GIMP_HELP_INDEXED_PALETTE_EDIT }
 };
 
@@ -104,12 +104,12 @@ colormap_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "colormap-action",
                                       colormap_add_color_actions,
                                       G_N_ELEMENTS (colormap_add_color_actions),
-                                      G_CALLBACK (colormap_add_color_cmd_callback));
+                                      colormap_add_color_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "colormap-action",
                                       colormap_to_selection_actions,
                                       G_N_ELEMENTS (colormap_to_selection_actions),
-                                      G_CALLBACK (colormap_to_selection_cmd_callback));
+                                      colormap_to_selection_cmd_callback);
 }
 
 void

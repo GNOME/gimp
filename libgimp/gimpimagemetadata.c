@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -364,15 +364,45 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       g_date_time_unref (datetime);
 
-      /* Thumbnail */
-
-      if (FALSE /* FIXME if (original image had a thumbnail) */)
-        *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
     }
+
+  /* Thumbnail */
+
+  if (FALSE /* FIXME if (original image had a thumbnail) */)
+    *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+
+  /* Color profile */
+
+  if (! gimp_export_color_profile ())
+    *suggested_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
   return metadata;
 }
 
+
+static void
+gimp_image_metadata_copy_tag (GExiv2Metadata *src,
+                              GExiv2Metadata *dest,
+                              const gchar    *tag)
+{
+  gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
+
+  if (values)
+    {
+      gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
+      g_strfreev (values);
+    }
+  else
+    {
+      gchar *value = gexiv2_metadata_get_tag_string (src, tag);
+
+      if (value)
+        {
+          gexiv2_metadata_set_tag_string (dest, tag, value);
+          g_free (value);
+        }
+    }
+}
 
 /**
  * gimp_image_metadata_save_finish:
@@ -404,7 +434,6 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   gboolean        support_exif;
   gboolean        support_xmp;
   gboolean        support_iptc;
-  gchar          *value;
   gboolean        success = FALSE;
   gint            i;
 
@@ -440,11 +469,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, exif_data[i]) &&
               gimp_metadata_is_tag_supported (exif_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                      exif_data[i]);
-              gexiv2_metadata_set_tag_string (new_g2metadata, exif_data[i],
-                                              value);
-              g_free (value);
+              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                            new_g2metadata,
+                                            exif_data[i]);
             }
         }
 
@@ -497,21 +524,22 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
       gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Xmp.GIMP.Platform",
 #if defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
-                                      "Windows");
+                                      "Windows"
 #elif defined(__linux__)
-                                      "Linux");
+                                      "Linux"
 #elif defined(__APPLE__) && defined(__MACH__)
-                                      "Mac OS");
+                                      "Mac OS"
 #elif defined(unix) || defined(__unix__) || defined(__unix)
-                                      "Unix");
+                                      "Unix"
 #else
-                                      "Unknown");
+                                      "Unknown"
 #endif
+                                      );
 
       xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
       /* Patch necessary structures */
-      for (i = 0; i < 9; i++)
+      for (i = 0; i < G_N_ELEMENTS (structlist); i++)
         {
           gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
                                               structlist[i].tag,
@@ -523,11 +551,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, xmp_data[i]) &&
               gimp_metadata_is_tag_supported (xmp_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                      xmp_data[i]);
-              gexiv2_metadata_set_tag_string (new_g2metadata, xmp_data[i],
-                                              value);
-              g_free (value);
+              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                            new_g2metadata,
+                                            xmp_data[i]);
             }
         }
 
@@ -543,11 +569,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, iptc_data[i]) &&
               gimp_metadata_is_tag_supported (iptc_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                      iptc_data[i]);
-              gexiv2_metadata_set_tag_string (new_g2metadata, iptc_data[i],
-                                              value);
-              g_free (value);
+              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                            new_g2metadata,
+                                            iptc_data[i]);
             }
         }
 
@@ -618,6 +642,14 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
         }
 
       g_object_unref (thumb_pixbuf);
+    }
+
+  if (flags & GIMP_METADATA_SAVE_COLOR_PROFILE)
+    {
+      /* nothing to do, but if we ever need to modify metadata based
+       * on the exported color profile, this is probably the place to
+       * add it
+       */
     }
 
   success = gimp_metadata_save_to_file (new_metadata, file, error);

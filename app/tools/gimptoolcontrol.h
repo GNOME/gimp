@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOOL_CONTROL_H__
@@ -47,8 +47,11 @@ struct _GimpToolControl
   gboolean             scroll_lock;        /*  allow scrolling or not          */
   gboolean             handle_empty_image; /*  invoke the tool on images       *
                                             *  without active drawable         */
-  GimpDirtyMask        dirty_mask;         /*  if preserve is FALSE, cancel    *
+  GimpDirtyMask        dirty_mask;         /*  if preserve is FALSE, stop      *
                                             *  the tool on these events        */
+  GimpToolAction       dirty_action;       /*  use this action to stop the     *
+                                            *  tool when one of the dirty      *
+                                            *  events occurs                   */
   GimpMotionMode       motion_mode;        /*  how to process motion events    *
                                             *  before they go to the tool      */
   gboolean             auto_snap_to;       /*  snap to guides automatically    */
@@ -124,6 +127,10 @@ gboolean       gimp_tool_control_get_handle_empty_image
 void           gimp_tool_control_set_dirty_mask     (GimpToolControl *control,
                                                      GimpDirtyMask    dirty_mask);
 GimpDirtyMask  gimp_tool_control_get_dirty_mask     (GimpToolControl *control);
+
+void           gimp_tool_control_set_dirty_action   (GimpToolControl *control,
+                                                     GimpToolAction   action);
+GimpToolAction gimp_tool_control_get_dirty_action   (GimpToolControl *control);
 
 void           gimp_tool_control_set_motion_mode    (GimpToolControl *control,
                                                      GimpMotionMode   motion_mode);

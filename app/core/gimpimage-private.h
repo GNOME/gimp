@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_PRIVATE_H__
@@ -29,8 +29,6 @@ struct _GimpImageFlushAccumulator
   gboolean preview_invalidated;
 };
 
-
-typedef struct _GimpImagePrivate GimpImagePrivate;
 
 struct _GimpImagePrivate
 {
@@ -57,8 +55,9 @@ struct _GimpImagePrivate
   const Babl        *babl_palette_rgb;      /*  palette's RGB Babl format    */
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */
 
-  gboolean           is_color_managed;      /*  is this image color managed  */
   GimpColorProfile  *color_profile;         /*  image's color profile        */
+  const Babl        *layer_space;           /*  image's Babl layer space     */
+  GimpColorProfile  *hidden_profile;        /*  hidden by "use sRGB"         */
 
   /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
   gboolean            color_transforms_created;
@@ -131,10 +130,7 @@ struct _GimpImagePrivate
   GimpImageFlushAccumulator  flush_accum;
 };
 
-#define GIMP_IMAGE_GET_PRIVATE(image) \
-        G_TYPE_INSTANCE_GET_PRIVATE (image, \
-                                     GIMP_TYPE_IMAGE, \
-                                     GimpImagePrivate)
+#define GIMP_IMAGE_GET_PRIVATE(image) (((GimpImage *) (image))->priv)
 
 void   gimp_image_take_mask (GimpImage   *image,
                              GimpChannel *mask);

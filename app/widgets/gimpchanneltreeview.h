@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CHANNEL_TREE_VIEW_H__
@@ -33,14 +33,14 @@
 #define GIMP_CHANNEL_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHANNEL_TREE_VIEW, GimpChannelTreeViewClass))
 
 
-typedef struct _GimpChannelTreeViewClass  GimpChannelTreeViewClass;
-typedef struct _GimpChannelTreeViewPriv   GimpChannelTreeViewPriv;
+typedef struct _GimpChannelTreeViewClass   GimpChannelTreeViewClass;
+typedef struct _GimpChannelTreeViewPrivate GimpChannelTreeViewPrivate;
 
 struct _GimpChannelTreeView
 {
-  GimpDrawableTreeView     parent_instance;
+  GimpDrawableTreeView        parent_instance;
 
-  GimpChannelTreeViewPriv *priv;
+  GimpChannelTreeViewPrivate *priv;
 };
 
 struct _GimpChannelTreeViewClass

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,9 +47,7 @@ struct _GimpCanvasProxyGroupPrivate
 };
 
 #define GET_PRIVATE(proxy_group) \
-        G_TYPE_INSTANCE_GET_PRIVATE (proxy_group, \
-                                     GIMP_TYPE_CANVAS_PROXY_GROUP, \
-                                     GimpCanvasProxyGroupPrivate)
+        ((GimpCanvasProxyGroupPrivate *) gimp_canvas_proxy_group_get_instance_private ((GimpCanvasProxyGroup *) (proxy_group)))
 
 
 /*  local function prototypes  */
@@ -65,8 +63,8 @@ static void        gimp_canvas_proxy_group_get_property (GObject          *objec
                                                          GParamSpec       *pspec);
 
 
-G_DEFINE_TYPE (GimpCanvasProxyGroup, gimp_canvas_proxy_group,
-               GIMP_TYPE_CANVAS_GROUP)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasProxyGroup, gimp_canvas_proxy_group,
+                            GIMP_TYPE_CANVAS_GROUP)
 
 #define parent_class gimp_canvas_proxy_group_parent_class
 
@@ -79,8 +77,6 @@ gimp_canvas_proxy_group_class_init (GimpCanvasProxyGroupClass *klass)
   object_class->finalize     = gimp_canvas_proxy_group_finalize;
   object_class->set_property = gimp_canvas_proxy_group_set_property;
   object_class->get_property = gimp_canvas_proxy_group_get_property;
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasProxyGroupPrivate));
 }
 
 static void

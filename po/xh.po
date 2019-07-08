@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp part1\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2012-05-06 03:28+0200\n"
 "PO-Revision-Date: 2005-03-22 16:29+0200\n"
 "Last-Translator: Canonical Ltd <translations@canonical.com>\n"
@@ -58,7 +58,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 
 #: ../app/app.c:224

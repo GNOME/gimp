@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -52,6 +52,7 @@ gimp_tool_control_init (GimpToolControl *control)
   control->handle_empty_image     = FALSE;
 
   control->dirty_mask             = GIMP_DIRTY_NONE;
+  control->dirty_action           = GIMP_TOOL_ACTION_HALT;
   control->motion_mode            = GIMP_MOTION_MODE_COMPRESS;
 
   control->auto_snap_to           = TRUE;
@@ -245,6 +246,23 @@ gimp_tool_control_get_dirty_mask (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_DIRTY_NONE);
 
   return control->dirty_mask;
+}
+
+void
+gimp_tool_control_set_dirty_action (GimpToolControl *control,
+                                    GimpToolAction  action)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->dirty_action = action;
+}
+
+GimpToolAction
+gimp_tool_control_get_dirty_action (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), GIMP_TOOL_ACTION_HALT);
+
+  return control->dirty_action;
 }
 
 void

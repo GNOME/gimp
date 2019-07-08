@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GUI_CONFIG_H__
@@ -41,6 +41,7 @@ struct _GimpGuiConfig
 {
   GimpDisplayConfig    parent_instance;
 
+  gboolean             edit_non_visible;
   gboolean             move_tool_changes_active;
   gint                 filter_tool_max_recent;
   gboolean             filter_tool_use_last_settings;
@@ -66,6 +67,7 @@ struct _GimpGuiConfig
   gboolean             prefer_dark_theme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
+  gboolean             prefer_symbolic_icons;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;
@@ -84,6 +86,7 @@ struct _GimpGuiConfig
   /* saved in sessionrc */
   gboolean             hide_docks;
   gboolean             single_window_mode;
+  gboolean             show_tabs;
   GimpPosition         tabs_position;
   gint                 last_tip_shown;
 };
@@ -91,11 +94,10 @@ struct _GimpGuiConfig
 struct _GimpGuiConfigClass
 {
   GimpDisplayConfigClass  parent_class;
-
-  void (* size_changed) (GimpGuiConfig *config);
 };
 
 
 GType  gimp_gui_config_get_type (void) G_GNUC_CONST;
+
 
 #endif /* GIMP_GUI_CONFIG_H__ */

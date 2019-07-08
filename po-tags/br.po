@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp Tags\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2009-07-28 04:27+0000\n"
 "PO-Revision-Date: 2009-07-29 05:00+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"

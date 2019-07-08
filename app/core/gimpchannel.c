@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,10 +32,12 @@
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 #include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
@@ -58,6 +60,8 @@
 
 #include "gimp-intl.h"
 
+
+#define RGBA_EPSILON 1e-6
 
 enum
 {
@@ -148,6 +152,7 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
 static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpImage         *dest_image,
                                               const Babl        *new_format,
+                                              GimpColorProfile  *src_profile,
                                               GimpColorProfile  *dest_profile,
                                               GeglDitherMethod   layer_dither_type,
                                               GeglDitherMethod   mask_dither_type,
@@ -156,8 +161,6 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (GimpDrawable       *drawable,
                                                 gboolean           *active);
-static GimpComponentMask
-                  gimp_channel_get_active_mask (GimpDrawable      *drawable);
 
 static void      gimp_channel_set_buffer     (GimpDrawable        *drawable,
                                               gboolean             push_undo,
@@ -183,6 +186,7 @@ static gboolean   gimp_channel_real_is_empty (GimpChannel         *channel);
 static void       gimp_channel_real_feather  (GimpChannel         *channel,
                                               gdouble              radius_x,
                                               gdouble              radius_y,
+                                              gboolean             edge_lock,
                                               gboolean             push_undo);
 static void       gimp_channel_real_sharpen  (GimpChannel         *channel,
                                               gboolean             push_undo);
@@ -290,7 +294,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->convert_type          = gimp_channel_convert_type;
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
-  drawable_class->get_active_mask       = gimp_channel_get_active_mask;
   drawable_class->set_buffer            = gimp_channel_set_buffer;
 
   klass->boundary       = gimp_channel_real_boundary;
@@ -348,17 +351,8 @@ gimp_channel_finalize (GObject *object)
 {
   GimpChannel *channel = GIMP_CHANNEL (object);
 
-  if (channel->segs_in)
-    {
-      g_free (channel->segs_in);
-      channel->segs_in = NULL;
-    }
-
-  if (channel->segs_out)
-    {
-      g_free (channel->segs_out);
-      channel->segs_out = NULL;
-    }
+  g_clear_pointer (&channel->segs_in,  g_free);
+  g_clear_pointer (&channel->segs_out, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -406,17 +400,18 @@ gimp_channel_get_node (GimpFilter *filter)
 
   g_warn_if_fail (channel->color_node == NULL);
 
-  if (gimp_drawable_get_linear (drawable))
-    color_format = babl_format ("RGBA float");
-  else
-    color_format = babl_format ("R'G'B'A float");
+  color_format =
+    gimp_babl_format (GIMP_RGB,
+                      gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                           gimp_drawable_get_trc (drawable)),
+                      TRUE, NULL);
 
   channel->color_node = gegl_node_new_child (node,
                                              "operation", "gegl:color",
                                              "format",    color_format,
                                              NULL);
   gimp_gegl_node_set_color (channel->color_node,
-                            &channel->color);
+                            &channel->color, NULL);
 
   g_warn_if_fail (channel->mask_node == NULL);
 
@@ -582,7 +577,7 @@ gimp_channel_convert (GimpItem  *item,
                                   GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
                                   gimp_drawable_has_alpha (drawable),
-                                  NULL,
+                                  NULL, NULL,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
     }
@@ -605,13 +600,14 @@ gimp_channel_convert (GimpItem  *item,
 
       gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
                                NULL, NULL,
-                               new_buffer, &background,
+                               new_buffer, &background, NULL,
                                GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
 
       gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
                                      new_buffer,
                                      gimp_item_get_offset_x (item),
-                                     gimp_item_get_offset_y (item));
+                                     gimp_item_get_offset_y (item),
+                                     TRUE);
       g_object_unref (new_buffer);
     }
 
@@ -741,7 +737,8 @@ gimp_channel_scale (GimpItem              *item,
       gimp_drawable_set_buffer_full (drawable,
                                      gimp_item_is_attached (item), NULL,
                                      new_buffer,
-                                     new_offset_x, new_offset_y);
+                                     new_offset_x, new_offset_y,
+                                     TRUE);
       g_object_unref (new_buffer);
 
       gimp_channel_clear (GIMP_CHANNEL (item), NULL, FALSE);
@@ -950,6 +947,7 @@ static void
 gimp_channel_convert_type (GimpDrawable     *drawable,
                            GimpImage        *dest_image,
                            const Babl       *new_format,
+                           GimpColorProfile *src_profile,
                            GimpColorProfile *dest_profile,
                            GeglDitherMethod  layer_dither_type,
                            GeglDitherMethod  mask_dither_type,
@@ -1004,13 +1002,6 @@ gimp_channel_get_active_components (GimpDrawable *drawable,
   active[ALPHA_G] = FALSE;
 }
 
-static GimpComponentMask
-gimp_channel_get_active_mask (GimpDrawable *drawable)
-{
-  /*  Return all, because that skips the component mask op when painting  */
-  return GIMP_COMPONENT_MASK_ALL;
-}
-
 static void
 gimp_channel_set_buffer (GimpDrawable *drawable,
                          gboolean      push_undo,
@@ -1040,12 +1031,11 @@ gimp_channel_set_buffer (GimpDrawable *drawable,
 
   if (gimp_filter_peek_node (GIMP_FILTER (channel)))
     {
-      const Babl *color_format;
-
-      if (gimp_drawable_get_linear (drawable))
-        color_format = babl_format ("RGBA float");
-      else
-        color_format = babl_format ("R'G'B'A float");
+      const Babl *color_format =
+        gimp_babl_format (GIMP_RGB,
+                          gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                               gimp_drawable_get_trc (drawable)),
+                          TRUE, NULL);
 
       gegl_node_set (channel->color_node,
                      "format", color_format,
@@ -1168,14 +1158,10 @@ gimp_channel_real_is_empty (GimpChannel *channel)
     return FALSE;
 
   /*  The mask is empty, meaning we can set the bounds as known  */
-  if (channel->segs_in)
-    g_free (channel->segs_in);
-  if (channel->segs_out)
-    g_free (channel->segs_out);
+  g_clear_pointer (&channel->segs_in,  g_free);
+  g_clear_pointer (&channel->segs_out, g_free);
 
   channel->empty          = TRUE;
-  channel->segs_in        = NULL;
-  channel->segs_out       = NULL;
   channel->num_segs_in    = 0;
   channel->num_segs_out   = 0;
   channel->bounds_known   = TRUE;
@@ -1192,6 +1178,7 @@ static void
 gimp_channel_real_feather (GimpChannel *channel,
                            gdouble      radius_x,
                            gdouble      radius_y,
+                           gboolean     edge_lock,
                            gboolean     push_undo)
 {
   gint x1, y1, x2, y2;
@@ -1223,7 +1210,8 @@ gimp_channel_real_feather (GimpChannel *channel,
                            gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                            GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                            radius_x,
-                           radius_y);
+                           radius_y,
+                           edge_lock);
 
   gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
@@ -1251,6 +1239,13 @@ gimp_channel_real_clear (GimpChannel *channel,
                          const gchar *undo_desc,
                          gboolean     push_undo)
 {
+  GeglBuffer    *buffer;
+  GeglRectangle  rect;
+  GeglRectangle  aligned_rect;
+
+  if (channel->bounds_known && channel->empty)
+    return;
+
   if (push_undo)
     {
       if (! undo_desc)
@@ -1259,18 +1254,26 @@ gimp_channel_real_clear (GimpChannel *channel,
       gimp_channel_push_undo (channel, undo_desc);
     }
 
-  if (channel->bounds_known && ! channel->empty)
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+
+  if (channel->bounds_known)
     {
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         GEGL_RECTANGLE (channel->x1, channel->y1,
-                                         channel->x2 - channel->x1,
-                                         channel->y2 - channel->y1));
+      rect.x      = channel->x1;
+      rect.y      = channel->y1;
+      rect.width  = channel->x2 - channel->x1;
+      rect.height = channel->y2 - channel->y1;
     }
   else
     {
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         NULL);
+      rect.x      = 0;
+      rect.y      = 0;
+      rect.width  = gimp_item_get_width  (GIMP_ITEM (channel));
+      rect.height = gimp_item_get_height (GIMP_ITEM (channel));
     }
+
+  gimp_gegl_rectangle_align_to_tile_grid (&aligned_rect, &rect, buffer);
+
+  gegl_buffer_clear (buffer, &aligned_rect);
 
   /*  we know the bounds  */
   channel->bounds_known = TRUE;
@@ -1280,7 +1283,8 @@ gimp_channel_real_clear (GimpChannel *channel,
   channel->x2           = gimp_item_get_width  (GIMP_ITEM (channel));
   channel->y2           = gimp_item_get_height (GIMP_ITEM (channel));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+                        rect.x, rect.y, rect.width, rect.height);
 }
 
 static void
@@ -1693,7 +1697,7 @@ gimp_channel_set_color (GimpChannel   *channel,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgba_distance (&channel->color, color) > 0.0001)
+  if (gimp_rgba_distance (&channel->color, color) > RGBA_EPSILON)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
         {
@@ -1708,7 +1712,7 @@ gimp_channel_set_color (GimpChannel   *channel,
       if (gimp_filter_peek_node (GIMP_FILTER (channel)))
         {
           gimp_gegl_node_set_color (channel->color_node,
-                                    &channel->color);
+                                    &channel->color, NULL);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
@@ -1759,7 +1763,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
       if (gimp_filter_peek_node (GIMP_FILTER (channel)))
         {
           gimp_gegl_node_set_color (channel->color_node,
-                                    &channel->color);
+                                    &channel->color, NULL);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
@@ -1889,6 +1893,7 @@ void
 gimp_channel_feather (GimpChannel *channel,
                       gdouble      radius_x,
                       gdouble      radius_y,
+                      gboolean     edge_lock,
                       gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -1897,7 +1902,7 @@ gimp_channel_feather (GimpChannel *channel,
     push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->feather (channel, radius_x, radius_y,
-                                             push_undo);
+                                             edge_lock, push_undo);
 }
 
 void

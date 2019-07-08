@@ -11,7 +11,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -85,7 +85,7 @@ _gimp_pick_button_kwin_pick (GimpPickButton *button)
       GimpRGB rgb;
       guint32 color;
 
-      g_variant_get (retval, "(u)", &color);
+      g_variant_get (retval, "((u))", &color);
       g_variant_unref (retval);
       /* Returned value is ARGB stored in uint32. */
       gimp_rgba_set_uchar (&rgb,

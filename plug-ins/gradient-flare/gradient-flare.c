@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * A fair proportion of this code was taken from GIMP & Script-fu
@@ -280,11 +280,11 @@ typedef struct
 
 typedef struct
 {
-  gint is_color;
-  gint has_alpha;
-  gint x, y, w, h;          /* mask bounds */
-  gint tile_width, tile_height;
-  /* these values don't belong to drawable, though. */
+  const Babl *format;
+  gint        bpp;
+  gint        is_color;
+  gint        has_alpha;
+  gint        x, y, w, h; /* mask bounds */
 } DrawableInfo;
 
 typedef struct _GradientMenu GradientMenu;
@@ -555,10 +555,8 @@ static const gchar *gflare_menu_modes[] =
 };
 
 static gint32              image_ID;
-static GimpDrawable       *drawable;
+static gint32              drawable_ID;
 static DrawableInfo        dinfo;
-static GimpPixelFetcher   *tk_read;
-static GimpPixelFetcher   *tk_write;
 static GFlareDialog       *dlg = NULL;
 static GFlareEditor       *ed = NULL;
 static GList              *gflares_list = NULL;
@@ -589,8 +587,10 @@ static clock_t  get_values_external_clock = 0;
 
 static void plugin_do                   (void);
 
-static void plugin_do_non_asupsample    (void);
-static void plugin_do_asupsample        (void);
+static void plugin_do_non_asupsample    (GeglBuffer   *src_buffer,
+                                         GeglBuffer   *dest_buffer);
+static void plugin_do_asupsample        (GeglBuffer   *src_buffer,
+                                         GeglBuffer   *dest_buffer);
 static void plugin_render_func          (gdouble       x,
                                          gdouble       y,
                                          GimpRGB      *color,
@@ -831,10 +831,8 @@ plugin_run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gchar             *path;
 
-  /* Initialize */
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -842,21 +840,33 @@ plugin_run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /*
-   *    Get the specified drawable and its info (global variable)
-   */
+  run_mode    = param[0].data.d_int32;
+  image_ID    = param[1].data.d_image;
+  drawable_ID = param[2].data.d_drawable;
 
-  image_ID = param[1].data.d_image;
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-  dinfo.is_color  = gimp_drawable_is_rgb (drawable->drawable_id);
-  dinfo.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  dinfo.is_color  = gimp_drawable_is_rgb (drawable_ID);
+  dinfo.has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (dinfo.is_color)
+    {
+      if (dinfo.has_alpha)
+        dinfo.format = babl_format ("R'G'B'A u8");
+      else
+        dinfo.format = babl_format ("R'G'B' u8");
+    }
+  else
+    {
+      if (dinfo.has_alpha)
+        dinfo.format = babl_format ("Y'A u8");
+      else
+        dinfo.format = babl_format ("Y u8");
+    }
+
+  dinfo.bpp = babl_format_get_bytes_per_pixel (dinfo.format);
+
+  if (! gimp_drawable_mask_intersect (drawable_ID,
                                       &dinfo.x, &dinfo.y, &dinfo.w, &dinfo.h))
     return;
-
-  dinfo.tile_width = gimp_tile_width ();
-  dinfo.tile_height = gimp_tile_height ();
 
   /*
    *    Start gradient caching
@@ -894,9 +904,6 @@ plugin_run (const gchar      *name,
 
   gflares_list_load_all ();
 
-  gimp_tile_cache_ntiles (drawable->width / gimp_tile_width () + 2);
-
-
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -906,10 +913,7 @@ plugin_run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! dlg_run ())
-        {
-          gimp_drawable_detach (drawable);
-          return;
-        }
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -948,8 +952,8 @@ plugin_run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-          gimp_drawable_is_gray (drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable_ID) ||
+          gimp_drawable_is_gray (drawable_ID))
         {
           gimp_progress_init (_("Gradient Flare"));
           plugin_do ();
@@ -976,13 +980,14 @@ plugin_run (const gchar      *name,
    *    Deinitialization
    */
   gradient_free ();
-  gimp_drawable_detach (drawable);
 }
 
 static void
 plugin_do (void)
 {
-  GFlare *gflare;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  GFlare     *gflare;
 
   gflare = gflares_list_lookup (pvals.gflare_name);
   if (gflare == NULL)
@@ -999,53 +1004,69 @@ plugin_do (void)
                     pvals.vangle, pvals.vlength);
   while (calc_init_progress ()) ;
 
+  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+
   /* Render it ! */
   if (pvals.use_asupsample)
-    plugin_do_asupsample ();
+    plugin_do_asupsample (src_buffer, dest_buffer);
   else
-    plugin_do_non_asupsample ();
+    plugin_do_non_asupsample (src_buffer, dest_buffer);
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   gimp_progress_update (1.0);
+
   /* Clean up */
   calc_deinit ();
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, dinfo.x, dinfo.y,
-                        dinfo.w, dinfo.h);
+
+  gimp_drawable_merge_shadow (drawable_ID, TRUE);
+  gimp_drawable_update (drawable_ID, dinfo.x, dinfo.y, dinfo.w, dinfo.h);
 }
 
 /* these routines should be almost rewritten anyway */
 
 static void
-plugin_do_non_asupsample (void)
+plugin_do_non_asupsample (GeglBuffer   *src_buffer,
+                          GeglBuffer   *dest_buffer)
 {
-  GimpPixelRgn  src_rgn, dest_rgn;
-  gpointer      pr;
-  gint          progress, max_progress;
-
+  GeglBufferIterator *iter;
+  gint                progress;
+  gint                max_progress;
 
   progress = 0;
   max_progress = dinfo.w * dinfo.h;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       dinfo.x, dinfo.y, dinfo.w, dinfo.h, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       dinfo.x, dinfo.y, dinfo.w, dinfo.h, TRUE, TRUE);
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   GEGL_RECTANGLE (dinfo.x, dinfo.y,
+                                                   dinfo.w, dinfo.h), 0,
+                                   dinfo.format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  gegl_buffer_iterator_add (iter, dest_buffer,
+                            GEGL_RECTANGLE (dinfo.x, dinfo.y,
+                                            dinfo.w, dinfo.h), 0,
+                            dinfo.format,
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src_row  = src_rgn.data;
-      guchar       *dest_row = dest_rgn.data;
+      const guchar *src_row  = iter->items[0].data;
+      guchar       *dest_row = iter->items[1].data;
       gint          row, y;
 
-      for (row = 0, y = src_rgn.y; row < src_rgn.h; row++, y++)
+      for (row = 0, y = iter->items[0].roi.y;
+           row < iter->items[0].roi.height;
+           row++, y++)
         {
           const guchar *src  = src_row;
           guchar       *dest = dest_row;
           gint          col, x;
 
-          for (col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
+          for (col = 0, x = iter->items[0].roi.x;
+               col < iter->items[0].roi.width;
+               col++, x++)
             {
               guchar  src_pix[4];
               guchar  dest_pix[4];
@@ -1054,7 +1075,7 @@ plugin_do_non_asupsample (void)
               for (b = 0; b < 3; b++)
                 src_pix[b] = dinfo.is_color ? src[b] : src[0];
 
-              src_pix[3] = dinfo.has_alpha ? src[src_rgn.bpp - 1] : OPAQUE;
+              src_pix[3] = dinfo.has_alpha ? src[dinfo.bpp - 1] : OPAQUE;
 
               calc_gflare_pix (dest_pix, x, y, src_pix);
 
@@ -1069,43 +1090,36 @@ plugin_do_non_asupsample (void)
                 }
 
               if (dinfo.has_alpha)
-                dest[src_rgn.bpp - 1] = dest_pix[3];
+                dest[dinfo.bpp - 1] = dest_pix[3];
 
-              src  += src_rgn.bpp;
-              dest += dest_rgn.bpp;
+              src  += dinfo.bpp;
+              dest += dinfo.bpp;
             }
 
-          src_row  += src_rgn.rowstride;
-          dest_row += dest_rgn.rowstride;
+          src_row  += dinfo.bpp * iter->items[0].roi.width;
+          dest_row += dinfo.bpp * iter->items[1].roi.width;
         }
 
       /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
+      progress += iter->items[0].roi.width * iter->items[0].roi.height;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
 }
 
 static void
-plugin_do_asupsample (void)
+plugin_do_asupsample (GeglBuffer   *src_buffer,
+                      GeglBuffer   *dest_buffer)
 {
-  tk_read  = gimp_pixel_fetcher_new (drawable, FALSE);
-  gimp_pixel_fetcher_set_edge_mode (tk_read, GIMP_PIXEL_FETCHER_EDGE_BLACK);
-
-  tk_write = gimp_pixel_fetcher_new (drawable, TRUE);
-
   gimp_adaptive_supersample_area (dinfo.x, dinfo.y,
                                   dinfo.x + dinfo.w - 1, dinfo.y + dinfo.h - 1,
                                   pvals.asupsample_max_depth,
                                   pvals.asupsample_threshold,
                                   plugin_render_func,
-                                  NULL,
+                                  src_buffer,
                                   plugin_put_pixel_func,
-                                  NULL,
+                                  dest_buffer,
                                   plugin_progress_func,
                                   NULL);
-
-  gimp_pixel_fetcher_destroy (tk_write);
-  gimp_pixel_fetcher_destroy (tk_read);
 }
 
 /*
@@ -1121,22 +1135,24 @@ plugin_render_func (gdouble   x,
                     GimpRGB  *color,
                     gpointer  data)
 {
-  guchar        src_pix[4];
-  guchar        flare_pix[4];
-  guchar        src[4];
-  gint          b;
-  gint          ix, iy;
+  GeglBuffer *src_buffer = data;
+  guchar      src_pix[4];
+  guchar      flare_pix[4];
+  guchar      src[4];
+  gint        b;
+  gint        ix, iy;
 
   /* translate (0.5, 0.5) before convert to `int' so that it can surely
      point the center of pixel */
   ix = floor (x + 0.5);
   iy = floor (y + 0.5);
 
-  gimp_pixel_fetcher_get_pixel (tk_read, ix, iy, src);
+  gegl_buffer_sample (src_buffer, ix, iy, NULL, src, dinfo.format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   for (b = 0; b < 3; b++)
     src_pix[b] = dinfo.is_color ? src[b] : src[0];
-  src_pix[3] = dinfo.has_alpha ? src[drawable->bpp - 1] : OPAQUE;
+  src_pix[3] = dinfo.has_alpha ? src[dinfo.bpp - 1] : OPAQUE;
 
   calc_gflare_pix (flare_pix, x, y, src_pix);
 
@@ -1152,7 +1168,8 @@ plugin_put_pixel_func (gint      ix,
                        GimpRGB  *color,
                        gpointer  data)
 {
-  guchar dest[4];
+  GeglBuffer *dest_buffer = data;
+  guchar      dest[4];
 
   if (dinfo.is_color)
     {
@@ -1166,9 +1183,10 @@ plugin_put_pixel_func (gint      ix,
     }
 
   if (dinfo.has_alpha)
-    dest[drawable->bpp - 1] = color->a * 255;
+    dest[dinfo.bpp - 1] = color->a * 255;
 
-  gimp_pixel_fetcher_put_pixel (tk_write, ix, iy, dest);
+  gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (ix, iy, 1, 1), 0,
+                   dinfo.format, dest, GEGL_AUTO_ROWSTRIDE);
 }
 
 static void
@@ -1558,8 +1576,8 @@ static void
 gflare_name_copy (gchar       *dest,
                   const gchar *src)
 {
-  strncpy (dest, src, GFLARE_NAME_MAX);
-  dest[GFLARE_NAME_MAX-1] = '\0';
+  strncpy (dest, src, GFLARE_NAME_MAX - 1);
+  dest[GFLARE_NAME_MAX - 1] = '\0';
 }
 
 /*************************************************************************/
@@ -1634,26 +1652,67 @@ gflares_list_remove (GFlare *gflare)
  * Load all gflares, which are founded in gflare-path-list, into gflares_list.
  */
 static void
-gflares_list_load_one (const GimpDatafileData *file_data,
-                       gpointer                user_data)
-{
-  GFlare *gflare;
-
-  gflare = gflare_load (file_data->filename, file_data->basename);
-
-  if (gflare)
-    gflares_list_insert (gflare);
-}
-
-static void
 gflares_list_load_all (void)
 {
+  GList *path;
+  GList *list;
+
   /*  Make sure to clear any existing gflares  */
   gflares_list_free_all ();
 
-  gimp_datafiles_read_directories (gflare_path, G_FILE_TEST_EXISTS,
-                                   gflares_list_load_one,
-                                   NULL);
+  path = gimp_config_path_expand_to_files (gflare_path, NULL);
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      GFileEnumerator *enumerator;
+
+      enumerator = g_file_enumerate_children (list->data,
+                                              G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                              G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                              G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                              G_FILE_QUERY_INFO_NONE,
+                                              NULL, NULL);
+
+      if (enumerator)
+        {
+          GFileInfo *info;
+
+          while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+            {
+              GFileType file_type = g_file_info_get_file_type (info);
+
+              if (file_type == G_FILE_TYPE_REGULAR &&
+                  ! g_file_info_get_is_hidden (info))
+                {
+                  GFlare *gflare;
+                  GFile  *child;
+                  gchar  *filename;
+                  gchar  *basename;
+
+                  child = g_file_enumerator_get_child (enumerator, info);
+
+                  filename = g_file_get_path (child);
+                  basename = g_file_get_basename (child);
+
+                  gflare = gflare_load (filename, basename);
+
+                  g_free (filename);
+                  g_free (basename);
+
+                  if (gflare)
+                    gflares_list_insert (gflare);
+
+                  g_object_unref (child);
+                }
+
+              g_object_unref (info);
+            }
+
+          g_object_unref (enumerator);
+        }
+    }
+
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 }
 
 static void
@@ -1856,19 +1915,24 @@ calc_sample_one_gradient (void)
                 {
                   for (j = 0; j < GRADIENT_RESOLUTION; j++)
                     {
-                      gint      r, g, b;
+                      GimpRGB rgb;
+                      GimpHSV hsv;
 
-                      r = gradient[j*4];
-                      g = gradient[j*4+1];
-                      b = gradient[j*4+2];
+                      rgb.r = (gdouble) gradient[j*4]   / 255.0;
+                      rgb.g = (gdouble) gradient[j*4+1] / 255.0;
+                      rgb.b = (gdouble) gradient[j*4+2] / 255.0;
 
-                      gimp_rgb_to_hsv_int (&r, &g, &b);
-                      r = (r + hue) % 256;
-                      gimp_hsv_to_rgb_int (&r, &g, &b);
+                      gimp_rgb_to_hsv (&rgb, &hsv);
 
-                      gradient[j*4] = r;
-                      gradient[j*4+1] = g;
-                      gradient[j*4+2] = b;
+                      hsv.h = (hsv.h + ((gdouble) hue / 255.0));
+                      if (hsv.h > 1.0)
+                        hsv.h -= 1.0;
+
+                      gimp_hsv_to_rgb (&hsv, &rgb);
+
+                      gradient[j*4]   = ROUND (rgb.r * 255.0);
+                      gradient[j*4+1] = ROUND (rgb.g * 255.0);
+                      gradient[j*4+2] = ROUND (rgb.b * 255.0);
                     }
                 }
             }
@@ -2323,14 +2387,14 @@ calc_overlay (guchar *dest, guchar *src1, guchar *src2)
 static gboolean
 dlg_run (void)
 {
-  GtkWidget *shell;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *abox;
-  GtkWidget *button;
-  GtkWidget *notebook;
-  gboolean   run = FALSE;
+  GeglBuffer *src_buffer;
+  GtkWidget  *shell;
+  GtkWidget  *hbox;
+  GtkWidget  *vbox;
+  GtkWidget  *frame;
+  GtkWidget  *button;
+  GtkWidget  *notebook;
+  gboolean    run = FALSE;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -2385,18 +2449,17 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  src_buffer = gimp_drawable_get_buffer (drawable_ID);
 
   dlg->preview = preview_new (DLG_PREVIEW_WIDTH, DLG_PREVIEW_HEIGHT,
                               dlg_preview_init_func, NULL,
-                              dlg_preview_render_func, NULL,
+                              dlg_preview_render_func, src_buffer,
                               dlg_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (dlg->preview->widget), DLG_PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), dlg->preview->widget);
@@ -2446,6 +2509,8 @@ dlg_run (void)
       run = TRUE;
     }
 
+  g_object_unref (src_buffer);
+
   gtk_widget_destroy (shell);
 
   return run;
@@ -2482,56 +2547,61 @@ dlg_setup_gflare (void)
 void
 dlg_preview_calc_window (void)
 {
+  gint     width  = gimp_drawable_width  (drawable_ID);
+  gint     height = gimp_drawable_height (drawable_ID);
   gint     is_wide;
   gdouble  offx, offy;
 
-  is_wide = ((double) DLG_PREVIEW_HEIGHT * drawable->width
-             >= (double) DLG_PREVIEW_WIDTH * drawable->height);
+  is_wide = ((double) DLG_PREVIEW_HEIGHT * width >=
+             (double) DLG_PREVIEW_WIDTH  * height);
+
   if (is_wide)
     {
-      offy = ((double) drawable->width * DLG_PREVIEW_HEIGHT / DLG_PREVIEW_WIDTH) / 2.0;
+      offy = ((double) width * DLG_PREVIEW_HEIGHT / DLG_PREVIEW_WIDTH) / 2.0;
 
       dlg->pwin.x0 = 0;
-      dlg->pwin.x1 = drawable->width;
-      dlg->pwin.y0 = drawable->height / 2.0 - offy;
-      dlg->pwin.y1 = drawable->height / 2.0 + offy;
+      dlg->pwin.x1 = width;
+      dlg->pwin.y0 = height / 2.0 - offy;
+      dlg->pwin.y1 = height / 2.0 + offy;
     }
   else
     {
-      offx = ((double) drawable->height * DLG_PREVIEW_WIDTH / DLG_PREVIEW_HEIGHT) / 2.0;
+      offx = ((double) height * DLG_PREVIEW_WIDTH / DLG_PREVIEW_HEIGHT) / 2.0;
 
-      dlg->pwin.x0 = drawable->width / 2.0 - offx;
-      dlg->pwin.x1 = drawable->width / 2.0 + offx;
+      dlg->pwin.x0 = width / 2.0 - offx;
+      dlg->pwin.x1 = width / 2.0 + offx;
       dlg->pwin.y0 = 0;
-      dlg->pwin.y1 = drawable->height;
+      dlg->pwin.y1 = height;
     }
 }
 
 void
 ed_preview_calc_window (void)
 {
+  gint     width  = gimp_drawable_width  (drawable_ID);
+  gint     height = gimp_drawable_height (drawable_ID);
   gint     is_wide;
   gdouble  offx, offy;
 
-  is_wide = ((double) DLG_PREVIEW_HEIGHT * drawable->width
-             >= (double) DLG_PREVIEW_WIDTH * drawable->height);
+  is_wide = ((double) DLG_PREVIEW_HEIGHT * width >=
+             (double) DLG_PREVIEW_WIDTH  * height);
+
   if (is_wide)
     {
-      offy = ((double) drawable->width * DLG_PREVIEW_HEIGHT / DLG_PREVIEW_WIDTH) / 2.0;
+      offy = ((double) width * DLG_PREVIEW_HEIGHT / DLG_PREVIEW_WIDTH) / 2.0;
 
       dlg->pwin.x0 = 0;
-      dlg->pwin.x1 = drawable->width;
-      dlg->pwin.y0 = drawable->height / 2.0 - offy;
-      dlg->pwin.y1 = drawable->height / 2.0 + offy;
+      dlg->pwin.x1 = width;
+      dlg->pwin.y0 = height / 2.0 - offy;
+      dlg->pwin.y1 = height / 2.0 + offy;
     }
   else
     {
-      offx = ((double) drawable->height * DLG_PREVIEW_WIDTH / DLG_PREVIEW_HEIGHT) / 2.0;
+      offx = ((double) height * DLG_PREVIEW_WIDTH / DLG_PREVIEW_HEIGHT) / 2.0;
 
-      dlg->pwin.x0 = drawable->width / 2.0 - offx;
-      dlg->pwin.x1 = drawable->width / 2.0 + offx;
+      dlg->pwin.x0 = width / 2.0 - offx;      dlg->pwin.x1 = width / 2.0 + offx;
       dlg->pwin.y0 = 0;
-      dlg->pwin.y1 = drawable->height;
+      dlg->pwin.y1 = height;
     }
 }
 
@@ -2625,33 +2695,36 @@ dlg_preview_render_func (Preview  *preview,
                          gint      y,
                          gpointer  data)
 {
-  GimpPixelRgn  srcPR;
-  gint          x;
-  gint          dx, dy;         /* drawable x, y */
-  guchar       *src_row, *src;
-  guchar        src_pix[4], dest_pix[4];
-  gint          b;
+  GeglBuffer *src_buffer = data;
+  gint        width      = gimp_drawable_width  (drawable_ID);
+  gint        height     = gimp_drawable_height (drawable_ID);
+  gint        x;
+  gint        dx, dy;         /* drawable x, y */
+  guchar     *src_row, *src;
+  guchar      src_pix[4], dest_pix[4];
+  gint        b;
 
   dy = (dlg->pwin.y0 +
         (gdouble) (dlg->pwin.y1 - dlg->pwin.y0) * y / DLG_PREVIEW_HEIGHT);
 
-  if (dy < 0 || dy >= drawable->height)
+  if (dy < 0 || dy >= height)
     {
       memset (dest, GRAY50, 3 * DLG_PREVIEW_WIDTH);
       return;
     }
 
-  src_row = g_new (guchar, drawable->bpp * drawable->width);
-  gimp_pixel_rgn_init (&srcPR, drawable,
-                       0, 0, drawable->width, drawable->height, FALSE, FALSE);
-  gimp_pixel_rgn_get_row (&srcPR, src_row, 0, dy, drawable->width);
+  src_row = g_new (guchar, dinfo.bpp * width);
+
+  gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, dy, width, 1), 1.0,
+                   dinfo.format, src_row,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   for (x = 0; x < DLG_PREVIEW_HEIGHT; x++)
     {
       dx = (dlg->pwin.x0 +
             (double) (dlg->pwin.x1 - dlg->pwin.x0) * x / DLG_PREVIEW_WIDTH);
 
-      if (dx < 0 || dx >= drawable->width)
+      if (dx < 0 || dx >= width)
         {
           for (b = 0; b < 3; b++)
             *dest++ = GRAY50;
@@ -2659,11 +2732,11 @@ dlg_preview_render_func (Preview  *preview,
         }
 
       /* Get drawable pix value */
-      src = &src_row[dx * drawable->bpp];
+      src = &src_row[dx * dinfo.bpp];
 
       for (b = 0; b < 3; b++)
         src_pix[b] = dinfo.is_color ? src[b] : src[0];
-      src_pix[3] = dinfo.has_alpha ? src[drawable->bpp-1] : OPAQUE;
+      src_pix[3] = dinfo.has_alpha ? src[dinfo.bpp - 1] : OPAQUE;
 
       /* Get GFlare pix value */
 
@@ -2723,11 +2796,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
                           _("_X:"), pvals.xcenter, xres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_width (drawable->drawable_id),
+                          0, gimp_drawable_width (drawable_ID),
 
                           _("_Y:"), pvals.ycenter, yres,
                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
-                          0, gimp_drawable_height (drawable->drawable_id));
+                          0, gimp_drawable_height (drawable_ID));
 
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 
@@ -2755,7 +2828,8 @@ dlg_make_page_settings (GFlareDialog *dlg,
 
   adj = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                               _("_Radius:"), SCALE_WIDTH, 6,
-                              pvals.radius, 0.0, drawable->width / 2,
+                              pvals.radius, 0.0,
+                              gimp_drawable_width (drawable_ID) / 2,
                               1.0, 10.0, 1,
                               FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
@@ -3299,7 +3373,6 @@ ed_run (GtkWindow            *parent,
   GtkWidget *shell;
   GtkWidget *hbox;
   GtkWidget *frame;
-  GtkWidget *abox;
   GtkWidget *notebook;
 
   if (!ed)
@@ -3352,13 +3425,10 @@ ed_run (GtkWindow            *parent,
    *    Preview
    */
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   ed->preview = preview_new (ED_PREVIEW_WIDTH, ED_PREVIEW_HEIGHT,
@@ -4106,7 +4176,10 @@ ed_preview_deinit_func (Preview *preview, gpointer data)
 }
 
 static void
-ed_preview_render_func (Preview *preview, guchar *buffer, gint y, gpointer data)
+ed_preview_render_func (Preview *preview,
+                        guchar  *buffer,
+                        gint     y,
+                        gpointer data)
 {
   switch (ed->cur_page)
     {
@@ -4633,8 +4706,8 @@ static void
 gradient_name_copy (gchar       *dest,
                     const gchar *src)
 {
-  strncpy (dest, src, GRADIENT_NAME_MAX);
-  dest[GRADIENT_NAME_MAX-1] = '\0';
+  strncpy (dest, src, GRADIENT_NAME_MAX - 1);
+  dest[GRADIENT_NAME_MAX - 1] = '\0';
 }
 
 /*
@@ -4989,6 +5062,7 @@ gradient_cache_lookup (const gchar *name,
         gradient_cache_zorch();
       ci = g_new (GradientCacheItem, 1);
       strncpy (ci->name, name, GRADIENT_NAME_MAX - 1);
+      ci->name[GRADIENT_NAME_MAX - 1] = '\0';
       ci->next = gradient_cache_head;
       ci->prev = NULL;
       if (gradient_cache_head)

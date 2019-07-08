@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,13 +47,13 @@ static const GimpActionEntry palette_editor_actions[] =
   { "palette-editor-edit-color", GIMP_ICON_EDIT,
     NC_("palette-editor-action", "_Edit Color..."), NULL,
     NC_("palette-editor-action", "Edit this entry"),
-    G_CALLBACK (palette_editor_edit_color_cmd_callback),
+    palette_editor_edit_color_cmd_callback,
     GIMP_HELP_PALETTE_EDITOR_EDIT },
 
   { "palette-editor-delete-color", GIMP_ICON_EDIT_DELETE,
     NC_("palette-editor-action", "_Delete Color"), NULL,
     NC_("palette-editor-action", "Delete this entry"),
-    G_CALLBACK (palette_editor_delete_color_cmd_callback),
+    palette_editor_delete_color_cmd_callback,
     GIMP_HELP_PALETTE_EDITOR_DELETE }
 };
 
@@ -61,7 +61,7 @@ static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 {
   { "palette-editor-edit-active", GIMP_ICON_LINKED,
     NC_("palette-editor-action", "Edit Active Palette"), NULL, NULL,
-    G_CALLBACK (data_editor_edit_active_cmd_callback),
+    data_editor_edit_active_cmd_callback,
     FALSE,
     GIMP_HELP_PALETTE_EDITOR_EDIT_ACTIVE }
 };
@@ -119,12 +119,12 @@ palette_editor_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "palette-editor-action",
                                       palette_editor_new_actions,
                                       G_N_ELEMENTS (palette_editor_new_actions),
-                                      G_CALLBACK (palette_editor_new_color_cmd_callback));
+                                      palette_editor_new_color_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       palette_editor_zoom_actions,
                                       G_N_ELEMENTS (palette_editor_zoom_actions),
-                                      G_CALLBACK (palette_editor_zoom_cmd_callback));
+                                      palette_editor_zoom_cmd_callback);
 }
 
 void

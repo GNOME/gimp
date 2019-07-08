@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -265,8 +265,8 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   editor->kerning_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
                                                    1.0, 10.0, 0.0);
-  editor->kerning_spinbutton = gtk_spin_button_new (editor->kerning_adjustment,
-                                                    1.0, 1);
+  editor->kerning_spinbutton =
+    gimp_spin_button_new (editor->kerning_adjustment, 1.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->kerning_spinbutton), 5);
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->kerning_spinbutton,
                     FALSE, FALSE, 0);
@@ -281,8 +281,8 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   editor->baseline_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
                                                     1.0, 10.0, 0.0);
-  editor->baseline_spinbutton = gtk_spin_button_new (editor->baseline_adjustment,
-                                                     1.0, 1);
+  editor->baseline_spinbutton =
+    gimp_spin_button_new (editor->baseline_adjustment, 1.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->baseline_spinbutton), 5);
   gtk_box_pack_end (GTK_BOX (editor->lower_hbox), editor->baseline_spinbutton,
                     FALSE, FALSE, 0);

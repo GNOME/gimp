@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,8 +31,11 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
+#include "core/gimp-utils.h"
 
 #include "gimppropwidgets.h"
 #include "gimptemplateeditor.h"
@@ -71,13 +74,12 @@ struct _GimpTemplateEditorPrivate
   GtkWidget     *more_label;
   GtkWidget     *resolution_se;
   GtkWidget     *chain_button;
+  GtkWidget     *precision_combo;
   GtkWidget     *profile_combo;
 };
 
 #define GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_TEMPLATE_EDITOR, \
-                                     GimpTemplateEditorPrivate)
+        ((GimpTemplateEditorPrivate *) gimp_template_editor_get_instance_private ((GimpTemplateEditor *) (editor)))
 
 
 static void    gimp_template_editor_constructed    (GObject            *object);
@@ -100,7 +102,8 @@ static void gimp_template_editor_template_notify   (GimpTemplate       *template
                                                     GimpTemplateEditor *editor);
 
 
-G_DEFINE_TYPE (GimpTemplateEditor, gimp_template_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTemplateEditor, gimp_template_editor,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_template_editor_parent_class
 
@@ -126,8 +129,6 @@ gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
                                                         GIMP_TYPE_TEMPLATE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class, sizeof (GimpTemplateEditorPrivate));
 }
 
 static void
@@ -157,10 +158,10 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *xres;
   GtkWidget                 *yres;
   GtkWidget                 *combo;
-  GtkWidget                 *toggle;
   GtkWidget                 *scrolled_window;
   GtkWidget                 *text_view;
   GtkTextBuffer             *text_buffer;
+  GtkListStore              *store;
   GList                     *focus_chain = NULL;
   gchar                     *text;
   gint                       row;
@@ -184,12 +185,12 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (grid);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  width = gtk_spin_button_new (adjustment, 1.0, 2);
+  width = gimp_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gtk_spin_button_new (adjustment, 1.0, 2);
+  height = gimp_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
@@ -307,12 +308,12 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (grid);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  xres = gtk_spin_button_new (adjustment, 1.0, 2);
+  xres = gimp_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (xres), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (xres), SB_WIDTH);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  yres = gtk_spin_button_new (adjustment, 1.0, 2);
+  yres = gimp_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (yres), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
 
@@ -391,32 +392,37 @@ gimp_template_editor_constructed (GObject *object)
                             _("Color _space:"), 0.0, 0.5,
                             combo, 1);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
-                                        "component-type",
-                                        GIMP_COMPONENT_TYPE_U8,
-                                        GIMP_COMPONENT_TYPE_FLOAT);
+  /* construct the precision combo manually, instead of using
+   * gimp_prop_enum_combo_box_new(), so that we only reset the gamma combo when
+   * the precision is changed through the ui.  see issue #3025.
+   */
+  store = gimp_enum_store_new_with_range (GIMP_TYPE_COMPONENT_TYPE,
+                                          GIMP_COMPONENT_TYPE_U8,
+                                          GIMP_COMPONENT_TYPE_FLOAT);
+
+  private->precision_combo = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                                           "model", store,
+                                           NULL);
+  g_object_unref (store);
+
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Precision:"), 0.0, 0.5,
-                            combo, 1);
+                            private->precision_combo, 1);
 
-  g_signal_connect (combo, "changed",
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->precision_combo),
+                                 gimp_babl_component_type (
+                                   gimp_template_get_precision (template)));
+
+  g_signal_connect (private->precision_combo, "changed",
                     G_CALLBACK (gimp_template_editor_precision_changed),
                     editor);
 
-  combo = gimp_prop_boolean_combo_box_new (G_OBJECT (template),
-                                           "linear",
-                                           _("Linear light"),
-                                           _("Perceptual gamma (sRGB)"));
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template), "trc",
+                                        GIMP_TRC_LINEAR,
+                                        GIMP_TRC_NON_LINEAR);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Gamma:"), 0.0, 0.5,
                             combo, 1);
-
-  toggle = gimp_prop_check_button_new (G_OBJECT (template),
-                                       "color-managed",
-                                       _("Color _manage this image"));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                            NULL, 0.0, 0.5,
-                            toggle, 1);
 
   private->profile_combo =
     gimp_prop_profile_combo_box_new (G_OBJECT (template),
@@ -625,37 +631,21 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
 {
   GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
   GimpComponentType          component_type;
+  GimpTRCType                trc;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  (gint *) &component_type);
 
-  /* when changing this logic, also change the same switch()
-   * in convert-precision-dialog.c
-   */
-  switch (component_type)
-    {
-    case GIMP_COMPONENT_TYPE_U8:
-      /* default to gamma for 8 bit */
-      g_object_set (private->template,
-                    "linear", FALSE,
-                    NULL);
-      break;
+  g_object_get (private->template,
+                "trc", &trc,
+                NULL);
 
-    case GIMP_COMPONENT_TYPE_U16:
-    case GIMP_COMPONENT_TYPE_U32:
-    default:
-      /* leave gamma alone by default for 16/32 bit int */
-      break;
+  trc = gimp_suggest_trc_for_component_type (component_type, trc);
 
-    case GIMP_COMPONENT_TYPE_HALF:
-    case GIMP_COMPONENT_TYPE_FLOAT:
-    case GIMP_COMPONENT_TYPE_DOUBLE:
-      /* default to linear for floating point */
-      g_object_set (private->template,
-                    "linear", TRUE,
-                    NULL);
-      break;
-    }
+  g_object_set (private->template,
+                "component-type", component_type,
+                "trc",            trc,
+                NULL);
 }
 
 static void
@@ -749,6 +739,20 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
           gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
                                           gimp_template_get_resolution_y (template),
                                           FALSE);
+        }
+      else if (! strcmp (param_spec->name, "component-type"))
+        {
+          g_signal_handlers_block_by_func (private->precision_combo,
+                                           gimp_template_editor_precision_changed,
+                                           editor);
+
+          gimp_int_combo_box_set_active (
+            GIMP_INT_COMBO_BOX (private->precision_combo),
+            gimp_babl_component_type (gimp_template_get_precision (template)));
+
+          g_signal_handlers_unblock_by_func (private->precision_combo,
+                                             gimp_template_editor_precision_changed,
+                                             editor);
         }
     }
 

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DATA_H__
@@ -42,11 +42,14 @@ typedef enum
 #define GIMP_DATA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA, GimpDataClass))
 
 
-typedef struct _GimpDataClass GimpDataClass;
+typedef struct _GimpDataPrivate GimpDataPrivate;
+typedef struct _GimpDataClass   GimpDataClass;
 
 struct _GimpData
 {
-  GimpViewable  parent_instance;
+  GimpViewable     parent_instance;
+
+  GimpDataPrivate *priv;
 };
 
 struct _GimpDataClass

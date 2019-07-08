@@ -9,8 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.9.5\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-05-18 19:07+0000\n"
 "PO-Revision-Date: 2018-05-19 21:26+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
@@ -336,7 +335,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "本程式是自由軟體，您可以遵照自由軟體基金會 (Free Software Foundation) 出版的 "
 "GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新發布這"
@@ -346,7 +345,7 @@ msgstr ""
 "擔保。更詳細的情況請參閱 GNU 通用公共許可證。\n"
 "\n"
 "您應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，請查閱"
-"http://www.gnu.org/licenses/。"
+"https://www.gnu.org/licenses/。"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format
@@ -4684,7 +4683,7 @@ msgid "_Dilate"
 msgstr "擴大(_D)"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "增大圖像較亮區域"
 
@@ -4694,7 +4693,7 @@ msgid "_Erode"
 msgstr "侵蝕(_E)"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "增大圖像較暗區域"
 
@@ -9826,17 +9825,17 @@ msgid "Toggle fullscreen view"
 msgstr "切換全螢幕檢視"
 
 #: ../app/actions/view-actions.c:315
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "設置縮放倍率"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "盡可能縮小"
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "盡可能放大"
 
@@ -9871,12 +9870,12 @@ msgid "Zoom In"
 msgstr "拉近"
 
 #: ../app/actions/view-actions.c:354
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "縮小很多"
 
 #: ../app/actions/view-actions.c:359
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "放大很多"
 

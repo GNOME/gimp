@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GEGL_LOOPS_H__
@@ -27,6 +27,9 @@ void   gimp_gegl_buffer_copy           (GeglBuffer               *src_buffer,
                                         GeglAbyssPolicy           abyss_policy,
                                         GeglBuffer               *dest_buffer,
                                         const GeglRectangle      *dest_rect);
+
+void   gimp_gegl_clear                 (GeglBuffer               *buffer,
+                                        const GeglRectangle      *rect);
 
 /*  this is a pretty stupid port of concolve_region() that only works
  *  on a linear source buffer
@@ -77,17 +80,6 @@ void   gimp_gegl_combine_mask_weird    (GeglBuffer               *mask_buffer,
                                         const GeglRectangle      *dest_rect,
                                         gdouble                   opacity,
                                         gboolean                  stipple);
-
-void   gimp_gegl_replace               (GeglBuffer               *top_buffer,
-                                        const GeglRectangle      *top_rect,
-                                        GeglBuffer               *bottom_buffer,
-                                        const GeglRectangle      *bottom_rect,
-                                        GeglBuffer               *mask_buffer,
-                                        const GeglRectangle      *mask_rect,
-                                        GeglBuffer               *dest_buffer,
-                                        const GeglRectangle      *dest_rect,
-                                        gdouble                   opacity,
-                                        const gboolean           *affect);
 
 void   gimp_gegl_index_to_mask         (GeglBuffer               *indexed_buffer,
                                         const GeglRectangle      *indexed_rect,

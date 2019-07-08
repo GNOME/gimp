@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -149,11 +149,8 @@ gimp_lang_rc_finalize (GObject *object)
 
   g_clear_object (&rc->system_gimprc);
   g_clear_object (&rc->user_gimprc);
-  if (rc->language)
-    {
-      g_free (rc->language);
-      rc->language = NULL;
-    }
+
+  g_clear_pointer (&rc->language, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

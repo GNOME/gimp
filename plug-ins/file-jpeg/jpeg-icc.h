@@ -1,22 +1,13 @@
 /* jpeg-icc.h
  *
- * This code was originally copied from the jpegicc tool as found in
- * the lcms source code. This code comes with the following copyright
- * notice:
+ * This code was originally proposed for the Independent JPEG Group's
+ * software, but that fell through, and only recently got merged into
+ * libjpeg-turbo. This code comes with the following copyright notice:
  *
- * Little cms
- * Copyright (C) 1998-2004 Marti Maria
+ * Copyright (C) 1997-1998, Thomas G. Lane, Todd Newman.
  *
- *  Permission is hereby granted, free of charge, to any person
- *  obtaining a copy of this software and associated documentation
- *  files (the "Software"), to deal in the Software without
- *  restriction, including without limitation the rights to use, copy,
- *  modify, merge, publish, distribute, sublicense, and/or sell copies
- *  of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be
- *  included in all copies or substantial portions of the Software.
+ * For conditions of distribution and use, see the accompanying
+ * COPYING.ijg file.
  */
 
 #ifndef __JPEG_ICC_H__

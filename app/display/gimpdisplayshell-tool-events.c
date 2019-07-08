@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,6 +32,7 @@
 #include "core/gimp-filter-history.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpitem.h"
 
 #include "widgets/gimpcontrollers.h"
@@ -66,7 +67,9 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 #include "gimpmotionbuffer.h"
+#include "gimpstatusbar.h"
 
+#include "gimp-intl.h"
 #include "gimp-log.h"
 
 
@@ -991,6 +994,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 return FALSE;
               }
 
+            if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK)
+              /* Make sure the picked layer is reset. */
+              shell->picked_layer = NULL;
+
             switch (kevent->keyval)
               {
               case GDK_KEY_Left:
@@ -1071,6 +1078,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GimpTool    *active_tool;
 
         active_tool = tool_manager_get_active (gimp);
+
+        if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK &&
+            shell->picked_layer)
+          {
+            GimpStatusbar *statusbar;
+
+            statusbar = gimp_display_shell_get_statusbar (shell);
+            gimp_statusbar_pop_temp (statusbar);
+
+            shell->picked_layer = NULL;
+          }
 
         if ((state & GDK_BUTTON1_MASK)      &&
             (! shell->space_release_pending ||
@@ -1500,13 +1518,57 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
   shell->rotate_drag_angle = shell->rotate_angle;
   shell->scaling           = (state & gimp_get_toggle_behavior_mask ()) ? TRUE : FALSE;
+  shell->layer_picking     = (state & GDK_MOD1_MASK) ? TRUE : FALSE;
 
   if (shell->rotating)
-    gimp_display_shell_set_override_cursor (shell,
-                                            (GimpCursorType) GDK_EXCHANGE);
+    {
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GDK_EXCHANGE);
+    }
   else if (shell->scaling)
-    gimp_display_shell_set_override_cursor (shell,
-                                            (GimpCursorType) GIMP_CURSOR_ZOOM);
+    {
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GIMP_CURSOR_ZOOM);
+    }
+  else if (shell->layer_picking)
+    {
+      GimpImage  *image   = gimp_display_get_image (shell->display);
+      GimpLayer  *layer;
+      GimpCoords  image_coords;
+      GimpCoords  display_coords;
+      guint32     time;
+
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GIMP_CURSOR_CROSSHAIR);
+
+      gimp_display_shell_get_event_coords (shell, event,
+                                           &display_coords,
+                                           &state, &time);
+      gimp_display_shell_untransform_event_coords (shell,
+                                                   &display_coords, &image_coords,
+                                                   NULL);
+      layer = gimp_image_pick_layer (image,
+                                     (gint) image_coords.x,
+                                     (gint) image_coords.y,
+                                     shell->picked_layer);
+
+      if (layer && ! gimp_image_get_floating_selection (image))
+        {
+          if (layer != gimp_image_get_active_layer (image))
+            {
+              GimpStatusbar *statusbar;
+
+              gimp_image_set_active_layer (image, layer);
+
+              statusbar = gimp_display_shell_get_statusbar (shell);
+              gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                                        GIMP_ICON_LAYER,
+                                        _("Layer picked: '%s'"),
+                                        gimp_object_get_name (layer));
+            }
+          shell->picked_layer = layer;
+        }
+    }
   else
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_FLEUR);
@@ -1528,6 +1590,7 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->rotating          = FALSE;
   shell->rotate_drag_angle = 0.0;
   shell->scaling           = FALSE;
+  shell->layer_picking     = FALSE;
 
   /* We may have ungrabbed the pointer when space was released while
    * mouse was down, to be able to catch a GDK_BUTTON_RELEASE event.
@@ -1562,6 +1625,10 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                      shell->scroll_start_y,
                                      shell->scroll_last_x - x,
                                      shell->scroll_last_y - y);
+    }
+  else if (shell->layer_picking)
+    {
+      /* Do nothing. We only pick the layer on click. */
     }
   else
     {
@@ -1703,11 +1770,11 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
         {
           if (kevent->keyval == GDK_KEY_Tab ||
               kevent->keyval == GDK_KEY_KP_Tab)
-            gimp_display_shell_layer_select_init (shell,
-                                                  1, kevent->time);
+            gimp_display_shell_layer_select_init (shell, (GdkEvent *) kevent,
+                                                  1);
           else
-            gimp_display_shell_layer_select_init (shell,
-                                                  -1, kevent->time);
+            gimp_display_shell_layer_select_init (shell, (GdkEvent *) kevent,
+                                                  -1);
 
           return TRUE;
         }
@@ -1842,8 +1909,6 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
       (! gimp_image_is_empty (image) ||
        gimp_tool_control_get_handle_empty_image (active_tool->control)))
     {
-      initialized = TRUE;
-
       /*  initialize the current tool if it has no drawable  */
       if (! active_tool->drawable)
         {
@@ -1861,14 +1926,20 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
           if (image == gimp_item_get_image (GIMP_ITEM (active_tool->drawable)))
             {
               /*  When changing between drawables if the *same* image,
-               *  halt the tool so it doesn't get committed on tool
-               *  change. This is a pure "probably better this way"
+               *  stop the tool using its dirty action, so it doesn't
+               *  get committed on tool change, in case its dirty action
+               *  is HALT. This is a pure "probably better this way"
                *  decision because the user is likely changing their
-               *  mind or was simply on the wrong layer. See bug
-               *  #776370.
+               *  mind or was simply on the wrong layer. See bug #776370.
+               *
+               *  See also issues #1180 and #1202 for cases where we
+               *  actually *don't* want to halt the tool here, but rather
+               *  commit it, hence the use of the tool's dirty action.
                */
-              tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT,
-                                           active_tool->display);
+              tool_manager_control_active (
+                gimp,
+                gimp_tool_control_get_dirty_action (active_tool->control),
+                active_tool->display);
             }
 
           if (procedure)
@@ -1888,6 +1959,11 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
               gimp_filter_history_add (gimp, procedure);
               gimp_ui_manager_activate_action (manager, "filters",
                                                "filters-reshow");
+
+              /*  the procedure already initialized the tool; don't
+               *  reinitialize it below, since this can lead to errors.
+               */
+              initialized = TRUE;
             }
           else
             {
@@ -1898,7 +1974,12 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
           /*  make sure the newly created tool has the right state  */
           gimp_display_shell_update_focus (shell, TRUE, image_coords, state);
 
-          initialized = tool_manager_initialize_active (gimp, display);
+          if (! initialized)
+            initialized = tool_manager_initialize_active (gimp, display);
+        }
+      else
+        {
+          initialized = TRUE;
         }
     }
 

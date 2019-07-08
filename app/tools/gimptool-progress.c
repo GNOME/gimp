@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -166,7 +166,7 @@ gimp_tool_progress_start (GimpProgress *progress,
                     G_CALLBACK (gimp_tool_progress_key_press),
                     tool);
 
-  tool->progress_cancelable;
+  tool->progress_cancelable = cancelable;
 
   return progress;
 }

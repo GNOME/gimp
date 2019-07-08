@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DRAWABLE_COMBINE_H__
@@ -21,29 +21,19 @@
 
 /*  virtual functions of GimpDrawable, don't call directly  */
 
-void   gimp_drawable_real_apply_buffer   (GimpDrawable           *drawable,
-                                          GeglBuffer             *buffer,
-                                          const GeglRectangle    *buffer_region,
-                                          gboolean                push_undo,
-                                          const gchar            *undo_desc,
-                                          gdouble                 opacity,
-                                          GimpLayerMode           mode,
-                                          GimpLayerColorSpace     blend_space,
-                                          GimpLayerColorSpace     composite_space,
-                                          GimpLayerCompositeMode  composite_mode,
-                                          GeglBuffer             *base_buffer,
-                                          gint                    base_x,
-                                          gint                    base_y);
-void   gimp_drawable_real_replace_buffer (GimpDrawable           *drawable,
-                                          GeglBuffer             *buffer,
-                                          const GeglRectangle    *buffer_region,
-                                          gboolean                push_undo,
-                                          const gchar            *undo_desc,
-                                          gdouble                 opacity,
-                                          GeglBuffer             *mask,
-                                          const GeglRectangle    *mask_region,
-                                          gint                    x,
-                                          gint                    y);
+void   gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
+                                        GeglBuffer             *buffer,
+                                        const GeglRectangle    *buffer_region,
+                                        gboolean                push_undo,
+                                        const gchar            *undo_desc,
+                                        gdouble                 opacity,
+                                        GimpLayerMode           mode,
+                                        GimpLayerColorSpace     blend_space,
+                                        GimpLayerColorSpace     composite_space,
+                                        GimpLayerCompositeMode  composite_mode,
+                                        GeglBuffer             *base_buffer,
+                                        gint                    base_x,
+                                        gint                    base_y);
 
 
 #endif /* __GIMP_DRAWABLE_COMBINE_H__ */

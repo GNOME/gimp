@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
+endif
+
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
@@ -22,6 +28,7 @@ SUBDIRS = \
 	plug-in		\
 	xcf		\
 	file		\
+	file-data	\
 	pdb		\
 	widgets		\
 	propgui		\
@@ -74,6 +81,10 @@ libapp_a_SOURCES = $(libapp_sources)
 gimp_@GIMP_APP_VERSION@_SOURCES = $(libapp_sources) main.c
 
 
+if PLATFORM_LINUX
+libdl = -ldl
+endif
+
 if PLATFORM_OSX
 framework_cocoa = -framework Cocoa
 endif
@@ -81,9 +92,15 @@ endif
 if OS_WIN32
 win32_ldflags = -mwindows -Wl,--tsaware $(WIN32_LARGE_ADDRESS_AWARE)
 
-# for GetProcessMemoryInfo() in the dashboard
+# for GimpDashboard and GimpBacktrace
 psapi_cflags = -DPSAPI_VERSION=1
 libpsapi = -lpsapi
+
+# for GimpBacktrace
+libdbghelp = -ldbghelp
+
+# for I_RpcExceptionFilter()
+librpcrt4 = -lrpcrt4
 
 if HAVE_EXCHNDL
 exchndl = -lexchndl
@@ -93,7 +110,7 @@ else
 libm = -lm
 endif
 
-if USE_BINRELOC
+if ENABLE_RELOCATABLE_RESOURCES
 munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
@@ -118,6 +135,7 @@ AM_CPPFLAGS = \
 	$(LCMS_CFLAGS)					\
 	$(GEXIV2_CFLAGS)				\
 	$(psapi_cflags)					\
+	$(xobjective_c)					\
 	-I$(includedir)					\
 	-I$(builddir)/gui
 
@@ -145,6 +163,7 @@ gimpconsoleldadd = \
 	vectors/libappvectors.a					\
 	core/libappcore.a					\
 	file/libappfile.a					\
+	file-data/libappfile-data.a				\
 	text/libapptext.a					\
 	paint/libapppaint.a					\
 	operations/libappoperations.a				\
@@ -173,10 +192,17 @@ gimpconsoleldadd = \
 	$(GEXIV2_LIBS)						\
 	$(Z_LIBS)						\
 	$(JSON_C_LIBS)						\
+	$(LIBARCHIVE_LIBS)					\
 	$(LIBMYPAINT_LIBS)					\
+	$(LIBBACKTRACE_LIBS)					\
+	$(LIBUNWIND_LIBS)					\
 	$(INTLLIBS)						\
 	$(RT_LIBS)						\
-	$(libm)
+	$(libm)							\
+	$(libdl)						\
+	$(libpsapi)						\
+	$(libdbghelp)						\
+	$(librpcrt4)
 
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)						\
@@ -201,7 +227,6 @@ gimp_@GIMP_APP_VERSION@_LDADD = \
 	$(GTK_MAC_INTEGRATION_LIBS)	\
 	$(DBUS_GLIB_LIBS)		\
 	$(gimpconsoleldadd)		\
-	$(libpsapi)			\
 	$(exchndl)			\
 	$(GIMPRC)
 

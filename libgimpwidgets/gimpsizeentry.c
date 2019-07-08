@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -143,7 +143,7 @@ static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
                                                       gpointer            data);
 
 
-G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
 
 #define parent_class gimp_size_entry_parent_class
 
@@ -187,8 +187,6 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
   klass->value_changed   = NULL;
   klass->refval_changed  = NULL;
   klass->unit_changed    = NULL;
-
-  g_type_class_add_private (klass, sizeof (GimpSizeEntryPrivate));
 }
 
 static void
@@ -196,9 +194,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
 {
   GimpSizeEntryPrivate *priv;
 
-  gse->priv = G_TYPE_INSTANCE_GET_PRIVATE (gse,
-                                           GIMP_TYPE_SIZE_ENTRY,
-                                           GimpSizeEntryPrivate);
+  gse->priv = gimp_size_entry_get_instance_private (gse);
 
   priv = gse->priv;
 
@@ -348,8 +344,8 @@ gimp_size_entry_new (gint                       number_of_fields,
                                                    gsef->min_value,
                                                    gsef->max_value,
                                                    1.0, 10.0, 0.0);
-      gsef->value_spinbutton = gtk_spin_button_new (gsef->value_adjustment,
-                                                    1.0, digits);
+      gsef->value_spinbutton = gimp_spin_button_new (gsef->value_adjustment,
+                                                     1.0, digits);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gsef->value_spinbutton),
                                    TRUE);
 
@@ -380,9 +376,9 @@ gimp_size_entry_new (gint                       number_of_fields,
                                                         gsef->min_refval,
                                                         gsef->max_refval,
                                                         1.0, 10.0, 0.0);
-          gsef->refval_spinbutton = gtk_spin_button_new (gsef->refval_adjustment,
-                                                         1.0,
-                                                         gsef->refval_digits);
+          gsef->refval_spinbutton = gimp_spin_button_new (gsef->refval_adjustment,
+                                                          1.0,
+                                                          gsef->refval_digits);
           gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
                                        TRUE);
 
@@ -1352,9 +1348,9 @@ gimp_size_entry_attach_eevl (GtkSpinButton      *spin_button,
   gtk_spin_button_set_numeric (spin_button, FALSE);
   gtk_spin_button_set_update_policy (spin_button, GTK_UPDATE_IF_VALID);
 
-  g_signal_connect (spin_button, "input",
-                    G_CALLBACK (gimp_size_entry_eevl_input_callback),
-                    gsef);
+  g_signal_connect_after (spin_button, "input",
+                          G_CALLBACK (gimp_size_entry_eevl_input_callback),
+                          gsef);
 }
 
 static gint

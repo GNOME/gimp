@@ -37,6 +37,12 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-generic.h			\
 	gimppropgui-hue-saturation.c		\
 	gimppropgui-hue-saturation.h		\
+	gimppropgui-motion-blur-circular.c	\
+	gimppropgui-motion-blur-circular.h	\
+	gimppropgui-motion-blur-linear.c	\
+	gimppropgui-motion-blur-linear.h	\
+	gimppropgui-motion-blur-zoom.c		\
+	gimppropgui-motion-blur-zoom.h		\
 	gimppropgui-panorama-projection.c	\
 	gimppropgui-panorama-projection.h	\
 	gimppropgui-recursive-transform.c	\

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -173,14 +173,12 @@ load_image (const gchar  *filename,
   gchar            *pixels = NULL;
   gint              begin;
   gint32            success = FALSE;
-  gchar            *comment;
-  GimpMetadata     *metadata;
-  gboolean          have_metadata = FALSE;
+  gchar            *comment = NULL;
+  GimpColorProfile *profile = NULL;
   guchar           *exif_data;
   guint             exif_size;
   guchar           *xmp_data;
   guint             xmp_size;
-
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -255,6 +253,17 @@ load_image (const gchar  *filename,
 
   gimp_image_set_filename (image, filename);
 
+  /* try to load an icc profile, it will be generated on the fly if
+   * chromaticities are given
+   */
+  if (image_type == GIMP_RGB)
+    {
+      profile = exr_loader_get_profile (loader);
+
+      if (profile)
+        gimp_image_set_color_profile (image, profile);
+    }
+
   layer = gimp_layer_new (image, _("Background"), width, height,
                           layer_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
@@ -298,21 +307,6 @@ load_image (const gchar  *filename,
       gimp_progress_update ((gdouble) begin / (gdouble) height);
     }
 
-  /* try to load an icc profile, it will be generated on the fly if
-   * chromaticities are given
-   */
-  if (image_type == GIMP_RGB)
-    {
-      GimpColorProfile *profile;
-
-      profile = exr_loader_get_profile (loader);
-      if (profile)
-        {
-          gimp_image_set_color_profile (image, profile);
-          g_object_unref (profile);
-        }
-    }
-
   /* try to read the file comment */
   comment = exr_loader_get_comment (loader);
   if (comment)
@@ -326,65 +320,50 @@ load_image (const gchar  *filename,
                                     comment);
       gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
-
-      g_free (comment);
     }
 
-  metadata = gimp_image_get_metadata (image);
-
-  if (metadata)
-    g_object_ref (metadata);
-  else
-    metadata = gimp_metadata_new ();
-
-  /* check if the image contains Exif data and read it */
+  /* check if the image contains Exif or Xmp data and read it */
   exif_data = exr_loader_get_exif (loader, &exif_size);
-  if (exif_data)
+  xmp_data  = exr_loader_get_xmp  (loader, &xmp_size);
+
+  if (exif_data || xmp_data)
     {
-      if (gimp_metadata_set_from_exif (metadata,
-                                       exif_data,
-                                       exif_size,
-                                       NULL))
+      GimpMetadata          *metadata = gimp_metadata_new ();
+      GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
+
+      if (exif_data)
         {
-          have_metadata = TRUE;
+          gimp_metadata_set_from_exif (metadata, exif_data, exif_size, NULL);
+          g_free (exif_data);
         }
 
-      g_free (exif_data);
-    }
-
-  /* try to read the Xmp data */
-  xmp_data = exr_loader_get_xmp (loader, &xmp_size);
-  if (xmp_data)
-    {
-      if (gimp_metadata_set_from_xmp (metadata,
-                                      xmp_data,
-                                      xmp_size,
-                                      NULL))
+      if (xmp_data)
         {
-          have_metadata = TRUE;
+          gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_size, NULL);
+          g_free (xmp_data);
         }
 
-      g_free (xmp_data);
+      if (comment)
+        flags &= ~GIMP_METADATA_LOAD_COMMENT;
+
+      if (profile)
+        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+
+      gimp_image_metadata_load_finish (image, "image/exr",
+                                       metadata, flags, interactive);
+      g_object_unref (metadata);
     }
-
-  if (have_metadata)
-    gimp_image_set_metadata (image, metadata);
-
-  g_object_unref (metadata);
 
   gimp_progress_update (1.0);
 
   success = TRUE;
 
  out:
-  if (buffer)
-    g_object_unref (buffer);
-
-  if (pixels)
-    g_free (pixels);
-
-  if (loader)
-    exr_loader_unref (loader);
+  g_clear_object (&profile);
+  g_clear_object (&buffer);
+  g_clear_pointer (&pixels, g_free);
+  g_clear_pointer (&comment, g_free);
+  g_clear_pointer (&loader, exr_loader_unref);
 
   if (success)
     return image;
@@ -399,11 +378,13 @@ load_image (const gchar  *filename,
 static void
 sanitize_comment (gchar *comment)
 {
-  if (! g_utf8_validate (comment, -1, NULL))
-    {
-      gchar *c;
+  const gchar *start_invalid;
 
-      for (c = comment; *c; c++)
+  if (! g_utf8_validate (comment, -1, &start_invalid))
+    {
+      guchar *c;
+
+      for (c = (guchar *) start_invalid; *c; c++)
         {
           if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
             *c = '?';

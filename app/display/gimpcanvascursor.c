@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -54,9 +54,7 @@ struct _GimpCanvasCursorPrivate
 };
 
 #define GET_PRIVATE(cursor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (cursor, \
-                                     GIMP_TYPE_CANVAS_CURSOR, \
-                                     GimpCanvasCursorPrivate)
+        ((GimpCanvasCursorPrivate *) gimp_canvas_cursor_get_instance_private ((GimpCanvasCursor *) (cursor)))
 
 
 /*  local function prototypes  */
@@ -74,8 +72,8 @@ static void             gimp_canvas_cursor_draw         (GimpCanvasItem *item,
 static cairo_region_t * gimp_canvas_cursor_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasCursor, gimp_canvas_cursor,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasCursor, gimp_canvas_cursor,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_cursor_parent_class
 
@@ -103,8 +101,6 @@ gimp_canvas_cursor_class_init (GimpCanvasCursorClass *klass)
                                                         -GIMP_MAX_IMAGE_SIZE,
                                                         GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasCursorPrivate));
 }
 
 static void

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PRIORITIES_H__
@@ -28,7 +28,8 @@
 /* #define GTK_PRIORITY_REDRAW (G_PRIORITY_HIGH_IDLE + 20) */
 
 /*  a bit higher than projection construction  */
-#define GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE (G_PRIORITY_HIGH_IDLE + 21)
+#define GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE             (G_PRIORITY_HIGH_IDLE + 21)
+#define GIMP_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE (G_PRIORITY_HIGH_IDLE + 21)
 
 /*  just a bit less than GDK_PRIORITY_REDRAW   */
 #define GIMP_PRIORITY_PROJECTION_IDLE (G_PRIORITY_HIGH_IDLE + 22)

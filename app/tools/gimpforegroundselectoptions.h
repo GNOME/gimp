@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 
@@ -38,13 +38,14 @@ struct _GimpForegroundSelectOptions
 {
   GimpSelectionOptions  parent_instance;
 
-  GimpMattingDrawMode   draw_mode;
-  gint                  stroke_width;
-  GimpChannelType       mask_color;
-  GimpMattingEngine     engine;
-  gint                  levels;
-  gint                  active_levels;
-  gint                  iterations;
+  GimpMattingDrawMode    draw_mode;
+  GimpMattingPreviewMode preview_mode;
+  gint                   stroke_width;
+  GimpRGB                mask_color;
+  GimpMattingEngine      engine;
+  gint                   levels;
+  gint                   active_levels;
+  gint                   iterations;
 };
 
 struct _GimpForegroundSelectOptionsClass
@@ -57,8 +58,6 @@ GType       gimp_foreground_select_options_get_type       (void) G_GNUC_CONST;
 
 GtkWidget * gimp_foreground_select_options_gui            (GimpToolOptions             *tool_options);
 
-void        gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *options,
-                                                           GimpRGB                     *color);
 
 
 #endif /* __GIMP_FOREGROUND_SELECT_OPTIONS_H__ */

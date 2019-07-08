@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -46,9 +46,7 @@ struct _GimpCanvasPassePartoutPrivate
 };
 
 #define GET_PRIVATE(item) \
-        G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                     GIMP_TYPE_CANVAS_PASSE_PARTOUT, \
-                                     GimpCanvasPassePartoutPrivate)
+        ((GimpCanvasPassePartoutPrivate *) gimp_canvas_passe_partout_get_instance_private ((GimpCanvasPassePartout *) (item)))
 
 
 /*  local function prototypes  */
@@ -68,8 +66,8 @@ static void             gimp_canvas_passe_partout_fill         (GimpCanvasItem *
                                                                 cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpCanvasPassePartout, gimp_canvas_passe_partout,
-               GIMP_TYPE_CANVAS_RECTANGLE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasPassePartout, gimp_canvas_passe_partout,
+                            GIMP_TYPE_CANVAS_RECTANGLE)
 
 #define parent_class gimp_canvas_passe_partout_parent_class
 
@@ -92,8 +90,6 @@ gimp_canvas_passe_partout_class_init (GimpCanvasPassePartoutClass *klass)
                                                         0.0,
                                                         1.0, 0.5,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasPassePartoutPrivate));
 }
 
 static void
@@ -173,6 +169,8 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem *item)
   inner = GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item);
 
   cairo_region_xor (outer, inner);
+
+  cairo_region_destroy (inner);
 
   return outer;
 }

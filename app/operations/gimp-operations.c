@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -36,11 +36,13 @@
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationcomposecrop.h"
 #include "gimpoperationequalize.h"
+#include "gimpoperationfillsource.h"
 #include "gimpoperationflood.h"
 #include "gimpoperationgradient.h"
 #include "gimpoperationgrow.h"
 #include "gimpoperationhistogramsink.h"
 #include "gimpoperationmaskcomponents.h"
+#include "gimpoperationoffset.h"
 #include "gimpoperationprofiletransform.h"
 #include "gimpoperationscalarmultiply.h"
 #include "gimpoperationsemiflatten.h"
@@ -129,11 +131,13 @@ gimp_operations_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_COMPOSE_CROP);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_FILL_SOURCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_FLOOD);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRADIENT);
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
   g_type_class_ref (GIMP_TYPE_OPERATION_HISTOGRAM_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_MASK_COMPONENTS);
+  g_type_class_ref (GIMP_TYPE_OPERATION_OFFSET);
   g_type_class_ref (GIMP_TYPE_OPERATION_PROFILE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_SCALAR_MULTIPLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SEMI_FLATTEN);

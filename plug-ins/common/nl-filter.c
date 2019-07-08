@@ -66,28 +66,32 @@ static NLFilterValues nlfvals =
 
 /* function protos */
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparam,
-                   const GimpParam  *param,
-                   gint             *nretvals,
-                   GimpParam       **retvals);
+static void     query            (void);
+static void     run              (const gchar      *name,
+                                  gint              nparam,
+                                  const GimpParam  *param,
+                                  gint             *nretvals,
+                                  GimpParam       **retvals);
 
-static void nlfilter            (GimpDrawable *drawable,
-                                 GimpPreview  *preview);
-static gboolean nlfilter_dialog (GimpDrawable *drawable);
+static void     nlfilter         (gint32            drawable_id,
+                                  GimpPreview      *preview);
+static void     nlfilter_preview (gpointer          drawable_id,
+                                  GimpPreview      *preview);
 
-static gint nlfiltInit   (gdouble       alpha,
-                          gdouble       radius,
-                          FilterType    filter);
+static gboolean nlfilter_dialog  (gint32            drawable_id);
 
-static void nlfiltRow    (guchar       *srclast,
-                          guchar       *srcthis,
-                          guchar       *srcnext,
-                          guchar       *dst,
-                          gint          width,
-                          gint          bpp,
-                          gint          filtno);
+static gint     nlfiltInit       (gdouble           alpha,
+                                  gdouble           radius,
+                                  FilterType        filter);
+
+static void     nlfiltRow        (guchar           *srclast,
+                                  guchar           *srcthis,
+                                  guchar           *srcnext,
+                                  guchar           *dst,
+                                  gint              width,
+                                  gint              bpp,
+                                  gint              filtno);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -139,15 +143,15 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_id;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -160,7 +164,7 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &nlfvals);
 
-      if (! nlfilter_dialog (drawable))
+      if (! nlfilter_dialog (drawable_id))
         return;
       break;
 
@@ -188,7 +192,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      nlfilter (drawable, NULL);
+      nlfilter (drawable_id, NULL);
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -196,8 +200,6 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter
@@ -899,15 +901,17 @@ rectang_area (gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
 }
 
 static void
-nlfilter (GimpDrawable *drawable,
+nlfilter (gint32        drawable_id,
           GimpPreview  *preview)
 {
-  GimpPixelRgn  srcPr, dstPr;
-  guchar       *srcbuf, *dstbuf;
-  guchar       *lastrow, *thisrow, *nextrow, *temprow;
-  gint          x1, y1, y2;
-  gint          width, height, bpp;
-  gint          filtno, y, rowsize, exrowsize, p_update;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  guchar     *srcbuf, *dstbuf;
+  guchar     *lastrow, *thisrow, *nextrow, *temprow;
+  gint        x1, y1, y2;
+  gint        width, height, bpp;
+  gint        filtno, y, rowsize, exrowsize, p_update;
 
   if (preview)
     {
@@ -917,26 +921,30 @@ nlfilter (GimpDrawable *drawable,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+      if (! gimp_drawable_mask_intersect (drawable_id,
                                           &x1, &y1, &width, &height))
         return;
 
       y2 = y1 + height;
     }
 
-  bpp = drawable->bpp;
+  if (gimp_drawable_has_alpha (drawable_id))
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
+
+  src_buffer = gimp_drawable_get_buffer (drawable_id);
+
+  if (preview)
+    dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer), format);
+  else
+    dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+
+  bpp = babl_format_get_bytes_per_pixel (format);
 
   rowsize = width * bpp;
   exrowsize = (width + 2) * bpp;
   p_update = width / 20 + 1;
-
-  gimp_tile_cache_ntiles (2 * (width / gimp_tile_width () + 1));
-
-  gimp_pixel_rgn_init (&srcPr, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dstPr, drawable,
-                       x1, y1, width, height,
-                       preview == NULL, TRUE);
 
   /* source buffer gives one pixel margin all around destination buffer */
   srcbuf = g_new0 (guchar, exrowsize * 3);
@@ -953,7 +961,10 @@ nlfilter (GimpDrawable *drawable,
     gimp_progress_init (_("NL Filter"));
 
   /* first row */
-  gimp_pixel_rgn_get_row (&srcPr, thisrow, x1, y1, width);
+  gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y1, width, 1), 1.0,
+                   format, thisrow,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
   /* copy thisrow[0] to thisrow[-1], thisrow[width-1] to thisrow[width] */
   memcpy (thisrow - bpp, thisrow, bpp);
   memcpy (thisrow + rowsize, thisrow + rowsize - bpp, bpp);
@@ -965,11 +976,18 @@ nlfilter (GimpDrawable *drawable,
       if (((y % p_update) == 0) && !preview)
         gimp_progress_update ((gdouble) y / (gdouble) height);
 
-      gimp_pixel_rgn_get_row (&srcPr, nextrow, x1, y + 1, width);
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y + 1, width, 1), 1.0,
+                       format, nextrow,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
       memcpy (nextrow - bpp, nextrow, bpp);
       memcpy (nextrow + rowsize, nextrow + rowsize - bpp, bpp);
       nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
-      gimp_pixel_rgn_set_row (&dstPr, dstbuf, x1, y, width);
+
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x1, y, width, 1), 0,
+                       format, dstbuf,
+                       GEGL_AUTO_ROWSTRIDE);
+
       /* rotate row buffers */
       temprow = lastrow; lastrow = thisrow;
       thisrow = nextrow; nextrow = temprow;
@@ -978,28 +996,49 @@ nlfilter (GimpDrawable *drawable,
   /* last row */
   memcpy (nextrow - bpp, thisrow - bpp, exrowsize);
   nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
-  gimp_pixel_rgn_set_row (&dstPr, dstbuf, x1, y2 - 1, width);
+
+  gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x1, y2 - 1, width, 1), 0,
+                   format, dstbuf,
+                   GEGL_AUTO_ROWSTRIDE);
 
   g_free (srcbuf);
   g_free (dstbuf);
 
   if (preview)
     {
-      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                         &dstPr);
+      guchar *buf = g_new (guchar, width * height * bpp);
+
+      gegl_buffer_get (dest_buffer, GEGL_RECTANGLE (x1, y1, width, height), 1.0,
+                       format, buf,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      gimp_preview_draw_buffer (GIMP_PREVIEW (preview), buf, width * bpp);
+
+      g_free (buf);
     }
-  else
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
+
+  if (! preview)
     {
       gimp_progress_update (1.0);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+
+      gimp_drawable_merge_shadow (drawable_id, TRUE);
+      gimp_drawable_update (drawable_id, x1, y1, width, height);
       gimp_displays_flush ();
     }
 }
 
+static void
+nlfilter_preview (gpointer     drawable_id,
+                  GimpPreview *preview)
+{
+  nlfilter (GPOINTER_TO_INT (drawable_id), preview);
+}
+
 static gboolean
-nlfilter_dialog (GimpDrawable *drawable)
+nlfilter_dialog (gint32 drawable_id)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -1036,13 +1075,13 @@ nlfilter_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable->drawable_id);
+  preview = gimp_drawable_preview_new_from_drawable_id (drawable_id);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (nlfilter),
-                            drawable);
+                            G_CALLBACK (nlfilter_preview),
+                            GINT_TO_POINTER (drawable_id));
 
   frame = gimp_int_radio_group_new (TRUE, _("Filter"),
                                     G_CALLBACK (gimp_radio_button_update),

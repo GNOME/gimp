@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GRADIENT_EDITOR_COMMANDS_H__
@@ -29,60 +29,71 @@ enum
 };
 
 
-void   gradient_editor_left_color_cmd_callback       (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_left_color_type_cmd_callback  (GtkAction *action,
-                                                      GtkAction *current,
-                                                      gpointer   data);
-void   gradient_editor_load_left_cmd_callback        (GtkAction *action,
-                                                      gint       value,
-                                                      gpointer   data);
-void   gradient_editor_save_left_cmd_callback        (GtkAction *action,
-                                                      gint       value,
-                                                      gpointer   data);
+void   gradient_editor_left_color_cmd_callback       (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_left_color_type_cmd_callback  (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_load_left_cmd_callback        (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_save_left_cmd_callback        (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
-void   gradient_editor_right_color_cmd_callback      (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_right_color_type_cmd_callback (GtkAction *action,
-                                                      GtkAction *current,
-                                                      gpointer   data);
-void   gradient_editor_load_right_cmd_callback       (GtkAction *action,
-                                                      gint       value,
-                                                      gpointer   data);
-void   gradient_editor_save_right_cmd_callback       (GtkAction *action,
-                                                      gint       value,
-                                                      gpointer   data);
+void   gradient_editor_right_color_cmd_callback      (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_right_color_type_cmd_callback (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_load_right_cmd_callback       (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_save_right_cmd_callback       (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
-void   gradient_editor_blending_func_cmd_callback    (GtkAction *action,
-                                                      GtkAction *current,
-                                                      gpointer   data);
-void   gradient_editor_coloring_type_cmd_callback    (GtkAction *action,
-                                                      GtkAction *current,
-                                                      gpointer   data);
+void   gradient_editor_blending_func_cmd_callback    (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_coloring_type_cmd_callback    (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
-void   gradient_editor_flip_cmd_callback             (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_replicate_cmd_callback        (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_split_midpoint_cmd_callback   (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_split_uniformly_cmd_callback  (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_delete_cmd_callback           (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_recenter_cmd_callback         (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_redistribute_cmd_callback     (GtkAction *action,
-                                                      gpointer   data);
+void   gradient_editor_flip_cmd_callback             (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_replicate_cmd_callback        (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_split_midpoint_cmd_callback   (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_split_uniformly_cmd_callback  (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_delete_cmd_callback           (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_recenter_cmd_callback         (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_redistribute_cmd_callback     (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
-void   gradient_editor_blend_color_cmd_callback      (GtkAction *action,
-                                                      gpointer   data);
-void   gradient_editor_blend_opacity_cmd_callback    (GtkAction *action,
-                                                      gpointer   data);
+void   gradient_editor_blend_color_cmd_callback      (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   gradient_editor_blend_opacity_cmd_callback    (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
-void   gradient_editor_zoom_cmd_callback             (GtkAction *action,
-                                                      gint       value,
-                                                      gpointer   data);
+void   gradient_editor_zoom_cmd_callback             (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
 
 #endif /* __GRADIENT_EDITOR_COMMANDS_H__ */

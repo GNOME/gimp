@@ -8,8 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-09-16 16:00+0000\n"
 "PO-Revision-Date: 2017-09-21 21:13+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
@@ -110,7 +109,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP adalah perangkat lunak bebas; Anda dapat menyebarluaskannya dan/atau "
 "mengubahnya di bawah syarat GNU General Public License sebagaimana "
@@ -122,7 +121,7 @@ msgstr ""
 "TERTENTU. Lihat GNU General Public License untuk rincian lebih lanjut.\n"
 "\n"
 "Anda seharusnya menerima salinan dari GNU General Public License bersama "
-"dengan GIMP. Jika tidak, lihat: http://www.gnu.org/licenses/"
+"dengan GIMP. Jika tidak, lihat: https://www.gnu.org/licenses/"
 
 #: ../app/main.c:160
 msgid "Show version information and exit"
@@ -4337,7 +4336,7 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:138
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Burning foto ke DVD"
 
@@ -4347,7 +4346,7 @@ msgid "_Erode"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 
@@ -9575,17 +9574,17 @@ msgstr "Berpindah mode layar penuh"
 
 #: ../app/actions/view-actions.c:315
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Tentukan faktor perbesaran terminal (1.0 = ukuran normal)"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9622,14 +9621,14 @@ msgstr "Perbesar"
 #: ../app/actions/view-actions.c:354
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Perkecil"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Perbesar"
 

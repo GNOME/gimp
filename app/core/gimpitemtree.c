@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -60,14 +60,13 @@ struct _GimpItemTreePrivate
 };
 
 #define GIMP_ITEM_TREE_GET_PRIVATE(object) \
-        G_TYPE_INSTANCE_GET_PRIVATE (object, \
-                                     GIMP_TYPE_ITEM_TREE, \
-                                     GimpItemTreePrivate)
+        ((GimpItemTreePrivate *) gimp_item_tree_get_instance_private ((GimpItemTree *) (object)))
 
 
 /*  local function prototypes  */
 
 static void     gimp_item_tree_constructed   (GObject      *object);
+static void     gimp_item_tree_dispose       (GObject      *object);
 static void     gimp_item_tree_finalize      (GObject      *object);
 static void     gimp_item_tree_set_property  (GObject      *object,
                                               guint         property_id,
@@ -86,7 +85,7 @@ static void     gimp_item_tree_uniquefy_name (GimpItemTree *tree,
                                               const gchar  *new_name);
 
 
-G_DEFINE_TYPE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_item_tree_parent_class
 
@@ -98,6 +97,7 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   object_class->constructed      = gimp_item_tree_constructed;
+  object_class->dispose          = gimp_item_tree_dispose;
   object_class->finalize         = gimp_item_tree_finalize;
   object_class->set_property     = gimp_item_tree_set_property;
   object_class->get_property     = gimp_item_tree_get_property;
@@ -130,8 +130,6 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_ITEM,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpItemTreePrivate));
 }
 
 static void
@@ -160,6 +158,23 @@ gimp_item_tree_constructed (GObject *object)
                                   "children-type", private->item_type,
                                   "policy",        GIMP_CONTAINER_POLICY_STRONG,
                                   NULL);
+}
+
+static void
+gimp_item_tree_dispose (GObject *object)
+{
+  GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
+  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+
+  gimp_item_tree_set_active_item (tree, NULL);
+
+  gimp_container_foreach (tree->container,
+                          (GFunc) gimp_item_removed, NULL);
+
+  gimp_container_clear (tree->container);
+  g_hash_table_remove_all (private->name_hash);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

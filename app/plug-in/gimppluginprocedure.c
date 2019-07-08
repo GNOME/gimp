@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -242,31 +242,20 @@ static const gchar *
 gimp_plug_in_procedure_get_label (GimpProcedure *procedure)
 {
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  const gchar         *path;
-  gchar               *stripped;
+  const gchar         *translated;
   gchar               *ellipsis;
   gchar               *label;
 
   if (proc->label)
     return proc->label;
 
-  if (proc->menu_label)
-    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_label);
-  else if (proc->menu_paths)
-    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_paths->data);
-  else
+  if (! proc->menu_label)
     return NULL;
 
-  stripped = gimp_strip_uline (path);
+  translated = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                         proc->menu_label);
 
-  if (proc->menu_label)
-    label = g_strdup (stripped);
-  else
-    label = g_path_get_basename (stripped);
-
-  g_free (stripped);
+  label = gimp_strip_uline (translated);
 
   ellipsis = strstr (label, "...");
 
@@ -287,22 +276,8 @@ gimp_plug_in_procedure_get_menu_label (GimpProcedure *procedure)
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
   if (proc->menu_label)
-    {
-      return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                       proc->menu_label);
-    }
-  else if (proc->menu_paths)
-    {
-      const gchar *translated;
-
-      translated = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                             proc->menu_paths->data);
-
-      translated = strrchr (translated, '/');
-
-      if (translated)
-        return translated + 1;
-    }
+    return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                     proc->menu_label);
 
   return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
@@ -635,8 +610,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       goto failure;
     }
 
-  if (g_str_has_prefix (menu_path, "<Toolbox>") ||
-      g_str_has_prefix (menu_path, "<Image>"))
+  if (g_str_has_prefix (menu_path, "<Image>"))
     {
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
@@ -1186,6 +1160,22 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
     g_slist_free_full (proc->magics_list, (GDestroyNotify) g_free);
 
   proc->magics_list = extensions_parse (proc->magics);
+}
+
+void
+gimp_plug_in_procedure_set_generic_file_proc (GimpPlugInProcedure *proc,
+                                              gboolean             is_generic_file_proc)
+{
+  proc->generic_file_proc = is_generic_file_proc;
+}
+
+void
+gimp_plug_in_procedure_set_priority (GimpPlugInProcedure *proc,
+                                     gint                 priority)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->priority = priority;
 }
 
 void

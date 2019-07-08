@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -26,6 +26,7 @@
 #include "tools-types.h"
 
 #include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
@@ -49,9 +50,11 @@
 #include "display/gimpdisplayshell-utils.h"
 
 #include "gimpcoloroptions.h"
+#include "gimppaintoptions-gui.h"
 #include "gimppainttool.h"
 #include "gimppainttool-paint.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -104,11 +107,12 @@ static GimpCanvasItem *
 
 static gboolean  gimp_paint_tool_check_alpha (GimpPaintTool         *paint_tool,
                                               GimpDrawable          *drawable,
+                                              GimpDisplay           *display,
                                               GError               **error);
 
 static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
                                               const GParamSpec      *pspec,
-                                              GimpTool              *tool);
+                                              GimpPaintTool         *paint_tool);
 static void   gimp_paint_tool_cursor_notify  (GimpDisplayConfig     *config,
                                               GParamSpec            *pspec,
                                               GimpPaintTool         *paint_tool);
@@ -150,6 +154,7 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   gimp_tool_control_set_action_opacity (tool->control,
                                         "context/context-opacity-set");
 
+  paint_tool->active        = TRUE;
   paint_tool->pick_colors   = FALSE;
   paint_tool->draw_line     = FALSE;
 
@@ -193,9 +198,9 @@ gimp_paint_tool_constructed (GObject *object)
 
   g_signal_connect_object (options, "notify::hard",
                            G_CALLBACK (gimp_paint_tool_hard_notify),
-                           tool, 0);
+                           paint_tool, 0);
 
-  gimp_paint_tool_hard_notify (options, NULL, tool);
+  gimp_paint_tool_hard_notify (options, NULL, paint_tool);
 
   paint_tool->show_cursor = display_config->show_paint_tool_cursor;
   paint_tool->draw_brush  = display_config->show_brush_outline;
@@ -256,6 +261,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 {
   GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpPaintOptions *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig    *config     = GIMP_GUI_CONFIG (display->gimp->config);
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GimpImage        *image      = gimp_display_get_image (display);
   GimpDrawable     *drawable   = gimp_image_get_active_drawable (image);
@@ -280,17 +287,31 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer's pixels are locked."));
+      gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
       return;
     }
 
-  if (! gimp_paint_tool_check_alpha (paint_tool, drawable, &error))
+  if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))
     {
+      GtkWidget *options_gui;
+      GtkWidget *mode_box;
+
       gimp_tool_message_literal (tool, display, error->message);
+
+      options_gui = gimp_tools_get_tool_options_gui (
+                      GIMP_TOOL_OPTIONS (options));
+      mode_box    = gimp_paint_options_gui_get_paint_mode_box (options_gui);
+
+      if (gtk_widget_is_sensitive (mode_box))
+        gimp_widget_blink (mode_box);
+
       g_clear_error (&error);
+
       return;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer is not visible."));
@@ -417,15 +438,15 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
                   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                                           GIMP_COLOR_OPTIONS (info->tool_options));
 
-                  switch (GIMP_COLOR_TOOL (tool)->pick_mode)
+                  switch (GIMP_COLOR_TOOL (tool)->pick_target)
                     {
-                    case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                    case GIMP_COLOR_PICK_TARGET_FOREGROUND:
                       gimp_tool_push_status (tool, display,
                                              _("Click in any image to pick the "
                                                "foreground color"));
                       break;
 
-                    case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                    case GIMP_COLOR_PICK_TARGET_BACKGROUND:
                       gimp_tool_push_status (tool, display,
                                              _("Click in any image to pick the "
                                                "background color"));
@@ -455,6 +476,7 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpGuiConfig      *config     = GIMP_GUI_CONFIG (display->gimp->config);
   GimpCursorModifier  modifier;
   GimpCursorModifier  toggle_modifier;
   GimpCursorModifier  old_modifier;
@@ -471,10 +493,11 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       GimpImage    *image    = gimp_display_get_image (display);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))      ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable))         ||
-          ! gimp_paint_tool_check_alpha (paint_tool, drawable, NULL) ||
-          ! gimp_item_is_visible (GIMP_ITEM (drawable)))
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
+          gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
+          ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
+          ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+             config->edit_non_visible))
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
           toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
@@ -570,11 +593,16 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
            *  draw a line.
            */
           gchar   *status_help;
+          gdouble  offset_angle;
+          gdouble  xres, yres;
 
-          gimp_paint_core_round_line (
-            core, paint_options,
-            (state & constrain_mask) != 0,
-            gimp_display_shell_get_constrained_line_offset_angle (shell));
+          gimp_display_shell_get_constrained_line_params (shell,
+                                                          &offset_angle,
+                                                          &xres, &yres);
+
+          gimp_paint_core_round_line (core, paint_options,
+                                      (state & constrain_mask) != 0,
+                                      offset_angle, xres, yres);
 
           status_help = gimp_suggest_modifiers (paint_tool->status_line,
                                                 constrain_mask & ~state,
@@ -635,9 +663,12 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+
+
+  if (paint_tool->active &&
+      ! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
-      GimpPaintTool  *paint_tool = GIMP_PAINT_TOOL (draw_tool);
       GimpPaintCore  *core       = paint_tool->core;
       GimpImage      *image      = gimp_display_get_image (draw_tool->display);
       GimpDrawable   *drawable   = gimp_image_get_active_drawable (image);
@@ -802,6 +833,7 @@ gimp_paint_tool_get_outline (GimpPaintTool *paint_tool,
 static gboolean
 gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
                              GimpDrawable   *drawable,
+                             GimpDisplay    *display,
                              GError        **error)
 {
   GimpPaintToolClass *klass = GIMP_PAINT_TOOL_GET_CLASS (paint_tool);
@@ -824,6 +856,9 @@ gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
             error, GIMP_ERROR, GIMP_FAILED,
             _("The active layer's alpha channel is locked."));
 
+          if (error)
+            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+
           return FALSE;
         }
     }
@@ -834,12 +869,17 @@ gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
 static void
 gimp_paint_tool_hard_notify (GimpPaintOptions *options,
                              const GParamSpec *pspec,
-                             GimpTool         *tool)
+                             GimpPaintTool    *paint_tool)
 {
-  gimp_tool_control_set_precision (tool->control,
-                                   options->hard ?
-                                   GIMP_CURSOR_PRECISION_PIXEL_CENTER :
-                                   GIMP_CURSOR_PRECISION_SUBPIXEL);
+  if (paint_tool->active)
+    {
+      GimpTool *tool = GIMP_TOOL (paint_tool);
+
+      gimp_tool_control_set_precision (tool->control,
+                                       options->hard ?
+                                       GIMP_CURSOR_PRECISION_PIXEL_CENTER :
+                                       GIMP_CURSOR_PRECISION_SUBPIXEL);
+    }
 }
 
 static void
@@ -855,10 +895,31 @@ gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }
 
+void
+gimp_paint_tool_set_active (GimpPaintTool *tool,
+                            gboolean       active)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  if (active != tool->active)
+    {
+      GimpPaintOptions *options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
+
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+      tool->active = active;
+
+      if (active)
+        gimp_paint_tool_hard_notify (options, NULL, tool);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
+}
+
 /**
  * gimp_paint_tool_enable_color_picker:
- * @tool: a #GimpPaintTool
- * @mode: the #GimpColorPickMode to set
+ * @tool:   a #GimpPaintTool
+ * @target: the #GimpColorPickTarget to set
  *
  * This is a convenience function used from the init method of paint
  * tools that want the color picking functionality. The @mode that is
@@ -866,14 +927,14 @@ gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
  * picked color goes to the foreground or background color.
  **/
 void
-gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
-                                     GimpColorPickMode  mode)
+gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
+                                     GimpColorPickTarget  target)
 {
   g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
 
   tool->pick_colors = TRUE;
 
-  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+  GIMP_COLOR_TOOL (tool)->pick_target = target;
 }
 
 void

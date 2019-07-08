@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -37,6 +37,7 @@ struct _SaveParams
 {
   gint     quality;
   gboolean lossless;
+  gboolean save_profile;
 };
 
 
@@ -120,6 +121,18 @@ query (void)
   gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
   gimp_register_file_handler_uri (LOAD_PROC);
+  /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
+   * can be of various values.
+   * See also: https://gitlab.gnome.org/GNOME/gimp/issues/2209
+   */
+  gimp_register_magic_load_handler (LOAD_PROC,
+                                    "heif,heic",
+                                    "",
+                                    "4,string,ftypheic,4,string,ftypheix,"
+                                    "4,string,ftyphevc,4,string,ftypheim,"
+                                    "4,string,ftypheis,4,string,ftyphevm,"
+                                    "4,string,ftyphevs,4,string,ftypmif1,"
+                                    "4,string,ftypmsf1");
 
   gimp_install_procedure (SAVE_PROC,
                           _("Exports HEIF images"),
@@ -204,13 +217,20 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      gint32           image_ID    = param[1].data.d_int32;
-      gint32           drawable_ID = param[2].data.d_int32;
-      GimpExportReturn export      = GIMP_EXPORT_CANCEL;
-      SaveParams       params;
+      gint32                 image_ID    = param[1].data.d_int32;
+      gint32                 drawable_ID = param[2].data.d_int32;
+      GimpExportReturn       export      = GIMP_EXPORT_CANCEL;
+      SaveParams             params;
+      GimpMetadata          *metadata = NULL;
+      GimpMetadataSaveFlags  metadata_flags;
 
-      params.lossless = FALSE;
-      params.quality  = 50;
+      metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                   "image/heif",
+                                                   &metadata_flags);
+
+      params.lossless     = FALSE;
+      params.quality      = 50;
+      params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
       switch (run_mode)
         {
@@ -223,6 +243,7 @@ run (const gchar      *name,
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
+              g_clear_object (&metadata);
               return;
             }
           break;
@@ -266,15 +287,21 @@ run (const gchar      *name,
                           &params,
                           &error))
             {
+              if (metadata)
+                gimp_image_metadata_save_finish (image_ID,
+                                                 "image/heif",
+                                                 metadata, metadata_flags,
+                                                 file, NULL);
               gimp_set_data (SAVE_PROC, &params, sizeof (params));
             }
           else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
-
           g_object_unref (file);
         }
+
+      g_clear_object (&metadata);
     }
   else
     {
@@ -323,8 +350,9 @@ load_image (GFile     *file,
   gsize                     bytes_read;
   struct heif_context      *ctx;
   struct heif_error         err;
-  struct heif_image_handle *handle = NULL;
-  struct heif_image        *img = NULL;
+  struct heif_image_handle *handle  = NULL;
+  struct heif_image        *img     = NULL;
+  GimpColorProfile         *profile = NULL;
   gint                      n_images;
   heif_item_id              primary;
   heif_item_id              selected_image;
@@ -452,8 +480,8 @@ load_image (GFile     *file,
   err = heif_decode_image (handle,
                            &img,
                            heif_colorspace_RGB,
-                           has_alpha ? heif_chroma_interleaved_32bit :
-                           heif_chroma_interleaved_24bit,
+                           has_alpha ? heif_chroma_interleaved_RGBA :
+                           heif_chroma_interleaved_RGB,
                            NULL);
   if (err.code)
     {
@@ -465,6 +493,45 @@ load_image (GFile     *file,
 
      return -1;
     }
+
+#ifdef HAVE_LIBHEIF_1_4_0
+  switch (heif_image_handle_get_color_profile_type (handle))
+    {
+    case heif_color_profile_type_not_present:
+      break;
+    case heif_color_profile_type_rICC:
+    case heif_color_profile_type_prof:
+      /* I am unsure, but it looks like both these types represent an
+       * ICC color profile. XXX
+       */
+        {
+          void   *profile_data;
+          size_t  profile_size;
+
+          profile_size = heif_image_handle_get_raw_color_profile_size (handle);
+          profile_data = g_malloc0 (profile_size);
+          err = heif_image_handle_get_raw_color_profile (handle, profile_data);
+
+          if (err.code)
+            g_warning ("%s: color profile loading failed and discarded.",
+                       G_STRFUNC);
+          else
+            profile = gimp_color_profile_new_from_icc_profile ((guint8 *) profile_data,
+                                                               profile_size, NULL);
+
+          g_free (profile_data);
+        }
+      break;
+
+    default:
+      /* heif_color_profile_type_nclx (what is that?) and any future
+       * profile type which we don't support in GIMP (yet).
+       */
+      g_warning ("%s: unknown color profile type has been discarded.",
+                 G_STRFUNC);
+      break;
+    }
+#endif /* HAVE_LIBHEIF_1_4_0 */
 
   gimp_progress_update (0.75);
 
@@ -478,6 +545,9 @@ load_image (GFile     *file,
   image_ID = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
+  if (profile)
+    gimp_image_set_color_profile (image_ID, profile);
+
   layer_ID = gimp_layer_new (image_ID,
                              _("image content"),
                              width, height,
@@ -490,9 +560,11 @@ load_image (GFile     *file,
   buffer = gimp_drawable_get_buffer (layer_ID);
 
   if (has_alpha)
-    format = babl_format ("R'G'B'A u8");
+    format = babl_format_with_space ("R'G'B'A u8",
+                                     gegl_buffer_get_format (buffer));
   else
-    format = babl_format ("R'G'B' u8");
+    format = babl_format_with_space ("R'G'B' u8",
+                                     gegl_buffer_get_format (buffer));
 
   data = heif_image_get_plane_readonly (img, heif_channel_interleaved,
                                         &stride);
@@ -549,7 +621,8 @@ load_image (GFile     *file,
 
     if (exif_data || xmp_data)
       {
-        GimpMetadata *metadata = gimp_metadata_new ();
+        GimpMetadata          *metadata = gimp_metadata_new ();
+        GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
 
         if (exif_data)
           gimp_metadata_set_from_exif (metadata,
@@ -559,11 +632,17 @@ load_image (GFile     *file,
           gimp_metadata_set_from_xmp (metadata,
                                       xmp_data, xmp_data_size, NULL);
 
+        if (profile)
+          flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+
         gimp_image_metadata_load_finish (image_ID, "image/heif",
-                                         metadata, GIMP_METADATA_LOAD_ALL,
+                                         metadata, flags,
                                          interactive);
       }
   }
+
+  if (profile)
+    g_object_unref (profile);
 
   heif_image_handle_release (handle);
   heif_context_free (ctx);
@@ -606,33 +685,89 @@ save_image (GFile             *file,
 {
   struct heif_image        *image   = NULL;
   struct heif_context      *context = heif_context_alloc ();
-  struct heif_encoder      *encoder;
-  struct heif_image_handle *handle;
+  struct heif_encoder      *encoder = NULL;
+  struct heif_image_handle *handle  = NULL;
   struct heif_writer        writer;
   struct heif_error         err;
   GOutputStream            *output;
   GeglBuffer               *buffer;
   const Babl               *format;
+  const Babl               *space   = NULL;
   guint8                   *data;
   gint                      stride;
   gint                      width;
   gint                      height;
   gboolean                  has_alpha;
+  gboolean                  out_linear = FALSE;
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
-  width  = gimp_drawable_width  (drawable_ID);
-  height = gimp_drawable_height (drawable_ID);
+  width   = gimp_drawable_width  (drawable_ID);
+  height  = gimp_drawable_height (drawable_ID);
 
   has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
   err = heif_image_create (width, height,
                            heif_colorspace_RGB,
                            has_alpha ?
-                           heif_chroma_interleaved_32bit :
-                           heif_chroma_interleaved_24bit,
+                           heif_chroma_interleaved_RGBA :
+                           heif_chroma_interleaved_RGB,
                            &image);
+
+#ifdef HAVE_LIBHEIF_1_4_0
+  if (params->save_profile)
+    {
+      GimpColorProfile *profile = NULL;
+      const guint8     *icc_data;
+      gsize             icc_length;
+
+      profile = gimp_image_get_color_profile (image_ID);
+      if (profile && gimp_color_profile_is_linear (profile))
+        out_linear = TRUE;
+
+      if (! profile)
+        {
+          profile = gimp_image_get_effective_color_profile (image_ID);
+
+          if (gimp_color_profile_is_linear (profile))
+            {
+              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+                {
+                  /* If stored data was linear, let's convert the profile. */
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  g_clear_object (&profile);
+                  profile = saved_profile;
+                }
+              else
+                {
+                  /* Keep linear profile as-is for 8-bit linear image. */
+                  out_linear = TRUE;
+                }
+            }
+        }
+
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet output the error. */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
+      g_object_unref (profile);
+    }
+#endif /* HAVE_LIBHEIF_1_4_0 */
+
+  if (! space)
+    space = gimp_drawable_get_format (drawable_ID);
 
   heif_image_add_plane (image, heif_channel_interleaved,
                         width, height, has_alpha ? 32 : 24);
@@ -642,9 +777,20 @@ save_image (GFile             *file,
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   if (has_alpha)
-    format = babl_format ("R'G'B'A u8");
+    {
+      if (out_linear)
+        format = babl_format ("RGBA u8");
+      else
+        format = babl_format ("R'G'B'A u8");
+    }
   else
-    format = babl_format ("R'G'B' u8");
+    {
+      if (out_linear)
+        format = babl_format ("RGB u8");
+      else
+        format = babl_format ("R'G'B' u8");
+    }
+  format = babl_format_with_space (babl_format_get_encoding (format), space);
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, width, height),
@@ -655,8 +801,6 @@ save_image (GFile             *file,
   gimp_progress_update (0.33);
 
   /*  encode to HEIF file  */
-
-  context = heif_context_alloc ();
 
   err = heif_context_get_encoder_for_format (context,
                                              heif_compression_HEVC,
@@ -696,6 +840,12 @@ save_image (GFile             *file,
 
   if (err.code != 0)
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Writing HEIF image failed: %s"),
                    err.message);
@@ -751,14 +901,14 @@ load_thumbnails (struct heif_context *heif,
 
   for (i = 0; i < n_images; i++)
     {
-      struct heif_image_handle *handle;
+      struct heif_image_handle *handle = NULL;
       struct heif_error         err;
       gint                      width;
       gint                      height;
-      struct heif_image_handle *thumbnail_handle;
+      struct heif_image_handle *thumbnail_handle = NULL;
       heif_item_id              thumbnail_ID;
       gint                      n_thumbnails;
-      struct heif_image        *thumbnail_img;
+      struct heif_image        *thumbnail_img = NULL;
       gint                      thumbnail_width;
       gint                      thumbnail_height;
 
@@ -826,7 +976,7 @@ load_thumbnails (struct heif_context *heif,
       err = heif_decode_image (thumbnail_handle,
                                &thumbnail_img,
                                heif_colorspace_RGB,
-                               heif_chroma_interleaved_24bit,
+                               heif_chroma_interleaved_RGB,
                                NULL);
       if (err.code)
         {
@@ -1067,11 +1217,11 @@ load_dialog (struct heif_context *heif,
 
 static void
 save_dialog_lossless_button_toggled (GtkToggleButton *source,
-                                     GtkWidget       *slider)
+                                     GtkWidget       *hbox)
 {
   gboolean lossless = gtk_toggle_button_get_active (source);
 
-  gtk_widget_set_sensitive (slider, ! lossless);
+  gtk_widget_set_sensitive (hbox, ! lossless);
 }
 
 gboolean
@@ -1082,6 +1232,10 @@ save_dialog (SaveParams *params)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *lossless_button;
+  GtkWidget *frame;
+#ifdef HAVE_LIBHEIF_1_4_0
+  GtkWidget *profile_button;
+#endif
   GtkWidget *quality_slider;
   gboolean   run = FALSE;
 
@@ -1092,26 +1246,40 @@ save_dialog (SaveParams *params)
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
 
-  lossless_button = gtk_check_button_new_with_label (_("Lossless"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), lossless_button, FALSE, FALSE, 0);
+  frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
+  lossless_button = gtk_check_button_new_with_mnemonic (_("_Lossless"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), lossless_button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  label = gtk_label_new (_("Quality:"));
+  label = gtk_label_new_with_mnemonic (_("_Quality:"));
   quality_slider = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
                                              0, 100, 5);
   gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   gtk_range_set_value (GTK_RANGE (quality_slider), params->quality);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lossless_button),
                                 params->lossless);
   gtk_widget_set_sensitive (quality_slider, !params->lossless);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), quality_slider);
 
   g_signal_connect (lossless_button, "toggled",
                     G_CALLBACK (save_dialog_lossless_button_toggled),
-                    quality_slider);
+                    hbox);
+
+#ifdef HAVE_LIBHEIF_1_4_0
+  profile_button = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (profile_button),
+                                params->save_profile);
+  g_signal_connect (profile_button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &params->save_profile);
+  gtk_box_pack_start (GTK_BOX (main_vbox), profile_button, FALSE, FALSE, 0);
+#endif
 
   gtk_widget_show_all (dialog);
 

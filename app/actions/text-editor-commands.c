@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,8 +47,9 @@ static void   text_editor_load_response (GtkWidget      *dialog,
 /*  public functions  */
 
 void
-text_editor_load_cmd_callback (GtkAction *action,
-                               gpointer   data)
+text_editor_load_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
 
@@ -91,8 +92,9 @@ text_editor_load_cmd_callback (GtkAction *action,
 }
 
 void
-text_editor_clear_cmd_callback (GtkAction *action,
-                                gpointer   data)
+text_editor_clear_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
   GtkTextBuffer  *buffer;
@@ -103,16 +105,16 @@ text_editor_clear_cmd_callback (GtkAction *action,
 }
 
 void
-text_editor_direction_cmd_callback (GtkAction *action,
-                                    GtkAction *current,
-                                    gpointer   data)
+text_editor_direction_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
-  GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
-  gint            value;
+  GimpTextEditor    *editor = GIMP_TEXT_EDITOR (data);
+  GimpTextDirection  direction;
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  direction = (GimpTextDirection) g_variant_get_int32 (value);
 
-  gimp_text_editor_set_direction (editor, (GimpTextDirection) value);
+  gimp_text_editor_set_direction (editor, direction);
 }
 
 

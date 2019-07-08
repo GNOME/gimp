@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__
@@ -20,8 +20,8 @@
 
 
 void   gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
-                                             gint              move,
-                                             guint32           time);
+                                             GdkEvent         *event,
+                                             gint              move);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__  */

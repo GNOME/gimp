@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DRAWABLE_UNDO_H__
@@ -40,14 +40,6 @@ struct _GimpDrawableUndo
   GeglBuffer   *buffer;
   gint          x;
   gint          y;
-
-  /* stuff for "Fade" */
-  GeglBuffer             *applied_buffer;
-  GimpLayerMode           paint_mode;
-  GimpLayerColorSpace     blend_space;
-  GimpLayerColorSpace     composite_space;
-  GimpLayerCompositeMode  composite_mode;
-  gdouble                 opacity;
 };
 
 struct _GimpDrawableUndoClass

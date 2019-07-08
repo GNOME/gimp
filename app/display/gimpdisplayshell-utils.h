@@ -12,27 +12,30 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DISPLAY_SHELL_UTILS_H__
 #define __GIMP_DISPLAY_SHELL_UTILS_H__
 
 
-gdouble   gimp_display_shell_get_constrained_line_offset_angle (GimpDisplayShell *shell);
-void      gimp_display_shell_constrain_line                    (GimpDisplayShell *shell,
-                                                                gdouble           start_x,
-                                                                gdouble           start_y,
-                                                                gdouble          *end_x,
-                                                                gdouble          *end_y,
-                                                                gint              n_snap_lines);
-gchar   * gimp_display_shell_get_line_status                   (GimpDisplayShell *shell,
-                                                                const gchar      *status,
-                                                                const gchar      *separator,
-                                                                gdouble           x1,
-                                                                gdouble           y1,
-                                                                gdouble           x2,
-                                                                gdouble           y2);
+void    gimp_display_shell_get_constrained_line_params (GimpDisplayShell *shell,
+                                                        gdouble          *offset_angle,
+                                                        gdouble          *xres,
+                                                        gdouble          *yres);
+void    gimp_display_shell_constrain_line              (GimpDisplayShell *shell,
+                                                        gdouble           start_x,
+                                                        gdouble           start_y,
+                                                        gdouble          *end_x,
+                                                        gdouble          *end_y,
+                                                        gint              n_snap_lines);
+gchar * gimp_display_shell_get_line_status             (GimpDisplayShell *shell,
+                                                        const gchar      *status,
+                                                        const gchar      *separator,
+                                                        gdouble           x1,
+                                                        gdouble           y1,
+                                                        gdouble           x2,
+                                                        gdouble           y2);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_UTILS_H__  */

@@ -52,6 +52,8 @@ libappoperations_a_sources = \
 	gimpoperationcomposecrop.h		\
 	gimpoperationequalize.c			\
 	gimpoperationequalize.h			\
+	gimpoperationfillsource.c		\
+	gimpoperationfillsource.h		\
 	gimpoperationflood.c			\
 	gimpoperationflood.h			\
 	gimpoperationgradient.c			\
@@ -60,8 +62,10 @@ libappoperations_a_sources = \
 	gimpoperationgrow.h			\
 	gimpoperationhistogramsink.c		\
 	gimpoperationhistogramsink.h		\
-	gimpoperationmaskcomponents.c		\
+	gimpoperationmaskcomponents.cc		\
 	gimpoperationmaskcomponents.h		\
+	gimpoperationoffset.c			\
+	gimpoperationoffset.h			\
 	gimpoperationprofiletransform.c		\
 	gimpoperationprofiletransform.h		\
 	gimpoperationscalarmultiply.c		\

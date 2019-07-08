@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -145,6 +145,18 @@ gimp_pixel_rgn_init (GimpPixelRgn *pr,
   pr->h         = height;
   pr->dirty     = dirty;
   pr->shadow    = shadow;
+}
+
+static GimpTile *
+gimp_drawable_get_tile2 (GimpDrawable *drawable,
+                         gboolean      shadow,
+                         gint          x,
+                         gint          y)
+{
+  gint col = x / TILE_WIDTH;
+  gint row = y / TILE_HEIGHT;
+
+  return gimp_drawable_get_tile (drawable, shadow, row, col);
 }
 
 /**

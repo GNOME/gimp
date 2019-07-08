@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TRANSFORM_OPTIONS_H__
@@ -35,12 +35,16 @@ typedef struct _GimpTransformOptionsClass GimpTransformOptionsClass;
 
 struct _GimpTransformOptions
 {
-  GimpToolOptions        parent_instance;
+  GimpToolOptions         parent_instance;
 
-  GimpTransformType      type;
-  GimpTransformDirection direction;
-  GimpInterpolationType  interpolation;
-  GimpTransformResize    clip;
+  GimpTransformType       type;
+  GimpTransformDirection  direction;
+  GimpInterpolationType   interpolation;
+  GimpTransformResize     clip;
+
+  /*  options gui  */
+  GtkWidget              *type_box;
+  GtkWidget              *direction_frame;
 };
 
 struct _GimpTransformOptionsClass

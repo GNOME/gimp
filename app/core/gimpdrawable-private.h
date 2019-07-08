@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DRAWABLE_PRIVATE_H__
@@ -20,25 +20,26 @@
 
 struct _GimpDrawablePrivate
 {
-  GeglBuffer     *buffer; /* buffer for drawable data */
-  GeglBuffer     *shadow; /* shadow buffer            */
+  GeglBuffer       *buffer; /* buffer for drawable data */
+  GeglBuffer       *shadow; /* shadow buffer            */
 
-  GeglNode       *source_node;
-  GeglNode       *buffer_source_node;
-  GimpContainer  *filter_stack;
-  GeglNode       *convert_format;
+  GimpColorProfile *format_profile;
 
-  GimpLayer      *floating_selection;
-  GimpFilter     *fs_filter;
-  GeglNode       *fs_crop_node;
-  GimpApplicator *fs_applicator;
+  GeglNode         *source_node;
+  GeglNode         *buffer_source_node;
+  GimpContainer    *filter_stack;
 
-  GeglNode       *mode_node;
+  GimpLayer        *floating_selection;
+  GimpFilter       *fs_filter;
+  GeglNode         *fs_crop_node;
+  GimpApplicator   *fs_applicator;
 
-  gint            paint_count;
-  GeglBuffer     *paint_buffer;
-  cairo_region_t *paint_copy_region;
-  cairo_region_t *paint_update_region;
+  GeglNode         *mode_node;
+
+  gint              paint_count;
+  GeglBuffer       *paint_buffer;
+  cairo_region_t   *paint_copy_region;
+  cairo_region_t   *paint_update_region;
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */

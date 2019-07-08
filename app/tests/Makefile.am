@@ -2,6 +2,12 @@
 # The tests must not be run in parallel or in a different order as specified
 .NOTPARALLEL: check
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
+endif
+
 SUBDIRS = \
 	files		\
 	gimpdir		\
@@ -53,6 +59,10 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+if PLATFORM_LINUX
+libdl = -ldl
+endif
+
 if OS_WIN32
 else
 libm = -lm
@@ -65,6 +75,7 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
+	$(xobjective_c)		\
 	-I$(includedir)
 
 # We need this due to circular dependencies
@@ -102,6 +113,7 @@ LDADD = \
 	../vectors/libappvectors.a					\
 	../core/libappcore.a						\
 	../file/libappfile.a						\
+	../file-data/libappfile-data.a					\
 	../text/libapptext.a						\
 	../paint/libapppaint.a						\
 	../config/libappconfig.a					\
@@ -120,6 +132,8 @@ LDADD = \
 	$(libgimpbase)							\
 	$(GIMPICONRC)							\
 	$(GTK_LIBS)							\
+	$(APPSTREAM_GLIB_LIBS)						\
+	$(GTK_MAC_INTEGRATION_LIBS)					\
 	$(DBUS_GLIB_LIBS)						\
 	$(GDK_PIXBUF_LIBS)						\
 	$(FREETYPE_LIBS)						\
@@ -132,10 +146,14 @@ LDADD = \
 	$(GEXIV2_LIBS)							\
 	$(Z_LIBS)							\
 	$(JSON_C_LIBS)							\
+	$(LIBARCHIVE_LIBS)						\
 	$(LIBMYPAINT_LIBS)						\
+	$(LIBBACKTRACE_LIBS)						\
+	$(LIBUNWIND_LIBS)						\
 	$(INTLLIBS)							\
 	$(RT_LIBS)							\
-	$(libm)
+	$(libm)								\
+	$(libdl)
 
 gimpdir-output:
 	mkdir -p gimpdir-output

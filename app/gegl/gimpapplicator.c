@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -104,9 +104,7 @@ gimp_applicator_get_property (GObject    *object,
 }
 
 GimpApplicator *
-gimp_applicator_new (GeglNode *parent,
-                     gboolean  use_split_preview,
-                     gboolean  use_result_cache)
+gimp_applicator_new (GeglNode *parent)
 {
   GimpApplicator *applicator;
 
@@ -148,40 +146,12 @@ gimp_applicator_new (GeglNode *parent,
                          "operation", "gegl:translate",
                          NULL);
 
-  applicator->dup_apply_buffer_node =
-    gegl_node_new_child (applicator->node,
-                         "operation", "gegl:copy-buffer",
-                         NULL);
-
   gegl_node_link_many (applicator->aux_node,
                        applicator->apply_offset_node,
-                       applicator->dup_apply_buffer_node,
                        NULL);
 
-  if (use_split_preview)
-    {
-      applicator->preview_cache_node =
-        gegl_node_new_child (applicator->node,
-                             "operation", "gegl:cache",
-                             NULL);
-
-      applicator->preview_crop_node =
-        gegl_node_new_child (applicator->node,
-                             "operation", "gegl:nop",
-                             NULL);
-
-      gegl_node_link_many (applicator->dup_apply_buffer_node,
-                           applicator->preview_cache_node,
-                           applicator->preview_crop_node,
-                           NULL);
-      gegl_node_connect_to (applicator->preview_crop_node, "output",
-                            applicator->mode_node,         "aux");
-    }
-  else
-    {
-      gegl_node_connect_to (applicator->dup_apply_buffer_node, "output",
-                            applicator->mode_node,             "aux");
-    }
+  gegl_node_connect_to (applicator->apply_offset_node, "output",
+                        applicator->mode_node,         "aux");
 
   applicator->mask_node =
     gegl_node_new_child (applicator->node,
@@ -203,26 +173,28 @@ gimp_applicator_new (GeglNode *parent,
                          "mask",      applicator->affect,
                          NULL);
 
-  if (use_result_cache)
-    {
-      applicator->output_cache_node =
-        gegl_node_new_child (applicator->node,
-                             "operation", "gegl:cache",
-                             NULL);
+  applicator->convert_format_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:nop",
+                         NULL);
 
-      gegl_node_link_many (applicator->input_node,
-                           applicator->affect_node,
-                           applicator->output_cache_node,
-                           applicator->output_node,
-                           NULL);
-    }
-  else
-    {
-      gegl_node_link_many (applicator->input_node,
-                           applicator->affect_node,
-                           applicator->output_node,
-                           NULL);
-    }
+  applicator->cache_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:nop",
+                         NULL);
+
+  applicator->crop_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:nop",
+                         NULL);
+
+  gegl_node_link_many (applicator->input_node,
+                       applicator->affect_node,
+                       applicator->convert_format_node,
+                       applicator->cache_node,
+                       applicator->crop_node,
+                       applicator->output_node,
+                       NULL);
 
   gegl_node_connect_to (applicator->mode_node,   "output",
                         applicator->affect_node, "aux");
@@ -487,133 +459,85 @@ gimp_applicator_set_affect (GimpApplicator    *applicator,
     }
 }
 
-gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
-                                            GeglRectangle **rectangles,
-                                            gint           *n_rectangles);
-
 void
-gimp_applicator_set_preview (GimpApplicator      *applicator,
-                             gboolean             enable,
-                             const GeglRectangle *rect)
+gimp_applicator_set_output_format (GimpApplicator *applicator,
+                                   const Babl     *format)
 {
   g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
-  g_return_if_fail (rect != NULL);
 
-  if (! applicator->preview_cache_node)
-    return;
-
-  if (applicator->preview_enabled     != enable      ||
-      applicator->preview_rect.x      != rect->x     ||
-      applicator->preview_rect.y      != rect->y     ||
-      applicator->preview_rect.width  != rect->width ||
-      applicator->preview_rect.height != rect->height)
+  if (applicator->output_format != format)
     {
-      if (enable)
+      if (format)
         {
-          if (! applicator->preview_enabled)
+          if (! applicator->output_format)
             {
-              gegl_node_set (applicator->preview_crop_node,
-                             "operation", "gimp:compose-crop",
-                             "x",         rect->x,
-                             "y",         rect->y,
-                             "width",     rect->width,
-                             "height",    rect->height,
+              gegl_node_set (applicator->convert_format_node,
+                             "operation", "gegl:convert-format",
+                             "format",    format,
                              NULL);
-
-              gegl_node_connect_to (applicator->input_node,        "output",
-                                    applicator->preview_crop_node, "aux");
             }
           else
             {
-              gegl_node_set (applicator->preview_crop_node,
-                             "x",      rect->x,
-                             "y",      rect->y,
-                             "width",  rect->width,
-                             "height", rect->height,
+              gegl_node_set (applicator->convert_format_node,
+                             "format", format,
                              NULL);
             }
         }
-      else if (applicator->preview_enabled)
+      else
         {
-          GeglBuffer *cache;
-
-          gegl_node_disconnect (applicator->preview_crop_node, "aux");
-          gegl_node_set (applicator->preview_crop_node,
+          gegl_node_set (applicator->convert_format_node,
                          "operation", "gegl:nop",
                          NULL);
-
-          /*  when disabling the preview, preserve the cached result
-           *  by processing it into the output cache, which only
-           *  involves the mode and affect nodes.
-           */
-          gegl_node_get (applicator->preview_cache_node,
-                         "cache", &cache,
-                         NULL);
-
-          if (cache)
-            {
-              GeglRectangle *rectangles;
-              gint           n_rectangles;
-
-              if (gegl_buffer_list_valid_rectangles (cache, &rectangles,
-                                                     &n_rectangles))
-                {
-                  gint i;
-
-                  for (i = 0; i < n_rectangles; i++)
-                    gegl_node_blit (applicator->output_cache_node, 1.0,
-                                    &rectangles[i],
-                                    NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-
-                  g_free (rectangles);
-                }
-
-              g_object_unref (cache);
-            }
         }
 
-      applicator->preview_enabled = enable;
-      applicator->preview_rect    = *rect;
+      applicator->output_format = format;
     }
 }
 
+const Babl *
+gimp_applicator_get_output_format (GimpApplicator *applicator)
+{
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+
+  return applicator->output_format;
+}
+
 void
-gimp_applicator_blit (GimpApplicator      *applicator,
-                      const GeglRectangle *rect)
+gimp_applicator_set_cache (GimpApplicator *applicator,
+                           gboolean        enable)
 {
   g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
 
-  gegl_node_blit (applicator->dest_node, 1.0, rect,
-                  NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+  if (applicator->cache_enabled != enable)
+    {
+      if (enable)
+        {
+          gegl_node_set (applicator->cache_node,
+                         "operation", "gegl:cache",
+                         NULL);
+        }
+      else
+        {
+          gegl_node_set (applicator->cache_node,
+                         "operation", "gegl:nop",
+                         NULL);
+        }
+
+      applicator->cache_enabled = enable;
+    }
 }
 
-GeglBuffer *
-gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
-                                  const GeglRectangle *rect)
+gboolean
+gimp_applicator_get_cache (GimpApplicator *applicator)
 {
-  GeglBuffer *buffer;
-  GeglBuffer *shifted;
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), FALSE);
 
-  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
-  g_return_val_if_fail (rect != NULL, NULL);
-
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect->width, rect->height),
-                            babl_format ("RGBA float"));
-
-  shifted = g_object_new (GEGL_TYPE_BUFFER,
-                          "source",  buffer,
-                          "shift-x", -rect->x,
-                          "shift-y", -rect->y,
-                          NULL);
-
-  gegl_node_set (applicator->dup_apply_buffer_node,
-                 "buffer", shifted,
-                 NULL);
-
-  g_object_unref (shifted);
-
-  return buffer;
+  return applicator->cache_enabled;
 }
+
+gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
+                                            GeglRectangle **rectangles,
+                                            gint           *n_rectangles);
 
 GeglBuffer *
 gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
@@ -624,22 +548,95 @@ gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
   g_return_val_if_fail (rectangles != NULL, NULL);
   g_return_val_if_fail (n_rectangles != NULL, NULL);
 
-  if (applicator->output_cache_node)
+  if (applicator->cache_enabled)
     {
       GeglBuffer *cache;
 
-      gegl_node_get (applicator->output_cache_node,
+      gegl_node_get (applicator->cache_node,
                      "cache", &cache,
                      NULL);
 
       if (cache)
         {
-          if (gegl_buffer_list_valid_rectangles (cache, rectangles, n_rectangles))
-            return cache;
+          if (gegl_buffer_list_valid_rectangles (cache,
+                                                 rectangles, n_rectangles))
+            {
+              return cache;
+            }
 
           g_object_unref (cache);
         }
     }
 
   return NULL;
+}
+
+void
+gimp_applicator_set_crop (GimpApplicator      *applicator,
+                          const GeglRectangle *rect)
+{
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
+  if (applicator->crop_enabled != (rect != NULL) ||
+      (rect && ! gegl_rectangle_equal (&applicator->crop_rect, rect)))
+    {
+      if (rect)
+        {
+          if (! applicator->crop_enabled)
+            {
+              gegl_node_set (applicator->crop_node,
+                             "operation", "gimp:compose-crop",
+                             "x",         rect->x,
+                             "y",         rect->y,
+                             "width",     rect->width,
+                             "height",    rect->height,
+                             NULL);
+
+              gegl_node_connect_to (applicator->input_node, "output",
+                                    applicator->crop_node,  "aux");
+            }
+          else
+            {
+              gegl_node_set (applicator->crop_node,
+                             "x",      rect->x,
+                             "y",      rect->y,
+                             "width",  rect->width,
+                             "height", rect->height,
+                             NULL);
+            }
+
+          applicator->crop_enabled = TRUE;
+          applicator->crop_rect    = *rect;
+        }
+      else
+        {
+          gegl_node_disconnect (applicator->crop_node, "aux");
+          gegl_node_set (applicator->crop_node,
+                         "operation", "gegl:nop",
+                         NULL);
+
+          applicator->crop_enabled = FALSE;
+        }
+    }
+}
+
+const GeglRectangle *
+gimp_applicator_get_crop (GimpApplicator *applicator)
+{
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+
+  if (applicator->crop_enabled)
+    return &applicator->crop_rect;
+
+  return NULL;
+}
+
+void
+gimp_applicator_blit (GimpApplicator      *applicator,
+                      const GeglRectangle *rect)
+{
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
+  gegl_node_blit (applicator->dest_node, 1.0, rect,
+                  NULL, NULL, 0, GEGL_BLIT_DEFAULT);
 }

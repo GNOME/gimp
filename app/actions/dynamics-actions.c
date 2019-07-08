@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -46,37 +46,37 @@ static const GimpActionEntry dynamics_actions[] =
   { "dynamics-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("dynamics-action", "_New Dynamics"), NULL,
     NC_("dynamics-action", "Create a new dynamics"),
-    G_CALLBACK (data_new_cmd_callback),
+    data_new_cmd_callback,
     GIMP_HELP_DYNAMICS_NEW },
 
   { "dynamics-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("dynamics-action", "D_uplicate Dynamics"), NULL,
     NC_("dynamics-action", "Duplicate this dynamics"),
-    G_CALLBACK (data_duplicate_cmd_callback),
+    data_duplicate_cmd_callback,
     GIMP_HELP_DYNAMICS_DUPLICATE },
 
   { "dynamics-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("dynamics-action", "Copy Dynamics _Location"), NULL,
     NC_("dynamics-action", "Copy dynamics file location to clipboard"),
-    G_CALLBACK (data_copy_location_cmd_callback),
+    data_copy_location_cmd_callback,
     GIMP_HELP_DYNAMICS_COPY_LOCATION },
 
   { "dynamics-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("dynamics-action", "Show in _File Manager"), NULL,
     NC_("dynamics-action", "Show dynamics file location in the file manager"),
-    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    data_show_in_file_manager_cmd_callback,
     GIMP_HELP_DYNAMICS_SHOW_IN_FILE_MANAGER },
 
   { "dynamics-delete", GIMP_ICON_EDIT_DELETE,
     NC_("dynamics-action", "_Delete Dynamics"), NULL,
     NC_("dynamics-action", "Delete this dynamics"),
-    G_CALLBACK (data_delete_cmd_callback),
+    data_delete_cmd_callback,
     GIMP_HELP_DYNAMICS_DELETE },
 
   { "dynamics-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("dynamics-action", "_Refresh Dynamics"), NULL,
     NC_("dynamics-action", "Refresh dynamics"),
-    G_CALLBACK (data_refresh_cmd_callback),
+    data_refresh_cmd_callback,
     GIMP_HELP_DYNAMICS_REFRESH }
 };
 
@@ -100,7 +100,7 @@ dynamics_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "dynamics-action",
                                         dynamics_edit_actions,
                                         G_N_ELEMENTS (dynamics_edit_actions),
-                                        G_CALLBACK (data_edit_cmd_callback));
+                                        data_edit_cmd_callback);
 }
 
 void

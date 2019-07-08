@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -175,8 +175,6 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 
   gimp_tool_control_set_action_size (tool->control,
                                      "tools/tools-color-average-radius-set");
-
-  color_tool->pick_mode = GIMP_COLOR_PICK_MODE_NONE;
 }
 
 static void
@@ -371,18 +369,18 @@ gimp_color_tool_cursor_update (GimpTool         *tool,
 
           if (gimp_color_tool_can_pick (color_tool, coords, display))
             {
-              switch (color_tool->pick_mode)
+              switch (color_tool->pick_target)
                 {
-                case GIMP_COLOR_PICK_MODE_NONE:
+                case GIMP_COLOR_PICK_TARGET_NONE:
                   modifier = GIMP_CURSOR_MODIFIER_NONE;
                   break;
-                case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                case GIMP_COLOR_PICK_TARGET_FOREGROUND:
                   modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
                   break;
-                case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                case GIMP_COLOR_PICK_TARGET_BACKGROUND:
                   modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
                   break;
-                case GIMP_COLOR_PICK_MODE_PALETTE:
+                case GIMP_COLOR_PICK_TARGET_PALETTE:
                   modifier = GIMP_CURSOR_MODIFIER_PLUS;
                   break;
                 }
@@ -496,22 +494,43 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
   /*  use this tool's own options here (NOT color_tool->options)  */
   context = GIMP_CONTEXT (gimp_tool_get_options (tool));
 
-  if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
-      color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND)
+  if (color_tool->pick_target == GIMP_COLOR_PICK_TARGET_FOREGROUND ||
+      color_tool->pick_target == GIMP_COLOR_PICK_TARGET_BACKGROUND)
     {
       GtkWidget *widget;
 
-      if (babl_format_is_palette (sample_format))
+      widget = gimp_dialog_factory_find_widget (dialog_factory,
+                                                "gimp-indexed-palette");
+      if (widget)
         {
-          widget = gimp_dialog_factory_find_widget (dialog_factory,
-                                                    "gimp-indexed-palette");
-          if (widget)
+          GtkWidget *editor = gtk_bin_get_child (GTK_BIN (widget));
+          GimpImage *image  = gimp_display_get_image (display);
+
+          if (babl_format_is_palette (sample_format))
             {
-              GtkWidget *editor = gtk_bin_get_child (GTK_BIN (widget));
-              guchar    *index  = pixel;
+              guchar *index  = pixel;
 
               gimp_colormap_editor_set_index (GIMP_COLORMAP_EDITOR (editor),
                                               *index, NULL);
+            }
+          else if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+            {
+              /* When Sample merged is set, we don't have the index
+               * information and it is possible to pick colors out of
+               * the colormap (with compositing). In such a case, the
+               * sample format will not be a palette format even though
+               * the image is indexed. Still search if the color exists
+               * in the colormap.
+               * Note that even if it does, we might still pick the
+               * wrong color, since several indexes may contain the same
+               * color and we can't know for sure which is the right
+               * one.
+               */
+              gint index = gimp_colormap_editor_get_index (GIMP_COLORMAP_EDITOR (editor),
+                                                           color);
+              if (index > -1)
+                gimp_colormap_editor_set_index (GIMP_COLORMAP_EDITOR (editor),
+                                                index, NULL);
             }
         }
 
@@ -530,20 +549,20 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         }
     }
 
-  switch (color_tool->pick_mode)
+  switch (color_tool->pick_target)
     {
-    case GIMP_COLOR_PICK_MODE_NONE:
+    case GIMP_COLOR_PICK_TARGET_NONE:
       break;
 
-    case GIMP_COLOR_PICK_MODE_FOREGROUND:
+    case GIMP_COLOR_PICK_TARGET_FOREGROUND:
       gimp_context_set_foreground (context, color);
       break;
 
-    case GIMP_COLOR_PICK_MODE_BACKGROUND:
+    case GIMP_COLOR_PICK_TARGET_BACKGROUND:
       gimp_context_set_background (context, color);
       break;
 
-    case GIMP_COLOR_PICK_MODE_PALETTE:
+    case GIMP_COLOR_PICK_TARGET_PALETTE:
       {
         GdkMonitor *monitor = gimp_widget_get_monitor (GTK_WIDGET (shell));
         GtkWidget  *dockable;

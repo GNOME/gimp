@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -71,6 +71,7 @@
 #include "gimpmovetool.h"
 #include "gimpmybrushtool.h"
 #include "gimpnpointdeformationtool.h"
+#include "gimpoffsettool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
@@ -86,8 +87,6 @@
 #include "gimpunifiedtransformtool.h"
 #include "gimpvectortool.h"
 #include "gimpwarptool.h"
-
-#include "gimp-intl.h"
 
 
 /*  local function prototypes  */
@@ -174,12 +173,13 @@ gimp_tools_init (Gimp *gimp)
     gimp_smudge_tool_register,
     gimp_dodge_burn_tool_register,
 
-    /*  color tools  */
+    /*  filter tools  */
 
     gimp_brightness_contrast_tool_register,
     gimp_threshold_tool_register,
     gimp_levels_tool_register,
     gimp_curves_tool_register,
+    gimp_offset_tool_register,
     gimp_gegl_tool_register,
     gimp_operation_tool_register
   };
@@ -244,10 +244,7 @@ gimp_tools_exit (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpToolInfo *tool_info = list->data;
-      GtkWidget    *options_gui;
 
-      options_gui = gimp_tools_get_tool_options_gui (tool_info->tool_options);
-      gtk_widget_destroy (options_gui);
       gimp_tools_set_tool_options_gui (tool_info->tool_options, NULL);
     }
 }
@@ -353,7 +350,6 @@ gimp_tools_restore (Gimp *gimp)
     {
       GimpToolInfo           *tool_info = GIMP_TOOL_INFO (list->data);
       GimpToolOptionsGUIFunc  options_gui_func;
-      GtkWidget              *options_gui;
 
       /*  copy all context properties except those the tool actually
        *  uses, because the subsequent deserialize() on the tool
@@ -374,27 +370,11 @@ gimp_tools_restore (Gimp *gimp)
       options_gui_func = g_object_get_data (G_OBJECT (tool_info),
                                             "gimp-tool-options-gui-func");
 
-      if (options_gui_func)
-        {
-          options_gui = (* options_gui_func) (tool_info->tool_options);
-        }
-      else
-        {
-          GtkWidget *label;
+      if (! options_gui_func)
+        options_gui_func = gimp_tool_options_empty_gui;
 
-          options_gui = gimp_tool_options_gui (tool_info->tool_options);
-
-          label = gtk_label_new (_("This tool has\nno options."));
-          gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-          gimp_label_set_attributes (GTK_LABEL (label),
-                                     PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                                     -1);
-          gtk_box_pack_start (GTK_BOX (options_gui), label, FALSE, FALSE, 6);
-          gtk_widget_show (label);
-        }
-
-      gimp_tools_set_tool_options_gui (tool_info->tool_options,
-                                       g_object_ref_sink (options_gui));
+      gimp_tools_set_tool_options_gui_func (tool_info->tool_options,
+                                            options_gui_func);
     }
 }
 

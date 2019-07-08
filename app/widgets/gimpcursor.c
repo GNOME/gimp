@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -24,17 +24,17 @@
 #include "gimpcursor.h"
 
 
-#define cursor_default_x_hot 10
-#define cursor_default_y_hot 10
+#define cursor_default_hot_x 10
+#define cursor_default_hot_y 10
 
-#define cursor_mouse_x_hot 3
-#define cursor_mouse_y_hot 2
-#define cursor_crosshair_x_hot 15
-#define cursor_crosshair_y_hot 15
-#define cursor_zoom_x_hot 8
-#define cursor_zoom_y_hot 8
-#define cursor_color_picker_x_hot 1
-#define cursor_color_picker_y_hot 30
+#define cursor_mouse_hot_x 3
+#define cursor_mouse_hot_y 2
+#define cursor_crosshair_hot_x 15
+#define cursor_crosshair_hot_y 15
+#define cursor_zoom_hot_x 8
+#define cursor_zoom_hot_y 8
+#define cursor_color_picker_hot_x 1
+#define cursor_color_picker_hot_y 30
 
 
 typedef struct _GimpCursor GimpCursor;
@@ -42,9 +42,11 @@ typedef struct _GimpCursor GimpCursor;
 struct _GimpCursor
 {
   const gchar *resource_name;
-  const gint   x_hot, y_hot;
+  const gint   hot_x;
+  const gint   hot_y;
 
   GdkPixbuf   *pixbuf;
+  GdkPixbuf   *pixbuf_x2;
 };
 
 
@@ -53,100 +55,100 @@ static GimpCursor gimp_cursors[] =
   /* these have to match up with enum GimpCursorType in widgets-enums.h */
 
   {
-    "cursor-none.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-none",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-mouse.png",
-    cursor_mouse_x_hot, cursor_mouse_y_hot
+    "cursor-mouse",
+    cursor_mouse_hot_x, cursor_mouse_hot_y
   },
   {
-    "cursor-crosshair.png",
-    cursor_crosshair_x_hot, cursor_crosshair_y_hot
+    "cursor-crosshair",
+    cursor_crosshair_hot_x, cursor_crosshair_hot_y
   },
   {
-    "cursor-crosshair-small.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-crosshair-small",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-bad.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-bad",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-move.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-move",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-zoom.png",
-    cursor_zoom_x_hot, cursor_zoom_y_hot
+    "cursor-zoom",
+    cursor_zoom_hot_x, cursor_zoom_hot_y
   },
   {
-    "cursor-color-picker.png",
-    cursor_color_picker_x_hot, cursor_color_picker_y_hot
+    "cursor-color-picker",
+    cursor_color_picker_hot_x, cursor_color_picker_hot_y
   },
   {
-    "cursor-corner-top.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-top",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-top-right.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-top-right",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-right.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-right",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-bottom-right.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-bottom-right",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-bottom.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-bottom",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-bottom-left.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-bottom-left",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-left.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-left",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-corner-top-left.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-corner-top-left",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-top.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-top",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-top-right.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-top-right",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-right.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-right",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-bottom-right.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-bottom-right",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-bottom.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-bottom",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-bottom-left.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-bottom-left",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-left.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-left",
+    cursor_default_hot_x, cursor_default_hot_y
   },
   {
-    "cursor-side-top-left.png",
-    cursor_default_x_hot, cursor_default_y_hot
+    "cursor-side-top-left",
+    cursor_default_hot_x, cursor_default_hot_y
   }
 };
 
@@ -155,43 +157,43 @@ static GimpCursor gimp_tool_cursors[] =
   /* these have to match up with enum GimpToolCursorType in widgets-enums.h */
 
   { NULL },
-  { "tool-rect-select.png" },
-  { "tool-ellipse-select.png" },
-  { "tool-free-select.png" },
-  { "tool-polygon-select.png" },
-  { "tool-fuzzy-select.png" },
-  { "tool-paths.png" },
-  { "tool-paths-anchor.png" },
-  { "tool-paths-control.png" },
-  { "tool-paths-segment.png" },
-  { "tool-iscissors.png" },
-  { "tool-move.png" },
-  { "tool-zoom.png" },
-  { "tool-crop.png" },
-  { "tool-resize.png" },
-  { "tool-rotate.png" },
-  { "tool-shear.png" },
-  { "tool-perspective.png" },
-  { "tool-flip-horizontal.png" },
-  { "tool-flip-vertical.png" },
-  { "tool-text.png" },
-  { "tool-color-picker.png" },
-  { "tool-bucket-fill.png" },
-  { "tool-gradient.png" },
-  { "tool-pencil.png" },
-  { "tool-paintbrush.png" },
-  { "tool-airbrush.png" },
-  { "tool-ink.png" },
-  { "tool-clone.png" },
-  { "tool-heal.png" },
-  { "tool-eraser.png" },
-  { "tool-smudge.png" },
-  { "tool-blur.png" },
-  { "tool-dodge.png" },
-  { "tool-burn.png" },
-  { "tool-measure.png" },
-  { "tool-warp.png" },
-  { "tool-hand.png" }
+  { "tool-rect-select" },
+  { "tool-ellipse-select" },
+  { "tool-free-select" },
+  { "tool-polygon-select" },
+  { "tool-fuzzy-select" },
+  { "tool-paths" },
+  { "tool-paths-anchor" },
+  { "tool-paths-control" },
+  { "tool-paths-segment" },
+  { "tool-iscissors" },
+  { "tool-move" },
+  { "tool-zoom" },
+  { "tool-crop" },
+  { "tool-resize" },
+  { "tool-rotate" },
+  { "tool-shear" },
+  { "tool-perspective" },
+  { "tool-flip-horizontal" },
+  { "tool-flip-vertical" },
+  { "tool-text" },
+  { "tool-color-picker" },
+  { "tool-bucket-fill" },
+  { "tool-gradient" },
+  { "tool-pencil" },
+  { "tool-paintbrush" },
+  { "tool-airbrush" },
+  { "tool-ink" },
+  { "tool-clone" },
+  { "tool-heal" },
+  { "tool-eraser" },
+  { "tool-smudge" },
+  { "tool-blur" },
+  { "tool-dodge" },
+  { "tool-burn" },
+  { "tool-measure" },
+  { "tool-warp" },
+  { "tool-hand" }
 };
 
 static GimpCursor gimp_cursor_modifiers[] =
@@ -199,64 +201,107 @@ static GimpCursor gimp_cursor_modifiers[] =
   /* these have to match up with enum GimpCursorModifier in widgets-enums.h */
 
   { NULL },
-  { "modifier-bad.png" },
-  { "modifier-plus.png" },
-  { "modifier-minus.png" },
-  { "modifier-intersect.png" },
-  { "modifier-move.png" },
-  { "modifier-resize.png" },
-  { "modifier-rotate.png" },
-  { "modifier-zoom.png" },
-  { "modifier-control.png" },
-  { "modifier-anchor.png" },
-  { "modifier-foreground.png" },
-  { "modifier-background.png" },
-  { "modifier-pattern.png" },
-  { "modifier-join.png" },
-  { "modifier-select.png" }
+  { "modifier-bad" },
+  { "modifier-plus" },
+  { "modifier-minus" },
+  { "modifier-intersect" },
+  { "modifier-move" },
+  { "modifier-resize" },
+  { "modifier-rotate" },
+  { "modifier-zoom" },
+  { "modifier-control" },
+  { "modifier-anchor" },
+  { "modifier-foreground" },
+  { "modifier-background" },
+  { "modifier-pattern" },
+  { "modifier-join" },
+  { "modifier-select" }
 };
 
 
 static const GdkPixbuf *
-get_cursor_pixbuf (GimpCursor *cursor)
+get_cursor_pixbuf (GimpCursor *cursor,
+                   gint        scale_factor)
 {
+  gchar  *resource_path;
+  GError *error = NULL;
+
   if (! cursor->pixbuf)
     {
-      gchar  *resource_path;
-      GError *error = NULL;
-
       resource_path = g_strconcat ("/org/gimp/tool-cursors/",
-                                   cursor->resource_name, NULL);
+                                   cursor->resource_name,
+                                   ".png", NULL);
 
       cursor->pixbuf = gdk_pixbuf_new_from_resource (resource_path, &error);
 
       if (! cursor->pixbuf)
         {
-          g_critical ("Failed to create cursor image: %s", error->message);
+          g_critical ("Failed to create cursor image '%s': %s",
+                      resource_path, error->message);
           g_clear_error (&error);
         }
 
       g_free (resource_path);
     }
 
-  return cursor->pixbuf;
+  if (scale_factor == 2 && ! cursor->pixbuf_x2)
+    {
+      resource_path = g_strconcat ("/org/gimp/tool-cursors/",
+                                   cursor->resource_name,
+                                   "-x2.png", NULL);
+
+      cursor->pixbuf_x2 = gdk_pixbuf_new_from_resource (resource_path, &error);
+
+      if (! cursor->pixbuf_x2)
+        {
+          /* no critical here until we actually have the cursor files */
+          g_printerr ("Failed to create scaled cursor image '%s' "
+                      "falling back to upscaling default cursor: %s\n",
+                      resource_path, error->message);
+          g_clear_error (&error);
+
+          if (cursor->pixbuf)
+            {
+              gint width  = gdk_pixbuf_get_width  (cursor->pixbuf);
+              gint height = gdk_pixbuf_get_height (cursor->pixbuf);
+
+              cursor->pixbuf_x2 = gdk_pixbuf_scale_simple (cursor->pixbuf,
+                                                           width  * 2,
+                                                           height * 2,
+                                                           GDK_INTERP_NEAREST);
+            }
+        }
+
+      g_free (resource_path);
+    }
+
+  if (scale_factor == 2)
+    return cursor->pixbuf_x2;
+  else
+    return cursor->pixbuf;
 }
 
 GdkCursor *
-gimp_cursor_new (GdkDisplay         *display,
+gimp_cursor_new (GdkWindow          *window,
                  GimpHandedness      cursor_handedness,
                  GimpCursorType      cursor_type,
                  GimpToolCursorType  tool_cursor,
                  GimpCursorModifier  modifier)
 {
+  GdkDisplay *display;
   GimpCursor *bmcursor   = NULL;
   GimpCursor *bmmodifier = NULL;
   GimpCursor *bmtool     = NULL;
   GdkCursor  *cursor;
   GdkPixbuf  *pixbuf;
+  gint        scale_factor;
+  gint        hot_x;
+  gint        hot_y;
 
-  g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (GDK_IS_WINDOW (window), NULL);
   g_return_val_if_fail (cursor_type < GIMP_CURSOR_LAST, NULL);
+
+  display = gdk_window_get_display (window);
 
   if (cursor_type <= (GimpCursorType) GDK_LAST_CURSOR)
     return gdk_cursor_new_for_display (display, (GdkCursorType) cursor_type);
@@ -360,7 +405,12 @@ gimp_cursor_new (GdkDisplay         *display,
       bmmodifier = &gimp_cursor_modifiers[modifier];
     }
 
-  pixbuf = gdk_pixbuf_copy (get_cursor_pixbuf (bmcursor));
+  scale_factor = gdk_window_get_scale_factor (window);
+
+  /* we only support x2 scaling right now */
+  scale_factor = CLAMP (scale_factor, 1, 2);
+
+  pixbuf = gdk_pixbuf_copy (get_cursor_pixbuf (bmcursor, scale_factor));
 
   if (bmmodifier || bmtool)
     {
@@ -368,17 +418,22 @@ gimp_cursor_new (GdkDisplay         *display,
       gint height = gdk_pixbuf_get_height (pixbuf);
 
       if (bmmodifier)
-        gdk_pixbuf_composite (get_cursor_pixbuf (bmmodifier), pixbuf,
+        gdk_pixbuf_composite (get_cursor_pixbuf (bmmodifier, scale_factor),
+                              pixbuf,
                               0, 0, width, height,
                               0.0, 0.0, 1.0, 1.0,
                               GDK_INTERP_NEAREST, 200);
 
       if (bmtool)
-        gdk_pixbuf_composite (get_cursor_pixbuf (bmtool), pixbuf,
+        gdk_pixbuf_composite (get_cursor_pixbuf (bmtool, scale_factor),
+                              pixbuf,
                               0, 0, width, height,
                               0.0, 0.0, 1.0, 1.0,
                               GDK_INTERP_NEAREST, 200);
     }
+
+  hot_x = bmcursor->hot_x;
+  hot_y = bmcursor->hot_y;
 
   /*  flip the cursor if mouse setting is left-handed  */
 
@@ -387,16 +442,23 @@ gimp_cursor_new (GdkDisplay         *display,
       GdkPixbuf *flipped = gdk_pixbuf_flip (pixbuf, TRUE);
       gint       width   = gdk_pixbuf_get_width (flipped);
 
-      cursor = gdk_cursor_new_from_pixbuf (display, flipped,
-                                           (width - 1) - bmcursor->x_hot,
-                                           bmcursor->y_hot);
-      g_object_unref (flipped);
+      g_object_unref (pixbuf);
+      pixbuf = flipped;
+
+      hot_x = (width - 1) - hot_x;
+    }
+
+  if (scale_factor > 1)
+    {
+      cairo_surface_t *surface =
+        gdk_cairo_surface_create_from_pixbuf (pixbuf, scale_factor, NULL);
+
+      cursor = gdk_cursor_new_from_surface (display, surface, hot_x, hot_y);
+      cairo_surface_destroy (surface);
     }
   else
     {
-      cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
-                                           bmcursor->x_hot,
-                                           bmcursor->y_hot);
+      cursor = gdk_cursor_new_from_pixbuf (display, pixbuf, hot_x, hot_y);
     }
 
   g_object_unref (pixbuf);
@@ -411,20 +473,23 @@ gimp_cursor_set (GtkWidget          *widget,
                  GimpToolCursorType  tool_cursor,
                  GimpCursorModifier  modifier)
 {
+  GdkWindow *window;
   GdkCursor *cursor;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (gtk_widget_get_realized (widget));
 
-  cursor = gimp_cursor_new (gtk_widget_get_display (widget),
+  window = gtk_widget_get_window (widget);
+
+  cursor = gimp_cursor_new (window,
                             cursor_handedness,
                             cursor_type,
                             tool_cursor,
                             modifier);
-  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
+  gdk_window_set_cursor (window, cursor);
   g_object_unref (cursor);
 
-  gdk_display_flush (gtk_widget_get_display (widget));
+  gdk_display_flush (gdk_window_get_display (window));
 }
 
 GimpCursorType

@@ -35,7 +35,9 @@ gimptool_@GIMP_TOOL_VERSION@_LDADD = \
 
 gimp_test_clipboard_@GIMP_TOOL_VERSION@_SOURCES = gimp-test-clipboard.c
 
-gimp_test_clipboard_@GIMP_TOOL_VERSION@_LDADD = $(GTK_LIBS)
+gimp_test_clipboard_@GIMP_TOOL_VERSION@_LDADD = \
+	$(libgimpbase)	\
+	$(GTK_LIBS)
 
 
 kernelgen_SOURCES = kernelgen.c
@@ -43,10 +45,6 @@ kernelgen_SOURCES = kernelgen.c
 
 
 if ENABLE_VECTOR_ICONS
-invert-svg$(BUILD_EXEEXT): invert-svg.c
-	$(CC_FOR_BUILD) -fPIC -o $@ $< $(NATIVE_GLIB_LIBS) $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $(NATIVE_GLIB_CFLAGS)
-
-
 # compute_svg_viewbox is not built or used because librsvg is just too buggy
 # right now. But we keep the code around. The goal of this build tool will be
 # to be able to extract SVG icons from a single SVG file at build time, rather
@@ -58,9 +56,9 @@ invert-svg$(BUILD_EXEEXT): invert-svg.c
 #compute_svg_viewbox_LDADD = $(SVG_LIBS)
 
 # Build tools which must be built for the host platform.
-all-local: invert-svg$(BUILD_EXEEXT)
+#all-local: compute-svg-viewbox$(BUILD_EXEEXT)
 
-DISTCLEANFILES = invert-svg$(BUILD_EXEEXT)
+#DISTCLEANFILES = compute-svg-viewbox$(BUILD_EXEEXT)
 endif
 
 AM_CPPFLAGS = \
@@ -98,7 +96,12 @@ AM_LDFLAGS = \
 	$(xnone)
 
 EXTRA_DIST = \
-	defcheck.py	\
-	gimp-mkenums	\
-	gimppath2svg.py	\
-	invert-svg.c
+	defcheck.py			\
+	gimp-mkenums			\
+	gimppath2svg.py			\
+	performance-log-coalesce.py	\
+	performance-log-deduce.py	\
+	performance-log-expand.py	\
+	performance-log-resolve.py	\
+	performance-log-viewer		\
+	performance-log-viewer.py

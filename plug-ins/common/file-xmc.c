@@ -19,7 +19,7 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
@@ -667,10 +667,11 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  if (!XcursorFileLoad (fp, &commentsp, &imagesp))
+  if (! XcursorFileLoad (fp, &commentsp, &imagesp))
     {
       g_set_error (error, 0, 0, _("'%s' is not a valid X cursor."),
                    gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -683,6 +684,7 @@ load_image (const gchar  *filename,
           g_set_error (error, 0, 0,
                        _("Frame %d of '%s' is too wide for an X cursor."),
                        i + 1, gimp_filename_to_utf8 (filename));
+          fclose (fp);
           return -1;
         }
       if (imagesp->images[i]->height > MAX_LOAD_DIMENSION)
@@ -690,6 +692,7 @@ load_image (const gchar  *filename,
           g_set_error (error, 0, 0,
                        _("Frame %d of '%s' is too high for an X cursor."),
                        i + 1, gimp_filename_to_utf8 (filename));
+          fclose (fp);
           return -1;
         }
     }
@@ -706,7 +709,10 @@ load_image (const gchar  *filename,
   gimp_image_set_filename (image_ID, filename);
 
   if (! set_hotspot_to_parasite (image_ID))
-    return -1;
+    {
+      fclose (fp);
+      return -1;
+    }
 
   /* Temporary buffer */
   tmppixel = g_new (guint32, img_width * img_height);
@@ -729,8 +735,11 @@ load_image (const gchar  *filename,
 
       framename = make_framename (imagesp->images[i]->size, delay,
                                   DISPLAY_DIGIT (imagesp->nimage), error);
-      if (!framename)
-        return -1;
+      if (! framename)
+        {
+          fclose (fp);
+          return -1;
+        }
 
       layer_ID = gimp_layer_new (image_ID, framename, width, height,
                                  GIMP_RGBA_IMAGE,
@@ -782,6 +791,7 @@ load_image (const gchar  *filename,
                                       parasiteName[commentsp->comments[i]->comment_type -1]))
             {
               DM_XMC ("Failed to write %ith comment.\n", i);
+              fclose (fp);
               return -1;
             }
         }
@@ -868,6 +878,7 @@ load_thumbnail (const gchar *filename,
       g_set_error (error, 0, 0,
                    "'%s' seems to have an incorrect toc size.",
                    gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
   positions = g_malloc (ntoc * sizeof (guint32));
@@ -906,6 +917,7 @@ load_thumbnail (const gchar *filename,
       g_set_error (error, 0, 0,
                    _("there is no image chunk in \"%s\"."),
                    gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -946,6 +958,7 @@ load_thumbnail (const gchar *filename,
       g_set_error (error, 0, 0,
                    _("'%s' is too wide for an X cursor."),
                    gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -954,6 +967,7 @@ load_thumbnail (const gchar *filename,
       g_set_error (error, 0, 0,
                    _("'%s' is too high for an X cursor."),
                    gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -1043,7 +1057,6 @@ save_dialog (const gint32   image_ID,
   GtkWidget      *grid;
   GtkWidget      *box;
   GtkAdjustment  *adjustment;
-  GtkWidget      *alignment;
   GtkWidget      *tmpwidget;
   GtkWidget      *label;
   GtkTextBuffer  *textbuffer;
@@ -1079,7 +1092,7 @@ save_dialog (const gint32   image_ID,
   x2 = hotspotRange->width + hotspotRange->x - 1;
 
   adjustment = gtk_adjustment_new (xmcparas.x, x1, x2, 1, 5, 0);
-  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  tmpwidget = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
@@ -1101,7 +1114,7 @@ save_dialog (const gint32   image_ID,
   y2 = hotspotRange->height + hotspotRange->y - 1;
 
   adjustment = gtk_adjustment_new (xmcparas.y, y1, y2, 1, 5, 0);
-  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  tmpwidget = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
@@ -1182,11 +1195,11 @@ save_dialog (const gint32   image_ID,
                                "is specified."),
                              TRUE,  NULL,
                              NULL);
-  alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_widget_show (alignment);
-  gtk_grid_attach (GTK_GRID (grid), alignment, 0, 3, 3, 1);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 20, 0); /*padding left*/
-  gtk_container_add (GTK_CONTAINER (alignment), tmpwidget);
+  g_object_set (tmpwidget,
+                "margin-start", 20,
+                "margin-bottom", 6,
+                NULL);
+  gtk_grid_attach (GTK_GRID (grid), tmpwidget, 0, 3, 3, 1);
   gtk_widget_show (tmpwidget);
 
   /*
@@ -1205,7 +1218,7 @@ save_dialog (const gint32   image_ID,
 
   adjustment = gtk_adjustment_new (xmcvals.delay, CURSOR_MINIMUM_DELAY,
                                    CURSOR_MAX_DELAY, 1, 5, 0);
-  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  tmpwidget = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
@@ -1233,11 +1246,11 @@ save_dialog (const gint32   image_ID,
                                "is specified."),
                              TRUE,  NULL,
                              NULL);
-  alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_widget_show (alignment);
-  gtk_grid_attach (GTK_GRID (grid), alignment, 0, 5, 3, 1);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 20, 0); /*padding left*/
-  gtk_container_add (GTK_CONTAINER (alignment), tmpwidget);
+  g_object_set (tmpwidget,
+                "margin-start", 20,
+                "margin-bottom", 6,
+                NULL);
+  gtk_grid_attach (GTK_GRID (grid), tmpwidget, 0, 5, 3, 1);
   gtk_widget_show (tmpwidget);
 
   /*
@@ -1497,6 +1510,7 @@ save_image (const gchar *filename,
   if (!imagesp)
     {
       DM_XMC ("Failed to XcursorImagesCreate!\n");
+      fclose (fp);
       return FALSE;
     }
   imagesp->nimage = nlayers;
@@ -1541,6 +1555,7 @@ save_image (const gchar *filename,
                        _("Frame '%s' is too wide. Please reduce to no more than %dpx."),
                        gimp_any_to_utf8 (framename, -1, NULL),
                        MAX_SAVE_DIMENSION);
+          fclose (fp);
           return FALSE;
         }
 
@@ -1550,6 +1565,7 @@ save_image (const gchar *filename,
                        _("Frame '%s' is too high. Please reduce to no more than %dpx."),
                        gimp_any_to_utf8 (framename, -1, NULL),
                        MAX_SAVE_DIMENSION);
+          fclose (fp);
           return FALSE;
         }
 
@@ -1558,6 +1574,7 @@ save_image (const gchar *filename,
           g_set_error (error, 0, 0,
                        _("Width and/or height of frame '%s' is zero!"),
                        gimp_any_to_utf8 (framename, -1, NULL));
+          fclose (fp);
           return FALSE;
         }
 
@@ -1578,6 +1595,7 @@ save_image (const gchar *filename,
               if (!imagesp->images[i])
                 {
                   DM_XMC ("Failed to XcursorImageCreate.\n");
+                  fclose (fp);
                   return FALSE;
                 }
               imagesp->images[i]->pixels[0] = 0x0;
@@ -1600,6 +1618,7 @@ save_image (const gchar *filename,
                              "Try to change the hot spot position, "
                              "layer geometry or export without auto-crop."),
                            gimp_any_to_utf8 (framename, -1, NULL));
+              fclose (fp);
               return FALSE;
             }
         }
@@ -1633,6 +1652,7 @@ save_image (const gchar *filename,
       if (!imagesp->images[i])
         {
           DM_XMC ("Failed to XcursorImageCreate.\n");
+          fclose (fp);
           return FALSE;
         }
       /*
@@ -1682,8 +1702,11 @@ save_image (const gchar *filename,
                                   imagesp->images[i]->delay,
                                   DISPLAY_DIGIT (imagesp->nimage),
                                   error);
-      if (!framename)
-        return FALSE;
+      if (! framename)
+        {
+          fclose (fp);
+          return FALSE;
+        }
 
       gimp_item_set_name (orig_layers[nlayers - 1 - i], framename);
       g_free (framename);
@@ -1742,6 +1765,7 @@ save_image (const gchar *filename,
         {
           DM_XMC ("Failed to XcursorFileSave.\t%p\t%p\t%p\n",
                   fp, commentsp, imagesp);
+          fclose (fp);
           return FALSE;
         }
 
@@ -1751,6 +1775,7 @@ save_image (const gchar *filename,
       if (! XcursorFileSaveImages (fp, imagesp))
         {
           DM_XMC ("Failed to XcursorFileSaveImages.\t%p\t%p\n", fp, imagesp);
+          fclose (fp);
           return FALSE;
         }
     }

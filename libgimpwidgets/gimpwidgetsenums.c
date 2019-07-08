@@ -133,9 +133,9 @@ gimp_color_selector_channel_get_type (void)
     { GIMP_COLOR_SELECTOR_GREEN, NC_("color-selector-channel", "_G"), N_("Green") },
     { GIMP_COLOR_SELECTOR_BLUE, NC_("color-selector-channel", "_B"), N_("Blue") },
     { GIMP_COLOR_SELECTOR_ALPHA, NC_("color-selector-channel", "_A"), N_("Alpha") },
-    { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, NC_("color-selector-channel", "_L"), N_("LCH Lightness") },
-    { GIMP_COLOR_SELECTOR_LCH_CHROMA, NC_("color-selector-channel", "_C"), N_("LCH Chroma") },
-    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_H"), N_("LCH Hue") },
+    { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, NC_("color-selector-channel", "_L"), N_("LCh Lightness") },
+    { GIMP_COLOR_SELECTOR_LCH_CHROMA, NC_("color-selector-channel", "_C"), N_("LCh Chroma") },
+    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_h"), N_("LCh Hue") },
     { 0, NULL, NULL }
   };
 
@@ -166,7 +166,7 @@ gimp_color_selector_model_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_COLOR_SELECTOR_MODEL_RGB, NC_("color-selector-model", "RGB"), N_("RGB color model") },
-    { GIMP_COLOR_SELECTOR_MODEL_LCH, NC_("color-selector-model", "LCH"), N_("CIELCh color model") },
+    { GIMP_COLOR_SELECTOR_MODEL_LCH, NC_("color-selector-model", "LCH"), N_("CIE LCh color model") },
     { GIMP_COLOR_SELECTOR_MODEL_HSV, NC_("color-selector-model", "HSV"), N_("HSV color model") },
     { 0, NULL, NULL }
   };
@@ -178,6 +178,38 @@ gimp_color_selector_model_get_type (void)
       type = g_enum_register_static ("GimpColorSelectorModel", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_type_set_translation_context (type, "color-selector-model");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_int_combo_box_layout_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY, "GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY", "icon-only" },
+    { GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED, "GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED", "abbreviated" },
+    { GIMP_INT_COMBO_BOX_LAYOUT_FULL, "GIMP_INT_COMBO_BOX_LAYOUT_FULL", "full" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY, "GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY", NULL },
+    { GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED, "GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED", NULL },
+    { GIMP_INT_COMBO_BOX_LAYOUT_FULL, "GIMP_INT_COMBO_BOX_LAYOUT_FULL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpIntComboBoxLayout", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "int-combo-box-layout");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -270,38 +302,6 @@ gimp_zoom_type_get_type (void)
       type = g_enum_register_static ("GimpZoomType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_type_set_translation_context (type, "zoom-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_int_combo_box_layout_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY, "GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY", "icon-only" },
-    { GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED, "GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED", "abbreviated" },
-    { GIMP_INT_COMBO_BOX_LAYOUT_FULL, "GIMP_INT_COMBO_BOX_LAYOUT_FULL", "full" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY, "GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY", NULL },
-    { GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED, "GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED", NULL },
-    { GIMP_INT_COMBO_BOX_LAYOUT_FULL, "GIMP_INT_COMBO_BOX_LAYOUT_FULL", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpIntComboBoxLayout", values);
-      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
-      gimp_type_set_translation_context (type, "int-combo-box-layout");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 
@@ -235,15 +235,60 @@ static void
 normalize (GimpDrawable *drawable)
 {
   NormalizeParam_t param;
-  gint x;
-  guchar  range;
+  gint             x1, y1, x2, y2;
+  gint             x;
+  guchar           range;
+  gint             total_area;
 
   param.min = 255;
   param.max = 0;
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.alpha = (param.has_alpha) ? drawable->bpp - 1 : drawable->bpp;
 
-  gimp_rgn_iterate1 (drawable, 0 /* unused */, find_min_max, &param);
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  total_area  = (x2 - x1) * (y2 - y1);
+  if (total_area <= 0)
+    return;
+
+  {
+    GimpPixelRgn  srcPR;
+    gpointer      pr;
+    gint          area_so_far;
+    gint          count;
+
+    area_so_far = 0;
+
+    gimp_pixel_rgn_init (&srcPR, drawable,
+                         x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+
+    for (pr = gimp_pixel_rgns_register (1, &srcPR), count = 0;
+         pr != NULL;
+         pr = gimp_pixel_rgns_process (pr), count++)
+      {
+        const guchar *src = srcPR.data;
+        gint          y;
+
+        for (y = 0; y < srcPR.h; y++)
+          {
+            const guchar *s = src;
+            gint          x;
+
+            for (x = 0; x < srcPR.w; x++)
+              {
+                find_min_max (s, srcPR.bpp, &param);
+                s += srcPR.bpp;
+              }
+
+            src += srcPR.rowstride;
+          }
+
+        area_so_far += srcPR.w * srcPR.h;
+
+        if ((count % 16) == 0)
+          gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
+      }
+  }
 
   /* Calculate LUT */
 
@@ -255,5 +300,55 @@ normalize (GimpDrawable *drawable)
   else
     param.lut[(gint)param.min] = param.min;
 
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, normalize_func, &param);
+  {
+    GimpPixelRgn  srcPR, destPR;
+    gpointer      pr;
+    gint          area_so_far;
+    gint          count;
+
+    area_so_far = 0;
+
+    /* Initialize the pixel regions. */
+    gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+                         FALSE, FALSE);
+    gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+                         TRUE, TRUE);
+
+    for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR), count = 0;
+         pr != NULL;
+         pr = gimp_pixel_rgns_process (pr), count++)
+      {
+        const guchar *src  = srcPR.data;
+        guchar       *dest = destPR.data;
+        gint          row;
+
+        for (row = 0; row < srcPR.h; row++)
+          {
+            const guchar *s      = src;
+            guchar       *d      = dest;
+            gint          pixels = srcPR.w;
+
+            while (pixels--)
+              {
+                normalize_func (s, d, srcPR.bpp, &param);
+
+                s += srcPR.bpp;
+                d += destPR.bpp;
+              }
+
+            src  += srcPR.rowstride;
+            dest += destPR.rowstride;
+          }
+
+        area_so_far += srcPR.w * srcPR.h;
+
+        if ((count % 16) == 0)
+          gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
+      }
+  }
+
+  /*  update the processed region  */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }

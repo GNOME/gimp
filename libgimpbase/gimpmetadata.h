@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_METADATA_H__
@@ -55,20 +55,23 @@ typedef enum
 
 /**
  * GimpMetadataSaveFlags:
- * @GIMP_METADATA_SAVE_EXIF:      Save EXIF
- * @GIMP_METADATA_SAVE_XMP:       Save XMP
- * @GIMP_METADATA_SAVE_IPTC:      Save IPTC
- * @GIMP_METADATA_SAVE_THUMBNAIL: Save a thumbnail of the image
- * @GIMP_METADATA_SAVE_ALL:       Save all of the above
+ * @GIMP_METADATA_SAVE_EXIF:          Save EXIF
+ * @GIMP_METADATA_SAVE_XMP:           Save XMP
+ * @GIMP_METADATA_SAVE_IPTC:          Save IPTC
+ * @GIMP_METADATA_SAVE_THUMBNAIL:     Save a thumbnail of the image
+ * @GIMP_METADATA_SAVE_COLOR_PROFILE: Save the image's color profile
+ *                                    Since: 2.10.10
+ * @GIMP_METADATA_SAVE_ALL:           Save all of the above
  *
  * What kinds of metadata to save when exporting images.
  **/
 typedef enum
 {
-  GIMP_METADATA_SAVE_EXIF      = 1 << 0,
-  GIMP_METADATA_SAVE_XMP       = 1 << 1,
-  GIMP_METADATA_SAVE_IPTC      = 1 << 2,
-  GIMP_METADATA_SAVE_THUMBNAIL = 1 << 3,
+  GIMP_METADATA_SAVE_EXIF          = 1 << 0,
+  GIMP_METADATA_SAVE_XMP           = 1 << 1,
+  GIMP_METADATA_SAVE_IPTC          = 1 << 2,
+  GIMP_METADATA_SAVE_THUMBNAIL     = 1 << 3,
+  GIMP_METADATA_SAVE_COLOR_PROFILE = 1 << 4,
 
   GIMP_METADATA_SAVE_ALL       = 0xffffffff
 } GimpMetadataSaveFlags;

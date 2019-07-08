@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -45,7 +45,11 @@
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
+#include "tools/gimptool.h"
+#include "tools/tool_manager.h"
 
+#include "widgets/gimpaction.h"
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcolorselectorpalette.h"
@@ -119,9 +123,6 @@ static gboolean   gui_exit_callback             (Gimp               *gimp,
 static gboolean   gui_exit_after_callback       (Gimp               *gimp,
                                                  gboolean            force);
 
-static void       gui_show_tooltips_notify      (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 Gimp               *gimp);
 static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  Gimp               *gimp);
@@ -227,7 +228,7 @@ gui_init (Gimp     *gimp,
   /* Normally this should have been taken care of during command line
    * parsing as a post-parse hook of gtk_get_option_group(), using the
    * system locales.
-   * But user config may have overriden the language, therefore we must
+   * But user config may have overridden the language, therefore we must
    * check the widget directions again.
    */
   gtk_widget_set_default_direction (gtk_get_locale_direction ());
@@ -269,7 +270,7 @@ gui_init (Gimp     *gimp,
 
   if (! no_splash)
     {
-      splash_create (gimp->be_verbose, initial_monitor);
+      splash_create (gimp, gimp->be_verbose, initial_monitor);
       status_callback = splash_update;
     }
 
@@ -533,7 +534,7 @@ gui_add_to_app_menu (GimpUIManager     *ui_manager,
 {
   GtkWidget *item;
 
-  item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (ui_manager), action_path);
+  item = gimp_ui_manager_get_widget (ui_manager, action_path);
 
   if (GTK_IS_MENU_ITEM (item))
     gtkosx_application_insert_app_menu_item (osx_app, GTK_WIDGET (item), index);
@@ -607,12 +608,15 @@ gui_restore_after_callback (Gimp               *gimp,
 
     osx_app = gtkosx_application_get ();
 
-    menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/image-menubar");
+    menu = gimp_ui_manager_get_widget (image_ui_manager,
+                                       "/image-menubar");
     if (GTK_IS_MENU_ITEM (menu))
       menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-    gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
+    /* do not activate OSX menu if tests are running */
+    if (!getenv("GIMP_TESTING_ABS_TOP_SRCDIR"))
+      gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
+
     gtkosx_application_set_use_quartz_accelerators (osx_app, FALSE);
 
     gui_add_to_app_menu (image_ui_manager, osx_app,
@@ -638,8 +642,8 @@ gui_restore_after_callback (Gimp               *gimp,
     item = gtk_separator_menu_item_new ();
     gtkosx_application_insert_app_menu_item (osx_app, item, 8);
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/image-menubar/File/file-quit");
+    item = gimp_ui_manager_get_widget (image_ui_manager,
+                                       "/image-menubar/File/file-quit");
     gtk_widget_hide (item);
 
     g_signal_connect (osx_app, "NSApplicationBlockTermination",
@@ -697,7 +701,8 @@ static gboolean
 gui_exit_callback (Gimp     *gimp,
                    gboolean  force)
 {
-  GimpGuiConfig  *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpTool      *active_tool;
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -725,6 +730,15 @@ gui_exit_callback (Gimp     *gimp,
   gimp->message_handler = GIMP_CONSOLE;
 
   gui_unique_exit ();
+
+  /* If any modifier is set when quitting (typically when exiting with
+   * Ctrl-q for instance!), when serializing the tool options, it will
+   * save any alternate value instead of the main one. Make sure that
+   * any modifier is reset before saving options.
+   */
+  active_tool = tool_manager_get_active (gimp);
+  if  (active_tool && active_tool->focus_display)
+    gimp_tool_set_modifier_state  (active_tool, 0, active_tool->focus_display);
 
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
@@ -960,30 +974,34 @@ gui_check_action_exists (const gchar *accel_path)
   GList         *list;
 
   manager = gimp_ui_managers_from_name ("<Image>")->data;
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+
+  for (list = gimp_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
     {
-      GtkActionGroup *group   = list->data;
-      GList          *actions = NULL;
-      GList          *list2;
+      GimpActionGroup *group   = list->data;
+      GList           *actions = NULL;
+      GList           *list2;
 
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      actions = gimp_action_group_list_actions (group);
+
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
-          const gchar *path;
-          GtkAction   *action = list2->data;
+          GimpAction  *action = list2->data;
+          const gchar *path   = gimp_action_get_accel_path (action);
 
-          path = gtk_action_get_accel_path (action);
           if (g_strcmp0 (path, accel_path) == 0)
             {
               action_exists = TRUE;
               break;
             }
         }
+
       g_list_free (actions);
+
       if (action_exists)
         break;
     }
+
   return action_exists;
 }

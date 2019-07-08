@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_WIDGETS_TYPES_H__
@@ -72,6 +72,7 @@ typedef struct _GimpPixmap                    GimpPixmap;
 typedef struct _GimpRuler                     GimpRuler;
 typedef struct _GimpScrolledPreview           GimpScrolledPreview;
 typedef struct _GimpSizeEntry                 GimpSizeEntry;
+typedef struct _GimpSpinButton                GimpSpinButton;
 typedef struct _GimpStringComboBox            GimpStringComboBox;
 typedef struct _GimpUnitComboBox              GimpUnitComboBox;
 typedef struct _GimpUnitMenu                  GimpUnitMenu;

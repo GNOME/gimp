@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -72,9 +72,7 @@ struct _GimpDeviceEditorPrivate
 
 
 #define GIMP_DEVICE_EDITOR_GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_DEVICE_EDITOR, \
-                                     GimpDeviceEditorPrivate)
+        ((GimpDeviceEditorPrivate *) gimp_device_editor_get_instance_private ((GimpDeviceEditor *) (editor)))
 
 
 static void   gimp_device_editor_constructed    (GObject           *object);
@@ -106,7 +104,8 @@ static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
                                                  GimpDeviceEditor  *editor);
 
 
-G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_PANED)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceEditor, gimp_device_editor,
+                            GTK_TYPE_PANED)
 
 #define parent_class gimp_device_editor_parent_class
 
@@ -127,8 +126,6 @@ gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class, sizeof (GimpDeviceEditorPrivate));
 }
 
 static void
@@ -147,7 +144,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 
   gtk_icon_size_lookup (GTK_ICON_SIZE_BUTTON, &icon_width, &icon_height);
   private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
-  gtk_widget_set_size_request (private->treeview, 200, -1);
+  gtk_widget_set_size_request (private->treeview, 300, -1);
   gtk_paned_pack1 (GTK_PANED (editor), private->treeview, TRUE, FALSE);
   gtk_widget_show (private->treeview);
 

@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -168,8 +168,11 @@ gimp_frame_child_notify (GimpFrame *frame)
 {
   GtkWidget *child = gtk_bin_get_child (GTK_BIN (frame));
 
-  gtk_widget_set_margin_start (child, gimp_frame_get_indent (frame));
-  gtk_widget_set_margin_top (child, gimp_frame_get_label_spacing (frame));
+  if (child)
+    {
+      gtk_widget_set_margin_start (child, gimp_frame_get_indent (frame));
+      gtk_widget_set_margin_top (child, gimp_frame_get_label_spacing (frame));
+    }
 }
 
 static gint
@@ -219,7 +222,7 @@ gimp_frame_get_label_spacing (GimpFrame *frame)
  * variant of #GtkFrame. It doesn't render a frame at all but
  * otherwise behaves like a frame. The frame's title is rendered in
  * bold and the frame content is indented four spaces as suggested by
- * the GNOME HIG (see http://developer.gnome.org/projects/gup/hig/).
+ * the GNOME HIG (see https://developer.gnome.org/hig/stable/).
  *
  * Return value: a new #GimpFrame widget
  *

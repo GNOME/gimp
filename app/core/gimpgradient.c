@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -70,7 +70,7 @@ static gint          gimp_gradient_compare           (GimpData            *data1
 
 static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
 
-static GimpGradientSegment *
+static inline GimpGradientSegment *
               gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
                                                       GimpGradientSegment *seg,
                                                       gdouble              pos);
@@ -89,6 +89,8 @@ static inline gdouble  gimp_gradient_calc_sine_factor              (gdouble  mid
 static inline gdouble  gimp_gradient_calc_sphere_increasing_factor (gdouble  middle,
                                                                     gdouble  pos);
 static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  middle,
+                                                                    gdouble  pos);
+static inline gdouble  gimp_gradient_calc_step_factor              (gdouble  middle,
                                                                     gdouble  pos);
 
 
@@ -458,7 +460,8 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
   GimpRGB  right_color;
   GimpRGB  rgb;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  /* type-check disabled to improve speed */
+  /* g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL); */
   g_return_val_if_fail (color != NULL, NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);
@@ -503,6 +506,10 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
       factor = gimp_gradient_calc_sphere_decreasing_factor (middle, pos);
       break;
 
+    case GIMP_GRADIENT_SEGMENT_STEP:
+      factor = gimp_gradient_calc_step_factor (middle, pos);
+      break;
+
     default:
       g_warning ("%s: Unknown gradient type %d.", G_STRFUNC, seg->type);
       break;
@@ -510,11 +517,19 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   /* Get left/right colors */
 
-  gimp_gradient_segment_get_left_flat_color (gradient,
-                                             context, seg, &left_color);
+  if (context)
+    {
+      gimp_gradient_segment_get_left_flat_color (gradient,
+                                                 context, seg, &left_color);
 
-  gimp_gradient_segment_get_right_flat_color (gradient,
-                                              context, seg, &right_color);
+      gimp_gradient_segment_get_right_flat_color (gradient,
+                                                  context, seg, &right_color);
+    }
+  else
+    {
+      left_color  = seg->left_color;
+      right_color = seg->right_color;
+    }
 
   /* Calculate color components */
 
@@ -2154,7 +2169,7 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
 
 /*  private functions  */
 
-static GimpGradientSegment *
+static inline GimpGradientSegment *
 gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
                                        GimpGradientSegment *seg,
                                        gdouble              pos)
@@ -2272,4 +2287,11 @@ gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
 
   /* Works for convex decreasing and concave increasing */
   return 1.0 - sqrt(1.0 - pos * pos);
+}
+
+static inline gdouble
+gimp_gradient_calc_step_factor (gdouble middle,
+                                gdouble pos)
+{
+  return pos >= middle;
 }

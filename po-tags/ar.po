@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2015-12-02 20:55+0400\n"
 "PO-Revision-Date: 2010-01-17 12:17+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"

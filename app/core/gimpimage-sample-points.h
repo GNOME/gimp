@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_SAMPLE_POINTS_H__
@@ -42,6 +42,11 @@ void              gimp_image_move_sample_point       (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gint             x,
                                                       gint             y,
+                                                      gboolean         push_undo);
+void              gimp_image_set_sample_point_pick_mode
+                                                     (GimpImage       *image,
+                                                      GimpSamplePoint *sample_point,
+                                                      GimpColorPickMode pick_mode,
                                                       gboolean         push_undo);
 
 GList           * gimp_image_get_sample_points       (GimpImage       *image);

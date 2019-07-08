@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -28,16 +28,15 @@
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawable-private.h"
-#include "gimpdrawableundo.h"
 #include "gimpfilter.h"
 #include "gimpfilterstack.h"
 #include "gimpimage.h"
-#include "gimpimage-undo.h"
 #include "gimpprogress.h"
 #include "gimpprojection.h"
 
@@ -110,142 +109,125 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GimpFilter   *filter,
                             GimpProgress *progress,
                             const gchar  *undo_desc,
-                            gboolean      cancellable)
+                            gboolean      cancellable,
+                            gboolean      update)
 {
-  GeglRectangle rect;
-  gboolean      success = TRUE;
+  GimpImage      *image;
+  GimpApplicator *applicator;
+  gboolean        applicator_cache         = FALSE;
+  const Babl     *applicator_output_format = NULL;
+  GeglBuffer     *undo_buffer;
+  GeglRectangle   undo_rect;
+  GeglBuffer     *cache                    = NULL;
+  GeglRectangle  *rects                    = NULL;
+  gint            n_rects                  = 0;
+  GeglRectangle   rect;
+  gboolean        success                  = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
-  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                &rect.x, &rect.y,
-                                &rect.width, &rect.height))
+  image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  applicator = gimp_filter_get_applicator (filter);
+
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                  &rect.x, &rect.y,
+                                  &rect.width, &rect.height))
     {
-      GimpImage      *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GeglBuffer     *undo_buffer;
-      GimpApplicator *applicator;
-      GeglBuffer     *apply_buffer = NULL;
-      GeglBuffer     *cache        = NULL;
-      GeglRectangle  *rects        = NULL;
-      gint            n_rects      = 0;
+      return TRUE;
+    }
 
-      undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                     rect.width, rect.height),
-                                     gimp_drawable_get_format (drawable));
+  if (applicator)
+    {
+      const GeglRectangle *crop_rect;
 
-      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                             GEGL_RECTANGLE (rect.x, rect.y,
-                                             rect.width, rect.height),
+      crop_rect = gimp_applicator_get_crop (applicator);
+
+      if (crop_rect && ! gegl_rectangle_intersect (&rect, &rect, crop_rect))
+        return TRUE;
+
+      /*  the cache and its valid rectangles are the region that
+       *  has already been processed by this applicator.
+       */
+      cache = gimp_applicator_get_cache_buffer (applicator,
+                                                &rects, &n_rects);
+
+      /*  skip the cache and output-format conversion while processing
+       *  the remaining area, so that the result is written directly to
+       *  the drawable's buffer.
+       */
+      applicator_cache         = gimp_applicator_get_cache (applicator);
+      applicator_output_format = gimp_applicator_get_output_format (applicator);
+
+      gimp_applicator_set_cache (applicator, FALSE);
+      if (applicator_output_format == gimp_drawable_get_format (drawable))
+        gimp_applicator_set_output_format (applicator, NULL);
+    }
+
+  gimp_gegl_rectangle_align_to_tile_grid (
+    &undo_rect,
+    &rect,
+    gimp_drawable_get_buffer (drawable));
+
+  undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                 undo_rect.width,
+                                                 undo_rect.height),
+                                 gimp_drawable_get_format (drawable));
+
+  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                         &undo_rect,
+                         GEGL_ABYSS_NONE,
+                         undo_buffer,
+                         GEGL_RECTANGLE (0, 0, 0, 0));
+
+  gimp_projection_stop_rendering (gimp_image_get_projection (image));
+
+  if (gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
+                                        progress, undo_desc,
+                                        gimp_filter_get_node (filter),
+                                        gimp_drawable_get_buffer (drawable),
+                                        &rect, FALSE,
+                                        cache, rects, n_rects,
+                                        cancellable))
+    {
+      /*  finished successfully  */
+
+      gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
+                               undo_rect.x, undo_rect.y,
+                               undo_rect.width, undo_rect.height);
+    }
+  else
+    {
+      /*  canceled by the user  */
+
+      gimp_gegl_buffer_copy (undo_buffer,
+                             GEGL_RECTANGLE (0, 0,
+                                             undo_rect.width,
+                                             undo_rect.height),
                              GEGL_ABYSS_NONE,
-                             undo_buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
+                             gimp_drawable_get_buffer (drawable),
+                             &undo_rect);
 
-      applicator = gimp_filter_get_applicator (filter);
+      success = FALSE;
+    }
 
-      if (applicator)
-        {
-          /*  disable the preview crop, this will force-process the
-           *  cached result from the preview cache into the result
-           *  cache, involving only the layer and affect nodes
-           */
-          gimp_applicator_set_preview (applicator, FALSE,
-                                       GEGL_RECTANGLE (0, 0, 0, 0));
+  g_object_unref (undo_buffer);
 
-          /*  the apply_buffer will make a copy of the region that is
-           *  actually processed in gimp_gegl_apply_cached_operation()
-           *  below.
-           */
-          apply_buffer = gimp_applicator_dup_apply_buffer (applicator, &rect);
+  if (cache)
+    {
+      g_object_unref (cache);
+      g_free (rects);
+    }
 
-          /*  the cache and its valid rectangles are the region that
-           *  has already been processed by this applicator.
-           */
-          cache = gimp_applicator_get_cache_buffer (applicator,
-                                                    &rects, &n_rects);
+  if (applicator)
+    {
+      gimp_applicator_set_cache (applicator, applicator_cache);
+      gimp_applicator_set_output_format (applicator, applicator_output_format);
+    }
 
-          if (cache)
-            {
-              gint i;
-
-              for (i = 0; i < n_rects; i++)
-                {
-                  g_printerr ("valid: %d %d %d %d\n",
-                              rects[i].x, rects[i].y,
-                              rects[i].width, rects[i].height);
-
-                  /*  we have to copy the cached region to the apply_buffer,
-                   *  because this region is not going to be processed.
-                   */
-                  gimp_gegl_buffer_copy (cache,
-                                         &rects[i],
-                                         GEGL_ABYSS_NONE,
-                                         apply_buffer,
-                                         GEGL_RECTANGLE (rects[i].x - rect.x,
-                                                         rects[i].y - rect.y,
-                                                         0, 0));
-                }
-            }
-
-        }
-
-      gimp_projection_stop_rendering (gimp_image_get_projection (image));
-
-      if (gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
-                                            progress, undo_desc,
-                                            gimp_filter_get_node (filter),
-                                            gimp_drawable_get_buffer (drawable),
-                                            &rect, FALSE,
-                                            cache, rects, n_rects,
-                                            cancellable))
-        {
-          /*  finished successfully  */
-
-          gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
-                                   rect.x, rect.y,
-                                   rect.width, rect.height);
-
-          if (applicator)
-            {
-              GimpDrawableUndo *undo;
-
-              undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
-
-              if (undo)
-                {
-                  undo->paint_mode = applicator->paint_mode;
-                  undo->opacity    = applicator->opacity;
-
-                  undo->applied_buffer = apply_buffer;
-                  apply_buffer = NULL;
-                }
-            }
-        }
-      else
-        {
-          /*  canceled by the user  */
-
-          gimp_gegl_buffer_copy (undo_buffer,
-                                 GEGL_RECTANGLE (0, 0, rect.width, rect.height),
-                                 GEGL_ABYSS_NONE,
-                                 gimp_drawable_get_buffer (drawable),
-                                 GEGL_RECTANGLE (rect.x, rect.y, 0, 0));
-
-          success = FALSE;
-        }
-
-      g_object_unref (undo_buffer);
-
-      if (apply_buffer)
-        g_object_unref (apply_buffer);
-
-      if (cache)
-        {
-          g_object_unref (cache);
-          g_free (rects);
-        }
-
+  if (update)
+    {
       gimp_drawable_update (drawable,
                             rect.x, rect.y,
                             rect.width, rect.height);

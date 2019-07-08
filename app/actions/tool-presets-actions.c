@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -49,50 +49,50 @@ static const GimpActionEntry tool_presets_actions[] =
   { "tool-presets-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("tool-presets-action", "_New Tool Preset"), NULL,
     NC_("tool-presets-action", "Create a new tool preset"),
-    G_CALLBACK (data_new_cmd_callback),
+    data_new_cmd_callback,
     GIMP_HELP_TOOL_PRESET_NEW },
 
   { "tool-presets-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("tool-presets-action", "D_uplicate Tool Preset"), NULL,
     NC_("tool-presets-action", "Duplicate this tool preset"),
-    G_CALLBACK (data_duplicate_cmd_callback),
+    data_duplicate_cmd_callback,
     GIMP_HELP_TOOL_PRESET_DUPLICATE },
 
   { "tool-presets-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("tool-presets-action", "Copy Tool Preset _Location"), NULL,
     NC_("tool-presets-action", "Copy tool preset file location to clipboard"),
-    G_CALLBACK (data_copy_location_cmd_callback),
+    data_copy_location_cmd_callback,
     GIMP_HELP_TOOL_PRESET_COPY_LOCATION },
 
   { "tool-presets-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("tool-presets-action", "Show in _File Manager"), NULL,
     NC_("tool-presets-action", "Show tool preset file location in the file manager"),
-    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    data_show_in_file_manager_cmd_callback,
     GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER },
 
   { "tool-presets-save", GIMP_ICON_DOCUMENT_SAVE,
     NC_("tool-presets-action", "_Save Tool Options to Preset"), NULL,
     NC_("tool-presets-action", "Save the active tool options to this "
         "tool preset"),
-    G_CALLBACK (tool_presets_save_cmd_callback),
+    tool_presets_save_cmd_callback,
     GIMP_HELP_TOOL_PRESET_SAVE },
 
   { "tool-presets-restore", GIMP_ICON_DOCUMENT_REVERT,
     NC_("tool-presets-action", "_Restore Tool Preset"), NULL,
     NC_("tool-presets-action", "Restore this tool preset"),
-    G_CALLBACK (tool_presets_restore_cmd_callback),
+    tool_presets_restore_cmd_callback,
     GIMP_HELP_TOOL_PRESET_RESTORE },
 
   { "tool-presets-delete", GIMP_ICON_EDIT_DELETE,
     NC_("tool-presets-action", "_Delete Tool Preset"), NULL,
     NC_("tool-presets-action", "Delete this tool preset"),
-    G_CALLBACK (data_delete_cmd_callback),
+    data_delete_cmd_callback,
     GIMP_HELP_TOOL_PRESET_DELETE },
 
   { "tool-presets-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("tool-presets-action", "_Refresh Tool Presets"), NULL,
     NC_("tool-presets-action", "Refresh tool presets"),
-    G_CALLBACK (data_refresh_cmd_callback),
+    data_refresh_cmd_callback,
     GIMP_HELP_TOOL_PRESET_REFRESH }
 };
 
@@ -116,7 +116,7 @@ tool_presets_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "tool-presets-action",
                                         tool_presets_edit_actions,
                                         G_N_ELEMENTS (tool_presets_edit_actions),
-                                        G_CALLBACK (data_edit_cmd_callback));
+                                        data_edit_cmd_callback);
 }
 
 void

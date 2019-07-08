@@ -14,7 +14,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Algorithms stolen from the whirl and pinch plugin distributed with Gimp,
 # by Federico Mena Quintero and Scott Goehring
@@ -52,7 +52,7 @@ class pixel_fetcher:
                 row = y / self.tile_height
                 rowoff = y % self.tile_height
 
-                if col != self.col or row != self.row or self.tile == None:
+                if col != self.col or row != self.row or self.tile is None:
                         self.tile = self.drawable.get_tile(False, row, col)
                         self.col = col
                         self.row = row
@@ -125,7 +125,7 @@ def whirl_pinch(image, drawable, whirl, pinch, radius):
                                 if cx >= 0: ix = int(cx)
                                 else:       ix = -(int(-cx) + 1)
                                 if cy >= 0: iy = int(cy)
-                                else:       iy = -(int(-cx) + 1)
+                                else:       iy = -(int(-cy) + 1)
                                 pixel[0] = pft.get_pixel(ix, iy)
                                 pixel[1] = pft.get_pixel(ix+1, iy)
                                 pixel[2] = pft.get_pixel(ix, iy+1)

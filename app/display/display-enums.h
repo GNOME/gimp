@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __DISPLAY_ENUMS_H__
@@ -42,6 +42,18 @@ typedef enum
   GIMP_BUTTON_RELEASE_CLICK,
   GIMP_BUTTON_RELEASE_NO_MOTION
 } GimpButtonReleaseType;
+
+
+#define GIMP_TYPE_COMPASS_ORIENTATION (gimp_compass_orientation_get_type ())
+
+GType gimp_compass_orientation_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COMPASS_ORIENTATION_AUTO,       /*< desc="Auto"       >*/
+  GIMP_COMPASS_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  GIMP_COMPASS_ORIENTATION_VERTICAL    /*< desc="Vertical"   >*/
+} GimpCompassOrientation;
 
 
 #define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())

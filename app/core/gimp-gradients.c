@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -81,18 +81,9 @@ gimp_gradients_init (Gimp *gimp)
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to BG (Hardedge)"),
                                           FG_BG_HARDEDGE_KEY);
-  gradient->segments->left                   = 0.00;
-  gradient->segments->middle                 = 0.25;
-  gradient->segments->right                  = 0.50;
-  gradient->segments->left_color_type        = GIMP_GRADIENT_COLOR_FOREGROUND;
-  gradient->segments->right_color_type       = GIMP_GRADIENT_COLOR_FOREGROUND;
-  gradient->segments->next                   = gimp_gradient_segment_new ();
-  gradient->segments->next->prev             = gradient->segments;
-  gradient->segments->next->left             = 0.50;
-  gradient->segments->next->middle           = 0.75;
-  gradient->segments->next->right            = 1.00;
-  gradient->segments->next->left_color_type  = GIMP_GRADIENT_COLOR_BACKGROUND;
-  gradient->segments->next->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
+  gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
+  gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_BACKGROUND;
+  gradient->segments->type             = GIMP_GRADIENT_SEGMENT_STEP;
 
   /* FG to BG (HSV counter-clockwise) */
   gradient = gimp_gradients_add_gradient (gimp,

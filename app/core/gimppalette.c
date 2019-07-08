@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -37,7 +37,9 @@
 
 #include "gimp-intl.h"
 
-#define EPSILON 1e-10
+
+#define RGB_EPSILON 1e-6
+
 
 /*  local function prototypes  */
 
@@ -648,11 +650,11 @@ gimp_palette_find_entry (GimpPalette      *palette,
       for (list = palette->colors; list; list = g_list_next (list))
         {
           entry = (GimpPaletteEntry *) list->data;
-          if (gimp_rgb_distance (&entry->color, color) < EPSILON)
+          if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
             return entry;
         }
     }
-  else if (gimp_rgb_distance (&start_from->color, color) < EPSILON)
+  else if (gimp_rgb_distance (&start_from->color, color) < RGB_EPSILON)
     {
       return start_from;
     }
@@ -674,7 +676,7 @@ gimp_palette_find_entry (GimpPalette      *palette,
           if (next)
             {
               entry = (GimpPaletteEntry *) next->data;
-              if (gimp_rgb_distance (&entry->color, color) < EPSILON)
+              if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
                 return entry;
 
               next = next->next;
@@ -683,7 +685,7 @@ gimp_palette_find_entry (GimpPalette      *palette,
           if (prev)
             {
               entry = (GimpPaletteEntry *) prev->data;
-              if (gimp_rgb_distance (&entry->color, color) < EPSILON)
+              if (gimp_rgb_distance (&entry->color, color) < RGB_EPSILON)
                 return entry;
 
               prev = prev->prev;

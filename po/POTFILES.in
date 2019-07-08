@@ -24,6 +24,7 @@ app/actions/context-actions.c
 app/actions/context-commands.c
 app/actions/cursor-info-actions.c
 app/actions/dashboard-actions.c
+app/actions/dashboard-commands.c
 app/actions/data-commands.c
 app/actions/debug-actions.c
 app/actions/dialogs-actions.c
@@ -103,6 +104,8 @@ app/core/gimp-batch.c
 app/core/gimp-contexts.c
 app/core/gimp-data-factories.c
 app/core/gimp-edit.c
+app/core/gimpextension.c
+app/core/gimpextensionmanager.c
 app/core/gimp-gradients.c
 app/core/gimp-gui.c
 app/core/gimp-internal-data.c
@@ -172,6 +175,7 @@ app/core/gimpitem-linked.c
 app/core/gimplayer-floating-selection.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
+app/core/gimplineart.c
 app/core/gimpmybrush-load.c
 app/core/gimppalette.c
 app/core/gimppalette-import.c
@@ -208,7 +212,7 @@ app/dialogs/convert-precision-dialog.c
 app/dialogs/data-delete-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/dialogs.c
-app/dialogs/fade-dialog.c
+app/dialogs/extensions-dialog.c
 app/dialogs/file-open-dialog.c
 app/dialogs/file-open-location-dialog.c
 app/dialogs/file-save-dialog.c
@@ -225,7 +229,6 @@ app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
 app/dialogs/lebl-dialog.c
 app/dialogs/module-dialog.c
-app/dialogs/offset-dialog.c
 app/dialogs/palette-import-dialog.c
 app/dialogs/preferences-dialog.c
 app/dialogs/print-size-dialog.c
@@ -256,6 +259,7 @@ app/display/gimpdisplayshell-layer-select.c
 app/display/gimpdisplayshell-rotate-dialog.c
 app/display/gimpdisplayshell-scale-dialog.c
 app/display/gimpdisplayshell-title.c
+app/display/gimpdisplayshell-tool-events.c
 app/display/gimpdisplayshell-utils.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
@@ -272,6 +276,12 @@ app/file/file-open.c
 app/file/file-remote.c
 app/file/file-save.c
 app/file/file-utils.c
+
+app/file-data/file-data-gbr.c
+app/file-data/file-data-gex.c
+app/file-data/file-data-gih.c
+app/file-data/file-data-pat.c
+app/file-data/file-data.c
 
 app/gegl/gimp-babl.c
 app/gegl/gimp-gegl-enums.c
@@ -291,6 +301,7 @@ app/operations/gimpoperationcurves.c
 app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationhuesaturation.c
 app/operations/gimpoperationlevels.c
+app/operations/gimpoperationoffset.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
 app/operations/gimpoperationthreshold.c
@@ -381,6 +392,9 @@ app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui-motion-blur-circular.c
+app/propgui/gimppropgui-motion-blur-linear.c
+app/propgui/gimppropgui-motion-blur-zoom.c
 app/propgui/gimppropgui-panorama-projection.c
 app/propgui/gimppropgui-recursive-transform.c
 app/propgui/gimppropgui-shadows-highlights.c
@@ -392,13 +406,13 @@ app/propgui/gimppropgui.c
 app/text/gimpfont.c
 app/text/gimpfontfactory.c
 app/text/gimptext-compat.c
+app/text/gimptext-parasite.c
 app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
 app/text/gimptextlayer-xcf.c
 app/text/gimptextlayout.c
 app/text/text-enums.c
 
-app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpalignoptions.c
 app/tools/gimpaligntool.c
@@ -456,6 +470,7 @@ app/tools/gimpmybrushoptions-gui.c
 app/tools/gimpmybrushtool.c
 app/tools/gimpnpointdeformationoptions.c
 app/tools/gimpnpointdeformationtool.c
+app/tools/gimpoffsettool.c
 app/tools/gimpoperationtool.c
 app/tools/gimppaintbrushtool.c
 app/tools/gimppaintoptions-gui.c
@@ -482,6 +497,7 @@ app/tools/gimptexttool.c
 app/tools/gimptexttool-editor.c
 app/tools/gimpthresholdtool.c
 app/tools/gimptool.c
+app/tools/gimptooloptions-gui.c
 app/tools/gimptransformgridoptions.c
 app/tools/gimptransformgridtool.c
 app/tools/gimptransformoptions.c
@@ -513,6 +529,7 @@ app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
 app/widgets/gimpcolorhistory.c
 app/widgets/gimpcolormapeditor.c
+app/widgets/gimpcolormapselection.c
 app/widgets/gimpcolorselectorpalette.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c

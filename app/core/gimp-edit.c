@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -30,11 +30,11 @@
 #include "gimp-edit.h"
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
 #include "gimpimage-new.h"
 #include "gimpimage-undo.h"
-#include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
 #include "gimplayer-new.h"
 #include "gimplist.h"
@@ -207,6 +207,25 @@ gimp_edit_paste_is_in_place (GimpPasteType paste_type)
   g_return_val_if_reached (FALSE);
 }
 
+static gboolean
+gimp_edit_paste_is_floating (GimpPasteType paste_type)
+{
+  switch (paste_type)
+    {
+    case GIMP_PASTE_TYPE_FLOATING:
+    case GIMP_PASTE_TYPE_FLOATING_INTO:
+    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+      return TRUE;
+
+    case GIMP_PASTE_TYPE_NEW_LAYER:
+    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+      return FALSE;
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
 static GimpLayer *
 gimp_edit_paste_get_layer (GimpImage     *image,
                            GimpDrawable  *drawable,
@@ -232,7 +251,7 @@ gimp_edit_paste_get_layer (GimpImage     *image,
   /*  floating pastes always have the pasted-to drawable's format with
    *  alpha; if drawable == NULL, user is pasting into an empty image
    */
-  if (drawable)
+  if (drawable && gimp_edit_paste_is_floating (*paste_type))
     floating_format = gimp_drawable_get_format_with_alpha (drawable);
   else
     floating_format = gimp_image_get_layer_format (image, TRUE);
@@ -249,11 +268,15 @@ gimp_edit_paste_get_layer (GimpImage     *image,
         case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
         case GIMP_PASTE_TYPE_FLOATING_INTO:
         case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-          /*  when pasting as floating selection, force creation of a
-           *  plain layer, so gimp_item_convert() will collapse a
-           *  group layer
+          /*  when pasting as floating make sure gimp_item_convert()
+           *  will turn group layers into normal layers, otherwise use
+           *  the same layer type so e.g. text information gets
+           *  preserved. See issue #2667.
            */
-          layer_type = GIMP_TYPE_LAYER;
+          if (GIMP_IS_GROUP_LAYER (layer))
+            layer_type = GIMP_TYPE_LAYER;
+          else
+            layer_type = G_TYPE_FROM_INSTANCE (layer);
           break;
 
         case GIMP_PASTE_TYPE_NEW_LAYER:
@@ -287,7 +310,7 @@ gimp_edit_paste_get_layer (GimpImage     *image,
                                           gimp_drawable_get_base_type (drawable),
                                           gimp_drawable_get_precision (drawable),
                                           TRUE,
-                                          NULL,
+                                          NULL, NULL,
                                           GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                           FALSE, NULL);
             }

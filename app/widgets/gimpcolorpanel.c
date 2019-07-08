@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,9 +32,13 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpaction.h"
+#include "gimpactiongroup.h"
+#include "gimpactionimpl.h"
 #include "gimpcolordialog.h"
 #include "gimpcolorpanel.h"
 
+
+#define RGBA_EPSILON 1e-6
 
 enum
 {
@@ -126,8 +130,8 @@ gimp_color_panel_button_press (GtkWidget      *widget,
       GimpColorButton *color_button;
       GimpColorPanel  *color_panel;
       GtkUIManager    *ui_manager;
-      GtkActionGroup  *group;
-      GtkAction       *action;
+      GimpActionGroup *group;
+      GimpAction      *action;
       GimpRGB          color;
 
       color_button = GIMP_COLOR_BUTTON (widget);
@@ -136,32 +140,32 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 
       group = gtk_ui_manager_get_action_groups (ui_manager)->data;
 
-      action = gtk_action_group_get_action (group,
-                                            "color-button-use-foreground");
-      gtk_action_set_visible (action, color_panel->context != NULL);
+      action = gimp_action_group_get_action (group,
+                                             "color-button-use-foreground");
+      gimp_action_set_visible (action, color_panel->context != NULL);
 
-      action = gtk_action_group_get_action (group,
-                                            "color-button-use-background");
-      gtk_action_set_visible (action, color_panel->context != NULL);
+      action = gimp_action_group_get_action (group,
+                                             "color-button-use-background");
+      gimp_action_set_visible (action, color_panel->context != NULL);
 
       if (color_panel->context)
         {
-          action = gtk_action_group_get_action (group,
-                                                "color-button-use-foreground");
+          action = gimp_action_group_get_action (group,
+                                                 "color-button-use-foreground");
           gimp_context_get_foreground (color_panel->context, &color);
           g_object_set (action, "color", &color, NULL);
 
-          action = gtk_action_group_get_action (group,
-                                                "color-button-use-background");
+          action = gimp_action_group_get_action (group,
+                                                 "color-button-use-background");
           gimp_context_get_background (color_panel->context, &color);
           g_object_set (action, "color", &color, NULL);
         }
 
-      action = gtk_action_group_get_action (group, "color-button-use-black");
+      action = gimp_action_group_get_action (group, "color-button-use-black");
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
       g_object_set (action, "color", &color, NULL);
 
-      action = gtk_action_group_get_action (group, "color-button-use-white");
+      action = gimp_action_group_get_action (group, "color-button-use-white");
       gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       g_object_set (action, "color", &color, NULL);
     }
@@ -185,7 +189,7 @@ gimp_color_panel_clicked (GtkButton *button)
       GimpColorButton *color_button = GIMP_COLOR_BUTTON (button);
 
       panel->color_dialog =
-        gimp_color_dialog_new (NULL, panel->context,
+        gimp_color_dialog_new (NULL, panel->context, TRUE,
                                gimp_color_button_get_title (color_button),
                                NULL, NULL,
                                GTK_WIDGET (button),
@@ -214,7 +218,7 @@ gimp_color_panel_clicked (GtkButton *button)
 static GType
 gimp_color_panel_get_action_type (GimpColorButton *button)
 {
-  return GIMP_TYPE_ACTION;
+  return GIMP_TYPE_ACTION_IMPL;
 }
 
 
@@ -255,7 +259,7 @@ gimp_color_panel_color_changed (GimpColorButton *button)
       gimp_color_dialog_get_color (GIMP_COLOR_DIALOG (panel->color_dialog),
                                    &dialog_color);
 
-      if (gimp_rgba_distance (&color, &dialog_color) > 0.00001 ||
+      if (gimp_rgba_distance (&color, &dialog_color) > RGBA_EPSILON ||
           color.a != dialog_color.a)
         {
           gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
@@ -307,17 +311,11 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      if (! gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-      gtk_widget_hide (panel->color_dialog);
-
-      g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
-                     state);
-      break;
-
     case GIMP_COLOR_DIALOG_CANCEL:
-      if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+      /* GimpColorDialog returns the appropriate color (new one or
+       * original one if process cancelled.
+       */
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
 
       g_signal_emit (panel, color_panel_signals[RESPONSE], 0,

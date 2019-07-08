@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -56,7 +56,18 @@
 #include "gimp-intl.h"
 
 
-#define RESPONSE_RESET 1
+#define EPSILON 1e-6
+
+
+#define RESPONSE_RESET    1
+#define RESPONSE_READJUST 2
+
+
+typedef struct
+{
+  GimpTransformDirection direction;
+  TransInfo              trans_infos[2];
+} UndoInfo;
 
 
 static void      gimp_transform_grid_tool_finalize           (GObject                *object);
@@ -108,6 +119,9 @@ static void      gimp_transform_grid_tool_options_notify     (GimpTool          
 static void      gimp_transform_grid_tool_draw               (GimpDrawTool           *draw_tool);
 
 static void      gimp_transform_grid_tool_recalc_matrix      (GimpTransformTool      *tr_tool);
+static gchar   * gimp_transform_grid_tool_get_undo_desc      (GimpTransformTool      *tr_tool);
+static GimpTransformDirection gimp_transform_grid_tool_get_direction
+                                                             (GimpTransformTool      *tr_tool);
 static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool      *tr_tool,
                                                               GimpItem               *item,
                                                               GeglBuffer             *orig_buffer,
@@ -117,6 +131,8 @@ static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool 
                                                               gint                   *new_offset_x,
                                                               gint                   *new_offset_y);
 
+static gchar  * gimp_transform_grid_tool_real_get_undo_desc  (GimpTransformGridTool  *tg_tool);
+static void     gimp_transform_grid_tool_real_update_widget  (GimpTransformGridTool  *tg_tool);
 static void     gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool  *tg_tool);
 static GeglBuffer * gimp_transform_grid_tool_real_transform  (GimpTransformGridTool  *tg_tool,
                                                               GimpItem               *item,
@@ -153,8 +169,13 @@ static void      gimp_transform_grid_tool_hide_active_item   (GimpTransformGridT
                                                               GimpItem               *item);
 static void      gimp_transform_grid_tool_show_active_item   (GimpTransformGridTool  *tg_tool);
 
-static TransInfo * trans_info_new  (void);
-static void        trans_info_free (TransInfo *info);
+static UndoInfo * undo_info_new  (void);
+static void       undo_info_free (UndoInfo *info);
+
+static gboolean   trans_info_equal  (const TransInfo  trans_info1,
+                                     const TransInfo  trans_info2);
+static gboolean   trans_infos_equal (const TransInfo *trans_infos1,
+                                     const TransInfo *trans_infos2);
 
 
 G_DEFINE_TYPE (GimpTransformGridTool, gimp_transform_grid_tool, GIMP_TYPE_TRANSFORM_TOOL)
@@ -188,13 +209,19 @@ gimp_transform_grid_tool_class_init (GimpTransformGridToolClass *klass)
   draw_class->draw           = gimp_transform_grid_tool_draw;
 
   tr_class->recalc_matrix    = gimp_transform_grid_tool_recalc_matrix;
+  tr_class->get_undo_desc    = gimp_transform_grid_tool_get_undo_desc;
+  tr_class->get_direction    = gimp_transform_grid_tool_get_direction;
   tr_class->transform        = gimp_transform_grid_tool_transform;
 
+  klass->info_to_matrix      = NULL;
+  klass->matrix_to_info      = NULL;
+  klass->get_undo_desc       = gimp_transform_grid_tool_real_get_undo_desc;
   klass->dialog              = NULL;
   klass->dialog_update       = NULL;
   klass->prepare             = NULL;
+  klass->readjust            = NULL;
   klass->get_widget          = NULL;
-  klass->update_widget       = NULL;
+  klass->update_widget       = gimp_transform_grid_tool_real_update_widget;
   klass->widget_changed      = gimp_transform_grid_tool_real_widget_changed;
   klass->transform           = gimp_transform_grid_tool_real_transform;
 
@@ -246,16 +273,17 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   GimpImage             *image    = gimp_display_get_image (display);
   GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
   GimpItem              *item;
+  UndoInfo              *undo_info;
 
   item = gimp_transform_tool_check_active_item (tr_tool, display, error);
 
   if (! item)
     return FALSE;
 
-  tool->display     = display;
-  tool->drawable    = drawable;
+  tool->display  = display;
+  tool->drawable = drawable;
 
-  tr_tool->drawable = drawable;
+  tr_tool->item  = item;
 
   /*  Initialize the transform_grid tool dialog  */
   if (! tg_tool->gui)
@@ -281,15 +309,13 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
   /* Initialize undo and redo lists */
-  tg_tool->undo_list = g_list_prepend (NULL, trans_info_new ());
+  undo_info = undo_info_new ();
+  tg_tool->undo_list = g_list_prepend (NULL, undo_info);
   tg_tool->redo_list = NULL;
-  tg_tool->old_trans_info = g_list_last (tg_tool->undo_list)->data;
-  tg_tool->prev_trans_info = g_list_first (tg_tool->undo_list)->data;
-  gimp_transform_grid_tool_update_sensitivity (tg_tool);
 
   /*  Save the current transformation info  */
-  memcpy (tg_tool->prev_trans_info, tg_tool->trans_info,
-          sizeof (TransInfo));
+  memcpy (undo_info->trans_infos, tg_tool->trans_infos,
+          sizeof (tg_tool->trans_infos));
 
   return TRUE;
 }
@@ -370,21 +396,16 @@ gimp_transform_grid_tool_button_release (GimpTool              *tool,
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
-      /* This hack is to perform the flip immediately with the flip tool */
-      if (! tg_tool->widget)
-        {
-          gimp_transform_grid_tool_response (NULL, GTK_RESPONSE_OK, tg_tool);
-          return;
-        }
-
       /* We're done with an interaction, save it on the undo list */
       gimp_transform_grid_tool_push_internal_undo (tg_tool);
     }
   else
     {
+      UndoInfo *undo_info = tg_tool->undo_list->data;
+
       /*  Restore the last saved state  */
-      memcpy (tg_tool->trans_info, tg_tool->prev_trans_info,
-              sizeof (TransInfo));
+      memcpy (tg_tool->trans_infos, undo_info->trans_infos,
+              sizeof (tg_tool->trans_infos));
 
       /*  recalculate the tool's transformation matrix  */
       gimp_transform_tool_recalc_matrix (tr_tool, display);
@@ -495,23 +516,32 @@ static gboolean
 gimp_transform_grid_tool_undo (GimpTool    *tool,
                                GimpDisplay *display)
 {
-  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
-  GList                 *item;
+  GimpTransformTool      *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformGridTool  *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tool);
+  GimpTransformOptions   *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  UndoInfo               *undo_info;
+  GimpTransformDirection  direction;
 
-  item = g_list_next (tg_tool->undo_list);
+  undo_info = tg_tool->undo_list->data;
+  direction = undo_info->direction;
 
-  /* Move prev_trans_info from undo_list to redo_list */
-  tg_tool->redo_list = g_list_prepend (tg_tool->redo_list,
-                                       tg_tool->prev_trans_info);
-  tg_tool->undo_list = g_list_remove (tg_tool->undo_list,
-                                      tg_tool->prev_trans_info);
+  /* Move undo_info from undo_list to redo_list */
+  tg_tool->redo_list = g_list_prepend (tg_tool->redo_list, undo_info);
+  tg_tool->undo_list = g_list_remove (tg_tool->undo_list, undo_info);
 
-  tg_tool->prev_trans_info = item->data;
+  undo_info = tg_tool->undo_list->data;
 
   /*  Restore the previous transformation info  */
-  memcpy (tg_tool->trans_info, tg_tool->prev_trans_info,
-          sizeof (TransInfo));
+  memcpy (tg_tool->trans_infos, undo_info->trans_infos,
+          sizeof (tg_tool->trans_infos));
+
+  /*  Restore the previous transformation direction  */
+  if (direction != tr_options->direction)
+    {
+      g_object_set (tr_options,
+                    "direction", direction,
+                    NULL);
+    }
 
   /*  recalculate the tool's transformation matrix  */
   gimp_transform_tool_recalc_matrix (tr_tool, display);
@@ -523,23 +553,30 @@ static gboolean
 gimp_transform_grid_tool_redo (GimpTool    *tool,
                                GimpDisplay *display)
 {
-  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
-  GList                 *item;
+  GimpTransformTool      *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformGridTool  *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tool);
+  GimpTransformOptions   *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  UndoInfo               *undo_info;
+  GimpTransformDirection  direction;
 
-  item = tg_tool->redo_list;
+  undo_info = tg_tool->redo_list->data;
+  direction = undo_info->direction;
 
-  /* Move prev_trans_info from redo_list to undo_list */
-  tg_tool->prev_trans_info = item->data;
-
-  tg_tool->undo_list = g_list_prepend (tg_tool->undo_list,
-                                       tg_tool->prev_trans_info);
-  tg_tool->redo_list = g_list_remove (tg_tool->redo_list,
-                                      tg_tool->prev_trans_info);
+  /* Move undo_info from redo_list to undo_list */
+  tg_tool->undo_list = g_list_prepend (tg_tool->undo_list, undo_info);
+  tg_tool->redo_list = g_list_remove (tg_tool->redo_list, undo_info);
 
   /*  Restore the previous transformation info  */
-  memcpy (tg_tool->trans_info, tg_tool->prev_trans_info,
-          sizeof (TransInfo));
+  memcpy (tg_tool->trans_infos, undo_info->trans_infos,
+          sizeof (tg_tool->trans_infos));
+
+  /*  Restore the previous transformation direction  */
+  if (direction != tr_options->direction)
+    {
+      g_object_set (tr_options,
+                    "direction", direction,
+                    NULL);
+    }
 
   /*  recalculate the tool's transformation matrix  */
   gimp_transform_tool_recalc_matrix (tr_tool, display);
@@ -589,7 +626,7 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
           item    = gimp_transform_tool_get_active_item (tr_tool, display);
           if (item)
             {
-              if (show_preview)
+              if (gimp_transform_grid_options_show_preview (tg_options))
                 gimp_transform_grid_tool_hide_active_item (tg_tool, item);
               else
                 gimp_transform_grid_tool_show_active_item (tg_tool);
@@ -679,7 +716,7 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
                                          segs_out, n_segs_out,
                                          &matrix,
                                          0, 0);
-          g_object_add_weak_pointer (G_OBJECT (tg_tool->boundary_in),
+          g_object_add_weak_pointer (G_OBJECT (tg_tool->boundary_out),
                                      (gpointer) &tg_tool->boundary_out);
 
           gimp_canvas_item_set_visible (tg_tool->boundary_out,
@@ -727,7 +764,79 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_transform_grid_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+  GimpTransformGridTool    *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tr_tool);
+
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->info_to_matrix)
+    {
+      GimpMatrix3 forward_transform;
+      GimpMatrix3 backward_transform;
+      gboolean    forward_transform_valid;
+      gboolean    backward_transform_valid;
+
+      tg_tool->trans_info      = tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD];
+      forward_transform_valid  = gimp_transform_grid_tool_info_to_matrix (
+                                   tg_tool, &forward_transform);
+
+      tg_tool->trans_info      = tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD];
+      backward_transform_valid = gimp_transform_grid_tool_info_to_matrix (
+                                   tg_tool, &backward_transform);
+
+      if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info &&
+          tg_options->direction_linked)
+        {
+          GimpMatrix3 transform = tr_tool->transform;
+
+          switch (tr_options->direction)
+            {
+            case GIMP_TRANSFORM_FORWARD:
+              if (forward_transform_valid)
+                {
+                  gimp_matrix3_invert (&transform);
+
+                  backward_transform = forward_transform;
+                  gimp_matrix3_mult (&transform, &backward_transform);
+
+                  tg_tool->trans_info =
+                    tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD];
+                  gimp_transform_grid_tool_matrix_to_info (tg_tool,
+                                                           &backward_transform);
+                  backward_transform_valid =
+                    gimp_transform_grid_tool_info_to_matrix (
+                      tg_tool, &backward_transform);
+                }
+              break;
+
+            case GIMP_TRANSFORM_BACKWARD:
+              if (backward_transform_valid)
+                {
+                  forward_transform = backward_transform;
+                  gimp_matrix3_mult (&transform, &forward_transform);
+
+                  tg_tool->trans_info =
+                    tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD];
+                  gimp_transform_grid_tool_matrix_to_info (tg_tool,
+                                                           &forward_transform);
+                  forward_transform_valid =
+                    gimp_transform_grid_tool_info_to_matrix (
+                      tg_tool, &forward_transform);
+                }
+              break;
+            }
+        }
+      else if (forward_transform_valid && backward_transform_valid)
+        {
+          tr_tool->transform = backward_transform;
+          gimp_matrix3_invert (&tr_tool->transform);
+          gimp_matrix3_mult (&forward_transform, &tr_tool->transform);
+        }
+
+      tr_tool->transform_valid = forward_transform_valid &&
+                                 backward_transform_valid;
+    }
+
+  tg_tool->trans_info = tg_tool->trans_infos[tr_options->direction];
 
   gimp_transform_grid_tool_dialog_update (tg_tool);
   gimp_transform_grid_tool_update_sensitivity (tg_tool);
@@ -736,6 +845,61 @@ gimp_transform_grid_tool_recalc_matrix (GimpTransformTool *tr_tool)
 
   if (tg_tool->gui)
     gimp_tool_gui_show (tg_tool->gui);
+}
+
+static gchar *
+gimp_transform_grid_tool_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  GimpTransformGridTool *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+  GimpTransformOptions  *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  gchar                 *result;
+
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info)
+    {
+      TransInfo trans_info;
+
+      memcpy (&trans_info, &tg_tool->init_trans_info, sizeof (TransInfo));
+
+      tg_tool->trans_info = trans_info;
+      gimp_transform_grid_tool_matrix_to_info (tg_tool, &tr_tool->transform);
+      result = GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->get_undo_desc (
+        tg_tool);
+    }
+  else if (trans_info_equal (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+                             tg_tool->init_trans_info))
+    {
+      tg_tool->trans_info = tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD];
+      result = GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->get_undo_desc (
+        tg_tool);
+    }
+  else if (trans_info_equal (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
+                             tg_tool->init_trans_info))
+    {
+      gchar *desc;
+
+      tg_tool->trans_info = tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD];
+      desc = GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->get_undo_desc (
+        tg_tool);
+
+      result = g_strdup_printf (_("%s (Corrective)"), desc);
+
+      g_free (desc);
+    }
+  else
+    {
+      result = GIMP_TRANSFORM_TOOL_CLASS (parent_class)->get_undo_desc (
+        tr_tool);
+    }
+
+  tg_tool->trans_info = tg_tool->trans_infos[tr_options->direction];
+
+  return result;
+}
+
+static GimpTransformDirection
+gimp_transform_grid_tool_get_direction (GimpTransformTool *tr_tool)
+{
+  return GIMP_TRANSFORM_FORWARD;
 }
 
 static GeglBuffer *
@@ -775,6 +939,29 @@ gimp_transform_grid_tool_transform (GimpTransformTool  *tr_tool,
   return new_buffer;
 }
 
+static gchar *
+gimp_transform_grid_tool_real_get_undo_desc (GimpTransformGridTool *tg_tool)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
+  return GIMP_TRANSFORM_TOOL_CLASS (parent_class)->get_undo_desc (tr_tool);
+}
+
+static void
+gimp_transform_grid_tool_real_update_widget (GimpTransformGridTool *tg_tool)
+{
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->info_to_matrix)
+    {
+      GimpMatrix3 transform;
+
+      gimp_transform_grid_tool_info_to_matrix (tg_tool, &transform);
+
+      g_object_set (tg_tool->widget,
+                    "transform", &transform,
+                    NULL);
+    }
+}
+
 static void
 gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool *tg_tool)
 {
@@ -782,7 +969,7 @@ gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool *tg_tool)
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpToolWidget    *widget  = tg_tool->widget;
 
-  /* supress the call to GimpTransformGridTool::update_widget() when
+  /* suppress the call to GimpTransformGridTool::update_widget() when
    * recalculating the matrix
    */
   tg_tool->widget = NULL;
@@ -860,23 +1047,22 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 
   if (tg_tool->redo_list)
     {
-      g_list_free_full (tg_tool->redo_list, (GDestroyNotify) trans_info_free);
+      g_list_free_full (tg_tool->redo_list, (GDestroyNotify) undo_info_free);
       tg_tool->redo_list = NULL;
     }
 
   if (tg_tool->undo_list)
     {
-      g_list_free_full (tg_tool->undo_list, (GDestroyNotify) trans_info_free);
+      g_list_free_full (tg_tool->undo_list, (GDestroyNotify) undo_info_free);
       tg_tool->undo_list = NULL;
-      tg_tool->prev_trans_info = NULL;
     }
 
   gimp_transform_grid_tool_show_active_item (tg_tool);
 
-  tool->display     = NULL;
-  tool->drawable    = NULL;
+  tool->display  = NULL;
+  tool->drawable = NULL;
 
-  tr_tool->drawable = NULL;
+  tr_tool->item  = NULL;
 }
 
 static void
@@ -913,18 +1099,20 @@ gimp_transform_grid_tool_dialog (GimpTransformGridTool *tg_tool)
                                     NULL, NULL, NULL, NULL,
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     TRUE,
-
-                                    _("_Reset"),     RESPONSE_RESET,
-                                    _("_Cancel"),    GTK_RESPONSE_CANCEL,
-                                    ok_button_label, GTK_RESPONSE_OK,
-
                                     NULL);
+
+  gimp_tool_gui_add_button   (tg_tool->gui, _("_Reset"),     RESPONSE_RESET);
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust)
+    gimp_tool_gui_add_button (tg_tool->gui, _("Re_adjust"),  RESPONSE_READJUST);
+  gimp_tool_gui_add_button   (tg_tool->gui, _("_Cancel"),    GTK_RESPONSE_CANCEL);
+  gimp_tool_gui_add_button   (tg_tool->gui, ok_button_label, GTK_RESPONSE_OK);
 
   gimp_tool_gui_set_auto_overlay (tg_tool->gui, TRUE);
   gimp_tool_gui_set_default_response (tg_tool->gui, GTK_RESPONSE_OK);
 
   gimp_tool_gui_set_alternative_button_order (tg_tool->gui,
                                               RESPONSE_RESET,
+                                              RESPONSE_READJUST,
                                               GTK_RESPONSE_OK,
                                               GTK_RESPONSE_CANCEL,
                                               -1);
@@ -961,7 +1149,18 @@ gimp_transform_grid_tool_prepare (GimpTransformGridTool *tg_tool,
     }
 
   if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->prepare)
-    GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->prepare (tg_tool);
+    {
+      tg_tool->trans_info = tg_tool->init_trans_info;
+      GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->prepare (tg_tool);
+
+      memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
+              tg_tool->init_trans_info, sizeof (TransInfo));
+      memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+              tg_tool->init_trans_info, sizeof (TransInfo));
+    }
+
+  gimp_matrix3_identity (&tr_tool->transform);
+  tr_tool->transform_valid = TRUE;
 }
 
 static GimpToolWidget *
@@ -1043,36 +1242,117 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
                                    gint                   response_id,
                                    GimpTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpDisplay       *display = tool->display;
+  GimpTool                 *tool       = GIMP_TOOL (tg_tool);
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpDisplay              *display    = tool->display;
 
   switch (response_id)
     {
     case RESPONSE_RESET:
-      /* Move all undo events to redo, and pop off the first
-       * one as that's the current one, which always sits on
-       * the undo_list
-       */
-      tg_tool->redo_list =
-        g_list_remove (g_list_concat (g_list_reverse (tg_tool->undo_list),
-                                      tg_tool->redo_list),
-                       tg_tool->old_trans_info);
-      tg_tool->prev_trans_info = tg_tool->old_trans_info;
-      tg_tool->undo_list = g_list_prepend (NULL,
-                                           tg_tool->prev_trans_info);
+      {
+        gboolean direction_linked;
 
-      gimp_transform_grid_tool_update_sensitivity (tg_tool);
+        /*  restore the initial transformation info  */
+        memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
+                tg_tool->init_trans_info,
+                sizeof (TransInfo));
+        memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+                tg_tool->init_trans_info,
+                sizeof (TransInfo));
 
-      /*  Restore the previous transformation info  */
-      memcpy (tg_tool->trans_info, tg_tool->prev_trans_info,
-              sizeof (TransInfo));
+        /*  recalculate the tool's transformation matrix  */
+        direction_linked             = tg_options->direction_linked;
+        tg_options->direction_linked = FALSE;
+        gimp_transform_tool_recalc_matrix (tr_tool, display);
+        tg_options->direction_linked = direction_linked;
 
-      /*  recalculate the tool's transformtion matrix  */
-      gimp_transform_tool_recalc_matrix (tr_tool, display);
+        /*  push the restored info to the undo stack  */
+        gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      }
+      break;
 
-      /*  update the undo actions / menu items  */
-      gimp_image_flush (gimp_display_get_image (display));
+    case RESPONSE_READJUST:
+      if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust       &&
+          GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info &&
+          tr_tool->transform_valid)
+        {
+          TransInfo old_trans_infos[2];
+          gboolean  direction_linked;
+          gboolean  transform_valid;
+
+          /*  save the current transformation info  */
+          memcpy (old_trans_infos, tg_tool->trans_infos,
+                  sizeof (old_trans_infos));
+
+          /*  readjust the transformation info to view  */
+          GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust (tg_tool);
+
+          /*  recalculate the tool's transformation matrix, preserving the
+           *  overall transformation
+           */
+          direction_linked             = tg_options->direction_linked;
+          tg_options->direction_linked = TRUE;
+          gimp_transform_tool_recalc_matrix (tr_tool, display);
+          tg_options->direction_linked = direction_linked;
+
+          transform_valid = tr_tool->transform_valid;
+
+          /*  if the resulting transformation is invalid, or if the
+           *  transformation info is already adjusted to view ...
+           */
+          if (! transform_valid ||
+              trans_infos_equal (old_trans_infos, tg_tool->trans_infos))
+            {
+              /*  ... readjust the transformation info to the item bounds  */
+              GimpMatrix3 transform = tr_tool->transform;
+
+              if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
+                gimp_matrix3_invert (&transform);
+
+              memcpy (tg_tool->trans_info, tg_tool->init_trans_info,
+                      sizeof (TransInfo));
+
+              GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info (
+                tg_tool, &transform);
+
+              /*  recalculate the tool's transformation matrix, preserving the
+               *  overall transformation
+               */
+              direction_linked             = tg_options->direction_linked;
+              tg_options->direction_linked = TRUE;
+              gimp_transform_tool_recalc_matrix (tr_tool, display);
+              tg_options->direction_linked = direction_linked;
+
+              if (! tr_tool->transform_valid ||
+                  ! trans_infos_equal (old_trans_infos, tg_tool->trans_infos))
+                {
+                  transform_valid = tr_tool->transform_valid;
+                }
+            }
+
+          if (transform_valid)
+            {
+              /*  push the new info to the undo stack  */
+              gimp_transform_grid_tool_push_internal_undo (tg_tool);
+            }
+          else
+            {
+              /*  restore the old transformation info  */
+              memcpy (tg_tool->trans_infos, old_trans_infos,
+                      sizeof (old_trans_infos));
+
+              /*  recalculate the tool's transformation matrix  */
+              direction_linked             = tg_options->direction_linked;
+              tg_options->direction_linked = FALSE;
+              gimp_transform_tool_recalc_matrix (tr_tool, display);
+              tg_options->direction_linked = direction_linked;
+
+              gimp_tool_message_literal (tool, tool->display,
+                                         _("Cannot readjust the transformation"));
+            }
+        }
       break;
 
     case GTK_RESPONSE_OK:
@@ -1098,25 +1378,28 @@ gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool *tg_tool)
   if (! tg_tool->gui)
     return;
 
-  gimp_tool_gui_set_response_sensitive (tg_tool->gui, GTK_RESPONSE_OK,
-                                        tr_tool->transform_valid);
-  gimp_tool_gui_set_response_sensitive (tg_tool->gui, RESPONSE_RESET,
-                                        g_list_next (tg_tool->undo_list) != NULL);
+  gimp_tool_gui_set_response_sensitive (
+    tg_tool->gui, GTK_RESPONSE_OK,
+    tr_tool->transform_valid);
+
+  gimp_tool_gui_set_response_sensitive (
+    tg_tool->gui, RESPONSE_RESET,
+    ! (trans_info_equal (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
+                         tg_tool->init_trans_info) &&
+       trans_info_equal (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+                         tg_tool->init_trans_info)));
+
+  gimp_tool_gui_set_response_sensitive (
+    tg_tool->gui, RESPONSE_READJUST,
+    tr_tool->transform_valid);
 }
 
 static void
 gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
 {
-  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpTransformGridOptions *options    = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
-  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_OPTIONS (options);
-  GimpMatrix3               matrix;
+  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformGridOptions *options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
   gint                      i;
-
-  matrix = tr_tool->transform;
-
-  if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
-    gimp_matrix3_invert (&matrix);
 
   if (tg_tool->preview)
     {
@@ -1126,7 +1409,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
       gimp_canvas_item_begin_change (tg_tool->preview);
       gimp_canvas_item_set_visible (tg_tool->preview, show_preview);
       g_object_set (tg_tool->preview,
-                    "transform", &matrix,
+                    "transform", &tr_tool->transform,
                     NULL);
       gimp_canvas_item_end_change (tg_tool->preview);
     }
@@ -1137,7 +1420,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
       gimp_canvas_item_set_visible (tg_tool->boundary_in,
                                     tr_tool->transform_valid);
       g_object_set (tg_tool->boundary_in,
-                    "transform", &matrix,
+                    "transform", &tr_tool->transform,
                     NULL);
       gimp_canvas_item_end_change (tg_tool->boundary_in);
     }
@@ -1148,7 +1431,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
       gimp_canvas_item_set_visible (tg_tool->boundary_out,
                                     tr_tool->transform_valid);
       g_object_set (tg_tool->boundary_out,
-                    "transform", &matrix,
+                    "transform", &tr_tool->transform,
                     NULL);
       gimp_canvas_item_end_change (tg_tool->boundary_out);
     }
@@ -1160,7 +1443,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
       gimp_canvas_item_begin_change (item);
       gimp_canvas_item_set_visible (item, tr_tool->transform_valid);
       g_object_set (item,
-                    "transform", &matrix,
+                    "transform", &tr_tool->transform,
                     NULL);
       gimp_canvas_item_end_change (item);
     }
@@ -1205,41 +1488,101 @@ gimp_transform_grid_tool_show_active_item (GimpTransformGridTool *tg_tool)
     }
 }
 
-static TransInfo *
-trans_info_new (void)
+static UndoInfo *
+undo_info_new (void)
 {
-  return g_slice_new0 (TransInfo);
+  return g_slice_new0 (UndoInfo);
 }
 
 static void
-trans_info_free (TransInfo *info)
+undo_info_free (UndoInfo *info)
 {
-  g_slice_free (TransInfo, info);
+  g_slice_free (UndoInfo, info);
+}
+
+static gboolean
+trans_info_equal (const TransInfo trans_info1,
+                  const TransInfo trans_info2)
+{
+  gint i;
+
+  for (i = 0; i < TRANS_INFO_SIZE; i++)
+    {
+      if (fabs (trans_info1[i] - trans_info2[i]) > EPSILON)
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+trans_infos_equal (const TransInfo *trans_infos1,
+                   const TransInfo *trans_infos2)
+{
+  return trans_info_equal (trans_infos1[GIMP_TRANSFORM_FORWARD],
+                           trans_infos2[GIMP_TRANSFORM_FORWARD]) &&
+         trans_info_equal (trans_infos1[GIMP_TRANSFORM_BACKWARD],
+                           trans_infos2[GIMP_TRANSFORM_BACKWARD]);
+}
+
+gboolean
+gimp_transform_grid_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
+                                         GimpMatrix3           *transform)
+{
+  g_return_val_if_fail (GIMP_IS_TRANSFORM_GRID_TOOL (tg_tool), FALSE);
+  g_return_val_if_fail (transform != NULL, FALSE);
+
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->info_to_matrix)
+    {
+      return GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->info_to_matrix (
+        tg_tool, transform);
+    }
+
+  return FALSE;
+}
+
+void
+gimp_transform_grid_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                         const GimpMatrix3     *transform)
+{
+  g_return_if_fail (GIMP_IS_TRANSFORM_GRID_TOOL (tg_tool));
+  g_return_if_fail (transform != NULL);
+
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info)
+    {
+      return GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info (
+        tg_tool, transform);
+    }
 }
 
 void
 gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool)
 {
+  UndoInfo *undo_info;
+
   g_return_if_fail (GIMP_IS_TRANSFORM_GRID_TOOL (tg_tool));
-  g_return_if_fail (tg_tool->prev_trans_info != NULL);
+  g_return_if_fail (tg_tool->undo_list != NULL);
+
+  undo_info = tg_tool->undo_list->data;
 
   /* push current state on the undo list and set this state as the
    * current state, but avoid doing this if there were no changes
    */
-  if (memcmp (tg_tool->prev_trans_info, tg_tool->trans_info,
-              sizeof (TransInfo)) != 0)
+  if (! trans_infos_equal (undo_info->trans_infos, tg_tool->trans_infos))
     {
-      tg_tool->prev_trans_info = trans_info_new ();
-      memcpy (tg_tool->prev_trans_info, tg_tool->trans_info,
-              sizeof (TransInfo));
+      GimpTransformOptions *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
 
-      tg_tool->undo_list = g_list_prepend (tg_tool->undo_list,
-                                           tg_tool->prev_trans_info);
+      undo_info            = undo_info_new ();
+      undo_info->direction = tr_options->direction;
+      memcpy (undo_info->trans_infos, tg_tool->trans_infos,
+              sizeof (tg_tool->trans_infos));
+
+      tg_tool->undo_list = g_list_prepend (tg_tool->undo_list, undo_info);
 
       /* If we undid anything and started interacting, we have to
        * discard the redo history
        */
-      g_list_free_full (tg_tool->redo_list, (GDestroyNotify) trans_info_free);
+      g_list_free_full (tg_tool->redo_list, (GDestroyNotify) undo_info_free);
       tg_tool->redo_list = NULL;
 
       gimp_transform_grid_tool_update_sensitivity (tg_tool);

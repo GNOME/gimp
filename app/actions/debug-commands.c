@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -36,6 +36,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
@@ -71,15 +72,17 @@ static gboolean  debug_accel_find_func         (GtkAccelKey *key,
 /*  public functions  */
 
 void
-debug_gtk_inspector_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+debug_gtk_inspector_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   gtk_window_set_interactive_debugging (TRUE);
 }
 
 void
-debug_mem_profile_cmd_callback (GtkAction *action,
-                                gpointer   data)
+debug_mem_profile_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   extern gboolean  gimp_debug_memsize;
   Gimp            *gimp;
@@ -93,8 +96,9 @@ debug_mem_profile_cmd_callback (GtkAction *action,
 }
 
 void
-debug_benchmark_projection_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+debug_benchmark_projection_cmd_callback (GimpAction *action,
+                                         GVariant   *value,
+                                         gpointer    data)
 {
   GimpDisplay *display;
   return_if_no_display (display, data);
@@ -103,8 +107,9 @@ debug_benchmark_projection_cmd_callback (GtkAction *action,
 }
 
 void
-debug_show_image_graph_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+debug_show_image_graph_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *source_image = NULL;
   return_if_no_image (source_image, data);
@@ -113,8 +118,9 @@ debug_show_image_graph_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_menus_cmd_callback (GtkAction *action,
-                               gpointer   data)
+debug_dump_menus_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GList *list;
 
@@ -154,8 +160,9 @@ debug_dump_menus_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_managers_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+debug_dump_managers_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GList *list;
 
@@ -176,30 +183,31 @@ debug_dump_managers_cmd_callback (GtkAction *action,
                    "========================================\n\n",
                    entry->identifier);
 
-          g_print ("%s\n", gtk_ui_manager_get_ui (managers->data));
+          g_print ("%s\n", gimp_ui_manager_get_ui (managers->data));
         }
     }
 }
 
 void
-debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
-                                            gpointer   data)
+debug_dump_keyboard_shortcuts_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
+                                            gpointer    data)
 {
   GimpDisplay      *display;
   GimpImageWindow  *window;
-  GtkUIManager     *manager;
+  GimpUIManager    *manager;
   GtkAccelGroup    *accel_group;
   GList            *group_it;
   GList            *strings = NULL;
   return_if_no_display (display, data);
 
   window  = gimp_display_shell_get_window (gimp_display_get_shell (display));
-  manager = GTK_UI_MANAGER (gimp_image_window_get_ui_manager (window));
+  manager = gimp_image_window_get_ui_manager (window);
 
-  accel_group = gtk_ui_manager_get_accel_group (manager);
+  accel_group = gimp_ui_manager_get_accel_group (manager);
 
   /* Gather formatted strings of keyboard shortcuts */
-  for (group_it = gtk_ui_manager_get_action_groups (manager);
+  for (group_it = gimp_ui_manager_get_action_groups (manager);
        group_it;
        group_it = g_list_next (group_it))
     {
@@ -207,13 +215,13 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
       GList           *actions   = NULL;
       GList           *action_it = NULL;
 
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      actions = gimp_action_group_list_actions (group);
       actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
 
       for (action_it = actions; action_it; action_it = g_list_next (action_it))
         {
-          GtkAction   *action        = action_it->data;
-          const gchar *name          = gtk_action_get_name (action);
+          GimpAction  *action        = action_it->data;
+          const gchar *name          = gimp_action_get_name (action);
           GClosure    *accel_closure = NULL;
 
           if (strstr (name, "-menu")  ||
@@ -221,7 +229,7 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
               name[0] == '<')
               continue;
 
-          accel_closure = gtk_action_get_accel_closure (action);
+          accel_closure = gimp_action_get_accel_closure (action);
 
           if (accel_closure)
             {
@@ -236,7 +244,7 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
                   gchar       *label;
                   gchar       *key_string;
 
-                  label_tmp  = gtk_action_get_label (action);
+                  label_tmp  = gimp_action_get_label (action);
                   label      = gimp_strip_uline (label_tmp);
                   key_string = gtk_accelerator_get_label (key->accel_key,
                                                           key->accel_mods);
@@ -271,8 +279,9 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
 }
 
 void
-debug_dump_attached_data_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+debug_dump_attached_data_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   Gimp        *gimp         = action_data_get_gimp (data);
   GimpContext *user_context = gimp_get_user_context (gimp);
@@ -293,15 +302,15 @@ debug_benchmark_projection (GimpDisplay *display)
     {
       GimpProjection *projection = gimp_image_get_projection (image);
 
+      gimp_projection_stop_rendering (projection);
+
       GIMP_TIMER_START ();
 
       gimp_image_invalidate (image,
                              0, 0,
                              gimp_image_get_width  (image),
                              gimp_image_get_height (image));
-      gimp_projection_flush_now (projection);
-
-      gimp_display_flush_now (display);
+      gimp_projection_flush_now (projection, TRUE);
 
       GIMP_TIMER_END ("Validation of the entire projection");
 

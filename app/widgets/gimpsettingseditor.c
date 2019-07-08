@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -71,9 +71,7 @@ struct _GimpSettingsEditorPrivate
   GtkWidget     *delete_button;
 };
 
-#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                                       GIMP_TYPE_SETTINGS_EDITOR, \
-                                                       GimpSettingsEditorPrivate)
+#define GET_PRIVATE(item) ((GimpSettingsEditorPrivate *) gimp_settings_editor_get_instance_private ((GimpSettingsEditor *) (item)))
 
 
 static void   gimp_settings_editor_constructed    (GObject             *object);
@@ -107,7 +105,8 @@ static void   gimp_settings_editor_name_edited    (GtkCellRendererText *cell,
                                                    GimpSettingsEditor  *editor);
 
 
-G_DEFINE_TYPE (GimpSettingsEditor, gimp_settings_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSettingsEditor, gimp_settings_editor,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_settings_editor_parent_class
 
@@ -142,8 +141,6 @@ gimp_settings_editor_class_init (GimpSettingsEditorClass *klass)
                                                         GIMP_TYPE_CONTAINER,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpSettingsEditorPrivate));
 }
 
 static void

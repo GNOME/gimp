@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -94,6 +94,7 @@ static void       gimp_dockable_set_aux_info  (GimpSessionManaged *managed,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
+                         G_ADD_PRIVATE (GimpDockable)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
                                                 gimp_dockable_session_managed_iface_init))
 
@@ -132,16 +133,12 @@ gimp_dockable_class_init (GimpDockableClass *klass)
                                                              G_MAXINT,
                                                              0,
                                                              GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDockablePrivate));
 }
 
 static void
 gimp_dockable_init (GimpDockable *dockable)
 {
-  dockable->p = G_TYPE_INSTANCE_GET_PRIVATE (dockable,
-                                             GIMP_TYPE_DOCKABLE,
-                                             GimpDockablePrivate);
+  dockable->p = gimp_dockable_get_instance_private (dockable);
 
   dockable->p->tab_style = GIMP_TAB_STYLE_PREVIEW;
 
@@ -166,31 +163,10 @@ gimp_dockable_dispose (GObject *object)
   if (dockable->p->context)
     gimp_dockable_set_context (dockable, NULL);
 
-  if (dockable->p->blurb)
-    {
-      if (dockable->p->blurb != dockable->p->name)
-        g_free (dockable->p->blurb);
-
-      dockable->p->blurb = NULL;
-    }
-
-  if (dockable->p->name)
-    {
-      g_free (dockable->p->name);
-      dockable->p->name = NULL;
-    }
-
-  if (dockable->p->icon_name)
-    {
-      g_free (dockable->p->icon_name);
-      dockable->p->icon_name = NULL;
-    }
-
-  if (dockable->p->help_id)
-    {
-      g_free (dockable->p->help_id);
-      dockable->p->help_id = NULL;
-    }
+  g_clear_pointer (&dockable->p->blurb,     g_free);
+  g_clear_pointer (&dockable->p->name,      g_free);
+  g_clear_pointer (&dockable->p->icon_name, g_free);
+  g_clear_pointer (&dockable->p->help_id,   g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -385,7 +361,7 @@ gimp_dockable_new (const gchar *name,
   if (blurb)
     dockable->p->blurb  = g_strdup (blurb);
   else
-    dockable->p->blurb  = dockable->p->name;
+    dockable->p->blurb  = g_strdup (dockable->p->name);
 
   gimp_help_set_help_data (GTK_WIDGET (dockable), NULL, help_id);
 

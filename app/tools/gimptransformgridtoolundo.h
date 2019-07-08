@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TRANSFORM_GRID_TOOL_UNDO_H__
@@ -38,7 +38,7 @@ struct _GimpTransformGridToolUndo
   GimpUndo               parent_instance;
 
   GimpTransformGridTool *tg_tool;
-  TransInfo              trans_info;
+  TransInfo              trans_infos[2];
 #if 0                   
   TileManager           *original;
 #endif

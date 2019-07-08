@@ -6,8 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2016-01-14 18:32+0100\n"
 "PO-Revision-Date: 2016-01-14 18:33+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
@@ -98,7 +97,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "GIMP er fri programvare. Du kan distribuera det vidare og/eller endra det ut "
 "frå vilkåra i GNU General Public License som er utgjeve av Free Software "
@@ -109,7 +108,7 @@ msgstr ""
 "BESTEMTE BEHOV. Sjå GNU General Public License for nærare informasjon.\n"
 "\n"
 "Du skal ha tatt i mot ein kopi av GNU General Public License saman med dette "
-"programmet. Dersom denne manglar, sjå http://www.gnu.org/licenses/"
+"programmet. Dersom denne manglar, sjå https://www.gnu.org/licenses/"
 
 #: ../app/main.c:158
 msgid "Show version information and exit"
@@ -1792,7 +1791,7 @@ msgid "_Dilate"
 msgstr "_Utvid"
 
 #: ../app/actions/drawable-actions.c:70
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Auk lyse område i biletet"
 
@@ -1802,7 +1801,7 @@ msgid "E_rode"
 msgstr "E_roder"
 
 #: ../app/actions/drawable-actions.c:76
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Auk mørke område i biletet"
 

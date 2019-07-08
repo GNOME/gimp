@@ -182,7 +182,6 @@
       <placeholder name="Undo">
         <menuitem action="edit-undo" />
         <menuitem action="edit-redo" />
-        <menuitem action="edit-fade" />
         <menuitem action="dialogs-undo-history" />
       </placeholder>
       <separator />
@@ -228,6 +227,7 @@
       <separator />
       <placeholder name="Preferences">
         <menuitem action="dialogs-preferences" />      
+        <menuitem action="dialogs-extensions" />
         <menuitem action="dialogs-input-devices" />
         <menuitem action="dialogs-keyboard-shortcuts" />
         <menuitem action="dialogs-module-dialog"/>
@@ -377,12 +377,13 @@
         <menuitem action="image-convert-float" />
         <menuitem action="image-convert-double" />
         <separator />
-        <menuitem action="image-convert-gamma" />
         <menuitem action="image-convert-linear" />
+        <menuitem action="image-convert-non-linear" />
+        <menuitem action="image-convert-perceptual" />
         <separator />
       </menu>
       <menu action="image-color-management-menu" name="Color Management">
-        <menuitem action="image-color-management-enabled" />
+        <menuitem action="image-color-profile-use-srgb" />
         <separator />
         <menuitem action="image-color-profile-assign" />
         <menuitem action="image-color-profile-convert" />
@@ -522,7 +523,7 @@
           <menuitem action="tools-rotate-arbitrary" />
         </placeholder>
         <separator />
-        <menuitem action="drawable-offset" />
+        <menuitem action="filters-offset" />
       </menu>
 
 <!-- Layer Properties
@@ -737,6 +738,7 @@
         <separator />
         <placeholder name="Shadow">
 	  <menuitem action="filters-dropshadow" />
+	  <menuitem action="filters-long-shadow" />
 	  <menuitem action="filters-vignette" />
 	</placeholder>
         <separator />
@@ -784,6 +786,7 @@
         <menuitem action="filters-displace" />
         <menuitem action="filters-fractal-trace" />
         <menuitem action="filters-illusion" />
+        <menuitem action="filters-little-planet" />
         <menuitem action="filters-panorama-projection" />
         <menuitem action="filters-recursive-transform" />
         <menuitem action="filters-tile-paper" />
@@ -801,9 +804,11 @@
 	  <menuitem action="filters-noise-solid" />
 	</menu>
         <menu action="filters-render-pattern-menu" name="Pattern">
+	  <menuitem action="filters-bayer-matrix" />
 	  <menuitem action="filters-checkerboard" />
 	  <menuitem action="filters-diffraction-patterns" />
 	  <menuitem action="filters-grid" />
+	  <menuitem action="filters-linear-sinusoid" />
 	  <menuitem action="filters-maze" />
 	  <menuitem action="filters-sinus" />
 	  <menuitem action="filters-spiral" />
@@ -840,6 +845,7 @@
       </placeholder>
       <separator />
       <menuitem action="windows-hide-docks" />
+      <menuitem action="windows-show-tabs" />
       <menu action="windows-tab-position" name="Position">
         <menuitem action="windows-tabs-position-top" />
         <menuitem action="windows-tabs-position-bottom" />

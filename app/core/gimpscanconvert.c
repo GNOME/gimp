@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -528,12 +528,12 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar     *data    = iter->data[0];
+      guchar     *data    = iter->items[0].data;
       guchar     *tmp_buf = NULL;
       const gint  stride  = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
                                                            roi->width);

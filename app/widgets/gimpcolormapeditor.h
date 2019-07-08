@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_COLORMAP_EDITOR_H__
@@ -36,15 +36,7 @@ struct _GimpColormapEditor
 {
   GimpImageEditor  parent_instance;
 
-  GtkWidget       *view;
-  gint             col_index;
-
-  PangoLayout     *layout;
-
-  GtkAdjustment   *index_adjustment;
-  GtkWidget       *index_spinbutton;
-  GtkWidget       *color_entry;
-
+  GtkWidget       *selection;
   GtkWidget       *color_dialog;
 };
 

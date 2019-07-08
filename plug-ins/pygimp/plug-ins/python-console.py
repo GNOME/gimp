@@ -14,7 +14,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from gimpfu import *
 
@@ -128,8 +128,8 @@ def do_console():
             cmd = ''
 
             if len(proc.return_vals) > 0:
-                cmd = ', '.join([x[1].replace('-', '_')
-                                for x in proc.return_vals]) + ' = '
+                cmd = ', '.join(x[1].replace('-', '_')
+                                for x in proc.return_vals) + ' = '
 
             cmd = cmd + 'pdb.%s' % proc.proc_name.replace('-', '_')
 
@@ -138,8 +138,8 @@ def do_console():
             else:
                 params = proc.params
 
-            cmd = cmd + '(%s)' % ', '.join([x[1].replace('-', '_')
-                                           for x in params])
+            cmd = cmd + '(%s)' % ', '.join(x[1].replace('-', '_')
+                                           for x in params)
 
             buffer = self.cons.buffer
 

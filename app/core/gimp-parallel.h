@@ -15,49 +15,32 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PARALLEL_H__
 #define __GIMP_PARALLEL_H__
 
 
-typedef void (* GimpParallelRunAsyncFunc)        (GimpAsync            *async,
-                                                  gpointer              user_data);
-
-typedef void (* GimpParallelDistributeFunc)      (gint                 i,
-                                                  gint                 n,
-                                                  gpointer             user_data);
-typedef void (* GimpParallelDistributeRangeFunc) (gsize                offset,
-                                                  gsize                size,
-                                                  gpointer             user_data);
-typedef void (* GimpParallelDistributeAreaFunc)  (const GeglRectangle *area,
-                                                  gpointer             user_data);
+typedef void (* GimpParallelRunAsyncFunc) (GimpAsync *async,
+                                           gpointer   user_data);
 
 
-void        gimp_parallel_init                  (Gimp                            *gimp);
-void        gimp_parallel_exit                  (Gimp                            *gimp);
+void        gimp_parallel_init                       (Gimp                     *gimp);
+void        gimp_parallel_exit                       (Gimp                     *gimp);
 
-GimpAsync * gimp_parallel_run_async             (GimpParallelRunAsyncFunc         func,
-                                                 gpointer                         user_data);
-GimpAsync * gimp_parallel_run_async_full        (gint                             priority,
-                                                 GimpParallelRunAsyncFunc         func,
-                                                 gpointer                         user_data,
-                                                 GDestroyNotify                   user_data_destroy_func);
-GimpAsync * gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc         func,
-                                                 gpointer                         user_data);
+GimpAsync * gimp_parallel_run_async                  (GimpParallelRunAsyncFunc  func,
+                                                      gpointer                  user_data);
+GimpAsync * gimp_parallel_run_async_full             (gint                      priority,
+                                                      GimpParallelRunAsyncFunc  func,
+                                                      gpointer                  user_data,
+                                                      GDestroyNotify            user_data_destroy_func);
+GimpAsync * gimp_parallel_run_async_independent      (GimpParallelRunAsyncFunc  func,
+                                                      gpointer                  user_data);
+GimpAsync * gimp_parallel_run_async_independent_full (gint                      priority,
+                                                      GimpParallelRunAsyncFunc  func,
+                                                      gpointer                  user_data);
 
-void        gimp_parallel_distribute            (gint                             max_n,
-                                                 GimpParallelDistributeFunc       func,
-                                                 gpointer                         user_data);
-void        gimp_parallel_distribute_range      (gsize                            size,
-                                                 gsize                            min_sub_size,
-                                                 GimpParallelDistributeRangeFunc  func,
-                                                 gpointer                         user_data);
-void        gimp_parallel_distribute_area       (const GeglRectangle             *area,
-                                                 gsize                            min_sub_area,
-                                                 GimpParallelDistributeAreaFunc   func,
-                                                 gpointer                         user_data);
 
 #ifdef __cplusplus
 
@@ -141,79 +124,33 @@ gimp_parallel_run_async_full (gint                 priority,
 
 template <class ParallelRunAsyncFunc>
 inline GimpAsync *
-gimp_parallel_run_async_independent (ParallelRunAsyncFunc func)
+gimp_parallel_run_async_independent_full (gint                 priority,
+                                          ParallelRunAsyncFunc func)
 {
   ParallelRunAsyncFunc *func_copy = g_new (ParallelRunAsyncFunc, 1);
 
   new (func_copy) ParallelRunAsyncFunc (func);
 
-  return gimp_parallel_run_async_independent ([] (GimpAsync *async,
-                                                  gpointer   user_data)
-                                              {
-                                                ParallelRunAsyncFunc *func_copy =
-                                                  (ParallelRunAsyncFunc *) user_data;
+  return gimp_parallel_run_async_independent_full (priority,
+                                                   [] (GimpAsync *async,
+                                                       gpointer   user_data)
+                                                   {
+                                                     ParallelRunAsyncFunc *func_copy =
+                                                       (ParallelRunAsyncFunc *) user_data;
 
-                                                (*func_copy) (async);
+                                                     (*func_copy) (async);
 
-                                                func_copy->~ParallelRunAsyncFunc ();
-                                                g_free (func_copy);
-                                              },
-                                              func_copy);
+                                                     func_copy->~ParallelRunAsyncFunc ();
+                                                     g_free (func_copy);
+                                                   },
+                                                   func_copy);
 }
 
-template <class ParallelDistributeFunc>
-inline void
-gimp_parallel_distribute (gint                   max_n,
-                          ParallelDistributeFunc func)
+template <class ParallelRunAsyncFunc>
+inline GimpAsync *
+gimp_parallel_run_async_independent (ParallelRunAsyncFunc func)
 {
-  gimp_parallel_distribute (max_n,
-                            [] (gint     i,
-                                gint     n,
-                                gpointer user_data)
-                            {
-                              ParallelDistributeFunc func_copy (
-                                *(const ParallelDistributeFunc *) user_data);
-
-                              func_copy (i, n);
-                            },
-                            &func);
-}
-
-template <class ParallelDistributeRangeFunc>
-inline void
-gimp_parallel_distribute_range (gsize                       size,
-                                gsize                       min_sub_size,
-                                ParallelDistributeRangeFunc func)
-{
-  gimp_parallel_distribute_range (size, min_sub_size,
-                                  [] (gsize    offset,
-                                      gsize    size,
-                                      gpointer user_data)
-                                  {
-                                    ParallelDistributeRangeFunc func_copy (
-                                      *(const ParallelDistributeRangeFunc *) user_data);
-
-                                    func_copy (offset, size);
-                                  },
-                                  &func);
-}
-
-template <class ParallelDistributeAreaFunc>
-inline void
-gimp_parallel_distribute_area (const GeglRectangle        *area,
-                               gsize                       min_sub_area,
-                               ParallelDistributeAreaFunc  func)
-{
-  gimp_parallel_distribute_area (area, min_sub_area,
-                                 [] (const GeglRectangle *area,
-                                     gpointer             user_data)
-                                 {
-                                   ParallelDistributeAreaFunc func_copy (
-                                     *(const ParallelDistributeAreaFunc *) user_data);
-
-                                   func_copy (area);
-                                 },
-                                 &func);
+  return gimp_parallel_run_async_independent_full (0, func);
 }
 
 }

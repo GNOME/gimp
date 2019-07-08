@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_UNDO_PUSH_H__
@@ -38,7 +38,7 @@ GimpUndo * gimp_image_undo_push_image_grid          (GimpImage     *image,
                                                      GimpGrid      *grid);
 GimpUndo * gimp_image_undo_push_image_colormap      (GimpImage     *image,
                                                      const gchar   *undo_desc);
-GimpUndo * gimp_image_undo_push_image_color_managed (GimpImage     *image,
+GimpUndo * gimp_image_undo_push_image_hidden_profile(GimpImage     *image,
                                                      const gchar   *undo_desc);
 GimpUndo * gimp_image_undo_push_image_metadata      (GimpImage     *image,
                                                      const gchar   *undo_desc);
@@ -72,6 +72,9 @@ GimpUndo * gimp_image_undo_push_drawable_mod        (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpDrawable  *drawable,
                                                      gboolean       copy_buffer);
+GimpUndo * gimp_image_undo_push_drawable_format     (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable);
 
 
 /*  mask undos  */

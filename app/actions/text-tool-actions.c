@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -56,47 +56,47 @@ static const GimpActionEntry text_tool_actions[] =
 
   { "text-tool-cut", GIMP_ICON_EDIT_CUT,
     NC_("text-tool-action", "Cu_t"), NULL, "<primary>X",
-    G_CALLBACK (text_tool_cut_cmd_callback),
+    text_tool_cut_cmd_callback,
     NULL },
 
   { "text-tool-copy", GIMP_ICON_EDIT_COPY,
     NC_("text-tool-action", "_Copy"), NULL, "<primary>C",
-    G_CALLBACK (text_tool_copy_cmd_callback),
+    text_tool_copy_cmd_callback,
     NULL },
 
   { "text-tool-paste", GIMP_ICON_EDIT_PASTE,
     NC_("text-tool-action", "_Paste"), NULL, "<primary>V",
-    G_CALLBACK (text_tool_paste_cmd_callback),
+    text_tool_paste_cmd_callback,
     NULL },
 
   { "text-tool-delete", GIMP_ICON_EDIT_DELETE,
     NC_("text-tool-action", "_Delete"), NULL, NULL,
-    G_CALLBACK (text_tool_delete_cmd_callback),
+    text_tool_delete_cmd_callback,
     NULL },
 
   { "text-tool-load", GIMP_ICON_DOCUMENT_OPEN,
     NC_("text-tool-action", "_Open text file..."), NULL, NULL,
-    G_CALLBACK (text_tool_load_cmd_callback),
+    text_tool_load_cmd_callback,
     NULL },
 
   { "text-tool-clear", GIMP_ICON_EDIT_CLEAR,
     NC_("text-tool-action", "Cl_ear"), NULL,
     NC_("text-tool-action", "Clear all text"),
-    G_CALLBACK (text_tool_clear_cmd_callback),
+    text_tool_clear_cmd_callback,
     NULL },
 
   { "text-tool-text-to-path", GIMP_ICON_PATH,
     NC_("text-tool-action", "_Path from Text"), "",
     NC_("text-tool-action",
         "Create a path from the outlines of the current text"),
-    G_CALLBACK (text_tool_text_to_path_cmd_callback),
+    text_tool_text_to_path_cmd_callback,
     NULL },
 
   { "text-tool-text-along-path", GIMP_ICON_PATH,
     NC_("text-tool-action", "Text _along Path"), "",
     NC_("text-tool-action",
         "Bend the text along the currently active path"),
-    G_CALLBACK (text_tool_text_along_path_cmd_callback),
+    text_tool_text_along_path_cmd_callback,
     NULL }
 };
 
@@ -110,6 +110,26 @@ static const GimpRadioActionEntry text_tool_direction_actions[] =
   { "text-tool-direction-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_RTL,
     NC_("text-tool-action", "From right to left"), NULL, NULL,
     GIMP_TEXT_DIRECTION_RTL,
+    NULL },
+
+  { "text-tool-direction-ttb-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL,
+    NC_("text-tool-action", "Vertical, right to left (mixed orientation)"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_RTL,
+    NULL },
+
+  { "text-tool-direction-ttb-rtl-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
+    NC_("text-tool-action", "Vertical, right to left (upright orientation)"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
+    NULL },
+
+  { "text-tool-direction-ttb-ltr", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR,
+    NC_("text-tool-action", "Vertical, left to right (mixed orientation)"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_LTR,
+    NULL },
+
+  { "text-tool-direction-ttb-ltr-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
+    NC_("text-tool-action", "Vertical, left to right (upright orientation)"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
     NULL }
 };
 
@@ -129,7 +149,7 @@ text_tool_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (text_tool_direction_actions),
                                        NULL,
                                        GIMP_TEXT_DIRECTION_LTR,
-                                       G_CALLBACK (text_tool_direction_cmd_callback));
+                                       text_tool_direction_cmd_callback);
 
   SET_HIDE_EMPTY ("text-tool-input-methods-menu", FALSE);
 }
@@ -156,6 +176,8 @@ text_tool_actions_update (GimpActionGroup *group,
   gboolean          clip       = FALSE;   /* clipboard has text available */
   gboolean          input_method_menu;
   gboolean          unicode_menu;
+  GimpTextDirection direction;
+  gint              i;
 
   layer = gimp_image_get_active_layer (image);
 
@@ -192,6 +214,16 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-load",            image);
   SET_SENSITIVE ("text-tool-text-to-path",    text_layer);
   SET_SENSITIVE ("text-tool-text-along-path", text_layer && vectors);
+
+  direction = gimp_text_tool_get_direction (text_tool);
+  for (i = 0; i < G_N_ELEMENTS (text_tool_direction_actions); i++)
+    {
+      if (direction == text_tool_direction_actions[i].value)
+        {
+          SET_ACTIVE (text_tool_direction_actions[i].name, TRUE);
+          break;
+        }
+    }
 
   SET_VISIBLE ("text-tool-input-methods-menu", input_method_menu);
 }

@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_WIDGETS_ENUMS_H__
@@ -116,16 +116,16 @@ typedef enum
   GIMP_COLOR_SELECTOR_GREEN,         /*< desc="_G", help="Green"          >*/
   GIMP_COLOR_SELECTOR_BLUE,          /*< desc="_B", help="Blue"           >*/
   GIMP_COLOR_SELECTOR_ALPHA,         /*< desc="_A", help="Alpha"          >*/
-  GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, /*< desc="_L", help="LCH Lightness"  >*/
-  GIMP_COLOR_SELECTOR_LCH_CHROMA,    /*< desc="_C", help="LCH Chroma"     >*/
-  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_H", help="LCH Hue"        >*/
+  GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, /*< desc="_L", help="LCh Lightness"  >*/
+  GIMP_COLOR_SELECTOR_LCH_CHROMA,    /*< desc="_C", help="LCh Chroma"     >*/
+  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_h", help="LCh Hue"        >*/
 } GimpColorSelectorChannel;
 
 
 /**
  * GimpColorSelectorModel:
  * @GIMP_COLOR_SELECTOR_MODEL_RGB: RGB color model
- * @GIMP_COLOR_SELECTOR_MODEL_LCH: CIELCh color model
+ * @GIMP_COLOR_SELECTOR_MODEL_LCH: CIE LCh color model
  * @GIMP_COLOR_SELECTOR_MODEL_HSV: HSV color model
  *
  * An enum to specify the types of color spaces edited in
@@ -139,10 +139,33 @@ GType gimp_color_selector_model_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_SELECTOR_MODEL_RGB, /*< desc="RGB", help="RGB color model"    >*/
-  GIMP_COLOR_SELECTOR_MODEL_LCH, /*< desc="LCH", help="CIELCh color model" >*/
-  GIMP_COLOR_SELECTOR_MODEL_HSV  /*< desc="HSV", help="HSV color model"    >*/
+  GIMP_COLOR_SELECTOR_MODEL_RGB, /*< desc="RGB", help="RGB color model"     >*/
+  GIMP_COLOR_SELECTOR_MODEL_LCH, /*< desc="LCH", help="CIE LCh color model" >*/
+  GIMP_COLOR_SELECTOR_MODEL_HSV  /*< desc="HSV", help="HSV color model"     >*/
 } GimpColorSelectorModel;
+
+
+/**
+ * GimpIntComboBoxLayout:
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY:   show icons only
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show icons and abbreviated labels,
+ *                                         when available
+ * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show icons and full labels
+ *
+ * Possible layouts for #GimpIntComboBox.
+ *
+ * Since: 2.10
+ **/
+#define GIMP_TYPE_INT_COMBO_BOX_LAYOUT (gimp_int_combo_box_layout_get_type ())
+
+GType gimp_int_combo_box_layout_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY,
+  GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
+  GIMP_INT_COMBO_BOX_LAYOUT_FULL
+} GimpIntComboBoxLayout;
 
 
 /**
@@ -211,27 +234,6 @@ typedef enum
   GIMP_ZOOM_TO,        /*< skip >*/
   GIMP_ZOOM_SMOOTH     /*< skip >*/
 } GimpZoomType;
-
-
-/**
- * GimpIntComboBoxLayout:
- * @GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY:   show icons only
- * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show icons and abbreviated labels,
- *                                         when available
- * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show icons and full labels
- *
- * Possible layouts for #GimpIntComboBox.
- **/
-#define GIMP_TYPE_INT_COMBO_BOX_LAYOUT (gimp_int_combo_box_layout_get_type ())
-
-GType gimp_int_combo_box_layout_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY,
-  GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
-  GIMP_INT_COMBO_BOX_LAYOUT_FULL
-} GimpIntComboBoxLayout;
 
 
 G_END_DECLS

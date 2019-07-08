@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -49,8 +49,9 @@ static void   gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 /*  public functions  */
 
 void
-gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;

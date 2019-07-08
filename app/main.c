@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -53,6 +53,7 @@
 #include "config/gimpconfig-dump.h"
 
 #include "core/gimp.h"
+#include "core/gimpbacktrace.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -310,6 +311,10 @@ main (int    argc,
   gchar          *backtrace_file     = NULL;
   gint            i;
 
+#ifdef ENABLE_WIN32_DEBUG_CONSOLE
+  gimp_open_console_window ();
+#endif
+
 #if defined (__GNUC__) && defined (_WIN64)
   /* mingw-w64, at least the unstable build from late July 2008,
    * starts subsystem:windows programs in main(), but passes them
@@ -319,6 +324,12 @@ main (int    argc,
   argc = __argc;
   argv = __argv;
 #endif
+
+  /* Initialize GimpBacktrace early on.  In particular, we want the
+   * Windows backend to catch the SET_THREAD_NAME exceptions of newly
+   * created threads.
+   */
+  gimp_backtrace_init ();
 
   /* Start signal handlers early. */
   gimp_init_signal_handlers (&backtrace_file);
@@ -393,10 +404,6 @@ main (int    argc,
     if (p_SetCurrentProcessExplicitAppUserModelID)
       (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
   }
-#endif
-
-#ifdef GIMP_UNSTABLE
-  gimp_open_console_window ();
 #endif
 
   gimp_init_malloc ();

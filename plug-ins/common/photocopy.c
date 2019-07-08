@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* Photocopy filter for GIMP for BIPS
@@ -345,11 +345,21 @@ photocopy (GimpDrawable *drawable,
             {
               /* desaturate */
               if (bytes > 2)
-                dest_ptr[col] = (guchar) gimp_rgb_to_l_int (src_ptr[col * bytes + 0],
-                                                            src_ptr[col * bytes + 1],
-                                                            src_ptr[col * bytes + 2]);
+                {
+                  GimpRGB rgb;
+                  GimpHSL hsl;
+
+                  gimp_rgb_set_uchar (&rgb,
+                                      src_ptr[col * bytes + 0],
+                                      src_ptr[col * bytes + 1],
+                                      src_ptr[col * bytes + 2]);
+                  gimp_rgb_to_hsl (&rgb, &hsl);
+                  dest_ptr[col] = ROUND (hsl.l * 255.0);
+                }
               else
-                dest_ptr[col] = (guchar) src_ptr[col * bytes];
+                {
+                  dest_ptr[col] = (guchar) src_ptr[col * bytes];
+                }
 
               /* compute  transfer */
               val = pow (dest_ptr[col], (1.0 / GAMMA));

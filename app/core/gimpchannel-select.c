@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -65,14 +65,10 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
   if (push_undo)
     gimp_channel_push_undo (channel, C_("undo-type", "Rectangle Select"));
 
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
-
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+  if (feather)
     {
       GimpItem   *item = GIMP_ITEM (channel);
       GeglBuffer *add_on;
@@ -82,12 +78,12 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
                                                 gimp_item_get_height (item)),
                                 babl_format ("Y float"));
 
-      gimp_gegl_mask_combine_rect (add_on, GIMP_CHANNEL_OP_ADD, x, y, w, h);
+      gimp_gegl_mask_combine_rect (add_on, GIMP_CHANNEL_OP_REPLACE, x, y, w, h);
 
-      if (feather)
-        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
-                                 feather_radius_x,
-                                 feather_radius_y);
+      gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
+                               feather_radius_x,
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
       g_object_unref (add_on);
@@ -117,14 +113,10 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
   if (push_undo)
     gimp_channel_push_undo (channel, C_("undo-type", "Ellipse Select"));
 
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
-
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+  if (feather)
     {
       GimpItem   *item = GIMP_ITEM (channel);
       GeglBuffer *add_on;
@@ -134,13 +126,13 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
                                                 gimp_item_get_height (item)),
                                 babl_format ("Y float"));
 
-      gimp_gegl_mask_combine_ellipse (add_on, GIMP_CHANNEL_OP_ADD,
+      gimp_gegl_mask_combine_ellipse (add_on, GIMP_CHANNEL_OP_REPLACE,
                                       x, y, w, h, antialias);
 
-      if (feather)
-        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
-                                 feather_radius_x,
-                                 feather_radius_y);
+      gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
+                               feather_radius_x,
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
       g_object_unref (add_on);
@@ -172,14 +164,10 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
   if (push_undo)
     gimp_channel_push_undo (channel, C_("undo-type", "Rounded Rectangle Select"));
 
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
-
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
    */
-  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+  if (feather)
     {
       GimpItem   *item = GIMP_ITEM (channel);
       GeglBuffer *add_on;
@@ -189,15 +177,15 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
                                                 gimp_item_get_height (item)),
                                 babl_format ("Y float"));
 
-      gimp_gegl_mask_combine_ellipse_rect (add_on, GIMP_CHANNEL_OP_ADD,
+      gimp_gegl_mask_combine_ellipse_rect (add_on, GIMP_CHANNEL_OP_REPLACE,
                                            x, y, w, h,
                                            corner_radius_x, corner_radius_y,
                                            antialias);
 
-      if (feather)
-        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
-                                 feather_radius_x,
-                                 feather_radius_y);
+      gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
+                               feather_radius_x,
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
       g_object_unref (add_on);
@@ -236,10 +224,6 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   if (push_undo)
     gimp_channel_push_undo (channel, undo_desc);
 
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
-
   item = GIMP_ITEM (channel);
 
   add_on = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -253,7 +237,8 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   if (feather)
     gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                              feather_radius_x,
-                             feather_radius_y);
+                             feather_radius_y,
+                             TRUE);
 
   gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
   g_object_unref (add_on);
@@ -346,11 +331,7 @@ gimp_channel_select_buffer (GimpChannel    *channel,
 
   gimp_channel_push_undo (channel, undo_desc);
 
-  /*  if applicable, replace the current selection  */
-  if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_channel_clear (channel, NULL, FALSE);
-
-  if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
+  if (feather)
     {
       GimpItem   *item = GIMP_ITEM (channel);
       GeglBuffer *add_on2;
@@ -361,13 +342,13 @@ gimp_channel_select_buffer (GimpChannel    *channel,
                                  babl_format ("Y float"));
 
       gimp_gegl_mask_combine_buffer (add_on2, add_on,
-                                     GIMP_CHANNEL_OP_ADD,
+                                     GIMP_CHANNEL_OP_REPLACE,
                                      offset_x, offset_y);
 
-      if (feather)
-        gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2, NULL,
-                                 feather_radius_x,
-                                 feather_radius_y);
+      gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2, NULL,
+                               feather_radius_x,
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on2, op, 0, 0);
       g_object_unref (add_on2);
@@ -470,6 +451,7 @@ gimp_channel_select_component (GimpChannel     *channel,
     gimp_channel_feather (add_on,
                           feather_radius_x,
                           feather_radius_y,
+                          TRUE,
                           FALSE /* no undo */);
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,

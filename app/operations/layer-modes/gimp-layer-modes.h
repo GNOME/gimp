@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_LAYER_MODES_H__
@@ -33,6 +33,7 @@ gboolean                   gimp_layer_mode_is_composite_mode_mutable  (GimpLayer
 
 gboolean                   gimp_layer_mode_is_subtractive             (GimpLayerMode           mode);
 gboolean                   gimp_layer_mode_is_alpha_only              (GimpLayerMode           mode);
+gboolean                   gimp_layer_mode_is_trivial                 (GimpLayerMode           mode);
 
 GimpLayerColorSpace        gimp_layer_mode_get_blend_space            (GimpLayerMode           mode);
 GimpLayerColorSpace        gimp_layer_mode_get_composite_space        (GimpLayerMode           mode);
@@ -60,8 +61,9 @@ gboolean                   gimp_layer_mode_get_for_group              (GimpLayer
                                                                        GimpLayerMode          *new_mode);
 
 const Babl               * gimp_layer_mode_get_format                 (GimpLayerMode           mode,
-                                                                       GimpLayerColorSpace     composite_space,
                                                                        GimpLayerColorSpace     blend_space,
+                                                                       GimpLayerColorSpace     composite_space,
+                                                                       GimpLayerCompositeMode  composite_mode,
                                                                        const Babl             *preferred_format);
 
 GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,

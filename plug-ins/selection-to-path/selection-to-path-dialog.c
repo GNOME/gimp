@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -84,14 +84,27 @@ def_val (gdouble default_value)
 GtkWidget *
 dialog_create_selection_area (SELVALS *sels)
 {
+  GtkWidget     *scrolled_win;
   GtkWidget     *grid;
   GtkWidget     *check;
   GtkAdjustment *adj;
   gint           row;
 
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_win, -1, 400);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_NONE);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_ALWAYS);
+  gtk_scrolled_window_set_overlay_scrolling (GTK_SCROLLED_WINDOW (scrolled_win),
+                                             FALSE);
+
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), grid);
+  gtk_widget_show (grid);
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
@@ -114,7 +127,7 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("If the angle defined by a point and its predecessors "
                                 "and successors is smaller than this, it's a corner, "
-                                "even if it's within `corner_surround' pixels of a "
+                                "even if it's within 'corner_surround' pixels of a "
                                 "point with a smaller angle."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -156,7 +169,7 @@ dialog_create_selection_area (SELVALS *sels)
                               0.2, 10, 0.1, 0.1, 2,
                               TRUE, 0, 0,
                               _("Amount of error at which a fitted spline is "
-                                "unacceptable.  If any pixel is further away "
+                                "unacceptable. If any pixel is further away "
                                 "than this from the fitted curve, we try again."),
                               NULL);
   g_signal_connect (adj, "value-changed",
@@ -201,8 +214,8 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("Number of times to smooth original data points.  "
                                 "Increasing this number dramatically --- to 50 or "
-                                "so --- can produce vastly better results.  But if "
-                                "any points that ``should'' be corners aren't found, "
+                                "so --- can produce vastly better results. But if "
+                                "any points that 'should' be corners aren't found, "
                                 "the curve goes to hell around that point."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -229,7 +242,7 @@ dialog_create_selection_area (SELVALS *sels)
                               3, 10, 1, 1, 0,
                               TRUE, 0, 0,
                               _("Number of adjacent points to consider if "
-                                "`filter_surround' points defines a straight line."),
+                                "'filter_surround' points defines a straight line."),
                               NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -254,7 +267,7 @@ dialog_create_selection_area (SELVALS *sels)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), sels->keep_knees);
   gtk_grid_attach (GTK_GRID (grid), check, 1, row, 2, 1);
   gimp_help_set_help_data (GTK_WIDGET (check),
-                           _("Says whether or not to remove ``knee'' "
+                           _("Says whether or not to remove 'knee' "
                              "points after finding the outline."), NULL);
   g_signal_connect (check, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -315,10 +328,10 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("Amount of error at which it is pointless to reparameterize.  "
                                 "This happens, for example, when we are trying to fit the "
-                                "outline of the outside of an `O' with a single spline.  "
-                                     "The initial fit is not good enough for the Newton-Raphson "
-                                     "iteration to improve it.  It may be that it would be better "
-                                     "to detect the cases where we didn't find any corners."), NULL);
+                                "outline of the outside of an 'O' with a single spline. "
+                                "The initial fit is not good enough for the Newton-Raphson "
+                                "iteration to improve it.  It may be that it would be better "
+                                "to detect the cases where we didn't find any corners."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->reparameterize_threshold);
@@ -380,5 +393,5 @@ dialog_create_selection_area (SELVALS *sels)
   adjust_widgets = g_slist_append (adjust_widgets, adj);
   g_object_set_data (G_OBJECT (adj), "default_value", def_val (3.0));
 
-  return grid;
+  return scrolled_win;
 }

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -92,6 +92,7 @@ static gint64     gimp_data_factory_get_memsize         (GimpObject          *ob
                                                          gint64              *gui_size);
 
 static void       gimp_data_factory_real_data_save      (GimpDataFactory     *factory);
+static void       gimp_data_factory_real_data_cancel    (GimpDataFactory     *factory);
 static GimpData * gimp_data_factory_real_data_duplicate (GimpDataFactory     *factory,
                                                          GimpData            *data);
 static gboolean   gimp_data_factory_real_data_delete    (GimpDataFactory     *factory,
@@ -106,7 +107,8 @@ static GFile    * gimp_data_factory_get_save_dir        (GimpDataFactory     *fa
                                                          GError             **error);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpDataFactory, gimp_data_factory,
+                                     GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_data_factory_parent_class
 
@@ -127,6 +129,7 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
   klass->data_init               = NULL;
   klass->data_refresh            = NULL;
   klass->data_save               = gimp_data_factory_real_data_save;
+  klass->data_cancel             = gimp_data_factory_real_data_cancel;
   klass->data_duplicate          = gimp_data_factory_real_data_duplicate;
   klass->data_delete             = gimp_data_factory_real_data_delete;
 
@@ -174,16 +177,12 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpDataFactoryPrivate));
 }
 
 static void
 gimp_data_factory_init (GimpDataFactory *factory)
 {
-  factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                               GIMP_TYPE_DATA_FACTORY,
-                                               GimpDataFactoryPrivate);
+  factory->priv = gimp_data_factory_get_instance_private (factory);
 
   factory->priv->async_set = gimp_async_set_new ();
 }
@@ -300,12 +299,12 @@ gimp_data_factory_get_property (GObject    *object,
 static void
 gimp_data_factory_finalize (GObject *object)
 {
-  GimpDataFactoryPrivate *priv = GET_PRIVATE (object);
+  GimpDataFactory        *factory = GIMP_DATA_FACTORY (object);
+  GimpDataFactoryPrivate *priv    = GET_PRIVATE (object);
 
   if (priv->async_set)
     {
-      gimp_cancelable_cancel (GIMP_CANCELABLE (priv->async_set));
-      gimp_waitable_wait (GIMP_WAITABLE (priv->async_set));
+      gimp_data_factory_data_cancel (factory);
 
       g_clear_object (&priv->async_set);
     }
@@ -410,6 +409,15 @@ gimp_data_factory_real_data_save (GimpDataFactory *factory)
   g_object_unref (writable_dir);
 
   g_list_free (dirty);
+}
+
+static void
+gimp_data_factory_real_data_cancel (GimpDataFactory *factory)
+{
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+
+  gimp_cancelable_cancel (GIMP_CANCELABLE (priv->async_set));
+  gimp_waitable_wait     (GIMP_WAITABLE   (priv->async_set));
 }
 
 static GimpData *
@@ -563,6 +571,8 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 {
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
+  gimp_data_factory_data_cancel (factory);
+
   if (! gimp_container_is_empty (factory->priv->container))
     {
       gimp_container_freeze (factory->priv->container);
@@ -602,6 +612,14 @@ gimp_data_factory_data_wait (GimpDataFactory *factory)
   g_object_unref (waitable);
 
   return TRUE;
+}
+
+void
+gimp_data_factory_data_cancel (GimpDataFactory *factory)
+{
+  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+
+  GIMP_DATA_FACTORY_GET_CLASS (factory)->data_cancel (factory);
 }
 
 gboolean
@@ -774,17 +792,12 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
 
   list = GIMP_LIST (factory->priv->container)->queue->head;
 
-  if (skip_internal)
-    {
-      while (list && gimp_data_is_internal (GIMP_DATA (list->data)))
-        list = g_list_next (list);
-    }
-
   while (list)
     {
       GList *next = g_list_next (list);
 
-      callback (factory, list->data, user_data);
+      if (! (skip_internal && gimp_data_is_internal (list->data)))
+        callback (factory, list->data, user_data);
 
       list = next;
     }

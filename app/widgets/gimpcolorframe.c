@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -35,6 +35,8 @@
 
 #include "gimp-intl.h"
 
+
+#define RGBA_EPSILON 1e-6
 
 enum
 {
@@ -65,7 +67,7 @@ static void       gimp_color_frame_style_updated     (GtkWidget      *widget);
 static gboolean   gimp_color_frame_draw              (GtkWidget      *widget,
                                                       cairo_t        *cr);
 
-static void       gimp_color_frame_menu_callback     (GtkWidget      *widget,
+static void       gimp_color_frame_combo_callback    (GtkWidget      *widget,
                                                       GimpColorFrame *frame);
 static void       gimp_color_frame_update            (GimpColorFrame *frame);
 
@@ -95,8 +97,8 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_COLOR_FRAME_MODE,
-                                                      GIMP_COLOR_FRAME_MODE_PIXEL,
+                                                      GIMP_TYPE_COLOR_PICK_MODE,
+                                                      GIMP_COLOR_PICK_MODE_PIXEL,
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_NUMBER,
@@ -134,22 +136,36 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
 static void
 gimp_color_frame_init (GimpColorFrame *frame)
 {
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *label;
-  gint       i;
+  GtkListStore *store;
+  GtkWidget    *vbox;
+  GtkWidget    *vbox2;
+  GtkWidget    *label;
+  gint          i;
 
   frame->sample_valid  = FALSE;
   frame->sample_format = babl_format ("R'G'B' u8");
 
   gimp_rgba_set (&frame->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
-  frame->menu = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_FRAME_MODE);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), frame->menu);
-  gtk_widget_show (frame->menu);
+  /* create the store manually so the values have a nice order */
+  store = gimp_enum_store_new_with_values (GIMP_TYPE_COLOR_PICK_MODE,
+                                           GIMP_COLOR_PICK_MODE_LAST + 1,
+                                           GIMP_COLOR_PICK_MODE_PIXEL,
+                                           GIMP_COLOR_PICK_MODE_RGB_PERCENT,
+                                           GIMP_COLOR_PICK_MODE_RGB_U8,
+                                           GIMP_COLOR_PICK_MODE_HSV,
+                                           GIMP_COLOR_PICK_MODE_LCH,
+                                           GIMP_COLOR_PICK_MODE_LAB,
+                                           GIMP_COLOR_PICK_MODE_XYY,
+                                           GIMP_COLOR_PICK_MODE_CMYK);
+  frame->combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  g_object_unref (store);
 
-  g_signal_connect (frame->menu, "changed",
-                    G_CALLBACK (gimp_color_frame_menu_callback),
+  gtk_frame_set_label_widget (GTK_FRAME (frame), frame->combo);
+  gtk_widget_show (frame->combo);
+
+  g_signal_connect (frame->combo, "changed",
+                    G_CALLBACK (gimp_color_frame_combo_callback),
                     frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -253,7 +269,7 @@ gimp_color_frame_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_MODE:
-      g_value_set_enum (value, frame->frame_mode);
+      g_value_set_enum (value, frame->pick_mode);
       break;
 
     case PROP_ELLIPSIZE:
@@ -342,7 +358,7 @@ gimp_color_frame_draw (GtkWidget *widget,
     {
       GtkStyleContext *style = gtk_widget_get_style_context (widget);
       GtkAllocation    allocation;
-      GtkAllocation    menu_allocation;
+      GtkAllocation    combo_allocation;
       GtkAllocation    color_area_allocation;
       GtkAllocation    coords_box_x_allocation;
       GtkAllocation    coords_box_y_allocation;
@@ -354,7 +370,7 @@ gimp_color_frame_draw (GtkWidget *widget,
       cairo_save (cr);
 
       gtk_widget_get_allocation (widget, &allocation);
-      gtk_widget_get_allocation (frame->menu, &menu_allocation);
+      gtk_widget_get_allocation (frame->combo, &combo_allocation);
       gtk_widget_get_allocation (frame->color_area, &color_area_allocation);
       gtk_widget_get_allocation (frame->coords_box_x, &coords_box_x_allocation);
       gtk_widget_get_allocation (frame->coords_box_y, &coords_box_y_allocation);
@@ -373,7 +389,7 @@ gimp_color_frame_draw (GtkWidget *widget,
       pango_layout_get_pixel_size (frame->number_layout, &w, &h);
 
       scale = ((gdouble) (allocation.height -
-                          menu_allocation.height -
+                          combo_allocation.height -
                           color_area_allocation.height -
                           (coords_box_x_allocation.height +
                            coords_box_y_allocation.height)) /
@@ -384,7 +400,7 @@ gimp_color_frame_draw (GtkWidget *widget,
       cairo_move_to (cr,
                      (allocation.width / 2.0) / scale - w / 2.0,
                      (allocation.height / 2.0 +
-                      menu_allocation.height / 2.0 +
+                      combo_allocation.height / 2.0 +
                       color_area_allocation.height / 2.0 +
                       coords_box_x_allocation.height / 2.0 +
                       coords_box_y_allocation.height / 2.0) / scale - h / 2.0);
@@ -422,16 +438,16 @@ gimp_color_frame_new (void)
  * @frame: The #GimpColorFrame.
  * @mode:  The new @mode.
  *
- * Sets the #GimpColorFrame's color @mode. Calling this function does
- * the same as selecting the @mode from the frame's #GtkOptionMenu.
+ * Sets the #GimpColorFrame's color pick @mode. Calling this function
+ * does the same as selecting the @mode from the frame's #GtkComboBox.
  **/
 void
-gimp_color_frame_set_mode (GimpColorFrame     *frame,
-                           GimpColorFrameMode  mode)
+gimp_color_frame_set_mode (GimpColorFrame    *frame,
+                           GimpColorPickMode  mode)
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (frame->menu), mode);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (frame->combo), mode);
 }
 
 void
@@ -552,7 +568,7 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
       frame->sample_format  == sample_format  &&
       frame->x              == x              &&
       frame->y              == y              &&
-      gimp_rgba_distance (&frame->color, color) < 0.0001)
+      gimp_rgba_distance (&frame->color, color) < RGBA_EPSILON)
     {
       frame->color = *color;
       return;
@@ -632,14 +648,14 @@ gimp_color_frame_set_color_config (GimpColorFrame  *frame,
 /*  private functions  */
 
 static void
-gimp_color_frame_menu_callback (GtkWidget      *widget,
-                                GimpColorFrame *frame)
+gimp_color_frame_combo_callback (GtkWidget      *widget,
+                                 GimpColorFrame *frame)
 {
   gint value;
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
-      frame->frame_mode = value;
+      frame->pick_mode = value;
       gimp_color_frame_update (frame);
 
       g_object_notify (G_OBJECT (frame), "mode");
@@ -677,13 +693,17 @@ gimp_color_frame_update (GimpColorFrame *frame)
       gtk_label_set_text (GTK_LABEL (frame->coords_label_y), C_("Coordinates", "n/a"));
     }
 
-  switch (frame->frame_mode)
+  switch (frame->pick_mode)
     {
-    case GIMP_COLOR_FRAME_MODE_PIXEL:
+    case GIMP_COLOR_PICK_MODE_PIXEL:
       {
-        GimpImageBaseType base_type;
+        GimpImageBaseType  base_type;
+        GimpTRCType        trc;
+        const Babl        *space;
 
         base_type = gimp_babl_format_get_base_type (frame->sample_format);
+        trc       = gimp_babl_format_get_trc (frame->sample_format);
+        space     = babl_format_get_space (frame->sample_format);
 
         if (frame->sample_valid)
           {
@@ -692,38 +712,30 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
             switch (gimp_babl_format_get_precision (frame->sample_format))
               {
-              case GIMP_PRECISION_U8_GAMMA:
+              case GIMP_PRECISION_U8_NON_LINEAR:
                 if (babl_format_is_palette (frame->sample_format))
                   {
                     print_format = gimp_babl_format (GIMP_RGB,
-                                                     GIMP_PRECISION_U8_GAMMA,
-                                                     has_alpha);
+                                                     GIMP_PRECISION_U8_NON_LINEAR,
+                                                     has_alpha,
+                                                     space);
                     break;
                   }
                 /* else fall thru */
 
-              case GIMP_PRECISION_U8_LINEAR:
-              case GIMP_PRECISION_U16_LINEAR:
-              case GIMP_PRECISION_U16_GAMMA:
-              case GIMP_PRECISION_U32_LINEAR:
-              case GIMP_PRECISION_U32_GAMMA:
-              case GIMP_PRECISION_FLOAT_LINEAR:
-              case GIMP_PRECISION_FLOAT_GAMMA:
-              case GIMP_PRECISION_DOUBLE_LINEAR:
-              case GIMP_PRECISION_DOUBLE_GAMMA:
+              default:
                 print_format = frame->sample_format;
                 break;
 
-              case GIMP_PRECISION_HALF_GAMMA:
-                print_format = gimp_babl_format (base_type,
-                                                 GIMP_PRECISION_FLOAT_GAMMA,
-                                                 has_alpha);
-                break;
-
               case GIMP_PRECISION_HALF_LINEAR:
-                print_format = gimp_babl_format (base_type,
-                                                 GIMP_PRECISION_FLOAT_LINEAR,
-                                                 has_alpha);
+              case GIMP_PRECISION_HALF_NON_LINEAR:
+              case GIMP_PRECISION_HALF_PERCEPTUAL:
+                print_format =
+                  gimp_babl_format (base_type,
+                                    gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                                         trc),
+                                    has_alpha,
+                                    space);
                 break;
               }
 
@@ -789,8 +801,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
       }
       break;
 
-    case GIMP_COLOR_FRAME_MODE_RGB_PERCENT:
-    case GIMP_COLOR_FRAME_MODE_RGB_U8:
+    case GIMP_COLOR_PICK_MODE_RGB_PERCENT:
+    case GIMP_COLOR_PICK_MODE_RGB_U8:
       /* TRANSLATORS: R for Red (RGB) */
       names[0] = C_("RGB", "R:");
       /* TRANSLATORS: G for Green (RGB) */
@@ -813,7 +825,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           gimp_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
 
-          if (frame->frame_mode == GIMP_COLOR_FRAME_MODE_RGB_PERCENT)
+          if (frame->pick_mode == GIMP_COLOR_PICK_MODE_RGB_PERCENT)
             {
               values[0] = g_strdup_printf ("%.01f %%", frame->color.r * 100.0);
               values[1] = g_strdup_printf ("%.01f %%", frame->color.g * 100.0);
@@ -832,7 +844,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_FRAME_MODE_HSV:
+    case GIMP_COLOR_PICK_MODE_HSV:
       /* TRANSLATORS: H for Hue (HSV color space) */
       names[0] = C_("HSV color space", "H:");
       /* TRANSLATORS: S for Saturation (HSV color space) */
@@ -860,7 +872,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_FRAME_MODE_LCH:
+    case GIMP_COLOR_PICK_MODE_LCH:
       /* TRANSLATORS: L for Lightness (LCH color space) */
       names[0] = C_("LCH color space", "L*:");
       /* TRANSLATORS: C for Chroma (LCH color space) */
@@ -892,7 +904,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
-    case GIMP_COLOR_FRAME_MODE_LAB:
+    case GIMP_COLOR_PICK_MODE_LAB:
       /* TRANSLATORS: L* for Lightness (Lab color space) */
       names[0] = C_("Lab color space", "L*:");
       /* TRANSLATORS: a* color channel in Lab color space */
@@ -917,14 +929,46 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           values = g_new0 (gchar *, 5);
 
-          values[0] = g_strdup_printf ("%.01f  ",        lab[0]);
-          values[1] = g_strdup_printf ("%.01f  ",        lab[1]);
-          values[2] = g_strdup_printf ("%.01f  ",        lab[2]);
-          values[3] = g_strdup_printf ("%.01f %%",       lab[3] * 100.0);
+          values[0] = g_strdup_printf ("%.01f  ",  lab[0]);
+          values[1] = g_strdup_printf ("%.01f  ",  lab[1]);
+          values[2] = g_strdup_printf ("%.01f  ",  lab[2]);
+          values[3] = g_strdup_printf ("%.01f %%", lab[3] * 100.0);
         }
       break;
 
-    case GIMP_COLOR_FRAME_MODE_CMYK:
+    case GIMP_COLOR_PICK_MODE_XYY:
+      /* TRANSLATORS: x from xyY color space */
+      names[0] = C_("xyY color space", "x:");
+      /* TRANSLATORS: y from xyY color space */
+      names[1] = C_("xyY color space", "y:");
+      /* TRANSLATORS: Y from xyY color space */
+      names[2] = C_("xyY color space", "Y:");
+
+      if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
+        names[3] = C_("Alpha channel", "A:");
+
+      if (frame->sample_valid)
+        {
+          static const Babl *fish = NULL;
+          gfloat             xyY[4];
+
+          if (G_UNLIKELY (! fish))
+            fish = babl_fish (babl_format ("R'G'B'A double"),
+                              babl_format ("CIE xyY alpha float"));
+
+          babl_process (fish, &frame->color, xyY, 1);
+
+          values = g_new0 (gchar *, 5);
+
+          values[0] = g_strdup_printf ("%1.6f  ",  xyY[0]);
+          values[1] = g_strdup_printf ("%1.6f  ",  xyY[1]);
+          values[2] = g_strdup_printf ("%1.6f  ",  xyY[2]);
+          values[3] = g_strdup_printf ("%.01f %%", xyY[3] * 100.0);
+        }
+      break;
+
+    case GIMP_COLOR_PICK_MODE_CMYK:
       /* TRANSLATORS: C for Cyan (CMYK) */
       names[0] = C_("CMYK", "C:");
       /* TRANSLATORS: M for Magenta (CMYK) */

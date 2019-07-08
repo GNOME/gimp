@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -335,7 +335,13 @@ gimp_grid_from_parasite (const GimpParasite *parasite)
                                 gimp_grid_parasite_name ()) == 0, NULL);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
+
+  if (! str)
+    {
+      g_warning ("Empty grid parasite");
+
+      return NULL;
+    }
 
   grid = g_object_new (GIMP_TYPE_GRID, NULL);
 

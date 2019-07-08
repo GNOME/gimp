@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -66,6 +66,7 @@ struct _GimpViewablePrivate
   gchar        *icon_name;
   GdkPixbuf    *icon_pixbuf;
   gint          freeze_count;
+  gboolean      invalidate_pending;
   GimpViewable *parent;
   gint          depth;
 
@@ -73,9 +74,7 @@ struct _GimpViewablePrivate
   GdkPixbuf    *preview_pixbuf;
 };
 
-#define GET_PRIVATE(viewable) G_TYPE_INSTANCE_GET_PRIVATE (viewable, \
-                                                           GIMP_TYPE_VIEWABLE, \
-                                                           GimpViewablePrivate)
+#define GET_PRIVATE(viewable) ((GimpViewablePrivate *) gimp_viewable_get_instance_private ((GimpViewable *) (viewable)))
 
 
 static void    gimp_viewable_config_iface_init (GimpConfigInterface *iface);
@@ -131,6 +130,7 @@ static gboolean gimp_viewable_deserialize_property   (GimpConfig       *config,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpViewable)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_viewable_config_iface_init))
 
@@ -187,7 +187,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
-  klass->default_icon_name       = "gimp-question";
+  klass->default_icon_name       = "dialog-question";
   klass->name_changed_signal     = "name-changed";
   klass->name_editable           = FALSE;
 
@@ -205,6 +205,8 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_new_pixbuf          = gimp_viewable_real_get_new_pixbuf;
   klass->get_description         = gimp_viewable_real_get_description;
   klass->is_name_editable        = gimp_viewable_real_is_name_editable;
+  klass->preview_freeze          = NULL;
+  klass->preview_thaw            = NULL;
   klass->get_children            = gimp_viewable_real_get_children;
   klass->set_expanded            = NULL;
   klass->get_expanded            = NULL;
@@ -232,8 +234,6 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpViewablePrivate));
 }
 
 static void
@@ -587,6 +587,8 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
+  else
+    private->invalidate_pending = TRUE;
 }
 
 /**
@@ -1136,7 +1138,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  icon = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-question.png",
+  icon = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/dialog-question.png",
                                        &error);
   if (! icon)
     {
@@ -1252,8 +1254,7 @@ gimp_viewable_set_icon_name (GimpViewable *viewable,
 
   private = GET_PRIVATE (viewable);
 
-  g_free (private->icon_name);
-  private->icon_name = NULL;
+  g_clear_pointer (&private->icon_name, g_free);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
@@ -1281,7 +1282,12 @@ gimp_viewable_preview_freeze (GimpViewable *viewable)
   private->freeze_count++;
 
   if (private->freeze_count == 1)
-    g_object_notify (G_OBJECT (viewable), "frozen");
+    {
+      if (GIMP_VIEWABLE_GET_CLASS (viewable)->preview_freeze)
+        GIMP_VIEWABLE_GET_CLASS (viewable)->preview_freeze (viewable);
+
+      g_object_notify (G_OBJECT (viewable), "frozen");
+    }
 }
 
 void
@@ -1299,8 +1305,17 @@ gimp_viewable_preview_thaw (GimpViewable *viewable)
 
   if (private->freeze_count == 0)
     {
-      gimp_viewable_invalidate_preview (viewable);
+      if (private->invalidate_pending)
+        {
+          private->invalidate_pending = FALSE;
+
+          gimp_viewable_invalidate_preview (viewable);
+        }
+
       g_object_notify (G_OBJECT (viewable), "frozen");
+
+      if (GIMP_VIEWABLE_GET_CLASS (viewable)->preview_thaw)
+        GIMP_VIEWABLE_GET_CLASS (viewable)->preview_thaw (viewable);
     }
 }
 

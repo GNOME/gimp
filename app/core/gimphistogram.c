@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,6 +31,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-atomic.h"
 #include "gimp-parallel.h"
@@ -39,8 +40,8 @@
 #include "gimpwaitable.h"
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
 enum
@@ -53,11 +54,11 @@ enum
 
 struct _GimpHistogramPrivate
 {
-  gboolean   linear;
-  gint       n_channels;
-  gint       n_bins;
-  gdouble   *values;
-  GimpAsync *calculate_async;
+  GimpTRCType  trc;
+  gint         n_channels;
+  gint         n_bins;
+  gdouble     *values;
+  GimpAsync   *calculate_async;
 };
 
 typedef struct
@@ -113,7 +114,7 @@ static void      gimp_histogram_calculate_async_callback (GimpAsync           *a
                                                           CalculateContext    *context);
 
 
-G_DEFINE_TYPE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_histogram_parent_class
 
@@ -145,16 +146,12 @@ gimp_histogram_class_init (GimpHistogramClass *klass)
                                    g_param_spec_boolean ("values", NULL, NULL,
                                                          FALSE,
                                                          G_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpHistogramPrivate));
 }
 
 static void
 gimp_histogram_init (GimpHistogram *histogram)
 {
-  histogram->priv = G_TYPE_INSTANCE_GET_PRIVATE (histogram,
-                                                 GIMP_TYPE_HISTOGRAM,
-                                                 GimpHistogramPrivate);
+  histogram->priv = gimp_histogram_get_instance_private (histogram);
 
   histogram->priv->n_bins = 256;
 }
@@ -230,11 +227,11 @@ gimp_histogram_get_memsize (GimpObject *object,
 /*  public functions  */
 
 GimpHistogram *
-gimp_histogram_new (gboolean linear)
+gimp_histogram_new (GimpTRCType trc)
 {
   GimpHistogram *histogram = g_object_new (GIMP_TYPE_HISTOGRAM, NULL);
 
-  histogram->priv->linear = linear;
+  histogram->priv->trc = trc;
 
   return histogram;
 }
@@ -258,7 +255,7 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
   if (histogram->priv->calculate_async)
     gimp_waitable_wait (GIMP_WAITABLE (histogram->priv->calculate_async));
 
-  dup = gimp_histogram_new (histogram->priv->linear);
+  dup = gimp_histogram_new (histogram->priv->trc);
 
   dup->priv->n_channels = histogram->priv->n_channels;
   dup->priv->n_bins     = histogram->priv->n_bins;
@@ -315,6 +312,7 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
                                 const GeglRectangle *mask_rect)
 {
   CalculateContext *context;
+  GeglRectangle     rect;
 
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
@@ -323,14 +321,16 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
   if (histogram->priv->calculate_async)
     gimp_async_cancel_and_wait (histogram->priv->calculate_async);
 
+  gimp_gegl_rectangle_align_to_tile_grid (&rect, buffer_rect, buffer);
+
   context = g_slice_new0 (CalculateContext);
 
   context->histogram   = histogram;
-  context->buffer      = gegl_buffer_new (buffer_rect,
+  context->buffer      = gegl_buffer_new (&rect,
                                           gegl_buffer_get_format (buffer));
   context->buffer_rect = *buffer_rect;
 
-  gimp_gegl_buffer_copy (buffer, buffer_rect, GEGL_ABYSS_NONE,
+  gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
                          context->buffer, NULL);
 
   if (mask)
@@ -340,10 +340,11 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
       else
         context->mask_rect = *gegl_buffer_get_extent (mask);
 
-      context->mask = gegl_buffer_new (&context->mask_rect,
-                                       gegl_buffer_get_format (mask));
+      gimp_gegl_rectangle_align_to_tile_grid (&rect, &context->mask_rect, mask);
 
-      gimp_gegl_buffer_copy (mask, &context->mask_rect, GEGL_ABYSS_NONE,
+      context->mask = gegl_buffer_new (&rect, gegl_buffer_get_format (mask));
+
+      gimp_gegl_buffer_copy (mask, &rect, GEGL_ABYSS_NONE,
                              context->mask, NULL);
     }
 
@@ -369,8 +370,7 @@ gimp_histogram_clear_values (GimpHistogram *histogram)
 
   if (histogram->priv->values)
     {
-      g_free (histogram->priv->values);
-      histogram->priv->values = NULL;
+      g_clear_pointer (&histogram->priv->values, g_free);
 
       g_object_notify (G_OBJECT (histogram), "values");
     }
@@ -869,76 +869,42 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
   CalculateData         data;
   GimpHistogramPrivate *priv;
   const Babl           *format;
+  const Babl           *space;
 
   priv = context->histogram->priv;
 
   format = gegl_buffer_get_format (context->buffer);
+  space  = babl_format_get_space (format);
 
   if (babl_format_get_type (format, 0) == babl_type ("u8"))
     context->n_bins = 256;
   else
     context->n_bins = 1024;
 
-  if (babl_format_is_palette (format))
+  switch (gimp_babl_format_get_base_type (format))
     {
-      if (babl_format_has_alpha (format))
-        {
-          if (priv->linear)
-            format = babl_format ("RGB float");
-          else
-            format = babl_format ("R'G'B' float");
-        }
-      else
-        {
-          if (priv->linear)
-            format = babl_format ("RGBA float");
-          else
-            format = babl_format ("R'G'B'A float");
-        }
-    }
-  else
-    {
-      const Babl *model = babl_format_get_model (format);
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      format = gimp_babl_format (GIMP_RGB,
+                                 gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                                      priv->trc),
+                                 babl_format_has_alpha (format),
+                                 space);
+      break;
 
-      if (model == babl_model ("Y") ||
-          model == babl_model ("Y'"))
-        {
-          if (priv->linear)
-            format = babl_format ("Y float");
-          else
-            format = babl_format ("Y' float");
-        }
-      else if (model == babl_model ("YA") ||
-               model == babl_model ("Y'A"))
-        {
-          if (priv->linear)
-            format = babl_format ("YA float");
-          else
-            format = babl_format ("Y'A float");
-        }
-      else if (model == babl_model ("RGB") ||
-               model == babl_model ("R'G'B'"))
-        {
-          if (priv->linear)
-            format = babl_format ("RGB float");
-          else
-            format = babl_format ("R'G'B' float");
-        }
-      else if (model == babl_model ("RGBA") ||
-               model == babl_model ("R'G'B'A"))
-        {
-          if (priv->linear)
-            format = babl_format ("RGBA float");
-          else
-            format = babl_format ("R'G'B'A float");
-        }
-      else
-        {
-          if (async)
-            gimp_async_abort (async);
+    case GIMP_GRAY:
+      format = gimp_babl_format (GIMP_GRAY,
+                                 gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                                      priv->trc),
+                                 babl_format_has_alpha (format),
+                                 space);
+      break;
 
-          g_return_if_reached ();
-        }
+    default:
+      if (async)
+        gimp_async_abort (async);
+
+      g_return_if_reached ();
     }
 
   context->n_components = babl_format_get_n_components (format);
@@ -948,9 +914,9 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
   data.format      = format;
   data.values_list = NULL;
 
-  gimp_parallel_distribute_area (
-    &context->buffer_rect, MIN_PARALLEL_SUB_AREA,
-    (GimpParallelDistributeAreaFunc) gimp_histogram_calculate_area,
+  gegl_parallel_distribute_area (
+    &context->buffer_rect, PIXELS_PER_THREAD, GEGL_SPLIT_STRATEGY_AUTO,
+    (GeglParallelDistributeAreaFunc) gimp_histogram_calculate_area,
     &data);
 
   if (! async || ! gimp_async_is_canceled (async))
@@ -1018,7 +984,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
   iter = gegl_buffer_iterator_new (context->buffer, area, 0,
                                    data->format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
   if (context->mask)
     {
@@ -1054,7 +1020,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *data   = iter->data[0];
+      const gfloat *data   = iter->items[0].data;
       gint          length = iter->length;
       gfloat        max;
       gfloat        luminance;
@@ -1063,7 +1029,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
       if (context->mask)
         {
-          const gfloat *mask_data = iter->data[1];
+          const gfloat *mask_data = iter->items[1].data;
 
           switch (n_components)
             {

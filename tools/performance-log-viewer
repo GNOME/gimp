@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# performance-log-viewer -- GIMP performance log viewer driver
+# Copyright (C) 2018  Ell
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+#
+# Usage: performance-log-viewer FILE
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 FILE"
+
+    exit 1
+fi
+
+tools_dir="$(dirname "$(command -v -- "$0")")"
+file="$1"
+
+< "$file" || exit 1
+
+< "$file"                                  \
+"$tools_dir/performance-log-expand.py"   | \
+"$tools_dir/performance-log-coalesce.py" | \
+"$tools_dir/performance-log-deduce.py"   | \
+"$tools_dir/performance-log-viewer.py"

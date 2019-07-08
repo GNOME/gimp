@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -77,18 +77,19 @@ load_image (const gchar *filename,
             gboolean     interactive,
             GError      **error)
 {
-  uint8_t  *indata = NULL;
-  gsize     indatalen;
-  gint      width;
-  gint      height;
-  gint32    image_ID;
-  WebPMux  *mux;
-  WebPData  wp_data;
-  uint32_t  flags;
-  gboolean  animation = FALSE;
-  gboolean  icc       = FALSE;
-  gboolean  exif      = FALSE;
-  gboolean  xmp       = FALSE;
+  uint8_t          *indata = NULL;
+  gsize             indatalen;
+  gint              width;
+  gint              height;
+  gint32            image_ID;
+  WebPMux          *mux;
+  WebPData          wp_data;
+  GimpColorProfile *profile   = NULL;
+  uint32_t          flags;
+  gboolean          animation = FALSE;
+  gboolean          icc       = FALSE;
+  gboolean          exif      = FALSE;
+  gboolean          xmp       = FALSE;
 
   /* Attempt to read the file contents from disk */
   if (! g_file_get_contents (filename,
@@ -135,6 +136,17 @@ load_image (const gchar *filename,
   /* Create the new image and associated layer */
   image_ID = gimp_image_new (width, height, GIMP_RGB);
 
+  if (icc)
+    {
+      WebPData icc_profile;
+
+      WebPMuxGetChunk (mux, "ICCP", &icc_profile);
+      profile = gimp_color_profile_new_from_icc_profile (icc_profile.bytes,
+                                                         icc_profile.size, NULL);
+      if (profile)
+        gimp_image_set_color_profile (image_ID, profile);
+    }
+
   if (! animation)
     {
       uint8_t *outdata;
@@ -144,7 +156,10 @@ load_image (const gchar *filename,
 
       /* Check to ensure the image data was loaded correctly */
       if (! outdata)
-        return -1;
+        {
+          WebPMuxDelete (mux);
+          return -1;
+        }
 
       create_layer (image_ID, outdata, 0, _("Background"),
                     width, height);
@@ -173,6 +188,7 @@ load_image (const gchar *filename,
               WebPDemuxDelete (demux);
             }
 
+          WebPMuxDelete (mux);
           return -1;
         }
 
@@ -229,21 +245,6 @@ load_image (const gchar *filename,
   /* Free the original compressed data */
   g_free (indata);
 
-  if (icc)
-    {
-      WebPData          icc_profile;
-      GimpColorProfile *profile;
-
-      WebPMuxGetChunk (mux, "ICCP", &icc_profile);
-      profile = gimp_color_profile_new_from_icc_profile (icc_profile.bytes,
-                                                         icc_profile.size, NULL);
-      if (profile)
-        {
-          gimp_image_set_color_profile (image_ID, profile);
-          g_object_unref (profile);
-        }
-    }
-
   if (exif || xmp)
     {
       GimpMetadata *metadata;
@@ -268,8 +269,13 @@ load_image (const gchar *filename,
                                                    file, NULL);
       if (metadata)
         {
+          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+          if (profile)
+            flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+
           gimp_image_metadata_load_finish (image_ID, "image/webp",
-                                           metadata, GIMP_METADATA_LOAD_ALL,
+                                           metadata, flags,
                                            interactive);
           g_object_unref (metadata);
         }
@@ -277,7 +283,12 @@ load_image (const gchar *filename,
       g_object_unref (file);
     }
 
+  WebPMuxDelete (mux);
+
   gimp_image_set_filename (image_ID, filename);
+
+  if (profile)
+    g_object_unref (profile);
 
   return image_ID;
 }

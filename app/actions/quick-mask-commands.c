@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -42,6 +42,9 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-6
+
+
 /*  local function prototypes  */
 
 static void   quick_mask_configure_callback (GtkWidget     *dialog,
@@ -62,14 +65,15 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
 /*  public functions */
 
 void
-quick_mask_toggle_cmd_callback (GtkAction *action,
-                                gpointer   data)
+quick_mask_toggle_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpImage *image;
   gboolean   active;
   return_if_no_image (image, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = g_variant_get_boolean (value);
 
   if (active != gimp_image_get_quick_mask_state (image))
     {
@@ -79,17 +83,17 @@ quick_mask_toggle_cmd_callback (GtkAction *action,
 }
 
 void
-quick_mask_invert_cmd_callback (GtkAction *action,
-                                GtkAction *current,
-                                gpointer   data)
+quick_mask_invert_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpImage *image;
-  gint       value;
+  gboolean   inverted;
   return_if_no_image (image, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  inverted = (gboolean) g_variant_get_int32 (value);
 
-  if (value != gimp_image_get_quick_mask_inverted (image))
+  if (inverted != gimp_image_get_quick_mask_inverted (image))
     {
       gimp_image_quick_mask_invert (image);
       gimp_image_flush (image);
@@ -97,8 +101,9 @@ quick_mask_invert_cmd_callback (GtkAction *action,
 }
 
 void
-quick_mask_configure_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+quick_mask_configure_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -167,7 +172,7 @@ quick_mask_configure_callback (GtkWidget     *dialog,
 
   gimp_image_get_quick_mask_color (image, &old_color);
 
-  if (gimp_rgba_distance (&old_color, channel_color) > 0.0001)
+  if (gimp_rgba_distance (&old_color, channel_color) > RGBA_EPSILON)
     {
       gimp_image_set_quick_mask_color (image, channel_color);
       gimp_image_flush (image);

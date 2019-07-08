@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -112,10 +112,12 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                         GimpPaintOptions *paint_options,
                         GimpSymmetry     *sym)
 {
-  GimpDodgeBurnOptions *options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
-  GimpContext          *context   = GIMP_CONTEXT (paint_options);
-  GimpDynamics         *dynamics  = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage            *image     = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpBrushCore        *brush_core = GIMP_BRUSH_CORE (paint_core);
+  GimpDodgeBurnOptions *options    = GIMP_DODGE_BURN_OPTIONS (paint_options);
+  GimpContext          *context    = GIMP_CONTEXT (paint_options);
+  GimpDynamics         *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage            *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer           *src_buffer;
   GeglBuffer           *paint_buffer;
   gint                  paint_buffer_x;
   gint                  paint_buffer_y;
@@ -123,7 +125,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gdouble               opacity;
   gdouble               force;
   const GimpCoords     *coords;
-  GeglNode             *op;
   gint                  paint_width, paint_height;
   gint                  n_strokes;
   gint                  i;
@@ -140,7 +141,12 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+  if (paint_options->application_mode == GIMP_PAINT_CONSTANT)
+    src_buffer = gimp_paint_core_get_orig_image (paint_core);
+  else
+    src_buffer = gimp_drawable_get_buffer (drawable);
+
+  gimp_brush_core_eval_transform_dynamics (brush_core,
                                            drawable,
                                            paint_options,
                                            coords);
@@ -148,6 +154,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   for (i = 0; i < n_strokes; i++)
     {
       coords = gimp_symmetry_get_coords (sym, i);
+
+      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
@@ -160,12 +168,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
       if (! paint_buffer)
         continue;
 
-      op = gimp_symmetry_get_operation (sym, i,
-                                        paint_width,
-                                        paint_height);
-
       /*  DodgeBurn the region  */
-      gimp_gegl_dodgeburn (gimp_paint_core_get_orig_image (paint_core),
+      gimp_gegl_dodgeburn (src_buffer,
                            GEGL_RECTANGLE (paint_buffer_x,
                                            paint_buffer_y,
                                            gegl_buffer_get_width  (paint_buffer),
@@ -192,6 +196,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                       gimp_context_get_opacity (context),
                                       gimp_paint_options_get_brush_mode (paint_options),
                                       force,
-                                      GIMP_PAINT_CONSTANT, op);
+                                      paint_options->application_mode);
     }
 }

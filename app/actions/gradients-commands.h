@@ -12,15 +12,16 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GRADIENTS_COMMANDS_H__
 #define __GRADIENTS_COMMANDS_H__
 
 
-void   gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
-                                               gpointer   data);
+void   gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
 
 #endif /* __GRADIENTS_COMMANDS_H__ */

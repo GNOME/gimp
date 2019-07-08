@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -271,7 +271,6 @@ gimp_operation_config_get_type (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), G_TYPE_NONE);
   g_return_val_if_fail (operation != NULL, G_TYPE_NONE);
-  g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), G_TYPE_NONE);
 
   config_types = gimp_operation_config_get_type_table (gimp);
 
@@ -280,6 +279,9 @@ gimp_operation_config_get_type (Gimp        *gimp,
   if (! config_type)
     {
       GTypeQuery query;
+
+      g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT),
+                            G_TYPE_NONE);
 
       g_type_query (parent_type, &query);
 
@@ -538,7 +540,7 @@ gimp_operation_config_sync_node (GObject  *config,
               gimp_value_get_rgb (&value, &gimp_color);
               g_value_unset (&value);
 
-              gegl_color = gimp_gegl_color_new (&gimp_color);
+              gegl_color = gimp_gegl_color_new (&gimp_color, NULL);
 
               g_value_init (&value, gegl_pspec->value_type);
               g_value_take_object (&value, gegl_color);
@@ -697,7 +699,7 @@ gimp_operation_config_config_notify (GObject          *config,
           gimp_value_get_rgb (&value, &gimp_color);
           g_value_unset (&value);
 
-          gegl_color = gimp_gegl_color_new (&gimp_color);
+          gegl_color = gimp_gegl_color_new (&gimp_color, NULL);
 
           g_value_init (&value, gegl_pspec->value_type);
           g_value_take_object (&value, gegl_color);

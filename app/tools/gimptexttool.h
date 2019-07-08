@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TEXT_TOOL_H__
@@ -62,7 +62,7 @@ struct _GimpTextTool
   gboolean        text_box_fixed;
 
   GimpTextLayout *layout;
-  gboolean        drawing_blocked;
+  gint            drawing_blocked;
 
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
@@ -119,10 +119,13 @@ void       gimp_text_tool_paste_clipboard        (GimpTextTool *text_tool);
 void       gimp_text_tool_create_vectors         (GimpTextTool *text_tool);
 void       gimp_text_tool_create_vectors_warped  (GimpTextTool *text_tool);
 
+GimpTextDirection
+           gimp_text_tool_get_direction          (GimpTextTool *text_tool);
+
 /*  only for the text editor  */
 void       gimp_text_tool_clear_layout           (GimpTextTool *text_tool);
 gboolean   gimp_text_tool_ensure_layout          (GimpTextTool *text_tool);
-gboolean   gimp_text_tool_apply                  (GimpTextTool *text_tool,
+void       gimp_text_tool_apply                  (GimpTextTool *text_tool,
                                                   gboolean      push_undo);
 
 

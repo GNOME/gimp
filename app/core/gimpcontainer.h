@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CONTAINER_H__
@@ -33,14 +33,14 @@
 #define GIMP_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER, GimpContainerClass))
 
 
-typedef struct _GimpContainerClass GimpContainerClass;
-typedef struct _GimpContainerPriv  GimpContainerPriv;
+typedef struct _GimpContainerClass   GimpContainerClass;
+typedef struct _GimpContainerPrivate GimpContainerPrivate;
 
 struct _GimpContainer
 {
-  GimpObject         parent_instance;
+  GimpObject            parent_instance;
 
-  GimpContainerPriv *priv;
+  GimpContainerPrivate *priv;
 };
 
 struct _GimpContainerClass

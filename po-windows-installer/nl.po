@@ -1,16 +1,20 @@
 # Dutch translation for gimp-windows-installer.
 # Copyright (C) 2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
-#
+# Nathan Follens <nthn@unseen.is>, 2019
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 02:30+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2019-01-17 11:03+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Nathan Follens <nthn@unseen.is>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -18,15 +22,12 @@ msgstr "Licentieovereenkomst"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr ""
+msgstr "Installatiewizard door Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
-msgid ""
-"This version of GIMP requires Windows XP with Service Pack 3, or a newer "
-"version of Windows."
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr ""
-"Deze versie van GIMP vereist Windows XP met Service Pack 3, of een recentere "
-"versie van Windows."
+"Deze versie van GIMP vereist Windows 7, of een recentere versie van Windows."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:4
 msgid "Development version"
@@ -35,17 +36,21 @@ msgstr "Ontwikkelaarsversie"
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
 msgid ""
-"This is a development version of GIMP installer. It hasn't been tested as "
-"much as the stable installer, which can result in GIMP not working properly. "
-"Please report any problems you encounter in the GIMP bugzilla (Installer "
-"component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
-"you wish to continue with installation anyway?"
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
-"Dit is een ontwikkelingsversie van GIMP installatie. Het is nog niet zoveel "
-"getest als de stabiele installatie, dit kan resulteren in GIMP niet optimaal "
-"werken. Gelieve problemen die je ondervindt te rapporteren in de GIMP "
-"bugzilla (Installatiecomponent):%n_https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=GIMP%n%nWenst u alsnog verder te gaan met de installatie?"
+"Dit is een ontwikkelingsversie van GIMP, waarin sommige functies mogelijk "
+"nog niet afgewerkt of onstabiel zijn.%nDeze versie van GIMP is niet bedoeld "
+"voor dagelijks gebruik aangezien het onstabiel is en u uw werk zou kunnen "
+"verliezen.%nAls u problemen ondervindt, controleer dan eerst of deze niet "
+"reeds opgelost zijn in GIT vooraleer u contact opneemt met de ontwikkelaars "
+"of de fout meldt op de Gitlab-website van GIMP:%n:https://gitlab.gnome.org/"
+"GNOME/gimp/issues%n%nWilt u toch verdergaan met de installatie?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -53,17 +58,17 @@ msgstr "&Verdergaan"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:8
 msgid "Exit"
-msgstr "Sluiten"
+msgstr "Afsluiten"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:9
 msgid ""
 "This version of GIMP requires a processor that supports SSE instructions."
 msgstr ""
-"Deze versie van GIMP vereist een processor die SSE instructies ondersteunt."
+"Deze versie van GIMP vereist een processor die SSE-instructies ondersteunt."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:10
 msgid "Display settings problem"
-msgstr "Probleem beeldscherminstellingen"
+msgstr "Probleem met beeldscherminstellingen"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:11
 msgid ""
@@ -72,10 +77,10 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Het installatieprogramma heeft gedetecteerd dat u Windows momenteel niet "
-"werkt in 32-bit kleurdiepte beeldmodus. Dit is geweten om "
-"stabiliteitsproblemen met GIMP te veroorzaken, dus het is aangeraden om de "
-"beeldscherm kleurdiepte te veranderen naar 32-bit voordat u verder gaat."
+"Het installatieprogramma heeft gedetecteerd dat uw Windows-installatie "
+"momenteel niet werkt in 32-bits beeldmodus. Dit is een gekende oorzaak van "
+"stabiliteitsproblemen met GIMP, dus wordt het aanbevolen om de kleurdiepte "
+"van het beeldscherm te veranderen naar 32-bits vooraleer u verdergaat."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
@@ -87,13 +92,13 @@ msgid ""
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP is nu klaar voor installatie. Klik op de Installeer knop voor de "
-"standaard instellingen, of klik de Aanpassen knop om meer controle te hebben "
-"over wat er wordt geïnstalleerd."
+"GIMP is nu klaar voor installatie. Klik op de knop ‘installeren’ voor de "
+"standaardinstellingen, of klik op de knop ‘Aanpassen’ om meer controle te "
+"hebben over wat er wordt geïnstalleerd."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"
-msgstr "&Installeer"
+msgstr "&Installeren"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:15
 msgid "&Customize"
@@ -121,142 +126,147 @@ msgstr "GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:21
 msgid "GIMP and all default plug-ins"
-msgstr "GIMP en alle standaard plugins"
+msgstr "GIMP en alle standaardplug-ins"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:22
 msgid "Run-time libraries"
-msgstr "Run-time bibliotheken"
+msgstr "Runtimebibliotheken"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:23
 msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
 msgstr ""
-"Run-time bibliotheken gebruikt door GIMP, inclusief GTK+ Run-time Environment"
+"Runtimebibliotheken gebruikt door GIMP, inclusief GTK+ Runtime Environment"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
-msgid "MS-Windows engine for GTK+"
-msgstr "Windows engine voor GTK+"
+msgid "Debug symbols"
+msgstr "Debugsymbolen"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:25
-msgid "Native Windows look for GIMP"
-msgstr "Natieve Windows uiterlijk voor GIMP"
+msgid "Include information to help with debugging GIMP"
+msgstr "Voeg informatie toe om te helpen bij het debuggen van GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:26
-msgid "Support for old plug-ins"
-msgstr "Ondersteuning voor oude plugins"
+msgid "MS-Windows engine for GTK+"
+msgstr "Windows-engine voor GTK+"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:27
-msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Installeer bibliotheken nodig door oude plugins van derden"
+msgid "Native Windows look for GIMP"
+msgstr "Windows-uiterlijk voor GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:28
+msgid "Support for old plug-ins"
+msgstr "Ondersteuning voor oude plug-ins"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:29
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "Installeer bibliotheken vereist door oude plug-ins van derden"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
 msgstr "Vertalingen"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:29
-msgid "Python scripting"
-msgstr "Python scripting"
-
-#: ../build/windows/installer/lang/setup.isl.in.h:30
-msgid "Allows you to use GIMP plugins written in Python scripting language."
-msgstr ""
-"Staat toe van GIMP plugins geschreven in Python scripting taal te gebruiken."
-
 #: ../build/windows/installer/lang/setup.isl.in.h:31
-msgid "MyPaint brushes"
-msgstr ""
+msgid "Python scripting"
+msgstr "Python-scripting"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
-msgid "Install the default set of MyPaint brushes"
-msgstr ""
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "Laat u toe GIMP-plug-ins geschreven in Python te gebruiken."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
-msgid "PostScript support"
-msgstr "PostScript ondersteuning"
+msgid "MyPaint brushes"
+msgstr "MyPaint-borstels"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:34
-msgid "Allow GIMP to load PostScript files"
-msgstr "Staat GIMP toe PostScript bestanden te laden"
+msgid "Install the default set of MyPaint brushes"
+msgstr "Installeer de standaardverzameling van MyPaint-borstels"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:35
-msgid "Support for 32-bit plug-ins"
-msgstr "Ondersteuning voor 32-bit plugins"
+msgid "PostScript support"
+msgstr "PostScript-ondersteuning"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:36
+msgid "Allow GIMP to load PostScript files"
+msgstr "Staat GIMP toe PostScript-bestanden te laden"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "Support for 32-bit plug-ins"
+msgstr "Ondersteuning voor 32-bits plug-ins"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"Installeer bestanden nodig voor gebruik van 32-bit plugins.%nVereist voor "
-"Python ondersteuning."
+"Installeer bestanden nodig voor gebruik van 32-bits plug-ins.%nVereist voor "
+"Python-ondersteuning."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:38
+#: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
 msgstr "Extra snelkoppelingen:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
+#: ../build/windows/installer/lang/setup.isl.in.h:41
 msgid "Create a &desktop icon"
 msgstr "Snelkoppeling op het &bureaublad aanmaken"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:40
+#: ../build/windows/installer/lang/setup.isl.in.h:42
 msgid "Create a &Quick Launch icon"
 msgstr "Snelkoppeling in &Quicklaunch aanmaken"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
-msgid "Remove previous GIMP version"
-msgstr "Verwijder oudere GIMP versies"
-
 #: ../build/windows/installer/lang/setup.isl.in.h:43
+msgid "Remove previous GIMP version"
+msgstr "Oude GIMP-installatie verwijderen"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:45
 #, no-c-format
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
-"Er was een probleem tijdens het bijwerken van GIMP's omgeving in %1. Als u "
-"een probleem krijgt bij het laden van plugins, probeer GIMP te verwijderen "
-"en opnieuw te installeren."
-
-#: ../build/windows/installer/lang/setup.isl.in.h:44
-msgid "Error extracting temporary data."
-msgstr "Er was een fout uitpakken tijdelijke gegevens."
-
-#: ../build/windows/installer/lang/setup.isl.in.h:45
-msgid "Error updating Python interpreter info."
-msgstr "Er was een fout bijwerken Python interpreter info."
+"Fout bij bijwerken van de omgeving van GIMP in %1. Als u problemen "
+"ondervindt bij het laden van plug-ins, probeer GIMP dan te verwijderen en "
+"opnieuw te installeren."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
-#, fuzzy
-msgid "Error updating MyPaint brushes info."
-msgstr "Er was een fout bijwerken Python interpreter info."
+msgid "Error extracting temporary data."
+msgstr "Fout bij uitpakken van tijdelijke gegevens."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:47
+msgid "Error updating Python interpreter info."
+msgstr "Fout bij bijwerken van Python-interpreteerderinfo."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
-#, no-c-format
-msgid "There was an error updating %1."
-msgstr "Er was een fout tijdens het bijwerken van %1."
+msgid "Error updating MyPaint brushes info."
+msgstr "Fout bij bijwerken van MyPaint-borstelinfo."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:50
 #, no-c-format
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr ""
-"Er was een fout tijdens het bijwerken van GIMP's configuratie bestand %1."
+msgid "There was an error updating %1."
+msgstr "Fout bij bijwerken van %s."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:51
+#: ../build/windows/installer/lang/setup.isl.in.h:52
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "Fout bij bijwerken van GIMP-configuratiebestand %s."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:53
 msgid "Edit with GIMP"
 msgstr "Bewerken met GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
+#: ../build/windows/installer/lang/setup.isl.in.h:54
 msgid "Select file associations"
-msgstr "Selecteer bestandskoppelingen"
+msgstr "Selecteer bestandsassociaties"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:53
+#: ../build/windows/installer/lang/setup.isl.in.h:55
 msgid "Extensions:"
 msgstr "Bestandsextensies:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select the file types you wish to associate with GIMP"
-msgstr "Selecteer de bestandsextensie die u wenst te associëren met GIMP"
+msgstr "Selecteer de bestandsextensies die u wenst te associëren met GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: ../build/windows/installer/lang/setup.isl.in.h:57
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -264,27 +274,27 @@ msgstr ""
 "Dit zal geselecteerde bestanden openen in GIMP wanneer u deze dubbelklikt in "
 "Verkenner."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select &All"
 msgstr "&Alles selecteren"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: ../build/windows/installer/lang/setup.isl.in.h:59
 msgid "Unselect &All"
 msgstr "&Alles deselecteren"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: ../build/windows/installer/lang/setup.isl.in.h:60
 msgid "Select &Unused"
 msgstr "&Ongebruikte selecteren"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: ../build/windows/installer/lang/setup.isl.in.h:61
 msgid "File types to associate with GIMP:"
-msgstr "Bestandtypes te associeren met GIMP:"
-
-#: ../build/windows/installer/lang/setup.isl.in.h:60
-msgid "Removing previous version of GIMP:"
-msgstr "Removing previous version of GIMP:"
+msgstr "Bestandstypes te associëren met GIMP:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:62
+msgid "Removing previous version of GIMP:"
+msgstr "Oude versie van GIMP wordt verwijderd:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -293,13 +303,13 @@ msgid ""
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 kan niet worden geïnstalleerd over u huidige geïnstalleerde GIMP "
-"versie en de automatische verwijdering van de oude versie is gefaald.%n"
+"GIMP %1 kan niet worden geïnstalleerd over uw huidig geïnstalleerde GIMP-"
+"versie, en de automatische verwijdering van de oude versie is gefaald.%n"
 "%nGelieve zelf de vorige versie van GIMP te verwijderen voordat u deze "
-"installeerd in %2 of kies een Aangepaste installatie en selecteer een andere "
-"installatie map.%n%nHet installatieprogramma zal nu afsluiten."
+"installeert in %2, of kies een Aangepaste installatie en selecteer een "
+"andere installatiemap.%n%nHet installatieprogramma zal nu afsluiten."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
+#: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -308,82 +318,98 @@ msgid ""
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 kan niet worden geïnstalleerd over u huidige geïnstalleerde GIMP "
+"GIMP %1 kan niet worden geïnstalleerd over uw huidig geïnstalleerde GIMP-"
 "versie en het installatieprogramma kon geen manier vinden om de oude versie "
 "automatisch te verwijderen.%n%nGelieve zelf de vorige versie van GIMP en "
-"plugins te verwijderen voordat u deze versie in %2 installeert of kies een "
+"plug-ins te verwijderen voordat u deze versie in %2 installeert of kies een "
 "Aangepaste installatie en selecteer een andere map.%n%nHet "
 "installatieprogramma zal nu afsluiten."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
+#: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"De vorige versie van GIMP wer succesvol verwijderd, maar Windows moet "
+"De vorige versie van GIMP werd succesvol verwijderd, maar Windows moet "
 "heropstarten voordat de installatie kan verdergaan.%n%nNa het heropstarten "
-"van u computer zal de installatie verdergaan de volgende keer een "
+"van uw computer zal de installatie verdergaan de volgende keer dat een "
 "administrator inlogt."
-
-#: ../build/windows/installer/lang/setup.isl.in.h:68
-#, no-c-format
-msgid "There was an error restarting the Setup. (%1)"
-msgstr "Er was een fout bij het heropstarten van de installatie. (%1)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:70
 #, no-c-format
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Remember: GIMP is Vrije Software.%n%nBezoek alstublieft"
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "Fout bij heropstarten van de installatie. (%1)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:71
-msgid "for free updates."
-msgstr "voor gratis bijwerkingen."
-
-#: ../build/windows/installer/lang/setup.isl.in.h:72
-msgid "Setting up file associations..."
-msgstr "Bezig met het opzetten van bestandskoppelingen..."
+msgid "Cleaning up old files..."
+msgstr "Oude bestanden worden opgeruimd…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:73
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "Bezig met het opzetten van omgeving voor GIMP Python extensie..."
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "Onthoud: GIMP is vrije software.%n%nBezoek"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:74
-#, fuzzy
-msgid "Setting up MyPaint brushes..."
-msgstr "Bezig met het opzetten van GIMP omgeving..."
+msgid "for free updates."
+msgstr "voor gratis updates."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
-msgid "Setting up GIMP environment..."
-msgstr "Bezig met het opzetten van GIMP omgeving..."
+msgid "Setting up file associations..."
+msgstr "Bezig met instellen van bestandsassociaties…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:76
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr ""
-"Bezig met het opzetten van GIMP configuratie voor 32-bit plugin "
-"ondersteuning..."
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "Bezig met opzetten van omgeving voor GIMP-Python-extensie…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:77
-msgid "Launch GIMP"
-msgstr "GIMP starten"
+msgid "Setting up MyPaint brushes..."
+msgstr "Bezig met opzetten van MyPaint-borstels..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:78
+msgid "Setting up GIMP environment..."
+msgstr "Bezig met opzetten van GIMP-omgeving…"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:79
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr ""
+"Bezig met instellen van GIMP-configuratie voor 32-bits-plug-in-"
+"ondersteuning..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:80
+msgid "Launch GIMP"
+msgstr "GIMP opstarten"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Removing add-on"
 msgstr "Verwijderen van add-on"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: ../build/windows/installer/lang/setup.isl.in.h:83
 #, no-c-format
 msgid "Internal error (%1)."
 msgstr "Interne fout (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: ../build/windows/installer/lang/setup.isl.in.h:84
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
-"GIMP schijnt niet in de geselecteerde map te worden geïnstalleerd. Toch "
-"doorgaan?"
+"GIMP lijkt niet in de geselecteerde map geïnstalleerd te zijn. Toch doorgaan?"
+
+#~ msgid ""
+#~ "This is a development version of GIMP installer. It hasn't been tested as "
+#~ "much as the stable installer, which can result in GIMP not working "
+#~ "properly. Please report any problems you encounter in the GIMP bugzilla "
+#~ "(Installer component):%n_https://bugzilla.gnome.org/enter_bug.cgi?"
+#~ "product=GIMP%n%nDo you wish to continue with installation anyway?"
+#~ msgstr ""
+#~ "Dit is een ontwikkelingsversie van GIMP installatie. Het is nog niet "
+#~ "zoveel getest als de stabiele installatie, dit kan resulteren in GIMP "
+#~ "niet optimaal werken. Gelieve problemen die je ondervindt te rapporteren "
+#~ "in de GIMP bugzilla (Installatiecomponent):%n_https://bugzilla.gnome.org/"
+#~ "enter_bug.cgi?product=GIMP%n%nWenst u alsnog verder te gaan met de "
+#~ "installatie?"
 
 #~ msgid ""
 #~ "Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening "

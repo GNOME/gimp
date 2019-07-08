@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -40,13 +40,13 @@ gimp_pattern_load (GimpContext   *context,
                    GInputStream  *input,
                    GError       **error)
 {
-  GimpPattern   *pattern = NULL;
-  const Babl    *format  = NULL;
-  PatternHeader  header;
-  gsize          size;
-  gsize          bytes_read;
-  gint           bn_size;
-  gchar         *name = NULL;
+  GimpPattern       *pattern = NULL;
+  const Babl        *format  = NULL;
+  GimpPatternHeader  header;
+  gsize              size;
+  gsize              bytes_read;
+  gsize              bn_size;
+  gchar             *name = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -70,8 +70,9 @@ gimp_pattern_load (GimpContext   *context,
   header.magic_number = g_ntohl (header.magic_number);
 
   /*  Check for correct file format */
-  if (header.magic_number != GPATTERN_MAGIC || header.version != 1 ||
-      header.header_size <= sizeof (header))
+  if (header.magic_number != GIMP_PATTERN_MAGIC ||
+      header.version      != 1                  ||
+      header.header_size  <= sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unknown pattern format version %d."),
@@ -90,16 +91,16 @@ gimp_pattern_load (GimpContext   *context,
     }
 
   /*  Validate dimensions  */
-  if ((header.width  == 0) || (header.width  > GIMP_MAX_IMAGE_SIZE) ||
-      (header.height == 0) || (header.height > GIMP_MAX_IMAGE_SIZE) ||
+  if ((header.width  == 0) || (header.width  > GIMP_PATTERN_MAX_SIZE) ||
+      (header.height == 0) || (header.height > GIMP_PATTERN_MAX_SIZE) ||
       (G_MAXSIZE / header.width / header.height / header.bytes < 1))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Invalid header data in '%s': width=%lu, height=%lu, "
                      "bytes=%lu"), gimp_file_get_utf8_name (file),
-                   (unsigned long int)header.width,
-                   (unsigned long int)header.height,
-                   (unsigned long int)header.bytes);
+                   (gulong) header.width,
+                   (gulong) header.height,
+                   (gulong) header.bytes);
       goto error;
     }
 
@@ -108,7 +109,17 @@ gimp_pattern_load (GimpContext   *context,
     {
       gchar *utf8;
 
-      name = g_new (gchar, bn_size);
+      if (bn_size > GIMP_PATTERN_MAX_NAME)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Invalid header data in '%s': "
+                         "Pattern name is too long: %lu"),
+                       gimp_file_get_utf8_name (file),
+                       (gulong) bn_size);
+          goto error;
+        }
+
+      name = g_new0 (gchar, bn_size + 1);
 
       if (! g_input_stream_read_all (input, name, bn_size,
                                      &bytes_read, NULL, error) ||

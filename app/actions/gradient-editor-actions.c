@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -65,57 +65,57 @@ static const GimpActionEntry gradient_editor_actions[] =
 
   { "gradient-editor-left-color", NULL,
     NC_("gradient-editor-action", "L_eft Endpoint's Color..."), NULL, NULL,
-    G_CALLBACK (gradient_editor_left_color_cmd_callback),
+    gradient_editor_left_color_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR },
 
   { "gradient-editor-right-color", NULL,
     NC_("gradient-editor-action", "R_ight Endpoint's Color..."), NULL, NULL,
-    G_CALLBACK (gradient_editor_right_color_cmd_callback),
+    gradient_editor_right_color_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR },
 
   { "gradient-editor-flip", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     "flip", NULL, NULL,
-    G_CALLBACK (gradient_editor_flip_cmd_callback),
+    gradient_editor_flip_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_FLIP },
 
   { "gradient-editor-replicate", GIMP_ICON_OBJECT_DUPLICATE,
     "replicate", NULL, NULL,
-    G_CALLBACK (gradient_editor_replicate_cmd_callback),
+    gradient_editor_replicate_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_FLIP },
 
   { "gradient-editor-split-midpoint", NULL,
     "splitmidpoint", NULL, NULL,
-    G_CALLBACK (gradient_editor_split_midpoint_cmd_callback),
+    gradient_editor_split_midpoint_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT },
 
   { "gradient-editor-split-uniform", NULL,
     "splituniform", NULL, NULL,
-    G_CALLBACK (gradient_editor_split_uniformly_cmd_callback),
+    gradient_editor_split_uniformly_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
 
   { "gradient-editor-delete", GIMP_ICON_EDIT_DELETE,
     "delete", "", NULL,
-    G_CALLBACK (gradient_editor_delete_cmd_callback),
+    gradient_editor_delete_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_DELETE },
 
   { "gradient-editor-recenter", NULL,
     "recenter", NULL, NULL,
-    G_CALLBACK (gradient_editor_recenter_cmd_callback),
+    gradient_editor_recenter_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_RECENTER },
 
   { "gradient-editor-redistribute", NULL,
     "redistribute", NULL, NULL,
-    G_CALLBACK (gradient_editor_redistribute_cmd_callback),
+    gradient_editor_redistribute_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_REDISTRIBUTE },
 
   { "gradient-editor-blend-color", NULL,
     NC_("gradient-editor-action", "Ble_nd Endpoints' Colors"), NULL, NULL,
-    G_CALLBACK (gradient_editor_blend_color_cmd_callback),
+    gradient_editor_blend_color_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_BLEND_COLOR },
 
   { "gradient-editor-blend-opacity", NULL,
     NC_("gradient-editor-action", "Blend Endpoints' Opacit_y"), NULL, NULL,
-    G_CALLBACK (gradient_editor_blend_opacity_cmd_callback),
+    gradient_editor_blend_opacity_cmd_callback,
     GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY }
 };
 
@@ -123,7 +123,7 @@ static const GimpToggleActionEntry gradient_editor_toggle_actions[] =
 {
   { "gradient-editor-edit-active", GIMP_ICON_LINKED,
     NC_("gradient-editor-action", "Edit Active Gradient"), NULL, NULL,
-    G_CALLBACK (data_editor_edit_active_cmd_callback),
+    data_editor_edit_active_cmd_callback,
     FALSE,
     GIMP_HELP_GRADIENT_EDITOR_EDIT_ACTIVE }
 };
@@ -339,6 +339,11 @@ static const GimpRadioActionEntry gradient_editor_blending_actions[] =
     GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
+  { "gradient-editor-blending-step", NULL,
+    NC_("gradient-editor-blending", "S_tep"), NULL, NULL,
+    GIMP_GRADIENT_SEGMENT_STEP,
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+
   { "gradient-editor-blending-varies", NULL,
     NC_("gradient-editor-blending", "(Varies)"), NULL, NULL,
     -1,
@@ -404,56 +409,56 @@ gradient_editor_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_load_left_actions,
                                       G_N_ELEMENTS (gradient_editor_load_left_actions),
-                                      G_CALLBACK (gradient_editor_load_left_cmd_callback));
+                                      gradient_editor_load_left_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_save_left_actions,
                                       G_N_ELEMENTS (gradient_editor_save_left_actions),
-                                      G_CALLBACK (gradient_editor_save_left_cmd_callback));
+                                      gradient_editor_save_left_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_load_right_actions,
                                       G_N_ELEMENTS (gradient_editor_load_right_actions),
-                                      G_CALLBACK (gradient_editor_load_right_cmd_callback));
+                                      gradient_editor_load_right_cmd_callback);
 
 
   gimp_action_group_add_enum_actions (group, "gradient-editor-action",
                                       gradient_editor_save_right_actions,
                                       G_N_ELEMENTS (gradient_editor_save_right_actions),
-                                      G_CALLBACK (gradient_editor_save_right_cmd_callback));
+                                      gradient_editor_save_right_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "gradient-editor-color-type",
                                        gradient_editor_left_color_type_actions,
                                        G_N_ELEMENTS (gradient_editor_left_color_type_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (gradient_editor_left_color_type_cmd_callback));
+                                       gradient_editor_left_color_type_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "gradient-editor-color-type",
                                        gradient_editor_right_color_type_actions,
                                        G_N_ELEMENTS (gradient_editor_right_color_type_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (gradient_editor_right_color_type_cmd_callback));
+                                       gradient_editor_right_color_type_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "gradient-editor-blending",
                                        gradient_editor_blending_actions,
                                        G_N_ELEMENTS (gradient_editor_blending_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (gradient_editor_blending_func_cmd_callback));
+                                       gradient_editor_blending_func_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "gradient-editor-coloring",
                                        gradient_editor_coloring_actions,
                                        G_N_ELEMENTS (gradient_editor_coloring_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (gradient_editor_coloring_type_cmd_callback));
+                                       gradient_editor_coloring_type_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       gradient_editor_zoom_actions,
                                       G_N_ELEMENTS (gradient_editor_zoom_actions),
-                                      G_CALLBACK (gradient_editor_zoom_cmd_callback));
+                                      gradient_editor_zoom_cmd_callback);
 }
 
 void
@@ -826,6 +831,7 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-blending-sine",              editable);
   SET_SENSITIVE ("gradient-editor-blending-sphere-increasing", editable);
   SET_SENSITIVE ("gradient-editor-blending-sphere-decreasing", editable);
+  SET_SENSITIVE ("gradient-editor-blending-step",              editable);
 
   if (blending_equal && gradient)
     {
@@ -845,6 +851,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
           break;
         case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
           SET_ACTIVE ("gradient-editor-blending-sphere-decreasing", TRUE);
+          break;
+        case GIMP_GRADIENT_SEGMENT_STEP:
+          SET_ACTIVE ("gradient-editor-blending-step", TRUE);
           break;
         }
     }

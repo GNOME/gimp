@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -27,6 +27,8 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
+
+#include "gegl/gimp-babl-compat.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -173,6 +175,7 @@ gimp_brush_select_constructed (GObject *object)
 
   scale = gimp_spin_scale_new (select->opacity_data,
                                _("Opacity"), 1);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
   gtk_box_pack_end (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -258,11 +261,18 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
 {
   GimpBrush      *brush = GIMP_BRUSH (object);
   GimpTempBuf    *mask  = gimp_brush_get_mask (brush);
+  const Babl     *format;
+  gpointer        data;
   GimpArray      *array;
   GimpValueArray *return_vals;
 
-  array = gimp_array_new (gimp_temp_buf_get_data (mask),
-                          gimp_temp_buf_get_data_size (mask),
+  format = gimp_babl_compat_u8_mask_format (gimp_temp_buf_get_format (mask));
+  data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
+
+  array = gimp_array_new (data,
+                          gimp_temp_buf_get_width         (mask) *
+                          gimp_temp_buf_get_height        (mask) *
+                          babl_format_get_bytes_per_pixel (format),
                           TRUE);
 
   return_vals =
@@ -282,6 +292,8 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                         G_TYPE_NONE);
 
   gimp_array_free (array);
+
+  gimp_temp_buf_unlock (mask, data);
 
   return return_vals;
 }

@@ -12,7 +12,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """Simple interface for writing GIMP plug-ins in Python.
 
@@ -607,7 +607,7 @@ def _interact(proc_name, start_params):
             self.button = gtk.Button()
             self.button.set_image(image)
             box.pack_start(self.entry)
-            box.pack_start(self.button)
+            box.pack_start(self.button, expand=False)
             self.button.connect("clicked", self.pick_file)
             if default:
                 self.entry.set_text(default)

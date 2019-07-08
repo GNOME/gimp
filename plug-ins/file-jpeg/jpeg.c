@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -347,6 +347,7 @@ run (const gchar      *name,
       jsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       jsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       jsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
+      jsvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
       parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)
@@ -568,6 +569,11 @@ run (const gchar      *name,
                 metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
               else
                 metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+
+              if (jsvals.save_profile)
+                metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
+              else
+                metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
               file = g_file_new_for_path (param[3].data.d_string);
               gimp_image_metadata_save_finish (orig_image_ID,

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -87,15 +87,14 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
                             GdkDisplay        *display,
                             GimpUIManager     *manager)
 {
-  GtkUIManager *ui_manager = GTK_UI_MANAGER (manager);
-  const gchar  *group_name;
-  const gchar  *ui_path;
-  const gchar  *display_name;
-  gchar        *action_path;
-  gchar        *merge_key;
-  guint         merge_id;
-  gint          n_screens;
-  gint          i;
+  const gchar *group_name;
+  const gchar *ui_path;
+  const gchar *display_name;
+  gchar       *action_path;
+  gchar       *merge_key;
+  guint        merge_id;
+  gint         n_screens;
+  gint         i;
 
   group_name = g_object_get_data (G_OBJECT (manager),
                                   "move-to-screen-group-name");
@@ -110,7 +109,7 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
 
   merge_key = g_strdup_printf ("%s-display-merge-id", display_name);
 
-  merge_id = gtk_ui_manager_new_merge_id (ui_manager);
+  merge_id = gimp_ui_manager_new_merge_id (manager);
   g_object_set_data (G_OBJECT (manager), merge_key,
                      GUINT_TO_POINTER (merge_id));
 
@@ -131,10 +130,10 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
                                      group_name, screen_name);
       g_free (screen_name);
 
-      gtk_ui_manager_add_ui (ui_manager, merge_id,
-                             action_path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
+      gimp_ui_manager_add_ui (manager, merge_id,
+                              action_path, action_name, action_name,
+                              GTK_UI_MANAGER_MENUITEM,
+                              FALSE);
 
       g_free (action_name);
     }
@@ -165,5 +164,5 @@ window_menu_display_closed (GdkDisplay    *display,
   g_free (merge_key);
 
   if (merge_id)
-    gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+    gimp_ui_manager_remove_ui (manager, merge_id);
 }

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_RADIO_ACTION_H__
@@ -51,6 +51,7 @@ GtkRadioAction * gimp_radio_action_new      (const gchar *name,
                                              const gchar *label,
                                              const gchar *tooltip,
                                              const gchar *icon_name,
+                                             const gchar *help_id,
                                              gint         value);
 
 

@@ -2,7 +2,7 @@
 
 <!-- This simple XSL transformation creates a text version from
      gimp-tips.xml.in which can then be used to seed
-     http://wiki.gimp.org/gimp/FortuneCookies in the GIMP Wiki. -->
+     https://wiki.gimp.org/gimp/FortuneCookies in the GIMP Wiki. -->
 
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_OPERATION_TOOL_H__
@@ -43,6 +43,7 @@ struct _GimpOperationTool
   GList          *aux_inputs;
 
   /* dialog */
+  GWeakRef        options_sw_ref;
   GWeakRef        options_box_ref;
   GWeakRef        options_gui_ref;
 };

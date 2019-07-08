@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -47,8 +47,8 @@ create_spin_button_in_grid (GtkWidget *grid,
                             gint       min,
                             gint       max)
 {
-   GtkAdjustment *adj = gtk_adjustment_new (value, min, max, 1, 1, 1);
-   GtkWidget *button = gtk_spin_button_new (adj, 1, 0);
+   GtkAdjustment *adj = gtk_adjustment_new (value, min, max, 1, 10, 0);
+   GtkWidget *button = gimp_spin_button_new (adj, 1, 0);
 
    gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
    if (label)

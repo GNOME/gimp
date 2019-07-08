@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -174,7 +174,7 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
                             "use-pattern",
                             _("Apply stored pattern"),
                             NULL,
-                            TRUE,
+                            DEFAULT_USE_PATTERN,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PALETTE,
@@ -208,7 +208,6 @@ gimp_tool_preset_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_tool_preset_init (GimpToolPreset *tool_preset)
 {
-  tool_preset->tool_options = NULL;
 }
 
 static void
@@ -387,6 +386,14 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
         if (! gimp_scanner_parse_string (scanner, &type_name))
           {
             *expected = G_TOKEN_STRING;
+            break;
+          }
+
+        if (! (type_name && *type_name))
+          {
+            g_scanner_error (scanner, "GimpToolOptions type name is empty");
+            *expected = G_TOKEN_NONE;
+            g_free (type_name);
             break;
           }
 

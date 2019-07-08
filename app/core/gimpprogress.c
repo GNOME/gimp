@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,7 +47,7 @@ G_DEFINE_INTERFACE (GimpProgress, gimp_progress, G_TYPE_OBJECT)
 static guint progress_signals[LAST_SIGNAL] = { 0 };
 
 
-/*  private functionss  */
+/*  private functions  */
 
 
 static void

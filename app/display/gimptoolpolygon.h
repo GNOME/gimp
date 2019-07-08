@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOOL_POLYGON_H__
@@ -47,6 +47,9 @@ struct _GimpToolPolygon
 struct _GimpToolPolygonClass
 {
   GimpToolWidgetClass  parent_class;
+
+  /*  signals  */
+  void (* change_complete) (GimpToolPolygon *polygon);
 };
 
 
@@ -54,6 +57,7 @@ GType            gimp_tool_polygon_get_type   (void) G_GNUC_CONST;
 
 GimpToolWidget * gimp_tool_polygon_new        (GimpDisplayShell   *shell);
 
+gboolean         gimp_tool_polygon_is_closed  (GimpToolPolygon    *polygon);
 void             gimp_tool_polygon_get_points (GimpToolPolygon    *polygon,
                                                const GimpVector2 **points,
                                                gint               *n_points);

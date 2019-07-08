@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -68,7 +68,7 @@ typedef struct
   GimpTagCacheRecord  current_record;
 } GimpTagCacheParseData;
 
-struct _GimpTagCachePriv
+struct _GimpTagCachePrivate
 {
   GArray *records;
   GList  *containers;
@@ -110,7 +110,7 @@ static const gchar * gimp_tag_cache_attribute_name_to_value
 static GQuark        gimp_tag_cache_get_error_domain   (void);
 
 
-G_DEFINE_TYPE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_tag_cache_parent_class
 
@@ -118,24 +118,18 @@ G_DEFINE_TYPE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
 static void
 gimp_tag_cache_class_init (GimpTagCacheClass *klass)
 {
-  GObjectClass      *object_class         = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class    = GIMP_OBJECT_CLASS (klass);
-  GimpTagCacheClass *gimp_tag_cache_class = GIMP_TAG_CACHE_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   object_class->finalize         = gimp_tag_cache_finalize;
 
   gimp_object_class->get_memsize = gimp_tag_cache_get_memsize;
-
-  g_type_class_add_private (gimp_tag_cache_class,
-                            sizeof (GimpTagCachePriv));
 }
 
 static void
 gimp_tag_cache_init (GimpTagCache *cache)
 {
-  cache->priv = G_TYPE_INSTANCE_GET_PRIVATE (cache,
-                                             GIMP_TYPE_TAG_CACHE,
-                                             GimpTagCachePriv);
+  cache->priv = gimp_tag_cache_get_instance_private (cache);
 
   cache->priv->records    = g_array_new (FALSE, FALSE,
                                          sizeof (GimpTagCacheRecord));
@@ -436,10 +430,21 @@ gimp_tag_cache_save (GimpTagCache *cache)
       g_printerr ("%s\n", error->message);
     }
   else if (! g_output_stream_write_all (output, buf->str, buf->len,
-                                        NULL, NULL, &error) ||
-           ! g_output_stream_close (output, NULL, &error))
+                                        NULL, NULL, &error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       g_printerr (_("Error writing '%s': %s\n"),
+                  gimp_file_get_utf8_name (file), error->message);
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+    }
+  else if (! g_output_stream_close (output, NULL, &error))
+    {
+      g_printerr (_("Error closing '%s': %s\n"),
                   gimp_file_get_utf8_name (file), error->message);
     }
 

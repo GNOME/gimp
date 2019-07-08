@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -84,6 +84,28 @@ gimp_tile_ref (GimpTile *tile)
     }
 
   gimp_tile_cache_insert (tile);
+}
+
+void
+_gimp_tile_ref_nocache (GimpTile *tile,
+                        gboolean  init)
+{
+  g_return_if_fail (tile != NULL);
+
+  tile->ref_count++;
+
+  if (tile->ref_count == 1)
+    {
+      if (init)
+        {
+          gimp_tile_get (tile);
+          tile->dirty = FALSE;
+        }
+      else
+        {
+          tile->data = g_new (guchar, tile->ewidth * tile->eheight * tile->bpp);
+        }
+    }
 }
 
 void

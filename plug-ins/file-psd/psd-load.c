@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -70,6 +70,7 @@ static gint             add_image_resources        (gint32        image_id,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
                                                     gboolean     *resolution_loaded,
+                                                    gboolean     *profile_loaded,
                                                     GError      **error);
 
 static gint             add_layers                 (gint32        image_id,
@@ -115,6 +116,7 @@ gint32
 load_image (const gchar  *filename,
             gboolean      merged_image_only,
             gboolean     *resolution_loaded,
+            gboolean     *profile_loaded,
             GError      **load_error)
 {
   FILE         *f;
@@ -189,7 +191,9 @@ load_image (const gchar  *filename,
 
   /* ----- Add image resources ----- */
   IFDBG(2) g_debug ("Add image resources");
-  if (add_image_resources (image_id, &img_a, f, resolution_loaded, &error) < 0)
+  if (add_image_resources (image_id, &img_a, f,
+                           resolution_loaded, profile_loaded,
+                           &error) < 0)
     goto load_error;
   gimp_progress_update (0.8);
 
@@ -1002,16 +1006,16 @@ create_gimp_image (PSDimage    *img_a,
     switch (img_a->bps)
       {
       case 32:
-        precision = GIMP_PRECISION_U32_GAMMA;
+        precision = GIMP_PRECISION_U32_NON_LINEAR;
         break;
 
       case 16:
-        precision = GIMP_PRECISION_U16_GAMMA;
+        precision = GIMP_PRECISION_U16_NON_LINEAR;
         break;
 
       case 8:
       case 1:
-        precision = GIMP_PRECISION_U8_GAMMA;
+        precision = GIMP_PRECISION_U8_NON_LINEAR;
         break;
 
       default:
@@ -1064,6 +1068,7 @@ add_image_resources (gint32     image_id,
                      PSDimage  *img_a,
                      FILE      *f,
                      gboolean  *resolution_loaded,
+                     gboolean  *profile_loaded,
                      GError   **error)
 {
   PSDimageres  res_a;
@@ -1097,7 +1102,8 @@ add_image_resources (gint32     image_id,
         }
 
       if (load_image_resource (&res_a, image_id, img_a, f,
-                               resolution_loaded, error) < 0)
+                               resolution_loaded, profile_loaded,
+                               error) < 0)
         return -1;
     }
 
@@ -1872,11 +1878,11 @@ add_merged_image (gint32     image_id,
           iter = gegl_buffer_iterator_new (buffer, NULL, 0,
                                            babl_format ("R'G'B'A float"),
                                            GEGL_ACCESS_READWRITE,
-                                           GEGL_ABYSS_NONE);
+                                           GEGL_ABYSS_NONE, 1);
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat *data = iter->data[0];
+              gfloat *data = iter->items[0].data;
 
               for (i = 0; i < iter->length; i++)
                 {

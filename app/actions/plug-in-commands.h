@@ -12,19 +12,20 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __PLUG_IN_COMMANDS_H__
 #define __PLUG_IN_COMMANDS_H__
 
 
-void   plug_in_run_cmd_callback       (GtkAction     *action,
-                                       GimpProcedure *proc,
-                                       gpointer       data);
+void   plug_in_run_cmd_callback       (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);
 
-void   plug_in_reset_all_cmd_callback (GtkAction     *action,
-                                       gpointer       data);
+void   plug_in_reset_all_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);
 
 
 #endif /* __PLUG_IN_COMMANDS_H__ */

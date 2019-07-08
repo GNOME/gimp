@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_HISTOGRAM_H__
@@ -50,7 +50,7 @@ struct _GimpHistogramClass
 
 GType           gimp_histogram_get_type        (void) G_GNUC_CONST;
 
-GimpHistogram * gimp_histogram_new             (gboolean              linear);
+GimpHistogram * gimp_histogram_new             (GimpTRCType           trc);
 
 GimpHistogram * gimp_histogram_duplicate       (GimpHistogram        *histogram);
 

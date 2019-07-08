@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -78,9 +78,6 @@ static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
 static void        gimp_operation_tool_control         (GimpTool          *tool,
                                                         GimpToolAction     action,
                                                         GimpDisplay       *display);
-static void        gimp_operation_tool_options_notify  (GimpTool          *tool,
-                                                        GimpToolOptions   *options,
-                                                        const GParamSpec  *pspec);
 
 static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filter_tool,
                                                         gchar            **description);
@@ -88,6 +85,7 @@ static void        gimp_operation_tool_dialog          (GimpFilterTool    *filte
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_set_config      (GimpFilterTool    *filter_tool,
                                                         GimpConfig        *config);
+static void        gimp_operation_tool_region_changed  (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filter_tool,
                                                         gpointer           identifier,
                                                         gdouble            x,
@@ -146,17 +144,17 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->finalize           = gimp_operation_tool_finalize;
+  object_class->finalize            = gimp_operation_tool_finalize;
 
-  tool_class->initialize           = gimp_operation_tool_initialize;
-  tool_class->control              = gimp_operation_tool_control;
-  tool_class->options_notify       = gimp_operation_tool_options_notify;
+  tool_class->initialize            = gimp_operation_tool_initialize;
+  tool_class->control               = gimp_operation_tool_control;
 
-  filter_tool_class->get_operation = gimp_operation_tool_get_operation;
-  filter_tool_class->dialog        = gimp_operation_tool_dialog;
-  filter_tool_class->reset         = gimp_operation_tool_reset;
-  filter_tool_class->set_config    = gimp_operation_tool_set_config;
-  filter_tool_class->color_picked  = gimp_operation_tool_color_picked;
+  filter_tool_class->get_operation  = gimp_operation_tool_get_operation;
+  filter_tool_class->dialog         = gimp_operation_tool_dialog;
+  filter_tool_class->reset          = gimp_operation_tool_reset;
+  filter_tool_class->set_config     = gimp_operation_tool_set_config;
+  filter_tool_class->region_changed = gimp_operation_tool_region_changed;
+  filter_tool_class->color_picked   = gimp_operation_tool_color_picked;
 }
 
 static void
@@ -237,35 +235,6 @@ gimp_operation_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
-static void
-gimp_operation_tool_options_notify (GimpTool         *tool,
-                                    GimpToolOptions  *options,
-                                    const GParamSpec *pspec)
-{
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
-
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
-
-  if (! strcmp (pspec->name, "region"))
-    {
-      GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
-
-      /* when the region changes, do we want the operation's on-canvas
-       * controller to move to a new position, or the operation to
-       * change its properties to match the on-canvas controller?
-       *
-       * decided to leave the on-canvas controller where it is and
-       * pretend it has changed, so the operation is updated
-       * accordingly...
-       */
-      if (filter_tool->widget)
-        g_signal_emit_by_name (filter_tool->widget, "changed");
-
-      if (filter_tool->config && tool->drawable)
-        gimp_operation_tool_sync_op (op_tool, FALSE);
-    }
-}
-
 static gchar *
 gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
                                    gchar          **description)
@@ -282,16 +251,29 @@ gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
 {
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
   GtkWidget         *main_vbox;
+  GtkWidget         *options_sw;
   GtkWidget         *options_gui;
   GtkWidget         *options_box;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
+  /*  The options scrolled window  */
+  options_sw = gtk_scrolled_window_new (NULL, NULL);
+  g_weak_ref_set (&op_tool->options_sw_ref, options_sw);
+  gtk_scrolled_window_set_overlay_scrolling (GTK_SCROLLED_WINDOW (options_sw),
+                                             FALSE);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (options_sw),
+                                       GTK_SHADOW_NONE);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (options_sw),
+                                  GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+  gtk_box_pack_start (GTK_BOX (main_vbox), options_sw,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (options_sw);
+
   /*  The options vbox  */
   options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   g_weak_ref_set (&op_tool->options_box_ref, options_box);
-  gtk_box_pack_start (GTK_BOX (main_vbox), options_box,
-                      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (options_sw), options_box);
   gtk_widget_show (options_box);
 
   options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
@@ -331,6 +313,25 @@ gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
     gimp_operation_tool_sync_op (op_tool, FALSE);
 
   gimp_operation_tool_relink_chains (op_tool);
+}
+
+static void
+gimp_operation_tool_region_changed (GimpFilterTool *filter_tool)
+{
+  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+
+  /* when the region changes, do we want the operation's on-canvas
+   * controller to move to a new position, or the operation to
+   * change its properties to match the on-canvas controller?
+   *
+   * decided to leave the on-canvas controller where it is and
+   * pretend it has changed, so the operation is updated
+   * accordingly...
+   */
+  if (filter_tool->widget)
+    g_signal_emit_by_name (filter_tool->widget, "changed");
+
+  gimp_operation_tool_sync_op (op_tool, FALSE);
 }
 
 static void
@@ -573,14 +574,20 @@ gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
 static void
 gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
 {
-  GtkSizeGroup *size_group  = NULL;
-  GtkWidget    *options_gui;
-  GtkWidget    *options_box;
-  GList        *list;
+  GtkSizeGroup   *size_group  = NULL;
+  GtkWidget      *options_gui;
+  GtkWidget      *options_box;
+  GtkWidget      *options_sw;
+  GtkWidget      *shell;
+  GdkRectangle    workarea;
+  GtkRequisition  minimum;
+  GList          *list;
+  gboolean        scrolling;
 
   options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
   options_box = g_weak_ref_get (&op_tool->options_box_ref);
-  g_return_if_fail (options_gui && options_box);
+  options_sw  = g_weak_ref_get (&op_tool->options_sw_ref);
+  g_return_if_fail (options_gui && options_box && options_sw);
 
   for (list = op_tool->aux_inputs; list; list = g_list_next (list))
     {
@@ -606,8 +613,25 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
   gtk_box_pack_start (GTK_BOX (options_box), options_gui, TRUE, TRUE, 0);
   gtk_widget_show (options_gui);
 
+  shell = GTK_WIDGET (gimp_display_get_shell (GIMP_TOOL (op_tool)->display));
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (shell), &workarea);
+  gtk_widget_get_preferred_size (options_box, &minimum, NULL);
+
+  scrolling = minimum.height > workarea.height / 2;
+
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (options_sw),
+                                  GTK_POLICY_NEVER,
+                                  scrolling ?
+                                  GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
+
+  if (scrolling)
+    gtk_widget_set_size_request (options_sw, -1, workarea.height / 2);
+  else
+    gtk_widget_set_size_request (options_sw, -1, -1);
+
   g_object_unref (options_gui);
   g_object_unref (options_box);
+  g_object_unref (options_sw);
 }
 
 
@@ -719,8 +743,6 @@ gimp_operation_tool_unlink_chains (GimpOperationTool *op_tool)
       if (active)
         {
           gimp_chain_button_set_active (chain, FALSE);
-
-          g_signal_emit_by_name (chain, "toggled");
         }
 
       chains = chains->next;
@@ -764,8 +786,6 @@ gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
               g_value_get_double (&double_y))
             {
               gimp_chain_button_set_active (chain, TRUE);
-
-              g_signal_emit_by_name (chain, "toggled");
             }
 
           g_value_unset (&double_x);

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -318,26 +318,10 @@ gimp_text_finalize (GObject *object)
 {
   GimpText *text = GIMP_TEXT (object);
 
-  if (text->text)
-    {
-      g_free (text->text);
-      text->text = NULL;
-    }
-  if (text->markup)
-    {
-      g_free (text->markup);
-      text->markup = NULL;
-    }
-  if (text->font)
-    {
-      g_free (text->font);
-      text->font = NULL;
-    }
-  if (text->language)
-    {
-      g_free (text->language);
-      text->language = NULL;
-    }
+  g_clear_pointer (&text->text,     g_free);
+  g_clear_pointer (&text->markup,   g_free);
+  g_clear_pointer (&text->font,     g_free);
+  g_clear_pointer (&text->language, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -448,8 +432,7 @@ gimp_text_set_property (GObject      *object,
       text->text = g_value_dup_string (value);
       if (text->text && text->markup)
         {
-          g_free (text->markup);
-          text->markup = NULL;
+          g_clear_pointer (&text->markup, g_free);
           g_object_notify (object, "markup");
         }
       break;
@@ -458,8 +441,7 @@ gimp_text_set_property (GObject      *object,
       text->markup = g_value_dup_string (value);
       if (text->markup && text->text)
         {
-          g_free (text->text);
-          text->text = NULL;
+          g_clear_pointer (&text->text, g_free);
           g_object_notify (object, "text");
         }
       break;

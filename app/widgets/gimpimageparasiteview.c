@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -143,12 +143,7 @@ gimp_image_parasite_view_finalize (GObject *object)
 {
   GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
 
-  if (view->parasite)
-    {
-      g_free (view->parasite);
-      view->parasite = NULL;
-
-    }
+  g_clear_pointer (&view->parasite, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

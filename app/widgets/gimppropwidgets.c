@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -930,7 +930,7 @@ gimp_prop_angle_range_dial_new (GObject     *config,
                                NULL, NULL);
 
   g_object_bind_property (config, clockwise_property_name,
-                          dial,   "clockwise",
+                          dial,   "clockwise-delta",
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* Special thanks to:
@@ -174,7 +174,7 @@ static void      view_set_hint                    (GimpGradientEditor *editor,
                                                    gint                x);
 
 static void      view_pick_color                  (GimpGradientEditor *editor,
-                                                   GimpColorPickMode   pick_mode,
+                                                   GimpColorPickTarget pick_target,
                                                    GimpColorPickState  pick_state,
                                                    gint                x);
 
@@ -581,6 +581,7 @@ gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
                            GIMP_DATA_EDITOR (editor)->context,
+                           TRUE,
                            _("Left Endpoint Color"),
                            GIMP_ICON_GRADIENT,
                            _("Gradient Segment's Left Endpoint Color"),
@@ -625,6 +626,7 @@ gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
                            GIMP_DATA_EDITOR (editor)->context,
+                           TRUE,
                            _("Right Endpoint Color"),
                            GIMP_ICON_GRADIENT,
                            _("Gradient Segment's Right Endpoint Color"),
@@ -1118,8 +1120,8 @@ view_events (GtkWidget          *widget,
               {
                 view_pick_color (editor,
                                  (mevent->state & gimp_get_toggle_behavior_mask ()) ?
-                                 GIMP_COLOR_PICK_MODE_BACKGROUND :
-                                 GIMP_COLOR_PICK_MODE_FOREGROUND,
+                                 GIMP_COLOR_PICK_TARGET_BACKGROUND :
+                                 GIMP_COLOR_PICK_TARGET_FOREGROUND,
                                  GIMP_COLOR_PICK_STATE_UPDATE,
                                  mevent->x);
               }
@@ -1148,8 +1150,8 @@ view_events (GtkWidget          *widget,
 
             view_pick_color (editor,
                              (bevent->state & gimp_get_toggle_behavior_mask ()) ?
-                             GIMP_COLOR_PICK_MODE_BACKGROUND :
-                             GIMP_COLOR_PICK_MODE_FOREGROUND,
+                             GIMP_COLOR_PICK_TARGET_BACKGROUND :
+                             GIMP_COLOR_PICK_TARGET_FOREGROUND,
                              GIMP_COLOR_PICK_STATE_START,
                              bevent->x);
           }
@@ -1206,8 +1208,8 @@ view_events (GtkWidget          *widget,
 
           view_pick_color (editor,
                            (bevent->state & gimp_get_toggle_behavior_mask ()) ?
-                           GIMP_COLOR_PICK_MODE_BACKGROUND :
-                           GIMP_COLOR_PICK_MODE_FOREGROUND,
+                           GIMP_COLOR_PICK_TARGET_BACKGROUND :
+                           GIMP_COLOR_PICK_TARGET_FOREGROUND,
                            GIMP_COLOR_PICK_STATE_END,
                            bevent->x);
           break;
@@ -1262,10 +1264,10 @@ view_set_hint (GimpGradientEditor *editor,
 }
 
 static void
-view_pick_color (GimpGradientEditor *editor,
-                 GimpColorPickMode   pick_mode,
-                 GimpColorPickState  pick_state,
-                 gint                x)
+view_pick_color (GimpGradientEditor  *editor,
+                 GimpColorPickTarget  pick_target,
+                 GimpColorPickState   pick_state,
+                 gint                 x)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GimpRGB         color;
@@ -1288,7 +1290,7 @@ view_pick_color (GimpGradientEditor *editor,
 
   str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", color.r, color.g, color.b);
 
-  if (pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND)
+  if (pick_target == GIMP_COLOR_PICK_TARGET_FOREGROUND)
     {
       gimp_context_set_foreground (data_editor->context, &color);
 

@@ -12,34 +12,38 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __DOCKABLE_COMMANDS_H__
 #define __DOCKABLE_COMMANDS_H__
 
 
-void   dockable_add_tab_cmd_callback         (GtkAction   *action,
-                                              const gchar *value,
-                                              gpointer     data);
-void   dockable_close_tab_cmd_callback       (GtkAction   *action,
-                                              gpointer     data);
-void   dockable_detach_tab_cmd_callback      (GtkAction   *action,
-                                              gpointer     data);
-void   dockable_lock_tab_cmd_callback        (GtkAction   *action,
-                                              gpointer     data);
+void   dockable_add_tab_cmd_callback         (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   dockable_close_tab_cmd_callback       (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   dockable_detach_tab_cmd_callback      (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   dockable_lock_tab_cmd_callback        (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
-void   dockable_toggle_view_cmd_callback     (GtkAction   *action,
-                                              GtkAction   *current,
-                                              gpointer     data);
-void   dockable_view_size_cmd_callback       (GtkAction   *action,
-                                              GtkAction   *current,
-                                              gpointer     data);
-void   dockable_tab_style_cmd_callback       (GtkAction   *action,
-                                              GtkAction   *current,
-                                              gpointer     data);
-void   dockable_show_button_bar_cmd_callback (GtkAction   *action,
-                                              gpointer     data);
+void   dockable_toggle_view_cmd_callback     (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   dockable_view_size_cmd_callback       (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   dockable_tab_style_cmd_callback       (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
+void   dockable_show_button_bar_cmd_callback (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data);
 
 
 #endif /* __DOCKABLE_COMMANDS_H__ */

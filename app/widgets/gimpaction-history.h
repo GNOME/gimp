@@ -15,14 +15,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_ACTION_HISTORY_H__
 #define __GIMP_ACTION_HISTORY_H__
 
 
-typedef gboolean (* GimpActionMatchFunc) (GtkAction   *action,
+typedef gboolean (* GimpActionMatchFunc) (GimpAction  *action,
                                           const gchar *keyword,
                                           gint        *section,
                                           Gimp        *gimp);
@@ -40,8 +40,7 @@ GList    * gimp_action_history_search                (Gimp                *gimp,
 gboolean   gimp_action_history_is_blacklisted_action (const gchar         *action_name);
 gboolean   gimp_action_history_is_excluded_action    (const gchar         *action_name);
 
-void       gimp_action_history_activate_callback     (GtkAction           *action,
-                                                      gpointer             user_data);
+void       gimp_action_history_action_activated      (GimpAction          *action);
 
 
 #endif  /* __GIMP_ACTION_HISTORY_H__ */

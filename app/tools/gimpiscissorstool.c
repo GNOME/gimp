@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* This tool is based on a paper from SIGGRAPH '95:
@@ -1074,14 +1074,35 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
       if (! iscissors->curve->closed &&
           g_queue_peek_tail (iscissors->curve->segments))
         {
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+          ISegment *segment = g_queue_peek_tail (iscissors->curve->segments);
 
-          gimp_iscissors_tool_push_undo (iscissors);
-          icurve_delete_segment (iscissors->curve,
-                                 g_queue_peek_tail (iscissors->curve->segments));
-          gimp_iscissors_tool_free_redo (iscissors);
+          if (g_queue_get_length (iscissors->curve->segments) > 1)
+            {
+              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+              gimp_iscissors_tool_push_undo (iscissors);
+              icurve_delete_segment (iscissors->curve, segment);
+              gimp_iscissors_tool_free_redo (iscissors);
+
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+            }
+          else if (segment->x2 != segment->x1 || segment->y2 != segment->y1)
+            {
+              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+              gimp_iscissors_tool_push_undo (iscissors);
+              segment->x2 = segment->x1;
+              segment->y2 = segment->y1;
+              g_ptr_array_remove_range (segment->points,
+                                        0, segment->points->len);
+              gimp_iscissors_tool_free_redo (iscissors);
+
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+            }
+          else
+            {
+              gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+            }
           return TRUE;
         }
       return FALSE;
@@ -1914,12 +1935,12 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   iter = gegl_buffer_iterator_new (iscissors->gradient_map,
                                    GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                                    0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guint8 *data = iter->data[0];
+      guint8 *data = iter->items[0].data;
       gint    endx = roi->x + roi->width;
       gint    endy = roi->y + roi->height;
       gint    i, j;

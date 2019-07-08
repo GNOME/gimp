@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -202,7 +202,6 @@ gimp_drawable_undo_free (GimpUndo     *undo,
   GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (undo);
 
   g_clear_object (&drawable_undo->buffer);
-  g_clear_object (&drawable_undo->applied_buffer);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

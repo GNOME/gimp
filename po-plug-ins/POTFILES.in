@@ -20,7 +20,7 @@ plug-ins/common/compose.c
 plug-ins/common/contrast-normalize.c
 plug-ins/common/contrast-retinex.c
 plug-ins/common/crop-zealous.c
-#plug-ins/common/curve-bend.c
+plug-ins/common/curve-bend.c
 plug-ins/common/decompose.c
 plug-ins/common/depth-merge.c
 plug-ins/common/despeckle.c
@@ -65,7 +65,6 @@ plug-ins/common/file-xpm.c
 plug-ins/common/file-xwd.c
 plug-ins/common/film.c
 plug-ins/common/filter-pack.c
-plug-ins/common/fractal-trace.c
 plug-ins/common/goat-exercise.c
 plug-ins/common/gradient-map.c
 plug-ins/common/grid.c
@@ -90,7 +89,6 @@ plug-ins/common/sphere-designer.c
 plug-ins/common/tile.c
 plug-ins/common/tile-small.c
 plug-ins/common/unit-editor.c
-plug-ins/common/unsharp-mask.c
 plug-ins/common/van-gogh-lic.c
 plug-ins/common/warp.c
 plug-ins/common/wavelet-decompose.c
@@ -99,6 +97,9 @@ plug-ins/common/web-page.c
 plug-ins/file-bmp/bmp-load.c
 plug-ins/file-bmp/bmp-save.c
 plug-ins/file-bmp/bmp.c
+plug-ins/file-dds/dds.c
+plug-ins/file-dds/ddsread.c
+plug-ins/file-dds/ddswrite.c
 plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c

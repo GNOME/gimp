@@ -12,32 +12,40 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __TEXT_TOOL_COMMANDS_H__
 #define __TEXT_TOOL_COMMANDS_H__
 
 
-void   text_tool_cut_cmd_callback             (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_copy_cmd_callback            (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_paste_cmd_callback           (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_delete_cmd_callback          (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_load_cmd_callback            (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_clear_cmd_callback           (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_text_to_path_cmd_callback    (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_text_along_path_cmd_callback (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_direction_cmd_callback       (GtkAction *action,
-                                               GtkAction *current,
-                                               gpointer   data);
+void   text_tool_cut_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_copy_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_paste_cmd_callback           (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_delete_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_load_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_clear_cmd_callback           (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_text_to_path_cmd_callback    (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_text_along_path_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   text_tool_direction_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
 
 #endif /* __TEXT_TOOL_COMMANDS_H__ */

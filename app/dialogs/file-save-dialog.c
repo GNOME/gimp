@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -798,7 +798,8 @@ file_save_dialog_save_image (GimpProgress        *progress,
       {
         gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
                       _("Saving '%s' failed:\n\n%s"),
-                      gimp_file_get_utf8_name (file), error->message);
+                      gimp_file_get_utf8_name (file),
+                      error ? error->message : _("Unknown error"));
         g_clear_error (&error);
       }
       break;

@@ -9,8 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-01-15 17:53+0000\n"
 "PO-Revision-Date: 2017-01-16 21:06+0000\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
@@ -114,7 +113,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "O GIMP é um programa grátis; pode redistribui-lo e/ou modificá-lo segundo os "
 "termos da Licença Pública Geral GNU, sempre com base nos termos da versão em "
@@ -128,7 +127,7 @@ msgstr ""
 "General Public License para mais detalhes.\n"
 "\n"
 "Deve ter recebido uma cópia da GNU General Public License juntamente com o "
-"GIMP; Senão, veja http://www.gnu.org/licenses/."
+"GIMP; Senão, veja https://www.gnu.org/licenses/."
 
 #: ../app/main.c:160
 msgid "Show version information and exit"
@@ -1956,7 +1955,7 @@ msgid "_Dilate"
 msgstr "_Dilatar"
 
 #: ../app/actions/drawable-actions.c:77
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Aumentar áreas mais claras da imagem"
 
@@ -1966,7 +1965,7 @@ msgid "E_rode"
 msgstr "E_rodir"
 
 #: ../app/actions/drawable-actions.c:83
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Aumentar áreas mais escuras da imagem"
 

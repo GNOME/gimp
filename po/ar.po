@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-03-27 13:21+0200\n"
 "PO-Revision-Date: 2018-03-27 15:44+0200\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
@@ -222,7 +222,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "جمب برمجية حرة: يمكنك توزيعه و/أو تعديله حسب بنود رخصة جنو العمومية كما "
 "نشرتها مؤسسة البرامج الحرة، الإصدار الثالث أو أي إصدار أحدث (حسب رغبتك).\n"
@@ -232,7 +232,7 @@ msgstr ""
 "لمزيد من التفاصيل.\n"
 "\n"
 "من المفترض أنك تلقيت نسخة من رخصة جنو العمومية مع هذا البرنامج، وإلا فراجع "
-"http://www.gnu.org/licenses/"
+"https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format
@@ -4385,7 +4385,7 @@ msgid "_Dilate"
 msgstr "_خفِّف"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "زوّد المناطق الفاتحة في الصورة"
 
@@ -4395,7 +4395,7 @@ msgid "_Erode"
 msgstr "_تآكل"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "زوّد المناطق الغامقة في الصورة"
 
@@ -9268,17 +9268,17 @@ msgstr "تحول إلى منظور ملء الشاشة"
 
 #: ../app/actions/view-actions.c:315
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "استخدم عامل تقريب مخصص"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9314,13 +9314,13 @@ msgstr "قرّب"
 
 #: ../app/actions/view-actions.c:354
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "بعّد"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "قرّب"
 

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -35,6 +35,7 @@
 
 #include "gimpbrushfactoryview.h"
 #include "gimpcontainerview.h"
+#include "gimpeditor.h"
 #include "gimpmenufactory.h"
 #include "gimpspinscale.h"
 #include "gimpviewrenderer.h"
@@ -149,6 +150,10 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
   factory_view->change_brush_spacing = change_brush_spacing;
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
+
+  gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
+                                 "brushes", "brushes-open-as-image",
+                                 NULL);
 
   gtk_box_pack_end (GTK_BOX (editor->view), factory_view->spacing_scale,
                     FALSE, FALSE, 0);

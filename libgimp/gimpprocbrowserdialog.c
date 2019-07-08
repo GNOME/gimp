@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -101,8 +101,8 @@ static void       browser_search            (GimpBrowser           *browser,
                                              GimpProcBrowserDialog *dialog);
 
 
-G_DEFINE_TYPE (GimpProcBrowserDialog, gimp_proc_browser_dialog,
-               GIMP_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpProcBrowserDialog, gimp_proc_browser_dialog,
+                            GIMP_TYPE_DIALOG)
 
 #define parent_class gimp_proc_browser_dialog_parent_class
 
@@ -146,8 +146,6 @@ gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
 
   klass->selection_changed = NULL;
   klass->row_activated     = NULL;
-
-  g_type_class_add_private (klass, sizeof (GimpProcBrowserDialogPrivate));
 }
 
 static void
@@ -159,9 +157,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   GtkTreeSelection             *selection;
   GtkWidget                    *parent;
 
-  dialog->priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
-                                              GIMP_TYPE_PROC_BROWSER_DIALOG,
-                                              GimpProcBrowserDialogPrivate);
+  dialog->priv = gimp_proc_browser_dialog_get_instance_private (dialog);
 
   priv = GET_PRIVATE (dialog);
 
@@ -255,14 +251,20 @@ gimp_proc_browser_dialog_new (const gchar  *title,
 {
   GimpProcBrowserDialog *dialog;
   va_list                args;
+  gboolean               use_header_bar;
 
   va_start (args, help_id);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_PROC_BROWSER_DIALOG,
-                         "title",     title,
-                         "role",      role,
-                         "help-func", help_func,
-                         "help-id",   help_id,
+                         "title",          title,
+                         "role",           role,
+                         "help-func",      help_func,
+                         "help-id",        help_id,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);

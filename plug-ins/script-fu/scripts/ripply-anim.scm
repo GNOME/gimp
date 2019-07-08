@@ -50,7 +50,7 @@
                                              " (replace)"))
           (plug-in-displace RUN-NONINTERACTIVE work-image frame-layer
                             displacement displacement
-                            TRUE TRUE map-layer map-layer edge-type)
+                            TRUE TRUE map-layer map-layer (+ edge-type 1))
           (gimp-item-set-visible frame-layer TRUE))
         (gimp-drawable-offset map-layer
                               TRUE

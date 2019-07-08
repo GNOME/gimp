@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -59,11 +59,7 @@ gimp_session_info_dockable_free (GimpSessionInfoDockable *info)
 {
   g_return_if_fail (info != NULL);
 
-  if (info->identifier)
-    {
-      g_free (info->identifier);
-      info->identifier = NULL;
-    }
+  g_clear_pointer (&info->identifier, g_free);
 
   if (info->aux_info)
     {

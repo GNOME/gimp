@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -240,7 +240,7 @@ new_unit_dialog (GtkWidget *main_dialog,
                                    gimp_unit_get_factor (template) : 1.0,
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    0.01, 0.1, 0.0);
-  spinbutton = gtk_spin_button_new (factor_adj, 0.01, 5);
+  spinbutton = gimp_spin_button_new (factor_adj, 0.01, 5);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Factor:"), 0.0, 0.5,
@@ -251,7 +251,7 @@ new_unit_dialog (GtkWidget *main_dialog,
   digits_adj = gtk_adjustment_new ((template != GIMP_UNIT_PIXEL) ?
                                    gimp_unit_get_digits (template) : 2.0,
                                    0, 5, 1, 1, 0);
-  spinbutton = gtk_spin_button_new (digits_adj, 0, 0);
+  spinbutton = gimp_spin_button_new (digits_adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("_Digits:"), 0.0, 0.5,
@@ -456,6 +456,7 @@ unit_editor_dialog (void)
   gtk_widget_show (toolbar);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_win, -1, 200);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),

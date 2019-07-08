@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins HEAD\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2008-07-17 13:42+0300\n"
 "PO-Revision-Date: 2008-07-17 14:35+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"

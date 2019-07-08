@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -91,6 +91,7 @@ enum
   EXTENSIONS,
   PREFIXES,
   MAGICS,
+  PRIORITY,
   MIME_TYPES,
   HANDLES_URI,
   HANDLES_RAW,
@@ -156,6 +157,8 @@ plug_in_rc_parse (Gimp    *gimp,
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "magics", GINT_TO_POINTER (MAGICS));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
+                              "priority", GINT_TO_POINTER (PRIORITY));
+  g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "mime-types", GINT_TO_POINTER (MIME_TYPES));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "handles-uri", GINT_TO_POINTER (HANDLES_URI));
@@ -168,6 +171,8 @@ plug_in_rc_parse (Gimp    *gimp,
                               "extensions", GINT_TO_POINTER (EXTENSIONS));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "prefixes", GINT_TO_POINTER (PREFIXES));
+  g_scanner_scope_add_symbol (scanner, SAVE_PROC,
+                              "priority", GINT_TO_POINTER (PRIORITY));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "mime-types", GINT_TO_POINTER (MIME_TYPES));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
@@ -272,6 +277,12 @@ plug_in_def_deserialize (Gimp      *gimp,
 
   if (! gimp_scanner_parse_string (scanner, &path))
     return G_TOKEN_STRING;
+
+  if (! (path && *path))
+    {
+      g_scanner_error (scanner, "plug-in filename is empty");
+      return G_TOKEN_ERROR;
+    }
 
   file = gimp_file_new_for_config_path (path, &error);
   g_free (path);
@@ -383,10 +394,25 @@ plug_in_procedure_deserialize (GScanner             *scanner,
   if (! gimp_scanner_parse_string (scanner, &str))
     return G_TOKEN_STRING;
 
+  if (! (str && *str))
+    {
+      g_scanner_error (scanner, "procedure name is empty");
+      return G_TOKEN_ERROR;
+    }
+
   if (! gimp_scanner_parse_int (scanner, &proc_type))
     {
       g_free (str);
       return G_TOKEN_INT;
+    }
+
+  if (proc_type != GIMP_PLUGIN &&
+      proc_type != GIMP_EXTENSION)
+    {
+      g_free (str);
+      g_scanner_error (scanner, "procedure type %d is out of range",
+                       proc_type);
+      return G_TOKEN_ERROR;
     }
 
   procedure = gimp_plug_in_procedure_new (proc_type, file);
@@ -582,9 +608,8 @@ static GTokenType
 plug_in_file_proc_deserialize (GScanner            *scanner,
                                GimpPlugInProcedure *proc)
 {
-  GTokenType  token;
-  gint        symbol;
-  gchar      *value;
+  GTokenType token;
+  gint       symbol;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
     return G_TOKEN_LEFT_PAREN;
@@ -612,38 +637,66 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
 
       symbol = GPOINTER_TO_INT (scanner->value.v_symbol);
 
-      if (symbol == MAGICS)
-        {
-          if (! gimp_scanner_parse_string_no_validate (scanner, &value))
-            return G_TOKEN_STRING;
-        }
-      else if (symbol != HANDLES_URI &&
-               symbol != HANDLES_RAW)
-        {
-          if (! gimp_scanner_parse_string (scanner, &value))
-            return G_TOKEN_STRING;
-        }
-
       switch (symbol)
         {
         case EXTENSIONS:
-          g_free (proc->extensions);
-          proc->extensions = value;
+          {
+            gchar *extensions;
+
+            if (! gimp_scanner_parse_string (scanner, &extensions))
+              return G_TOKEN_STRING;
+
+            g_free (proc->extensions);
+            proc->extensions = extensions;
+          }
           break;
 
         case PREFIXES:
-          g_free (proc->prefixes);
-          proc->prefixes = value;
+          {
+            gchar *prefixes;
+
+            if (! gimp_scanner_parse_string (scanner, &prefixes))
+              return G_TOKEN_STRING;
+
+            g_free (proc->prefixes);
+            proc->extensions = prefixes;
+          }
           break;
 
         case MAGICS:
-          g_free (proc->magics);
-          proc->magics = value;
+          {
+            gchar *magics;
+
+            if (! gimp_scanner_parse_string_no_validate (scanner, &magics))
+              return G_TOKEN_STRING;
+
+            g_free (proc->magics);
+            proc->magics = magics;
+          }
+          break;
+
+        case PRIORITY:
+          {
+            gint priority;
+
+            if (! gimp_scanner_parse_int (scanner, &priority))
+              return G_TOKEN_INT;
+
+            gimp_plug_in_procedure_set_priority (proc, priority);
+          }
           break;
 
         case MIME_TYPES:
-          gimp_plug_in_procedure_set_mime_types (proc, value);
-          g_free (value);
+          {
+            gchar *mime_types;
+
+            if (! gimp_scanner_parse_string (scanner, &mime_types))
+              return G_TOKEN_STRING;
+
+            gimp_plug_in_procedure_set_mime_types (proc, mime_types);
+
+            g_free (mime_types);
+          }
           break;
 
         case HANDLES_URI:
@@ -655,8 +708,16 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
           break;
 
         case THUMB_LOADER:
-          gimp_plug_in_procedure_set_thumb_loader (proc, value);
-          g_free (value);
+          {
+            gchar *thumb_loader;
+
+            if (! gimp_scanner_parse_string (scanner, &thumb_loader))
+              return G_TOKEN_STRING;
+
+            gimp_plug_in_procedure_set_thumb_loader (proc, thumb_loader);
+
+            g_free (thumb_loader);
+          }
           break;
 
         default:
@@ -940,10 +1001,24 @@ plug_in_rc_write (GSList  *plug_in_defs,
                       gimp_config_writer_close (writer);
                     }
 
+                  if (proc->priority)
+                    {
+                      gimp_config_writer_open (writer, "priority");
+                      gimp_config_writer_printf (writer, "%d", proc->priority);
+                      gimp_config_writer_close (writer);
+                    }
+
                   if (proc->mime_types && *proc->mime_types)
                     {
                       gimp_config_writer_open (writer, "mime-types");
                       gimp_config_writer_string (writer, proc->mime_types);
+                      gimp_config_writer_close (writer);
+                    }
+
+                  if (proc->priority)
+                    {
+                      gimp_config_writer_open (writer, "priority");
+                      gimp_config_writer_printf (writer, "%d", proc->priority);
                       gimp_config_writer_close (writer);
                     }
 

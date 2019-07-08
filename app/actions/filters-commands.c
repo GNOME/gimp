@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -36,6 +36,8 @@
 #include "core/gimpprogress.h"
 #include "core/gimpsettings.h"
 
+#include "widgets/gimpaction.h"
+
 #include "actions.h"
 #include "filters-commands.h"
 #include "gimpgeglprocedure.h"
@@ -58,9 +60,9 @@ static void    filters_run_procedure   (Gimp          *gimp,
 /*  public functions  */
 
 void
-filters_apply_cmd_callback (GtkAction   *action,
-                            const gchar *operation_str,
-                            gpointer     data)
+filters_apply_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
   GimpImage     *image;
   GimpDrawable  *drawable;
@@ -70,19 +72,18 @@ filters_apply_cmd_callback (GtkAction   *action,
   return_if_no_drawable (image, drawable, data);
 
   operation = filters_parse_operation (image->gimp,
-                                       operation_str,
-                                       gtk_action_get_icon_name (action),
+                                       g_variant_get_string (value, NULL),
+                                       gimp_action_get_icon_name (action),
                                        &settings);
 
   procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_NONINTERACTIVE, settings,
                                        operation,
-                                       gtk_action_get_name (action),
-                                       gtk_action_get_label (action),
-                                       gtk_action_get_tooltip (action),
-                                       gtk_action_get_icon_name (action),
-                                       g_object_get_qdata (G_OBJECT (action),
-                                                           GIMP_HELP_ID));
+                                       gimp_action_get_name (action),
+                                       gimp_action_get_label (action),
+                                       gimp_action_get_tooltip (action),
+                                       gimp_action_get_icon_name (action),
+                                       gimp_action_get_help_id (action));
 
   g_free (operation);
 
@@ -90,15 +91,17 @@ filters_apply_cmd_callback (GtkAction   *action,
     g_object_unref (settings);
 
   gimp_filter_history_add (image->gimp, procedure);
-  filters_history_cmd_callback (NULL, procedure, data);
+  filters_history_cmd_callback (NULL,
+                                g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure)),
+                                data);
 
   g_object_unref (procedure);
 }
 
 void
-filters_apply_interactive_cmd_callback (GtkAction   *action,
-                                        const gchar *operation,
-                                        gpointer     data)
+filters_apply_interactive_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
   GimpImage     *image;
   GimpDrawable  *drawable;
@@ -107,48 +110,57 @@ filters_apply_interactive_cmd_callback (GtkAction   *action,
 
   procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_INTERACTIVE, NULL,
-                                       operation,
-                                       gtk_action_get_name (action),
-                                       gtk_action_get_label (action),
-                                       gtk_action_get_tooltip (action),
-                                       gtk_action_get_icon_name (action),
-                                       g_object_get_qdata (G_OBJECT (action),
-                                                           GIMP_HELP_ID));
+                                       g_variant_get_string (value, NULL),
+                                       gimp_action_get_name (action),
+                                       gimp_action_get_label (action),
+                                       gimp_action_get_tooltip (action),
+                                       gimp_action_get_icon_name (action),
+                                       gimp_action_get_help_id (action));
 
   gimp_filter_history_add (image->gimp, procedure);
-  filters_history_cmd_callback (NULL, procedure, data);
+  filters_history_cmd_callback (NULL,
+                                g_variant_new_uint64 (GPOINTER_TO_SIZE (procedure)),
+                                data);
 
   g_object_unref (procedure);
 }
 
 void
-filters_repeat_cmd_callback (GtkAction *action,
-                             gint       value,
-                             gpointer   data)
+filters_repeat_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   GimpImage     *image;
   GimpDrawable  *drawable;
   GimpDisplay   *display;
   GimpProcedure *procedure;
+  GimpRunMode    run_mode;
   return_if_no_drawable (image, drawable, data);
   return_if_no_display (display, data);
+
+  run_mode = (GimpRunMode) g_variant_get_int32 (value);
 
   procedure = gimp_filter_history_nth (image->gimp, 0);
 
   if (procedure)
-    filters_run_procedure (image->gimp, display, procedure,
-                           (GimpRunMode) value);
+    filters_run_procedure (image->gimp, display, procedure, run_mode);
 }
 
 void
-filters_history_cmd_callback (GtkAction     *action,
-                              GimpProcedure *procedure,
-                              gpointer       data)
+filters_history_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
-  Gimp        *gimp;
-  GimpDisplay *display;
+  Gimp          *gimp;
+  GimpDisplay   *display;
+  GimpProcedure *procedure;
+  gsize          hack;
   return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
+
+  hack = g_variant_get_uint64 (value);
+
+  procedure = GSIZE_TO_POINTER (hack);
 
   filters_run_procedure (gimp, display, procedure, GIMP_RUN_INTERACTIVE);
 }

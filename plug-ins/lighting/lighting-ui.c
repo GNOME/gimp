@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -1548,8 +1548,8 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
   *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (*adjustment,
-                                    climb_rate, digits);
+  spinbutton = gimp_spin_button_new (*adjustment,
+                                     climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 

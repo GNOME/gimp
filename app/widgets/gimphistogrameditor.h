@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_HISTOGRAM_EDITOR_H__
@@ -36,7 +36,7 @@ struct _GimpHistogramEditor
 {
   GimpImageEditor       parent_instance;
 
-  gboolean              linear;
+  GimpTRCType           trc;
 
   GimpDrawable         *drawable;
   GimpHistogram        *histogram;
@@ -44,6 +44,10 @@ struct _GimpHistogramEditor
 
   guint                 idle_id;
   gboolean              recompute;
+
+  GimpAsync            *calculate_async;
+  gboolean              bg_pending;
+  gboolean              update_pending;
 
   GtkWidget            *menu;
   GtkWidget            *box;

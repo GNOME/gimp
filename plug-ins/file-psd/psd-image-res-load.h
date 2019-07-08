@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __PSD_IMAGE_RES_LOAD_H__
@@ -31,6 +31,7 @@ gint  load_image_resource       (PSDimageres  *res_a,
                                  PSDimage     *img_a,
                                  FILE         *f,
                                  gboolean     *resolution_loaded,
+                                 gboolean     *profile_loaded,
                                  GError      **error);
 
 gint  load_thumbnail_resource   (PSDimageres  *res_a,

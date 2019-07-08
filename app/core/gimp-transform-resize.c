@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -233,11 +233,11 @@ gimp_transform_resize_adjust (const GimpVector2 *points,
       bottom_right.y = MAX (bottom_right.y, points[i].y);
     }
 
-  *x1 = (gint) floor (top_left.x);
-  *y1 = (gint) floor (top_left.y);
+  *x1 = (gint) floor (top_left.x + EPSILON);
+  *y1 = (gint) floor (top_left.y + EPSILON);
 
-  *x2 = (gint) ceil (bottom_right.x);
-  *y2 = (gint) ceil (bottom_right.y);
+  *x2 = (gint) ceil (bottom_right.x - EPSILON);
+  *y2 = (gint) ceil (bottom_right.y - EPSILON);
 }
 
 static void

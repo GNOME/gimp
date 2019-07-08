@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -34,7 +34,7 @@
 #endif
 
 #ifdef PLATFORM_OSX
-#include <CoreGraphics/CoreGraphics.h>
+#include <ApplicationServices/ApplicationServices.h>
 #endif
 
 #include "libgimpbase/gimpbase.h"
@@ -47,6 +47,7 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "gimpaction.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockcontainer.h"
@@ -58,7 +59,8 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_TOOL_OPTIONS_GUI_KEY "gimp-tool-options-gui"
+#define GIMP_TOOL_OPTIONS_GUI_KEY      "gimp-tool-options-gui"
+#define GIMP_TOOL_OPTIONS_GUI_FUNC_KEY "gimp-tool-options-gui-func"
 
 
 GtkWidget *
@@ -360,9 +362,9 @@ gimp_widget_load_icon (GtkWidget   *widget,
   /* This will find the symbolic icon and fallback to non-symbolic
    * depending on icon theme.
    */
-  icon_info  = gtk_icon_theme_lookup_icon_for_scale (icon_theme, name,
-                                                     size, scale_factor,
-                                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+  icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme, name,
+                                                    size, scale_factor,
+                                                    GTK_ICON_LOOKUP_GENERIC_FALLBACK);
   g_free (name);
 
   if (icon_info)
@@ -402,7 +404,10 @@ gimp_widget_load_icon (GtkWidget   *widget,
                         "in your icon theme.\n", GIMP_ICON_WILBER_EEK);
         }
       else
-        g_printerr ("WARNING: icon theme has no icon '%s'.\n", GIMP_ICON_WILBER_EEK);
+        {
+          g_printerr ("WARNING: icon theme has no icon '%s'.\n",
+                      GIMP_ICON_WILBER_EEK);
+        }
     }
 
   /* Last fallback: just a magenta square. */
@@ -410,13 +415,13 @@ gimp_widget_load_icon (GtkWidget   *widget,
     {
       /* As last resort, just draw an ugly magenta square. */
       guchar *data;
-      gint    rowstride = 3 * size;
+      gint    rowstride = 3 * size * scale_factor;
       gint    i, j;
 
       data = g_new (guchar, rowstride * size);
       for (i = 0; i < size; i++)
         {
-          for (j = 0; j < size; j++)
+          for (j = 0; j < size * scale_factor; j++)
             {
               data[i * rowstride + j * 3] = 255;
               data[i * rowstride + j * 3 + 1] = 0;
@@ -424,7 +429,9 @@ gimp_widget_load_icon (GtkWidget   *widget,
             }
         }
       pixbuf = gdk_pixbuf_new_from_data (data, GDK_COLORSPACE_RGB, FALSE,
-                                         8, size, size, rowstride,
+                                         8,
+                                         size * scale_factor,
+                                         size * scale_factor, rowstride,
                                          (GdkPixbufDestroyNotify) g_free,
                                          NULL);
     }
@@ -435,71 +442,6 @@ gimp_widget_load_icon (GtkWidget   *widget,
   g_return_val_if_fail (pixbuf != NULL, NULL);
 
   return pixbuf;
-}
-
-GtkIconSize
-gimp_get_icon_size (GtkWidget   *widget,
-                    const gchar *icon_name,
-                    GtkIconSize  max_size,
-                    gint         width,
-                    gint         height)
-{
-  GtkStyleContext *style;
-  GtkIconSet      *icon_set;
-  GtkIconSize     *sizes;
-  gint             n_sizes;
-  gint             i;
-  gint             width_diff  = 1024;
-  gint             height_diff = 1024;
-  gint             max_width;
-  gint             max_height;
-  GtkIconSize      icon_size = GTK_ICON_SIZE_MENU;
-
-  g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
-  g_return_val_if_fail (icon_name != NULL, icon_size);
-  g_return_val_if_fail (width > 0, icon_size);
-  g_return_val_if_fail (height > 0, icon_size);
-
-  style = gtk_widget_get_style_context (widget);
-
-  icon_set = gtk_style_context_lookup_icon_set (style, icon_name);
-
-  if (! icon_set)
-    return GTK_ICON_SIZE_INVALID;
-
-  if (! gtk_icon_size_lookup (max_size, &max_width, &max_height))
-    {
-      max_width  = 1024;
-      max_height = 1024;
-    }
-
-  gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
-
-  for (i = 0; i < n_sizes; i++)
-    {
-      gint icon_width;
-      gint icon_height;
-
-      if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
-        {
-          if (icon_width  <= width      &&
-              icon_height <= height     &&
-              icon_width  <= max_width  &&
-              icon_height <= max_height &&
-              ((width  - icon_width)  < width_diff ||
-               (height - icon_height) < height_diff))
-            {
-              width_diff  = width  - icon_width;
-              height_diff = height - icon_height;
-
-              icon_size = sizes[i];
-            }
-        }
-    }
-
-  g_free (sizes);
-
-  return icon_size;
 }
 
 GimpTabStyle
@@ -1033,15 +975,15 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
 
   if (accel_closure == widget_closure)
     {
-      GtkAction   *action;
+      GimpAction  *action;
       GtkAccelKey *accel_key;
       const gchar *tooltip;
       const gchar *help_id;
 
       action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
 
-      tooltip = gtk_action_get_tooltip (action);
-      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+      tooltip = gimp_action_get_tooltip (action);
+      help_id = gimp_action_get_help_id (action);
 
       accel_key = gtk_accel_group_find (accel_group,
                                         gimp_widget_accel_find_func,
@@ -1093,8 +1035,8 @@ gimp_accel_help_widget_weak_notify (gpointer  accel_group,
 }
 
 void
-gimp_widget_set_accel_help (GtkWidget *widget,
-                            GtkAction *action)
+gimp_widget_set_accel_help (GtkWidget  *widget,
+                            GimpAction *action)
 {
   GtkAccelGroup *accel_group;
   GClosure      *accel_closure;
@@ -1115,7 +1057,7 @@ gimp_widget_set_accel_help (GtkWidget *widget,
       g_object_set_data (G_OBJECT (widget), "gimp-accel-group", NULL);
     }
 
-  accel_closure = gtk_action_get_accel_closure (action);
+  accel_closure = gimp_action_get_accel_closure (action);
 
   if (accel_closure)
     {
@@ -1146,13 +1088,10 @@ gimp_widget_set_accel_help (GtkWidget *widget,
     }
   else
     {
-      const gchar *tooltip;
-      const gchar *help_id;
+      gimp_help_set_help_data (widget,
+                               gimp_action_get_tooltip (action),
+                               gimp_action_get_help_id (action));
 
-      tooltip = gtk_action_get_tooltip (action);
-      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
-
-      gimp_help_set_help_data (widget, tooltip, help_id);
     }
 }
 
@@ -1421,6 +1360,9 @@ gimp_widget_blink (GtkWidget *widget)
                                      widget);
 
   gimp_highlight_widget (widget, TRUE);
+
+  while ((widget = gtk_widget_get_parent (widget)))
+    gimp_widget_blink_cancel (widget);
 }
 
 void
@@ -1428,9 +1370,12 @@ gimp_widget_blink_cancel (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gimp_highlight_widget (widget, FALSE);
+  if (g_object_get_data (G_OBJECT (widget), "gimp-widget-blink"))
+    {
+      gimp_highlight_widget (widget, FALSE);
 
-  g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+    }
 }
 
 /**
@@ -1491,18 +1436,57 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
 GtkWidget *
 gimp_tools_get_tool_options_gui (GimpToolOptions *tool_options)
 {
-  return g_object_get_data (G_OBJECT (tool_options),
-                            GIMP_TOOL_OPTIONS_GUI_KEY);
+  GtkWidget *widget;
+
+  widget = g_object_get_data (G_OBJECT (tool_options),
+                              GIMP_TOOL_OPTIONS_GUI_KEY);
+
+  if (! widget)
+    {
+      GimpToolOptionsGUIFunc func;
+
+      func = g_object_get_data (G_OBJECT (tool_options),
+                                GIMP_TOOL_OPTIONS_GUI_FUNC_KEY);
+
+      if (func)
+        {
+          widget = func (tool_options);
+
+          gimp_tools_set_tool_options_gui (tool_options, widget);
+        }
+    }
+
+  return widget;
 }
 
 void
-gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
-                                 GtkWidget         *widget)
+gimp_tools_set_tool_options_gui (GimpToolOptions *tool_options,
+                                 GtkWidget       *widget)
 {
+  GtkWidget *prev_widget;
+
+  prev_widget = g_object_get_data (G_OBJECT (tool_options),
+                                   GIMP_TOOL_OPTIONS_GUI_KEY);
+
+  if (widget == prev_widget)
+    return;
+
+  if (prev_widget)
+    gtk_widget_destroy (prev_widget);
+
   g_object_set_data_full (G_OBJECT (tool_options),
                           GIMP_TOOL_OPTIONS_GUI_KEY,
-                          widget,
+                          widget ? g_object_ref_sink (widget)      : NULL,
                           widget ? (GDestroyNotify) g_object_unref : NULL);
+}
+
+void
+gimp_tools_set_tool_options_gui_func (GimpToolOptions        *tool_options,
+                                      GimpToolOptionsGUIFunc  func)
+{
+  g_object_set_data (G_OBJECT (tool_options),
+                     GIMP_TOOL_OPTIONS_GUI_FUNC_KEY,
+                     func);
 }
 
 gboolean
@@ -1523,6 +1507,21 @@ gimp_widget_set_fully_opaque (GtkWidget *widget,
   return g_object_set_data (G_OBJECT (widget),
                             "gimp-widget-fully-opaque",
                             GINT_TO_POINTER (fully_opaque));
+}
+
+static void
+gimp_gtk_container_clear_callback (GtkWidget    *widget,
+                                   GtkContainer *container)
+{
+  gtk_container_remove (container, widget);
+}
+
+void
+gimp_gtk_container_clear (GtkContainer *container)
+{
+  gtk_container_foreach (container,
+                         (GtkCallback) gimp_gtk_container_clear_callback,
+                         container);
 }
 
 void
@@ -1692,7 +1691,6 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
                                        GError                **error)
 {
   GimpColorProfile *profile;
-  const Babl       *format;
   gchar            *label;
   GError           *my_error = NULL;
 
@@ -1700,8 +1698,8 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  format  = gimp_babl_format (base_type, precision, TRUE);
-  profile = gimp_babl_format_get_color_profile (format);
+  profile = gimp_babl_get_builtin_color_profile (base_type,
+                                                 gimp_babl_trc (precision));
 
   if (base_type == GIMP_GRAY)
     {
@@ -1864,4 +1862,11 @@ gimp_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
   g_signal_connect (dialog, "response",
                     G_CALLBACK (connect_path_response),
                     NULL);
+}
+
+void
+gimp_widget_flush_expose (void)
+{
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
 }

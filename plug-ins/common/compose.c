@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
@@ -658,11 +658,11 @@ cpn_affine_transform (GeglBuffer *buffer,
   gegl_buffer_set_format (buffer, babl_format ("Y double"));
 
   gi = gegl_buffer_iterator_new (buffer, NULL, 0, NULL,
-                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (gi))
     {
-      gdouble *data = gi->data[0];
+      gdouble *data = gi->items[0].data;
       guint    k;
 
       for (k = 0; k < gi->length; k++)
@@ -683,7 +683,7 @@ fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
   gint                j;
 
   gi = gegl_buffer_iterator_new (dst, NULL, 0, NULL,
-                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 10);
 
   for (j = 0; j < num_cpn; j++)
     {
@@ -695,13 +695,13 @@ fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
   while (gegl_buffer_iterator_next (gi))
     {
       gdouble *src_data[MAX_COMPOSE_IMAGES];
-      gdouble *dst_data = (gdouble*) gi->data[0];
+      gdouble *dst_data = (gdouble*) gi->items[0].data;
       gulong   k, count;
 
       count = 1;
       for (j = 0; j < num_cpn; j++)
         if (inputs[j].is_ID)
-          src_data[j] = (gdouble*) gi->data[count++];
+          src_data[j] = (gdouble*) gi->items[count++].data;
 
       for (k = 0; k < gi->length; k++)
         {

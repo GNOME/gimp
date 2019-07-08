@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,11 +32,13 @@
 #include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpperspectivetool.h"
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
 #include "gimpunifiedtransformtool.h"
 #include "gimptooloptions-gui.h"
 #include "gimptransformgridoptions.h"
+#include "gimptransformgridtool.h"
 
 #include "gimp-intl.h"
 
@@ -45,6 +47,7 @@ enum
 {
   PROP_0,
   PROP_DIRECTION,
+  PROP_DIRECTION_LINKED,
   PROP_SHOW_PREVIEW,
   PROP_PREVIEW_OPACITY,
   PROP_GRID_TYPE,
@@ -94,10 +97,16 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
   g_object_class_override_property (object_class, PROP_DIRECTION,
                                     "direction");
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DIRECTION_LINKED,
+                            "direction-linked",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
                             "show-preview",
                             _("Show image preview"),
-                            _("Show a preview of the transform_grided image"),
+                            _("Show a preview of the transformed image"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -133,7 +142,7 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_SCALE,
                             "constrain-scale",
                             NULL, NULL,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_ROTATE,
@@ -212,6 +221,9 @@ gimp_transform_grid_options_set_property (GObject      *object,
                     transform_options->direction != GIMP_TRANSFORM_BACKWARD,
                     NULL);
       break;
+    case PROP_DIRECTION_LINKED:
+      options->direction_linked = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_PREVIEW:
       options->show_preview = g_value_get_boolean (value);
       break;
@@ -274,6 +286,9 @@ gimp_transform_grid_options_get_property (GObject    *object,
     case PROP_DIRECTION:
       g_value_set_enum (value, transform_options->direction);
       break;
+    case PROP_DIRECTION_LINKED:
+      g_value_set_boolean (value, options->direction_linked);
+      break;
     case PROP_SHOW_PREVIEW:
       g_value_set_boolean (value, options->show_preview);
       break;
@@ -333,16 +348,52 @@ gimp_transform_grid_options_get_property (GObject    *object,
 GtkWidget *
 gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox;
-  GtkWidget       *frame;
-  GtkWidget       *combo;
-  GtkWidget       *scale;
-  GtkWidget       *grid_box;
-  GdkModifierType  extend_mask    = gimp_get_extend_selection_mask ();
-  GdkModifierType  constrain_mask = gimp_get_constrain_behavior_mask ();
+  GObject                    *config = G_OBJECT (tool_options);
+  GimpTransformGridToolClass *tg_class;
+  GtkWidget                  *vbox;
+  GtkWidget                  *frame;
+  GtkWidget                  *combo;
+  GtkWidget                  *scale;
+  GtkWidget                  *grid_box;
+  GdkModifierType             extend_mask    = gimp_get_extend_selection_mask ();
+  GdkModifierType             constrain_mask = gimp_get_constrain_behavior_mask ();
 
   vbox = gimp_transform_options_gui (tool_options, TRUE, TRUE, TRUE);
+
+  tg_class  = g_type_class_ref (tool_options->tool_info->tool_type);
+
+  /* the direction-link button */
+  if (tg_class->matrix_to_info)
+    {
+      GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (tool_options);
+      GtkWidget            *vbox2;
+      GtkWidget            *hbox;
+      GtkWidget            *button;
+
+      vbox2 = gtk_bin_get_child (GTK_BIN (tr_options->direction_frame));
+      g_object_ref (vbox2);
+      gtk_container_remove (GTK_CONTAINER (tr_options->direction_frame), vbox2);
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+      gtk_container_add (GTK_CONTAINER (tr_options->direction_frame), hbox);
+      gtk_widget_show (hbox);
+
+      gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
+      g_object_unref (vbox2);
+
+      button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gimp_chain_button_set_icon_size (GIMP_CHAIN_BUTTON (button),
+                                       GTK_ICON_SIZE_MENU);
+      gtk_widget_show (button);
+
+      g_object_bind_property (config, "direction-linked",
+                              button, "active",
+                              G_BINDING_BIDIRECTIONAL |
+                              G_BINDING_SYNC_CREATE);
+    }
+
+  g_type_class_unref (tg_class);
 
   /*  the preview frame  */
   scale = gimp_prop_spin_scale_new (config, "preview-opacity", NULL,
@@ -421,6 +472,37 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       gimp_help_set_help_data (button, _("Scale around the center point"),
                                NULL);
+
+      g_free (label);
+    }
+  else if (tool_options->tool_info->tool_type == GIMP_TYPE_PERSPECTIVE_TOOL)
+    {
+      GtkWidget *button;
+      gchar     *label;
+
+      label = g_strdup_printf (_("Constrain handles (%s)"),
+                               gimp_get_mod_string (extend_mask));
+
+      button = gimp_prop_check_button_new (config, "constrain-perspective", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (
+        button, _("Constrain handles to move along edges and diagonal (%s)"),
+        NULL);
+
+      g_free (label);
+
+      label = g_strdup_printf (_("Around center (%s)"),
+                               gimp_get_mod_string (constrain_mask));
+
+      button = gimp_prop_check_button_new (config, "frompivot-perspective", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (
+        button, _("Transform around the center point"),
+        NULL);
 
       g_free (label);
     }

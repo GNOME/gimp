@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GENERIC_TRANSFORM_TOOL_H__
@@ -49,7 +49,7 @@ struct _GimpGenericTransformToolClass
   GimpTransformGridToolClass  parent_class;
 
   /*  virtual functions  */
-  void   (* recalc_points) (GimpGenericTransformTool *generic);
+  void   (* info_to_points) (GimpGenericTransformTool *generic);
 };
 
 

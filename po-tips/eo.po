@@ -2,22 +2,21 @@
 # Copyright (C) 2006-2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the GIMP package.
 # Antonio C. CODAZZI "la Filozofo" <f_sophia@libero.it>, 2006.
-# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011, 2012.
-#
+# Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>, 2011-2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: it\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-10 17:33+0000\n"
-"PO-Revision-Date: 2012-04-06 22:26+0200\n"
+"Project-Id-Version: gimp-tips master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2018-07-12 16:21+0000\n"
+"PO-Revision-Date: 2019-03-06 22:25+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
-"Language-Team: Esperanto <gnome-l10n-eo@lists.launchpad.net>\n"
+"Language-Team: Esperanto <gnome-eo-list@gnome.org>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -25,7 +24,7 @@ msgid ""
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Vi povas ĉiam akiri kuntekst-rilatan helpon pri trajtoj de GIMPo per premo "
-"de la F1-klavo. Tio funkcias ankau en menuoj."
+"de la F1-klavo. Tio funkcias ankaŭ en menuoj."
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -46,16 +45,17 @@ msgstr ""
 "tavolo en la fenestro pri Tavoloj."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
+#, fuzzy
 #| msgid ""
 #| "When you save an image to work on it again later, try using XCF, GIMP's "
 #| "native file format (use the file extension <tt>.xcf</tt>). This preserves "
-#| "the layers and every aspect of your work-in-progress. Once a project is "
-#| "completed, you can save it as JPEG, PNG, GIF, ..."
+#| "the layers and many aspects of your work-in-progress. Once a project is "
+#| "completed, you can export it as JPEG, PNG, GIF, etc."
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
-"native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and many aspects of your work-in-progress. Once a project is "
-"completed, you can export it as JPEG, PNG, GIF, etc."
+"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
 "Kiam vi konservas bildon por labori super ĝi poste, provu uzi na XCF, GIMP-"
 "origina dosierformo (uzu la dosier-finaĵon <tt>.xcf</tt>). Tio konservas "
@@ -117,9 +117,6 @@ msgstr ""
 "plenigos la bildon mem aŭ la elekton per ĉi tiu koloro."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
-#| msgid ""
-#| "You can use the middle mouse button to pan around the image (or "
-#| "optionally hold <tt>Spacebar</tt> while you move the mouse.)"
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -313,9 +310,9 @@ msgid ""
 "with the Curves tool (Colors→Curves)."
 msgstr ""
 "Se la koloroj de viaj diĝitigitaj fotoj ne aspektas intensaj sufiĉe, vi "
-"povas facile plibonigi nuancon per &quot;Auto&quot; butono en Ilo de Niveloj"
-"(Koloroj→Niveloj). Se kolordominatoj ekzistas, vi povas korekti ilin per la "
-"ilo KURBOJ (Koloroj→Kurboj)."
+"povas facile plibonigi nuancon per &quot;Auto&quot; butono en Ilo de "
+"Niveloj(Koloroj→Niveloj). Se kolordominatoj ekzistas, vi povas korekti ilin "
+"per la ilo KURBOJ (Koloroj→Kurboj)."
 
 #~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 #~ msgstr ""

@@ -12,8 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-01-14 23:02+0000\n"
 "PO-Revision-Date: 2017-01-15 10:52+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
@@ -114,7 +113,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP je slobodný softvér; môžete ho šíriť a/alebo meniť za podmienok "
 "licencie GNU General Public License ako ju publikovala Free Software "
@@ -126,7 +125,7 @@ msgstr ""
 "ÚČEL. Podrobnosti nájdete v GNU General Public License.\n"
 "\n"
 "Spolu s programom GIMP by ste mali dostať kópiu GNU General Public License. "
-"Ak sa tak nestalo, nájdete ju na adrese http://www.gnu.org/licenses/"
+"Ak sa tak nestalo, nájdete ju na adrese https://www.gnu.org/licenses/"
 
 # popis voľby príkazového riadka
 #: ../app/main.c:160
@@ -2156,7 +2155,7 @@ msgstr "_Deliatovať"
 #, fuzzy
 #| msgctxt "cage-mode"
 #| msgid "Deform the cage to deform the image"
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Deformovať obrázok deformovaním klietky"
 
@@ -2166,7 +2165,7 @@ msgid "E_rode"
 msgstr "E_rodovať"
 
 #: ../app/actions/drawable-actions.c:83
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Zväčší tmavšie oblasti obrázku"
 

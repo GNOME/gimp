@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,8 +47,9 @@ dock_commands_get_dock_window_from_widget (GtkWidget *widget)
 /*  public functions  */
 
 void
-dock_toggle_image_menu_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+dock_toggle_image_menu_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GtkWidget      *widget      = NULL;
   GimpDockWindow *dock_window = NULL;
@@ -58,15 +59,16 @@ dock_toggle_image_menu_cmd_callback (GtkAction *action,
 
   if (dock_window)
     {
-      gboolean active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_dock_window_set_show_image_menu (dock_window, active);
     }
 }
 
 void
-dock_toggle_auto_cmd_callback (GtkAction *action,
-                               gpointer   data)
+dock_toggle_auto_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GtkWidget      *widget      = NULL;
   GimpDockWindow *dock_window = NULL;
@@ -76,7 +78,7 @@ dock_toggle_auto_cmd_callback (GtkAction *action,
 
   if (dock_window)
     {
-      gboolean active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_dock_window_set_auto_follow_active (dock_window, active);
     }

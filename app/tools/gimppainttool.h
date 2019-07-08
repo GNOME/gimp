@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PAINT_TOOL_H__
@@ -41,6 +41,7 @@ struct _GimpPaintTool
 {
   GimpColorTool  parent_instance;
 
+  gboolean       active;
   gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean       draw_line;
 
@@ -82,18 +83,21 @@ struct _GimpPaintToolClass
 };
 
 
-GType      gimp_paint_tool_get_type            (void) G_GNUC_CONST;
+GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
 
-void       gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
-                                                GimpColorPickMode  mode);
+void    gimp_paint_tool_set_active          (GimpPaintTool       *tool,
+                                             gboolean             active);
 
-void       gimp_paint_tool_set_draw_fallback   (GimpPaintTool     *tool,
-                                                gboolean           draw_fallback,
-                                                gint               fallback_size);
+void    gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
+                                             GimpColorPickTarget  target);
 
-void       gimp_paint_tool_set_draw_circle     (GimpPaintTool     *tool,
-                                                gboolean           draw_circle,
-                                                gint               circle_size);
+void    gimp_paint_tool_set_draw_fallback   (GimpPaintTool       *tool,
+                                             gboolean             draw_fallback,
+                                             gint                 fallback_size);
+
+void    gimp_paint_tool_set_draw_circle     (GimpPaintTool       *tool,
+                                             gboolean             draw_circle,
+                                             gint                 circle_size);
 
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

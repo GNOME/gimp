@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -199,7 +199,7 @@ gimp_gradient_load (GimpContext   *context,
         case 2:
           seg->type  = (GimpGradientSegmentType) type;
           if (seg->type < GIMP_GRADIENT_SEGMENT_LINEAR ||
-              seg->type > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
+              seg->type > GIMP_GRADIENT_SEGMENT_STEP)
             {
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_MIRROR_H__
@@ -37,24 +37,17 @@ typedef struct _GimpMirrorClass GimpMirrorClass;
 
 struct _GimpMirror
 {
-  GimpSymmetry     parent_instance;
+  GimpSymmetry  parent_instance;
 
-  gboolean         horizontal_mirror;
-  gboolean         vertical_mirror;
-  gboolean         point_symmetry;
-  gboolean         disable_transformation;
+  gboolean      horizontal_mirror;
+  gboolean      vertical_mirror;
+  gboolean      point_symmetry;
+  gboolean      disable_transformation;
 
-  gdouble          mirror_position_y;
-  gdouble          mirror_position_x;
-  GimpGuide       *horizontal_guide;
-  GimpGuide       *vertical_guide;
-
-  /* Cached data */
-  gint             last_paint_width;
-  gint             last_paint_height;
-  GeglNode        *horizontal_op;
-  GeglNode        *vertical_op;
-  GeglNode        *central_op;
+  gdouble       mirror_position_y;
+  gdouble       mirror_position_x;
+  GimpGuide    *horizontal_guide;
+  GimpGuide    *vertical_guide;
 };
 
 struct _GimpMirrorClass

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_PICK_ITEM_H__
@@ -21,7 +21,8 @@
 
 GimpLayer       * gimp_image_pick_layer           (GimpImage *image,
                                                    gint       x,
-                                                   gint       y);
+                                                   gint       y,
+                                                   GimpLayer *previously_picked);
 GimpLayer       * gimp_image_pick_layer_by_bounds (GimpImage *image,
                                                    gint       x,
                                                    gint       y);
@@ -40,6 +41,12 @@ GimpGuide       * gimp_image_pick_guide           (GimpImage *image,
                                                    gdouble    y,
                                                    gdouble    epsilon_x,
                                                    gdouble    epsilon_y);
+GList           * gimp_image_pick_guides          (GimpImage *image,
+                                                   gdouble    x,
+                                                   gdouble    y,
+                                                   gdouble    epsilon_x,
+                                                   gdouble    epsilon_y);
+
 GimpSamplePoint * gimp_image_pick_sample_point    (GimpImage *image,
                                                    gdouble    x,
                                                    gdouble    y,

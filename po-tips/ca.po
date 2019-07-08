@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2011-12-23 19:02+0000\n"
 "PO-Revision-Date: 2017-03-27 17:36+0200\n"
 "Last-Translator: Eulalia <eulaliapages@gmail.com>\n"

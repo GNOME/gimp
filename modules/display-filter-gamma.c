@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -193,11 +193,11 @@ cdisplay_gamma_convert_buffer (GimpColorDisplay *display,
 
   iter = gegl_buffer_iterator_new (buffer, area, 0,
                                    babl_format ("R'G'B'A float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data  = iter->data[0];
+      gfloat *data  = iter->items[0].data;
       gint    count = iter->length;
 
       while (count--)

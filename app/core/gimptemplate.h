@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TEMPLATE_H__
@@ -84,7 +84,6 @@ GimpUnit            gimp_template_get_resolution_unit (GimpTemplate *template);
 GimpImageBaseType   gimp_template_get_base_type       (GimpTemplate *template);
 GimpPrecision       gimp_template_get_precision       (GimpTemplate *template);
 
-gboolean            gimp_template_get_color_managed   (GimpTemplate *template);
 GimpColorProfile  * gimp_template_get_color_profile   (GimpTemplate *template);
 
 GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);

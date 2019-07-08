@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -84,6 +84,7 @@ file_open_image (Gimp                *gimp,
   GFile          *local_file  = NULL;
   gchar          *path        = NULL;
   gchar          *entered_uri = NULL;
+  gboolean        mounted     = TRUE;
   GError         *my_error    = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -150,18 +151,27 @@ file_open_image (Gimp                *gimp,
       ! file_remote_mount_file (gimp, file, progress, &my_error))
     {
       if (my_error)
-        g_propagate_error (error, my_error);
-      else
-        *status = GIMP_PDB_CANCEL;
+        {
+          g_printerr ("%s: mounting remote volume failed, trying to download"
+                      "the file: %s\n",
+                      G_STRFUNC, my_error->message);
+          g_clear_error (&my_error);
 
-      return NULL;
+          mounted = FALSE;
+        }
+      else
+        {
+          *status = GIMP_PDB_CANCEL;
+
+          return NULL;
+        }
     }
 
-  if (! file_proc || ! file_proc->handles_uri)
+  if (! file_proc || ! file_proc->handles_uri || ! mounted)
     {
-      path = g_file_get_path (file);
+      gchar *my_path = g_file_get_path (file);
 
-      if (! path)
+      if (! my_path)
         {
           local_file = file_remote_download_image (gimp, file, progress,
                                                    &my_error);
@@ -192,12 +202,22 @@ file_open_image (Gimp                *gimp,
               return NULL;
             }
 
-          path = g_file_get_path (local_file);
+          if (file_proc->handles_uri)
+            path = g_file_get_uri (local_file);
+          else
+            path = g_file_get_path (local_file);
         }
+
+      g_free (my_path);
     }
 
   if (! path)
-    path = g_file_get_uri (file);
+    {
+      if (file_proc->handles_uri)
+        path = g_file_get_uri (file);
+      else
+        path = g_file_get_path (file);
+    }
 
   entered_uri = g_file_get_uri (entered_file);
 
@@ -224,7 +244,7 @@ file_open_image (Gimp                *gimp,
 
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
-  if (*status == GIMP_PDB_SUCCESS)
+  if (*status == GIMP_PDB_SUCCESS && ! file_proc->generic_file_proc)
     image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
                                   gimp);
 
@@ -250,7 +270,7 @@ file_open_image (Gimp                *gimp,
           if (mime_type)
             *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
         }
-      else
+      else if (! file_proc->generic_file_proc)
         {
           if (error && ! *error)
             g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -265,7 +285,7 @@ file_open_image (Gimp                *gimp,
     {
       if (error && ! *error)
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                     _("%s plug-In could not open image"),
+                     _("%s plug-in could not open image"),
                      gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
     }
 
@@ -399,26 +419,26 @@ file_open_thumbnail (Gimp           *gimp,
                     {
                     case GIMP_RGB_IMAGE:
                       *format = gimp_babl_format (GIMP_RGB,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  FALSE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  FALSE, NULL);
                       break;
 
                     case GIMP_RGBA_IMAGE:
                       *format = gimp_babl_format (GIMP_RGB,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  TRUE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  TRUE, NULL);
                       break;
 
                     case GIMP_GRAY_IMAGE:
                       *format = gimp_babl_format (GIMP_GRAY,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  FALSE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  FALSE, NULL);
                       break;
 
                     case GIMP_GRAYA_IMAGE:
                       *format = gimp_babl_format (GIMP_GRAY,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  TRUE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  TRUE, NULL);
                       break;
 
                     case GIMP_INDEXED_IMAGE:
@@ -634,7 +654,8 @@ file_open_layers (Gimp                *gimp,
 
           layer = gimp_image_merge_visible_layers (new_image, context,
                                                    GIMP_CLIP_TO_IMAGE,
-                                                   FALSE, FALSE);
+                                                   FALSE, FALSE,
+                                                   NULL);
 
           layers = g_list_prepend (NULL, layer);
         }
@@ -708,7 +729,7 @@ file_open_from_command_line (Gimp     *gimp,
                               g_object_ref (file),
                               (GDestroyNotify) g_object_unref);
     }
-  else if (status != GIMP_PDB_CANCEL && display)
+  else if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL && display)
     {
       gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed: %s"),

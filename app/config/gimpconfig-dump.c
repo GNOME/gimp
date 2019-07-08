@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -271,6 +271,14 @@ static const gchar *man_page_path =
 "Path to configuration files, which is set to the value of the environment\n"
 "variable GIMP3_SYSCONFDIR or to the compiled-in default value \n"
 "@gimpsysconfdir@.\n"
+".TP\n"
+".I gimp_cache_dir\n"
+"Path to cached files, which is set to the value of the environment\n"
+"variable GIMP3_CACHEDIR or to the system default for per-user cached files.\n"
+".TP\n"
+".I gimp_temp_dir\n"
+"Path to temporary files, which is set to the value of the environment\n"
+"variable GIMP3_TEMPDIR or to the system default for temporary files.\n"
 "\n";
 
 static const gchar man_page_footer[] =
@@ -402,6 +410,8 @@ static const gchar display_format_description[] =
 "%Cx expands to x if the image is clean, the empty string otherwise\n"
 "%B  expands to (modified) if the image is dirty, the empty string otherwise\n"
 "%A  expands to (clean) if the image is clean, the empty string otherwise\n"
+"%Nx expands to x if the image is export-dirty, the empty string otherwise\n"
+"%Ex expands to x if the image is export-clean, the empty string otherwise\n"
 "%l  the number of layers\n"
 "%L  the number of layers (long form)\n"
 "%m  memory used by the image\n"

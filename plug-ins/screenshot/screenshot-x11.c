@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -478,13 +478,13 @@ add_cursor_image (gint32      image,
                                                    gimp_drawable_width  (layer),
                                                    gimp_drawable_height (layer)),
                                    0, babl_format ("R'G'B'A u8"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
       const gulong *src  = cursor->pixels + roi->y * cursor->width + roi->x;
-      guchar       *dest = iter->data[0];
+      guchar       *dest = iter->items[0].data;
       gint          x, y;
 
       for (y = 0; y < roi->height; y++)

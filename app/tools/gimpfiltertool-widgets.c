@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -56,48 +56,51 @@ struct _Controller
 
 /*  local function prototypes  */
 
-static void   gimp_filter_tool_set_line                (Controller                 *controller,
-                                                        GeglRectangle              *area,
-                                                        gdouble                     x1,
-                                                        gdouble                     y1,
-                                                        gdouble                     x2,
-                                                        gdouble                     y2);
-static void   gimp_filter_tool_line_changed            (GimpToolWidget             *widget,
-                                                        Controller                 *controller);
+static Controller * gimp_filter_tool_controller_new          (void);
+static void         gimp_filter_tool_controller_free         (Controller                 *controller);
 
-static void   gimp_filter_tool_set_slider_line         (Controller                 *controller,
-                                                        GeglRectangle              *area,
-                                                        gdouble                     x1,
-                                                        gdouble                     y1,
-                                                        gdouble                     x2,
-                                                        gdouble                     y2,
-                                                        const GimpControllerSlider *sliders,
-                                                        gint                        n_sliders);
-static void   gimp_filter_tool_slider_line_changed     (GimpToolWidget             *widget,
-                                                        Controller                 *controller);
+static void         gimp_filter_tool_set_line                (Controller                 *controller,
+                                                              GeglRectangle              *area,
+                                                              gdouble                     x1,
+                                                              gdouble                     y1,
+                                                              gdouble                     x2,
+                                                              gdouble                     y2);
+static void         gimp_filter_tool_line_changed            (GimpToolWidget             *widget,
+                                                              Controller                 *controller);
 
-static void   gimp_filter_tool_set_transform_grid      (Controller                 *controller,
-                                                        GeglRectangle              *area,
-                                                        const GimpMatrix3          *transform);
-static void   gimp_filter_tool_transform_grid_changed  (GimpToolWidget             *widget,
-                                                        Controller                 *controller);
+static void         gimp_filter_tool_set_slider_line         (Controller                 *controller,
+                                                              GeglRectangle              *area,
+                                                              gdouble                     x1,
+                                                              gdouble                     y1,
+                                                              gdouble                     x2,
+                                                              gdouble                     y2,
+                                                              const GimpControllerSlider *sliders,
+                                                              gint                        n_sliders);
+static void         gimp_filter_tool_slider_line_changed     (GimpToolWidget             *widget,
+                                                              Controller                 *controller);
 
-static void   gimp_filter_tool_set_transform_grids     (Controller                 *controller,
-                                                        GeglRectangle              *area,
-                                                        const GimpMatrix3          *transforms,
-                                                        gint                        n_transforms);
-static void   gimp_filter_tool_transform_grids_changed (GimpToolWidget             *widget,
-                                                        Controller                 *controller);
+static void         gimp_filter_tool_set_transform_grid      (Controller                 *controller,
+                                                              GeglRectangle              *area,
+                                                              const GimpMatrix3          *transform);
+static void         gimp_filter_tool_transform_grid_changed  (GimpToolWidget             *widget,
+                                                              Controller                 *controller);
 
-static void   gimp_filter_tool_set_gyroscope           (Controller                 *controller,
-                                                        GeglRectangle              *area,
-                                                        gdouble                     yaw,
-                                                        gdouble                     pitch,
-                                                        gdouble                     roll,
-                                                        gdouble                     zoom,
-                                                        gboolean                    invert);
-static void   gimp_filter_tool_gyroscope_changed       (GimpToolWidget             *widget,
-                                                        Controller                 *controller);
+static void         gimp_filter_tool_set_transform_grids     (Controller                 *controller,
+                                                              GeglRectangle              *area,
+                                                              const GimpMatrix3          *transforms,
+                                                              gint                        n_transforms);
+static void         gimp_filter_tool_transform_grids_changed (GimpToolWidget             *widget,
+                                                              Controller                 *controller);
+
+static void         gimp_filter_tool_set_gyroscope           (Controller                 *controller,
+                                                              GeglRectangle              *area,
+                                                              gdouble                     yaw,
+                                                              gdouble                     pitch,
+                                                              gdouble                     roll,
+                                                              gdouble                     zoom,
+                                                              gboolean                    invert);
+static void         gimp_filter_tool_gyroscope_changed       (GimpToolWidget             *widget,
+                                                              Controller                 *controller);
 
 
 /*  public functions  */
@@ -116,6 +119,7 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
   Controller       *controller;
 
   g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), NULL);
+  g_return_val_if_fail (filter_tool->config != NULL, NULL);
 
   tool = GIMP_TOOL (filter_tool);
 
@@ -123,7 +127,7 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
 
   shell = gimp_display_get_shell (tool->display);
 
-  controller = g_new0 (Controller, 1);
+  controller = gimp_filter_tool_controller_new ();
 
   controller->filter_tool      = filter_tool;
   controller->controller_type  = controller_type;
@@ -244,9 +248,12 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
       break;
     }
 
-  g_object_set_data_full (G_OBJECT (controller->widget),
-                          "controller", controller,
-                          (GDestroyNotify) g_free);
+  g_object_add_weak_pointer (G_OBJECT (controller->widget),
+                            (gpointer) &controller->widget);
+
+  g_object_set_data_full (filter_tool->config,
+                          "gimp-filter-tool-controller", controller,
+                          (GDestroyNotify) gimp_filter_tool_controller_free);
 
   return controller->widget;
 }
@@ -293,9 +300,10 @@ gimp_filter_tool_reset_widget (GimpFilterTool *filter_tool,
 
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (filter_tool->config != NULL);
 
-  controller = g_object_get_data (G_OBJECT (filter_tool->widget),
-                                  "controller");
+  controller = g_object_get_data (filter_tool->config,
+                                  "gimp-filter-tool-controller");
 
   g_return_if_fail (controller != NULL);
 
@@ -341,6 +349,26 @@ gimp_filter_tool_reset_widget (GimpFilterTool *filter_tool,
 
 /*  private functions  */
 
+static Controller *
+gimp_filter_tool_controller_new (void)
+{
+  return g_slice_new0 (Controller);
+}
+
+static void
+gimp_filter_tool_controller_free (Controller *controller)
+{
+  if (controller->widget)
+    {
+      g_signal_handlers_disconnect_by_data (controller->widget, controller);
+
+      g_object_remove_weak_pointer (G_OBJECT (controller->widget),
+                                    (gpointer) &controller->widget);
+    }
+
+  g_slice_free (Controller, controller);
+}
+
 static void
 gimp_filter_tool_set_line (Controller    *controller,
                            GeglRectangle *area,
@@ -349,8 +377,14 @@ gimp_filter_tool_set_line (Controller    *controller,
                            gdouble        x2,
                            gdouble        y2)
 {
-  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDrawable *drawable = tool->drawable;
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
 
   if (drawable)
     {
@@ -420,8 +454,14 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                                   const GimpControllerSlider *sliders,
                                   gint                        n_sliders)
 {
-  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDrawable *drawable = tool->drawable;
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
 
   if (drawable)
     {
@@ -495,13 +535,19 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
                                      GeglRectangle     *area,
                                      const GimpMatrix3 *transform)
 {
-  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDrawable *drawable = tool->drawable;
-  gdouble       x1       = area->x;
-  gdouble       y1       = area->y;
-  gdouble       x2       = area->x + area->width;
-  gdouble       y2       = area->y + area->height;
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+  gdouble       x1 = area->x;
+  gdouble       y1 = area->y;
+  gdouble       x2 = area->x + area->width;
+  gdouble       y2 = area->y + area->height;
   GimpMatrix3   matrix;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
 
   if (drawable)
     {
@@ -574,17 +620,24 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
                                       const GimpMatrix3 *transforms,
                                       gint               n_transforms)
 {
-  GimpTool         *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDisplayShell *shell    = gimp_display_get_shell (tool->display);
-  GimpDrawable     *drawable = tool->drawable;
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
+  GimpDrawable     *drawable;
   GimpContainer    *grids;
-  GimpToolWidget   *grid     = NULL;
-  gdouble           x1       = area->x;
-  gdouble           y1       = area->y;
-  gdouble           x2       = area->x + area->width;
-  gdouble           y2       = area->y + area->height;
+  GimpToolWidget   *grid = NULL;
+  gdouble           x1   = area->x;
+  gdouble           y1   = area->y;
+  gdouble           x2   = area->x + area->width;
+  gdouble           y2   = area->y + area->height;
   GimpMatrix3       matrix;
   gint              i;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  shell    = gimp_display_get_shell (tool->display);
+  drawable = tool->drawable;
 
   g_signal_handlers_block_by_func (controller->widget,
                                    gimp_filter_tool_transform_grids_changed,
@@ -737,6 +790,9 @@ gimp_filter_tool_set_gyroscope (Controller    *controller,
                                 gdouble        zoom,
                                 gboolean       invert)
 {
+  if (! controller->widget)
+    return;
+
   g_signal_handlers_block_by_func (controller->widget,
                                    gimp_filter_tool_gyroscope_changed,
                                    controller);
@@ -754,8 +810,9 @@ gimp_filter_tool_set_gyroscope (Controller    *controller,
                                      controller);
 }
 
-static void   gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
-                                                  Controller     *controller)
+static void
+gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
+                                    Controller     *controller)
 {
   GimpFilterTool                  *filter_tool = controller->filter_tool;
   GimpControllerGyroscopeCallback  gyroscope_callback;

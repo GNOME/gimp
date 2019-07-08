@@ -7,8 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-05-07 21:13+0000\n"
 "PO-Revision-Date: 2018-05-20 22:41+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
@@ -322,7 +321,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP este software liber; îl puteți redistribui și/sau modifica în "
 "conformitate cu termenii licenței GNU General Public License așa cum este "
@@ -335,7 +334,7 @@ msgstr ""
 "License pentru mai multe detalii.\n"
 "\n"
 "Împreună cu GIMP ar trebui să fi primit o copie a licenței GNU General "
-"Public License. Dacă nu, vedeți http://www.gnu.org/licenses/"
+"Public License. Dacă nu, vedeți https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format
@@ -4681,7 +4680,7 @@ msgid "_Dilate"
 msgstr "Dilată"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr ""
 
@@ -4692,7 +4691,7 @@ msgid "_Erode"
 msgstr "Erodează"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 
@@ -9831,17 +9830,17 @@ msgstr "Comută vizualizarea pe tot ecranul"
 
 #: ../app/actions/view-actions.c:315
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Stabilește un factor de zoom personalizat"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Micșorează cât mai mult posibil"
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Mărește cât mai mult posibil"
 
@@ -9879,13 +9878,13 @@ msgstr "Mărește"
 
 #: ../app/actions/view-actions.c:354
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Micșorează"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Mărește"
 

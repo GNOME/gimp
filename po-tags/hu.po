@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2012-06-04 17:45+0000\n"
 "PO-Revision-Date: 2012-06-04 22:02+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"

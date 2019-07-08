@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_BABL_COMPAT_H__
@@ -25,6 +25,7 @@
 GimpImageType   gimp_babl_format_get_image_type (const Babl *format);
 
 const Babl    * gimp_babl_compat_u8_format      (const Babl *format);
+const Babl    * gimp_babl_compat_u8_mask_format (const Babl *format);
 
 
 #endif /* __GIMP_BABL_COMPAT_H__ */

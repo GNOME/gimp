@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -86,7 +86,7 @@ static gint32    *image_id;
 static void sendBMPToGimp                      (HBITMAP         hBMP,
                                                 HDC             hDC,
                                                 RECT            rect);
-static void     doWindowCapture                    (void);
+static int      doWindowCapture                    (void);
 static gboolean doCapture                          (HWND            selectedHwnd);
 static BOOL     isWindowIsAboveCaptureRegion       (HWND            hwndWindow,
                                                     RECT            rectCapture);
@@ -183,9 +183,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
     }
   else if (shootvals->shoot_type == SHOOT_WINDOW)
     {
-      doWindowCapture ();
-
-      status = GIMP_PDB_SUCCESS;
+      status = 0 == doWindowCapture () ? GIMP_PDB_CANCEL : GIMP_PDB_SUCCESS;
     }
   else if (shootvals->shoot_type == SHOOT_REGION)
     {
@@ -352,7 +350,7 @@ sendBMPToGimp (HBITMAP hBMP,
  * ENTRY POINT FOR WINSNAP NONROOT
  *
  */
-static void
+static int
 doWindowCapture (void)
 {
   /* Start up a standard Win32
@@ -360,7 +358,7 @@ doWindowCapture (void)
    * selection of the window
    * to be captured
    */
-  winsnapWinMain ();
+  return winsnapWinMain ();
 }
 
 /******************************************************************
@@ -518,13 +516,15 @@ GetAccurateWindowRect (HWND hwndTarget,
   /* In this case, we did not got the rect from the dwm api so we try to get the rect with the normal function */
   if (GetWindowRect (hwndTarget, outRect))
     {
-      /* If the window is maximized then we need and can fix the rect variable (we need to do this if the rect not comming from dwm api) */
+      /* If the window is maximized then we need and can fix the rect variable 
+       * (we need to do this if the rect isn't coming from dwm api) 
+       */
       ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
       if (GetWindowPlacement (hwndTarget, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
         {
           RECT *rectScreens = NULL;
 
-          /* if this is not the first time we call this function for some
+          /* If this is not the first time we call this function for some
            * reason then we reset the rectScreens count
            */
           if (rectScreensCount)
@@ -1258,7 +1258,7 @@ WndProc (HWND   hwnd,
       if (selectedHwnd)
         doCapture (selectedHwnd);
 
-      PostQuitMessage (0);
+      PostQuitMessage (selectedHwnd != NULL);
 
       break;
 

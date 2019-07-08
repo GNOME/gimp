@@ -22,7 +22,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * --
  *
  * For now, this MNG plug-in can only save images. It cannot load images.
@@ -849,8 +849,8 @@ mng_save_image (const gchar  *filename,
       layer_drawable_type = gimp_drawable_type (layers[i]);
 
       layer_buffer        = gimp_drawable_get_buffer (layers[i]);
-      layer_rows          = gegl_buffer_get_width  (layer_buffer);
-      layer_cols          = gegl_buffer_get_height (layer_buffer);
+      layer_cols          = gegl_buffer_get_width  (layer_buffer);
+      layer_rows          = gegl_buffer_get_height (layer_buffer);
 
       gimp_drawable_offsets (layers[i], &layer_offset_x, &layer_offset_y);
       layer_has_unique_palette = TRUE;
@@ -1528,7 +1528,7 @@ mng_save_dialog (gint32 image_id)
 
   spinbutton_adj = gtk_adjustment_new (mng_data.default_delay,
                                        0, 65000, 10, 100, 0);
-  spinbutton = gtk_spin_button_new (spinbutton_adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (spinbutton_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   g_signal_connect (spinbutton_adj, "value-changed",

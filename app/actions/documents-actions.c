@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -45,62 +45,62 @@ static const GimpActionEntry documents_actions[] =
   { "documents-open", GIMP_ICON_DOCUMENT_OPEN,
     NC_("documents-action", "_Open Image"), NULL,
     NC_("documents-action", "Open the selected entry"),
-    G_CALLBACK (documents_open_cmd_callback),
+    documents_open_cmd_callback,
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-raise-or-open", NULL,
     NC_("documents-action", "_Raise or Open Image"), NULL,
     NC_("documents-action", "Raise window if already open"),
-    G_CALLBACK (documents_raise_or_open_cmd_callback),
+    documents_raise_or_open_cmd_callback,
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-file-open-dialog", NULL,
     NC_("documents-action", "File Open _Dialog"), NULL,
     NC_("documents-action", "Open image dialog"),
-    G_CALLBACK (documents_file_open_dialog_cmd_callback),
+    documents_file_open_dialog_cmd_callback,
     GIMP_HELP_DOCUMENT_OPEN },
 
   { "documents-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("documents-action", "Copy Image _Location"), NULL,
     NC_("documents-action", "Copy image location to clipboard"),
-    G_CALLBACK (documents_copy_location_cmd_callback),
+    documents_copy_location_cmd_callback,
     GIMP_HELP_DOCUMENT_COPY_LOCATION },
 
   { "documents-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("documents-action", "Show in _File Manager"), NULL,
     NC_("documents-action", "Show image location in the file manager"),
-    G_CALLBACK (documents_show_in_file_manager_cmd_callback),
+    documents_show_in_file_manager_cmd_callback,
     GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },
 
   { "documents-remove", GIMP_ICON_LIST_REMOVE,
     NC_("documents-action", "Remove _Entry"), NULL,
     NC_("documents-action", "Remove the selected entry"),
-    G_CALLBACK (documents_remove_cmd_callback),
+    documents_remove_cmd_callback,
     GIMP_HELP_DOCUMENT_REMOVE },
 
   { "documents-clear", GIMP_ICON_SHRED,
     NC_("documents-action", "_Clear History"), NULL,
     NC_("documents-action", "Clear the entire document history"),
-    G_CALLBACK (documents_clear_cmd_callback),
+    documents_clear_cmd_callback,
     GIMP_HELP_DOCUMENT_CLEAR },
 
   { "documents-recreate-preview", GIMP_ICON_VIEW_REFRESH,
     NC_("documents-action", "Recreate _Preview"), NULL,
     NC_("documents-action", "Recreate preview"),
-    G_CALLBACK (documents_recreate_preview_cmd_callback),
+    documents_recreate_preview_cmd_callback,
     GIMP_HELP_DOCUMENT_REFRESH },
 
   { "documents-reload-previews", NULL,
     NC_("documents-action", "Reload _all Previews"), NULL,
     NC_("documents-action", "Reload all previews"),
-    G_CALLBACK (documents_reload_previews_cmd_callback),
+    documents_reload_previews_cmd_callback,
     GIMP_HELP_DOCUMENT_REFRESH },
 
   { "documents-remove-dangling", NULL,
     NC_("documents-action", "Remove Dangling E_ntries"), NULL,
     NC_("documents-action",
         "Remove entries for which the corresponding file is not available"),
-    G_CALLBACK (documents_remove_dangling_cmd_callback),
+    documents_remove_dangling_cmd_callback,
     GIMP_HELP_DOCUMENT_REFRESH }
 };
 

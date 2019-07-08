@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -30,10 +30,13 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "gegl/gimp-gegl-utils.h"
 
 #include "operations/gimpcageconfig.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -50,6 +53,7 @@
 #include "gimpcagetool.h"
 #include "gimpcageoptions.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -195,6 +199,8 @@ gimp_cage_tool_init (GimpCageTool *self)
                                      GIMP_DIRTY_SELECTION       |
                                      GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_precision   (tool->control,
+                                     GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
@@ -208,8 +214,9 @@ gimp_cage_tool_initialize (GimpTool     *tool,
                            GimpDisplay  *display,
                            GError      **error)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpGuiConfig *config   = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image    = gimp_display_get_image (display);
+  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return FALSE;
@@ -225,10 +232,13 @@ gimp_cage_tool_initialize (GimpTool     *tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer's pixels are locked."));
+      if (error)
+        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer is not visible."));
@@ -661,6 +671,7 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
 {
   GimpCageTool       *ct       = GIMP_CAGE_TOOL (tool);
   GimpCageOptions    *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  GimpGuiConfig      *config   = GIMP_GUI_CONFIG (display->gimp->config);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
   if (tool->display)
@@ -687,7 +698,8 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
           gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
-          ! gimp_item_is_visible (GIMP_ITEM (drawable)))
+          ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+             config->edit_non_visible))
         {
           modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
@@ -1266,6 +1278,7 @@ gimp_cage_tool_create_filter (GimpCageTool *ct)
                                          _("Cage transform"),
                                          ct->render_node,
                                          GIMP_ICON_TOOL_CAGE);
+  gimp_drawable_filter_set_region (ct->filter, GIMP_FILTER_REGION_DRAWABLE);
 
   g_signal_connect (ct->filter, "flush",
                     G_CALLBACK (gimp_cage_tool_filter_flush),

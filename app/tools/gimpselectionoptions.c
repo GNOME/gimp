@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -218,6 +218,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
+
+    options->mode_box = hbox;
 
     label = gtk_label_new (_("Mode:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);

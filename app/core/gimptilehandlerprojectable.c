@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -27,11 +27,8 @@
 #include "gimptilehandlerprojectable.h"
 
 
-static void   gimp_tile_handler_projectable_validate (GimpTileHandlerValidate *validate,
-                                                      const GeglRectangle     *rect,
-                                                      const Babl              *format,
-                                                      gpointer                 dest_buf,
-                                                      gint                     dest_stride);
+static void   gimp_tile_handler_projectable_begin_validate (GimpTileHandlerValidate *validate);
+static void   gimp_tile_handler_projectable_end_validate   (GimpTileHandlerValidate *validate);
 
 
 G_DEFINE_TYPE (GimpTileHandlerProjectable, gimp_tile_handler_projectable,
@@ -47,7 +44,8 @@ gimp_tile_handler_projectable_class_init (GimpTileHandlerProjectableClass *klass
 
   validate_class = GIMP_TILE_HANDLER_VALIDATE_CLASS (klass);
 
-  validate_class->validate = gimp_tile_handler_projectable_validate;
+  validate_class->begin_validate = gimp_tile_handler_projectable_begin_validate;
+  validate_class->end_validate   = gimp_tile_handler_projectable_end_validate;
 }
 
 static void
@@ -56,24 +54,23 @@ gimp_tile_handler_projectable_init (GimpTileHandlerProjectable *projectable)
 }
 
 static void
-gimp_tile_handler_projectable_validate (GimpTileHandlerValidate *validate,
-                                        const GeglRectangle     *rect,
-                                        const Babl              *format,
-                                        gpointer                 dest_buf,
-                                        gint                     dest_stride)
+gimp_tile_handler_projectable_begin_validate (GimpTileHandlerValidate *validate)
 {
   GimpTileHandlerProjectable *handler = GIMP_TILE_HANDLER_PROJECTABLE (validate);
-  GeglNode                   *graph;
 
-  graph = gimp_projectable_get_graph (handler->projectable);
+  GIMP_TILE_HANDLER_VALIDATE_CLASS (parent_class)->begin_validate (validate);
 
   gimp_projectable_begin_render (handler->projectable);
+}
 
-  gegl_node_blit (graph, 1.0, rect, format,
-                  dest_buf, dest_stride,
-                  GEGL_BLIT_DEFAULT);
+static void
+gimp_tile_handler_projectable_end_validate (GimpTileHandlerValidate *validate)
+{
+  GimpTileHandlerProjectable *handler = GIMP_TILE_HANDLER_PROJECTABLE (validate);
 
   gimp_projectable_end_render (handler->projectable);
+
+  GIMP_TILE_HANDLER_VALIDATE_CLASS (parent_class)->end_validate (validate);
 }
 
 GeglTileHandler *
@@ -84,6 +81,9 @@ gimp_tile_handler_projectable_new (GimpProjectable *projectable)
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
   handler = g_object_new (GIMP_TYPE_TILE_HANDLER_PROJECTABLE, NULL);
+
+  GIMP_TILE_HANDLER_VALIDATE (handler)->graph =
+    g_object_ref (gimp_projectable_get_graph (projectable));
 
   handler->projectable = projectable;
 

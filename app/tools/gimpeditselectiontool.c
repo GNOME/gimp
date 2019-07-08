@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -56,6 +56,7 @@
 #include "gimpdrawtool.h"
 #include "gimpeditselectiontool.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"
@@ -185,31 +186,14 @@ gimp_edit_selection_tool_finalize (GObject *object)
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (object);
 
-  if (edit_select->segs_in)
-    {
-      g_free (edit_select->segs_in);
-      edit_select->segs_in     = NULL;
-      edit_select->num_segs_in = 0;
-    }
+  g_clear_pointer (&edit_select->segs_in, g_free);
+  edit_select->num_segs_in = 0;
 
-  if (edit_select->segs_out)
-    {
-      g_free (edit_select->segs_out);
-      edit_select->segs_out     = NULL;
-      edit_select->num_segs_out = 0;
-    }
+  g_clear_pointer (&edit_select->segs_out, g_free);
+  edit_select->num_segs_out = 0;
 
-  if (edit_select->live_items)
-    {
-      g_list_free (edit_select->live_items);
-      edit_select->live_items = NULL;
-    }
-
-  if (edit_select->delayed_items)
-    {
-      g_list_free (edit_select->delayed_items);
-      edit_select->delayed_items = NULL;
-    }
+  g_clear_pointer (&edit_select->live_items,    g_list_free);
+  g_clear_pointer (&edit_select->delayed_items, g_list_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -531,7 +515,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
     {
       gimp_constrain_line (edit_select->start_x, edit_select->start_y,
                            &new_x, &new_y,
-                           GIMP_CONSTRAIN_LINE_45_DEGREES, 0.0);
+                           GIMP_CONSTRAIN_LINE_45_DEGREES, 0.0, 1.0, 1.0);
     }
 
   gimp_edit_selection_tool_calc_coords (edit_select, image,
@@ -1008,14 +992,15 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
     }
 
   return gimp_edit_selection_tool_translate (tool, kevent, translate_type,
-                                             display);
+                                             display, NULL);
 }
 
 gboolean
 gimp_edit_selection_tool_translate (GimpTool          *tool,
                                     GdkEventKey       *kevent,
                                     GimpTransformType  translate_type,
-                                    GimpDisplay       *display)
+                                    GimpDisplay       *display,
+                                    GtkWidget         *type_box)
 {
   gint               inc_x          = 0;
   gint               inc_y          = 0;
@@ -1093,6 +1078,9 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         case GIMP_TRANSFORM_TYPE_SELECTION:
           item = GIMP_ITEM (gimp_image_get_mask (image));
 
+          if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
+            item = NULL;
+
           edit_mode = GIMP_TRANSLATE_MODE_MASK;
           undo_type = GIMP_UNDO_GROUP_MASK;
 
@@ -1105,10 +1093,6 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
             {
               /* cannot happen, don't translate this message */
               locked_message = "The selection's position is locked.";
-            }
-          else if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
-            {
-              locked_message = _("The selection is empty.");
             }
           break;
 
@@ -1189,11 +1173,14 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   if (! item)
     {
       gimp_tool_message_literal (tool, display, null_message);
+      if (type_box)
+        gimp_widget_blink (type_box);
       return TRUE;
     }
   else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
+      gimp_tools_blink_lock_box (display->gimp, item);
       return TRUE;
     }
 

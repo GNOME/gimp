@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -2105,7 +2105,7 @@ toggle_obj_type (GtkRadioAction *action,
 
 /* Given a number of float co-ords adjust for scaling back to org size */
 /* Size is number of PAIRS of points */
-/* FP + int varients */
+/* FP + int variants */
 
 static void
 scale_to_orginal_x (gdouble *list)

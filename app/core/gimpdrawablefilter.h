@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DRAWABLE_FILTER_H__
@@ -57,6 +57,9 @@ GimpDrawableFilter *
 
 void       gimp_drawable_filter_set_region     (GimpDrawableFilter  *filter,
                                                 GimpFilterRegion     region);
+void       gimp_drawable_filter_set_crop       (GimpDrawableFilter  *filter,
+                                                const GeglRectangle *rect,
+                                                gboolean             update);
 void       gimp_drawable_filter_set_preview    (GimpDrawableFilter  *filter,
                                                 gboolean             enabled,
                                                 GimpAlignmentType    alignment,
@@ -69,9 +72,6 @@ void       gimp_drawable_filter_set_mode       (GimpDrawableFilter  *filter,
                                                 GimpLayerColorSpace  composite_space,
                                                 GimpLayerCompositeMode composite_mode);
 
-void       gimp_drawable_filter_set_color_managed
-                                               (GimpDrawableFilter  *filter,
-                                                gboolean             managed);
 void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter  *filter,
                                                 gboolean             gamma_hack);
 

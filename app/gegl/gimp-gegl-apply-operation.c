@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -30,6 +30,7 @@
 
 #include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
+#include "core/gimpchunkiterator.h"
 #include "core/gimpprogress.h"
 
 #include "gimp-gegl-apply-operation.h"
@@ -77,15 +78,16 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                   gint                 n_valid_rects,
                                   gboolean             cancelable)
 {
-  GeglNode      *gegl;
-  GeglNode      *effect;
-  GeglNode      *dest_node;
-  GeglNode      *operation_src_node = NULL;
-  GeglRectangle  rect = { 0, };
-  GeglProcessor *processor          = NULL;
-  gboolean       progress_started   = FALSE;
-  gdouble        value;
-  gboolean       cancel             = FALSE;
+  GeglNode          *gegl;
+  GeglNode          *effect;
+  GeglNode          *dest_node;
+  GeglNode          *operation_src_node = NULL;
+  GimpChunkIterator *iter;
+  cairo_region_t    *region;
+  gboolean           progress_started   = FALSE;
+  gboolean           cancel             = FALSE;
+  gint               all_pixels;
+  gint               done_pixels;
 
   g_return_val_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
@@ -95,15 +97,8 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   g_return_val_if_fail (valid_rects == NULL || cache != NULL, FALSE);
   g_return_val_if_fail (valid_rects == NULL || n_valid_rects != 0, FALSE);
 
-  if (dest_rect)
-    {
-      rect = *dest_rect;
-    }
-  else
-    {
-      rect = *GEGL_RECTANGLE (0, 0, gegl_buffer_get_width  (dest_buffer),
-                                    gegl_buffer_get_height (dest_buffer));
-    }
+  if (! dest_rect)
+    dest_rect = gegl_buffer_get_extent (dest_buffer);
 
   gegl = gegl_node_new ();
 
@@ -115,14 +110,25 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   if (src_buffer)
     {
       GeglNode *src_node;
+      GeglNode *underlying_operation;
+
+      underlying_operation =
+        gimp_gegl_node_get_underlying_operation (operation);
 
       /* dup() because reading and writing the same buffer doesn't
-       * work with area ops when using a processor. See bug #701875.
+       * generally work with non-point ops when working in chunks.
+       * See bug #701875.
        */
-      if (progress && (src_buffer == dest_buffer))
-        src_buffer = gegl_buffer_dup (src_buffer);
+      if (src_buffer == dest_buffer &&
+          ! (gimp_gegl_node_is_point_operation  (underlying_operation) ||
+             gimp_gegl_node_is_source_operation (underlying_operation)))
+        {
+          src_buffer = gegl_buffer_dup (src_buffer);
+        }
       else
-        g_object_ref (src_buffer);
+        {
+          g_object_ref (src_buffer);
+        }
 
       src_node = gegl_node_new_child (gegl,
                                       "operation", "gegl:buffer-source",
@@ -137,10 +143,10 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
           crop_node = gegl_node_new_child (gegl,
                                            "operation", "gegl:crop",
-                                           "x",         (gdouble) rect.x,
-                                           "y",         (gdouble) rect.y,
-                                           "width",     (gdouble) rect.width,
-                                           "height",    (gdouble) rect.height,
+                                           "x",         (gdouble) dest_rect->x,
+                                           "y",         (gdouble) dest_rect->y,
+                                           "width",     (gdouble) dest_rect->width,
+                                           "height",    (gdouble) dest_rect->height,
                                            NULL);
 
           gegl_node_connect_to (src_node,  "output",
@@ -175,8 +181,6 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   if (progress)
     {
-      processor = gegl_node_new_processor (dest_node, &rect);
-
       if (gimp_progress_is_active (progress))
         {
           if (undo_desc)
@@ -197,100 +201,84 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
           progress_started = TRUE;
         }
     }
+  else
+    {
+      cancelable = FALSE;
+    }
+
+  gegl_buffer_freeze_changed (dest_buffer);
+
+  all_pixels  = dest_rect->width * dest_rect->height;
+  done_pixels = 0;
+
+  region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) dest_rect);
 
   if (cache)
     {
-      cairo_region_t *region;
-      gint            all_pixels;
-      gint            done_pixels = 0;
-      gint            n_rects;
-      gint            i;
-
-      region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rect);
-
-      all_pixels = rect.width * rect.height;
+      gint i;
 
       for (i = 0; i < n_valid_rects; i++)
         {
-          gimp_gegl_buffer_copy (cache,       valid_rects + i, GEGL_ABYSS_NONE,
-                                 dest_buffer, valid_rects + i);
+          GeglRectangle valid_rect;
+
+          if (! gegl_rectangle_intersect (&valid_rect,
+                                          &valid_rects[i], dest_rect))
+            {
+              continue;
+            }
+
+          gimp_gegl_buffer_copy (cache,       &valid_rect, GEGL_ABYSS_NONE,
+                                 dest_buffer, &valid_rect);
 
           cairo_region_subtract_rectangle (region,
                                            (cairo_rectangle_int_t *)
-                                           valid_rects + i);
+                                           &valid_rect);
 
-          done_pixels += valid_rects[i].width * valid_rects[i].height;
-
-          if (progress)
-            gimp_progress_set_value (progress,
-                                     (gdouble) done_pixels /
-                                     (gdouble) all_pixels);
-        }
-
-      n_rects = cairo_region_num_rectangles (region);
-
-      for (i = 0; ! cancel && (i < n_rects); i++)
-        {
-          cairo_rectangle_int_t render_rect;
-
-          cairo_region_get_rectangle (region, i, &render_rect);
+          done_pixels += valid_rect.width * valid_rect.height;
 
           if (progress)
             {
-              gint rect_pixels = render_rect.width * render_rect.height;
-
-#ifdef REUSE_PROCESSOR
-              gegl_processor_set_rectangle (processor,
-                                            (GeglRectangle *) &render_rect);
-#else
-              g_object_unref (processor);
-              processor = gegl_node_new_processor (dest_node,
-                                                   (GeglRectangle *) &render_rect);
-#endif
-
-              while (! cancel && gegl_processor_work (processor, &value))
-                {
-                  gimp_progress_set_value (progress,
-                                           ((gdouble) done_pixels +
-                                            value * rect_pixels) /
-                                           (gdouble) all_pixels);
-
-                  while (! cancel && g_main_context_pending (NULL))
-                    g_main_context_iteration (NULL, FALSE);
-                }
-
-              done_pixels += rect_pixels;
-            }
-          else
-            {
-              gegl_node_blit (dest_node, 1.0, (GeglRectangle *) &render_rect,
-                              NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+              gimp_progress_set_value (progress,
+                                       (gdouble) done_pixels /
+                                       (gdouble) all_pixels);
             }
         }
-
-      cairo_region_destroy (region);
     }
-  else
+
+  iter = gimp_chunk_iterator_new (region);
+
+  while (gimp_chunk_iterator_next (iter))
     {
+      GeglRectangle render_rect;
+
       if (progress)
         {
-          while (! cancel && gegl_processor_work (processor, &value))
-            {
-              gimp_progress_set_value (progress, value);
+          while (! cancel && g_main_context_pending (NULL))
+            g_main_context_iteration (NULL, FALSE);
 
-              while (! cancel && g_main_context_pending (NULL))
-                g_main_context_iteration (NULL, FALSE);
-            }
+          if (cancel)
+            break;
         }
-      else
+
+      while (gimp_chunk_iterator_get_rect (iter, &render_rect))
         {
-          gegl_node_blit (dest_node, 1.0, &rect,
-                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+          gint rect_pixels = render_rect.width * render_rect.height;
+
+          gegl_node_blit (dest_node, 1.0, &render_rect, NULL, NULL, 0,
+                          GEGL_BLIT_DEFAULT);
+
+          done_pixels += rect_pixels;
+        }
+
+      if (progress)
+        {
+          gimp_progress_set_value (progress,
+                                   (gdouble) done_pixels /
+                                   (gdouble) all_pixels);
         }
     }
 
-  if (processor)
-    g_object_unref (processor);
+  gegl_buffer_thaw_changed (dest_buffer);
 
   g_object_unref (gegl);
 
@@ -349,6 +337,7 @@ gimp_gegl_apply_flatten (GeglBuffer          *src_buffer,
                          const gchar         *undo_desc,
                          GeglBuffer          *dest_buffer,
                          const GimpRGB       *background,
+                         const Babl          *space,
                          GimpLayerColorSpace  composite_space)
 {
   GeglNode *node;
@@ -358,7 +347,7 @@ gimp_gegl_apply_flatten (GeglBuffer          *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
   g_return_if_fail (background != NULL);
 
-  node = gimp_gegl_create_flatten_node (background, composite_space);
+  node = gimp_gegl_create_flatten_node (background, space, composite_space);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
                              node, dest_buffer, NULL, FALSE);
@@ -372,11 +361,19 @@ gimp_gegl_apply_feather (GeglBuffer          *src_buffer,
                          GeglBuffer          *dest_buffer,
                          const GeglRectangle *dest_rect,
                          gdouble              radius_x,
-                         gdouble              radius_y)
+                         gdouble              radius_y,
+                         gboolean             edge_lock)
 {
+  GaussianBlurAbyssPolicy abyss_policy;
+
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  if (edge_lock)
+    abyss_policy = GAUSSIAN_BLUR_ABYSS_CLAMP;
+  else
+    abyss_policy = GAUSSIAN_BLUR_ABYSS_NONE;
 
   /* 3.5 is completely magic and picked to visually match the old
    * gaussian_blur_region() on a crappy laptop display
@@ -385,7 +382,8 @@ gimp_gegl_apply_feather (GeglBuffer          *src_buffer,
                                  progress, undo_desc,
                                  dest_buffer, dest_rect,
                                  radius_x / 3.5,
-                                 radius_y / 3.5);
+                                 radius_y / 3.5,
+                                 abyss_policy);
 }
 
 void
@@ -556,13 +554,14 @@ gimp_gegl_apply_flood (GeglBuffer          *src_buffer,
 }
 
 void
-gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
-                               GimpProgress        *progress,
-                               const gchar         *undo_desc,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               gdouble              std_dev_x,
-                               gdouble              std_dev_y)
+gimp_gegl_apply_gaussian_blur (GeglBuffer              *src_buffer,
+                               GimpProgress            *progress,
+                               const gchar             *undo_desc,
+                               GeglBuffer              *dest_buffer,
+                               const GeglRectangle     *dest_rect,
+                               gdouble                  std_dev_x,
+                               gdouble                  std_dev_y,
+                               GaussianBlurAbyssPolicy  abyss_policy)
 {
   GeglNode *node;
 
@@ -571,9 +570,10 @@ gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
   node = gegl_node_new_child (NULL,
-                              "operation", "gegl:gaussian-blur",
-                              "std-dev-x", std_dev_x,
-                              "std-dev-y", std_dev_y,
+                              "operation",    "gegl:gaussian-blur",
+                              "std-dev-x",    std_dev_x,
+                              "std-dev-y",    std_dev_y,
+                              "abyss-policy", abyss_policy,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,

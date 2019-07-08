@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_UNDO_H__
@@ -51,7 +51,7 @@ struct _GimpImageUndo
   GimpGrid          *grid;
   gint               num_colors;
   guchar            *colormap;
-  gboolean           is_color_managed;
+  GimpColorProfile  *hidden_profile;
   GimpMetadata      *metadata;
   gchar             *parasite_name;
   GimpParasite      *parasite;

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GEGL_MASK_COMBINE_H__
@@ -38,8 +38,8 @@ gboolean   gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
                                                 gint            y,
                                                 gint            w,
                                                 gint            h,
-                                                gdouble         a,
-                                                gdouble         b,
+                                                gdouble         rx,
+                                                gdouble         ry,
                                                 gboolean        antialias);
 gboolean   gimp_gegl_mask_combine_buffer       (GeglBuffer     *mask,
                                                 GeglBuffer     *add_on,

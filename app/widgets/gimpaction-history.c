@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -288,14 +288,14 @@ gimp_action_history_search (Gimp                *gimp,
        actions = g_list_next (actions), i++)
     {
       GimpActionHistoryItem *item   = actions->data;
-      GtkAction             *action;
+      GimpAction            *action;
 
       action = gimp_ui_manager_find_action (manager, NULL, item->action_name);
       if (action == NULL)
         continue;
 
-      if (! gtk_action_is_visible (action)    ||
-          (! gtk_action_is_sensitive (action) &&
+      if (! gimp_action_is_visible (action)    ||
+          (! gimp_action_is_sensitive (action) &&
            ! config->search_show_unavailable))
         continue;
 
@@ -348,22 +348,29 @@ gimp_action_history_is_excluded_action (const gchar *action_name)
           g_strcmp0 (action_name, "filters-reshow") == 0);
 }
 
-/* Callback run on the `activate` signal of an action.
- * It allows us to log all used action.
+/* Called whenever a GimpAction is activated.
+ * It allows us to log all used actions.
  */
 void
-gimp_action_history_activate_callback (GtkAction *action,
-                                       gpointer   user_data)
+gimp_action_history_action_activated (GimpAction *action)
 {
-  GimpGuiConfig         *config = GIMP_GUI_CONFIG (history.gimp->config);
+  GimpGuiConfig         *config;
   const gchar           *action_name;
   GList                 *link;
   GimpActionHistoryItem *item;
 
+  /* Silently return when called at the wrong time, like when the
+   * activated action was "quit" and the history is already gone.
+   */
+  if (! history.gimp)
+    return;
+
+  config = GIMP_GUI_CONFIG (history.gimp->config);
+
   if (config->action_history_size == 0)
     return;
 
-  action_name = gtk_action_get_name (action);
+  action_name = gimp_action_get_name (action);
 
   /* Some specific actions are of no log interest. */
   if (gimp_action_history_is_excluded_action (action_name))

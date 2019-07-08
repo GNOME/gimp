@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -44,18 +44,20 @@ static GimpDockable * dockable_get_current (GimpDockbook *dockbook);
 /*  public functions  */
 
 void
-dockable_add_tab_cmd_callback (GtkAction   *action,
-                               const gchar *value,
-                               gpointer     data)
+dockable_add_tab_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  gimp_dockbook_add_from_dialog_factory (dockbook, value);
+  gimp_dockbook_add_from_dialog_factory (dockbook,
+                                         g_variant_get_string (value, NULL));
 }
 
 void
-dockable_close_tab_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+dockable_close_tab_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -66,8 +68,9 @@ dockable_close_tab_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_detach_tab_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+dockable_detach_tab_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -77,32 +80,32 @@ dockable_detach_tab_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_lock_tab_cmd_callback (GtkAction *action,
-                                gpointer   data)
+dockable_lock_tab_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     {
-      gboolean lock = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean lock = g_variant_get_boolean (value);
 
       gimp_dockable_set_locked (dockable, lock);
     }
 }
 
 void
-dockable_toggle_view_cmd_callback (GtkAction *action,
-                                   GtkAction *current,
-                                   gpointer   data)
+dockable_toggle_view_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
   GimpViewType  view_type;
   gint          page_num;
 
-  view_type = (GimpViewType)
-    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  view_type = (GimpViewType) g_variant_get_int32 (value);
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -191,7 +194,7 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                       gtk_widget_show (new_dockable);
 
                       gtk_container_remove (GTK_CONTAINER (dockbook),
-                                            dockable);
+                                            GTK_WIDGET (dockable));
 
                       gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                                      page_num);
@@ -205,15 +208,15 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_view_size_cmd_callback (GtkAction *action,
-                                 GtkAction *current,
-                                 gpointer   data)
+dockable_view_size_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
   gint          view_size;
 
-  view_size = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  view_size = g_variant_get_int32 (value);
 
   if (dockable)
     {
@@ -233,16 +236,15 @@ dockable_view_size_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_tab_style_cmd_callback (GtkAction *action,
-                                 GtkAction *current,
-                                 gpointer   data)
+dockable_tab_style_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
   GimpTabStyle  tab_style;
 
-  tab_style = (GimpTabStyle)
-    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  tab_style = (GimpTabStyle) g_variant_get_int32 (value);
 
   if (dockable && gimp_dockable_get_tab_style (dockable) != tab_style)
     {
@@ -259,8 +261,9 @@ dockable_tab_style_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_show_button_bar_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+dockable_show_button_bar_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -271,7 +274,7 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
       gboolean    show;
 
       docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
-      show   = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      show   = g_variant_get_boolean (value);
 
       gimp_docked_set_show_button_bar (docked, show);
     }

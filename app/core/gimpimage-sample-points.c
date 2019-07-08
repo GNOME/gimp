@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -53,7 +53,7 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
                                        sample_point);
 
   gimp_image_add_sample_point (image, sample_point, x, y);
-  gimp_sample_point_unref (sample_point);
+  g_object_unref (sample_point);
 
   return sample_point;
 }
@@ -67,14 +67,14 @@ gimp_image_add_sample_point (GimpImage       *image,
   GimpImagePrivate *private;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   private->sample_points = g_list_append (private->sample_points, sample_point);
 
   gimp_sample_point_set_position (sample_point, x, y);
-  gimp_sample_point_ref (sample_point);
+  g_object_ref (sample_point);
 
   gimp_image_sample_point_added (image, sample_point);
 }
@@ -87,7 +87,7 @@ gimp_image_remove_sample_point (GimpImage       *image,
   GimpImagePrivate *private;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
@@ -97,11 +97,14 @@ gimp_image_remove_sample_point (GimpImage       *image,
                                        sample_point);
 
   private->sample_points = g_list_remove (private->sample_points, sample_point);
+  gimp_aux_item_removed (GIMP_AUX_ITEM (sample_point));
 
   gimp_image_sample_point_removed (image, sample_point);
 
-  gimp_sample_point_set_position (sample_point, -1, -1);
-  gimp_sample_point_unref (sample_point);
+  gimp_sample_point_set_position (sample_point,
+                                  GIMP_SAMPLE_POINT_POSITION_UNDEFINED,
+                                  GIMP_SAMPLE_POINT_POSITION_UNDEFINED);
+  g_object_unref (sample_point);
 }
 
 void
@@ -112,7 +115,7 @@ gimp_image_move_sample_point (GimpImage       *image,
                               gboolean         push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
   g_return_if_fail (x >= 0);
   g_return_if_fail (y >= 0);
   g_return_if_fail (x < gimp_image_get_width  (image));
@@ -125,6 +128,27 @@ gimp_image_move_sample_point (GimpImage       *image,
 
   gimp_sample_point_set_position (sample_point, x, y);
 
+  gimp_image_sample_point_moved (image, sample_point);
+}
+
+void
+gimp_image_set_sample_point_pick_mode (GimpImage         *image,
+                                       GimpSamplePoint   *sample_point,
+                                       GimpColorPickMode  pick_mode,
+                                       gboolean           push_undo)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+
+  if (push_undo)
+    gimp_image_undo_push_sample_point (image,
+                                       C_("undo-type",
+                                          "Set Sample Point Pick Mode"),
+                                       sample_point);
+
+  gimp_sample_point_set_pick_mode (sample_point, pick_mode);
+
+  /* well... */
   gimp_image_sample_point_moved (image, sample_point);
 }
 
@@ -150,7 +174,7 @@ gimp_image_get_sample_point (GimpImage *image,
     {
       GimpSamplePoint *sample_point = sample_points->data;
 
-      if (gimp_sample_point_get_ID (sample_point) == id)
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (sample_point)) == id)
         return sample_point;
     }
 
@@ -181,7 +205,7 @@ gimp_image_get_next_sample_point (GimpImage *image,
       if (*sample_point_found) /* this is the first guide after the found one */
         return sample_point;
 
-      if (gimp_sample_point_get_ID (sample_point) == id) /* found it, next one will be returned */
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (sample_point)) == id) /* found it, next one will be returned */
         *sample_point_found = TRUE;
     }
 

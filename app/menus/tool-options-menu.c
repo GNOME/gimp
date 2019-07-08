@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -80,12 +80,12 @@ tool_options_menu_update (GimpUIManager *manager,
 
   if (merge_id)
     {
-      gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+      gimp_ui_manager_remove_ui (manager, merge_id);
 
       g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
                          GINT_TO_POINTER (0));
 
-      gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
+      gimp_ui_manager_ensure_update (manager);
     }
 }
 
@@ -104,7 +104,7 @@ tool_options_menu_update_after (GimpUIManager *manager,
   if (! tool_info->presets)
     return;
 
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id = gimp_ui_manager_new_merge_id (manager);
 
   g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
                      GUINT_TO_POINTER (merge_id));
@@ -125,7 +125,7 @@ tool_options_menu_update_after (GimpUIManager *manager,
                                     "Delete", "delete",
                                     tool_info->presets);
 
-  gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
+  gimp_ui_manager_ensure_update (manager);
 }
 
 static void
@@ -150,10 +150,10 @@ tool_options_menu_update_presets (GimpUIManager *manager,
                                      which_action, i);
       path        = g_strdup_printf ("%s/%s", ui_path, menu_path);
 
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                             path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
+      gimp_ui_manager_add_ui (manager, merge_id,
+                              path, action_name, action_name,
+                              GTK_UI_MANAGER_MENUITEM,
+                              FALSE);
 
       g_free (action_name);
       g_free (path);

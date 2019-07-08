@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -312,6 +312,30 @@ gimp_wire_destroy (GimpWireMessage *msg)
 }
 
 gboolean
+_gimp_wire_read_int64 (GIOChannel *channel,
+                       guint64    *data,
+                       gint        count,
+                       gpointer    user_data)
+{
+  g_return_val_if_fail (count >= 0, FALSE);
+
+  if (count > 0)
+    {
+      if (! _gimp_wire_read_int8 (channel,
+                                  (guint8 *) data, count * 8, user_data))
+        return FALSE;
+
+      while (count--)
+        {
+          *data = GUINT64_FROM_BE (*data);
+          data++;
+        }
+    }
+
+  return TRUE;
+}
+
+gboolean
 _gimp_wire_read_int32 (GIOChannel *channel,
                        guint32    *data,
                        gint        count,
@@ -466,6 +490,31 @@ _gimp_wire_read_color (GIOChannel *channel,
 
   return _gimp_wire_read_double (channel,
                                  (gdouble *) data, 4 * count, user_data);
+}
+
+gboolean
+_gimp_wire_write_int64 (GIOChannel    *channel,
+                        const guint64 *data,
+                        gint           count,
+                        gpointer       user_data)
+{
+  g_return_val_if_fail (count >= 0, FALSE);
+
+  if (count > 0)
+    {
+      gint i;
+
+      for (i = 0; i < count; i++)
+        {
+          guint64 tmp = GUINT64_TO_BE (data[i]);
+
+          if (! _gimp_wire_write_int8 (channel,
+                                       (const guint8 *) &tmp, 8, user_data))
+            return FALSE;
+        }
+    }
+
+  return TRUE;
 }
 
 gboolean

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,7 +47,7 @@ static const GimpToggleActionEntry cursor_info_toggle_actions[] =
   { "cursor-info-sample-merged", NULL,
     NC_("cursor-info-action", "_Sample Merged"), "",
     NC_("cursor-info-action", "Use the composite color of all visible layers"),
-    G_CALLBACK (cursor_info_sample_merged_cmd_callback),
+    cursor_info_sample_merged_cmd_callback,
     TRUE,
     GIMP_HELP_POINTER_INFO_SAMPLE_MERGED }
 };

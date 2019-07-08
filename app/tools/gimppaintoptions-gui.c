@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -114,6 +114,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
+  g_object_set_data (G_OBJECT (vbox),
+                     "gimp-paint-options-gui-paint-mode-box", menu);
+
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
@@ -127,6 +130,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the opacity scale  */
   scale = gimp_prop_spin_scale_new (config, "opacity", NULL,
                                     0.01, 0.1, 0);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
   gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -255,7 +259,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the "incremental" toggle  */
   if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
-      tool_type == GIMP_TYPE_ERASER_TOOL)
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL)
     {
       GtkWidget *button;
 
@@ -284,6 +289,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   return vbox;
+}
+
+GtkWidget *
+gimp_paint_options_gui_get_paint_mode_box (GtkWidget *options_gui)
+{
+  return g_object_get_data (G_OBJECT (options_gui),
+                            "gimp-paint-options-gui-paint-mode-box");
 }
 
 
@@ -514,6 +526,8 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
 
   scale = gimp_prop_spin_scale_new (config, prop_name, NULL,
                                     step_increment, page_increment, digits);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
+
   gimp_prop_widget_set_factor (scale, factor,
                                step_increment, page_increment, digits);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),

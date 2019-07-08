@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -24,12 +24,9 @@
 #include <gegl-plugin.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-
 #include "operations-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimptilehandlervalidate.h"
 
 #include "gimpoperationbuffersourcevalidate.h"
@@ -86,7 +83,7 @@ gimp_operation_buffer_source_validate_class_init (GimpOperationBufferSourceValid
   operation_class->process          = gimp_operation_buffer_source_validate_process;
 
   operation_class->threaded         = FALSE;
-  operation_class->no_cache         = TRUE;
+  operation_class->cache_policy     = GEGL_CACHE_POLICY_NEVER;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:buffer-source-validate",
@@ -239,89 +236,16 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
 
       if (validate_handler)
         {
-          gint n_threads;
+          GeglRectangle rect;
 
-          g_object_get (gegl_config (),
-                        "threads", &n_threads,
-                        NULL);
+          /* align the rectangle to the tile grid */
+          gimp_gegl_rectangle_align_to_tile_grid (
+            &rect, result, buffer_source_validate->buffer);
 
-          /* the main reason to validate the buffer during processing is to
-           * avoid threading issues.  skip validation if not using
-           * multithreading.
-           */
-          if (n_threads > 1)
-            {
-              gint                   shift_x;
-              gint                   shift_y;
-              gint                   tile_width;
-              gint                   tile_height;
-              cairo_rectangle_int_t  rect;
-              cairo_region_overlap_t overlap;
-
-              g_object_get (buffer_source_validate->buffer,
-                            "shift-x",     &shift_x,
-                            "shift-y",     &shift_y,
-                            "tile-width",  &tile_width,
-                            "tile-height", &tile_height,
-                            NULL);
-
-              /* align the rectangle to the tile grid */
-              rect.x      = (gint) floor ((gdouble) (result->x                  + shift_x) / tile_width)  * tile_width;
-              rect.y      = (gint) floor ((gdouble) (result->y                  + shift_y) / tile_height) * tile_height;
-              rect.width  = (gint) ceil  ((gdouble) (result->x + result->width  + shift_x) / tile_width)  * tile_width  - rect.x;
-              rect.height = (gint) ceil  ((gdouble) (result->y + result->height + shift_y) / tile_height) * tile_height - rect.y;
-
-              /* check if the rectangle interescts with the dirty region */
-              overlap = cairo_region_contains_rectangle (validate_handler->dirty_region,
-                                                         &rect);
-
-              if (overlap != CAIRO_REGION_OVERLAP_OUT)
-                {
-                  GeglBufferIterator *iter;
-
-                  /* if the rectangle is not entirely within the dirty
-                   * region ...
-                   */
-                  if (overlap == CAIRO_REGION_OVERLAP_PART)
-                    {
-                      cairo_region_t        *region;
-                      cairo_rectangle_int_t  intersection;
-
-                      /* ... intersect it with region and use the result's
-                       * bounds
-                       */
-                      region = cairo_region_copy (validate_handler->dirty_region);
-
-                      cairo_region_intersect_rectangle (region, &rect);
-                      cairo_region_get_extents (region, &intersection);
-
-                      cairo_region_destroy (region);
-
-                      /* realign the rectangle to the tile grid */
-                      rect.x      = (gint) floor ((gdouble) (intersection.x                      ) / tile_width)  * tile_width;
-                      rect.y      = (gint) floor ((gdouble) (intersection.y                      ) / tile_height) * tile_height;
-                      rect.width  = (gint) ceil  ((gdouble) (intersection.x + intersection.width ) / tile_width)  * tile_width  - rect.x;
-                      rect.height = (gint) ceil  ((gdouble) (intersection.y + intersection.height) / tile_height) * tile_height - rect.y;
-                    }
-
-                  rect.x -= shift_x;
-                  rect.y -= shift_y;
-
-                  /* iterate over the rectangle -- this implicitly causes
-                   * validation
-                   */
-                  iter = gegl_buffer_iterator_new (buffer,
-                                                   GEGL_RECTANGLE (rect.x,
-                                                                   rect.y,
-                                                                   rect.width,
-                                                                   rect.height),
-                                                   level, NULL,
-                                                   GEGL_BUFFER_READ,
-                                                   GEGL_ABYSS_NONE);
-
-                  while (gegl_buffer_iterator_next (iter));
-                }
-            }
+          gimp_tile_handler_validate_validate (validate_handler,
+                                               buffer_source_validate->buffer,
+                                               &rect,
+                                               TRUE);
         }
 
       gegl_operation_context_set_object (context, "output", G_OBJECT (buffer));

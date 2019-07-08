@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -48,6 +48,12 @@
 #define WINVER 0x0500
 #include <windows.h>
 #endif /* G_OS_WIN32 */
+
+#ifdef GDK_WINDOWING_QUARTZ
+// only to get keycode definitions from HIToolbox/Events.h
+#include <Carbon/Carbon.h>
+#include <Cocoa/Cocoa.h>
+#endif /* GDK_WINDOWING_QUARTZ */
 
 void
 gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
@@ -180,7 +186,7 @@ gimp_test_utils_create_image (Gimp *gimp,
   GimpLayer *layer;
 
   image = gimp_image_new (gimp, width, height,
-                          GIMP_RGB, GIMP_PRECISION_U8_GAMMA);
+                          GIMP_RGB, GIMP_PRECISION_U8_NON_LINEAR);
 
   layer = gimp_layer_new (image,
                           width,
@@ -214,72 +220,76 @@ void
 gimp_test_utils_synthesize_key_event (GtkWidget *widget,
                                       guint      keyval)
 {
-#if defined G_OS_WIN32 && ! GTK_CHECK_VERSION (2, 24, 25)
-  /* gdk_test_simulate_key() has no implementation for win32 until
-   * GTK+ 2.24.25.
-   * TODO: remove the below hack when our GTK+ requirement is over 2.24.25. */
-  GdkKeymapKey *keys   = NULL;
-  gint          n_keys = 0;
-  INPUT         ip;
-  gint          i;
+#if defined(GDK_WINDOWING_QUARTZ)
 
-  ip.type = INPUT_KEYBOARD;
-  ip.ki.wScan = 0;
-  ip.ki.time = 0;
-  ip.ki.dwExtraInfo = 0;
-  if (gdk_keymap_get_entries_for_keyval (gdk_keymap_get_default (), keyval, &keys, &n_keys))
-    {
-      for (i = 0; i < n_keys; i++)
-        {
-          ip.ki.dwFlags = 0;
-          /* AltGr press. */
-          if (keys[i].group)
-            {
-              /* According to some virtualbox code I found, AltGr is
-               * simulated on win32 with LCtrl+RAlt */
-              ip.ki.wVk = VK_CONTROL;
-              SendInput(1, &ip, sizeof(INPUT));
-              ip.ki.wVk = VK_MENU;
-              SendInput(1, &ip, sizeof(INPUT));
-            }
-          /* Shift press. */
-          if (keys[i].level)
-            {
-              ip.ki.wVk = VK_SHIFT;
-              SendInput(1, &ip, sizeof(INPUT));
-            }
-          /* Key pressed. */
-          ip.ki.wVk = keys[i].keycode;
-          SendInput(1, &ip, sizeof(INPUT));
+GdkKeymapKey *keys   = NULL;
+gint          n_keys = 0;
+gint          i;
+CGEventRef    keyUp, keyDown;
 
-          ip.ki.dwFlags = KEYEVENTF_KEYUP;
-          /* Key released. */
-          SendInput(1, &ip, sizeof(INPUT));
-          /* Shift release. */
-          if (keys[i].level)
-            {
-              ip.ki.wVk = VK_SHIFT;
-              SendInput(1, &ip, sizeof(INPUT));
-            }
-          /* AltrGr release. */
-          if (keys[i].group)
-            {
-              ip.ki.wVk = VK_MENU;
-              SendInput(1, &ip, sizeof(INPUT));
-              ip.ki.wVk = VK_CONTROL;
-              SendInput(1, &ip, sizeof(INPUT));
-            }
-          /* No need to loop for alternative keycodes. We want only one
-           * key generated. */
-          break;
-        }
-      g_free (keys);
-    }
-  else
-    {
-      g_warning ("%s: no win32 key mapping found for keyval %d.", G_STRFUNC, keyval);
-    }
-#else /* G_OS_WIN32  && ! GTK_CHECK_VERSION (2, 24, 25) */
+if (gdk_keymap_get_entries_for_keyval (gdk_keymap_get_for_display (gdk_display_get_default ()), keyval, &keys, &n_keys))
+  {
+    /* XXX not in use yet */
+    CGEventRef commandDown	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Command, true);
+    CGEventRef commandUp	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Command, false);
+
+    CGEventRef shiftDown	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Shift, true);
+    CGEventRef shiftUp		=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Shift, false);
+
+    CGEventRef optionDown	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Option, true);
+    CGEventRef optionUp		=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Option, false);
+
+    for (i = 0; i < n_keys; i++)
+      {
+        /* Option press. */
+        if (keys[i].group)
+          {
+            CGEventPost (kCGHIDEventTap, optionDown);
+          }
+        /* Shift press. */
+        if (keys[i].level)
+          {
+            CGEventPost(kCGHIDEventTap, shiftDown);
+          }
+        keyDown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keys[i].keycode, true);
+        keyUp = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keys[i].keycode, false);
+        /* Key pressed. */
+        CGEventPost (kCGHIDEventTap, keyDown);
+        CFRelease (keyDown);
+        usleep (100);
+        /* key released */
+        CGEventPost (kCGHIDEventTap, keyUp);
+        CFRelease (keyUp);
+
+        /* Shift release. */
+        if (keys[i].level)
+          {
+            CGEventPost (kCGHIDEventTap, shiftDown);
+          }
+
+        /* Option release. */
+        if (keys[i].group)
+          {
+            CGEventPost (kCGHIDEventTap, optionUp);
+          }
+        /* No need to loop for alternative keycodes. We want only one
+         * key generated. */
+        break;
+      }
+    CFRelease (commandDown);
+    CFRelease (commandUp);
+    CFRelease (shiftDown);
+    CFRelease (shiftUp);
+    CFRelease (optionDown);
+    CFRelease (optionUp);
+    g_free (keys);
+  }
+else
+  {
+    g_warning ("%s: no macOS key mapping found for keyval %d.", G_STRFUNC, keyval);
+  }
+
+#else /* ! GDK_WINDOWING_QUARTZ */
   gdk_test_simulate_key (gtk_widget_get_window (widget),
                          -1, -1, /*x, y*/
                          keyval,
@@ -290,7 +300,7 @@ gimp_test_utils_synthesize_key_event (GtkWidget *widget,
                          keyval,
                          0 /*modifiers*/,
                          GDK_KEY_RELEASE);
-#endif /* G_OS_WIN32  && ! GTK_CHECK_VERSION (2, 24, 25) */
+#endif /* ! GDK_WINDOWING_QUARTZ */
 }
 
 /**

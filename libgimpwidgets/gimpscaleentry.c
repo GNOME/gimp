@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -156,7 +156,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
                                     G_BINDING_BIDIRECTIONAL |
                                     G_BINDING_SYNC_CREATE);
 
-  spinbutton = gtk_spin_button_new (spin_adjustment, step_increment, digits);
+  spinbutton = gimp_spin_button_new (spin_adjustment, step_increment, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_show (spinbutton);
 

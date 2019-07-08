@@ -12,7 +12,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''This module implements the UI items found in the libgimpui library.
 It requires pygtk to work.  These functions take use to callbacks -- one

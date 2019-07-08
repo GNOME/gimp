@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -45,13 +45,13 @@ static const GimpActionEntry buffers_actions[] =
   { "buffers-paste-as-new-image", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as _New Image"), NULL,
     NC_("buffers-action", "Paste the selected buffer as a new image"),
-    G_CALLBACK (buffers_paste_as_new_image_cmd_callback),
+    buffers_paste_as_new_image_cmd_callback,
     GIMP_HELP_BUFFER_PASTE_AS_NEW_IMAGE },
 
   { "buffers-delete", GIMP_ICON_EDIT_DELETE,
     NC_("buffers-action", "_Delete Buffer"), NULL,
     NC_("buffers-action", "Delete the selected buffer"),
-    G_CALLBACK (buffers_delete_cmd_callback),
+    buffers_delete_cmd_callback,
     GIMP_HELP_BUFFER_DELETE }
 };
 
@@ -107,7 +107,7 @@ buffers_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "buffers-action",
                                       buffers_paste_actions,
                                       G_N_ELEMENTS (buffers_paste_actions),
-                                      G_CALLBACK (buffers_paste_cmd_callback));
+                                      buffers_paste_cmd_callback);
 }
 
 void

@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -83,12 +83,12 @@ color_profile_import_dialog_run (GimpImage                 *image,
   if (gimp_image_get_base_type (image) == GIMP_GRAY)
     {
       title       = _("Convert to Grayscale Working Space?");
-      frame_title = _("Convert the image to the grayscale working space?");
+      frame_title = _("Convert the image to the built-in grayscale color profile?");
     }
   else
     {
       title       = _("Convert to RGB Working Space?");
-      frame_title = _("Convert the image to the RGB working space?");
+      frame_title = _("Convert the image to the built-in sRGB color profile?");
     }
 
   dialog =

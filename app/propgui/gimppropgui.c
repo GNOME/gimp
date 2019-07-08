@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -54,6 +54,9 @@
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
+#include "gimppropgui-motion-blur-circular.h"
+#include "gimppropgui-motion-blur-linear.h"
+#include "gimppropgui-motion-blur-zoom.h"
 #include "gimppropgui-panorama-projection.h"
 #include "gimppropgui-recursive-transform.h"
 #include "gimppropgui-shadows-highlights.h"
@@ -211,6 +214,9 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           gtk_widget_show (widget);
 
           dial = gimp_prop_angle_dial_new (config, pspec->name);
+          g_object_set (dial,
+                        "clockwise-angles", HAS_KEY (pspec, "direction", "cw"),
+                        NULL);
           gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
           gtk_widget_show (dial);
 
@@ -242,37 +248,45 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
         {
           gimp_prop_gui_bind_label (widget, widget);
 
-          if (area)
+          if (area &&
+              (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
+               HAS_KEY (pspec, "unit", "pixel-distance")) &&
+              (HAS_KEY (pspec, "axis", "x") ||
+               HAS_KEY (pspec, "axis", "y")))
             {
-              if (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
-                  HAS_KEY (pspec, "unit", "pixel-distance"))
-                {
-                  gint off_x = 0;
-                  gint off_y = 0;
+              gdouble min = lower;
+              gdouble max = upper;
 
-                  if (HAS_KEY (pspec, "unit", "pixel-coordinate"))
-                    {
-                      off_x = area->x;
-                      off_y = area->y;
-                    }
+              if (HAS_KEY (pspec, "unit", "pixel-coordinate"))
+                {
+                  /* limit pixel coordinate scales to the actual area */
+
+                  gint off_x = area->x;
+                  gint off_y = area->y;
 
                   if (HAS_KEY (pspec, "axis", "x"))
                     {
-                      gdouble min = MAX (lower, off_x);
-                      gdouble max = MIN (upper, off_x + area->width);
-
-                      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                        min, max);
+                      min = MAX (lower, off_x);
+                      max = MIN (upper, off_x + area->width);
                     }
                   else if (HAS_KEY (pspec, "axis","y"))
                     {
-                      gdouble min = MAX (lower, off_y);
-                      gdouble max = MIN (upper, off_y + area->height);
-
-                      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                        min, max);
+                      min = MAX (lower, off_y);
+                      max = MIN (upper, off_y + area->height);
                     }
                 }
+              else if (HAS_KEY (pspec, "unit", "pixel-distance"))
+                {
+                  /* limit pixel distance scales to the same value on the
+                   * x and y axes, so linked values have the same range,
+                   * we use MAX (width, height), see issue #2540
+                   */
+
+                  max = MIN (upper, MAX (area->width, area->height));
+                }
+
+              gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
+                                                min, max);
             }
         }
     }
@@ -452,6 +466,12 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-motion-blur-circular-config",
+    _gimp_prop_gui_new_motion_blur_circular },
+  { "GimpGegl-gegl-motion-blur-linear-config",
+    _gimp_prop_gui_new_motion_blur_linear },
+  { "GimpGegl-gegl-motion-blur-zoom-config",
+    _gimp_prop_gui_new_motion_blur_zoom },
   { "GimpGegl-gegl-panorama-projection-config",
     _gimp_prop_gui_new_panorama_projection },
   { "GimpGegl-gegl-recursive-transform-config",

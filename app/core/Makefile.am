@@ -8,6 +8,7 @@ endif
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"			\
+	-DGIMP_VERSION=\"$(GIMP_VERSION)\"		\
 	-DGIMP_APP_VERSION=\"$(GIMP_APP_VERSION)\"	\
 	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"	\
 	-DG_LOG_DOMAIN=\"Gimp-Core\"			\
@@ -22,6 +23,7 @@ AM_CPPFLAGS = \
 	$(LIBMYPAINT_CFLAGS)				\
 	$(MYPAINT_BRUSHES_CFLAGS)			\
 	$(GEXIV2_CFLAGS)				\
+	$(LIBUNWIND_CFLAGS)				\
 	-I$(includedir)
 
 AM_CFLAGS = \
@@ -90,6 +92,15 @@ libappcore_a_sources = \
 	gimpasync.h				\
 	gimpasyncset.c				\
 	gimpasyncset.h				\
+	gimpauxitem.c				\
+	gimpauxitem.h				\
+	gimpauxitemundo.c			\
+	gimpauxitemundo.h			\
+	gimpbacktrace.h				\
+	gimpbacktrace-backend.h			\
+	gimpbacktrace-linux.c			\
+	gimpbacktrace-none.c			\
+	gimpbacktrace-windows.c			\
 	gimpbezierdesc.h			\
 	gimpbezierdesc.c			\
 	gimpboundary.c				\
@@ -102,6 +113,8 @@ libappcore_a_sources = \
 	gimpbrush-load.c			\
 	gimpbrush-load.h			\
 	gimpbrush-private.h			\
+	gimpbrush-save.c			\
+	gimpbrush-save.h			\
 	gimpbrush-transform.cc			\
 	gimpbrush-transform.h			\
 	gimpbrushcache.c			\
@@ -118,6 +131,8 @@ libappcore_a_sources = \
 	gimpbrushpipe.h				\
 	gimpbrushpipe-load.c			\
 	gimpbrushpipe-load.h			\
+	gimpbrushpipe-save.c			\
+	gimpbrushpipe-save.h			\
 	gimpbuffer.c				\
 	gimpbuffer.h				\
 	gimpcancelable.c			\
@@ -132,6 +147,8 @@ libappcore_a_sources = \
 	gimpchannelpropundo.h			\
 	gimpchannelundo.c			\
 	gimpchannelundo.h			\
+	gimpchunkiterator.c			\
+	gimpchunkiterator.h			\
 	gimpcontainer.c				\
 	gimpcontainer.h				\
 	gimpcontainer-filter.c			\
@@ -201,6 +218,8 @@ libappcore_a_sources = \
 	gimpdrawablefilter.h			\
 	gimpdrawablemodundo.c			\
 	gimpdrawablemodundo.h			\
+	gimpdrawablepropundo.c			\
+	gimpdrawablepropundo.h			\
 	gimpdrawablestack.c			\
 	gimpdrawablestack.h			\
 	gimpdrawableundo.c			\
@@ -271,8 +290,6 @@ libappcore_a_sources = \
 	gimpimage-crop.h			\
 	gimpimage-duplicate.c			\
 	gimpimage-duplicate.h			\
-	gimpimage-fade.c			\
-	gimpimage-fade.h			\
 	gimpimage-flip.c			\
 	gimpimage-flip.h			\
 	gimpimage-grid.h                	\
@@ -350,6 +367,8 @@ libappcore_a_sources = \
 	gimplayerstack.h			\
 	gimplayerundo.c				\
 	gimplayerundo.h				\
+	gimplineart.c				\
+	gimplineart.h				\
 	gimplist.c				\
 	gimplist.h				\
 	gimpmaskundo.c				\
@@ -370,6 +389,8 @@ libappcore_a_sources = \
 	gimppattern-header.h			\
 	gimppattern-load.c			\
 	gimppattern-load.h			\
+	gimppattern-save.c			\
+	gimppattern-save.h			\
 	gimppatternclipboard.c			\
 	gimppatternclipboard.h			\
 	gimppalette.c				\
@@ -396,7 +417,7 @@ libappcore_a_sources = \
 	gimppickable.h				\
 	gimppickable-auto-shrink.c		\
 	gimppickable-auto-shrink.h		\
-	gimppickable-contiguous-region.c	\
+	gimppickable-contiguous-region.cc	\
 	gimppickable-contiguous-region.h	\
 	gimpprogress.c				\
 	gimpprogress.h				\
@@ -479,6 +500,9 @@ libappcore_a_extra_sources = \
 
 libappcore_a_SOURCES = $(libappcore_a_built_sources) $(libappcore_a_sources)
 
+BUILT_SOURCES = \
+	$(libappcore_a_built_sources)
+
 EXTRA_DIST = \
 	$(libappcore_a_extra_sources)
 
@@ -530,11 +554,11 @@ $(srcdir)/core-enums.c: xgen-cec
 	fi
 
 gimp-core-pixbufs.h: $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/icons/Color --generate-header \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
 
 gimp-core-pixbufs.c: gimp-core-pixbufs.h
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/icons/Color --generate-source \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml

@@ -11,8 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-02-06 02:41+0000\n"
 "PO-Revision-Date: 2018-02-13 12:50+0200\n"
 "Last-Translator: Pilar Embid Giner <embid_mar@gva.es>\n"
@@ -183,13 +182,13 @@ msgid ""
 "\n"
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP. If not, see: http://www.gnu.org/licenses/"
+"You should have received a copy of the GNU General Public License along with GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "El GIMP és programari lliure; podeu distribuir-lo i/o modificar-lo sota els termes de la llicència GNU General Public License tal com està publicada per la Free Software Foundation; ja siga la versió 3 de la llicència, o bé (si ho preferiu) qualsevol versió posterior.\n"
 "\n"
 "El GIMP es distribueix amb la voluntat què puga ser útil, però SENSE CAP GARANTIA, ni tan sols les garanties implícites MERCANTILS o ESPECÍFIQUES PER A UN PROPÒSIT DETERMINAT. Si voleu més informació, vegeu la llicència GNU General Public License.\n"
 "\n"
-"Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu <http://www.gnu.org/licenses/licenses.ca.html>."
+"Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu <https://www.gnu.org/licenses/licenses.ca.html>."
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format
@@ -4391,7 +4390,7 @@ msgid "_Dilate"
 msgstr "_Dilata"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Eixampla les àrees més clares de la imatge"
 
@@ -4401,7 +4400,7 @@ msgid "_Erode"
 msgstr "_Erosiona"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Eixampla les àrees més fosques de la imatge"
 
@@ -9253,17 +9252,17 @@ msgid "Toggle fullscreen view"
 msgstr "Commuta la vista en pantalla completa"
 
 #: ../app/actions/view-actions.c:315
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Defineix un factor de zoom"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Redueix al màxim possible"
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Amplia al màxim possible"
 
@@ -9298,12 +9297,12 @@ msgid "Zoom In"
 msgstr "Amplia"
 
 #: ../app/actions/view-actions.c:354
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Redueix molt"
 
 #: ../app/actions/view-actions.c:359
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Amplia molt"
 

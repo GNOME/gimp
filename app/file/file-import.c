@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -73,7 +73,7 @@ file_import_image (GimpImage    *image,
                                             progress);
 
               if (config->import_promote_dither &&
-                  old_precision == GIMP_PRECISION_U8_GAMMA)
+                  old_precision == GIMP_PRECISION_U8_NON_LINEAR)
                 {
                   gimp_image_convert_dither_u8 (image, progress);
                 }

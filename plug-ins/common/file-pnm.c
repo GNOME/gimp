@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
@@ -661,16 +661,16 @@ load_image (GFile   *file,
                        pnminfo->jmpbuf, _("Unsupported maximum value."));
       if (pnminfo->maxval < 256)
         {
-          precision = GIMP_PRECISION_U8_GAMMA;
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
         }
       else
         {
-          precision = GIMP_PRECISION_U16_GAMMA;
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
         }
     }
   else
     {
-      precision = GIMP_PRECISION_U8_GAMMA;
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
     }
 
   /* Create a new image of the proper size and associate the filename
@@ -1020,7 +1020,10 @@ pnm_load_rawpfm (PNMScanner *scan,
            * little vague about what the scale factor should be used
            * for */
           data[x] *= fabsf (info->scale_factor);
-          data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x]));
+          /* Keep values smaller than zero. That is in line with what the
+           * TIFF loader does. If the user doesn't want the negative numbers
+           * he has to get rid of them afterwards */
+          /* data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x])); */
         }
 
         gegl_buffer_set (buffer,
@@ -1263,7 +1266,8 @@ save_image (GFile     *file,
   switch (gimp_image_get_precision (image_ID))
     {
     case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_GAMMA:
+    case GIMP_PRECISION_U8_NON_LINEAR:
+    case GIMP_PRECISION_U8_PERCEPTUAL:
       rowinfo.bpc = 1;
       break;
     default:
@@ -1582,6 +1586,15 @@ save_image (GFile     *file,
   status = TRUE;
 
  out:
+  if (! status)
+    {
+      GCancellable  *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+    }
+
   if (comment)
     g_free (comment);
   if (buffer)

@@ -53,16 +53,16 @@
       GIMP è disponibile per Linux, Windows e OS X.
   </description>
 
-  <homepage rdf:resource="http://www.gimp.org" />
+  <homepage rdf:resource="https://www.gimp.org" />
 
-  <mailing-list rdf:resource="http://gimp.org/mail_lists.html" />
+  <mailing-list rdf:resource="https://gimp.org/mail_lists.html" />
 
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
 
-  <download-page rdf:resource="http:///www.gimp.org/downloads/" />
+  <download-page rdf:resource="https:///www.gimp.org/downloads/" />
 
   <bug-database
-    rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=GIMP"
+    rdf:resource="https://gitlab.gnome.org/GNOME/gimp/issues"
   />
 
   <programming-language>C</programming-language>

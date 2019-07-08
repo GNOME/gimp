@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -276,27 +276,22 @@ static void
 gimp_prop_gui_chain_toggled (GimpChainButton *chain,
                              GtkAdjustment   *x_adj)
 {
+  GBinding      *binding;
   GtkAdjustment *y_adj;
 
-  y_adj = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
+  binding = g_object_get_data (G_OBJECT (chain), "binding");
+  y_adj   = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
 
   if (gimp_chain_button_get_active (chain))
     {
-      GBinding *binding;
-
-      binding = g_object_bind_property (x_adj, "value",
-                                        y_adj, "value",
-                                        G_BINDING_BIDIRECTIONAL);
-
-      g_object_set_data (G_OBJECT (chain), "binding", binding);
+      if (! binding)
+        binding = g_object_bind_property (x_adj, "value",
+                                          y_adj, "value",
+                                          G_BINDING_BIDIRECTIONAL);
     }
   else
     {
-      GBinding *binding;
-
-      binding = g_object_get_data (G_OBJECT (chain), "binding");
-
-      g_object_unref (binding);
-      g_object_set_data (G_OBJECT (chain), "binding", NULL);
+      g_clear_object (&binding);
     }
+  g_object_set_data (G_OBJECT (chain), "binding", binding);
 }

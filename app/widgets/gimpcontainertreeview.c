@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -140,6 +140,7 @@ static void          gimp_container_tree_view_monitor_changed     (GimpContainer
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
+                         G_ADD_PRIVATE (GimpContainerTreeView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_container_tree_view_view_iface_init))
 
@@ -186,8 +187,6 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   gtk_binding_entry_add_signal (binding_set, GDK_KEY_F2, 0,
                                 "edit-name", 0);
-
-  g_type_class_add_private (klass, sizeof (GimpContainerTreeViewPriv));
 }
 
 static void
@@ -219,9 +218,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 {
   GimpContainerBox *box = GIMP_CONTAINER_BOX (tree_view);
 
-  tree_view->priv = G_TYPE_INSTANCE_GET_PRIVATE (tree_view,
-                                                 GIMP_TYPE_CONTAINER_TREE_VIEW,
-                                                 GimpContainerTreeViewPriv);
+  tree_view->priv = gimp_container_tree_view_get_instance_private (tree_view);
 
   gimp_container_tree_store_columns_init (tree_view->model_columns,
                                           &tree_view->n_model_columns);
@@ -922,14 +919,20 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
-  /* GTK+ 3.x always keeps the row with the cursor selected, so we get
-   * a gazillion selection changed during gtk_tree_store_clear()
-   */
   g_signal_handlers_block_by_func (tree_view->priv->selection,
                                    gimp_container_tree_view_selection_changed,
                                    tree_view);
 
+  /* temporarily unset the tree-view's model, so that name editing is stopped
+   * now, before clearing the tree store.  otherwise, name editing would stop
+   * when the corresponding item is removed from the store, leading us to
+   * rename the wrong item.  see issue #3284.
+   */
+  gtk_tree_view_set_model (tree_view->view, NULL);
+
   gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (tree_view->model));
+
+  gtk_tree_view_set_model (tree_view->view, tree_view->model);
 
   g_signal_handlers_unblock_by_func (tree_view->priv->selection,
                                      gimp_container_tree_view_selection_changed,
@@ -959,8 +962,8 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
   for (list = tree_view->priv->toggle_cells; list; list = g_list_next (list))
     {
-      gchar       *icon_name;
-      GtkIconSize  icon_size;
+      gchar *icon_name;
+      gint   icon_size;
 
       g_object_get (list->data, "icon-name", &icon_name, NULL);
 
@@ -974,15 +977,10 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
           gtk_style_context_get_border (style, 0, &border);
           gtk_style_context_restore (style);
 
-          icon_size = gimp_get_icon_size (tree_widget,
-                                          icon_name,
-                                          GTK_ICON_SIZE_BUTTON,
-                                          view_size -
-                                          (border.left + border.right),
-                                          view_size -
-                                          (border.top + border.bottom));
-
-          g_object_set (list->data, "stock-size", icon_size, NULL);
+          g_object_get (list->data, "icon-size", &icon_size, NULL);
+          icon_size = MIN (icon_size, MAX (view_size - (border.left + border.right),
+                                           view_size - (border.top + border.bottom)));
+          g_object_set (list->data, "icon-size", icon_size, NULL);
 
           g_free (icon_name);
         }

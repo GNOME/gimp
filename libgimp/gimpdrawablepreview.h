@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
@@ -70,6 +70,7 @@ GType          gimp_drawable_preview_get_type             (void) G_GNUC_CONST;
 GtkWidget    * gimp_drawable_preview_new_from_drawable_id (gint32               drawable_ID);
 gint32         gimp_drawable_preview_get_drawable_id      (GimpDrawablePreview *preview);
 
+GIMP_DEPRECATED_FOR(gimp_preview_draw_buffer)
 void           gimp_drawable_preview_draw_region          (GimpDrawablePreview *preview,
                                                            const GimpPixelRgn  *region);
 

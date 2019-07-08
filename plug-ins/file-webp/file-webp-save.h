@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __WEBP_SAVE_H__
@@ -36,6 +36,7 @@ typedef struct
   gboolean   exif;
   gboolean   iptc;
   gboolean   xmp;
+  gboolean   profile;
   gint       delay;
   gboolean   force_delay;
 } WebPSaveParams;

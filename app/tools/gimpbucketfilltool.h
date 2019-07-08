@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef  __GIMP_BUCKET_FILL_TOOL_H__
 #define  __GIMP_BUCKET_FILL_TOOL_H__
 
 
-#include "gimptool.h"
+#include "gimpcolortool.h"
 
 
 #define GIMP_TYPE_BUCKET_FILL_TOOL            (gimp_bucket_fill_tool_get_type ())
@@ -34,15 +34,18 @@
 
 typedef struct _GimpBucketFillTool      GimpBucketFillTool;
 typedef struct _GimpBucketFillToolClass GimpBucketFillToolClass;
+typedef struct _GimpBucketFillToolPrivate GimpBucketFillToolPrivate;
 
 struct _GimpBucketFillTool
 {
-  GimpTool  parent_instance;
+  GimpColorTool              parent_instance;
+
+  GimpBucketFillToolPrivate *priv;
 };
 
 struct _GimpBucketFillToolClass
 {
-  GimpToolClass  parent_class;
+  GimpColorToolClass  parent_class;
 };
 
 

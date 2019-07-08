@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -138,10 +138,22 @@ gimp_tags_user_install (void)
   else if (! g_output_stream_write_all (output,
                                         tags_installer.buf->str,
                                         tags_installer.buf->len,
-                                        NULL, NULL, &error) ||
-           ! g_output_stream_close (output, NULL, &error))
+                                        NULL, NULL, &error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       g_printerr (_("Error writing '%s': %s"),
+                  gimp_file_get_utf8_name (file), error->message);
+      result = FALSE;
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+    }
+  else if (! g_output_stream_close (output, NULL, &error))
+    {
+      g_printerr (_("Error closing '%s': %s"),
                   gimp_file_get_utf8_name (file), error->message);
       result = FALSE;
     }

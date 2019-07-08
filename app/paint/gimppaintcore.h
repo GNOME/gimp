@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PAINT_CORE_H__
@@ -58,7 +58,6 @@ struct _GimpPaintCore
   GeglBuffer  *undo_buffer;       /*  pixels which have been modified     */
   GeglBuffer  *saved_proj_buffer; /*  proj tiles which have been modified */
   GeglBuffer  *canvas_buffer;     /*  the buffer to paint the mask to     */
-  GeglBuffer  *comp_buffer;       /*  scratch buffer used when masking components */
   GeglBuffer  *paint_buffer;      /*  the buffer to paint pixels to       */
   gint         paint_buffer_x;
   gint         paint_buffer_y;
@@ -160,7 +159,9 @@ void      gimp_paint_core_get_last_coords           (GimpPaintCore    *core,
 void      gimp_paint_core_round_line                (GimpPaintCore    *core,
                                                      GimpPaintOptions *options,
                                                      gboolean          constrain_15_degrees,
-                                                     gdouble           constrain_offset_angle);
+                                                     gdouble           constrain_offset_angle,
+                                                     gdouble           constrain_xres,
+                                                     gdouble           constrain_yres);
 
 
 /*  protected functions  */

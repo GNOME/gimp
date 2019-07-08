@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -97,7 +97,8 @@ static void        gimp_dialog_factory_hide                 (GimpDialogFactory  
 static void        gimp_dialog_factory_show                 (GimpDialogFactory      *factory);
 
 
-G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDialogFactory, gimp_dialog_factory,
+                            GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_dialog_factory_parent_class
 
@@ -139,16 +140,12 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK_WINDOW);
-
-  g_type_class_add_private (klass, sizeof (GimpDialogFactoryPrivate));
 }
 
 static void
 gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
-  factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                            GIMP_TYPE_DIALOG_FACTORY,
-                                            GimpDialogFactoryPrivate);
+  factory->p = gimp_dialog_factory_get_instance_private (factory);
   factory->p->dialog_state = GIMP_DIALOGS_SHOWN;
 }
 
@@ -487,7 +484,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       GtkWidget *dockbook    = NULL;
       GtkWidget *dock_window = NULL;
 
-      /* What follows is special-case code for some entires. At some
+      /* What follows is special-case code for some entries. At some
        * point we might want to abstract this block of code away.
        */
       if (create_containers)
@@ -1063,6 +1060,62 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   gimp_dialog_factory_add_dialog (factory, dialog, monitor);
 }
 
+/**
+ * gimp_dialog_factory_position_dialog:
+ * @factory:
+ * @identifier:
+ * @dialog:
+ * @monitor:
+ *
+ * We correctly position all newly created dialog via
+ * gimp_dialog_factory_add_dialog(), but some dialogs (like various
+ * color dialogs) are never destroyed but created only once per
+ * session. On re-showing, whatever window managing magic kicks in and
+ * the dialog sometimes goes where it shouldn't.
+ *
+ * This function correctly positions a dialog on re-showing so it
+ * appears where it was before it was hidden.
+ *
+ * See https://gitlab.gnome.org/GNOME/gimp/issues/1093
+ **/
+void
+gimp_dialog_factory_position_dialog (GimpDialogFactory *factory,
+                                     const gchar       *identifier,
+                                     GtkWidget         *dialog,
+                                     GdkMonitor        *monitor)
+{
+  GimpSessionInfo *info;
+  GimpGuiConfig   *gui_config;
+
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (identifier != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+  g_return_if_fail (gtk_widget_is_toplevel (dialog));
+  g_return_if_fail (GDK_IS_MONITOR (monitor));
+
+  info = gimp_dialog_factory_find_session_info (factory, identifier);
+
+  if (! info)
+    {
+      g_warning ("%s: no session info found for \"%s\"",
+                 G_STRFUNC, identifier);
+      return;
+    }
+
+  if (gimp_session_info_get_widget (info) != dialog)
+    {
+      g_warning ("%s: session info for \"%s\" is for a different widget",
+                 G_STRFUNC, identifier);
+      return;
+    }
+
+  gui_config = GIMP_GUI_CONFIG (factory->p->context->gimp->config);
+
+  gimp_session_info_apply_geometry (info,
+                                    monitor,
+                                    gui_config->restore_monitor);
+}
+
 void
 gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                    GtkWidget         *dialog)
@@ -1556,9 +1609,7 @@ gimp_dialog_factory_show (GimpDialogFactory *factory)
 void
 gimp_dialog_factory_set_busy (GimpDialogFactory *factory)
 {
-  GdkDisplay *display = NULL;
-  GdkCursor  *cursor  = NULL;
-  GList      *list;
+  GList *list;
 
   if (! factory)
     return;
@@ -1569,27 +1620,20 @@ gimp_dialog_factory_set_busy (GimpDialogFactory *factory)
 
       if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
-          if (!display || display != gtk_widget_get_display (widget))
+          GdkWindow *window = gtk_widget_get_window (widget);
+
+          if (window)
             {
-              display = gtk_widget_get_display (widget);
-
-              if (cursor)
-                g_object_unref (cursor);
-
-              cursor = gimp_cursor_new (display,
-                                        GIMP_HANDEDNESS_RIGHT,
-                                        (GimpCursorType) GDK_WATCH,
-                                        GIMP_TOOL_CURSOR_NONE,
-                                        GIMP_CURSOR_MODIFIER_NONE);
+              GdkCursor *cursor = gimp_cursor_new (window,
+                                                   GIMP_HANDEDNESS_RIGHT,
+                                                   (GimpCursorType) GDK_WATCH,
+                                                   GIMP_TOOL_CURSOR_NONE,
+                                                   GIMP_CURSOR_MODIFIER_NONE);
+              gdk_window_set_cursor (window, cursor);
+              g_object_unref (cursor);
             }
-
-          if (gtk_widget_get_window (widget))
-            gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
         }
     }
-
-  if (cursor)
-    g_object_unref (cursor);
 }
 
 void
@@ -1606,8 +1650,10 @@ gimp_dialog_factory_unset_busy (GimpDialogFactory *factory)
 
       if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
-          if (gtk_widget_get_window (widget))
-            gdk_window_set_cursor (gtk_widget_get_window (widget), NULL);
+          GdkWindow *window = gtk_widget_get_window (widget);
+
+          if (window)
+            gdk_window_set_cursor (window, NULL);
         }
     }
 }

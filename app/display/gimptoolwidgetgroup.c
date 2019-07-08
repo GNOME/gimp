@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -123,6 +123,9 @@ static void             gimp_tool_widget_group_child_status_coords (GimpToolWidg
                                                                     gdouble                y,
                                                                     const gchar           *help,
                                                                     GimpToolWidgetGroup   *group);
+static void             gimp_tool_widget_group_child_message       (GimpToolWidget        *child,
+                                                                    const gchar           *message,
+                                                                    GimpToolWidgetGroup   *group);
 static void             gimp_tool_widget_group_child_focus_changed (GimpToolWidget        *child,
                                                                     GimpToolWidgetGroup   *group);
 
@@ -133,7 +136,8 @@ static GimpToolWidget * gimp_tool_widget_group_get_hover_widget    (GimpToolWidg
                                                                     GimpHit               *hit);
 
 
-G_DEFINE_TYPE (GimpToolWidgetGroup, gimp_tool_widget_group, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolWidgetGroup, gimp_tool_widget_group,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_widget_group_parent_class
 
@@ -161,8 +165,6 @@ gimp_tool_widget_group_class_init (GimpToolWidgetGroupClass *klass)
   widget_class->motion_modifier = gimp_tool_widget_group_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_widget_group_hover_modifier;
   widget_class->get_cursor      = gimp_tool_widget_group_get_cursor;
-
-  g_type_class_add_private (klass, sizeof (GimpToolWidgetGroupPrivate));
 }
 
 static void
@@ -170,9 +172,7 @@ gimp_tool_widget_group_init (GimpToolWidgetGroup *group)
 {
   GimpToolWidgetGroupPrivate *priv;
 
-  priv = group->priv = G_TYPE_INSTANCE_GET_PRIVATE (group,
-                                                    GIMP_TYPE_TOOL_WIDGET_GROUP,
-                                                    GimpToolWidgetGroupPrivate);
+  priv = group->priv = gimp_tool_widget_group_get_instance_private (group);
 
   priv->children = g_object_new (GIMP_TYPE_LIST,
                                  "children-type", GIMP_TYPE_TOOL_WIDGET,
@@ -204,6 +204,9 @@ gimp_tool_widget_group_init (GimpToolWidgetGroup *group)
   gimp_container_add_handler (priv->children, "status-coords",
                               G_CALLBACK (gimp_tool_widget_group_child_status_coords),
                               group);
+  gimp_container_add_handler (priv->children, "message",
+                              G_CALLBACK (gimp_tool_widget_group_child_message),
+                              group);
   gimp_container_add_handler (priv->children, "focus-changed",
                               G_CALLBACK (gimp_tool_widget_group_child_focus_changed),
                               group);
@@ -229,6 +232,8 @@ gimp_tool_widget_group_button_press (GimpToolWidget      *widget,
 {
   GimpToolWidgetGroup        *group = GIMP_TOOL_WIDGET_GROUP (widget);
   GimpToolWidgetGroupPrivate *priv  = group->priv;
+
+  gimp_tool_widget_group_hover (widget, coords, state, TRUE);
 
   if (priv->focus_widget != priv->hover_widget)
     {
@@ -448,6 +453,13 @@ gimp_tool_widget_group_children_add (GimpContainer       *container,
   gimp_canvas_group_add_item (canvas_group,
                               gimp_tool_widget_get_item (child));
 
+  if (gimp_tool_widget_get_focus (child) && priv->focus_widget)
+    {
+      gimp_tool_widget_set_focus (priv->focus_widget, FALSE);
+
+      priv->focus_widget = NULL;
+    }
+
   if (! priv->focus_widget)
     {
       priv->focus_widget = child;
@@ -481,6 +493,15 @@ gimp_tool_widget_group_children_remove (GimpContainer       *container,
       gimp_tool_widget_leave_notify (child);
 
       priv->hover_widget = NULL;
+    }
+
+  if (! priv->focus_widget)
+    {
+      priv->focus_widget =
+        GIMP_TOOL_WIDGET (gimp_container_get_last_child (container));
+
+      if (priv->focus_widget)
+        gimp_tool_widget_set_focus (priv->focus_widget, TRUE);
     }
 
   gimp_canvas_group_remove_item (canvas_group,
@@ -579,6 +600,18 @@ gimp_tool_widget_group_child_status_coords (GimpToolWidget      *child,
 
   if (priv->hover_widget == child)
     gimp_tool_widget_set_status_coords (widget, title, x, separator, y, help);
+}
+
+static void
+gimp_tool_widget_group_child_message (GimpToolWidget      *child,
+                                      const gchar         *message,
+                                      GimpToolWidgetGroup *group)
+{
+  GimpToolWidgetGroupPrivate *priv   = group->priv;
+  GimpToolWidget             *widget = GIMP_TOOL_WIDGET (group);
+
+  if (priv->focus_widget == child)
+    gimp_tool_widget_message_literal (widget, message);
 }
 
 static void

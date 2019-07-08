@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -36,6 +36,8 @@
 #include "vectors/gimpvectors.h"
 
 #include "widgets/gimpwidgets-utils.h"
+
+#include "tools/gimptools-utils.h"
 
 #include "gimpcanvashandle.h"
 #include "gimpcanvasitem-utils.h"
@@ -198,7 +200,7 @@ static void     gimp_tool_path_delete_selected_anchors
                                                (GimpToolPath          *path);
 
 
-G_DEFINE_TYPE (GimpToolPath, gimp_tool_path, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPath, gimp_tool_path, GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_path_parent_class
 
@@ -278,16 +280,12 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolPathPrivate));
 }
 
 static void
 gimp_tool_path_init (GimpToolPath *path)
 {
-  path->private = G_TYPE_INSTANCE_GET_PRIVATE (path,
-                                               GIMP_TYPE_TOOL_PATH,
-                                               GimpToolPathPrivate);
+  path->private = gimp_tool_path_get_instance_private (path);
 }
 
 static void
@@ -496,12 +494,18 @@ static gboolean
 gimp_tool_path_check_writable (GimpToolPath *path)
 {
   GimpToolPathPrivate *private = path->private;
+  GimpToolWidget      *widget  = GIMP_TOOL_WIDGET (path);
+  GimpDisplayShell    *shell   = gimp_tool_widget_get_shell (widget);
 
   if (gimp_item_is_content_locked (GIMP_ITEM (private->vectors)) ||
       gimp_item_is_position_locked (GIMP_ITEM (private->vectors)))
     {
-      gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (path),
-                                   _("The active path is locked."));
+      gimp_tool_widget_message_literal (GIMP_TOOL_WIDGET (path),
+                                        _("The active path is locked."));
+
+      /* FIXME: this should really be done by the tool */
+      gimp_tools_blink_lock_box (shell->display->gimp,
+                                 GIMP_ITEM (private->vectors));
 
       private->function = VECTORS_FINISHED;
 

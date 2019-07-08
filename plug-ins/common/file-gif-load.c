@@ -366,6 +366,7 @@ load_image (const gchar  *filename,
   if (! ReadOK (fd, buf, 6))
     {
       g_message ("Error reading magic number");
+      fclose (fd);
       return -1;
     }
 
@@ -373,6 +374,7 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", _("This is not a GIF file"));
+      fclose (fd);
       return -1;
     }
 
@@ -382,12 +384,14 @@ load_image (const gchar  *filename,
   if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
     {
       g_message ("Bad version number, not '87a' or '89a'");
+      fclose (fd);
       return -1;
     }
 
   if (! ReadOK (fd, buf, 7))
     {
       g_message ("Failed to read screen descriptor");
+      fclose (fd);
       return -1;
     }
 
@@ -405,6 +409,7 @@ load_image (const gchar  *filename,
                           &GifScreen.GrayScale))
         {
           g_message ("Error reading global colormap");
+          fclose (fd);
           return -1;
         }
     }
@@ -422,12 +427,14 @@ load_image (const gchar  *filename,
       if (! ReadOK (fd, &c, 1))
         {
           g_message ("EOF / read error on image data");
+          fclose (fd);
           return image_ID; /* will be -1 if failed on first image! */
         }
 
       if (c == ';')
         {
           /* GIF terminator */
+          fclose (fd);
           return image_ID;
         }
 
@@ -437,6 +444,7 @@ load_image (const gchar  *filename,
           if (! ReadOK (fd, &c, 1))
             {
               g_message ("EOF / read error on extension function code");
+              fclose (fd);
               return image_ID; /* will be -1 if failed on first image! */
             }
 
@@ -456,6 +464,7 @@ load_image (const gchar  *filename,
       if (! ReadOK (fd, buf, 9))
         {
           g_message ("Couldn't read left/top/width/height");
+          fclose (fd);
           return image_ID; /* will be -1 if failed on first image! */
         }
 
@@ -468,6 +477,7 @@ load_image (const gchar  *filename,
           if (! ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
             {
               g_message ("Error reading local colormap");
+              fclose (fd);
               return image_ID; /* will be -1 if failed on first image! */
             }
 
@@ -514,6 +524,8 @@ load_image (const gchar  *filename,
       if (thumbnail)
         break;
     }
+
+  fclose (fd);
 
   return image_ID;
 }
@@ -1120,7 +1132,8 @@ ReadImage (FILE        *fd,
       /* I don't see how one would easily construct a GIF in which
          this could happen, but it's a mad mad world. */
       g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
-                 "Please file a bug report in GIMP's bugzilla.");
+                 "Please file a bug report at "
+                 "https://gitlab.gnome.org/GNOME/gimp/issues");
       gimp_quit ();
     }
 

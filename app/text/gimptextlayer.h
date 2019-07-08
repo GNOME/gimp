@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TEXT_LAYER_H__
@@ -33,7 +33,8 @@
 #define GIMP_TEXT_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEXT_LAYER, GimpTextLayerClass))
 
 
-typedef struct _GimpTextLayerClass GimpTextLayerClass;
+typedef struct _GimpTextLayerClass   GimpTextLayerClass;
+typedef struct _GimpTextLayerPrivate GimpTextLayerPrivate;
 
 struct _GimpTextLayer
 {
@@ -48,6 +49,8 @@ struct _GimpTextLayer
   gboolean      modified;
 
   const Babl   *convert_format;
+
+  GimpTextLayerPrivate *private;
 };
 
 struct _GimpTextLayerClass

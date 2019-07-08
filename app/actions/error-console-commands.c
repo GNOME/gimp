@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -46,8 +46,9 @@ static void   error_console_save_response (GtkWidget        *dialog,
 /*  public functions  */
 
 void
-error_console_clear_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+error_console_clear_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   GtkTextIter       start_iter;
@@ -58,8 +59,9 @@ error_console_clear_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_select_all_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+error_console_select_all_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   GtkTextIter       start_iter;
@@ -70,14 +72,16 @@ error_console_select_all_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_save_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+error_console_save_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  GimpErrorConsole *console   = GIMP_ERROR_CONSOLE (data);
+  gboolean          selection = (gboolean) g_variant_get_int32 (value);
 
-  if (value && ! gtk_text_buffer_get_selection_bounds (console->text_buffer,
-                                                       NULL, NULL))
+  if (selection &&
+      ! gtk_text_buffer_get_selection_bounds (console->text_buffer,
+                                              NULL, NULL))
     {
       gimp_message_literal (console->gimp,
                             G_OBJECT (console), GIMP_MESSAGE_WARNING,
@@ -104,7 +108,7 @@ error_console_save_cmd_callback (GtkAction *action,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
 
-      console->save_selection = value;
+      console->save_selection = selection;
 
       g_object_add_weak_pointer (G_OBJECT (dialog),
                                  (gpointer) &console->file_dialog);
@@ -132,37 +136,34 @@ error_console_save_cmd_callback (GtkAction *action,
 }
 
 void
-error_console_highlight_error_cmd_callback (GtkAction *action,
-                                            gpointer   data)
+error_console_highlight_error_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
+                                            gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
-  gboolean          active;
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean          active  = g_variant_get_boolean (value);
 
   console->highlight[GIMP_MESSAGE_ERROR] = active;
 }
 
 void
-error_console_highlight_warning_cmd_callback (GtkAction *action,
-                                              gpointer   data)
+error_console_highlight_warning_cmd_callback (GimpAction *action,
+                                              GVariant   *value,
+                                              gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
-  gboolean          active;
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean          active  = g_variant_get_boolean (value);
 
   console->highlight[GIMP_MESSAGE_WARNING] = active;
 }
 
 void
-error_console_highlight_info_cmd_callback (GtkAction *action,
-                                           gpointer   data)
+error_console_highlight_info_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
+                                           gpointer    data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
-  gboolean          active;
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean          active  = g_variant_get_boolean (value);
 
   console->highlight[GIMP_MESSAGE_INFO] = active;
 }

@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -27,11 +27,9 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-apply-operation.h"
-
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawablefilter.h"
 #include "gimpprogress.h"
 #include "gimpsettings.h"
 
@@ -44,8 +42,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                const gchar  *undo_desc,
                                GeglNode     *operation)
 {
-  GeglBuffer    *dest_buffer;
-  GeglRectangle  rect;
+  GimpDrawableFilter *filter;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -54,21 +51,17 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
   g_return_if_fail (GEGL_IS_NODE (operation));
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                  &rect.x,     &rect.y,
-                                  &rect.width, &rect.height))
-    return;
+                                  NULL, NULL, NULL, NULL))
+    {
+      return;
+    }
 
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  filter = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
 
-  gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                             progress, undo_desc,
-                             operation,
-                             dest_buffer, &rect, FALSE);
+  gimp_drawable_filter_apply  (filter, NULL);
+  gimp_drawable_filter_commit (filter, progress, TRUE);
 
-  gimp_drawable_merge_shadow_buffer (drawable, TRUE, undo_desc);
-  gimp_drawable_free_shadow_buffer (drawable);
-
-  gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
+  g_object_unref (filter);
 
   if (progress)
     gimp_progress_end (progress);

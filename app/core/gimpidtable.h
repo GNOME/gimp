@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_ID_TABLE_H__
@@ -33,14 +33,14 @@
 #define GIMP_ID_TABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ID_TABLE, GimpIdTableClass))
 
 
-typedef struct _GimpIdTableClass  GimpIdTableClass;
-typedef struct _GimpIdTablePriv   GimpIdTablePriv;
+typedef struct _GimpIdTableClass   GimpIdTableClass;
+typedef struct _GimpIdTablePrivate GimpIdTablePrivate;
 
 struct _GimpIdTable
 {
-  GimpObject       parent_instance;
+  GimpObject          parent_instance;
 
-  GimpIdTablePriv *priv;
+  GimpIdTablePrivate *priv;
 };
 
 struct _GimpIdTableClass

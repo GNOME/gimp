@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DOCKABLE_H__
@@ -39,7 +39,7 @@ typedef struct _GimpDockableClass   GimpDockableClass;
 /**
  * GimpDockable:
  *
- * A kind of adpater to make other widgets dockable. The widget to
+ * A kind of adapter to make other widgets dockable. The widget to
  * dock is put inside the GimpDockable, which is put in a
  * GimpDockbook.
  */

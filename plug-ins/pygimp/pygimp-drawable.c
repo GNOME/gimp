@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -159,7 +159,7 @@ static PyObject *
 drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
     GimpTile *t;
-    int shadow, x, y;
+    int shadow, x, y, row, col;
 
     static char *kwlist[] = { "shadow", "x", "y", NULL };
 
@@ -174,7 +174,10 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
         return Py_None;
     }
 
-    t = gimp_drawable_get_tile2(self->drawable, shadow, x, y);
+    col = x / gimp_tile_width ();
+    row = y / gimp_tile_height ();
+
+    t = gimp_drawable_get_tile(self->drawable, shadow, col, row);
     return pygimp_tile_new(t, self);
 }
 

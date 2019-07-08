@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -547,42 +547,6 @@ gimp_get_fill_params (GimpContext   *context,
 }
 
 /**
- * gimp_utils_point_to_line_distance:
- * @point:              The point to calculate the distance for.
- * @point_on_line:      A point on the line.
- * @line_direction:     Normalized line direction vector.
- * @closest_line_point: Gets set to the point on the line that is
- *                      closest to @point.
- *
- * Returns: The shortest distance from @point to the line defined by
- *          @point_on_line and @normalized_line_direction.
- **/
-static gdouble
-gimp_utils_point_to_line_distance (const GimpVector2 *point,
-                                   const GimpVector2 *point_on_line,
-                                   const GimpVector2 *line_direction,
-                                   GimpVector2       *closest_line_point)
-{
-  GimpVector2 distance_vector;
-  GimpVector2 tmp_a;
-  GimpVector2 tmp_b;
-  gdouble     d;
-
-  gimp_vector2_sub (&tmp_a, point, point_on_line);
-
-  d = gimp_vector2_inner_product (&tmp_a, line_direction);
-
-  tmp_b = gimp_vector2_mul_val (*line_direction, d);
-
-  *closest_line_point = gimp_vector2_add_val (*point_on_line,
-                                              tmp_b);
-
-  gimp_vector2_sub (&distance_vector, closest_line_point, point);
-
-  return gimp_vector2_length (&distance_vector);
-}
-
-/**
  * gimp_constrain_line:
  * @start_x:
  * @start_y:
@@ -590,6 +554,8 @@ gimp_utils_point_to_line_distance (const GimpVector2 *point,
  * @end_y:
  * @n_snap_lines: Number evenly disributed lines to snap to.
  * @offset_angle: The angle by which to offset the lines, in degrees.
+ * @xres:         The horizontal resolution.
+ * @yres:         The vertical resolution.
  *
  * Projects a line onto the specified subset of evenly radially
  * distributed lines. @n_lines of 2 makes the line snap horizontally
@@ -602,38 +568,29 @@ gimp_constrain_line (gdouble  start_x,
                      gdouble *end_x,
                      gdouble *end_y,
                      gint     n_snap_lines,
-                     gdouble  offset_angle)
+                     gdouble  offset_angle,
+                     gdouble  xres,
+                     gdouble  yres)
 {
-  GimpVector2 line_point          = {  start_x,  start_y };
-  GimpVector2 point               = { *end_x,   *end_y   };
-  GimpVector2 constrained_point;
-  GimpVector2 line_dir;
-  gdouble     shortest_dist_moved = G_MAXDOUBLE;
-  gdouble     dist_moved;
+  GimpVector2 diff;
+  GimpVector2 dir;
   gdouble     angle;
-  gint        i;
 
-  for (i = 0; i < n_snap_lines; i++)
-    {
-      angle  = i * G_PI / n_snap_lines;
-      angle += offset_angle * G_PI / 180.0;
+  offset_angle *= G_PI / 180.0;
 
-      gimp_vector2_set (&line_dir,
-                        cos (angle),
-                        sin (angle));
+  diff.x = (*end_x - start_x) / xres;
+  diff.y = (*end_y - start_y) / yres;
 
-      dist_moved = gimp_utils_point_to_line_distance (&point,
-                                                      &line_point,
-                                                      &line_dir,
-                                                      &constrained_point);
-      if (dist_moved < shortest_dist_moved)
-        {
-          shortest_dist_moved = dist_moved;
+  angle = (atan2 (diff.y, diff.x) - offset_angle) * n_snap_lines / G_PI;
+  angle = RINT (angle) * G_PI / n_snap_lines + offset_angle;
 
-          *end_x = constrained_point.x;
-          *end_y = constrained_point.y;
-        }
-    }
+  dir.x = cos (angle);
+  dir.y = sin (angle);
+
+  gimp_vector2_mul (&dir, gimp_vector2_inner_product (&dir, &diff));
+
+  *end_x = start_x + dir.x * xres;
+  *end_y = start_y + dir.y * yres;
 }
 
 gint
@@ -815,6 +772,71 @@ gimp_file_with_new_extension (GFile *file,
   return ret;
 }
 
+/**
+ * gimp_file_delete_recursive:
+ * @file: #GFile to delete from file system.
+ * @error:
+ *
+ * Delete @file. If file is a directory, it will delete its children as
+ * well recursively. It will not follow symlinks so you won't end up in
+ * infinite loops, not will you be at risk of deleting your whole file
+ * system (unless you pass the root of course!).
+ * Such function unfortunately does not exist in glib, which only allows
+ * to delete single files or empty directories by default.
+ *
+ * Returns: #TRUE if @file was successfully deleted and all its
+ * children, #FALSE otherwise with @error filled.
+ */
+gboolean
+gimp_file_delete_recursive (GFile   *file,
+                            GError **error)
+{
+  gboolean success = TRUE;
+
+  if (g_file_query_exists (file, NULL))
+    {
+      if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                  NULL) == G_FILE_TYPE_DIRECTORY)
+        {
+          GFileEnumerator *enumerator;
+
+          enumerator = g_file_enumerate_children (file,
+                                                  G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                                  G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                                  G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                  G_FILE_QUERY_INFO_NONE,
+                                                  NULL, NULL);
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+                {
+                  GFile *child;
+
+                  child = g_file_enumerator_get_child (enumerator, info);
+                  g_object_unref (info);
+
+                  if (! gimp_file_delete_recursive (child, error))
+                    success = FALSE;
+
+                  g_object_unref (child);
+                  if (! success)
+                    break;
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      if (success)
+        /* Non-directory or empty directory. */
+        success = g_file_delete (file, NULL, error);
+    }
+
+  return success;
+}
+
 gchar *
 gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
                                          gsize             *length,
@@ -899,6 +921,59 @@ gimp_ascii_strtod (const gchar  *nptr,
   if (result) *result = temp_result;
 
   return TRUE;
+}
+
+gint
+gimp_g_list_compare (GList *list1,
+                     GList *list2)
+{
+  while (list1 && list2)
+    {
+      if (list1->data < list2->data)
+        return -1;
+      else if (list1->data > list2->data)
+        return +1;
+
+      list1 = g_list_next (list1);
+      list2 = g_list_next (list2);
+    }
+
+  if (! list1)
+    return -1;
+  else if (! list2)
+    return +1;
+
+  return 0;
+}
+
+GimpTRCType
+gimp_suggest_trc_for_component_type (GimpComponentType component_type,
+                                     GimpTRCType       old_trc)
+{
+  GimpTRCType new_trc = old_trc;
+
+  switch (component_type)
+    {
+    case GIMP_COMPONENT_TYPE_U8:
+      /* default to non-linear when converting 8 bit */
+      new_trc = GIMP_TRC_NON_LINEAR;
+      break;
+
+    case GIMP_COMPONENT_TYPE_U16:
+    case GIMP_COMPONENT_TYPE_U32:
+    default:
+      /* leave TRC alone by default when converting to 16/32 bit int */
+      break;
+
+    case GIMP_COMPONENT_TYPE_HALF:
+    case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      /* default to linear when converting to floating point */
+      new_trc = GIMP_TRC_LINEAR;
+      break;
+    }
+
+  return new_trc;
 }
 
 

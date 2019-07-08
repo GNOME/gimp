@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -92,26 +92,36 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
 
   if (pattern)
     {
-      const Babl       *format;
       GeglBuffer       *src_buffer;
       GeglBuffer       *dest_buffer;
       GimpColorProfile *src_profile;
       GimpColorProfile *dest_profile;
 
       src_buffer = gimp_pattern_create_buffer (pattern);
-      format = gegl_buffer_get_format (src_buffer);
 
-      dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                     format);
+      src_profile  = gimp_babl_format_get_color_profile (
+                       gegl_buffer_get_format (src_buffer));
+      dest_profile = gimp_color_managed_get_color_profile (
+                       GIMP_COLOR_MANAGED (drawable));
 
-      src_profile  = gimp_babl_format_get_color_profile (format);
-      dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+      if (gimp_color_transform_can_gegl_copy (src_profile, dest_profile))
+        {
+          dest_buffer = g_object_ref (src_buffer);
+        }
+      else
+        {
+          dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                         gegl_buffer_get_format (buffer));
 
-      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
-                                       dest_buffer, NULL, dest_profile,
-                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                       TRUE,
-                                       NULL);
+          gimp_gegl_convert_color_profile (
+            src_buffer,  NULL, src_profile,
+            dest_buffer, NULL, dest_profile,
+            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+            TRUE,
+            NULL);
+        }
+
+      g_object_unref (src_profile);
 
       gegl_buffer_set_pattern (buffer, NULL, dest_buffer,
                                pattern_offset_x, pattern_offset_y);
@@ -130,7 +140,8 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
       if (! gimp_drawable_has_alpha (drawable))
         gimp_rgb_set_alpha (&image_color, 1.0);
 
-      gegl_color = gimp_gegl_color_new (&image_color);
+      gegl_color = gimp_gegl_color_new (&image_color,
+                                        gimp_drawable_get_space (drawable));
       gegl_buffer_set_color (buffer, NULL, gegl_color);
       g_object_unref (gegl_color);
     }
@@ -246,7 +257,8 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                             gimp_fill_options_get_antialias (options));
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
-                                            GEGL_RECTANGLE (0, 0, w, h));
+                                            GEGL_RECTANGLE (0, 0, w, h),
+                                            -x, -y);
 
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer, 0, 0, 1.0);

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -37,6 +37,7 @@ gimp_text_layout_render (GimpTextLayout    *layout,
   PangoLayout    *pango_layout;
   cairo_matrix_t  trafo;
   gint            x, y;
+  gint            width, height;
 
   g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
   g_return_if_fail (cr != NULL);
@@ -48,6 +49,22 @@ gimp_text_layout_render (GimpTextLayout    *layout,
 
   gimp_text_layout_get_transform (layout, &trafo);
   cairo_transform (cr, &trafo);
+
+  if (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
+      base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT)
+    {
+      gimp_text_layout_get_size (layout, &width, &height);
+      cairo_translate (cr, width, 0);
+      cairo_rotate (cr, G_PI_2);
+    }
+
+  if (base_dir == GIMP_TEXT_DIRECTION_TTB_LTR ||
+      base_dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT)
+    {
+      gimp_text_layout_get_size (layout, &width, &height);
+      cairo_translate (cr, 0, height);
+      cairo_rotate (cr, -G_PI_2);
+    }
 
   pango_layout = gimp_text_layout_get_pango_layout (layout);
 

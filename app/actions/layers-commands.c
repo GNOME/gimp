@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -57,6 +57,8 @@
 #include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpaction.h"
@@ -176,8 +178,9 @@ static GimpInterpolationType  layer_scale_interp  = -1;
 /*  public functions  */
 
 void
-layers_edit_cmd_callback (GtkAction *action,
-                          gpointer   data)
+layers_edit_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -187,17 +190,18 @@ layers_edit_cmd_callback (GtkAction *action,
 
   if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
     {
-      layers_edit_text_cmd_callback (action, data);
+      layers_edit_text_cmd_callback (action, value, data);
     }
   else
     {
-      layers_edit_attributes_cmd_callback (action, data);
+      layers_edit_attributes_cmd_callback (action, value, data);
     }
 }
 
 void
-layers_edit_text_cmd_callback (GtkAction *action,
-                               gpointer   data)
+layers_edit_text_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -235,8 +239,9 @@ layers_edit_text_cmd_callback (GtkAction *action,
 }
 
 void
-layers_edit_attributes_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+layers_edit_attributes_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -285,8 +290,9 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
 }
 
 void
-layers_new_cmd_callback (GtkAction *action,
-                         gpointer   data)
+layers_new_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -361,8 +367,9 @@ layers_new_cmd_callback (GtkAction *action,
 }
 
 void
-layers_new_last_vals_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+layers_new_last_vals_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpImage        *image;
   GtkWidget        *widget;
@@ -380,7 +387,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
    */
   if (gimp_image_get_floating_selection (image))
     {
-      layers_new_cmd_callback (action, data);
+      layers_new_cmd_callback (action, value, data);
       return;
     }
 
@@ -415,8 +422,9 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
 }
 
 void
-layers_new_from_visible_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+layers_new_from_visible_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
   GimpImage        *image;
   GimpLayer        *layer;
@@ -444,8 +452,9 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
 }
 
 void
-layers_new_group_cmd_callback (GtkAction *action,
-                               gpointer   data)
+layers_new_group_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -458,15 +467,18 @@ layers_new_group_cmd_callback (GtkAction *action,
 }
 
 void
-layers_select_cmd_callback (GtkAction *action,
-                            gint       value,
-                            gpointer   data)
+layers_select_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
-  GimpImage     *image;
-  GimpLayer     *layer;
-  GimpContainer *container;
-  GimpLayer     *new_layer;
+  GimpImage            *image;
+  GimpLayer            *layer;
+  GimpContainer        *container;
+  GimpLayer            *new_layer;
+  GimpActionSelectType  select_type;
   return_if_no_image (image, data);
+
+  select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
   layer = gimp_image_get_active_layer (image);
 
@@ -475,7 +487,7 @@ layers_select_cmd_callback (GtkAction *action,
   else
     container = gimp_image_get_layers (image);
 
-  new_layer = (GimpLayer *) action_select_object ((GimpActionSelectType) value,
+  new_layer = (GimpLayer *) action_select_object (select_type,
                                                   container,
                                                   (GimpObject *) layer);
 
@@ -487,8 +499,9 @@ layers_select_cmd_callback (GtkAction *action,
 }
 
 void
-layers_raise_cmd_callback (GtkAction *action,
-                           gpointer   data)
+layers_raise_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -499,8 +512,9 @@ layers_raise_cmd_callback (GtkAction *action,
 }
 
 void
-layers_raise_to_top_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+layers_raise_to_top_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -511,8 +525,9 @@ layers_raise_to_top_cmd_callback (GtkAction *action,
 }
 
 void
-layers_lower_cmd_callback (GtkAction *action,
-                           gpointer   data)
+layers_lower_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -523,8 +538,9 @@ layers_lower_cmd_callback (GtkAction *action,
 }
 
 void
-layers_lower_to_bottom_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+layers_lower_to_bottom_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -535,8 +551,9 @@ layers_lower_to_bottom_cmd_callback (GtkAction *action,
 }
 
 void
-layers_duplicate_cmd_callback (GtkAction *action,
-                               gpointer   data)
+layers_duplicate_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -557,8 +574,9 @@ layers_duplicate_cmd_callback (GtkAction *action,
 }
 
 void
-layers_anchor_cmd_callback (GtkAction *action,
-                            gpointer   data)
+layers_anchor_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -572,21 +590,26 @@ layers_anchor_cmd_callback (GtkAction *action,
 }
 
 void
-layers_merge_down_cmd_callback (GtkAction *action,
-                                gpointer   data)
+layers_merge_down_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
-  GimpImage *image;
-  GimpLayer *layer;
+  GimpImage   *image;
+  GimpLayer   *layer;
+  GimpDisplay *display;
   return_if_no_layer (image, layer, data);
+  return_if_no_display (display, data);
 
   gimp_image_merge_down (image, layer, action_data_get_context (data),
-                         GIMP_EXPAND_AS_NECESSARY, NULL);
+                         GIMP_EXPAND_AS_NECESSARY,
+                         GIMP_PROGRESS (display), NULL);
   gimp_image_flush (image);
 }
 
 void
-layers_merge_group_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+layers_merge_group_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -597,8 +620,9 @@ layers_merge_group_cmd_callback (GtkAction *action,
 }
 
 void
-layers_delete_cmd_callback (GtkAction *action,
-                            gpointer   data)
+layers_delete_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -609,8 +633,9 @@ layers_delete_cmd_callback (GtkAction *action,
 }
 
 void
-layers_text_discard_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+layers_text_discard_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -621,8 +646,9 @@ layers_text_discard_cmd_callback (GtkAction *action,
 }
 
 void
-layers_text_to_vectors_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+layers_text_to_vectors_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -645,8 +671,9 @@ layers_text_to_vectors_cmd_callback (GtkAction *action,
 }
 
 void
-layers_text_along_vectors_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+layers_text_along_vectors_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
   GimpImage   *image;
   GimpLayer   *layer;
@@ -656,12 +683,42 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_TEXT_LAYER (layer))
     {
+      gdouble      box_width;
+      gdouble      box_height;
       GimpVectors *new_vectors;
+      gdouble      offset;
+
+      box_width  = gimp_item_get_width  (GIMP_ITEM (layer));
+      box_height = gimp_item_get_height (GIMP_ITEM (layer));
 
       new_vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
 
-      gimp_vectors_warp_vectors (vectors, new_vectors,
-                                 0.5 * gimp_item_get_height (GIMP_ITEM (layer)));
+      offset = 0;
+      switch (GIMP_TEXT_LAYER (layer)->text->base_dir)
+        {
+        case GIMP_TEXT_DIRECTION_LTR:
+        case GIMP_TEXT_DIRECTION_RTL:
+          offset = 0.5 * box_height;
+          break;
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+          {
+            GimpStroke *stroke = NULL;
+
+            while ((stroke = gimp_vectors_stroke_get_next (new_vectors, stroke)))
+              {
+                gimp_stroke_rotate (stroke, 0, 0, 270);
+                gimp_stroke_translate (stroke, 0, box_width);
+              }
+          }
+          offset = 0.5 * box_width;
+          break;
+        }
+
+
+      gimp_vectors_warp_vectors (vectors, new_vectors, offset);
 
       gimp_item_set_visible (GIMP_ITEM (new_vectors), TRUE, FALSE);
 
@@ -672,8 +729,9 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 }
 
 void
-layers_resize_cmd_callback (GtkAction *action,
-                            gpointer   data)
+layers_resize_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -718,8 +776,9 @@ layers_resize_cmd_callback (GtkAction *action,
 }
 
 void
-layers_resize_to_image_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+layers_resize_to_image_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -732,8 +791,9 @@ layers_resize_to_image_cmd_callback (GtkAction *action,
 }
 
 void
-layers_scale_cmd_callback (GtkAction *action,
-                           gpointer   data)
+layers_scale_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -776,8 +836,9 @@ layers_scale_cmd_callback (GtkAction *action,
 }
 
 void
-layers_crop_to_selection_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+layers_crop_to_selection_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -814,8 +875,9 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
 }
 
 void
-layers_crop_to_content_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+layers_crop_to_content_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -860,8 +922,9 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_add_cmd_callback (GtkAction *action,
-                              gpointer   data)
+layers_mask_add_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -895,8 +958,9 @@ layers_mask_add_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_add_last_vals_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+layers_mask_add_last_vals_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
   GimpImage        *image;
   GimpLayer        *layer;
@@ -925,7 +989,7 @@ layers_mask_add_last_vals_cmd_callback (GtkAction *action,
 
       if (! channel)
         {
-          layers_mask_add_cmd_callback (action, data);
+          layers_mask_add_cmd_callback (action, value, data);
           return;
         }
     }
@@ -942,9 +1006,9 @@ layers_mask_add_last_vals_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_apply_cmd_callback (GtkAction *action,
-                                gint       value,
-                                gpointer   data)
+layers_mask_apply_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -952,7 +1016,7 @@ layers_mask_apply_cmd_callback (GtkAction *action,
 
   if (gimp_layer_get_mask (layer))
     {
-      GimpMaskApplyMode mode = (GimpMaskApplyMode) value;
+      GimpMaskApplyMode mode = (GimpMaskApplyMode) g_variant_get_int32 (value);
 
       gimp_layer_apply_mask (layer, mode, TRUE);
       gimp_image_flush (image);
@@ -960,8 +1024,9 @@ layers_mask_apply_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_edit_cmd_callback (GtkAction *action,
-                               gpointer   data)
+layers_mask_edit_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -969,9 +1034,7 @@ layers_mask_edit_cmd_callback (GtkAction *action,
 
   if (gimp_layer_get_mask (layer))
     {
-      gboolean active;
-
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_layer_set_edit_mask (layer, active);
       gimp_image_flush (image);
@@ -979,8 +1042,9 @@ layers_mask_edit_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_show_cmd_callback (GtkAction *action,
-                               gpointer   data)
+layers_mask_show_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -988,9 +1052,7 @@ layers_mask_show_cmd_callback (GtkAction *action,
 
   if (gimp_layer_get_mask (layer))
     {
-      gboolean active;
-
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_layer_set_show_mask (layer, active, TRUE);
       gimp_image_flush (image);
@@ -998,8 +1060,9 @@ layers_mask_show_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_disable_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+layers_mask_disable_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -1007,9 +1070,7 @@ layers_mask_disable_cmd_callback (GtkAction *action,
 
   if (gimp_layer_get_mask (layer))
     {
-      gboolean active;
-
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean active = g_variant_get_boolean (value);
 
       gimp_layer_set_apply_mask (layer, ! active, TRUE);
       gimp_image_flush (image);
@@ -1017,9 +1078,9 @@ layers_mask_disable_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mask_to_selection_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+layers_mask_to_selection_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpImage     *image;
   GimpLayer     *layer;
@@ -1030,16 +1091,18 @@ layers_mask_to_selection_cmd_callback (GtkAction *action,
 
   if (mask)
     {
-      gimp_item_to_selection (GIMP_ITEM (mask),
-                              (GimpChannelOps) value,
+      GimpChannelOps operation = (GimpChannelOps) g_variant_get_int32 (value);
+
+      gimp_item_to_selection (GIMP_ITEM (mask), operation,
                               TRUE, FALSE, 0.0, 0.0);
       gimp_image_flush (image);
     }
 }
 
 void
-layers_alpha_add_cmd_callback (GtkAction *action,
-                               gpointer   data)
+layers_alpha_add_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -1053,8 +1116,9 @@ layers_alpha_add_cmd_callback (GtkAction *action,
 }
 
 void
-layers_alpha_remove_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+layers_alpha_remove_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
@@ -1068,24 +1132,26 @@ layers_alpha_remove_cmd_callback (GtkAction *action,
 }
 
 void
-layers_alpha_to_selection_cmd_callback (GtkAction *action,
-                                        gint       value,
-                                        gpointer   data)
+layers_alpha_to_selection_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
-  GimpImage *image;
-  GimpLayer *layer;
+  GimpImage      *image;
+  GimpLayer      *layer;
+  GimpChannelOps  operation;
   return_if_no_layer (image, layer, data);
 
-  gimp_item_to_selection (GIMP_ITEM (layer),
-                          (GimpChannelOps) value,
+  operation = (GimpChannelOps) g_variant_get_int32 (value);
+
+  gimp_item_to_selection (GIMP_ITEM (layer), operation,
                           TRUE, FALSE, 0.0, 0.0);
   gimp_image_flush (image);
 }
 
 void
-layers_opacity_cmd_callback (GtkAction *action,
-                             gint       value,
-                             gpointer   data)
+layers_opacity_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   GimpImage      *image;
   GimpLayer      *layer;
@@ -1109,9 +1175,9 @@ layers_opacity_cmd_callback (GtkAction *action,
 }
 
 void
-layers_mode_cmd_callback (GtkAction *action,
-                          gint       value,
-                          gpointer   data)
+layers_mode_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   GimpImage     *image;
   GimpLayer     *layer;
@@ -1146,16 +1212,16 @@ layers_mode_cmd_callback (GtkAction *action,
 }
 
 void
-layers_blend_space_cmd_callback (GtkAction *action,
-                                 GtkAction *current,
-                                 gpointer   data)
+layers_blend_space_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpImage           *image;
   GimpLayer           *layer;
   GimpLayerColorSpace  blend_space;
   return_if_no_layer (image, layer, data);
 
-  blend_space = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  blend_space = (GimpLayerColorSpace) g_variant_get_int32 (value);
 
   if (blend_space != gimp_layer_get_blend_space (layer))
     {
@@ -1174,16 +1240,16 @@ layers_blend_space_cmd_callback (GtkAction *action,
 }
 
 void
-layers_composite_space_cmd_callback (GtkAction *action,
-                                     GtkAction *current,
-                                     gpointer   data)
+layers_composite_space_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage           *image;
   GimpLayer           *layer;
   GimpLayerColorSpace  composite_space;
   return_if_no_layer (image, layer, data);
 
-  composite_space = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  composite_space = (GimpLayerColorSpace) g_variant_get_int32 (value);
 
   if (composite_space != gimp_layer_get_composite_space (layer))
     {
@@ -1202,16 +1268,16 @@ layers_composite_space_cmd_callback (GtkAction *action,
 }
 
 void
-layers_composite_mode_cmd_callback (GtkAction *action,
-                                    GtkAction *current,
-                                    gpointer   data)
+layers_composite_mode_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpImage              *image;
   GimpLayer              *layer;
   GimpLayerCompositeMode  composite_mode;
   return_if_no_layer (image, layer, data);
 
-  composite_mode = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  composite_mode = (GimpLayerCompositeMode) g_variant_get_int32 (value);
 
   if (composite_mode != gimp_layer_get_composite_mode (layer))
     {
@@ -1230,59 +1296,64 @@ layers_composite_mode_cmd_callback (GtkAction *action,
 }
 
 void
-layers_visible_cmd_callback (GtkAction *action,
+layers_visible_cmd_callback (GimpAction *action,
+                             GVariant   *value,
                              gpointer   data)
 {
   GimpImage *image;
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  items_visible_cmd_callback (action, image, GIMP_ITEM (layer));
+  items_visible_cmd_callback (action, value, image, GIMP_ITEM (layer));
 }
 
 void
-layers_linked_cmd_callback (GtkAction *action,
-                            gpointer   data)
+layers_linked_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  items_linked_cmd_callback (action, image, GIMP_ITEM (layer));
+  items_linked_cmd_callback (action, value, image, GIMP_ITEM (layer));
 }
 
 void
-layers_lock_content_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+layers_lock_content_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  items_lock_content_cmd_callback (action, image, GIMP_ITEM (layer));
+  items_lock_content_cmd_callback (action, value, image, GIMP_ITEM (layer));
 }
 
 void
-layers_lock_position_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+layers_lock_position_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  items_lock_position_cmd_callback (action, image, GIMP_ITEM (layer));
+  items_lock_position_cmd_callback (action, value, image, GIMP_ITEM (layer));
 }
 
 void
-layers_lock_alpha_cmd_callback (GtkAction *action,
-                                gpointer   data)
+layers_lock_alpha_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpImage *image;
   GimpLayer *layer;
   gboolean   lock_alpha;
   return_if_no_layer (image, layer, data);
 
-  lock_alpha = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  lock_alpha = g_variant_get_boolean (value);
 
   if (lock_alpha != gimp_layer_get_lock_alpha (layer))
     {
@@ -1301,16 +1372,19 @@ layers_lock_alpha_cmd_callback (GtkAction *action,
 }
 
 void
-layers_color_tag_cmd_callback (GtkAction *action,
-                               gint       value,
-                               gpointer   data)
+layers_color_tag_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
-  GimpImage *image;
-  GimpLayer *layer;
+  GimpImage    *image;
+  GimpLayer    *layer;
+  GimpColorTag  color_tag;
   return_if_no_layer (image, layer, data);
 
+  color_tag = (GimpColorTag) g_variant_get_int32 (value);
+
   items_color_tag_cmd_callback (action, image, GIMP_ITEM (layer),
-                                (GimpColorTag) value);
+                                color_tag);
 }
 
 

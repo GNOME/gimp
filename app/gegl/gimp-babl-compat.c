@@ -15,10 +15,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
+
+#include <string.h>
 
 #include <gegl.h>
 
@@ -31,29 +33,33 @@
 GimpImageType
 gimp_babl_format_get_image_type (const Babl *format)
 {
-  const Babl *model;
+  const gchar *name;
 
   g_return_val_if_fail (format != NULL, -1);
 
-  model = babl_format_get_model (format);
+  name = babl_get_name (babl_format_get_model (format));
 
-  if (model == babl_model ("Y") ||
-      model == babl_model ("Y'"))
+  if (! strcmp (name, "Y")  ||
+      ! strcmp (name, "Y'") ||
+      ! strcmp (name, "Y~"))
     {
       return GIMP_GRAY_IMAGE;
     }
-  else if (model == babl_model ("YA") ||
-           model == babl_model ("Y'A"))
+  else if (! strcmp (name, "YA")   ||
+           ! strcmp (name, "Y'A") ||
+           ! strcmp (name, "Y~A"))
     {
       return GIMP_GRAYA_IMAGE;
     }
-  else if (model == babl_model ("RGB") ||
-           model == babl_model ("R'G'B'"))
+  else if (! strcmp (name, "RGB")    ||
+           ! strcmp (name, "R'G'B'") ||
+           ! strcmp (name, "R~G~B~"))
     {
       return GIMP_RGB_IMAGE;
     }
-  else if (model == babl_model ("RGBA") ||
-           model == babl_model ("R'G'B'A"))
+  else if (! strcmp (name, "RGBA")    ||
+           ! strcmp (name, "R'G'B'A") ||
+           ! strcmp (name, "R~G~B~A"))
     {
       return GIMP_RGBA_IMAGE;
     }
@@ -78,6 +84,18 @@ gimp_babl_compat_u8_format (const Babl *format)
     return format;
 
   return gimp_babl_format (gimp_babl_format_get_base_type (format),
-                           GIMP_PRECISION_U8_GAMMA,
-                           babl_format_has_alpha (format));
+                           GIMP_PRECISION_U8_NON_LINEAR,
+                           babl_format_has_alpha (format),
+                           babl_format_get_space (format));
+}
+
+const Babl *
+gimp_babl_compat_u8_mask_format (const Babl *format)
+{
+  g_return_val_if_fail (format != NULL, NULL);
+
+  return gimp_babl_format (gimp_babl_format_get_base_type (format),
+                           GIMP_PRECISION_U8_LINEAR,
+                           FALSE,
+                           NULL);
 }

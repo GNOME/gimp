@@ -13,7 +13,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *********************************************************************/
 
 #include "config.h"
@@ -509,7 +509,6 @@ explorer_dialog (void)
   GtkWidget *dialog;
   GtkWidget *top_hbox;
   GtkWidget *left_vbox;
-  GtkWidget *abox;
   GtkWidget *vbox;
   GtkWidget *bbox;
   GtkWidget *frame;
@@ -599,13 +598,10 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (left_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_halign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   wint.preview = gimp_preview_area_new ();
@@ -1178,22 +1174,22 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), gradient, FALSE, FALSE, 0);
   gtk_widget_show (gradient);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   {
     gint xsize, ysize;
-
     for (ysize = 1; ysize * ysize * ysize < 8192; ysize++) /**/;
     xsize = wvals.ncolors / ysize;
     while (xsize * ysize < 8192) xsize++;
-
-    gtk_widget_set_size_request (abox, xsize, ysize * 4);
+    gtk_widget_set_size_request (hbox, xsize, ysize * 4);
   }
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   cmap_preview = gimp_preview_area_new ();
+  gtk_widget_set_halign (cmap_preview, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (cmap_preview, GTK_ALIGN_CENTER);
   gtk_widget_set_size_request (cmap_preview, 32, 32);
-  gtk_container_add (GTK_CONTAINER (abox), cmap_preview);
+  gtk_box_pack_start (GTK_BOX (hbox), cmap_preview, TRUE, TRUE, 0);
   g_signal_connect (cmap_preview, "size-allocate",
                     G_CALLBACK (cmap_preview_size_allocate), NULL);
   gtk_widget_show (cmap_preview);

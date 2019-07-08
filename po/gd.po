@@ -8,8 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2015-03-27 18:28+0000\n"
 "PO-Revision-Date: 2015-03-27 19:41+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
@@ -105,7 +104,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -118,7 +117,7 @@ msgstr ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 
 #: ../app/batch.c:76
 #, c-format
@@ -1784,7 +1783,7 @@ msgid "_Dilate"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:70
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr ""
 
@@ -1794,7 +1793,7 @@ msgid "E_rode"
 msgstr ""
 
 #: ../app/actions/drawable-actions.c:76
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 

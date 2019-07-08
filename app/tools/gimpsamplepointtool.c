@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -39,9 +39,6 @@
 #include "tool_manager.h"
 
 #include "gimp-intl.h"
-
-
-#define GIMP_SAMPLE_POINT_POSITION_UNDEFINED G_MININT
 
 
 /*  local function prototypes  */
@@ -370,7 +367,7 @@ gimp_sample_point_tool_start_edit (GimpTool        *parent_tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (parent_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   gimp_sample_point_tool_start (parent_tool, display, sample_point);
 }

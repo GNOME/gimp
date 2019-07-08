@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_COLOR_DIALOG_H__
@@ -42,8 +42,14 @@ struct _GimpColorDialog
   GimpViewableDialog   parent_instance;
 
   gboolean             wants_updates;
+  gboolean             user_context_aware;
 
+  GtkWidget           *stack;
   GtkWidget           *selection;
+  GtkWidget           *colormap_selection;
+
+  GimpImage           *active_image;
+  gboolean             colormap_editing;
 };
 
 struct _GimpColorDialogClass
@@ -60,6 +66,7 @@ GType       gimp_color_dialog_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
                                          GimpContext       *context,
+                                         gboolean           context_aware,
                                          const gchar       *title,
                                          const gchar       *icon_name,
                                          const gchar       *desc,

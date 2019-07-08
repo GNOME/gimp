@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -78,7 +78,7 @@ gimp_data_factories_init (Gimp *gimp)
                                        "GIMP Brush",
                                        gimp_brush_load,
                                        GIMP_BRUSH_FILE_EXTENSION,
-                                       FALSE);
+                                       TRUE);
   gimp_data_loader_factory_add_loader (gimp->brush_factory,
                                        "GIMP Brush Pixmap",
                                        gimp_brush_load,
@@ -103,7 +103,7 @@ gimp_data_factories_init (Gimp *gimp)
                                        "GIMP Brush Pipe",
                                        gimp_brush_pipe_load,
                                        GIMP_BRUSH_PIPE_FILE_EXTENSION,
-                                       FALSE);
+                                       TRUE);
 
   gimp->dynamics_factory =
     gimp_data_loader_factory_new (gimp,
@@ -151,7 +151,7 @@ gimp_data_factories_init (Gimp *gimp)
                                        "GIMP Pattern",
                                        gimp_pattern_load,
                                        GIMP_PATTERN_FILE_EXTENSION,
-                                       FALSE);
+                                       TRUE);
   gimp_data_loader_factory_add_fallback (gimp->pattern_factory,
                                          "Pattern from GdkPixbuf",
                                          gimp_pattern_load_pixbuf);

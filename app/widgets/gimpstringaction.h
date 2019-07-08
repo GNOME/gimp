@@ -15,14 +15,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_STRING_ACTION_H__
 #define __GIMP_STRING_ACTION_H__
 
 
-#include "gimpaction.h"
+#include "gimpactionimpl.h"
 
 
 #define GIMP_TYPE_STRING_ACTION            (gimp_string_action_get_type ())
@@ -37,29 +37,25 @@ typedef struct _GimpStringActionClass GimpStringActionClass;
 
 struct _GimpStringAction
 {
-  GimpAction  parent_instance;
+  GimpActionImpl  parent_instance;
 
-  gchar      *value;
+  gchar          *value;
 };
 
 struct _GimpStringActionClass
 {
-  GimpActionClass parent_class;
-
-  void (* selected) (GimpStringAction *action,
-                     const gchar      *value);
+  GimpActionImplClass parent_class;
 };
 
 
 GType              gimp_string_action_get_type (void) G_GNUC_CONST;
 
-GimpStringAction * gimp_string_action_new      (const gchar      *name,
-                                                const gchar      *label,
-                                                const gchar      *tooltip,
-                                                const gchar      *icon_name,
-                                                const gchar      *value);
-void               gimp_string_action_selected (GimpStringAction *action,
-                                                const gchar      *value);
+GimpStringAction * gimp_string_action_new      (const gchar *name,
+                                                const gchar *label,
+                                                const gchar *tooltip,
+                                                const gchar *icon_name,
+                                                const gchar *help_id,
+                                                const gchar *value);
 
 
 #endif  /* __GIMP_STRING_ACTION_H__ */

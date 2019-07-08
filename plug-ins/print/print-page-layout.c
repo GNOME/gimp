@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -273,7 +273,7 @@ print_size_frame (PrintData    *data,
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gtk_spin_button_new (adj, 1, 2);
+  height = gimp_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
@@ -315,7 +315,7 @@ print_size_frame (PrintData    *data,
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gtk_spin_button_new (adj, 1, 2);
+  height = gimp_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
@@ -399,7 +399,7 @@ print_offset_frame (PrintData    *data,
 
   /* left */
   info.left_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gtk_spin_button_new (info.left_adj, 1, 2);
+  spinner = gimp_spin_button_new (info.left_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
@@ -416,7 +416,7 @@ print_offset_frame (PrintData    *data,
 
   /* right */
   info.right_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gtk_spin_button_new (info.right_adj, 1, 2);
+  spinner = gimp_spin_button_new (info.right_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
   g_signal_connect (info.right_adj, "value-changed",
@@ -436,7 +436,7 @@ print_offset_frame (PrintData    *data,
 
   /* top */
   info.top_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gtk_spin_button_new (info.top_adj, 1, 2);
+  spinner = gimp_spin_button_new (info.top_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
@@ -453,7 +453,7 @@ print_offset_frame (PrintData    *data,
 
   /* bottom */
   info.bottom_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gtk_spin_button_new (info.bottom_adj, 1, 2);
+  spinner = gimp_spin_button_new (info.bottom_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
   g_signal_connect (info.bottom_adj, "value-changed",

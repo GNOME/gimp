@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -243,6 +243,13 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+  /*  The color index number  */
+  editor->index_label = gtk_label_new ("####");
+  gtk_box_pack_start (GTK_BOX (hbox), editor->index_label, FALSE, FALSE, 0);
+  gimp_label_set_attributes (GTK_LABEL (editor->index_label),
+                             PANGO_ATTR_FAMILY, "Monospace", -1);
+  gtk_widget_show (editor->index_label);
+
   /*  The color name entry  */
   editor->color_name = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
@@ -261,7 +268,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_widget_show (icon);
 
   editor->columns_adj = gtk_adjustment_new (0, 0, 64, 1, 4, 0);
-  spinbutton = gtk_spin_button_new (editor->columns_adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (editor->columns_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -474,6 +481,7 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (palette),
                                data_editor->context,
+                               FALSE,
                                _("Edit Palette Color"),
                                GIMP_ICON_PALETTE,
                                _("Edit Color Palette Entry"),
@@ -498,6 +506,12 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
                                          data_editor->context);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &editor->color->color);
+
+      if (! gtk_widget_get_visible (editor->color_dialog))
+        gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
+                                             "gimp-palette-editor-color-dialog",
+                                             editor->color_dialog,
+                                             gimp_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   gtk_window_present (GTK_WINDOW (editor->color_dialog));
@@ -767,7 +781,16 @@ palette_editor_entry_selected (GimpPaletteView   *view,
 
   if (editor->color != entry)
     {
+      gchar index[8];
+
       editor->color = entry;
+
+      if (entry)
+        g_snprintf (index, sizeof (index), "%04i", entry->position);
+      else
+        g_snprintf (index, sizeof (index), "####");
+
+      gtk_label_set_text (GTK_LABEL (editor->index_label), index);
 
       g_signal_handlers_block_by_func (editor->color_name,
                                        palette_editor_color_name_changed,

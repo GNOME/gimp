@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -188,13 +188,13 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_PALETTE_DIALOG },
 
   { "dialogs-palette-editor", GIMP_ICON_PALETTE,
-    NC_("dialogs-action", "Palette Editor"), NULL,
+    NC_("dialogs-action", "Palette _Editor"), NULL,
     NC_("dialogs-action", "Open the palette editor"),
     "gimp-palette-editor",
     GIMP_HELP_PALETTE_EDIT },
 
   { "dialogs-tool-presets", GIMP_ICON_TOOL_PRESET,
-    NC_("dialogs-action", "Tool presets"), NULL,
+    NC_("dialogs-action", "Tool Pre_sets"), NULL,
     NC_("dialogs-action", "Open tool presets dialog"),
     "gimp-tool-preset-list|gimp-tool-preset-grid",
     GIMP_HELP_TOOL_PRESET_DIALOG },
@@ -293,7 +293,13 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     NC_("dialogs-action", "_Search and Run a Command"), "slash",
     NC_("dialogs-action", "Search commands by keyword, and run them"),
     "gimp-action-search-dialog",
-    GIMP_HELP_ACTION_SEARCH_DIALOG }
+    GIMP_HELP_ACTION_SEARCH_DIALOG },
+
+  { "dialogs-extensions", GIMP_ICON_PLUGIN,
+    NC_("dialogs-action", "Manage _Extensions"), NULL,
+    NC_("dialogs-action", "Manage Extensions: search, install, uninstall, update."),
+    "gimp-extensions-dialog",
+    GIMP_HELP_EXTENSIONS_DIALOG }
 };
 
 
@@ -336,12 +342,12 @@ dialogs_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "dialogs-action",
                                         dialogs_dockable_actions,
                                         G_N_ELEMENTS (dialogs_dockable_actions),
-                                        G_CALLBACK (dialogs_create_dockable_cmd_callback));
+                                        dialogs_create_dockable_cmd_callback);
 
   gimp_action_group_add_string_actions (group, "dialogs-action",
                                         dialogs_toplevel_actions,
                                         G_N_ELEMENTS (dialogs_toplevel_actions),
-                                        G_CALLBACK (dialogs_create_toplevel_cmd_callback));
+                                        dialogs_create_toplevel_cmd_callback);
 }
 
 void

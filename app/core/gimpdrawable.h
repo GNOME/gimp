@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DRAWABLE_H__
@@ -50,6 +50,7 @@ struct _GimpDrawableClass
                                            gint                  y,
                                            gint                  width,
                                            gint                  height);
+  void          (* format_changed)        (GimpDrawable         *drawable);
   void          (* alpha_changed)         (GimpDrawable         *drawable);
 
   /*  virtual functions  */
@@ -57,6 +58,7 @@ struct _GimpDrawableClass
                                            GimpComponentType     component_type,
                                            gint                  width,
                                            gint                  height);
+  void          (* update_all)            (GimpDrawable         *drawable);
   void          (* invalidate_boundary)   (GimpDrawable         *drawable);
   void          (* get_active_components) (GimpDrawable         *drawable,
                                            gboolean             *active);
@@ -64,6 +66,7 @@ struct _GimpDrawableClass
   void          (* convert_type)          (GimpDrawable         *drawable,
                                            GimpImage            *dest_image,
                                            const Babl           *new_format,
+                                           GimpColorProfile     *src_profile,
                                            GimpColorProfile     *dest_profile,
                                            GeglDitherMethod      layer_dither_type,
                                            GeglDitherMethod      mask_dither_type,
@@ -82,16 +85,6 @@ struct _GimpDrawableClass
                                            GeglBuffer           *base_buffer,
                                            gint                  base_x,
                                            gint                  base_y);
-  void          (* replace_buffer)        (GimpDrawable         *drawable,
-                                           GeglBuffer           *buffer,
-                                           const GeglRectangle  *buffer_region,
-                                           gboolean              push_undo,
-                                           const gchar          *undo_desc,
-                                           gdouble               opacity,
-                                           GeglBuffer           *mask,
-                                           const GeglRectangle  *mask_region,
-                                           gint                  x,
-                                           gint                  y);
   GeglBuffer  * (* get_buffer)            (GimpDrawable         *drawable);
   void          (* set_buffer)            (GimpDrawable         *drawable,
                                            gboolean              push_undo,
@@ -135,7 +128,7 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
-void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
+void            gimp_drawable_update_all         (GimpDrawable       *drawable);
 
 void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 void         gimp_drawable_get_active_components (GimpDrawable       *drawable,
@@ -147,6 +140,7 @@ void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpImageBaseType   new_base_type,
                                                   GimpPrecision       new_precision,
                                                   gboolean            new_has_alpha,
+                                                  GimpColorProfile   *src_profile,
                                                   GimpColorProfile   *dest_profile,
                                                   GeglDitherMethod    layer_dither_type,
                                                   GeglDitherMethod    mask_dither_type,
@@ -166,16 +160,6 @@ void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
                                                   GeglBuffer          *base_buffer,
                                                   gint                 base_x,
                                                   gint                 base_y);
-void            gimp_drawable_replace_buffer     (GimpDrawable        *drawable,
-                                                  GeglBuffer          *buffer,
-                                                  const GeglRectangle *buffer_region,
-                                                  gboolean             push_undo,
-                                                  const gchar         *undo_desc,
-                                                  gdouble              opacity,
-                                                  GeglBuffer          *mask,
-                                                  const GeglRectangle *mask_region,
-                                                  gint                 x,
-                                                  gint                 y);
 
 GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
 void            gimp_drawable_set_buffer         (GimpDrawable       *drawable,
@@ -187,10 +171,16 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer,
                                                   gint                offset_x,
-                                                  gint                offset_y);
+                                                  gint                offset_y,
+                                                  gboolean            update);
 
 void            gimp_drawable_steal_buffer       (GimpDrawable       *drawable,
                                                   GimpDrawable       *src_drawable);
+
+void            gimp_drawable_set_format         (GimpDrawable       *drawable,
+                                                  const Babl         *format,
+                                                  gboolean            copy_buffer,
+                                                  gboolean            push_undo);
 
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
@@ -208,11 +198,12 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   gint                width,
                                                   gint                height);
 
+const Babl      * gimp_drawable_get_space            (GimpDrawable    *drawable);
 const Babl      * gimp_drawable_get_format           (GimpDrawable    *drawable);
 const Babl      * gimp_drawable_get_format_with_alpha(GimpDrawable    *drawable);
 const Babl      * gimp_drawable_get_format_without_alpha
                                                      (GimpDrawable    *drawable);
-gboolean          gimp_drawable_get_linear           (GimpDrawable    *drawable);
+GimpTRCType       gimp_drawable_get_trc              (GimpDrawable    *drawable);
 gboolean          gimp_drawable_has_alpha            (GimpDrawable    *drawable);
 GimpImageBaseType gimp_drawable_get_base_type        (GimpDrawable    *drawable);
 GimpComponentType gimp_drawable_get_component_type   (GimpDrawable    *drawable);

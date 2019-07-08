@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SETTINGS_BOX_H__
@@ -69,6 +69,8 @@ GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
 
 void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);
+
+void        gimp_settings_box_unset       (GimpSettingsBox *box);
 
 
 #endif  /*  __GIMP_SETTINGS_BOX_H__  */

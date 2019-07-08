@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 /* This provides a color preview area. The preview
@@ -86,6 +86,8 @@ void        gimp_color_area_set_type         (GimpColorArea     *area,
                                               GimpColorAreaType  type);
 void        gimp_color_area_set_draw_border  (GimpColorArea     *area,
                                               gboolean           draw_border);
+void        gimp_color_area_set_out_of_gamut (GimpColorArea     *area,
+                                              gboolean           out_of_gamut);
 
 void        gimp_color_area_set_color_config (GimpColorArea     *area,
                                               GimpColorConfig   *config);

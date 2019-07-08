@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -46,43 +46,43 @@ static const GimpActionEntry patterns_actions[] =
   { "patterns-open-as-image", GIMP_ICON_DOCUMENT_OPEN,
     NC_("patterns-action", "_Open Pattern as Image"), NULL,
     NC_("patterns-action", "Open this pattern as an image"),
-    G_CALLBACK (data_open_as_image_cmd_callback),
+    data_open_as_image_cmd_callback,
     GIMP_HELP_PATTERN_OPEN_AS_IMAGE },
 
   { "patterns-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("patterns-action", "_New Pattern"), NULL,
     NC_("patterns-action", "Create a new pattern"),
-    G_CALLBACK (data_new_cmd_callback),
+    data_new_cmd_callback,
     GIMP_HELP_PATTERN_NEW },
 
   { "patterns-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("patterns-action", "D_uplicate Pattern"), NULL,
     NC_("patterns-action", "Duplicate this pattern"),
-    G_CALLBACK (data_duplicate_cmd_callback),
+    data_duplicate_cmd_callback,
     GIMP_HELP_PATTERN_DUPLICATE },
 
   { "patterns-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("patterns-action", "Copy Pattern _Location"), NULL,
     NC_("patterns-action", "Copy pattern file location to clipboard"),
-    G_CALLBACK (data_copy_location_cmd_callback),
+    data_copy_location_cmd_callback,
     GIMP_HELP_PATTERN_COPY_LOCATION },
 
   { "patterns-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("patterns-action", "Show in _File Manager"), NULL,
     NC_("patterns-action", "Show pattern file location in the file manager"),
-    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    data_show_in_file_manager_cmd_callback,
     GIMP_HELP_PATTERN_SHOW_IN_FILE_MANAGER },
 
   { "patterns-delete", GIMP_ICON_EDIT_DELETE,
     NC_("patterns-action", "_Delete Pattern"), NULL,
     NC_("patterns-action", "Delete this pattern"),
-    G_CALLBACK (data_delete_cmd_callback),
+    data_delete_cmd_callback,
     GIMP_HELP_PATTERN_DELETE },
 
   { "patterns-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("patterns-action", "_Refresh Patterns"), NULL,
     NC_("patterns-action", "Refresh patterns"),
-    G_CALLBACK (data_refresh_cmd_callback),
+    data_refresh_cmd_callback,
     GIMP_HELP_PATTERN_REFRESH }
 };
 
@@ -106,7 +106,7 @@ patterns_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "patterns-action",
                                         patterns_edit_actions,
                                         G_N_ELEMENTS (patterns_edit_actions),
-                                        G_CALLBACK (data_edit_cmd_callback));
+                                        data_edit_cmd_callback);
 }
 
 void

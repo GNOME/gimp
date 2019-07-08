@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_COLORMAP_H__
@@ -25,6 +25,8 @@
 void           gimp_image_colormap_init            (GimpImage     *image);
 void           gimp_image_colormap_dispose         (GimpImage     *image);
 void           gimp_image_colormap_free            (GimpImage     *image);
+
+void           gimp_image_colormap_update_formats  (GimpImage     *image);
 
 const Babl   * gimp_image_colormap_get_rgb_format  (GimpImage     *image);
 const Babl   * gimp_image_colormap_get_rgba_format (GimpImage     *image);

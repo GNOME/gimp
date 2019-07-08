@@ -15,14 +15,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GUIDE_H__
 #define __GIMP_GUIDE_H__
 
 
-#include "gimpobject.h"
+#include "gimpauxitem.h"
 
 
 #define GIMP_GUIDE_POSITION_UNDEFINED G_MININT
@@ -41,17 +41,14 @@ typedef struct _GimpGuideClass   GimpGuideClass;
 
 struct _GimpGuide
 {
-  GObject           parent_instance;
+  GimpAuxItem       parent_instance;
 
   GimpGuidePrivate *priv;
 };
 
 struct _GimpGuideClass
 {
-  GObjectClass      parent_class;
-
-  /*  signals  */
-  void (* removed) (GimpGuide  *guide);
+  GimpAuxItemClass  parent_class;
 };
 
 
@@ -63,8 +60,6 @@ GimpGuide *         gimp_guide_custom_new       (GimpOrientationType  orientatio
                                                  guint32              guide_ID,
                                                  GimpGuideStyle       guide_style);
 
-guint32             gimp_guide_get_ID           (GimpGuide           *guide);
-
 GimpOrientationType gimp_guide_get_orientation  (GimpGuide           *guide);
 void                gimp_guide_set_orientation  (GimpGuide           *guide,
                                                  GimpOrientationType  orientation);
@@ -72,7 +67,6 @@ void                gimp_guide_set_orientation  (GimpGuide           *guide,
 gint                gimp_guide_get_position     (GimpGuide           *guide);
 void                gimp_guide_set_position     (GimpGuide           *guide,
                                                  gint                 position);
-void                gimp_guide_removed          (GimpGuide           *guide);
 
 GimpGuideStyle      gimp_guide_get_style        (GimpGuide           *guide);
 gboolean            gimp_guide_is_custom        (GimpGuide           *guide);

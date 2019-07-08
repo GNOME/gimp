@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -182,8 +182,8 @@ gimp_text_editor_new (const gchar     *title,
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (editor));
 
-  toolbar = gtk_ui_manager_get_widget (GTK_UI_MANAGER (editor->ui_manager),
-                                       "/text-editor-toolbar");
+  toolbar = gimp_ui_manager_get_widget (editor->ui_manager,
+                                        "/text-editor-toolbar");
 
   if (toolbar)
     {
@@ -214,6 +214,10 @@ gimp_text_editor_new (const gchar     *title,
   switch (editor->base_dir)
     {
     case GIMP_TEXT_DIRECTION_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_LTR);
       break;
     case GIMP_TEXT_DIRECTION_RTL:
@@ -286,6 +290,10 @@ gimp_text_editor_set_direction (GimpTextEditor    *editor,
       switch (editor->base_dir)
         {
         case GIMP_TEXT_DIRECTION_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
           gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_LTR);
           break;
         case GIMP_TEXT_DIRECTION_RTL:

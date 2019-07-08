@@ -1,0 +1,175 @@
+The following notes are from an email I received from Fabian 'ryg' Giesen. They
+should help answer some questions regarding the code found in dxt.c
+
+---
+
+mul8bit: This formula is equivalent to (a*b)/255 for a fairly large set of
+values (didn't bother finding out the exact bounds). It's a fairly well-known
+trick also used in other parts of the GIMP codebase (among others) and was
+first documented by Jim Blinn, I think. A good reference is his book "Dirty
+Pixels".
+
+---
+
+lerp_rgb: The expression computed is exactly equivalent to mul8bit(a[i],255-f)
++ mul8bit(b[i],f) - I just verified that by brute force for -255 <= b[i]-a[i]
+<= 255 because I couldn't be bothered to find a derivation for this :) . You
+customarily use a factor between 0 and 256 incluse for LERPing if you can, but
+normal DXT blocks have colors placed at 1/3 and 2/3 between the two
+interpolated colors. 255 is divisible by 3, so lerp_rgb can later be used in
+eval_colors to determine the result of
+
+  a*(1/3) + b*(2/3)  and  a*(2/3) + b*(1/3)
+
+exactly, which is nice :)
+
+---
+
+dither_block: This is just Floyd-Steinberg dithering. Distributing the error
+terms to the adjacent pixels for each source pixel is the customary variant to
+write this, but since blocks are so small, it's nearly all boundary
+cases; "gathering" the error terms per source pixel turned out to be simpler.
+
+---
+
+match_colors_block: This includes a few tricks. We want to map each source
+color to its nearest representable color (index), using the euclidean distance
+as a metric.
+
+The obvious, brute-force way is to just compare squared distances to the 4
+representable colors for each source pixel (using, for example,
+color_distance); this requires a lot of arithmetic operations.
+
+Instead, the code uses the fact that the 4 colors lie on a line in RGB space
+(only approximately in truth, since we have discrete steps). It's a well-known
+fact in geometry that if P is the closest point to the line L in 3D space, and
+Q is the point closest to P on L, then (P-Q) is orthogonal to the direction of
+L. So (in R3 at least), we can simply determine Q by projecting P onto the
+direction vector of L, which is done by the 16 dot products in the first for
+loop. Since the RGB values have discrete steps in reality, this is just an
+approximation, but a quite good one.
+
+The loop after that determines where the 4 actually representable colors lie
+along the line. After that, you simply need to determine which of those 4
+values your current pixel's dot product is closest to. Instead of doing a
+bunch of comparisions per pixel, the code computes the points along the line
+at which the decision would change (that's c0pt, halfpt and c3pt). This would
+still require 3 comparisions; by testing the middle point - which is halfpt -
+first, one point is always excluded from consideration, which reduces the
+number of compares to two in all cases. No big deal, but hey, why not :)
+
+Similarly, instead of dithering full RGB values, I just dither the dot product
+values. Again, by my experiments this works just as well and reduces the
+amount of work significantly.
+
+---
+
+optimize_colors_block: This first determines min/max/mean for r,g,b and the
+covariance matrix for the color distribution. The latter is used to determine
+the principal component (=eigenvector with largest eigenvalue) of that color
+distribution, or the direction along which the colors in the block vary most
+(in layman's terms) - the eigenvector is determined using simple power
+iteration (a standard technique). That iteration needs a seed vector; I just
+use (max_r-min_r,max_g-min_g,max_b-min_b), which works well in practice. If
+the iteration converges to a vector with very small magnitude (or zero), which
+can happen sometimes, it just defaults to an approximation of the YCbCr Y
+vector (scaled appropriately to make sure no precision is lost with the dot
+products).
+
+This is then used as an initial approximation for the direction of the line
+through RGB color space that is used to select colors for that block. It
+simply uses the two most extreme points along that axis as the two colors
+stored in the block.
+
+---
+
+refine_block: This takes a block and a chosen set of color indices, and tries
+to determine the optimal endpoints for these indices (i.e. the full process
+is: take block, use color distribution to get rough estimate of optimal
+direction, assign color indices accordingly, use these to get better
+endpoints, assign indices again). The computation just solves a least-squares
+system to minimize the square error between the actual pixels and the
+interpolated colors (solving for the two extremal colors). The least-squares
+computation turns out to boil down to solving a 2x2 system of linear equations
+for each of the RGB color channels; the actual solution is computed using
+Cramer's rule.
+
+The code is somewhat weird (especially the "prods"/"akku" thing), but that's
+just to reduce the amount of computation done (this piece of code is a hot
+spot, so it's worth it).
+
+The (!yy || !xx || xx * yy == xy*xy) part checks whether the system of linear
+equations is degenerate. After pondering about this some months ago, I found
+out that the only case in which this can ever happen is when all pixels of the
+source block get mapped to the same color value. But that case can be handled
+better in any case, by just using the single-color lookup tables. I've
+attached the new version of refine_block using that observation - it both
+increases performance (a bit) and image quality, so it's pretty neat.
+
+---
+
+encode_alpha_block_DXT5: The only thing that shouldn't be obvious is the index
+computation. This just uses some two's complement arithmetic and bit shuffling
+to avoid computing
+
+  7 * (in_alpha - min_alpha) / (max_alpha - min_alpha)
+
+which would be more expensive. (The extra calc with idx is just because of the
+weird DXT color numbering).
+
+---
+
+Some more notes on the general flow:
+
+The computation without dithering is just as I explained in the part about
+refine_block:
+1. Calc initial endpoints directly from block colors
+2. Determine color indices for these endpoints
+3. Optimize endpoints given color indices
+4. Determine new color indices given optimized endpoints
+
+With dithering, there's a twist: The first two steps are done using a version
+of the block dithered to colors that are representable using 16-bit 565 RGB
+values. I've found that this significantly improves visual quality with
+dithering; if you don't do this, the colors inside a block typically vary too
+little for dithering to be useful. This process decreases objective quality
+but typically looks notably better.
+
+The single-color match (omatch5/omatch6) trick: If the block only contains a
+single color (or, for the improved version of refine_block, if the color
+values are sufficiently close to all map to the same index), an optimal
+solution can be used instead.
+
+You normally want solid-color blocks to map to solid-color block (because
+dithering patterns are very obvious otherwise). This means that all color
+indices for the block are going to be identical, i.e. all 0, 1, 2 or 3. All-0
+is symmetrical to all-1 (with the endpoints flipped), and all-2 is symmetrical
+to all-3 (again with the endpoints flipped). So you only need to consider
+all-0 or all-2 indices for the block. Furthermore, all-0 means that the first
+endpoint specified in the block gets used for all pixels; you can get the same
+result by setting both endpoints to the same value and using index 2 for
+everything.
+
+In short, you can always set all indices to 2 without sacrificing any quality
+whatsoever. For any of the color components R,G,B, you then want to determine
+5-bit or 6-bit values a and b such that
+
+  expand[a]*(2/3) + expand[b]*(1/3) is as close as possible to R/G/B
+
+and that's exactly what's in omatch5 (for 5-bit values) and omatch6 (for 6-bit
+values).
+
+If you use the 3-color+transparency mode of DXT1, you need separate versions
+for omatch5/omatch6 for this case, since the interpolated value is exactly
+halfway between the two endpoints instead of 1/3 of the way along. But I
+recommend against that mode, because even if your top-level mipmap has 1-bit
+transparency, mipmaps will have more than 2 distinct values, and the DXT mode
+is selected per texture. That's why my original code doesn't support the
+3-color mode of DXT1 at all: I don't think it's useful in practice.
+
+Not sure if all of this is useful to you or not, but I guess it might make
+sense to at least put this in a seperate text file or whatever, because
+otherwise it's really quite hard to see what's going on in some places.
+
+Cheers,
+-Fabian "ryg" Giesen 

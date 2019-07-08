@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -24,6 +24,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -63,53 +64,20 @@ gimp_image_convert_precision (GimpImage        *image,
   GimpProgress     *sub_progress;
   GList            *layers;
   GimpDrawable     *drawable;
-  const gchar      *undo_desc    = NULL;
+  const gchar      *enum_desc;
+  gchar            *undo_desc = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (precision != gimp_image_get_precision (image));
-  g_return_if_fail (precision == GIMP_PRECISION_U8_GAMMA ||
-                    gimp_image_get_base_type (image) != GIMP_INDEXED);
+  g_return_if_fail (gimp_babl_is_valid (gimp_image_get_base_type (image),
+                                        precision));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  switch (precision)
-    {
-    case GIMP_PRECISION_U8_LINEAR:
-      undo_desc = C_("undo-type", "Convert Image to 8 bit linear integer");
-      break;
-    case GIMP_PRECISION_U8_GAMMA:
-      undo_desc = C_("undo-type", "Convert Image to 8 bit gamma integer");
-      break;
-    case GIMP_PRECISION_U16_LINEAR:
-      undo_desc = C_("undo-type", "Convert Image to 16 bit linear integer");
-      break;
-    case GIMP_PRECISION_U16_GAMMA:
-      undo_desc = C_("undo-type", "Convert Image to 16 bit gamma integer");
-      break;
-    case GIMP_PRECISION_U32_LINEAR:
-      undo_desc = C_("undo-type", "Convert Image to 32 bit linear integer");
-      break;
-    case GIMP_PRECISION_U32_GAMMA:
-      undo_desc = C_("undo-type", "Convert Image to 32 bit gamma integer");
-      break;
-    case GIMP_PRECISION_HALF_LINEAR:
-      undo_desc = C_("undo-type", "Convert Image to 16 bit linear floating point");
-      break;
-    case GIMP_PRECISION_HALF_GAMMA:
-      undo_desc = C_("undo-type", "Convert Image to 16 bit gamma floating point");
-      break;
-    case GIMP_PRECISION_FLOAT_LINEAR:
-      undo_desc = C_("undo-type", "Convert Image to 32 bit linear floating point");
-      break;
-    case GIMP_PRECISION_FLOAT_GAMMA:
-      undo_desc = C_("undo-type", "Convert Image to 32 bit gamma floating point");
-      break;
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-      undo_desc = C_("undo-type", "Convert Image to 64 bit linear floating point");
-      break;
-    case GIMP_PRECISION_DOUBLE_GAMMA:
-      undo_desc = C_("undo-type", "Convert Image to 64 bit gamma floating point");
-      break;
-    }
+  gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
+                       NULL, NULL, &enum_desc, NULL);
+
+  undo_desc = g_strdup_printf (C_("undo-type", "Convert Image to %s"),
+                               enum_desc);
 
   if (progress)
     gimp_progress_start (progress, FALSE, "%s", undo_desc);
@@ -128,11 +96,12 @@ gimp_image_convert_precision (GimpImage        *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
+  g_free (undo_desc);
 
   /*  Push the image precision to the stack  */
   gimp_image_undo_push_image_precision (image, NULL);
 
-  old_profile = gimp_image_get_color_profile (image);
+  old_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
   old_format  = gimp_image_get_layer_format (image, FALSE);
 
   /*  Set the new precision  */
@@ -140,17 +109,23 @@ gimp_image_convert_precision (GimpImage        *image,
 
   new_format = gimp_image_get_layer_format (image, FALSE);
 
-  if (old_profile)
+  /* we use old_format and new_format just for looking at their
+   * TRCs, new_format's space might be incorrect, don't use it
+   * for anything else.
+   */
+  if (gimp_babl_format_get_trc (old_format) !=
+      gimp_babl_format_get_trc (new_format))
     {
-      if (gimp_babl_format_get_linear (old_format) !=
-          gimp_babl_format_get_linear (new_format))
-        {
-          /* when converting between linear and gamma, we create a new
-           * profile using the original profile's chromacities and
-           * whitepoint, but a linear/sRGB-gamma TRC.
-           */
+      GimpImageBaseType base_type = gimp_image_get_base_type (image);
+      GimpTRCType       new_trc   = gimp_babl_trc (precision);
 
-          if (gimp_babl_format_get_linear (new_format))
+      /* if the image doesn't use the builtin profile, create a new
+       * one, using the original profile's chromacities and
+       * whitepoint, but a linear/sRGB-gamma TRC.
+       */
+      if (gimp_image_get_color_profile (image))
+        {
+          if (new_trc == GIMP_TRC_LINEAR)
             {
               new_profile =
                 gimp_color_profile_new_linear_from_color_profile (old_profile);
@@ -160,20 +135,19 @@ gimp_image_convert_precision (GimpImage        *image,
               new_profile =
                 gimp_color_profile_new_srgb_trc_from_color_profile (old_profile);
             }
-
-          /* if a new profile cannot be be generated, convert to the
-           * builtin profile, which is better than leaving the user with
-           * broken colors
-           */
-          if (! new_profile)
-            {
-              new_profile = gimp_image_get_builtin_color_profile (image);
-              g_object_ref (new_profile);
-            }
         }
 
+      /* we always need a profile for convert_type with changing TRC
+       * on the same image, use the new precision's builtin profile if
+       * the profile couldn't be converted or the image used the old
+       * TRC's builtin profile.
+       */
       if (! new_profile)
-        new_profile = g_object_ref (old_profile);
+        {
+          new_profile = gimp_babl_get_builtin_color_profile (base_type,
+                                                             new_trc);
+          g_object_ref (new_profile);
+        }
     }
 
   while ((drawable = gimp_object_queue_pop (queue)))
@@ -201,7 +175,7 @@ gimp_image_convert_precision (GimpImage        *image,
         }
       else
         {
-          gint dither_type;
+          GeglDitherMethod dither_type;
 
           if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
             dither_type = text_layer_dither_type;
@@ -212,6 +186,7 @@ gimp_image_convert_precision (GimpImage        *image,
                                       gimp_drawable_get_base_type (drawable),
                                       precision,
                                       gimp_drawable_has_alpha (drawable),
+                                      old_profile,
                                       new_profile,
                                       dither_type,
                                       mask_dither_type,
@@ -221,10 +196,12 @@ gimp_image_convert_precision (GimpImage        *image,
 
   if (new_profile)
     {
-      if (new_profile != old_profile)
-        gimp_image_set_color_profile (image, new_profile, NULL);
-
+      gimp_image_set_color_profile (image, new_profile, NULL);
       g_object_unref (new_profile);
+    }
+  else
+    {
+      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
     }
 
   gimp_image_undo_group_end (image);

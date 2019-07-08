@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_LAYER_TREE_VIEW_H__
@@ -33,14 +33,14 @@
 #define GIMP_LAYER_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_TREE_VIEW, GimpLayerTreeViewClass))
 
 
-typedef struct _GimpLayerTreeViewClass  GimpLayerTreeViewClass;
-typedef struct _GimpLayerTreeViewPriv   GimpLayerTreeViewPriv;
+typedef struct _GimpLayerTreeViewClass   GimpLayerTreeViewClass;
+typedef struct _GimpLayerTreeViewPrivate GimpLayerTreeViewPrivate;
 
 struct _GimpLayerTreeView
 {
-  GimpDrawableTreeView   parent_instance;
+  GimpDrawableTreeView      parent_instance;
 
-  GimpLayerTreeViewPriv *priv;
+  GimpLayerTreeViewPrivate *priv;
 };
 
 struct _GimpLayerTreeViewClass

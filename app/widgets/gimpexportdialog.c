@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,6 +31,8 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpimage.h"
+
+#include "config/gimpcoreconfig.h"
 
 #include "file/gimp-file.h"
 
@@ -158,7 +160,7 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
    *   1. Type of last Export
    *   2. Type of the image Import
    *   3. Type of latest Export of any document
-   *   4. .png
+   *   4. Default file type set in Preferences
    */
 
   ext_file = gimp_image_get_exported_file (image);
@@ -171,9 +173,23 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
                                   GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
   if (ext_file)
-    g_object_ref (ext_file);
+    {
+      g_object_ref (ext_file);
+    }
   else
-    ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.png");
+    {
+      const gchar *extension;
+      gchar       *uri;
+
+      gimp_enum_get_value (GIMP_TYPE_EXPORT_FILE_TYPE,
+                           image->gimp->config->export_file_type,
+                           NULL, &extension, NULL, NULL);
+
+      uri = g_strconcat ("file:///we/only/care/about/extension.",
+                         extension, NULL);
+      ext_file = g_file_new_for_uri (uri);
+      g_free (uri);
+    }
 
   if (ext_file)
     {

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -120,8 +120,7 @@ gimp_procedure_finalize (GObject *object)
       for (i = 0; i < procedure->num_args; i++)
         g_param_spec_unref (procedure->args[i]);
 
-      g_free (procedure->args);
-      procedure->args = NULL;
+      g_clear_pointer (&procedure->args, g_free);
     }
 
   if (procedure->values)
@@ -129,8 +128,7 @@ gimp_procedure_finalize (GObject *object)
       for (i = 0; i < procedure->num_values; i++)
         g_param_spec_unref (procedure->values[i]);
 
-      g_free (procedure->values);
-      procedure->values = NULL;
+      g_clear_pointer (&procedure->values, g_free);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

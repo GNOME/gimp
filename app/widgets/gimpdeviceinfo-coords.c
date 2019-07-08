@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -39,7 +39,7 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
 {
   gdouble x;
 
-  if (gdk_event_get_axis (event, GDK_AXIS_X, &x))
+  if (event && gdk_event_get_axis (event, GDK_AXIS_X, &x))
     {
       *coords = default_coords;
 

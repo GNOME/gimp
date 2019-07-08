@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* WMF loading file filter for GIMP
@@ -495,7 +495,6 @@ load_dialog (const gchar *filename)
   GtkWidget     *image;
   GtkWidget     *grid;
   GtkWidget     *grid2;
-  GtkWidget     *abox;
   GtkWidget     *res;
   GtkWidget     *label;
   GtkWidget     *spinbutton;
@@ -537,13 +536,9 @@ load_dialog (const gchar *filename)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   pixels = wmf_get_pixbuf (filename, &vals.width, &vals.height);
@@ -591,7 +586,7 @@ load_dialog (const gchar *filename)
   gtk_widget_show (hbox);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 2);
+  spinbutton = gimp_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
@@ -639,7 +634,7 @@ load_dialog (const gchar *filename)
                              (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_width,
                              (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_width,
                              0.01, 0.1, 0);
-  spinbutton = gtk_spin_button_new (xadj, 0.01, 4);
+  spinbutton = gimp_spin_button_new (xadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_grid_attach (GTK_GRID (grid2), spinbutton, 0, 0, 1, 1);
@@ -659,7 +654,7 @@ load_dialog (const gchar *filename)
                              (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_height,
                              (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_height,
                              0.01, 0.1, 0);
-  spinbutton = gtk_spin_button_new (yadj, 0.01, 4);
+  spinbutton = gimp_spin_button_new (yadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_grid_attach (GTK_GRID (grid2), spinbutton, 0, 1, 1, 1);

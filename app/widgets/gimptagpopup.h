@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TAG_POPUP_H__
@@ -41,7 +41,7 @@ struct _GimpTagPopup
   GimpComboTagEntry *combo_entry;
 
   GtkWidget         *frame;
-  GtkWidget         *alignment;
+  GtkWidget         *border_area;
   GtkWidget         *tag_area;
 
   PangoLayout       *layout;

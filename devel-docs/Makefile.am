@@ -14,18 +14,20 @@ SUBDIRS = \
 	libgimpthumb	\
 	libgimpwidgets	\
 	libgimp		\
-	$(app)
+	$(app)		\
+	\
+	performance-logs
 
 EXTRA_DIST = \
 	README				\
 	README.gtkdoc			\
-	bugzilla-milestones.txt		\
 	contexts.txt			\
 	debug-plug-ins.txt		\
 	exif-handling.txt		\
 	gbr.txt				\
 	ggr.txt  			\
 	gih.txt  			\
+	gitlab-milestones.txt		\
 	gpb.txt  			\
 	includes.txt			\
 	libtool-instructions.txt	\

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -53,9 +53,7 @@ struct _GimpCanvasGuidePrivate
 };
 
 #define GET_PRIVATE(guide) \
-        G_TYPE_INSTANCE_GET_PRIVATE (guide, \
-                                     GIMP_TYPE_CANVAS_GUIDE, \
-                                     GimpCanvasGuidePrivate)
+        ((GimpCanvasGuidePrivate *) gimp_canvas_guide_get_instance_private ((GimpCanvasGuide *) (guide)))
 
 
 /*  local function prototypes  */
@@ -75,7 +73,8 @@ static void             gimp_canvas_guide_stroke       (GimpCanvasItem *item,
                                                         cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpCanvasGuide, gimp_canvas_guide, GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasGuide, gimp_canvas_guide,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_guide_parent_class
 
@@ -110,8 +109,6 @@ gimp_canvas_guide_class_init (GimpCanvasGuideClass *klass)
                                                       GIMP_TYPE_GUIDE_STYLE,
                                                       GIMP_GUIDE_STYLE_NONE,
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasGuidePrivate));
 }
 
 static void

@@ -6,8 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2015-02-27 06:46+0000\n"
 "PO-Revision-Date: 2015-03-09 22:37+0100\n"
 "Last-Translator: Emin Šehić <esehic3@etf.unsa.ba>\n"
@@ -95,7 +94,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "Gimp je slobodan softver; možete ga raspodjeljivati i/ili ga mijenjati pod "
 "uslovima GNU Opšte Javne Licence (GNU GPL) kako je objavljuje Zadužbina za "
@@ -107,7 +106,7 @@ msgstr ""
 "NAMJENI.  Vidite GNU Opštu Javnu Licencu za više detalja.\n"
 "\n"
 "Trebali ste da primite primjerak GNU Opšte Javne Licence uz Gimp.  Ukoliko "
-"niste, idite na http://www.gnu.org/licenses/."
+"niste, idite na https://www.gnu.org/licenses/."
 
 #: ../app/batch.c:76
 #, c-format
@@ -1746,7 +1745,7 @@ msgid "_Dilate"
 msgstr "_Diletacija"
 
 #: ../app/actions/drawable-actions.c:70
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Razvij svjetlija područja slike"
 
@@ -1756,7 +1755,7 @@ msgid "E_rode"
 msgstr "E_rozija"
 
 #: ../app/actions/drawable-actions.c:76
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Razvij tamnija područja slike"
 

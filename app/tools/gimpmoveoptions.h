@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_MOVE_OPTIONS_H__
@@ -39,6 +39,9 @@ struct _GimpMoveOptions
 
   GimpTransformType  move_type;
   gboolean           move_current;
+
+  /*  options gui  */
+  GtkWidget         *type_box;
 };
 
 

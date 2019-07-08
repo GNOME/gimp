@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -222,6 +222,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.icon_theme_dir   = icon_theme_dir ?
                                   g_file_get_path (icon_theme_dir) :
                                   NULL;
+      config.tile_cache_size  = gegl_config->tile_cache_size;
+      config.swap_path        = gegl_config->swap_path;
+      config.num_processors   = gegl_config->num_processors;
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = gimp_value_array_length (args);

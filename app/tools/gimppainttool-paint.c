@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -187,7 +187,7 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
       gimp_draw_tool_pause (draw_tool);
 
-      gimp_projection_flush_now (gimp_image_get_projection (image));
+      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
       gimp_display_flush_now (display);
 
       gimp_draw_tool_resume (draw_tool);
@@ -289,13 +289,18 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
     }
   else if (paint_tool->draw_line)
     {
+      gdouble offset_angle;
+      gdouble xres, yres;
+
+      gimp_display_shell_get_constrained_line_params (shell,
+                                                      &offset_angle,
+                                                      &xres, &yres);
+
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
-      gimp_paint_core_round_line (
-        core, paint_options,
-        constrain,
-        gimp_display_shell_get_constrained_line_offset_angle (shell));
+      gimp_paint_core_round_line (core, paint_options,
+                                  constrain, offset_angle, xres, yres);
     }
 
   /*  Notify subclasses  */
@@ -321,7 +326,7 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
                              GIMP_PAINT_STATE_MOTION, time);
     }
 
-  gimp_projection_flush_now (gimp_image_get_projection (image));
+  gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
   gimp_display_flush_now (display);
 
   /*  Start the display update timeout  */
@@ -470,7 +475,7 @@ gimp_paint_tool_paint_push (GimpPaintTool          *paint_tool,
 
       func (paint_tool, data);
 
-      gimp_projection_flush_now (gimp_image_get_projection (image));
+      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
       gimp_display_flush_now (display);
 
       gimp_draw_tool_resume (draw_tool);

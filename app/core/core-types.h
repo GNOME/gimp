@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __CORE_TYPES_H__
@@ -91,6 +91,7 @@ typedef struct _GimpObject                      GimpObject;
 typedef struct _GimpViewable                    GimpViewable;
 typedef struct _GimpFilter                      GimpFilter;
 typedef struct _GimpItem                        GimpItem;
+typedef struct _GimpAuxItem                     GimpAuxItem;
 
 typedef struct _Gimp                            Gimp;
 typedef struct _GimpImage                       GimpImage;
@@ -161,6 +162,12 @@ typedef struct _GimpLayer                       GimpLayer;
 typedef struct _GimpGroupLayer                  GimpGroupLayer;
 
 
+/*  auxiliary image items  */
+
+typedef struct _GimpGuide                       GimpGuide;
+typedef struct _GimpSamplePoint                 GimpSamplePoint;
+
+
 /*  undo objects  */
 
 typedef struct _GimpUndo                        GimpUndo;
@@ -185,11 +192,11 @@ typedef struct _GimpDrawableFilter              GimpDrawableFilter;
 typedef struct _GimpEnvironTable                GimpEnvironTable;
 typedef struct _GimpExtension                   GimpExtension;
 typedef struct _GimpExtensionManager            GimpExtensionManager;
-typedef struct _GimpGuide                       GimpGuide;
 typedef struct _GimpHistogram                   GimpHistogram;
 typedef struct _GimpIdTable                     GimpIdTable;
 typedef struct _GimpImagefile                   GimpImagefile;
 typedef struct _GimpInterpreterDB               GimpInterpreterDB;
+typedef struct _GimpLineArt                     GimpLineArt;
 typedef struct _GimpObjectQueue                 GimpObjectQueue;
 typedef struct _GimpParasiteList                GimpParasiteList;
 typedef struct _GimpPdbProgress                 GimpPdbProgress;
@@ -214,11 +221,12 @@ typedef struct _GimpWaitable                    GimpWaitable;    /* dummy typede
 
 /*  non-object types  */
 
+typedef struct _GimpBacktrace                   GimpBacktrace;
 typedef struct _GimpBoundSeg                    GimpBoundSeg;
+typedef struct _GimpChunkIterator               GimpChunkIterator;
 typedef struct _GimpCoords                      GimpCoords;
 typedef struct _GimpGradientSegment             GimpGradientSegment;
 typedef struct _GimpPaletteEntry                GimpPaletteEntry;
-typedef struct _GimpSamplePoint                 GimpSamplePoint;
 typedef struct _GimpScanConvert                 GimpScanConvert;
 typedef struct _GimpTempBuf                     GimpTempBuf;
 typedef         guint32                         GimpTattoo;

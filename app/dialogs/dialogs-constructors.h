@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __DIALOGS_CONSTRUCTORS_H__
@@ -42,6 +42,10 @@ GtkWidget * dialogs_file_export_new             (GimpDialogFactory *factory,
                                                  GimpUIManager     *ui_manager,
                                                  gint               view_size);
 GtkWidget * dialogs_preferences_get             (GimpDialogFactory *factory,
+                                                 GimpContext       *context,
+                                                 GimpUIManager     *ui_manager,
+                                                 gint               view_size);
+GtkWidget * dialogs_extensions_get              (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,
                                                  gint               view_size);

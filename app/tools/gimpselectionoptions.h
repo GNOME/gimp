@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SELECTION_OPTIONS_H__
@@ -43,6 +43,7 @@ struct _GimpSelectionOptions
   gdouble          feather_radius;
 
   /*  options gui  */
+  GtkWidget       *mode_box;
   GtkWidget       *antialias_toggle;
 };
 

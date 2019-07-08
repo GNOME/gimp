@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* The PDF export plugin has 3 main procedures:
@@ -228,6 +228,9 @@ static gboolean          gui_single                 (void);
 
 static gboolean          gui_multi                  (void);
 
+static void              reverse_order_toggled      (GtkToggleButton *reverse_order,
+                                                     GtkButton       *layers_as_pages);
+
 static void              choose_file_call           (GtkWidget       *browse_button,
                                                      gpointer         file_entry);
 
@@ -310,8 +313,8 @@ query (void)
     { GIMP_PDB_INT32,    "vectorize",       "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
     { GIMP_PDB_INT32,    "ignore-hidden",   "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
     { GIMP_PDB_INT32,    "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
-    { GIMP_PDB_INT32,    "layers-as-pages", "Layers as pages. TRUE or FALSE" },
-    { GIMP_PDB_INT32,    "reverse-order",   "Reverse the pages order. TRUE or FALSE" }
+    { GIMP_PDB_INT32,    "layers-as-pages", "Layers as pages (bottom layers first). TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "reverse-order",   "Reverse the pages order (top layers first). TRUE or FALSE" }
   };
 
   static GimpParamDef save_multi_args[] =
@@ -502,7 +505,6 @@ run (const gchar      *name,
   for (i = 0; i < multi_page.image_count; i++)
     {
       gint32    image_ID = multi_page.images[i];
-      gboolean  exported;
       gint32   *layers;
       gint32    n_layers;
       gdouble   x_res, y_res;
@@ -519,15 +521,18 @@ run (const gchar      *name,
        */
       cairo_save (cr);
 
-      if (gimp_export_image (&image_ID, &temp, NULL,
-                             capabilities) == GIMP_EXPORT_EXPORT)
+      if (! (gimp_export_image (&image_ID, &temp, NULL,
+                                capabilities) == GIMP_EXPORT_EXPORT))
         {
-          exported = TRUE;
+          /* gimp_drawable_histogram() only works within the bounds of
+           * the selection, which is a problem (see issue #2431).
+           * Instead of saving the selection, unselecting to later
+           * reselect, let's just always work on a duplicate of the
+           * image.
+           */
+          image_ID = gimp_image_duplicate (image_ID);
         }
-      else
-        {
-          exported = FALSE;
-        }
+      gimp_selection_none (image_ID);
 
       gimp_image_get_resolution (image_ID, &x_res, &y_res);
       x_scale = 72.0 / x_res;
@@ -701,8 +706,7 @@ run (const gchar      *name,
         cairo_show_page (cr);
       cairo_restore (cr);
 
-      if (exported)
-        gimp_image_delete (image_ID);
+      gimp_image_delete (image_ID);
     }
 
   /* We are done with all the images - time to free the resources */
@@ -891,6 +895,8 @@ gui_single (void)
   GtkWidget *apply_c;
   GtkWidget *layers_as_pages_c;
   GtkWidget *reverse_order_c;
+  GtkWidget *frame;
+  gchar     *text;
   gboolean   run;
   gint32     n_layers;
 
@@ -920,27 +926,38 @@ gui_single (void)
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
   gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
+  /* Frame for multi-page from layers. */
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_end (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+
+  text = g_strdup_printf (_("Layers as pages (%s)"),
+                          optimize.reverse_order ?
+                          _("top layers first") : _("bottom layers first"));
+  layers_as_pages_c = gtk_check_button_new_with_label (text);
+  g_free (text);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
+                                optimize.layers_as_pages);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), layers_as_pages_c);
+  gimp_image_get_layers (multi_page.images[0], &n_layers);
+
   reverse_order_c = gtk_check_button_new_with_label (_("Reverse the pages order"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order_c),
                                 optimize.reverse_order);
-  gtk_box_pack_end (GTK_BOX (vbox), reverse_order_c, TRUE, TRUE, 0);
-
-  layers_as_pages_c = gtk_check_button_new_with_label (_("Layers as pages"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                optimize.layers_as_pages);
-  gimp_image_get_layers (multi_page.images[0], &n_layers);
-  gtk_box_pack_end (GTK_BOX (vbox), layers_as_pages_c, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), reverse_order_c);
 
   if (n_layers <= 1)
-  {
-    gtk_widget_set_sensitive(layers_as_pages_c, FALSE);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                  FALSE);
-  }
+    {
+      gtk_widget_set_sensitive (layers_as_pages_c, FALSE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
+                                    FALSE);
+    }
 
   g_object_bind_property (layers_as_pages_c, "active",
                           reverse_order_c,  "sensitive",
                           G_BINDING_SYNC_CREATE);
+  g_signal_connect (G_OBJECT (reverse_order_c), "toggled",
+                    G_CALLBACK (reverse_order_toggled),
+                    layers_as_pages_c);
 
   gtk_widget_show_all (window);
 
@@ -1104,6 +1121,19 @@ gui_multi (void)
   gtk_widget_destroy (window);
 
   return run;
+}
+
+static void
+reverse_order_toggled (GtkToggleButton *reverse_order,
+                       GtkButton       *layers_as_pages)
+{
+  gchar *text;
+
+  text = g_strdup_printf (_("Layers as pages (%s)"),
+                          gtk_toggle_button_get_active (reverse_order) ?
+                          _("top layers first") : _("bottom layers first"));
+  gtk_button_set_label (layers_as_pages, text);
+  g_free (text);
 }
 
 /* A function that is called when the button for browsing for file
@@ -1490,6 +1520,7 @@ drawText (gint32    text_id,
   gchar                *text   = gimp_text_layer_get_text (text_id);
   gchar                *markup = gimp_text_layer_get_markup (text_id);
   gchar                *font_family;
+  gchar                *language;
   cairo_font_options_t *options;
   gint                  x;
   gint                  y;
@@ -1501,7 +1532,6 @@ drawText (gint32    text_id,
   gboolean              justify;
   PangoAlignment        align;
   GimpTextDirection     dir;
-  PangoDirection        pango_dir;
   PangoLayout          *layout;
   PangoContext         *context;
   PangoFontDescription *font_description;
@@ -1520,7 +1550,7 @@ drawText (gint32    text_id,
 
   /* Position */
   gimp_drawable_offsets (text_id, &x, &y);
-  cairo_move_to (cr, x, y);
+  cairo_translate (cr, x, y);
 
   /* Color */
   /* When dealing with a gray/indexed image, the viewed color of the text layer
@@ -1572,15 +1602,53 @@ drawText (gint32    text_id,
 
   pango_cairo_context_set_font_options (context, options);
 
+  /* Language */
+  language = gimp_text_layer_get_language (text_id);
+  if (language)
+    pango_context_set_language (context,
+                                pango_language_from_string(language));
+
   /* Text Direction */
   dir = gimp_text_layer_get_base_direction (text_id);
 
-  if (dir == GIMP_TEXT_DIRECTION_RTL)
-    pango_dir = PANGO_DIRECTION_RTL;
-  else
-    pango_dir = PANGO_DIRECTION_LTR;
+  switch (dir)
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
+      break;
 
-  pango_context_set_base_dir (context, pango_dir);
+    case GIMP_TEXT_DIRECTION_RTL:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
+      break;
+    }
 
   /* We are done with the context's settings. It's time to create the
    * layout
@@ -1604,26 +1672,33 @@ drawText (gint32    text_id,
   pango_layout_set_font_description (layout, font_description);
 
   /* Width */
-  pango_layout_set_width (layout, gimp_drawable_width (text_id) * PANGO_SCALE);
+  if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
+    pango_layout_set_width (layout, gimp_drawable_width (text_id) * PANGO_SCALE);
+  else
+    pango_layout_set_width (layout, gimp_drawable_height (text_id) * PANGO_SCALE);
 
   /* Justification, and Alignment */
   justify = FALSE;
   j = gimp_text_layer_get_justification (text_id);
-
-  if (j == GIMP_TEXT_JUSTIFY_CENTER)
-    align = PANGO_ALIGN_CENTER;
-  else if (j == GIMP_TEXT_JUSTIFY_LEFT)
-    align = PANGO_ALIGN_LEFT;
-  else if (j == GIMP_TEXT_JUSTIFY_RIGHT)
-    align = PANGO_ALIGN_RIGHT;
-  else /* We have GIMP_TEXT_JUSTIFY_FILL */
+  align = PANGO_ALIGN_LEFT;
+  switch (j)
     {
-      if (dir == GIMP_TEXT_DIRECTION_LTR)
-        align = PANGO_ALIGN_LEFT;
-      else
-        align = PANGO_ALIGN_RIGHT;
+    case GIMP_TEXT_JUSTIFY_LEFT:
+      align = PANGO_ALIGN_LEFT;
+      break;
+    case GIMP_TEXT_JUSTIFY_RIGHT:
+      align = PANGO_ALIGN_RIGHT;
+      break;
+    case GIMP_TEXT_JUSTIFY_CENTER:
+      align = PANGO_ALIGN_CENTER;
+      break;
+    case GIMP_TEXT_JUSTIFY_FILL:
+      align = PANGO_ALIGN_LEFT;
       justify = TRUE;
+      break;
     }
+  pango_layout_set_alignment (layout, align);
+  pango_layout_set_justify (layout, justify);
 
   /* Indentation */
   indent = gimp_text_layer_get_indent (text_id);
@@ -1638,8 +1713,6 @@ drawText (gint32    text_id,
   letter_spacing_at = pango_attr_letter_spacing_new ((int)(PANGO_SCALE * letter_spacing));
   pango_attr_list_insert (attr_list, letter_spacing_at);
 
-  pango_layout_set_justify (layout, justify);
-  pango_layout_set_alignment (layout, align);
 
   pango_layout_set_attributes (layout, attr_list);
 
@@ -1650,10 +1723,25 @@ drawText (gint32    text_id,
   else /* If we can't find a markup, then it has just text */
     pango_layout_set_text (layout, text, -1);
 
+  if (dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
+      dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT)
+    {
+      cairo_translate (cr, gimp_drawable_width (text_id), 0);
+      cairo_rotate (cr, G_PI_2);
+    }
+
+  if (dir == GIMP_TEXT_DIRECTION_TTB_LTR ||
+      dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT)
+    {
+      cairo_translate (cr, 0, gimp_drawable_height (text_id));
+      cairo_rotate (cr, -G_PI_2);
+    }
+
   pango_cairo_show_layout (cr, layout);
 
   g_free (text);
   g_free (font_family);
+  g_free (language);
 
   g_object_unref (layout);
   pango_font_description_free (font_description);

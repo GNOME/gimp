@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -227,15 +227,27 @@ gimp_device_info_constructed (GObject *object)
 
   if (info->device)
     {
+      gint i;
+
       g_object_set_data (G_OBJECT (info->device), GIMP_DEVICE_INFO_DATA_KEY,
                          info);
 
       gimp_object_set_name (GIMP_OBJECT (info),
                             gdk_device_get_name (info->device));
 
-      info->mode    = gdk_device_get_mode (info->device);
-      info->n_axes  = gdk_device_get_n_axes (info->device);
-      info->n_keys  = gdk_device_get_n_keys (info->device);
+      info->mode = gdk_device_get_mode (info->device);
+
+      info->n_axes = gdk_device_get_n_axes (info->device);
+      info->axes = g_new0 (GdkAxisUse, info->n_axes);
+      for (i = 0; i < info->n_axes; i++)
+        info->axes[i] = gdk_device_get_axis_use (info->device, i);
+
+      info->n_keys = gdk_device_get_n_keys (info->device);
+      info->keys = g_new0 (GimpDeviceKey, info->n_keys);
+      for (i = 0; i < info->n_keys; i++)
+        gdk_device_get_key (info->device, i,
+                            &info->keys[i].keyval,
+                            &info->keys[i].modifiers);
     }
 }
 
@@ -292,21 +304,15 @@ gimp_device_info_set_property (GObject      *object,
         if (array)
           {
             gint i;
-            gint n_device_values;
+            gint n_device_values = gimp_value_array_length (array);
 
             if (device)
-              {
-                n_device_values = MIN (gimp_value_array_length (array),
-                                       gdk_device_get_n_axes (device));
-              }
-            else
-              {
-                n_device_values = gimp_value_array_length (array);
+              n_device_values = MIN (n_device_values,
+                                     gdk_device_get_n_axes (device));
 
-                info->n_axes = n_device_values;
-                info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
-                memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
-              }
+            info->n_axes = n_device_values;
+            info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
+            memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
 
             for (i = 0; i < n_device_values; i++)
               {
@@ -327,21 +333,15 @@ gimp_device_info_set_property (GObject      *object,
         if (array)
           {
             gint i;
-            gint n_device_values;
+            gint n_device_values = gimp_value_array_length (array);
 
             if (device)
-              {
-                n_device_values = MIN (gimp_value_array_length (array),
-                                       gdk_device_get_n_keys (device));
-              }
-            else
-              {
-                n_device_values = gimp_value_array_length (array);
+              n_device_values = MIN (n_device_values,
+                                     gdk_device_get_n_keys (device));
 
-                info->n_keys = n_device_values;
-                info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
-                memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
-              }
+            info->n_keys = n_device_values;
+            info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
+            memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
 
             for (i = 0; i < n_device_values; i++)
               {
@@ -617,13 +617,35 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       g_printerr ("%s: trying to set GdkDevice '%s' on GimpDeviceInfo "
                   "which already has a device\n",
                   G_STRFUNC, gdk_device_get_name (device));
+
+#ifdef G_OS_WIN32
+      /*  This is a very weird/dirty difference we make between Win32 and
+       *  Linux. On Linux, we had breakage because of duplicate devices,
+       *  fixed by overwriting the info's old device (assuming it to be
+       *  dead) with the new one. Unfortunately doing this on Windows
+       *  too broke a lot of devices (which used to work with the old
+       *  way). See the regression bug #2495.
+       *
+       *  NOTE that this only happens if something is wrong on the USB
+       *  or udev or libinput or whatever side and the same device is
+       *  present multiple times. Therefore there doesn't seem to be an
+       *  absolute single "solution" to this problem (well there is, but
+       *  probably not in GIMP, where we can only react). This is more
+       *  of an experimenting-in-real-life kind of bug.
+       *  Also we had no clear report on macOS or BSD (AFAIK) of broken
+       *  tablets with any of the version of the code. So let's keep
+       *  these similar to Linux for now.
+       */
       return FALSE;
+#endif /* G_OS_WIN32 */
     }
   else if (! device && ! info->device)
     {
       g_printerr ("%s: trying to unset GdkDevice of GimpDeviceInfo '%s'"
                   "which has no device\n",
                   G_STRFUNC, gimp_object_get_name (info));
+
+      /*  bail out, unsetting twice makes no sense  */
       return FALSE;
     }
 
@@ -681,7 +703,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
       memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
 
-      for (i = 0; i < gdk_device_get_n_axes (device); i++)
+      for (i = 0; i < info->n_axes; i++)
         gimp_device_info_set_axis_use (info, i,
                                        gdk_device_get_axis_use (device, i));
 
@@ -689,7 +711,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
       memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
 
-      for (i = 0; i < MIN (info->n_keys, gdk_device_get_n_keys (device)); i++)
+      for (i = 0; i < info->n_keys; i++)
         {
           guint           keyval    = 0;
           GdkModifierType modifiers = 0;
@@ -884,7 +906,7 @@ gimp_device_info_get_vendor_id (GimpDeviceInfo  *info)
     {
       if (gdk_device_get_device_type (info->device) == GDK_DEVICE_TYPE_MASTER)
         {
-          id = _("(Virtual decvice)");
+          id = _("(Virtual device)");
         }
       else
         {
@@ -909,7 +931,7 @@ gimp_device_info_get_product_id (GimpDeviceInfo  *info)
     {
       if (gdk_device_get_device_type (info->device) == GDK_DEVICE_TYPE_MASTER)
         {
-          return _("(Virtual decvice)");
+          return _("(Virtual device)");
         }
       else
         {
@@ -1029,8 +1051,8 @@ gimp_device_info_set_axis_use (GimpDeviceInfo *info,
     {
       if (info->device)
         gdk_device_set_axis_use (info->device, axis, use);
-      else
-        info->axes[axis] = use;
+
+      info->axes[axis] = use;
 
       g_object_notify (G_OBJECT (info), "axes");
     }
@@ -1092,14 +1114,10 @@ gimp_device_info_set_key (GimpDeviceInfo *info,
       modifiers != old_modifiers)
     {
       if (info->device)
-        {
-          gdk_device_set_key (info->device, key, keyval, modifiers);
-        }
-      else
-        {
-          info->keys[key].keyval    = keyval;
-          info->keys[key].modifiers = modifiers;
-        }
+        gdk_device_set_key (info->device, key, keyval, modifiers);
+
+      info->keys[key].keyval    = keyval;
+      info->keys[key].modifiers = modifiers;
 
       g_object_notify (G_OBJECT (info), "keys");
     }

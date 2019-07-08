@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -136,9 +136,10 @@ gimp_operation_set_alpha_set_property (GObject      *object,
 static void
 gimp_operation_set_alpha_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("RGBA float"));
-  gegl_operation_set_format (operation, "aux",    babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  gegl_operation_set_format (operation, "input",  babl_format_with_space ("RGBA float", space));
+  gegl_operation_set_format (operation, "aux",    babl_format_with_space ("Y float", space));
+  gegl_operation_set_format (operation, "output", babl_format_with_space ("RGBA float", space));
 }
 
 static gboolean

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SAVE_DIALOG_H__
@@ -43,7 +43,7 @@ struct _GimpSaveDialog
   gboolean             close_after_saving;
   GimpObject          *display_to_close;
 
-  GtkWidget           *compression_toggle;
+  GtkWidget           *compression_frame;
   GtkWidget           *compat_info;
   gboolean             compression;
 };

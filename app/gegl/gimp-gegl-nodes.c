@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,6 +32,7 @@
 
 GeglNode *
 gimp_gegl_create_flatten_node (const GimpRGB       *background,
+                               const Babl          *space,
                                GimpLayerColorSpace  composite_space)
 {
   GeglNode  *node;
@@ -51,12 +52,20 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  c = gimp_gegl_color_new (background);
+  c = gimp_gegl_color_new (background, space);
   color = gegl_node_new_child (node,
                                "operation", "gegl:color",
                                "value",     c,
+                               "format",    gimp_layer_mode_get_format (
+                                              GIMP_LAYER_MODE_NORMAL,
+                                              GIMP_LAYER_COLOR_SPACE_AUTO,
+                                              composite_space,
+                                              GIMP_LAYER_COMPOSITE_AUTO,
+                                              NULL),
                                NULL);
   g_object_unref (c);
+
+  gimp_gegl_node_set_underlying_operation (node, color);
 
   mode = gegl_node_new_child (node,
                               "operation", "gimp:normal",
@@ -101,6 +110,8 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                       "value",     opacity,
                                       NULL);
 
+  gimp_gegl_node_set_underlying_operation (node, opacity_node);
+
   mask_source = gimp_gegl_add_buffer_source (node, mask,
                                              mask_offset_x,
                                              mask_offset_y);
@@ -111,6 +122,22 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                         opacity_node, "aux");
   gegl_node_connect_to (opacity_node, "output",
                         output,       "input");
+
+  return node;
+}
+
+GeglNode *
+gimp_gegl_create_transform_node (const GimpMatrix3 *matrix)
+{
+  GeglNode *node;
+
+  g_return_val_if_fail (matrix != NULL, NULL);
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:transform",
+                              NULL);
+
+  gimp_gegl_node_set_matrix (node, matrix);
 
   return node;
 }
@@ -217,14 +244,15 @@ gimp_gegl_node_set_matrix (GeglNode          *node,
 
 void
 gimp_gegl_node_set_color (GeglNode      *node,
-                          const GimpRGB *color)
+                          const GimpRGB *color,
+                          const Babl    *space)
 {
   GeglColor *gegl_color;
 
   g_return_if_fail (GEGL_IS_NODE (node));
   g_return_if_fail (color != NULL);
 
-  gegl_color = gimp_gegl_color_new (color);
+  gegl_color = gimp_gegl_color_new (color, space);
 
   gegl_node_set (node,
                  "value", gegl_color,

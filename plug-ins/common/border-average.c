@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -271,14 +271,14 @@ borderaverage (GeglBuffer   *buffer,
           GeglBufferIterator *gi;
 
           gi = gegl_buffer_iterator_new (buffer, &border[i], 0, babl_format ("R'G'B' u8"),
-                                         GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                         GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
           while (gegl_buffer_iterator_next (gi))
             {
               guint   k;
               guchar *data;
 
-              data = (guchar*) gi->data[0];
+              data = (guchar*) gi->items[0].data;
 
               for (k = 0; k < gi->length; k++)
                 {
@@ -355,7 +355,7 @@ borderaverage_dialog (gint32        image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_("Borderaverage"), PLUG_IN_ROLE,
+  dialog = gimp_dialog_new (_("Border Average"), PLUG_IN_ROLE,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

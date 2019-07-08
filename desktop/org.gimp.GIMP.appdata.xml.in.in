@@ -5,9 +5,9 @@
 
   <!--
       The tag 'metadata_license' means the licence of this file, not the whole
-      product; see http://people.freedesktop.org/~hughsient/appdata/
+      product; see https://people.freedesktop.org/~hughsient/appdata/
       as of 20.09.2013. The CC0 licence is GPL compatible, see
-      http://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses
+      https://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses
       as of 20.09.2013
   -->
   <metadata_license>CC0-1.0</metadata_license>
@@ -72,7 +72,186 @@
   </provides>
 
   <releases>
-    <release version="2.10.4" date="2018-07-07">
+    <release version="2.10.12" date="2019-06-12">
+      <url type="details">https://www.gimp.org/news/2019/06/12/gimp-2-10-12-released/</url>
+      <description>
+        <_p>
+        GIMP 2.10.12 is a significant bug fix release, which is to be expected
+        after a 2.10.10 with so many changes!
+        Still, very cool improvements are also available, in particular for
+        curves editing:
+        </_p>
+        <ul>
+          <_li>
+          Improved curves interaction overall
+          </_li>
+          <_li>
+          A few enhancements specific to the Curves tool
+          </_li>
+          <_li>
+          Layer support in TIFF
+          </_li>
+          <_li>
+          Discovery of user-installed fonts in Windows
+          </_li>
+          <_li>
+          Incremental mode in the Dodge/Burn tool
+          </_li>
+          <_li>
+          Free Select tool creates preliminary selection
+          </_li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.10.10" date="2019-04-07">
+      <url type="details">https://www.gimp.org/news/2019/04/07/gimp-2-10-10-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.10 is quite a big update with many new features and
+          bug fixes. Notable improvements include:
+        </_p>
+        <ul>
+          <_li>
+          Bucket Fill tool: new "Fill by line art detection" for not
+          perfectly closed line art zones
+          </_li>
+          <_li>
+          Bucket Fill tool can now quickly color-pick with Ctrl+click
+          </_li>
+          <_li>
+          Bucket Fill tool allows holding the mouse when filling
+          "similar colors" and "by line art detection"
+          </_li>
+          <_li>
+          Scale tool scales around center even when using numeric input
+          </_li>
+          <_li>
+          Unified Transform tool now defaults to preserving aspect ratio
+          when scaling up or down
+          </_li>
+          <_li>
+          Add "Constrain handles" and "Around center" options to the
+          perspective-transform tool's GUI
+          </_li>
+          <_li>
+          New generic canvas modifier 'Alt + middle click' to pick
+          layers
+          </_li>
+          <_li>
+          Parametric brushes now 32-bit float to avoid posterization
+          </_li>
+          <_li>
+          Clipboard brushes and pattern can now be duplicated
+          </_li>
+          <_li>
+          Failure to edit locked layers will blink to shift attention to
+          the cause of the error
+          </_li>
+          <_li>
+          New on-canvas GUI (simple lines) for circular, linear, and
+          zoom motion blur
+          </_li>
+          <_li>
+          Several optimizations including faster layer group rendering
+          </_li>
+          <_li>
+          Swap and cache files are not saved in the configuration
+          directory anymore
+          </_li>
+          <_li>
+          Various file saving/exporting made more robust to error by not
+          saving partial files
+          </_li>
+          <_li>
+          HiDPI support improvements
+          </_li>
+          <_li>
+          New preference to choose the default export file type
+          </_li>
+          <_li>
+          New option to export PNG, JPEG and TIFF with a color profile;
+          always export PSD with a color profile
+          </_li>
+          <_li>
+          New DDS format loading/exporting plug-in
+          </_li>
+          <_li>
+          Full rewrite of the Spyrogimp plug-in with more options and
+          better interaction
+          </_li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.10.8" date="2018-11-07">
+      <url type="details">https://www.gimp.org/news/2018/11/08/gimp-2-10-8-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.8 is mostly a bug fix and optimization release. In
+          particular, it includes:
+        </_p>
+        <ul>
+          <_li>
+          Adaptative chunk size when rendering projections, improving
+          responsiveness dynamically
+          </_li>
+          <_li>
+          Detection of RawTherapee (version 5.5 and above) improved on
+          Windows
+          </_li>
+          <_li>
+          XCF compatibility information in the Save dialog more
+          understandable and discoverable
+          </_li>
+          <_li>
+          Various performance log tools added and log recording made
+          available in the Dashboard dock
+          </_li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.10.6" date="2018-08-19">
+      <url type="details">https://www.gimp.org/news/2018/08/19/gimp-2-10-6-released/</url>
+      <description>
+        <_p>
+          GIMP 2.10.6 comes with a lot of bug fixes, optimizations and
+          features. Most notable changes are:
+        </_p>
+        <ul>
+          <_li>
+          Text layers can now represent vertical texts (with various
+          character orientations and line directions)
+          </_li>
+          <_li>
+          New "Little Planet" (gegl:stereographic-projection) filter
+          </_li>
+          <_li>
+          New "Long Shadow" filter
+          </_li>
+          <_li>
+          The "Straighten" option of the Measure Tool now allows
+          vertical straightening
+          </_li>
+          <_li>
+          Drawable previews are now rendered asynchronously and layer
+          group previews can be disabled in Preferences
+          </_li>
+          <_li>
+          New "async" field in the Dashboard "misc" group, showing the
+          number of async operations currently running
+          </_li>
+          <_li>
+          File format filtering in Open/Save/Export dialogs made less
+          confusing
+          </_li>
+          <_li>
+          New language (having GIMP translated in 81 languages now):
+          Marathi
+          </_li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.10.4" date="2018-07-04">
+      <url type="details">https://www.gimp.org/news/2018/07/04/gimp-2-10-4-released/</url>
       <description>
         <_p>
           GIMP 2.10.4 includes a lot of bug fixes as well as various
@@ -102,6 +281,7 @@
       </description>
     </release>
     <release version="2.10.2" date="2018-05-20">
+      <url type="details">https://www.gimp.org/news/2018/05/20/gimp-2-10-2-released/</url>
       <description>
         <_p>
           This second release in the GIMP 2.10 series, so soon after
@@ -119,6 +299,7 @@
     </release>
 
     <release version="2.10.0" date="2018-04-27">
+      <url type="details">https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</url>
       <description>
         <_p>
           First release of the 2.10 series which prominently features
@@ -168,11 +349,11 @@
             And much, much more…
           </_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</_p>
       </description>
     </release>
 
     <release version="2.10.0~rc2" date="2018-04-17" type="development">
+      <url type="details">https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</url>
       <description>
         <_p>
         In this second release candidate before GIMP 2.10.0, while
@@ -182,9 +363,9 @@
         </_p>
         <ul>
           <_li>Major core optimizations for painting and display,
-          including parallelized painting code.</_li>
+          including parallelized painting code</_li>
           <_li>Symmetries are now preserved in XCF files (saved as image
-          parasites).</_li>
+          parasites)</_li>
           <_li>"Light" and "Dark" themes rewritten from scratch to get
           rid of various usability issues. "Lighter" and "Darker" themes
           removed.</_li>
@@ -194,12 +375,12 @@
           <_li>Plug-in debugging improved to output stack traces from
           plug-ins with --stack-trace-mode command line option not only
           on receiving signals but also on warnings and critical errors
-          when "fatal-warnings" debug key is set.</_li>
+          when "fatal-warnings" debug key is set</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</_p>
       </description>
     </release>
     <release version="2.10.0~rc1" date="2018-03-26" type="development">
+      <url type="details">https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</url>
       <description>
         <_p>
         GIMP 2.10.0-RC1 is the first release candidate before GIMP
@@ -218,11 +399,11 @@
           <_li>Metadata defaults preferences now available</_li>
           <_li>Various GUI polishing</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</_p>
       </description>
     </release>
 
     <release version="2.9.8" date="2017-12-12" type="development">
+      <url type="details">https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</url>
       <description>
         <_p>GIMP 2.9.8 introduces on-canvas gradient
         editing and various enhancements while focusing on bugfixing
@@ -240,7 +421,6 @@
           <_li>New support for password-protected PDF</_li>
           <_li>New support for HGT format (Digital Elevation Model data)</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</_p>
       </description>
     </release>
     <release version="2.9.6" date="2017-08-24" type="development" />
@@ -260,4 +440,5 @@
     <release version="2.8.2"  date="2012-08-24"/>
     <release version="2.8.0"  date="2012-05-03"/>
   </releases>
+  <content_rating type="oars-1.1" />
 </component>

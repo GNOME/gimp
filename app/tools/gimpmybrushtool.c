@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -101,7 +101,7 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
                                          "tools/tools-mypaint-brush-hardness-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
+                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static void

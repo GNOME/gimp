@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -220,11 +220,7 @@ gimp_tag_entry_dispose (GObject *object)
 {
   GimpTagEntry *entry = GIMP_TAG_ENTRY (object);
 
-  if (entry->selected_items)
-    {
-      g_list_free (entry->selected_items);
-      entry->selected_items = NULL;
-    }
+  g_clear_pointer (&entry->selected_items, g_list_free);
 
   if (entry->common_tags)
     {

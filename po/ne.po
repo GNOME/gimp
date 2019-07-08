@@ -16,8 +16,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gnome Nepali Translation Project\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N"
-"+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-07-28 21:48+0000\n"
 "PO-Revision-Date: 2017-07-31 12:57+0545\n"
 "Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
@@ -4473,7 +4472,7 @@ msgstr "फैलाउनु"
 
 #: ../app/actions/filters-actions.c:138
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "छवि क्षेत्रहरू बेर्न माउस नियन्त्रण प्रयोग गर्नुहोस्"
 
@@ -4484,7 +4483,7 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:154
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "छवि क्षेत्रहरू बेर्न माउस नियन्त्रण प्रयोग गर्नुहोस्"
 
@@ -9893,19 +9892,19 @@ msgstr "पूरा पर्दा टगल गर्नुहोस्"
 
 #: ../app/actions/view-actions.c:315
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "जुम तत्व: %d:१"
 
 #: ../app/actions/view-actions.c:320
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "बाहिरी जुम"
 
 #: ../app/actions/view-actions.c:325
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "यदि सम्भव भएमा"
 
@@ -9944,14 +9943,14 @@ msgstr "जुम "
 #: ../app/actions/view-actions.c:354
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "बाहिरी जुम"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "भित्रि जुम"
 

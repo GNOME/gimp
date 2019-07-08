@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -103,8 +103,9 @@ static void        file_revert_confirm_response (GtkWidget    *dialog,
 
 
 void
-file_open_cmd_callback (GtkAction *action,
-                        gpointer   data)
+file_open_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   Gimp        *gimp;
   GtkWidget   *widget;
@@ -120,8 +121,9 @@ file_open_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_as_layers_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+file_open_as_layers_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   Gimp        *gimp;
   GtkWidget   *widget;
@@ -141,8 +143,9 @@ file_open_as_layers_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_location_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_open_location_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -155,22 +158,25 @@ file_open_location_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_recent_cmd_callback (GtkAction *action,
-                               gint       value,
-                               gpointer   data)
+file_open_recent_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   Gimp          *gimp;
   GimpImagefile *imagefile;
+  gint           index;
   gint           num_entries;
   return_if_no_gimp (gimp, data);
 
+  index = g_variant_get_int32 (value);
+
   num_entries = gimp_container_get_n_children (gimp->documents);
 
-  if (value >= num_entries)
+  if (index >= num_entries)
     return;
 
   imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_index (gimp->documents, value);
+    gimp_container_get_child_by_index (gimp->documents, index);
 
   if (imagefile)
     {
@@ -212,9 +218,9 @@ file_open_recent_cmd_callback (GtkAction *action,
 }
 
 void
-file_save_cmd_callback (GtkAction *action,
-                        gint       value,
-                        gpointer   data)
+file_save_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   Gimp         *gimp;
   GimpDisplay  *display;
@@ -229,7 +235,7 @@ file_save_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  save_mode = (GimpSaveMode) value;
+  save_mode = (GimpSaveMode) g_variant_get_int32 (value);
 
   if (! gimp_image_get_active_drawable (image))
     return;
@@ -353,8 +359,9 @@ file_save_cmd_callback (GtkAction *action,
 }
 
 void
-file_create_template_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+file_create_template_cmd_callback (GimpAction *action,
+                                   GVariant   *value,
+                                   gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -375,8 +382,9 @@ file_create_template_cmd_callback (GtkAction *action,
 }
 
 void
-file_revert_cmd_callback (GtkAction *action,
-                          gpointer   data)
+file_revert_cmd_callback (GimpAction *action,
+                          GVariant   *value,
+                          gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -447,8 +455,9 @@ file_revert_cmd_callback (GtkAction *action,
 }
 
 void
-file_close_all_cmd_callback (GtkAction *action,
-                             gpointer   data)
+file_close_all_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);
@@ -470,8 +479,9 @@ file_close_all_cmd_callback (GtkAction *action,
 }
 
 void
-file_copy_location_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_copy_location_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   Gimp         *gimp;
   GimpDisplay  *display;
@@ -494,8 +504,9 @@ file_copy_location_cmd_callback (GtkAction *action,
 }
 
 void
-file_show_in_file_manager_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+file_show_in_file_manager_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
 {
   Gimp         *gimp;
   GimpDisplay  *display;
@@ -523,8 +534,9 @@ file_show_in_file_manager_cmd_callback (GtkAction *action,
 }
 
 void
-file_quit_cmd_callback (GtkAction *action,
-                        gpointer   data)
+file_quit_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);

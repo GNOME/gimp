@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -79,9 +79,7 @@ struct _GimpDisplayPrivate
 };
 
 #define GIMP_DISPLAY_GET_PRIVATE(display) \
-        G_TYPE_INSTANCE_GET_PRIVATE (display, \
-                                     GIMP_TYPE_DISPLAY, \
-                                     GimpDisplayPrivate)
+        ((GimpDisplayPrivate *) gimp_display_get_instance_private ((GimpDisplay *) (display)))
 
 
 /*  local function prototypes  */
@@ -126,6 +124,7 @@ static void     gimp_display_paint_area             (GimpDisplay         *displa
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplay, gimp_display, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpDisplay)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_progress_iface_init))
 
@@ -164,8 +163,6 @@ gimp_display_class_init (GimpDisplayClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_DISPLAY_SHELL,
                                                         GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDisplayPrivate));
 }
 
 static void
@@ -720,12 +717,21 @@ void
 gimp_display_empty (GimpDisplay *display)
 {
   GimpDisplayPrivate *private;
+  GList              *iter;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   g_return_if_fail (GIMP_IS_IMAGE (private->image));
+
+  for (iter = display->gimp->context_list; iter; iter = g_list_next (iter))
+    {
+      GimpContext *context = iter->data;
+
+      if (gimp_context_get_display (context) == display)
+        gimp_context_set_image (context, NULL);
+    }
 
   gimp_display_set_image (display, NULL);
 

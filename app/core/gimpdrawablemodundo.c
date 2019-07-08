@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -198,7 +198,7 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
                         &drawable_mod_undo->offset_y);
 
   gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
-                                 buffer, offset_x, offset_y);
+                                 buffer, offset_x, offset_y, TRUE);
   g_object_unref (buffer);
 }
 

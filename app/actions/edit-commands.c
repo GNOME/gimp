@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -53,9 +53,8 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "tools/gimptools-utils.h"
 #include "tools/tool_manager.h"
-
-#include "dialogs/fade-dialog.h"
 
 #include "actions.h"
 #include "edit-commands.h"
@@ -65,25 +64,28 @@
 
 /*  local function prototypes  */
 
-static void   edit_paste                         (GimpDisplay   *display,
-                                                  GimpPasteType  paste_type,
-                                                  gboolean       try_svg);
-static void   cut_named_buffer_callback          (GtkWidget     *widget,
-                                                  const gchar   *name,
-                                                  gpointer       data);
-static void   copy_named_buffer_callback         (GtkWidget     *widget,
-                                                  const gchar   *name,
-                                                  gpointer       data);
-static void   copy_named_visible_buffer_callback (GtkWidget     *widget,
-                                                  const gchar   *name,
-                                                  gpointer       data);
+static gboolean   check_drawable_alpha               (GimpDrawable  *drawable,
+                                                      gpointer       data);
+static void       edit_paste                         (GimpDisplay   *display,
+                                                      GimpPasteType  paste_type,
+                                                      gboolean       try_svg);
+static void       cut_named_buffer_callback          (GtkWidget     *widget,
+                                                      const gchar   *name,
+                                                      gpointer       data);
+static void       copy_named_buffer_callback         (GtkWidget     *widget,
+                                                      const gchar   *name,
+                                                      gpointer       data);
+static void       copy_named_visible_buffer_callback (GtkWidget     *widget,
+                                                      const gchar   *name,
+                                                      gpointer       data);
 
 
 /*  public functions  */
 
 void
-edit_undo_cmd_callback (GtkAction *action,
-                        gpointer   data)
+edit_undo_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -98,8 +100,9 @@ edit_undo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_redo_cmd_callback (GtkAction *action,
-                        gpointer   data)
+edit_redo_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -114,8 +117,9 @@ edit_redo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_strong_undo_cmd_callback (GtkAction *action,
-                               gpointer   data)
+edit_strong_undo_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   return_if_no_image (image, data);
@@ -125,8 +129,9 @@ edit_strong_undo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_strong_redo_cmd_callback (GtkAction *action,
-                               gpointer   data)
+edit_strong_redo_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage *image;
   return_if_no_image (image, data);
@@ -136,8 +141,9 @@ edit_strong_redo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_undo_clear_cmd_callback (GtkAction *action,
-                              gpointer   data)
+edit_undo_clear_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage     *image;
   GimpUndoStack *undo_stack;
@@ -205,35 +211,18 @@ edit_undo_clear_cmd_callback (GtkAction *action,
 }
 
 void
-edit_fade_cmd_callback (GtkAction *action,
-                        gpointer   data)
-{
-  GimpImage *image;
-  GtkWidget *widget;
-  GtkWidget *dialog;
-  return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
-
-  dialog = fade_dialog_new (image, widget);
-
-  if (dialog)
-    {
-      g_signal_connect_object (image, "disconnect",
-                               G_CALLBACK (gtk_widget_destroy),
-                               dialog, G_CONNECT_SWAPPED);
-      gtk_widget_show (dialog);
-    }
-}
-
-void
-edit_cut_cmd_callback (GtkAction *action,
-                       gpointer   data)
+edit_cut_cmd_callback (GimpAction *action,
+                       GVariant   *value,
+                       gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
   GimpObject   *cut;
   GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
+
+  if (! check_drawable_alpha (drawable, data))
+    return;
 
   cut = gimp_edit_cut (image, drawable, action_data_get_context (data),
                        &error);
@@ -262,8 +251,9 @@ edit_cut_cmd_callback (GtkAction *action,
 }
 
 void
-edit_copy_cmd_callback (GtkAction *action,
-                        gpointer   data)
+edit_copy_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -298,8 +288,9 @@ edit_copy_cmd_callback (GtkAction *action,
 }
 
 void
-edit_copy_visible_cmd_callback (GtkAction *action,
-                                gpointer   data)
+edit_copy_visible_cmd_callback (GimpAction *action,
+                                GVariant   *value,
+                                gpointer    data)
 {
   GimpImage *image;
   GError    *error = NULL;
@@ -327,18 +318,18 @@ edit_copy_visible_cmd_callback (GtkAction *action,
 }
 
 void
-edit_paste_cmd_callback (GtkAction *action,
-                         gint       value,
-                         gpointer   data)
+edit_paste_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
 {
   GimpDisplay   *display    = action_data_get_display (data);
-  GimpPasteType  paste_type = (GimpPasteType) value;
+  GimpPasteType  paste_type = (GimpPasteType) g_variant_get_int32 (value);
 
   if (paste_type == GIMP_PASTE_TYPE_FLOATING)
     {
       if (! display || ! gimp_display_get_image (display))
         {
-          edit_paste_as_new_image_cmd_callback (action, data);
+          edit_paste_as_new_image_cmd_callback (action, value, data);
           return;
         }
     }
@@ -363,8 +354,9 @@ edit_paste_cmd_callback (GtkAction *action,
 }
 
 void
-edit_paste_as_new_image_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+edit_paste_as_new_image_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
   Gimp       *gimp;
   GtkWidget  *widget;
@@ -396,8 +388,9 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_cut_cmd_callback (GtkAction *action,
-                             gpointer   data)
+edit_named_cut_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -416,8 +409,9 @@ edit_named_cut_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_copy_cmd_callback (GtkAction *action,
-                              gpointer   data)
+edit_named_copy_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -436,8 +430,9 @@ edit_named_copy_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_copy_visible_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+edit_named_copy_visible_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -456,8 +451,9 @@ edit_named_copy_visible_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_paste_cmd_callback (GtkAction *action,
-                               gpointer   data)
+edit_named_paste_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   Gimp      *gimp;
   GtkWidget *widget;
@@ -472,21 +468,25 @@ edit_named_paste_cmd_callback (GtkAction *action,
 }
 
 void
-edit_clear_cmd_callback (GtkAction *action,
-                         gpointer   data)
+edit_clear_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
   return_if_no_drawable (image, drawable, data);
+
+  if (! check_drawable_alpha (drawable, data))
+    return;
 
   gimp_drawable_edit_clear (drawable, action_data_get_context (data));
   gimp_image_flush (image);
 }
 
 void
-edit_fill_cmd_callback (GtkAction *action,
-                        gint       value,
-                        gpointer   data)
+edit_fill_cmd_callback (GimpAction *action,
+                        GVariant   *value,
+                        gpointer    data)
 {
   GimpImage       *image;
   GimpDrawable    *drawable;
@@ -495,7 +495,7 @@ edit_fill_cmd_callback (GtkAction *action,
   GError          *error = NULL;
   return_if_no_drawable (image, drawable, data);
 
-  fill_type = (GimpFillType) value;
+  fill_type = (GimpFillType) g_variant_get_int32 (value);
 
   options = gimp_fill_options_new (action_data_get_gimp (data), NULL, FALSE);
 
@@ -518,6 +518,32 @@ edit_fill_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static gboolean
+check_drawable_alpha (GimpDrawable *drawable,
+                      gpointer      data)
+{
+  if (gimp_drawable_has_alpha (drawable) &&
+      GIMP_IS_LAYER (drawable)           &&
+      gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)))
+    {
+      Gimp        *gimp    = action_data_get_gimp    (data);
+      GimpDisplay *display = action_data_get_display (data);
+
+      if (gimp && display)
+        {
+          gimp_message_literal (
+            gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
+            _("The active layer's alpha channel is locked."));
+
+          gimp_tools_blink_lock_box (gimp, GIMP_ITEM (drawable));
+        }
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
 
 static void
 edit_paste (GimpDisplay   *display,

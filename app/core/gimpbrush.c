@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,6 +31,7 @@
 #include "gimpbrush-boundary.h"
 #include "gimpbrush-load.h"
 #include "gimpbrush-private.h"
+#include "gimpbrush-save.h"
 #include "gimpbrush-transform.h"
 #include "gimpbrushcache.h"
 #include "gimpbrushgenerated.h"
@@ -82,6 +83,8 @@ static gchar       * gimp_brush_get_description       (GimpViewable         *vie
 
 static void          gimp_brush_dirty                 (GimpData             *data);
 static const gchar * gimp_brush_get_extension         (GimpData             *data);
+static void          gimp_brush_copy                  (GimpData             *data,
+                                                       GimpData             *src_data);
 
 static void          gimp_brush_real_begin_use        (GimpBrush            *brush);
 static void          gimp_brush_real_end_use          (GimpBrush            *brush);
@@ -96,6 +99,7 @@ static gchar       * gimp_brush_get_checksum          (GimpTagged           *tag
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrush, gimp_brush, GIMP_TYPE_DATA,
+                         G_ADD_PRIVATE (GimpBrush)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
                                                 gimp_brush_tagged_iface_init))
 
@@ -133,7 +137,9 @@ gimp_brush_class_init (GimpBrushClass *klass)
   viewable_class->get_description   = gimp_brush_get_description;
 
   data_class->dirty                 = gimp_brush_dirty;
+  data_class->save                  = gimp_brush_save;
   data_class->get_extension         = gimp_brush_get_extension;
+  data_class->copy                  = gimp_brush_copy;
 
   klass->begin_use                  = gimp_brush_real_begin_use;
   klass->end_use                    = gimp_brush_real_end_use;
@@ -151,8 +157,6 @@ gimp_brush_class_init (GimpBrushClass *klass)
                                                         1.0, 5000.0, 20.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpBrushPrivate));
 }
 
 static void
@@ -164,9 +168,7 @@ gimp_brush_tagged_iface_init (GimpTaggedInterface *iface)
 static void
 gimp_brush_init (GimpBrush *brush)
 {
-  brush->priv = G_TYPE_INSTANCE_GET_PRIVATE (brush,
-                                             GIMP_TYPE_BRUSH,
-                                             GimpBrushPrivate);
+  brush->priv = gimp_brush_get_instance_private (brush);
 
   brush->priv->spacing  = 20;
   brush->priv->x_axis.x = 15.0;
@@ -273,6 +275,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   GimpTempBuf       *return_buf  = NULL;
   gint               mask_width;
   gint               mask_height;
+  guchar            *mask_data;
   guchar            *mask;
   guchar            *buf;
   gint               x, y;
@@ -295,14 +298,14 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             {
                GimpBrushGenerated *gen_brush = GIMP_BRUSH_GENERATED (brush);
 
-               mask_buf = gimp_brush_transform_mask (brush, NULL, scale,
+               mask_buf = gimp_brush_transform_mask (brush, scale,
                                                      (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
                                                      gimp_brush_generated_get_angle (gen_brush) / 360.0,
                                                      FALSE,
                                                      gimp_brush_generated_get_hardness (gen_brush));
             }
           else
-            mask_buf = gimp_brush_transform_mask (brush, NULL, scale,
+            mask_buf = gimp_brush_transform_mask (brush, scale,
                                                   0.0, 0.0, FALSE, 1.0);
 
           if (! mask_buf)
@@ -316,7 +319,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             }
 
           if (pixmap_buf)
-            pixmap_buf = gimp_brush_transform_pixmap (brush, NULL, scale,
+            pixmap_buf = gimp_brush_transform_pixmap (brush, scale,
                                                       0.0, 0.0, FALSE, 1.0);
 
           mask_width  = gimp_temp_buf_get_width  (mask_buf);
@@ -328,14 +331,19 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
   return_buf = gimp_temp_buf_new (mask_width, mask_height,
                                   babl_format ("R'G'B'A u8"));
-  gimp_temp_buf_data_clear (return_buf);
 
-  mask = gimp_temp_buf_get_data (mask_buf);
+  mask = mask_data = gimp_temp_buf_lock (mask_buf, babl_format ("Y u8"),
+                                         GEGL_ACCESS_READ);
   buf  = gimp_temp_buf_get_data (return_buf);
 
   if (pixmap_buf)
     {
-      guchar *pixmap = gimp_temp_buf_get_data (pixmap_buf);
+      guchar *pixmap_data;
+      guchar *pixmap;
+
+      pixmap = pixmap_data = gimp_temp_buf_lock (pixmap_buf,
+                                                 babl_format ("R'G'B' u8"),
+                                                 GEGL_ACCESS_READ);
 
       for (y = 0; y < mask_height; y++)
         {
@@ -347,6 +355,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
               *buf++ = *mask++;
             }
         }
+
+      gimp_temp_buf_unlock (pixmap_buf, pixmap_data);
     }
   else
     {
@@ -361,6 +371,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             }
         }
     }
+
+  gimp_temp_buf_unlock (mask_buf, mask_data);
 
   if (scaled)
     {
@@ -408,6 +420,28 @@ static const gchar *
 gimp_brush_get_extension (GimpData *data)
 {
   return GIMP_BRUSH_FILE_EXTENSION;
+}
+
+static void
+gimp_brush_copy (GimpData *data,
+                 GimpData *src_data)
+{
+  GimpBrush *brush     = GIMP_BRUSH (data);
+  GimpBrush *src_brush = GIMP_BRUSH (src_data);
+
+  g_clear_pointer (&brush->priv->mask, gimp_temp_buf_unref);
+  if (src_brush->priv->mask)
+    brush->priv->mask = gimp_temp_buf_copy (src_brush->priv->mask);
+
+  g_clear_pointer (&brush->priv->pixmap, gimp_temp_buf_unref);
+  if (src_brush->priv->pixmap)
+    brush->priv->pixmap = gimp_temp_buf_copy (src_brush->priv->pixmap);
+
+  brush->priv->spacing = src_brush->priv->spacing;
+  brush->priv->x_axis  = src_brush->priv->x_axis;
+  brush->priv->y_axis  = src_brush->priv->y_axis;
+
+  gimp_data_dirty (data);
 }
 
 static void
@@ -599,7 +633,6 @@ gimp_brush_transform_size (GimpBrush     *brush,
 
 const GimpTempBuf *
 gimp_brush_transform_mask (GimpBrush *brush,
-                           GeglNode  *op,
                            gdouble    scale,
                            gdouble    aspect_ratio,
                            gdouble    angle,
@@ -619,7 +652,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
                              &width, &height);
 
   mask = gimp_brush_cache_get (brush->priv->mask_cache,
-                               op, width, height,
+                               width, height,
                                scale, aspect_ratio, angle, reflect, hardness);
 
   if (! mask)
@@ -656,37 +689,9 @@ gimp_brush_transform_mask (GimpBrush *brush,
                                                            reflect,
                                                            effective_hardness);
 
-      if (op)
-        {
-          GeglNode   *graph, *source, *target;
-          GeglBuffer *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask);
-
-          graph  = gegl_node_new ();
-          source = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-source",
-                                        "buffer", buffer,
-                                        NULL);
-          gegl_node_add_child (graph, op);
-          target = gegl_node_new_child (graph,
-                                        "operation", "gegl:write-buffer",
-                                        "buffer", buffer,
-                                        NULL);
-
-          gegl_node_link_many (source, op, target, NULL);
-          gegl_node_blit (target, 1.0,
-                          GEGL_RECTANGLE (0, 0,
-                                          gegl_buffer_get_width (buffer),
-                                          gegl_buffer_get_height (buffer)),
-                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-
-
-          g_object_unref (graph);
-          g_object_unref (buffer);
-        }
-
       gimp_brush_cache_add (brush->priv->mask_cache,
                             (gpointer) mask,
-                            op, width, height,
+                            width, height,
                             scale, aspect_ratio, angle, reflect, effective_hardness);
     }
 
@@ -695,7 +700,6 @@ gimp_brush_transform_mask (GimpBrush *brush,
 
 const GimpTempBuf *
 gimp_brush_transform_pixmap (GimpBrush *brush,
-                             GeglNode  *op,
                              gdouble    scale,
                              gdouble    aspect_ratio,
                              gdouble    angle,
@@ -716,7 +720,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                              &width, &height);
 
   pixmap = gimp_brush_cache_get (brush->priv->pixmap_cache,
-                                 op, width, height,
+                                 width, height,
                                  scale, aspect_ratio, angle, reflect, hardness);
 
   if (! pixmap)
@@ -748,36 +752,9 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                                                                reflect,
                                                                effective_hardness);
 
-      if (op)
-        {
-          GeglNode   *graph, *source, *target;
-          GeglBuffer *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) pixmap);
-
-          graph  = gegl_node_new ();
-          source = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-source",
-                                        "buffer", buffer,
-                                        NULL);
-          gegl_node_add_child (graph, op);
-          target = gegl_node_new_child (graph,
-                                        "operation", "gegl:write-buffer",
-                                        "buffer", buffer,
-                                        NULL);
-
-          gegl_node_link_many (source, op, target, NULL);
-          gegl_node_blit (target, 1.0,
-                          GEGL_RECTANGLE (0, 0,
-                                          gegl_buffer_get_width (buffer),
-                                          gegl_buffer_get_height (buffer)),
-                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-
-          g_object_unref (graph);
-          g_object_unref (buffer);
-        }
-
       gimp_brush_cache_add (brush->priv->pixmap_cache,
                             (gpointer) pixmap,
-                            op, width, height,
+                            width, height,
                             scale, aspect_ratio, angle, reflect, effective_hardness);
     }
 
@@ -806,7 +783,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                              width, height);
 
   boundary = gimp_brush_cache_get (brush->priv->boundary_cache,
-                                   NULL, *width, *height,
+                                   *width, *height,
                                    scale, aspect_ratio, angle, reflect, hardness);
 
   if (! boundary)
@@ -829,7 +806,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
       if (boundary)
         gimp_brush_cache_add (brush->priv->boundary_cache,
                               (gpointer) boundary,
-                              NULL, *width, *height,
+                              *width, *height,
                               scale, aspect_ratio, angle, reflect, hardness);
     }
 

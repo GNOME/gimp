@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PLUG_IN_MANAGER_H__
@@ -48,6 +48,11 @@ struct _GimpPlugInManager
   GSList            *save_procs;
   GSList            *export_procs;
   GSList            *raw_load_procs;
+
+  GSList            *display_load_procs;
+  GSList            *display_save_procs;
+  GSList            *display_export_procs;
+  GSList            *display_raw_load_procs;
 
   GSList            *menu_branches;
   GSList            *locale_domains;

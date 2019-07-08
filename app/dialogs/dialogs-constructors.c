@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -71,6 +71,7 @@
 #include "action-search-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
+#include "extensions-dialog.h"
 #include "file-open-dialog.h"
 #include "file-open-location-dialog.h"
 #include "file-save-dialog.h"
@@ -142,6 +143,15 @@ dialogs_preferences_get (GimpDialogFactory *factory,
                          gint               view_size)
 {
   return preferences_dialog_create (context->gimp);
+}
+
+GtkWidget *
+dialogs_extensions_get (GimpDialogFactory *factory,
+                        GimpContext       *context,
+                        GimpUIManager     *ui_manager,
+                        gint               view_size)
+{
+  return extensions_dialog_new (context->gimp);
 }
 
 GtkWidget *

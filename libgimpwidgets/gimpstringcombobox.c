@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -69,7 +69,8 @@ static void   gimp_string_combo_box_get_property (GObject      *object,
                                                   GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpStringComboBox, gimp_string_combo_box, GTK_TYPE_COMBO_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpStringComboBox, gimp_string_combo_box,
+                            GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_string_combo_box_parent_class
 
@@ -135,16 +136,12 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpStringComboBoxPrivate));
 }
 
 static void
 gimp_string_combo_box_init (GimpStringComboBox *combo_box)
 {
-  combo_box->priv = G_TYPE_INSTANCE_GET_PRIVATE (combo_box,
-                                                 GIMP_TYPE_STRING_COMBO_BOX,
-                                                 GimpStringComboBoxPrivate);
+  combo_box->priv = gimp_string_combo_box_get_instance_private (combo_box);
 }
 
 static void

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOOL_H__
@@ -59,6 +59,12 @@ struct _GimpTool
   GdkModifierType  modifier_state;
   GdkModifierType  button_press_state;
   GdkModifierType  active_modifier_state;
+
+  /*  private state for synthesizing button_release() events
+   */
+  GimpCoords       last_pointer_coords;
+  guint32          last_pointer_time;
+  GdkModifierType  last_pointer_state;
 
   /*  private state for click detection
    */

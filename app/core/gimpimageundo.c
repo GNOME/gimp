@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -39,7 +39,6 @@
 #include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
 #include "gimpimageundo.h"
-#include "gimpparasitelist.h"
 
 
 enum
@@ -188,8 +187,9 @@ gimp_image_undo_constructed (GObject *object)
                                          GIMP_IMAGE_COLORMAP_SIZE);
       break;
 
-    case GIMP_UNDO_IMAGE_COLOR_MANAGED:
-      image_undo->is_color_managed = gimp_image_get_is_color_managed (image);
+    case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
+      g_set_object (&image_undo->hidden_profile,
+                    _gimp_image_get_hidden_profile (image));
       break;
 
     case GIMP_UNDO_IMAGE_METADATA:
@@ -472,14 +472,14 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_COLOR_MANAGED:
+    case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
       {
-        gboolean is_color_managed;
+        GimpColorProfile *hidden_profile = NULL;
 
-        is_color_managed = gimp_image_get_is_color_managed (image);
-        gimp_image_set_is_color_managed (image, image_undo->is_color_managed,
-                                         FALSE);
-        image_undo->is_color_managed = is_color_managed;
+        g_set_object (&hidden_profile, _gimp_image_get_hidden_profile (image));
+        _gimp_image_set_hidden_profile (image, image_undo->hidden_profile,
+                                        FALSE);
+        image_undo->hidden_profile = hidden_profile;
       }
       break;
 
@@ -501,21 +501,14 @@ gimp_image_undo_pop (GimpUndo            *undo,
     case GIMP_UNDO_PARASITE_REMOVE:
       {
         GimpParasite *parasite = image_undo->parasite;
-        const gchar  *name;
 
         image_undo->parasite = gimp_parasite_copy
           (gimp_image_parasite_find (image, image_undo->parasite_name));
 
         if (parasite)
-          gimp_parasite_list_add (private->parasites, parasite);
+          gimp_image_parasite_attach (image, parasite, FALSE);
         else
-          gimp_parasite_list_remove (private->parasites,
-                                     image_undo->parasite_name);
-
-        name = parasite ? parasite->name : image_undo->parasite_name;
-
-        if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-          _gimp_image_update_color_profile (image, parasite);
+          gimp_image_parasite_detach (image, image_undo->parasite_name, FALSE);
 
         if (parasite)
           gimp_parasite_free (parasite);
@@ -535,6 +528,7 @@ gimp_image_undo_free (GimpUndo     *undo,
 
   g_clear_object (&image_undo->grid);
   g_clear_pointer (&image_undo->colormap, g_free);
+  g_clear_object (&image_undo->hidden_profile);
   g_clear_object (&image_undo->metadata);
   g_clear_pointer (&image_undo->parasite_name, g_free);
   g_clear_pointer (&image_undo->parasite, gimp_parasite_free);

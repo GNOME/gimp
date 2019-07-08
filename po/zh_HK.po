@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6.7\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2012-05-06 03:29+0200\n"
 "PO-Revision-Date: 2011-01-01 19:40+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
@@ -60,7 +60,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "本程式是自由軟件，你可以遵照自由軟件基金會 (Free Software Foundation) 出版的 "
 "GNU 通用公共許可證條款 (GNU General Public License) 第二版來修改和重新發佈這"
@@ -70,7 +70,7 @@ msgstr ""
 "擔保。更詳細的情況請參閱 GNU 通用公共許可證。\n"
 "\n"
 "你應該已經和程式一起收到一份 GNU 通用公共許可證的副本。如果還沒有，請查閱"
-"http://www.gnu.org/licenses/。\n"
+"https://www.gnu.org/licenses/。\n"
 
 #: ../app/app.c:224
 #, c-format
@@ -11801,7 +11801,7 @@ msgid ""
 "%s"
 msgstr ""
 "程序「%s」的呼叫錯誤：\n"
-"\r%s"
+"%s"
 
 #: ../app/plug-in/gimpplugin-message.c:494
 #, c-format
@@ -11819,7 +11819,7 @@ msgid ""
 "%s"
 msgstr ""
 "「%s」的呼叫錯誤：\n"
-"\r%s"
+"%s"
 
 #: ../app/plug-in/gimppluginprocedure.c:999
 #, c-format
@@ -11828,7 +11828,7 @@ msgid ""
 "%s"
 msgstr ""
 "「%s」的執行錯誤：\n"
-"\r%s"
+"%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:331
 msgid "Cancelled"

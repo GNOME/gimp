@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -83,8 +83,6 @@ static gboolean gimp_utils_generic_available (const gchar *program,
                                               gint         major,
                                               gint         minor);
 static gboolean gimp_utils_gdb_available     (gint         major,
-                                              gint         minor);
-static gboolean gimp_utils_lldb_available    (gint         major,
                                               gint         minor);
 
 /**
@@ -1111,14 +1109,37 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  *
  * On Win32, we return TRUE if Dr. Mingw is built-in, FALSE otherwise.
  *
+ * Note: this function is not crash-safe, i.e. you should not try to use
+ * it in a callback when the program is already crashing. In such a
+ * case, call gimp_stack_trace_print() or gimp_stack_trace_query()
+ * directly.
+ *
  * Since: 2.10
  **/
 gboolean
 gimp_stack_trace_available (gboolean optimal)
 {
 #ifndef G_OS_WIN32
-  if (gimp_utils_gdb_available (7, 0) ||
-      gimp_utils_lldb_available (0, 0))
+  gchar    *lld_path = NULL;
+  gboolean  has_lldb = FALSE;
+
+  /* Similarly to gdb, we could check for lldb by calling:
+   * gimp_utils_generic_available ("lldb", major, minor).
+   * We don't do so on purpose because on macOS, when lldb is absent, it
+   * triggers a popup asking to install Xcode. So instead, we just
+   * search for the executable in path.
+   * This is the reason why this function is not crash-safe, since
+   * g_find_program_in_path() allocates memory.
+   * See issue #1999.
+   */
+  lld_path = g_find_program_in_path ("lldb");
+  if (lld_path)
+    {
+      has_lldb = TRUE;
+      g_free (lld_path);
+    }
+
+  if (gimp_utils_gdb_available (7, 0) || has_lldb)
     return TRUE;
 #ifdef HAVE_EXECINFO_H
   if (! optimal)
@@ -1300,7 +1321,12 @@ gimp_stack_trace_print (const gchar   *prog_name,
           eintr_count = 0;
           if (! stack_printed)
             {
-#if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
+#if defined(PLATFORM_OSX)
+              if (stream)
+                g_fprintf (stream,
+                           "\n# Stack traces obtained from PID %d - Thread 0x%lx #\n\n",
+                           pid, tid);
+#elif defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
               if (stream)
                 g_fprintf (stream,
                            "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
@@ -1309,7 +1335,11 @@ gimp_stack_trace_print (const gchar   *prog_name,
               if (trace)
                 {
                   gtrace = g_string_new (NULL);
-#if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
+#if defined(PLATFORM_OSX)
+                  g_string_printf (gtrace,
+                                   "\n# Stack traces obtained from PID %d - Thread 0x%lx #\n\n",
+                                   pid, tid);
+#elif defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
                   g_string_printf (gtrace,
                                    "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
                                    pid, tid);
@@ -1573,11 +1603,4 @@ gimp_utils_gdb_available (gint major,
                           gint minor)
 {
   return gimp_utils_generic_available ("gdb", major, minor);
-}
-
-static gboolean
-gimp_utils_lldb_available (gint major,
-                           gint minor)
-{
-  return gimp_utils_generic_available ("lldb", major, minor);
 }

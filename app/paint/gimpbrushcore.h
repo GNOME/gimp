@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_BRUSH_CORE_H__
@@ -50,6 +50,9 @@ struct _GimpBrushCore
   gdouble            angle;
   gboolean           reflect;
   gdouble            hardness;
+
+  gdouble            symmetry_angle;
+  gboolean           symmetry_reflect;
 
   /*  brush buffers  */
   GimpTempBuf       *pressure_brush;
@@ -108,8 +111,7 @@ void   gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                        GimpLayerMode             paint_mode,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness,
-                                       GimpPaintApplicationMode  mode,
-                                       GeglNode                 *op);
+                                       GimpPaintApplicationMode  mode);
 void   gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                        GimpDrawable             *drawable,
                                        const GimpCoords         *coords,
@@ -117,31 +119,34 @@ void   gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                        gdouble                   image_opacity,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness,
-                                       GimpPaintApplicationMode  mode,
-                                       GeglNode                 *op);
+                                       GimpPaintApplicationMode  mode);
 
 void   gimp_brush_core_color_area_with_pixmap
                                       (GimpBrushCore            *core,
                                        GimpDrawable             *drawable,
                                        const GimpCoords         *coords,
-                                       GeglNode                 *op,
                                        GeglBuffer               *area,
                                        gint                      area_x,
                                        gint                      area_y,
-                                       GimpBrushApplicationMode  mode);
+                                       gboolean                  apply_mask);
 
 const GimpTempBuf * gimp_brush_core_get_brush_mask
                                       (GimpBrushCore            *core,
                                        const GimpCoords         *coords,
-                                       GeglNode                 *op,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness);
+const GimpTempBuf * gimp_brush_core_get_brush_pixmap
+                                      (GimpBrushCore            *core);
 
 void   gimp_brush_core_eval_transform_dynamics
-                                      (GimpBrushCore            *paint_core,
+                                      (GimpBrushCore            *core,
                                        GimpDrawable             *drawable,
                                        GimpPaintOptions         *paint_options,
                                        const GimpCoords         *coords);
+void   gimp_brush_core_eval_transform_symmetry
+                                      (GimpBrushCore            *core,
+                                       GimpSymmetry             *symmetry,
+                                       gint                      stroke);
 
 
 #endif  /*  __GIMP_BRUSH_CORE_H__  */

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,6 +47,7 @@
 enum
 {
   PROP_0,
+  PROP_TRC,
   PROP_LINEAR,
   PROP_CHANNEL,
   PROP_LOW_INPUT,
@@ -104,6 +105,14 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-levels";
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRC,
+                         "trc",
+                         _("Linear/Perceptual"),
+                         _("Work on linear or perceptual RGB"),
+                         GIMP_TYPE_TRC_TYPE,
+                         GIMP_TRC_NON_LINEAR, 0);
+
+  /* compat */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
                             "linear",
                             _("Linear"),
@@ -186,8 +195,12 @@ gimp_levels_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_TRC:
+      g_value_set_enum (value, self->trc);
+      break;
+
     case PROP_LINEAR:
-      g_value_set_boolean (value, self->linear);
+      g_value_set_boolean (value, self->trc == GIMP_TRC_LINEAR ? TRUE : FALSE);
       break;
 
     case PROP_CHANNEL:
@@ -238,8 +251,14 @@ gimp_levels_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TRC:
+      self->trc = g_value_get_enum (value);
+      break;
+
     case PROP_LINEAR:
-      self->linear = g_value_get_boolean (value);
+      self->trc = g_value_get_boolean (value) ?
+                  GIMP_TRC_LINEAR : GIMP_TRC_NON_LINEAR;
+      g_object_notify (object, "trc");
       break;
 
     case PROP_CHANNEL:
@@ -296,7 +315,7 @@ gimp_levels_config_serialize (GimpConfig       *config,
   gboolean              success = TRUE;
 
   if (! gimp_config_serialize_property_by_name (config, "time",         writer) ||
-      ! gimp_config_serialize_property_by_name (config, "linear",       writer) ||
+      ! gimp_config_serialize_property_by_name (config, "trc",          writer) ||
       ! gimp_config_serialize_property_by_name (config, "clamp-input",  writer) ||
       ! gimp_config_serialize_property_by_name (config, "clamp-output", writer))
     return FALSE;
@@ -358,7 +377,7 @@ gimp_levels_config_equal (GimpConfig *a,
   GimpLevelsConfig     *config_b = GIMP_LEVELS_CONFIG (b);
   GimpHistogramChannel  channel;
 
-  if (config_a->linear       != config_b->linear      ||
+  if (config_a->trc          != config_b->trc         ||
       config_a->clamp_input  != config_b->clamp_input ||
       config_a->clamp_output != config_b->clamp_output)
     return FALSE;
@@ -394,7 +413,7 @@ gimp_levels_config_reset (GimpConfig *config)
       gimp_levels_config_reset_channel (l_config);
     }
 
-  gimp_config_reset_property (G_OBJECT (config), "linear");
+  gimp_config_reset_property (G_OBJECT (config), "trc");
   gimp_config_reset_property (G_OBJECT (config), "channel");
   gimp_config_reset_property (G_OBJECT (config), "clamp-input");
   gimp_config_reset_property (G_OBJECT (config), "clamp_output");
@@ -426,12 +445,12 @@ gimp_levels_config_copy (GimpConfig  *src,
   g_object_notify (G_OBJECT (dest), "low-output");
   g_object_notify (G_OBJECT (dest), "high-output");
 
-  dest_config->linear       = src_config->linear;
+  dest_config->trc          = src_config->trc;
   dest_config->channel      = src_config->channel;
   dest_config->clamp_input  = src_config->clamp_input;
   dest_config->clamp_output = src_config->clamp_output;
 
-  g_object_notify (G_OBJECT (dest), "linear");
+  g_object_notify (G_OBJECT (dest), "trc");
   g_object_notify (G_OBJECT (dest), "channel");
   g_object_notify (G_OBJECT (dest), "clamp-input");
   g_object_notify (G_OBJECT (dest), "clamp-output");
@@ -689,24 +708,21 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
 
   curves = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
-  curves->linear = config->linear;
+  curves->trc = config->trc;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
       GimpCurve  *curve    = curves->curve[channel];
-      const gint  n_points = gimp_curve_get_n_points (curve);
       static const gint n  = 8;
-      gint        point    = -1;
       gdouble     gamma    = config->gamma[channel];
       gdouble     delta_in;
       gdouble     delta_out;
       gdouble     x, y;
 
       /* clear the points set by default */
-      gimp_curve_set_point (curve, 0, -1, -1);
-      gimp_curve_set_point (curve, n_points - 1, -1, -1);
+      gimp_curve_clear_points (curve);
 
       delta_in  = config->high_input[channel] - config->low_input[channel];
       delta_out = config->high_output[channel] - config->low_output[channel];
@@ -714,8 +730,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
       x = config->low_input[channel];
       y = config->low_output[channel];
 
-      point = CLAMP (n_points * x, point + 1, n_points - 1 - n);
-      gimp_curve_set_point (curve, point, x, y);
+      gimp_curve_add_point (curve, x, y);
 
       if (delta_out != 0 && gamma != 1.0)
         {
@@ -755,8 +770,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
                   x = config->low_input[channel] + dx;
                   y = config->low_output[channel] + delta_out *
                       gimp_operation_levels_map_input (config, channel, x);
-                  point = CLAMP (n_points * x, point + 1, n_points - 1 - n + i);
-                  gimp_curve_set_point (curve, point, x, y);
+                  gimp_curve_add_point (curve, x, y);
                 }
             }
           else
@@ -792,8 +806,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
                   y = config->low_output[channel] + dy;
                   x = config->low_input[channel] + delta_in *
                       gimp_operation_levels_map_input (config_inv, channel, y);
-                  point = CLAMP (n_points * x, point + 1, n_points - 1 - n + i);
-                  gimp_curve_set_point (curve, point, x, y);
+                  gimp_curve_add_point (curve, x, y);
                 }
 
               g_object_unref (config_inv);
@@ -803,8 +816,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
       x = config->high_input[channel];
       y = config->high_output[channel];
 
-      point = CLAMP (n_points * x, point + 1, n_points - 1);
-      gimp_curve_set_point (curve, point, x, y);
+      gimp_curve_add_point (curve, x, y);
     }
 
   return curves;
@@ -894,11 +906,11 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
       config->high_output[i] = high_output[i] / 255.0;
     }
 
-  config->linear       = FALSE;
+  config->trc          = GIMP_TRC_NON_LINEAR;
   config->clamp_input  = TRUE;
   config->clamp_output = TRUE;
 
-  g_object_notify (G_OBJECT (config), "linear");
+  g_object_notify (G_OBJECT (config), "trc");
   g_object_notify (G_OBJECT (config), "low-input");
   g_object_notify (G_OBJECT (config), "high-input");
   g_object_notify (G_OBJECT (config), "clamp-input");

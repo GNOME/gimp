@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TRANSFORM_GRID_OPTIONS_H__
@@ -37,6 +37,7 @@ struct _GimpTransformGridOptions
 {
   GimpTransformOptions  parent_instance;
 
+  gboolean              direction_linked;
   gboolean              show_preview;
   gdouble               preview_opacity;
   GimpGuidesType        grid_type;

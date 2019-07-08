@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CURVE_VIEW_H__
@@ -48,11 +48,15 @@ struct _GimpCurveView
   gint               grid_columns;
 
   gint               selected;
+  gdouble            offset_x;
+  gdouble            offset_y;
+  GimpCurvePointType point_type;
   gdouble            last_x;
   gdouble            last_y;
   gdouble            leftmost;
   gdouble            rightmost;
   gboolean           grabbed;
+  GimpCurve         *orig_curve;
 
   GdkCursorType      cursor_type;
 
@@ -78,9 +82,12 @@ struct _GimpCurveViewClass
 {
   GimpHistogramViewClass  parent_class;
 
-  void (* cut_clipboard)   (GimpCurveView *view);
-  void (* copy_clipboard)  (GimpCurveView *view);
-  void (* paste_clipboard) (GimpCurveView *view);
+  /* signals */
+  void (* selection_changed) (GimpCurveView *view);
+
+  void (* cut_clipboard)     (GimpCurveView *view);
+  void (* copy_clipboard)    (GimpCurveView *view);
+  void (* paste_clipboard)   (GimpCurveView *view);
 };
 
 
@@ -103,6 +110,8 @@ void   gimp_curve_view_remove_all_backgrounds (GimpCurveView *view);
 
 void        gimp_curve_view_set_selected      (GimpCurveView *view,
                                                gint           selected);
+gint        gimp_curve_view_get_selected      (GimpCurveView *view);
+
 void        gimp_curve_view_set_range_x       (GimpCurveView *view,
                                                gdouble        min,
                                                gdouble        max);

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_MEASURE_OPTIONS_H__
@@ -35,12 +35,13 @@ typedef struct _GimpMeasureOptionsClass GimpMeasureOptionsClass;
 
 struct _GimpMeasureOptions
 {
-  GimpTransformOptions  parent_instance;
+  GimpTransformOptions    parent_instance;
 
-  gboolean              use_info_window;
+  GimpCompassOrientation  orientation;
+  gboolean                use_info_window;
 
   /*  options gui  */
-  GtkWidget            *straighten_button;
+  GtkWidget              *straighten_button;
 };
 
 struct _GimpMeasureOptionsClass

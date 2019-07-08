@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -32,6 +32,9 @@
 #include "gimptempbuf.h"
 
 
+#define LOCK_DATA_ALIGNMENT 16
+
+
 struct _GimpTempBuf
 {
   gint        ref_count;
@@ -41,6 +44,21 @@ struct _GimpTempBuf
   guchar     *data;
 };
 
+typedef struct
+{
+  const Babl     *format;
+  GeglAccessMode  access_mode;
+} LockData;
+
+G_STATIC_ASSERT (sizeof (LockData) <= LOCK_DATA_ALIGNMENT);
+
+
+/*  local variables  */
+
+static guintptr gimp_temp_buf_total_memsize = 0;
+
+
+/*  public functions  */
 
 GimpTempBuf *
 gimp_temp_buf_new (gint        width,
@@ -64,6 +82,9 @@ gimp_temp_buf_new (gint        width,
   temp->height    = height;
   temp->format    = format;
   temp->data      = gegl_malloc ((gsize) width * height * bpp);
+
+  g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
+                        +gimp_temp_buf_get_memsize (temp));
 
   return temp;
 }
@@ -132,29 +153,31 @@ gimp_temp_buf_copy (const GimpTempBuf *src)
 }
 
 GimpTempBuf *
-gimp_temp_buf_ref (GimpTempBuf *buf)
+gimp_temp_buf_ref (const GimpTempBuf *buf)
 {
   g_return_val_if_fail (buf != NULL, NULL);
 
-  buf->ref_count++;
+  g_atomic_int_inc ((gint *) &buf->ref_count);
 
-  return buf;
+  return (GimpTempBuf *) buf;
 }
 
 void
-gimp_temp_buf_unref (GimpTempBuf *buf)
+gimp_temp_buf_unref (const GimpTempBuf *buf)
 {
   g_return_if_fail (buf != NULL);
   g_return_if_fail (buf->ref_count > 0);
 
-  buf->ref_count--;
-
-  if (buf->ref_count < 1)
+  if (g_atomic_int_dec_and_test ((gint *) &buf->ref_count))
     {
+      g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
+                            -gimp_temp_buf_get_memsize (buf));
+
+
       if (buf->data)
         gegl_free (buf->data);
 
-      g_slice_free (GimpTempBuf, buf);
+      g_slice_free (GimpTempBuf, (GimpTempBuf *) buf);
     }
 }
 
@@ -262,6 +285,75 @@ gimp_temp_buf_data_clear (GimpTempBuf *buf)
   return buf->data;
 }
 
+gpointer
+gimp_temp_buf_lock (const GimpTempBuf *buf,
+                    const Babl        *format,
+                    GeglAccessMode     access_mode)
+{
+  guchar   *data;
+  LockData *lock_data;
+  gint      n_pixels;
+  gint      bpp;
+
+  g_return_val_if_fail (buf != NULL, NULL);
+
+  if (! format || format == buf->format)
+    return gimp_temp_buf_get_data (buf);
+
+  n_pixels = buf->width * buf->height;
+  bpp      = babl_format_get_bytes_per_pixel (format);
+
+  data = gegl_scratch_alloc (LOCK_DATA_ALIGNMENT + n_pixels * bpp);
+
+  if ((guintptr) data % LOCK_DATA_ALIGNMENT)
+    {
+      g_free (data);
+
+      g_return_val_if_reached (NULL);
+    }
+
+  lock_data              = (LockData *) data;
+  lock_data->format      = format;
+  lock_data->access_mode = access_mode;
+
+  data += LOCK_DATA_ALIGNMENT;
+
+  if (access_mode & GEGL_ACCESS_READ)
+    {
+      babl_process (babl_fish (buf->format, format),
+                    gimp_temp_buf_get_data (buf),
+                    data,
+                    n_pixels);
+    }
+
+  return data;
+}
+
+void
+gimp_temp_buf_unlock (const GimpTempBuf *buf,
+                      gconstpointer      data)
+{
+  LockData *lock_data;
+
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (data != NULL);
+
+  if (data == buf->data)
+    return;
+
+  lock_data = (LockData *) ((const guint8 *) data - LOCK_DATA_ALIGNMENT);
+
+  if (lock_data->access_mode & GEGL_ACCESS_WRITE)
+    {
+      babl_process (babl_fish (lock_data->format, buf->format),
+                    data,
+                    gimp_temp_buf_get_data (buf),
+                    buf->width * buf->height);
+    }
+
+  gegl_scratch_free (lock_data);
+}
+
 gsize
 gimp_temp_buf_get_memsize (const GimpTempBuf *buf)
 {
@@ -271,8 +363,8 @@ gimp_temp_buf_get_memsize (const GimpTempBuf *buf)
   return 0;
 }
 
-GeglBuffer  *
-gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
+GeglBuffer *
+gimp_temp_buf_create_buffer (const GimpTempBuf *temp_buf)
 {
   GeglBuffer *buffer;
 
@@ -288,13 +380,14 @@ gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
                                       (GDestroyNotify) gimp_temp_buf_unref,
                                       gimp_temp_buf_ref (temp_buf));
 
-  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
+  g_object_set_data (G_OBJECT (buffer),
+                     "gimp-temp-buf", (GimpTempBuf *) temp_buf);
 
   return buffer;
 }
 
 GdkPixbuf *
-gimp_temp_buf_create_pixbuf (GimpTempBuf *temp_buf)
+gimp_temp_buf_create_pixbuf (const GimpTempBuf *temp_buf)
 {
   GdkPixbuf    *pixbuf;
   const Babl   *format;
@@ -345,4 +438,13 @@ gimp_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
   return g_object_get_data (G_OBJECT (buffer), "gimp-temp-buf");
+}
+
+
+/*  public functions (stats)  */
+
+guint64
+gimp_temp_buf_get_total_memsize (void)
+{
+  return gimp_temp_buf_total_memsize;
 }

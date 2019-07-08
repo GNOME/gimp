@@ -19,12 +19,9 @@ def makearchive (dest, manifest, root):
 def parse_packagedb (packagedb_loc):
     """Parses a jhbuild packagedb.xml file"""
 
-    packages = []
-
     tree = ElementTree.parse (packagedb_loc)
     root = tree.getroot ()
-    for child in root:
-        packages.append (child.attrib)
+    packages = [child.attrib for child in root]
 
     return packages
 
@@ -109,7 +106,7 @@ def main ():
 
     scriptdir_loc = os.path.dirname (os.path.realpath (__file__))
     targets_loc = os.path.join (scriptdir_loc, "targets")
-    if packages_loc == None:
+    if packages_loc is None:
         packages_loc = os.path.join (targets_loc, "packages")
 
     run (targets_loc, packages_loc)

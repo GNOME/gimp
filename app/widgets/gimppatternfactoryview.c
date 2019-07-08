@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -91,7 +91,6 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
                                  NULL);
 
   gtk_widget_hide (gimp_data_factory_view_get_edit_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
-  gtk_widget_hide (gimp_data_factory_view_get_duplicate_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
 
   return GTK_WIDGET (factory_view);
 }

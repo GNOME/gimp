@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -55,9 +55,7 @@ struct _GimpCanvasRectanglePrivate
 };
 
 #define GET_PRIVATE(rectangle) \
-        G_TYPE_INSTANCE_GET_PRIVATE (rectangle, \
-                                     GIMP_TYPE_CANVAS_RECTANGLE, \
-                                     GimpCanvasRectanglePrivate)
+        ((GimpCanvasRectanglePrivate *) gimp_canvas_rectangle_get_instance_private ((GimpCanvasRectangle *) (rectangle)))
 
 
 /*  local function prototypes  */
@@ -75,8 +73,8 @@ static void             gimp_canvas_rectangle_draw         (GimpCanvasItem *item
 static cairo_region_t * gimp_canvas_rectangle_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasRectangle, gimp_canvas_rectangle,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasRectangle, gimp_canvas_rectangle,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_rectangle_parent_class
 
@@ -121,8 +119,6 @@ gimp_canvas_rectangle_class_init (GimpCanvasRectangleClass *klass)
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasRectanglePrivate));
 }
 
 static void

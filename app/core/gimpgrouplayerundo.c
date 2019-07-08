@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -159,7 +159,8 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
                                              FALSE, NULL,
                                              group_layer_undo->mask_buffer,
                                              group_layer_undo->mask_bounds.x,
-                                             group_layer_undo->mask_bounds.y);
+                                             group_layer_undo->mask_bounds.y,
+                                             TRUE);
             }
         }
       break;
@@ -226,7 +227,7 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
                                     group_layer_undo->prev_type,
                                     group_layer_undo->prev_precision,
                                     group_layer_undo->prev_has_alpha,
-                                    NULL,
+                                    NULL, NULL,
                                     0, 0,
                                     FALSE, NULL);
 

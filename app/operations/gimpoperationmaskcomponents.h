@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_OPERATION_MASK_COMPONENTS_H__
@@ -40,6 +40,11 @@ struct _GimpOperationMaskComponents
   GeglOperationPointComposer  parent_instance;
 
   GimpComponentMask           mask;
+  gdouble                     alpha;
+
+  guint32                     alpha_value;
+  gpointer                    process;
+  const Babl                 *format;
 };
 
 struct _GimpOperationMaskComponentsClass
@@ -48,7 +53,16 @@ struct _GimpOperationMaskComponentsClass
 };
 
 
-GType   gimp_operation_mask_components_get_type (void) G_GNUC_CONST;
+GType        gimp_operation_mask_components_get_type   (void) G_GNUC_CONST;
+
+const Babl * gimp_operation_mask_components_get_format (const Babl        *input_format);
+
+void         gimp_operation_mask_components_process    (const Babl        *format,
+                                                        gconstpointer      in,
+                                                        gconstpointer      aux,
+                                                        gpointer           out,
+                                                        gint               n,
+                                                        GimpComponentMask  mask);
 
 
 #endif /* __GIMP_OPERATION_MASK_COMPONENTS_H__ */

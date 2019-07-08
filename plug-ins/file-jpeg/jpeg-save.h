@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __JPEG_SAVE_H__
@@ -31,9 +31,10 @@ typedef struct
   gint             dct;
   gboolean         preview;
   gboolean         save_exif;
-  gboolean         save_thumbnail;
   gboolean         save_xmp;
   gboolean         save_iptc;
+  gboolean         save_thumbnail;
+  gboolean         save_profile;
   gboolean         use_orig_quality;
 } JpegSaveVals;
 

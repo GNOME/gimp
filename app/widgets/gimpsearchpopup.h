@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SEARCH_POPUP_H__
@@ -68,7 +68,7 @@ GtkWidget * gimp_search_popup_new        (Gimp                    *gimp,
                                           gpointer                 callback_data);
 
 void        gimp_search_popup_add_result (GimpSearchPopup *popup,
-                                          GtkAction       *action,
+                                          GimpAction      *action,
                                           gint             section);
 
 #endif  /*  __GIMP_SEARCH_POPUP_H__  */

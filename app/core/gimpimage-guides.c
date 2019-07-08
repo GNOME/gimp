@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -77,7 +77,7 @@ gimp_image_add_vguide (GimpImage *image,
                                 C_("undo-type", "Add Vertical Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
-  g_object_unref (G_OBJECT (guide));
+  g_object_unref (guide);
 
   return guide;
 }
@@ -97,7 +97,7 @@ gimp_image_add_guide (GimpImage *image,
   private->guides = g_list_prepend (private->guides, guide);
 
   gimp_guide_set_position (guide, position);
-  g_object_ref (G_OBJECT (guide));
+  g_object_ref (guide);
 
   gimp_image_guide_added (image, guide);
 }
@@ -121,12 +121,12 @@ gimp_image_remove_guide (GimpImage *image,
     gimp_image_undo_push_guide (image, C_("undo-type", "Remove Guide"), guide);
 
   private->guides = g_list_remove (private->guides, guide);
-  gimp_guide_removed (guide);
+  gimp_aux_item_removed (GIMP_AUX_ITEM (guide));
 
   gimp_image_guide_removed (image, guide);
 
   gimp_guide_set_position (guide, GIMP_GUIDE_POSITION_UNDEFINED);
-  g_object_unref (G_OBJECT (guide));
+  g_object_unref (guide);
 }
 
 void
@@ -177,7 +177,7 @@ gimp_image_get_guide (GimpImage *image,
     {
       GimpGuide *guide = guides->data;
 
-      if (gimp_guide_get_ID (guide) == id)
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (guide)) == id)
         return guide;
     }
 
@@ -208,7 +208,7 @@ gimp_image_get_next_guide (GimpImage *image,
       if (*guide_found) /* this is the first guide after the found one */
         return guide;
 
-      if (gimp_guide_get_ID (guide) == id) /* found it, next one will be returned */
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (guide)) == id) /* found it, next one will be returned */
         *guide_found = TRUE;
     }
 

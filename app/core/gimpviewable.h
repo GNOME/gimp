@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_VIEWABLE_H__
@@ -96,6 +96,9 @@ struct _GimpViewableClass
                                           gchar        **tooltip);
 
   gboolean        (* is_name_editable)   (GimpViewable  *viewable);
+
+  void            (* preview_freeze)     (GimpViewable  *viewable);
+  void            (* preview_thaw)       (GimpViewable  *viewable);
 
   GimpContainer * (* get_children)       (GimpViewable  *viewable);
 

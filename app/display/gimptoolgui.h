@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TOOL_GUI_H__
@@ -95,6 +95,12 @@ void          gimp_tool_gui_set_focus_on_map       (GimpToolGui      *gui,
                                                     gboolean          focus_on_map);
 gboolean      gimp_tool_gui_get_focus_on_map       (GimpToolGui      *gui);
 
+
+void          gimp_tool_gui_add_buttons_valist     (GimpToolGui      *gui,
+                                                    va_list           args);
+void          gimp_tool_gui_add_button             (GimpToolGui      *gui,
+                                                    const gchar      *button_text,
+                                                    gint              response_id);
 void          gimp_tool_gui_set_default_response   (GimpToolGui      *gui,
                                                     gint              response_id);
 void          gimp_tool_gui_set_response_sensitive (GimpToolGui      *gui,

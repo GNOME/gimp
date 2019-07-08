@@ -19,7 +19,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -257,17 +257,11 @@ browser_dialog_open (const gchar *plug_in_binary)
   gtk_widget_show (main_vbox);
   gtk_paned_pack2 (GTK_PANED (paned), main_vbox, TRUE, TRUE);
 
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-
-  gtk_widget_set_size_request (scrolled, 300, 200);
-  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled);
-
   view = webkit_web_view_new ();
-  gtk_container_add (GTK_CONTAINER (scrolled), view);
+  gtk_widget_set_size_request (view, 300, 200);
   gtk_widget_show (view);
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), view, TRUE, TRUE, 0);
 
   g_signal_connect (view, "realize",
                     G_CALLBACK (view_realize),
@@ -851,7 +845,7 @@ static void
 website_callback (GtkAction *action,
                   gpointer   data)
 {
-  browser_dialog_load ("http://docs.gimp.org/");
+  browser_dialog_load ("https://docs.gimp.org/");
 }
 
 static void
@@ -1256,7 +1250,7 @@ search (const gchar *text)
       const char *prev_text =
         webkit_find_controller_get_search_text (find_controller);
 
-      /* The previous search, if any, may ned to be canceled. */
+      /* The previous search, if any, may need to be canceled. */
       if (prev_text && strcmp (text, prev_text) != 0)
         webkit_find_controller_search_finish (find_controller);
 

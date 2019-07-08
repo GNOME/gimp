@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -339,6 +339,10 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
     {
       tool_name = "gimp-threshold-tool";
     }
+  else if (! strcmp (procedure->original_name, "gimp:offset"))
+    {
+      tool_name = "gimp-offset-tool";
+    }
   else
     {
       tool_name = "gimp-operation-tool";
@@ -367,7 +371,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
   if (! strcmp (gimp_object_get_name (active_tool->tool_info), tool_name))
     {
-      /*  Remember the prodecure that created this tool, because
+      /*  Remember the procedure that created this tool, because
        *  we can't just switch to an operation tool using
        *  gimp_context_set_tool(), we also have to go through the
        *  initialization code below, otherwise we end up with a

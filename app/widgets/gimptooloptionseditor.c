@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -105,6 +105,7 @@ static void        gimp_tool_options_editor_presets_update    (GimpToolOptionsEd
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolOptionsEditor, gimp_tool_options_editor,
                          GIMP_TYPE_EDITOR,
+                         G_ADD_PRIVATE (GimpToolOptionsEditor)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_tool_options_editor_docked_iface_init))
 
@@ -127,8 +128,6 @@ gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpToolOptionsEditorPrivate));
 }
 
 static void
@@ -143,11 +142,8 @@ static void
 gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 {
   GtkScrolledWindow *scrolled_window;
-  GtkWidget         *viewport;
 
-  editor->p = G_TYPE_INSTANCE_GET_PRIVATE (editor,
-                                           GIMP_TYPE_TOOL_OPTIONS_EDITOR,
-                                           GimpToolOptionsEditorPrivate);
+  editor->p = gimp_tool_options_editor_get_instance_private (editor);
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 
@@ -172,20 +168,15 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   gtk_scrolled_window_set_policy (scrolled_window,
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_overlay_scrolling (scrolled_window, FALSE);
 
   gtk_box_pack_start (GTK_BOX (editor), editor->p->scrolled_window,
                       TRUE, TRUE, 0);
   gtk_widget_show (editor->p->scrolled_window);
 
-  viewport = gtk_viewport_new (gtk_scrolled_window_get_hadjustment (scrolled_window),
-                               gtk_scrolled_window_get_vadjustment (scrolled_window));
-  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
-  gtk_widget_show (viewport);
-
   /*  The vbox containing the tool options  */
   editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_add (GTK_CONTAINER (viewport), editor->p->options_vbox);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), editor->p->options_vbox);
   gtk_widget_show (editor->p->options_vbox);
 }
 
@@ -385,8 +376,8 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
 {
   GimpEditor *gimp_editor = GIMP_EDITOR (editor);
 
-  gtk_ui_manager_get_widget (GTK_UI_MANAGER (gimp_editor_get_ui_manager (gimp_editor)),
-                             gimp_editor_get_ui_path (gimp_editor));
+  gimp_ui_manager_get_widget (gimp_editor_get_ui_manager (gimp_editor),
+                              gimp_editor_get_ui_path (gimp_editor));
   gimp_ui_manager_update (gimp_editor_get_ui_manager (gimp_editor),
                           gimp_editor_get_popup_data (gimp_editor));
 

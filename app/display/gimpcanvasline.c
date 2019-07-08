@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -53,9 +53,7 @@ struct _GimpCanvasLinePrivate
 };
 
 #define GET_PRIVATE(line) \
-        G_TYPE_INSTANCE_GET_PRIVATE (line, \
-                                     GIMP_TYPE_CANVAS_LINE, \
-                                     GimpCanvasLinePrivate)
+        ((GimpCanvasLinePrivate *) gimp_canvas_line_get_instance_private ((GimpCanvasLine *) (line)))
 
 
 /*  local function prototypes  */
@@ -73,7 +71,8 @@ static void             gimp_canvas_line_draw         (GimpCanvasItem *item,
 static cairo_region_t * gimp_canvas_line_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasLine, gimp_canvas_line, GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasLine, gimp_canvas_line,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_line_parent_class
 
@@ -113,8 +112,6 @@ gimp_canvas_line_class_init (GimpCanvasLineClass *klass)
                                                         -GIMP_MAX_IMAGE_SIZE,
                                                         GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasLinePrivate));
 }
 
 static void

@@ -4,7 +4,7 @@
  * gimpimagefile.h
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
- * http://triq.net/~pearl/thumbnail-spec/
+ * https://specifications.freedesktop.org/thumbnail-spec/
  *
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
@@ -20,7 +20,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGEFILE_H__

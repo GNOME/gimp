@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -30,13 +30,12 @@
 /*  public functions  */
 
 void
-sample_points_sample_merged_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+sample_points_sample_merged_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
+                                          gpointer    data)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (data);
-  gboolean               active;
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean               active = g_variant_get_boolean (value);
 
   gimp_sample_point_editor_set_sample_merged (editor, active);
 }

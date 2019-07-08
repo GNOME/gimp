@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -33,6 +33,7 @@
 
 
 #define LOAD_THUMB_PROC "file-rawtherapee-load-thumb"
+#define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\rawtherapee"
 
 
 static void     init                 (void);
@@ -94,9 +95,14 @@ init (void)
   gchar    *exec_path        = file_raw_get_executable_path ("rawtherapee", NULL,
                                                              "RAWTHERAPEE_EXECUTABLE",
                                                              "com.rawtherapee.rawtherapee",
-                                                             NULL,
+                                                             REGISTRY_KEY_BASE,
                                                              &search_path);
+#ifdef G_OS_WIN32
+  /* Issue #2716 - Prevent RT from opening a console window */
+  gchar    *argv[]             = { exec_path, "-v", "-w", NULL };
+#else
   gchar    *argv[]             = { exec_path, "-v", NULL };
+#endif
   gchar    *rawtherapee_stdout = NULL;
   gboolean  have_rawtherapee   = FALSE;
   gint      i;
@@ -297,7 +303,7 @@ load_image (const gchar  *filename,
   gchar    *exec_path          = file_raw_get_executable_path ("rawtherapee", NULL,
                                                                "RAWTHERAPEE_EXECUTABLE",
                                                                "com.rawtherapee.rawtherapee",
-                                                               NULL,
+                                                               REGISTRY_KEY_BASE,
                                                                &search_path);
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
@@ -403,7 +409,7 @@ load_thumbnail_image (const gchar   *filename,
   gchar    *exec_path   = file_raw_get_executable_path ("rawtherapee", "-cli",
                                                         "RAWTHERAPEE_EXECUTABLE",
                                                         "com.rawtherapee.rawtherapee",
-                                                        NULL,
+                                                        REGISTRY_KEY_BASE,
                                                         &search_path);
   gchar *argv[] =
     {

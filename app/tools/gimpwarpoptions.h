@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_WARP_OPTIONS_H__
@@ -47,6 +47,7 @@ struct _GimpWarpOptions
   GimpInterpolationType  interpolation;
   GeglAbyssPolicy        abyss_policy;
   gboolean               high_quality_preview;
+  gboolean               real_time_preview;
 
   gboolean               stroke_during_motion;
   gboolean               stroke_periodically;
@@ -55,6 +56,8 @@ struct _GimpWarpOptions
   gint                   n_animation_frames;
 
   /*  options gui  */
+  GtkWidget             *behavior_combo;
+  GtkWidget             *stroke_frame;
   GtkWidget             *animate_button;
 };
 

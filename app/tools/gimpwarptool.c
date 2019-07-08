@@ -14,13 +14,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
 
 #include <gegl.h>
-#include "gegl-utils.h"
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -28,6 +28,8 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+
+#include "config/gimpguiconfig.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
 
@@ -48,6 +50,7 @@
 #include "gimpwarptool.h"
 #include "gimpwarpoptions.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -56,86 +59,95 @@
 #define PREVIEW_SAMPLER      GEGL_SAMPLER_NEAREST
 
 
-static void       gimp_warp_tool_control            (GimpTool              *tool,
-                                                     GimpToolAction         action,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_button_press       (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     guint32                time,
-                                                     GdkModifierType        state,
-                                                     GimpButtonPressType    press_type,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_button_release     (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     guint32                time,
-                                                     GdkModifierType        state,
-                                                     GimpButtonReleaseType  release_type,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_motion             (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     guint32                time,
-                                                     GdkModifierType        state,
-                                                     GimpDisplay           *display);
-static gboolean   gimp_warp_tool_key_press          (GimpTool              *tool,
-                                                     GdkEventKey           *kevent,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_oper_update        (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     GdkModifierType        state,
-                                                     gboolean               proximity,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_cursor_update      (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     GdkModifierType        state,
-                                                     GimpDisplay           *display);
-const gchar     * gimp_warp_tool_can_undo           (GimpTool              *tool,
-                                                     GimpDisplay           *display);
-const gchar     * gimp_warp_tool_can_redo           (GimpTool              *tool,
-                                                     GimpDisplay           *display);
-static gboolean   gimp_warp_tool_undo               (GimpTool              *tool,
-                                                     GimpDisplay           *display);
-static gboolean   gimp_warp_tool_redo               (GimpTool              *tool,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_options_notify     (GimpTool              *tool,
-                                                     GimpToolOptions       *options,
-                                                     const GParamSpec      *pspec);
+static void            gimp_warp_tool_control                   (GimpTool              *tool,
+                                                                 GimpToolAction         action,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_button_press              (GimpTool              *tool,
+                                                                 const GimpCoords      *coords,
+                                                                 guint32                time,
+                                                                 GdkModifierType        state,
+                                                                 GimpButtonPressType    press_type,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_button_release            (GimpTool              *tool,
+                                                                 const GimpCoords      *coords,
+                                                                 guint32                time,
+                                                                 GdkModifierType        state,
+                                                                 GimpButtonReleaseType  release_type,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_motion                    (GimpTool              *tool,
+                                                                 const GimpCoords      *coords,
+                                                                 guint32                time,
+                                                                 GdkModifierType        state,
+                                                                 GimpDisplay           *display);
+static gboolean        gimp_warp_tool_key_press                 (GimpTool              *tool,
+                                                                 GdkEventKey           *kevent,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_oper_update               (GimpTool              *tool,
+                                                                 const GimpCoords      *coords,
+                                                                 GdkModifierType        state,
+                                                                 gboolean               proximity,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_cursor_update             (GimpTool              *tool,
+                                                                 const GimpCoords      *coords,
+                                                                 GdkModifierType        state,
+                                                                 GimpDisplay           *display);
+const gchar          * gimp_warp_tool_can_undo                  (GimpTool              *tool,
+                                                                 GimpDisplay           *display);
+const gchar          * gimp_warp_tool_can_redo                  (GimpTool              *tool,
+                                                                 GimpDisplay           *display);
+static gboolean        gimp_warp_tool_undo                      (GimpTool              *tool,
+                                                                 GimpDisplay           *display);
+static gboolean        gimp_warp_tool_redo                      (GimpTool              *tool,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_options_notify            (GimpTool              *tool,
+                                                                 GimpToolOptions       *options,
+                                                                 const GParamSpec      *pspec);
 
-static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
+static void            gimp_warp_tool_draw                      (GimpDrawTool          *draw_tool);
 
-static gboolean   gimp_warp_tool_can_stroke         (GimpWarpTool          *wt,
-                                                     GimpDisplay           *display,
-                                                     gboolean               show_message);
+static gboolean        gimp_warp_tool_can_stroke                (GimpWarpTool          *wt,
+                                                                 GimpDisplay           *display,
+                                                                 gboolean               show_message);
 
-static gboolean   gimp_warp_tool_start              (GimpWarpTool          *wt,
-                                                     GimpDisplay           *display);
-static void       gimp_warp_tool_halt               (GimpWarpTool          *wt);
-static void       gimp_warp_tool_commit             (GimpWarpTool          *wt);
+static gboolean        gimp_warp_tool_start                     (GimpWarpTool          *wt,
+                                                                 GimpDisplay           *display);
+static void            gimp_warp_tool_halt                      (GimpWarpTool          *wt);
+static void            gimp_warp_tool_commit                    (GimpWarpTool          *wt);
 
-static void       gimp_warp_tool_start_stroke_timer (GimpWarpTool          *wt);
-static void       gimp_warp_tool_stop_stroke_timer  (GimpWarpTool          *wt);
-static gboolean   gimp_warp_tool_stroke_timer       (GimpWarpTool          *wt);
+static void            gimp_warp_tool_start_stroke_timer        (GimpWarpTool          *wt);
+static void            gimp_warp_tool_stop_stroke_timer         (GimpWarpTool          *wt);
+static gboolean        gimp_warp_tool_stroke_timer              (GimpWarpTool          *wt);
 
-static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
-static void       gimp_warp_tool_create_filter      (GimpWarpTool          *wt,
-                                                     GimpDrawable          *drawable);
-static void       gimp_warp_tool_set_sampler        (GimpWarpTool          *wt,
-                                                     gboolean               commit);
+static void            gimp_warp_tool_create_graph              (GimpWarpTool          *wt);
+static void            gimp_warp_tool_create_filter             (GimpWarpTool          *wt,
+                                                                 GimpDrawable          *drawable);
+static void            gimp_warp_tool_set_sampler               (GimpWarpTool          *wt,
+                                                                 gboolean               commit);
 static GeglRectangle
-                  gimp_warp_tool_get_stroke_bounds  (GeglNode              *node);
-static void       gimp_warp_tool_update_stroke      (GimpWarpTool          *wt,
-                                                     GeglNode              *node);
-static void       gimp_warp_tool_stroke_changed     (GeglPath              *stroke,
-                                                     const GeglRectangle   *roi,
-                                                     GimpWarpTool          *wt);
-static void       gimp_warp_tool_filter_flush       (GimpDrawableFilter    *filter,
-                                                     GimpTool              *tool);
-static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt,
-                                                     GeglNode              *op);
-static void       gimp_warp_tool_remove_op          (GimpWarpTool          *wt,
-                                                     GeglNode              *op);
-static void       gimp_warp_tool_free_op            (GeglNode              *op);
+                       gimp_warp_tool_get_stroke_bounds         (GeglNode              *node);
+static GeglRectangle   gimp_warp_tool_get_node_bounds           (GeglNode              *node);
+static void            gimp_warp_tool_clear_node_bounds         (GeglNode              *node);
+static GeglRectangle   gimp_warp_tool_get_invalidated_by_change (GimpWarpTool          *wt,
+                                                                 const GeglRectangle   *area);
+static void            gimp_warp_tool_update_bounds             (GimpWarpTool          *wt);
+static void            gimp_warp_tool_update_area               (GimpWarpTool          *wt,
+                                                                 const GeglRectangle   *area,
+                                                                 gboolean               synchronous);
+static void            gimp_warp_tool_update_stroke             (GimpWarpTool          *wt,
+                                                                 GeglNode              *node);
+static void            gimp_warp_tool_stroke_append             (GimpWarpTool          *wt,
+                                                                 gchar                  type,
+                                                                 gdouble                x,
+                                                                 gdouble                y);
+static void            gimp_warp_tool_filter_flush              (GimpDrawableFilter    *filter,
+                                                                 GimpTool              *tool);
+static void            gimp_warp_tool_add_op                    (GimpWarpTool          *wt,
+                                                                 GeglNode              *op);
+static void            gimp_warp_tool_remove_op                 (GimpWarpTool          *wt,
+                                                                 GeglNode              *op);
+static void            gimp_warp_tool_free_op                   (GeglNode              *op);
 
-static void       gimp_warp_tool_animate            (GimpWarpTool          *wt);
+static void            gimp_warp_tool_animate                   (GimpWarpTool          *wt);
 
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
@@ -187,13 +199,19 @@ gimp_warp_tool_init (GimpWarpTool *self)
 {
   GimpTool *tool = GIMP_TOOL (self);
 
+  gimp_tool_control_set_motion_mode     (tool->control, GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
   gimp_tool_control_set_preserve        (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask      (tool->control,
                                          GIMP_DIRTY_IMAGE           |
                                          GIMP_DIRTY_DRAWABLE        |
                                          GIMP_DIRTY_SELECTION       |
                                          GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_dirty_action    (tool->control,
+                                         GIMP_TOOL_ACTION_COMMIT);
   gimp_tool_control_set_wants_click     (tool->control, TRUE);
+  gimp_tool_control_set_precision       (tool->control,
+                                         GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_WARP);
   gimp_tool_control_set_action_size     (tool->control,
@@ -254,27 +272,32 @@ gimp_warp_tool_button_press (GimpTool            *tool,
 
   wt->current_stroke = gegl_path_new ();
 
+  wt->last_pos.x = coords->x;
+  wt->last_pos.y = coords->y;
+
+  wt->total_dist = 0.0;
+
   new_op = gegl_node_new_child (NULL,
                                 "operation", "gegl:warp",
                                 "behavior",  options->behavior,
                                 "size",      options->effect_size,
                                 "hardness",  options->effect_hardness / 100.0,
                                 "strength",  options->effect_strength,
-                                "spacing",   options->stroke_spacing / 100.0,
+                                /* we implement spacing manually.
+                                 * anything > 1 will do.
+                                 */
+                                "spacing",   10.0,
                                 "stroke",    wt->current_stroke,
                                 NULL);
 
   gimp_warp_tool_add_op (wt, new_op);
   g_object_unref (new_op);
 
-  g_signal_connect (wt->current_stroke, "changed",
-                    G_CALLBACK (gimp_warp_tool_stroke_changed),
-                    wt);
-
   gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
-  gegl_path_append (wt->current_stroke,
-                    'M', coords->x - off_x, coords->y - off_y);
+  gimp_warp_tool_stroke_append (wt,
+                                'M', wt->last_pos.x - off_x,
+                                     wt->last_pos.y - off_y);
 
   gimp_warp_tool_start_stroke_timer (wt);
 
@@ -296,10 +319,6 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   gimp_tool_control_halt (tool->control);
 
   gimp_warp_tool_stop_stroke_timer (wt);
-
-  g_signal_handlers_disconnect_by_func (wt->current_stroke,
-                                        gimp_warp_tool_stroke_changed,
-                                        wt);
 
 #ifdef WARP_DEBUG
   g_printerr ("%s\n", gegl_path_to_string (wt->current_stroke));
@@ -342,27 +361,64 @@ gimp_warp_tool_motion (GimpTool         *tool,
                        GdkModifierType   state,
                        GimpDisplay      *display)
 {
-  GimpWarpTool    *wt = GIMP_WARP_TOOL (tool);
-  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpWarpTool    *wt             = GIMP_WARP_TOOL (tool);
+  GimpWarpOptions *options        = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpVector2      old_cursor_pos;
+  GimpVector2      delta;
+  gdouble          dist;
+  gdouble          step;
+  gboolean         stroke_changed = FALSE;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  old_cursor_pos = wt->cursor_pos;
 
-  wt->cursor_x = coords->x;
-  wt->cursor_y = coords->y;
+  wt->cursor_pos.x = coords->x;
+  wt->cursor_pos.y = coords->y;
 
-  if (options->stroke_during_motion)
+  gimp_vector2_sub (&delta, &wt->cursor_pos, &old_cursor_pos);
+  dist = gimp_vector2_length (&delta);
+
+  step = options->effect_size * options->stroke_spacing / 100.0;
+
+  while (wt->total_dist + dist >= step)
     {
-      gint off_x, off_y;
+      gdouble diff = step - wt->total_dist;
 
-      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+      gimp_vector2_mul (&delta, diff / dist);
+      gimp_vector2_add (&old_cursor_pos, &old_cursor_pos, &delta);
 
-      gegl_path_append (wt->current_stroke,
-                        'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
+      gimp_vector2_sub (&delta, &wt->cursor_pos, &old_cursor_pos);
+      dist -= diff;
 
-      gimp_warp_tool_start_stroke_timer (wt);
+      wt->last_pos   = old_cursor_pos;
+      wt->total_dist = 0.0;
+
+      if (options->stroke_during_motion)
+        {
+          gint off_x, off_y;
+
+          if (! stroke_changed)
+            {
+              stroke_changed = TRUE;
+
+              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+            }
+
+          gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+
+          gimp_warp_tool_stroke_append (wt,
+                                        'L', wt->last_pos.x - off_x,
+                                             wt->last_pos.y - off_y);
+        }
     }
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  wt->total_dist += dist;
+
+  if (stroke_changed)
+    {
+      gimp_warp_tool_start_stroke_timer (wt);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
 }
 
 static gboolean
@@ -408,8 +464,10 @@ gimp_warp_tool_oper_update (GimpTool         *tool,
 
       if (! tool->display || display == tool->display)
         {
-          wt->cursor_x = coords->x;
-          wt->cursor_y = coords->y;
+          wt->cursor_pos.x = coords->x;
+          wt->cursor_pos.y = coords->y;
+
+          wt->last_pos = wt->cursor_pos;
         }
 
       if (! gimp_draw_tool_is_active (draw_tool))
@@ -445,12 +503,12 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
       switch (options->behavior)
         {
         case GIMP_WARP_BEHAVIOR_MOVE:
-        case GEGL_WARP_BEHAVIOR_GROW:
-        case GEGL_WARP_BEHAVIOR_SHRINK:
-        case GEGL_WARP_BEHAVIOR_SWIRL_CW:
-        case GEGL_WARP_BEHAVIOR_SWIRL_CCW:
-        case GEGL_WARP_BEHAVIOR_ERASE:
-        case GEGL_WARP_BEHAVIOR_SMOOTH:
+        case GIMP_WARP_BEHAVIOR_GROW:
+        case GIMP_WARP_BEHAVIOR_SHRINK:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CW:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CCW:
+        case GIMP_WARP_BEHAVIOR_ERASE:
+        case GIMP_WARP_BEHAVIOR_SMOOTH:
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         }
@@ -518,6 +576,7 @@ gimp_warp_tool_undo (GimpTool    *tool,
   gegl_node_connect_to (prev_node,       "output",
                         wt->render_node, "aux");
 
+  gimp_warp_tool_update_bounds (wt);
   gimp_warp_tool_update_stroke (wt, to_delete);
 
   return TRUE;
@@ -537,6 +596,7 @@ gimp_warp_tool_redo (GimpTool    *tool,
 
   wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
 
+  gimp_warp_tool_update_bounds (wt);
   gimp_warp_tool_update_stroke (wt, to_add);
 
   return TRUE;
@@ -559,12 +619,7 @@ gimp_warp_tool_options_notify (GimpTool         *tool,
     }
   else if (! strcmp (pspec->name, "interpolation"))
     {
-      if (wt_options->high_quality_preview)
-        {
-          gimp_warp_tool_set_sampler (wt, /* commit = */ FALSE);
-
-          gimp_warp_tool_update_stroke (wt, NULL);
-        }
+      gimp_warp_tool_set_sampler (wt, /* commit = */ FALSE);
     }
   else if (! strcmp (pspec->name, "abyss-policy"))
     {
@@ -580,8 +635,6 @@ gimp_warp_tool_options_notify (GimpTool         *tool,
   else if (! strcmp (pspec->name, "high-quality-preview"))
     {
       gimp_warp_tool_set_sampler (wt, /* commit = */ FALSE);
-
-      gimp_warp_tool_update_stroke (wt, NULL);
     }
 }
 
@@ -593,8 +646,8 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_add_arc (draw_tool,
                           FALSE,
-                          wt->cursor_x - options->effect_size * 0.5,
-                          wt->cursor_y - options->effect_size * 0.5,
+                          wt->last_pos.x - options->effect_size * 0.5,
+                          wt->last_pos.y - options->effect_size * 0.5,
                           options->effect_size,
                           options->effect_size,
                           0.0, 2.0 * G_PI);
@@ -607,6 +660,7 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
 {
   GimpTool        *tool     = GIMP_TOOL (wt);
   GimpWarpOptions *options  = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpGuiConfig   *config   = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage       *image    = gimp_display_get_image (display);
   GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
 
@@ -627,12 +681,15 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
         {
           gimp_tool_message_literal (tool, display,
                                      _("The active layer's pixels are locked."));
+
+          gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
         }
 
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       if (show_message)
         {
@@ -650,9 +707,46 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
         {
           gimp_tool_message_literal (tool, display,
                                      _("No stroke events selected."));
+
+          gimp_widget_blink (options->stroke_frame);
         }
 
       return FALSE;
+    }
+
+  if (! wt->filter || ! gimp_tool_can_undo (tool, display))
+    {
+      const gchar *message = NULL;
+
+      switch (options->behavior)
+        {
+        case GIMP_WARP_BEHAVIOR_MOVE:
+        case GIMP_WARP_BEHAVIOR_GROW:
+        case GIMP_WARP_BEHAVIOR_SHRINK:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CW:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CCW:
+          break;
+
+        case GIMP_WARP_BEHAVIOR_ERASE:
+          message = _("No warp to erase.");
+          break;
+
+        case GIMP_WARP_BEHAVIOR_SMOOTH:
+          message = _("No warp to smooth.");
+          break;
+        }
+
+      if (message)
+        {
+          if (show_message)
+            {
+              gimp_tool_message_literal (tool, display, message);
+
+              gimp_widget_blink (options->behavior_combo);
+            }
+
+          return FALSE;
+        }
     }
 
   return TRUE;
@@ -751,7 +845,8 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
 {
   GimpTool *tool = GIMP_TOOL (wt);
 
-  if (wt->filter)
+  /* don't commit a nop */
+  if (tool->display && gimp_tool_can_undo (tool, tool->display))
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
@@ -805,8 +900,9 @@ gimp_warp_tool_stroke_timer (GimpWarpTool *wt)
 
   gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
-  gegl_path_append (wt->current_stroke,
-                    'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
+  gimp_warp_tool_stroke_append (wt,
+                                'L', wt->last_pos.x - off_x,
+                                     wt->last_pos.y - off_y);
 
   return TRUE;
 }
@@ -900,6 +996,9 @@ gimp_warp_tool_set_sampler (GimpWarpTool *wt,
       gegl_node_set (wt->render_node,
                      "sampler-type", sampler,
                      NULL);
+
+      gimp_warp_tool_update_bounds (wt);
+      gimp_warp_tool_update_stroke (wt, NULL);
     }
 }
 
@@ -934,11 +1033,127 @@ gimp_warp_tool_get_stroke_bounds (GeglNode *node)
   return bbox;
 }
 
+static GeglRectangle
+gimp_warp_tool_get_node_bounds (GeglNode *node)
+{
+  GeglRectangle *bounds;
+
+  if (! node || strcmp (gegl_node_get_operation (node), "gegl:warp"))
+    return *GEGL_RECTANGLE (0, 0, 0, 0);
+
+  bounds = g_object_get_data (G_OBJECT (node), "gimp-warp-tool-bounds");
+
+  if (! bounds)
+    {
+      GeglNode      *input_node;
+      GeglRectangle  input_bounds;
+      GeglRectangle  stroke_bounds;
+
+      input_node   = gegl_node_get_producer (node, "input", NULL);
+      input_bounds = gimp_warp_tool_get_node_bounds (input_node);
+
+      stroke_bounds = gimp_warp_tool_get_stroke_bounds (node);
+
+      gegl_rectangle_bounding_box (&input_bounds,
+                                   &input_bounds, &stroke_bounds);
+
+      bounds = gegl_rectangle_dup (&input_bounds);
+
+      g_object_set_data_full (G_OBJECT (node), "gimp-warp-tool-bounds",
+                              bounds, g_free);
+    }
+
+  return *bounds;
+}
+
+static void
+gimp_warp_tool_clear_node_bounds (GeglNode *node)
+{
+  if (node && ! strcmp (gegl_node_get_operation (node), "gegl:warp"))
+    g_object_set_data (G_OBJECT (node), "gimp-warp-tool-bounds", NULL);
+}
+
+static GeglRectangle
+gimp_warp_tool_get_invalidated_by_change (GimpWarpTool        *wt,
+                                          const GeglRectangle *area)
+{
+  GeglRectangle result = *area;
+
+  if (! wt->filter)
+    return result;
+
+  if (wt->render_node)
+    {
+      GeglOperation *operation = gegl_node_get_gegl_operation (wt->render_node);
+
+      result = gegl_operation_get_invalidated_by_change (operation,
+                                                         "aux", area);
+    }
+
+  return result;
+}
+
+static void
+gimp_warp_tool_update_bounds (GimpWarpTool *wt)
+{
+  GeglRectangle bounds = {0, 0, 0, 0};
+
+  if (! wt->filter)
+    return;
+
+  if (wt->render_node)
+    {
+      GeglNode *node = gegl_node_get_producer (wt->render_node, "aux", NULL);
+
+      bounds = gimp_warp_tool_get_node_bounds (node);
+
+      bounds = gimp_warp_tool_get_invalidated_by_change (wt, &bounds);
+    }
+
+  gimp_drawable_filter_set_crop (wt->filter, &bounds, FALSE);
+}
+
+static void
+gimp_warp_tool_update_area (GimpWarpTool        *wt,
+                            const GeglRectangle *area,
+                            gboolean             synchronous)
+{
+  GeglRectangle rect;
+
+  if (! wt->filter)
+    return;
+
+  rect = gimp_warp_tool_get_invalidated_by_change (wt, area);
+
+  if (synchronous)
+    {
+      GimpTool  *tool  = GIMP_TOOL (wt);
+      GimpImage *image = gimp_display_get_image (tool->display);
+
+      g_signal_handlers_block_by_func (wt->filter,
+                                       gimp_warp_tool_filter_flush,
+                                       wt);
+
+      gimp_drawable_filter_apply (wt->filter, &rect);
+
+      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
+      gimp_display_flush_now (tool->display);
+
+      g_signal_handlers_unblock_by_func (wt->filter,
+                                         gimp_warp_tool_filter_flush,
+                                         wt);
+    }
+  else
+    {
+      gimp_drawable_filter_apply (wt->filter, &rect);
+    }
+}
+
 static void
 gimp_warp_tool_update_stroke (GimpWarpTool *wt,
                               GeglNode     *node)
 {
-  GeglRectangle bbox = {0, 0, 0, 0};
+  GeglRectangle bounds = {0, 0, 0, 0};
 
   if (! wt->filter)
     return;
@@ -946,57 +1161,62 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
   if (node)
     {
       /* update just this stroke */
-      bbox = gimp_warp_tool_get_stroke_bounds (node);
+      bounds = gimp_warp_tool_get_stroke_bounds (node);
     }
   else if (wt->render_node)
     {
-      /* update all strokes */
-      for (node = gegl_node_get_producer (wt->render_node, "aux", NULL);
-           ! strcmp (gegl_node_get_operation (node), "gegl:warp");
-           node = gegl_node_get_producer (node, "input", NULL))
-        {
-          GeglRectangle node_bbox;
+      node = gegl_node_get_producer (wt->render_node, "aux", NULL);
 
-          node_bbox = gimp_warp_tool_get_stroke_bounds (node);
-
-          gegl_rectangle_bounding_box (&bbox, &bbox, &node_bbox);
-        }
+      bounds = gimp_warp_tool_get_node_bounds (node);
     }
 
-  if (! gegl_rectangle_is_empty (&bbox))
+  if (! gegl_rectangle_is_empty (&bounds))
     {
 #ifdef WARP_DEBUG
   g_printerr ("update stroke: (%d,%d), %dx%d\n",
-              bbox.x, bbox.y,
-              bbox.width, bbox.height);
+              bounds.x, bounds.y,
+              bounds.width, bounds.height);
 #endif
 
-      gimp_drawable_filter_apply (wt->filter, &bbox);
+      gimp_warp_tool_update_area (wt, &bounds, FALSE);
     }
 }
 
 static void
-gimp_warp_tool_stroke_changed (GeglPath            *path,
-                               const GeglRectangle *roi,
-                               GimpWarpTool        *wt)
+gimp_warp_tool_stroke_append (GimpWarpTool *wt,
+                              gchar         type,
+                              gdouble       x,
+                              gdouble       y)
 {
-  GimpWarpOptions *options       = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GeglRectangle    update_region;
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GeglRectangle    area;
 
-  update_region.x      = floor (roi->x - options->effect_size * 0.5);
-  update_region.y      = floor (roi->y - options->effect_size * 0.5);
-  update_region.width  = ceil (roi->x + roi->width  +
-                               options->effect_size * 0.5) - update_region.x;
-  update_region.height = ceil (roi->y + roi->height +
-                               options->effect_size * 0.5) - update_region.y;
+  if (! wt->filter)
+    return;
+
+  gegl_path_append (wt->current_stroke, type, x, y);
+
+  area.x      = floor (x - options->effect_size * 0.5);
+  area.y      = floor (y - options->effect_size * 0.5);
+  area.width  = ceil  (x + options->effect_size * 0.5) - area.x;
+  area.height = ceil  (y + options->effect_size * 0.5) - area.y;
 
 #ifdef WARP_DEBUG
   g_printerr ("update rect: (%d,%d), %dx%d\n",
-              update_region.x, update_region.y,
-              update_region.width, update_region.height);
+              area.x, area.y,
+              area.width, area.height);
 #endif
 
-  gimp_drawable_filter_apply (wt->filter, &update_region);
+  if (wt->render_node)
+    {
+      GeglNode *node = gegl_node_get_producer (wt->render_node, "aux", NULL);
+
+      gimp_warp_tool_clear_node_bounds (node);
+
+      gimp_warp_tool_update_bounds (wt);
+    }
+
+  gimp_warp_tool_update_area (wt, &area, options->real_time_preview);
 }
 
 static void

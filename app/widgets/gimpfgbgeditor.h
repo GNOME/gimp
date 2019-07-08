@@ -15,11 +15,21 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_FG_BG_EDITOR_H__
 #define __GIMP_FG_BG_EDITOR_H__
+
+
+typedef enum
+{
+  GIMP_FG_BG_TARGET_INVALID,
+  GIMP_FG_BG_TARGET_FOREGROUND,
+  GIMP_FG_BG_TARGET_BACKGROUND,
+  GIMP_FG_BG_TARGET_SWAP,
+  GIMP_FG_BG_TARGET_DEFAULT
+} GimpFgBgTarget;
 
 
 #define GIMP_TYPE_FG_BG_EDITOR            (gimp_fg_bg_editor_get_type ())
@@ -42,6 +52,8 @@ struct _GimpFgBgEditor
 
   GimpActiveColor     active_color;
 
+  GimpImage          *active_image;
+
   GdkPixbuf          *default_icon;
   GdkPixbuf          *swap_icon;
 
@@ -58,6 +70,10 @@ struct _GimpFgBgEditorClass
 
   void (* color_clicked) (GimpFgBgEditor  *editor,
                           GimpActiveColor  color);
+
+  void (* tooltip)       (GimpFgBgEditor *editor,
+                          GimpFgBgTarget  target,
+                          GtkTooltip      tooltip);
 };
 
 

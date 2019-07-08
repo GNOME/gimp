@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -212,12 +212,12 @@ gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
                                     GIMP_PARASITE_PERSISTENT,
                                     len + 1, text);
 
-      gimp_image_parasite_attach (image, parasite);
+      gimp_image_parasite_attach (image, parasite, TRUE);
       gimp_parasite_free (parasite);
     }
   else
     {
-      gimp_image_parasite_detach (image, GIMP_IMAGE_COMMENT_PARASITE);
+      gimp_image_parasite_detach (image, GIMP_IMAGE_COMMENT_PARASITE, TRUE);
     }
 
   editor->recoursing = FALSE;

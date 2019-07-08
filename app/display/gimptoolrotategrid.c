@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -77,8 +77,8 @@ static void   gimp_tool_rotate_grid_motion       (GimpToolWidget      *widget,
                                                   GdkModifierType      state);
 
 
-G_DEFINE_TYPE (GimpToolRotateGrid, gimp_tool_rotate_grid,
-               GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolRotateGrid, gimp_tool_rotate_grid,
+                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
 
 #define parent_class gimp_tool_rotate_grid_parent_class
 
@@ -103,16 +103,12 @@ gimp_tool_rotate_grid_class_init (GimpToolRotateGridClass *klass)
                                                         0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolRotateGridPrivate));
 }
 
 static void
 gimp_tool_rotate_grid_init (GimpToolRotateGrid *grid)
 {
-  grid->private = G_TYPE_INSTANCE_GET_PRIVATE (grid,
-                                               GIMP_TYPE_TOOL_ROTATE_GRID,
-                                               GimpToolRotateGridPrivate);
+  grid->private = gimp_tool_rotate_grid_get_instance_private (grid);
 }
 
 static void

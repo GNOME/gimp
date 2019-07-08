@@ -85,6 +85,7 @@
       <menuitem action="gradient-editor-blending-sine" />
       <menuitem action="gradient-editor-blending-sphere-increasing" />
       <menuitem action="gradient-editor-blending-sphere-decreasing" />
+      <menuitem action="gradient-editor-blending-step" />
       <menuitem action="gradient-editor-blending-varies" />
     </menu>
     <menu action="gradient-editor-coloring-type">

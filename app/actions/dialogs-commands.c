@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -37,35 +37,41 @@
 /*  public functions  */
 
 void
-dialogs_create_toplevel_cmd_callback (GtkAction   *action,
-                                      const gchar *value,
-                                      gpointer     data)
+dialogs_create_toplevel_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
-  GtkWidget *widget;
+  GtkWidget   *widget;
+  const gchar *identifier;
   return_if_no_widget (widget, data);
 
-  if (value)
+  identifier = g_variant_get_string (value, NULL);
+
+  if (identifier)
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     gimp_widget_get_monitor (widget),
                                     NULL /*ui_manager*/,
                                     widget,
-                                    value, -1, TRUE);
+                                    identifier, -1, TRUE);
 }
 
 void
-dialogs_create_dockable_cmd_callback (GtkAction   *action,
-                                      const gchar *value,
-                                      gpointer     data)
+dialogs_create_dockable_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
 {
-  Gimp      *gimp;
-  GtkWidget *widget;
+  Gimp        *gimp;
+  GtkWidget   *widget;
+  const gchar *identifier;
   return_if_no_gimp   (gimp, data);
   return_if_no_widget (widget, data);
 
-  if (value)
+  identifier = g_variant_get_string (value, NULL);
+
+  if (identifier)
     gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
                                                gimp,
                                                gimp_dialog_factory_get_singleton (),
                                                gimp_widget_get_monitor (widget),
-                                               value);
+                                               identifier);
 }

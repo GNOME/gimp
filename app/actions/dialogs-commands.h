@@ -12,19 +12,19 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __DIALOGS_COMMANDS_H__
 #define __DIALOGS_COMMANDS_H__
 
 
-void   dialogs_create_toplevel_cmd_callback (GtkAction   *action,
-                                             const gchar *value,
-                                             gpointer     data);
-void   dialogs_create_dockable_cmd_callback (GtkAction   *action,
-                                             const gchar *value,
-                                             gpointer     data);
+void   dialogs_create_toplevel_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
+void   dialogs_create_dockable_cmd_callback (GimpAction *action,
+                                             GVariant   *value,
+                                             gpointer    data);
 
 
 #endif /* __DIALOGS_COMMANDS_H__ */

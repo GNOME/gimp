@@ -30,8 +30,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
-"eywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-12-23 13:44+0000\n"
 "PO-Revision-Date: 2017-12-23 20:53+0200\n"
 "Last-Translator: Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>\n"
@@ -133,7 +132,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMPo estas libera programaro: vi povas disdoni kaj/aŭ modifi ĝin sub la "
 "kondiĉoj de la Ĝenerala Publika Permesilo de GNU eldonite de la Free "
@@ -145,7 +144,7 @@ msgstr ""
 "CELO.  Legu la Ĝeneralan Publikan Permesilon de GNU por pli da detaloj.\n"
 "\n"
 "Vi devintus ricevi kopion de la Ĝenerala Publika Permesilo de GNU kune kun "
-"GIMPo. Se ne, vidu http://www.gnu.org/licenses/"
+"GIMPo. Se ne, vidu https://www.gnu.org/licenses/"
 
 #: ../app/main.c:160
 msgid "Show version information and exit"
@@ -4668,7 +4667,7 @@ msgid "_Dilate"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr ""
 
@@ -4678,7 +4677,7 @@ msgid "_Erode"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 
@@ -9917,17 +9916,17 @@ msgstr "Baskuligi la tutekranan vidon"
 #: ../app/actions/view-actions.c:315
 #, fuzzy
 #| msgid "Select Zoom Ratio"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Elekti proporcion de zomo"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9964,14 +9963,14 @@ msgstr "Enzomi"
 #: ../app/actions/view-actions.c:354
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Elzomi"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Enzomi"
 

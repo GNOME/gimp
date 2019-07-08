@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -143,15 +143,15 @@ static void
 gimp_operation_desaturate_prepare (GeglOperation *operation)
 {
   GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
-  const Babl              *format;
+  const Babl              *format = gegl_operation_get_source_format (operation, "input");
 
   if (desaturate->mode == GIMP_DESATURATE_LUMINANCE)
     {
-      format = babl_format ("RGBA float");
+      format = babl_format_with_space ("RGBA float", format);
     }
   else
     {
-      format = babl_format ("R'G'B'A float");
+      format = babl_format_with_space ("R'G'B'A float", format);
     }
 
   gegl_operation_set_format (operation, "input",  format);
@@ -199,18 +199,24 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
 
     case GIMP_DESATURATE_LUMA:
     case GIMP_DESATURATE_LUMINANCE:
-      while (samples--)
-        {
-          gfloat value = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]);
+      {
+        const Babl *space = gegl_operation_get_source_space (operation, "input");
+        double red_luminance, green_luminance, blue_luminance;
+        babl_space_get_rgb_luminance (space, &red_luminance, &green_luminance, &blue_luminance);
+        while (samples--)
+          {
+            gfloat value  = (src[0] * red_luminance)   +
+                            (src[1] * green_luminance) +
+                            (src[2] * blue_luminance);
+            dest[0] = value;
+            dest[1] = value;
+            dest[2] = value;
+            dest[3] = src[3];
 
-          dest[0] = value;
-          dest[1] = value;
-          dest[2] = value;
-          dest[3] = src[3];
-
-          src  += 4;
-          dest += 4;
-        }
+            src  += 4;
+            dest += 4;
+          }
+      }
       break;
 
     case GIMP_DESATURATE_AVERAGE:

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -33,6 +33,8 @@
 
 #include "gimp-intl.h"
 
+
+#define RGBA_EPSILON 1e-4
 
 enum
 {
@@ -205,7 +207,7 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
     {
       GimpPaletteEntry *entry = list->data;
 
-      if (gimp_rgba_distance (&entry->color, color) < 0.0001)
+      if (gimp_rgba_distance (&entry->color, color) < RGBA_EPSILON)
         {
           found = entry;
 
@@ -228,7 +230,7 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
               GimpPaletteEntry *entry2 = list2->data;
 
               if (gimp_rgba_distance (&entry->color,
-                                      &entry2->color) < 0.0001)
+                                      &entry2->color) < RGBA_EPSILON)
                 {
                   found = entry2;
 

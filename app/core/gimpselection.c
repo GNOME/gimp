@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -93,6 +93,7 @@ static gboolean   gimp_selection_stroke        (GimpItem            *item,
 static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
                                                 GimpImage           *dest_image,
                                                 const Babl          *new_format,
+                                                GimpColorProfile    *src_profile,
                                                 GimpColorProfile    *dest_profile,
                                                 GeglDitherMethod     layer_dither_type,
                                                 GeglDitherMethod     mask_dither_type,
@@ -113,6 +114,7 @@ static gboolean   gimp_selection_is_empty      (GimpChannel         *channel);
 static void       gimp_selection_feather       (GimpChannel         *channel,
                                                 gdouble              radius_x,
                                                 gdouble              radius_y,
+                                                gboolean             edge_lock,
                                                 gboolean             push_undo);
 static void       gimp_selection_sharpen       (GimpChannel         *channel,
                                                 gboolean             push_undo);
@@ -357,6 +359,7 @@ static void
 gimp_selection_convert_type (GimpDrawable      *drawable,
                              GimpImage         *dest_image,
                              const Babl        *new_format,
+                             GimpColorProfile  *src_profile,
                              GimpColorProfile  *dest_profile,
                              GeglDitherMethod   layer_dither_type,
                              GeglDitherMethod   mask_dither_type,
@@ -368,6 +371,7 @@ gimp_selection_convert_type (GimpDrawable      *drawable,
 
   GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                     new_format,
+                                                    src_profile,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,
@@ -507,10 +511,11 @@ static void
 gimp_selection_feather (GimpChannel *channel,
                         gdouble      radius_x,
                         gdouble      radius_y,
+                        gboolean     edge_lock,
                         gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->feather (channel, radius_x, radius_y,
-                                              push_undo);
+                                              edge_lock, push_undo);
 }
 
 static void
@@ -713,7 +718,8 @@ gimp_selection_extract (GimpSelection *selection,
       dest_format = gimp_image_get_format (image, GIMP_RGB,
                                            gimp_image_get_precision (image),
                                            add_alpha ||
-                                           babl_format_has_alpha (src_format));
+                                           babl_format_has_alpha (src_format),
+                                           babl_format_get_space (src_format));
     }
   else
     {

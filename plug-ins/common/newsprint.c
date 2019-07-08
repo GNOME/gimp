@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /*
@@ -787,7 +787,7 @@ newsprint_menu_callback (GtkWidget *widget,
    */
   if (in_progress)
     {
-      printf ("newsprint_menu_callback: unexpected recursion: can't happen\n");
+      g_printerr ("newsprint_menu_callback: unexpected recursion: can't happen\n");
       return;
     }
 
@@ -967,8 +967,6 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   GtkSizeGroup *group;
   GtkWidget    *grid;
   GtkWidget    *hbox;
-  GtkWidget    *hbox2;
-  GtkWidget    *abox;
   GtkWidget    *label;
   spot_info_t  *sf;
   channel_st   *chst;
@@ -1011,22 +1009,15 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   gtk_box_pack_start (GTK_BOX (chst->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  abox = gtk_alignment_new (0.5, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
-  hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (abox), hbox2);
-  gtk_widget_show (hbox2);
-
   label = gtk_label_new_with_mnemonic (_("_Spot function:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_size_group_add_widget (group, label);
 
   chst->combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  gtk_widget_set_valign (chst->combo, GTK_ALIGN_CENTER);
 
   for (sf = spotfn_list, i = 0; sf->name; sf++, i++)
     gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (chst->combo),
@@ -1044,7 +1035,7 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_box_pack_start (GTK_BOX (hbox2), chst->combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), chst->combo, FALSE, FALSE, 0);
   gtk_widget_show (chst->combo);
 
   /* spot function previews */
@@ -1476,7 +1467,7 @@ newsprint_cspace_update (GtkWidget *widget,
   preview = g_object_get_data (G_OBJECT (widget), "preview");
 
   if (!st)
-    printf ("newsprint: cspace_update: no state, can't happen!\n");
+    g_printerr ("newsprint: cspace_update: no state, can't happen!\n");
 
   if (st)
     {
@@ -1831,13 +1822,13 @@ newsprint (GimpDrawable *drawable,
       WGT (x, y) = BARTLETT (x, y);
 #endif /* 0 */
 
-#define ASRT(_x)                                                \
-do {                                                            \
-    if (!VALID_SPOTFN(_x))                                      \
-    {                                                           \
-        printf("newsprint: %d is not a valid spot type\n", _x); \
-        _x = SPOTFN_DOT;                                        \
-    }                                                           \
+#define ASRT(_x)                                                     \
+do {                                                                 \
+    if (!VALID_SPOTFN(_x))                                           \
+    {                                                                \
+        g_printerr ("newsprint: %d is not a valid spot type\n", _x); \
+        _x = SPOTFN_DOT;                                             \
+    }                                                                \
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */

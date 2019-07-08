@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* TODO
@@ -1313,12 +1313,12 @@ ifs_compose (gint32 drawable_id)
                                        GEGL_RECTANGLE (0, band_y,
                                                        width, band_height), 0,
                                        format,
-                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-      roi = &iter->roi[0];
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+      roi = &iter->items[0].roi;
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *destrow = iter->data[0];
+          guchar *destrow = iter->items[0].data;
 
           for (j = roi->y; j < (roi->y + roi->height); j++)
             {
@@ -2091,7 +2091,7 @@ value_pair_create (gpointer      data,
                                                (upper - lower) / 100,
                                                (upper - lower) / 10,
                                                0.0);
-  value_pair->spin = gtk_spin_button_new (value_pair->adjustment, 1.0, 3);
+  value_pair->spin = gimp_spin_button_new (value_pair->adjustment, 1.0, 3);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (value_pair->spin), TRUE);
   gtk_widget_set_size_request (value_pair->spin, 72, -1);
 

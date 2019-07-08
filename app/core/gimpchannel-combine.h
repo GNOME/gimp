@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CHANNEL_COMBINE_H__
@@ -38,8 +38,8 @@ void   gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                           gint            y,
                                           gint            w,
                                           gint            h,
-                                          gdouble         a,
-                                          gdouble         b,
+                                          gdouble         rx,
+                                          gdouble         ry,
                                           gboolean        antialias);
 void   gimp_channel_combine_mask         (GimpChannel    *mask,
                                           GimpChannel    *add_on,

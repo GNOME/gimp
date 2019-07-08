@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
@@ -47,35 +47,6 @@ void   gimp_hsl_to_rgb          (const GimpHSL  *hsl,
                                  GimpRGB        *rgb);
 void   gimp_cmyk_to_rgb         (const GimpCMYK *cmyk,
                                  GimpRGB        *rgb);
-
-
-/*  gint functions  */
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_hsv)
-void    gimp_rgb_to_hsv_int     (gint    *red         /* returns hue        */,
-                                 gint    *green       /* returns saturation */,
-                                 gint    *blue        /* returns value      */);
-
-GIMP_DEPRECATED_FOR (gimp_hsv_to_rgb)
-void    gimp_hsv_to_rgb_int     (gint    *hue         /* returns red        */,
-                                 gint    *saturation  /* returns green      */,
-                                 gint    *value       /* returns blue       */);
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_hsl)
-void    gimp_rgb_to_hsl_int     (gint    *red         /* returns hue        */,
-                                 gint    *green       /* returns saturation */,
-                                 gint    *blue        /* returns lightness  */);
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_hsl)
-gint    gimp_rgb_to_l_int       (gint     red,
-                                 gint     green,
-                                 gint     blue);
-
-GIMP_DEPRECATED_FOR (gimp_hsl_to_rgb)
-void    gimp_hsl_to_rgb_int     (gint    *hue         /* returns red        */,
-                                 gint    *saturation  /* returns green      */,
-                                 gint    *lightness   /* returns blue       */);
-
 
 G_END_DECLS
 

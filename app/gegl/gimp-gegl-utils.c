@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -24,6 +24,8 @@
 
 #include <gegl.h>
 #include <gegl-plugin.h>
+
+#include "libgimpmath/gimpmath.h"
 
 #include "gimp-gegl-types.h"
 
@@ -61,14 +63,17 @@ gimp_gegl_get_op_enum_type (const gchar *operation,
 }
 
 GeglColor *
-gimp_gegl_color_new (const GimpRGB *rgb)
+gimp_gegl_color_new (const GimpRGB *rgb,
+                     const Babl    *space)
 {
   GeglColor *color;
 
   g_return_val_if_fail (rgb != NULL, NULL);
 
   color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  gegl_color_set_pixel (color,
+                        babl_format_with_space ("R'G'B'A double", space),
+                        rgb);
 
   return color;
 }
@@ -114,6 +119,39 @@ gimp_gegl_progress_connect (GeglNode     *node,
                           (GDestroyNotify) g_free);
 }
 
+gboolean
+gimp_gegl_node_is_source_operation (GeglNode *node)
+{
+  GeglOperation *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), FALSE);
+
+  operation = gegl_node_get_gegl_operation (node);
+
+  if (! operation)
+    return FALSE;
+
+  return GEGL_IS_OPERATION_SOURCE (operation);
+}
+
+gboolean
+gimp_gegl_node_is_point_operation (GeglNode *node)
+{
+  GeglOperation *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), FALSE);
+
+  operation = gegl_node_get_gegl_operation (node);
+
+  if (! operation)
+    return FALSE;
+
+  return GEGL_IS_OPERATION_POINT_RENDER    (operation) ||
+         GEGL_IS_OPERATION_POINT_FILTER    (operation) ||
+         GEGL_IS_OPERATION_POINT_COMPOSER  (operation) ||
+         GEGL_IS_OPERATION_POINT_COMPOSER3 (operation);
+}
+
 const Babl *
 gimp_gegl_node_get_format (GeglNode    *node,
                            const gchar *pad_name)
@@ -139,6 +177,33 @@ gimp_gegl_node_get_format (GeglNode    *node,
   return format;
 }
 
+void
+gimp_gegl_node_set_underlying_operation (GeglNode *node,
+                                         GeglNode *operation)
+{
+  g_return_if_fail (GEGL_IS_NODE (node));
+  g_return_if_fail (operation == NULL || GEGL_IS_NODE (operation));
+
+  g_object_set_data (G_OBJECT (node),
+                     "gimp-gegl-node-underlying-operation", operation);
+}
+
+GeglNode *
+gimp_gegl_node_get_underlying_operation (GeglNode *node)
+{
+  GeglNode *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), NULL);
+
+  operation = g_object_get_data (G_OBJECT (node),
+                                 "gimp-gegl-node-underlying-operation");
+
+  if (operation)
+    return gimp_gegl_node_get_underlying_operation (operation);
+  else
+    return node;
+}
+
 gboolean
 gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
                               const gchar *key,
@@ -150,4 +215,38 @@ gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
     return TRUE;
 
   return FALSE;
+}
+
+void
+gimp_gegl_rectangle_align_to_tile_grid (GeglRectangle       *dest,
+                                        const GeglRectangle *src,
+                                        GeglBuffer          *buffer)
+{
+  gint          shift_x;
+  gint          shift_y;
+  gint          tile_width;
+  gint          tile_height;
+  GeglRectangle rect;
+
+  g_return_if_fail (dest != NULL);
+  g_return_if_fail (src != NULL);
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  g_object_get (buffer,
+                "shift-x",     &shift_x,
+                "shift-y",     &shift_y,
+                "tile-width",  &tile_width,
+                "tile-height", &tile_height,
+                NULL);
+
+  rect.x      = (gint) floor ((gdouble) (src->x               + shift_x) /
+                              tile_width)  * tile_width;
+  rect.y      = (gint) floor ((gdouble) (src->y               + shift_y) /
+                              tile_height) * tile_height;
+  rect.width  = (gint) ceil  ((gdouble) (src->x + src->width  + shift_x) /
+                              tile_width)  * tile_width  - rect.x;
+  rect.height = (gint) ceil  ((gdouble) (src->y + src->height + shift_y) /
+                              tile_height) * tile_height - rect.y;
+
+  *dest = rect;
 }

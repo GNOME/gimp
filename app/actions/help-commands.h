@@ -12,17 +12,19 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __HELP_COMMANDS_H__
 #define __HELP_COMMANDS_H__
 
 
-void   help_help_cmd_callback         (GtkAction *action,
-                                       gpointer   data);
-void   help_context_help_cmd_callback (GtkAction *action,
-                                       gpointer   data);
+void   help_help_cmd_callback         (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);
+void   help_context_help_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data);
 
 
 #endif /* __HELP_COMMANDS_H__ */

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -128,8 +128,13 @@ file_raw_get_executable_path (const gchar *main_executable,
       else
         registry_key = g_strconcat (win32_registry_key_base, ".exe", NULL);
 
-      status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
+      /* Check HKCU first in case there is a user specific installation. */
+      status = RegGetValue (HKEY_CURRENT_USER, registry_key, "", RRF_RT_ANY,
                             NULL, (PVOID)&path, &buffer_size);
+
+      if (status != ERROR_SUCCESS)
+        status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
+                              NULL, (PVOID)&path, &buffer_size);
 
       g_free (registry_key);
 

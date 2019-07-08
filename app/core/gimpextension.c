@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -25,6 +25,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpxmlparser.h"
+
+#include "gimperror.h"
 #include "gimpextension.h"
 #include "gimpextension-error.h"
 
@@ -35,7 +38,8 @@ enum
 {
   PROP_0,
   PROP_PATH,
-  PROP_WRITABLE
+  PROP_WRITABLE,
+  PROP_RUNNING
 };
 
 struct _GimpExtensionPrivate
@@ -44,6 +48,7 @@ struct _GimpExtensionPrivate
 
   AsApp    *app;
   gboolean  writable;
+  gboolean  running;
 
   /* Extension metadata: directories. */
   GList    *brush_paths;
@@ -53,10 +58,22 @@ struct _GimpExtensionPrivate
   GList    *gradient_paths;
   GList    *palette_paths;
   GList    *tool_preset_paths;
+  GList    *splash_paths;
+  GList    *theme_paths;
 
   /* Extension metadata: plug-in entry points. */
   GList    *plug_in_paths;
 };
+
+typedef struct
+{
+  GString  *text;
+  gint      level;
+
+  gboolean  numbered_list;
+  gint      list_num;
+  gboolean  unnumbered_list;
+} ParseState;
 
 
 static void         gimp_extension_finalize        (GObject        *object);
@@ -69,12 +86,29 @@ static void         gimp_extension_get_property    (GObject        *object,
                                                     GValue         *value,
                                                     GParamSpec     *pspec);
 
+static void         gimp_extension_clean           (GimpExtension  *extension);
 static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
                                                     const gchar    *paths,
                                                     gboolean        as_directories,
                                                     GError        **error);
 
-G_DEFINE_TYPE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
+static void         appstream_text_start_element   (GMarkupParseContext  *context,
+                                                    const gchar          *element_name,
+                                                    const gchar         **attribute_names,
+                                                    const gchar         **attribute_values,
+                                                    gpointer              user_data,
+                                                    GError              **error);
+static void         appstream_text_end_element     (GMarkupParseContext  *context,
+                                                    const gchar          *element_name,
+                                                    gpointer              user_data,
+                                                    GError              **error);
+static void         appstream_text_characters      (GMarkupParseContext  *context,
+                                                    const gchar          *text,
+                                                    gsize                 text_len,
+                                                    gpointer              user_data,
+                                                    GError              **error);
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_extension_parent_class
 
@@ -98,16 +132,16 @@ gimp_extension_class_init (GimpExtensionClass *klass)
                                                          NULL, NULL, FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpExtensionPrivate));
+  g_object_class_install_property (object_class, PROP_RUNNING,
+                                   g_param_spec_boolean ("running",
+                                                         NULL, NULL, FALSE,
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
 gimp_extension_init (GimpExtension *extension)
 {
-  extension->p = G_TYPE_INSTANCE_GET_PRIVATE (extension,
-                                              GIMP_TYPE_EXTENSION,
-                                              GimpExtensionPrivate);
+  extension->p = gimp_extension_get_instance_private (extension);
 }
 
 static void
@@ -115,7 +149,7 @@ gimp_extension_finalize (GObject *object)
 {
   GimpExtension *extension = GIMP_EXTENSION (object);
 
-  gimp_extension_stop (extension);
+  gimp_extension_clean (extension);
 
   g_free (extension->p->path);
   if (extension->p->app)
@@ -141,6 +175,9 @@ gimp_extension_set_property (GObject      *object,
     case PROP_WRITABLE:
       extension->p->writable = g_value_get_boolean (value);
       break;
+    case PROP_RUNNING:
+      extension->p->running = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -164,6 +201,9 @@ gimp_extension_get_property (GObject      *object,
     case PROP_WRITABLE:
       g_value_set_boolean (value, extension->p->writable);
       break;
+    case PROP_RUNNING:
+      g_value_set_boolean (value, extension->p->running);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -185,6 +225,139 @@ gimp_extension_new (const gchar *dir,
                        NULL);
 }
 
+const gchar *
+gimp_extension_get_name (GimpExtension *extension)
+{
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  return as_app_get_name (extension->p->app, g_getenv ("LANGUAGE")) ?
+    as_app_get_name (extension->p->app, g_getenv ("LANGUAGE")) :
+    as_app_get_name (extension->p->app, NULL);
+}
+
+const gchar *
+gimp_extension_get_comment (GimpExtension *extension)
+{
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  return as_app_get_comment (extension->p->app, g_getenv ("LANGUAGE")) ?
+    as_app_get_comment (extension->p->app, g_getenv ("LANGUAGE")) :
+    as_app_get_comment (extension->p->app, NULL);
+}
+
+const gchar *
+gimp_extension_get_description (GimpExtension *extension)
+{
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  return as_app_get_description (extension->p->app, g_getenv ("LANGUAGE")) ?
+    as_app_get_description (extension->p->app, g_getenv ("LANGUAGE")) :
+    as_app_get_description (extension->p->app, NULL);
+}
+
+GdkPixbuf *
+gimp_extension_get_screenshot (GimpExtension  *extension,
+                               gint            width,
+                               gint            height,
+                               const gchar   **caption)
+{
+  GdkPixbuf    *pixbuf = NULL;
+  AsScreenshot *screenshot;
+
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  screenshot = as_app_get_screenshot_default (extension->p->app);
+  if (screenshot)
+    {
+      AsImage *image;
+
+      image = as_screenshot_get_image_for_locale (screenshot, g_getenv ("LANGUAGE"), width, height);
+      if (! image)
+        image = as_screenshot_get_image_for_locale (screenshot, NULL, width, height);
+
+      pixbuf = as_image_get_pixbuf (image);
+      if (pixbuf)
+        {
+          g_object_ref (pixbuf);
+        }
+      else
+        {
+          GFile            *file;
+          GFileInputStream *istream;
+          GError           *error = NULL;
+
+          file = g_file_new_for_uri (as_image_get_url (image));
+          istream = g_file_read (file, NULL, &error);
+          if (istream)
+            {
+              pixbuf = gdk_pixbuf_new_from_stream (G_INPUT_STREAM (istream), NULL, &error);
+              g_object_unref (istream);
+            }
+
+          if (error)
+            {
+              g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+              g_error_free (error);
+            }
+          g_object_unref (file);
+        }
+
+      if (caption)
+        {
+          *caption = as_screenshot_get_caption (screenshot, g_getenv ("LANGUAGE"));
+          if (*caption == NULL)
+            *caption = as_screenshot_get_caption (screenshot, NULL);
+        }
+    }
+
+  return pixbuf;
+}
+
+const gchar *
+gimp_extension_get_path (GimpExtension *extension)
+{
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), NULL);
+
+  return extension->p->path;
+}
+
+gchar *
+gimp_extension_get_markup_description (GimpExtension *extension)
+{
+  static const GMarkupParser appstream_text_parser =
+    {
+      appstream_text_start_element,
+      appstream_text_end_element,
+      appstream_text_characters,
+      NULL, /*  passthrough */
+      NULL  /*  error       */
+    };
+  const gchar *description;
+
+  GimpXmlParser *xml_parser;
+  gchar         *markup = NULL;
+  GError        *error  = NULL;
+  ParseState     state;
+
+  state.level = 0;
+  state.text = g_string_new (NULL);
+  state.numbered_list   = FALSE;
+  state.unnumbered_list = FALSE;
+
+  xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
+  description = gimp_extension_get_description (extension);
+  if (description &&
+      ! gimp_xml_parser_parse_buffer (xml_parser, description, -1, &error))
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+      g_error_free (error);
+    }
+  markup = g_string_free (state.text, FALSE);
+  gimp_xml_parser_free (xml_parser);
+
+  return markup;
+}
+
 gboolean
 gimp_extension_load (GimpExtension  *extension,
                      GError        **error)
@@ -195,7 +368,8 @@ gimp_extension_load (GimpExtension  *extension,
   AsRelease *release;
   gchar     *appdata_name;
   gchar     *path;
-  gboolean   success = FALSE;
+  gboolean   success     = FALSE;
+  gboolean   has_require = FALSE;
 
   g_clear_object (&extension->p->app);
 
@@ -284,7 +458,8 @@ gimp_extension_load (GimpExtension  *extension,
           if (as_require_get_kind (require) == AS_REQUIRE_KIND_ID &&
               g_strcmp0 (as_require_get_value (require), "org.gimp.GIMP") == 0)
             {
-              if (! as_require_version_compare (require, GIMP_APP_VERSION, error))
+              has_require = TRUE;
+              if (! as_require_version_compare (require, GIMP_VERSION, error))
                 {
                   success = FALSE;
                   break;
@@ -303,6 +478,16 @@ gimp_extension_load (GimpExtension  *extension,
               success = FALSE;
               break;
             }
+        }
+    }
+  if (! has_require)
+    {
+      success = FALSE;
+      if (error && *error == NULL)
+        {
+          *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                GIMP_EXTENSION_FAILED,
+                                _("<requires><id>org.gimp.GIMP</id></requires> for version comparison is mandatory."));
         }
     }
 
@@ -324,7 +509,7 @@ gimp_extension_run (GimpExtension  *extension,
   g_return_val_if_fail (extension->p->app != NULL, FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
-  gimp_extension_stop (extension);
+  gimp_extension_clean (extension);
   metadata = as_app_get_metadata (extension->p->app);
 
   value = g_hash_table_lookup (metadata, "GIMP::brush-path");
@@ -381,9 +566,27 @@ gimp_extension_run (GimpExtension  *extension,
                                                                    value, FALSE,
                                                                    error);
     }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::splash-path");
+      extension->p->splash_paths = gimp_extension_validate_paths (extension,
+                                                                  value, TRUE,
+                                                                  error);
+    }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::theme-path");
+      extension->p->theme_paths = gimp_extension_validate_paths (extension,
+                                                                 value, TRUE,
+                                                                 error);
+    }
 
   if (*error)
-    gimp_extension_stop (extension);
+    gimp_extension_clean (extension);
+
+  g_object_set (extension,
+                "running", TRUE,
+                NULL);
 
   return (*error == NULL);
 }
@@ -391,22 +594,10 @@ gimp_extension_run (GimpExtension  *extension,
 void
 gimp_extension_stop (GimpExtension  *extension)
 {
-  g_list_free_full (extension->p->brush_paths, g_object_unref);
-  extension->p->brush_paths = NULL;
-  g_list_free_full (extension->p->dynamics_paths, g_object_unref);
-  extension->p->dynamics_paths = NULL;
-  g_list_free_full (extension->p->mypaint_brush_paths, g_object_unref);
-  extension->p->brush_paths = NULL;
-  g_list_free_full (extension->p->pattern_paths, g_object_unref);
-  extension->p->pattern_paths = NULL;
-  g_list_free_full (extension->p->gradient_paths, g_object_unref);
-  extension->p->gradient_paths = NULL;
-  g_list_free_full (extension->p->palette_paths, g_object_unref);
-  extension->p->palette_paths = NULL;
-  g_list_free_full (extension->p->tool_preset_paths, g_object_unref);
-  extension->p->tool_preset_paths = NULL;
-  g_list_free_full (extension->p->plug_in_paths, g_object_unref);
-  extension->p->plug_in_paths = NULL;
+  gimp_extension_clean (extension);
+  g_object_set (extension,
+                "running", FALSE,
+                NULL);
 }
 
 GList *
@@ -452,9 +643,81 @@ gimp_extension_get_tool_preset_paths (GimpExtension *extension)
 }
 
 GList *
+gimp_extension_get_splash_paths (GimpExtension *extension)
+{
+  return extension->p->splash_paths;
+}
+
+GList *
+gimp_extension_get_theme_paths (GimpExtension *extension)
+{
+  return extension->p->theme_paths;
+}
+
+GList *
 gimp_extension_get_plug_in_paths (GimpExtension *extension)
 {
   return extension->p->plug_in_paths;
+}
+
+/**
+ * @extension1: a #GimpExtension.
+ * @extension2: another #GimpExtension.
+ *
+ * Compare 2 extensions by their ID.
+ *
+ * Returns: 0 if the 2 extensions have the same ID (even though they may
+ * represent different versions of the same extension).
+ */
+gint
+gimp_extension_cmp (GimpExtension *extension1,
+                    GimpExtension *extension2)
+{
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension1), -1);
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension2), -1);
+
+  return g_strcmp0 (gimp_object_get_name (extension1),
+                    gimp_object_get_name (extension2));
+}
+
+/**
+ * @extension: a #GimpExtension.
+ * @id:        an extension ID (reverse-DNS scheme)
+ *
+ * Compare the extension ID with @id.
+ *
+ * Returns: 0 if @extension have @id as appstream ID.
+ */
+gint
+gimp_extension_id_cmp (GimpExtension *extension,
+                       const gchar   *id)
+{
+  return g_strcmp0 (gimp_object_get_name (extension), id);
+}
+
+static void
+gimp_extension_clean (GimpExtension  *extension)
+{
+  g_list_free_full (extension->p->brush_paths, g_object_unref);
+  extension->p->brush_paths = NULL;
+  g_list_free_full (extension->p->dynamics_paths, g_object_unref);
+  extension->p->dynamics_paths = NULL;
+  g_list_free_full (extension->p->mypaint_brush_paths, g_object_unref);
+  extension->p->brush_paths = NULL;
+  g_list_free_full (extension->p->pattern_paths, g_object_unref);
+  extension->p->pattern_paths = NULL;
+  g_list_free_full (extension->p->gradient_paths, g_object_unref);
+  extension->p->gradient_paths = NULL;
+  g_list_free_full (extension->p->palette_paths, g_object_unref);
+  extension->p->palette_paths = NULL;
+  g_list_free_full (extension->p->tool_preset_paths, g_object_unref);
+  extension->p->tool_preset_paths = NULL;
+  g_list_free_full (extension->p->plug_in_paths, g_object_unref);
+  extension->p->plug_in_paths = NULL;
+  g_list_free_full (extension->p->splash_paths, g_object_unref);
+  extension->p->splash_paths = NULL;
+  g_list_free_full (extension->p->theme_paths, g_object_unref);
+  extension->p->theme_paths = NULL;
 }
 
 /**
@@ -589,4 +852,85 @@ gimp_extension_validate_paths (GimpExtension  *extension,
   list = g_list_reverse (list);
 
   return list;
+}
+
+static void
+appstream_text_start_element (GMarkupParseContext  *context,
+                              const gchar          *element_name,
+                              const gchar         **attribute_names,
+                              const gchar         **attribute_values,
+                              gpointer              user_data,
+                              GError              **error)
+{
+  ParseState *state = user_data;
+
+  state->level++;
+
+  if ((state->numbered_list || state->unnumbered_list) &&
+      (g_strcmp0 (element_name, "ul") == 0 ||
+       g_strcmp0 (element_name, "ol") == 0))
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("This parser does not support imbricated lists."));
+    }
+  else if (g_strcmp0 (element_name, "ul") == 0)
+    {
+      state->unnumbered_list = TRUE;
+    }
+  else if (g_strcmp0 (element_name, "ol") == 0)
+    {
+      state->numbered_list = TRUE;
+      state->list_num      = 0;
+    }
+  else if (g_strcmp0 (element_name, "li") == 0)
+    {
+      state->list_num++;
+      if (state->numbered_list)
+        g_string_append_printf (state->text, "\n %d. ",
+                                state->list_num);
+      else if (state->unnumbered_list)
+        g_string_append (state->text, "\n * ");
+      else
+        g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                     _("<li> must be inside <ol> or <ul> tags."));
+    }
+  else if (g_strcmp0 (element_name, "p") != 0)
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("Unknown tag <%s>."), element_name);
+    }
+}
+
+static void
+appstream_text_end_element (GMarkupParseContext  *context,
+                            const gchar          *element_name,
+                            gpointer              user_data,
+                            GError              **error)
+{
+  ParseState *state = user_data;
+
+  state->level--;
+
+  if (g_strcmp0 (element_name, "p") == 0)
+    {
+      g_string_append (state->text, "\n\n");
+    }
+  else if (g_strcmp0 (element_name, "ul") == 0 ||
+           g_strcmp0 (element_name, "ol") == 0)
+    {
+      state->numbered_list   = FALSE;
+      state->unnumbered_list = FALSE;
+    }
+}
+
+static void
+appstream_text_characters (GMarkupParseContext  *context,
+                           const gchar          *text,
+                           gsize                 text_len,
+                           gpointer              user_data,
+                           GError              **error)
+{
+  ParseState *state = user_data;
+
+  g_string_append (state->text, text);
 }

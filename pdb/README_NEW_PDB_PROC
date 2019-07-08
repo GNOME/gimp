@@ -40,9 +40,9 @@ Anything I should know before continuing this tutorial?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Yes. You should know
-http://en.wikipedia.org/wiki/C_%28programming_language%29[C Programming]
+https://en.wikipedia.org/wiki/C_%28programming_language%29[C Programming]
 (C is the language in which GIMP is coded), know a bit of
-http://library.gnome.org/devel/glib/stable/[Glib] (the library which
+https://library.gnome.org/devel/glib/stable/[Glib] (the library which
 GIMP uses for many of it's data-structures). In addition, you should
 know enough about the GIMP core for implementing your function (this is
 not a programming tutorial, this is only a technical tutorial) or at

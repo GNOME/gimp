@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  * This is a first loader for FLI and FLC movies. It uses as the same method as
  * the gif plug-in to store the animation (i.e. 1 layer/frame).
@@ -505,9 +505,14 @@ load_image (const gchar  *filename,
 
   fli_read_header (file, &fli_header);
   if (fli_header.magic == NO_HEADER)
-    return -1;
+    {
+      fclose (file);
+      return -1;
+    }
   else
-    fseek (file, 128, SEEK_SET);
+    {
+      fseek (file, 128, SEEK_SET);
+    }
 
   /*
    * Fix parameters
@@ -528,11 +533,13 @@ load_image (const gchar  *filename,
   if (to_frame < 1)
     {
       /* nothing to do ... */
+      fclose (file);
       return -1;
     }
   if (from_frame >= fli_header.frames)
     {
       /* nothing to do ... */
+      fclose (file);
       return -1;
     }
   if (to_frame>fli_header.frames)
@@ -890,7 +897,7 @@ load_dialog (const gchar *filename)
    * But for now you can set a start- and a end-frame:
    */
   adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "From:"), 0.0, 0.5,
@@ -900,7 +907,7 @@ load_dialog (const gchar *filename)
                     &from_frame);
 
   adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "To:"), 0.0, 0.5,
@@ -948,7 +955,7 @@ save_dialog (gint32 image_id)
    * But for now you can set a start- and a end-frame:
    */
   adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "From:"), 0.0, 0.5,
@@ -958,7 +965,7 @@ save_dialog (gint32 image_id)
                     &from_frame);
 
   adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "To:"), 0.0, 0.5,

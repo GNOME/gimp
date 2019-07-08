@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -41,6 +41,7 @@
 #include "paint/gimp-paint.h"
 
 #include "xcf/xcf.h"
+#include "file-data/file-data.h"
 
 #include "gimp.h"
 #include "gimp-contexts.h"
@@ -284,9 +285,15 @@ gimp_constructed (GObject *object)
   gimp->pdb               = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
+  file_data_init (gimp);
 
   /*  create user and default context  */
   gimp_contexts_init (gimp);
+
+  /* Initialize the extension manager early as its contents may be used
+   * at the very start (e.g. the splash image).
+   */
+  gimp_extension_manager_initialize (gimp->extension_manager);
 }
 
 static void
@@ -385,6 +392,7 @@ gimp_finalize (GObject *object)
       g_clear_object (&gimp->tool_info_list);
     }
 
+  file_data_exit (gimp);
   xcf_exit (gimp);
 
   g_clear_object (&gimp->pdb);
@@ -399,6 +407,7 @@ gimp_finalize (GObject *object)
   g_clear_object (&gimp->image_table);
   g_clear_object (&gimp->images);
   g_clear_object (&gimp->plug_in_manager);
+  g_clear_object (&gimp->extension_manager);
 
   if (gimp->module_db)
     gimp_modules_exit (gimp);
@@ -516,7 +525,6 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_pdb_compat_procs_register (gimp->pdb, gimp->pdb_compat_mode);
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
-  gimp_extension_manager_initialize (gimp->extension_manager);
 
   status_callback (NULL, "", 1.0);
 }
@@ -546,6 +554,7 @@ gimp_real_exit (Gimp     *gimp,
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
+  gimp_extension_manager_exit (gimp->extension_manager);
   gimp_modules_unload (gimp);
 
   gimp_data_factories_save (gimp);
@@ -981,7 +990,7 @@ gimp_create_image (Gimp              *gimp,
                                                       GIMP_PARASITE_PERSISTENT,
                                                       strlen (comment) + 1,
                                                       comment);
-          gimp_image_parasite_attach (image, parasite);
+          gimp_image_parasite_attach (image, parasite, FALSE);
           gimp_parasite_free (parasite);
         }
     }

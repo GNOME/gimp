@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -347,7 +347,7 @@ image_new_confirm_dialog (ImageNewDialog *private)
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                               _("An image of the chosen size will use more "
                                 "memory than what is configured as "
-                                "\"Maximum Image Size\" in the Preferences "
+                                "\"Maximum new image size\" in the Preferences "
                                 "dialog (currently %s)."), size);
   g_free (size);
 

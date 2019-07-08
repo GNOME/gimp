@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __APP_GIMP_WIDGETS_UTILS_H__
@@ -45,11 +45,6 @@ void              gimp_enum_radio_frame_add        (GtkFrame             *frame,
 GdkPixbuf       * gimp_widget_load_icon            (GtkWidget            *widget,
                                                     const gchar          *icon_name,
                                                     gint                  size);
-GtkIconSize       gimp_get_icon_size               (GtkWidget            *widget,
-                                                    const gchar          *icon_name,
-                                                    GtkIconSize           max_size,
-                                                    gint                  width,
-                                                    gint                  height);
 GimpTabStyle      gimp_preview_tab_style_to_icon   (GimpTabStyle          tab_style);
 
 const gchar     * gimp_get_mod_string              (GdkModifierType       modifiers);
@@ -79,7 +74,7 @@ guint32           gimp_window_get_native_id        (GtkWindow            *window
 void              gimp_window_set_transient_for    (GtkWindow            *window,
                                                     guint32               parent_ID);
 void              gimp_widget_set_accel_help       (GtkWidget            *widget,
-                                                    GtkAction            *action);
+                                                    GimpAction           *action);
 
 const gchar     * gimp_get_message_icon_name       (GimpMessageSeverity   severity);
 gboolean          gimp_get_color_tag_color         (GimpColorTag          color_tag,
@@ -100,10 +95,15 @@ GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factor
 GtkWidget       * gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
                                                     GtkWidget            *widget);
+void              gimp_tools_set_tool_options_gui_func
+                                                   (GimpToolOptions      *tool_options,
+                                                    GimpToolOptionsGUIFunc func);
 
 gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget);
 void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
                                                     gboolean              fully_opaque);
+
+void              gimp_gtk_container_clear         (GtkContainer         *container);
 
 void              gimp_button_set_suggested        (GtkWidget            *button,
                                                     gboolean              suggested,
@@ -125,6 +125,8 @@ void              gimp_color_profile_chooser_dialog_connect_path
                                                    (GtkWidget             *dialog,
                                                     GObject               *config,
                                                     const gchar           *property_name);
+
+void              gimp_widget_flush_expose         (void);
 
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

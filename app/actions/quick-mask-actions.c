@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -45,7 +45,7 @@ static const GimpActionEntry quick_mask_actions[] =
 
   { "quick-mask-configure", NULL,
     NC_("quick-mask-action", "_Configure Color and Opacity..."), NULL, NULL,
-    G_CALLBACK (quick_mask_configure_cmd_callback),
+    quick_mask_configure_cmd_callback,
     GIMP_HELP_QUICK_MASK_EDIT }
 };
 
@@ -54,7 +54,7 @@ static const GimpToggleActionEntry quick_mask_toggle_actions[] =
   { "quick-mask-toggle", GIMP_ICON_QUICK_MASK_ON,
     NC_("quick-mask-action", "Toggle _Quick Mask"), "<shift>Q",
     NC_("quick-mask-action", "Toggle Quick Mask on/off"),
-    G_CALLBACK (quick_mask_toggle_cmd_callback),
+    quick_mask_toggle_cmd_callback,
     FALSE,
     GIMP_HELP_QUICK_MASK_TOGGLE }
 };
@@ -89,7 +89,7 @@ quick_mask_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (quick_mask_invert_actions),
                                        NULL,
                                        FALSE,
-                                       G_CALLBACK (quick_mask_invert_cmd_callback));
+                                       quick_mask_invert_cmd_callback);
 }
 
 void

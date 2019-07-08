@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -78,6 +78,8 @@
 #include "gimpstatusbar.h"
 
 #include "gimp-log.h"
+#include "gimp-priorities.h"
+
 #include "gimp-intl.h"
 
 
@@ -93,6 +95,10 @@
 
 /* Whether the window's maximized or not */
 #define GIMP_IMAGE_WINDOW_MAXIMIZED        "maximized"
+
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 1070
+#define NSWindowCollectionBehaviorFullScreenAuxiliary (1 << 8)
+#endif
 
 
 enum
@@ -145,9 +151,7 @@ typedef struct
 
 
 #define GIMP_IMAGE_WINDOW_GET_PRIVATE(window) \
-        G_TYPE_INSTANCE_GET_PRIVATE (window, \
-                                     GIMP_TYPE_IMAGE_WINDOW, \
-                                     GimpImageWindowPrivate)
+        ((GimpImageWindowPrivate *) gimp_image_window_get_instance_private ((GimpImageWindow *) (window)))
 
 
 /*  local function prototypes  */
@@ -263,6 +267,7 @@ static void      gimp_image_window_update_tab_labels   (GimpImageWindow     *win
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
+                         G_ADD_PRIVATE (GimpImageWindow)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
                                                 gimp_image_window_dock_container_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
@@ -312,8 +317,6 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GDK_TYPE_MONITOR,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpImageWindowPrivate));
 }
 
 static void
@@ -373,7 +376,7 @@ gimp_image_window_constructed (GObject *object)
                            window, G_CONNECT_SWAPPED);
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (private->menubar_manager)));
+                              gimp_ui_manager_get_accel_group (private->menubar_manager));
 
   g_signal_connect (private->menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_image_window_show_tooltip),
@@ -391,9 +394,8 @@ gimp_image_window_constructed (GObject *object)
 
   /* Create the menubar */
 #ifndef GDK_WINDOWING_QUARTZ
-  private->menubar =
-    gtk_ui_manager_get_widget (GTK_UI_MANAGER (private->menubar_manager),
-                               "/image-menubar");
+  private->menubar = gimp_ui_manager_get_widget (private->menubar_manager,
+                                                 "/image-menubar");
 #endif /* !GDK_WINDOWING_QUARTZ */
   if (private->menubar)
     {
@@ -401,7 +403,7 @@ gimp_image_window_constructed (GObject *object)
                           private->menubar, FALSE, FALSE, 0);
 
       /*  make sure we can activate accels even if the menubar is invisible
-       *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
+       *  (see https://bugzilla.gnome.org/show_bug.cgi?id=137151)
        */
       g_signal_connect (private->menubar, "can-activate-accel",
                         G_CALLBACK (gtk_true),
@@ -478,6 +480,9 @@ gimp_image_window_constructed (GObject *object)
   gtk_widget_set_visible (private->right_docks, config->single_window_mode);
 
   g_signal_connect_object (config, "notify::single-window-mode",
+                           G_CALLBACK (gimp_image_window_config_notify),
+                           window, G_CONNECT_SWAPPED);
+  g_signal_connect_object (config, "notify::show-tabs",
                            G_CALLBACK (gimp_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::hide-docks",
@@ -604,12 +609,7 @@ gimp_image_window_map (GtkWidget *widget)
    * as soon as GTK+ has proper support for this, we will migrate to the
    * new-style full screen mode.
    */
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
   ns_window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenAuxiliary;
-#else
-  /* Hard code the define ... */
-  ns_window.collectionBehavior |= 1 << 8;
-#endif
 #endif /* !GDK_WINDOWING_QUARTZ */
 }
 
@@ -765,7 +765,7 @@ gimp_image_window_style_updated (GtkWidget *widget)
 
   /*  Only set user pos on the empty display because it gets a pos
    *  set by gimp. All other displays should be placed by the window
-   *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
+   *  manager. See https://bugzilla.gnome.org/show_bug.cgi?id=559580
    */
   if (! gimp_display_get_image (shell->display))
     geometry_mask |= GDK_HINT_USER_POS;
@@ -1725,6 +1725,7 @@ gimp_image_window_update_tabs (GimpImageWindow *window)
   /* Tab visibility. */
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook),
                               config->single_window_mode &&
+                              config->show_tabs          &&
                               ! config->hide_docks       &&
                               ((private->active_shell          &&
                                 private->active_shell->display &&
@@ -1785,6 +1786,7 @@ gimp_image_window_config_notify (GimpImageWindow *window,
   /* Dock column visibility */
   if (strcmp (pspec->name, "single-window-mode") == 0 ||
       strcmp (pspec->name, "hide-docks")         == 0 ||
+      strcmp (pspec->name, "show-tabs")          == 0 ||
       strcmp (pspec->name, "tabs-position")      == 0)
     {
       if (strcmp (pspec->name, "single-window-mode") == 0 ||
@@ -1873,8 +1875,10 @@ gimp_image_window_update_ui_manager (GimpImageWindow *window)
   if (! private->update_ui_manager_idle_id)
     {
       private->update_ui_manager_idle_id =
-        g_idle_add ((GSourceFunc) gimp_image_window_update_ui_manager_idle,
-                    window);
+        g_idle_add_full (GIMP_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE,
+                         (GSourceFunc) gimp_image_window_update_ui_manager_idle,
+                         window,
+                         NULL);
     }
 }
 

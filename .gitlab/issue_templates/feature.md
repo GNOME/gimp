@@ -12,3 +12,5 @@ or other relevant resources.
 # Use cases
 
 If not obvious, explain the use cases or problems to solve.
+
+/label ~"1. Enhancement"

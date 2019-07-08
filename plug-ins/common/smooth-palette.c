@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -470,7 +470,7 @@ dialog (gint32 drawable_id)
   gtk_widget_show (sizeentry);
 
   adj = gtk_adjustment_new (config.ntries, 1, 1024, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   gimp_grid_attach_aligned (GTK_GRID (sizeentry), 0, 2,

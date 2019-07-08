@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -55,9 +55,7 @@ struct _GimpCanvasPolygonPrivate
 };
 
 #define GET_PRIVATE(polygon) \
-        G_TYPE_INSTANCE_GET_PRIVATE (polygon, \
-                                     GIMP_TYPE_CANVAS_POLYGON, \
-                                     GimpCanvasPolygonPrivate)
+        ((GimpCanvasPolygonPrivate *) gimp_canvas_polygon_get_instance_private ((GimpCanvasPolygon *) (polygon)))
 
 
 /*  local function prototypes  */
@@ -79,8 +77,8 @@ static gboolean         gimp_canvas_polygon_hit          (GimpCanvasItem *item,
                                                           gdouble         y);
 
 
-G_DEFINE_TYPE (GimpCanvasPolygon, gimp_canvas_polygon,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasPolygon, gimp_canvas_polygon,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_polygon_parent_class
 
@@ -111,8 +109,6 @@ gimp_canvas_polygon_class_init (GimpCanvasPolygonClass *klass)
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasPolygonPrivate));
 }
 
 static void
@@ -125,18 +121,10 @@ gimp_canvas_polygon_finalize (GObject *object)
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (object);
 
-  if (private->points)
-    {
-      g_free (private->points);
-      private->points = NULL;
-      private->n_points = 0;
-    }
+  g_clear_pointer (&private->points, g_free);
+  private->n_points = 0;
 
-  if (private->transform)
-    {
-      g_free (private->transform);
-      private->transform = NULL;
-    }
+  g_clear_pointer (&private->transform, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -155,8 +143,7 @@ gimp_canvas_polygon_set_property (GObject      *object,
       {
         GimpArray *array = g_value_get_boxed (value);
 
-        g_free (private->points);
-        private->points = NULL;
+        g_clear_pointer (&private->points, g_free);
         private->n_points = 0;
 
         if (array)

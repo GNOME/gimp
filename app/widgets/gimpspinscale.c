@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -62,6 +62,8 @@ struct _GimpSpinScalePrivate
   guint            mnemonic_keyval;
   gboolean         mnemonics_visible;
 
+  gboolean         constrain_drag;
+
   gboolean         scale_limits_set;
   gdouble          scale_lower;
   gdouble          scale_upper;
@@ -81,9 +83,7 @@ struct _GimpSpinScalePrivate
   gint             pointer_warp_start_x;
 };
 
-#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                                       GIMP_TYPE_SPIN_SCALE, \
-                                                       GimpSpinScalePrivate))
+#define GET_PRIVATE(obj) ((GimpSpinScalePrivate *) gimp_spin_scale_get_instance_private ((GimpSpinScale *) (obj)))
 
 
 static void       gimp_spin_scale_dispose              (GObject          *object);
@@ -130,7 +130,8 @@ static void       gimp_spin_scale_setup_mnemonic       (GimpSpinScale    *scale,
                                                         guint             previous_keyval);
 
 
-G_DEFINE_TYPE (GimpSpinScale, gimp_spin_scale, GTK_TYPE_SPIN_BUTTON);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinScale, gimp_spin_scale,
+                            GIMP_TYPE_SPIN_BUTTON)
 
 #define parent_class gimp_spin_scale_parent_class
 
@@ -164,8 +165,6 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
                                    g_param_spec_string ("label", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpSpinScalePrivate));
 
   gtk_widget_class_set_css_name (widget_class, "spinbutton");
 }
@@ -762,6 +761,9 @@ gimp_spin_scale_change_value (GtkWidget *widget,
   value *= power;
   value = RINT (value);
   value /= power;
+
+  if (private->constrain_drag)
+    value = rint (value);
 
   gtk_adjustment_set_value (adjustment, value);
 }
@@ -1384,4 +1386,36 @@ gimp_spin_scale_get_gamma (GimpSpinScale *scale)
   g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
 
   return GET_PRIVATE (scale)->gamma;
+}
+
+/**
+ * gimp_spin_scale_set_constrain_drag:
+ * @scale: the #GimpSpinScale.
+ * @constrain: whether constraining to integer values when dragging with
+ *             pointer.
+ *
+ * If @constrain_drag is TRUE, dragging the scale with the pointer will
+ * only result into integer values. It will still possible to set the
+ * scale to fractional values (if the spin scale "digits" is above 0)
+ * for instance with keyboard edit.
+ */
+void
+gimp_spin_scale_set_constrain_drag (GimpSpinScale *scale,
+                                    gboolean       constrain)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  private->constrain_drag = constrain;
+}
+
+gboolean
+gimp_spin_scale_get_constrain_drag (GimpSpinScale *scale)
+{
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
+
+  return GET_PRIVATE (scale)->constrain_drag;
 }

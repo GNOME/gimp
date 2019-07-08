@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_FOREGROUND_SELECT_TOOL_H__
 #define __GIMP_FOREGROUND_SELECT_TOOL_H__
 
 
-#include "gimpfreeselecttool.h"
+#include "gimppolygonselecttool.h"
 
 
 typedef enum
@@ -45,26 +45,27 @@ typedef struct _GimpForegroundSelectToolClass GimpForegroundSelectToolClass;
 
 struct _GimpForegroundSelectTool
 {
-  GimpFreeSelectTool  parent_instance;
+  GimpPolygonSelectTool  parent_instance;
 
-  MattingState        state;
-  gboolean            in_double_click;
+  MattingState           state;
 
-  GimpCoords          last_coords;
-  GArray             *stroke;
-  GeglBuffer         *trimap;
-  GeglBuffer         *mask;
+  GimpCoords             last_coords;
+  GArray                *stroke;
+  GeglBuffer            *trimap;
+  GeglBuffer            *mask;
 
-  GList              *undo_stack;
-  GList              *redo_stack;
+  GList                 *undo_stack;
+  GList                 *redo_stack;
 
-  GimpToolGui        *gui;
-  GtkWidget          *preview_toggle;
+  GimpToolGui           *gui;
+  GtkWidget             *preview_toggle;
+
+  GimpCanvasItem        *grayscale_preview;
 };
 
 struct _GimpForegroundSelectToolClass
 {
-  GimpFreeSelectToolClass  parent_class;
+  GimpPolygonSelectToolClass  parent_class;
 };
 
 

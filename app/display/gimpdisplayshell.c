@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -34,6 +34,8 @@
 #include "config/gimpcoreconfig.h"
 #include "config/gimpdisplayconfig.h"
 #include "config/gimpdisplayoptions.h"
+
+#include "gegl/gimp-babl.h"
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
@@ -140,6 +142,7 @@ static void      gimp_display_shell_get_property   (GObject          *object,
                                                     GParamSpec       *pspec);
 
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
+static void      gimp_display_shell_unmap          (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
@@ -235,6 +238,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   object_class->get_property       = gimp_display_shell_get_property;
 
   widget_class->unrealize          = gimp_display_shell_unrealize;
+  widget_class->unmap              = gimp_display_shell_unmap;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
@@ -320,6 +324,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->override_cursor   = (GimpCursorType) -1;
 
   shell->filter_format     = babl_format ("R'G'B'A float");
+  shell->filter_profile    = gimp_babl_get_builtin_color_profile (GIMP_RGB,
+                                                                  GIMP_TRC_NON_LINEAR);
 
   shell->motion_buffer   = gimp_motion_buffer_new ();
 
@@ -370,7 +376,7 @@ gimp_display_shell_constructed (GObject *object)
   GimpColorDisplayStack *filter;
   GtkWidget             *grid;
   GtkWidget             *gtk_image;
-  GtkAction             *action;
+  GimpAction            *action;
   gint                   image_width;
   gint                   image_height;
   gint                   shell_width;
@@ -866,6 +872,16 @@ gimp_display_shell_unrealize (GtkWidget *widget)
     gtk_widget_unrealize (shell->nav_popup);
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+gimp_display_shell_unmap (GtkWidget *widget)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+
+  gimp_display_shell_selection_undraw (shell);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void

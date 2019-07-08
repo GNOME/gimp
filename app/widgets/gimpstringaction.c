@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -24,16 +24,10 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
-
+#include "gimpaction.h"
+#include "gimpaction-history.h"
 #include "gimpstringaction.h"
 
-
-enum
-{
-  SELECTED,
-  LAST_SIGNAL
-};
 
 enum
 {
@@ -55,11 +49,9 @@ static void   gimp_string_action_get_property (GObject      *object,
 static void   gimp_string_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION)
+G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION_IMPL)
 
 #define parent_class gimp_string_action_parent_class
-
-static guint action_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
@@ -79,22 +71,11 @@ gimp_string_action_class_init (GimpStringActionClass *klass)
                                                         NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-
-  action_signals[SELECTED] =
-    g_signal_new ("selected",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpStringActionClass, selected),
-                  NULL, NULL,
-                  gimp_marshal_VOID__STRING,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_STRING);
 }
 
 static void
 gimp_string_action_init (GimpStringAction *action)
 {
-  action->value = NULL;
 }
 
 static void
@@ -102,11 +83,7 @@ gimp_string_action_finalize (GObject *object)
 {
   GimpStringAction *action = GIMP_STRING_ACTION (object);
 
-  if (action->value)
-    {
-      g_free (action->value);
-      action->value = NULL;
-    }
+  g_clear_pointer (&action->value, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -155,6 +132,7 @@ gimp_string_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
                         const gchar *icon_name,
+                        const gchar *help_id,
                         const gchar *value)
 {
   GimpStringAction *action;
@@ -167,6 +145,8 @@ gimp_string_action_new (const gchar *name,
                          "value",     value,
                          NULL);
 
+  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+
   return action;
 }
 
@@ -175,14 +155,8 @@ gimp_string_action_activate (GtkAction *action)
 {
   GimpStringAction *string_action = GIMP_STRING_ACTION (action);
 
-  gimp_string_action_selected (string_action, string_action->value);
-}
+  gimp_action_emit_activate (GIMP_ACTION (action),
+                             g_variant_new_string (string_action->value));
 
-void
-gimp_string_action_selected (GimpStringAction *action,
-                             const gchar      *value)
-{
-  g_return_if_fail (GIMP_IS_STRING_ACTION (action));
-
-  g_signal_emit (action, action_signals[SELECTED], 0, value);
+  gimp_action_history_action_activated (GIMP_ACTION (action));
 }

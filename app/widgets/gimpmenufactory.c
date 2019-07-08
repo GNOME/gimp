@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,7 +31,9 @@
 
 #include "core/gimp.h"
 
+#include "gimpaction.h"
 #include "gimpactionfactory.h"
+#include "gimpactiongroup.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 
@@ -47,7 +49,8 @@ struct _GimpMenuFactoryPrivate
 static void   gimp_menu_factory_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpMenuFactory, gimp_menu_factory, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMenuFactory, gimp_menu_factory,
+                            GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_menu_factory_parent_class
 
@@ -58,16 +61,12 @@ gimp_menu_factory_class_init (GimpMenuFactoryClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_menu_factory_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpMenuFactoryPrivate));
 }
 
 static void
 gimp_menu_factory_init (GimpMenuFactory *factory)
 {
-  factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                            GIMP_TYPE_MENU_FACTORY,
-                                            GimpMenuFactoryPrivate);
+  factory->p = gimp_menu_factory_get_instance_private (factory);
 }
 
 static void
@@ -193,11 +192,11 @@ gimp_menu_factory_get_registered_menus (GimpMenuFactory *factory)
 
 static void
 gimp_menu_factory_manager_action_added (GimpActionGroup *group,
-                                        GtkAction       *action,
+                                        GimpAction      *action,
                                         GtkAccelGroup   *accel_group)
 {
-  gtk_action_set_accel_group (action, accel_group);
-  gtk_action_connect_accelerator (action);
+  gimp_action_set_accel_group (action, accel_group);
+  gimp_action_connect_accelerator (action);
 }
 
 GimpUIManager *
@@ -221,7 +220,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
           GList         *list;
 
           manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-          accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
+          accel_group = gimp_ui_manager_get_accel_group (manager);
 
           for (list = entry->action_groups; list; list = g_list_next (list))
             {
@@ -233,14 +232,14 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                                      (const gchar *) list->data,
                                                      callback_data);
 
-              actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+              actions = gimp_action_group_list_actions (group);
 
               for (list2 = actions; list2; list2 = g_list_next (list2))
                 {
-                  GtkAction *action = list2->data;
+                  GimpAction *action = list2->data;
 
-                  gtk_action_set_accel_group (action, accel_group);
-                  gtk_action_connect_accelerator (action);
+                  gimp_action_set_accel_group (action, accel_group);
+                  gimp_action_connect_accelerator (action);
                 }
 
               g_list_free (actions);
@@ -249,10 +248,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                        G_CALLBACK (gimp_menu_factory_manager_action_added),
                                        accel_group, 0);
 
-              gtk_ui_manager_insert_action_group (GTK_UI_MANAGER (manager),
-                                                  GTK_ACTION_GROUP (group),
-                                                  -1);
-
+              gimp_ui_manager_insert_action_group (manager, group, -1);
               g_object_unref (group);
             }
 

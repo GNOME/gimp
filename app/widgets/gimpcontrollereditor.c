@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -34,6 +34,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "gimpaction.h"
 #include "gimpactioneditor.h"
 #include "gimpactionview.h"
 #include "gimpcontrollereditor.h"
@@ -281,6 +282,7 @@ gimp_controller_editor_constructed (GObject *object)
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
                                        GTK_SHADOW_IN);
+  gtk_widget_set_size_request (sw, 400, 300);
   gtk_container_add (GTK_CONTAINER (sw), tv);
   gtk_widget_show (tv);
 
@@ -316,12 +318,12 @@ gimp_controller_editor_constructed (GObject *object)
 
       if (event_action)
         {
-          GtkAction *action;
+          GimpAction *action;
 
           action = gimp_ui_manager_find_action (ui_manager, NULL, event_action);
 
           if (action)
-            icon_name = gtk_action_get_icon_name (action);
+            icon_name = gimp_action_get_icon_name (action);
         }
 
       gtk_list_store_append (store, &iter);

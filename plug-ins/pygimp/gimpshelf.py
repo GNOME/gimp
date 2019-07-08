@@ -12,7 +12,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # gimpshelf.py -- a simple module to help gimp modules written in Python
 #                 store persistent data.
@@ -53,11 +53,12 @@ def _display_id(obj):
 def _vectors_id(obj):
     return gimp._id2vectors, (int(obj.ID),)
 
-copy_reg.pickle(gimp.Image,   _image_id,    gimp._id2image)
-copy_reg.pickle(gimp.Layer,   _drawable_id, gimp._id2drawable)
-copy_reg.pickle(gimp.Channel, _drawable_id, gimp._id2drawable)
-copy_reg.pickle(gimp.Display, _display_id,  gimp._id2display)
-copy_reg.pickle(gimp.Vectors, _vectors_id,  gimp._id2vectors)
+copy_reg.pickle(gimp.Image,      _image_id,    gimp._id2image)
+copy_reg.pickle(gimp.Layer,      _drawable_id, gimp._id2drawable)
+copy_reg.pickle(gimp.GroupLayer, _drawable_id, gimp._id2drawable)
+copy_reg.pickle(gimp.Channel,    _drawable_id, gimp._id2drawable)
+copy_reg.pickle(gimp.Display,    _display_id,  gimp._id2display)
+copy_reg.pickle(gimp.Vectors,    _vectors_id,  gimp._id2vectors)
 
 del copy_reg, _image_id, _drawable_id, _display_id, _vectors_id
 

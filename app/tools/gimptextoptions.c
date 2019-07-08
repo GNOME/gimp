@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -245,11 +245,7 @@ gimp_text_options_finalize (GObject *object)
 {
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
 
-  if (options->language)
-    {
-      g_free (options->language);
-      options->language = NULL;
-    }
+  g_clear_pointer (&options->language, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -603,6 +599,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
                                        40, 24, GIMP_COLOR_AREA_FLAT);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
   gtk_widget_set_halign (button, GTK_ALIGN_START);

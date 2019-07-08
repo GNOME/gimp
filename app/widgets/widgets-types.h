@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __WIDGETS_TYPES_H__
@@ -175,6 +175,7 @@ typedef struct _GimpColorBar                 GimpColorBar;
 typedef struct _GimpColorDisplayEditor       GimpColorDisplayEditor;
 typedef struct _GimpColorFrame               GimpColorFrame;
 typedef struct _GimpColorHistory             GimpColorHistory;
+typedef struct _GimpColormapSelection        GimpColormapSelection;
 typedef struct _GimpColorPanel               GimpColorPanel;
 typedef struct _GimpComboTagEntry            GimpComboTagEntry;
 typedef struct _GimpControllerEditor         GimpControllerEditor;
@@ -185,6 +186,8 @@ typedef struct _GimpDeviceEditor             GimpDeviceEditor;
 typedef struct _GimpDeviceInfoEditor         GimpDeviceInfoEditor;
 typedef struct _GimpDial                     GimpDial;
 typedef struct _GimpDynamicsOutputEditor     GimpDynamicsOutputEditor;
+typedef struct _GimpExtensionDetails         GimpExtensionDetails;
+typedef struct _GimpExtensionList            GimpExtensionList;
 typedef struct _GimpFgBgEditor               GimpFgBgEditor;
 typedef struct _GimpFgBgView                 GimpFgBgView;
 typedef struct _GimpFileProcView             GimpFileProcView;
@@ -307,6 +310,8 @@ typedef gboolean    (* GimpPanedBoxDroppedFunc)      (GtkWidget         *noteboo
                                                       GtkWidget         *child,
                                                       gint               insert_index,
                                                       gpointer           data);
+
+typedef GtkWidget * (* GimpToolOptionsGUIFunc)       (GimpToolOptions   *tool_options);
 
 
 #endif /* __WIDGETS_TYPES_H__ */

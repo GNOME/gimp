@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -54,6 +54,9 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-6
+
+
 /*  local function prototypes  */
 
 static void   channels_new_callback             (GtkWidget     *dialog,
@@ -87,8 +90,9 @@ static void   channels_edit_attributes_callback (GtkWidget     *dialog,
 /*  public functions  */
 
 void
-channels_edit_attributes_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+channels_edit_attributes_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -133,8 +137,9 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
 }
 
 void
-channels_new_cmd_callback (GtkAction *action,
-                           gpointer   data)
+channels_new_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -178,8 +183,9 @@ channels_new_cmd_callback (GtkAction *action,
 }
 
 void
-channels_new_last_vals_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+channels_new_last_vals_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage        *image;
   GimpChannel      *channel;
@@ -204,8 +210,9 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
 }
 
 void
-channels_raise_cmd_callback (GtkAction *action,
-                             gpointer   data)
+channels_raise_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -216,8 +223,9 @@ channels_raise_cmd_callback (GtkAction *action,
 }
 
 void
-channels_raise_to_top_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+channels_raise_to_top_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -228,8 +236,9 @@ channels_raise_to_top_cmd_callback (GtkAction *action,
 }
 
 void
-channels_lower_cmd_callback (GtkAction *action,
-                             gpointer   data)
+channels_lower_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -240,8 +249,9 @@ channels_lower_cmd_callback (GtkAction *action,
 }
 
 void
-channels_lower_to_bottom_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+channels_lower_to_bottom_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -252,8 +262,9 @@ channels_lower_to_bottom_cmd_callback (GtkAction *action,
 }
 
 void
-channels_duplicate_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+channels_duplicate_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *new_channel;
@@ -304,8 +315,9 @@ channels_duplicate_cmd_callback (GtkAction *action,
 }
 
 void
-channels_delete_cmd_callback (GtkAction *action,
-                              gpointer   data)
+channels_delete_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -316,14 +328,14 @@ channels_delete_cmd_callback (GtkAction *action,
 }
 
 void
-channels_to_selection_cmd_callback (GtkAction *action,
-                                    gint       value,
-                                    gpointer   data)
+channels_to_selection_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpChannelOps  op;
   GimpImage      *image;
 
-  op = (GimpChannelOps) value;
+  op = (GimpChannelOps) g_variant_get_int32 (value);
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -348,76 +360,85 @@ channels_to_selection_cmd_callback (GtkAction *action,
 }
 
 void
-channels_visible_cmd_callback (GtkAction *action,
-                               gpointer   data)
+channels_visible_cmd_callback (GimpAction *action,
+                               GVariant   *value,
+                               gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_visible_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_visible_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
-channels_linked_cmd_callback (GtkAction *action,
-                              gpointer   data)
+channels_linked_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_linked_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_linked_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
-channels_lock_content_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+channels_lock_content_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_lock_content_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_lock_content_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
-channels_lock_position_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+channels_lock_position_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  items_lock_position_cmd_callback (action, image, GIMP_ITEM (channel));
+  items_lock_position_cmd_callback (action, value, image, GIMP_ITEM (channel));
 }
 
 void
-channels_color_tag_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+channels_color_tag_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
+  GimpImage    *image;
+  GimpChannel  *channel;
+  GimpColorTag  color_tag;
   return_if_no_channel (image, channel, data);
+
+  color_tag = (GimpColorTag) g_variant_get_int32 (value);
 
   items_color_tag_cmd_callback (action, image, GIMP_ITEM (channel),
-                                (GimpColorTag) value);
+                                color_tag);
 }
 
 void
-channels_select_cmd_callback (GtkAction *action,
-                              gint       value,
-                              gpointer   data)
+channels_select_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
-  GimpImage      *image;
-  GimpChannel    *channel;
-  GimpChannel    *channel2;
-  GimpContainer  *container;
+  GimpImage            *image;
+  GimpChannel          *channel;
+  GimpChannel          *channel2;
+  GimpContainer        *container;
+  GimpActionSelectType  type;
   return_if_no_channel (image, channel, data);
 
+  type = (GimpActionSelectType) g_variant_get_int32 (value);
+
   container = gimp_image_get_channels (image);
-  channel2 = (GimpChannel *) action_select_object ((GimpActionSelectType) value,
-                                                   container,
+  channel2 = (GimpChannel *) action_select_object (type, container,
                                                    (GimpObject *) channel);
 
   if (channel2 && channel2 != channel)
@@ -504,12 +525,12 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
 {
   GimpItem *item = GIMP_ITEM (channel);
 
-  if (strcmp (channel_name, gimp_object_get_name (channel))        ||
-      gimp_rgba_distance (channel_color, &channel->color) > 0.0001 ||
-      channel_visible       != gimp_item_get_visible (item)        ||
-      channel_linked        != gimp_item_get_linked (item)         ||
-      channel_color_tag     != gimp_item_get_color_tag (item)      ||
-      channel_lock_content  != gimp_item_get_lock_content (item)   ||
+  if (strcmp (channel_name, gimp_object_get_name (channel))              ||
+      gimp_rgba_distance (channel_color, &channel->color) > RGBA_EPSILON ||
+      channel_visible       != gimp_item_get_visible (item)              ||
+      channel_linked        != gimp_item_get_linked (item)               ||
+      channel_color_tag     != gimp_item_get_color_tag (item)            ||
+      channel_lock_content  != gimp_item_get_lock_content (item)         ||
       channel_lock_position != gimp_item_get_lock_position (item))
     {
       gimp_image_undo_group_start (image,
@@ -519,7 +540,7 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
       if (strcmp (channel_name, gimp_object_get_name (channel)))
         gimp_item_rename (GIMP_ITEM (channel), channel_name, NULL);
 
-      if (gimp_rgba_distance (channel_color, &channel->color) > 0.0001)
+      if (gimp_rgba_distance (channel_color, &channel->color) > RGBA_EPSILON)
         gimp_channel_set_color (channel, channel_color, TRUE);
 
       if (channel_visible != gimp_item_get_visible (item))

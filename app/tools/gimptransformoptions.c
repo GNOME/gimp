@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -214,17 +214,20 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
                             gboolean         interpolation,
                             gboolean         clipping)
 {
-  GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget       *hbox;
-  GtkWidget       *box;
-  GtkWidget       *label;
-  GtkWidget       *frame;
-  GtkWidget       *combo;
+  GObject              *config  = G_OBJECT (tool_options);
+  GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (tool_options);
+  GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget            *hbox;
+  GtkWidget            *box;
+  GtkWidget            *label;
+  GtkWidget            *frame;
+  GtkWidget            *combo;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  options->type_box = hbox;
 
   label = gtk_label_new (_("Transform:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -240,6 +243,8 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
                                               0, 0);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
+
+      options->direction_frame = frame;
     }
 
   /*  the interpolation menu  */

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -516,12 +516,11 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   GList            *list;
   gboolean          open_as_layers;
 
-  /* If the app is already being torn down, shell->display might be NULL here.
-   * Play it safe. */
+  /* If the app is already being torn down, shell->display might be
+   * NULL here.  Play it safe.
+   */
   if (! shell->display)
-    {
-      return;
-    }
+    return;
 
   image = gimp_display_get_image (shell->display);
   context = gimp_get_user_context (shell->display->gimp);
@@ -529,6 +528,9 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   GIMP_LOG (DND, NULL);
 
   open_as_layers = (image != NULL);
+
+  if (image)
+    g_object_ref (image);
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -541,6 +543,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         {
           /* It seems as if GIMP is being torn down for quitting. Bail out. */
           g_object_unref (file);
+          g_clear_object (&image);
           return;
         }
 
@@ -556,11 +559,14 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
           if (new_layers)
             {
-              gint x, y;
-              gint width, height;
+              gint x      = 0;
+              gint y      = 0;
+              gint width  = gimp_image_get_width  (image);
+              gint height = gimp_image_get_height (image);
 
-              gimp_display_shell_untransform_viewport (shell, &x, &y,
-                                                       &width, &height);
+              if (gimp_display_get_image (shell->display))
+                gimp_display_shell_untransform_viewport (shell, &x, &y,
+                                                         &width, &height);
 
               gimp_image_add_layers (image, new_layers,
                                      GIMP_IMAGE_ACTIVE_PARENT, -1,
@@ -569,7 +575,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
               g_list_free (new_layers);
             }
-          else if (status != GIMP_PDB_CANCEL)
+          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
             {
               warn = TRUE;
             }
@@ -585,7 +591,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                               G_OBJECT (gimp_widget_get_monitor (widget)),
                                               &status, &error);
 
-          if (! new_image && status != GIMP_PDB_CANCEL)
+          if (! new_image && status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
             warn = TRUE;
         }
       else
@@ -597,13 +603,20 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                           G_OBJECT (gimp_widget_get_monitor (widget)),
                                           &status, &error);
 
-          if (! image && status != GIMP_PDB_CANCEL)
-            warn = TRUE;
+          if (image)
+            {
+              g_object_ref (image);
+            }
+          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+            {
+              warn = TRUE;
+            }
         }
 
       /* Something above might have run a few rounds of the main loop. Check
        * that shell->display is still there, otherwise ignore this as the app
-       * is being torn down for quitting. */
+       * is being torn down for quitting.
+       */
       if (warn && shell->display)
         {
           gimp_message (shell->display->gimp, G_OBJECT (shell->display),
@@ -618,6 +631,8 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
   if (image)
     gimp_display_shell_dnd_flush (shell, image);
+
+  g_clear_object (&image);
 }
 
 static void

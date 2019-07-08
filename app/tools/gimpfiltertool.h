@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_FILTER_TOOL_H__
@@ -58,6 +58,7 @@ struct _GimpFilterTool
   gboolean            overlay;
   GimpToolGui        *gui;
   GtkWidget          *settings_box;
+  GtkWidget          *controller_toggle;
   GtkWidget          *region_combo;
   GtkWidget          *active_picker;
 
@@ -88,6 +89,7 @@ struct _GimpFilterToolClass
                                    GOutputStream     *output,
                                    GError           **error);
 
+  void        (* region_changed)  (GimpFilterTool    *filter_tool);
   void        (* color_picked)    (GimpFilterTool    *filter_tool,
                                    gpointer           identifier,
                                    gdouble            x,

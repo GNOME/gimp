@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -75,116 +75,116 @@ static const GimpActionEntry image_actions[] =
   { "image-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("image-action", "_New..."), "<primary>N",
     NC_("image-action", "Create a new image"),
-    G_CALLBACK (image_new_cmd_callback),
+    image_new_cmd_callback,
     GIMP_HELP_FILE_NEW },
 
   { "image-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("image-action", "_Duplicate"), "<primary>D",
     NC_("image-action", "Create a duplicate of this image"),
-    G_CALLBACK (image_duplicate_cmd_callback),
+    image_duplicate_cmd_callback,
     GIMP_HELP_IMAGE_DUPLICATE },
 
   { "image-color-profile-assign", NULL,
     NC_("image-action", "_Assign Color Profile..."), NULL,
     NC_("image-action", "Set a color profile on the image"),
-    G_CALLBACK (image_color_profile_assign_cmd_callback),
+    image_color_profile_assign_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN },
 
   { "image-color-profile-convert", NULL,
     NC_("image-action", "_Convert to Color Profile..."), NULL,
     NC_("image-action", "Apply a color profile to the image"),
-    G_CALLBACK (image_color_profile_convert_cmd_callback),
+    image_color_profile_convert_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT },
 
   { "image-color-profile-discard", NULL,
     NC_("image-action", "_Discard Color Profile"), NULL,
     NC_("image-action", "Remove the image's color profile"),
-    G_CALLBACK (image_color_profile_discard_cmd_callback),
+    image_color_profile_discard_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
 
   { "image-color-profile-save", NULL,
     NC_("image-action", "_Save Color Profile to File..."), NULL,
     NC_("image-action", "Save the image's color profile to an ICC file"),
-    G_CALLBACK (image_color_profile_save_cmd_callback),
+    image_color_profile_save_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
 
   { "image-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL,
     NC_("image-action", "Adjust the image dimensions"),
-    G_CALLBACK (image_resize_cmd_callback),
+    image_resize_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE },
 
   { "image-resize-to-layers", NULL,
     NC_("image-action", "Fit Canvas to L_ayers"), NULL,
     NC_("image-action", "Resize the image to enclose all layers"),
-    G_CALLBACK (image_resize_to_layers_cmd_callback),
+    image_resize_to_layers_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
   { "image-resize-to-selection", NULL,
     NC_("image-action", "F_it Canvas to Selection"), NULL,
     NC_("image-action", "Resize the image to the extents of the selection"),
-    G_CALLBACK (image_resize_to_selection_cmd_callback),
+    image_resize_to_selection_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE_TO_SELECTION },
 
   { "image-print-size", GIMP_ICON_DOCUMENT_PRINT_RESOLUTION,
     NC_("image-action", "_Print Size..."), NULL,
     NC_("image-action", "Adjust the print resolution"),
-    G_CALLBACK (image_print_size_cmd_callback),
+    image_print_size_cmd_callback,
     GIMP_HELP_IMAGE_PRINT_SIZE },
 
   { "image-scale", GIMP_ICON_OBJECT_SCALE,
     NC_("image-action", "_Scale Image..."), NULL,
     NC_("image-action", "Change the size of the image content"),
-    G_CALLBACK (image_scale_cmd_callback),
+    image_scale_cmd_callback,
     GIMP_HELP_IMAGE_SCALE },
 
   { "image-crop-to-selection", GIMP_ICON_TOOL_CROP,
     NC_("image-action", "_Crop to Selection"), NULL,
     NC_("image-action", "Crop the image to the extents of the selection"),
-    G_CALLBACK (image_crop_to_selection_cmd_callback),
+    image_crop_to_selection_cmd_callback,
     GIMP_HELP_IMAGE_CROP },
 
   { "image-crop-to-content", GIMP_ICON_TOOL_CROP,
     NC_("image-action", "Crop to C_ontent"), NULL,
     NC_("image-action", "Crop the image to the extents of its content (remove empty borders from the image)"),
-    G_CALLBACK (image_crop_to_content_cmd_callback),
+    image_crop_to_content_cmd_callback,
     GIMP_HELP_IMAGE_CROP },
 
   { "image-merge-layers", NULL,
     NC_("image-action", "Merge Visible _Layers..."), "<primary>M",
     NC_("image-action", "Merge all visible layers into one layer"),
-    G_CALLBACK (image_merge_layers_cmd_callback),
+    image_merge_layers_cmd_callback,
     GIMP_HELP_IMAGE_MERGE_LAYERS },
 
   { "image-flatten", NULL,
     NC_("image-action", "_Flatten Image"), NULL,
     NC_("image-action", "Merge all layers into one and remove transparency"),
-    G_CALLBACK (image_flatten_image_cmd_callback),
+    image_flatten_image_cmd_callback,
     GIMP_HELP_IMAGE_FLATTEN },
 
   { "image-configure-grid", GIMP_ICON_GRID,
     NC_("image-action", "Configure G_rid..."), NULL,
     NC_("image-action", "Configure the grid for this image"),
-    G_CALLBACK (image_configure_grid_cmd_callback),
+    image_configure_grid_cmd_callback,
     GIMP_HELP_IMAGE_GRID },
 
   { "image-properties", "dialog-information",
     NC_("image-action", "Image Pr_operties"), "<alt>Return",
     NC_("image-action", "Display information about this image"),
-    G_CALLBACK (image_properties_cmd_callback),
+    image_properties_cmd_callback,
     GIMP_HELP_IMAGE_PROPERTIES }
 };
 
 static const GimpToggleActionEntry image_toggle_actions[] =
 {
-  { "image-color-management-enabled", NULL,
-    NC_("image-action", "_Enable Color Management"), NULL,
-    NC_("image-action", "Whether the image is color managed. Disabling "
-        "color management is equivalent to assigning a built-in sRGB "
-        "color profile. Better leave color management enabled."),
-    G_CALLBACK (image_color_management_enabled_cmd_callback),
+  { "image-color-profile-use-srgb", NULL,
+    NC_("image-action", "Use _sRGB Profile"), NULL,
+    NC_("image-action", "Temporarily use an sRGB profile for the image. "
+        "This is the same as discarding the image's color profile, but "
+        "allows to easily restore the profile."),
+    image_color_profile_use_srgb_cmd_callback,
     TRUE,
-    GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED }
+    GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB }
 };
 
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
@@ -244,19 +244,25 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
     GIMP_COMPONENT_TYPE_DOUBLE, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
 };
 
-static const GimpRadioActionEntry image_convert_gamma_actions[] =
+static const GimpRadioActionEntry image_convert_trc_actions[] =
 {
-  { "image-convert-gamma", NULL,
-    NC_("image-convert-action", "Perceptual gamma (sRGB)"), NULL,
-    NC_("image-convert-action",
-        "Convert the image to perceptual (sRGB) gamma"),
-    FALSE, GIMP_HELP_IMAGE_CONVERT_GAMMA },
-
   { "image-convert-linear", NULL,
     NC_("image-convert-action", "Linear light"), NULL,
     NC_("image-convert-action",
         "Convert the image to linear light"),
-    TRUE, GIMP_HELP_IMAGE_CONVERT_GAMMA }
+    GIMP_TRC_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
+
+  { "image-convert-non-linear", NULL,
+    NC_("image-convert-action", "Non-Linear"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to non-linear gamma from the color profile"),
+    GIMP_TRC_NON_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
+
+  { "image-convert-perceptual", NULL,
+    NC_("image-convert-action", "Perceptual (sRGB)"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to perceptual (sRGB) gamma"),
+    GIMP_TRC_PERCEPTUAL, GIMP_HELP_IMAGE_CONVERT_GAMMA }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -311,29 +317,29 @@ image_actions_setup (GimpActionGroup *group)
                                        image_convert_base_type_actions,
                                        G_N_ELEMENTS (image_convert_base_type_actions),
                                        NULL, 0,
-                                       G_CALLBACK (image_convert_base_type_cmd_callback));
+                                       image_convert_base_type_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "image-convert-action",
                                        image_convert_precision_actions,
                                        G_N_ELEMENTS (image_convert_precision_actions),
                                        NULL, 0,
-                                       G_CALLBACK (image_convert_precision_cmd_callback));
+                                       image_convert_precision_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "image-convert-action",
-                                       image_convert_gamma_actions,
-                                       G_N_ELEMENTS (image_convert_gamma_actions),
+                                       image_convert_trc_actions,
+                                       G_N_ELEMENTS (image_convert_trc_actions),
                                        NULL, 0,
-                                       G_CALLBACK (image_convert_gamma_cmd_callback));
+                                       image_convert_trc_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "image-action",
                                       image_flip_actions,
                                       G_N_ELEMENTS (image_flip_actions),
-                                      G_CALLBACK (image_flip_cmd_callback));
+                                      image_flip_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "image-action",
                                       image_rotate_actions,
                                       G_N_ELEMENTS (image_rotate_actions),
-                                      G_CALLBACK (image_rotate_cmd_callback));
+                                      image_rotate_cmd_callback);
 
 #define SET_ALWAYS_SHOW_IMAGE(action,show) \
         gimp_action_group_set_action_always_show_image (group, action, show)
@@ -349,16 +355,26 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image         = action_data_get_image (data);
-  gboolean   is_indexed    = FALSE;
-  gboolean   is_u8_gamma   = FALSE;
-  gboolean   is_double     = FALSE;
-  gboolean   aux           = FALSE;
-  gboolean   lp            = FALSE;
-  gboolean   sel           = FALSE;
-  gboolean   groups        = FALSE;
-  gboolean   color_managed = FALSE;
-  gboolean   profile       = FALSE;
+  GimpImage *image          = action_data_get_image (data);
+  gboolean   is_indexed     = FALSE;
+  gboolean   is_u8_gamma    = FALSE;
+  gboolean   is_double      = FALSE;
+  gboolean   aux            = FALSE;
+  gboolean   lp             = FALSE;
+  gboolean   sel            = FALSE;
+  gboolean   groups         = FALSE;
+  gboolean   profile_srgb   = FALSE;
+  gboolean   profile_hidden = FALSE;
+  gboolean   profile        = FALSE;
+
+#define SET_LABEL(action,label) \
+        gimp_action_group_set_action_label (group, action, (label))
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
+#define SET_VISIBLE(action,condition) \
+        gimp_action_group_set_action_visible (group, action, (condition) != 0)
 
   if (image)
     {
@@ -367,10 +383,13 @@ image_actions_update (GimpActionGroup *group,
       GimpImageBaseType  base_type;
       GimpPrecision      precision;
       GimpComponentType  component_type;
+      GimpTRCType        trc;
 
       base_type      = gimp_image_get_base_type (image);
       precision      = gimp_image_get_precision (image);
       component_type = gimp_image_get_component_type (image);
+      trc            = gimp_babl_format_get_trc
+                         (gimp_image_get_layer_format (image, FALSE));
 
       switch (base_type)
         {
@@ -379,7 +398,7 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_INDEXED: action = "image-convert-indexed";   break;
         }
 
-      gimp_action_group_set_action_active (group, action, TRUE);
+      SET_ACTIVE (action, TRUE);
 
       switch (component_type)
         {
@@ -391,22 +410,30 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_COMPONENT_TYPE_DOUBLE: action = "image-convert-double"; break;
         }
 
-      gimp_action_group_set_action_active (group, action, TRUE);
+      SET_ACTIVE (action, TRUE);
 
-      if (gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
-                                                                    FALSE)))
+      switch (trc)
         {
-          gimp_action_group_set_action_active (group, "image-convert-linear",
-                                               TRUE);
+        case GIMP_TRC_LINEAR:
+          action = "image-convert-linear";
+          SET_VISIBLE ("image-convert-perceptual", FALSE);
+          break;
+
+        case GIMP_TRC_NON_LINEAR:
+          action = "image-convert-non-linear";
+          SET_VISIBLE ("image-convert-perceptual", FALSE);
+          break;
+
+        case GIMP_TRC_PERCEPTUAL:
+          action = "image-convert-perceptual";
+          SET_VISIBLE ("image-convert-perceptual", TRUE);
+          break;
         }
-      else
-        {
-          gimp_action_group_set_action_active (group, "image-convert-gamma",
-                                               TRUE);
-        }
+
+      SET_ACTIVE (action, TRUE);
 
       is_indexed  = (base_type == GIMP_INDEXED);
-      is_u8_gamma = (precision == GIMP_PRECISION_U8_GAMMA);
+      is_u8_gamma = (precision == GIMP_PRECISION_U8_NON_LINEAR);
       is_double   = (component_type == GIMP_COMPONENT_TYPE_DOUBLE);
       aux         = (gimp_image_get_active_channel (image) != NULL);
       lp          = ! gimp_image_is_empty (image);
@@ -416,18 +443,13 @@ image_actions_update (GimpActionGroup *group,
 
       groups = ! gimp_item_stack_is_flat (GIMP_ITEM_STACK (layers));
 
-      color_managed = gimp_image_get_is_color_managed (image);
-      profile       = (gimp_image_get_color_profile (image) != NULL);
+      profile_srgb = gimp_image_get_use_srgb_profile (image, &profile_hidden);
+      profile      = (gimp_image_get_color_profile (image) != NULL);
     }
-
-#define SET_LABEL(action,label) \
-        gimp_action_group_set_action_label (group, action, (label))
-#define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
-#define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
-#define SET_VISIBLE(action,condition) \
-        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+  else
+    {
+      SET_VISIBLE ("image-convert-perceptual", FALSE);
+    }
 
   SET_SENSITIVE ("image-duplicate", image);
 
@@ -458,11 +480,12 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-double", image && !is_indexed);
   SET_VISIBLE   ("image-convert-double", is_double);
 
-  SET_SENSITIVE ("image-convert-gamma",  image);
-  SET_SENSITIVE ("image-convert-linear", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-linear",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-non-linear", image);
+  SET_SENSITIVE ("image-convert-perceptual", image && !is_indexed);
 
-  SET_SENSITIVE ("image-color-management-enabled", image);
-  SET_ACTIVE    ("image-color-management-enabled", image && color_managed);
+  SET_SENSITIVE ("image-color-profile-use-srgb", image && (profile || profile_hidden));
+  SET_ACTIVE    ("image-color-profile-use-srgb", image && profile_srgb);
 
   SET_SENSITIVE ("image-color-profile-assign",  image);
   SET_SENSITIVE ("image-color-profile-convert", image);

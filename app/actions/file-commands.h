@@ -12,43 +12,52 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __FILE_COMMANDS_H__
 #define __FILE_COMMANDS_H__
 
 
-void   file_open_cmd_callback                 (GtkAction   *action,
-                                               gpointer     data);
-void   file_open_as_layers_cmd_callback       (GtkAction   *action,
-                                               gpointer     data);
-void   file_open_location_cmd_callback        (GtkAction   *action,
-                                               gpointer     data);
-void   file_open_recent_cmd_callback          (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
+void   file_open_cmd_callback                 (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_open_as_layers_cmd_callback       (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_open_location_cmd_callback        (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_open_recent_cmd_callback          (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   file_save_cmd_callback                 (GtkAction   *action,
-                                               gint         value,
-                                               gpointer     data);
-void   file_create_template_cmd_callback      (GtkAction   *action,
-                                               gpointer     data);
+void   file_save_cmd_callback                 (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_create_template_cmd_callback      (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   file_revert_cmd_callback               (GtkAction   *action,
-                                               gpointer     data);
-void   file_close_all_cmd_callback            (GtkAction   *action,
-                                               gpointer     data);
-void   file_copy_location_cmd_callback        (GtkAction   *action,
-                                               gpointer     data);
-void   file_show_in_file_manager_cmd_callback (GtkAction   *action,
-                                               gpointer     data);
-void   file_quit_cmd_callback                 (GtkAction   *action,
-                                               gpointer     data);
+void   file_revert_cmd_callback               (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_close_all_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_copy_location_cmd_callback        (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_show_in_file_manager_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_quit_cmd_callback                 (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   file_file_open_dialog                  (Gimp        *gimp,
-                                               GFile       *file,
-                                               GtkWidget   *parent);
+void   file_file_open_dialog                  (Gimp       *gimp,
+                                               GFile      *file,
+                                               GtkWidget  *parent);
 
 
 #endif /* __FILE_COMMANDS_H__ */

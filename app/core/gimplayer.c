@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -186,6 +186,7 @@ static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
 static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
+                                                 GimpColorProfile   *src_profile,
                                                  GimpColorProfile   *dest_profile,
                                                  GeglDitherMethod    layer_dither_type,
                                                  GeglDitherMethod    mask_dither_type,
@@ -256,6 +257,7 @@ static void       gimp_layer_real_transform     (GimpLayer          *layer,
 static void       gimp_layer_real_convert_type  (GimpLayer          *layer,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
+                                                 GimpColorProfile   *src_profile,
                                                  GimpColorProfile   *dest_profile,
                                                  GeglDitherMethod    layer_dither_type,
                                                  GeglDitherMethod    mask_dither_type,
@@ -981,6 +983,7 @@ gimp_layer_convert (GimpItem  *item,
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
   GimpPrecision      new_precision;
+  GimpColorProfile  *src_profile  = NULL;
   GimpColorProfile  *dest_profile = NULL;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
@@ -989,11 +992,19 @@ gimp_layer_convert (GimpItem  *item,
   old_precision = gimp_drawable_get_precision (drawable);
   new_precision = gimp_image_get_precision (dest_image);
 
-  if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
-      gimp_image_get_is_color_managed (dest_image))
+  if (g_type_is_a (old_type, GIMP_TYPE_LAYER))
     {
+      src_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (item));
+
       dest_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+
+      if (gimp_color_profile_is_equal (dest_profile, src_profile))
+        {
+          src_profile  = NULL;
+          dest_profile = NULL;
+        }
     }
 
   if (old_base_type != new_base_type ||
@@ -1004,6 +1015,7 @@ gimp_layer_convert (GimpItem  *item,
                                   new_base_type,
                                   new_precision,
                                   gimp_drawable_has_alpha (drawable),
+                                  src_profile,
                                   dest_profile,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
@@ -1358,6 +1370,7 @@ static void
 gimp_layer_convert_type (GimpDrawable     *drawable,
                          GimpImage        *dest_image,
                          const Babl       *new_format,
+                         GimpColorProfile *src_profile,
                          GimpColorProfile *dest_profile,
                          GeglDitherMethod  layer_dither_type,
                          GeglDitherMethod  mask_dither_type,
@@ -1366,6 +1379,8 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
 {
   GimpLayer       *layer = GIMP_LAYER (drawable);
   GimpObjectQueue *queue = NULL;
+  const Babl      *dest_space;
+  const Babl      *space_format;
   gboolean         convert_mask;
 
   convert_mask = layer->mask &&
@@ -1394,8 +1409,28 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
   if (queue)
     gimp_object_queue_pop (queue);
 
-  GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, new_format,
-                                              dest_profile, layer_dither_type,
+  /*  when called with a dest_profile, always use the space from that
+   *  profile, we can't use gimp_image_get_layer_space() during an
+   *  image type or precision conversion
+   */
+  if (dest_profile)
+    {
+      dest_space =
+        gimp_color_profile_get_space (dest_profile,
+                                      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                      NULL);
+    }
+  else
+    {
+      dest_space = gimp_image_get_layer_space (dest_image);
+    }
+
+  space_format = babl_format_with_space ((const gchar *) new_format,
+                                         dest_space);
+
+  GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, space_format,
+                                              src_profile, dest_profile,
+                                              layer_dither_type,
                                               mask_dither_type, push_undo,
                                               progress);
 
@@ -1408,7 +1443,7 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                                   GIMP_GRAY,
                                   gimp_babl_format_get_precision (new_format),
                                   gimp_drawable_has_alpha (GIMP_DRAWABLE (layer->mask)),
-                                  NULL,
+                                  NULL, NULL,
                                   layer_dither_type, mask_dither_type,
                                   push_undo, progress);
     }
@@ -1419,24 +1454,23 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
 static void
 gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 {
-  GimpLayer   *layer = GIMP_LAYER (drawable);
-  GimpImage   *image;
-  GimpChannel *mask;
+  GimpLayer *layer = GIMP_LAYER (drawable);
 
-  if (! (image = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
-
-  /*  Turn the current selection off  */
-  gimp_image_selection_invalidate (image);
-
-  /*  get the selection mask channel  */
-  mask = gimp_image_get_mask (image);
-
-  /*  Only bother with the bounds if there is a selection  */
-  if (! gimp_channel_is_empty (mask))
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
+      gimp_item_is_visible (GIMP_ITEM (drawable)))
     {
-      mask->bounds_known   = FALSE;
-      mask->boundary_known = FALSE;
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpChannel *mask  = gimp_image_get_mask (image);
+
+      /*  Turn the current selection off  */
+      gimp_image_selection_invalidate (image);
+
+      /*  Only bother with the bounds if there is a selection  */
+      if (! gimp_channel_is_empty (mask))
+        {
+          mask->bounds_known   = FALSE;
+          mask->boundary_known = FALSE;
+        }
     }
 
   if (gimp_layer_is_floating_sel (layer))
@@ -1480,10 +1514,10 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
                        gint          offset_y)
 {
   GeglBuffer *old_buffer = gimp_drawable_get_buffer (drawable);
-  gint        old_linear = -1;
+  gint        old_trc    = -1;
 
   if (old_buffer)
-    old_linear = gimp_drawable_get_linear (drawable);
+    old_trc = gimp_drawable_get_trc (drawable);
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
@@ -1492,7 +1526,7 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
 
   if (gimp_filter_peek_node (GIMP_FILTER (drawable)))
     {
-      if (gimp_drawable_get_linear (drawable) != old_linear)
+      if (gimp_drawable_get_trc (drawable) != old_trc)
         gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
 }
@@ -1665,6 +1699,7 @@ static void
 gimp_layer_real_convert_type (GimpLayer        *layer,
                               GimpImage        *dest_image,
                               const Babl       *new_format,
+                              GimpColorProfile *src_profile,
                               GimpColorProfile *dest_profile,
                               GeglDitherMethod  layer_dither_type,
                               GeglDitherMethod  mask_dither_type,
@@ -1705,8 +1740,9 @@ gimp_layer_real_convert_type (GimpLayer        *layer,
 
   if (dest_profile)
     {
-      GimpColorProfile *src_profile =
-        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+      if (! src_profile)
+        src_profile =
+          gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
 
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,
@@ -1767,6 +1803,28 @@ gimp_layer_layer_mask_update (GimpDrawable *drawable,
 
 
 /*  public functions  */
+
+void
+gimp_layer_fix_format_space (GimpLayer *layer,
+                             gboolean   copy_buffer,
+                             gboolean   push_undo)
+{
+  GimpDrawable *drawable;
+  const Babl   *format;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (push_undo == FALSE || copy_buffer == TRUE);
+
+  drawable = GIMP_DRAWABLE (layer);
+
+  format = gimp_image_get_layer_format (gimp_item_get_image (GIMP_ITEM (layer)),
+                                        gimp_drawable_has_alpha (drawable));
+
+  if (format != gimp_drawable_get_format (drawable))
+    {
+      gimp_drawable_set_format (drawable, format, copy_buffer, push_undo);
+    }
+}
 
 GimpLayer *
 gimp_layer_get_parent (GimpLayer *layer)
@@ -2022,7 +2080,8 @@ gimp_layer_create_mask (GimpLayer       *layer,
             const Babl *copy_format =
               gimp_image_get_format (image, GIMP_GRAY,
                                      gimp_drawable_get_precision (drawable),
-                                     gimp_drawable_has_alpha (drawable));
+                                     gimp_drawable_has_alpha (drawable),
+                                     NULL);
 
             src_buffer =
               gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -2049,7 +2108,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
             gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
 
             gimp_gegl_apply_flatten (src_buffer, NULL, NULL,
-                                     dest_buffer, &background,
+                                     dest_buffer, &background, NULL,
                                      GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
           }
         else
@@ -2388,6 +2447,7 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
   gimp_gegl_apply_flatten (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                            NULL, NULL,
                            new_buffer, &background,
+                           gimp_drawable_get_space (GIMP_DRAWABLE (layer)),
                            gimp_layer_get_real_composite_space (layer));
 
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
@@ -2447,8 +2507,7 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
     {
       if (layer->fs.segs)
         {
-          g_free (layer->fs.segs);
-          layer->fs.segs     = NULL;
+          g_clear_pointer (&layer->fs.segs, g_free);
           layer->fs.num_segs = 0;
         }
 

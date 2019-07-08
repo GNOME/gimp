@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef  __GIMP_COLOR_PICKER_OPTIONS_H__
@@ -35,12 +35,12 @@ typedef struct _GimpToolOptionsClass   GimpColorPickerOptionsClass;
 
 struct _GimpColorPickerOptions
 {
-  GimpColorOptions   parent_instance;
+  GimpColorOptions     parent_instance;
 
-  GimpColorPickMode  pick_mode;
-  gboolean           use_info_window;
-  GimpColorFrameMode frame1_mode;
-  GimpColorFrameMode frame2_mode;
+  GimpColorPickTarget  pick_target;
+  gboolean             use_info_window;
+  GimpColorPickMode    frame1_mode;
+  GimpColorPickMode    frame2_mode;
 };
 
 

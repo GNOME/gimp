@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -94,20 +94,31 @@ static const RulerMetric ruler_metric_decimal =
 
 static const RulerMetric ruler_metric_inches =
 {
-  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-  { 1, 4, 8, 16, 12 * 16 }
+  /* 12 inch = 1 foot; 36 inch = 1 yard; 72 inchs = 1 fathom */
+  { 1, 2, 6, 12, 36, 72, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+
+  /* Inches are divided by multiples of 2. */
+  { 1, 2, 4, 8, 16 }
 };
 
 static const RulerMetric ruler_metric_feet =
 {
-  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-  { 1, 3, 6, 12, 12 * 8 }
+  /* 3 feet = 1 yard; 6 feet = 1 fathom */
+  { 1, 3, 6, 12, 36, 72, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+
+  /* 1 foot = 12 inches, so let's divide up to 12, */
+  { 1, 3, 6, 12,
+  /* then divide the inch by 2. */
+    24 }
 };
 
 static const RulerMetric ruler_metric_yards =
 {
-  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-  { 1, 3, 6, 12, 12 * 12 }
+  /* 1 fathom = 2 yards. Should we go back to base-10 digits? */
+  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+
+  /* 1 yard = 3 feet = 36 inches. */
+  { 1, 3, 6, 12, 36 }
 };
 
 
@@ -153,7 +164,7 @@ static const RulerMetric *
                      gimp_ruler_get_metric            (GimpUnit        unit);
 
 
-G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_ruler_parent_class
 
@@ -238,8 +249,6 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                         GIMP_PARAM_READWRITE));
 
   gtk_widget_class_set_css_name (widget_class, "GimpRuler");
-
-  g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
 }
 
 static void
@@ -247,9 +256,7 @@ gimp_ruler_init (GimpRuler *ruler)
 {
   GimpRulerPrivate *priv;
 
-  ruler->priv = G_TYPE_INSTANCE_GET_PRIVATE (ruler,
-                                             GIMP_TYPE_RULER,
-                                             GimpRulerPrivate);
+  ruler->priv = gimp_ruler_get_instance_private (ruler);
 
   priv = ruler->priv;
 
@@ -1389,13 +1396,17 @@ gimp_ruler_get_layout (GtkWidget   *widget,
 static const RulerMetric *
 gimp_ruler_get_metric (GimpUnit unit)
 {
-  /*  not enabled until we double checked the metrics  */
-  return &ruler_metric_decimal;
-
   if (unit == GIMP_UNIT_INCH)
     {
       return  &ruler_metric_inches;
     }
+  /* XXX: recognizing feet or yard unit this way definitely sucks.
+   * Actually the subdvision and rule scale rules should probably become
+   * settable values in unitrc instead of hardcoded rules.
+   * This way, people would be able to set how they want a unit to be
+   * shown (we could definitely imagine someone wanting to see inches
+   * with base-10 divisions).
+   */
   else if (FACTOR_EQUAL (unit, 0.083333))
     {
       return  &ruler_metric_feet;

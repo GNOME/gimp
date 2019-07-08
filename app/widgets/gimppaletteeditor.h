@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_PALETTE_EDITOR_H__
@@ -38,6 +38,7 @@ struct _GimpPaletteEditor
 
   GtkWidget        *view;
 
+  GtkWidget        *index_label;
   GtkWidget        *color_name;
   GtkAdjustment    *columns_adj;
 
@@ -45,7 +46,7 @@ struct _GimpPaletteEditor
 
   GimpPaletteEntry *color;
 
-  gfloat            zoom_factor;  /* range from 0.1 to 4.0 */
+  gdouble           zoom_factor;  /* range from 0.1 to 4.0 */
   gint              col_width;
   gint              last_width;
   gint              columns;

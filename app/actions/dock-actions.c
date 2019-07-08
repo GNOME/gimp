@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -48,13 +48,13 @@ static const GimpActionEntry dock_actions[] =
 
   { "dock-close", GIMP_ICON_WINDOW_CLOSE,
     NC_("dock-action", "Close Dock"), "", NULL,
-    G_CALLBACK (window_close_cmd_callback),
+    window_close_cmd_callback,
     GIMP_HELP_DOCK_CLOSE },
 
   { "dock-open-display", NULL,
     NC_("dock-action", "_Open Display..."), NULL,
     NC_("dock-action", "Connect to another display"),
-    G_CALLBACK (window_open_display_cmd_callback),
+    window_open_display_cmd_callback,
     NULL }
 };
 
@@ -62,13 +62,13 @@ static const GimpToggleActionEntry dock_toggle_actions[] =
 {
   { "dock-show-image-menu", NULL,
     NC_("dock-action", "_Show Image Selection"), NULL, NULL,
-    G_CALLBACK (dock_toggle_image_menu_cmd_callback),
+    dock_toggle_image_menu_cmd_callback,
     TRUE,
     GIMP_HELP_DOCK_IMAGE_MENU },
 
   { "dock-auto-follow-active", NULL,
     NC_("dock-action", "Auto _Follow Active Image"), NULL, NULL,
-    G_CALLBACK (dock_toggle_auto_cmd_callback),
+    dock_toggle_auto_cmd_callback,
     TRUE,
     GIMP_HELP_DOCK_AUTO_BUTTON }
 };

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -39,13 +39,16 @@
 /*  local function prototypes  */
 
 static void   themes_apply_theme         (Gimp                   *gimp,
-                                          const gchar            *theme_name);
+                                          GimpGuiConfig          *config);
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
 static gint   themes_name_compare        (const void             *p1,
                                           const void             *p2);
 static void   themes_theme_change_notify (GimpGuiConfig          *config,
+                                          GParamSpec             *pspec,
+                                          Gimp                   *gimp);
+static void   themes_theme_paths_notify  (GimpExtensionManager   *manager,
                                           GParamSpec             *pspec,
                                           Gimp                   *gimp);
 
@@ -67,66 +70,11 @@ themes_init (Gimp *gimp)
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  themes_hash = g_hash_table_new_full (g_str_hash,
-                                       g_str_equal,
-                                       g_free,
-                                       g_object_unref);
-
-  if (config->theme_path)
-    {
-      GList *path;
-      GList *list;
-
-      path = gimp_config_path_expand_to_files (config->theme_path, NULL);
-
-      for (list = path; list; list = g_list_next (list))
-        {
-          GFile           *dir = list->data;
-          GFileEnumerator *enumerator;
-
-          enumerator =
-            g_file_enumerate_children (dir,
-                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
-                                       G_FILE_QUERY_INFO_NONE,
-                                       NULL, NULL);
-
-          if (enumerator)
-            {
-              GFileInfo *info;
-
-              while ((info = g_file_enumerator_next_file (enumerator,
-                                                          NULL, NULL)))
-                {
-                  if (! g_file_info_get_is_hidden (info) &&
-                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
-                    {
-                      GFile       *file;
-                      const gchar *name;
-                      gchar       *basename;
-
-                      file = g_file_enumerator_get_child (enumerator, info);
-                      name = gimp_file_get_utf8_name (file);
-
-                      basename = g_path_get_basename (name);
-
-                      if (gimp->be_verbose)
-                        g_print ("Adding theme '%s' (%s)\n",
-                                 basename, name);
-
-                      g_hash_table_insert (themes_hash, basename, file);
-                    }
-
-                  g_object_unref (info);
-                }
-
-              g_object_unref (enumerator);
-            }
-        }
-
-      g_list_free_full (path, (GDestroyNotify) g_object_unref);
-    }
+  /* Check for theme extensions. */
+  themes_theme_paths_notify (gimp->extension_manager, NULL, gimp);
+  g_signal_connect (gimp->extension_manager, "notify::theme-paths",
+                    G_CALLBACK (themes_theme_paths_notify),
+                    gimp);
 
   themes_style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
 
@@ -143,6 +91,9 @@ themes_init (Gimp *gimp)
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
   g_signal_connect (config, "notify::prefer-dark-theme",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
+  g_signal_connect (config, "notify::prefer-symbolic-icons",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
 
@@ -265,14 +216,15 @@ themes_get_theme_file (Gimp        *gimp,
 /*  private functions  */
 
 static void
-themes_apply_theme (Gimp        *gimp,
-                    const gchar *theme_name)
+themes_apply_theme (Gimp          *gimp,
+                    GimpGuiConfig *config)
 {
   GFile         *theme_css;
   GOutputStream *output;
   GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
 
   theme_css = gimp_directory_file ("theme.css", NULL);
 
@@ -289,64 +241,106 @@ themes_apply_theme (Gimp        *gimp,
     }
   else
     {
-      GFile *theme_dir = themes_get_theme_dir (gimp, theme_name);
-      GFile *css_theme;
-      GFile *css_user;
-      gchar *esc_css_theme;
-      gchar *esc_css_user;
-      gchar *tmp;
+      GFile  *theme_dir = themes_get_theme_dir (gimp, config->theme);
+      GFile  *css_user;
+      GSList *css_files = NULL;
+      GSList *iter;
 
       if (theme_dir)
         {
-          css_theme = g_file_get_child (theme_dir, "gimp.css");
+          css_files = g_slist_prepend (
+            css_files, g_file_get_child (theme_dir, "gimp.css"));
         }
       else
         {
+          gchar *tmp;
+
           tmp = g_build_filename (gimp_data_directory (),
                                   "themes", "System", "gimp.css",
                                   NULL);
-          css_theme = g_file_new_for_path (tmp);
+          css_files = g_slist_prepend (
+            css_files, g_file_new_for_path (tmp));
           g_free (tmp);
         }
 
-      css_user = gimp_directory_file ("gimp.css", NULL);
+      css_files = g_slist_prepend (
+        css_files, gimp_sysconf_directory_file ("gimp.css", NULL));
 
-      tmp = g_file_get_path (css_theme);
-      esc_css_theme = g_strescape (tmp, NULL);
-      g_free (tmp);
+      css_user  = gimp_directory_file ("gimp.css", NULL);
+      css_files = g_slist_prepend (
+        css_files, css_user);
 
-      tmp = g_file_get_path (css_user);
-      esc_css_user = g_strescape (tmp, NULL);
-      g_free (tmp);
+      css_files = g_slist_reverse (css_files);
 
-      if (! g_output_stream_printf
-            (output, NULL, NULL, &error,
-             "/* GIMP theme.css\n"
-             " *\n"
-             " * This file is written on GIMP startup and on every theme change.\n"
-             " * It is NOT supposed to be edited manually. Edit your personal\n"
-             " * gimp.css file instead (%s).\n"
-             " */\n"
-             "\n"
-             "@import url(\"%s\");\n"
-             "@import url(\"%s\");\n"
-             "\n"
-             "/* end of theme.css */\n",
-             gimp_file_get_utf8_name (css_user),
-             esc_css_theme,
-             esc_css_user) ||
-          ! g_output_stream_close (output, NULL, &error))
+      g_output_stream_printf (
+        output, NULL, NULL, &error,
+        "/* GIMP theme.css\n"
+        " *\n"
+        " * This file is written on GIMP startup and on every theme change.\n"
+        " * It is NOT supposed to be edited manually. Edit your personal\n"
+        " * gimp.css file instead (%s).\n"
+        " */\n"
+        "\n",
+        gimp_file_get_utf8_name (css_user));
+
+      for (iter = css_files; ! error && iter; iter = g_slist_next (iter))
         {
+          GFile *file = iter->data;
+
+          if (g_file_query_exists (file, NULL))
+            {
+              gchar *path;
+              gchar *esc_path;
+
+              path     = g_file_get_path (file);
+              esc_path = g_strescape (path, NULL);
+              g_free (path);
+
+              g_output_stream_printf (
+                output, NULL, NULL, &error,
+                "@import url(\"%s\");\n",
+                esc_path);
+
+              g_free (esc_path);
+            }
+        }
+
+      if (! error)
+        {
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n"
+            "* { -gtk-icon-style: %s; }\n"
+            "\n"
+            "%s"
+            "/* end of theme.css */\n",
+            config->prefer_symbolic_icons ? "symbolic" : "regular",
+            config->prefer_dark_theme ? "/* prefer-dark-theme */\n\n" : "");
+        }
+
+      if (error)
+        {
+          GCancellable *cancellable = g_cancellable_new ();
+
           gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
                         _("Error writing '%s': %s"),
                         gimp_file_get_utf8_name (theme_css), error->message);
           g_clear_error (&error);
+
+          /* Cancel the overwrite initiated by g_file_replace(). */
+          g_cancellable_cancel (cancellable);
+          g_output_stream_close (output, cancellable, NULL);
+          g_object_unref (cancellable);
+        }
+      else if (! g_output_stream_close (output, NULL, &error))
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Error closing '%s': %s"),
+                        gimp_file_get_utf8_name (theme_css), error->message);
+          g_clear_error (&error);
         }
 
-      g_free (esc_css_theme);
-      g_free (esc_css_user);
-      g_object_unref (css_theme);
-      g_object_unref (css_user);
+      g_slist_free_full (css_files, g_object_unref);
       g_object_unref (output);
     }
 
@@ -377,16 +371,14 @@ themes_theme_change_notify (GimpGuiConfig *config,
                             GParamSpec    *pspec,
                             Gimp          *gimp)
 {
-  GFile    *theme_css;
-  GError   *error = NULL;
-  gboolean  prefer_dark_theme;
+  GFile  *theme_css;
+  GError *error = NULL;
 
-  g_object_get (config, "prefer-dark-theme", &prefer_dark_theme, NULL);
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-application-prefer-dark-theme", prefer_dark_theme,
+                "gtk-application-prefer-dark-theme", config->prefer_dark_theme,
                 NULL);
 
-  themes_apply_theme (gimp, config->theme);
+  themes_apply_theme (gimp, config);
 
   theme_css = gimp_directory_file ("theme.css", NULL);
 
@@ -405,4 +397,83 @@ themes_theme_change_notify (GimpGuiConfig *config,
   g_object_unref (theme_css);
 
   gtk_style_context_reset_widgets (gdk_screen_get_default ());
+}
+
+static void
+themes_theme_paths_notify (GimpExtensionManager *manager,
+                           GParamSpec           *pspec,
+                           Gimp                 *gimp)
+{
+  GimpGuiConfig *config;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (themes_hash)
+    g_hash_table_remove_all (themes_hash);
+  else
+    themes_hash = g_hash_table_new_full (g_str_hash,
+                                         g_str_equal,
+                                         g_free,
+                                         g_object_unref);
+
+  config = GIMP_GUI_CONFIG (gimp->config);
+  if (config->theme_path)
+    {
+      GList *path;
+      GList *list;
+
+      g_object_get (gimp->extension_manager,
+                    "theme-paths", &path,
+                    NULL);
+      path = g_list_copy_deep (path, (GCopyFunc) g_object_ref, NULL);
+      path = g_list_concat (path, gimp_config_path_expand_to_files (config->theme_path, NULL));
+
+      for (list = path; list; list = g_list_next (list))
+        {
+          GFile           *dir = list->data;
+          GFileEnumerator *enumerator;
+
+          enumerator =
+            g_file_enumerate_children (dir,
+                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                       G_FILE_QUERY_INFO_NONE,
+                                       NULL, NULL);
+
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator,
+                                                          NULL, NULL)))
+                {
+                  if (! g_file_info_get_is_hidden (info) &&
+                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+                    {
+                      GFile       *file;
+                      const gchar *name;
+                      gchar       *basename;
+
+                      file = g_file_enumerator_get_child (enumerator, info);
+                      name = gimp_file_get_utf8_name (file);
+
+                      basename = g_path_get_basename (name);
+
+                      if (gimp->be_verbose)
+                        g_print ("Adding theme '%s' (%s)\n",
+                                 basename, name);
+
+                      g_hash_table_insert (themes_hash, basename, file);
+                    }
+
+                  g_object_unref (info);
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
+    }
 }

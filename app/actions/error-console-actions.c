@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -43,13 +43,13 @@ static const GimpActionEntry error_console_actions[] =
   { "error-console-clear", GIMP_ICON_EDIT_CLEAR,
     NC_("error-console-action", "_Clear"), NULL,
     NC_("error-console-action", "Clear error console"),
-    G_CALLBACK (error_console_clear_cmd_callback),
+    error_console_clear_cmd_callback,
     GIMP_HELP_ERRORS_CLEAR },
 
   { "error-console-select-all", NULL,
     NC_("error-console-action", "Select _All"), "",
     NC_("error-console-action", "Select all error messages"),
-    G_CALLBACK (error_console_select_all_cmd_callback),
+    error_console_select_all_cmd_callback,
     GIMP_HELP_ERRORS_SELECT_ALL },
 
   { "error-console-highlight", NULL,
@@ -77,21 +77,21 @@ static const GimpToggleActionEntry error_console_highlight_actions[] =
   { "error-console-highlight-error", NULL,
     NC_("error-console-action", "_Errors"), NULL,
     NC_("error-console-action", "Highlight error console on errors"),
-    G_CALLBACK (error_console_highlight_error_cmd_callback),
+    error_console_highlight_error_cmd_callback,
     FALSE,
     GIMP_HELP_ERRORS_HIGHLIGHT },
 
   { "error-console-highlight-warning", NULL,
     NC_("error-console-action", "_Warnings"), NULL,
     NC_("error-console-action", "Highlight error console on warnings"),
-    G_CALLBACK (error_console_highlight_warning_cmd_callback),
+    error_console_highlight_warning_cmd_callback,
     FALSE,
     GIMP_HELP_ERRORS_HIGHLIGHT },
 
   { "error-console-highlight-info", NULL,
     NC_("error-console-action", "_Messages"), NULL,
     NC_("error-console-action", "Highlight error console on messages"),
-    G_CALLBACK (error_console_highlight_info_cmd_callback),
+    error_console_highlight_info_cmd_callback,
     FALSE,
     GIMP_HELP_ERRORS_HIGHLIGHT }
 };
@@ -107,7 +107,7 @@ error_console_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "error-console-action",
                                       error_console_save_actions,
                                       G_N_ELEMENTS (error_console_save_actions),
-                                      G_CALLBACK (error_console_save_cmd_callback));
+                                      error_console_save_cmd_callback);
 
   gimp_action_group_add_toggle_actions (group, "error-console-action",
                                         error_console_highlight_actions,

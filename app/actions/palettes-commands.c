@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -54,8 +54,9 @@ static void   palettes_merge_callback (GtkWidget   *widget,
 /*  public functions */
 
 void
-palettes_import_cmd_callback (GtkAction *action,
-                              gpointer   data)
+palettes_import_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -68,8 +69,9 @@ palettes_import_cmd_callback (GtkAction *action,
 }
 
 void
-palettes_merge_cmd_callback (GtkAction *action,
-                             gpointer   data)
+palettes_merge_cmd_callback (GimpAction *action,
+                             GVariant   *value,
+                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GtkWidget           *dialog;

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -88,9 +88,7 @@ struct _GimpSettingsBoxPrivate
   GFile         *last_file;
 };
 
-#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                                       GIMP_TYPE_SETTINGS_BOX, \
-                                                       GimpSettingsBoxPrivate)
+#define GET_PRIVATE(item) ((GimpSettingsBoxPrivate *) gimp_settings_box_get_instance_private ((GimpSettingsBox *) (item)))
 
 
 static void      gimp_settings_box_constructed   (GObject           *object);
@@ -143,7 +141,7 @@ static void  gimp_settings_box_truncate_list     (GimpSettingsBox   *box,
                                                   gint               max_recent);
 
 
-G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_settings_box_parent_class
 
@@ -261,8 +259,6 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                                                         G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpSettingsBoxPrivate));
 }
 
 static void
@@ -557,12 +553,8 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
                                     GimpSettingsBox   *box)
 {
   if (object)
-    {
-      g_signal_emit (box, settings_box_signals[SELECTED], 0,
-                     object);
-
-      gimp_container_view_select_item (view, NULL);
-    }
+    g_signal_emit (box, settings_box_signals[SELECTED], 0,
+                   object);
 }
 
 static gboolean
@@ -964,4 +956,16 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
   gimp_settings_box_truncate_list (box, max_recent);
 
   gimp_operation_config_serialize (private->gimp, private->container, NULL);
+}
+
+void
+gimp_settings_box_unset (GimpSettingsBox *box)
+{
+  GimpSettingsBoxPrivate *private;
+
+  g_return_if_fail (GIMP_IS_SETTINGS_BOX (box));
+
+  private = GET_PRIVATE (box);
+
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->combo), NULL);
 }

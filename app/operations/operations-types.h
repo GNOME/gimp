@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __OPERATIONS_TYPES_H__
@@ -64,7 +64,8 @@ typedef gboolean (* GimpLayerModeFunc)      (GeglOperation          *operation,
                                              const GeglRectangle    *roi,
                                              gint                    level);
 
-typedef  void    (* GimpLayerModeBlendFunc) (const gfloat           *in,
+typedef  void    (* GimpLayerModeBlendFunc) (GeglOperation          *operation,
+                                             const gfloat           *in,
                                              const gfloat           *layer,
                                              gfloat                 *out,
                                              gint                    samples);

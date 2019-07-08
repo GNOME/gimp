@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -41,26 +41,44 @@ static const GimpActionEntry dashboard_actions[] =
     GIMP_HELP_DASHBOARD_DIALOG },
 
   { "dashboard-groups", NULL,
-    NC_("dashboard-action", "Groups") },
+    NC_("dashboard-action", "_Groups") },
   { "dashboard-update-interval", NULL,
-    NC_("dashboard-action", "Update Interval") },
+    NC_("dashboard-action", "_Update Interval") },
   { "dashboard-history-duration", NULL,
-    NC_("dashboard-action", "History Duration") },
+    NC_("dashboard-action", "_History Duration") },
+
+  { "dashboard-log-record", GIMP_ICON_RECORD,
+    NC_("dashboard-action", "_Start/Stop Recording..."), NULL,
+    NC_("dashboard-action", "Start/stop recording performance log"),
+    dashboard_log_record_cmd_callback,
+    GIMP_HELP_DASHBOARD_LOG_RECORD },
+  { "dashboard-log-add-marker", GIMP_ICON_MARKER,
+    NC_("dashboard-action", "_Add Marker..."), NULL,
+    NC_("dashboard-action", "Add an event marker "
+                            "to the performance log"),
+    dashboard_log_add_marker_cmd_callback,
+    GIMP_HELP_DASHBOARD_LOG_ADD_MARKER },
+  { "dashboard-log-add-empty-marker", GIMP_ICON_MARKER,
+    NC_("dashboard-action", "Add _Empty Marker"), NULL,
+    NC_("dashboard-action", "Add an empty event marker "
+                            "to the performance log"),
+    dashboard_log_add_empty_marker_cmd_callback,
+    GIMP_HELP_DASHBOARD_LOG_ADD_EMPTY_MARKER },
 
   { "dashboard-reset", GIMP_ICON_RESET,
-    NC_("dashboard-action", "Reset"), NULL,
+    NC_("dashboard-action", "_Reset"), NULL,
     NC_("dashboard-action", "Reset cumulative data"),
-    G_CALLBACK (dashboard_reset_cmd_callback),
+    dashboard_reset_cmd_callback,
     GIMP_HELP_DASHBOARD_RESET },
 };
 
 static const GimpToggleActionEntry dashboard_toggle_actions[] =
 {
   { "dashboard-low-swap-space-warning", NULL,
-    NC_("dashboard-action", "Low Swap Space Warning"), NULL,
+    NC_("dashboard-action", "_Low Swap Space Warning"), NULL,
     NC_("dashboard-action", "Raise the dashboard when "
                             "the swap size approaches its limit"),
-    G_CALLBACK (dashboard_low_swap_space_warning_cmd_callback),
+    dashboard_low_swap_space_warning_cmd_callback,
     FALSE,
     GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING }
 };
@@ -138,14 +156,14 @@ dashboard_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (dashboard_update_interval_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (dashboard_update_interval_cmd_callback));
+                                       dashboard_update_interval_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "dashboard-history-duration",
                                        dashboard_history_duration_actions,
                                        G_N_ELEMENTS (dashboard_history_duration_actions),
                                        NULL,
                                        0,
-                                       G_CALLBACK (dashboard_history_duration_cmd_callback));
+                                       dashboard_history_duration_cmd_callback);
 }
 
 void
@@ -153,7 +171,12 @@ dashboard_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
+  gboolean       recording;
 
+  recording = gimp_dashboard_log_is_recording (dashboard);
+
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
@@ -195,8 +218,13 @@ dashboard_actions_update (GimpActionGroup *group,
       break;
     }
 
+  SET_SENSITIVE ("dashboard-log-add-marker",       recording);
+  SET_SENSITIVE ("dashboard-log-add-empty-marker", recording);
+  SET_SENSITIVE ("dashboard-reset",                !recording);
+
   SET_ACTIVE ("dashboard-low-swap-space-warning",
               gimp_dashboard_get_low_swap_space_warning (dashboard));
 
+#undef SET_SENSITIVE
 #undef SET_ACTIVE
 }

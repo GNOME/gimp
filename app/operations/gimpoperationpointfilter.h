@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_OPERATION_POINT_FILTER_H__
@@ -29,7 +29,7 @@
 enum
 {
   GIMP_OPERATION_POINT_FILTER_PROP_0,
-  GIMP_OPERATION_POINT_FILTER_PROP_LINEAR,
+  GIMP_OPERATION_POINT_FILTER_PROP_TRC,
   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG
 };
 
@@ -48,7 +48,7 @@ struct _GimpOperationPointFilter
 {
   GeglOperationPointFilter  parent_instance;
 
-  gboolean                  linear;
+  GimpTRCType               trc;
   GObject                  *config;
 };
 

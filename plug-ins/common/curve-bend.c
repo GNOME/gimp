@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* Revision history
@@ -132,11 +132,11 @@ struct _BenderDialog
   GtkWidget *pv_widget;
   GtkWidget *graph;
   GtkAdjustment *rotate_data;
-  GdkPixmap *pixmap;
   GtkWidget *filechooser;
 
   GdkCursor *cursor_busy;
 
+  gint32        drawable_id;
   GimpDrawable *drawable;
   int        color;
   int        outline;
@@ -207,6 +207,9 @@ typedef double CRMatrix[4][4];
 
 typedef struct
 {
+  guint32 drawable_id;
+  gint    width;
+  gint    height;
   GimpDrawable *drawable;
   gint       x1;
   gint       y1;
@@ -261,6 +264,9 @@ static void            bender_save_callback           (GtkWidget *,
                                                        BenderDialog *);
 static gint            bender_graph_events            (GtkWidget *, GdkEvent *,
                                                        BenderDialog *);
+static gint            bender_graph_draw              (GtkWidget *,
+                                                       cairo_t *,
+                                                       BenderDialog *);
 static void            bender_CR_compose              (CRMatrix, CRMatrix,
                                                        CRMatrix);
 static void            bender_init_min_max            (BenderDialog *, gint32);
@@ -268,7 +274,7 @@ static BenderDialog *  do_dialog                      (GimpDrawable *);
 static void            p_init_gdrw                    (t_GDRW *gdrw, GimpDrawable *drawable,
                                                        int dirty, int shadow);
 static void            p_end_gdrw                     (t_GDRW *gdrw);
-static gint32          p_main_bend                    (BenderDialog *, GimpDrawable *, gint);
+static gint32          p_main_bend                    (BenderDialog *, guint32, gint);
 static gint32          p_create_pv_image              (GimpDrawable *src_drawable, gint32 *layer_id);
 static void            p_render_preview               (BenderDialog *cd, gint32 layer_id);
 static void            p_get_pixel                    (t_GDRW *gdrw,
@@ -732,6 +738,7 @@ run (const gchar      *name,
               cd = g_new (BenderDialog, 1);
               cd->run = TRUE;
               cd->show_progress = TRUE;
+              cd->drawable_id = l_active_drawable_id;
               cd->drawable = l_active_drawable;
 
               cd->rotation      = param[3].data.d_float;
@@ -770,6 +777,7 @@ run (const gchar      *name,
           cd = g_new (BenderDialog, 1);
           cd->run = TRUE;
           cd->show_progress = TRUE;
+          cd->drawable_id = l_active_drawable_id;
           cd->drawable = l_active_drawable;
           p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
           break;
@@ -794,7 +802,8 @@ run (const gchar      *name,
 
           gimp_image_undo_group_start (l_image_id);
 
-          l_bent_layer_id = p_main_bend (cd, cd->drawable, cd->work_on_copy);
+          l_bent_layer_id = p_main_bend (cd, cd->drawable_id,
+                                         cd->work_on_copy);
 
           gimp_image_undo_group_end (l_image_id);
 
@@ -922,7 +931,7 @@ p_load_pointfile (BenderDialog *cd,
            }
            else
            {
-              printf("warning: BAD points[%d] in file %s are ignored\n", l_pi, filename);
+              g_printf("warning: BAD points[%d] in file %s are ignored\n", l_pi, filename);
            }
         }
         l_len = strlen(KEY_VAL_Y);
@@ -937,7 +946,7 @@ p_load_pointfile (BenderDialog *cd,
            }
            else
            {
-              printf("warning: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
+              g_printf("warning: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
            }
         }
 
@@ -1145,7 +1154,6 @@ do_dialog (GimpDrawable *drawable)
   bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);
 
   gtk_main ();
-  gdk_display_flush (gtk_widget_get_display (cd->shell));
 
   gimp_image_delete(cd->preview_image_id);
   cd->preview_image_id = -1;
@@ -1167,7 +1175,6 @@ bender_new_dialog (GimpDrawable *drawable)
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *vbox2;
-  GtkWidget    *abox;
   GtkWidget    *frame;
   GtkWidget    *upper, *lower;
   GtkWidget    *smooth, *freew;
@@ -1182,7 +1189,6 @@ bender_new_dialog (GimpDrawable *drawable)
 
   cd->preview = FALSE;
   cd->curve_type = SMOOTH;
-  cd->pixmap = NULL;
   cd->filechooser = NULL;
   cd->outline = OUTLINE_UPPER;
   cd->show_progress = FALSE;
@@ -1191,8 +1197,9 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->work_on_copy = FALSE;
   cd->rotation = 0.0;       /* vertical bend */
 
+  cd->drawable_id = drawable->drawable_id;
   cd->drawable = drawable;
-  cd->color = gimp_drawable_is_rgb (cd->drawable->drawable_id);
+  cd->color = gimp_drawable_is_rgb (cd->drawable_id);
 
   cd->run = FALSE;
   cd->bval_from = NULL;
@@ -1265,14 +1272,12 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_halign (frame, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (frame, GTK_ALIGN_CENTER);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   cd->pv_widget = gimp_preview_area_new ();
@@ -1326,7 +1331,7 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->rotate_data = gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 0);
   gtk_adjustment_set_value (cd->rotate_data, cd->rotation);
 
-  spinbutton = gtk_spin_button_new (cd->rotate_data, 0.5, 1);
+  spinbutton = gimp_spin_button_new (cd->rotate_data, 0.5, 1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1376,20 +1381,21 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   cd->graph = gtk_drawing_area_new ();
+  gtk_widget_set_halign (cd->graph, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (cd->graph, GTK_ALIGN_CENTER);
   gtk_widget_set_size_request (cd->graph,
                                GRAPH_WIDTH + RADIUS * 2,
                                GRAPH_HEIGHT + RADIUS * 2);
   gtk_widget_set_events (cd->graph, GRAPH_MASK);
-  gtk_container_add (GTK_CONTAINER (abox), cd->graph);
+  gtk_box_pack_start (GTK_BOX (vbox), cd->graph, FALSE, FALSE, 0);
   gtk_widget_show (cd->graph);
 
   g_signal_connect (cd->graph, "event",
                     G_CALLBACK (bender_graph_events),
+                    cd);
+  g_signal_connect (cd->graph, "draw",
+                    G_CALLBACK (bender_graph_draw),
                     cd);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -1530,7 +1536,7 @@ bender_update (BenderDialog *cd,
       if (cd->preview_layer_id2 >= 0)
          gimp_image_remove_layer(cd->preview_image_id, cd->preview_layer_id2);
 
-      cd->preview_layer_id2 = p_main_bend(cd, gimp_drawable_get (cd->preview_layer_id1), TRUE /* work_on_copy*/ );
+      cd->preview_layer_id2 = p_main_bend(cd, cd->preview_layer_id1, TRUE /* work_on_copy*/ );
       p_render_preview(cd, cd->preview_layer_id2);
 
       if (update & UP_DRAW)
@@ -1545,13 +1551,13 @@ bender_update (BenderDialog *cd,
        * that holds the bent version of the preview (if there is one)
        */
       if (cd->preview_layer_id2 < 0)
-         cd->preview_layer_id2 = p_main_bend(cd, gimp_drawable_get (cd->preview_layer_id1), TRUE /* work_on_copy*/ );
+         cd->preview_layer_id2 = p_main_bend(cd, cd->preview_layer_id1, TRUE /* work_on_copy*/ );
       p_render_preview(cd, cd->preview_layer_id2);
 
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
     }
-  if ((update & UP_GRAPH) && (update & UP_DRAW) && cd->pixmap != NULL)
+  if ((update & UP_GRAPH) && (update & UP_DRAW))
     {
       cairo_t *cr;
 
@@ -1702,7 +1708,7 @@ bender_plot_curve (BenderDialog *cd,
   else
   {
     cd->curve_ptr[cd->outline][lastx] = lasty;
-    if(gb_debug) printf("bender_plot_curve xmax:%d ymax:%d\n", (int)xmax, (int)ymax);
+    if(gb_debug) g_printf("bender_plot_curve xmax:%d ymax:%d\n", (int)xmax, (int)ymax);
   }
 
   /* loop over the curve */
@@ -1734,7 +1740,7 @@ bender_plot_curve (BenderDialog *cd,
           /* use dynamic allocated curve_ptr (for the real curve) */
           cd->curve_ptr[cd->outline][newx] = newy;
 
-          if(gb_debug) printf("outline: %d  cX: %d cY: %d\n", (int)cd->outline, (int)newx, (int)newy);
+          if(gb_debug) g_printf("outline: %d  cX: %d cY: %d\n", (int)cd->outline, (int)newx, (int)newy);
         }
       }
 
@@ -2187,15 +2193,6 @@ bender_graph_events (GtkWidget    *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      if (cd->pixmap == NULL)
-        cd->pixmap = gdk_pixmap_new (gtk_widget_get_window (cd->graph),
-                                     GRAPH_WIDTH + RADIUS * 2,
-                                     GRAPH_HEIGHT + RADIUS * 2, -1);
-
-      bender_update (cd, UP_GRAPH | UP_DRAW);
-      break;
-
     case GDK_BUTTON_PRESS:
       new_type = GDK_TCROSS;
 
@@ -2331,6 +2328,16 @@ bender_graph_events (GtkWidget    *widget,
     default:
       break;
     }
+
+  return FALSE;
+}
+
+static gboolean
+bender_graph_draw (GtkWidget    *widget,
+                   cairo_t      *cr,
+                   BenderDialog *cd)
+{
+  bender_update (cd, UP_GRAPH | UP_DRAW);
 
   return FALSE;
 }
@@ -2535,13 +2542,16 @@ p_init_gdrw (t_GDRW       *gdrw,
 {
   gint w, h;
 
+  gdrw->drawable_id = drawable->drawable_id;
+  gdrw->width = gimp_drawable_width (gdrw->drawable_id);
+  gdrw->height = gimp_drawable_height (gdrw->drawable_id);
   gdrw->drawable = drawable;
   gdrw->pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (gdrw->pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
   gdrw->tile_width = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (gdrw->drawable_id,
                                       &gdrw->x1, &gdrw->y1, &w, &h))
     {
       w = 0;
@@ -2552,7 +2562,7 @@ p_init_gdrw (t_GDRW       *gdrw,
   gdrw->y2 = gdrw->y1 + h;
 
   gdrw->bpp = drawable->bpp;
-  if (gimp_drawable_has_alpha (drawable->drawable_id))
+  if (gimp_drawable_has_alpha (gdrw->drawable_id))
     {
       /* index of the alpha channelbyte {1|3} */
       gdrw->index_alpha = gdrw->bpp - 1;
@@ -2650,10 +2660,9 @@ p_clear_drawable (GimpDrawable *drawable)
    guchar       *l_ptr;
 
    gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                             0, 0, drawable->width, drawable->height,
-                             TRUE,  /* dirty */
-                             FALSE  /* shadow */
-                             );
+                        0, 0, drawable->width, drawable->height,
+                        TRUE,  /* dirty */
+                        FALSE  /* shadow */);
 
    /* clear the drawable with 0 Bytes (black full-transparent pixels) */
    for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
@@ -2666,7 +2675,7 @@ p_clear_drawable (GimpDrawable *drawable)
         l_ptr += pixel_rgn.rowstride;
       }
    }
-}       /* end  p_clear_drawable */
+}
 
 /* ============================================================================
  * p_create_pv_image
@@ -2822,7 +2831,7 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
        (cd->bval_to == NULL) ||
        (cd->bval_curr == NULL))
      {
-       if(gb_debug)  printf("p_bender_calculate_iter_curve NORMAL1\n");
+       if(gb_debug)  g_printf("p_bender_calculate_iter_curve NORMAL1\n");
        if (cd->curve_type == SMOOTH)
          {
            cd->outline = OUTLINE_UPPER;
@@ -2838,7 +2847,7 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
    else
      {
        /* compose curves by iterating between FROM/TO values */
-       if(gb_debug)  printf ("p_bender_calculate_iter_curve ITERmode 1\n");
+       if(gb_debug)  g_printf ("p_bender_calculate_iter_curve ITERmode 1\n");
 
        /* init FROM curves */
        cd_from = g_new (BenderDialog, 1);
@@ -2934,8 +2943,9 @@ p_vertical_bend (BenderDialog *cd,
   gint     l_alias_dir;
   guchar   l_mixmask;
 
-  l_topshift = p_upper_curve_extend (cd, src_gdrw->drawable->width,
-                                     src_gdrw->drawable->height);
+  l_topshift = p_upper_curve_extend (cd,
+                                     src_gdrw->width,
+                                     src_gdrw->height);
   l_diff = l_curvy = l_nb_curvy = l_nb2_curvy= l_miny = l_maxy = 0;
 
   /* allocate array of last values (one element foreach x coordinate) */
@@ -2996,21 +3006,24 @@ p_vertical_bend (BenderDialog *cd,
                   p_get_pixel(src_gdrw, l_x, l_y, color);
 
                   l_curvy = p_curve_get_dy(cd, l_x,
-                                           (gint32)src_gdrw->drawable->width,
-                                           (gint32)src_gdrw->drawable->height, (gdouble)l_y);
+                                           (gint32)src_gdrw->width,
+                                           (gint32)src_gdrw->height,
+                                           (gdouble)l_y);
                   l_desty = l_y + l_topshift + l_curvy;
 
                   /* ----------- SMOOTHING ------------------ */
                   if (cd->smoothing && (l_x > 0))
                     {
                       l_nb_curvy = p_curve_get_dy(cd, l_x -1,
-                                                  (gint32)src_gdrw->drawable->width,
-                                                  (gint32)src_gdrw->drawable->height, (gdouble)l_y);
+                                                  (gint32)src_gdrw->width,
+                                                  (gint32)src_gdrw->height,
+                                                  (gdouble)l_y);
                       if ((l_nb_curvy == l_curvy) && (l_x > 1))
                         {
                           l_nb2_curvy = p_curve_get_dy(cd, l_x -2,
-                                                       (gint32)src_gdrw->drawable->width,
-                                                       (gint32)src_gdrw->drawable->height, (gdouble)l_y);
+                                                       (gint32)src_gdrw->width,
+                                                       (gint32)src_gdrw->height,
+                                                       (gdouble)l_y);
                         }
                       else
                         {
@@ -3047,8 +3060,8 @@ p_vertical_bend (BenderDialog *cd,
                               l_othery = (src_gdrw->y2 -1)
                                 + l_topshift
                                 + p_curve_get_dy(cd, l_x,
-                                                 (gint32)src_gdrw->drawable->width,
-                                                 (gint32)src_gdrw->drawable->height,
+                                                 (gint32)src_gdrw->width,
+                                                 (gint32)src_gdrw->height,
                                                  (gdouble)(src_gdrw->y2 -1));
                             }
                         }
@@ -3067,8 +3080,8 @@ p_vertical_bend (BenderDialog *cd,
                           l_othery = (src_gdrw->y1)
                             + l_topshift
                             + p_curve_get_dy(cd, l_x,
-                                             (gint32)src_gdrw->drawable->width,
-                                             (gint32)src_gdrw->drawable->height,
+                                             (gint32)src_gdrw->width,
+                                             (gint32)src_gdrw->height,
                                              (gdouble)(src_gdrw->y1));
                         }
 
@@ -3081,7 +3094,7 @@ p_vertical_bend (BenderDialog *cd,
                           guchar l_alpha_lo;
 
                           l_alpha_lo = 20;
-                          if (gimp_drawable_has_alpha(src_gdrw->drawable->drawable_id))
+                          if (gimp_drawable_has_alpha(src_gdrw->drawable_id))
                             {
                               l_alpha_lo = MIN(20, mixcolor[src_gdrw->index_alpha]);
                             }
@@ -3204,7 +3217,7 @@ p_vertical_bend (BenderDialog *cd,
 
 static gint32
 p_main_bend (BenderDialog *cd,
-             GimpDrawable    *original_drawable,
+             guint32       original_drawable_id,
              gint          work_on_copy)
 {
    t_GDRW  l_src_gdrw;
@@ -3220,14 +3233,14 @@ p_main_bend (BenderDialog *cd,
    gint32    xmax, ymax;
 
    l_interpolation = cd->smoothing;
-   l_image_id = gimp_item_get_image (original_drawable->drawable_id);
-   gimp_drawable_offsets(original_drawable->drawable_id, &l_offset_x, &l_offset_y);
+   l_image_id = gimp_item_get_image (original_drawable_id);
+   gimp_drawable_offsets(original_drawable_id, &l_offset_x, &l_offset_y);
 
-   l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable->drawable_id) / 2 );
-   l_center_y = l_offset_y + (gimp_drawable_height (original_drawable->drawable_id) / 2 );
+   l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable_id) / 2 );
+   l_center_y = l_offset_y + (gimp_drawable_height (original_drawable_id) / 2 );
 
    /* always copy original_drawable to a tmp src_layer */
-   l_tmp_layer_id = gimp_layer_copy(original_drawable->drawable_id);
+   l_tmp_layer_id = gimp_layer_copy(original_drawable_id);
    /* set layer invisible and dummyname and
     * add at top of the image while working
     * (for the case of undo GIMP must know,
@@ -3237,11 +3250,11 @@ p_main_bend (BenderDialog *cd,
    gimp_item_set_visible (l_tmp_layer_id, FALSE);
    gimp_item_set_name (l_tmp_layer_id, "curve_bend_dummylayer");
 
-   if(gb_debug) printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);
+   if(gb_debug) g_printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);
 
    if (cd->rotation != 0.0)
      {
-       if(gb_debug) printf("p_main_bend rotate: %f\n", (float)cd->rotation);
+       if(gb_debug) g_printf("p_main_bend rotate: %f\n", (float)cd->rotation);
        p_gimp_rotate(l_image_id, l_tmp_layer_id, l_interpolation, cd->rotation);
      }
    src_drawable = gimp_drawable_get (l_tmp_layer_id);
@@ -3257,27 +3270,27 @@ p_main_bend (BenderDialog *cd,
                 + p_upper_curve_extend(cd, src_drawable->width, src_drawable->height)
                 + p_lower_curve_extend(cd, src_drawable->width, src_drawable->height);
 
-   if(gb_debug) printf("p_main_bend: l_dst_height:%d\n", (int)l_dst_height);
+   if(gb_debug) g_printf("p_main_bend: l_dst_height:%d\n", (int)l_dst_height);
 
    if(work_on_copy)
      {
        dst_drawable = p_add_layer(src_drawable->width, l_dst_height, src_drawable);
-       if(gb_debug) printf("p_main_bend: DONE add layer\n");
+       if(gb_debug) g_printf("p_main_bend: DONE add layer\n");
      }
    else
      {
        /* work on the original */
-       gimp_layer_resize(original_drawable->drawable_id,
-                         src_drawable->width,
-                         l_dst_height,
-                         l_offset_x, l_offset_y);
-       if(gb_debug) printf("p_main_bend: DONE layer resize\n");
-       if(!gimp_drawable_has_alpha(original_drawable->drawable_id))
+       gimp_layer_resize (original_drawable_id,
+                          src_drawable->width,
+                          l_dst_height,
+                          l_offset_x, l_offset_y);
+       if(gb_debug) g_printf("p_main_bend: DONE layer resize\n");
+       if(!gimp_drawable_has_alpha(original_drawable_id))
          {
            /* always add alpha channel */
-           gimp_layer_add_alpha(original_drawable->drawable_id);
+           gimp_layer_add_alpha(original_drawable_id);
          }
-       dst_drawable = gimp_drawable_get (original_drawable->drawable_id);
+       dst_drawable = gimp_drawable_get (original_drawable_id);
      }
    p_clear_drawable(dst_drawable);
 
@@ -3286,7 +3299,7 @@ p_main_bend (BenderDialog *cd,
 
    p_vertical_bend(cd, &l_src_gdrw, &l_dst_gdrw);
 
-   if(gb_debug) printf("p_main_bend: DONE vertical bend\n");
+   if(gb_debug) g_printf("p_main_bend: DONE vertical bend\n");
 
    p_end_gdrw(&l_src_gdrw);
    p_end_gdrw(&l_dst_gdrw);
@@ -3313,7 +3326,7 @@ p_main_bend (BenderDialog *cd,
    g_free (cd->curve_ptr[OUTLINE_UPPER]);
    g_free (cd->curve_ptr[OUTLINE_LOWER]);
 
-   if (gb_debug) printf("p_main_bend: DONE bend main\n");
+   if (gb_debug) g_printf("p_main_bend: DONE bend main\n");
 
    return dst_drawable->drawable_id;
 }

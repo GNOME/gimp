@@ -4,7 +4,7 @@ Developers documentation
 This directory holds information that you will find useful if you
 develop a GIMP plug-in or want to work on the GIMP core.
 
-See http://wiki.gimp.org/index.php/Main_Page for more information.
+See https://wiki.gimp.org/index.php/Main_Page for more information.
 
    app                     - setup for documentation of the GIMP core;
                              not built by default since it is huge and
@@ -25,8 +25,8 @@ See http://wiki.gimp.org/index.php/Main_Page for more information.
 
 
 
-   bugzilla-milestones.txt - describes how the GIMP project
-                             uses milestones in the Bugzilla bugtracker
+   gitlab-milestones.txt   - describes how the GIMP project uses
+                             milestones in the GNOME gitlab issue tracker
    commit-rules.txt        - describes rules and things to think
                              about when creating GIMP commits
    contexts.txt            - describes how GimpContexts are used in GIMP

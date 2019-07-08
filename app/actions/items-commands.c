@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -62,13 +62,12 @@ static void   items_stroke_callback (GtkWidget         *dialog,
 /*  public functions  */
 
 void
-items_visible_cmd_callback (GtkAction *action,
-                            GimpImage *image,
-                            GimpItem  *item)
+items_visible_cmd_callback (GimpAction *action,
+                            GVariant   *value,
+                            GimpImage  *image,
+                            GimpItem   *item)
 {
-  gboolean visible;
-
-  visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean visible = g_variant_get_boolean (value);
 
   if (visible != gimp_item_get_visible (item))
     {
@@ -87,13 +86,12 @@ items_visible_cmd_callback (GtkAction *action,
 }
 
 void
-items_linked_cmd_callback (GtkAction *action,
-                           GimpImage *image,
-                           GimpItem  *item)
+items_linked_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           GimpImage  *image,
+                           GimpItem   *item)
 {
-  gboolean linked;
-
-  linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean linked = g_variant_get_boolean (value);
 
   if (linked != gimp_item_get_linked (item))
     {
@@ -112,13 +110,12 @@ items_linked_cmd_callback (GtkAction *action,
 }
 
 void
-items_lock_content_cmd_callback (GtkAction *action,
-                                 GimpImage *image,
-                                 GimpItem  *item)
+items_lock_content_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 GimpImage  *image,
+                                 GimpItem   *item)
 {
-  gboolean locked;
-
-  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean locked = g_variant_get_boolean (value);
 
   if (locked != gimp_item_get_lock_content (item))
     {
@@ -137,13 +134,12 @@ items_lock_content_cmd_callback (GtkAction *action,
 }
 
 void
-items_lock_position_cmd_callback (GtkAction *action,
-                                  GimpImage *image,
-                                  GimpItem  *item)
+items_lock_position_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  GimpImage  *image,
+                                  GimpItem   *item)
 {
-  gboolean locked;
-
-  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  gboolean locked = g_variant_get_boolean (value);
 
   if (locked != gimp_item_get_lock_position (item))
     {
@@ -163,7 +159,7 @@ items_lock_position_cmd_callback (GtkAction *action,
 }
 
 void
-items_color_tag_cmd_callback (GtkAction    *action,
+items_color_tag_cmd_callback (GimpAction   *action,
                               GimpImage    *image,
                               GimpItem     *item,
                               GimpColorTag  color_tag)
@@ -185,7 +181,7 @@ items_color_tag_cmd_callback (GtkAction    *action,
 }
 
 void
-items_fill_cmd_callback (GtkAction   *action,
+items_fill_cmd_callback (GimpAction  *action,
                          GimpImage   *image,
                          GimpItem    *item,
                          const gchar *dialog_key,
@@ -233,10 +229,10 @@ items_fill_cmd_callback (GtkAction   *action,
 }
 
 void
-items_fill_last_vals_cmd_callback (GtkAction   *action,
-                                   GimpImage   *image,
-                                   GimpItem    *item,
-                                   gpointer     data)
+items_fill_last_vals_cmd_callback (GimpAction *action,
+                                   GimpImage  *image,
+                                   GimpItem   *item,
+                                   gpointer    data)
 {
   GimpDrawable     *drawable;
   GimpDialogConfig *config;
@@ -270,7 +266,7 @@ items_fill_last_vals_cmd_callback (GtkAction   *action,
 }
 
 void
-items_stroke_cmd_callback (GtkAction   *action,
+items_stroke_cmd_callback (GimpAction  *action,
                            GimpImage   *image,
                            GimpItem    *item,
                            const gchar *dialog_key,
@@ -318,10 +314,10 @@ items_stroke_cmd_callback (GtkAction   *action,
 }
 
 void
-items_stroke_last_vals_cmd_callback (GtkAction   *action,
-                                     GimpImage   *image,
-                                     GimpItem    *item,
-                                     gpointer     data)
+items_stroke_last_vals_cmd_callback (GimpAction *action,
+                                     GimpImage  *image,
+                                     GimpItem   *item,
+                                     gpointer    data)
 {
   GimpDrawable     *drawable;
   GimpDialogConfig *config;

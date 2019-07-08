@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_TRANSFORM_TOOL_H__
@@ -47,7 +47,7 @@ struct _GimpTransformTool
 {
   GimpDrawTool  parent_instance;
 
-  GimpDrawable *drawable;
+  GimpItem     *item;
 
   gint          x1, y1;             /*  upper left hand coordinate         */
   gint          x2, y2;             /*  lower right hand coords            */
@@ -61,17 +61,19 @@ struct _GimpTransformToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  void         (* recalc_matrix) (GimpTransformTool  *tr_tool);
-  gchar      * (* get_undo_desc) (GimpTransformTool  *tr_tool);
-  GeglBuffer * (* transform)     (GimpTransformTool  *tr_tool,
-                                  GimpItem           *item,
-                                  GeglBuffer         *orig_buffer,
-                                  gint                orig_offset_x,
-                                  gint                orig_offset_y,
-                                  GimpColorProfile  **buffer_profile,
-                                  gint               *new_offset_x,
-                                  gint               *new_offset_y);
+  void                     (* recalc_matrix) (GimpTransformTool  *tr_tool);
+  gchar                  * (* get_undo_desc) (GimpTransformTool  *tr_tool);
+  GimpTransformDirection   (* get_direction) (GimpTransformTool  *tr_tool);
+  GeglBuffer             * (* transform)     (GimpTransformTool  *tr_tool,
+                                              GimpItem           *item,
+                                              GeglBuffer         *orig_buffer,
+                                              gint                orig_offset_x,
+                                              gint                orig_offset_y,
+                                              GimpColorProfile  **buffer_profile,
+                                              gint               *new_offset_x,
+                                              gint               *new_offset_y);
 
+  const gchar *undo_desc;
   const gchar *progress_text;
 };
 

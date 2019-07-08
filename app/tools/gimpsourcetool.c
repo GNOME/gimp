@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -249,12 +249,20 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
           paint_tool->status = source_tool->status_set_source;
 
           source_tool->show_source_outline = FALSE;
+
+          source_tool->saved_precision =
+            gimp_tool_control_get_precision (tool->control);
+          gimp_tool_control_set_precision (tool->control,
+                                           GIMP_CURSOR_PRECISION_PIXEL_CENTER);
         }
       else
         {
           paint_tool->status = source_tool->status_paint;
 
           source_tool->show_source_outline = TRUE;
+
+          gimp_tool_control_set_precision (tool->control,
+                                           source_tool->saved_precision);
         }
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));

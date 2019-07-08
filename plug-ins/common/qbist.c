@@ -22,7 +22,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -501,7 +501,7 @@ run (const gchar      *name,
                                                            img_width, img_height),
                                            0, babl_format ("R'G'B'A float"),
                                            GEGL_ACCESS_READWRITE,
-                                           GEGL_ABYSS_NONE);
+                                           GEGL_ABYSS_NONE, 1);
 
           optimize (&qbist_info.info);
 
@@ -509,8 +509,8 @@ run (const gchar      *name,
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat        *data = iter->data[0];
-              GeglRectangle  roi  = iter->roi[0];
+              gfloat        *data = iter->items[0].data;
+              GeglRectangle  roi  = iter->items[0].roi;
               gint           row;
 
               for (row = 0; row < roi.height; row++)

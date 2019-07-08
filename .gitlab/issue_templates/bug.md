@@ -1,5 +1,9 @@
 GIMP version:
 
+Note: bug reporters are expected to have verified the bug still exists
+either in the last stable version of GIMP or on updated development code
+(master branch).
+
 Operating System:
 
 Package: [flatpak? Installer from gimp.org? If another installer, tell us where from]
@@ -28,3 +32,5 @@ Actual result:
 # Additional information
 
 If you have a backtrace for a crash or a warning, paste it here.
+
+/label ~"1. Bug"

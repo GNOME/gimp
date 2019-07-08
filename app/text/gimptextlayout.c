@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -136,8 +136,6 @@ gimp_text_layout_new (GimpText  *text,
 
   pango_layout_set_wrap (layout->layout, PANGO_WRAP_WORD_CHAR);
 
-  g_object_unref (context);
-
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
@@ -167,12 +165,18 @@ gimp_text_layout_new (GimpText  *text,
     case GIMP_TEXT_BOX_DYNAMIC:
       break;
     case GIMP_TEXT_BOX_FIXED:
-      pango_layout_set_width (layout->layout,
-                              pango_units_from_double
-                              (gimp_units_to_pixels (text->box_width,
-                                                     text->box_unit,
-                                                     xres) -
-                               2 * layout->text->border));
+      if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
+        pango_layout_set_width (layout->layout,
+                                pango_units_from_double
+                                (gimp_units_to_pixels (text->box_width,
+                                                       text->box_unit,
+                                                       xres)));
+      else
+        pango_layout_set_width (layout->layout,
+                                pango_units_from_double
+                                (gimp_units_to_pixels (text->box_height,
+                                                       text->box_unit,
+                                                       yres)));
       break;
     }
 
@@ -209,6 +213,8 @@ gimp_text_layout_new (GimpText  *text,
 #endif
       break;
     }
+
+  g_object_unref (context);
 
   return layout;
 }
@@ -591,6 +597,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
 {
   PangoRectangle  ink;
   PangoRectangle  logical;
+  PangoContext   *context;
   gint            x1, y1;
   gint            x2, y2;
 
@@ -603,6 +610,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
 
   ink.width = ceil ((gdouble) ink.width * layout->xres / layout->yres);
   logical.width = ceil ((gdouble) logical.width * layout->xres / layout->yres);
+  context = pango_layout_get_context (layout->layout);
 
 #ifdef VERBOSE
   g_printerr ("ink rect: %d x %d @ %d, %d\n",
@@ -641,7 +649,11 @@ gimp_text_layout_position (GimpTextLayout *layout)
       pango_layout_get_pixel_size (layout->layout, &width, NULL);
 
       if ((base_dir == GIMP_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT))
+          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_TTB_LTR && align == PANGO_ALIGN_LEFT) ||
+          (base_dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT && align == PANGO_ALIGN_LEFT))
         {
           layout->extents.x +=
             PANGO_PIXELS (pango_layout_get_width (layout->layout)) - width;
@@ -661,6 +673,19 @@ gimp_text_layout_position (GimpTextLayout *layout)
       layout->extents.y      += border;
       layout->extents.width  += 2 * border;
       layout->extents.height += 2 * border;
+    }
+
+  if (PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
+    {
+      gint temp;
+
+      temp = layout->extents.y;
+      layout->extents.y = layout->extents.x;
+      layout->extents.x = temp;
+
+      temp = layout->extents.height;
+      layout->extents.height = layout->extents.width;
+      layout->extents.width = temp;
     }
 
 #ifdef VERBOSE
@@ -732,10 +757,38 @@ gimp_text_get_pango_context (GimpText *text,
     {
     case GIMP_TEXT_DIRECTION_LTR:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
       break;
 
     case GIMP_TEXT_DIRECTION_RTL:
       pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
       break;
     }
 

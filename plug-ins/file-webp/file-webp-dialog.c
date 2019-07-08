@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -277,7 +277,7 @@ save_dialog (WebPSaveParams *params,
       adj_kf = gtk_adjustment_new (params->kf_distance,
                                    0.0, 10000.0,
                                    1.0, 10.0, 0.0);
-      kf_distance = gtk_spin_button_new (adj_kf, 1, 0);
+      kf_distance = gimp_spin_button_new (adj_kf, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (kf_distance), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox_kf), kf_distance, FALSE, FALSE, 0);
       gtk_widget_show (kf_distance);
@@ -333,7 +333,7 @@ save_dialog (WebPSaveParams *params,
 
       /* default delay */
       adj = gtk_adjustment_new (params->delay, 1, 10000, 1, 10, 0);
-      delay = gtk_spin_button_new (adj, 1, 0);
+      delay = gimp_spin_button_new (adj, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (delay), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox), delay, FALSE, FALSE, 0);
       gtk_widget_show (delay);
@@ -359,27 +359,10 @@ save_dialog (WebPSaveParams *params,
                         &params->force_delay);
   }
 
-  /* Advanced options */
-  text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
-  expander = gtk_expander_new_with_mnemonic (text);
-  gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
-  g_free (text);
-
-  gtk_box_pack_start (GTK_BOX (vbox), expander, TRUE, TRUE, 0);
-  gtk_widget_show (expander);
-
-  frame = gimp_frame_new ("<expander>");
-  gtk_container_add (GTK_CONTAINER (expander), frame);
-  gtk_widget_show (frame);
-
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
-
   /* Save EXIF data */
   toggle = gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->exif);
-  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -389,13 +372,22 @@ save_dialog (WebPSaveParams *params,
   /* XMP metadata */
   toggle = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->xmp);
-  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->xmp);
 
+  /* Color profile */
+  toggle = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->profile);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &params->profile);
 
   gtk_widget_show (dialog);
 

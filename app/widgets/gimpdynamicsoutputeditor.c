@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -73,8 +73,10 @@ inputs[] =
   { "use-tilt",      "tilt-curve",      N_("Tilt"),             { 1.0, 0.5, 0.0, 1.0 } },
   { "use-wheel",     "wheel-curve",     N_("Wheel / Rotation"), { 1.0, 0.0, 1.0, 1.0 } },
   { "use-random",    "random-curve",    N_("Random"),           { 0.0, 1.0, 1.0, 1.0 } },
-  { "use-fade",      "fade-curve",      N_("Fade"),             { 0.2, 0.2, 0.2, 1.0 } }
+  { "use-fade",      "fade-curve",      N_("Fade"),             { 0.5, 0.5, 0.5, 0.0 } }
 };
+
+#define INPUT_COLOR(i) (inputs[(i)].color.a ? &inputs[(i)].color : NULL)
 
 
 typedef struct _GimpDynamicsOutputEditorPrivate GimpDynamicsOutputEditorPrivate;
@@ -93,9 +95,7 @@ struct _GimpDynamicsOutputEditorPrivate
 };
 
 #define GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, \
-                                     GimpDynamicsOutputEditorPrivate)
+        ((GimpDynamicsOutputEditorPrivate *) gimp_dynamics_output_editor_get_instance_private ((GimpDynamicsOutputEditor *) (editor)))
 
 
 static void   gimp_dynamics_output_editor_constructed    (GObject                  *object);
@@ -127,8 +127,8 @@ static void   gimp_dynamics_output_editor_notify_output  (GimpDynamicsOutput    
                                                           GimpDynamicsOutputEditor *editor);
 
 
-G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
-               GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDynamicsOutputEditor,
+                            gimp_dynamics_output_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_dynamics_output_editor_parent_class
 
@@ -149,9 +149,6 @@ gimp_dynamics_output_editor_class_init (GimpDynamicsOutputEditorClass *klass)
                                                         GIMP_TYPE_DYNAMICS_OUTPUT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpDynamicsOutputEditorPrivate));
 }
 
 static void
@@ -420,7 +417,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       if (input == i)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                     input_curve, &inputs[i].color);
+                                     input_curve, INPUT_COLOR (i));
           private->active_curve = input_curve;
 
           gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
@@ -429,8 +426,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       else if (use_input)
         {
           gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                          input_curve,
-                                          &inputs[i].color);
+                                          input_curve, INPUT_COLOR (i));
         }
 
       g_object_unref (input_curve);
@@ -470,8 +466,7 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
               if (use_input)
                 {
                   gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                                  input_curve,
-                                                  &inputs[i].color);
+                                                  input_curve, INPUT_COLOR (i));
                 }
               else
                 {

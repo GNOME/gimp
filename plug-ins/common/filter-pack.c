@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -501,7 +501,65 @@ fp_func (const guchar *src,
 static void
 fp (GimpDrawable *drawable)
 {
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, fp_func, NULL);
+  GimpPixelRgn  srcPR, destPR;
+  gint          x1, y1, x2, y2;
+  gpointer      pr;
+  gint          total_area;
+  gint          area_so_far;
+  gint          count;
+
+  g_return_if_fail (drawable != NULL);
+
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  total_area  = (x2 - x1) * (y2 - y1);
+  area_so_far = 0;
+
+  if (total_area <= 0)
+    return;
+
+  /* Initialize the pixel regions. */
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+                       FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+                       TRUE, TRUE);
+
+  for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR), count = 0;
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr), count++)
+    {
+      const guchar *src  = srcPR.data;
+      guchar       *dest = destPR.data;
+      gint          row;
+
+      for (row = 0; row < srcPR.h; row++)
+        {
+          const guchar *s      = src;
+          guchar       *d      = dest;
+          gint          pixels = srcPR.w;
+
+          while (pixels--)
+            {
+              fp_func (s, d, srcPR.bpp, NULL);
+
+              s += srcPR.bpp;
+              d += destPR.bpp;
+            }
+
+          src  += srcPR.rowstride;
+          dest += destPR.rowstride;
+        }
+
+      area_so_far += srcPR.w * srcPR.h;
+
+      if ((count % 16) == 0)
+        gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
+    }
+
+  /*  update the processed region  */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
 /***********************************************************/
@@ -1279,7 +1337,7 @@ fp_advanced_dialog (GtkWidget *parent)
   GtkWidget     *frame, *hbox;
   GtkAdjustment *smoothnessData;
   GtkWidget     *graphFrame, *scale;
-  GtkWidget     *vbox, *label, *labelGrid, *alignment;
+  GtkWidget     *vbox, *label, *labelGrid;
   GtkWidget     *inner_vbox, *innermost_vbox;
   gint           i;
 
@@ -1318,12 +1376,10 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (graphFrame), inner_vbox);
   gtk_widget_show (inner_vbox);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (inner_vbox), alignment, TRUE, TRUE, 0);
-  gtk_widget_show (alignment);
-
   innermost_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_add (GTK_CONTAINER (alignment), innermost_vbox);
+  gtk_widget_set_halign (innermost_vbox, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (innermost_vbox, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), innermost_vbox, TRUE, TRUE, 0);
   gtk_widget_show (innermost_vbox);
 
   AW.aliasing_preview = gimp_preview_area_new ();

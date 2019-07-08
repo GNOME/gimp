@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
@@ -58,16 +58,6 @@ GimpTile     * gimp_drawable_get_tile               (GimpDrawable  *drawable,
                                                      gboolean       shadow,
                                                      gint           row,
                                                      gint           col);
-GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
-GimpTile     * gimp_drawable_get_tile2              (GimpDrawable  *drawable,
-                                                     gboolean       shadow,
-                                                     gint           x,
-                                                     gint           y);
-
-GIMP_DEPRECATED
-void           gimp_drawable_get_color_uchar        (gint32         drawable_ID,
-                                                     const GimpRGB *color,
-                                                     guchar        *color_uchar);
 
 guchar       * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
                                                      gint          *width,

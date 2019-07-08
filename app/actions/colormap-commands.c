@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -28,6 +28,7 @@
 #include "core/gimpimage-colormap.h"
 
 #include "widgets/gimpcolormapeditor.h"
+#include "widgets/gimpcolormapselection.h"
 
 #include "actions.h"
 #include "colormap-commands.h"
@@ -36,8 +37,9 @@
 /*  public functions  */
 
 void
-colormap_edit_color_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+colormap_edit_color_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
@@ -45,20 +47,23 @@ colormap_edit_color_cmd_callback (GtkAction *action,
 }
 
 void
-colormap_add_color_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+colormap_add_color_cmd_callback (GimpAction *action,
+                                 GVariant   *value,
+                                 gpointer    data)
 {
   GimpContext *context;
   GimpImage   *image;
+  gboolean     background;
   return_if_no_context (context, data);
   return_if_no_image (image, data);
+
+  background = (gboolean) g_variant_get_int32 (value);
 
   if (gimp_image_get_colormap_size (image) < 256)
     {
       GimpRGB color;
 
-      if (value)
+      if (background)
         gimp_context_get_background (context, &color);
       else
         gimp_context_get_foreground (context, &color);
@@ -69,23 +74,27 @@ colormap_add_color_cmd_callback (GtkAction *action,
 }
 
 void
-colormap_to_selection_cmd_callback (GtkAction *action,
-                                    gint       value,
-                                    gpointer   data)
+colormap_to_selection_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
-  GimpColormapEditor *editor;
-  GimpImage          *image;
-  GimpChannelOps      op;
+  GimpColormapSelection *selection;
+  GimpColormapEditor    *editor;
+  GimpImage             *image;
+  GimpChannelOps         op;
+  gint                   col_index;
+
   return_if_no_image (image, data);
 
-  editor = GIMP_COLORMAP_EDITOR (data);
+  editor    = GIMP_COLORMAP_EDITOR (data);
+  selection = GIMP_COLORMAP_SELECTION (editor->selection);
+  col_index = gimp_colormap_selection_get_index (selection, NULL);
 
-  op = (GimpChannelOps) value;
+  op = (GimpChannelOps) g_variant_get_int32 (value);
 
   gimp_channel_select_by_index (gimp_image_get_mask (image),
                                 gimp_image_get_active_drawable (image),
-                                editor->col_index,
-                                op,
+                                col_index, op,
                                 FALSE, 0.0, 0.0);
 
   gimp_image_flush (image);

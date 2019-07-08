@@ -32,23 +32,27 @@ typedef struct
   gboolean  save_xmp;
   gboolean  save_iptc;
   gboolean  save_thumbnail;
+  gboolean  save_profile;
+  gboolean  save_layers;
 } TiffSaveVals;
 
 
-gboolean  save_image  (GFile        *file,
-                       TiffSaveVals *tsvals,
-                       gint32        image,
-                       gint32        drawable,
-                       gint32        orig_image,
-                       const gchar  *image_comment,
-                       gint         *saved_bpp,
-                       GError      **error);
+gboolean  save_image  (GFile                  *file,
+                       TiffSaveVals           *tsvals,
+                       gint32                  image,
+                       gint32                  orig_image,
+                       const gchar            *image_comment,
+                       gint                   *saved_bpp,
+                       GimpMetadata           *metadata,
+                       GimpMetadataSaveFlags   metadata_flags,
+                       GError                **error);
 
 gboolean  save_dialog (TiffSaveVals *tsvals,
                        const gchar  *help_id,
                        gboolean      has_alpha,
                        gboolean      is_monochrome,
                        gboolean      is_indexed,
+                       gboolean      is_multi_layer,
                        gchar       **image_comment);
 
 

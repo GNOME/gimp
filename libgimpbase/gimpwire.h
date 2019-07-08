@@ -13,7 +13,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_WIRE_H__
@@ -83,6 +83,10 @@ void      gimp_wire_destroy       (GimpWireMessage     *msg);
 
 /*  for internal use in libgimpbase  */
 
+G_GNUC_INTERNAL gboolean  _gimp_wire_read_int64   (GIOChannel     *channel,
+                                                   guint64        *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
 G_GNUC_INTERNAL gboolean  _gimp_wire_read_int32   (GIOChannel     *channel,
                                                    guint32        *data,
                                                    gint            count,
@@ -105,6 +109,10 @@ G_GNUC_INTERNAL gboolean  _gimp_wire_read_string  (GIOChannel     *channel,
                                                    gpointer        user_data);
 G_GNUC_INTERNAL gboolean  _gimp_wire_read_color   (GIOChannel     *channel,
                                                    GimpRGB        *data,
+                                                   gint            count,
+                                                   gpointer        user_data);
+G_GNUC_INTERNAL gboolean  _gimp_wire_write_int64  (GIOChannel     *channel,
+                                                   const guint64  *data,
                                                    gint            count,
                                                    gpointer        user_data);
 G_GNUC_INTERNAL gboolean  _gimp_wire_write_int32  (GIOChannel     *channel,

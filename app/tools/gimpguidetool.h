@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GUIDE_TOOL_H__
@@ -30,18 +30,26 @@
 #define GIMP_GUIDE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GUIDE_TOOL, GimpGuideToolClass))
 
 
+typedef struct _GimpGuideToolGuide GimpGuideToolGuide;
 typedef struct _GimpGuideTool      GimpGuideTool;
 typedef struct _GimpGuideToolClass GimpGuideToolClass;
 
+struct _GimpGuideToolGuide
+{
+  GimpGuide           *guide;
+
+  gint                 old_position;
+  gint                 position;
+  GimpOrientationType  orientation;
+  gboolean             custom;
+};
+
 struct _GimpGuideTool
 {
-  GimpDrawTool         parent_instance;
+  GimpDrawTool        parent_instance;
 
-  GimpGuide           *guide;
-  gint                 guide_old_position;
-  gint                 guide_position;
-  GimpOrientationType  guide_orientation;
-  gboolean             guide_custom;
+  GimpGuideToolGuide *guides;
+  gint                n_guides;
 };
 
 struct _GimpGuideToolClass
@@ -50,14 +58,17 @@ struct _GimpGuideToolClass
 };
 
 
-GType   gimp_guide_tool_get_type   (void) G_GNUC_CONST;
+GType   gimp_guide_tool_get_type        (void) G_GNUC_CONST;
 
-void    gimp_guide_tool_start_new  (GimpTool            *parent_tool,
-                                    GimpDisplay         *display,
-                                    GimpOrientationType  orientation);
-void    gimp_guide_tool_start_edit (GimpTool            *parent_tool,
-                                    GimpDisplay         *display,
-                                    GimpGuide           *guide);
+void    gimp_guide_tool_start_new       (GimpTool            *parent_tool,
+                                         GimpDisplay         *display,
+                                         GimpOrientationType  orientation);
+void    gimp_guide_tool_start_edit      (GimpTool            *parent_tool,
+                                         GimpDisplay         *display,
+                                         GimpGuide           *guide);
+void    gimp_guide_tool_start_edit_many (GimpTool            *parent_tool,
+                                         GimpDisplay         *display,
+                                         GList               *guides);
 
 
 #endif  /*  __GIMP_GUIDE_TOOL_H__  */

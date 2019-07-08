@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -237,7 +237,8 @@ xcf_save_image (XcfInfo    *info,
   /* write out the tag information for the image */
   if (info->file_version > 0)
     {
-      sprintf (version_tag, "gimp xcf v%03d", info->file_version);
+      g_snprintf (version_tag, sizeof (version_tag),
+                  "gimp xcf v%03d", info->file_version);
     }
   else
     {
@@ -383,8 +384,15 @@ xcf_save_image_props (XcfInfo    *info,
                                     gimp_image_get_guides (image)));
 
   if (gimp_image_get_sample_points (image))
-    xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS, error,
-                                    gimp_image_get_sample_points (image)));
+    {
+      /* save the new property before the old one, so loading can skip
+       * the latter
+       */
+      xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS, error,
+                                      gimp_image_get_sample_points (image)));
+      xcf_check_error (xcf_save_prop (info, image, PROP_OLD_SAMPLE_POINTS, error,
+                                      gimp_image_get_sample_points (image)));
+    }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_RESOLUTION, error,
                                   xres, yres));
@@ -1078,6 +1086,34 @@ xcf_save_prop (XcfInfo    *info,
         GList *sample_points   = va_arg (args, GList *);
         gint   n_sample_points = g_list_length (sample_points);
 
+        size = n_sample_points * (5 * 4);
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+
+        for (; sample_points; sample_points = g_list_next (sample_points))
+          {
+            GimpSamplePoint   *sample_point = sample_points->data;
+            gint32             x, y;
+            GimpColorPickMode  pick_mode;
+            guint32            padding[2] = { 0, };
+
+            gimp_sample_point_get_position (sample_point, &x, &y);
+            pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+
+            xcf_write_int32_check_error (info, (guint32 *) &x,         1);
+            xcf_write_int32_check_error (info, (guint32 *) &y,         1);
+            xcf_write_int32_check_error (info, (guint32 *) &pick_mode, 1);
+            xcf_write_int32_check_error (info, (guint32 *) padding,    2);
+          }
+      }
+      break;
+
+    case PROP_OLD_SAMPLE_POINTS:
+      {
+        GList *sample_points   = va_arg (args, GList *);
+        gint   n_sample_points = g_list_length (sample_points);
+
         size = n_sample_points * (4 + 4);
 
         xcf_write_prop_type_check_error (info, prop_type);
@@ -1517,6 +1553,15 @@ xcf_save_buffer (XcfInfo     *info,
           height /= 2;
           xcf_write_int32_check_error (info, (guint32 *) &width,  1);
           xcf_write_int32_check_error (info, (guint32 *) &height, 1);
+
+          /* NOTE:  this should be an offset, not an int32!  however...
+           * since there are already 64-bit-offsets XCFs out there in
+           * which this field is 32-bit, and since it's not actually
+           * being used, we're going to keep this field 32-bit for the
+           * dummy levels, to remain consistent.  if we ever make use
+           * of levels above the first, we should turn this field into
+           * an offset, and bump the xcf version.
+           */
           xcf_write_int32_check_error (info, (guint32 *) &tmp1,   1);
         }
 

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -295,6 +295,30 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 i += print (title, title_len, i, "%s", _("(clean)"));
               break;
 
+            case 'N': /* not-exported flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %E-sequence, print literal '%E' */
+                  i += print (title, title_len, i, "%%N");
+                  break;
+                }
+              if (gimp_image_is_export_dirty (image))
+                title[i++] = format[1];
+              format++;
+              break;
+
+            case 'E': /* exported flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %E-sequence, print literal '%E' */
+                  i += print (title, title_len, i, "%%E");
+                  break;
+                }
+              if (! gimp_image_is_export_dirty (image))
+                title[i++] = format[1];
+              format++;
+              break;
+
             case 'm': /* memory used by image */
               {
                 GimpObject *object = GIMP_OBJECT (image);
@@ -457,21 +481,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'o': /* image's color profile name */
-              if (gimp_image_get_is_color_managed (image))
-                {
-                  GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
-                  GimpColorProfile *profile;
+              {
+                GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
+                GimpColorProfile *profile;
 
-                  profile = gimp_color_managed_get_color_profile (managed);
+                profile = gimp_color_managed_get_color_profile (managed);
 
-                  i += print (title, title_len, i, "%s",
-                              gimp_color_profile_get_label (profile));
-                }
-              else
-                {
-                  i += print (title, title_len, i, "%s",
-                              _("not color managed"));
-                }
+                i += print (title, title_len, i, "%s",
+                            gimp_color_profile_get_label (profile));
+              }
               break;
 
             case 'e': /* display's offsets in pixels */

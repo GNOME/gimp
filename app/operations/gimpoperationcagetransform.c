@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -108,7 +108,6 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   operation_class->get_required_for_output = gimp_operation_cage_transform_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_cage_transform_get_cached_region;
-  operation_class->no_cache                = FALSE;
   operation_class->get_bounding_box        = gimp_operation_cage_transform_get_bounding_box;
   /* XXX Temporarily disable multi-threading on this operation because
    * it is much faster when single-threaded. See bug 787663.
@@ -234,7 +233,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
   /* pre-fill the out buffer with no-displacement coordinate */
   it      = gegl_buffer_iterator_new (out_buf, roi, 0, NULL,
-                                      GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                      GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
   cage_bb = gimp_cage_config_get_bounding_box (config);
 
   point = &(g_array_index (config->cage_points, GimpCagePoint, 0));
@@ -247,10 +246,10 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
     {
       /* iterate inside the roi */
       gint    n_pixels = it->length;
-      gfloat *output   = it->data[0];
+      gfloat *output   = it->items[0].data;
 
-      x = it->roi->x; /* initial x         */
-      y = it->roi->y; /* and y coordinates */
+      x = it->items[0].roi.x; /* initial x         */
+      y = it->items[0].roi.y; /* and y coordinates */
 
       while (n_pixels--)
         {
@@ -280,13 +279,16 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
           /* update x and y coordinates */
           x++;
-          if (x >= (it->roi->x + it->roi->width))
+          if (x >= (it->items[0].roi.x + it->items[0].roi.width))
             {
-              x = it->roi->x;
+              x = it->items[0].roi.x;
               y++;
             }
         }
     }
+
+  if (! aux_buf)
+    return TRUE;
 
   gegl_operation_progress (operation, 0.0, "");
 

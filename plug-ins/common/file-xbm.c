@@ -20,7 +20,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* Release 1.0, 1998-02-04, Gordon Matzigkeit <gord@gnu.org>:
@@ -826,6 +826,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nCould not read header (ftell == %ld)"),
                  gimp_filename_to_utf8 (filename), ftell (fp));
+      fclose (fp);
       return -1;
     }
 
@@ -833,6 +834,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image width specified"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -840,6 +842,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -847,6 +850,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image height specified"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -854,6 +858,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -861,6 +866,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image data type specified"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -973,6 +979,7 @@ save_image (GFile        *file,
 {
   GOutputStream *output;
   GeglBuffer    *buffer;
+  GCancellable  *cancellable;
   gint           width, height, colors, dark;
   gint           intbits, lineints, need_comma, nints, rowoffset, tileheight;
   gint           c, i, j, k, thisbit;
@@ -1215,6 +1222,11 @@ save_image (GFile        *file,
 
  fail:
 
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+  g_object_unref (cancellable);
+
   g_free (data);
   g_object_unref (buffer);
   g_object_unref (output);
@@ -1312,7 +1324,7 @@ save_dialog (gint32 drawable_ID)
   adj = gtk_adjustment_new (xsvals.x_hot, 0,
                             gimp_drawable_width (drawable_ID) - 1,
                             1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Hot spot _X:"), 0.0, 0.5,
@@ -1325,7 +1337,7 @@ save_dialog (gint32 drawable_ID)
   adj = gtk_adjustment_new (xsvals.y_hot, 0,
                             gimp_drawable_height (drawable_ID) - 1,
                             1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Hot spot _Y:"), 0.0, 0.5,

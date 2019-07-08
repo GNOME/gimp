@@ -12,11 +12,10 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
-
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -25,10 +24,13 @@ extern "C"
 
 #include "paint-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "operations/layer-modes/gimp-layer-modes.h"
 
-#include "core/gimp-parallel.h"
 #include "core/gimptempbuf.h"
+
+#include "operations/gimpoperationmaskcomponents.h"
 
 #include "operations/layer-modes/gimpoperationlayermode.h"
 
@@ -37,8 +39,8 @@ extern "C"
 } /* extern "C" */
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
 /* In order to avoid iterating over the same region of the same buffers
@@ -97,9 +99,15 @@ extern "C"
 
 enum
 {
-  ALGORITHM_PAINT_BUF  = 1u << 31,
-  ALGORITHM_PAINT_MASK = 1u << 30,
-  ALGORITHM_STIPPLE    = 1u << 29
+  ALGORITHM_PAINT_BUF              = 1u << 31,
+  ALGORITHM_PAINT_MASK             = 1u << 30,
+  ALGORITHM_STIPPLE                = 1u << 29,
+  ALGORITHM_COMP_MASK              = 1u << 28,
+  ALGORITHM_TEMP_COMP_MASK         = 1u << 27,
+  ALGORITHM_COMP_BUFFER            = 1u << 26,
+  ALGORITHM_TEMP_COMP_BUFFER       = 1u << 25,
+  ALGORITHM_CANVAS_BUFFER_ITERATOR = 1u << 24,
+  ALGORITHM_MASK_BUFFER_ITERATOR   = 1u << 23
 };
 
 
@@ -232,18 +240,13 @@ struct AlgorithmBase
    * Algorithms that redefine 'filter' should bitwise-OR their filter with that
    * of their base class.
    */
-  static constexpr guint          filter                 = 0;
+  static constexpr guint          filter          = 0;
 
-  /* See CanvasBufferIterator. */
-  static constexpr gint           canvas_buffer_iterator = -1;
-  static constexpr GeglAccessMode canvas_buffer_access   = {};
-
-  /* The current number of iterators used by the hierarchy.  Algorithms should
-   * use the 'n_iterators' value of their base class as the base-index for
-   * their iterators, and redefine 'n_iterators' by adding the number of
+  /* The current maximal number of iterators used by the hierarchy.  Algorithms
+   * should redefine 'max_n_iterators' by adding the maximal number of
    * iterators they use to this value.
    */
-  static constexpr gint           n_iterators            = 0;
+  static constexpr gint           max_n_iterators = 0;
 
   /* Non-static data members should be initialized in the constructor, and
    * should not be further modified.
@@ -276,7 +279,8 @@ struct AlgorithmBase
    *
    * 'params' is the same parameter struct passed to the constructor.  'state'
    * is the state object.  'iter' is the iterator; each distinct state object
-   * uses a distinct iterator.  'roi' is the full region to be processed.
+   * uses a distinct iterator; if the algorithm hierarchy doesn't use any
+   * iterator, 'iter' may be NULL.  'roi' is the full region to be processed.
    * 'area' is the subregion to be processed by the current state object.
    *
    * An algorithm that overrides this function should call the 'init()'
@@ -296,7 +300,8 @@ struct AlgorithmBase
    * 'gegl_buffer_iterator_next()' call, and should perform any necessary
    * initialization required before processing the current chunk.
    *
-   * The parameters are the same as for 'init()'.
+   * The parameters are the same as for 'init()', with the addition of 'rect',
+   * which is the area of the current chunk.
    *
    * An algorithm that overrides this function should call the 'init_step()'
    * function of its base class first, using the same arguments.
@@ -307,15 +312,16 @@ struct AlgorithmBase
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
   }
 
   /* The 'process_row()' function is called for each row in the current chunk,
    * and should perform the actual processing.
    *
-   * The parameters are the same as for 'init()', with the addition of 'y',
-   * which is the current row.
+   * The parameters are the same as for 'init_step()', with the addition of
+   * 'y', which is the current row.
    *
    * An algorithm that overrides this function should call the 'process_row()'
    * function of its base class first, using the same arguments.
@@ -327,7 +333,43 @@ struct AlgorithmBase
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
+  {
+  }
+
+  /* The 'finalize_step()' function is called once per chunk after its
+   * processing is done, and should finalize any chunk-specific resources of
+   * the state object.
+   *
+   * 'params' is the same parameter struct passed to the constructor.  'state'
+   * is the state object.
+   *
+   * An algorithm that overrides this function should call the
+   * 'finalize_step()' function of its base class after performing its own
+   * finalization, using the same arguments.
+   */
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+  }
+
+  /* The 'finalize()' function is called once per state object after processing
+   * is done, and should finalize the state object.
+   *
+   * 'params' is the same parameter struct passed to the constructor.  'state'
+   * is the state object.
+   *
+   * An algorithm that overrides this function should call the 'finalize()'
+   * function of its base class after performing its own finalization, using
+   * the same arguments.
+   */
+  template <class Derived>
+  void
+  finalize (const GimpPaintCoreLoopsParams *params,
+            State<Derived>                 *state) const
   {
   }
 };
@@ -338,13 +380,43 @@ struct AlgorithmBase
  * A class template implementing a simple dispatch function object, which adds
  * an algorithm to the hierarchy unconditionally.  'AlgorithmTemplate' is the
  * alogithm class template (usually a helper class, rather than an actual
- * algorithm), and 'Mask' is the dispatch function mask, as described in
- * 'dispatch()'.
+ * algorithm), 'Mask' is the dispatch function mask, as described in
+ * 'dispatch()', and 'Dependencies' is a list of (types of) dispatch functions
+ * the algorithm depends on.
+ *
+ * Before adding the algorithm to the hierarchy, the hierarchy is augmented by
+ * dispatching through the list of dependencies, in order.
  */
 
 template <template <class Base> class AlgorithmTemplate,
-          guint                       Mask>
+          guint                       Mask,
+          class...                    Dependencies>
 struct BasicDispatch
+{
+  static constexpr guint mask = Mask;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    dispatch (
+      [&] (auto algorithm)
+      {
+        using NewAlgorithm = typename decltype (algorithm)::type;
+
+        visitor (identity<AlgorithmTemplate<NewAlgorithm>> ());
+      },
+      params, algorithms, algorithm, Dependencies ()...);
+  }
+};
+
+template <template <class Base> class AlgorithmTemplate,
+          guint                       Mask>
+struct BasicDispatch<AlgorithmTemplate, Mask>
 {
   static constexpr guint mask = Mask;
 
@@ -366,7 +438,7 @@ struct BasicDispatch
  * A class template implementing a dispatch function suitable for dispatching
  * algorithms.  'AlgorithmTemplate' is the algorithm class template, 'Mask' is
  * the dispatch function mask, as described in 'dispatch()', and 'Dependencies'
- * is a list of (types of) dispatch functions the algorithm depends on, usd as
+ * is a list of (types of) dispatch functions the algorithm depends on, used as
  * explained below.
  *
  * 'AlgorithmDispatch' adds the algorithm to the hierarchy if it's included in
@@ -407,6 +479,85 @@ struct AlgorithmDispatch
       {
         visitor (algorithm);
       }
+  }
+};
+
+
+/* MandatoryAlgorithmDispatch:
+ *
+ * A class template implementing a dispatch function suitable for dispatching
+ * algorithms that must be included in all hierarchies.  'AlgorithmTemplate' is
+ * the algorithm class template, 'Mask' is the dispatch function mask, as
+ * described in 'dispatch()', and 'Dependencies' is a list of (types of)
+ * dispatch functions the algorithm depends on, used as explained below.
+ *
+ * 'MandatoryAlgorithmDispatch' verifies that the algorithm is included in the
+ * set of requested algorithms (specifically, that the bitwise-AND of the
+ * requested-algorithms bitset and of 'Mask' is equal to 'Mask'), and adds the
+ * it to the hierarchy unconditionally.
+ *
+ * Before adding the algorithm to the hierarchy, the hierarchy is augmented by
+ * dispatching through the list of dependencies, in order.
+ */
+
+template <template <class Base> class AlgorithmTemplate,
+          guint                       Mask,
+          class...                    Dependencies>
+struct MandatoryAlgorithmDispatch
+{
+  static constexpr guint mask = Mask;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    g_return_if_fail ((algorithms & Mask) == Mask);
+
+    BasicDispatch<AlgorithmTemplate, Mask, Dependencies...> () (visitor,
+                                                                params,
+                                                                algorithms,
+                                                                algorithm);
+  }
+};
+
+/* SuppressedAlgorithmDispatch:
+ *
+ * A class template implementing a placeholder dispatch function suitable for
+ * dispatching algorithms that are never included in any hierarchy.
+ * 'AlgorithmTemplate' is the algorithm class template, 'Mask' is the dispatch
+ * function mask, as described in 'dispatch()', and 'Dependencies' is a list of
+ * (types of) dispatch functions the algorithm depends on.  Note that
+ * 'AlgorithmTemplate' and 'Dependencies' are not actually used, and are merely
+ * included for exposition.
+ *
+ * 'SuppressedAlgorithmDispatch' verifies that the algorithm is not included in
+ * the set of requested algorithms (specifically, that the bitwise-AND of the
+ * requested-algorithms bitset and of 'Mask' is not equal to 'Mask'), and
+ * doesn't modify the hierarchy.
+ */
+
+template <template <class Base> class AlgorithmTemplate,
+          guint                       Mask,
+          class...                    Dependencies>
+struct SuppressedAlgorithmDispatch
+{
+  static constexpr guint mask = Mask;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    g_return_if_fail ((algorithms & Mask) != Mask);
+
+    visitor (algorithm);
   }
 };
 
@@ -543,39 +694,380 @@ struct DispatchStipple
 } static dispatch_stipple;
 
 
-/* CanvasBufferIterator:
+/* CompMask, dispatch_comp_mask(), has_comp_mask(), comp_mask_data():
  *
- * An algorithm helper class, providing iterator-access to the canvas buffer.
- * Algorithms that iterate over the canvas buffer should derive from this
- * class, and access its members through their base type/subobject.
+ * An algorithm helper class, providing access to the mask used for
+ * compositing.  When this class is part of the hierarchy, 'DoLayerBlend' uses
+ * this buffer as the mask, instead of the input parameters' 'mask_buffer'.
+ * Algorithms that use the compositing mask should specify
+ * 'dispatch_comp_mask()' as a dependency, and access 'CompMask' members
+ * through their base type/subobject.
  *
- * 'Base' is the base class to use, which should normally be the base template-
- * parameter class passed to the algorithm.  'Access' specifies the desired
- * iterator access to the canvas buffer.
+ * Note that 'CompMask' only provides *access* to the compositing mask, but
+ * doesn't provide its actual *storage*.  This is the responsibility of the
+ * algorithms that use 'CompMask'.  Algorithms that need temporary storage for
+ * the compositing mask can use 'TempCompMask'.
+ *
+ * The 'has_comp_mask()' constexpr function determines if a given algorithm
+ * hierarchy uses the compositing mask.
+ *
+ * The 'comp_mask_data()' function returns a pointer to the compositing mask
+ * data for the current row if the hierarchy uses the compositing mask, or NULL
+ * otherwise.
  */
 
-template <class Base,
-          guint Access>
-struct CanvasBufferIterator : Base
+template <class Base>
+struct CompMask : Base
 {
-  /* The iterator index of the canvas buffer. */
-  static constexpr gint           canvas_buffer_iterator =
-    Base::canvas_buffer_iterator < 0 ? Base::n_iterators :
-                                       Base::canvas_buffer_iterator;
-  /* Used internally. */
-  static constexpr GeglAccessMode canvas_buffer_access   =
-    (GeglAccessMode) (Base::canvas_buffer_access | Access);
-  /* The total number of iterators used by the hierarchy, up to, and including,
-   * the current class.
-   */
-  static constexpr gint           n_iterators            =
-    Base::canvas_buffer_iterator < 0 ? Base::n_iterators + 1:
-                                       Base::n_iterators;
+  /* Component type of the compositing mask. */
+  using comp_mask_type = gfloat;
+
+  static constexpr guint filter = Base::filter | ALGORITHM_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    /* Pointer to the compositing mask data for the current row. */
+    comp_mask_type *comp_mask_data;
+  };
+};
+
+static BasicDispatch<CompMask, ALGORITHM_COMP_MASK> dispatch_comp_mask;
+
+template <class Base>
+static constexpr gboolean
+has_comp_mask (const CompMask<Base> *algorithm)
+{
+  return TRUE;
+}
+
+static constexpr gboolean
+has_comp_mask (const AlgorithmBase *algorithm)
+{
+  return FALSE;
+}
+
+template <class Base,
+          class State>
+static gfloat *
+comp_mask_data (const CompMask<Base> *algorithm,
+                State                *state)
+{
+  return state->comp_mask_data;
+}
+
+template <class State>
+static gfloat *
+comp_mask_data (const AlgorithmBase *algorithm,
+                State               *state)
+{
+  return NULL;
+}
+
+
+/* TempCompMask, dispatch_temp_comp_mask():
+ *
+ * An algorithm helper class, providing temporary storage for the compositing
+ * mask.  Algorithms that need a temporary compositing mask should specify
+ * 'dispatch_temp_comp_mask()' as a dependency, which itself includes
+ * 'dispatch_comp_mask()' as a dependency.
+ */
+
+template <class Base>
+struct TempCompMask : Base
+{
+  static constexpr guint filter = Base::filter | ALGORITHM_TEMP_COMP_MASK;
 
   using Base::Base;
 
   template <class Derived>
   using State = typename Base::template State<Derived>;
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->comp_mask_data = gegl_scratch_new (gfloat, rect->width);
+  }
+
+
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+    gegl_scratch_free (state->comp_mask_data);
+
+    Base::finalize_step (params, state);
+  }
+};
+
+static BasicDispatch<
+  TempCompMask,
+  ALGORITHM_TEMP_COMP_MASK,
+  decltype (dispatch_comp_mask)
+> dispatch_temp_comp_mask;
+
+
+/* CompBuffer, dispatch_comp_buffer(), has_comp_buffer(), comp_buffer_data():
+ *
+ * An algorithm helper class, providing access to the output buffer used for
+ * compositing.  When this class is part of the hierarchy, 'DoLayerBlend' uses
+ * this buffer as the output buffer, instead of the input parameters'
+ * 'dest_buffer'.  Algorithms that use the compositing buffer should specify
+ * 'dispatch_comp_buffer()' as a dependency, and access 'CompBuffer' members
+ * through their base type/subobject.
+ *
+ * Note that 'CompBuffer' only provides *access* to the compositing buffer, but
+ * doesn't provide its actual *storage*.  This is the responsibility of the
+ * algorithms that use 'CompBuffer'.  Algorithms that need temporary storage
+ * for the compositing buffer can use 'TempCompBuffer'.
+ *
+ * The 'has_comp_buffer()' constexpr function determines if a given algorithm
+ * hierarchy uses the compositing buffer.
+ *
+ * The 'comp_buffer_data()' function returns a pointer to the compositing
+ * buffer data for the current row if the hierarchy uses the compositing
+ * buffer, or NULL otherwise.
+ */
+
+template <class Base>
+struct CompBuffer : Base
+{
+  /* Component type of the compositing buffer. */
+  using comp_buffer_type = gfloat;
+
+  static constexpr guint filter = Base::filter | ALGORITHM_COMP_BUFFER;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    /* Pointer to the compositing buffer data for the current row. */
+    comp_buffer_type *comp_buffer_data;
+  };
+};
+
+static BasicDispatch<CompBuffer, ALGORITHM_COMP_BUFFER> dispatch_comp_buffer;
+
+template <class Base>
+static constexpr gboolean
+has_comp_buffer (const CompBuffer<Base> *algorithm)
+{
+  return TRUE;
+}
+
+static constexpr gboolean
+has_comp_buffer (const AlgorithmBase *algorithm)
+{
+  return FALSE;
+}
+
+template <class Base,
+          class State>
+static gfloat *
+comp_buffer_data (const CompBuffer<Base> *algorithm,
+                  State                  *state)
+{
+  return state->comp_buffer_data;
+}
+
+template <class State>
+static gfloat *
+comp_buffer_data (const AlgorithmBase *algorithm,
+                  State               *state)
+{
+  return NULL;
+}
+
+
+/* TempCompBuffer, dispatch_temp_comp_buffer():
+ *
+ * An algorithm helper class, providing temporary storage for the compositing
+ * buffer.  Algorithms that need a temporary compositing buffer should specify
+ * 'dispatch_temp_comp_buffer()' as a dependency, which itself includes
+ * 'dispatch_comp_buffer()' as a dependency.
+ */
+
+template <class Base>
+struct TempCompBuffer : Base
+{
+  static constexpr guint filter = Base::filter | ALGORITHM_TEMP_COMP_BUFFER;
+
+  using Base::Base;
+
+  template <class Derived>
+  using State = typename Base::template State<Derived>;
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->comp_buffer_data = gegl_scratch_new (gfloat, 4 * rect->width);
+  }
+
+
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+    gegl_scratch_free (state->comp_buffer_data);
+
+    Base::finalize_step (params, state);
+  }
+};
+
+static BasicDispatch<
+  TempCompBuffer,
+  ALGORITHM_TEMP_COMP_BUFFER,
+  decltype (dispatch_comp_buffer)
+> dispatch_temp_comp_buffer;
+
+
+/* CanvasBufferIterator, DispatchCanvasBufferIterator:
+ *
+ * An algorithm helper class, providing iterator-access to the canvas buffer.
+ * Algorithms that iterate over the canvas buffer should specify
+ * 'DispatchCanvasBufferIterator<Access>' as a dependency, where 'Access' is
+ * the desired access mode to the canvas buffer, and access its members through
+ * their base type/subobject.
+ */
+
+template <class    Base,
+          guint    Access,
+          gboolean First>
+struct CanvasBufferIterator;
+
+template <class Base,
+          guint Access>
+static constexpr gboolean
+canvas_buffer_iterator_is_first (CanvasBufferIterator<Base, Access, TRUE> *algorithm)
+{
+  return FALSE;
+}
+
+static constexpr gboolean
+canvas_buffer_iterator_is_first (AlgorithmBase *algorithm)
+{
+  return TRUE;
+}
+
+template <class    Base,
+          guint    Access,
+          gboolean First = canvas_buffer_iterator_is_first ((Base *) NULL)>
+struct CanvasBufferIterator : Base
+{
+  /* The combined canvas-buffer access mode used by the hierarchy, up to, and
+   * including, the current class.
+   */
+  static constexpr GeglAccessMode canvas_buffer_access =
+    (GeglAccessMode) (Base::canvas_buffer_access | Access);
+
+  using Base::Base;
+};
+
+template <class Base,
+          guint Access>
+struct CanvasBufferIterator<Base, Access, TRUE> : Base
+{
+  /* The combined canvas-buffer access mode used by the hierarchy, up to, and
+   * including, the current class.
+   */
+  static constexpr GeglAccessMode canvas_buffer_access =
+    (GeglAccessMode) Access;
+
+  static constexpr gint           max_n_iterators      =
+    Base::max_n_iterators + 1;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    gint canvas_buffer_iterator;
+  };
+
+  template <class Derived>
+  void
+  init (const GimpPaintCoreLoopsParams *params,
+        State<Derived>                 *state,
+        GeglBufferIterator             *iter,
+        const GeglRectangle            *roi,
+        const GeglRectangle            *area) const
+  {
+    state->canvas_buffer_iterator = gegl_buffer_iterator_add (
+      iter, params->canvas_buffer, area, 0, babl_format ("Y float"),
+      Derived::canvas_buffer_access, GEGL_ABYSS_NONE);
+
+    /* initialize the base class *after* initializing the iterator, to make
+     * sure that canvas_buffer is the primary buffer of the iterator, if no
+     * subclass added an iterator first.
+     */
+    Base::init (params, state, iter, roi, area);
+  }
+};
+
+template <guint Access>
+struct DispatchCanvasBufferIteratorHelper
+{
+  template <class Base>
+  using algorithm_template = CanvasBufferIterator<Base, Access>;
+};
+
+template <guint Access>
+using DispatchCanvasBufferIterator = BasicDispatch<
+  DispatchCanvasBufferIteratorHelper<Access>::template algorithm_template,
+  ALGORITHM_CANVAS_BUFFER_ITERATOR
+>;
+
+
+/* MaskBufferIterator, mask_buffer_iterator_dispatch(),
+ * has_mask_buffer_iterator():
+ *
+ * An algorithm helper class, providing read-only iterator-access to the mask
+ * buffer.  Algorithms that iterate over the mask buffer should specify
+ * 'dispatch_mask_buffer_iterator()' as a dependency, and access
+ * 'MaskBufferIterator' members through their base type/subobject.
+ *
+ * The 'has_mask_buffer_iterator()' constexpr function determines if a given
+ * algorithm hierarchy uses has a mask-buffer iterator.
+ *
+ * The 'mask_buffer_iterator()' function returns the index of the mask-buffer
+ * iterator if the hierarchy has one, or -1 otherwise.
+ */
+
+template <class Base>
+struct MaskBufferIterator : Base
+{
+  static constexpr guint filter = Base::filter | ALGORITHM_MASK_BUFFER_ITERATOR;
+
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 1;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    gint mask_buffer_iterator;
+  };
 
   template <class Derived>
   void
@@ -587,43 +1079,93 @@ struct CanvasBufferIterator : Base
   {
     Base::init (params, state, iter, roi, area);
 
-    if (Base::canvas_buffer_iterator < 0)
-      {
-        gegl_buffer_iterator_add (iter, params->canvas_buffer, area, 0,
-                                  babl_format ("Y float"),
-                                  Derived::canvas_buffer_access,
-                                  GEGL_ABYSS_NONE);
-      }
+    GeglRectangle mask_area = *area;
+
+    mask_area.x -= params->mask_offset_x;
+    mask_area.y -= params->mask_offset_y;
+
+    state->mask_buffer_iterator = gegl_buffer_iterator_add (
+      iter, params->mask_buffer, &mask_area, 0, babl_format ("Y float"),
+      GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   }
 };
 
+struct DispatchMaskBufferIterator
+{
+  static constexpr guint mask = ALGORITHM_MASK_BUFFER_ITERATOR;
 
-/* CombinePaintMaskToCanvasMaskToPaintBufAlpha,
- * dispatch_combine_paint_mask_to_canvas_mask_to_paint_buf_alpha():
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    if (params->mask_buffer)
+      visitor (identity<MaskBufferIterator<Algorithm>> ());
+    else
+      visitor (algorithm);
+  }
+} static dispatch_mask_buffer_iterator;
+
+template <class Base>
+static constexpr gboolean
+has_mask_buffer_iterator (const MaskBufferIterator<Base> *algorithm)
+{
+  return TRUE;
+}
+
+static constexpr gboolean
+has_mask_buffer_iterator (const AlgorithmBase *algorithm)
+{
+  return FALSE;
+}
+
+template <class Base,
+          class State>
+static gint
+mask_buffer_iterator (const MaskBufferIterator<Base> *algorithm,
+                      State                          *state)
+{
+  return state->mask_buffer_iterator;
+}
+
+template <class State>
+static gint
+mask_buffer_iterator (const AlgorithmBase *algorithm,
+                      State               *state)
+{
+  return -1;
+}
+
+
+/* CombinePaintMaskToCanvasBufferToPaintBufAlpha,
+ * dispatch_combine_paint_mask_to_canvas_buffer_to_paint_buf_alpha():
  *
  * An algorithm class, providing an optimized version combining both the
- * COMBINE_PAINT_MASK_TO_CANVAS_MASK and the CANVAS_BUFFER_TO_PAINT_BUF_ALPHA
+ * COMBINE_PAINT_MASK_TO_CANVAS_BUFFER and the CANVAS_BUFFER_TO_PAINT_BUF_ALPHA
  * algorithms.  Used instead of the individual implementations, when both
  * algorithms are requested.
  */
 
 template <class Base>
-struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
-  CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>
+struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
 {
-  using base_type = CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>;
-  using mask_type = typename base_type::mask_type;
+  using mask_type = typename Base::mask_type;
 
   static constexpr guint filter =
-    base_type::filter                                                 |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA  |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    Base::filter                                                        |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK          |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
-  using base_type::base_type;
+  using Base::Base;
 
   template <class Derived>
-  struct State : base_type::template State<Derived>
+  struct State : Base::template State<Derived>
   {
     gfloat *canvas_pixel;
   };
@@ -634,12 +1176,13 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    base_type::init_step (params, state, iter, roi, area);
+    Base::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
-      (gfloat *) iter->data[base_type::canvas_buffer_iterator];
+      (gfloat *) iter->items[state->canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -649,21 +1192,22 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    base_type::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
 
-    gint             mask_offset  = (y              - roi->y) * this->mask_stride +
-                                    (iter->roi[0].x - roi->x);
+    gint             mask_offset  = (y       - roi->y) * this->mask_stride +
+                                    (rect->x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
-    gint             paint_offset = (y              - roi->y) * this->paint_stride +
-                                    (iter->roi[0].x - roi->x) * 4;
+    gint             paint_offset = (y       - roi->y) * this->paint_stride +
+                                    (rect->x - roi->x) * 4;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
     gint             x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < rect->width; x++)
       {
-        if (base_type::stipple)
+        if (Base::stipple)
           {
             state->canvas_pixel[0] += (1.0 - state->canvas_pixel[0])  *
                                       value_to_float (*mask_pixel)    *
@@ -688,39 +1232,41 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
   }
 };
 
-static AlgorithmDispatch<
-  CombinePaintMaskToCanvasMaskToPaintBufAlpha,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK |
+static SuppressedAlgorithmDispatch<
+  CombinePaintMaskToCanvasBufferToPaintBufAlpha,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   decltype (dispatch_paint_mask),
-  decltype (dispatch_stipple)
+  decltype (dispatch_stipple),
+  DispatchCanvasBufferIterator<GEGL_BUFFER_READWRITE>
 >
-dispatch_combine_paint_mask_to_canvas_mask_to_paint_buf_alpha;
+dispatch_combine_paint_mask_to_canvas_buffer_to_paint_buf_alpha;
 
 
-/* CombinePaintMaskToCanvasMask, dispatch_combine_paint_mask_to_canvas_mask():
+/* CombinePaintMaskToCanvasBuffer,
+ * dispatch_combine_paint_mask_to_canvas_buffer():
  *
- * An algorithm class, implementing the COMBINE_PAINT_MASK_TO_CANVAS_MASK
+ * An algorithm class, implementing the COMBINE_PAINT_MASK_TO_CANVAS_BUFFER
  * algorithm.
  */
 
 template <class Base>
-struct CombinePaintMaskToCanvasMask :
-  CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>
+struct CombinePaintMaskToCanvasBuffer : Base
 {
-  using base_type = CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>;
-  using mask_type = typename base_type::mask_type;
+  using mask_type = typename Base::mask_type;
 
   static constexpr guint filter =
-    base_type::filter                                                 |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    Base::filter                                                        |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
-  using base_type::base_type;
+  using Base::Base;
 
   template <class Derived>
-  struct State : base_type::template State<Derived>
+  struct State : Base::template State<Derived>
   {
     gfloat *canvas_pixel;
   };
@@ -731,12 +1277,13 @@ struct CombinePaintMaskToCanvasMask :
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    base_type::init_step (params, state, iter, roi, area);
+    Base::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
-      (gfloat *) iter->data[base_type::canvas_buffer_iterator];
+      (gfloat *) iter->items[state->canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -746,18 +1293,19 @@ struct CombinePaintMaskToCanvasMask :
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    base_type::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
 
-    gint             mask_offset = (y              - roi->y) * this->mask_stride +
-                                   (iter->roi[0].x - roi->x);
+    gint             mask_offset = (y       - roi->y) * this->mask_stride +
+                                   (rect->x - roi->x);
     const mask_type *mask_pixel  = &this->mask_data[mask_offset];
     gint             x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < rect->width; x++)
       {
-        if (base_type::stipple)
+        if (Base::stipple)
           {
             state->canvas_pixel[0] += (1.0 - state->canvas_pixel[0]) *
                                       value_to_float (*mask_pixel)   *
@@ -780,12 +1328,13 @@ struct CombinePaintMaskToCanvasMask :
 };
 
 static AlgorithmDispatch<
-  CombinePaintMaskToCanvasMask,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK,
+  CombinePaintMaskToCanvasBuffer,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER,
   decltype (dispatch_paint_mask),
-  decltype (dispatch_stipple)
+  decltype (dispatch_stipple),
+  DispatchCanvasBufferIterator<GEGL_BUFFER_READWRITE>
 >
-dispatch_combine_paint_mask_to_canvas_mask;
+dispatch_combine_paint_mask_to_canvas_buffer;
 
 
 /* CanvasBufferToPaintBufAlpha, dispatch_canvas_buffer_to_paint_buf_alpha():
@@ -795,20 +1344,19 @@ dispatch_combine_paint_mask_to_canvas_mask;
  */
 
 template <class Base>
-struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
-                                                          GEGL_BUFFER_READ>
+struct CanvasBufferToPaintBufAlpha : Base
 {
-  using base_type = CanvasBufferIterator<Base, GEGL_BUFFER_READ>;
-
   static constexpr guint filter =
-    base_type::filter                                                |
+    Base::filter                                                     |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA    |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK       |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
-  using base_type::base_type;
+  using Base::Base;
 
   template <class Derived>
-  struct State : base_type::template State<Derived>
+  struct State : Base::template State<Derived>
   {
     const gfloat *canvas_pixel;
   };
@@ -819,12 +1367,13 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    base_type::init_step (params, state, iter, roi, area);
+    Base::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
-      (const gfloat *) iter->data[base_type::canvas_buffer_iterator];
+      (const gfloat *) iter->items[state->canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -834,18 +1383,19 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    base_type::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
 
     /* Copy the canvas buffer in rect to the paint buffer's alpha channel */
 
-    gint    paint_offset = (y              - roi->y) * this->paint_stride +
-                           (iter->roi[0].x - roi->x) * 4;
+    gint    paint_offset = (y       - roi->y) * this->paint_stride +
+                           (rect->x - roi->x) * 4;
     gfloat *paint_pixel  = &this->paint_data[paint_offset];
     gint    x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < rect->width; x++)
       {
         paint_pixel[3] *= *state->canvas_pixel;
 
@@ -855,30 +1405,34 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
   }
 };
 
-static AlgorithmDispatch<
+static SuppressedAlgorithmDispatch<
   CanvasBufferToPaintBufAlpha,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
-  decltype (dispatch_paint_buf)
+  decltype (dispatch_paint_buf),
+  DispatchCanvasBufferIterator<GEGL_BUFFER_READ>
 >
 dispatch_canvas_buffer_to_paint_buf_alpha;
 
 
-/* PaintMaskToPaintBuffer, dispatch_paint_mask_to_paint_buffer():
+/* PaintMaskToPaintBufAlpha, dispatch_paint_mask_to_paint_buf_alpha():
  *
- * An algorithm class, implementing the PAINT_MASK_TO_PAINT_BUFFER algorithm.
+ * An algorithm class, implementing the PAINT_MASK_TO_PAINT_BUF_ALPHA
+ * algorithm.
  */
 
 template <class Base>
-struct PaintMaskToPaintBuffer : Base
+struct PaintMaskToPaintBufAlpha : Base
 {
   using mask_type = typename Base::mask_type;
 
   static constexpr guint filter =
     Base::filter |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK    |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
   explicit
-  PaintMaskToPaintBuffer (const GimpPaintCoreLoopsParams *params) :
+  PaintMaskToPaintBufAlpha (const GimpPaintCoreLoopsParams *params) :
     Base (params)
   {
     /* Validate that the paint buffer is within the bounds of the paint mask */
@@ -900,19 +1454,20 @@ struct PaintMaskToPaintBuffer : Base
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    Base::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
 
-    gint             paint_offset = (y              - roi->y) * this->paint_stride +
-                                    (iter->roi[0].x - roi->x) * 4;
+    gint             paint_offset = (y       - roi->y) * this->paint_stride +
+                                    (rect->x - roi->x) * 4;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
-    gint             mask_offset  = (y              - roi->y) * this->mask_stride +
-                                    (iter->roi[0].x - roi->x);
+    gint             mask_offset  = (y       - roi->y) * this->mask_stride +
+                                    (rect->x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
     gint             x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < rect->width; x++)
       {
         paint_pixel[3] *= value_to_float (*mask_pixel) * params->paint_opacity;
 
@@ -922,13 +1477,384 @@ struct PaintMaskToPaintBuffer : Base
   }
 };
 
-static AlgorithmDispatch<
-  PaintMaskToPaintBuffer,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER,
+static SuppressedAlgorithmDispatch<
+  PaintMaskToPaintBufAlpha,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   decltype (dispatch_paint_mask)
 >
-dispatch_paint_mask_to_paint_buffer;
+dispatch_paint_mask_to_paint_buf_alpha;
+
+
+/* CanvasBufferToCompMask, dispatch_canvas_buffer_to_comp_mask():
+ *
+ * An algorithm class, implementing the CANVAS_BUFFER_TO_COMP_MASK algorithm.
+ */
+
+template <class    Base,
+          gboolean Direct>
+struct CanvasBufferToCompMask : Base
+{
+  using comp_mask_type = typename Base::comp_mask_type;
+
+  static constexpr guint filter =
+    Base::filter                                               |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    const gfloat *canvas_pixel;
+    const gfloat *mask_pixel;
+  };
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->canvas_pixel =
+      (const gfloat *) iter->items[state->canvas_buffer_iterator].data;
+    state->mask_pixel   =
+      (const gfloat *) iter->items[state->mask_buffer_iterator].data;
+  }
+
+  template <class Derived>
+  void
+  process_row (const GimpPaintCoreLoopsParams *params,
+               State<Derived>                 *state,
+               GeglBufferIterator             *iter,
+               const GeglRectangle            *roi,
+               const GeglRectangle            *area,
+               const GeglRectangle            *rect,
+               gint                            y) const
+  {
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    comp_mask_type *comp_mask_pixel = state->comp_mask_data;
+    gint            x;
+
+    for (x = 0; x < rect->width; x++)
+      {
+        comp_mask_pixel[0] = state->canvas_pixel[0] * state->mask_pixel[0];
+
+        comp_mask_pixel     += 1;
+        state->canvas_pixel += 1;
+        state->mask_pixel   += 1;
+      }
+  }
+};
+
+template <class Base>
+struct CanvasBufferToCompMask<Base, TRUE> : Base
+{
+  static constexpr guint filter =
+    Base::filter                                               |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  using State = typename Base::template State<Derived>;
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->comp_mask_data =
+      (gfloat *) iter->items[state->canvas_buffer_iterator].data - rect->width;
+  }
+
+  template <class Derived>
+  void
+  process_row (const GimpPaintCoreLoopsParams *params,
+               State<Derived>                 *state,
+               GeglBufferIterator             *iter,
+               const GeglRectangle            *roi,
+               const GeglRectangle            *area,
+               const GeglRectangle            *rect,
+               gint                            y) const
+  {
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    state->comp_mask_data += rect->width;
+  }
+};
+
+struct DispatchCanvasBufferToCompMask
+{
+  static constexpr guint mask =
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
+
+  template <class Base>
+  using AlgorithmDirect   = CanvasBufferToCompMask<Base, TRUE>;
+  template <class Base>
+  using AlgorithmIndirect = CanvasBufferToCompMask<Base, FALSE>;
+
+  using DispatchDirect    = BasicDispatch<
+    AlgorithmDirect,
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK,
+    decltype (dispatch_comp_mask)
+  >;
+  using DispatchIndirect  = BasicDispatch<
+    AlgorithmIndirect,
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK,
+    decltype (dispatch_temp_comp_mask)
+  >;
+
+  template <class Algorithm,
+            gboolean HasMaskBufferIterator = has_mask_buffer_iterator (
+                                               (Algorithm *) NULL)>
+  struct Dispatch : DispatchIndirect
+  {
+  };
+
+  template <class Algorithm>
+  struct Dispatch<Algorithm, FALSE> : DispatchDirect
+  {
+  };
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    if ((algorithms & mask) == mask)
+      {
+        dispatch (
+          [&] (auto algorithm)
+          {
+            using NewAlgorithm = typename decltype (algorithm)::type;
+
+            Dispatch<NewAlgorithm> () (visitor, params, algorithms, algorithm);
+          },
+          params, algorithms, algorithm,
+          DispatchCanvasBufferIterator<GEGL_BUFFER_READ> (),
+          dispatch_mask_buffer_iterator);
+      }
+    else
+      {
+        visitor (algorithm);
+      }
+  }
+} static dispatch_canvas_buffer_to_comp_mask;
+
+
+/* PaintMaskToCompMask, dispatch_paint_mask_to_comp_mask():
+ *
+ * An algorithm class, implementing the PAINT_MASK_TO_COMP_MASK algorithm.
+ */
+
+template <class    Base,
+          gboolean Direct>
+struct PaintMaskToCompMask : Base
+{
+  using mask_type      = typename Base::mask_type;
+  using comp_mask_type = typename Base::comp_mask_type;
+
+  static constexpr guint filter =
+    Base::filter |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    const gfloat *mask_pixel;
+  };
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    if (has_mask_buffer_iterator (this))
+      {
+        state->mask_pixel =
+          (const gfloat *) iter->items[mask_buffer_iterator (this, state)].data;
+      }
+  }
+
+  template <class Derived>
+  void
+  process_row (const GimpPaintCoreLoopsParams *params,
+               State<Derived>                 *state,
+               GeglBufferIterator             *iter,
+               const GeglRectangle            *roi,
+               const GeglRectangle            *area,
+               const GeglRectangle            *rect,
+               gint                            y) const
+  {
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    gint             mask_offset = (y       - roi->y) * this->mask_stride +
+                                   (rect->x - roi->x);
+    const mask_type *mask_pixel  = &this->mask_data[mask_offset];
+    comp_mask_type  *comp_mask_pixel = state->comp_mask_data;
+    gint             x;
+
+    if (has_mask_buffer_iterator (this))
+      {
+        for (x = 0; x < rect->width; x++)
+          {
+            comp_mask_pixel[0] = value_to_float (mask_pixel[0]) *
+                                 state->mask_pixel[0];
+
+            comp_mask_pixel   += 1;
+            mask_pixel        += 1;
+            state->mask_pixel += 1;
+          }
+      }
+    else
+      {
+        for (x = 0; x < rect->width; x++)
+          {
+            comp_mask_pixel[0] = value_to_float (mask_pixel[0]);
+
+            comp_mask_pixel += 1;
+            mask_pixel      += 1;
+          }
+      }
+  }
+};
+
+template <class Base>
+struct PaintMaskToCompMask<Base, TRUE> : Base
+{
+  using mask_type = typename Base::mask_type;
+
+  static constexpr guint filter =
+    Base::filter                                            |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  using State = typename Base::template State<Derived>;
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    gint mask_offset = (rect->y - roi->y) * this->mask_stride +
+                       (rect->x - roi->x);
+
+    state->comp_mask_data = (mask_type *) &this->mask_data[mask_offset] -
+                            this->mask_stride;
+  }
+
+  template <class Derived>
+  void
+  process_row (const GimpPaintCoreLoopsParams *params,
+               State<Derived>                 *state,
+               GeglBufferIterator             *iter,
+               const GeglRectangle            *roi,
+               const GeglRectangle            *area,
+               const GeglRectangle            *rect,
+               gint                            y) const
+  {
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    state->comp_mask_data += this->mask_stride;
+  }
+};
+
+struct DispatchPaintMaskToCompMask
+{
+  static constexpr guint mask =
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+
+  template <class Base>
+  using AlgorithmDirect   = PaintMaskToCompMask<Base, TRUE>;
+  template <class Base>
+  using AlgorithmIndirect = PaintMaskToCompMask<Base, FALSE>;
+
+  using DispatchDirect    = BasicDispatch<
+    AlgorithmDirect,
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK,
+    decltype (dispatch_comp_mask)
+  >;
+  using DispatchIndirect  = BasicDispatch<
+    AlgorithmIndirect,
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK,
+    decltype (dispatch_temp_comp_mask)
+  >;
+
+  template <class Algorithm,
+            class MaskType                 = typename Algorithm::mask_type,
+            gboolean HasMaskBufferIterator = has_mask_buffer_iterator (
+                                               (Algorithm *) NULL)>
+  struct Dispatch : DispatchIndirect
+  {
+  };
+
+  template <class Algorithm>
+  struct Dispatch<Algorithm, gfloat, FALSE> : DispatchDirect
+  {
+  };
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    if ((algorithms & mask) == mask)
+      {
+        dispatch (
+          [&] (auto algorithm)
+          {
+            using NewAlgorithm = typename decltype (algorithm)::type;
+
+            Dispatch<NewAlgorithm> () (visitor, params, algorithms, algorithm);
+          },
+          params, algorithms, algorithm,
+          dispatch_paint_mask,
+          dispatch_mask_buffer_iterator);
+      }
+    else
+      {
+        visitor (algorithm);
+      }
+  }
+} static dispatch_paint_mask_to_comp_mask;
 
 
 /* DoLayerBlend, dispatch_do_layer_blend():
@@ -943,8 +1869,7 @@ struct DoLayerBlend : Base
     Base::filter |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
 
-  static constexpr gint iterator_base = Base::n_iterators;
-  static constexpr gint n_iterators   = Base::n_iterators + 3;
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 2;
 
   const Babl             *iterator_format;
   GimpOperationLayerMode  layer_mode;
@@ -963,8 +1888,9 @@ struct DoLayerBlend : Base
     layer_mode.real_composite_mode = layer_mode.composite_mode;
 
     iterator_format = gimp_layer_mode_get_format (params->paint_mode,
-                                                  layer_mode.composite_space,
                                                   layer_mode.blend_space,
+                                                  layer_mode.composite_space,
+                                                  layer_mode.composite_mode,
                                                   gimp_temp_buf_get_format (params->paint_buf));
 
     g_return_if_fail (gimp_temp_buf_get_format (params->paint_buf) == iterator_format);
@@ -973,6 +1899,8 @@ struct DoLayerBlend : Base
   template <class Derived>
   struct State : Base::template State<Derived>
   {
+    gint           iterator_base;
+
     GeglRectangle  process_roi;
 
     gfloat        *out_pixel;
@@ -989,27 +1917,23 @@ struct DoLayerBlend : Base
         const GeglRectangle            *roi,
         const GeglRectangle            *area) const
   {
-    Base::init (params, state, iter, roi, area);
+    state->iterator_base = gegl_buffer_iterator_add (iter, params->src_buffer,
+                                                     area, 0, iterator_format,
+                                                     GEGL_ACCESS_READ,
+                                                     GEGL_ABYSS_NONE);
 
-    GeglRectangle mask_area = *area;
-
-    mask_area.x -= params->mask_offset_x;
-    mask_area.y -= params->mask_offset_y;
-
-    gegl_buffer_iterator_add (iter, params->dest_buffer, area, 0,
-                              iterator_format,
-                              GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-    gegl_buffer_iterator_add (iter, params->src_buffer, area, 0,
-                              iterator_format,
-                              GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-    if (params->mask_buffer)
+    if (! has_comp_buffer ((const Derived *) this))
       {
-        gegl_buffer_iterator_add (iter, params->mask_buffer, &mask_area, 0,
-                                  babl_format ("Y float"),
-                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+        gegl_buffer_iterator_add (iter, params->dest_buffer, area, 0,
+                                  iterator_format,
+                                  GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
       }
+
+    /* initialize the base class *after* initializing the iterator, to make
+     * sure that src_buffer is the primary buffer of the iterator, if no
+     * subclass added an iterator first.
+     */
+    Base::init (params, state, iter, roi, area);
   }
 
   template <class Derived>
@@ -1018,23 +1942,28 @@ struct DoLayerBlend : Base
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    Base::init_step (params, state, iter, roi, area);
+    Base::init_step (params, state, iter, roi, area, rect);
 
-    state->out_pixel  = (gfloat *) iter->data[iterator_base + 0];
-    state->in_pixel   = (gfloat *) iter->data[iterator_base + 1];
-    state->mask_pixel = NULL;
+    state->in_pixel = (gfloat *) iter->items[state->iterator_base + 0].data;
 
-    state->paint_pixel = this->paint_data                               +
-                         (iter->roi[0].y - roi->y) * this->paint_stride +
-                         (iter->roi[0].x - roi->x) * 4;
+    state->paint_pixel = this->paint_data                        +
+                         (rect->y - roi->y) * this->paint_stride +
+                         (rect->x - roi->x) * 4;
 
-    if (params->mask_buffer)
-      state->mask_pixel = (gfloat *) iter->data[iterator_base + 2];
+    if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
+      {
+        state->mask_pixel =
+          (gfloat *) iter->items[mask_buffer_iterator (this, state)].data;
+      }
 
-    state->process_roi.x      = iter->roi[0].x;
-    state->process_roi.width  = iter->roi[0].width;
+    if (! has_comp_buffer ((const Derived *) this))
+      state->out_pixel = (gfloat *) iter->items[state->iterator_base + 1].data;
+
+    state->process_roi.x      = rect->x;
+    state->process_roi.width  = rect->width;
     state->process_roi.height = 1;
   }
 
@@ -1045,35 +1974,191 @@ struct DoLayerBlend : Base
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    Base::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    gfloat *mask_pixel;
+    gfloat *out_pixel;
+
+    if (has_comp_mask (this))
+      mask_pixel = comp_mask_data (this, state);
+    else if (has_mask_buffer_iterator (this))
+      mask_pixel = state->mask_pixel;
+    else
+      mask_pixel = NULL;
+
+    if (! has_comp_buffer ((const Derived *) this))
+      {
+        out_pixel = state->out_pixel;
+      }
+    else
+      {
+        out_pixel = comp_buffer_data (
+          (const Derived *) this,
+          (typename Derived::template State<Derived> *) state);
+      }
 
     state->process_roi.y = y;
 
     layer_mode.function ((GeglOperation*) &layer_mode,
                          state->in_pixel,
                          state->paint_pixel,
-                         state->mask_pixel,
-                         state->out_pixel,
-                         iter->roi[0].width,
+                         mask_pixel,
+                         out_pixel,
+                         rect->width,
                          &state->process_roi,
                          0);
 
-    state->in_pixel     += iter->roi[0].width * 4;
-    state->out_pixel    += iter->roi[0].width * 4;
-    if (params->mask_buffer)
-      state->mask_pixel += iter->roi[0].width;
+    state->in_pixel     += rect->width * 4;
     state->paint_pixel  += this->paint_stride;
+    if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
+      state->mask_pixel += rect->width;
+    if (! has_comp_buffer ((const Derived *) this))
+      state->out_pixel  += rect->width * 4;
+  }
+};
+
+static MandatoryAlgorithmDispatch<
+  DoLayerBlend,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND,
+  decltype (dispatch_paint_buf),
+  decltype (dispatch_mask_buffer_iterator)
+>
+dispatch_do_layer_blend;
+
+
+/* MaskComponents, dispatch_mask_components():
+ *
+ * An algorithm class, implementing the MASK_COMPONENTS algorithm.
+ */
+
+template <class Base>
+struct MaskComponents : Base
+{
+  static constexpr guint filter =
+    Base::filter |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS;
+
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 1;
+
+  const Babl *format;
+  const Babl *comp_fish = NULL;
+
+  explicit
+  MaskComponents (const GimpPaintCoreLoopsParams *params) :
+    Base (params)
+  {
+    format = gimp_operation_mask_components_get_format (
+      gegl_buffer_get_format (params->dest_buffer));
+
+    if (format != this->iterator_format)
+      comp_fish = babl_fish (this->iterator_format, format);
+  }
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    gint    dest_buffer_iterator;
+
+    guint8 *dest_pixel;
+    guint8 *comp_pixel;
+  };
+
+  template <class Derived>
+  void
+  init (const GimpPaintCoreLoopsParams *params,
+        State<Derived>                 *state,
+        GeglBufferIterator             *iter,
+        const GeglRectangle            *roi,
+        const GeglRectangle            *area) const
+  {
+    state->dest_buffer_iterator = gegl_buffer_iterator_add (
+      iter, params->dest_buffer, area, 0, format,
+      GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+    /* initialize the base class *after* initializing the iterator, to make
+     * sure that dest_buffer is the primary buffer of the iterator, if no
+     * subclass added an iterator first.
+     */
+    Base::init (params, state, iter, roi, area);
+  }
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->dest_pixel =
+      (guint8 *) iter->items[state->dest_buffer_iterator].data;
+
+    if (comp_fish)
+      {
+        state->comp_pixel = (guint8 *) gegl_scratch_alloc (
+          rect->width * babl_format_get_bytes_per_pixel (format));
+      }
+  }
+
+  template <class Derived>
+  void
+  process_row (const GimpPaintCoreLoopsParams *params,
+               State<Derived>                 *state,
+               GeglBufferIterator             *iter,
+               const GeglRectangle            *roi,
+               const GeglRectangle            *area,
+               const GeglRectangle            *rect,
+               gint                            y) const
+  {
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    gpointer comp_pixel;
+
+    if (comp_fish)
+      {
+        babl_process (comp_fish,
+                      state->comp_buffer_data, state->comp_pixel,
+                      rect->width);
+
+        comp_pixel = state->comp_pixel;
+      }
+    else
+      {
+        comp_pixel = state->comp_buffer_data;
+      }
+
+    gimp_operation_mask_components_process (format,
+                                            state->dest_pixel, comp_pixel,
+                                            state->dest_pixel,
+                                            rect->width, params->affect);
+
+    state->dest_pixel += rect->width * babl_format_get_bytes_per_pixel (format);
+  }
+
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+    if (comp_fish)
+      gegl_scratch_free (state->comp_pixel);
+
+    Base::finalize_step (params, state);
   }
 };
 
 static AlgorithmDispatch<
-  DoLayerBlend,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND,
-  decltype (dispatch_paint_buf)
+  MaskComponents,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS,
+  decltype (dispatch_temp_comp_buffer)
 >
-dispatch_do_layer_blend;
+dispatch_mask_components;
 
 
 /* gimp_paint_core_loops_process():
@@ -1118,259 +2203,64 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
 
       Algorithm algorithm (params);
 
-      gimp_parallel_distribute_area (&roi, MIN_PARALLEL_SUB_AREA,
-                                     [=] (const GeglRectangle *area)
+      gegl_parallel_distribute_area (
+        &roi, PIXELS_PER_THREAD,
+        [=] (const GeglRectangle *area)
         {
           State state;
           gint  y;
 
-          if (Algorithm::n_iterators > 0)
+          if (Algorithm::max_n_iterators > 0)
             {
               GeglBufferIterator *iter;
 
-              iter = gegl_buffer_iterator_empty_new ();
+              iter = gegl_buffer_iterator_empty_new (
+                Algorithm::max_n_iterators);
 
               algorithm.init (params, &state, iter, &roi, area);
 
               while (gegl_buffer_iterator_next (iter))
                 {
-                  algorithm.init_step (params, &state, iter, &roi, area);
+                  const GeglRectangle *rect = &iter->items[0].roi;
 
-                  for (y = 0; y < iter->roi[0].height; y++)
+                  algorithm.init_step (params, &state, iter, &roi, area, rect);
+
+                  for (y = 0; y < rect->height; y++)
                     {
                       algorithm.process_row (params, &state,
-                                             iter, &roi, area,
-                                             iter->roi[0].y + y);
+                                             iter, &roi, area, rect,
+                                             rect->y + y);
                     }
+
+                  algorithm.finalize_step (params, &state);
                 }
+
+              algorithm.finalize (params, &state);
             }
           else
             {
-              GeglBufferIterator iter;
+              algorithm.init      (params, &state, NULL, &roi, area);
+              algorithm.init_step (params, &state, NULL, &roi, area, area);
 
-              iter.roi[0] = *area;
-
-              algorithm.init      (params, &state, &iter, &roi, area);
-              algorithm.init_step (params, &state, &iter, &roi, area);
-
-              for (y = 0; y < iter.roi[0].height; y++)
+              for (y = 0; y < area->height; y++)
                 {
                   algorithm.process_row (params, &state,
-                                         &iter, &roi, area,
-                                         iter.roi[0].y + y);
+                                         NULL, &roi, area, area,
+                                         area->y + y);
                 }
+
+              algorithm.finalize_step (params, &state);
+              algorithm.finalize      (params, &state);
             }
         });
     },
     params, algorithms, identity<AlgorithmBase> (),
-    dispatch_combine_paint_mask_to_canvas_mask_to_paint_buf_alpha,
-    dispatch_combine_paint_mask_to_canvas_mask,
+    dispatch_combine_paint_mask_to_canvas_buffer_to_paint_buf_alpha,
+    dispatch_combine_paint_mask_to_canvas_buffer,
     dispatch_canvas_buffer_to_paint_buf_alpha,
-    dispatch_paint_mask_to_paint_buffer,
-    dispatch_do_layer_blend);
-}
-
-
-/* combine_paint_mask_to_canvas_mask():
- *
- * A convenience wrapper around 'gimp_paint_core_loops_process()', performing
- * just the COMBINE_PAINT_MASK_TO_CANVAS_MASK algorithm.
- */
-
-void
-combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
-                                   gint               mask_x_offset,
-                                   gint               mask_y_offset,
-                                   GeglBuffer        *canvas_buffer,
-                                   gint               x_offset,
-                                   gint               y_offset,
-                                   gfloat             opacity,
-                                   gboolean           stipple)
-{
-  GimpPaintCoreLoopsParams params = {};
-
-  params.canvas_buffer       = canvas_buffer;
-
-  params.paint_buf_offset_x  = x_offset;
-  params.paint_buf_offset_y  = y_offset;
-
-  params.paint_mask          = paint_mask;
-  params.paint_mask_offset_x = mask_x_offset;
-  params.paint_mask_offset_y = mask_y_offset;
-
-  params.stipple             = stipple;
-
-  params.paint_opacity       = opacity;
-
-  gimp_paint_core_loops_process (
-    &params,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK);
-}
-
-
-/* canvas_buffer_to_paint_buf_alpha():
- *
- * A convenience wrapper around 'gimp_paint_core_loops_process()', performing
- * just the CANVAS_BUFFER_TO_PAINT_BUF_ALPHA algorithm.
- */
-
-void
-canvas_buffer_to_paint_buf_alpha (GimpTempBuf  *paint_buf,
-                                  GeglBuffer   *canvas_buffer,
-                                  gint          x_offset,
-                                  gint          y_offset)
-{
-  GimpPaintCoreLoopsParams params = {};
-
-  params.canvas_buffer      = canvas_buffer;
-
-  params.paint_buf          = paint_buf;
-  params.paint_buf_offset_x = x_offset;
-  params.paint_buf_offset_y = y_offset;
-
-  gimp_paint_core_loops_process (
-    &params,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA);
-}
-
-
-/* paint_mask_to_paint_buffer():
- *
- * A convenience wrapper around 'gimp_paint_core_loops_process()', performing
- * just the PAINT_MASK_TO_PAINT_BUFFER algorithm.
- */
-
-void
-paint_mask_to_paint_buffer (const GimpTempBuf  *paint_mask,
-                            gint                mask_x_offset,
-                            gint                mask_y_offset,
-                            GimpTempBuf        *paint_buf,
-                            gfloat              paint_opacity)
-{
-  GimpPaintCoreLoopsParams params = {};
-
-  params.paint_buf           = paint_buf;
-
-  params.paint_mask          = paint_mask;
-  params.paint_mask_offset_x = mask_x_offset;
-  params.paint_mask_offset_y = mask_y_offset;
-
-  params.paint_opacity       = paint_opacity;
-
-  gimp_paint_core_loops_process (
-    &params,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER);
-}
-
-
-/* do_layer_blend():
- *
- * A convenience wrapper around 'gimp_paint_core_loops_process()', performing
- * just the DO_LAYER_BLEND algorithm.
- */
-
-void
-do_layer_blend (GeglBuffer    *src_buffer,
-                GeglBuffer    *dst_buffer,
-                GimpTempBuf   *paint_buf,
-                GeglBuffer    *mask_buffer,
-                gfloat         opacity,
-                gint           x_offset,
-                gint           y_offset,
-                gint           mask_x_offset,
-                gint           mask_y_offset,
-                GimpLayerMode  paint_mode)
-{
-  GimpPaintCoreLoopsParams params = {};
-
-  params.paint_buf          = paint_buf;
-  params.paint_buf_offset_x = x_offset;
-  params.paint_buf_offset_y = y_offset;
-
-  params.src_buffer         = src_buffer;
-  params.dest_buffer        = dst_buffer;
-
-  params.mask_buffer        = mask_buffer;
-  params.mask_offset_x      = mask_x_offset;
-  params.mask_offset_y      = mask_y_offset;
-
-  params.image_opacity      = opacity;
-
-  params.paint_mode         = paint_mode;
-
-  gimp_paint_core_loops_process (
-    &params,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND);
-}
-
-
-/* mask_components_onto():
- *
- * Copies the contents of 'src_buffer' and 'aux_buffer' into 'dst_buffer', over
- * 'roi'.  Components set in 'mask' are copied from 'aux_buffer', while those
- * not set in 'mask' are copied from 'src_buffer'.  'linear_mode' specifies
- * whether to iterate over the buffers use a linear format.  It should match
- * the linear mode of the painted-to drawable, to avoid modifying masked-out
- * components.
- *
- * Note that we don't integrate this function into the rest of the algorithm
- * framework, since it uses a (potentially) different format when iterating
- * over the buffers than the rest of the algorithms.
- */
-
-void
-mask_components_onto (GeglBuffer          *src_buffer,
-                      GeglBuffer          *aux_buffer,
-                      GeglBuffer          *dst_buffer,
-                      const GeglRectangle *roi,
-                      GimpComponentMask    mask,
-                      gboolean             linear_mode)
-{
-  const Babl *iterator_format;
-
-  if (! roi)
-    roi = gegl_buffer_get_extent (dst_buffer);
-
-  if (linear_mode)
-    iterator_format = babl_format ("RGBA float");
-  else
-    iterator_format = babl_format ("R'G'B'A float");
-
-  gimp_parallel_distribute_area (roi, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *area)
-    {
-      GeglBufferIterator *iter;
-
-      iter = gegl_buffer_iterator_new (dst_buffer, area, 0,
-                                       iterator_format,
-                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-      gegl_buffer_iterator_add (iter, src_buffer, area, 0,
-                                iterator_format,
-                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-      gegl_buffer_iterator_add (iter, aux_buffer, area, 0,
-                                iterator_format,
-                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat *dest    = (gfloat *)iter->data[0];
-          gfloat *src     = (gfloat *)iter->data[1];
-          gfloat *aux     = (gfloat *)iter->data[2];
-          glong   samples = iter->length;
-
-          while (samples--)
-            {
-              dest[RED]   = (mask & GIMP_COMPONENT_MASK_RED)   ? aux[RED]   : src[RED];
-              dest[GREEN] = (mask & GIMP_COMPONENT_MASK_GREEN) ? aux[GREEN] : src[GREEN];
-              dest[BLUE]  = (mask & GIMP_COMPONENT_MASK_BLUE)  ? aux[BLUE]  : src[BLUE];
-              dest[ALPHA] = (mask & GIMP_COMPONENT_MASK_ALPHA) ? aux[ALPHA] : src[ALPHA];
-
-              src  += 4;
-              aux  += 4;
-              dest += 4;
-            }
-        }
-    });
+    dispatch_paint_mask_to_paint_buf_alpha,
+    dispatch_canvas_buffer_to_comp_mask,
+    dispatch_paint_mask_to_comp_mask,
+    dispatch_do_layer_blend,
+    dispatch_mask_components);
 }

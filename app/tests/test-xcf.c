@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -66,7 +66,7 @@
 #define GIMP_MAINIMAGE_WIDTH            100
 #define GIMP_MAINIMAGE_HEIGHT           90
 #define GIMP_MAINIMAGE_TYPE             GIMP_RGB
-#define GIMP_MAINIMAGE_PRECISION        GIMP_PRECISION_U8_GAMMA
+#define GIMP_MAINIMAGE_PRECISION        GIMP_PRECISION_U8_NON_LINEAR
 
 #define GIMP_MAINIMAGE_LAYER1_NAME      "layer1"
 #define GIMP_MAINIMAGE_LAYER1_WIDTH     50
@@ -465,13 +465,13 @@ gimp_create_mainimage (Gimp     *gimp,
                                 GIMP_MAINIMAGE_PARASITE_SIZE,
                                 GIMP_MAINIMAGE_PARASITE_DATA);
   gimp_image_parasite_attach (image,
-                              parasite);
+                              parasite, FALSE);
   gimp_parasite_free (parasite);
   parasite = gimp_parasite_new ("gimp-comment",
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (GIMP_MAINIMAGE_COMMENT) + 1,
                                 GIMP_MAINIMAGE_COMMENT);
-  gimp_image_parasite_attach (image, parasite);
+  gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
 
 

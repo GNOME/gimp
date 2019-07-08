@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,15 +47,15 @@ invert_segment_clicked (GtkWidget *button,
   gboolean clockwise;
 
   g_object_get (dial,
-                "alpha",     &alpha,
-                "beta",      &beta,
-                "clockwise", &clockwise,
+                "alpha",           &alpha,
+                "beta",            &beta,
+                "clockwise-delta", &clockwise,
                 NULL);
 
   g_object_set (dial,
-                "alpha",     beta,
-                "beta",      alpha,
-                "clockwise", ! clockwise,
+                "alpha",           beta,
+                "beta",            alpha,
+                "clockwise-delta", ! clockwise,
                 NULL);
 }
 
@@ -67,8 +67,8 @@ select_all_clicked (GtkWidget *button,
   gboolean clockwise;
 
   g_object_get (dial,
-                "alpha",     &alpha,
-                "clockwise", &clockwise,
+                "alpha",           &alpha,
+                "clockwise-delta", &clockwise,
                 NULL);
 
   beta = alpha - (clockwise ? -1 : 1) * 0.00001;

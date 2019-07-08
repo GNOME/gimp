@@ -21,7 +21,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -229,10 +229,67 @@ main_function (GimpDrawable *drawable,
     }
   else
     {
+      GimpPixelRgn  srcPR, destPR;
+      gint          x1, y1, x2, y2;
+      gpointer      pr;
+      gint          total_area;
+      gint          area_so_far;
+      gint          count;
+
       gimp_progress_init (_("Max RGB"));
 
-      gimp_rgn_iterate2 (drawable, 0 /* unused */, max_rgb_func, &param);
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
+      total_area  = (x2 - x1) * (y2 - y1);
+      area_so_far = 0;
+
+      if (total_area <= 0)
+        goto out;
+
+      /* Initialize the pixel regions. */
+      gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+                           FALSE, FALSE);
+      gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+                           TRUE, TRUE);
+
+      for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR), count = 0;
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr), count++)
+        {
+          const guchar *src  = srcPR.data;
+          guchar       *dest = destPR.data;
+          gint          row;
+
+          for (row = 0; row < srcPR.h; row++)
+            {
+              const guchar *s      = src;
+              guchar       *d      = dest;
+              gint          pixels = srcPR.w;
+
+              while (pixels--)
+                {
+                  max_rgb_func (s, d, srcPR.bpp, &param);
+
+                  s += srcPR.bpp;
+                  d += destPR.bpp;
+                }
+
+              src  += srcPR.rowstride;
+              dest += destPR.rowstride;
+            }
+
+          area_so_far += srcPR.w * srcPR.h;
+
+          if ((count % 16) == 0)
+            gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
+        }
+
+      /*  update the processed region  */
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+
+    out:
       gimp_drawable_detach (drawable);
     }
 

@@ -223,15 +223,14 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 1920)
-#     (height 1080)
+#     (width 2001)
+#     (height 1984)
 #     (unit pixels)
 #     (xresolution 300.000000)
 #     (yresolution 300.000000)
 #     (resolution-unit inches)
 #     (image-type rgb)
-#     (precision u8-gamma)
-#     (color-managed yes)
+#     (precision u8-non-linear)
 #     (color-profile NULL)
 #     (fill-type background)
 #     (comment "Created with GIMP"))
@@ -285,6 +284,12 @@
 # 
 # (layer-previews yes)
 
+# Sets whether GIMP should create previews of layer groups. Layer group
+# previews are more expensive than ordinary layer previews.  Possible values
+# are yes and no.
+# 
+# (group-layer-previews yes)
+
 # Sets the preview size used for layers and channel previews in newly created
 # dialogs.  Possible values are tiny, extra-small, small, medium, large,
 # extra-large, huge, enormous and gigantic.
@@ -316,8 +321,7 @@
 #     (simulation-use-black-point-compensation no)
 #     (simulation-optimize yes)
 #     (simulation-gamut-check no)
-#     (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000))
-#     (display-module "CdisplayLcms"))
+#     (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000)))
 
 # Keep a permanent record of all opened and saved files in the Recent
 # Documents list.  Possible values are yes and no.
@@ -351,6 +355,11 @@
 # 
 # (import-raw-plug-in "")
 
+# Export the image's color profile by default.  Possible values are yes and
+# no.
+# 
+# (export-color-profile yes)
+
 # Export Exif metadata by default.  Possible values are yes and no.
 # 
 # (export-metadata-exif yes)
@@ -366,7 +375,7 @@
 # Try generating debug data for bug reporting when appropriate.  Possible
 # values are warning, critical, fatal and never.
 # 
-# (debug-policy fatal)
+# (debug-policy warning)
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
@@ -450,6 +459,8 @@
 # %Cx expands to x if the image is clean, the empty string otherwise
 # %B  expands to (modified) if the image is dirty, the empty string otherwise
 # %A  expands to (clean) if the image is clean, the empty string otherwise
+# %Nx expands to x if the image is export-dirty, the empty string otherwise
+# %Ex expands to x if the image is export-clean, the empty string otherwise
 # %l  the number of layers
 # %L  the number of layers (long form)
 # %m  memory used by the image
@@ -488,6 +499,8 @@
 # %Cx expands to x if the image is clean, the empty string otherwise
 # %B  expands to (modified) if the image is dirty, the empty string otherwise
 # %A  expands to (clean) if the image is clean, the empty string otherwise
+# %Nx expands to x if the image is export-dirty, the empty string otherwise
+# %Ex expands to x if the image is export-clean, the empty string otherwise
 # %l  the number of layers
 # %L  the number of layers (long form)
 # %m  memory used by the image
@@ -649,15 +662,6 @@
 # 
 # (save-tool-options yes)
 
-# Show a tooltip when the pointer hovers over an item.  Possible values are
-# yes and no.
-# 
-# (show-tooltips yes)
-
-# When enabled, menus can be torn off.  Possible values are yes and no.
-# 
-# (tearoff-menus yes)
-
 # When enabled, you can change keyboard shortcuts for menu items by hitting a
 # key combination while the menu item is highlighted.  Possible values are
 # yes and no.
@@ -716,6 +720,10 @@
 # 
 # (theme "Dark")
 
+# The name of the theme to use.  Possible values are yes and no.
+# 
+# (prefer-dark-theme yes)
+
 # Sets the icon theme search path.  This is a colon-separated list of folders
 # to search.
 # 
@@ -725,10 +733,10 @@
 # 
 # (icon-theme "Symbolic")
 
-# The size of the icons to use.  Possible values are auto, theme, small,
-# medium, large and huge.
+# When enabled, symbolic icons will be preferred if available.  Possible
+# values are yes and no.
 # 
-# (icon-size auto)
+# (prefer-symbolic-icons yes)
 
 # When enabled, pressing F1 will open the help browser.  Possible values are
 # yes and no.
@@ -771,7 +779,7 @@
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-# (user-manual-online-uri "http://docs.gimp.org/2.10")
+# (user-manual-online-uri "https://docs.gimp.org/2.99")
 
 # The window type hint that is set on dock windows and the toolbox window.
 # This may affect the way your window manager decorates and handles these

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -67,6 +67,10 @@ gboolean      save_animation        (const gchar       *filename,
                                      WebPSaveParams    *params,
                                      GError           **error);
 
+static void   webp_decide_output    (gint32             image_ID,
+                                     WebPSaveParams    *params,
+                                     GimpColorProfile **profile,
+                                     gboolean          *out_linear);
 
 int
 webp_anim_file_writer (FILE          *outfile,
@@ -151,8 +155,9 @@ save_layer (const gchar    *filename,
   gint              w, h;
   gboolean          has_alpha;
   const Babl       *format;
+  const Babl       *space      = NULL;
   gint              bpp;
-  GimpColorProfile *profile;
+  GimpColorProfile *profile    = NULL;
   GeglBuffer       *geglbuffer = NULL;
   GeglRectangle     extent;
   gchar            *indata;
@@ -160,7 +165,27 @@ save_layer (const gchar    *filename,
   struct            stat stsz;
   int               fd_outfile;
   WebPData          chunk;
+  gboolean          out_linear = FALSE;
   int               res;
+
+  webp_decide_output (image_ID, params, &profile, &out_linear);
+  if (profile)
+    {
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet still output the error.
+           */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
+    }
+  if (! space)
+    space = gimp_drawable_get_format (drawable_ID);
 
   /* The do...while() loop is a neat little trick that makes it easier
    * to jump to error handling code while still ensuring proper
@@ -188,10 +213,21 @@ save_layer (const gchar    *filename,
       has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
       if (has_alpha)
-        format = babl_format ("R'G'B'A u8");
+        {
+          if (out_linear)
+            format = babl_format ("RGBA u8");
+          else
+            format = babl_format ("R'G'B'A u8");
+        }
       else
-        format = babl_format ("R'G'B' u8");
+        {
+          if (out_linear)
+            format = babl_format ("RGB u8");
+          else
+            format = babl_format ("R'G'B' u8");
+        }
 
+      format = babl_format_with_space (babl_format_get_encoding (format), space);
       bpp = babl_format_get_bytes_per_pixel (format);
 
       /* Retrieve the buffer for the layer */
@@ -291,31 +327,24 @@ save_layer (const gchar    *filename,
 
           if (mux)
             {
-              gboolean saved = FALSE;
-
               /* Save ICC data */
-              profile = gimp_image_get_color_profile (image_ID);
               if (profile)
                 {
                   const guint8 *icc_data;
                   gsize         icc_data_size;
-
-                  saved = TRUE;
 
                   icc_data = gimp_color_profile_get_icc_profile (profile,
                                                                  &icc_data_size);
                   chunk.bytes = icc_data;
                   chunk.size = icc_data_size;
                   WebPMuxSetChunk(mux, "ICCP", &chunk, 1);
-                  g_object_unref (profile);
-                }
 
-              if (saved == TRUE)
-                {
                   WebPMuxAssemble (mux, &wp_data);
                   rewind (outfile);
                   webp_anim_file_writer (outfile, wp_data.bytes, wp_data.size);
                 }
+
+              WebPMuxDelete (mux);
             }
           else
             {
@@ -339,6 +368,7 @@ save_layer (const gchar    *filename,
     fclose (outfile);
 
   WebPPictureFree (&picture);
+  g_clear_object (&profile);
 
   return status;
 }
@@ -479,19 +509,41 @@ save_animation (const gchar    *filename,
   gboolean               status   = TRUE;
   FILE                  *outfile  = NULL;
   guchar                *buffer   = NULL;
+  gint                   buffer_size = 0;
   gint                   w, h;
   gint                   bpp;
   gboolean               has_alpha;
   const Babl            *format;
-  GimpColorProfile      *profile;
+  const Babl            *space   = NULL;
+  GimpColorProfile      *profile = NULL;
   WebPAnimEncoderOptions enc_options;
   WebPData               webp_data;
   int                    frame_timestamp = 0;
   WebPAnimEncoder       *enc = NULL;
   GeglBuffer            *prev_frame = NULL;
+  gboolean               out_linear = FALSE;
 
   if (nLayers < 1)
     return FALSE;
+
+  webp_decide_output (image_ID, params, &profile, &out_linear);
+  if (profile)
+    {
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet still output the error.
+           */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
+    }
+  if (! space)
+    space = gimp_drawable_get_format (drawable_ID);
 
   gimp_image_undo_freeze (image_ID);
 
@@ -555,10 +607,21 @@ save_animation (const gchar    *filename,
           has_alpha = gimp_drawable_has_alpha (drawable);
 
           if (has_alpha)
-            format = babl_format ("R'G'B'A u8");
+            {
+              if (out_linear)
+                format = babl_format ("RGBA u8");
+              else
+                format = babl_format ("R'G'B'A u8");
+            }
           else
-            format = babl_format ("R'G'B' u8");
+            {
+              if (out_linear)
+                format = babl_format ("RGB u8");
+              else
+                format = babl_format ("R'G'B' u8");
+            }
 
+          format = babl_format_with_space (babl_format_get_encoding (format), space);
           bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
@@ -582,12 +645,20 @@ save_animation (const gchar    *filename,
             }
 
           /* Attempt to allocate a buffer of the appropriate size */
-          buffer = g_try_malloc (w * h * bpp);
-          if (! buffer)
+          if (! buffer || buffer_size < w * h * bpp)
             {
-              g_printerr ("Buffer error: 'buffer null'\n");
-              status = FALSE;
-              break;
+              buffer = g_try_realloc (buffer, w * h * bpp);
+
+              if (! buffer)
+                {
+                  g_printerr ("Buffer error: 'buffer null'\n");
+                  status = FALSE;
+                  break;
+                }
+              else
+                {
+                  buffer_size = w * h * bpp;
+                }
             }
 
           WebPConfigPreset (&config, params->preset, params->quality);
@@ -636,7 +707,6 @@ save_animation (const gchar    *filename,
             {
               status = WebPPictureImportRGBA (&picture, buffer, w * bpp);
             }
-          g_free (buffer);
 
           if (! status)
             {
@@ -661,6 +731,7 @@ save_animation (const gchar    *filename,
           gimp_progress_update ((loop + 1.0) / nLayers);
           frame_timestamp += (delay <= 0 || force_delay) ? default_delay : delay;
         }
+      g_free (buffer);
 
       if (status == FALSE)
         break;
@@ -676,7 +747,6 @@ save_animation (const gchar    *filename,
         }
 
       /* Create a mux object if profile is present */
-      profile = gimp_image_get_color_profile (image_ID);
       if (profile)
         {
           WebPMux      *mux;
@@ -697,7 +767,6 @@ save_animation (const gchar    *filename,
           chunk.bytes = icc_data;
           chunk.size  = icc_data_size;
           WebPMuxSetChunk (mux, "ICCP", &chunk, 1);
-          g_object_unref (profile);
 
           WebPDataClear (&webp_data);
           if (WebPMuxAssemble (mux, &webp_data) != WEBP_MUX_OK)
@@ -715,6 +784,7 @@ save_animation (const gchar    *filename,
   /* Free any resources */
   WebPDataClear (&webp_data);
   WebPAnimEncoderDelete (enc);
+  g_clear_object (&profile);
 
   if (prev_frame != NULL)
     {
@@ -790,6 +860,11 @@ save_image (const gchar            *filename,
           metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
         }
 
+      if (params->profile)
+        metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
+      else
+        metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
+
       file = g_file_new_for_path (filename);
       gimp_image_metadata_save_finish (image_ID,
                                        "image/webp",
@@ -800,4 +875,55 @@ save_image (const gchar            *filename,
 
   /* Return the status */
   return status;
+}
+
+static void
+webp_decide_output (gint32             image_ID,
+                    WebPSaveParams    *params,
+                    GimpColorProfile **profile,
+                    gboolean          *out_linear)
+{
+  g_return_if_fail (profile && *profile == NULL);
+
+  *out_linear = FALSE;
+  if (params->profile)
+    {
+      *profile = gimp_image_get_color_profile (image_ID);
+
+      /* If a profile is explicitly set, follow its TRC, whatever the
+       * storage format.
+       */
+      if (*profile && gimp_color_profile_is_linear (*profile))
+        *out_linear = TRUE;
+
+      /* When no profile was explicitly set, since WebP is apparently
+       * 8-bit max, we export it as sRGB to avoid shadow posterization
+       * (we don't care about storage TRC).
+       * We do an exception for 8-bit linear work image to avoid
+       * conversion loss while the precision is the same.
+       */
+      if (! *profile)
+        {
+          /* There is always an effective profile. */
+          *profile = gimp_image_get_effective_color_profile (image_ID);
+
+          if (gimp_color_profile_is_linear (*profile))
+            {
+              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+                {
+                  /* If stored data was linear, let's convert the profile. */
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (*profile);
+                  g_clear_object (profile);
+                  *profile = saved_profile;
+                }
+              else
+                {
+                  /* Keep linear profile as-is for 8-bit linear image. */
+                  *out_linear = TRUE;
+                }
+            }
+        }
+    }
 }

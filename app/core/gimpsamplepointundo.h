@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_SAMPLE_POINT_UNDO_H__
 #define __GIMP_SAMPLE_POINT_UNDO_H__
 
 
-#include "gimpundo.h"
+#include "gimpauxitemundo.h"
 
 
 #define GIMP_TYPE_SAMPLE_POINT_UNDO            (gimp_sample_point_undo_get_type ())
@@ -35,16 +35,16 @@ typedef struct _GimpSamplePointUndoClass GimpSamplePointUndoClass;
 
 struct _GimpSamplePointUndo
 {
-  GimpUndo         parent_instance;
+  GimpAuxItemUndo    parent_instance;
 
-  GimpSamplePoint *sample_point;
-  gint             x;
-  gint             y;
+  gint               x;
+  gint               y;
+  GimpColorPickMode  pick_mode;
 };
 
 struct _GimpSamplePointUndoClass
 {
-  GimpUndoClass  parent_class;
+  GimpAuxItemUndoClass  parent_class;
 };
 
 

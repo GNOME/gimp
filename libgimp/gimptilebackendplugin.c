@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -43,7 +43,7 @@ struct _GimpTileBackendPluginPrivate
 static gint
 gimp_gegl_tile_mul (void)
 {
-  static gint     mul    = 2;
+  static gint     mul    = 1;
   static gboolean inited = FALSE;
 
   if (G_LIKELY (inited))
@@ -78,8 +78,8 @@ static GeglTile * gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
                                       gint                   y);
 
 
-G_DEFINE_TYPE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
-               GEGL_TYPE_TILE_BACKEND)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
+                            GEGL_TYPE_TILE_BACKEND)
 
 #define parent_class _gimp_tile_backend_plugin_parent_class
 
@@ -93,10 +93,6 @@ _gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_tile_backend_plugin_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpTileBackendPluginPrivate));
-
-  gimp_tile_cache_ntiles (64);
 }
 
 static void
@@ -104,9 +100,7 @@ _gimp_tile_backend_plugin_init (GimpTileBackendPlugin *backend)
 {
   GeglTileSource *source = GEGL_TILE_SOURCE (backend);
 
-  backend->priv = G_TYPE_INSTANCE_GET_PRIVATE (backend,
-                                               GIMP_TYPE_TILE_BACKEND_PLUGIN,
-                                               GimpTileBackendPluginPrivate);
+  backend->priv = _gimp_tile_backend_plugin_get_instance_private (backend);
 
   source->command = gimp_tile_backend_plugin_command;
 }
@@ -136,20 +130,31 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
   switch (command)
     {
     case GEGL_TILE_GET:
-      g_mutex_lock (&backend_plugin_mutex);
+      /* TODO: fetch mipmapped tiles directly from gimp, instead of returning
+       * NULL to render them locally
+       */
+      if (z == 0)
+        {
+          g_mutex_lock (&backend_plugin_mutex);
 
-      result = gimp_tile_read_mul (backend_plugin, x, y);
+          result = gimp_tile_read_mul (backend_plugin, x, y);
 
-      g_mutex_unlock (&backend_plugin_mutex);
+          g_mutex_unlock (&backend_plugin_mutex);
+        }
       break;
 
     case GEGL_TILE_SET:
-      g_mutex_lock (&backend_plugin_mutex);
+      /* TODO: actually store mipmapped tiles */
+      if (z == 0)
+        {
+          g_mutex_lock (&backend_plugin_mutex);
 
-      gimp_tile_write_mul (backend_plugin, x, y, gegl_tile_get_data (data));
+          gimp_tile_write_mul (backend_plugin, x, y, gegl_tile_get_data (data));
+
+          g_mutex_unlock (&backend_plugin_mutex);
+        }
+
       gegl_tile_mark_as_stored (data);
-
-      g_mutex_unlock (&backend_plugin_mutex);
       break;
 
     case GEGL_TILE_FLUSH:
@@ -161,7 +166,9 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
       break;
 
     default:
-      g_assert (command < GEGL_TILE_LAST_COMMAND && command >= 0);
+      result = gegl_tile_backend_command (GEGL_TILE_BACKEND (tile_store),
+                                          command, x, y, z, data);
+      break;
     }
 
   return result;
@@ -200,7 +207,7 @@ gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
           gimp_tile = gimp_drawable_get_tile (priv->drawable,
                                               priv->shadow,
                                               y + v, x + u);
-          gimp_tile_ref (gimp_tile);
+          _gimp_tile_ref_nocache (gimp_tile, TRUE);
 
           {
             gint ewidth           = gimp_tile->ewidth;
@@ -252,7 +259,7 @@ gimp_tile_write_mul (GimpTileBackendPlugin *backend_plugin,
           gimp_tile = gimp_drawable_get_tile (priv->drawable,
                                               priv->shadow,
                                               y+v, x+u);
-          gimp_tile_ref (gimp_tile);
+          _gimp_tile_ref_nocache (gimp_tile, FALSE);
 
           {
             gint ewidth           = gimp_tile->ewidth;

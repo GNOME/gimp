@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE__UNDO_H__
@@ -52,8 +52,6 @@ GimpUndo      * gimp_image_undo_push            (GimpImage     *image,
 GimpUndo      * gimp_image_undo_can_compress    (GimpImage     *image,
                                                  GType          object_type,
                                                  GimpUndoType   undo_type);
-
-GimpUndo      * gimp_image_undo_get_fadeable    (GimpImage     *image);
 
 
 #endif /* __GIMP_IMAGE__UNDO_H__ */

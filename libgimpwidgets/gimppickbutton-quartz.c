@@ -11,7 +11,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,6 +31,21 @@
 #import <AppKit/AppKit.h>
 #include <Carbon/Carbon.h>  /* For virtual key codes ... */
 #include <ApplicationServices/ApplicationServices.h>
+#endif
+
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 1070
+@interface NSWindow (GIMPExt)
+- (NSRect) convertRectToScreen: (NSRect)aRect;
+@end
+@implementation NSWindow (GIMPExt)
+- (NSRect) convertRectToScreen: (NSRect)aRect
+{
+  NSRect result = aRect;
+  NSPoint origin = result.origin;
+  result.origin = [self convertBaseToScreen:origin];
+  return result;
+}
+@end
 #endif
 
 

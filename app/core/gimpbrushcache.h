@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_BRUSH_CACHE_H__
@@ -62,7 +62,6 @@ GimpBrushCache * gimp_brush_cache_new      (GDestroyNotify  data_destory,
 void             gimp_brush_cache_clear    (GimpBrushCache *cache);
 
 gconstpointer    gimp_brush_cache_get      (GimpBrushCache *cache,
-                                            GeglNode       *op,
                                             gint            width,
                                             gint            height,
                                             gdouble         scale,
@@ -72,7 +71,6 @@ gconstpointer    gimp_brush_cache_get      (GimpBrushCache *cache,
                                             gdouble         hardness);
 void             gimp_brush_cache_add      (GimpBrushCache *cache,
                                             gpointer        data,
-                                            GeglNode       *op,
                                             gint            width,
                                             gint            height,
                                             gdouble         scale,

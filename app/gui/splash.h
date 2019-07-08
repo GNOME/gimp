@@ -12,14 +12,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __SPLASH_H__
 #define __SPLASH_H__
 
 
-void   splash_create    (gboolean     be_verbose,
+void   splash_create    (Gimp        *gimp,
+                         gboolean     be_verbose,
                          GdkMonitor  *mointor);
 void   splash_destroy   (void);
 

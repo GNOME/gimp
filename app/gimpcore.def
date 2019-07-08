@@ -854,8 +854,6 @@ gimp_plug_in_procedure_get_locale_domain
 
 gimp_channel_select_round_rect
 gimp_drawable_undo_get_type
-gimp_edit_fade
-gimp_image_undo_get_fadeable
 gimp_message_severity_get_type
 gimp_progress_message
 plug_in_icc_profile_info

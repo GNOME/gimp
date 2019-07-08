@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -222,12 +222,12 @@ struct _GimpToolRectanglePrivate
 
   /* Whether to draw round corners */
   gboolean                round_corners;
-  gboolean                corner_radius;
+  gdouble                 corner_radius;
 
   /* The title for the statusbar coords */
   gchar                  *status_title;
 
-  /* For saving in case of cancelation. */
+  /* For saving in case of cancellation. */
   gdouble                 saved_x1;
   gdouble                 saved_y1;
   gdouble                 saved_x2;
@@ -433,8 +433,8 @@ static void     gimp_tool_rectangle_adjust_coord    (GimpToolRectangle     *rect
                                                      gdouble               *coord_y_output);
 
 
-G_DEFINE_TYPE (GimpToolRectangle, gimp_tool_rectangle,
-               GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolRectangle, gimp_tool_rectangle,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_rectangle_parent_class
 
@@ -556,7 +556,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
   g_object_class_install_property (object_class, PROP_CORNER_RADIUS,
                                    g_param_spec_double ("corner-radius",
                                                         NULL, NULL,
-                                                        0.0, 1000.0, 5.0,
+                                                        0.0, 10000.0, 10.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -694,16 +694,12 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolRectanglePrivate));
 }
 
 static void
 gimp_tool_rectangle_init (GimpToolRectangle *rectangle)
 {
-  rectangle->private = G_TYPE_INSTANCE_GET_PRIVATE (rectangle,
-                                                    GIMP_TYPE_TOOL_RECTANGLE,
-                                                    GimpToolRectanglePrivate);
+  rectangle->private = gimp_tool_rectangle_get_instance_private (rectangle);
 
   rectangle->private->function = GIMP_TOOL_RECTANGLE_CREATING;
   rectangle->private->is_first = TRUE;
@@ -823,11 +819,7 @@ gimp_tool_rectangle_finalize (GObject *object)
   GimpToolRectangle        *rectangle = GIMP_TOOL_RECTANGLE (object);
   GimpToolRectanglePrivate *private   = rectangle->private;
 
-  if (private->status_title)
-    {
-      g_free (private->status_title);
-      private->status_title = NULL;
-    }
+  g_clear_pointer (&private->status_title, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

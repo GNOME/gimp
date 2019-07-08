@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -210,11 +210,12 @@ gimp_error_console_add (GimpErrorConsole    *console,
                         const gchar         *domain,
                         const gchar         *message)
 {
-  const gchar *desc;
-  GtkTextIter  end;
-  GtkTextMark *end_mark;
-  GdkPixbuf   *pixbuf;
-  gchar       *str;
+  const gchar        *desc;
+  GtkTextIter         end;
+  GtkTextMark        *end_mark;
+  GtkTextChildAnchor *anchor;
+  GtkWidget          *image;
+  gchar              *str;
 
   g_return_if_fail (GIMP_IS_ERROR_CONSOLE (console));
   g_return_if_fail (domain != NULL);
@@ -225,10 +226,16 @@ gimp_error_console_add (GimpErrorConsole    *console,
 
   gtk_text_buffer_get_end_iter (console->text_buffer, &end);
 
-  pixbuf = gimp_widget_load_icon (GTK_WIDGET (console),
-                                  gimp_get_message_icon_name (severity), 20);
-  gtk_text_buffer_insert_pixbuf (console->text_buffer, &end, pixbuf);
-  g_object_unref (pixbuf);
+  anchor = gtk_text_child_anchor_new ();
+  gtk_text_buffer_insert_child_anchor (console->text_buffer, &end, anchor);
+
+  image = gtk_image_new_from_icon_name (gimp_get_message_icon_name (severity),
+                                        GTK_ICON_SIZE_BUTTON);
+  gtk_text_view_add_child_at_anchor (GTK_TEXT_VIEW (console->text_view),
+                                     image, anchor);
+  gtk_widget_show (image);
+
+  g_object_unref (anchor);
 
   gtk_text_buffer_insert (console->text_buffer, &end, "  ", -1);
 

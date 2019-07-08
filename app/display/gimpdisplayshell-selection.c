@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -43,10 +43,10 @@ struct _Selection
 {
   GimpDisplayShell *shell;            /*  shell that owns the selection     */
 
-  GimpSegment      *segs_in;          /*  gdk segments of area boundary     */
+  GimpSegment      *segs_in;          /*  segments of area boundary         */
   gint              n_segs_in;        /*  number of segments in segs_in     */
 
-  GimpSegment      *segs_out;         /*  gdk segments of area boundary     */
+  GimpSegment      *segs_out;         /*  segments of area boundary         */
   gint              n_segs_out;       /*  number of segments in segs_out    */
 
   guint             index;            /*  index of current stipple pattern  */
@@ -63,7 +63,8 @@ struct _Selection
 static void      selection_start          (Selection          *selection);
 static void      selection_stop           (Selection          *selection);
 
-static void      selection_draw           (Selection          *selection);
+static void      selection_draw           (Selection          *selection,
+                                           cairo_t            *cr);
 static void      selection_undraw         (Selection          *selection);
 
 static void      selection_render_mask    (Selection          *selection);
@@ -246,19 +247,14 @@ selection_stop (Selection *selection)
 }
 
 static void
-selection_draw (Selection *selection)
+selection_draw (Selection *selection,
+                cairo_t   *cr)
 {
   if (selection->segs_in)
     {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
-
       gimp_display_shell_draw_selection_in (selection->shell, cr,
                                             selection->segs_in_mask,
                                             selection->index % 8);
-
-      cairo_destroy (cr);
     }
 }
 
@@ -426,31 +422,48 @@ selection_start_timeout (Selection *selection)
   /*  Draw the ants  */
   if (selection->show_selection)
     {
-      GimpDisplayConfig *config = selection->shell->display->config;
+      GdkWindow             *window;
+      GdkDrawingContext     *context;
+      cairo_rectangle_int_t  rect;
+      cairo_region_t        *region;
+      cairo_t               *cr;
 
-      selection_draw (selection);
+      window = gtk_widget_get_window (selection->shell->canvas);
+
+      rect.x      = 0;
+      rect.y      = 0;
+      rect.width  = gdk_window_get_width  (window);
+      rect.height = gdk_window_get_height (window);
+
+      region = cairo_region_create_rectangle (&rect);
+      context = gdk_window_begin_draw_frame (window, region);
+      cairo_region_destroy (region);
+
+      cr = gdk_drawing_context_get_cairo_context (context);
+
+      selection_draw (selection, cr);
 
       if (selection->segs_out)
         {
-          cairo_t *cr;
-
-          cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
-
           if (selection->shell->rotate_transform)
             cairo_transform (cr, selection->shell->rotate_transform);
 
           gimp_display_shell_draw_selection_out (selection->shell, cr,
                                                  selection->segs_out,
                                                  selection->n_segs_out);
-
-          cairo_destroy (cr);
         }
 
+      gdk_window_end_draw_frame (window, context);
+
       if (selection->segs_in && selection->shell_visible)
-        selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
-                                                 config->marching_ants_speed,
-                                                 (GSourceFunc) selection_timeout,
-                                                 selection, NULL);
+        {
+          GimpDisplayConfig *config = selection->shell->display->config;
+
+          selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                                   config->marching_ants_speed,
+                                                   (GSourceFunc) selection_timeout,
+                                                   selection, NULL);
+        }
     }
 
   return FALSE;
@@ -459,8 +472,29 @@ selection_start_timeout (Selection *selection)
 static gboolean
 selection_timeout (Selection *selection)
 {
+  GdkWindow             *window;
+  GdkDrawingContext     *context;
+  cairo_rectangle_int_t  rect;
+  cairo_region_t        *region;
+  cairo_t               *cr;
+
+  window = gtk_widget_get_window (selection->shell->canvas);
+
+  rect.x      = 0;
+  rect.y      = 0;
+  rect.width  = gdk_window_get_width  (window);
+  rect.height = gdk_window_get_height (window);
+
+  region = cairo_region_create_rectangle (&rect);
+  context = gdk_window_begin_draw_frame (window, region);
+  cairo_region_destroy (region);
+
+  cr = gdk_drawing_context_get_cairo_context (context);
+
   selection->index++;
-  selection_draw (selection);
+  selection_draw (selection, cr);
+
+  gdk_window_end_draw_frame (window, context);
 
   return TRUE;
 }

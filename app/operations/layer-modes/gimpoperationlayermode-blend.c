@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -80,10 +80,11 @@ safe_div (gfloat a,
 
 
 void /* aka linear_dodge */
-gimp_operation_layer_mode_blend_addition (const gfloat *in,
-                                          const gfloat *layer,
-                                          gfloat       *comp,
-                                          gint          samples)
+gimp_operation_layer_mode_blend_addition (GeglOperation *operation,
+                                          const gfloat  *in,
+                                          const gfloat  *layer,
+                                          gfloat        *comp,
+                                          gint           samples)
 {
   while (samples--)
     {
@@ -104,10 +105,11 @@ gimp_operation_layer_mode_blend_addition (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_burn (const gfloat *in,
-                                      const gfloat *layer,
-                                      gfloat       *comp,
-                                      gint          samples)
+gimp_operation_layer_mode_blend_burn (GeglOperation *operation,
+                                      const gfloat  *in,
+                                      const gfloat  *layer,
+                                      gfloat        *comp,
+                                      gint           samples)
 {
   while (samples--)
     {
@@ -128,10 +130,11 @@ gimp_operation_layer_mode_blend_burn (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_darken_only (const gfloat *in,
-                                             const gfloat *layer,
-                                             gfloat       *comp,
-                                             gint          samples)
+gimp_operation_layer_mode_blend_darken_only (GeglOperation *operation,
+                                             const gfloat  *in,
+                                             const gfloat  *layer,
+                                             gfloat        *comp,
+                                             gint           samples)
 {
   while (samples--)
     {
@@ -152,10 +155,11 @@ gimp_operation_layer_mode_blend_darken_only (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_difference (const gfloat *in,
-                                            const gfloat *layer,
-                                            gfloat       *comp,
-                                            gint          samples)
+gimp_operation_layer_mode_blend_difference (GeglOperation *operation,
+                                            const gfloat  *in,
+                                            const gfloat  *layer,
+                                            gfloat        *comp,
+                                            gint           samples)
 {
   while (samples--)
     {
@@ -176,10 +180,11 @@ gimp_operation_layer_mode_blend_difference (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_divide (const gfloat *in,
-                                        const gfloat *layer,
-                                        gfloat       *comp,
-                                        gint          samples)
+gimp_operation_layer_mode_blend_divide (GeglOperation *operation,
+                                        const gfloat  *in,
+                                        const gfloat  *layer,
+                                        gfloat        *comp,
+                                        gint           samples)
 {
   while (samples--)
     {
@@ -200,10 +205,11 @@ gimp_operation_layer_mode_blend_divide (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_dodge (const gfloat *in,
-                                       const gfloat *layer,
-                                       gfloat       *comp,
-                                       gint          samples)
+gimp_operation_layer_mode_blend_dodge (GeglOperation *operation,
+                                       const gfloat  *in,
+                                       const gfloat  *layer,
+                                       gfloat        *comp,
+                                       gint           samples)
 {
   while (samples--)
     {
@@ -224,10 +230,11 @@ gimp_operation_layer_mode_blend_dodge (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_exclusion (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_exclusion (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -248,10 +255,11 @@ gimp_operation_layer_mode_blend_exclusion (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_grain_extract (const gfloat *in,
-                                               const gfloat *layer,
-                                               gfloat       *comp,
-                                               gint          samples)
+gimp_operation_layer_mode_blend_grain_extract (GeglOperation *operation,
+                                               const gfloat  *in,
+                                               const gfloat  *layer,
+                                               gfloat        *comp,
+                                               gint           samples)
 {
   while (samples--)
     {
@@ -272,10 +280,11 @@ gimp_operation_layer_mode_blend_grain_extract (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_grain_merge (const gfloat *in,
-                                             const gfloat *layer,
-                                             gfloat       *comp,
-                                             gint          samples)
+gimp_operation_layer_mode_blend_grain_merge (GeglOperation *operation,
+                                             const gfloat  *in,
+                                             const gfloat  *layer,
+                                             gfloat        *comp,
+                                             gint           samples)
 {
   while (samples--)
     {
@@ -296,10 +305,11 @@ gimp_operation_layer_mode_blend_grain_merge (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_hard_mix (const gfloat *in,
-                                          const gfloat *layer,
-                                          gfloat       *comp,
-                                          gint          samples)
+gimp_operation_layer_mode_blend_hard_mix (GeglOperation *operation,
+                                          const gfloat  *in,
+                                          const gfloat  *layer,
+                                          gfloat        *comp,
+                                          gint           samples)
 {
   while (samples--)
     {
@@ -320,10 +330,11 @@ gimp_operation_layer_mode_blend_hard_mix (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_hardlight (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_hardlight (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -358,10 +369,11 @@ gimp_operation_layer_mode_blend_hardlight (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_hsl_color (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_hsl_color (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -422,10 +434,11 @@ gimp_operation_layer_mode_blend_hsl_color (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_hsv_hue (const gfloat *in,
-                                         const gfloat *layer,
-                                         gfloat       *comp,
-                                         gint          samples)
+gimp_operation_layer_mode_blend_hsv_hue (GeglOperation *operation,
+                                         const gfloat  *in,
+                                         const gfloat  *layer,
+                                         gfloat        *comp,
+                                         gint           samples)
 {
   while (samples--)
     {
@@ -477,10 +490,11 @@ gimp_operation_layer_mode_blend_hsv_hue (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_hsv_saturation (const gfloat *in,
-                                                const gfloat *layer,
-                                                gfloat       *comp,
-                                                gint          samples)
+gimp_operation_layer_mode_blend_hsv_saturation (GeglOperation *operation,
+                                                const gfloat  *in,
+                                                const gfloat  *layer,
+                                                gfloat        *comp,
+                                                gint           samples)
 {
   while (samples--)
     {
@@ -531,10 +545,11 @@ gimp_operation_layer_mode_blend_hsv_saturation (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_hsv_value (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_hsv_value (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -574,10 +589,11 @@ gimp_operation_layer_mode_blend_hsv_value (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_chroma (const gfloat *in,
-                                            const gfloat *layer,
-                                            gfloat       *comp,
-                                            gint          samples)
+gimp_operation_layer_mode_blend_lch_chroma (GeglOperation *operation,
+                                            const gfloat  *in,
+                                            const gfloat  *layer,
+                                            gfloat        *comp,
+                                            gint           samples)
 {
   while (samples--)
     {
@@ -616,10 +632,11 @@ gimp_operation_layer_mode_blend_lch_chroma (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_color (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_lch_color (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -639,10 +656,11 @@ gimp_operation_layer_mode_blend_lch_color (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_hue (const gfloat *in,
-                                         const gfloat *layer,
-                                         gfloat       *comp,
-                                         gint          samples)
+gimp_operation_layer_mode_blend_lch_hue (GeglOperation *operation,
+                                         const gfloat  *in,
+                                         const gfloat  *layer,
+                                         gfloat        *comp,
+                                         gint           samples)
 {
   while (samples--)
     {
@@ -681,10 +699,11 @@ gimp_operation_layer_mode_blend_lch_hue (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_lightness (const gfloat *in,
-                                               const gfloat *layer,
-                                               gfloat       *comp,
-                                               gint          samples)
+gimp_operation_layer_mode_blend_lch_lightness (GeglOperation *operation,
+                                               const gfloat  *in,
+                                               const gfloat  *layer,
+                                               gfloat        *comp,
+                                               gint           samples)
 {
   while (samples--)
     {
@@ -704,10 +723,11 @@ gimp_operation_layer_mode_blend_lch_lightness (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_lighten_only (const gfloat *in,
-                                              const gfloat *layer,
-                                              gfloat       *comp,
-                                              gint          samples)
+gimp_operation_layer_mode_blend_lighten_only (GeglOperation *operation,
+                                              const gfloat  *in,
+                                              const gfloat  *layer,
+                                              gfloat        *comp,
+                                              gint           samples)
 {
   while (samples--)
     {
@@ -728,10 +748,11 @@ gimp_operation_layer_mode_blend_lighten_only (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_linear_burn (const gfloat *in,
-                                             const gfloat *layer,
-                                             gfloat       *comp,
-                                             gint          samples)
+gimp_operation_layer_mode_blend_linear_burn (GeglOperation *operation,
+                                             const gfloat  *in,
+                                             const gfloat  *layer,
+                                             gfloat        *comp,
+                                             gint           samples)
 {
   while (samples--)
     {
@@ -754,10 +775,11 @@ gimp_operation_layer_mode_blend_linear_burn (const gfloat *in,
 /* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 void
-gimp_operation_layer_mode_blend_linear_light (const gfloat *in,
-                                              const gfloat *layer,
-                                              gfloat       *comp,
-                                              gint          samples)
+gimp_operation_layer_mode_blend_linear_light (GeglOperation *operation,
+                                              const gfloat  *in,
+                                              const gfloat  *layer,
+                                              gfloat        *comp,
+                                              gint           samples)
 {
   while (samples--)
     {
@@ -787,11 +809,17 @@ gimp_operation_layer_mode_blend_linear_light (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_luma_darken_only (const gfloat *in,
-                                                  const gfloat *layer,
-                                                  gfloat       *comp,
-                                                  gint          samples)
+gimp_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
+                                                  const gfloat  *in,
+                                                  const gfloat  *layer,
+                                                  gfloat        *comp,
+                                                  gint           samples)
 {
+  const Babl *space  = gegl_operation_get_source_space (operation, "input");
+  double red_luminance, green_luminance, blue_luminance;
+  babl_space_get_rgb_luminance (space, 
+    &red_luminance, &green_luminance, &blue_luminance);
+
   while (samples--)
     {
       if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
@@ -800,8 +828,13 @@ gimp_operation_layer_mode_blend_luma_darken_only (const gfloat *in,
           gfloat src_luminance;
           gint   c;
 
-          dest_luminance = GIMP_RGB_LUMINANCE (in[0],    in[1],    in[2]);
-          src_luminance  = GIMP_RGB_LUMINANCE (layer[0], layer[1], layer[2]);
+          dest_luminance  = (in[0]    * red_luminance)   +
+                            (in[1]    * green_luminance) +
+                            (in[2]    * blue_luminance);
+
+          src_luminance   = (layer[0] * red_luminance)   +
+                            (layer[1] * green_luminance) +
+                            (layer[2] * blue_luminance);
 
           if (dest_luminance <= src_luminance)
             {
@@ -824,11 +857,17 @@ gimp_operation_layer_mode_blend_luma_darken_only (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_luma_lighten_only (const gfloat *in,
-                                                   const gfloat *layer,
-                                                   gfloat       *comp,
-                                                   gint          samples)
+gimp_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
+                                                   const gfloat  *in,
+                                                   const gfloat  *layer,
+                                                   gfloat        *comp,
+                                                   gint           samples)
 {
+  const Babl *space  = gegl_operation_get_source_space (operation, "input");
+  double red_luminance, green_luminance, blue_luminance;
+  babl_space_get_rgb_luminance (space, 
+    &red_luminance, &green_luminance, &blue_luminance);
+
   while (samples--)
     {
       if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
@@ -837,8 +876,13 @@ gimp_operation_layer_mode_blend_luma_lighten_only (const gfloat *in,
           gfloat src_luminance;
           gint   c;
 
-          dest_luminance = GIMP_RGB_LUMINANCE (in[0],    in[1],    in[2]);
-          src_luminance  = GIMP_RGB_LUMINANCE (layer[0], layer[1], layer[2]);
+          dest_luminance  = (in[0]    * red_luminance)   +
+                            (in[1]    * green_luminance) +
+                            (in[2]    * blue_luminance);
+
+          src_luminance   = (layer[0] * red_luminance)   +
+                            (layer[1] * green_luminance) +
+                            (layer[2] * blue_luminance);
 
           if (dest_luminance >= src_luminance)
             {
@@ -861,25 +905,34 @@ gimp_operation_layer_mode_blend_luma_lighten_only (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_luminance (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
-  gfloat layer_Y[samples], *layer_Y_p;
-  gfloat in_Y[samples],    *in_Y_p;
+  const Babl *fish;
+  gfloat     *scratch;
+  gfloat     *in_Y;
+  gfloat     *layer_Y;
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
 
-  babl_process (babl_fish ("RGBA float", "Y float"), layer, layer_Y, samples);
-  babl_process (babl_fish ("RGBA float", "Y float"), in,    in_Y,    samples);
+  fish = babl_fish (babl_format_with_space ("RGBA float", space),
+                    babl_format_with_space ("Y float",    space));
 
-  layer_Y_p = &layer_Y[0];
-  in_Y_p    = &in_Y[0];
+  scratch = gegl_scratch_new (gfloat, 2 * samples);
+
+  in_Y    = scratch;
+  layer_Y = scratch + samples;
+
+  babl_process (fish, in,    in_Y,    samples);
+  babl_process (fish, layer, layer_Y, samples);
 
   while (samples--)
     {
       if (layer[ALPHA] != 0.0f && in[ALPHA] != 0.0f)
         {
-          gfloat ratio = safe_div (layer_Y_p[0], in_Y_p[0]);
+          gfloat ratio = safe_div (layer_Y[0], in_Y[0]);
           gint   c;
 
           for (c = 0; c < 3; c ++)
@@ -888,19 +941,22 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
 
       comp[ALPHA] = layer[ALPHA];
 
-      comp      += 4;
-      in        += 4;
-      layer     += 4;
-      in_Y_p    ++;
-      layer_Y_p ++;
+      comp    += 4;
+      in      += 4;
+      layer   += 4;
+      in_Y    ++;
+      layer_Y ++;
     }
+
+  gegl_scratch_free (scratch);
 }
 
 void
-gimp_operation_layer_mode_blend_multiply (const gfloat *in,
-                                          const gfloat *layer,
-                                          gfloat       *comp,
-                                          gint          samples)
+gimp_operation_layer_mode_blend_multiply (GeglOperation *operation,
+                                          const gfloat  *in,
+                                          const gfloat  *layer,
+                                          gfloat        *comp,
+                                          gint           samples)
 {
   while (samples--)
     {
@@ -921,10 +977,11 @@ gimp_operation_layer_mode_blend_multiply (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_overlay (const gfloat *in,
-                                         const gfloat *layer,
-                                         gfloat       *comp,
-                                         gint          samples)
+gimp_operation_layer_mode_blend_overlay (GeglOperation *operation,
+                                         const gfloat  *in,
+                                         const gfloat  *layer,
+                                         gfloat        *comp,
+                                         gint           samples)
 {
   while (samples--)
     {
@@ -955,10 +1012,11 @@ gimp_operation_layer_mode_blend_overlay (const gfloat *in,
 /* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 void
-gimp_operation_layer_mode_blend_pin_light (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_pin_light (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -988,10 +1046,11 @@ gimp_operation_layer_mode_blend_pin_light (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_screen (const gfloat *in,
-                                        const gfloat *layer,
-                                        gfloat       *comp,
-                                        gint          samples)
+gimp_operation_layer_mode_blend_screen (GeglOperation *operation,
+                                        const gfloat  *in,
+                                        const gfloat  *layer,
+                                        gfloat        *comp,
+                                        gint           samples)
 {
   while (samples--)
     {
@@ -1012,10 +1071,11 @@ gimp_operation_layer_mode_blend_screen (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_softlight (const gfloat *in,
-                                           const gfloat *layer,
-                                           gfloat       *comp,
-                                           gint          samples)
+gimp_operation_layer_mode_blend_softlight (GeglOperation *operation,
+                                           const gfloat  *in,
+                                           const gfloat  *layer,
+                                           gfloat        *comp,
+                                           gint           samples)
 {
   while (samples--)
     {
@@ -1041,10 +1101,11 @@ gimp_operation_layer_mode_blend_softlight (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_blend_subtract (const gfloat *in,
-                                          const gfloat *layer,
-                                          gfloat       *comp,
-                                          gint          samples)
+gimp_operation_layer_mode_blend_subtract (GeglOperation *operation,
+                                          const gfloat  *in,
+                                          const gfloat  *layer,
+                                          gfloat        *comp,
+                                          gint           samples)
 {
   while (samples--)
     {
@@ -1067,10 +1128,11 @@ gimp_operation_layer_mode_blend_subtract (const gfloat *in,
 /* added according to:
     http://www.simplefilter.de/en/basics/mixmods.html */
 void
-gimp_operation_layer_mode_blend_vivid_light (const gfloat *in,
-                                             const gfloat *layer,
-                                             gfloat       *comp,
-                                             gint          samples)
+gimp_operation_layer_mode_blend_vivid_light (GeglOperation *operation,
+                                             const gfloat  *in,
+                                             const gfloat  *layer,
+                                             gfloat        *comp,
+                                             gint           samples)
 {
   while (samples--)
     {
@@ -1115,10 +1177,11 @@ gimp_operation_layer_mode_blend_vivid_light (const gfloat *in,
 
 
 void
-gimp_operation_layer_mode_blend_color_erase (const gfloat *in,
-                                             const gfloat *layer,
-                                             gfloat       *comp,
-                                             gint          samples)
+gimp_operation_layer_mode_blend_color_erase (GeglOperation *operation,
+                                             const gfloat  *in,
+                                             const gfloat  *layer,
+                                             gfloat        *comp,
+                                             gint           samples)
 {
   while (samples--)
     {

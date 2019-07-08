@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_CANVAS_TEXT_CURSOR_H__
@@ -51,7 +51,8 @@ GType            gimp_canvas_text_cursor_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_text_cursor_new      (GimpDisplayShell *shell,
                                                    PangoRectangle   *cursor,
-                                                   gboolean          overwrite);
+                                                   gboolean          overwrite,
+                                                   GimpTextDirection direction);
 
 
 #endif /* __GIMP_CANVAS_RECTANGLE_H__ */

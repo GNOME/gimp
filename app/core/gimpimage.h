@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_IMAGE_H__
@@ -33,13 +33,16 @@
 #define GIMP_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE, GimpImageClass))
 
 
-typedef struct _GimpImageClass GimpImageClass;
+typedef struct _GimpImageClass   GimpImageClass;
+typedef struct _GimpImagePrivate GimpImagePrivate;
 
 struct _GimpImage
 {
-  GimpViewable  parent_instance;
+  GimpViewable      parent_instance;
 
-  Gimp         *gimp;  /*  the GIMP the image belongs to  */
+  Gimp             *gimp;  /*  the GIMP the image belongs to  */
+
+  GimpImagePrivate *priv;
 };
 
 struct _GimpImageClass
@@ -73,6 +76,7 @@ struct _GimpImageClass
                                          GimpDirtyMask         dirty_mask);
   void (* dirty)                        (GimpImage            *image,
                                          GimpDirtyMask         dirty_mask);
+  void (* saving)                       (GimpImage            *image);
   void (* saved)                        (GimpImage            *image,
                                          GFile                *file);
   void (* exported)                     (GimpImage            *image,
@@ -122,7 +126,10 @@ GimpPrecision      gimp_image_get_precision      (GimpImage          *image);
 const Babl    * gimp_image_get_format            (GimpImage          *image,
                                                   GimpImageBaseType   base_type,
                                                   GimpPrecision       precision,
-                                                  gboolean            with_alpha);
+                                                  gboolean            with_alpha,
+                                                  const Babl         *space);
+
+const Babl    * gimp_image_get_layer_space       (GimpImage          *image);
 const Babl    * gimp_image_get_layer_format      (GimpImage          *image,
                                                   gboolean            with_alpha);
 const Babl    * gimp_image_get_channel_format    (GimpImage          *image);
@@ -163,6 +170,7 @@ GimpPlugInProcedure * gimp_image_get_load_proc   (GimpImage          *image);
 void            gimp_image_set_save_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
 GimpPlugInProcedure * gimp_image_get_save_proc   (GimpImage          *image);
+void            gimp_image_saving                (GimpImage          *image);
 void            gimp_image_saved                 (GimpImage          *image,
                                                   GFile              *file);
 void            gimp_image_set_export_proc       (GimpImage          *image,
@@ -310,9 +318,11 @@ gboolean        gimp_image_parasite_validate     (GimpImage          *image,
                                                   const GimpParasite *parasite,
                                                   GError            **error);
 void            gimp_image_parasite_attach       (GimpImage          *image,
-                                                  const GimpParasite *parasite);
+                                                  const GimpParasite *parasite,
+                                                  gboolean            push_undo);
 void            gimp_image_parasite_detach       (GimpImage          *image,
-                                                  const gchar        *name);
+                                                  const gchar        *name,
+                                                  gboolean            push_undo);
 
 
 /*  tattoos  */

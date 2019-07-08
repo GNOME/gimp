@@ -12,26 +12,26 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __FILTERS_COMMANDS_H__
 #define __FILTERS_COMMANDS_H__
 
 
-void   filters_apply_cmd_callback             (GtkAction     *action,
-                                               const gchar   *operation,
-                                               gpointer       data);
-void   filters_apply_interactive_cmd_callback (GtkAction     *action,
-                                               const gchar   *operation,
-                                               gpointer       data);
+void   filters_apply_cmd_callback             (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   filters_apply_interactive_cmd_callback (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
-void   filters_repeat_cmd_callback            (GtkAction     *action,
-                                               gint           value,
-                                               gpointer       data);
-void   filters_history_cmd_callback           (GtkAction     *action,
-                                               GimpProcedure *procedure,
-                                               gpointer       data);
+void   filters_repeat_cmd_callback            (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   filters_history_cmd_callback           (GimpAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
 
 
 #endif /* __FILTERS_COMMANDS_H__ */

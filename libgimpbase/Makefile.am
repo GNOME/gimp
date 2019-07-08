@@ -65,7 +65,6 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)						\
 	$(GIO_CFLAGS)						\
 	$(GEXIV2_CFLAGS)					\
-	$(BINRELOC_CFLAGS)					\
 	-I$(includedir)
 
 AM_CFLAGS = \
@@ -108,8 +107,6 @@ libgimpbase_sources = \
 	gimpchecks.h           	\
 	gimpcpuaccel.c		\
 	gimpcpuaccel.h		\
-	gimpdatafiles.c		\
-	gimpdatafiles.h		\
 	gimpenv.c		\
 	gimpenv.h		\
 	gimpmemsize.c		\
@@ -157,7 +154,6 @@ libgimpbaseinclude_HEADERS = \
 	gimpversion.h		\
 	\
 	gimpchecks.h		\
-	gimpdatafiles.h		\
 	gimpenv.h		\
 	gimpmemsize.h		\
 	gimpmetadata.h		\

@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -38,8 +38,9 @@
 /*  public functions  */
 
 void
-window_close_cmd_callback (GtkAction *action,
-                           gpointer   data)
+window_close_cmd_callback (GimpAction *action,
+                           GVariant   *value,
+                           gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -60,8 +61,9 @@ window_close_cmd_callback (GtkAction *action,
 }
 
 void
-window_open_display_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+window_open_display_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
 {
   GtkWidget *widget;
   GtkWidget *dialog;
@@ -132,14 +134,15 @@ window_open_display_cmd_callback (GtkAction *action,
 }
 
 void
-window_move_to_screen_cmd_callback (GtkAction *action,
-                                    GtkAction *current,
-                                    gpointer   data)
+window_move_to_screen_cmd_callback (GimpAction *action,
+                                    GVariant   *value,
+                                    gpointer    data)
 {
   GtkWidget *widget;
   GdkScreen *screen;
   return_if_no_widget (widget, data);
 
+#if 0
   if (! gtk_widget_is_toplevel (widget))
     widget = gtk_widget_get_toplevel (widget);
 
@@ -149,4 +152,5 @@ window_move_to_screen_cmd_callback (GtkAction *action,
     {
       gtk_window_set_screen (GTK_WINDOW (widget), screen);
     }
+#endif
 }

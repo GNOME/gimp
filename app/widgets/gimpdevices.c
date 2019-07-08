@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -309,7 +309,7 @@ gimp_devices_get_from_event (Gimp            *gimp,
         case GDK_DEVICE_TYPE_SLAVE:
           /*  this is the tricky part: we do want to distingiugh slave
            *  devices, but only if we actually enabled them ourselves
-           *  explicitely (like the pens of a tablet); however we
+           *  explicitly (like the pens of a tablet); however we
            *  usually don't enable the different incarnations of the
            *  mouse itself (like touchpad, trackpoint, usb mouse
            *  etc.), so for these return their respective master so

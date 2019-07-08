@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -31,6 +31,7 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-tile-compat.h"
 
 #include "core/gimp.h"
@@ -160,7 +161,7 @@ xcf_load_image (Gimp     *gimp,
   gint                width;
   gint                height;
   gint                image_type;
-  GimpPrecision       precision = GIMP_PRECISION_U8_GAMMA;
+  GimpPrecision       precision = GIMP_PRECISION_U8_NON_LINEAR;
   gint                num_successful_elements = 0;
   GList              *syms;
   GList              *iter;
@@ -183,11 +184,11 @@ xcf_load_image (Gimp     *gimp,
         {
           switch (p)
             {
-            case 0: precision = GIMP_PRECISION_U8_GAMMA;     break;
-            case 1: precision = GIMP_PRECISION_U16_GAMMA;    break;
-            case 2: precision = GIMP_PRECISION_U32_LINEAR;   break;
-            case 3: precision = GIMP_PRECISION_HALF_LINEAR;  break;
-            case 4: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
+            case 0: precision = GIMP_PRECISION_U8_NON_LINEAR;  break;
+            case 1: precision = GIMP_PRECISION_U16_NON_LINEAR; break;
+            case 2: precision = GIMP_PRECISION_U32_LINEAR;     break;
+            case 3: precision = GIMP_PRECISION_HALF_LINEAR;    break;
+            case 4: precision = GIMP_PRECISION_FLOAT_LINEAR;   break;
             default:
               goto hard_error;
             }
@@ -197,16 +198,16 @@ xcf_load_image (Gimp     *gimp,
         {
           switch (p)
             {
-            case 100: precision = GIMP_PRECISION_U8_LINEAR; break;
-            case 150: precision = GIMP_PRECISION_U8_GAMMA; break;
-            case 200: precision = GIMP_PRECISION_U16_LINEAR; break;
-            case 250: precision = GIMP_PRECISION_U16_GAMMA; break;
-            case 300: precision = GIMP_PRECISION_U32_LINEAR; break;
-            case 350: precision = GIMP_PRECISION_U32_GAMMA; break;
-            case 400: precision = GIMP_PRECISION_HALF_LINEAR; break;
-            case 450: precision = GIMP_PRECISION_HALF_GAMMA; break;
-            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
-            case 550: precision = GIMP_PRECISION_FLOAT_GAMMA; break;
+            case 100: precision = GIMP_PRECISION_U8_LINEAR;        break;
+            case 150: precision = GIMP_PRECISION_U8_NON_LINEAR;    break;
+            case 200: precision = GIMP_PRECISION_U16_LINEAR;       break;
+            case 250: precision = GIMP_PRECISION_U16_NON_LINEAR;   break;
+            case 300: precision = GIMP_PRECISION_U32_LINEAR;       break;
+            case 350: precision = GIMP_PRECISION_U32_NON_LINEAR;   break;
+            case 400: precision = GIMP_PRECISION_HALF_LINEAR;      break;
+            case 450: precision = GIMP_PRECISION_HALF_NON_LINEAR;  break;
+            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR;     break;
+            case 550: precision = GIMP_PRECISION_FLOAT_NON_LINEAR; break;
             default:
               goto hard_error;
             }
@@ -219,6 +220,14 @@ xcf_load_image (Gimp     *gimp,
 
   GIMP_LOG (XCF, "version=%d, width=%d, height=%d, image_type=%d, precision=%d",
             info->file_version, width, height, image_type, precision);
+
+  if (! gimp_babl_is_valid (image_type, precision))
+    {
+      gimp_message_literal (gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_ERROR,
+                            _("Invalid image mode and precision combination."));
+      goto hard_error;
+    }
 
   image = gimp_create_image (gimp, width, height, image_type, precision,
                              FALSE);
@@ -257,12 +266,14 @@ xcf_load_image (Gimp     *gimp,
                                        "gimp-image-metadata");
   if (parasite)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-      GimpMetadata     *metadata;
+      GimpImagePrivate *private  = GIMP_IMAGE_GET_PRIVATE (image);
+      GimpMetadata     *metadata = NULL;
       const gchar      *meta_string;
 
       meta_string = (gchar *) gimp_parasite_data (parasite);
-      metadata = gimp_metadata_deserialize (meta_string);
+
+      if (meta_string)
+        metadata = gimp_metadata_deserialize (meta_string);
 
       if (metadata)
         {
@@ -560,7 +571,16 @@ xcf_load_image (Gimp     *gimp,
   xcf_load_add_masks (image);
 
   if (info->floating_sel && info->floating_sel_drawable)
-    floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
+    {
+      /* we didn't fix the loaded floating selection's format before
+       * because we didn't know if it needed the layer space
+       */
+      if (GIMP_IS_LAYER (info->floating_sel_drawable) &&
+          gimp_drawable_is_gray (GIMP_DRAWABLE (info->floating_sel)))
+        gimp_layer_fix_format_space (info->floating_sel, TRUE, FALSE);
+
+      floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
+    }
 
   if (info->active_layer)
     gimp_image_set_active_layer (image, info->active_layer);
@@ -791,8 +811,50 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_SAMPLE_POINTS:
           {
+            gint n_sample_points, i;
+
+            n_sample_points = prop_size / (5 * 4);
+            for (i = 0; i < n_sample_points; i++)
+              {
+                GimpSamplePoint   *sample_point;
+                gint32             x, y;
+                GimpColorPickMode  pick_mode;
+                guint32            padding[2] = { 0, };
+
+                xcf_read_int32 (info, (guint32 *) &x,         1);
+                xcf_read_int32 (info, (guint32 *) &y,         1);
+                xcf_read_int32 (info, (guint32 *) &pick_mode, 1);
+                xcf_read_int32 (info, (guint32 *) padding,    2);
+
+                GIMP_LOG (XCF, "prop sample point x=%d y=%d mode=%d",
+                          x, y, pick_mode);
+
+                if (pick_mode > GIMP_COLOR_PICK_MODE_LAST)
+                  pick_mode = GIMP_COLOR_PICK_MODE_PIXEL;
+
+                sample_point = gimp_image_add_sample_point_at_pos (image,
+                                                                   x, y, FALSE);
+                gimp_image_set_sample_point_pick_mode (image, sample_point,
+                                                       pick_mode, FALSE);
+              }
+          }
+          break;
+
+        case PROP_OLD_SAMPLE_POINTS:
+          {
             gint32 x, y;
             gint   i, n_sample_points;
+
+            /* if there are already sample points, we loaded the new
+             * prop before
+             */
+            if (gimp_image_get_sample_points (image))
+              {
+                if (! xcf_skip_unknown_prop (info, prop_size))
+                  return FALSE;
+
+                break;
+              }
 
             n_sample_points = prop_size / (4 + 4);
             for (i = 0; i < n_sample_points; i++)
@@ -800,7 +862,7 @@ xcf_load_image_props (XcfInfo   *info,
                 xcf_read_int32 (info, (guint32 *) &x, 1);
                 xcf_read_int32 (info, (guint32 *) &y, 1);
 
-                GIMP_LOG (XCF, "prop sample point x=%d y=%d", x, y);
+                GIMP_LOG (XCF, "prop old sample point x=%d y=%d", x, y);
 
                 gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
               }
@@ -862,7 +924,7 @@ xcf_load_image_props (XcfInfo   *info,
                   }
                 else
                   {
-                    gimp_image_parasite_attach (image, p);
+                    gimp_image_parasite_attach (image, p, FALSE);
                   }
 
                 gimp_parasite_free (p);
@@ -1121,11 +1183,27 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_OFFSETS:
           {
-            guint32 offset_x;
-            guint32 offset_y;
+            gint32 offset_x;
+            gint32 offset_y;
 
-            xcf_read_int32 (info, &offset_x, 1);
-            xcf_read_int32 (info, &offset_y, 1);
+            xcf_read_int32 (info, (guint32 *) &offset_x, 1);
+            xcf_read_int32 (info, (guint32 *) &offset_y, 1);
+
+            if (offset_x < -GIMP_MAX_IMAGE_SIZE ||
+                offset_x > GIMP_MAX_IMAGE_SIZE)
+              {
+                g_printerr ("unexpected item offset_x (%d) in XCF, "
+                            "setting to 0\n", offset_x);
+                offset_x = 0;
+              }
+
+            if (offset_y < -GIMP_MAX_IMAGE_SIZE ||
+                offset_y > GIMP_MAX_IMAGE_SIZE)
+              {
+                g_printerr ("unexpected item offset_y (%d) in XCF, "
+                            "setting to 0\n", offset_y);
+                offset_y = 0;
+              }
 
             gimp_item_set_offset (GIMP_ITEM (*layer), offset_x, offset_y);
           }
@@ -1653,16 +1731,25 @@ xcf_load_layer (XcfInfo    *info,
   if (width <= 0 || height <= 0)
     return NULL;
 
-  /* do not use gimp_image_get_layer_format() because it might
-   * be the floating selection of a channel or mask
-   */
-  format = gimp_image_get_format (image, base_type,
-                                  gimp_image_get_precision (image),
-                                  has_alpha);
+  if (base_type == GIMP_GRAY)
+    {
+      /* do not use gimp_image_get_layer_format() because it might
+       * be the floating selection of a channel or mask
+       */
+      format = gimp_image_get_format (image, base_type,
+                                      gimp_image_get_precision (image),
+                                      has_alpha,
+                                      NULL /* we will fix the space later */);
+    }
+  else
+    {
+      format = gimp_image_get_layer_format (image, has_alpha);
+    }
 
   /* create a new layer */
   layer = gimp_layer_new (image, width, height,
-                          format, name, 255, GIMP_LAYER_MODE_NORMAL);
+                          format, name,
+                          GIMP_OPACITY_OPAQUE, GIMP_LAYER_MODE_NORMAL);
   g_free (name);
   if (! layer)
     return NULL;
@@ -1691,6 +1778,13 @@ xcf_load_layer (XcfInfo    *info,
       if (floating)
         info->floating_sel = layer;
     }
+
+  /* if this is not the floating selection, we can fix the layer's
+   * space already now, the function will do nothing if we already
+   * created the layer with the right format
+   */
+  if (! floating && base_type == GIMP_GRAY)
+    gimp_layer_fix_format_space (layer, FALSE, FALSE);
 
   /* read the hierarchy and layer mask offsets */
   xcf_read_offset (info, &hierarchy_offset,  1);

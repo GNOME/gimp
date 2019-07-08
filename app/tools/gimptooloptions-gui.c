@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -28,6 +28,8 @@
 
 #include "gimptooloptions-gui.h"
 
+#include "gimp-intl.h"
+
 
 /*  public functions  */
 
@@ -39,6 +41,23 @@ gimp_tool_options_gui (GimpToolOptions *tool_options)
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), NULL);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+
+  return vbox;
+}
+
+GtkWidget *
+gimp_tool_options_empty_gui (GimpToolOptions *tool_options)
+{
+  GtkWidget *vbox = gimp_tool_options_gui (tool_options);
+  GtkWidget *label;
+
+  label = gtk_label_new (_("This tool has\nno options."));
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 6);
+  gtk_widget_show (label);
 
   return vbox;
 }

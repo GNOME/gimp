@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -85,6 +85,9 @@ static void   gimp_sample_point_editor_points_changed (GimpSamplePointEditor *ed
 static void   gimp_sample_point_editor_dirty          (GimpSamplePointEditor *editor,
                                                        gint                   index);
 static gboolean gimp_sample_point_editor_update       (GimpSamplePointEditor *editor);
+static void     gimp_sample_point_editor_mode_notify  (GimpColorFrame        *frame,
+                                                       const GParamSpec      *pspec,
+                                                       GimpSamplePointEditor *editor);
 
 
 G_DEFINE_TYPE (GimpSamplePointEditor, gimp_sample_point_editor,
@@ -422,15 +425,25 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
   gtk_widget_set_visible (editor->empty_label,
                           image_editor->image && n_points == 0);
 
-  if (n_points < editor->n_color_frames)
+  /*  Keep that many color frames around so they remember their color
+   *  model. Let's hope nobody uses more and notices they get reset to
+   *  "pixel". See https://gitlab.gnome.org/GNOME/gimp/issues/1805
+   */
+#define RANDOM_MAGIC 16
+
+  if (n_points < editor->n_color_frames &&
+      n_points < RANDOM_MAGIC           &&
+      editor->n_color_frames > RANDOM_MAGIC)
     {
-      for (i = n_points; i < editor->n_color_frames; i++)
+      for (i = RANDOM_MAGIC; i < editor->n_color_frames; i++)
         {
           gtk_widget_destroy (editor->color_frames[i]);
         }
 
       editor->color_frames = g_renew (GtkWidget *, editor->color_frames,
-                                      n_points);
+                                      RANDOM_MAGIC);
+
+      editor->n_color_frames = RANDOM_MAGIC;
     }
   else if (n_points > editor->n_color_frames)
     {
@@ -448,7 +461,7 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
 
           editor->color_frames[i] =
             g_object_new (GIMP_TYPE_COLOR_FRAME,
-                          "mode",           GIMP_COLOR_FRAME_MODE_PIXEL,
+                          "mode",           GIMP_COLOR_PICK_MODE_PIXEL,
                           "has-number",     TRUE,
                           "number",         i + 1,
                           "has-color-area", TRUE,
@@ -461,14 +474,22 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
 
           gtk_grid_attach (GTK_GRID (editor->grid), editor->color_frames[i],
                            column, row, 1, 1);
-          gtk_widget_show (editor->color_frames[i]);
+
+          g_signal_connect_object (editor->color_frames[i], "notify::mode",
+                                   G_CALLBACK (gimp_sample_point_editor_mode_notify),
+                                   editor, 0);
 
           g_object_set_data (G_OBJECT (editor->color_frames[i]),
                              "dirty", GINT_TO_POINTER (TRUE));
         }
+
+      editor->n_color_frames = n_points;
     }
 
-  editor->n_color_frames = n_points;
+  for (i = 0; i < editor->n_color_frames; i++)
+    {
+      gtk_widget_set_visible (editor->color_frames[i], i < n_points);
+    }
 
   if (n_points > 0)
     gimp_sample_point_editor_dirty (editor, -1);
@@ -505,7 +526,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
   GList           *sample_points;
-  gint             n_points     = 0;
+  gint             n_points;
   GList           *list;
   gint             i;
 
@@ -522,17 +543,18 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
        i < n_points;
        i++, list = g_list_next (list))
     {
-      GimpColorFrame  *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+      GimpColorFrame *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
 
       if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_frame),
                                               "dirty")))
         {
-          GimpSamplePoint *sample_point = list->data;
-          const Babl      *format;
-          guchar           pixel[32];
-          GimpRGB          color;
-          gint             x;
-          gint             y;
+          GimpSamplePoint   *sample_point = list->data;
+          const Babl        *format;
+          guchar             pixel[32];
+          GimpRGB            color;
+          GimpColorPickMode  pick_mode;
+          gint               x;
+          gint               y;
 
           g_object_set_data (G_OBJECT (color_frame),
                              "dirty", GINT_TO_POINTER (FALSE));
@@ -555,8 +577,48 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
             {
               gimp_color_frame_set_invalid (color_frame);
             }
+
+          pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+
+          gimp_color_frame_set_mode (color_frame, pick_mode);
         }
     }
 
   return FALSE;
+}
+
+static void
+gimp_sample_point_editor_mode_notify (GimpColorFrame        *frame,
+                                      const GParamSpec      *pspec,
+                                      GimpSamplePointEditor *editor)
+{
+  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GList           *sample_points;
+  gint             n_points;
+  GList           *list;
+  gint             i;
+
+  sample_points = gimp_image_get_sample_points (image_editor->image);
+
+  n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
+
+  for (i = 0, list = sample_points;
+       i < n_points;
+       i++, list = g_list_next (list))
+    {
+      if (GIMP_COLOR_FRAME (editor->color_frames[i]) == frame)
+        {
+          GimpSamplePoint   *sample_point = list->data;
+          GimpColorPickMode  pick_mode;
+
+          g_object_get (frame, "mode", &pick_mode, NULL);
+
+          if (pick_mode != gimp_sample_point_get_pick_mode (sample_point))
+            gimp_image_set_sample_point_pick_mode (image_editor->image,
+                                                   sample_point,
+                                                   pick_mode,
+                                                   TRUE);
+          break;
+        }
+    }
 }

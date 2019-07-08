@@ -12,14 +12,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GUIDE_UNDO_H__
 #define __GIMP_GUIDE_UNDO_H__
 
 
-#include "gimpundo.h"
+#include "gimpauxitemundo.h"
 
 
 #define GIMP_TYPE_GUIDE_UNDO            (gimp_guide_undo_get_type ())
@@ -35,16 +35,15 @@ typedef struct _GimpGuideUndoClass GimpGuideUndoClass;
 
 struct _GimpGuideUndo
 {
-  GimpUndo             parent_instance;
+  GimpAuxItemUndo      parent_instance;
 
-  GimpGuide           *guide;
   GimpOrientationType  orientation;
   gint                 position;
 };
 
 struct _GimpGuideUndoClass
 {
-  GimpUndoClass  parent_class;
+  GimpAuxItemUndoClass  parent_class;
 };
 
 

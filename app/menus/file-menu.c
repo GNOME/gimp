@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -30,6 +30,7 @@
 #include "core/gimpviewable.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpactionimpl.h"
 #include "widgets/gimpuimanager.h"
 
 #include "file-menu.h"
@@ -47,19 +48,16 @@ void
 file_menu_setup (GimpUIManager *manager,
                  const gchar   *ui_path)
 {
-  GtkUIManager *ui_manager;
-  gint          n_entries;
-  guint         merge_id;
-  gint          i;
+  gint  n_entries;
+  guint merge_id;
+  gint  i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  ui_manager = GTK_UI_MANAGER (manager);
-
   n_entries = GIMP_GUI_CONFIG (manager->gimp->config)->last_opened_size;
 
-  merge_id = gtk_ui_manager_new_merge_id (ui_manager);
+  merge_id = gimp_ui_manager_new_merge_id (manager);
 
   for (i = 0; i < n_entries; i++)
     {
@@ -71,18 +69,18 @@ file_menu_setup (GimpUIManager *manager,
       action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
       action_path = g_strdup_printf ("%s/File/Open Recent/Files", ui_path);
 
-      gtk_ui_manager_add_ui (ui_manager, merge_id,
-                             action_path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
+      gimp_ui_manager_add_ui (manager, merge_id,
+                              action_path, action_name, action_name,
+                              GTK_UI_MANAGER_MENUITEM,
+                              FALSE);
 
       full_path = g_strconcat (action_path, "/", action_name, NULL);
 
-      widget = gtk_ui_manager_get_widget (ui_manager, full_path);
+      widget = gimp_ui_manager_get_widget (manager, full_path);
 
       if (widget)
         {
-          GtkAction *action;
+          GimpAction *action;
 
           action = gimp_ui_manager_find_action (manager, "file", action_name);
 
@@ -105,15 +103,16 @@ file_menu_open_recent_query_tooltip (GtkWidget  *widget,
                                      GtkTooltip *tooltip,
                                      GimpAction *action)
 {
-  gchar *text;
+  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
+  gchar          *text;
 
   text = gtk_widget_get_tooltip_text (widget);
   gtk_tooltip_set_text (tooltip, text);
   g_free (text);
 
   gtk_tooltip_set_icon (tooltip,
-                        gimp_viewable_get_pixbuf (action->viewable,
-                                                  action->context,
+                        gimp_viewable_get_pixbuf (impl->viewable,
+                                                  impl->context,
                                                   GIMP_THUMB_SIZE_NORMAL,
                                                   GIMP_THUMB_SIZE_NORMAL));
 

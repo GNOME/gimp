@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -236,7 +236,7 @@ resize_dialog_new (GimpViewable       *viewable,
 
   /*  the offset sizeentry  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 

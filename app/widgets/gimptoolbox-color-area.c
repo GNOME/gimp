@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -29,12 +29,15 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "gimpaction.h"
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimpfgbgeditor.h"
+#include "gimphelp-ids.h"
 #include "gimpsessioninfo.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -56,6 +59,10 @@ static void   color_area_dialog_update      (GimpColorDialog      *dialog,
 static void   color_area_color_clicked      (GimpFgBgEditor       *editor,
                                              GimpActiveColor       active_color,
                                              GimpContext          *context);
+static void   color_area_tooltip            (GimpFgBgEditor       *editor,
+                                             GimpFgBgTarget        target,
+                                             GtkTooltip           *tooltip,
+                                             GimpToolbox          *toolbox);
 
 
 /*  local variables  */
@@ -83,19 +90,18 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 
   color_area = gimp_fg_bg_editor_new (context);
   gtk_widget_set_size_request (color_area, width, height);
-  gtk_widget_add_events (color_area,
-                         GDK_ENTER_NOTIFY_MASK |
-                         GDK_LEAVE_NOTIFY_MASK);
 
-  gimp_help_set_help_data
-    (color_area, _("Foreground & background colors.\n"
-                   "The black and white squares reset colors.\n"
-                   "The arrows swap colors.\n"
-                   "Click to open the color selection dialog."), NULL);
+  gimp_help_set_help_data (color_area, NULL,
+                           GIMP_HELP_TOOLBOX_COLOR_AREA);
+  g_object_set (color_area, "has-tooltip", TRUE, NULL);
 
   g_signal_connect (color_area, "color-clicked",
                     G_CALLBACK (color_area_color_clicked),
                     context);
+
+  g_signal_connect (color_area, "tooltip",
+                    G_CALLBACK (color_area_tooltip),
+                    toolbox);
 
   return color_area;
 }
@@ -174,13 +180,13 @@ color_area_dialog_update (GimpColorDialog      *dialog,
       else
         {
           g_signal_handlers_block_by_func (context,
-                                           color_area_foreground_changed,
+                                           color_area_background_changed,
                                            dialog);
 
           gimp_context_set_background (context, color);
 
           g_signal_handlers_unblock_by_func (context,
-                                             color_area_foreground_changed,
+                                             color_area_background_changed,
                                              dialog);
         }
       break;
@@ -223,7 +229,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   if (! color_dialog)
     {
-      color_dialog = gimp_color_dialog_new (NULL, context,
+      color_dialog = gimp_color_dialog_new (NULL, context, TRUE,
                                             NULL, NULL, NULL,
                                             GTK_WIDGET (editor),
                                             gimp_dialog_factory_get_singleton (),
@@ -244,35 +250,10 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
     }
   else if (! gtk_widget_get_visible (color_dialog))
     {
-      /*  See https://gitlab.gnome.org/GNOME/gimp/issues/1093
-       *
-       *  We correctly position all newly created dialog via
-       *  gimp_dialog_factory_add_dialog(), but the color dialog is
-       *  special, it's never destroyed but created only once per
-       *  session. On re-showing, whatever window managing magic kicks
-       *  in and the dialog sometimes goes where it shouldn't.
-       *
-       *  The code below belongs into GimpDialogFactory, perhaps a new
-       *  function gimp_dialog_factory_position_dialog() and does the
-       *  same positioning logic as add_dialog().
-       */
-      GimpDialogFactory *dialog_factory = gimp_dialog_factory_get_singleton ();
-      GimpSessionInfo   *info;
-
-      info = gimp_dialog_factory_find_session_info (dialog_factory,
-                                                    "gimp-toolbox-color-dialog");
-
-      if (gimp_session_info_get_widget (info) == color_dialog)
-        {
-          GdkMonitor    *monitor = gimp_widget_get_monitor (GTK_WIDGET (editor));
-          GimpGuiConfig *gui_config;
-
-          gui_config = GIMP_GUI_CONFIG (context->gimp->config);
-
-          gimp_session_info_apply_geometry (info,
-                                            monitor,
-                                            gui_config->restore_monitor);
-        }
+      gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
+                                           "gimp-toolbox-color-dialog",
+                                           color_dialog,
+                                           gimp_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);
@@ -280,4 +261,94 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   gtk_window_present (GTK_WINDOW (color_dialog));
   color_dialog_active = TRUE;
+}
+
+static gboolean
+accel_find_func (GtkAccelKey *key,
+                 GClosure    *closure,
+                 gpointer     data)
+{
+  return (GClosure *) data == closure;
+}
+
+static void
+color_area_tooltip (GimpFgBgEditor *editor,
+                    GimpFgBgTarget  target,
+                    GtkTooltip     *tooltip,
+                    GimpToolbox    *toolbox)
+{
+  GimpUIManager *manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox));
+  GimpAction    *action  = NULL;
+  const gchar   *text    = NULL;
+
+  switch (target)
+    {
+    case GIMP_FG_BG_TARGET_FOREGROUND:
+      text = _("The active foreground color.\n"
+               "Click to open the color selection dialog.");
+      break;
+
+    case GIMP_FG_BG_TARGET_BACKGROUND:
+      text = _("The active background color.\n"
+               "Click to open the color selection dialog.");
+      break;
+
+    case GIMP_FG_BG_TARGET_SWAP:
+      action = gimp_ui_manager_find_action (manager, "context",
+                                            "context-colors-swap");
+      text = gimp_action_get_tooltip (action);
+      break;
+
+    case GIMP_FG_BG_TARGET_DEFAULT:
+      action = gimp_ui_manager_find_action (manager, "context",
+                                            "context-colors-default");
+      text = gimp_action_get_tooltip (action);
+      break;
+
+    default:
+      break;
+    }
+
+  if (text)
+    {
+      gchar *markup = NULL;
+
+      if (action)
+        {
+          GtkAccelGroup *accel_group;
+          GClosure      *accel_closure;
+          GtkAccelKey   *accel_key;
+
+          accel_closure = gimp_action_get_accel_closure (action);
+          accel_group   = gtk_accel_group_from_accel_closure (accel_closure);
+
+          accel_key = gtk_accel_group_find (accel_group,
+                                            accel_find_func,
+                                            accel_closure);
+
+          if (accel_key            &&
+              accel_key->accel_key &&
+              (accel_key->accel_flags & GTK_ACCEL_VISIBLE))
+            {
+              gchar *escaped = g_markup_escape_text (text, -1);
+              gchar *accel   = gtk_accelerator_get_label (accel_key->accel_key,
+                                                          accel_key->accel_mods);
+
+              markup = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
+
+              g_free (accel);
+              g_free (escaped);
+            }
+        }
+
+      if (markup)
+        {
+          gtk_tooltip_set_markup (tooltip, markup);
+          g_free (markup);
+        }
+      else
+        {
+          gtk_tooltip_set_text (tooltip, text);
+        }
+    }
 }

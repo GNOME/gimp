@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-12-23 23:39+0000\n"
 "PO-Revision-Date: 2017-12-24 19:11+0100\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
@@ -108,7 +108,7 @@ msgid ""
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A "
 "PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP. If not, see: http://www.gnu.org/licenses/"
+"You should have received a copy of the GNU General Public License along with GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "Гимп је слободан софтвер; можете га расподелити и/или га мењати под условима Гнуове опште јавне лиценце како је објављује Задужбина Слободног Софтвера; било "
 "издања 3 те лиценце, било (према вашем избору) било којег новијег издања.\n"
@@ -116,7 +116,7 @@ msgstr ""
 "Гимп се дели у нади да ће бити користан, али БЕЗ ИКАКВЕ ГАРАНЦИЈЕ; чак и без примењене гаранције ТРЖИШНЕ ВРЕДНОСТИ или ПРИЛАГОЂЕНОСТИ ОДРЕЂЕНОЈ НАМЕНИ.  "
 "Погледајте Гнуову општу јавну лиценцу за више детаља.\n"
 "\n"
-"Требали сте да примите примерак Гнуове опште јавне лиценце уз Гимп.  Уколико нисте, идите на „http://www.gnu.org/licenses/“."
+"Требали сте да примите примерак Гнуове опште јавне лиценце уз Гимп.  Уколико нисте, идите на „https://www.gnu.org/licenses/“."
 
 #: ../app/main.c:160
 msgid "Show version information and exit"
@@ -4205,7 +4205,7 @@ msgid "_Dilate"
 msgstr "_Дилатирај"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Појачај светлије делове слике"
 
@@ -4215,7 +4215,7 @@ msgid "_Erode"
 msgstr "_Еродирај"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Појачај тамније делове слике"
 
@@ -9055,17 +9055,17 @@ msgstr "Пребацује на приказ преко целог екрана"
 #, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Омогућава да подесите произвољан чинилац увећавања"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9102,14 +9102,14 @@ msgstr "Увећај приказ"
 #: ../app/actions/view-actions.c:354
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Умањите приказ"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Увећајте приказ"
 

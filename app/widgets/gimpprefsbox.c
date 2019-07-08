@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -69,7 +69,7 @@ static void   gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
                                                    GimpPrefsBox     *box);
 
 
-G_DEFINE_TYPE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_prefs_box_parent_class
 
@@ -80,8 +80,6 @@ gimp_prefs_box_class_init (GimpPrefsBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_prefs_box_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpPrefsBoxPrivate));
 }
 
 static void
@@ -96,9 +94,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkWidget           *ebox;
   GtkWidget           *vbox;
 
-  box->priv = G_TYPE_INSTANCE_GET_PRIVATE (box,
-                                           GIMP_TYPE_PREFS_BOX,
-                                           GimpPrefsBoxPrivate);
+  box->priv = gimp_prefs_box_get_instance_private (box);
 
   private = box->priv;
 
@@ -284,6 +280,8 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_NEVER, GTK_POLICY_NEVER);
+  gtk_scrolled_window_set_overlay_scrolling (GTK_SCROLLED_WINDOW (scrolled_win),
+                                             FALSE);
   gtk_box_pack_start (GTK_BOX (page_vbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 

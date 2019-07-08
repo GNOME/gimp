@@ -17,7 +17,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_GEGL_APPLY_OPERATION_H__
@@ -61,6 +61,7 @@ void   gimp_gegl_apply_flatten         (GeglBuffer             *src_buffer,
                                         const gchar            *undo_desc,
                                         GeglBuffer             *dest_buffer,
                                         const GimpRGB          *background,
+                                        const Babl             *space,
                                         GimpLayerColorSpace     composite_space);
 
 void   gimp_gegl_apply_feather         (GeglBuffer             *src_buffer,
@@ -69,7 +70,8 @@ void   gimp_gegl_apply_feather         (GeglBuffer             *src_buffer,
                                         GeglBuffer             *dest_buffer,
                                         const GeglRectangle    *dest_rect,
                                         gdouble                 radius_x,
-                                        gdouble                 radius_y);
+                                        gdouble                 radius_y,
+                                        gboolean                edge_lock);
 
 void   gimp_gegl_apply_border          (GeglBuffer             *src_buffer,
                                         GimpProgress           *progress,
@@ -104,13 +106,21 @@ void   gimp_gegl_apply_flood           (GeglBuffer             *src_buffer,
                                         GeglBuffer             *dest_buffer,
                                         const GeglRectangle    *dest_rect);
 
+/* UGLY: private enum of gegl:gaussian-blur */
+typedef enum
+{
+  GAUSSIAN_BLUR_ABYSS_NONE,
+  GAUSSIAN_BLUR_ABYSS_CLAMP
+} GaussianBlurAbyssPolicy;
+
 void   gimp_gegl_apply_gaussian_blur   (GeglBuffer             *src_buffer,
                                         GimpProgress           *progress,
                                         const gchar            *undo_desc,
                                         GeglBuffer             *dest_buffer,
                                         const GeglRectangle    *dest_rect,
                                         gdouble                 std_dev_x,
-                                        gdouble                 std_dev_y);
+                                        gdouble                 std_dev_y,
+                                        GaussianBlurAbyssPolicy abyss_policy);
 
 void   gimp_gegl_apply_invert_gamma    (GeglBuffer             *src_buffer,
                                         GimpProgress           *progress,

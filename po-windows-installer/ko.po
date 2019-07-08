@@ -1,0 +1,384 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR
+# Sangdo Jun <sebuls@gmail.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp windows installer\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2019-02-27 07:27+0000\n"
+"PO-Revision-Date: 2018-11-17 10:13+0900\n"
+"Last-Translator: Sangdo Jun <sebuls@gmail.com>\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:1
+msgid "License Agreement"
+msgstr "라이선스 계약"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:2
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Setup을 Jernej Simoncic, jernej-gimp@ena.si가 만듦"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:3
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr "이 버전의 김프는 윈도우 버전 7 이상이 필요합니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:4
+msgid "Development version"
+msgstr "개발 버전"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:6
+#, no-c-format
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
+msgstr ""
+"이것은 김프의 개발 버전으로 어떤 기능은 끝나지 않았거나, 불안정할 수 있습니"
+"다.%n이 버전의 김프는 일상업무를 위한 것은 아니므로 불안정할 수 있고, 작업한 "
+"내용을 잃을 수 있습니다.%n문제가 생기면, 이미 Git에서 고쳐졌는지 먼저 확인하"
+"고 개발자에게 연락하거나 김프 bugzilla에 알리세요:%n_https://bugzilla.gnome."
+"org/enter_bug.cgi?product=GIMP%n%n그래도 설치를 계속 하시겠습니까?"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:7
+msgid "&Continue"
+msgstr "계속(&C)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:8
+msgid "Exit"
+msgstr "나가기"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:9
+msgid ""
+"This version of GIMP requires a processor that supports SSE instructions."
+msgstr "이 버전의 김프는 SSE 명령을 지원하는 프로세서가 필요합니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:10
+msgid "Display settings problem"
+msgstr "설정 문제 표시"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:11
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"윈도우가 32 비트 픽셀 디스플레이 모드로 실행되고 있지 않습니다. 이것은 김프"
+"의 안정성 문제를 일으키는 것으로 알려져 있으므로, 디스플레이의 색심도를 32BPP"
+"로 바꾸고 계속하는 것이 좋습니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:12
+msgid "E&xit"
+msgstr "나가기(&X)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:13
+msgid ""
+"GIMP is now ready to be installed. Click the Install now button to install "
+"using the default settings, or click the Customize button if you'd like to "
+"have more control over what gets installed."
+msgstr ""
+"김프 설치 준비되었습니다. 지금 설치 버튼을 클릭하여 기본 설정을 쓰거나, 설치"
+"할 때 좀더 제어하고 싶으면 사용자 정의 설치 버튼을 클릭하세요."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:14
+msgid "&Install"
+msgstr "설치(&I)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:15
+msgid "&Customize"
+msgstr "사용자 정의 설치(&C)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:16
+msgid "Compact installation"
+msgstr "최소 설치"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:17
+msgid "Custom installation"
+msgstr "사용자 정의 설치"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:18
+msgid "Full installation"
+msgstr "전체 설치"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:19
+msgid "Description"
+msgstr "설명"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:20
+msgid "GIMP"
+msgstr "김프"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:21
+msgid "GIMP and all default plug-ins"
+msgstr "김프 및 모든 기본 플러그인"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:22
+msgid "Run-time libraries"
+msgstr "런타임 라이브러리"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:23
+msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgstr "GTK+ 런타임 환경이 들어있는 김프가 사용하는 런타임 라이브러리"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "심볼 디버깅"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "김프 디버깅 정보 포함"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
+msgid "MS-Windows engine for GTK+"
+msgstr "GTK+ 용 MS-Windows 엔진"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:27
+msgid "Native Windows look for GIMP"
+msgstr "김프 기본 창 보기"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:28
+msgid "Support for old plug-ins"
+msgstr "오래된 플러그인 지원"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:29
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "옛 타사 플러그인에 필요한 라이브러리 설치"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:30
+msgid "Translations"
+msgstr "번역"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:31
+msgid "Python scripting"
+msgstr "파이썬 스크립팅"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:32
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "파이썬 스크립트 언어로 쓰인 김프 플러그인 사용 허용."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "MyPaint brushes"
+msgstr "마이페인트 붓"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Install the default set of MyPaint brushes"
+msgstr "마이페인트 붓 기본 세트 설치"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
+msgid "PostScript support"
+msgstr "포스트스크립트 지원"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:36
+msgid "Allow GIMP to load PostScript files"
+msgstr "김프가 포스트스크립트 파일을 불러오게 허용"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "Support for 32-bit plug-ins"
+msgstr "32비트 플러그인 지원"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
+#, no-c-format
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"support."
+msgstr ""
+"32비트 플러그 쓸 때 필요한 파일을 넣으세요.%n파이썬을 지원하려면 필요합니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:40
+msgid "Additional icons:"
+msgstr "추가 아이콘:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:41
+msgid "Create a &desktop icon"
+msgstr "바탕 화면 아이콘 만들기(&D)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:42
+msgid "Create a &Quick Launch icon"
+msgstr "빠른 시작 아이콘 만들기(&Q)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:43
+msgid "Remove previous GIMP version"
+msgstr "이전 버전 김프 없애기"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:45
+#, no-c-format
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"김프 환경을 %1에 업데이트 하는 데 문제가 있습니다. 플러그인을 불러올 때 오류"
+"가 있으면, 김프를 제거하고 다시 설치해 보세요."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:46
+msgid "Error extracting temporary data."
+msgstr "임시 데이터 추출 중 오류."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:47
+msgid "Error updating Python interpreter info."
+msgstr "파이썬 인터프리터 정보 업데이트 중 오류."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:48
+msgid "Error updating MyPaint brushes info."
+msgstr "마이페인트 붓 정보 업데이트 중 오류."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:50
+#, no-c-format
+msgid "There was an error updating %1."
+msgstr "%1 업데이트 중 오류."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:52
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "김프 설정 파일 %1 업데이트 중 오류."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:53
+msgid "Edit with GIMP"
+msgstr "김프로 편집"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:54
+msgid "Select file associations"
+msgstr "파일 확장자 연결 선택"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:55
+msgid "Extensions:"
+msgstr "확장:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:56
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "김프에 연결할 파일 유형을 선택하세요"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:57
+msgid ""
+"This will make selected files open in GIMP when you double-click them in "
+"Explorer."
+msgstr "탐색기에서 파일을 두번 누르면 선택한 파일이 김프에서 열립니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:58
+msgid "Select &All"
+msgstr "전체 선택(&A)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:59
+msgid "Unselect &All"
+msgstr "모두 선택 취소(&A)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:60
+msgid "Select &Unused"
+msgstr "사용 안 함 선택(&U)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:61
+msgid "File types to associate with GIMP:"
+msgstr "김프에 연결된 파일 유형:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:62
+msgid "Removing previous version of GIMP:"
+msgstr "이전 버전 김프 지우기:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:64
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"the automatic uninstall of old version has failed.%n%nPlease remove the "
+"previous version of GIMP yourself before installing this version in %2, or "
+"choose a Custom install, and select a different installation folder.%n%nThe "
+"Setup will now exit."
+msgstr ""
+"김프 %1을 현재 설치된 김프 버전 위에 설치할 수 없으며, 이전 버전을 자동 제거"
+"하는데 실패했습니다.%n%n이전 버전을 제거하고 이 버전을 %2에 설치하거나, 사용"
+"자 정의 설치를 선택하고, 다른 설치 폴더를 선택하세요.%n%n이제 설치 프로그램"
+"을 나갑니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:66
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
+msgstr ""
+"김프 %1을 현재 설치된 김프 버전 위에 설치할 수 없으며, 설치 프로그램이 이전 "
+"버전을 어떻게 자동 제거할지 결정할 수 없습니다.%n%n김프 및 애드온의 이전 버전"
+"을 직접 제거하고 %2에 이 버전을 설치하거나, 사용자 정의 설치를 선택하고 다른 "
+"설치 폴더를 선택하십시오.%n%n이제 설치를 나갑니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:68
+#, no-c-format
+msgid ""
+"Previous GIMP version was removed successfully, but Windows has to be "
+"restarted before the Setup can continue.%n%nAfter restarting your computer, "
+"Setup will continue next time an administrator logs in."
+msgstr ""
+"이전 버전 김프가 성공적으로 제거되었지만, 윈도우를 다시 시작하고 설치를 계속"
+"해야 합니다.%n%n컴퓨터를 다시 시작한 다음에, 관리자로 로그인하면 설치를 계속"
+"합니다."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:70
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "설치 다시 시작 중 오류.(%1)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:71
+msgid "Cleaning up old files..."
+msgstr "오래된 파일 지우기..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "기억할 것: 김프는 자유 소프트웨어입니다.%n%n방문하세요"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:74
+msgid "for free updates."
+msgstr "자유 업데이트를 위하여."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:75
+msgid "Setting up file associations..."
+msgstr "파일 확장자 연결 설정..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:76
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "김프 파이썬 확장 환경 설정..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:77
+msgid "Setting up MyPaint brushes..."
+msgstr "마이페인트 붓 환경 설정..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:78
+msgid "Setting up GIMP environment..."
+msgstr "김프 환경 설정..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:79
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "32비트 플러그인 지원 김프 설정..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:80
+msgid "Launch GIMP"
+msgstr "김프 실행"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:81
+msgid "Removing add-on"
+msgstr "애드온 없애기"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:83
+#, no-c-format
+msgid "Internal error (%1)."
+msgstr "내부 오류 (%1)."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:84
+msgid ""
+"GIMP does not appear to be installed in the selected directory. Continue "
+"anyway?"
+msgstr ""
+"선택한 디렉터리에 김프를 설치하지 않은 것 같습니다. 그래도 계속 할까요?"

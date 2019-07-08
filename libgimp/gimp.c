@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -746,11 +746,7 @@ gimp_quit (void)
  *
  * @menu_label defines the label that should be used for the
  * procedure's menu entry. The position where to register in the menu
- * hierarchy is chosen using gimp_plugin_menu_register().  This
- * function also still accepts the old (pre-2.2) way of registering a
- * menu entry and takes a string in the form
- * "&lt;Domain&gt;/Path/To/My/Menu"
- * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
+ * hierarchy is chosen using gimp_plugin_menu_register().
  *
  * It is possible to register a procedure only for keyboard-shortcut
  * activation by passing a @menu_label to gimp_install_procedure() but
@@ -813,7 +809,7 @@ gimp_install_procedure (const gchar        *name,
   proc_install.author       = (gchar *) author;
   proc_install.copyright    = (gchar *) copyright;
   proc_install.date         = (gchar *) date;
-  proc_install.menu_path    = (gchar *) menu_label;
+  proc_install.menu_label   = (gchar *) menu_label;
   proc_install.image_types  = (gchar *) image_types;
   proc_install.type         = type;
   proc_install.nparams      = n_params;
@@ -2145,6 +2141,9 @@ gimp_loop (void)
 static void
 gimp_config (GPConfig *config)
 {
+  GFile *file;
+  gchar *path;
+
   _tile_width       = config->tile_width;
   _tile_height      = config->tile_height;
   _shm_ID           = config->shm_ID;
@@ -2167,10 +2166,19 @@ gimp_config (GPConfig *config)
 
   gimp_cpu_accel_set_use (config->use_cpu_accel);
 
+  file = gimp_file_new_for_config_path (config->swap_path, NULL);
+  path = g_file_get_path (file);
+
   g_object_set (gegl_config (),
+                "tile-cache-size",     config->tile_cache_size,
+                "swap",                path,
+                "threads",             (gint) config->num_processors,
                 "use-opencl",          config->use_opencl,
                 "application-license", "GPL3",
                 NULL);
+
+  g_free (path);
+  g_object_unref (file);
 
   if (_shm_ID != -1)
     {

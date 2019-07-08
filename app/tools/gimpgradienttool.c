@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -28,10 +28,13 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "operations/gimp-operation-config.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawablefilter.h"
@@ -51,6 +54,7 @@
 #include "gimpgradienttool.h"
 #include "gimpgradienttool-editor.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -198,6 +202,8 @@ gimp_gradient_tool_init (GimpGradientTool *gradient_tool)
                                             GIMP_DIRTY_IMAGE_STRUCTURE |
                                             GIMP_DIRTY_DRAWABLE        |
                                             GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_dirty_action       (tool->control,
+                                            GIMP_TOOL_ACTION_COMMIT);
   gimp_tool_control_set_wants_click        (tool->control, TRUE);
   gimp_tool_control_set_wants_double_click (tool->control, TRUE);
   gimp_tool_control_set_active_modifiers   (tool->control,
@@ -233,6 +239,7 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
   GimpImage           *image    = gimp_display_get_image (display);
   GimpDrawable        *drawable = gimp_image_get_active_drawable (image);
   GimpGradientOptions *options  = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig       *config   = GIMP_GUI_CONFIG (display->gimp->config);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -250,10 +257,13 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer's pixels are locked."));
+      if (error)
+        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer is not visible."));
@@ -438,12 +448,14 @@ gimp_gradient_tool_cursor_update (GimpTool         *tool,
                                   GdkModifierType   state,
                                   GimpDisplay      *display)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpGuiConfig *config   = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image    = gimp_display_get_image (display);
+  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
-      ! gimp_item_is_visible (GIMP_ITEM (drawable)))
+      ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+         config->edit_non_visible))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -720,6 +732,12 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
   if (gradient_tool->filter)
     {
+      /* halt the editor before committing the filter so that the image-flush
+       * idle source is removed, to avoid flushing the image, and hence
+       * restarting the projection rendering, while applying the filter.
+       */
+      gimp_gradient_tool_editor_halt (gradient_tool);
+
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_drawable_filter_commit (gradient_tool->filter,

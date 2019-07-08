@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
@@ -115,10 +115,14 @@ gboolean           gimp_color_profile_is_cmyk               (GimpColorProfile  *
 
 gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
 
+const Babl       * gimp_color_profile_get_space             (GimpColorProfile  *profile,
+                                                             GimpColorRenderingIntent intent,
+                                                             GError           **error);
 const Babl       * gimp_color_profile_get_format            (GimpColorProfile  *profile,
                                                              const Babl        *format,
                                                              GimpColorRenderingIntent intent,
                                                              GError           **error);
+
 const Babl       * gimp_color_profile_get_lcms_format       (const Babl        *format,
                                                              guint32           *lcms_format);
 

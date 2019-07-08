@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -61,9 +61,7 @@ struct _GimpCanvasCornerPrivate
 };
 
 #define GET_PRIVATE(corner) \
-        G_TYPE_INSTANCE_GET_PRIVATE (corner, \
-                                     GIMP_TYPE_CANVAS_CORNER, \
-                                     GimpCanvasCornerPrivate)
+        ((GimpCanvasCornerPrivate *) gimp_canvas_corner_get_instance_private ((GimpCanvasCorner *) (corner)))
 
 
 /*  local function prototypes  */
@@ -81,8 +79,8 @@ static void             gimp_canvas_corner_draw         (GimpCanvasItem *item,
 static cairo_region_t * gimp_canvas_corner_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasCorner, gimp_canvas_corner,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasCorner, gimp_canvas_corner,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_corner_parent_class
 
@@ -143,8 +141,6 @@ gimp_canvas_corner_class_init (GimpCanvasCornerClass *klass)
                                    g_param_spec_boolean ("outside", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasCornerPrivate));
 }
 
 static void

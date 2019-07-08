@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_MASK_UNDO_H__
@@ -35,14 +35,15 @@ typedef struct _GimpMaskUndoClass GimpMaskUndoClass;
 
 struct _GimpMaskUndo
 {
-  GimpItemUndo  parent_instance;
+  GimpItemUndo   parent_instance;
 
-  gboolean      convert_format;
+  gboolean       convert_format;
 
-  GeglBuffer   *buffer;
-  gint          x;
-  gint          y;
-  const Babl   *format;
+  const Babl    *format;
+  GeglBuffer    *buffer;
+  GeglRectangle  bounds;
+  gint           x;
+  gint           y;
 };
 
 struct _GimpMaskUndoClass

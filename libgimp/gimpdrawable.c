@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library.  If not, see
- * <http://www.gnu.org/licenses/>.
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -212,60 +212,6 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
   return &tiles[tile_num];
 }
 
-GimpTile *
-gimp_drawable_get_tile2 (GimpDrawable *drawable,
-                         gboolean      shadow,
-                         gint          x,
-                         gint          y)
-{
-  gint row;
-  gint col;
-
-  g_return_val_if_fail (drawable != NULL, NULL);
-
-  col = x / TILE_WIDTH;
-  row = y / TILE_HEIGHT;
-
-  return gimp_drawable_get_tile (drawable, shadow, row, col);
-}
-
-void
-gimp_drawable_get_color_uchar (gint32         drawable_ID,
-                               const GimpRGB *color,
-                               guchar        *color_uchar)
-{
-  g_return_if_fail (color != NULL);
-  g_return_if_fail (color_uchar != NULL);
-
-  switch (gimp_drawable_type (drawable_ID))
-    {
-    case GIMP_RGB_IMAGE:
-      gimp_rgb_get_uchar (color,
-                          &color_uchar[0], &color_uchar[1], &color_uchar[2]);
-      color_uchar[3] = 255;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      gimp_rgba_get_uchar (color,
-                           &color_uchar[0], &color_uchar[1], &color_uchar[2],
-                           &color_uchar[3]);
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      color_uchar[0] = gimp_rgb_luminance_uchar (color);
-      color_uchar[1] = 255;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      color_uchar[0] = gimp_rgb_luminance_uchar (color);
-      gimp_rgba_get_uchar (color, NULL, NULL, NULL, &color_uchar[1]);
-      break;
-
-    default:
-      break;
-    }
-}
-
 guchar *
 gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
                                   gint   *width,
@@ -418,55 +364,72 @@ gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
 const Babl *
 gimp_drawable_get_format (gint32 drawable_ID)
 {
-  static GHashTable *palette_formats = NULL;
   const Babl *format     = NULL;
   gchar      *format_str = _gimp_drawable_get_format (drawable_ID);
 
+  /* _gimp_drawable_get_format() only returns the encoding, so we
+   * create the actual space from the image's profile
+   */
+
   if (format_str)
     {
+      gint32      image_ID = gimp_item_get_image (drawable_ID);
+      const Babl *space    = NULL;
+
+      if (gimp_item_is_layer (drawable_ID))
+        {
+          GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
+
+          if (profile)
+            {
+              GError *error = NULL;
+
+              space = gimp_color_profile_get_space
+                (profile,
+                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                 &error);
+
+              if (! space)
+                {
+                  g_printerr ("%s: failed to create Babl space from "
+                              "profile: %s\n",
+                              G_STRFUNC, error->message);
+                  g_clear_error (&error);
+                }
+
+              g_object_unref (profile);
+            }
+        }
+
       if (gimp_drawable_is_indexed (drawable_ID))
         {
-          gint32      image_ID = gimp_item_get_image (drawable_ID);
+          const Babl *palette;
+          const Babl *palette_alpha;
           guchar     *colormap;
           gint        n_colors;
 
+          babl_new_palette_with_space (format_str, space,
+                                       &palette, &palette_alpha);
+
+          if (gimp_drawable_has_alpha (drawable_ID))
+            format = palette_alpha;
+          else
+            format = palette;
+
           colormap = gimp_image_get_colormap (image_ID, &n_colors);
-
-          if (!palette_formats)
-            palette_formats = g_hash_table_new (g_str_hash, g_str_equal);
-
-          format = g_hash_table_lookup (palette_formats, format_str);
-
-          if (!format)
-            {
-              const Babl *palette;
-              const Babl *palette_alpha;
-
-              babl_new_palette (format_str, &palette, &palette_alpha);
-              g_hash_table_insert (palette_formats,
-                                   (gpointer) babl_get_name (palette),
-                                   (gpointer) palette);
-              g_hash_table_insert (palette_formats,
-                                   (gpointer) babl_get_name (palette_alpha),
-                                   (gpointer) palette_alpha);
-
-              if (gimp_drawable_has_alpha (drawable_ID))
-                format = palette_alpha;
-              else
-                format = palette;
-            }
 
           if (colormap)
             {
               babl_palette_set_palette (format,
-                                        babl_format ("R'G'B' u8"),
+                                        babl_format_with_space ("R'G'B' u8",
+                                                                space),
                                         colormap, n_colors);
               g_free (colormap);
             }
         }
       else
         {
-          format = babl_format (format_str);
+          format = babl_format_with_space (format_str, space);
         }
 
       g_free (format_str);

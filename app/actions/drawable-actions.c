@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -44,34 +44,27 @@ static const GimpActionEntry drawable_actions[] =
   { "drawable-equalize", NULL,
     NC_("drawable-action", "_Equalize"), NULL,
     NC_("drawable-action", "Automatic contrast enhancement"),
-    G_CALLBACK (drawable_equalize_cmd_callback),
+    drawable_equalize_cmd_callback,
     GIMP_HELP_LAYER_EQUALIZE },
 
   { "drawable-levels-stretch", NULL,
     NC_("drawable-action", "_White Balance"), NULL,
     NC_("drawable-action", "Automatic white balance correction"),
-    G_CALLBACK (drawable_levels_stretch_cmd_callback),
-    GIMP_HELP_LAYER_WHITE_BALANCE },
-
-  { "drawable-offset", NULL,
-    NC_("drawable-action", "_Offset..."), "<primary><shift>O",
-    NC_("drawable-action",
-        "Shift the pixels, optionally wrapping them at the borders"),
-    G_CALLBACK (drawable_offset_cmd_callback),
-    GIMP_HELP_LAYER_OFFSET }
+    drawable_levels_stretch_cmd_callback,
+    GIMP_HELP_LAYER_WHITE_BALANCE }
 };
 
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-visible", GIMP_ICON_VISIBLE,
     NC_("drawable-action", "Toggle Drawable _Visibility"), NULL, NULL,
-    G_CALLBACK (drawable_visible_cmd_callback),
+    drawable_visible_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
   { "drawable-linked", GIMP_ICON_LINKED,
     NC_("drawable-action", "Toggle Drawable _Linked State"), NULL, NULL,
-    G_CALLBACK (drawable_linked_cmd_callback),
+    drawable_linked_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LINKED },
 
@@ -79,7 +72,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     NC_("drawable-action", "L_ock Pixels of Drawable"), NULL,
     NC_("drawable-action",
         "Keep the pixels on this drawable from being modified"),
-    G_CALLBACK (drawable_lock_content_cmd_callback),
+    drawable_lock_content_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
@@ -87,7 +80,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     NC_("drawable-action", "L_ock Position of Drawable"), NULL,
     NC_("drawable-action",
         "Keep the position on this drawable from being modified"),
-    G_CALLBACK (drawable_lock_position_cmd_callback),
+    drawable_lock_position_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LOCK_POSITION },
 };
@@ -143,12 +136,12 @@ drawable_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_enum_actions (group, "drawable-action",
                                       drawable_flip_actions,
                                       G_N_ELEMENTS (drawable_flip_actions),
-                                      G_CALLBACK (drawable_flip_cmd_callback));
+                                      drawable_flip_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, "drawable-action",
                                       drawable_rotate_actions,
                                       G_N_ELEMENTS (drawable_rotate_actions),
-                                      G_CALLBACK (drawable_rotate_cmd_callback));
+                                      drawable_rotate_cmd_callback);
 
 #define SET_ALWAYS_SHOW_IMAGE(action,show) \
         gimp_action_group_set_action_always_show_image (group, action, show)
@@ -215,7 +208,6 @@ drawable_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("drawable-equalize",       writable && !children);
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
-  SET_SENSITIVE ("drawable-offset",         writable && !children);
 
   SET_SENSITIVE ("drawable-visible",       drawable);
   SET_SENSITIVE ("drawable-linked",        drawable);

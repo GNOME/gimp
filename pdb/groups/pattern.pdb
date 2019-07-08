@@ -12,7 +12,7 @@
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
@@ -47,9 +47,14 @@ HELP
 
   if (pattern)
     {
+      const Babl *format;
+
+      format = gimp_babl_compat_u8_format (
+        gimp_temp_buf_get_format (pattern->mask));
+
       width  = gimp_temp_buf_get_width  (pattern->mask);
       height = gimp_temp_buf_get_height (pattern->mask);
-      bpp    = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
+      bpp    = babl_format_get_bytes_per_pixel (format);
     }
   else
     success = FALSE;
@@ -95,12 +100,20 @@ HELP
 
   if (pattern)
     {
+      const Babl *format;
+      gpointer    data;
+
+      format = gimp_babl_compat_u8_format (
+        gimp_temp_buf_get_format (pattern->mask));
+      data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+
       width           = gimp_temp_buf_get_width  (pattern->mask);
       height          = gimp_temp_buf_get_height (pattern->mask);
-      bpp             = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
+      bpp             = babl_format_get_bytes_per_pixel (format);
       num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
-      color_bytes     = g_memdup (gimp_temp_buf_get_data (pattern->mask),
-                                  num_color_bytes);
+      color_bytes     = g_memdup (data, num_color_bytes);
+
+      gimp_temp_buf_unlock (pattern->mask, data);
     }
   else
     success = FALSE;
@@ -111,6 +124,7 @@ CODE
 
 
 @headers = qw(<string.h>
+              "gegl/gimp-babl-compat.h"
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "core/gimppattern.h"

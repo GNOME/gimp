@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __GIMP_DRAWABLE_FILTERS_H__
@@ -37,7 +37,8 @@ gboolean        gimp_drawable_merge_filter  (GimpDrawable *drawable,
                                              GimpFilter   *filter,
                                              GimpProgress *progress,
                                              const gchar  *undo_desc,
-                                             gboolean      cancellable);
+                                             gboolean      cancellable,
+                                             gboolean      update);
 
 
 #endif /* __GIMP_DRAWABLE_FILTERS_H__ */

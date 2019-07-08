@@ -12,27 +12,32 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef __ERROR_CONSOLE_COMMANDS_H__
 #define __ERROR_CONSOLE_COMMANDS_H__
 
 
-void   error_console_clear_cmd_callback             (GtkAction *action,
-                                                     gpointer   data);
-void   error_console_select_all_cmd_callback        (GtkAction *action,
-                                                     gpointer   data);
-void   error_console_save_cmd_callback              (GtkAction *action,
-                                                     gint       value,
-                                                     gpointer   data);
+void   error_console_clear_cmd_callback             (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+void   error_console_select_all_cmd_callback        (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+void   error_console_save_cmd_callback              (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 
-void   error_console_highlight_error_cmd_callback   (GtkAction *action,
-                                                     gpointer   data);
-void   error_console_highlight_warning_cmd_callback (GtkAction *action,
-                                                     gpointer   data);
-void   error_console_highlight_info_cmd_callback    (GtkAction *action,
-                                                     gpointer   data);
+void   error_console_highlight_error_cmd_callback   (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+void   error_console_highlight_warning_cmd_callback (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+void   error_console_highlight_info_cmd_callback    (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 
 
 #endif /* __ERROR_CONSOLE_COMMANDS_H__ */

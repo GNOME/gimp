@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -220,22 +220,18 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
                                GError           **error)
 {
   GimpDrawable     *drawable    = GIMP_DRAWABLE (layer);
-  GimpImage        *image       = gimp_item_get_image (GIMP_ITEM (layer));
   GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
   GimpColorProfile *dest_profile;
-
-  if (! gimp_image_get_is_color_managed (image))
-    {
-      gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
-                             dest_buffer, NULL);
-      return;
-    }
 
   if (! src_profile)
     {
       const Babl *src_format = gegl_buffer_get_format (src_buffer);
 
       src_profile = gimp_babl_format_get_color_profile (src_format);
+    }
+  else
+    {
+      g_object_ref (src_profile);
     }
 
   dest_profile =
@@ -245,4 +241,6 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
                                    dest_buffer, NULL, dest_profile,
                                    GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                    TRUE, NULL);
+
+  g_object_unref (src_profile);
 }

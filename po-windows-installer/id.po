@@ -5,16 +5,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-08 14:57+0100\n"
-"PO-Revision-Date: 2018-02-08 14:57+0100\n"
-"Last-Translator: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2019-04-08 10:21+0000\n"
+"PO-Revision-Date: 2019-04-11 17:27+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -25,12 +26,9 @@ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 msgstr "Setup yang dibuat oleh Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
-msgid ""
-"This version of GIMP requires Windows XP with Service Pack 3, or a newer "
-"version of Windows."
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr ""
-"Versi GIMP ini memerlukan Windows XP dengan Service Pack 3, atau versi "
-"Windows yang lebih baru."
+"Versi GIMP ini memerlukan Windows 7, atau versi Windows yang lebih baru."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:4
 msgid "Development version"
@@ -43,17 +41,17 @@ msgid ""
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP bugzilla:"
-"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
-"continue with installation anyway?"
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
 "Ini adalah versi pengembangan GIMP dimana beberapa fitur mungkin tidak "
 "selesai, atau mungkin tidak stabil.%nVersi GIMP ini tidak dimaksudkan untuk "
 "pekerjaan sehari-hari karena mungkin tidak stabil, dan Anda bisa kehilangan "
 "pekerjaan Anda.%nJika Anda mengalami masalah, pertama verifikasi bahwa "
 "mereka belum selesai di GIT sebelum menghubungi pengembang atau "
-"melaporkannya di bugzilla GIMP:%n_https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=GIMP%n%nApakah Anda ingin melanjutkan pemasangan?"
+"melaporkannya di bugzilla GIMP:%n_https://gitlab.gnome.org/GNOME/gimp/issues"
+"%n%nApakah Anda ingin melanjutkan pemasangan?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -86,7 +84,7 @@ msgstr ""
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
-msgstr "E&xit"
+msgstr "&Keluar"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:13
 msgid ""
@@ -94,13 +92,13 @@ msgid ""
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP sekarang siap untuk diinstal. Klik tombol Install now untuk menginstal "
-"menggunakan pengaturan default, atau klik tombol Customize jika Anda ingin "
-"memiliki kontrol lebih terhadap apa yang terinstal."
+"GIMP sekarang siap untuk dipasang. Klik tombol pasang sekarang untuk "
+"memasang menggunakan pengaturan bawaan, atau klik tombol Sesuaikan jika Anda "
+"ingin memiliki kontrol lebih terhadap apa yang terpasang."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"
-msgstr "&Install"
+msgstr "&Pasang"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:15
 msgid "&Customize"
@@ -112,11 +110,11 @@ msgstr "Pemasangan yang kompak"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:17
 msgid "Custom installation"
-msgstr "Instalasi kustom"
+msgstr "Pemasangan tersuai"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:18
 msgid "Full installation"
-msgstr "Instalasi penuh"
+msgstr "Pemasangan penuh"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:19
 msgid "Description"
@@ -128,7 +126,7 @@ msgstr "GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:21
 msgid "GIMP and all default plug-ins"
-msgstr "GIMP dan semua plug-in default"
+msgstr "GIMP dan semua pengaya bawaan"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:22
 msgid "Run-time libraries"
@@ -140,156 +138,164 @@ msgstr ""
 "Pustaka run-time yang digunakan oleh GIMP, termasuk lingkungan GTK+ Run-time"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "Simbol awakutu"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "Masukkan informasi untuk membantu mengawakutu GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
 msgstr "mesin MS-Windows untuk GTK+"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:25
+#: ../build/windows/installer/lang/setup.isl.in.h:27
 msgid "Native Windows look for GIMP"
 msgstr "Windows Asli mencari GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:26
+#: ../build/windows/installer/lang/setup.isl.in.h:28
 msgid "Support for old plug-ins"
-msgstr "Dukungan untuk plug-in lama"
+msgstr "Dukungan untuk pengaya lama"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:27
+#: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr "Instal perpustakaan yang dibutuhkan oleh plug-in pihak ketiga yang tua"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:28
+#: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
 msgstr "Terjemahan"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:29
+#: ../build/windows/installer/lang/setup.isl.in.h:31
 msgid "Python scripting"
 msgstr "scripting Python"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:30
+#: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
-"Memungkinkan Anda untuk menggunakan plugin GIMP yang ditulis dengan bahasa "
+"Memungkinkan Anda untuk menggunakan pengaya GIMP yang ditulis dengan bahasa "
 "scripting Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:31
+#: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "MyPaint brushes"
 msgstr "sikat MyPaint"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:32
+#: ../build/windows/installer/lang/setup.isl.in.h:34
 msgid "Install the default set of MyPaint brushes"
-msgstr "Instal set default sikat MyPaint"
+msgstr "Pasang set bawaan sikat MyPaint"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:33
+#: ../build/windows/installer/lang/setup.isl.in.h:35
 msgid "PostScript support"
 msgstr "Dukungan PostScript"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
+#: ../build/windows/installer/lang/setup.isl.in.h:36
 msgid "Allow GIMP to load PostScript files"
-msgstr "Izinkan GIMP memuat file PostScript"
-
-#: ../build/windows/installer/lang/setup.isl.in.h:35
-msgid "Support for 32-bit plug-ins"
-msgstr "Dukungan untuk plug-in 32-bit"
+msgstr "Izinkan GIMP memuat berkas PostScript"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "Support for 32-bit plug-ins"
+msgstr "Dukungan untuk pengaya 32-bit"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"Sertakan file yang diperlukan untuk menggunakan plug-in 32-bit.%nDiperlukan "
-"untuk dukungan Python."
+"Sertakan berkas yang diperlukan untuk menggunakan pengaya 32-bit."
+"%nDiperlukan untuk dukungan Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:38
+#: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
 msgstr "Ikon tambahan:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
-msgid "Create a &desktop icon"
-msgstr "Buat ikon &desktop"
-
-#: ../build/windows/installer/lang/setup.isl.in.h:40
-msgid "Create a &Quick Launch icon"
-msgstr "Buat ikon Quick Launch"
-
 #: ../build/windows/installer/lang/setup.isl.in.h:41
+msgid "Create a &desktop icon"
+msgstr "Buat ikon &destop"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:42
+msgid "Create a &Quick Launch icon"
+msgstr "Buat ikon &Peluncuran Cepat"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:43
 msgid "Remove previous GIMP version"
 msgstr "Hapus versi GIMP sebelumnya"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
+#: ../build/windows/installer/lang/setup.isl.in.h:45
 #, no-c-format
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
 "Terjadi masalah saat memperbarui lingkungan GIMP di %1. Jika Anda mengalami "
-"kesalahan saat memuat plugin, coba copot pemasangan dan pasang ulang GIMP."
+"kesalahan saat memuat pengaya, coba copot pemasangan dan pasang ulang GIMP."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:44
+#: ../build/windows/installer/lang/setup.isl.in.h:46
 msgid "Error extracting temporary data."
 msgstr "Kesalahan mengekstrak data sementara."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
+#: ../build/windows/installer/lang/setup.isl.in.h:47
 msgid "Error updating Python interpreter info."
 msgstr "Kesalahan memperbarui informasi juru bahasa Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:46
+#: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error updating MyPaint brushes info."
 msgstr "Kesalahan memperbarui sikat MyPaint info."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
+#: ../build/windows/installer/lang/setup.isl.in.h:50
 #, no-c-format
 msgid "There was an error updating %1."
 msgstr "Terjadi kesalahan saat memutakhirkan %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
+#: ../build/windows/installer/lang/setup.isl.in.h:52
 #, no-c-format
 msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Ada kesalahan saat memperbarui file konfigurasi GIMP %1."
-
-#: ../build/windows/installer/lang/setup.isl.in.h:51
-msgid "Edit with GIMP"
-msgstr "Edit dengan GIMP"
-
-#: ../build/windows/installer/lang/setup.isl.in.h:52
-msgid "Select file associations"
-msgstr "Pilih asosiasi file"
+msgstr "Ada kesalahan saat memutakhirkan berkas konfigurasi GIMP %1."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:53
+msgid "Edit with GIMP"
+msgstr "Sunting dengan GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:54
+msgid "Select file associations"
+msgstr "Pilih asosiasi berkas"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:55
 msgid "Extensions:"
 msgstr "Ekstensi:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select the file types you wish to associate with GIMP"
-msgstr "Pilih jenis file yang ingin Anda kaitkan dengan GIMP"
+msgstr "Pilih jenis berkas yang ingin Anda kaitkan dengan GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: ../build/windows/installer/lang/setup.isl.in.h:57
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
 msgstr ""
-"Ini akan membuat file terpilih terbuka di GIMP saat Anda mengklik dua kali "
+"Ini akan membuat berkas terpilih terbuka di GIMP saat Anda mengklik dua kali "
 "di Explorer."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select &All"
 msgstr "Pilih &Semua"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: ../build/windows/installer/lang/setup.isl.in.h:59
 msgid "Unselect &All"
-msgstr "batalkan pilihan &semua"
+msgstr "Batalkan pilihan &semua"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: ../build/windows/installer/lang/setup.isl.in.h:60
 msgid "Select &Unused"
 msgstr "Pilih &Tidak Digunakan"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: ../build/windows/installer/lang/setup.isl.in.h:61
 msgid "File types to associate with GIMP:"
-msgstr "Jenis file untuk diasosiasikan dengan GIMP:"
+msgstr "Jenis berkas untuk diasosiasikan dengan GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Removing previous version of GIMP:"
 msgstr "Melepaskan versi GIMP sebelumnya:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
+#: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -298,12 +304,12 @@ msgid ""
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"GIMP %1 tidak dapat diinstal di atas versi GIMP yang Anda instal saat ini, "
+"GIMP %1 tidak dapat dipasang di atas versi GIMP yang Anda pasang saat ini, "
 "dan penghapusan otomatis versi lama telah gagal.%n%nHapus versi GIMP "
-"sebelumnya sebelum menginstal versi ini di %2, atau pilih pemasangan Khusus, "
+"sebelumnya sebelum memasang versi ini di %2, atau pilih pemasangan Khusus, "
 "dan pilih folder instalasi yang berbeda.%n%nThe Setup sekarang akan keluar."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
+#: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -312,72 +318,77 @@ msgid ""
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"GIMP %1 tidak dapat diinstal di atas versi GIMP yang Anda instal saat ini, "
+"GIMP %1 tidak dapat dipasang di atas versi GIMP yang Anda pasang saat ini, "
 "dan Setup tidak dapat menentukan cara menghapus versi lama secara otomatis.%n"
-"%nHapus versi GIMP sebelumnya dan add-on sendiri sebelum menginstal versi "
-"ini di %2, atau pilih Custom install, dan pilih folder instalasi yang "
-"berbeda.%n%nThe Setup sekarang akan keluar."
+"%nHapus versi GIMP sebelumnya dan add-on sendiri sebelum memasang versi ini "
+"di %2, atau pilih Pemasangan kustom, dan pilih folder instalasi yang berbeda."
+"%n%nThe Setup sekarang akan keluar."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
+#: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"Versi GIMP sebelumnya telah berhasil dihapus, namun Windows harus di-restart "
-"sebelum Setup dapat dilanjutkan.%n%nSetelah me-restart komputer Anda, Setup "
-"akan berlanjut saat administrator masuk."
-
-#: ../build/windows/installer/lang/setup.isl.in.h:68
-#, no-c-format
-msgid "There was an error restarting the Setup. (%1)"
-msgstr "Terjadi kesalahan saat me-restart Setup. (%1)"
+"Versi GIMP sebelumnya telah berhasil dihapus, namun Windows harus dinyalakan "
+"ulang sebelum Setup dapat dilanjutkan.%n%nSetelah menyalakan ulang komputer "
+"Anda, Setup akan berlanjut saat administrator masuk."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:70
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "Terjadi kesalahan saat memulai ulang Setup. (%1)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:71
+msgid "Cleaning up old files..."
+msgstr "Membersihkan berkas lama..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Ingat: GIMP adalah Perangkat Lunak Bebas.%n%nHarap kunjungi"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:71
+#: ../build/windows/installer/lang/setup.isl.in.h:74
 msgid "for free updates."
-msgstr "untuk update gratis."
+msgstr "untuk pemutakhiran gratis."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:72
+#: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up file associations..."
-msgstr "Menyiapkan kumpulan file ..."
+msgstr "Menyiapkan kumpulan berkas..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Menyiapkan lingkungan untuk ekstensi Python GIMP ..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up MyPaint brushes..."
 msgstr "Menyiapkan sikat MyPaint ..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up GIMP environment..."
 msgstr "Menyiapkan lingkungan GIMP ..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Menyiapkan konfigurasi GIMP untuk dukungan plug-in 32-bit ..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Launch GIMP"
 msgstr "Luncurkan GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Removing add-on"
 msgstr "Melepaskan add-on"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: ../build/windows/installer/lang/setup.isl.in.h:83
 #, no-c-format
 msgid "Internal error (%1)."
 msgstr "Kesalahan internal (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: ../build/windows/installer/lang/setup.isl.in.h:84
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
-msgstr "GIMP tidak muncul untuk dipasang di direktori yang dipilih. Terus sih?"
+msgstr ""
+"GIMP tidak muncul untuk dipasang di direktori yang dipilih. Lanjutkan saja?"

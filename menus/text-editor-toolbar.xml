@@ -8,5 +8,9 @@
     <separator />
     <toolitem action="text-editor-direction-ltr" />
     <toolitem action="text-editor-direction-rtl" />
+    <toolitem action="text-editor-direction-ttb-rtl" />
+    <toolitem action="text-editor-direction-ttb-rtl-upright" />
+    <toolitem action="text-editor-direction-ttb-ltr" />
+    <toolitem action="text-editor-direction-ttb-ltr-upright" />
   </toolbar>
 </ui>

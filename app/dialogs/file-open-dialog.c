@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -128,6 +128,9 @@ file_open_dialog_response (GtkWidget *dialog,
   if (! open_dialog->open_as_layers)
     gtk_window_set_transient_for (GTK_WINDOW (dialog), NULL);
 
+  if (file_dialog->image)
+    g_object_ref (file_dialog->image);
+
   for (list = files; list; list = g_slist_next (list))
     {
       GFile *file = list->data;
@@ -136,13 +139,19 @@ file_open_dialog_response (GtkWidget *dialog,
         {
           if (! file_dialog->image)
             {
-              file_dialog->image = file_open_dialog_open_image (dialog,
-                                                                gimp,
-                                                                file,
-                                                                file_dialog->file_proc);
+              gimp_open_dialog_set_image (
+                open_dialog,
+                file_open_dialog_open_image (dialog,
+                                             gimp,
+                                             file,
+                                             file_dialog->file_proc),
+                TRUE);
 
               if (file_dialog->image)
-                success = TRUE;
+                {
+                  g_object_ref (file_dialog->image);
+                  success = TRUE;
+                }
             }
           else if (file_open_dialog_open_layers (dialog,
                                                  file_dialog->image,
@@ -174,13 +183,21 @@ file_open_dialog_response (GtkWidget *dialog,
 
   if (success)
     {
-      if (open_dialog->open_as_layers && file_dialog->image)
-        gimp_image_flush (file_dialog->image);
+      if (file_dialog->image)
+        {
+          if (open_dialog->open_as_layers)
+            gimp_image_flush (file_dialog->image);
+
+          g_object_unref (file_dialog->image);
+        }
 
       gtk_widget_destroy (dialog);
     }
   else
     {
+      if (file_dialog->image)
+        g_object_unref (file_dialog->image);
+
       gimp_file_dialog_set_sensitive (file_dialog, TRUE);
     }
 
@@ -205,7 +222,7 @@ file_open_dialog_open_image (GtkWidget           *dialog,
                                            G_OBJECT (gimp_widget_get_monitor (dialog)),
                                            &status, &error);
 
-  if (! image && status != GIMP_PDB_CANCEL)
+  if (! image && status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
     {
       gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),

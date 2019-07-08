@@ -12,7 +12,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -47,49 +47,49 @@ static const GimpActionEntry palettes_actions[] =
   { "palettes-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("palettes-action", "_New Palette"), NULL,
     NC_("palettes-action", "Create a new palette"),
-    G_CALLBACK (data_new_cmd_callback),
+    data_new_cmd_callback,
     GIMP_HELP_PALETTE_NEW },
 
   { "palettes-import", "gtk-convert",
     NC_("palettes-action", "_Import Palette..."), NULL,
     NC_("palettes-action", "Import palette"),
-    G_CALLBACK (palettes_import_cmd_callback),
+    palettes_import_cmd_callback,
     GIMP_HELP_PALETTE_IMPORT },
 
   { "palettes-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("palettes-action", "D_uplicate Palette"), NULL,
     NC_("palettes-action", "Duplicate this palette"),
-    G_CALLBACK (data_duplicate_cmd_callback),
+    data_duplicate_cmd_callback,
     GIMP_HELP_PALETTE_DUPLICATE },
 
   { "palettes-merge", NULL,
     NC_("palettes-action", "_Merge Palettes..."), NULL,
     NC_("palettes-action", "Merge palettes"),
-    G_CALLBACK (palettes_merge_cmd_callback),
+    palettes_merge_cmd_callback,
     GIMP_HELP_PALETTE_MERGE },
 
   { "palettes-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("palettes-action", "Copy Palette _Location"), NULL,
     NC_("palettes-action", "Copy palette file location to clipboard"),
-    G_CALLBACK (data_copy_location_cmd_callback),
+    data_copy_location_cmd_callback,
     GIMP_HELP_PALETTE_COPY_LOCATION },
 
   { "palettes-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("palettes-action", "Show in _File Manager"), NULL,
     NC_("palettes-action", "Show palette file location in the file manager"),
-    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    data_show_in_file_manager_cmd_callback,
     GIMP_HELP_PALETTE_SHOW_IN_FILE_MANAGER },
 
   { "palettes-delete", GIMP_ICON_EDIT_DELETE,
     NC_("palettes-action", "_Delete Palette"), NULL,
     NC_("palettes-action", "Delete this palette"),
-    G_CALLBACK (data_delete_cmd_callback),
+    data_delete_cmd_callback,
     GIMP_HELP_PALETTE_DELETE },
 
   { "palettes-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("palettes-action", "_Refresh Palettes"), NULL,
     NC_("palettes-action", "Refresh palettes"),
-    G_CALLBACK (data_refresh_cmd_callback),
+    data_refresh_cmd_callback,
     GIMP_HELP_PALETTE_REFRESH }
 };
 
@@ -113,7 +113,7 @@ palettes_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "palettes-action",
                                         palettes_edit_actions,
                                         G_N_ELEMENTS (palettes_edit_actions),
-                                        G_CALLBACK (data_edit_cmd_callback));
+                                        data_edit_cmd_callback);
 }
 
 void
