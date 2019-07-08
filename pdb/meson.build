@@ -7,13 +7,11 @@ pdb_names = [
   'brushes',
   'buffer',
   'channel',
-  'color',
   'context',
   'debug',
   'display',
   'drawable_color',
   'drawable_edit',
-  'drawable_transform',
   'drawable',
   'dynamics',
   'edit',
@@ -44,7 +42,6 @@ pdb_names = [
   'palette_select',
   'palette',
   'palettes',
-  'paths',
   'pattern_select',
   'pattern',
   'patterns',
@@ -52,11 +49,9 @@ pdb_names = [
   'plug_in',
   'procedural_db',
   'progress',
-  'selection_tools',
   'selection',
   'text_layer',
   'text_tool',
-  'transform_tools',
   'unit',
   'vectors',
 ]
@@ -64,8 +59,7 @@ pdb_names = [
 pdb_sources = []
 pdb_outputs = []
 foreach name : pdb_names
-  pdb_sources += join_paths('pdb', name + '.pdb')
-  pdb_sources += join_paths('pdb', name + '.pdb')
+  pdb_sources += files('groups' / name + '.pdb')
 endforeach
 
 
@@ -123,14 +117,15 @@ enums_pl = custom_target('enums.pl',
 
 pdbgen = custom_target('stamp-pdbgen',
   input : [
-    'pdbgen.pl',
+    files(
+      'pdbgen.pl',
 
-    'app.pl',
-    'lib.pl',
-    'pdb.pl',
-    'stddefs.pdb',
-    'util.pl',
-
+      'app.pl',
+      'lib.pl',
+      'pdb.pl',
+      'stddefs.pdb',
+      'util.pl',
+    ),
     enums_pl,
     groups_pl,
     pdb_sources,

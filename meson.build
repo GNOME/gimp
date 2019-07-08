@@ -557,7 +557,8 @@ endif
 libwebp      = dependency('libwebp',     version: '>=0.6.0', required: get_option('webp'))
 libwebpmux   = dependency('libwebpmux',  version: '>=0.6.0', required: get_option('webp'))
 libwebpdemux = dependency('libwebpdemux',version: '>=0.6.0', required: get_option('webp'))
-if libwebp.found() and libwebpmux.found() and libwebpdemux.found()
+webp_found = libwebp.found() and libwebpmux.found() and libwebpdemux.found()
+if webp_found
   MIMEtypes += 'image/x-webp'
 endif
 
@@ -589,9 +590,6 @@ endif
 
 
 cairopdf = dependency('cairo-pdf', version: '>=1.12.2', required: get_option('cairo-pdf'))
-if cairopdf.found()
-  cairopdf = dependency('', required: false)
-endif
 
 # PDF import support is a granted feature.
 MIMEtypes += 'application/pdf'
@@ -1235,6 +1233,7 @@ install_conf = configuration_data()
 install_conf.set('GIMP_APP_VERSION', app_version)
 install_conf.set('GIMP_PKGCONFIG_VERSION', gimp_version)
 install_conf.set('GIMP_VERSION', gimp_version)
+install_conf.set('APPSTREAM_GLIB_REQUIRED_VERSION', appstream_glib.version())
 install_conf.set('ATK_REQUIRED_VERSION',          atk         .version())
 install_conf.set('BABL_REQUIRED_VERSION',         babl        .version())
 install_conf.set('CAIRO_PDF_REQUIRED_VERSION',    cairopdf    .version())
@@ -1243,6 +1242,7 @@ install_conf.set('FONTCONFIG_REQUIRED_VERSION',   fontconfig  .version())
 install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2   .version())
 install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf  .version())
 install_conf.set('GEGL_REQUIRED_VERSION',         gegl        .version())
+install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2.version())
 install_conf.set('GLIB_REQUIRED_VERSION',         glib        .version())
 install_conf.set('GTK_REQUIRED_VERSION',          gtk3        .version())
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz    .version())
@@ -1253,6 +1253,7 @@ install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma     .version())
 install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint  .version())
 install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng      .version())
 install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr     .version())
+install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg.version())
 install_conf.set('PANGOCAIRO_REQUIRED_VERSION',   pangocairo  .version())
 install_conf.set('POPPLER_DATA_REQUIRED_VERSION', poppler[1]  .version())
 install_conf.set('POPPLER_REQUIRED_VERSION',      poppler[0]  .version())
@@ -1261,7 +1262,7 @@ install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
 install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit      .version())
 install_conf.set('WEBP_REQUIRED_VERSION',         libwebp     .version())
 install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
-install_conf.set('XGETTEXT_RECOMMENDED_VERSION', '0.19')
+install_conf.set('XGETTEXT_REQUIRED_VERSION', '0.19')
 
 configure_file(
   input : 'INSTALL.in',
@@ -1502,7 +1503,7 @@ Optional Plug-Ins:
   JPEG 2000:           @0@'''.format(openjpeg.found()) +'''
   MNG:                 @0@'''.format(libmng.found()) +'''
   OpenEXR:             @0@'''.format(openexr.found()) +'''
-  WebP:                @0@'''.format(get_option('webp')) +'''
+  WebP:                @0@'''.format(webp_found) +'''
   Heif:                @0@'''.format(libheif.found()) +'''
   PDF (export):        @0@'''.format(cairopdf.found()) +'''
   Print:               @0@'''.format(have_print) +'''
