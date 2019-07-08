@@ -47,7 +47,6 @@
 #include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppixbuf.h>
-#include <libgimp/gimppixelfetcher.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpproceduraldb.h>
