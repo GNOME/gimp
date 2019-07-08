@@ -136,8 +136,7 @@ struct _BenderDialog
 
   GdkCursor *cursor_busy;
 
-  gint32        drawable_id;
-  GimpDrawable *drawable;
+  gint32     drawable_id;
   int        color;
   int        outline;
   gint       preview;
@@ -237,69 +236,124 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static BenderDialog *  bender_new_dialog              (GimpDrawable *);
-static void            bender_update                  (BenderDialog *, int);
+static BenderDialog *  bender_new_dialog              (gint32 drawable_id);
+static void            bender_update                  (BenderDialog *,
+                                                       int);
 static void            bender_plot_curve              (BenderDialog *,
-                                                       int, int, int, int,
-                                                       gint32, gint32, gint);
-static void            bender_calculate_curve         (BenderDialog *, gint32,
-                                                       gint32, gint);
-static void            bender_rotate_adj_callback     (GtkAdjustment *, gpointer);
-static void            bender_border_callback         (GtkWidget *, gpointer);
-static void            bender_type_callback           (GtkWidget *, gpointer);
-static void            bender_reset_callback          (GtkWidget *, gpointer);
-static void            bender_copy_callback           (GtkWidget *, gpointer);
-static void            bender_copy_inv_callback       (GtkWidget *, gpointer);
-static void            bender_swap_callback           (GtkWidget *, gpointer);
-static void            bender_response                (GtkWidget *, gint,
+                                                       int,
+                                                       int,
+                                                       int,
+                                                       int,
+                                                       gint32,
+                                                       gint32,
+                                                       gint);
+static void            bender_calculate_curve         (BenderDialog *,
+                                                       gint32,
+                                                       gint32,
+                                                       gint);
+static void            bender_rotate_adj_callback     (GtkAdjustment *,
+                                                       gpointer);
+static void            bender_border_callback         (GtkWidget *,
+                                                       gpointer);
+static void            bender_type_callback           (GtkWidget *,
+                                                       gpointer);
+static void            bender_reset_callback          (GtkWidget *,
+                                                       gpointer);
+static void            bender_copy_callback           (GtkWidget *,
+                                                       gpointer);
+static void            bender_copy_inv_callback       (GtkWidget *,
+                                                       gpointer);
+static void            bender_swap_callback           (GtkWidget *,
+                                                       gpointer);
+static void            bender_response                (GtkWidget *,
+                                                       gint,
                                                        BenderDialog *);
-static void            bender_smoothing_callback      (GtkWidget *, gpointer);
-static void            bender_antialias_callback      (GtkWidget *, gpointer);
-static void            bender_work_on_copy_callback   (GtkWidget *, gpointer);
-static void            bender_preview_update          (GtkWidget *, gpointer);
-static void            bender_preview_update_once     (GtkWidget *, gpointer);
+static void            bender_smoothing_callback      (GtkWidget *,
+                                                       gpointer);
+static void            bender_antialias_callback      (GtkWidget *,
+                                                       gpointer);
+static void            bender_work_on_copy_callback   (GtkWidget *,
+                                                       gpointer);
+static void            bender_preview_update          (GtkWidget *,
+                                                       gpointer);
+static void            bender_preview_update_once     (GtkWidget *,
+                                                       gpointer);
 static void            bender_load_callback           (GtkWidget *,
                                                        BenderDialog *);
 static void            bender_save_callback           (GtkWidget *,
                                                        BenderDialog *);
-static gint            bender_graph_events            (GtkWidget *, GdkEvent *,
+static gint            bender_graph_events            (GtkWidget *,
+                                                       GdkEvent *,
                                                        BenderDialog *);
 static gint            bender_graph_draw              (GtkWidget *,
                                                        cairo_t *,
                                                        BenderDialog *);
-static void            bender_CR_compose              (CRMatrix, CRMatrix,
+static void            bender_CR_compose              (CRMatrix,
+                                                       CRMatrix,
                                                        CRMatrix);
-static void            bender_init_min_max            (BenderDialog *, gint32);
-static BenderDialog *  do_dialog                      (GimpDrawable *);
-static void            p_init_gdrw                    (t_GDRW *gdrw, GimpDrawable *drawable,
-                                                       int dirty, int shadow);
-static void            p_end_gdrw                     (t_GDRW *gdrw);
-static gint32          p_main_bend                    (BenderDialog *, guint32, gint);
-static gint32          p_create_pv_image              (GimpDrawable *src_drawable, gint32 *layer_id);
-static void            p_render_preview               (BenderDialog *cd, gint32 layer_id);
-static void            p_get_pixel                    (t_GDRW *gdrw,
-                                                       gint32 x, gint32 y, guchar *pixel);
-static void            p_put_pixel                    (t_GDRW *gdrw,
-                                                       gint32 x, gint32 y, guchar *pixel);
-static void            p_put_mix_pixel                (t_GDRW *gdrw,
-                                                       gint32 x, gint32 y, guchar *color,
-                                                       gint32 nb_curvy, gint32 nb2_curvy,
-                                                       gint32 curvy);
-static void            p_stretch_curves               (BenderDialog *cd, gint32 xmax, gint32 ymax);
-static void            p_cd_to_bval                   (BenderDialog *cd, BenderValues *bval);
-static void            p_cd_from_bval                 (BenderDialog *cd, BenderValues *bval);
+static void            bender_init_min_max            (BenderDialog *,
+                                                       gint32);
+static BenderDialog *  do_dialog                      (gint32        drawable_id);
+static void            p_init_gdrw                    (t_GDRW       *gdrw,
+                                                       gint32        drawable_id,
+                                                       int           dirty,
+                                                       int           shadow);
+static void            p_end_gdrw                     (t_GDRW       *gdrw);
+static gint32          p_main_bend                    (BenderDialog *cd,
+                                                       guint32,
+                                                       gint);
+static gint32          p_create_pv_image              (gint32        src_drawable_id,
+                                                       gint32       *layer_id);
+static void            p_render_preview               (BenderDialog *cd,
+                                                       gint32        layer_id);
+static void            p_get_pixel                    (t_GDRW       *gdrw,
+                                                       gint32        x,
+                                                       gint32        y,
+                                                       guchar       *pixel);
+static void            p_put_pixel                    (t_GDRW       *gdrw,
+                                                       gint32        x,
+                                                       gint32        y,
+                                                       guchar       *pixel);
+static void            p_put_mix_pixel                (t_GDRW       *gdrw,
+                                                       gint32        x,
+                                                       gint32        y,
+                                                       guchar       *color,
+                                                       gint32        nb_curvy,
+                                                       gint32        nb2_curvy,
+                                                       gint32        curvy);
+static void            p_stretch_curves               (BenderDialog *cd,
+                                                       gint32        xmax,
+                                                       gint32        ymax);
+static void            p_cd_to_bval                   (BenderDialog *cd,
+                                                       BenderValues *bval);
+static void            p_cd_from_bval                 (BenderDialog *cd,
+                                                       BenderValues *bval);
 static void            p_store_values                 (BenderDialog *cd);
 static void            p_retrieve_values              (BenderDialog *cd);
-static void            p_bender_calculate_iter_curve  (BenderDialog *cd, gint32 xmax, gint32 ymax);
-static void            p_delta_gdouble                (double *val, double val_from, double val_to,
-                                                       gint32 total_steps, gdouble current_step);
-static void            p_delta_gint32                 (gint32 *val, gint32 val_from, gint32 val_to,
-                                                       gint32 total_steps, gdouble current_step);
-static void            p_copy_points                  (BenderDialog *cd, int outline, int xy,
-                                                       int argc, gdouble *floatarray);
-static void            p_copy_yval                    (BenderDialog *cd, int outline,
-                                                       int argc, guint8 *int8array);
-static int             p_save_pointfile               (BenderDialog *cd, const gchar *filename);
+static void            p_bender_calculate_iter_curve  (BenderDialog *cd,
+                                                       gint32        xmax,
+                                                       gint32        ymax);
+static void            p_delta_gdouble                (double       *val,
+                                                       double        val_from,
+                                                       double        val_to,
+                                                       gint32        total_steps,
+                                                       gdouble       current_step);
+static void            p_delta_gint32                 (gint32       *val,
+                                                       gint32        val_from,
+                                                       gint32        val_to,
+                                                       gint32        total_steps,
+                                                       gdouble       current_step);
+static void            p_copy_points                  (BenderDialog *cd,
+                                                       int           outline,
+                                                       int           xy,
+                                                       int           argc,
+                                                       gdouble      *floatarray);
+static void            p_copy_yval                    (BenderDialog *cd,
+                                                       int           outline,
+                                                       int           argc,
+                                                       guint8       *int8array);
+static int             p_save_pointfile               (BenderDialog *cd,
+                                                       const gchar  *filename);
 
 
 /* Global Variables */
@@ -337,35 +391,35 @@ static int gb_debug = FALSE;
 static gint
 p_pdb_procedure_available (const gchar *proc_name)
 {
-  gint             l_nparams;
-  gint             l_nreturn_vals;
-  GimpPDBProcType  l_proc_type;
-  gchar           *l_proc_blurb;
-  gchar           *l_proc_help;
-  gchar           *l_proc_author;
-  gchar           *l_proc_copyright;
-  gchar           *l_proc_date;
-  GimpParamDef    *l_params;
-  GimpParamDef    *l_return_vals;
-  gint             l_rc;
+  gint             nparams;
+  gint             nreturn_vals;
+  GimpPDBProcType  proc_type;
+  gchar           *proc_blurb;
+  gchar           *proc_help;
+  gchar           *proc_author;
+  gchar           *proc_copyright;
+  gchar           *proc_date;
+  GimpParamDef    *params;
+  GimpParamDef    *return_vals;
+  gint             rc;
 
-  l_rc = 0;
+  rc = 0;
 
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
   if (gimp_procedural_db_proc_info (proc_name,
-                                    &l_proc_blurb,
-                                    &l_proc_help,
-                                    &l_proc_author,
-                                    &l_proc_copyright,
-                                    &l_proc_date,
-                                    &l_proc_type,
-                                    &l_nparams, &l_nreturn_vals,
-                                    &l_params, &l_return_vals))
+                                    &proc_blurb,
+                                    &proc_help,
+                                    &proc_author,
+                                    &proc_copyright,
+                                    &proc_date,
+                                    &proc_type,
+                                    &nparams, &nreturn_vals,
+                                    &params, &return_vals))
     {
       /* procedure found in PDB */
-      return l_nparams;
+      return nparams;
     }
 
   g_printerr ("Warning: Procedure %s not found.\n", proc_name);
@@ -380,33 +434,33 @@ p_gimp_rotate (gint32  image_id,
                gint32  interpolation,
                gdouble angle_deg)
 {
-  gdouble       l_angle_rad;
-  gint          l_rc;
+  gdouble       angle_rad;
+  gint          rc;
 
 #ifdef ROTATE_OPTIMIZE
-  static gchar *l_rotate_proc = "plug-in-rotate";
+  static gchar *rotate_proc = "plug-in-rotate";
   GimpParam    *return_vals;
   gint          nreturn_vals;
-  gint32        l_angle_step;
-  gint          l_nparams;
+  gint32        angle_step;
+  gint          nparams;
 
-  if     (angle_deg == 90.0)  { l_angle_step = 1; }
-  else if(angle_deg == 180.0) { l_angle_step = 2; }
-  else if(angle_deg == 270.0) { l_angle_step = 3; }
-  else                        { l_angle_step = 0; }
+  if     (angle_deg == 90.0)  { angle_step = 1; }
+  else if(angle_deg == 180.0) { angle_step = 2; }
+  else if(angle_deg == 270.0) { angle_step = 3; }
+  else                        { angle_step = 0; }
 
-  if (l_angle_step != 0)
+  if (angle_step != 0)
     {
-      l_nparams = p_pdb_procedure_available (l_rotate_proc);
-      if (l_nparams == 5)
+      nparams = p_pdb_procedure_available (rotate_proc);
+      if (nparams == 5)
         {
           /* use faster rotate plugin on multiples of 90 degrees */
-          return_vals = gimp_run_procedure (l_rotate_proc,
+          return_vals = gimp_run_procedure (rotate_proc,
                                             &nreturn_vals,
                                             GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
                                             GIMP_PDB_IMAGE, image_id,
                                             GIMP_PDB_DRAWABLE, drawable_id,
-                                            GIMP_PDB_INT32, l_angle_step,
+                                            GIMP_PDB_INT32, angle_step,
                                             GIMP_PDB_INT32, FALSE,         /* don't rotate the whole image */
                                             GIMP_PDB_END);
 
@@ -418,23 +472,23 @@ p_gimp_rotate (gint32  image_id,
     }
 #endif /* ROTATE_OPTIMIZE */
 
-  l_angle_rad = (angle_deg * G_PI) / 180.0;
+  angle_rad = (angle_deg * G_PI) / 180.0;
 
   gimp_context_push ();
   if (! interpolation)
     gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
   gimp_context_set_transform_resize (GIMP_TRANSFORM_RESIZE_ADJUST);
-  l_rc = gimp_item_transform_rotate (drawable_id,
-                                     l_angle_rad,
-                                     TRUE /*auto_center*/,
-                                     -1.0 /*center_x*/,
-                                     -1.0 /*center_y*/);
+  rc = gimp_item_transform_rotate (drawable_id,
+                                   angle_rad,
+                                   TRUE /*auto_center*/,
+                                   -1.0 /*center_x*/,
+                                   -1.0 /*center_y*/);
   gimp_context_pop ();
 
-  if (l_rc == -1)
+  if (rc == -1)
     g_printerr ("Error: gimp_drawable_transform_rotate_default call failed\n");
 
-  return l_rc;
+  return rc;
 }
 
 /* ============================================================================
@@ -448,16 +502,16 @@ p_if_selection_float_it (gint32 image_id,
 {
   if (! gimp_layer_is_floating_sel (layer_id))
     {
-      gint32   l_sel_channel_id;
-      gint32   l_x1, l_x2, l_y1, l_y2;
+      gint32   sel_channel_id;
+      gint32   x1, x2, y1, y2;
       gint32   non_empty;
 
       /* check and see if we have a selection mask */
-      l_sel_channel_id  = gimp_image_get_selection (image_id);
+      sel_channel_id  = gimp_image_get_selection (image_id);
 
-      gimp_selection_bounds (image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2);
+      gimp_selection_bounds (image_id, &non_empty, &x1, &y1, &x2, &y2);
 
-      if (non_empty && l_sel_channel_id >= 0)
+      if (non_empty && sel_channel_id >= 0)
         {
           /* selection is TRUE, make a layer (floating selection) from
              the selection  */
@@ -583,14 +637,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  const gchar  *l_env;
+  const gchar  *env;
   BenderDialog *cd;
-  GimpDrawable *l_active_drawable    = NULL;
-  gint32        l_active_drawable_id = -1;
-  gint32        l_image_id           = -1;
-  gint32        l_layer_id           = -1;
-  gint32        l_layer_mask_id      = -1;
-  GError       *error                = NULL;
+  gint32        active_drawable_id = -1;
+  gint32        image_id           = -1;
+  gint32        layer_id           = -1;
+  GError       *error              = NULL;
 
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;
@@ -606,10 +658,10 @@ run (const gchar      *name,
 
   cd = NULL;
 
-  l_env = g_getenv ("BEND_DEBUG");
-  if (l_env != NULL)
+  env = g_getenv ("BEND_DEBUG");
+  if (env != NULL)
     {
-      if((*l_env != 'n') && (*l_env != 'N')) gb_debug = 1;
+      if ((*env != 'n') && (*env != 'N')) gb_debug = 1;
     }
 
   if (gb_debug) g_printerr ("\n\nDEBUG: run %s\n", name);
@@ -680,10 +732,10 @@ run (const gchar      *name,
     }
 
   /* get image and drawable */
-  l_image_id = param[1].data.d_int32;
-  l_layer_id = param[2].data.d_drawable;
+  image_id = param[1].data.d_int32;
+  layer_id = param[2].data.d_drawable;
 
-  if (! gimp_item_is_layer (l_layer_id))
+  if (! gimp_item_is_layer (layer_id))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Can operate on layers only "
@@ -692,8 +744,7 @@ run (const gchar      *name,
     }
 
   /* check for layermask */
-  l_layer_mask_id = gimp_layer_get_mask (l_layer_id);
-  if (l_layer_mask_id >= 0)
+  if (gimp_layer_get_mask (layer_id) > 0)
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Cannot operate on layers with masks."));
@@ -701,8 +752,8 @@ run (const gchar      *name,
     }
 
   /* if there is a selection, make it the floating selection layer */
-  l_active_drawable_id = p_if_selection_float_it (l_image_id, l_layer_id);
-  if (l_active_drawable_id < 0)
+  active_drawable_id = p_if_selection_float_it (image_id, layer_id);
+  if (active_drawable_id < 0)
     {
       /* could not float the selection because selection rectangle
        * is completely empty return GIMP_PDB_EXECUTION_ERROR
@@ -710,10 +761,6 @@ run (const gchar      *name,
       g_set_error (&error, 0, 0, "%s",
                    _("Cannot operate on empty selections."));
        status = GIMP_PDB_EXECUTION_ERROR;
-    }
-  else
-    {
-      l_active_drawable = gimp_drawable_get (l_active_drawable_id);
     }
 
   /* how are we running today? */
@@ -727,7 +774,7 @@ run (const gchar      *name,
           /* gimp_get_data (PLUG_IN_PROC, &g_bndvals); */
 
           /* Get information from the dialog */
-          cd = do_dialog (l_active_drawable);
+          cd = do_dialog (active_drawable_id);
           cd->show_progress = TRUE;
           break;
 
@@ -738,8 +785,7 @@ run (const gchar      *name,
               cd = g_new (BenderDialog, 1);
               cd->run = TRUE;
               cd->show_progress = TRUE;
-              cd->drawable_id = l_active_drawable_id;
-              cd->drawable = l_active_drawable;
+              cd->drawable_id = active_drawable_id;
 
               cd->rotation      = param[3].data.d_float;
               cd->smoothing     = param[4].data.d_int32 != 0;
@@ -777,8 +823,7 @@ run (const gchar      *name,
           cd = g_new (BenderDialog, 1);
           cd->run = TRUE;
           cd->show_progress = TRUE;
-          cd->drawable_id = l_active_drawable_id;
-          cd->drawable = l_active_drawable;
+          cd->drawable_id = active_drawable_id;
           p_retrieve_values (cd);  /* Possibly retrieve data from a previous run */
           break;
 
@@ -798,14 +843,14 @@ run (const gchar      *name,
 
       if (cd->run)
         {
-          gint32 l_bent_layer_id;
+          gint32 bent_layer_id;
 
-          gimp_image_undo_group_start (l_image_id);
+          gimp_image_undo_group_start (image_id);
 
-          l_bent_layer_id = p_main_bend (cd, cd->drawable_id,
-                                         cd->work_on_copy);
+          bent_layer_id = p_main_bend (cd, cd->drawable_id,
+                                       cd->work_on_copy);
 
-          gimp_image_undo_group_end (l_image_id);
+          gimp_image_undo_group_end (image_id);
 
           /* Store variable states for next run */
           if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -814,7 +859,7 @@ run (const gchar      *name,
             }
 
           /* return the id of handled layer */
-          values[1].data.d_int32 = l_bent_layer_id;
+          values[1].data.d_int32 = bent_layer_id;
         }
       else
         {
@@ -839,48 +884,49 @@ static int
 p_save_pointfile (BenderDialog *cd,
                   const gchar  *filename)
 {
-  gint j;
-  FILE *l_fp;
+  FILE *fp;
+  gint  j;
 
-  l_fp = g_fopen(filename, "w+b");
-  if (!l_fp)
+  fp = g_fopen(filename, "w+b");
+  if (! fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  fprintf(l_fp, "%s\n", KEY_POINTFILE);
-  fprintf(l_fp, "VERSION 1.0\n\n");
+  fprintf (fp, "%s\n", KEY_POINTFILE);
+  fprintf (fp, "VERSION 1.0\n\n");
 
-  fprintf(l_fp, "# points for upper and lower smooth curve (0.0 <= pt <= 1.0)\n");
-  fprintf(l_fp, "# there are upto 17 points where unused points are set to -1\n");
-  fprintf(l_fp, "#       UPPERX     UPPERY      LOWERX    LOWERY\n");
-  fprintf(l_fp, "\n");
+  fprintf (fp, "# points for upper and lower smooth curve (0.0 <= pt <= 1.0)\n");
+  fprintf (fp, "# there are upto 17 points where unused points are set to -1\n");
+  fprintf (fp, "#       UPPERX     UPPERY      LOWERX    LOWERY\n");
+  fprintf (fp, "\n");
 
   for(j = 0; j < 17; j++)
   {
-      fprintf(l_fp, "%s %+.6f  %+.6f   %+.6f  %+.6f\n", KEY_POINTS,
-                  (float)cd->points[OUTLINE_UPPER][j][0],
-                  (float)cd->points[OUTLINE_UPPER][j][1],
-                  (float)cd->points[OUTLINE_LOWER][j][0],
-                  (float)cd->points[OUTLINE_LOWER][j][1] );
+      fprintf (fp, "%s %+.6f  %+.6f   %+.6f  %+.6f\n", KEY_POINTS,
+               (float)cd->points[OUTLINE_UPPER][j][0],
+               (float)cd->points[OUTLINE_UPPER][j][1],
+               (float)cd->points[OUTLINE_LOWER][j][0],
+               (float)cd->points[OUTLINE_LOWER][j][1] );
   }
 
-  fprintf(l_fp, "\n");
-  fprintf(l_fp, "# y values for upper/lower freehand curve (0 <= y <= 255) \n");
-  fprintf(l_fp, "# there must be exactly 256 y values \n");
-  fprintf(l_fp, "#     UPPER_Y  LOWER_Y\n");
-  fprintf(l_fp, "\n");
+  fprintf (fp, "\n");
+  fprintf (fp, "# y values for upper/lower freehand curve (0 <= y <= 255) \n");
+  fprintf (fp, "# there must be exactly 256 y values \n");
+  fprintf (fp, "#     UPPER_Y  LOWER_Y\n");
+  fprintf (fp, "\n");
 
   for (j = 0; j < 256; j++)
   {
-    fprintf(l_fp, "%s %3d  %3d\n", KEY_VAL_Y,
-               (int)cd->curve[OUTLINE_UPPER][j],
-               (int)cd->curve[OUTLINE_LOWER][j]);
+    fprintf (fp, "%s %3d  %3d\n", KEY_VAL_Y,
+             (int)cd->curve[OUTLINE_UPPER][j],
+             (int)cd->curve[OUTLINE_LOWER][j]);
   }
 
-  fclose(l_fp);
+  fclose (fp);
+
   return 0;
 }
 
@@ -888,71 +934,78 @@ static int
 p_load_pointfile (BenderDialog *cd,
                   const gchar  *filename)
 {
-  gint  l_pi, l_ci, l_n, l_len;
-  FILE *l_fp;
-  char  l_buff[2000];
-  float l_fux, l_fuy, l_flx, l_fly;
-  gint  l_iuy, l_ily ;
+  gint  pi, ci, n, len;
+  FILE *fp;
+  char  buff[2000];
+  float fux, fuy, flx, fly;
+  gint  iuy, ily ;
 
-  l_fp = g_fopen(filename, "rb");
-  if (!l_fp)
+  fp = g_fopen(filename, "rb");
+  if (! fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
 
-  l_pi = 0;
-  l_ci = 0;
+  pi = 0;
+  ci = 0;
 
-  if (! fgets (l_buff, 2000 - 1, l_fp))
+  if (! fgets (buff, 2000 - 1, fp))
     {
       g_message (_("Error while reading '%s': %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      fclose (l_fp);
+      fclose (fp);
       return -1;
     }
 
-  if (strncmp(l_buff, KEY_POINTFILE, strlen(KEY_POINTFILE)) == 0)
-  {
-     while (NULL != fgets (l_buff, 2000-1, l_fp))
-     {
-        l_len = strlen(KEY_POINTS);
-        if(strncmp(l_buff, KEY_POINTS, l_len) == 0)
+  if (strncmp (buff, KEY_POINTFILE, strlen(KEY_POINTFILE)) == 0)
+    {
+      while (NULL != fgets (buff, 2000-1, fp))
         {
-           l_n = sscanf(&l_buff[l_len], "%f %f %f %f", &l_fux, &l_fuy, &l_flx, &l_fly);
-           if((l_n == 4) && (l_pi < 17))
-           {
-             cd->points[OUTLINE_UPPER][l_pi][0] = l_fux;
-             cd->points[OUTLINE_UPPER][l_pi][1] = l_fuy;
-             cd->points[OUTLINE_LOWER][l_pi][0] = l_flx;
-             cd->points[OUTLINE_LOWER][l_pi][1] = l_fly;
-             l_pi++;
-           }
-           else
-           {
-              g_printf("warning: BAD points[%d] in file %s are ignored\n", l_pi, filename);
-           }
-        }
-        l_len = strlen(KEY_VAL_Y);
-        if (strncmp(l_buff, KEY_VAL_Y, l_len) == 0)
-        {
-           l_n = sscanf(&l_buff[l_len], "%d %d", &l_iuy, &l_ily);
-           if ((l_n == 2) && (l_ci < 256))
-           {
-             cd->curve[OUTLINE_UPPER][l_ci] = l_iuy;
-             cd->curve[OUTLINE_LOWER][l_ci] = l_ily;
-             l_ci++;
-           }
-           else
-           {
-              g_printf("warning: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
-           }
-        }
+          len = strlen(KEY_POINTS);
 
-     }
-  }
-  fclose(l_fp);
+          if (strncmp (buff, KEY_POINTS, len) == 0)
+            {
+              n = sscanf (&buff[len],
+                          "%f %f %f %f", &fux, &fuy, &flx, &fly);
+
+              if ((n == 4) && (pi < 17))
+                {
+                  cd->points[OUTLINE_UPPER][pi][0] = fux;
+                  cd->points[OUTLINE_UPPER][pi][1] = fuy;
+                  cd->points[OUTLINE_LOWER][pi][0] = flx;
+                  cd->points[OUTLINE_LOWER][pi][1] = fly;
+                  pi++;
+                }
+              else
+                {
+                  g_printf("warning: BAD points[%d] in file %s are ignored\n", pi, filename);
+                }
+            }
+
+          len = strlen (KEY_VAL_Y);
+
+          if (strncmp (buff, KEY_VAL_Y, len) == 0)
+            {
+              n = sscanf (&buff[len], "%d %d", &iuy, &ily);
+
+              if ((n == 2) && (ci < 256))
+                {
+                  cd->curve[OUTLINE_UPPER][ci] = iuy;
+                  cd->curve[OUTLINE_LOWER][ci] = ily;
+                  ci++;
+                }
+              else
+                {
+                  g_printf("warning: BAD y_vals[%d] in file %s are ignored\n", ci, filename);
+                }
+            }
+        }
+    }
+
+  fclose (fp);
+
   return 0;
 }
 
@@ -960,21 +1013,21 @@ static void
 p_cd_to_bval (BenderDialog *cd,
               BenderValues *bval)
 {
-  gint i,j;
+  gint i, j;
 
   for (i = 0; i < 2; i++)
-  {
-    for(j = 0; j < 256; j++)
     {
-      bval->curve[i][j] = cd->curve[i][j];
-    }
+      for (j = 0; j < 256; j++)
+        {
+          bval->curve[i][j] = cd->curve[i][j];
+        }
 
-    for(j = 0; j < 17; j++)
-    {
-      bval->points[i][j][0] = cd->points[i][j][0];  /* x */
-      bval->points[i][j][1] = cd->points[i][j][1];  /* y */
+      for (j = 0; j < 17; j++)
+        {
+          bval->points[i][j][0] = cd->points[i][j][0];  /* x */
+          bval->points[i][j][1] = cd->points[i][j][1];  /* y */
+        }
     }
-  }
 
   bval->curve_type = cd->curve_type;
   bval->smoothing = cd->smoothing;
@@ -987,23 +1040,24 @@ p_cd_to_bval (BenderDialog *cd,
 }
 
 static void
-p_cd_from_bval(BenderDialog *cd, BenderValues *bval)
+p_cd_from_bval (BenderDialog *cd,
+                BenderValues *bval)
 {
-  gint i,j;
+  gint i, j;
 
-  for(i = 0; i < 2; i++)
-  {
-    for(j = 0; j < 256; j++)
+  for (i = 0; i < 2; i++)
     {
-      cd->curve[i][j] = bval->curve[i][j];
-    }
+      for (j = 0; j < 256; j++)
+        {
+          cd->curve[i][j] = bval->curve[i][j];
+        }
 
-    for(j = 0; j < 17; j++)
-    {
-      cd->points[i][j][0] = bval->points[i][j][0];  /* x */
-      cd->points[i][j][1] = bval->points[i][j][1];  /* y */
+      for (j = 0; j < 17; j++)
+        {
+          cd->points[i][j][0] = bval->points[i][j][0];  /* x */
+          cd->points[i][j][1] = bval->points[i][j][1];  /* y */
+        }
     }
-  }
 
   cd->curve_type = bval->curve_type;
   cd->smoothing = bval->smoothing;
@@ -1015,46 +1069,46 @@ p_cd_from_bval(BenderDialog *cd, BenderValues *bval)
 static void
 p_store_values (BenderDialog *cd)
 {
-  BenderValues l_bval;
+  BenderValues bval;
 
-  p_cd_to_bval(cd, &l_bval);
-  gimp_set_data(PLUG_IN_PROC, &l_bval, sizeof(l_bval));
+  p_cd_to_bval (cd, &bval);
+  gimp_set_data (PLUG_IN_PROC, &bval, sizeof (bval));
 }
 
 static void
 p_retrieve_values (BenderDialog *cd)
 {
-  BenderValues l_bval;
+  BenderValues bval;
 
-  l_bval.total_steps = 0;
-  l_bval.current_step = -444.4;  /* init with an invalid  dummy value */
+  bval.total_steps = 0;
+  bval.current_step = -444.4;  /* init with an invalid  dummy value */
 
-  gimp_get_data (PLUG_IN_PROC, &l_bval);
+  gimp_get_data (PLUG_IN_PROC, &bval);
 
-  if (l_bval.total_steps == 0)
-  {
-    cd->bval_from = NULL;
-    cd->bval_to = NULL;
-    if(l_bval.current_step != -444.4)
+  if (bval.total_steps == 0)
     {
-       /* last_value data was retrieved (and dummy value was overwritten) */
-       p_cd_from_bval(cd, &l_bval);
+      cd->bval_from = NULL;
+      cd->bval_to = NULL;
+      if(bval.current_step != -444.4)
+        {
+          /* last_value data was retrieved (and dummy value was overwritten) */
+          p_cd_from_bval(cd, &bval);
+        }
     }
-  }
   else
-  {
-    cd->bval_from = g_new (BenderValues, 1);
-    cd->bval_to   = g_new (BenderValues, 1);
-    cd->bval_curr = g_new (BenderValues, 1);
-    *cd->bval_curr = l_bval;
+    {
+      cd->bval_from = g_new (BenderValues, 1);
+      cd->bval_to   = g_new (BenderValues, 1);
+      cd->bval_curr = g_new (BenderValues, 1);
+      *cd->bval_curr = bval;
 
-    /* it seems that we are called from GAP with "Varying Values" */
-    gimp_get_data(PLUG_IN_DATA_ITER_FROM, cd->bval_from);
-    gimp_get_data(PLUG_IN_DATA_ITER_TO,   cd->bval_to);
-    *cd->bval_curr = l_bval;
-    p_cd_from_bval(cd, cd->bval_curr);
-    cd->work_on_copy = FALSE;
-  }
+      /* it seems that we are called from GAP with "Varying Values" */
+      gimp_get_data(PLUG_IN_DATA_ITER_FROM, cd->bval_from);
+      gimp_get_data(PLUG_IN_DATA_ITER_TO,   cd->bval_to);
+      *cd->bval_curr = bval;
+      p_cd_from_bval(cd, cd->bval_curr);
+      cd->work_on_copy = FALSE;
+    }
 }
 
 static void
@@ -1064,12 +1118,13 @@ p_delta_gdouble (double  *val,
                  gint32   total_steps,
                  gdouble  current_step)
 {
-    double     delta;
+  double delta;
 
-    if(total_steps < 1) return;
+  if (total_steps < 1)
+    return;
 
-    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
-    *val  = val_from + delta;
+  delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
+  *val  = val_from + delta;
 }
 
 static void
@@ -1079,12 +1134,13 @@ p_delta_gint32 (gint32  *val,
                 gint32   total_steps,
                 gdouble  current_step)
 {
-    double     delta;
+  double delta;
 
-    if (total_steps < 1) return;
+  if (total_steps < 1)
+    return;
 
-    delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
-    *val  = val_from + delta;
+  delta = ((double)(val_to - val_from) / (double)total_steps) * ((double)total_steps - current_step);
+  *val  = val_from + delta;
 }
 
 static void
@@ -1094,16 +1150,17 @@ p_copy_points (BenderDialog *cd,
                int           argc,
                gdouble      *floatarray)
 {
-   int j;
+  int j;
 
-   for (j = 0; j < 17; j++)
-   {
-     cd->points[outline][j][xy] = -1;
-   }
-   for(j = 0; j < argc; j++)
-   {
-     cd->points[outline][j][xy] = floatarray[j];
-   }
+  for (j = 0; j < 17; j++)
+    {
+      cd->points[outline][j][xy] = -1;
+    }
+
+  for (j = 0; j < argc; j++)
+    {
+      cd->points[outline][j][xy] = floatarray[j];
+    }
 }
 
 static void
@@ -1116,17 +1173,18 @@ p_copy_yval (BenderDialog *cd,
    guchar fill;
 
    fill = MIDDLE;
+
    for (j = 0; j < 256; j++)
-   {
-     if (j < argc)
      {
-        fill = cd->curve[outline][j] = int8array[j];
+       if (j < argc)
+         {
+           fill = cd->curve[outline][j] = int8array[j];
+         }
+       else
+         {
+           cd->curve[outline][j] = fill;
+         }
      }
-     else
-     {
-        cd->curve[outline][j] = fill;
-     }
-   }
 }
 
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
@@ -1134,7 +1192,7 @@ p_copy_yval (BenderDialog *cd,
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
 static BenderDialog *
-do_dialog (GimpDrawable *drawable)
+do_dialog (gint32 drawable_id)
 {
   BenderDialog *cd;
 
@@ -1142,10 +1200,11 @@ do_dialog (GimpDrawable *drawable)
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   /*  The curve_bend dialog  */
-  cd = bender_new_dialog (drawable);
+  cd = bender_new_dialog (drawable_id);
 
   /* create temporary image (with a small copy of drawable) for the preview */
-  cd->preview_image_id = p_create_pv_image(drawable, &cd->preview_layer_id1);
+  cd->preview_image_id = p_create_pv_image (drawable_id,
+                                            &cd->preview_layer_id1);
   cd->preview_layer_id2 = -1;
 
   if (! gtk_widget_get_visible (cd->shell))
@@ -1168,7 +1227,7 @@ do_dialog (GimpDrawable *drawable)
 /**************************/
 
 static BenderDialog *
-bender_new_dialog (GimpDrawable *drawable)
+bender_new_dialog (gint32 drawable_id)
 {
   BenderDialog *cd;
   GtkWidget    *main_hbox;
@@ -1197,9 +1256,9 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->work_on_copy = FALSE;
   cd->rotation = 0.0;       /* vertical bend */
 
-  cd->drawable_id = drawable->drawable_id;
-  cd->drawable = drawable;
-  cd->color = gimp_drawable_is_rgb (cd->drawable_id);
+  cd->drawable_id = drawable_id;
+
+  cd->color = gimp_drawable_is_rgb (drawable_id);
 
   cd->run = FALSE;
   cd->bval_from = NULL;
@@ -1641,20 +1700,20 @@ bender_plot_curve (BenderDialog *cd,
   CRMatrix geometry;
   CRMatrix tmp1, tmp2;
   CRMatrix deltas;
-  double x, dx, dx2, dx3;
-  double y, dy, dy2, dy3;
-  double d, d2, d3;
-  int lastx, lasty;
-  gint32 newx, newy;
-  gint32 ntimes;
-  gint32 i;
+  double   x, dx, dx2, dx3;
+  double   y, dy, dy2, dy3;
+  double   d, d2, d3;
+  int      lastx, lasty;
+  gint32   newx, newy;
+  gint32   ntimes;
+  gint32   i;
 
   /* construct the geometry matrix from the segment */
   for (i = 0; i < 4; i++)
-  {
+    {
       geometry[i][2] = 0;
       geometry[i][3] = 0;
-  }
+    }
 
   geometry[0][0] = (cd->points[cd->outline][p1][0] * xmax);
   geometry[1][0] = (cd->points[cd->outline][p2][0] * xmax);
@@ -1702,14 +1761,15 @@ bender_plot_curve (BenderDialog *cd,
 
 
   if (fix255)
-  {
-    cd->curve[cd->outline][lastx] = lasty;
-  }
+    {
+      cd->curve[cd->outline][lastx] = lasty;
+    }
   else
-  {
-    cd->curve_ptr[cd->outline][lastx] = lasty;
-    if(gb_debug) g_printf("bender_plot_curve xmax:%d ymax:%d\n", (int)xmax, (int)ymax);
-  }
+    {
+      cd->curve_ptr[cd->outline][lastx] = lasty;
+      if(gb_debug) g_printf("bender_plot_curve xmax:%d ymax:%d\n",
+                            (int)xmax, (int)ymax);
+    }
 
   /* loop over the curve */
   for (i = 0; i < ntimes; i++)
@@ -1729,20 +1789,21 @@ bender_plot_curve (BenderDialog *cd,
 
       /* if this point is different than the last one...then draw it */
       if ((lastx != newx) || (lasty != newy))
-      {
-        if(fix255)
         {
-          /* use fixed array size (for the curve graph) */
-          cd->curve[cd->outline][newx] = newy;
-        }
-        else
-        {
-          /* use dynamic allocated curve_ptr (for the real curve) */
-          cd->curve_ptr[cd->outline][newx] = newy;
+          if (fix255)
+            {
+              /* use fixed array size (for the curve graph) */
+              cd->curve[cd->outline][newx] = newy;
+            }
+          else
+            {
+              /* use dynamic allocated curve_ptr (for the real curve) */
+              cd->curve_ptr[cd->outline][newx] = newy;
 
-          if(gb_debug) g_printf("outline: %d  cX: %d cY: %d\n", (int)cd->outline, (int)newx, (int)newy);
+              if(gb_debug) g_printf("outline: %d  cX: %d cY: %d\n",
+                                    (int)cd->outline, (int)newx, (int)newy);
+            }
         }
-      }
 
       lastx = newx;
       lasty = newy;
@@ -1763,9 +1824,10 @@ bender_calculate_curve (BenderDialog *cd,
   int yfirst, ylast;
 
   switch (cd->curve_type)
-  {
+    {
     case GFREE:
       break;
+
     case SMOOTH:
       /*  cycle through the curves  */
       num_pts = 0;
@@ -1776,43 +1838,45 @@ bender_calculate_curve (BenderDialog *cd,
       xmid = xmax / 2;
       /*  Initialize boundary curve points */
       if (num_pts != 0)
-      {
-        if(fix255)
         {
-          for (i = 0; i < (cd->points[cd->outline][points[0]][0] * 255); i++)
-            cd->curve[cd->outline][i] = (cd->points[cd->outline][points[0]][1] * 255);
-          for (i = (cd->points[cd->outline][points[num_pts - 1]][0] * 255); i < 256; i++)
-            cd->curve[cd->outline][i] = (cd->points[cd->outline][points[num_pts - 1]][1] * 255);
-        }
-        else
-        {
-            yfirst  = cd->points[cd->outline][points[0]][1] * ymax;
-            ylast   = cd->points[cd->outline][points[num_pts - 1]][1] * ymax;
-
-            for (i = 0; i < xmid; i++)
+          if (fix255)
             {
-               cd->curve_ptr[cd->outline][i] = yfirst;
-            }
-            for (i = xmid; i <= xmax; i++)
-            {
-               cd->curve_ptr[cd->outline][i] = ylast;
-            }
+              for (i = 0; i < (cd->points[cd->outline][points[0]][0] * 255); i++)
+                cd->curve[cd->outline][i] =
+                  (cd->points[cd->outline][points[0]][1] * 255);
 
+              for (i = (cd->points[cd->outline][points[num_pts - 1]][0] * 255); i < 256; i++)
+                cd->curve[cd->outline][i] =
+                  (cd->points[cd->outline][points[num_pts - 1]][1] * 255);
+            }
+          else
+            {
+              yfirst  = cd->points[cd->outline][points[0]][1] * ymax;
+              ylast   = cd->points[cd->outline][points[num_pts - 1]][1] * ymax;
+
+              for (i = 0; i < xmid; i++)
+                {
+                  cd->curve_ptr[cd->outline][i] = yfirst;
+                }
+
+              for (i = xmid; i <= xmax; i++)
+                {
+                  cd->curve_ptr[cd->outline][i] = ylast;
+                }
+            }
         }
-      }
 
       for (i = 0; i < num_pts - 1; i++)
-      {
+        {
           p1 = (i == 0) ? points[i] : points[(i - 1)];
           p2 = points[i];
           p3 = points[(i + 1)];
           p4 = (i == (num_pts - 2)) ? points[(num_pts - 1)] : points[(i + 2)];
 
           bender_plot_curve (cd, p1, p2, p3, p4, xmax, ymax, fix255);
-      }
+        }
       break;
-  }
-
+    }
 }
 
 static void
@@ -2365,57 +2429,60 @@ static void
 p_render_preview (BenderDialog *cd,
                   gint32        layer_id)
 {
-   guchar        l_pixel[4];
-   guchar       *l_buf, *l_ptr;
-   GimpDrawable *l_pv_drawable;
-   gint          l_x, l_y;
-   gint          l_ofx, l_ofy;
-   t_GDRW        l_gdrw;
-   t_GDRW       *gdrw;
+   guchar  pixel[4];
+   guchar *buf, *ptr;
+   gint    x, y;
+   gint    ofx, ofy;
+   gint    width, height;
+   t_GDRW  l_gdrw;
+   t_GDRW *gdrw;
 
-   l_pv_drawable = gimp_drawable_get (layer_id);
+   width  = gimp_drawable_width  (layer_id);
+   height = gimp_drawable_height (layer_id);
 
-   l_ptr = l_buf = g_new (guchar, PREVIEW_BPP * PREVIEW_SIZE_X * PREVIEW_SIZE_Y);
+   ptr = buf = g_new (guchar, PREVIEW_BPP * PREVIEW_SIZE_X * PREVIEW_SIZE_Y);
    gdrw = &l_gdrw;
-   p_init_gdrw(gdrw, l_pv_drawable, FALSE, FALSE);
+   p_init_gdrw(gdrw, layer_id, FALSE, FALSE);
 
   /* offsets to set bend layer to preview center */
-  l_ofx = (l_pv_drawable->width / 2) - (PREVIEW_SIZE_X / 2);
-  l_ofy = (l_pv_drawable->height / 2) - (PREVIEW_SIZE_Y / 2);
+  ofx = (width / 2) - (PREVIEW_SIZE_X / 2);
+  ofy = (height / 2) - (PREVIEW_SIZE_Y / 2);
 
   /* render preview */
-  for (l_y = 0; l_y < PREVIEW_SIZE_Y; l_y++)
-  {
-     for (l_x = 0; l_x < PREVIEW_SIZE_X; l_x++)
-     {
-        p_get_pixel(gdrw, l_x + l_ofx, l_y + l_ofy, &l_pixel[0]);
-
-        if (cd->color)
+  for (y = 0; y < PREVIEW_SIZE_Y; y++)
+    {
+      for (x = 0; x < PREVIEW_SIZE_X; x++)
         {
-           l_ptr[0] = l_pixel[0];
-           l_ptr[1] = l_pixel[1];
-           l_ptr[2] = l_pixel[2];
-        }
-        else
-        {
-           l_ptr[0] = l_pixel[0];
-           l_ptr[1] = l_pixel[0];
-           l_ptr[2] = l_pixel[0];
-        }
-        l_ptr[3] = l_pixel[gdrw->index_alpha];
+          p_get_pixel (gdrw, x + ofx, y + ofy, &pixel[0]);
 
-        l_ptr += PREVIEW_BPP;
-     }
-  }
+          if (cd->color)
+            {
+              ptr[0] = pixel[0];
+              ptr[1] = pixel[1];
+              ptr[2] = pixel[2];
+            }
+          else
+            {
+              ptr[0] = pixel[0];
+              ptr[1] = pixel[0];
+              ptr[2] = pixel[0];
+            }
+
+          ptr[3] = pixel[gdrw->index_alpha];
+
+          ptr += PREVIEW_BPP;
+        }
+    }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (cd->pv_widget),
                           0, 0, PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
                           GIMP_RGBA_IMAGE,
-                          l_buf,
+                          buf,
                           PREVIEW_BPP * PREVIEW_SIZE_X);
-  g_free (l_buf);
+  g_free (buf);
 
   p_end_gdrw(gdrw);
-}       /* end p_render_preview */
+}
 
 /* ===================================================== */
 /* curve_bend worker procedures                          */
@@ -2426,30 +2493,34 @@ p_stretch_curves (BenderDialog *cd,
                   gint32        xmax,
                   gint32        ymax)
 {
-  gint32   l_x1, l_x2;
-  gdouble  l_ya, l_yb;
-  gdouble  l_rest;
-  int      l_outline;
+  gint32   x1, x2;
+  gdouble  ya, yb;
+  gdouble  rest;
+  int      outline;
 
-  for(l_outline = 0; l_outline < 2; l_outline++)
-  {
-    for(l_x1 = 0; l_x1 <= xmax; l_x1++)
+  for (outline = 0; outline < 2; outline++)
     {
-       l_x2 = (l_x1 * 255) / xmax;
-       if((xmax <= 255) && (l_x2 < 255))
-       {
-         cd->curve_ptr[l_outline][l_x1] = ROUND((cd->curve[l_outline][l_x2] * ymax) / 255);
-       }
-       else
-       {
-         /* interpolate */
-         l_rest = (((gdouble)l_x1 * 255.0) / (gdouble)xmax) - l_x2;
-         l_ya = cd->curve[l_outline][l_x2];        /* y of this point */
-         l_yb = cd->curve[l_outline][l_x2 +1];     /* y of next point */
-         cd->curve_ptr[l_outline][l_x1] = ROUND (((l_ya + ((l_yb -l_ya) * l_rest)) * ymax) / 255);
-       }
+      for(x1 = 0; x1 <= xmax; x1++)
+        {
+          x2 = (x1 * 255) / xmax;
+
+          if ((xmax <= 255) && (x2 < 255))
+            {
+              cd->curve_ptr[outline][x1] =
+                ROUND ((cd->curve[outline][x2] * ymax) / 255);
+            }
+          else
+            {
+              /* interpolate */
+              rest = (((gdouble)x1 * 255.0) / (gdouble)xmax) - x2;
+              ya = cd->curve[outline][x2];        /* y of this point */
+              yb = cd->curve[outline][x2 +1];     /* y of next point */
+
+              cd->curve_ptr[outline][x1] =
+                ROUND (((ya + ((yb -ya) * rest)) * ymax) / 255);
+            }
+        }
     }
-  }
 }
 
 static void
@@ -2459,27 +2530,35 @@ bender_init_min_max (BenderDialog *cd,
   int i, j;
 
   for (i = 0; i < 2; i++)
-  {
-    cd->min2[i] = 65000;
-    cd->max2[i] = 0;
-    for (j = 0; j <= xmax; j++)
     {
-       if(cd->curve_ptr[i][j] > cd->max2[i])
-       {
-          cd->max2[i] = cd->curve_ptr[i][j];
-       }
-       if(cd->curve_ptr[i][j] < cd->min2[i])
-       {
-          cd->min2[i] = cd->curve_ptr[i][j];
-       }
+      cd->min2[i] = 65000;
+      cd->max2[i] = 0;
+
+      for (j = 0; j <= xmax; j++)
+        {
+          if(cd->curve_ptr[i][j] > cd->max2[i])
+            {
+              cd->max2[i] = cd->curve_ptr[i][j];
+            }
+
+          if(cd->curve_ptr[i][j] < cd->min2[i])
+            {
+              cd->min2[i] = cd->curve_ptr[i][j];
+            }
+        }
     }
-  }
 
-  /* for UPPER outline : y-zero line is assumed at the min leftmost or rightmost point */
-  cd->zero2[OUTLINE_UPPER] = MIN(cd->curve_ptr[OUTLINE_UPPER][0], cd->curve_ptr[OUTLINE_UPPER][xmax]);
+  /* for UPPER outline : y-zero line is assumed at the min leftmost or
+   * rightmost point
+   */
+  cd->zero2[OUTLINE_UPPER] = MIN (cd->curve_ptr[OUTLINE_UPPER][0],
+                                  cd->curve_ptr[OUTLINE_UPPER][xmax]);
 
-  /* for LOWER outline : y-zero line is assumed at the min leftmost or rightmost point */
-  cd->zero2[OUTLINE_LOWER] = MAX(cd->curve_ptr[OUTLINE_LOWER][0], cd->curve_ptr[OUTLINE_LOWER][xmax]);
+  /* for LOWER outline : y-zero line is assumed at the min leftmost or
+   * rightmost point
+   */
+  cd->zero2[OUTLINE_LOWER] = MAX (cd->curve_ptr[OUTLINE_LOWER][0],
+                                  cd->curve_ptr[OUTLINE_LOWER][xmax]);
 }
 
 static gint32
@@ -2492,14 +2571,15 @@ p_curve_get_dy (BenderDialog *cd,
   /* get y values of both upper and lower curve,
    * and return the iterated value in between
    */
-  gdouble     l_y1,  l_y2;
-  gdouble     delta;
+  gdouble y1,  y2;
+  gdouble delta;
 
-  l_y1 = cd->zero2[OUTLINE_UPPER] - cd->curve_ptr[OUTLINE_UPPER][x];
-  l_y2 = cd->zero2[OUTLINE_LOWER] - cd->curve_ptr[OUTLINE_LOWER][x];
+  y1 = cd->zero2[OUTLINE_UPPER] - cd->curve_ptr[OUTLINE_UPPER][x];
+  y2 = cd->zero2[OUTLINE_LOWER] - cd->curve_ptr[OUTLINE_LOWER][x];
 
-  delta = ((double)(l_y2 - l_y1) / (double)(total_steps -1)) * current_step;
-  return SIGNED_ROUND(l_y1 + delta);
+  delta = ((double)(y2 - y1) / (double)(total_steps - 1)) * current_step;
+
+  return SIGNED_ROUND (y1 + delta);
 }
 
 static gint32
@@ -2507,12 +2587,12 @@ p_upper_curve_extend (BenderDialog *cd,
                       gint32        drawable_width,
                       gint32        drawable_height)
 {
-   gint32  l_y1,  l_y2;
+   gint32 y1, y2;
 
-   l_y1 = cd->max2[OUTLINE_UPPER] - cd->zero2[OUTLINE_UPPER];
-   l_y2 = (cd->max2[OUTLINE_LOWER] - cd->zero2[OUTLINE_LOWER]) - drawable_height;
+   y1 = cd->max2[OUTLINE_UPPER] - cd->zero2[OUTLINE_UPPER];
+   y2 = (cd->max2[OUTLINE_LOWER] - cd->zero2[OUTLINE_LOWER]) - drawable_height;
 
-   return MAX(l_y1, l_y2);
+   return MAX (y1, y2);
 }
 
 static gint32
@@ -2520,35 +2600,40 @@ p_lower_curve_extend (BenderDialog *cd,
                       gint32        drawable_width,
                       gint32        drawable_height)
 {
-   gint32  l_y1,  l_y2;
+   gint32  y1,  y2;
 
-   l_y1 = cd->zero2[OUTLINE_LOWER] - cd->min2[OUTLINE_LOWER];
-   l_y2 = (cd->zero2[OUTLINE_UPPER] - cd->min2[OUTLINE_UPPER]) - drawable_height;
+   y1 = cd->zero2[OUTLINE_LOWER] - cd->min2[OUTLINE_LOWER];
+   y2 = (cd->zero2[OUTLINE_UPPER] - cd->min2[OUTLINE_UPPER]) - drawable_height;
 
-   return MAX(l_y1, l_y2);
+   return MAX (y1, y2);
 }
 
 static void
 p_end_gdrw (t_GDRW *gdrw)
 {
   gimp_pixel_fetcher_destroy (gdrw->pft);
+  gimp_drawable_detach (gdrw->drawable);
 }
 
 static void
-p_init_gdrw (t_GDRW       *gdrw,
-             GimpDrawable *drawable,
-             int           dirty,
-             int           shadow)
+p_init_gdrw (t_GDRW *gdrw,
+             gint32  drawable_id,
+             int     dirty,
+             int     shadow)
 {
   gint w, h;
 
-  gdrw->drawable_id = drawable->drawable_id;
-  gdrw->width = gimp_drawable_width (gdrw->drawable_id);
+  gdrw->drawable_id = drawable_id;
+
+  gdrw->drawable = gimp_drawable_get (drawable_id);
+
+  gdrw->width  = gimp_drawable_width  (gdrw->drawable_id);
   gdrw->height = gimp_drawable_height (gdrw->drawable_id);
-  gdrw->drawable = drawable;
-  gdrw->pft = gimp_pixel_fetcher_new (drawable, FALSE);
+
+  gdrw->pft = gimp_pixel_fetcher_new (gdrw->drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (gdrw->pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
-  gdrw->tile_width = gimp_tile_width ();
+
+  gdrw->tile_width  = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
 
   if (! gimp_drawable_mask_intersect (gdrw->drawable_id,
@@ -2561,8 +2646,9 @@ p_init_gdrw (t_GDRW       *gdrw,
   gdrw->x2 = gdrw->x1 + w;
   gdrw->y2 = gdrw->y1 + h;
 
-  gdrw->bpp = drawable->bpp;
-  if (gimp_drawable_has_alpha (gdrw->drawable_id))
+  gdrw->bpp = gimp_drawable_bpp (drawable_id);
+
+  if (gimp_drawable_has_alpha (drawable_id))
     {
       /* index of the alpha channelbyte {1|3} */
       gdrw->index_alpha = gdrw->bpp - 1;
@@ -2606,75 +2692,45 @@ p_put_mix_pixel (t_GDRW *gdrw,
                  gint32  nb2_curvy,
                  gint32  curvy)
 {
-   guchar  l_pixel[4];
-   guchar  l_mixmask;
-   gint    l_idx;
-   gint    l_diff;
+   guchar  pixel[4];
+   guchar  mixmask;
+   gint    idx;
+   gint    diff;
 
-   l_mixmask = 255 - 96;
-   l_diff = abs(nb_curvy - curvy);
-   if (l_diff == 0)
-   {
-     l_mixmask = 255 - 48;
-     l_diff = abs(nb2_curvy - curvy);
+   mixmask = 255 - 96;
+   diff = abs(nb_curvy - curvy);
 
-     if (l_diff == 0)
+   if (diff == 0)
      {
-       /* last 2 neighbours were not shifted against current pixel, do not mix */
+       mixmask = 255 - 48;
+       diff = abs(nb2_curvy - curvy);
+
+       if (diff == 0)
+         {
+           /* last 2 neighbours were not shifted against current pixel, do not mix */
+           p_put_pixel(gdrw, x, y, color);
+           return;
+         }
+     }
+
+   /* get left neighbour pixel */
+   p_get_pixel(gdrw, x-1, y, &pixel[0]);
+
+   if (pixel[gdrw->index_alpha] < 10)
+     {
+       /* neighbour is (nearly or full) transparent, do not mix */
        p_put_pixel(gdrw, x, y, color);
        return;
      }
-   }
 
-   /* get left neighbour pixel */
-   p_get_pixel(gdrw, x-1, y, &l_pixel[0]);
+   for (idx = 0; idx < gdrw->index_alpha ; idx++)
+     {
+       /* mix in left neighbour color */
+       pixel[idx] = MIX_CHANNEL(color[idx], pixel[idx], mixmask);
+     }
 
-   if (l_pixel[gdrw->index_alpha] < 10)
-   {
-     /* neighbour is (nearly or full) transparent, do not mix */
-     p_put_pixel(gdrw, x, y, color);
-     return;
-   }
-
-   for (l_idx = 0; l_idx < gdrw->index_alpha ; l_idx++)
-   {
-      /* mix in left neighbour color */
-      l_pixel[l_idx] = MIX_CHANNEL(color[l_idx], l_pixel[l_idx], l_mixmask);
-   }
-
-   l_pixel[gdrw->index_alpha] = color[gdrw->index_alpha];
-   p_put_pixel(gdrw, x, y, &l_pixel[0]);
-}
-
-/* ============================================================================
- * p_clear_drawable
- * ============================================================================
- */
-
-static void
-p_clear_drawable (GimpDrawable *drawable)
-{
-   GimpPixelRgn  pixel_rgn;
-   gpointer      pr;
-   guint         l_row;
-   guchar       *l_ptr;
-
-   gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                        0, 0, drawable->width, drawable->height,
-                        TRUE,  /* dirty */
-                        FALSE  /* shadow */);
-
-   /* clear the drawable with 0 Bytes (black full-transparent pixels) */
-   for (pr = gimp_pixel_rgns_register (1, &pixel_rgn);
-        pr != NULL; pr = gimp_pixel_rgns_process (pr))
-   {
-      l_ptr = pixel_rgn.data;
-      for ( l_row = 0; l_row < pixel_rgn.h; l_row++ )
-      {
-        memset(l_ptr, 0, pixel_rgn.w * drawable->bpp);
-        l_ptr += pixel_rgn.rowstride;
-      }
-   }
+   pixel[gdrw->index_alpha] = color[gdrw->index_alpha];
+   p_put_pixel(gdrw, x, y, &pixel[0]);
 }
 
 /* ============================================================================
@@ -2682,132 +2738,126 @@ p_clear_drawable (GimpDrawable *drawable)
  * ============================================================================
  */
 static gint32
-p_create_pv_image (GimpDrawable *src_drawable,
-                   gint32    *layer_id)
+p_create_pv_image (gint32  src_drawable_id,
+                   gint32 *layer_id)
 {
-  gint32        l_new_image_id;
-  guint         l_new_width;
-  guint         l_new_height;
-  GimpImageType l_type;
-  guint         l_x, l_y;
-  double        l_scale;
-  guchar        l_pixel[4];
-  GimpDrawable *dst_drawable;
-  t_GDRW        l_src_gdrw;
-  t_GDRW        l_dst_gdrw;
+  gint32        new_image_id;
+  guint         new_width;
+  guint         new_height;
+  GimpImageType type;
+  guint         x, y;
+  double        scale;
+  guchar        pixel[4];
+  t_GDRW        src_gdrw;
+  t_GDRW        dst_gdrw;
+  gint          src_width;
+  gint          src_height;
 
-  l_new_image_id = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
-                   gimp_image_base_type (gimp_item_get_image (src_drawable->drawable_id)));
-  gimp_image_undo_disable (l_new_image_id);
+  src_width  = gimp_drawable_width  (src_drawable_id);
+  src_height = gimp_drawable_height (src_drawable_id);
 
-  l_type = gimp_drawable_type(src_drawable->drawable_id);
-  if (src_drawable->height > src_drawable->width)
-  {
-    l_new_height = PV_IMG_HEIGHT;
-    l_new_width = (src_drawable->width * l_new_height) / src_drawable->height;
-    l_scale = (float)src_drawable->height / PV_IMG_HEIGHT;
-  }
+  new_image_id = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
+                                 gimp_image_base_type (gimp_item_get_image (src_drawable_id)));
+  gimp_image_undo_disable (new_image_id);
+
+  type = gimp_drawable_type (src_drawable_id);
+  if (src_height > src_width)
+    {
+      new_height = PV_IMG_HEIGHT;
+      new_width = (src_width * new_height) / src_height;
+      scale = (float) src_height / PV_IMG_HEIGHT;
+    }
   else
-  {
-    l_new_width = PV_IMG_WIDTH;
-    l_new_height = (src_drawable->height * l_new_width) / src_drawable->width;
-    l_scale = (float)src_drawable->width / PV_IMG_WIDTH;
-  }
+    {
+      new_width = PV_IMG_WIDTH;
+      new_height = (src_height * new_width) / src_width;
+      scale = (float) src_width / PV_IMG_WIDTH;
+    }
 
-  *layer_id = gimp_layer_new(l_new_image_id, "preview_original",
-                             l_new_width, l_new_height,
-                             l_type,
+  *layer_id = gimp_layer_new(new_image_id, "preview_original",
+                             new_width, new_height,
+                             type,
                              100.0,    /* opacity */
                              0);       /* mode NORMAL */
-  if (!gimp_drawable_has_alpha(*layer_id))
-  {
-    /* always add alpha channel */
-    gimp_layer_add_alpha(*layer_id);
-  }
+  if (! gimp_drawable_has_alpha(*layer_id))
+    {
+      /* always add alpha channel */
+      gimp_layer_add_alpha(*layer_id);
+    }
 
-  gimp_image_insert_layer(l_new_image_id, *layer_id, -1, 0);
+  gimp_image_insert_layer(new_image_id, *layer_id, -1, 0);
 
-  dst_drawable = gimp_drawable_get (*layer_id);
-  p_init_gdrw(&l_src_gdrw, src_drawable, FALSE, FALSE);
-  p_init_gdrw(&l_dst_gdrw, dst_drawable,  TRUE,  FALSE);
+  p_init_gdrw (&src_gdrw, src_drawable_id, FALSE, FALSE);
+  p_init_gdrw (&dst_gdrw, *layer_id,  TRUE,  FALSE);
 
-  for (l_y = 0; l_y < l_new_height; l_y++)
-  {
-     for (l_x = 0; l_x < l_new_width; l_x++)
-     {
-       p_get_pixel(&l_src_gdrw, l_x * l_scale, l_y * l_scale, &l_pixel[0]);
-       p_put_pixel(&l_dst_gdrw, l_x, l_y, &l_pixel[0]);
-     }
-  }
+  for (y = 0; y < new_height; y++)
+    {
+      for (x = 0; x < new_width; x++)
+        {
+          p_get_pixel(&src_gdrw, x * scale, y * scale, &pixel[0]);
+          p_put_pixel(&dst_gdrw, x, y, &pixel[0]);
+        }
+    }
 
-  p_end_gdrw(&l_src_gdrw);
-  p_end_gdrw(&l_dst_gdrw);
+  p_end_gdrw (&src_gdrw);
+  p_end_gdrw (&dst_gdrw);
 
-  /* gimp_display_new(l_new_image_id); */
-  return l_new_image_id;
+  return new_image_id;
 }
 
 /* ============================================================================
  * p_add_layer
  * ============================================================================
  */
-static GimpDrawable*
-p_add_layer (gint       width,
-             gint       height,
-             GimpDrawable *src_drawable)
+static gint32
+p_add_layer (gint   width,
+             gint   height,
+             gint32 src_drawable_id)
 {
-  GimpImageType  l_type;
-  static GimpDrawable  *l_new_drawable;
-  gint32     l_new_layer_id;
-  char      *l_name;
-  char      *l_name2;
-  gdouble    l_opacity;
-  GimpLayerMode l_mode;
-  gint       l_visible;
-  gint32     image_id;
-  gint       stack_position;
+  GimpImageType  type;
+  gint32         new_layer_id;
+  char          *name;
+  char          *name2;
+  gdouble        opacity;
+  GimpLayerMode  mode;
+  gint           visible;
+  gint32         image_id;
+  gint           stack_position;
 
-  image_id = gimp_item_get_image (src_drawable->drawable_id);
+  image_id = gimp_item_get_image (src_drawable_id);
   stack_position = 0;                                  /* TODO:  should be same as src_layer */
 
   /* copy type, name, opacity and mode from src_drawable */
-  l_type     = gimp_drawable_type (src_drawable->drawable_id);
-  l_visible  = gimp_item_get_visible (src_drawable->drawable_id);
+  type   = gimp_drawable_type (src_drawable_id);
+  visible  = gimp_item_get_visible (src_drawable_id);
 
-  l_name2 = gimp_item_get_name (src_drawable->drawable_id);
-  l_name = g_strdup_printf ("%s_b", l_name2);
-  g_free (l_name2);
+  name2 = gimp_item_get_name (src_drawable_id);
+  name = g_strdup_printf ("%s_b", name2);
+  g_free (name2);
 
-  l_mode = gimp_layer_get_mode (src_drawable->drawable_id);
-  l_opacity = gimp_layer_get_opacity (src_drawable->drawable_id);  /* full opacity */
+  mode = gimp_layer_get_mode (src_drawable_id);
+  opacity = gimp_layer_get_opacity (src_drawable_id);  /* full opacity */
 
-  l_new_layer_id = gimp_layer_new (image_id, l_name,
-                                   width, height,
-                                   l_type,
-                                   l_opacity,
-                                   l_mode);
+  new_layer_id = gimp_layer_new (image_id, name,
+                                 width, height,
+                                 type,
+                                 opacity,
+                                 mode);
 
-  g_free (l_name);
-  if (!gimp_drawable_has_alpha (l_new_layer_id))
+  g_free (name);
+  if (!gimp_drawable_has_alpha (new_layer_id))
     {
       /* always add alpha channel */
-      gimp_layer_add_alpha (l_new_layer_id);
-    }
-
-  l_new_drawable = gimp_drawable_get (l_new_layer_id);
-  if (!l_new_drawable)
-    {
-      g_printerr ("p_add_layer: can't get new_drawable\n");
-      return NULL;
+      gimp_layer_add_alpha (new_layer_id);
     }
 
   /* add the copied layer to the temp. working image */
-  gimp_image_insert_layer (image_id, l_new_layer_id, -1, stack_position);
+  gimp_image_insert_layer (image_id, new_layer_id, -1, stack_position);
 
   /* copy visibility state */
-  gimp_item_set_visible (l_new_layer_id, l_visible);
+  gimp_item_set_visible (new_layer_id, visible);
 
-  return l_new_drawable;
+  return new_layer_id;
 }
 
 /* ============================================================================
@@ -2820,12 +2870,12 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
                                gint32        xmax,
                                gint32        ymax)
 {
-   int l_x;
-   gint      l_outline;
+   gint          x;
+   gint          outline;
    BenderDialog *cd_from;
    BenderDialog *cd_to;
 
-   l_outline = cd->outline;
+   outline = cd->outline;
 
    if ((cd->bval_from == NULL) ||
        (cd->bval_to == NULL) ||
@@ -2888,17 +2938,17 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
          }
 
        /* MIX Y-koords of the curves according to current iteration step */
-       for (l_x = 0; l_x <= xmax; l_x++)
+       for (x = 0; x <= xmax; x++)
          {
-           p_delta_gint32 (&cd->curve_ptr[OUTLINE_UPPER][l_x],
-                           cd_from->curve_ptr[OUTLINE_UPPER][l_x],
-                           cd_to->curve_ptr[OUTLINE_UPPER][l_x],
+           p_delta_gint32 (&cd->curve_ptr[OUTLINE_UPPER][x],
+                           cd_from->curve_ptr[OUTLINE_UPPER][x],
+                           cd_to->curve_ptr[OUTLINE_UPPER][x],
                            cd->bval_curr->total_steps,
                            cd->bval_curr->current_step);
 
-           p_delta_gint32 (&cd->curve_ptr[OUTLINE_LOWER][l_x],
-                           cd_from->curve_ptr[OUTLINE_LOWER][l_x],
-                           cd_to->curve_ptr[OUTLINE_LOWER][l_x],
+           p_delta_gint32 (&cd->curve_ptr[OUTLINE_LOWER][x],
+                           cd_from->curve_ptr[OUTLINE_LOWER][x],
+                           cd_to->curve_ptr[OUTLINE_LOWER][x],
                            cd->bval_curr->total_steps,
                            cd->bval_curr->current_step);
          }
@@ -2910,7 +2960,7 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
        g_free (cd_to);
      }
 
-   cd->outline = l_outline;
+   cd->outline = outline;
 }
 
 /* ============================================================================
@@ -2923,30 +2973,30 @@ p_vertical_bend (BenderDialog *cd,
                  t_GDRW       *src_gdrw,
                  t_GDRW       *dst_gdrw)
 {
-  gint32   l_row, l_col;
-  gint32   l_first_row, l_first_col, l_last_row, l_last_col;
-  gint32   l_x, l_y;
-  gint32   l_x2, l_y2;
-  gint32   l_curvy, l_nb_curvy, l_nb2_curvy;
-  gint32   l_desty, l_othery;
-  gint32   l_miny, l_maxy;
-  gint32   l_sign, l_dy, l_diff;
-  gint32   l_topshift;
-  float    l_progress_step;
-  float    l_progress_max;
-  float    l_progress;
+  gint32   row, col;
+  gint32   first_row, first_col, last_row, last_col;
+  gint32   x, y;
+  gint32   x2, y2;
+  gint32   curvy, nb_curvy, nb2_curvy;
+  gint32   desty, othery;
+  gint32   miny, maxy;
+  gint32   sign, dy, diff;
+  gint32   topshift;
+  float    progress_step;
+  float    progress_max;
+  float    progress;
 
   t_Last  *last_arr;
   t_Last  *first_arr;
   guchar   color[4];
   guchar   mixcolor[4];
-  gint     l_alias_dir;
-  guchar   l_mixmask;
+  gint     alias_dir;
+  guchar   mixmask;
 
-  l_topshift = p_upper_curve_extend (cd,
-                                     src_gdrw->width,
-                                     src_gdrw->height);
-  l_diff = l_curvy = l_nb_curvy = l_nb2_curvy= l_miny = l_maxy = 0;
+  topshift = p_upper_curve_extend (cd,
+                                   src_gdrw->width,
+                                   src_gdrw->height);
+  diff = curvy = nb_curvy = nb2_curvy= miny = maxy = 0;
 
   /* allocate array of last values (one element foreach x coordinate) */
   last_arr  = g_new (t_Last, src_gdrw->x2);
@@ -2955,162 +3005,165 @@ p_vertical_bend (BenderDialog *cd,
   /* ------------------------------------------------
    * foreach pixel in the SAMPLE_drawable:
    * ------------------------------------------------
-   * the inner loops (l_x/l_y) are designed to process
+   * the inner loops (x/y) are designed to process
    * all pixels of one tile in the sample drawable, the outer loops (row/col) do step
    * to the next tiles. (this was done to reduce tile swapping)
    */
 
-  l_first_row = src_gdrw->y1 / src_gdrw->tile_height;
-  l_last_row  = (src_gdrw->y2 / src_gdrw->tile_height);
-  l_first_col = src_gdrw->x1 / src_gdrw->tile_width;
-  l_last_col  = (src_gdrw->x2 / src_gdrw->tile_width);
+  first_row = src_gdrw->y1 / src_gdrw->tile_height;
+  last_row  = (src_gdrw->y2 / src_gdrw->tile_height);
+  first_col = src_gdrw->x1 / src_gdrw->tile_width;
+  last_col  = (src_gdrw->x2 / src_gdrw->tile_width);
 
   /* init progress */
-  l_progress_max = (1 + l_last_row - l_first_row) * (1 + l_last_col - l_first_col);
-  l_progress_step = 1.0 / l_progress_max;
-  l_progress = 0.0;
+  progress_max = (1 + last_row - first_row) * (1 + last_col - first_col);
+  progress_step = 1.0 / progress_max;
+  progress = 0.0;
   if (cd->show_progress)
     gimp_progress_init ( _("Curve Bend"));
 
-  for (l_row = l_first_row; l_row <= l_last_row; l_row++)
+  for (row = first_row; row <= last_row; row++)
     {
-      for (l_col = l_first_col; l_col <= l_last_col; l_col++)
+      for (col = first_col; col <= last_col; col++)
         {
-          if (l_col == l_first_col)
-            l_x = src_gdrw->x1;
+          if (col == first_col)
+            x = src_gdrw->x1;
           else
-            l_x = l_col * src_gdrw->tile_width;
-          if (l_col == l_last_col)
-            l_x2 = src_gdrw->x2;
+            x = col * src_gdrw->tile_width;
+          if (col == last_col)
+            x2 = src_gdrw->x2;
           else
-            l_x2 = (l_col +1) * src_gdrw->tile_width;
+            x2 = (col +1) * src_gdrw->tile_width;
 
           if (cd->show_progress)
-            gimp_progress_update (l_progress += l_progress_step);
+            gimp_progress_update (progress += progress_step);
 
-          for( ; l_x < l_x2; l_x++)
+          for( ; x < x2; x++)
             {
-              if (l_row == l_first_row)
-                l_y = src_gdrw->y1;
+              if (row == first_row)
+                y = src_gdrw->y1;
               else
-                l_y = l_row * src_gdrw->tile_height;
-              if(l_row == l_last_row)
-                l_y2 = src_gdrw->y2;
-              else
-                l_y2 = (l_row +1) * src_gdrw->tile_height ;
+                y = row * src_gdrw->tile_height;
 
-              for( ; l_y < l_y2; l_y++)
+              if (row == last_row)
+                y2 = src_gdrw->y2;
+              else
+                y2 = (row +1) * src_gdrw->tile_height ;
+
+              for( ; y < y2; y++)
                 {
                   /* ---------- copy SRC_PIXEL to curve position ------ */
 
-                  p_get_pixel(src_gdrw, l_x, l_y, color);
+                  p_get_pixel (src_gdrw, x, y, color);
 
-                  l_curvy = p_curve_get_dy(cd, l_x,
-                                           (gint32)src_gdrw->width,
-                                           (gint32)src_gdrw->height,
-                                           (gdouble)l_y);
-                  l_desty = l_y + l_topshift + l_curvy;
+                  curvy = p_curve_get_dy (cd, x,
+                                          (gint32)src_gdrw->width,
+                                          (gint32)src_gdrw->height,
+                                          (gdouble)y);
+                  desty = y + topshift + curvy;
 
                   /* ----------- SMOOTHING ------------------ */
-                  if (cd->smoothing && (l_x > 0))
+                  if (cd->smoothing && (x > 0))
                     {
-                      l_nb_curvy = p_curve_get_dy(cd, l_x -1,
-                                                  (gint32)src_gdrw->width,
-                                                  (gint32)src_gdrw->height,
-                                                  (gdouble)l_y);
-                      if ((l_nb_curvy == l_curvy) && (l_x > 1))
+                      nb_curvy = p_curve_get_dy (cd, x -1,
+                                                 (gint32)src_gdrw->width,
+                                                 (gint32)src_gdrw->height,
+                                                 (gdouble)y);
+                      if ((nb_curvy == curvy) && (x > 1))
                         {
-                          l_nb2_curvy = p_curve_get_dy(cd, l_x -2,
-                                                       (gint32)src_gdrw->width,
-                                                       (gint32)src_gdrw->height,
-                                                       (gdouble)l_y);
+                          nb2_curvy = p_curve_get_dy (cd, x -2,
+                                                      (gint32)src_gdrw->width,
+                                                      (gint32)src_gdrw->height,
+                                                      (gdouble)y);
                         }
                       else
                         {
-                          l_nb2_curvy = l_nb_curvy;
+                          nb2_curvy = nb_curvy;
                         }
-                      p_put_mix_pixel(dst_gdrw, l_x, l_desty, color, l_nb_curvy, l_nb2_curvy, l_curvy );
+
+                      p_put_mix_pixel (dst_gdrw, x, desty, color, nb_curvy, nb2_curvy, curvy);
                     }
                   else
                     {
-                      p_put_pixel(dst_gdrw, l_x, l_desty, color);
+                      p_put_pixel (dst_gdrw, x, desty, color);
                     }
 
                   /* ----------- render ANTIALIAS ------------------ */
 
-                  if(cd->antialias)
+                  if (cd->antialias)
                     {
-                      l_othery = l_desty;
+                      othery = desty;
 
-                      if(l_y == src_gdrw->y1)             /* Upper outline */
+                      if (y == src_gdrw->y1)             /* Upper outline */
                         {
-                          first_arr[l_x].y = l_curvy;
-                          memcpy(first_arr[l_x].color, color,
-                                 dst_gdrw->drawable->bpp);
+                          first_arr[x].y = curvy;
+                          memcpy (first_arr[x].color, color,
+                                  dst_gdrw->drawable->bpp);
 
-                          if (l_x > 0)
+                          if (x > 0)
                             {
-                              memcpy(mixcolor, first_arr[l_x-1].color,
-                                     dst_gdrw->drawable->bpp);
+                              memcpy (mixcolor, first_arr[x-1].color,
+                                      dst_gdrw->drawable->bpp);
 
-                              l_diff = abs(first_arr[l_x - 1].y - l_curvy) +1;
-                              l_miny = MIN(first_arr[l_x - 1].y, l_curvy) -1;
-                              l_maxy = MAX(first_arr[l_x - 1].y, l_curvy) +1;
+                              diff = abs(first_arr[x - 1].y - curvy) +1;
+                              miny = MIN(first_arr[x - 1].y, curvy) -1;
+                              maxy = MAX(first_arr[x - 1].y, curvy) +1;
 
-                              l_othery = (src_gdrw->y2 -1)
-                                + l_topshift
-                                + p_curve_get_dy(cd, l_x,
+                              othery = (src_gdrw->y2 -1)
+                                + topshift
+                                + p_curve_get_dy(cd, x,
                                                  (gint32)src_gdrw->width,
                                                  (gint32)src_gdrw->height,
                                                  (gdouble)(src_gdrw->y2 -1));
                             }
                         }
-                      if (l_y == src_gdrw->y2 - 1)      /* Lower outline */
-                        {
-                          if (l_x > 0)
-                            {
-                              memcpy(mixcolor, last_arr[l_x-1].color,
-                                     dst_gdrw->drawable->bpp);
 
-                              l_diff = abs(last_arr[l_x - 1].y - l_curvy) +1;
-                              l_maxy = MAX(last_arr[l_x - 1].y, l_curvy) +1;
-                              l_miny = MIN(last_arr[l_x - 1].y, l_curvy) -1;
+                      if (y == src_gdrw->y2 - 1)      /* Lower outline */
+                        {
+                          if (x > 0)
+                            {
+                              memcpy (mixcolor, last_arr[x-1].color,
+                                      dst_gdrw->drawable->bpp);
+
+                              diff = abs (last_arr[x - 1].y - curvy) +1;
+                              maxy = MAX (last_arr[x - 1].y, curvy) +1;
+                              miny = MIN (last_arr[x - 1].y, curvy) -1;
                             }
 
-                          l_othery = (src_gdrw->y1)
-                            + l_topshift
-                            + p_curve_get_dy(cd, l_x,
+                          othery = (src_gdrw->y1)
+                            + topshift
+                            + p_curve_get_dy(cd, x,
                                              (gint32)src_gdrw->width,
                                              (gint32)src_gdrw->height,
                                              (gdouble)(src_gdrw->y1));
                         }
 
-                      if(l_desty < l_othery)        { l_alias_dir =  1; }  /* fade to transp. with descending dy */
-                      else if(l_desty > l_othery)   { l_alias_dir = -1; }  /* fade to transp. with ascending dy */
-                      else                          { l_alias_dir =  0; }  /* no antialias at curve crossing point(s) */
+                      if(desty < othery)        { alias_dir =  1; }  /* fade to transp. with descending dy */
+                      else if(desty > othery)   { alias_dir = -1; }  /* fade to transp. with ascending dy */
+                      else                          { alias_dir =  0; }  /* no antialias at curve crossing point(s) */
 
-                      if (l_alias_dir != 0)
+                      if (alias_dir != 0)
                         {
-                          guchar l_alpha_lo;
+                          guchar alpha_lo = 20;
 
-                          l_alpha_lo = 20;
-                          if (gimp_drawable_has_alpha(src_gdrw->drawable_id))
+                          if (gimp_drawable_has_alpha (src_gdrw->drawable_id))
                             {
-                              l_alpha_lo = MIN(20, mixcolor[src_gdrw->index_alpha]);
+                              alpha_lo = MIN (20, mixcolor[src_gdrw->index_alpha]);
                             }
 
-                          for(l_dy = 0; l_dy < l_diff; l_dy++)
+                          for (dy = 0; dy < diff; dy++)
                             {
                               /* iterate for fading alpha channel */
-                              l_mixmask =  255 * ((gdouble)(l_dy+1) / (gdouble)(l_diff+1));
-                              mixcolor[dst_gdrw->index_alpha] = MIX_CHANNEL(color[dst_gdrw->index_alpha], l_alpha_lo, l_mixmask);
-                              if(l_alias_dir > 0)
+                              mixmask =  255 * ((gdouble)(dy + 1) / (gdouble) (diff+1));
+                              mixcolor[dst_gdrw->index_alpha] = MIX_CHANNEL(color[dst_gdrw->index_alpha], alpha_lo, mixmask);
+
+                              if(alias_dir > 0)
                                 {
-                                  p_put_pixel(dst_gdrw, l_x -1, l_y + l_topshift  + l_miny + l_dy, mixcolor);
+                                  p_put_pixel (dst_gdrw, x -1, y + topshift  + miny + dy, mixcolor);
                                 }
                               else
                                 {
-                                  p_put_pixel(dst_gdrw, l_x -1, l_y + l_topshift  + (l_maxy - l_dy), mixcolor);
+                                  p_put_pixel (dst_gdrw, x -1, y + topshift  + (maxy - dy), mixcolor);
                                 }
 
                             }
@@ -3119,28 +3172,28 @@ p_vertical_bend (BenderDialog *cd,
 
                   /* ------------------ FILL HOLES ------------------ */
 
-                  if (l_y == src_gdrw->y1)
+                  if (y == src_gdrw->y1)
                     {
-                      l_diff = 0;
-                      l_sign = 1;
+                      diff = 0;
+                      sign = 1;
                     }
                   else
                     {
-                      l_diff = last_arr[l_x].y - l_curvy;
-                      if (l_diff < 0)
+                      diff = last_arr[x].y - curvy;
+                      if (diff < 0)
                         {
-                          l_diff = 0 - l_diff;
-                          l_sign = -1;
+                          diff = 0 - diff;
+                          sign = -1;
                         }
                       else
                         {
-                          l_sign = 1;
+                          sign = 1;
                         }
 
-                      memcpy(mixcolor, color, dst_gdrw->drawable->bpp);
+                      memcpy (mixcolor, color, dst_gdrw->drawable->bpp);
                     }
 
-                  for (l_dy = 1; l_dy <= l_diff; l_dy++)
+                  for (dy = 1; dy <= diff; dy++)
                     {
                       /* y differs more than 1 pixel from last y in the
                        * destination drawable. So we have to fill the empty
@@ -3150,60 +3203,62 @@ p_vertical_bend (BenderDialog *cd,
                       if (cd->smoothing)
                         {
                           /* smoothing is on, so we are using a mixed color */
-                          gulong alpha1 = last_arr[l_x].color[3];
+                          gulong alpha1 = last_arr[x].color[3];
                           gulong alpha2 = color[3];
                           gulong alpha;
-                          l_mixmask =  255 * ((gdouble)(l_dy) / (gdouble)(l_diff+1));
-                          alpha = alpha1 * l_mixmask + alpha2 * (255 - l_mixmask);
+
+                          mixmask =  255 * ((gdouble)(dy) / (gdouble)(diff+1));
+                          alpha = alpha1 * mixmask + alpha2 * (255 - mixmask);
                           mixcolor[3] = alpha/255;
                           if (mixcolor[3])
                             {
-                              mixcolor[0] = (alpha1 * l_mixmask * last_arr[l_x].color[0]
-                                             + alpha2 * (255 - l_mixmask) * color[0])/alpha;
-                              mixcolor[1] = (alpha1 * l_mixmask * last_arr[l_x].color[1]
-                                             + alpha2 * (255 - l_mixmask) * color[1])/alpha;
-                              mixcolor[2] = (alpha1 * l_mixmask * last_arr[l_x].color[2]
-                                             + alpha2 * (255 - l_mixmask) * color[2])/alpha;
-                              /*mixcolor[2] =  MIX_CHANNEL(last_arr[l_x].color[2], color[2], l_mixmask);*/
+                              mixcolor[0] = (alpha1 * mixmask * last_arr[x].color[0]
+                                             + alpha2 * (255 - mixmask) * color[0])/alpha;
+                              mixcolor[1] = (alpha1 * mixmask * last_arr[x].color[1]
+                                             + alpha2 * (255 - mixmask) * color[1])/alpha;
+                              mixcolor[2] = (alpha1 * mixmask * last_arr[x].color[2]
+                                             + alpha2 * (255 - mixmask) * color[2])/alpha;
+                              /*mixcolor[2] =  MIX_CHANNEL(last_arr[x].color[2], color[2], mixmask);*/
                             }
                         }
                       else
                         {
                           /* smoothing is off, so we are using this color or
                              the last color */
-                          if (l_dy < l_diff / 2)
+                          if (dy < diff / 2)
                             {
-                              memcpy(mixcolor, color,
-                                     dst_gdrw->drawable->bpp);
+                              memcpy (mixcolor, color,
+                                      dst_gdrw->drawable->bpp);
                             }
                           else
                             {
-                              memcpy(mixcolor, last_arr[l_x].color,
-                                     dst_gdrw->drawable->bpp);
+                              memcpy (mixcolor, last_arr[x].color,
+                                      dst_gdrw->drawable->bpp);
                             }
                         }
 
                       if (cd->smoothing)
                         {
-                          p_put_mix_pixel(dst_gdrw, l_x,
-                                          l_desty + (l_dy * l_sign),
-                                          mixcolor,
-                                          l_nb_curvy, l_nb2_curvy, l_curvy );
+                          p_put_mix_pixel (dst_gdrw, x,
+                                           desty + (dy * sign),
+                                           mixcolor,
+                                           nb_curvy, nb2_curvy, curvy );
                         }
                       else
                         {
-                          p_put_pixel(dst_gdrw, l_x,
-                                      l_desty + (l_dy * l_sign), mixcolor);
+                          p_put_pixel (dst_gdrw, x,
+                                       desty + (dy * sign), mixcolor);
                         }
                     }
 
                   /* store y and color */
-                  last_arr[l_x].y = l_curvy;
-                  memcpy(last_arr[l_x].color, color, dst_gdrw->drawable->bpp);
+                  last_arr[x].y = curvy;
+                  memcpy (last_arr[x].color, color, dst_gdrw->drawable->bpp);
                 }
             }
         }
     }
+
   gimp_progress_update (1.0);
 
   g_free (last_arr);
@@ -3220,113 +3275,121 @@ p_main_bend (BenderDialog *cd,
              guint32       original_drawable_id,
              gint          work_on_copy)
 {
-   t_GDRW  l_src_gdrw;
-   t_GDRW  l_dst_gdrw;
-   GimpDrawable *dst_drawable;
-   GimpDrawable *src_drawable;
-   gint32    l_dst_height;
-   gint32    l_image_id;
-   gint32    l_tmp_layer_id;
-   gint32    l_interpolation;
-   gint      l_offset_x, l_offset_y;
-   gint      l_center_x, l_center_y;
-   gint32    xmax, ymax;
+   t_GDRW  src_gdrw;
+   t_GDRW  dst_gdrw;
+   gint32  src_drawable_id;
+   gint32  dst_drawable_id;
+   gint    src_width;
+   gint    src_height;
+   gint32  dst_height;
+   gint32  image_id;
+   gint32  tmp_layer_id;
+   gint32  interpolation;
+   gint    offset_x, offset_y;
+   gint    center_x, center_y;
+   gint32  xmax, ymax;
 
-   l_interpolation = cd->smoothing;
-   l_image_id = gimp_item_get_image (original_drawable_id);
-   gimp_drawable_offsets(original_drawable_id, &l_offset_x, &l_offset_y);
+   interpolation = cd->smoothing;
+   image_id = gimp_item_get_image (original_drawable_id);
+   gimp_drawable_offsets(original_drawable_id, &offset_x, &offset_y);
 
-   l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable_id) / 2 );
-   l_center_y = l_offset_y + (gimp_drawable_height (original_drawable_id) / 2 );
+   center_x = offset_x + (gimp_drawable_width  (original_drawable_id) / 2 );
+   center_y = offset_y + (gimp_drawable_height (original_drawable_id) / 2 );
 
    /* always copy original_drawable to a tmp src_layer */
-   l_tmp_layer_id = gimp_layer_copy(original_drawable_id);
+   tmp_layer_id = gimp_layer_copy(original_drawable_id);
    /* set layer invisible and dummyname and
     * add at top of the image while working
     * (for the case of undo GIMP must know,
     *  that the layer was part of the image)
     */
-   gimp_image_insert_layer (l_image_id, l_tmp_layer_id, -1, 0);
-   gimp_item_set_visible (l_tmp_layer_id, FALSE);
-   gimp_item_set_name (l_tmp_layer_id, "curve_bend_dummylayer");
+   gimp_image_insert_layer (image_id, tmp_layer_id, -1, 0);
+   gimp_item_set_visible (tmp_layer_id, FALSE);
+   gimp_item_set_name (tmp_layer_id, "curve_bend_dummylayer");
 
-   if(gb_debug) g_printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);
+   if(gb_debug) g_printf("p_main_bend  tmp_layer_id %d\n", (int)tmp_layer_id);
 
    if (cd->rotation != 0.0)
      {
        if(gb_debug) g_printf("p_main_bend rotate: %f\n", (float)cd->rotation);
-       p_gimp_rotate(l_image_id, l_tmp_layer_id, l_interpolation, cd->rotation);
+       p_gimp_rotate(image_id, tmp_layer_id, interpolation, cd->rotation);
      }
-   src_drawable = gimp_drawable_get (l_tmp_layer_id);
 
-   xmax = ymax = src_drawable->width -1;
+   src_drawable_id = tmp_layer_id;
+
+   src_width  = gimp_drawable_width  (tmp_layer_id);
+   src_height = gimp_drawable_height (tmp_layer_id);
+
+   xmax = ymax = src_width -1;
    cd->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
    cd->curve_ptr[OUTLINE_LOWER] = g_new (gint32, 1+xmax);
 
    p_bender_calculate_iter_curve(cd, xmax, ymax);
    bender_init_min_max(cd, xmax);
 
-   l_dst_height = src_drawable->height
-                + p_upper_curve_extend(cd, src_drawable->width, src_drawable->height)
-                + p_lower_curve_extend(cd, src_drawable->width, src_drawable->height);
+   dst_height = src_height
+                + p_upper_curve_extend(cd, src_width, src_height)
+                + p_lower_curve_extend(cd, src_width, src_height);
 
-   if(gb_debug) g_printf("p_main_bend: l_dst_height:%d\n", (int)l_dst_height);
+   if(gb_debug) g_printf("p_main_bend: dst_height:%d\n", dst_height);
 
-   if(work_on_copy)
+   if (work_on_copy)
      {
-       dst_drawable = p_add_layer(src_drawable->width, l_dst_height, src_drawable);
-       if(gb_debug) g_printf("p_main_bend: DONE add layer\n");
+       dst_drawable_id = p_add_layer (src_width, dst_height,
+                                      src_drawable_id);
+       if (gb_debug) g_printf("p_main_bend: DONE add layer\n");
      }
    else
      {
        /* work on the original */
        gimp_layer_resize (original_drawable_id,
-                          src_drawable->width,
-                          l_dst_height,
-                          l_offset_x, l_offset_y);
-       if(gb_debug) g_printf("p_main_bend: DONE layer resize\n");
-       if(!gimp_drawable_has_alpha(original_drawable_id))
+                          src_width,
+                          dst_height,
+                          offset_x, offset_y);
+       if (gb_debug) g_printf("p_main_bend: DONE layer resize\n");
+       if (! gimp_drawable_has_alpha (original_drawable_id))
          {
            /* always add alpha channel */
-           gimp_layer_add_alpha(original_drawable_id);
+           gimp_layer_add_alpha (original_drawable_id);
          }
-       dst_drawable = gimp_drawable_get (original_drawable_id);
+
+       dst_drawable_id = original_drawable_id;
      }
-   p_clear_drawable(dst_drawable);
 
-   p_init_gdrw(&l_src_gdrw, src_drawable, FALSE, FALSE);
-   p_init_gdrw(&l_dst_gdrw, dst_drawable,  TRUE,  FALSE);
+   gimp_drawable_fill (dst_drawable_id, GIMP_FILL_TRANSPARENT);
 
-   p_vertical_bend(cd, &l_src_gdrw, &l_dst_gdrw);
+   p_init_gdrw (&src_gdrw, src_drawable_id, FALSE, FALSE);
+   p_init_gdrw (&dst_gdrw, dst_drawable_id,  TRUE, FALSE);
+
+   p_vertical_bend (cd, &src_gdrw, &dst_gdrw);
 
    if(gb_debug) g_printf("p_main_bend: DONE vertical bend\n");
 
-   p_end_gdrw(&l_src_gdrw);
-   p_end_gdrw(&l_dst_gdrw);
+   p_end_gdrw (&src_gdrw);
+   p_end_gdrw (&dst_gdrw);
 
-   if(cd->rotation != 0.0)
+   if (cd->rotation != 0.0)
      {
-       p_gimp_rotate (l_image_id, dst_drawable->drawable_id,
-                      l_interpolation, (gdouble)(360.0 - cd->rotation));
+       p_gimp_rotate (image_id, dst_drawable_id,
+                      interpolation, (gdouble)(360.0 - cd->rotation));
 
        /* TODO: here we should crop dst_drawable to cut off full transparent borderpixels */
-
-   }
+     }
 
    /* set offsets of the resulting new layer
     *(center == center of original_drawable)
     */
-   l_offset_x = l_center_x - (gimp_drawable_width  (dst_drawable->drawable_id) / 2 );
-   l_offset_y = l_center_y - (gimp_drawable_height  (dst_drawable->drawable_id) / 2 );
-   gimp_layer_set_offsets (dst_drawable->drawable_id, l_offset_x, l_offset_y);
+   offset_x = center_x - (gimp_drawable_width  (dst_drawable_id) / 2 );
+   offset_y = center_y - (gimp_drawable_height  (dst_drawable_id) / 2 );
+   gimp_layer_set_offsets (dst_drawable_id, offset_x, offset_y);
 
    /* delete the temp layer */
-   gimp_image_remove_layer (l_image_id, l_tmp_layer_id);
+   gimp_image_remove_layer (image_id, tmp_layer_id);
 
    g_free (cd->curve_ptr[OUTLINE_UPPER]);
    g_free (cd->curve_ptr[OUTLINE_LOWER]);
 
    if (gb_debug) g_printf("p_main_bend: DONE bend main\n");
 
-   return dst_drawable->drawable_id;
+   return dst_drawable_id;
 }
