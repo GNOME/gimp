@@ -63,4 +63,12 @@ void        gimp_link_layer_discard     (GimpLinkLayer *layer);
 void        gimp_link_layer_monitor     (GimpLinkLayer *layer);
 gboolean    gimp_item_is_link_layer     (GimpItem      *item);
 
+
+/* Only to be used for XCF loading/saving. */
+
+guint32     gimp_link_layer_get_xcf_flags (GimpLinkLayer  *layer);
+void        gimp_link_layer_from_layer    (GimpLayer     **layer,
+                                           GimpLink       *link,
+                                           guint32         flags);
+
 #endif /* __GIMP_LINK_LAYER_H__ */

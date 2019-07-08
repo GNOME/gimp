@@ -51,6 +51,13 @@
 
 enum
 {
+  LINK_LAYER_XCF_NONE              = 0,
+  LINK_LAYER_XCF_DONT_AUTO_RENAME  = 1 << 0,
+  LINK_LAYER_XCF_MODIFIED          = 1 << 1
+};
+
+enum
+{
   PROP_0,
   PROP_LINK,
   PROP_AUTO_RENAME,
@@ -112,6 +119,8 @@ static gboolean   gimp_link_layer_render         (GimpLinkLayer     *layer);
 static void       gimp_link_layer_render_buffer  (GimpLinkLayer     *layer,
                                                   GeglBuffer        *buffer);
 
+static void       gimp_link_layer_set_xcf_flags  (GimpLinkLayer     *layer,
+                                                  guint32            flags);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER)
 
@@ -523,6 +532,80 @@ gimp_item_is_link_layer (GimpItem *item)
           ! GIMP_LINK_LAYER (item)->p->modified);
 }
 
+guint32
+gimp_link_layer_get_xcf_flags (GimpLinkLayer *link_layer)
+{
+  guint flags = 0;
+
+  g_return_val_if_fail (GIMP_IS_LINK_LAYER (link_layer), 0);
+
+  if (! link_layer->p->auto_rename)
+    flags |= LINK_LAYER_XCF_DONT_AUTO_RENAME;
+
+  if (link_layer->p->modified)
+    flags |= LINK_LAYER_XCF_MODIFIED;
+
+  return flags;
+}
+
+/**
+ * gimp_link_layer_from_layer:
+ * @layer: a #GimpLayer object
+ * @link: a #GimpLink object
+ * @flags: flags as retrieved from the XCF file.
+ *
+ * Converts a standard #GimpLayer into a #GimpLinkLayer.
+ * The new link layer takes ownership of the @link.
+ * The old @layer object is freed and replaced in-place by the new
+ * #GimpLinkLayer.
+ *
+ * This is a hack similar to the one used to load text layers from XCF,
+ * since at first they are loaded as normal layers, and only later
+ * promoted to link layers when the corresponding property is read from
+ * the file.
+ **/
+void
+gimp_link_layer_from_layer (GimpLayer **layer,
+                            GimpLink   *link,
+                            guint32     flags)
+{
+  GimpLinkLayer *link_layer;
+  GimpDrawable  *drawable;
+
+  g_return_if_fail (GIMP_IS_LAYER (*layer));
+  g_return_if_fail (GIMP_IS_LINK (link));
+
+  link_layer = g_object_new (GIMP_TYPE_LINK_LAYER,
+                             "image", gimp_item_get_image (GIMP_ITEM (*layer)),
+                             NULL);
+
+  gimp_item_replace_item (GIMP_ITEM (link_layer), GIMP_ITEM (*layer));
+
+  drawable = GIMP_DRAWABLE (link_layer);
+  gimp_drawable_steal_buffer (drawable, GIMP_DRAWABLE (*layer));
+
+  gimp_layer_set_opacity         (GIMP_LAYER (link_layer),
+                                  gimp_layer_get_opacity (*layer), FALSE);
+  gimp_layer_set_mode            (GIMP_LAYER (link_layer),
+                                  gimp_layer_get_mode (*layer), FALSE);
+  gimp_layer_set_blend_space     (GIMP_LAYER (link_layer),
+                                  gimp_layer_get_blend_space (*layer), FALSE);
+  gimp_layer_set_composite_space (GIMP_LAYER (link_layer),
+                                  gimp_layer_get_composite_space (*layer), FALSE);
+  gimp_layer_set_composite_mode  (GIMP_LAYER (link_layer),
+                                  gimp_layer_get_composite_mode (*layer), FALSE);
+  gimp_layer_set_lock_alpha      (GIMP_LAYER (link_layer),
+                                  gimp_layer_get_lock_alpha (*layer), FALSE);
+
+  gimp_link_layer_set_link (link_layer, link, FALSE);
+  gimp_link_layer_set_xcf_flags (link_layer, flags);
+
+  g_object_unref (link);
+  g_object_unref (*layer);
+
+  *layer = GIMP_LAYER (link_layer);
+}
+
 /*  private functions  */
 
 static void
@@ -648,4 +731,16 @@ gimp_link_layer_render_buffer (GimpLinkLayer *layer,
   else
     gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
                            gimp_drawable_get_buffer (drawable), NULL);
+}
+
+static void
+gimp_link_layer_set_xcf_flags (GimpLinkLayer *layer,
+                               guint32        flags)
+{
+  g_return_if_fail (GIMP_IS_LINK_LAYER (layer));
+
+  g_object_set (layer,
+                "auto-rename", (flags & LINK_LAYER_XCF_DONT_AUTO_RENAME) == 0,
+                "modified",    (flags & LINK_LAYER_XCF_MODIFIED)         != 0,
+                NULL);
 }
