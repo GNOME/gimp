@@ -22,8 +22,6 @@ EXPORTS
 	gimp_cpu_accel_set_use
 	gimp_data_directory
 	gimp_data_directory_file
-	gimp_datafiles_check_extension
-	gimp_datafiles_read_directories
 	gimp_desaturate_mode_get_type
 	gimp_directory
 	gimp_directory_file
