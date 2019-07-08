@@ -1,6 +1,7 @@
 # Build properties
 option('ansi',              type: 'boolean', value: false,description: 'Turn on strict ansi')
 option('enable-console-bin',type: 'boolean', value: true, description: 'Build a console-only binary which does not link GTK+')
+option('win32-debug-console',type:'boolean', value: true, description: 'Open a console when starting the program')
 option('enable-default-bin',type: 'boolean', value: true, description: 'Build default Gtk+ binary')
 option('enable-multiproc',  type: 'boolean', value: true, description: 'Support for multiple processors')
 option('profiling',         type: 'boolean', value: true, description: 'Enable profiling')
@@ -12,6 +13,10 @@ option('gimpdir',           type: 'string',  value: '',   description: 'Change d
 option('icc-directory',     type: 'string',  value: '',   description: 'Path to default color profiles for this system')
 option('directx-sdk-dir',   type: 'string',  value: '',   description: 'Prefix where the DirectX SDK is installed(optional)')
 option('with-sendmail',     type: 'string',  value: '',   description: 'Use Sendmail instead of Xdg-email')
+
+option('win32-32bits-dll-folder', type: 'string',  value: '32/bin', description: 'alternative folder with 32-bit versions of DLL libraries on Windows')
+option('libunwind',         type: 'boolean', value: true, description: 'Build with libunwind for backtrace')
+option('libbacktrace',      type: 'boolean', value: true, description: 'Build with libbacktrace support')
 
 # Features
 

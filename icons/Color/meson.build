@@ -37,7 +37,7 @@ foreach icon_info : all_icons
 endforeach
 
 
-icons_core = [ '64/gimp-question.png', ]
+icons_core = [ '64/dialog-question.png', ]
 icons_imgs = [ '64/gimp-wilber-eek.png', ]
 
 resourcename = 'gimp-core-pixbufs'

@@ -32,14 +32,3 @@ executable('gimp-test-clipboard',
   ],
   install: true,
 )
-
-if have_vector_icons
-  invert_svg = generator(
-    executable('invert-svg',
-      'invert-svg.c',
-      dependencies: gio,
-    ),
-    output: '@BASENAME@',
-    arguments: [ '@INPUT@', '@OUTPUT@' ],
-  )
-endif

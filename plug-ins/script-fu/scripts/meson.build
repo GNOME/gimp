@@ -47,7 +47,6 @@ scripts = [
   'selection-round.scm',
   'slide.scm',
   'spinning-globe.scm',
-  'spyrogimp.scm',
   'tileblur.scm',
   'unsharp-mask.scm',
   'waves-anim.scm',

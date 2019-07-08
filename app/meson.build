@@ -16,6 +16,7 @@ subdir('core')
 subdir('dialogs')
 subdir('display')
 subdir('file')
+subdir('file-data')
 subdir('gegl')
 subdir('gui')
 subdir('menus')
@@ -73,6 +74,7 @@ app_links = [
   libappconfig,
   libappcore,
   libappfile,
+  libappfiledata,
   libappgegl,
   libappinternalprocs,
   libapplayermodes,
