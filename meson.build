@@ -237,8 +237,6 @@ endif
 #     # #      #      #      #   ## #    # #      #   ## #    # # #      #    #
 ######  ###### #      ###### #    # #####  ###### #    #  ####  # ######  ####
 
-<<<<<<< HEAD
-=======
 no_dep = dependency('', required: false)
 
 ################################################################################
@@ -246,7 +244,6 @@ no_dep = dependency('', required: false)
 
 relocatable_bundle = get_option('relocatable-bundle')
 conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
->>>>>>> e7cbd98f5e... Update from autotools
 
 
 math              = cc.find_library('m')
@@ -254,11 +251,7 @@ dl                = cc.find_library('dl')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
-<<<<<<< HEAD
-babl              = dependency('babl',               version: '>=0.1.51')
-=======
 babl              = dependency('babl',               version: '>=0.1.66')
->>>>>>> e7cbd98f5e... Update from autotools
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -301,16 +294,8 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
 
-<<<<<<< HEAD
-libmypaint_brushes_bundled = get_option('with-bundled-mypaint-brushes')
-conf.set('ENABLE_BUNDLED_MYPAINT_BRUSHES', libmypaint_brushes_bundled)
-
-if libmypaint_brushes_bundled
-  libmypaint_brushes = dependency('', required: false)
-=======
 if relocatable_bundle
   libmypaint_brushes = no_dep
->>>>>>> e7cbd98f5e... Update from autotools
   libmypaint_brushes_dir = join_paths(
     '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
   )
