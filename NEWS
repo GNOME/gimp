@@ -30,7 +30,8 @@ Tools:
 Plug-ins:
 
   - More filters ported to GEGL: nl-filter, film, fractal-explorer,
-    flame, blinds, jigsaw.
+    flame, blinds, jigsaw, gradient-flare, checkerboard, tile-small,
+    curve-bend, sample-colorize, map-object.
   - Added color profile support for HEIF (only when libheif 1.4.0 is
     available).
   - TIFF import will now ask (in interactive mode) how to process
