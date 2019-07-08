@@ -207,19 +207,19 @@ typedef double CRMatrix[4][4];
 
 typedef struct
 {
-  guint32 drawable_id;
-  gint    width;
-  gint    height;
-  GimpDrawable *drawable;
-  gint       x1;
-  gint       y1;
-  gint       x2;
-  gint       y2;
-  gint       index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
-  gint       bpp;
-  GimpPixelFetcher *pft;
-  gint       tile_width;
-  gint       tile_height;
+  guint32     drawable_id;
+  gint        width;
+  gint        height;
+  GeglBuffer *buffer;
+  const Babl *format;
+  gint        x1;
+  gint        y1;
+  gint        x2;
+  gint        y2;
+  gint        index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
+  gint        bpp;
+  gint        tile_width;
+  gint        tile_height;
 } t_GDRW;
 
 typedef struct
@@ -294,7 +294,6 @@ static void            bender_init_min_max            (BenderDialog *,
 static BenderDialog *  do_dialog                      (gint32        drawable_id);
 static void            p_init_gdrw                    (t_GDRW       *gdrw,
                                                        gint32        drawable_id,
-                                                       int           dirty,
                                                        int           shadow);
 static void            p_end_gdrw                     (t_GDRW       *gdrw);
 static gint32          p_main_bend                    (BenderDialog *cd,
@@ -653,6 +652,7 @@ run (const gchar      *name,
   static GimpParam values[2];
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   cd = NULL;
 
@@ -2443,7 +2443,7 @@ p_render_preview (BenderDialog *cd,
 
    ptr = buf = g_new (guchar, PREVIEW_BPP * PREVIEW_SIZE_X * PREVIEW_SIZE_Y);
    gdrw = &l_gdrw;
-   p_init_gdrw(gdrw, layer_id, FALSE, FALSE);
+   p_init_gdrw(gdrw, layer_id, FALSE);
 
   /* offsets to set bend layer to preview center */
   ofx = (width / 2) - (PREVIEW_SIZE_X / 2);
@@ -2612,27 +2612,25 @@ p_lower_curve_extend (BenderDialog *cd,
 static void
 p_end_gdrw (t_GDRW *gdrw)
 {
-  gimp_pixel_fetcher_destroy (gdrw->pft);
-  gimp_drawable_detach (gdrw->drawable);
+  g_object_unref (gdrw->buffer);
 }
 
 static void
 p_init_gdrw (t_GDRW *gdrw,
              gint32  drawable_id,
-             int     dirty,
              int     shadow)
 {
   gint w, h;
 
   gdrw->drawable_id = drawable_id;
 
-  gdrw->drawable = gimp_drawable_get (drawable_id);
+  if (shadow)
+    gdrw->buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+  else
+    gdrw->buffer = gimp_drawable_get_buffer (drawable_id);
 
   gdrw->width  = gimp_drawable_width  (gdrw->drawable_id);
   gdrw->height = gimp_drawable_height (gdrw->drawable_id);
-
-  gdrw->pft = gimp_pixel_fetcher_new (gdrw->drawable, FALSE);
-  gimp_pixel_fetcher_set_edge_mode (gdrw->pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
 
   gdrw->tile_width  = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
@@ -2647,7 +2645,12 @@ p_init_gdrw (t_GDRW *gdrw,
   gdrw->x2 = gdrw->x1 + w;
   gdrw->y2 = gdrw->y1 + h;
 
-  gdrw->bpp = gimp_drawable_bpp (drawable_id);
+  if (gimp_drawable_has_alpha (drawable_id))
+    gdrw->format = babl_format ("R'G'B'A u8");
+  else
+    gdrw->format = babl_format ("R'G'B' u8");
+
+  gdrw->bpp = babl_format_get_bytes_per_pixel (gdrw->format);
 
   if (gimp_drawable_has_alpha (drawable_id))
     {
@@ -2672,7 +2675,9 @@ p_get_pixel (t_GDRW *gdrw,
 {
   pixel[1] = 255;
   pixel[3] = 255;  /* simulate full visible alpha channel */
-  gimp_pixel_fetcher_get_pixel (gdrw->pft, x, y, pixel);
+
+  gegl_buffer_sample (gdrw->buffer, x, y, NULL, pixel, gdrw->format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 }
 
 static void
@@ -2681,7 +2686,8 @@ p_put_pixel (t_GDRW *gdrw,
              gint32  y,
              guchar *pixel)
 {
-  gimp_pixel_fetcher_put_pixel (gdrw->pft, x, y, pixel);
+  gegl_buffer_set (gdrw->buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                   gdrw->format, pixel, GEGL_AUTO_ROWSTRIDE);
 }
 
 static void
@@ -2788,8 +2794,8 @@ p_create_pv_image (gint32  src_drawable_id,
 
   gimp_image_insert_layer(new_image_id, *layer_id, -1, 0);
 
-  p_init_gdrw (&src_gdrw, src_drawable_id, FALSE, FALSE);
-  p_init_gdrw (&dst_gdrw, *layer_id,  TRUE,  FALSE);
+  p_init_gdrw (&src_gdrw, src_drawable_id, FALSE);
+  p_init_gdrw (&dst_gdrw, *layer_id,       FALSE);
 
   for (y = 0; y < new_height; y++)
     {
@@ -3099,12 +3105,12 @@ p_vertical_bend (BenderDialog *cd,
                         {
                           first_arr[x].y = curvy;
                           memcpy (first_arr[x].color, color,
-                                  dst_gdrw->drawable->bpp);
+                                  dst_gdrw->bpp);
 
                           if (x > 0)
                             {
                               memcpy (mixcolor, first_arr[x-1].color,
-                                      dst_gdrw->drawable->bpp);
+                                      dst_gdrw->bpp);
 
                               diff = abs(first_arr[x - 1].y - curvy) +1;
                               miny = MIN(first_arr[x - 1].y, curvy) -1;
@@ -3124,7 +3130,7 @@ p_vertical_bend (BenderDialog *cd,
                           if (x > 0)
                             {
                               memcpy (mixcolor, last_arr[x-1].color,
-                                      dst_gdrw->drawable->bpp);
+                                      dst_gdrw->bpp);
 
                               diff = abs (last_arr[x - 1].y - curvy) +1;
                               maxy = MAX (last_arr[x - 1].y, curvy) +1;
@@ -3191,7 +3197,7 @@ p_vertical_bend (BenderDialog *cd,
                           sign = 1;
                         }
 
-                      memcpy (mixcolor, color, dst_gdrw->drawable->bpp);
+                      memcpy (mixcolor, color, dst_gdrw->bpp);
                     }
 
                   for (dy = 1; dy <= diff; dy++)
@@ -3229,12 +3235,12 @@ p_vertical_bend (BenderDialog *cd,
                           if (dy < diff / 2)
                             {
                               memcpy (mixcolor, color,
-                                      dst_gdrw->drawable->bpp);
+                                      dst_gdrw->bpp);
                             }
                           else
                             {
                               memcpy (mixcolor, last_arr[x].color,
-                                      dst_gdrw->drawable->bpp);
+                                      dst_gdrw->bpp);
                             }
                         }
 
@@ -3254,7 +3260,7 @@ p_vertical_bend (BenderDialog *cd,
 
                   /* store y and color */
                   last_arr[x].y = curvy;
-                  memcpy (last_arr[x].color, color, dst_gdrw->drawable->bpp);
+                  memcpy (last_arr[x].color, color, dst_gdrw->bpp);
                 }
             }
         }
@@ -3359,8 +3365,8 @@ p_main_bend (BenderDialog *cd,
 
    gimp_drawable_fill (dst_drawable_id, GIMP_FILL_TRANSPARENT);
 
-   p_init_gdrw (&src_gdrw, src_drawable_id, FALSE, FALSE);
-   p_init_gdrw (&dst_gdrw, dst_drawable_id,  TRUE, FALSE);
+   p_init_gdrw (&src_gdrw, src_drawable_id, FALSE);
+   p_init_gdrw (&dst_gdrw, dst_drawable_id, FALSE);
 
    p_vertical_bend (cd, &src_gdrw, &dst_gdrw);
 
