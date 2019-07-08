@@ -1,7 +1,7 @@
 # Meson build file
 
 project('gimp', ['c', 'cpp'], version: '2.99.1',
-  meson_version: '>=0.47.0',
+  meson_version: '>=0.50.0',
   default_options: [
     'cpp_std=gnu++14',
     'sysconfdir=/etc',
@@ -66,6 +66,8 @@ package_string= prettyname + ' ' + gimp_version
 
 gettext_package= 'gimp@0@@1@'.format(apiversion_major, apiversion_minor)
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
+
+conf.set_quoted('GIMP_VERSION', gimp_version)
 
 stable = (version_minor % 2 == 0)
 conf.set10('GIMP_UNSTABLE', not stable)
@@ -248,6 +250,7 @@ conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
 math              = cc.find_library('m')
+dl                = cc.find_library('dl')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
@@ -269,7 +272,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.16')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.17')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
