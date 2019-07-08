@@ -3,7 +3,7 @@ if have_vector_icons
   all_icons = [
     [ 'scalable', symbolic_vector_scalable ],
     [ '24x24',    symbolic_vector_24 ],
-    [ '64x64',    bitmap_64system ],
+    # [ '64x64',    bitmap_64system ],
   ]
 else
   all_icons = [

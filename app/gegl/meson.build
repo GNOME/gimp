@@ -12,7 +12,7 @@ libappgegl_sources = [
   'gimp-gegl-apply-operation.c',
   'gimp-gegl-loops-sse2.c',
   'gimp-gegl-loops.cc',
-  'gimp-gegl-mask-combine.c',
+  'gimp-gegl-mask-combine.cc',
   'gimp-gegl-mask.c',
   'gimp-gegl-nodes.c',
   'gimp-gegl-tile-compat.c',
