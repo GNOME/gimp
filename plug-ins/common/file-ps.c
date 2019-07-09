@@ -1585,7 +1585,7 @@ ps_open (const gchar      *filename,
   gboolean      is_pdf;
   gboolean      maybe_epsf = FALSE;
   int           code;
-  void         *instance;
+  void         *instance = NULL;
 
   resolution = loadopt->resolution;
   *llx = *lly = 0;
