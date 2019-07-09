@@ -41,7 +41,6 @@
 #define PLUG_IN_ROLE        "gimp-sample-colorize"
 #define NUMBER_IN_ARGS      13
 
-#define TILE_CACHE_SIZE      32
 #define LUMINOSITY_0(X)      ((X[0] * 30 + X[1] * 59 + X[2] * 11))
 #define LUMINOSITY_1(X)      ((X[0] * 30 + X[1] * 59 + X[2] * 11) / 100)
 #define MIX_CHANNEL(a, b, m) (((a * m) + (b * (255 - m))) / 255)
@@ -363,8 +362,6 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable_id) ||
       gimp_drawable_is_gray (drawable_id))
     {
-      gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
-
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
