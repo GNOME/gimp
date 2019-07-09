@@ -50,9 +50,6 @@ GIMP_DEPRECATED
 void    gimp_tile_unref        (GimpTile  *tile,
                                 gboolean   dirty);
 GIMP_DEPRECATED
-void    gimp_tile_flush        (GimpTile  *tile);
-
-GIMP_DEPRECATED
 void    gimp_tile_cache_ntiles (gulong     ntiles);
 
 
@@ -60,6 +57,8 @@ void    gimp_tile_cache_ntiles (gulong     ntiles);
 
 G_GNUC_INTERNAL void _gimp_tile_ref_nocache          (GimpTile     *tile,
                                                       gboolean      init);
+
+G_GNUC_INTERNAL void _gimp_tile_flush                (GimpTile     *tile);
 
 G_GNUC_INTERNAL void _gimp_tile_cache_flush_drawable (GimpDrawable *drawable);
 

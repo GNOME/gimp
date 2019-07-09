@@ -120,14 +120,14 @@ gimp_tile_unref (GimpTile *tile,
 
   if (tile->ref_count == 0)
     {
-      gimp_tile_flush (tile);
+      _gimp_tile_flush (tile);
       g_free (tile->data);
       tile->data = NULL;
     }
 }
 
 void
-gimp_tile_flush (GimpTile *tile)
+_gimp_tile_flush (GimpTile *tile)
 {
   g_return_if_fail (tile != NULL);
 

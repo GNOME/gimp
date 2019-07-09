@@ -130,7 +130,7 @@ gimp_drawable_flush (GimpDrawable *drawable)
 
       for (i = 0; i < n_tiles; i++)
         if ((tiles[i].ref_count > 0) && tiles[i].dirty)
-          gimp_tile_flush (&tiles[i]);
+          _gimp_tile_flush (&tiles[i]);
     }
 
   if (drawable->shadow_tiles)
@@ -140,7 +140,7 @@ gimp_drawable_flush (GimpDrawable *drawable)
 
       for (i = 0; i < n_tiles; i++)
         if ((tiles[i].ref_count > 0) && tiles[i].dirty)
-          gimp_tile_flush (&tiles[i]);
+          _gimp_tile_flush (&tiles[i]);
     }
 
   /*  nuke all references to this drawable from the cache  */
