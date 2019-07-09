@@ -23,23 +23,24 @@
 #include "map-object-image.h"
 
 
-GimpDrawable *input_drawable, *output_drawable;
-GimpPixelRgn source_region,dest_region;
+gint32      input_drawable_id;
+gint32      output_drawable_id;
+GeglBuffer *source_buffer;
+GeglBuffer *dest_buffer;
 
-GimpDrawable *box_drawables[6];
-GimpPixelRgn box_regions[6];
+gint32      box_drawable_ids[6];
+GeglBuffer *box_buffers[6];
 
-GimpDrawable *cylinder_drawables[2];
-GimpPixelRgn cylinder_regions[2];
+gint32      cylinder_drawable_ids[2];
+GeglBuffer *cylinder_buffers[2];
 
 guchar          *preview_rgb_data = NULL;
 gint             preview_rgb_stride;
 cairo_surface_t *preview_surface = NULL;
 
-glong   maxcounter,old_depth,max_depth;
-gint    imgtype,width,height,in_channels,out_channels,image_id;
+glong    maxcounter, old_depth, max_depth;
+gint     width, height, image_id;
 GimpRGB  background;
-gdouble oldthreshold;
 
 gint border_x, border_y, border_w, border_h;
 
@@ -51,27 +52,14 @@ GimpRGB
 peek (gint x,
       gint y)
 {
-  static guchar data[4];
-
   GimpRGB color;
 
-  gimp_pixel_rgn_get_pixel (&source_region, data, x, y);
+  gegl_buffer_sample (source_buffer, x, y, NULL,
+                      &color, babl_format ("R'G'B'A double"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  color.r = (gdouble) (data[0]) / 255.0;
-  color.g = (gdouble) (data[1]) / 255.0;
-  color.b = (gdouble) (data[2]) / 255.0;
-
-  if (input_drawable->bpp == 4)
-    {
-      if (in_channels == 4)
-        color.a = (gdouble) (data[3]) / 255.0;
-      else
-        color.a = 1.0;
-    }
-  else
-    {
-      color.a = 1.0;
-    }
+  if (! babl_format_has_alpha (gegl_buffer_get_format (source_buffer)))
+    color.a = 1.0;
 
   return color;
 }
@@ -81,27 +69,14 @@ peek_box_image (gint image,
                 gint x,
                 gint y)
 {
-  static guchar data[4];
-
   GimpRGB color;
 
-  gimp_pixel_rgn_get_pixel (&box_regions[image], data, x, y);
+  gegl_buffer_sample (box_buffers[image], x, y, NULL,
+                      &color, babl_format ("R'G'B'A double"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  color.r = (gdouble) (data[0]) / 255.0;
-  color.g = (gdouble) (data[1]) / 255.0;
-  color.b = (gdouble) (data[2]) / 255.0;
-
-  if (box_drawables[image]->bpp == 4)
-    {
-      if (gimp_drawable_has_alpha (box_drawables[image]->drawable_id))
-        color.a = (gdouble) (data[3]) / 255.0;
-      else
-        color.a = 1.0;
-    }
-  else
-    {
-      color.a = 1.0;
-    }
+  if (! babl_format_has_alpha (gegl_buffer_get_format (box_buffers[image])))
+    color.a = 1.0;
 
   return color;
 }
@@ -111,27 +86,14 @@ peek_cylinder_image (gint image,
                      gint x,
                      gint y)
 {
-  static guchar data[4];
-
   GimpRGB color;
 
-  gimp_pixel_rgn_get_pixel (&cylinder_regions[image],data, x, y);
+  gegl_buffer_sample (cylinder_buffers[image], x, y, NULL,
+                      &color, babl_format ("R'G'B'A double"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  color.r = (gdouble) (data[0]) / 255.0;
-  color.g = (gdouble) (data[1]) / 255.0;
-  color.b = (gdouble) (data[2]) / 255.0;
-
-  if (cylinder_drawables[image]->bpp == 4)
-    {
-      if (gimp_drawable_has_alpha (cylinder_drawables[image]->drawable_id))
-        color.a = (gdouble) (data[3]) / 255.0;
-      else
-        color.a = 1.0;
-    }
-  else
-    {
-      color.a = 1.0;
-    }
+  if (! babl_format_has_alpha (gegl_buffer_get_format (cylinder_buffers[image])))
+    color.a = 1.0;
 
   return color;
 }
@@ -140,20 +102,21 @@ void
 poke (gint      x,
       gint      y,
       GimpRGB  *color,
-      gpointer  data)
+      gpointer  user_data)
 {
-  static guchar col[4];
-
-  gimp_rgba_get_uchar (color, &col[0], &col[1], &col[2], &col[3]);
-
-  gimp_pixel_rgn_set_pixel (&dest_region, col, x, y);
+  gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                   babl_format ("R'G'B'A double"), color,
+                   GEGL_AUTO_ROWSTRIDE);
 }
 
 gint
 checkbounds (gint x,
              gint y)
 {
-  if (x < border_x || y < border_y || x >= border_x + border_w || y >= border_y + border_h)
+  if (x < border_x ||
+      y < border_y ||
+      x >= border_x + border_w ||
+      y >= border_y + border_h)
     return FALSE;
   else
     return TRUE;
@@ -166,8 +129,8 @@ checkbounds_box_image (gint image,
 {
   gint w, h;
 
-  w = box_drawables[image]->width;
-  h = box_drawables[image]->height;
+  w = gegl_buffer_get_width  (box_buffers[image]);
+  h = gegl_buffer_get_height (box_buffers[image]);
 
   if (x < 0 || y < 0 || x >= w || y >= h)
     return FALSE ;
@@ -182,8 +145,8 @@ checkbounds_cylinder_image (gint image,
 {
   gint w, h;
 
-  w = cylinder_drawables[image]->width;
-  h = cylinder_drawables[image]->height;
+  w = gegl_buffer_get_width  (cylinder_buffers[image]);
+  h = gegl_buffer_get_height (cylinder_buffers[image]);
 
   if (x < 0 || y < 0 || x >= w || y >= h)
     return FALSE;
@@ -286,8 +249,8 @@ get_box_image_color (gint    image,
   gint    x1, y1, x2, y2;
   GimpRGB p[4];
 
-  w = box_drawables[image]->width;
-  h = box_drawables[image]->height;
+  w = gegl_buffer_get_width  (box_buffers[image]);
+  h = gegl_buffer_get_height (box_buffers[image]);
 
   x1 = (gint) ((u * (gdouble) w));
   y1 = (gint) ((v * (gdouble) h));
@@ -318,8 +281,8 @@ get_cylinder_image_color (gint    image,
   gint    x1, y1, x2, y2;
   GimpRGB p[4];
 
-  w = cylinder_drawables[image]->width;
-  h = cylinder_drawables[image]->height;
+  w = gegl_buffer_get_width  (cylinder_buffers[image]);
+  h = gegl_buffer_get_height (cylinder_buffers[image]);
 
   x1 = (gint) ((u * (gdouble) w));
   y1 = (gint) ((v * (gdouble) h));
@@ -346,30 +309,20 @@ get_cylinder_image_color (gint    image,
 /****************************************/
 
 gint
-image_setup (GimpDrawable *drawable,
-             gint       interactive)
+image_setup (gint32 drawable_id,
+             gint   interactive)
 {
-  /* Set the tile cache size */
-  /* ======================= */
+  input_drawable_id  = drawable_id;
+  output_drawable_id = drawable_id;
 
-  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width() - 1) /
-                          gimp_tile_width ());
-
-  /* Get some useful info on the input drawable */
-  /* ========================================== */
-
-  input_drawable  = drawable;
-  output_drawable = drawable;
-
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &border_x, &border_y,
+  if (! gimp_drawable_mask_intersect (drawable_id, &border_x, &border_y,
                                       &border_w, &border_h))
     return FALSE;
 
-  width  = input_drawable->width;
-  height = input_drawable->height;
+  width  = gimp_drawable_width  (input_drawable_id);
+  height = gimp_drawable_height (input_drawable_id);
 
-  gimp_pixel_rgn_init (&source_region, input_drawable,
-                       0, 0, width, height, FALSE, FALSE);
+  source_buffer = gimp_drawable_get_buffer (input_drawable_id);
 
   maxcounter = (glong) width * (glong) height;
 
@@ -382,13 +335,6 @@ image_setup (GimpDrawable *drawable,
       gimp_context_get_background (&background);
       gimp_rgb_set_alpha (&background, 1.0);
     }
-
-  /* Assume at least RGB */
-  /* =================== */
-
-  in_channels = 3;
-  if (gimp_drawable_has_alpha (input_drawable->drawable_id) == TRUE)
-    in_channels++;
 
   if (interactive == TRUE)
     {

@@ -1313,7 +1313,7 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (GimpDrawable *drawable)
+main_dialog (gint32 drawable_id)
 {
   GtkWidget     *main_hbox;
   GtkWidget     *vbox;
@@ -1441,7 +1441,7 @@ main_dialog (GimpDrawable *drawable)
     gdk_cursor_unref (cursor);
   }
 
-  image_setup (drawable, TRUE);
+  image_setup (drawable_id, TRUE);
 
   compute_preview_image ();
 
