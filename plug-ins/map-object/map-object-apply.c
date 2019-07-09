@@ -133,13 +133,9 @@ init_compute (void)
 
         for (i = 0; i < 6; i++)
           {
-            box_drawables[i] = gimp_drawable_get (mapvals.boxmap_id[i]);
+            box_drawable_ids[i] = mapvals.boxmap_id[i];
 
-            gimp_pixel_rgn_init (&box_regions[i], box_drawables[i],
-                                 0, 0,
-                                 box_drawables[i]->width,
-                                 box_drawables[i]->height,
-                                 FALSE, FALSE);
+            box_buffers[i] = gimp_drawable_get_buffer (box_drawable_ids[i]);
           }
 
         break;
@@ -174,16 +170,10 @@ init_compute (void)
 
         for (i = 0; i < 2; i++)
           {
-            cylinder_drawables[i] =
-              gimp_drawable_get (mapvals.cylindermap_id[i]);
+            cylinder_drawable_ids[i] = mapvals.cylindermap_id[i];
 
-            gimp_pixel_rgn_init (&cylinder_regions[i], cylinder_drawables[i],
-                                 0, 0,
-                                 cylinder_drawables[i]->width,
-                                 cylinder_drawables[i]->height,
-                                 FALSE, FALSE);
+            cylinder_buffers[i] = gimp_drawable_get_buffer (cylinder_drawable_ids[i]);
           }
-
         break;
     }
 
@@ -246,10 +236,13 @@ compute_image (void)
   if (mapvals.create_new_image ||
       mapvals.create_new_layer ||
       (mapvals.transparent_background &&
-       output_drawable->bpp != 4))
+       ! gimp_drawable_has_alpha (output_drawable_id)))
     {
-      gchar *layername[] = {_("Map to plane"), _("Map to sphere"), _("Map to box"),
-                            _("Map to cylinder"), _("Background")};
+      gchar *layername[] = {_("Map to plane"),
+                            _("Map to sphere"),
+                            _("Map to box"),
+                            _("Map to cylinder"),
+                            _("Background")};
 
       new_layer_id = gimp_layer_new (new_image_id,
                                      layername[mapvals.create_new_image ? 4 :
@@ -262,11 +255,10 @@ compute_image (void)
                                      gimp_image_get_default_new_layer_mode (new_image_id));
 
       insert_layer = TRUE;
-      output_drawable = gimp_drawable_get (new_layer_id);
+      output_drawable_id = new_layer_id;
     }
 
-  gimp_pixel_rgn_init (&dest_region, output_drawable,
-                       0, 0, width, height, TRUE, TRUE);
+  dest_buffer = gimp_drawable_get_shadow_buffer (output_drawable_id);
 
   switch (mapvals.maptype)
     {
@@ -284,7 +276,7 @@ compute_image (void)
         break;
     }
 
-  if (mapvals.antialiasing == FALSE)
+  if (! mapvals.antialiasing)
     {
       for (ycount = 0; ycount < height; ycount++)
         {
@@ -294,10 +286,11 @@ compute_image (void)
               color = (* get_ray_color) (&p);
               poke (xcount, ycount, &color, NULL);
 
-              if ((progress_counter++ % width) == 0)
-                gimp_progress_update ((gdouble) progress_counter /
-                                      (gdouble) maxcounter);
+              progress_counter++;
             }
+
+          gimp_progress_update ((gdouble) progress_counter /
+                                (gdouble) maxcounter);
         }
     }
   else
@@ -313,22 +306,22 @@ compute_image (void)
                                       show_progress,
                                       NULL);
     }
+
   gimp_progress_update (1.0);
 
-  /* Update the region */
-  /* ================= */
+  g_object_unref (source_buffer);
+  g_object_unref (dest_buffer);
 
-  gimp_drawable_flush (output_drawable);
   if (insert_layer)
     gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
-  gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
-  gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
+
+  gimp_drawable_merge_shadow (output_drawable_id, TRUE);
+  gimp_drawable_update (output_drawable_id, 0, 0, width, height);
 
   if (new_image_id != image_id)
     {
       gimp_display_new (new_image_id);
       gimp_displays_flush ();
-      gimp_drawable_detach (output_drawable);
     }
 
   gimp_image_undo_group_end (new_image_id);
