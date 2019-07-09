@@ -76,7 +76,7 @@
     'plugin-browser' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
     'qbist' => { ui => 1, gegl => 1 },
-    'sample-colorize' => { ui => 1 },
+    'sample-colorize' => { ui => 1, gegl => 1 },
     'sharpen' => { ui => 1 },
     'smooth-palette' => { ui => 1, gegl => 1 },
     'softglow' => { ui => 1 },
