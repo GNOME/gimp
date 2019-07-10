@@ -124,10 +124,11 @@ precompute_init (gint w,
     {
       if (vertex_normals[n] != NULL)
         g_free (vertex_normals[n]);
+
       if (heights[n] != NULL)
         g_free (heights[n]);
 
-      heights[n] = g_new (gdouble, w);
+      heights[n]        = g_new (gdouble, w);
       vertex_normals[n] = g_new (GimpVector3, w);
     }
 
@@ -135,11 +136,8 @@ precompute_init (gint w,
     if (triangle_normals[n] != NULL)
       g_free (triangle_normals[n]);
 
-  if (bumprow != NULL)
-    {
-      g_free (bumprow);
-      bumprow = NULL;
-    }
+  g_clear_pointer (&bumprow, g_free);
+
   if (mapvals.bumpmap_id != -1)
     {
       bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
@@ -176,23 +174,30 @@ interpol_row (gint x1,
               gint x2,
               gint y)
 {
-  GimpVector3   p1, p2, p3;
-  gint          n, i;
-  guchar        *map = NULL;
-  gint          bpp = 1;
-  guchar* bumprow1 = NULL;
-  guchar* bumprow2 = NULL;
+  GimpVector3  p1, p2, p3;
+  gint         n, i;
+  guchar      *map = NULL;
+  gint         bpp = 1;
+  guchar      *bumprow1 = NULL;
+  guchar      *bumprow2 = NULL;
 
   if (mapvals.bumpmap_id != -1)
     {
-      bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
+      bumpmap_setup (mapvals.bumpmap_id);
+
+      bpp = babl_format_get_bytes_per_pixel (bump_format);
     }
 
-  bumprow1 = g_new (guchar, pre_w * bpp);
-  bumprow2 = g_new (guchar, pre_w * bpp);
+  bumprow1 = g_new0 (guchar, pre_w * bpp);
+  bumprow2 = g_new0 (guchar, pre_w * bpp);
 
-  gimp_pixel_rgn_get_row (&bump_region, bumprow1, x1, y, x2 - x1);
-  gimp_pixel_rgn_get_row (&bump_region, bumprow2, x1, y+1, x2 - x1);
+  gegl_buffer_get (bump_buffer, GEGL_RECTANGLE (x1, y, x2 - x1, 1), 1.0,
+                   bump_format, bumprow1,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  gegl_buffer_get (bump_buffer, GEGL_RECTANGLE (x1, y - 1, x2 - x1, 1), 1.0,
+                   bump_format, bumprow2,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (mapvals.bumpmaptype > 0)
     {
@@ -213,8 +218,8 @@ interpol_row (gint x1,
   for (n = 0; n < (x2 - x1); n++)
     {
       gdouble diff;
-      guchar mapval;
-      guchar mapval1, mapval2;
+      guchar  mapval;
+      guchar  mapval1, mapval2;
 
       if (bpp>1)
         {
@@ -285,8 +290,8 @@ precompute_normals (gint x1,
   gdouble     *tmpd;
   gint         n, i, nv;
   guchar      *map = NULL;
-  gint bpp = 1;
-  guchar mapval;
+  gint         bpp = 1;
+  guchar       mapval;
 
 
   /* First, compute the heights */
@@ -308,10 +313,14 @@ precompute_normals (gint x1,
 
   if (mapvals.bumpmap_id != -1)
     {
-      bpp = gimp_drawable_bpp(mapvals.bumpmap_id);
+      bumpmap_setup (mapvals.bumpmap_id);
+
+      bpp = babl_format_get_bytes_per_pixel (bump_format);
     }
 
-  gimp_pixel_rgn_get_row (&bump_region, bumprow, x1, y, x2 - x1);
+  gegl_buffer_get (bump_buffer, GEGL_RECTANGLE (x1, y, x2 - x1, 1), 1.0,
+                   bump_format, bumprow,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   if (mapvals.bumpmaptype > 0)
     {
@@ -330,9 +339,11 @@ precompute_normals (gint x1,
 
       for (n = 0; n < (x2 - x1); n++)
         {
-          if (bpp>1)
+          if (bpp > 1)
             {
-              mapval = (guchar)((float)((bumprow[n * bpp] +bumprow[n * bpp +1] + bumprow[n * bpp + 2])/3.0 )) ;
+              mapval = (guchar)((float)((bumprow[n * bpp + 0] +
+                                         bumprow[n * bpp + 1] +
+                                         bumprow[n * bpp + 2])  /3.0));
             }
           else
             {
@@ -348,12 +359,15 @@ precompute_normals (gint x1,
         {
           if (bpp>1)
             {
-              mapval = (guchar)((float)((bumprow[n * bpp] +bumprow[n * bpp +1] + bumprow[n * bpp + 2])/3.0 )) ;
+              mapval = (guchar)((float)((bumprow[n * bpp + 0] +
+                                         bumprow[n * bpp + 1] +
+                                         bumprow[n * bpp + 2]) / 3.0));
             }
           else
             {
               mapval = bumprow[n * bpp];
             }
+
           heights[2][n] = (gdouble) mapvals.bumpmax * (gdouble) mapval / 255.0;
         }
     }
@@ -819,5 +833,6 @@ get_ray_color_no_bilinear_ref (GimpVector3 *position)
     }
 
  gimp_rgb_clamp (&color_sum);
+
  return color_sum;
 }

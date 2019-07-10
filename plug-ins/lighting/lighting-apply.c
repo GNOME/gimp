@@ -24,7 +24,7 @@ void
 compute_image (void)
 {
   gint         xcount, ycount;
-  GimpRGB       color;
+  GimpRGB      color;
   glong        progress_counter = 0;
   GimpVector3  p;
   gint32       new_image_id = -1;
@@ -35,11 +35,9 @@ compute_image (void)
   gboolean     has_alpha;
   get_ray_func ray_func;
 
-
-
   if (mapvals.create_new_image == TRUE ||
       (mapvals.transparent_background == TRUE &&
-       ! gimp_drawable_has_alpha (input_drawable->drawable_id)))
+       ! gimp_drawable_has_alpha (input_drawable_id)))
     {
       /* Create a new image */
       /* ================== */
@@ -70,35 +68,33 @@ compute_image (void)
         }
 
       gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
-      output_drawable = gimp_drawable_get (new_layer_id);
+      output_drawable_id = new_layer_id;
     }
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      gimp_pixel_rgn_init (&bump_region, gimp_drawable_get (mapvals.bumpmap_id),
-			   0, 0, width, height, FALSE, FALSE);
+      bumpmap_setup (mapvals.bumpmap_id);
     }
 
   precompute_init (width, height);
 
-  if (!mapvals.env_mapped || mapvals.envmap_id == -1)
+  if (! mapvals.env_mapped || mapvals.envmap_id == -1)
     {
       ray_func = get_ray_color;
     }
   else
     {
-      env_width = gimp_drawable_width (mapvals.envmap_id);
-      env_height = gimp_drawable_height (mapvals.envmap_id);
-      gimp_pixel_rgn_init (&env_region, gimp_drawable_get (mapvals.envmap_id),
-			   0, 0, env_width, env_height, FALSE, FALSE);
+      envmap_setup (mapvals.envmap_id);
+
       ray_func = get_ray_color_ref;
     }
 
-  gimp_pixel_rgn_init (&dest_region, output_drawable,
-		       0, 0, width, height, TRUE, TRUE);
+  dest_buffer = gimp_drawable_get_shadow_buffer (output_drawable_id);
 
-  obpp = gimp_drawable_bpp (output_drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (output_drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (output_drawable_id);
+
+  /* FIXME */
+  obpp = has_alpha ? 4 : 3; //gimp_drawable_bpp (output_drawable_id);
 
   row = g_new (guchar, obpp * width);
 
@@ -127,30 +123,32 @@ compute_image (void)
 	  if (has_alpha)
 	    row[index++] = (guchar) (color.a * 255.0);
 
-	  if ((progress_counter++ % width) == 0)
-	    gimp_progress_update ((gdouble) progress_counter /
-				  (gdouble) maxcounter);
+	  progress_counter++;
 	}
 
-      gimp_pixel_rgn_set_row (&dest_region, row, 0, ycount, width);
+      gimp_progress_update ((gdouble) progress_counter /
+                            (gdouble) maxcounter);
+
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (0, ycount, width, 1), 0,
+                       has_alpha ?
+                       babl_format ("R'G'B'A u8") : babl_format ("R'G'B' u8"),
+                       row,
+                       GEGL_AUTO_ROWSTRIDE);
     }
 
   gimp_progress_update (1.0);
 
   g_free (row);
 
-  /* Update image */
-  /* ============ */
+  g_object_unref (dest_buffer);
 
-  gimp_drawable_flush (output_drawable);
-  gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
-  gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
+  gimp_drawable_merge_shadow (output_drawable_id, TRUE);
+  gimp_drawable_update (output_drawable_id, 0, 0, width, height);
 
   if (new_image_id!=-1)
     {
       gimp_display_new (new_image_id);
       gimp_displays_flush ();
-      gimp_drawable_detach (output_drawable);
     }
 
 }
