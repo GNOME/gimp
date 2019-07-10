@@ -211,13 +211,12 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_id;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -238,9 +237,10 @@ run (const gchar      *name,
   /* Get the specified drawable */
   /* ========================== */
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
-  mapvals.drawable_id = drawable->drawable_id;
+  mapvals.drawable_id = drawable_id;
 
   check_drawables ();
 
@@ -249,17 +249,12 @@ run (const gchar      *name,
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_is_rgb (drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable_id))
         {
-          /* Set the tile cache size */
-          /* ======================= */
-
-          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
-
           switch (run_mode)
             {
               case GIMP_RUN_INTERACTIVE:
-                if (main_dialog (drawable))
+                if (main_dialog (drawable_id))
                   {
                     compute_image ();
 
@@ -270,7 +265,7 @@ run (const gchar      *name,
               break;
 
               case GIMP_RUN_WITH_LAST_VALS:
-                if (image_setup (drawable, FALSE))
+                if (image_setup (drawable_id, FALSE))
                   compute_image ();
                 gimp_displays_flush ();
                 break;
@@ -305,7 +300,7 @@ run (const gchar      *name,
                     mapvals.transparent_background     = (gint) param[23].data.d_int32;
 
                     check_drawables ();
-                    if (image_setup (drawable, FALSE))
+                    if (image_setup (drawable_id, FALSE))
                       compute_image ();
                   }
               default:
@@ -313,11 +308,12 @@ run (const gchar      *name,
             }
         }
       else
-        status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
-  gimp_drawable_detach (drawable);
 
   g_free (xpostab);
   g_free (ypostab);

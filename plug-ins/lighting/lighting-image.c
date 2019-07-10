@@ -14,21 +14,25 @@
 #include "lighting-ui.h"
 
 
-GimpDrawable *input_drawable,*output_drawable;
-GimpPixelRgn  source_region, dest_region;
+gint32      input_drawable_id;
+gint32      output_drawable_id;
+GeglBuffer *source_buffer;
+GeglBuffer *dest_buffer;
 
-GimpDrawable *bump_drawable = NULL;
-GimpPixelRgn  bump_region;
+gint32      bump_drawable_id;
+GeglBuffer *bump_buffer;
+const Babl *bump_format;
 
-GimpDrawable *env_drawable = NULL;
-GimpPixelRgn  env_region;
+gint32      env_drawable_id;
+GeglBuffer *env_buffer;
 
 guchar          *preview_rgb_data = NULL;
 gint             preview_rgb_stride;
 cairo_surface_t *preview_surface = NULL;
 
-glong  maxcounter;
-gint   imgtype, width, height, env_width, env_height, in_channels, out_channels;
+glong   maxcounter;
+gint    width, height;
+gint    env_width, env_height;
 GimpRGB background;
 
 gint border_x1, border_y1, border_x2, border_y2;
@@ -40,23 +44,25 @@ guchar sinemap[256], spheremap[256], logmap[256];
 /******************/
 
 guchar
-peek_map (GimpPixelRgn *region,
-	  gint       x,
-	  gint       y)
+peek_map (GeglBuffer *buffer,
+          const Babl *format,
+	  gint        x,
+	  gint        y)
 {
   guchar data[4];
   guchar ret_val;
 
+  gegl_buffer_sample (buffer, x, y, NULL, data, format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  gimp_pixel_rgn_get_pixel (region, data, x, y);
-
-  if (region->bpp == 1)
-  {
-    ret_val = data[0];
-  } else
-  {
-    ret_val = (guchar)((float)((data[0] + data[1] + data[2])/3.0));
-  }
+  if (babl_format_get_bytes_per_pixel (format))
+    {
+      ret_val = data[0];
+    }
+  else
+    {
+      ret_val = (guchar)((float)((data[0] + data[1] + data[2])/3.0));
+    }
 
   return ret_val;
 }
@@ -65,26 +71,14 @@ GimpRGB
 peek (gint x,
       gint y)
 {
-  guchar data[4];
   GimpRGB color;
 
-  gimp_pixel_rgn_get_pixel (&source_region,data, x, y);
+  gegl_buffer_sample (source_buffer, x, y, NULL,
+                      &color, babl_format ("R'G'B'A double"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  color.r = (gdouble) (data[0]) / 255.0;
-  color.g = (gdouble) (data[1]) / 255.0;
-  color.b = (gdouble) (data[2]) / 255.0;
-
-  if (input_drawable->bpp == 4)
-    {
-      if (in_channels == 4)
-        color.a = (gdouble) (data[3]) / 255.0;
-      else
-        color.a = 1.0;
-    }
-  else
-    {
-      color.a = 1.0;
-    }
+  if (! babl_format_has_alpha (gegl_buffer_get_format (source_buffer)))
+    color.a = 1.0;
 
   return color;
 }
@@ -93,7 +87,6 @@ GimpRGB
 peek_env_map (gint x,
 	      gint y)
 {
-  guchar data[4];
   GimpRGB color;
 
   if (x < 0)
@@ -105,11 +98,10 @@ peek_env_map (gint x,
   else if (y >= env_height)
     y = env_height - 1;
 
-  gimp_pixel_rgn_get_pixel (&env_region, data, x, y);
+  gegl_buffer_sample (env_buffer, x, y, NULL,
+                      &color, babl_format ("R'G'B'A double"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-  color.r = (gdouble) (data[0]) / 255.0;
-  color.g = (gdouble) (data[1]) / 255.0;
-  color.b = (gdouble) (data[2]) / 255.0;
   color.a = 1.0;
 
   return color;
@@ -120,8 +112,6 @@ poke (gint    x,
       gint    y,
       GimpRGB *color)
 {
-  static guchar data[4];
-
   if (x < 0)
     x = 0;
   else if (x >= width)
@@ -131,19 +121,19 @@ poke (gint    x,
   else if (y >= height)
     y = height - 1;
 
-  data[0] = (guchar) (color->r * 255.0);
-  data[1] = (guchar) (color->g * 255.0);
-  data[2] = (guchar) (color->b * 255.0);
-  data[3] = (guchar) (color->a * 255.0);
-
-  gimp_pixel_rgn_set_pixel (&dest_region, data, x, y);
+  gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                   babl_format ("R'G'B'A double"), color,
+                   GEGL_AUTO_ROWSTRIDE);
 }
 
 gint
 check_bounds (gint x,
 	      gint y)
 {
-  if (x < border_x1 || y < border_y1 || x >= border_x2 || y >= border_y2)
+  if (x < border_x1 ||
+      y < border_y1 ||
+      x >= border_x2 ||
+      y >= border_y2)
     return FALSE;
   else
     return TRUE;
@@ -283,10 +273,11 @@ get_image_color (gdouble  u,
 }
 
 gdouble
-get_map_value (GimpPixelRgn *region,
-	       gdouble    u,
-	       gdouble    v,
-	       gint      *inside)
+get_map_value (GeglBuffer *buffer,
+               const Babl *format,
+	       gdouble     u,
+	       gdouble     v,
+	       gint       *inside)
 {
   gint    x1, y1, x2, y2;
   gdouble p[4];
@@ -300,14 +291,14 @@ get_map_value (GimpPixelRgn *region,
   if (check_bounds (x2, y2) == FALSE)
     {
       *inside = TRUE;
-      return (gdouble) peek_map (region, x1, y1);
+      return (gdouble) peek_map (buffer, format, x1, y1);
     }
 
   *inside = TRUE;
-  p[0] = (gdouble) peek_map (region, x1, y1);
-  p[1] = (gdouble) peek_map (region, x2, y1);
-  p[2] = (gdouble) peek_map (region, x1, y2);
-  p[3] = (gdouble) peek_map (region, x2, y2);
+  p[0] = (gdouble) peek_map (buffer, format, x1, y1);
+  p[1] = (gdouble) peek_map (buffer, format, x2, y1);
+  p[2] = (gdouble) peek_map (buffer, format, x1, y2);
+  p[3] = (gdouble) peek_map (buffer, format, x2, y2);
 
   return gimp_bilinear (u, v, p);
 }
@@ -344,21 +335,21 @@ compute_maps (void)
 /****************************************/
 
 gint
-image_setup (GimpDrawable *drawable,
-	     gint          interactive)
+image_setup (gint32 drawable_id,
+	     gint   interactive)
 {
-  gint		w, h;
-  gboolean      ret;
+  gint	   w, h;
+  gboolean ret;
 
   compute_maps ();
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
 
-  input_drawable  = drawable;
-  output_drawable = drawable;
+  input_drawable_id  = drawable_id;
+  output_drawable_id = drawable_id;
 
-  ret = gimp_drawable_mask_intersect (drawable->drawable_id,
+  ret = gimp_drawable_mask_intersect (drawable_id,
                                       &border_x1, &border_y1, &w, &h);
 
   border_x2 = border_x1 + w;
@@ -367,20 +358,12 @@ image_setup (GimpDrawable *drawable,
   if (! ret)
     return FALSE;
 
-  width  = input_drawable->width;
-  height = input_drawable->height;
+  width  = gimp_drawable_width  (input_drawable_id);
+  height = gimp_drawable_height (input_drawable_id);
 
-  gimp_pixel_rgn_init (&source_region, input_drawable,
-		       0, 0, width, height, FALSE, FALSE);
+  source_buffer = gimp_drawable_get_buffer (input_drawable_id);
 
   maxcounter = (glong) width * (glong) height;
-
-  /* Assume at least RGB */
-  /* =================== */
-
-  in_channels = 3;
-  if (gimp_drawable_has_alpha (input_drawable->drawable_id) == TRUE)
-    in_channels++;
 
   if (interactive)
     {
@@ -395,4 +378,30 @@ image_setup (GimpDrawable *drawable,
     }
 
   return TRUE;
+}
+
+void
+bumpmap_setup (gint32 bumpmap_id)
+{
+  if (bumpmap_id != -1 && ! bump_buffer)
+    {
+      bump_buffer = gimp_drawable_get_buffer (bumpmap_id);
+
+      if (gimp_drawable_is_rgb (bumpmap_id))
+        bump_format = babl_format ("R'G'B' u8");
+      else
+        bump_format = babl_format ("Y' u8"); /* FIXME */
+    }
+}
+
+void
+envmap_setup (gint32 envmap_id)
+{
+  if (envmap_id != -1 && ! env_buffer)
+    {
+      env_width  = gimp_drawable_width  (envmap_id);
+      env_height = gimp_drawable_height (envmap_id);
+
+      env_buffer = gimp_drawable_get_buffer (envmap_id);
+    }
 }

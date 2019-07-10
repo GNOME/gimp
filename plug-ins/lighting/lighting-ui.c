@@ -1005,7 +1005,7 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (GimpDrawable *drawable)
+main_dialog (gint32 drawable_id)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
@@ -1129,7 +1129,7 @@ main_dialog (GimpDrawable *drawable)
     g_object_unref (cursor);
   }
 
-  if (image_setup (drawable, TRUE))
+  if (image_setup (drawable_id, TRUE))
     preview_compute ();
 
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)

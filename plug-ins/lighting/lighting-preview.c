@@ -96,9 +96,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      gimp_pixel_rgn_init (&bump_region,
-                           gimp_drawable_get (mapvals.bumpmap_id),
-                           0, 0, width, height, FALSE, FALSE);
+      bumpmap_setup (mapvals.bumpmap_id);
     }
 
   imagey = 0;
@@ -110,12 +108,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
   if (mapvals.env_mapped == TRUE && mapvals.envmap_id != -1)
     {
-      env_width = gimp_drawable_width (mapvals.envmap_id);
-      env_height = gimp_drawable_height (mapvals.envmap_id);
-
-      gimp_pixel_rgn_init (&env_region,
-                           gimp_drawable_get (mapvals.envmap_id), 0,
-                           0, env_width, env_height, FALSE, FALSE);
+      envmap_setup (mapvals.envmap_id);
 
       if (mapvals.previewquality)
         ray_func = get_ray_color_ref;
@@ -456,13 +449,12 @@ preview_draw (GtkWidget *area,
 void
 interactive_preview_callback (GtkWidget *widget)
 {
-  if ( preview_update_timer != 0)
-    {
-      g_source_remove ( preview_update_timer );
-    }
-  /* start new timer */
+  if (preview_update_timer != 0)
+    g_source_remove (preview_update_timer);
+
   preview_update_timer = g_timeout_add (100,
-                                        interactive_preview_timer_callback, NULL);
+                                        interactive_preview_timer_callback,
+                                        NULL);
 }
 
 static gboolean
