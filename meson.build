@@ -4,9 +4,6 @@ project('gimp', ['c', 'cpp'], version: '2.99.1',
   meson_version: '>=0.50.0',
   default_options: [
     'cpp_std=gnu++14',
-    'sysconfdir=/etc',
-    'localstatedir=/var',
-    'sharedstatedir=/var/lib',
   ],
 )
 
