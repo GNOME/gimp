@@ -799,3 +799,24 @@ gimp_drawable_get_format (gint32 drawable_ID)
 
   return format;
 }
+/**
+ * gimp_drawable_get_thumbnail_format:
+ * @drawable_ID: the ID of the #GimpDrawable to get the thumbnail format for.
+ *
+ * Returns the #Babl thumbnail format of the drawable.
+ *
+ * Return value: The #Babl thumbnail format.
+ *
+ * Since: 2.10.14
+ */
+const Babl *
+gimp_drawable_get_thumbnail_format (gint32 drawable_ID)
+{
+  const Babl *format     = NULL;
+  gchar      *format_str = _gimp_drawable_get_thumbnail_format (drawable_ID);
+
+  if (format_str)
+    format = babl_format (format_str);
+
+  return format;
+}
