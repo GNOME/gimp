@@ -826,7 +826,7 @@ if gimpdir == ''
   gimpdir = meson.project_name().to_upper()
 endif
 
-project_subdir = join_paths(meson.project_name(), gimp_api_version)
+project_subdir = join_paths(meson.project_name(), gimp_app_version)
 gimpdatadir    = join_paths(get_option('datadir'),    project_subdir)
 gimpplugindir  = join_paths(get_option('libdir'),     project_subdir)
 gimpsysconfdir = join_paths(get_option('sysconfdir'), project_subdir)
