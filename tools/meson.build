@@ -6,7 +6,7 @@ if platform_win32
 endif
 
 
-gimptool = executable('gimptool-' + user_version,
+gimptool = executable('gimptool-' + gimp_app_version,
   'gimptool.c',
   include_directories: rootInclude,
   dependencies: [
@@ -14,6 +14,9 @@ gimptool = executable('gimptool-' + user_version,
   ],
   link_with: [
     libgimpbase,
+  ],
+  c_args: [
+    '-DDATADIR="@0@"'.format(gimpdatadir),
   ],
   install: true,
 )
