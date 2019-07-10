@@ -45,7 +45,7 @@ libgimpthumb_headers = [
   'gimpthumbnail.h',
 ]
 
-libgimpthumb = library('gimpthumb-'+ api_version,
+libgimpthumb = library('gimpthumb-'+ gimp_api_version,
   libgimpthumb_sources,
   include_directories: rootInclude,
   dependencies: [
