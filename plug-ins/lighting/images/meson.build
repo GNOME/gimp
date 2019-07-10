@@ -17,7 +17,7 @@ foreach name : stock_icons
   stock_icons_list += join_paths(meson.current_source_dir(), name + '.png')
 endforeach
 
-stock_pixbufs_h = custom_target('stock-pixbufs.h',
+lighting_stock_pixbufs_h = custom_target('stock-pixbufs.h',
   input : [ ],
   output: [ 'stock-pixbufs.h', ],
   command: [
