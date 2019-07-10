@@ -158,14 +158,14 @@ gimp_image_arrange_objects (GimpImage         *image,
                                          (reference, "align-width"));
           /* The offset parameter works as an internal margin */
           fill_offset = (distr_width - 2 * offset) /
-                         g_list_length (object_list);
+                         (gint) g_list_length (object_list);
         }
       if (reference_alignment == GIMP_ARRANGE_VFILL)
         {
           distr_height = GPOINTER_TO_INT (g_object_get_data
                                           (reference, "align-height"));
           fill_offset = (distr_height - 2 * offset) /
-                         g_list_length (object_list);
+                         (gint) g_list_length (object_list);
         }
 
       /* FIXME: undo group type is wrong */
