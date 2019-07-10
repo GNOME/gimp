@@ -14,7 +14,8 @@ Core:
 
   - New "Selected areas continue outside the image" toggle option to the
     "Feather Selection" dialog.
-  - New settings "Allow editing on non-visible layers" in Preferences.
+  - New "Allow editing on non-visible layers" setting in Preferences to allow
+    painting, transforming, and selecting on layers with toggled off visibility.
 
 Tools:
 
@@ -31,7 +32,7 @@ Plug-ins:
 
   - More filters ported to GEGL: nl-filter, film, fractal-explorer,
     flame, blinds, jigsaw, gradient-flare, checkerboard, tile-small,
-    curve-bend, sample-colorize, map-object.
+    curve-bend, sample-colorize, map-object, lighting, grid.
   - Added color profile support for HEIF (only when libheif 1.4.0 is
     available).
   - TIFF import will now ask (in interactive mode) how to process
