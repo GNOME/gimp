@@ -640,8 +640,8 @@ if directx_sdk_path != '' and platform_win32
   else
     directx = declare_dependency(
       link_with: cc.find_library('dxguid',
-                    dirs:  join_paths(directx_sdk_path, 'Lib', 'x86')),
-      include_directories: join_paths(directx_sdk_path, 'Include'),
+                    dirs:  directx_sdk_path / 'Lib' / 'x86'),
+      include_directories: directx_sdk_path / 'Include',
     )
   endif
 else
@@ -694,12 +694,8 @@ endif
 
 isocodes = dependency('iso-codes')
 isocodes_prefix = isocodes.get_pkgconfig_variable('prefix')
-isocodes_location = join_paths(
-  isocodes_prefix, get_option('datadir'), 'xml', 'iso-codes'
-)
-isocodes_localedir= join_paths(
-  isocodes_prefix, get_option('datadir'), 'locale'
-)
+isocodes_location = isocodes_prefix / get_option('datadir') / 'xml' / 'iso-codes'
+isocodes_localedir= isocodes_prefix / get_option('datadir') / 'locale'
 conf.set('HAVE_ISO_CODES', isocodes.found())
 
 
@@ -826,24 +822,24 @@ if gimpdir == ''
   gimpdir = meson.project_name().to_upper()
 endif
 
-project_subdir = join_paths(meson.project_name(), gimp_app_version)
-gimpdatadir    = join_paths(get_option('datadir'),    project_subdir)
-gimpplugindir  = join_paths(get_option('libdir'),     project_subdir)
-gimpsysconfdir = join_paths(get_option('sysconfdir'), project_subdir)
+project_subdir = meson.project_name() / gimp_app_version
+gimpdatadir    = get_option('datadir')    / project_subdir
+gimpplugindir  = get_option('libdir')     / project_subdir
+gimpsysconfdir = get_option('sysconfdir') / project_subdir
 gimpmanpagedir = gimpdir
-localedir      = join_paths(get_option('datadir'), 'locale')
+localedir      = get_option('datadir') / 'locale'
 
 
 
 # Check for internal tools
-defcheck            = find_program(join_paths('tools','defcheck.py'))
-extract_vector_icon = find_program(join_paths('tools','extract-vector-icon.sh'))
-generate_changelog  = find_program(join_paths('tools','generate_changelog.sh'))
-generate_news       = find_program(join_paths('tools','generate-news'))
-gimppath2svg        = find_program(join_paths('tools','gimppath2svg.py'))
-module_dependencies = find_program(join_paths('tools','module-dependencies.py'))
+defcheck            = find_program('tools'/'defcheck.py')
+extract_vector_icon = find_program('tools'/'extract-vector-icon.sh')
+generate_changelog  = find_program('tools'/'generate_changelog.sh')
+generate_news       = find_program('tools'/'generate-news')
+gimppath2svg        = find_program('tools'/'gimppath2svg.py')
+module_dependencies = find_program('tools'/'module-dependencies.py')
 
-gimp_mkenums        = find_program(join_paths('tools', 'gimp-mkenums'))
+gimp_mkenums        = find_program('tools'/'gimp-mkenums')
 gimp_mkenums_custom_target_commonargs = [
   '--fprod','/* enumerations from "@basename@" */\n',
   '--vhead','GType\n'+
@@ -1154,24 +1150,24 @@ conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_api_version)
 conf.set_quoted('PREFIX',          prefix)
 conf.set_quoted('EXEC_PREFIX',     prefix)
 conf.set_quoted('GIMPDIR',         gimpdir)
-conf.set_quoted('GIMPSYSCONFDIR',  gimpsysconfdir)
-conf.set_quoted('GIMPDATADIR',     join_paths(prefix, gimpdatadir))
-conf.set_quoted('GIMPPLUGINDIR',   join_paths(prefix, gimpplugindir))
-conf.set_quoted('PLUGINDIR',       join_paths(prefix, gimpplugindir))
-conf.set_quoted('LOCALEDIR',       join_paths(prefix, localedir))
+conf.set_quoted('GIMPSYSCONFDIR',  prefix / gimpsysconfdir)
+conf.set_quoted('GIMPDATADIR',     prefix / gimpdatadir)
+conf.set_quoted('GIMPPLUGINDIR',   prefix / gimpplugindir)
+conf.set_quoted('PLUGINDIR',       prefix / gimpplugindir)
+conf.set_quoted('LOCALEDIR',       prefix / localedir)
 
-conf.set_quoted('LOCALSTATEDIR',   get_option('localstatedir'))
+conf.set_quoted('LOCALSTATEDIR',   prefix / get_option('localstatedir'))
 # /usr/com?
-conf.set_quoted('SHAREDSTATEDIR',  get_option('sharedstatedir'))
-conf.set_quoted('SYSCONFDIR',      get_option('sysconfdir'))
-conf.set_quoted('BINDIR',          join_paths(prefix, get_option('bindir')))
-conf.set_quoted('DATAROOTDIR',     join_paths(prefix, get_option('datadir')))
-conf.set_quoted('INFODIR',         join_paths(prefix, get_option('infodir')))
-conf.set_quoted('LIBDIR',          join_paths(prefix, get_option('libdir')))
-conf.set_quoted('LIBEXECDIR',      join_paths(prefix, get_option('libexecdir')))
-conf.set_quoted('MANDIR',          join_paths(prefix, get_option('mandir')))
-conf.set_quoted('SBINDIR',         join_paths(prefix, get_option('sbindir')))
-conf.set_quoted('SYSDATADIR',      join_paths(prefix, get_option('datadir')))
+conf.set_quoted('SHAREDSTATEDIR',  prefix / get_option('sharedstatedir'))
+conf.set_quoted('SYSCONFDIR',      prefix / get_option('sysconfdir'))
+conf.set_quoted('BINDIR',          prefix / get_option('bindir'))
+conf.set_quoted('DATAROOTDIR',     prefix / get_option('datadir'))
+conf.set_quoted('INFODIR',         prefix / get_option('infodir'))
+conf.set_quoted('LIBDIR',          prefix / get_option('libdir'))
+conf.set_quoted('LIBEXECDIR',      prefix / get_option('libexecdir'))
+conf.set_quoted('MANDIR',          prefix / get_option('mandir'))
+conf.set_quoted('SBINDIR',         prefix / get_option('sbindir'))
+conf.set_quoted('SYSDATADIR',      prefix / get_option('datadir'))
 
 # Third-party/Misc
 conf.set_quoted('ISO_CODES_LOCATION',    isocodes_location)
@@ -1337,7 +1333,7 @@ if have_python
     output: [ 'check-defs', ],
     command: [
       python2,
-      join_paths(meson.source_root(), 'tools','defcheck.py'),
+      meson.source_root() / 'tools' / 'defcheck.py',
       meson.source_root(),
     ],
     build_by_default: false,
