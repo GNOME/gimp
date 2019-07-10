@@ -27,7 +27,7 @@ executable('kernelgen',
   install: false,
 )
 
-executable('gimp-test-clipboard',
+executable('gimp-test-clipboard-' + gimp_app_version,
   'gimp-test-clipboard.c',
   include_directories: rootInclude,
   dependencies: [
