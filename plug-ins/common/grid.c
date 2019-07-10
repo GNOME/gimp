@@ -65,10 +65,10 @@ static guchar      best_cmap_match (const guchar  *cmap,
                                     gint           ncolors,
                                     const GimpRGB *color);
 static void        grid            (gint32         image_ID,
-                                    GimpDrawable  *drawable,
+                                    gint32         drawable_ID,
                                     GimpPreview   *preview);
 static gint        dialog          (gint32         image_ID,
-                                    GimpDrawable  *drawable);
+                                    gint32         drawable_ID);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -162,19 +162,20 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   gint32             image_ID;
+  gint32             drawable_ID;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  INIT_I18N ();
-
-  run_mode = param[0].data.d_int32;
-  image_ID = param[1].data.d_int32;
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  image_ID    = param[1].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
@@ -224,7 +225,7 @@ run (const gchar      *name,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (!dialog (image_ID, drawable))
+      if (! dialog (image_ID, drawable_ID))
         {
           /* The dialog was closed, or something similarly evil happened. */
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -239,20 +240,17 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Drawing grid"));
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-      grid (image_ID, drawable, NULL);
+      grid (image_ID, drawable_ID, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
-
-      gimp_drawable_detach (drawable);
     }
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -325,22 +323,26 @@ pix_composite (guchar   *p1,
 }
 
 static void
-grid (gint32        image_ID,
-      GimpDrawable *drawable,
-      GimpPreview  *preview)
+grid (gint32       image_ID,
+      gint32       drawable_ID,
+      GimpPreview *preview)
 {
-  GimpPixelRgn  srcPR, destPR;
-  gint          bytes;
-  gint          x_offset, y_offset;
-  guchar       *dest, *buffer = NULL;
-  gint          x, y;
-  gboolean      alpha;
-  gboolean      blend;
-  guchar        hcolor[4];
-  guchar        vcolor[4];
-  guchar        icolor[4];
-  guchar       *cmap;
-  gint          ncolors;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  gint        bytes;
+  gint        x_offset;
+  gint        y_offset;
+  guchar     *dest;
+  guchar     *buffer = NULL;
+  gint        x, y;
+  gboolean    alpha;
+  gboolean    blend;
+  guchar      hcolor[4];
+  guchar      vcolor[4];
+  guchar      icolor[4];
+  guchar     *cmap;
+  gint        ncolors;
 
   gimp_rgba_get_uchar (&grid_cfg.hcolor,
                        hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
@@ -349,10 +351,17 @@ grid (gint32        image_ID,
   gimp_rgba_get_uchar (&grid_cfg.icolor,
                        icolor, icolor + 1, icolor + 2, icolor + 3);
 
+  alpha = gimp_drawable_has_alpha (drawable_ID);
+
   switch (gimp_image_base_type (image_ID))
     {
     case GIMP_RGB:
       blend = TRUE;
+
+      if (alpha)
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAY:
@@ -360,6 +369,11 @@ grid (gint32        image_ID,
       vcolor[0] = gimp_rgb_luminance_uchar (&grid_cfg.vcolor);
       icolor[0] = gimp_rgb_luminance_uchar (&grid_cfg.icolor);
       blend = TRUE;
+
+      if (alpha)
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y' u8");
       break;
 
     case GIMP_INDEXED:
@@ -371,6 +385,8 @@ grid (gint32        image_ID,
 
       g_free (cmap);
       blend = FALSE;
+
+      format = gimp_drawable_get_format (drawable_ID);
       break;
 
     default:
@@ -378,8 +394,7 @@ grid (gint32        image_ID,
       blend = FALSE;
     }
 
-  bytes = drawable->bpp;
-  alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  bytes = babl_format_get_bytes_per_pixel (format);
 
   if (preview)
     {
@@ -395,24 +410,25 @@ grid (gint32        image_ID,
     {
       gint w, h;
 
-      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+      if (! gimp_drawable_mask_intersect (drawable_ID,
                                           &sx1, &sy1, &w, &h))
         return;
 
       sx2 = sx1 + w;
       sy2 = sy1 + h;
 
-      gimp_pixel_rgn_init (&destPR, drawable, 0, 0, w, h, TRUE, TRUE);
+      dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
     }
 
-  gimp_pixel_rgn_init (&srcPR,
-                       drawable, 0, 0, sx2 - sx1, sy2 - sy1, FALSE, FALSE);
+  src_buffer = gimp_drawable_get_buffer (drawable_ID);
 
   dest = g_new (guchar, (sx2 - sx1) * bytes);
 
   for (y = sy1; y < sy2; y++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (sx1, y, sx2 - sx1, 1), 1.0,
+                       format, dest,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       y_offset = y - grid_cfg.hoffset;
       while (y_offset < 0)
@@ -492,7 +508,10 @@ grid (gint32        image_ID,
         }
       else
         {
-          gimp_pixel_rgn_set_row (&destPR, dest, sx1, y, (sx2 - sx1));
+          gegl_buffer_set (dest_buffer,
+                           GEGL_RECTANGLE (sx1, y, sx2 - sx1, 1), 0,
+                           format, dest,
+                           GEGL_AUTO_ROWSTRIDE);
 
           if (y % 16 == 0)
             gimp_progress_update ((gdouble) y / (gdouble) (sy2 - sy1));
@@ -500,6 +519,8 @@ grid (gint32        image_ID,
     }
 
   g_free (dest);
+
+  g_object_unref (src_buffer);
 
   if (preview)
     {
@@ -509,9 +530,11 @@ grid (gint32        image_ID,
   else
     {
       gimp_progress_update (1.0);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id,
+
+      g_object_unref (dest_buffer);
+
+      gimp_drawable_merge_shadow (drawable_ID, TRUE);
+      gimp_drawable_update (drawable_ID,
                             sx1, sy1, sx2 - sx1, sy2 - sy1);
     }
 }
@@ -557,11 +580,13 @@ update_values (void)
 
 static void
 update_preview (GimpPreview  *preview,
-                GimpDrawable *drawable)
+                gpointer      drawable_ID)
 {
   update_values ();
 
-  grid (gimp_item_get_image (drawable->drawable_id), drawable, preview);
+  grid (gimp_item_get_image (GPOINTER_TO_INT (drawable_ID)),
+        GPOINTER_TO_INT (drawable_ID),
+        preview);
 }
 
 static void
@@ -615,8 +640,8 @@ color_callback (GtkWidget *widget,
 
 
 static gint
-dialog (gint32        image_ID,
-        GimpDrawable *drawable)
+dialog (gint32 image_ID,
+        gint32 drawable_ID)
 {
   GimpColorConfig *config;
   GtkWidget       *dlg;
@@ -626,18 +651,23 @@ dialog (gint32        image_ID,
   GtkWidget       *label;
   GtkWidget       *preview;
   GtkWidget       *button;
-  GtkWidget      *width;
-  GtkWidget      *space;
-  GtkWidget      *offset;
-  GtkWidget      *chain_button;
-  GimpUnit        unit;
-  gdouble         xres;
-  gdouble         yres;
-  gboolean        run;
+  GtkWidget       *width;
+  GtkWidget       *space;
+  GtkWidget       *offset;
+  GtkWidget       *chain_button;
+  GimpUnit         unit;
+  gint             d_width;
+  gint             d_height;
+  gdouble          xres;
+  gdouble          yres;
+  gboolean         run;
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
+
+  d_width  = gimp_drawable_width  (drawable_ID);
+  d_height = gimp_drawable_height (drawable_ID);
 
   main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_ROLE,
                                        NULL, 0,
@@ -665,13 +695,13 @@ dialog (gint32        image_ID,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable->drawable_id);
+  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (update_preview),
-                    drawable);
+                    GINT_TO_POINTER (drawable_ID));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
@@ -700,18 +730,17 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 1, 0.0, drawable->width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 2, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 0, 0.0, d_height);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 1, 0.0, d_width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 2, 0.0, d_width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 0, 0.0,
-                                         drawable->height);
+                                         d_height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 1, 0.0,
-                                         drawable->width);
+                                         d_width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0,
-                                         MAX (drawable->width,
-                                              drawable->height));
+                                         MAX (d_width, d_height));
   gtk_grid_set_column_spacing (GTK_GRID (width), 6);
 
   /*  initialize the values  */
@@ -772,18 +801,17 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, drawable->width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, d_height);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, d_width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, d_width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0,
-                                         drawable->height);
+                                         d_height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
-                                         drawable->width);
+                                         d_width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
-                                         MAX (drawable->width,
-                                              drawable->height));
+                                         MAX (d_width, d_height));
   gtk_grid_set_column_spacing (GTK_GRID (space), 6);
 
   /*  initialize the values  */
@@ -838,18 +866,17 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, drawable->height);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, drawable->width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, d_height);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, d_width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, d_width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0,
-                                         drawable->height);
+                                         d_height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
-                                         drawable->width);
+                                         d_width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
-                                         MAX (drawable->width,
-                                              drawable->height));
+                                         MAX (d_width, d_height));
   gtk_grid_set_column_spacing (GTK_GRID (offset), 6);
 
   /*  initialize the values  */

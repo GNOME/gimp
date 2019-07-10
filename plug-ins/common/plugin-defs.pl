@@ -63,7 +63,7 @@
     'filter-pack' => { ui => 1 },
     'goat-exercise' => { gegl => 1 },
     'gradient-map' => { gegl => 1 },
-    'grid' => { ui => 1 },
+    'grid' => { ui => 1, gegl => 1 },
     'guillotine' => {},
     'hot' => { ui => 1 },
     'jigsaw' => { ui => 1, gegl => 1 },
