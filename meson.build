@@ -528,6 +528,8 @@ liblzma = dependency('liblzma', version: '>=5.0.0')
 ghostscript = cc.find_library('gs', required: get_option('ghostscript'))
 if ghostscript.found()
   MIMEtypes += 'application/postscript'
+else
+  ghostscript = disabler()
 endif
 
 
