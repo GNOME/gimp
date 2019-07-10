@@ -44,7 +44,7 @@ libgimpconfig_headers = [
   'gimpscanner.h',
 ]
 
-libgimpconfig = library('gimpconfig-' + api_version,
+libgimpconfig = library('gimpconfig-' + gimp_api_version,
   libgimpconfig_sources,
   include_directories: rootInclude,
   dependencies: [

@@ -112,7 +112,7 @@ app_deps = [
 
 # Executables
 
-rc_name = 'gimp-'+ user_version
+rc_name = 'gimp-'+ gimp_app_version
 rc_file = platform_win32 ? windows.compile_resources(
   gimp_app_rc,
   args: [
@@ -125,7 +125,7 @@ rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
-gimpconsole_exe = executable('gimp-console-'+user_version,
+gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
   libapp_sources + [ 'main.c', rc_file, ],
   c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ] + [ '-DGIMP_CONSOLE_COMPILATION', ],
   include_directories: [ rootInclude, ],
@@ -134,7 +134,7 @@ gimpconsole_exe = executable('gimp-console-'+user_version,
   install: true,
 )
 
-rc_name = 'gimp-console-'+ user_version
+rc_name = 'gimp-console-'+ gimp_app_version
 rc_file = platform_win32 ? windows.compile_resources(
   gimp_app_rc,
   args: [
@@ -147,7 +147,7 @@ rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
-gimpmain_exe = executable('gimp-'+user_version,
+gimpmain_exe = executable('gimp-'+gimp_app_version,
   libapp_sources + [ 'main.c', rc_file, ],
   c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
   include_directories: [ rootInclude, ],

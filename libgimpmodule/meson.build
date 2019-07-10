@@ -11,7 +11,7 @@ libgimpmodule_headers = [
 ]
 
 
-libgimpmodule = library('gimpmodule-' + api_version,
+libgimpmodule = library('gimpmodule-' + gimp_api_version,
   libgimpmodule_sources,
   include_directories: rootInclude,
   dependencies: [

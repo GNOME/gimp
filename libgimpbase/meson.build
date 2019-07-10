@@ -80,7 +80,7 @@ libgimpbase_headers = [
 ]
 
 
-libgimpbase = library('gimpbase-' + api_version,
+libgimpbase = library('gimpbase-' + gimp_api_version,
   libgimpbase_sources,
   include_directories: rootInclude,
   dependencies: [
