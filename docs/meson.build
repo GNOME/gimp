@@ -2,11 +2,11 @@
 # Configure_file is just here to rename the files
 manconf = configuration_data()
 manconf.set('GIMP_VERSION',   gimp_version)
-manconf.set('gimpdatadir',    join_paths(prefix, gimpdatadir))
-manconf.set('gimplocaledir',  join_paths(prefix, localedir))
-manconf.set('gimpplugindir',  join_paths(prefix, gimpplugindir))
-manconf.set('manpage_gimpdir', '\fB$XDG_CONFIG_HOME\fP/' + join_paths(gimpdir, gimp_app_version))
-manconf.set('gimpsysconfdir', gimpsysconfdir)
+manconf.set('gimpdatadir',    prefix / gimpdatadir)
+manconf.set('gimplocaledir',  prefix / localedir)
+manconf.set('gimpplugindir',  prefix / gimpplugindir)
+manconf.set('manpage_gimpdir', '\fB$XDG_CONFIG_HOME\fP/' + gimpdir / gimp_app_version)
+manconf.set('gimpsysconfdir', prefix / gimpsysconfdir)
 manconf.set('mypaint_brushes_dir', libmypaint_brushes_dir)
 
 
