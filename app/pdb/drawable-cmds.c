@@ -91,6 +91,36 @@ drawable_get_format_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+drawable_get_thumbnail_format_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpDrawable *drawable;
+  gchar *format = NULL;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      format = g_strdup (babl_format_get_encoding (gimp_drawable_get_preview_format (drawable)));
+
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), format);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 drawable_type_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -988,6 +1018,37 @@ register_drawable_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("format",
                                                            "format",
                                                            "The drawable's Babl format",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-get-thumbnail-format
+   */
+  procedure = gimp_procedure_new (drawable_get_thumbnail_format_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-thumbnail-format");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-get-thumbnail-format",
+                                     "Returns the drawable's thumbnail Babl format",
+                                     "This procedure returns the drawable's thumbnail Babl format.\n"
+                                     "Thumbnails are always 8-bit images, see 'gimp-drawable-thumbnail' and 'gimp-drawable-sub-thmbnail'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("format",
+                                                           "format",
+                                                           "The drawable's thumbnail Babl format",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

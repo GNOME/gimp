@@ -307,6 +307,38 @@ CODE
     );
 }
 
+sub drawable_get_thumbnail_format {
+    $blurb = "Returns the drawable's thumbnail Babl format";
+
+    $help = <<'HELP';
+This procedure returns the drawable's thumbnail Babl format.
+
+Thumbnails are always 8-bit images, see gimp_drawable_thumbnail() and
+gimp_drawable_sub_thmbnail().
+HELP
+
+    &mitch_pdb_misc('2019', '2.10.14');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+	{ name => 'format', type => 'string', wrap => 1,
+	  desc => "The drawable's thumbnail Babl format" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  format = g_strdup (babl_format_get_encoding (gimp_drawable_get_preview_format (drawable)));
+
+}
+CODE
+    );
+}
+
 sub drawable_type {
     $blurb = "Returns the drawable's type.";
     $help  = "This procedure returns the drawable's type.";
@@ -994,6 +1026,7 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(drawable_get_format
+            drawable_get_thumbnail_format
             drawable_type
             drawable_type_with_alpha
             drawable_has_alpha

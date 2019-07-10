@@ -46,6 +46,7 @@ GeglBuffer   * gimp_drawable_get_buffer             (gint32         drawable_ID)
 GeglBuffer   * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
 
 const Babl   * gimp_drawable_get_format             (gint32         drawable_ID);
+const Babl   * gimp_drawable_get_thumbnail_format   (gint32         drawable_ID);
 
 GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
 GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID);

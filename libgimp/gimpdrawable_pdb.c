@@ -72,6 +72,40 @@ _gimp_drawable_get_format (gint32 drawable_ID)
 }
 
 /**
+ * _gimp_drawable_get_thumbnail_format:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's thumbnail Babl format
+ *
+ * This procedure returns the drawable's thumbnail Babl format.
+ * Thumbnails are always 8-bit images, see gimp_drawable_thumbnail()
+ * and gimp_drawable_sub_thmbnail().
+ *
+ * Returns: The drawable's thumbnail Babl format.
+ *
+ * Since: 2.10.14
+ **/
+gchar *
+_gimp_drawable_get_thumbnail_format (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *format = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-drawable-get-thumbnail-format",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    format = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return format;
+}
+
+/**
  * gimp_drawable_type:
  * @drawable_ID: The drawable.
  *
