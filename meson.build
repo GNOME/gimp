@@ -291,8 +291,7 @@ gtk3              = dependency('gtk+-3.0',           version: '>=3.16.10')
 harfbuzz          = dependency('harfbuzz',           version: '>=0.9.19')
 lcms              = dependency('lcms2',              version: '>=2.8')
 
-libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
-libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
+libmypaint        = dependency('libmypaint',         version: '>=1.3.0')
 
 if relocatable_bundle
   libmypaint_brushes = no_dep
