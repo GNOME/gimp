@@ -24,58 +24,62 @@ conf = configuration_data()
 prettyname = 'GIMP'
 full_name  = 'GNU Image Manipulation Program'
 
-version_arr = meson.project_version().split('.')
-version_major = version_arr[0].to_int()
-version_minor = version_arr[1].to_int()
-version_micro = version_arr[2].to_int()
-
-apiversion_major = (version_minor == 99) ? (version_major+1) : (version_major)
-apiversion_minor = (version_minor == 99) ? (              0) : (version_minor)
-
-
-# Override for Release-candidates
+# General version
 gimp_version = meson.project_version()
-app_version = '@0@.@1@'.format(   version_major,    version_minor)
-api_version = '@0@.@1@'.format(apiversion_major, apiversion_minor)
-user_version = api_version
 
-
-# See http://sources.redhat.com/autobook/autobook/autobook_91.html#SEC91 for details
-# - If interfaces have been changed or added, but binary compatibility has been preserved, change:
-#      lt_current += 1
-#      lt_revision = 0
-#      lt_age += 1
-# - If binary compatibility has been broken (eg removed or changed interfaces), change:
-#      lt_current += 1
-#      lt_revision = 0
-#      lt_age = 0
-# - If the interface is the same as the previous version, but bugs are fixed, change:
-#      lt_revision += 1
-lt_current = 0
-lt_revision = version_micro
-lt_age = 100*apiversion_minor + 0
-so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
-
-
-gimp_command  = 'gimp-' + app_version
-gimp_api_name = 'gimp-' + api_version
 package_string= prettyname + ' ' + gimp_version
 
-gettext_package= 'gimp@0@@1@'.format(apiversion_major, apiversion_minor)
+gimp_app_version_arr = gimp_version.split('.')
+gimp_app_version_major = gimp_app_version_arr[0].to_int()
+gimp_app_version_minor = gimp_app_version_arr[1].to_int()
+gimp_app_version_micro = gimp_app_version_arr[2].to_int()
+
+# Override for Release-candidates
+gimp_app_version = '@0@.@1@'.format(
+  gimp_app_version_major,
+  gimp_app_version_minor
+)
+
+
+# API & pkg-config version
+api_version_major = gimp_app_version_major
+api_version_minor = gimp_app_version_minor
+
+if api_version_minor == 99
+  api_version_major += 1
+  api_version_minor = 0
+endif
+
+gimp_api_version = '@0@.@1@'.format(api_version_major, api_version_minor)
+gimp_api_name = 'gimp-' + gimp_api_version
+
+
+
+gimp_command  = 'gimp-' + gimp_app_version
+
+gettext_package= 'gimp@0@@1@'.format(api_version_major, api_version_minor)
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
 conf.set_quoted('GIMP_VERSION', gimp_version)
 
-stable = (version_minor % 2 == 0)
+stable = (gimp_app_version_minor % 2 == 0)
 conf.set10('GIMP_UNSTABLE', not stable)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)
-versionconfig.set('GIMP_MAJOR_VERSION', version_major)
-versionconfig.set('GIMP_MINOR_VERSION', version_minor)
-versionconfig.set('GIMP_MICRO_VERSION', version_micro)
+versionconfig.set('GIMP_MAJOR_VERSION', gimp_app_version_major)
+versionconfig.set('GIMP_MINOR_VERSION', gimp_app_version_minor)
+versionconfig.set('GIMP_MICRO_VERSION', gimp_app_version_micro)
 versionconfig.set('GIMP_VERSION',       gimp_version)
-versionconfig.set('GIMP_API_VERSION',   api_version)
+versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
+
+
+# Libtool versionning
+gimp_interface_age = 0
+lt_current = 0
+lt_revision = gimp_app_version_micro
+lt_age = 100*api_version_minor + 0
+so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
 
 
 ################################################################################
@@ -822,7 +826,7 @@ if gimpdir == ''
   gimpdir = meson.project_name().to_upper()
 endif
 
-project_subdir = join_paths(meson.project_name(), api_version)
+project_subdir = join_paths(meson.project_name(), gimp_api_version)
 gimpdatadir    = join_paths(get_option('datadir'),    project_subdir)
 gimpplugindir  = join_paths(get_option('libdir'),     project_subdir)
 gimpsysconfdir = join_paths(get_option('sysconfdir'), project_subdir)
@@ -1136,14 +1140,15 @@ conf.set_quoted('PACKAGE_STRING', package_string)
 conf.set_quoted('GIMP_COMMAND',   gimp_command)
 
 # Versions
-conf.set_quoted('GIMP_APP_VERSION_STRING',app_version)
-conf.set_quoted('GIMP_APP_VERSION',       app_version)
-conf.set_quoted('GIMP_DATA_VERSION',      api_version)
-conf.set_quoted('GIMP_PLUGIN_VERSION',    api_version)
-conf.set_quoted('GIMP_SYSCONF_VERSION',   api_version)
-conf.set_quoted('GIMP_TOOL_VERSION',      api_version)
-conf.set_quoted('GIMP_USER_VERSION',      user_version)
-conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_version)
+conf.set_quoted('GIMP_APP_VERSION_STRING',gimp_app_version)
+conf.set_quoted('GIMP_APP_VERSION',       gimp_app_version)
+conf.set_quoted('GIMP_USER_VERSION',      gimp_app_version)
+
+conf.set_quoted('GIMP_DATA_VERSION',      gimp_api_version)
+conf.set_quoted('GIMP_PLUGIN_VERSION',    gimp_api_version)
+conf.set_quoted('GIMP_SYSCONF_VERSION',   gimp_api_version)
+conf.set_quoted('GIMP_TOOL_VERSION',      gimp_api_version)
+conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_api_version)
 
 # Directories
 conf.set_quoted('PREFIX',          prefix)
@@ -1227,7 +1232,7 @@ gitversion_h = vcs_tag(
 
 
 install_conf = configuration_data()
-install_conf.set('GIMP_APP_VERSION', app_version)
+install_conf.set('GIMP_APP_VERSION', gimp_app_version)
 install_conf.set('GIMP_PKGCONFIG_VERSION', gimp_version)
 install_conf.set('GIMP_VERSION', gimp_version)
 install_conf.set('APPSTREAM_GLIB_REQUIRED_VERSION', appstream_glib.version())
@@ -1417,7 +1422,7 @@ subdir('docs')
 
 
 pkgconfig.generate(libgimp,
-  filebase: 'gimp-' + api_version,
+  filebase: 'gimp-' + gimp_api_version,
   name: prettyname,
   description: 'GIMP Library',
   version: gimp_version,
@@ -1445,7 +1450,7 @@ pkgconfig.generate(libgimp,
 )
 
 pkgconfig.generate(libgimpthumb,
-  filebase: 'gimpthumb-' + api_version,
+  filebase: 'gimpthumb-' + gimp_api_version,
   name: 'GIMP Thumb',
   description: 'GIMP Thumbnail Library',
   version: gimp_version,
@@ -1459,7 +1464,7 @@ pkgconfig.generate(libgimpthumb,
 )
 
 pkgconfig.generate(libgimpui,
-  filebase: 'gimpui-' + api_version,
+  filebase: 'gimpui-' + gimp_api_version,
   name: 'GIMP UI',
   description: 'GIMP User Interface Library',
   version: gimp_version,

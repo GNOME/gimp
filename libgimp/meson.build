@@ -231,7 +231,7 @@ libgimp_top_headers = [
 ]
 
 
-libgimp = library('gimp-'+ api_version,
+libgimp = library('gimp-'+ gimp_api_version,
   libgimp_top_sources,
   include_directories: rootInclude,
   dependencies: [
@@ -249,7 +249,7 @@ libgimp = library('gimp-'+ api_version,
 )
 
 
-libgimpui = library('gimpui-'+ api_version,
+libgimpui = library('gimpui-'+ gimp_api_version,
   libgimpui_sources,
   include_directories: rootInclude,
   dependencies: [
