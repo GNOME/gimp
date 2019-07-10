@@ -32,7 +32,7 @@ libgimpcolor_headers = [
 ]
 
 
-libgimpcolor = library('gimpcolor-' + api_version,
+libgimpcolor = library('gimpcolor-' + gimp_api_version,
   libgimpcolor_sources,
   include_directories: rootInclude,
   dependencies: [
