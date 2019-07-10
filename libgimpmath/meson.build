@@ -12,7 +12,7 @@ libgimpmath_headers = [
 ]
 
 
-libgimpmath = library('gimpmath-' + api_version,
+libgimpmath = library('gimpmath-' + gimp_api_version,
   libgimpmath_sources,
   include_directories: rootInclude,
   dependencies: [

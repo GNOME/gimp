@@ -161,7 +161,7 @@ else
   ]
 endif
 
-libgimpwidgets = library('gimpwidgets-'+ api_version,
+libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
   libgimpwidgets_sources,
   include_directories: rootInclude,
   dependencies: [
