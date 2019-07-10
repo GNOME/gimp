@@ -15,17 +15,16 @@ rc_file = platform_win32 ? windows.compile_resources(
 ) : []
 
 executable(plugin_name,
-  [
-    'lighting-apply.c',
-    'lighting-image.c',
-    'lighting-main.c',
-    'lighting-preview.c',
-    'lighting-shade.c',
-    'lighting-stock.c',
-    'lighting-ui.c',
-    stock_pixbufs_h,
-    rc_file,
-  ],
+  'lighting-apply.c',
+  'lighting-image.c',
+  'lighting-main.c',
+  'lighting-preview.c',
+  'lighting-shade.c',
+  'lighting-stock.c',
+  'lighting-ui.c',
+  rc_file,
+  lighting_stock_pixbufs_h,
+
   include_directories: [ rootInclude, include_directories('.'), ],
   dependencies: [
     gtk3, gegl, math,
