@@ -260,18 +260,14 @@ static void              drawText                   (gint32           text_id,
                                                      gdouble          x_res,
                                                      gdouble          y_res);
 
-static void              draw_layer                  (gint32               *layers,
-                                                      gint                  n_layers,
-                                                      gint                 *j,
-                                                      gint                 *nreturn_vals,
-                                                      cairo_surface_t      *pdf_file,
-                                                      cairo_t              *cr,
-                                                      FILE                 *fp,
-                                                       GimpParam           *values,
-                                                      gdouble               x_res,
-                                                      gdouble               y_res,
-                                                      const gchar          *name,
-                                                      GError               *error);
+static gboolean          draw_layer                 (gint32          *layers,
+                                                     gint             n_layers,
+                                                     gint             j,
+                                                     cairo_t         *cr,
+                                                     gdouble          x_res,
+                                                     gdouble          y_res,
+                                                     const gchar     *name,
+                                                     GError         **error);
 
 static gboolean     dnd_remove = TRUE;
 static PdfMultiPage multi_page;
@@ -593,7 +589,21 @@ run (const gchar      *name,
       /* Now, we should loop over the layers of each image */
       for (j = 0; j < n_layers; j++)
         {
-          draw_layer (layers, n_layers, &j, nreturn_vals, pdf_file, cr, fp, values, x_res, y_res, name, error);
+          if (! draw_layer (layers, n_layers, j, cr, x_res, y_res, name, &error))
+            {
+              *nreturn_vals = 2;
+
+              /* free the resources */
+              cairo_surface_destroy (pdf_file);
+              cairo_destroy (cr);
+              fclose (fp);
+
+              values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
+              return;
+            }
         }
 
       /* We are done with this image - Show it!
@@ -1651,68 +1661,57 @@ drawText (gint32    text_id,
   cairo_restore (cr);
 }
 
-static void draw_layer (gint32               *layers,
-                        gint                  n_layers,
-                        gint                 *j,
-                        gint                 *nreturn_vals,
-                        cairo_surface_t      *pdf_file,
-                        cairo_t              *cr,
-                        FILE                 *fp,
-                        GimpParam            *values,
-                        gdouble               x_res,
-                        gdouble               y_res,
-                        const gchar          *name,
-                        GError               *error)
+static gboolean
+draw_layer (gint32       *layers,
+            gint          n_layers,
+            gint          j,
+            cairo_t      *cr,
+            gdouble       x_res,
+            gdouble       y_res,
+            const gchar  *name,
+            GError      **error)
 {
-  gint32           layer_ID;
-  gint32           mask_ID    = -1;
-  cairo_surface_t *mask_image = NULL;
-  gdouble          opacity;
-  gboolean         single_color;
-  gint             x, y, i;
-  gint             children_num;
-  gint            *children;
+  gint32 layer_ID;
 
   if (optimize.reverse_order && optimize.layers_as_pages)
-    layer_ID = layers [*j];
+    layer_ID = layers [j];
   else
-    layer_ID = layers [n_layers - *j - 1];
+    layer_ID = layers [n_layers - j - 1];
 
   if (gimp_item_is_group (layer_ID))
     {
+      gint *children;
+      gint  children_num;
+      gint  i;
+
       children = gimp_item_get_children (layer_ID, &children_num);
       for (i = 0; i < children_num; i++)
         {
-          draw_layer (children, children_num, &i, nreturn_vals, pdf_file, cr, fp, values, x_res, y_res, name, error);
+          if (! draw_layer (children, children_num, i,
+                            cr, x_res, y_res, name, error))
+            return FALSE;
         }
     }
   else
     {
+      cairo_surface_t *mask_image = NULL;
+      gint32           mask_ID    = -1;
+      gdouble          opacity;
+
       opacity = gimp_layer_get_opacity (layer_ID) / 100.0;
 
       if ((gimp_item_get_visible (layer_ID) && opacity > 0.0) ||
           ! optimize.ignore_hidden)
         {
+          gint x, y;
+
           mask_ID = gimp_layer_get_mask (layer_ID);
           if (mask_ID != -1)
             {
-              mask_image = get_cairo_surface (mask_ID, TRUE,
-                                              &error);
-              if (error != NULL)
-                {
-                  *nreturn_vals = 2;
+              mask_image = get_cairo_surface (mask_ID, TRUE, error);
 
-                  /* free the resources */
-                  cairo_surface_destroy (pdf_file);
-                  cairo_destroy (cr);
-                  fclose (fp);
-
-                  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-                  values[1].type          = GIMP_PDB_STRING;
-                  values[1].data.d_string = error->message;
-                  return;
-                }
+              if (*error)
+                return FALSE;
             }
           gimp_drawable_offsets (layer_ID, &x, &y);
 
@@ -1720,7 +1719,8 @@ static void draw_layer (gint32               *layers,
             {
               /* For raster layers */
 
-              GimpRGB layer_color;
+              GimpRGB  layer_color;
+              gboolean single_color = FALSE;
 
               layer_color = get_layer_color (layer_ID, &single_color);
 
@@ -1744,23 +1744,10 @@ static void draw_layer (gint32               *layers,
                 {
                   cairo_surface_t *layer_image;
 
-                  layer_image = get_cairo_surface (layer_ID, FALSE,
-                                                   &error);
-                  if (error != NULL)
-                    {
-                      *nreturn_vals = 2;
+                  layer_image = get_cairo_surface (layer_ID, FALSE, error);
 
-                      /* free the resources */
-                      cairo_surface_destroy (pdf_file);
-                      cairo_destroy (cr);
-                      fclose (fp);
-
-                      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-                      values[1].type          = GIMP_PDB_STRING;
-                      values[1].data.d_string = error->message;
-                      return;
-                    }
+                  if (*error)
+                    return FALSE;
 
                   cairo_clip (cr);
 
@@ -1793,4 +1780,6 @@ static void draw_layer (gint32               *layers,
       if (mask_ID != -1)
         cairo_surface_destroy (mask_image);
     }
+
+  return TRUE;
 }
