@@ -16,6 +16,10 @@ Core:
     "Feather Selection" dialog.
   - New "Allow editing on non-visible layers" setting in Preferences to allow
     painting, transforming, and selecting on layers with toggled off visibility.
+  - XCF loading a bit more resilient to corruption: it doesn't stop
+    anymore at the first layer or channel error; instead it tries to
+    load more layers/channels to salvage as much data as possible from a
+    corrupted XCF file.
 
 Tools:
 
@@ -33,7 +37,7 @@ Plug-ins:
   - Simple 8-bit port of filters to GEGL: nl-filter, film, fractal-explorer,
     flame, blinds, jigsaw, gradient-flare, checkerboard, tile-small,
     curve-bend, sample-colorize, map-object, lighting, grid, despeckle,
-    sphere-designer, contrast-retinex.
+    sphere-designer, contrast-retinex, hot.
   - Added color profile support for HEIF (only when libheif 1.4.0 is
     available).
   - TIFF import will now ask (in interactive mode) how to process
@@ -47,6 +51,7 @@ Plug-ins:
   - HEIF export dialog now has a "Save color profile" checkbox allowing
     to not export with a profile when needed (needs libheif 1.4.0 or
     higher).
+  - Text layers in layer groups are now exported as proper texts to PDF.
 
 User interface:
 
