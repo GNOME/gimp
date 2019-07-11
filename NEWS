@@ -32,7 +32,8 @@ Plug-ins:
 
   - Simple 8-bit port of filters to GEGL: nl-filter, film, fractal-explorer,
     flame, blinds, jigsaw, gradient-flare, checkerboard, tile-small,
-    curve-bend, sample-colorize, map-object, lighting, grid, despeckle.
+    curve-bend, sample-colorize, map-object, lighting, grid, despeckle,
+    sphere-designer, contrast-retinex.
   - Added color profile support for HEIF (only when libheif 1.4.0 is
     available).
   - TIFF import will now ask (in interactive mode) how to process
@@ -65,7 +66,7 @@ Translations:
 Bugfixes:
 
    - #3630, #3226, #3610, #1725, #3093, #3599, #3597, #3082, #3553, #3435,
-     #3503, #3532, #3164, #3560, #3500, #3493, #3514, #3512, #2685.
+     #3503, #3532, #3164, #3560, #3500, #3493, #3514, #3512, #2685, #3641.
      
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
