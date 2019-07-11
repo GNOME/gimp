@@ -237,6 +237,7 @@ run (const gchar      *name,
   *retvals  = rvals;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   memset (&args, 0, sizeof (args));
   args.mode = -1;
@@ -306,28 +307,34 @@ run (const gchar      *name,
 static gboolean
 pluginCore (piArgs *argp)
 {
-  GimpDrawable *drw, *ndrw = NULL;
-  GimpPixelRgn  srcPr, dstPr;
-  gboolean      success = TRUE;
-  gint          nl      = 0;
-  gint          y, i;
-  gint          Y, I, Q;
-  gint          width, height, bpp;
-  gint          sel_x1, sel_x2, sel_y1, sel_y2;
-  gint          prog_interval;
-  guchar       *src, *s, *dst, *d;
-  guchar        r, prev_r=0, new_r=0;
-  guchar        g, prev_g=0, new_g=0;
-  guchar        b, prev_b=0, new_b=0;
-  gdouble       fy, fc, t, scale;
-  gdouble       pr, pg, pb;
-  gdouble       py;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  gboolean    success = TRUE;
+  gint        nl      = 0;
+  gint        y, i;
+  gint        Y, I, Q;
+  gint        width, height;
+  gint        bpp;
+  gint        sel_x1, sel_x2, sel_y1, sel_y2;
+  gint        prog_interval;
+  guchar     *src, *s, *dst, *d;
+  guchar      r, prev_r=0, new_r=0;
+  guchar      g, prev_g=0, new_g=0;
+  guchar      b, prev_b=0, new_b=0;
+  gdouble     fy, fc, t, scale;
+  gdouble     pr, pg, pb;
+  gdouble     py;
 
-  drw = gimp_drawable_get (argp->drawable);
+  width  = gimp_drawable_width  (argp->drawable);
+  height = gimp_drawable_height (argp->drawable);
 
-  width  = drw->width;
-  height = drw->height;
-  bpp    = drw->bpp;
+  if (gimp_drawable_has_alpha (argp->drawable))
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
+
+  bpp = babl_format_get_bytes_per_pixel (format);
 
   if (argp->new_layerp)
     {
@@ -352,12 +359,12 @@ pluginCore (piArgs *argp)
                            GIMP_RGBA_IMAGE,
                            100,
                            gimp_image_get_default_new_layer_mode (argp->image));
-      ndrw = gimp_drawable_get (nl);
+
       gimp_drawable_fill (nl, GIMP_FILL_TRANSPARENT);
       gimp_image_insert_layer (argp->image, nl, -1, 0);
     }
 
-  if (! gimp_drawable_mask_intersect (drw->drawable_id,
+  if (! gimp_drawable_mask_intersect (argp->drawable,
                                       &sel_x1, &sel_y1, &width, &height))
     return success;
 
@@ -366,21 +373,22 @@ pluginCore (piArgs *argp)
 
   src = g_new (guchar, width * height * bpp);
   dst = g_new (guchar, width * height * 4);
-  gimp_pixel_rgn_init (&srcPr, drw, sel_x1, sel_y1, width, height,
-                       FALSE, FALSE);
+
+  src_buffer = gimp_drawable_get_buffer (argp->drawable);
 
   if (argp->new_layerp)
     {
-      gimp_pixel_rgn_init (&dstPr, ndrw, sel_x1, sel_y1, width, height,
-                           FALSE, FALSE);
+      dest_buffer = gimp_drawable_get_buffer (nl);
     }
   else
     {
-      gimp_pixel_rgn_init (&dstPr, drw, sel_x1, sel_y1, width, height,
-                           TRUE, TRUE);
+      dest_buffer = gimp_drawable_get_shadow_buffer (argp->drawable);
     }
 
-  gimp_pixel_rgn_get_rect (&srcPr, src, sel_x1, sel_y1, width, height);
+  gegl_buffer_get (src_buffer,
+                   GEGL_RECTANGLE (sel_x1, sel_y1, width, height), 1.0,
+                   format, src,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   s = src;
   d = dst;
@@ -551,23 +559,28 @@ pluginCore (piArgs *argp)
             }
         }
     }
-  gimp_progress_update (1.0);
 
-  gimp_pixel_rgn_set_rect (&dstPr, dst, sel_x1, sel_y1, width, height);
+  gegl_buffer_set (dest_buffer,
+                   GEGL_RECTANGLE (sel_x1, sel_y1, width, height), 0,
+                   format, dst,
+                   GEGL_AUTO_ROWSTRIDE);
+
+  gimp_progress_update (1.0);
 
   g_free (src);
   g_free (dst);
 
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
+
   if (argp->new_layerp)
     {
-      gimp_drawable_flush (ndrw);
       gimp_drawable_update (nl, sel_x1, sel_y1, width, height);
     }
   else
     {
-      gimp_drawable_flush (drw);
-      gimp_drawable_merge_shadow (drw->drawable_id, TRUE);
-      gimp_drawable_update (drw->drawable_id, sel_x1, sel_y1, width, height);
+      gimp_drawable_merge_shadow (argp->drawable, TRUE);
+      gimp_drawable_update (argp->drawable, sel_x1, sel_y1, width, height);
     }
 
   gimp_displays_flush ();
