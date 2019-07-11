@@ -31,11 +31,6 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'cartoon',
-    [ 'cartoon.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'checkerboard',
     [ 'checkerboard.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
@@ -333,11 +328,6 @@ common_exes_list = [
   [
     'oilify',
     [ 'oilify.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'photocopy',
-    [ 'photocopy.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
