@@ -64,7 +64,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
       offset_y %= height;
     }
 
-  if (offset_x == 0 || offset_y == 0)
+  if (offset_x == 0 && offset_y == 0)
     return;
 
   node = gegl_node_new_child (NULL,
