@@ -310,7 +310,7 @@ static void      restartrender (void);
 static void      drawcolor1    (GtkWidget            *widget);
 static void      drawcolor2    (GtkWidget            *widget);
 static gboolean  render        (void);
-static void      realrender    (GimpDrawable         *drawable);
+static void      realrender    (gint32                drawable_ID);
 static void      fileselect    (GtkFileChooserAction  action,
                                 GtkWidget            *parent);
 static gint      traceray      (ray                  *r,
@@ -2936,37 +2936,50 @@ render (void)
 }
 
 static void
-realrender (GimpDrawable *drawable)
+realrender (gint32 drawable_ID)
 {
-  gint          x, y;
-  ray           r;
-  GimpVector4   rcol;
-  gint          width, height;
-  gint          x1, y1;
-  guchar       *dest;
-  gint          bpp;
-  GimpPixelRgn  pr, dpr;
-  guchar       *buffer, *ibuffer;
+  GeglBuffer  *src_buffer;
+  GeglBuffer  *dest_buffer;
+  const Babl  *format;
+  gint         x, y;
+  ray          r;
+  GimpVector4  rcol;
+  gint         width, height;
+  gint         x1, y1;
+  guchar      *dest;
+  gint         bpp;
+  guchar      *buffer, *ibuffer;
 
   initworld ();
 
   r.v1.z = -10.0;
   r.v2.z = 0.0;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_ID,
                                       &x1, &y1, &width, &height))
     return;
 
-  gimp_pixel_rgn_init (&pr, drawable, 0, 0,
-                       gimp_drawable_width (drawable->drawable_id),
-                       gimp_drawable_height (drawable->drawable_id), FALSE,
-                       FALSE);
-  gimp_pixel_rgn_init (&dpr, drawable, 0, 0,
-                       gimp_drawable_width (drawable->drawable_id),
-                       gimp_drawable_height (drawable->drawable_id), TRUE,
-                       TRUE);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  buffer = g_malloc (width * 4);
+  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+
+  if (gimp_drawable_is_rgb (drawable_ID))
+    {
+      if (gimp_drawable_has_alpha (drawable_ID))
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
+    }
+  else
+    {
+      if (gimp_drawable_has_alpha (drawable_ID))
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y' u8");
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  buffer  = g_malloc (width * 4);
   ibuffer = g_malloc (width * 4);
 
   gimp_progress_init (_("Rendering sphere"));
@@ -2986,7 +2999,11 @@ realrender (GimpDrawable *drawable)
           dest[3] = pixelval (255 * rcol.w);
           dest += 4;
         }
-      gimp_pixel_rgn_get_row (&pr, ibuffer, x1, y1 + y, width);
+
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x1, y1 + y, width, 1), 1.0,
+                       format, ibuffer,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
       for (x = 0; x < width; x++)
         {
           gint   k, dx = x * 4, sx = x * bpp;
@@ -2998,15 +3015,23 @@ realrender (GimpDrawable *drawable)
                 buffer[dx + k] * a + ibuffer[sx + k] * (1.0 - a);
             }
         }
-      gimp_pixel_rgn_set_row (&dpr, ibuffer, x1, y1 + y, width);
+
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x1, y1 + y, width, 1), 0,
+                       format, ibuffer,
+                       GEGL_AUTO_ROWSTRIDE);
+
       gimp_progress_update ((gdouble) y / (gdouble) height);
     }
+
   gimp_progress_update (1.0);
   g_free (buffer);
   g_free (ibuffer);
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
+
+  gimp_drawable_merge_shadow (drawable_ID, TRUE);
+  gimp_drawable_update (drawable_ID, x1, y1, width, height);
 }
 
 static void
@@ -3037,7 +3062,7 @@ query (void)
 }
 
 static gboolean
-sphere_main (GimpDrawable *drawable)
+sphere_main (gint32 drawable_ID)
 {
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -3078,24 +3103,24 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, w, h;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x, &y, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable_ID, &x, &y, &w, &h))
     {
       g_message (_("Region selected for plug-in is empty"));
       return;
@@ -3106,40 +3131,29 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_PROC, &s);
-      if (!sphere_main (drawable))
-        {
-          gimp_drawable_detach (drawable);
-          return;
-        }
+      if (! sphere_main (drawable_ID))
+        return;
       break;
+
     case GIMP_RUN_WITH_LAST_VALS:
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_PROC, &s);
       if (s.com.numtexture == 0)
-        {
-          gimp_drawable_detach (drawable);
-          return;
-        }
+        return;
       break;
+
     case GIMP_RUN_NONINTERACTIVE:
     default:
       /* Not implemented yet... */
-      gimp_drawable_detach (drawable);
       return;
     }
 
   gimp_set_data (PLUG_IN_PROC, &s, sizeof (s));
 
-  realrender (drawable);
+  realrender (drawable_ID);
   gimp_displays_flush ();
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 MAIN ()
