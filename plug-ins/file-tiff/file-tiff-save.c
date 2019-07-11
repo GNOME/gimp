@@ -267,6 +267,7 @@ save_paths (TIFF    *tif,
 static gboolean
 save_layer (TIFF         *tif,
             TiffSaveVals *tsvals,
+            const Babl   *space,
             gint32        image,
             gint32        layer,
             gint32        page,
@@ -591,7 +592,7 @@ save_layer (TIFF         *tif,
     }
 
   format = babl_format_with_space (babl_format_get_encoding (format),
-                                   gegl_buffer_get_format (buffer));
+                                   space ? space : gegl_buffer_get_format (buffer));
 
   bytesperrow = cols * babl_format_get_bytes_per_pixel (format);
 
@@ -951,12 +952,13 @@ save_image (GFile                  *file,
             GimpMetadataSaveFlags   metadata_flags,
             GError                **error)
 {
-  TIFF     *tif;
-  gboolean  status              = FALSE;
-  gboolean  out_linear          = FALSE;
-  gint      number_of_sub_IFDs  = 1;
-  toff_t    sub_IFDs_offsets[1] = { 0UL };
-  gint32    num_layers, *layers, current_layer = 0;
+  const Babl *space               = NULL;
+  TIFF       *tif;
+  gboolean    status              = FALSE;
+  gboolean    out_linear          = FALSE;
+  gint        number_of_sub_IFDs  = 1;
+  toff_t      sub_IFDs_offsets[1] = { 0UL };
+  gint32      num_layers, *layers, current_layer = 0;
 
   layers = gimp_image_get_layers (image, &num_layers);
 
@@ -1017,6 +1019,7 @@ save_image (GFile                  *file,
       GimpColorProfile *profile;
       const guint8     *icc_data;
       gsize             icc_length;
+      GError           *error = NULL;
 
       profile = gimp_image_get_effective_color_profile (orig_image);
 
@@ -1029,6 +1032,19 @@ save_image (GFile                  *file,
       /* Write the profile to the TIFF file. */
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
+
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            &error);
+
+      if (error)
+        {
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, error->message);
+          g_error_free (error);
+          space = NULL;
+        }
+
       g_object_unref (profile);
     }
 #endif
@@ -1038,7 +1054,7 @@ save_image (GFile                  *file,
     TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
 
   /* write last layer as first page. */
-  if (! save_layer (tif,  tsvals, image,
+  if (! save_layer (tif,  tsvals, space, image,
                     layers[num_layers - current_layer - 1],
                     current_layer, num_layers,
                     orig_image, saved_bpp, out_linear, error))
@@ -1079,7 +1095,7 @@ save_image (GFile                  *file,
       for (; current_layer < num_layers; current_layer++)
         {
           gint tmp_saved_bpp;
-          if (! save_layer (tif,  tsvals, image,
+          if (! save_layer (tif,  tsvals, space, image,
                             layers[num_layers - current_layer - 1],
                             current_layer, num_layers, orig_image,
                             &tmp_saved_bpp, out_linear, error))
