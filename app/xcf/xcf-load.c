@@ -96,6 +96,8 @@ static gboolean        xcf_load_layer_props   (XcfInfo       *info,
                                                gboolean      *show_mask,
                                                guint32       *text_layer_flags,
                                                guint32       *group_layer_flags);
+static gboolean        xcf_check_layer_props  (XcfInfo       *info,
+                                               GList        **item_path);
 static gboolean        xcf_load_channel_props (XcfInfo       *info,
                                                GimpImage     *image,
                                                GimpChannel  **channel);
@@ -140,6 +142,11 @@ static gboolean        xcf_load_vector        (XcfInfo       *info,
 static gboolean        xcf_skip_unknown_prop  (XcfInfo       *info,
                                                gsize          size);
 
+static gboolean        xcf_item_path_is_parent (GList        *path,
+                                                GList        *parent_path);
+static void            xcf_fix_item_path       (GimpLayer    *layer,
+                                                GList       **path,
+                                                GList        *broken_paths);
 
 #define xcf_progress_update(info) G_STMT_START  \
   {                                             \
@@ -163,6 +170,9 @@ xcf_load_image (Gimp     *gimp,
   gint                image_type;
   GimpPrecision       precision = GIMP_PRECISION_U8_GAMMA;
   gint                num_successful_elements = 0;
+  gint                n_broken_layers         = 0;
+  gint                n_broken_channels       = 0;
+  GList              *broken_paths            = NULL;
   GList              *syms;
   GList              *iter;
 
@@ -463,8 +473,34 @@ xcf_load_image (Gimp     *gimp,
 
       /* read in the layer */
       layer = xcf_load_layer (info, image, &item_path);
-      if (!layer)
-        goto error;
+      if (! layer)
+        {
+          n_broken_layers++;
+
+          if (! xcf_seek_pos (info, saved_pos, NULL))
+            goto error;
+
+          /* Don't just stop at the first broken layer. Load as much as
+           * possible.
+           */
+          if (! item_path)
+            {
+              GimpContainer *layers = gimp_image_get_layers (image);
+
+              item_path = g_list_prepend (NULL,
+                                          GUINT_TO_POINTER (gimp_container_get_n_children (layers)));
+
+              broken_paths = g_list_prepend (broken_paths, item_path);
+            }
+
+          continue;
+        }
+
+      if (broken_paths && item_path)
+        {
+          /* Item paths may be a problem when layers are missing. */
+          xcf_fix_item_path (layer, &item_path, broken_paths);
+        }
 
       num_successful_elements++;
 
@@ -523,6 +559,9 @@ xcf_load_image (Gimp     *gimp,
         goto error;
     }
 
+  if (broken_paths)
+    g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
+
   while (TRUE)
     {
       GimpChannel *channel;
@@ -548,7 +587,14 @@ xcf_load_image (Gimp     *gimp,
       /* read in the channel */
       channel = xcf_load_channel (info, image);
       if (!channel)
-        goto error;
+        {
+          n_broken_channels++;
+
+          if (! xcf_seek_pos (info, saved_pos, NULL))
+            goto error;
+
+          continue;
+        }
 
       num_successful_elements++;
 
@@ -568,7 +614,8 @@ xcf_load_image (Gimp     *gimp,
         goto error;
     }
 
-  xcf_load_add_masks (image);
+  if (n_broken_layers == 0 && n_broken_channels == 0)
+    xcf_load_add_masks (image);
 
   if (info->floating_sel && info->floating_sel_drawable)
     floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
@@ -584,6 +631,9 @@ xcf_load_image (Gimp     *gimp,
 
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (image, info->tattoo_state);
+
+  if (n_broken_layers > 0 || n_broken_channels > 0)
+    goto error;
 
   gimp_image_undo_enable (image);
 
@@ -1418,6 +1468,87 @@ xcf_load_layer_props (XcfInfo    *info,
 }
 
 static gboolean
+xcf_check_layer_props (XcfInfo  *info,
+                       GList   **item_path)
+{
+  PropType prop_type;
+  guint32  prop_size;
+
+  while (TRUE)
+    {
+      if (! xcf_load_prop (info, &prop_type, &prop_size))
+        return FALSE;
+
+      switch (prop_type)
+        {
+        case PROP_END:
+          return TRUE;
+
+        case PROP_ITEM_PATH:
+          {
+            goffset  base = info->cp;
+            GList   *path = NULL;
+
+            while (info->cp - base < prop_size)
+              {
+                guint32 index;
+
+                if (xcf_read_int32 (info, &index, 1) != 4)
+                  {
+                    g_list_free (path);
+                    return FALSE;
+                  }
+
+                path = g_list_append (path, GUINT_TO_POINTER (index));
+              }
+
+            *item_path = path;
+          }
+          break;
+
+        case PROP_TEXT_LAYER_FLAGS:
+        case PROP_GROUP_ITEM:
+        case PROP_GROUP_ITEM_FLAGS:
+        case PROP_ACTIVE_LAYER:
+        case PROP_FLOATING_SELECTION:
+        case PROP_OPACITY:
+        case PROP_FLOAT_OPACITY:
+        case PROP_VISIBLE:
+        case PROP_LINKED:
+        case PROP_COLOR_TAG:
+        case PROP_LOCK_CONTENT:
+        case PROP_LOCK_ALPHA:
+        case PROP_LOCK_POSITION:
+        case PROP_APPLY_MASK:
+        case PROP_EDIT_MASK:
+        case PROP_SHOW_MASK:
+        case PROP_OFFSETS:
+        case PROP_MODE:
+        case PROP_BLEND_SPACE:
+        case PROP_COMPOSITE_SPACE:
+        case PROP_COMPOSITE_MODE:
+        case PROP_TATTOO:
+        case PROP_PARASITES:
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
+          /* Just ignore for now. */
+          break;
+
+        default:
+#ifdef GIMP_UNSTABLE
+          g_printerr ("unexpected/unknown layer property: %d (skipping)\n",
+                      prop_type);
+#endif
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
+          break;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
 xcf_load_channel_props (XcfInfo      *info,
                         GimpImage    *image,
                         GimpChannel **channel)
@@ -1720,7 +1851,11 @@ xcf_load_layer (XcfInfo    *info,
     }
 
   if (width <= 0 || height <= 0)
-    return NULL;
+    {
+      /* Load item path anyway. */
+      xcf_check_layer_props (info, item_path);
+      return NULL;
+    }
 
   /* do not use gimp_image_get_layer_format() because it might
    * be the floating selection of a channel or mask
@@ -2815,4 +2950,79 @@ xcf_skip_unknown_prop (XcfInfo *info,
     }
 
   return TRUE;
+}
+
+static gboolean
+xcf_item_path_is_parent (GList *path,
+                         GList *parent_path)
+{
+  GList *iter        = path;
+  GList *parent_iter = parent_path;
+
+  if (g_list_length (parent_path) >= g_list_length (path))
+    return FALSE;
+
+  while (iter && parent_iter)
+    {
+      if (iter->data != parent_iter->data)
+        return FALSE;
+
+      iter = iter->next;
+      parent_iter = parent_iter->next;
+    }
+
+  return TRUE;
+}
+
+static void
+xcf_fix_item_path (GimpLayer  *layer,
+                   GList     **path,
+                   GList      *broken_paths)
+{
+  GList *iter;
+
+  for (iter = broken_paths; iter; iter = iter->next)
+    {
+      if (xcf_item_path_is_parent (*path, iter->data))
+        {
+          /* Not much to do when the absent path is a parent. */
+          g_printerr ("%s: layer '%s' moved to layer tree root because of missing parent.",
+                      G_STRFUNC, gimp_object_get_name (layer));
+          g_clear_pointer (path, g_list_free);
+          return;
+        }
+    }
+
+  /* Check if a parent of path, or path itself is on the same
+   * tree level as any broken path; and if so, and if the broken path is
+   * in a lower position in the item group, decrement it.
+   */
+  for (iter = broken_paths; iter; iter = iter->next)
+    {
+      GList *broken_path = iter->data;
+      GList *iter1       = *path;
+      GList *iter2       = broken_path;
+
+      if (g_list_length (broken_path) > g_list_length (*path))
+        continue;
+
+      while (iter1 && iter2)
+        {
+          if (iter2->next && iter1->data != iter2->data)
+            /* Paths diverged before reaching iter2 leaf. */
+            break;
+
+          if (iter2->next)
+            {
+              iter1 = iter1->next;
+              iter2 = iter2->next;
+              continue;
+            }
+
+          if (GPOINTER_TO_UINT (iter2->data) < GPOINTER_TO_UINT (iter1->data))
+            iter1->data = GUINT_TO_POINTER (GPOINTER_TO_UINT (iter1->data) - 1);
+
+          break;
+        }
+    }
 }
