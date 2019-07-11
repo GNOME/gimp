@@ -81,8 +81,10 @@ static void     run                         (const gchar      *name,
                                              GimpParam       **return_vals);
 
 /* Gimp */
-static gboolean retinex_dialog              (GimpDrawable *drawable);
-static void     retinex                     (GimpDrawable *drawable,
+static gboolean retinex_dialog              (gint32        drawable_ID);
+static void     retinex                     (gint32        drawable_ID,
+                                             GimpPreview  *preview);
+static void     retinex_preview             (gpointer      drawable_ID,
                                              GimpPreview  *preview);
 
 static void     retinex_scales_distribution (gfloat       *scales,
@@ -180,14 +182,13 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, width, height;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -195,20 +196,18 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_ID,
                                       &x, &y, &width, &height) ||
       width  < MIN_GAUSSIAN_SCALE ||
       height < MIN_GAUSSIAN_SCALE)
     {
       status = GIMP_PDB_EXECUTION_ERROR;
-      gimp_drawable_detach (drawable);
       values[0].data.d_status = status;
       return;
     }
-
-  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
   switch (run_mode)
     {
@@ -217,7 +216,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &rvals);
 
       /*  First acquire information with a dialog  */
-      if (! retinex_dialog (drawable))
+      if (! retinex_dialog (drawable_ID))
         return;
       break;
 
@@ -244,12 +243,12 @@ run (const gchar      *name,
       break;
     }
 
-  if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (drawable->drawable_id)))
+  if (status == GIMP_PDB_SUCCESS &&
+      (gimp_drawable_is_rgb (drawable_ID)))
     {
       gimp_progress_init (_("Retinex"));
 
-      retinex (drawable, NULL);
+      retinex (drawable_ID, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -263,14 +262,12 @@ run (const gchar      *name,
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_drawable_detach (drawable);
-
   values[0].data.d_status = status;
 }
 
 
 static gboolean
-retinex_dialog (GimpDrawable *drawable)
+retinex_dialog (gint32 drawable_ID)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -304,13 +301,13 @@ retinex_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_zoom_preview_new_from_drawable_id (drawable->drawable_id);
+  preview = gimp_zoom_preview_new_from_drawable_id (drawable_ID);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (retinex),
-                            drawable);
+                            G_CALLBACK (retinex_preview),
+                            GINT_TO_POINTER (drawable_ID));
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -386,16 +383,16 @@ retinex_dialog (GimpDrawable *drawable)
  * Applies the algorithm
  */
 static void
-retinex (GimpDrawable *drawable,
-         GimpPreview  *preview)
+retinex (gint32       drawable_ID,
+         GimpPreview *preview)
 {
-  gint          x, y, width, height;
-  gint          size, bytes;
-  guchar       *src  = NULL;
-  guchar       *psrc = NULL;
-  GimpPixelRgn  dst_rgn, src_rgn;
-
-  bytes = drawable->bpp;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  guchar     *src  = NULL;
+  guchar     *psrc = NULL;
+  gint        x, y, width, height;
+  gint        size, bytes;
 
   /*
    * Get the size of the current image or its selection.
@@ -407,13 +404,20 @@ retinex (GimpDrawable *drawable,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+      if (! gimp_drawable_mask_intersect (drawable_ID,
                                           &x, &y, &width, &height))
         return;
 
+      if (gimp_drawable_has_alpha (drawable_ID))
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
+
+      bytes = babl_format_get_bytes_per_pixel (format);
+
       /* Allocate memory */
       size = width * height * bytes;
-      src = g_try_malloc (sizeof (guchar) * size);
+      src  = g_try_malloc (sizeof (guchar) * size);
 
       if (src == NULL)
         {
@@ -424,10 +428,11 @@ retinex (GimpDrawable *drawable,
       memset (src, 0, sizeof (guchar) * size);
 
       /* Fill allocated memory with pixel data */
-      gimp_pixel_rgn_init (&src_rgn, drawable,
-                           x, y, width, height,
-                           FALSE, FALSE);
-      gimp_pixel_rgn_get_rect (&src_rgn, src, x, y, width, height);
+      src_buffer = gimp_drawable_get_buffer (drawable_ID);
+
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x, y, width, height), 1.0,
+                       format, src,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
 
   /*
@@ -442,27 +447,39 @@ retinex (GimpDrawable *drawable,
     }
   else
     {
-      gimp_pixel_rgn_init (&dst_rgn, drawable,
-                           x, y, width, height,
-                           TRUE, TRUE);
-      gimp_pixel_rgn_set_rect (&dst_rgn, psrc, x, y, width, height);
+      dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, width, height), 0,
+                       format, psrc,
+                       GEGL_AUTO_ROWSTRIDE);
+
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
 
       gimp_progress_update (1.0);
 
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
+      gimp_drawable_merge_shadow (drawable_ID, TRUE);
+      gimp_drawable_update (drawable_ID, x, y, width, height);
     }
 
   g_free (src);
 }
 
+static void
+retinex_preview (gpointer     drawable_ID,
+                 GimpPreview *preview)
+{
+  retinex (GPOINTER_TO_INT (drawable_ID), preview);
+}
 
 /*
  * calculate scale values for desired distribution.
  */
 static void
-retinex_scales_distribution(gfloat* scales, gint nscales, gint mode, gint s)
+retinex_scales_distribution (gfloat *scales,
+                             gint    nscales,
+                             gint    mode,
+                             gint    s)
 {
   if (nscales == 1)
     { /* For one filter we choose the median scale */
