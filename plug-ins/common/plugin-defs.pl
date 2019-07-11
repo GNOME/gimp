@@ -64,7 +64,7 @@
     'gradient-map' => { gegl => 1 },
     'grid' => { ui => 1, gegl => 1 },
     'guillotine' => {},
-    'hot' => { ui => 1 },
+    'hot' => { ui => 1, gegl => 1 },
     'jigsaw' => { ui => 1, gegl => 1 },
     'mail' => { ui => 1, optional => 1 },
     'max-rgb' => { ui => 1 },
