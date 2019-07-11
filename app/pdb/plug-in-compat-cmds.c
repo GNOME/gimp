@@ -871,6 +871,49 @@ plug_in_c_astretch_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_cartoon_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble mask_radius;
+  gdouble pct_black;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  mask_radius = g_value_get_double (gimp_value_array_index (args, 3));
+  pct_black = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation",   "gegl:cartoon",
+                                 "mask-radius", mask_radius,
+                                 "pct-black",   pct_black,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Cartoon"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
@@ -4780,6 +4823,55 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-cartoon
+   */
+  procedure = gimp_procedure_new (plug_in_cartoon_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-cartoon");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-cartoon",
+                                     "Simulate a cartoon by enhancing edges",
+                                     "Propagates dark values in an image based on each pixel's relative darkness to a neighboring average. The idea behind this filter is to give the look of a black felt pen drawing subsequently shaded with color. This is achieved by darkening areas of the image which are measured to be darker than a neighborhood average. In this way, sufficiently large shifts in intensity are darkened to black. The rate at which they are darkened to black is determined by the second pct_black parameter. The mask_radius parameter controls the size of the pixel neighborhood over which the average intensity is computed and then compared to each pixel in the neighborhood to decide whether or not to darken it to black. Large values for mask_radius result in very thick black areas bordering the shaded regions of color and much less detail for black areas everywhere including inside regions of color. Small values result in more subtle pen strokes and detail everywhere. Small values for the pct_black make the\n"
+                                     "blend from the color regions to the black border lines smoother and the lines themselves thinner and less noticeable; larger values achieve the opposite effect.",
+                                     "Compatibility procedure. Please see 'gegl:cartoon' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:cartoon' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("mask-radius",
+                                                    "mask radius",
+                                                    "Cartoon mask radius (radius of pixel neighborhood)",
+                                                    1.0, 50.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("pct-black",
+                                                    "pct black",
+                                                    "Percentage of darkened pixels to set to black",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

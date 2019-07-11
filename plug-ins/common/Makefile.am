@@ -52,7 +52,6 @@ blinds_libexecdir = $(gimpplugindir)/plug-ins/blinds
 blur_libexecdir = $(gimpplugindir)/plug-ins/blur
 border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
 busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
-cartoon_libexecdir = $(gimpplugindir)/plug-ins/cartoon
 checkerboard_libexecdir = $(gimpplugindir)/plug-ins/checkerboard
 cml_explorer_libexecdir = $(gimpplugindir)/plug-ins/cml-explorer
 color_cube_analyze_libexecdir = $(gimpplugindir)/plug-ins/color-cube-analyze
@@ -144,7 +143,6 @@ blinds_libexec_PROGRAMS = blinds
 blur_libexec_PROGRAMS = blur
 border_average_libexec_PROGRAMS = border-average
 busy_dialog_libexec_PROGRAMS = busy-dialog
-cartoon_libexec_PROGRAMS = cartoon
 checkerboard_libexec_PROGRAMS = checkerboard
 cml_explorer_libexec_PROGRAMS = cml-explorer
 color_cube_analyze_libexec_PROGRAMS = color-cube-analyze
@@ -355,23 +353,6 @@ busy_dialog_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(busy_dialog_RC)
-
-cartoon_SOURCES = \
-	cartoon.c
-
-cartoon_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(cartoon_RC)
 
 checkerboard_SOURCES = \
 	checkerboard.c

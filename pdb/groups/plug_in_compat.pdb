@@ -608,6 +608,72 @@ CODE
     );
 }
 
+sub plug_in_cartoon {
+    $blurb = 'Simulate a cartoon by enhancing edges';
+
+    $help = <<'HELP';
+Propagates dark values in an image based on each pixel's relative
+darkness to a neighboring average. The idea behind this filter is to
+give the look of a black felt pen drawing subsequently shaded with
+color. This is achieved by darkening areas of the image which are
+measured to be darker than a neighborhood average. In this way,
+sufficiently large shifts in intensity are darkened to black. The rate
+at which they are darkened to black is determined by the second
+pct_black parameter. The mask_radius parameter controls the size of
+the pixel neighborhood over which the average intensity is computed
+and then compared to each pixel in the neighborhood to decide whether
+or not to darken it to black. Large values for mask_radius result in
+very thick black areas bordering the shaded regions of color and much
+less detail for black areas everywhere including inside regions of
+color. Small values result in more subtle pen strokes and detail
+everywhere. Small values for the pct_black make the blend from the
+color regions to the black border lines smoother and the lines
+themselves thinner and less noticeable; larger values achieve the
+opposite effect.
+HELP
+
+    &std_pdb_compat('gegl:cartoon');
+    $date = '2019';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'mask_radius', type => '1.0 <= float <= 50.0',
+	  desc => 'Cartoon mask radius (radius of pixel neighborhood)' },
+	{ name => 'pct_black', type => '0.0 <= float <= 1.0',
+	  desc => 'Percentage of darkened pixels to set to black' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation",   "gegl:cartoon",
+			     "mask-radius", mask_radius,
+			     "pct-black",   pct_black,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Cartoon"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_colors_channel_mixer {
     $blurb = 'Alter colors by mixing RGB Channels';
 
@@ -4727,6 +4793,7 @@ CODE
             plug_in_bump_map
             plug_in_bump_map_tiled
             plug_in_c_astretch
+            plug_in_cartoon
             plug_in_colors_channel_mixer
             plug_in_colortoalpha
             plug_in_convmatrix
