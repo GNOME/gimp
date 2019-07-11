@@ -309,13 +309,15 @@ pluginCore (piArgs *argp)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
-  const Babl *format;
+  const Babl *src_format;
+  const Babl *dest_format;
+  gint        src_bpp;
+  gint        dest_bpp;
   gboolean    success = TRUE;
   gint        nl      = 0;
   gint        y, i;
   gint        Y, I, Q;
   gint        width, height;
-  gint        bpp;
   gint        sel_x1, sel_x2, sel_y1, sel_y2;
   gint        prog_interval;
   guchar     *src, *s, *dst, *d;
@@ -330,11 +332,11 @@ pluginCore (piArgs *argp)
   height = gimp_drawable_height (argp->drawable);
 
   if (gimp_drawable_has_alpha (argp->drawable))
-    format = babl_format ("R'G'B'A u8");
+    src_format = babl_format ("R'G'B'A u8");
   else
-    format = babl_format ("R'G'B' u8");
+    src_format = babl_format ("R'G'B' u8");
 
-  bpp = babl_format_get_bytes_per_pixel (format);
+  dest_format = src_format;
 
   if (argp->new_layerp)
     {
@@ -362,17 +364,22 @@ pluginCore (piArgs *argp)
 
       gimp_drawable_fill (nl, GIMP_FILL_TRANSPARENT);
       gimp_image_insert_layer (argp->image, nl, -1, 0);
+
+      dest_format = babl_format ("R'G'B'A u8");
     }
 
   if (! gimp_drawable_mask_intersect (argp->drawable,
                                       &sel_x1, &sel_y1, &width, &height))
     return success;
 
+  src_bpp  = babl_format_get_bytes_per_pixel (src_format);
+  dest_bpp = babl_format_get_bytes_per_pixel (dest_format);
+
   sel_x2 = sel_x1 + width;
   sel_y2 = sel_y1 + height;
 
-  src = g_new (guchar, width * height * bpp);
-  dst = g_new (guchar, width * height * 4);
+  src = g_new (guchar, width * height * src_bpp);
+  dst = g_new (guchar, width * height * dest_bpp);
 
   src_buffer = gimp_drawable_get_buffer (argp->drawable);
 
@@ -387,7 +394,7 @@ pluginCore (piArgs *argp)
 
   gegl_buffer_get (src_buffer,
                    GEGL_RECTANGLE (sel_x1, sel_y1, width, height), 1.0,
-                   format, src,
+                   src_format, src,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   s = src;
@@ -414,7 +421,7 @@ pluginCore (piArgs *argp)
                   for (i = 0; i < 3; i++)
                     *d++ = 0;
                   s += 3;
-                  if (bpp == 4)
+                  if (src_bpp == 4)
                     *d++ = *s++;
                   else if (argp->new_layerp)
                     *d++ = 255;
@@ -430,7 +437,7 @@ pluginCore (piArgs *argp)
                       *d++ = new_g;
                       *d++ = new_b;
                       s += 3;
-                      if (bpp == 4)
+                      if (src_bpp == 4)
                         *d++ = *s++;
                       else if (argp->new_layerp)
                         *d++ = 255;
@@ -537,7 +544,7 @@ pluginCore (piArgs *argp)
 
                       s += 3;
 
-                      if (bpp == 4)
+                      if (src_bpp == 4)
                         *d++ = *s++;
                       else if (argp->new_layerp)
                         *d++ = 255;
@@ -546,15 +553,15 @@ pluginCore (piArgs *argp)
             }
           else
             {
-              if (!argp->new_layerp)
+              if (! argp->new_layerp)
                 {
-                  for (i = 0; i < bpp; i++)
+                  for (i = 0; i < src_bpp; i++)
                     *d++ = *s++;
                 }
               else
                 {
-                  s += bpp;
-                  d += 4;
+                  s += src_bpp;
+                  d += dest_bpp;
                 }
             }
         }
@@ -562,7 +569,7 @@ pluginCore (piArgs *argp)
 
   gegl_buffer_set (dest_buffer,
                    GEGL_RECTANGLE (sel_x1, sel_y1, width, height), 0,
-                   format, dst,
+                   dest_format, dst,
                    GEGL_AUTO_ROWSTRIDE);
 
   gimp_progress_update (1.0);
