@@ -2658,6 +2658,55 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_photocopy_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble mask_radius;
+  gdouble sharpness;
+  gdouble pct_black;
+  gdouble pct_white;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  mask_radius = g_value_get_double (gimp_value_array_index (args, 3));
+  sharpness = g_value_get_double (gimp_value_array_index (args, 4));
+  pct_black = g_value_get_double (gimp_value_array_index (args, 5));
+  pct_white = g_value_get_double (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation",   "gegl:photocopy",
+                                 "mask-radius", mask_radius,
+                                 "sharpness",   sharpness,
+                                 "black",       pct_black,
+                                 "white",       pct_white,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Photocopy"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_pixelize_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -6799,6 +6848,67 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Background alpha (unused)",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-photocopy
+   */
+  procedure = gimp_procedure_new (plug_in_photocopy_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-photocopy");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-photocopy",
+                                     "Simulate color distortion produced by a copy machine",
+                                     "Propagates dark values in an image based on each pixel's relative darkness to a neighboring average. The idea behind this filter is to give the look of a photocopied version of the image, with toner transferred based on the relative darkness of a particular region. This is achieved by darkening areas of the image which are measured to be darker than a neighborhood average and setting other pixels to white. In this way, sufficiently large shifts in intensity are darkened to black. The rate at which they are darkened to black is determined by the second pct_black parameter. The mask_radius parameter controls the size of the pixel neighborhood over which the average intensity is computed and then compared to each pixel in the neighborhood to decide whether or not to darken it to black. Large values for mask_radius result in very thick black areas bordering the regions of white and much less detail for black areas everywhere including inside regions of color. Small values result in\n"
+                                     "less toner overall and more detail everywhere. Small values for the pct_black make the blend from the white regions to the black border lines smoother and the toner regions themselves thinner and less noticeable; larger values achieve the opposite effect.",
+                                     "Compatibility procedure. Please see 'gegl:photocopy' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:photocopy' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("mask-radius",
+                                                    "mask radius",
+                                                    "Photocopy mask radius (radius of pixel neighborhood)",
+                                                    3.0, 50.0, 3.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("sharpness",
+                                                    "sharpness",
+                                                    "Sharpness (detail level)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("pct-black",
+                                                    "pct black",
+                                                    "Percentage of darkened pixels to set to black",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("pct-white",
+                                                    "pct white",
+                                                    "Percentage of non-darkened pixels left white",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

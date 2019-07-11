@@ -117,7 +117,6 @@ max_rgb_libexecdir = $(gimpplugindir)/plug-ins/max-rgb
 newsprint_libexecdir = $(gimpplugindir)/plug-ins/newsprint
 nl_filter_libexecdir = $(gimpplugindir)/plug-ins/nl-filter
 oilify_libexecdir = $(gimpplugindir)/plug-ins/oilify
-photocopy_libexecdir = $(gimpplugindir)/plug-ins/photocopy
 plugin_browser_libexecdir = $(gimpplugindir)/plug-ins/plugin-browser
 procedure_browser_libexecdir = $(gimpplugindir)/plug-ins/procedure-browser
 qbist_libexecdir = $(gimpplugindir)/plug-ins/qbist
@@ -208,7 +207,6 @@ max_rgb_libexec_PROGRAMS = max-rgb
 newsprint_libexec_PROGRAMS = newsprint
 nl_filter_libexec_PROGRAMS = nl-filter
 oilify_libexec_PROGRAMS = oilify
-photocopy_libexec_PROGRAMS = photocopy
 plugin_browser_libexec_PROGRAMS = plugin-browser
 procedure_browser_libexec_PROGRAMS = procedure-browser
 qbist_libexec_PROGRAMS = qbist
@@ -1521,23 +1519,6 @@ oilify_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(oilify_RC)
-
-photocopy_SOURCES = \
-	photocopy.c
-
-photocopy_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(photocopy_RC)
 
 plugin_browser_SOURCES = \
 	plugin-browser.c

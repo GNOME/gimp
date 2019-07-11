@@ -69,7 +69,6 @@ max_rgb_RC = max-rgb.rc.o
 newsprint_RC = newsprint.rc.o
 nl_filter_RC = nl-filter.rc.o
 oilify_RC = oilify.rc.o
-photocopy_RC = photocopy.rc.o
 plugin_browser_RC = plugin-browser.rc.o
 procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o
