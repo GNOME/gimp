@@ -97,7 +97,9 @@ static gboolean        xcf_load_layer_props   (XcfInfo       *info,
                                                guint32       *text_layer_flags,
                                                guint32       *group_layer_flags);
 static gboolean        xcf_check_layer_props  (XcfInfo       *info,
-                                               GList        **item_path);
+                                               GList        **item_path,
+                                               gboolean      *is_group_layer,
+                                               gboolean      *is_text_layer);
 static gboolean        xcf_load_channel_props (XcfInfo       *info,
                                                GimpImage     *image,
                                                GimpChannel  **channel);
@@ -478,7 +480,12 @@ xcf_load_image (Gimp     *gimp,
           n_broken_layers++;
 
           if (! xcf_seek_pos (info, saved_pos, NULL))
-            goto error;
+            {
+              if (item_path)
+                g_list_free (item_path);
+
+              goto error;
+            }
 
           /* Don't just stop at the first broken layer. Load as much as
            * possible.
@@ -560,7 +567,10 @@ xcf_load_image (Gimp     *gimp,
     }
 
   if (broken_paths)
-    g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
+    {
+      g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
+      broken_paths = NULL;
+    }
 
   while (TRUE)
     {
@@ -640,6 +650,9 @@ xcf_load_image (Gimp     *gimp,
   return image;
 
  error:
+  if (broken_paths)
+    g_list_free_full (broken_paths, (GDestroyNotify) g_list_free);
+
   if (num_successful_elements == 0)
     goto hard_error;
 
@@ -1468,11 +1481,16 @@ xcf_load_layer_props (XcfInfo    *info,
 }
 
 static gboolean
-xcf_check_layer_props (XcfInfo  *info,
-                       GList   **item_path)
+xcf_check_layer_props (XcfInfo    *info,
+                       GList     **item_path,
+                       gboolean   *is_group_layer,
+                       gboolean   *is_text_layer)
 {
   PropType prop_type;
   guint32  prop_size;
+
+  g_return_val_if_fail (*is_group_layer == FALSE, FALSE);
+  g_return_val_if_fail (*is_text_layer  == FALSE, FALSE);
 
   while (TRUE)
     {
@@ -1483,6 +1501,21 @@ xcf_check_layer_props (XcfInfo  *info,
         {
         case PROP_END:
           return TRUE;
+
+        case PROP_TEXT_LAYER_FLAGS:
+          *is_text_layer = TRUE;
+
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
+          break;
+
+        case PROP_GROUP_ITEM:
+        case PROP_GROUP_ITEM_FLAGS:
+          *is_group_layer = TRUE;
+
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
+          break;
 
         case PROP_ITEM_PATH:
           {
@@ -1506,9 +1539,6 @@ xcf_check_layer_props (XcfInfo  *info,
           }
           break;
 
-        case PROP_TEXT_LAYER_FLAGS:
-        case PROP_GROUP_ITEM:
-        case PROP_GROUP_ITEM_FLAGS:
         case PROP_ACTIVE_LAYER:
         case PROP_FLOATING_SELECTION:
         case PROP_OPACITY:
@@ -1852,9 +1882,26 @@ xcf_load_layer (XcfInfo    *info,
 
   if (width <= 0 || height <= 0)
     {
-      /* Load item path anyway. */
-      xcf_check_layer_props (info, item_path);
-      return NULL;
+      gboolean is_group_layer = FALSE;
+      gboolean is_text_layer  = FALSE;
+      goffset  saved_pos;
+
+      saved_pos = info->cp;
+      /* Load item path and check if this is a group or text layer. */
+      xcf_check_layer_props (info, item_path, &is_group_layer, &is_text_layer);
+      if ((is_text_layer || is_group_layer) &&
+          xcf_seek_pos (info, saved_pos, NULL))
+        {
+          /* Something is wrong, but leave a chance to the layer because
+           * anyway group and text layer depends on their contents.
+           */
+          width = height = 1;
+          g_clear_pointer (item_path, g_list_free);
+        }
+      else
+        {
+          return NULL;
+        }
     }
 
   /* do not use gimp_image_get_layer_format() because it might
