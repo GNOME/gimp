@@ -54,6 +54,7 @@ LDADD = \
 	$(libgimpcolor)	\
 	$(libgimpbase)	\
 	$(GLIB_LIBS)	\
+	$(GEGL_LIBS)	\
 	$(RT_LIBS)	\
 	$(INTLLIBS)	\
 	$(twain_LIBS)	\
