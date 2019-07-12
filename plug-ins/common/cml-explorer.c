@@ -519,7 +519,6 @@ run (const gchar      *name,
       break;
     }
 
-  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
   status = CML_main_function (FALSE);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -538,28 +537,27 @@ run (const gchar      *name,
 static GimpPDBStatusType
 CML_main_function (gboolean preview_p)
 {
-  GimpDrawable *drawable = NULL;
-  GimpPixelRgn  dest_rgn, src_rgn;
-  guchar    *dest_buffer = NULL;
-  guchar    *src_buffer  = NULL;
-  gint       x, y;
-  gint       dx, dy;
-  gboolean   dest_has_alpha = FALSE;
-  gboolean   dest_is_gray   = FALSE;
-  gboolean   src_has_alpha  = FALSE;
-  gboolean   src_is_gray    = FALSE;
-  gint       total, processed = 0;
-  gint       keep_height = 1;
-  gint       cell_num, width_by_pixel, height_by_pixel;
-  gint       index;
-  gint       src_bpp, src_bpl;
-  gint       dest_bpp, dest_bpl;
-  gdouble   *hues, *sats, *vals;
-  gdouble   *newh, *news, *newv;
-  gdouble   *haux, *saux, *vaux;
-
-  /* open THE drawable */
-  drawable = gimp_drawable_get (drawable_id);
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *src_format;
+  const Babl *dest_format;
+  guchar     *dest_buf = NULL;
+  guchar     *src_buf  = NULL;
+  gint        x, y;
+  gint        dx, dy;
+  gboolean    dest_has_alpha = FALSE;
+  gboolean    dest_is_gray   = FALSE;
+  gboolean    src_has_alpha  = FALSE;
+  gboolean    src_is_gray    = FALSE;
+  gint        total, processed = 0;
+  gint        keep_height = 1;
+  gint        cell_num, width_by_pixel, height_by_pixel;
+  gint        index;
+  gint        src_bpp, src_bpl;
+  gint        dest_bpp, dest_bpl;
+  gdouble    *hues, *sats, *vals;
+  gdouble    *newh, *news, *newv;
+  gdouble    *haux, *saux, *vaux;
 
   if (! gimp_drawable_mask_intersect (drawable_id,
                                       &x, &y,
@@ -567,11 +565,31 @@ CML_main_function (gboolean preview_p)
     return GIMP_PDB_SUCCESS;
 
   src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable_id);
-  src_is_gray = dest_is_gray = gimp_drawable_is_gray (drawable_id);
-  src_bpp = dest_bpp = (src_is_gray ? 1 : 3) + (src_has_alpha ? 1 : 0);
+  src_is_gray   = dest_is_gray   = gimp_drawable_is_gray (drawable_id);
+
+  if (src_is_gray)
+    {
+      if (src_has_alpha)
+        src_format = babl_format ("Y'A u8");
+      else
+        src_format = babl_format ("Y' u8");
+    }
+  else
+    {
+      if (src_has_alpha)
+        src_format = babl_format ("R'G'B'A u8");
+      else
+        src_format = babl_format ("R'G'B' u8");
+    }
+
+  dest_format = src_format;
+
+  src_bpp = dest_bpp = babl_format_get_bytes_per_pixel (src_format);
 
   if (preview_p)
     {
+      dest_format = babl_format ("R'G'B' u8");
+
       dest_has_alpha = FALSE;
       dest_bpp       = 3;
 
@@ -580,12 +598,15 @@ CML_main_function (gboolean preview_p)
       if (height_by_pixel > PREVIEW_HEIGHT)
         height_by_pixel = PREVIEW_HEIGHT;
     }
+
   dest_bpl = width_by_pixel * dest_bpp;
   src_bpl = width_by_pixel * src_bpp;
   cell_num = (width_by_pixel - 1)/ VALS.scale + 1;
   total = height_by_pixel * width_by_pixel;
+
   if (total < 1)
     return GIMP_PDB_EXECUTION_ERROR;
+
   keep_height = VALS.scale;
 
   /* configure reusable memories */
@@ -595,6 +616,7 @@ CML_main_function (gboolean preview_p)
       mem_chank0_size = 9 * cell_num * sizeof (gdouble);
       mem_chank0 = (gdouble *) g_malloc (mem_chank0_size);
     }
+
   hues = mem_chank0;
   sats = mem_chank0 + cell_num;
   vals = mem_chank0 + 2 * cell_num;
@@ -611,7 +633,7 @@ CML_main_function (gboolean preview_p)
       mem_chank1_size = src_bpl * keep_height;
       mem_chank1 = (guchar *) g_malloc (mem_chank1_size);
     }
-  src_buffer = mem_chank1;
+  src_buf = mem_chank1;
 
   if (mem_chank2_size < dest_bpl * keep_height)
     {
@@ -619,16 +641,12 @@ CML_main_function (gboolean preview_p)
       mem_chank2_size = dest_bpl * keep_height;
       mem_chank2 = (guchar *) g_malloc (mem_chank2_size);
     }
-  dest_buffer = mem_chank2;
+  dest_buf = mem_chank2;
 
   if (! preview_p)
-    gimp_pixel_rgn_init (&dest_rgn, drawable, x, y,
-                         width_by_pixel, height_by_pixel,
-                         TRUE, TRUE);
+    dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x, y,
-                       width_by_pixel, height_by_pixel,
-                       FALSE, FALSE);
+  src_buffer = gimp_drawable_get_buffer (drawable_id);
 
   gr = g_rand_new ();
   if (VALS.initial_value == CML_INITIAL_RANDOM_FROM_SEED)
@@ -660,6 +678,7 @@ CML_main_function (gboolean preview_p)
           haux [index] = VALS.hue.power;
           break;
         }
+
       switch (VALS.sat.arrange)
         {
         case RAND_POWER0:
@@ -684,6 +703,7 @@ CML_main_function (gboolean preview_p)
           saux [index] = VALS.sat.power;
           break;
         }
+
       switch (VALS.val.arrange)
         {
         case RAND_POWER0:
@@ -708,6 +728,7 @@ CML_main_function (gboolean preview_p)
           vaux [index] = VALS.val.power;
           break;
         }
+
       switch (VALS.initial_value)
         {
         case 0:
@@ -750,8 +771,9 @@ CML_main_function (gboolean preview_p)
           GimpRGB rgb;
           GimpHSV hsv;
 
-          gimp_pixel_rgn_get_pixel (&src_rgn, buffer,
-                                    x + (index * VALS.scale), y);
+          gegl_buffer_sample (src_buffer, x + (index * VALS.scale), y, NULL,
+                              buffer, src_format,
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
           gimp_rgb_set_uchar (&rgb, buffer[0], buffer[1], buffer[2]);
           gimp_rgb_to_hsv (&rgb, &hsv);
@@ -782,8 +804,13 @@ CML_main_function (gboolean preview_p)
       if ((VALS.hue.function == CML_KEEP_VALUES) ||
           (VALS.sat.function == CML_KEEP_VALUES) ||
           (VALS.val.function == CML_KEEP_VALUES))
-        gimp_pixel_rgn_get_rect (&src_rgn, src_buffer,
-                                 x, y + dy, width_by_pixel, keep_height);
+        {
+          gegl_buffer_get (src_buffer,
+                           GEGL_RECTANGLE (x, y + dy,
+                                           width_by_pixel, keep_height), 1.0,
+                           src_format, src_buf,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+        }
 
       CML_compute_next_step (cell_num,
                              &hues, &sats, &vals,
@@ -829,8 +856,8 @@ CML_main_function (gboolean preview_p)
                     int i;
 
                     for (i = 0; i < src_bpp; i++)
-                      rgbi[i] = src_buffer[offset_y * src_bpl
-                                           + (dx * VALS.scale + offset_x) * src_bpp + i];
+                      rgbi[i] = src_buf[offset_y * src_bpl
+                                        + (dx * VALS.scale + offset_x) * src_bpp + i];
                     if (src_is_gray && (VALS.val.function == CML_KEEP_VALUES))
                       {
                         b = rgbi[0];
@@ -868,21 +895,21 @@ CML_main_function (gboolean preview_p)
 
                 if (dest_is_gray)
                   {
-                    dest_buffer[dest_offset++] = b;
+                    dest_buf[dest_offset++] = b;
                     if (preview_p)
                       {
-                        dest_buffer[dest_offset++] = b;
-                        dest_buffer[dest_offset++] = b;
+                        dest_buf[dest_offset++] = b;
+                        dest_buf[dest_offset++] = b;
                       }
                   }
                 else
                   {
-                    dest_buffer[dest_offset++] = r;
-                    dest_buffer[dest_offset++] = g;
-                    dest_buffer[dest_offset++] = b;
+                    dest_buf[dest_offset++] = r;
+                    dest_buf[dest_offset++] = g;
+                    dest_buf[dest_offset++] = b;
                   }
                 if (dest_has_alpha)
-                  dest_buffer[dest_offset] = 255;
+                  dest_buf[dest_offset] = 255;
 
                 if ((!preview_p) &&
                     (++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
@@ -891,16 +918,26 @@ CML_main_function (gboolean preview_p)
         }
 
       if (preview_p)
-        gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                                0, dy,
-                                width_by_pixel, keep_height,
-                                GIMP_RGB_IMAGE,
-                                dest_buffer,
-                                dest_bpl);
+        {
+          gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                                  0, dy,
+                                  width_by_pixel, keep_height,
+                                  GIMP_RGB_IMAGE,
+                                  dest_buf,
+                                  dest_bpl);
+        }
       else
-        gimp_pixel_rgn_set_rect (&dest_rgn, dest_buffer, x, y + dy,
-                                 width_by_pixel, keep_height);
+        {
+          gegl_buffer_set (dest_buffer,
+                           GEGL_RECTANGLE (x, y + dy,
+                                           width_by_pixel, keep_height), 0,
+                           dest_format, dest_buf,
+                           GEGL_AUTO_ROWSTRIDE);
+        }
     }
+
+  g_object_unref (src_buffer);
+
   if (preview_p)
     {
       gtk_widget_queue_draw (preview);
@@ -908,11 +945,12 @@ CML_main_function (gboolean preview_p)
   else
     {
       gimp_progress_update (1.0);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id,
+
+      g_object_unref (dest_buffer);
+
+      gimp_drawable_merge_shadow (drawable_id, TRUE);
+      gimp_drawable_update (drawable_id,
                             x, y, width_by_pixel, height_by_pixel);
-      gimp_drawable_detach (drawable);
     }
 
   g_rand_free (gr);
