@@ -80,42 +80,40 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  sparkle_dialog        (GimpDrawable *drawable);
+static gboolean  sparkle_dialog        (gint32        drawable_ID);
 
 static gint      compute_luminosity    (const guchar *pixel,
                                         gboolean      gray,
                                         gboolean      has_alpha);
-static gint      compute_lum_threshold (GimpDrawable *drawable,
+static gint      compute_lum_threshold (gint32        drawable_ID,
                                         gdouble       percentile);
-static void      sparkle               (GimpDrawable *drawable,
+static void      sparkle               (gint32        drawable_ID,
                                         GimpPreview  *preview);
-static void      fspike                (GimpPixelRgn *src_rgn,
-                                        GimpPixelRgn *dest_rgn,
+static void      sparkle_preview       (gpointer      drawable_ID,
+                                        GimpPreview  *preview);
+static void      fspike                (GeglBuffer   *src_buffer,
+                                        GeglBuffer   *dest_buffer,
+                                        const Babl   *format,
+                                        gint          bytes,
                                         gint          x1,
                                         gint          y1,
                                         gint          x2,
                                         gint          y2,
                                         gint          xr,
                                         gint          yr,
-                                        gint          tile_width,
-                                        gint          tile_height,
                                         gdouble       inten,
                                         gdouble       length,
                                         gdouble       angle,
                                         GRand        *gr,
                                         guchar       *dest_buf);
-static GimpTile * rpnt                 (GimpDrawable *drawable,
-                                        GimpTile     *tile,
+static void       rpnt                 (GeglBuffer   *dest_buffer,
+                                        const Babl   *format,
                                         gint          x1,
                                         gint          y1,
                                         gint          x2,
                                         gint          y2,
                                         gdouble       xr,
                                         gdouble       yr,
-                                        gint          tile_width,
-                                        gint          tile_height,
-                                        gint         *row,
-                                        gint         *col,
                                         gint          bytes,
                                         gdouble       inten,
                                         guchar        color[MAX_CHANNELS],
@@ -201,14 +199,13 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, w, h;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -216,15 +213,14 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x, &y, &w, &h))
+  run_mode    = param[0].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
+
+  if (! gimp_drawable_mask_intersect (drawable_ID, &x, &y, &w, &h))
     {
       g_message (_("Region selected for filter is empty"));
       return;
     }
-
-  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
   switch (run_mode)
     {
@@ -233,8 +229,8 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &svals);
 
       /*  First acquire information with a dialog  */
-      if (! sparkle_dialog (drawable))
-    return;
+      if (! sparkle_dialog (drawable_ID))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -293,12 +289,12 @@ run (const gchar      *name,
     }
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-      gimp_drawable_is_gray (drawable->drawable_id))
+  if (gimp_drawable_is_rgb (drawable_ID) ||
+      gimp_drawable_is_gray (drawable_ID))
     {
       gimp_progress_init (_("Sparkling"));
 
-      sparkle (drawable, NULL);
+      sparkle (drawable_ID, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -314,12 +310,10 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 static gboolean
-sparkle_dialog (GimpDrawable *drawable)
+sparkle_dialog (gint32 drawable_ID)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -356,12 +350,12 @@ sparkle_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable->drawable_id);
+  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (sparkle),
-                            drawable);
+                            G_CALLBACK (sparkle_preview),
+                            GINT_TO_POINTER (drawable_ID));
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -622,54 +616,68 @@ compute_luminosity (const guchar *pixel,
 }
 
 static gint
-compute_lum_threshold (GimpDrawable *drawable,
-                       gdouble       percentile)
+compute_lum_threshold (gint32  drawable_ID,
+                       gdouble percentile)
 {
-  GimpPixelRgn src_rgn;
-  gpointer     pr;
-  gint         values[256];
-  gint         total, sum;
-  gboolean     gray;
-  gboolean     has_alpha;
-  gint         i;
-  gint         x1, y1;
-  gint         width, height;
+  GeglBuffer         *src_buffer;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
+  gint                values[256];
+  gint                total, sum;
+  gboolean            gray;
+  gboolean            has_alpha;
+  gint                i;
+  gint                x1, y1;
+  gint                width, height;
 
   /*  zero out the luminosity values array  */
   memset (values, 0, sizeof (gint) * 256);
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_ID,
                                       &x1, &y1, &width, &height))
     return 0;
 
-  gray = gimp_drawable_is_gray (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  gray = gimp_drawable_is_gray (drawable_ID);
+  has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
+  if (gray)
+    {
+      if (has_alpha)
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y' u8");
+    }
+  else
+    {
+      if (has_alpha)
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
+    }
 
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-     {
-       const guchar *src, *s;
-       gint          sx, sy;
+  bpp = babl_format_get_bytes_per_pixel (format);
 
-       src = src_rgn.data;
+  src_buffer = gimp_drawable_get_buffer (drawable_ID);
 
-       for (sy = 0; sy < src_rgn.h; sy++)
-         {
-           s = src;
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   GEGL_RECTANGLE (x1, y1, width, height), 0,
+                                   format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
-           for (sx = 0; sx < src_rgn.w; sx++)
-             {
-               values [compute_luminosity (s, gray, has_alpha)]++;
-               s += src_rgn.bpp;
-             }
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *src    = iter->items[0].data;
+      gint          length = iter->length;
 
-           src += src_rgn.rowstride;
-         }
-     }
+      while (length--)
+        {
+          values [compute_luminosity (src, gray, has_alpha)]++;
+          src += bpp;
+        }
+    }
+
+  g_object_unref (src_buffer);
 
   total = width * height;
   sum = 0;
@@ -683,29 +691,52 @@ compute_lum_threshold (GimpDrawable *drawable,
            return i;
         }
     }
+
   return 0;
 }
 
 static void
-sparkle (GimpDrawable *drawable,
-         GimpPreview  *preview)
+sparkle (gint32       drawable_ID,
+         GimpPreview *preview)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  gdouble      nfrac, length, inten, spike_angle;
-  gint         cur_progress, max_progress;
-  gint         x1, y1, x2, y2;
-  gint         width, height;
-  gint         threshold;
-  gint         lum, x, y, b;
-  gboolean     gray, has_alpha;
-  gint         alpha;
-  gint         bytes;
-  gpointer     pr;
-  gint         tile_width, tile_height;
-  GRand       *gr;
-  guchar      *dest_buf = NULL;
+  GeglBuffer         *src_buffer;
+  GeglBuffer         *dest_buffer;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                d_width, d_height;
+  gdouble             nfrac, length, inten, spike_angle;
+  gint                cur_progress, max_progress;
+  gint                x1, y1, x2, y2;
+  gint                width, height;
+  gint                threshold;
+  gint                lum, x, y, b;
+  gboolean            gray, has_alpha;
+  gint                alpha;
+  gint                bytes;
+  GRand              *gr;
+  guchar             *dest_buf = NULL;
 
-  bytes = drawable->bpp;
+  gray = gimp_drawable_is_gray (drawable_ID);
+  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+
+  if (gray)
+    {
+      if (has_alpha)
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y' u8");
+    }
+  else
+    {
+      if (has_alpha)
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
+    }
+
+  bytes = babl_format_get_bytes_per_pixel (format);
+
+  alpha = (has_alpha) ? bytes - 1 : bytes;
 
   if (preview)
     {
@@ -718,7 +749,7 @@ sparkle (GimpDrawable *drawable,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+      if (! gimp_drawable_mask_intersect (drawable_ID,
                                           &x1, &y1, &width, &height))
         return;
 
@@ -728,6 +759,9 @@ sparkle (GimpDrawable *drawable,
 
   if (width < 1 || height < 1)
     return;
+
+  d_width  = gimp_drawable_width  (drawable_ID);
+  d_height = gimp_drawable_height (drawable_ID);
 
   gr = g_rand_new ();
 
@@ -739,45 +773,45 @@ sparkle (GimpDrawable *drawable,
   else
     {
       /*  compute the luminosity which exceeds the luminosity threshold  */
-      threshold = compute_lum_threshold (drawable, svals.lum_threshold);
+      threshold = compute_lum_threshold (drawable_ID, svals.lum_threshold);
     }
-
-  gray = gimp_drawable_is_gray (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
-
-  tile_width  = gimp_tile_width();
-  tile_height = gimp_tile_height();
 
   /* initialize the progress dialog */
   cur_progress = 0;
   max_progress = num_sparkles;
 
   /* copy what is already there */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, width, height, preview == NULL, TRUE);
+  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   GEGL_RECTANGLE (x1, y1, width, height), 0,
+                                   format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+
+  gegl_buffer_iterator_add (iter, dest_buffer,
+                            GEGL_RECTANGLE (x1, y1, width, height), 0,
+                            format,
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src,  *s;
-      guchar       *dest, *d;
+      GeglRectangle  roi = iter->items[0].roi;
+      const guchar  *src,  *s;
+      guchar        *dest, *d;
 
-      src = src_rgn.data;
+      src = iter->items[0].data;
       if (preview)
-        dest = dest_buf + (((dest_rgn.y - y1) * width) + (dest_rgn.x - x1)) * bytes;
+        dest = dest_buf + (((roi.y - y1) * width) + (roi.x - x1)) * bytes;
       else
-        dest = dest_rgn.data;
+        dest = iter->items[1].data;
 
-      for (y = 0; y < src_rgn.h; y++)
+      for (y = 0; y < roi.height; y++)
         {
           s = src;
           d = dest;
 
-          for (x = 0; x < src_rgn.w; x++)
+          for (x = 0; x < roi.width; x++)
             {
               if (has_alpha && s[alpha] == 0)
                 {
@@ -792,44 +826,49 @@ sparkle (GimpDrawable *drawable,
               if (has_alpha)
                 d[alpha] = s[alpha];
 
-              s += src_rgn.bpp;
-              d += dest_rgn.bpp;
+              s += bytes;
+              d += bytes;
             }
 
-          src += src_rgn.rowstride;
+          src += roi.width * bytes;
           if (preview)
             dest += width * bytes;
           else
-            dest += dest_rgn.rowstride;
+            dest += roi.width * bytes;
         }
     }
+
   /* add effects to new image based on intensity of old pixels */
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, width, height, preview == NULL, TRUE);
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   GEGL_RECTANGLE (x1, y1, width, height), 0,
+                                   format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  gegl_buffer_iterator_add (iter, dest_buffer,
+                            GEGL_RECTANGLE (x1, y1, width, height), 0,
+                            format,
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src, *s;
+      GeglRectangle  roi = iter->items[0].roi;
+      const guchar  *src, *s;
 
-      src = src_rgn.data;
+      src = iter->items[0].data;
 
-      for (y = 0; y < src_rgn.h; y++)
+      for (y = 0; y < roi.height; y++)
         {
           s = src;
 
-          for (x = 0; x < src_rgn.w; x++)
+          for (x = 0; x < roi.width; x++)
             {
               if (svals.border)
                 {
-                  if (x + src_rgn.x == 0 ||
-                      y + src_rgn.y == 0 ||
-                      x + src_rgn.x == drawable->width  - 1 ||
-                      y + src_rgn.y == drawable->height - 1)
+                  if (x + roi.x == 0 ||
+                      y + roi.y == 0 ||
+                      x + roi.x == d_width  - 1 ||
+                      y + roi.y == d_height - 1)
                     {
                       lum = 255;
                     }
@@ -862,15 +901,15 @@ sparkle (GimpDrawable *drawable,
 
                       if (g_rand_double (gr) <= svals.density)
                         {
-                          fspike (&src_rgn, &dest_rgn, x1, y1, x2, y2,
-                                  x + src_rgn.x, y + src_rgn.y,
-                                  tile_width, tile_height,
+                          fspike (src_buffer, dest_buffer, format, bytes,
+                                  x1, y1, x2, y2,
+                                  x + roi.x, y + roi.y,
                                   inten, length, spike_angle, gr, dest_buf);
 
                           /* minor spikes */
-                          fspike (&src_rgn, &dest_rgn, x1, y1, x2, y2,
-                                  x + src_rgn.x, y + src_rgn.y,
-                                  tile_width, tile_height,
+                          fspike (src_buffer, dest_buffer, format, bytes,
+                                  x1, y1, x2, y2,
+                                  x + roi.x, y + roi.y,
                                   inten * 0.7, length * 0.7,
                                   ((gdouble)spike_angle+180.0/svals.spike_pts),
                                   gr, dest_buf);
@@ -885,12 +924,16 @@ sparkle (GimpDrawable *drawable,
                                               (double) max_progress);
                     }
                 }
-              s += src_rgn.bpp;
+
+              s += bytes;
             }
 
-          src += src_rgn.rowstride;
+          src += roi.width * bytes;
         }
     }
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   if (preview)
     {
@@ -901,28 +944,29 @@ sparkle (GimpDrawable *drawable,
     {
       gimp_progress_update (1.0);
 
-      /*  update the sparkled region  */
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_drawable_merge_shadow (drawable_ID, TRUE);
+      gimp_drawable_update (drawable_ID, x1, y1, width, height);
     }
 
   g_rand_free (gr);
 }
 
-static inline GimpTile *
-rpnt (GimpDrawable *drawable,
-      GimpTile     *tile,
+static void
+sparkle_preview (gpointer     drawable_ID,
+                 GimpPreview *preview)
+{
+  sparkle (GPOINTER_TO_INT (drawable_ID), preview);
+}
+
+static inline void
+rpnt (GeglBuffer   *dest_buffer,
+      const Babl   *format,
       gint          x1,
       gint          y1,
       gint          x2,
       gint          y2,
       gdouble       xr,
       gdouble       yr,
-      gint          tile_width,
-      gint          tile_height,
-      gint         *row,
-      gint         *col,
       gint          bytes,
       gdouble       inten,
       guchar        color[MAX_CHANNELS],
@@ -931,9 +975,8 @@ rpnt (GimpDrawable *drawable,
   gint     x, y, b;
   gdouble  dx, dy, rs, val;
   guchar  *pixel;
+  guchar   pixel_buf[4];
   gdouble  new;
-  gint     newcol, newrow;
-  gint     newcoloff, newrowoff;
 
   x = (int) (xr);    /* integer coord. to upper left of real point */
   y = (int) (yr);
@@ -941,28 +984,18 @@ rpnt (GimpDrawable *drawable,
   if (x >= x1 && y >= y1 && x < x2 && y < y2)
     {
       if (dest_buf)
-        pixel = dest_buf + ((y - y1) * (x2 - x1) + (x - x1)) * bytes;
+        {
+          pixel = dest_buf + ((y - y1) * (x2 - x1) + (x - x1)) * bytes;
+        }
       else
         {
-          newcol    = x / tile_width;
-          newcoloff = x % tile_width;
-          newrow    = y / tile_height;
-          newrowoff = y % tile_height;
+          gegl_buffer_sample (dest_buffer, x, y, NULL,
+                              pixel_buf, format,
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-          if ((newcol != *col) || (newrow != *row))
-            {
-              *col = newcol;
-              *row = newrow;
-
-              if (tile)
-                gimp_tile_unref (tile, TRUE);
-
-              tile = gimp_drawable_get_tile (drawable, TRUE, *row, *col);
-              gimp_tile_ref (tile);
-            }
-
-          pixel = tile->data + tile->bpp * (tile->ewidth * newrowoff + newcoloff);
+          pixel = pixel_buf;
         }
+
       dx = xr - x; dy = yr - y;
       rs = dx * dx + dy * dy;
       val = inten * exp (-rs / PSV);
@@ -999,22 +1032,25 @@ rpnt (GimpDrawable *drawable,
           else
             pixel[b] = new;
         }
-    }
 
-  return tile;
+      if (! dest_buf)
+        gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                         format, pixel_buf,
+                         GEGL_AUTO_ROWSTRIDE);
+    }
 }
 
 static void
-fspike (GimpPixelRgn *src_rgn,
-        GimpPixelRgn *dest_rgn,
+fspike (GeglBuffer   *src_buffer,
+        GeglBuffer   *dest_buffer,
+        const Babl   *format,
+        gint          bytes,
         gint          x1,
         gint          y1,
         gint          x2,
         gint          y2,
         gint          xr,
         gint          yr,
-        gint          tile_width,
-        gint          tile_height,
         gdouble       inten,
         gdouble       length,
         gdouble       angle,
@@ -1027,10 +1063,7 @@ fspike (GimpPixelRgn *src_rgn,
   gdouble        in;
   gdouble        theta;
   gdouble        sfac;
-  GimpTile      *tile = NULL;
-  gint           row, col;
   gint           i;
-  gint           bytes;
   gboolean       ok;
   GimpRGB        gimp_color;
   guchar         pixel[MAX_CHANNELS];
@@ -1038,9 +1071,6 @@ fspike (GimpPixelRgn *src_rgn,
   guchar         color[MAX_CHANNELS];
 
   theta = angle;
-  bytes = dest_rgn->bpp;
-  row = -1;
-  col = -1;
 
   switch (svals.colortype)
     {
@@ -1063,7 +1093,8 @@ fspike (GimpPixelRgn *src_rgn,
   /* draw the major spikes */
   for (i = 0; i < svals.spike_pts; i++)
     {
-      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
+      gegl_buffer_sample (dest_buffer, xr, yr, NULL, pixel, format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
       if (svals.colortype == NATURAL)
         {
@@ -1132,18 +1163,21 @@ fspike (GimpPixelRgn *src_rgn,
           if (in > 0.01)
             ok = TRUE;
 
-          tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2,
-                       xrt, yrt, tile_width, tile_height,
-                       &row, &col, bytes, in, color, dest_buf);
-          tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2,
-                       xrt + 1.0, yrt, tile_width, tile_height,
-                       &row, &col, bytes, in, color, dest_buf);
-          tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2,
-                       xrt + 1.0, yrt + 1.0, tile_width, tile_height,
-                       &row, &col, bytes, in, color, dest_buf);
-          tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2,
-                       xrt, yrt + 1.0, tile_width, tile_height,
-                       &row, &col, bytes, in, color, dest_buf);
+          rpnt (dest_buffer, format, x1, y1, x2, y2,
+                xrt, yrt,
+                bytes, in, color, dest_buf);
+
+          rpnt (dest_buffer, format, x1, y1, x2, y2,
+                xrt + 1.0, yrt,
+                bytes, in, color, dest_buf);
+
+          rpnt (dest_buffer, format, x1, y1, x2, y2,
+                xrt + 1.0, yrt + 1.0,
+                bytes, in, color, dest_buf);
+
+          rpnt (dest_buffer, format, x1, y1, x2, y2,
+                xrt, yrt + 1.0,
+                bytes, in, color, dest_buf);
 
           xrt += dx;
           yrt += dy;
@@ -1153,7 +1187,4 @@ fspike (GimpPixelRgn *src_rgn,
 
       theta += 360.0 / svals.spike_pts;
     }
-
-  if (tile)
-    gimp_tile_unref (tile, TRUE);
 }
