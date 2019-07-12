@@ -2301,13 +2301,15 @@ static gboolean
 xcf_check_layer_props (XcfInfo    *info,
                        GList     **item_path,
                        gboolean   *is_group_layer,
-                       gboolean   *is_text_layer)
+                       gboolean   *is_text_layer,
+                       gboolean   *is_link_layer)
 {
   PropType prop_type;
   guint32  prop_size;
 
   g_return_val_if_fail (*is_group_layer == FALSE, FALSE);
   g_return_val_if_fail (*is_text_layer  == FALSE, FALSE);
+  g_return_val_if_fail (*is_link_layer  == TRUE, FALSE);
 
   while (TRUE)
     {
@@ -2321,6 +2323,13 @@ xcf_check_layer_props (XcfInfo    *info,
 
         case PROP_TEXT_LAYER_FLAGS:
           *is_text_layer = TRUE;
+
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
+          break;
+
+        case PROP_LINK_LAYER_DATA:
+          *is_link_layer = TRUE;
 
           if (! xcf_skip_unknown_prop (info, prop_size))
             return FALSE;
@@ -3268,16 +3277,18 @@ xcf_load_layer (XcfInfo    *info,
     {
       gboolean is_group_layer = FALSE;
       gboolean is_text_layer  = FALSE;
+      gboolean is_link_layer  = FALSE;
       goffset  saved_pos;
 
       saved_pos = info->cp;
       /* Load item path and check if this is a group or text layer. */
-      xcf_check_layer_props (info, item_path, &is_group_layer, &is_text_layer);
-      if ((is_text_layer || is_group_layer) &&
+      xcf_check_layer_props (info, item_path, &is_group_layer,
+                             &is_text_layer, &is_link_layer);
+      if ((is_text_layer || is_group_layer || is_link_layer) &&
           xcf_seek_pos (info, saved_pos, NULL))
         {
           /* Something is wrong, but leave a chance to the layer because
-           * anyway group and text layer depends on their contents.
+           * anyway group, text and link layer depends on their contents.
            */
           width = height = 1;
           g_clear_pointer (item_path, g_list_free);
