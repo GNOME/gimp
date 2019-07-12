@@ -594,6 +594,7 @@ run (const gchar      *name,
               *nreturn_vals = 2;
 
               /* free the resources */
+              g_free (layers);
               cairo_surface_destroy (pdf_file);
               cairo_destroy (cr);
               fclose (fp);
@@ -605,6 +606,7 @@ run (const gchar      *name,
               return;
             }
         }
+      g_free (layers);
 
       /* We are done with this image - Show it!
        * Unless that's a multi-page to avoid blank page at the end
@@ -846,7 +848,7 @@ gui_single (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
                                 optimize.layers_as_pages);
   gtk_frame_set_label_widget (GTK_FRAME (frame), layers_as_pages_c);
-  gimp_image_get_layers (multi_page.images[0], &n_layers);
+  g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
 
   reverse_order_c = gtk_check_button_new_with_label (_("Reverse the pages order"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order_c),
@@ -1689,8 +1691,12 @@ draw_layer (gint32       *layers,
         {
           if (! draw_layer (children, children_num, i,
                             cr, x_res, y_res, name, error))
-            return FALSE;
+            {
+              g_free (children);
+              return FALSE;
+            }
         }
+      g_free (children);
     }
   else
     {
