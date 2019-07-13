@@ -2744,6 +2744,50 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_neon_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble radius;
+  gdouble amount;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  radius = g_value_get_double (gimp_value_array_index (args, 3));
+  amount = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation", "gegl:edge-neon",
+                                      "radius",    radius,
+                                      "amount",    amount,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Neon"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_nova_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -7007,6 +7051,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-neon
+   */
+  procedure = gimp_procedure_new (plug_in_neon_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-neon");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-neon",
+                                     "Simulate the glowing boundary of a neon light",
+                                     "This filter works in a manner similar to the edge plug-in, but uses the first derivative of the gaussian operator to achieve resolution independence. The IIR method of calculating the effect is utilized to keep the processing time constant between large and small standard deviations.",
+                                     "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of neon effect (in pixels)",
+                                                    0.0, 1500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amount",
+                                                    "amount",
+                                                    "Effect enhancement variable",
+                                                    0.0, 100.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
