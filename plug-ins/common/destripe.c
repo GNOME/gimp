@@ -54,10 +54,12 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static void      destripe        (GimpDrawable *drawable,
-                                  GimpPreview  *preview);
+static void      destripe         (gint32        drawable_ID,
+                                   GimpPreview  *preview);
+static void      destripe_preview (gpointer      drawable_ID,
+                                   GimpPreview  *preview);
 
-static gboolean  destripe_dialog (GimpDrawable *drawable);
+static gboolean  destripe_dialog  (gint32        drawable_ID);
 
 /*
  * Globals...
@@ -122,19 +124,15 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode        run_mode;   /* Current run mode */
-  GimpPDBStatusType  status;     /* Return status */
   static GimpParam   values[1];  /* Return values */
-  GimpDrawable      *drawable;
+  GimpPDBStatusType  status;     /* Return status */
+  GimpRunMode        run_mode;   /* Current run mode */
+  gint32             drawable_ID;
 
   INIT_I18N ();
-
-  /*
-   * Initialize parameter data...
-   */
+  gegl_init (NULL, NULL);
 
   status   = GIMP_PDB_SUCCESS;
-  run_mode = param[0].data.d_int32;
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
@@ -142,15 +140,8 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  /*
-   * Get drawable information...
-   */
-
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-
-  /*
-   * See how we will run
-   */
+  run_mode    = param[0].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
 
   switch (run_mode)
     {
@@ -163,7 +154,7 @@ run (const gchar      *name,
       /*
        * Get information from the dialog...
        */
-      if (!destripe_dialog (drawable))
+      if (! destripe_dialog (drawable_ID))
         return;
       break;
 
@@ -195,19 +186,13 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if ((gimp_drawable_is_rgb (drawable->drawable_id) ||
-           gimp_drawable_is_gray (drawable->drawable_id)))
+      if ((gimp_drawable_is_rgb (drawable_ID) ||
+           gimp_drawable_is_gray (drawable_ID)))
         {
-          /*
-           * Set the tile cache size...
-           */
-          gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-                                  gimp_tile_width ());
-
           /*
            * Run!
            */
-          destripe (drawable, NULL);
+          destripe (drawable_ID, NULL);
 
           /*
            * If run mode is interactive, flush displays...
@@ -222,44 +207,36 @@ run (const gchar      *name,
             gimp_set_data (PLUG_IN_PROC, &vals, sizeof (vals));
         }
       else
-        status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     };
 
   /*
    * Reset the current run status...
    */
   values[0].data.d_status = status;
-
-  /*
-   * Detach from the drawable...
-   */
-  gimp_drawable_detach (drawable);
 }
 
 static void
-destripe (GimpDrawable *drawable,
-          GimpPreview  *preview)
+destripe (gint32       drawable_ID,
+          GimpPreview *preview)
 {
-  GimpPixelRgn  src_rgn;        /* source image region */
-  GimpPixelRgn  dst_rgn;        /* destination image region */
-  guchar       *src_rows;       /* image data */
-  gdouble       progress, progress_inc;
-  gint          x1, x2, y1;
-  gint          width, height;
-  gint          bpp;
-  glong        *hist, *corr;        /* "histogram" data */
-  gint          tile_width = gimp_tile_width ();
-  gint          i, x, y, ox, cols;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  guchar     *src_rows;       /* image data */
+  gdouble     progress, progress_inc;
+  gint        x1, x2, y1;
+  gint        width, height;
+  gint        bpp;
+  glong      *hist, *corr;        /* "histogram" data */
+  gint        tile_width = gimp_tile_width ();
+  gint        i, x, y, ox, cols;
 
-  /* initialize */
-
-  progress = 0.0;
+  progress     = 0.0;
   progress_inc = 0.0;
 
-  /*
-   * Let the user know what we're doing...
-   */
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
   if (preview)
     {
       gimp_preview_get_position (preview, &x1, &y1);
@@ -268,25 +245,42 @@ destripe (GimpDrawable *drawable,
   else
     {
       gimp_progress_init (_("Destriping"));
-      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+
+      if (! gimp_drawable_mask_intersect (drawable_ID,
                                           &x1, &y1, &width, &height))
         {
           return;
         }
+
       progress = 0;
       progress_inc = 0.5 * tile_width / width;
     }
 
   x2 = x1 + width;
 
+  if (gimp_drawable_is_rgb (drawable_ID))
+    {
+      if (gimp_drawable_has_alpha (drawable_ID))
+        format = babl_format ("R'G'B'A u8");
+      else
+        format = babl_format ("R'G'B' u8");
+    }
+  else
+    {
+      if (gimp_drawable_has_alpha (drawable_ID))
+        format = babl_format ("Y'A u8");
+      else
+        format = babl_format ("Y' u8");
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
   /*
    * Setup for filter...
    */
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dst_rgn, drawable,
-                       x1, y1, width, height, (preview == NULL), TRUE);
+  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
 
   hist = g_new (long, width * bpp);
   corr = g_new (long, width * bpp);
@@ -306,7 +300,9 @@ destripe (GimpDrawable *drawable,
       if (cols > tile_width)
         cols = tile_width;
 
-      gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, y1, cols, height);
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (ox, y1, cols, height), 1.0,
+                       format, rows,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       for (y = 0; y < height; y++)
         {
@@ -317,7 +313,7 @@ destripe (GimpDrawable *drawable,
             *h++ += *rows++;
         }
 
-      if (!preview)
+      if (! preview)
         gimp_progress_update (progress += progress_inc);
     }
 
@@ -341,10 +337,12 @@ destripe (GimpDrawable *drawable,
               {
                 sum += h[ extend]; cnt++;
               }
+
             if (x - extend >= 0)
               {
                 sum -= h[-extend]; cnt--;
               }
+
             if (x >= 0)
               {
                 if (*h)
@@ -371,9 +369,11 @@ destripe (GimpDrawable *drawable,
       if (cols > tile_width)
         cols = tile_width;
 
-      gimp_pixel_rgn_get_rect (&src_rgn, rows, ox, y1, cols, height);
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (ox, y1, cols, height), 1.0,
+                       format, rows,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      if (!preview)
+      if (! preview)
         gimp_progress_update (progress += progress_inc);
 
       for (y = 0; y < height; y++)
@@ -382,50 +382,74 @@ destripe (GimpDrawable *drawable,
           guchar *row_end = rows + cols * bpp;
 
           if (vals.histogram)
-            while (rows < row_end)
-              {
-                *rows = MIN (255, MAX (0, 128 + (*rows * *c >> 10)));
-                c++; rows++;
-              }
+            {
+              while (rows < row_end)
+                {
+                  *rows = MIN (255, MAX (0, 128 + (*rows * *c >> 10)));
+                  c++; rows++;
+                }
+            }
           else
-            while (rows < row_end)
-              {
-                *rows = MIN (255, MAX (0, *rows + (*rows * *c >> 10) ));
-                c++; rows++;
-              }
+            {
+              while (rows < row_end)
+                {
+                  *rows = MIN (255, MAX (0, *rows + (*rows * *c >> 10) ));
+                  c++; rows++;
+                }
+            }
         }
 
-      gimp_pixel_rgn_set_rect (&dst_rgn, src_rows,
-                               ox, y1, cols, height);
-      if (!preview)
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (ox, y1, cols, height), 0,
+                       format, src_rows,
+                       GEGL_AUTO_ROWSTRIDE);
+
+      if (! preview)
         gimp_progress_update (progress += progress_inc);
     }
 
   g_free (src_rows);
 
-  /*
-   * Update the screen...
-   */
+  g_object_unref (src_buffer);
 
   if (preview)
     {
-      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                         &dst_rgn);
+      guchar *buffer = g_new (guchar, width * height * bpp);
+
+      gegl_buffer_get (dest_buffer, GEGL_RECTANGLE (x1, y1, width, height), 1.0,
+                       format, buffer,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      gimp_preview_draw_buffer (GIMP_PREVIEW (preview),
+                                buffer, width * bpp);
+
+      g_free (buffer);
+      g_object_unref (dest_buffer);
     }
   else
     {
+      g_object_unref (dest_buffer);
+
       gimp_progress_update (1.0);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id,
+
+      gimp_drawable_merge_shadow (drawable_ID, TRUE);
+      gimp_drawable_update (drawable_ID,
                             x1, y1, width, height);
     }
+
   g_free (hist);
   g_free (corr);
 }
 
+static void
+destripe_preview (gpointer     drawable_ID,
+                  GimpPreview *preview)
+{
+  destripe (GPOINTER_TO_INT (drawable_ID), preview);
+}
+
+
 static gboolean
-destripe_dialog (GimpDrawable *drawable)
+destripe_dialog (gint32 drawable_ID)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -459,13 +483,13 @@ destripe_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable->drawable_id);
+  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (destripe),
-                            drawable);
+                            G_CALLBACK (destripe_preview),
+                            GINT_TO_POINTER (drawable_ID));
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
