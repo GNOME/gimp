@@ -2482,6 +2482,60 @@ CODE
     );
 }
 
+sub plug_in_neon {
+    $blurb = 'Simulate the glowing boundary of a neon light';
+
+    $help = <<'HELP';
+This filter works in a manner similar to the edge plug-in, but uses
+the first derivative of the gaussian operator to achieve resolution
+independence. The IIR method of calculating the effect is utilized to
+keep the processing time constant between large and small standard
+deviations.
+HELP
+
+    &std_pdb_compat('gegl:edge-neon');
+    $date = '2019';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'radius', type => '0.0 <= float <= 1500.0',
+          desc => 'Radius of neon effect (in pixels)' },
+        { name => 'amount', type => '0.0 <= float <= 100.0',
+          desc => 'Effect enhancement variable' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:edge-neon",
+                                  "radius",    radius,
+                                  "amount",    amount,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Neon"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_nova {
     $blurb = 'Add a starburst to the image';
 
@@ -4895,6 +4949,7 @@ CODE
             plug_in_mblur
             plug_in_mblur_inward
             plug_in_mosaic
+            plug_in_neon
             plug_in_nova
             plug_in_papertile
             plug_in_photocopy

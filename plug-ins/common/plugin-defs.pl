@@ -21,7 +21,6 @@
     'despeckle' => { ui => 1, gegl => 1 },
     'destripe' => { ui => 1, gegl => 1 },
     'edge-dog' => { ui => 1 },
-    'edge-neon' => { ui => 1 },
     'emboss' => { ui => 1 },
     'file-aa' => { ui => 1, gegl => 1, optional => 1, libs => 'AA_LIBS' },
     'file-cel' => { ui => 1, gegl => 1 },

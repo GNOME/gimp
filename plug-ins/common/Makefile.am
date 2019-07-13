@@ -67,7 +67,6 @@ depth_merge_libexecdir = $(gimpplugindir)/plug-ins/depth-merge
 despeckle_libexecdir = $(gimpplugindir)/plug-ins/despeckle
 destripe_libexecdir = $(gimpplugindir)/plug-ins/destripe
 edge_dog_libexecdir = $(gimpplugindir)/plug-ins/edge-dog
-edge_neon_libexecdir = $(gimpplugindir)/plug-ins/edge-neon
 emboss_libexecdir = $(gimpplugindir)/plug-ins/emboss
 file_aa_libexecdir = $(gimpplugindir)/plug-ins/file-aa
 file_cel_libexecdir = $(gimpplugindir)/plug-ins/file-cel
@@ -157,7 +156,6 @@ depth_merge_libexec_PROGRAMS = depth-merge
 despeckle_libexec_PROGRAMS = despeckle
 destripe_libexec_PROGRAMS = destripe
 edge_dog_libexec_PROGRAMS = edge-dog
-edge_neon_libexec_PROGRAMS = edge-neon
 emboss_libexec_PROGRAMS = emboss
 file_aa_libexec_PROGRAMS = $(FILE_AA)
 file_cel_libexec_PROGRAMS = file-cel
@@ -612,23 +610,6 @@ edge_dog_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(edge_dog_RC)
-
-edge_neon_SOURCES = \
-	edge-neon.c
-
-edge_neon_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(edge_neon_RC)
 
 emboss_SOURCES = \
 	emboss.c
