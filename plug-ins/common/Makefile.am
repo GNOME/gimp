@@ -53,7 +53,6 @@ border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
 busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
 checkerboard_libexecdir = $(gimpplugindir)/plug-ins/checkerboard
 cml_explorer_libexecdir = $(gimpplugindir)/plug-ins/cml-explorer
-color_cube_analyze_libexecdir = $(gimpplugindir)/plug-ins/color-cube-analyze
 colorify_libexecdir = $(gimpplugindir)/plug-ins/colorify
 colormap_remap_libexecdir = $(gimpplugindir)/plug-ins/colormap-remap
 compose_libexecdir = $(gimpplugindir)/plug-ins/compose
@@ -137,7 +136,6 @@ border_average_libexec_PROGRAMS = border-average
 busy_dialog_libexec_PROGRAMS = busy-dialog
 checkerboard_libexec_PROGRAMS = checkerboard
 cml_explorer_libexec_PROGRAMS = cml-explorer
-color_cube_analyze_libexec_PROGRAMS = color-cube-analyze
 colorify_libexec_PROGRAMS = colorify
 colormap_remap_libexec_PROGRAMS = colormap-remap
 compose_libexec_PROGRAMS = compose
@@ -360,23 +358,6 @@ cml_explorer_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(cml_explorer_RC)
-
-color_cube_analyze_SOURCES = \
-	color-cube-analyze.c
-
-color_cube_analyze_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(color_cube_analyze_RC)
 
 colorify_SOURCES = \
 	colorify.c
