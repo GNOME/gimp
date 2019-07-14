@@ -10,7 +10,6 @@ color_cube_analyze_RC = color-cube-analyze.rc.o
 colorify_RC = colorify.rc.o
 colormap_remap_RC = colormap-remap.rc.o
 compose_RC = compose.rc.o
-contrast_normalize_RC = contrast-normalize.rc.o
 contrast_retinex_RC = contrast-retinex.rc.o
 crop_zealous_RC = crop-zealous.rc.o
 curve_bend_RC = curve-bend.rc.o

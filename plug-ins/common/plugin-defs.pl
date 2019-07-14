@@ -12,7 +12,6 @@
     'colorify' => { ui => 1 },
     'colormap-remap' => { ui => 1, gegl => 1 },
     'compose' => { ui => 1, gegl => 1 },
-    'contrast-normalize' => {},
     'contrast-retinex' => { ui => 1, gegl => 1 },
     'crop-zealous' => { gegl => 1 },
     'curve-bend' => { ui => 1, gegl => 1 },
