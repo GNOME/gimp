@@ -2788,6 +2788,46 @@ plug_in_neon_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_normalize_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:stretch-contrast",
+                                      "keep-colors", TRUE,
+                                      "perceptual",  TRUE,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Normalize"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_nova_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -7099,6 +7139,42 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Effect enhancement variable",
                                                     0.0, 100.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-normalize
+   */
+  procedure = gimp_procedure_new (plug_in_normalize_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-normalize");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-normalize",
+                                     "Stretch brightness values to cover the full range",
+                                     "This plug-in performs almost the same operation as the 'contrast autostretch' plug-in, except that it won't allow the color channels to normalize independently. This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable color-tint from a source image which is supposed to contain pure-white and pure-black.",
+                                     "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

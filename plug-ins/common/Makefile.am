@@ -61,7 +61,6 @@ color_enhance_libexecdir = $(gimpplugindir)/plug-ins/color-enhance
 colorify_libexecdir = $(gimpplugindir)/plug-ins/colorify
 colormap_remap_libexecdir = $(gimpplugindir)/plug-ins/colormap-remap
 compose_libexecdir = $(gimpplugindir)/plug-ins/compose
-contrast_normalize_libexecdir = $(gimpplugindir)/plug-ins/contrast-normalize
 contrast_retinex_libexecdir = $(gimpplugindir)/plug-ins/contrast-retinex
 crop_zealous_libexecdir = $(gimpplugindir)/plug-ins/crop-zealous
 curve_bend_libexecdir = $(gimpplugindir)/plug-ins/curve-bend
@@ -155,7 +154,6 @@ color_enhance_libexec_PROGRAMS = color-enhance
 colorify_libexec_PROGRAMS = colorify
 colormap_remap_libexec_PROGRAMS = colormap-remap
 compose_libexec_PROGRAMS = compose
-contrast_normalize_libexec_PROGRAMS = contrast-normalize
 contrast_retinex_libexec_PROGRAMS = contrast-retinex
 crop_zealous_libexec_PROGRAMS = crop-zealous
 curve_bend_libexec_PROGRAMS = curve-bend
@@ -517,21 +515,6 @@ compose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(compose_RC)
-
-contrast_normalize_SOURCES = \
-	contrast-normalize.c
-
-contrast_normalize_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(contrast_normalize_RC)
 
 contrast_retinex_SOURCES = \
 	contrast-retinex.c
