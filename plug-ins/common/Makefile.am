@@ -115,7 +115,6 @@ plugin_browser_libexecdir = $(gimpplugindir)/plug-ins/plugin-browser
 procedure_browser_libexecdir = $(gimpplugindir)/plug-ins/procedure-browser
 qbist_libexecdir = $(gimpplugindir)/plug-ins/qbist
 sample_colorize_libexecdir = $(gimpplugindir)/plug-ins/sample-colorize
-sharpen_libexecdir = $(gimpplugindir)/plug-ins/sharpen
 smooth_palette_libexecdir = $(gimpplugindir)/plug-ins/smooth-palette
 sparkle_libexecdir = $(gimpplugindir)/plug-ins/sparkle
 sphere_designer_libexecdir = $(gimpplugindir)/plug-ins/sphere-designer
@@ -198,7 +197,6 @@ plugin_browser_libexec_PROGRAMS = plugin-browser
 procedure_browser_libexec_PROGRAMS = procedure-browser
 qbist_libexec_PROGRAMS = qbist
 sample_colorize_libexec_PROGRAMS = sample-colorize
-sharpen_libexec_PROGRAMS = sharpen
 smooth_palette_libexec_PROGRAMS = smooth-palette
 sparkle_libexec_PROGRAMS = sparkle
 sphere_designer_libexec_PROGRAMS = sphere-designer
@@ -1480,23 +1478,6 @@ sample_colorize_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sample_colorize_RC)
-
-sharpen_SOURCES = \
-	sharpen.c
-
-sharpen_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(sharpen_RC)
 
 smooth_palette_SOURCES = \
 	smooth-palette.c
