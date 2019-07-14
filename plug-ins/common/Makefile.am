@@ -49,7 +49,6 @@ AM_CPPFLAGS = \
 align_layers_libexecdir = $(gimpplugindir)/plug-ins/align-layers
 animation_optimize_libexecdir = $(gimpplugindir)/plug-ins/animation-optimize
 blinds_libexecdir = $(gimpplugindir)/plug-ins/blinds
-blur_libexecdir = $(gimpplugindir)/plug-ins/blur
 border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
 busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
 checkerboard_libexecdir = $(gimpplugindir)/plug-ins/checkerboard
@@ -134,7 +133,6 @@ web_page_libexecdir = $(gimpplugindir)/plug-ins/web-page
 align_layers_libexec_PROGRAMS = align-layers
 animation_optimize_libexec_PROGRAMS = animation-optimize
 blinds_libexec_PROGRAMS = blinds
-blur_libexec_PROGRAMS = blur
 border_average_libexec_PROGRAMS = border-average
 busy_dialog_libexec_PROGRAMS = busy-dialog
 checkerboard_libexec_PROGRAMS = checkerboard
@@ -290,21 +288,6 @@ blinds_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blinds_RC)
-
-blur_SOURCES = \
-	blur.c
-
-blur_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(blur_RC)
 
 border_average_SOURCES = \
 	border-average.c

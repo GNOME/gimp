@@ -3,7 +3,6 @@
     'animation-optimize' => {},
 # FIXME 'animation-play' => { ui => 1, gegl => 1 },
     'blinds' => { ui => 1, gegl => 1 },
-    'blur' => {},
     'border-average' => { ui => 1, gegl => 1 },
     'busy-dialog' => { ui => 1, gegl => 1 },
     'checkerboard' => { ui => 1, gegl => 1 },

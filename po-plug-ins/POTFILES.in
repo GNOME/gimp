@@ -7,7 +7,6 @@ plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
 #plug-ins/common/animation-play.c
 plug-ins/common/blinds.c
-plug-ins/common/blur.c
 plug-ins/common/border-average.c
 plug-ins/common/busy-dialog.c
 plug-ins/common/checkerboard.c
