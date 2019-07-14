@@ -1441,6 +1441,85 @@ plug_in_displace_polar_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_dog_invoker (GimpProcedure         *procedure,
+                     Gimp                  *gimp,
+                     GimpContext           *context,
+                     GimpProgress          *progress,
+                     const GimpValueArray  *args,
+                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpDrawable *drawable;
+  gdouble inner;
+  gdouble outer;
+  gboolean normalize;
+  gboolean invert;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  inner = g_value_get_double (gimp_value_array_index (args, 3));
+  outer = g_value_get_double (gimp_value_array_index (args, 4));
+  normalize = g_value_get_boolean (gimp_value_array_index (args, 5));
+  invert = g_value_get_boolean (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          if (normalize || invert)
+            gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+                                         C_("undo-type", "DoG Edge Detect"));
+
+          node = gegl_node_new_child (NULL,
+                                      "operation", "gegl:difference-of-gaussians",
+                                      "radius1",   inner * 0.32,
+                                      "radius2",   outer * 0.32,
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "DoG Edge Detect"),
+                                         node);
+          g_object_unref (node);
+
+          if (normalize)
+            {
+              node = gegl_node_new_child (NULL,
+                                          "operation",   "gegl:stretch-contrast",
+                                          "keep-colors", TRUE,
+                                          "perceptual",  TRUE,
+                                          NULL);
+
+              gimp_drawable_apply_operation (drawable, progress,
+                                             C_("undo-type", "Normalize"),
+                                             node);
+              g_object_unref (node);
+            }
+
+          if (invert)
+            gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                   C_("undo-type", "Invert"),
+                                                   "gegl:invert-gamma",
+                                                   NULL);
+
+          if (normalize || invert)
+            gimp_image_undo_group_end (image);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_edge_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -5586,6 +5665,66 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
                                                       1, 3, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-dog
+   */
+  procedure = gimp_procedure_new (plug_in_dog_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-dog");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-dog",
+                                     "Edge detection with control of edge thickness",
+                                     "Applies two Gaussian blurs to the drawable, and subtracts the results. This is robust and widely used method for detecting edges.",
+                                     "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("inner",
+                                                    "inner",
+                                                    "Radius of inner gaussian blur in pixels",
+                                                    0.0, 10.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("outer",
+                                                    "outer",
+                                                    "Radius of outer gaussian blur in pixels",
+                                                    0.0, 10.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("normalize",
+                                                     "normalize",
+                                                     "Normalize",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("invert",
+                                                     "invert",
+                                                     "Invert",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

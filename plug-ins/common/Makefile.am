@@ -65,7 +65,6 @@ decompose_libexecdir = $(gimpplugindir)/plug-ins/decompose
 depth_merge_libexecdir = $(gimpplugindir)/plug-ins/depth-merge
 despeckle_libexecdir = $(gimpplugindir)/plug-ins/despeckle
 destripe_libexecdir = $(gimpplugindir)/plug-ins/destripe
-edge_dog_libexecdir = $(gimpplugindir)/plug-ins/edge-dog
 emboss_libexecdir = $(gimpplugindir)/plug-ins/emboss
 file_aa_libexecdir = $(gimpplugindir)/plug-ins/file-aa
 file_cel_libexecdir = $(gimpplugindir)/plug-ins/file-cel
@@ -153,7 +152,6 @@ decompose_libexec_PROGRAMS = decompose
 depth_merge_libexec_PROGRAMS = depth-merge
 despeckle_libexec_PROGRAMS = despeckle
 destripe_libexec_PROGRAMS = destripe
-edge_dog_libexec_PROGRAMS = edge-dog
 emboss_libexec_PROGRAMS = emboss
 file_aa_libexec_PROGRAMS = $(FILE_AA)
 file_cel_libexec_PROGRAMS = file-cel
@@ -576,23 +574,6 @@ destripe_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(destripe_RC)
-
-edge_dog_SOURCES = \
-	edge-dog.c
-
-edge_dog_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(edge_dog_RC)
 
 emboss_SOURCES = \
 	emboss.c

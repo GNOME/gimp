@@ -1255,6 +1255,90 @@ CODE
     );
 }
 
+sub plug_in_dog {
+    $blurb = 'Edge detection with control of edge thickness';
+
+    $help = <<'HELP';
+Applies two Gaussian blurs to the drawable, and subtracts the results.
+This is robust and widely used method for detecting edges.
+HELP
+
+    &std_pdb_compat('gegl:difference-of-gaussians');
+    $date = '2015';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'inner', type => '0.0 <= float <= 10.0',
+          desc => 'Radius of inner gaussian blur in pixels' },
+        { name => 'outer', type => '0.0 <= float <= 10.0',
+          desc => 'Radius of outer gaussian blur in pixels' },
+        { name => 'normalize', type => 'boolean',
+          desc => 'Normalize' },
+        { name => 'invert', type => 'boolean',
+          desc => 'Invert' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      if (normalize || invert)
+        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+                                     C_("undo-type", "DoG Edge Detect"));
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:difference-of-gaussians",
+                                  "radius1",   inner * 0.32,
+                                  "radius2",   outer * 0.32,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "DoG Edge Detect"),
+                                     node);
+      g_object_unref (node);
+
+      if (normalize)
+        {
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:stretch-contrast",
+                                      "keep-colors", TRUE,
+                                      "perceptual",  TRUE,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Normalize"),
+                                         node);
+          g_object_unref (node);
+        }
+
+      if (invert)
+        gimp_drawable_apply_operation_by_name (drawable, progress,
+                                               C_("undo-type", "Invert"),
+                                               "gegl:invert-gamma",
+                                               NULL);
+
+      if (normalize || invert)
+        gimp_image_undo_group_end (image);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_edge {
     $blurb = 'Several simple methods for detecting edges';
 
@@ -4980,6 +5064,7 @@ CODE
             plug_in_diffraction
             plug_in_displace
             plug_in_displace_polar
+            plug_in_dog
             plug_in_edge
             plug_in_engrave
             plug_in_exchange
