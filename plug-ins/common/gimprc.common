@@ -72,7 +72,6 @@ qbist_RC = qbist.rc.o
 sample_colorize_RC = sample-colorize.rc.o
 sharpen_RC = sharpen.rc.o
 smooth_palette_RC = smooth-palette.rc.o
-softglow_RC = softglow.rc.o
 sparkle_RC = sparkle.rc.o
 sphere_designer_RC = sphere-designer.rc.o
 tile_RC = tile.rc.o

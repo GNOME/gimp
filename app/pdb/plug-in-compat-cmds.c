@@ -3810,6 +3810,54 @@ plug_in_sobel_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_softglow_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble glow_radius;
+  gdouble brightness;
+  gdouble sharpness;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  glow_radius = g_value_get_double (gimp_value_array_index (args, 3));
+  brightness = g_value_get_double (gimp_value_array_index (args, 4));
+  sharpness = g_value_get_double (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation",  "gegl:softglow",
+                                 "glow-radius", glow_radius,
+                                 "brightness",  brightness,
+                                 "sharpness",   sharpness,
+                                 NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Softglow"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_solid_noise_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -8208,6 +8256,60 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      "Keep sign of result (one direction only)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-softglow
+   */
+  procedure = gimp_procedure_new (plug_in_softglow_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-softglow");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-softglow",
+                                     "Simulate glow by making highlights intense and fuzzy",
+                                     "Gives an image a softglow effect by intensifying the highlights in the image. This is done by screening a modified version of the drawable with itself. The modified version is desaturated and then a sigmoidal transfer function is applied to force the distribution of intensities into very small and very large only. This desaturated version is then blurred to give it a fuzzy 'vaseline-on-the-lens' effect. The glow radius parameter controls the sharpness of the glow effect. The brightness parameter controls the degree of intensification applied to image highlights. The sharpness parameter controls how defined or alternatively, diffuse, the glow effect should be.",
+                                     "Compatibility procedure. Please see 'gegl:softglow' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:softglow' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("glow-radius",
+                                                    "glow radius",
+                                                    "Glow radius in pixels",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("brightness",
+                                                    "brightness",
+                                                    "Glow brightness",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("sharpness",
+                                                    "sharpness",
+                                                    "Glow sharpness",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

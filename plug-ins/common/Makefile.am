@@ -120,7 +120,6 @@ qbist_libexecdir = $(gimpplugindir)/plug-ins/qbist
 sample_colorize_libexecdir = $(gimpplugindir)/plug-ins/sample-colorize
 sharpen_libexecdir = $(gimpplugindir)/plug-ins/sharpen
 smooth_palette_libexecdir = $(gimpplugindir)/plug-ins/smooth-palette
-softglow_libexecdir = $(gimpplugindir)/plug-ins/softglow
 sparkle_libexecdir = $(gimpplugindir)/plug-ins/sparkle
 sphere_designer_libexecdir = $(gimpplugindir)/plug-ins/sphere-designer
 tile_libexecdir = $(gimpplugindir)/plug-ins/tile
@@ -207,7 +206,6 @@ qbist_libexec_PROGRAMS = qbist
 sample_colorize_libexec_PROGRAMS = sample-colorize
 sharpen_libexec_PROGRAMS = sharpen
 smooth_palette_libexec_PROGRAMS = smooth-palette
-softglow_libexec_PROGRAMS = softglow
 sparkle_libexec_PROGRAMS = sparkle
 sphere_designer_libexec_PROGRAMS = sphere-designer
 tile_libexec_PROGRAMS = tile
@@ -1572,23 +1570,6 @@ smooth_palette_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(smooth_palette_RC)
-
-softglow_SOURCES = \
-	softglow.c
-
-softglow_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(softglow_RC)
 
 sparkle_SOURCES = \
 	sparkle.c

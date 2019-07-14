@@ -3981,6 +3981,69 @@ CODE
     );
 }
 
+sub plug_in_softglow {
+    $blurb = 'Simulate glow by making highlights intense and fuzzy';
+
+    $help = <<'HELP';
+Gives an image a softglow effect by intensifying the highlights in the
+image. This is done by screening a modified version of the drawable
+with itself. The modified version is desaturated and then a sigmoidal
+transfer function is applied to force the distribution of intensities
+into very small and very large only. This desaturated version is then
+blurred to give it a fuzzy 'vaseline-on-the-lens' effect. The glow
+radius parameter controls the sharpness of the glow effect. The
+brightness parameter controls the degree of intensification applied to
+image highlights. The sharpness parameter controls how defined or
+alternatively, diffuse, the glow effect should be.
+HELP
+
+    &std_pdb_compat('gegl:softglow');
+    $date = '2019';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'glow_radius', type => '0 <= float',
+	  desc => 'Glow radius in pixels' },
+	{ name => 'brightness', type => '0.0 <= float <= 1.0',
+	  desc => 'Glow brightness' },
+	{ name => 'sharpness', type => '0.0 <= float <= 1.0',
+	  desc => 'Glow sharpness' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation",  "gegl:softglow",
+                             "glow-radius", glow_radius,
+                             "brightness",  brightness,
+                             "sharpness",   sharpness,
+                             NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Softglow"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_solid_noise {
     $blurb = 'Create a random cloud-like texture';
 
@@ -5107,6 +5170,7 @@ CODE
             plug_in_shift
             plug_in_sinus
             plug_in_sobel
+            plug_in_softglow
             plug_in_solid_noise
             plug_in_spread
             plug_in_threshold_alpha
