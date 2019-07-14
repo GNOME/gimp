@@ -14,31 +14,20 @@
   )
 
   (define (spline-chrome-it)
-    (let* ((a (cons-array 18 'byte)))
-      (set-pt a 0 0 0)
-      (set-pt a 1 31 235)
-      (set-pt a 2 63 23)
-      (set-pt a 3 95 230)
-      (set-pt a 4 127 25)
-      (set-pt a 5 159 210)
-      (set-pt a 6 191 20)
-      (set-pt a 7 223 240)
-      (set-pt a 8 255 31)
+    (let* ((a (cons-array 18 'double)))
+      (set-pt a 0 0.0   0.0)
+      (set-pt a 1 0.125 0.9216)
+      (set-pt a 2 0.25  0.0902)
+      (set-pt a 3 0.375 0.9020)
+      (set-pt a 4 0.5   0.0989)
+      (set-pt a 5 0.625 0.9549)
+      (set-pt a 6 0.75  00784)
+      (set-pt a 7 0.875 0.9412)
+      (set-pt a 8 1.0   0.1216)
       a
     )
   )
 
-  (define (brush brush-size)
-    (cond ((<= brush-size 5) "Circle Fuzzy (05)")
-          ((<= brush-size 7) "Circle Fuzzy (07)")
-          ((<= brush-size 9) "Circle Fuzzy (09)")
-          ((<= brush-size 11) "Circle Fuzzy (11)")
-          ((<= brush-size 13) "Circle Fuzzy (13)")
-          ((<= brush-size 15) "Circle Fuzzy (15)")
-          ((<= brush-size 17) "Circle Fuzzy (17)")
-          (else "Circle Fuzzy (19)")
-    )
-  )
 
   (define (shadows val)
     (/ (* 0.96 val) 2.55)
@@ -99,6 +88,7 @@
         (offy2 (sota-scale size (- 0.25) chrome-factor))
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
+        (brush-name (car (gimp-brush-new "Chrome It")))
         (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
         (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 LAYER-MODE-NORMAL)))
         (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 LAYER-MODE-NORMAL)))
@@ -154,7 +144,7 @@
     (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    (gimp-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
+    (gimp-drawable-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-MASK-BLACK)))
     (gimp-layer-add-mask layer1 layer-mask)
@@ -164,7 +154,17 @@
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-insert-layer img layer2 0 0)
-    (gimp-context-set-brush (brush brush-size))
+
+    (gimp-brush-set-shape brush-name BRUSH-GENERATED-CIRCLE)
+    (gimp-brush-set-spikes brush-name 2)
+    (gimp-brush-set-hardness brush-name 1.0)
+    (gimp-brush-set-spacing brush-name 25)
+    (gimp-brush-set-aspect-ratio brush-name 1)
+    (gimp-brush-set-angle brush-name 0)
+    (cond (<= brush-size 17) (gimp-brush-set-radius brush-name (\ brush-size 2))
+	  (else gimp-brush-set-radius brush-name (\ 19 2)))
+    (gimp-context-set-brush brush-name)
+
     (gimp-context-set-foreground '(255 255 255))
     (gimp-drawable-edit-stroke-selection layer-mask)
 
@@ -218,6 +218,8 @@
     (gimp-item-set-name layer1 _"Highlight")
 
     (gimp-image-remove-channel img mask)
+
+    (gimp-brush-delete brush-name)
 
     (gimp-display-new img)
     (gimp-image-undo-enable img)
