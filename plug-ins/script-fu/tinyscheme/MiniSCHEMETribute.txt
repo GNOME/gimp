@@ -6,7 +6,7 @@
      but it was probably ten times bigger that the program it was supposed to
      be embedded in. There would also be thorny licencing issues. 
      
-     So, the obvious thing to do was find a trully small interpreter. Forth
+     So, the obvious thing to do was find a truly small interpreter. Forth
      was a language I had once quasi-implemented, but the difficulty of
      handling dynamic data and the weirdness of the language put me off. I then
      looked around for a LISP interpreter, the next thing I knew was easy to

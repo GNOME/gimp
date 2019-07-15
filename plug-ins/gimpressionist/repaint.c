@@ -100,7 +100,7 @@ static int
 get_hue (guchar *rgb)
 {
   double h, v, temp, diff;
-  /* TODO : There seems to be some typoes in the comments here.
+  /* TODO : There seems to be some typos in the comments here.
    * Ask vidar what he meant.
    * */
   if ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2])) /* Gray */
