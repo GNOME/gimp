@@ -139,6 +139,7 @@ gimp_display_shell_filter_changed_idle (gpointer data)
 
   gimp_display_shell_profile_update (shell);
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 
   shell->filter_idle_id = 0;
 

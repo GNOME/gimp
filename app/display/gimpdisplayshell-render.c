@@ -28,9 +28,6 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
@@ -41,37 +38,128 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-profile.h"
 #include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayxfer.h"
 
+
+void
+gimp_display_shell_render_invalidate_full (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  g_clear_pointer (&shell->render_cache_valid, cairo_region_destroy);
+}
+
+void
+gimp_display_shell_render_invalidate_area (GimpDisplayShell *shell,
+                                           gint              x,
+                                           gint              y,
+                                           gint              width,
+                                           gint              height)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->render_cache_valid)
+    {
+      cairo_rectangle_int_t rect;
+
+      rect.x      = x;
+      rect.y      = y;
+      rect.width  = width;
+      rect.height = height;
+
+      cairo_region_subtract_rectangle (shell->render_cache_valid, &rect);
+    }
+}
+
+void
+gimp_display_shell_render_validate_area (GimpDisplayShell *shell,
+                                         gint              x,
+                                         gint              y,
+                                         gint              width,
+                                         gint              height)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->render_cache_valid)
+    {
+      cairo_rectangle_int_t rect;
+
+      rect.x      = x;
+      rect.y      = y;
+      rect.width  = width;
+      rect.height = height;
+
+      cairo_region_union_rectangle (shell->render_cache_valid, &rect);
+    }
+}
+
+gboolean
+gimp_display_shell_render_is_valid (GimpDisplayShell *shell,
+                                    gint              x,
+                                    gint              y,
+                                    gint              width,
+                                    gint              height)
+{
+  if (shell->render_cache_valid)
+    {
+      cairo_rectangle_int_t  rect;
+      cairo_region_overlap_t overlap;
+
+      rect.x      = x;
+      rect.y      = y;
+      rect.width  = width;
+      rect.height = height;
+
+      overlap = cairo_region_contains_rectangle (shell->render_cache_valid,
+                                                 &rect);
+
+      return (overlap == CAIRO_REGION_OVERLAP_IN);
+    }
+
+  return FALSE;
+}
 
 void
 gimp_display_shell_render (GimpDisplayShell *shell,
                            cairo_t          *cr,
-                           gint              x,
-                           gint              y,
-                           gint              w,
-                           gint              h,
+                           gint              tx,
+                           gint              ty,
+                           gint              twidth,
+                           gint              theight,
                            gdouble           scale)
 {
-  GimpImage       *image;
-  GeglBuffer      *buffer;
+  GimpImage  *image;
+  GeglBuffer *buffer;
 #ifdef USE_NODE_BLIT
-  GeglNode        *node;
+  GeglNode   *node;
 #endif
-  cairo_surface_t *xfer;
-  gint             xfer_src_x;
-  gint             xfer_src_y;
-  gint             mask_src_x = 0;
-  gint             mask_src_y = 0;
-  gint             cairo_stride;
-  guchar          *cairo_data;
+  cairo_t    *my_cr;
+  gint        cairo_stride;
+  guchar     *cairo_data;
+  gdouble     x1, y1;
+  gdouble     x2, y2;
+  gint        x;
+  gint        y;
+  gint        width;
+  gint        height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
-  g_return_if_fail (w > 0 && w <= GIMP_DISPLAY_RENDER_BUF_WIDTH);
-  g_return_if_fail (h > 0 && h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT);
   g_return_if_fail (scale > 0.0);
+
+  /* map chunk from screen space to scaled image space */
+  gimp_display_shell_untransform_bounds_with_scale (shell, scale,
+                                                    tx, ty,
+                                                    tx + twidth, ty + theight,
+                                                    &x1, &y1,
+                                                    &x2, &y2);
+
+  x      = floor (x1);
+  y      = floor (y1);
+  width  = ceil  (x2) - x;
+  height = ceil  (y2) - y;
+
+  g_return_if_fail (width  > 0 && width  <= shell->render_buf_width);
+  g_return_if_fail (height > 0 && height <= shell->render_buf_height);
 
   image  = gimp_display_get_image (shell->display);
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
@@ -81,12 +169,45 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gimp_projectable_begin_render (GIMP_PROJECTABLE (image));
 #endif
 
-  xfer = gimp_display_xfer_get_surface (shell->xfer, w, h,
-                                        &xfer_src_x, &xfer_src_y);
+  if (! shell->render_surface)
+    {
+      shell->render_surface =
+        cairo_surface_create_similar_image (cairo_get_target (cr),
+                                            CAIRO_FORMAT_ARGB32,
+                                            shell->render_buf_width,
+                                            shell->render_buf_height);
+    }
 
-  cairo_stride = cairo_image_surface_get_stride (xfer);
-  cairo_data   = cairo_image_surface_get_data (xfer) +
-                 xfer_src_y * cairo_stride + xfer_src_x * 4;
+  cairo_surface_flush (shell->render_surface);
+
+  if (! shell->render_cache)
+    {
+      shell->render_cache =
+        cairo_surface_create_similar_image (cairo_get_target (cr),
+                                            CAIRO_FORMAT_ARGB32,
+                                            shell->disp_width,
+                                            shell->disp_height);
+    }
+
+  if (! shell->render_cache_valid)
+    {
+      shell->render_cache_valid = cairo_region_create ();
+    }
+
+  my_cr = cairo_create (shell->render_cache);
+
+  /* clip to chunk bounds, in screen space */
+  cairo_rectangle (my_cr, tx, ty, twidth, theight);
+  cairo_clip (my_cr);
+
+  /* transform to scaled image space, and apply uneven scaling */
+  if (shell->rotate_transform)
+    cairo_transform (my_cr, shell->rotate_transform);
+  cairo_translate (my_cr, -shell->offset_x, -shell->offset_y);
+  cairo_scale (my_cr, shell->scale_x / scale, shell->scale_y / scale);
+
+  cairo_stride = cairo_image_surface_get_stride (shell->render_surface);
+  cairo_data   = cairo_image_surface_get_data (shell->render_surface);
 
   if (shell->profile_transform ||
       gimp_display_shell_has_filter (shell))
@@ -105,8 +226,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       if ((gimp_display_shell_has_filter (shell) || ! can_convert_to_u8) &&
           ! shell->filter_buffer)
         {
-          gint fw = GIMP_DISPLAY_RENDER_BUF_WIDTH;
-          gint fh = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
+          gint fw = shell->render_buf_width;
+          gint fh = shell->render_buf_height;
 
           shell->filter_data =
             gegl_malloc (fw * fh *
@@ -131,13 +252,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
            */
 #ifndef USE_NODE_BLIT
           gegl_buffer_get (buffer,
-                           GEGL_RECTANGLE (x, y, w, h), scale,
+                           GEGL_RECTANGLE (x, y, width, height), scale,
                            gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                            shell->profile_data, shell->profile_stride,
                            GEGL_ABYSS_CLAMP);
 #else
           gegl_node_blit (node,
-                          scale, GEGL_RECTANGLE (x, y, w, h),
+                          scale, GEGL_RECTANGLE (x, y, width, height),
                           gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                           shell->profile_data, shell->profile_stride,
                           GEGL_BLIT_CACHE);
@@ -149,13 +270,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
            */
 #ifndef USE_NODE_BLIT
           gegl_buffer_get (buffer,
-                           GEGL_RECTANGLE (x, y, w, h), scale,
+                           GEGL_RECTANGLE (x, y, width, height), scale,
                            shell->filter_format,
                            shell->filter_data, shell->filter_stride,
                            GEGL_ABYSS_CLAMP);
 #else
           gegl_node_blit (node,
-                          scale, GEGL_RECTANGLE (x, y, w, h),
+                          scale, GEGL_RECTANGLE (x, y, width, height),
                           shell->filter_format,
                           shell->filter_data, shell->filter_stride,
                           GEGL_BLIT_CACHE);
@@ -169,9 +290,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
         {
           gimp_color_transform_process_buffer (shell->filter_transform,
                                                shell->profile_buffer,
-                                               GEGL_RECTANGLE (0, 0, w, h),
+                                               GEGL_RECTANGLE (0, 0,
+                                                               width, height),
                                                shell->filter_buffer,
-                                               GEGL_RECTANGLE (0, 0, w, h));
+                                               GEGL_RECTANGLE (0, 0,
+                                                               width, height));
         }
 
       /*  if there are filters, apply them
@@ -194,7 +317,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
            */
           gimp_color_display_stack_convert_buffer (shell->filter_stack,
                                                    filter_buffer,
-                                                   GEGL_RECTANGLE (x, y, w, h));
+                                                   GEGL_RECTANGLE (x, y,
+                                                                   width, height));
 
           g_object_unref (filter_buffer);
         }
@@ -210,9 +334,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                */
               gimp_color_transform_process_buffer (shell->profile_transform,
                                                    shell->filter_buffer,
-                                                   GEGL_RECTANGLE (0, 0, w, h),
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   width, height),
                                                    shell->filter_buffer,
-                                                   GEGL_RECTANGLE (0, 0, w, h));
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   width, height));
             }
           else if (! can_convert_to_u8)
             {
@@ -221,16 +347,19 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                */
               gimp_color_transform_process_buffer (shell->profile_transform,
                                                    shell->profile_buffer,
-                                                   GEGL_RECTANGLE (0, 0, w, h),
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   width, height),
                                                    shell->filter_buffer,
-                                                   GEGL_RECTANGLE (0, 0, w, h));
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   width, height));
             }
           else
             {
               GeglBuffer *buffer =
                 gegl_buffer_linear_new_from_data (cairo_data,
                                                   babl_format ("cairo-ARGB32"),
-                                                  GEGL_RECTANGLE (0, 0, w, h),
+                                                  GEGL_RECTANGLE (0, 0,
+                                                                  width, height),
                                                   cairo_stride,
                                                   NULL, NULL);
 
@@ -239,9 +368,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                */
               gimp_color_transform_process_buffer (shell->profile_transform,
                                                    shell->profile_buffer,
-                                                   GEGL_RECTANGLE (0, 0, w, h),
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   width, height),
                                                    buffer,
-                                                   GEGL_RECTANGLE (0, 0, w, h));
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   width, height));
               g_object_unref (buffer);
             }
         }
@@ -252,7 +383,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
         {
           gegl_buffer_get (shell->filter_buffer,
-                           GEGL_RECTANGLE (0, 0, w, h), 1.0,
+                           GEGL_RECTANGLE (0, 0, width, height), 1.0,
                            babl_format ("cairo-ARGB32"),
                            cairo_data, cairo_stride,
                            GEGL_ABYSS_CLAMP);
@@ -265,13 +396,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
        */
 #ifndef USE_NODE_BLIT
       gegl_buffer_get (buffer,
-                       GEGL_RECTANGLE (x, y, w, h), scale,
+                       GEGL_RECTANGLE (x, y, width, height), scale,
                        babl_format ("cairo-ARGB32"),
                        cairo_data, cairo_stride,
                        GEGL_ABYSS_CLAMP);
 #else
       gegl_node_blit (node,
-                      scale, GEGL_RECTANGLE (x, y, w, h),
+                      scale, GEGL_RECTANGLE (x, y, width, height),
                       babl_format ("cairo-ARGB32"),
                       cairo_data, cairo_stride,
                       GEGL_BLIT_CACHE);
@@ -282,26 +413,30 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gimp_projectable_end_render (GIMP_PROJECTABLE (image));
 #endif
 
+  cairo_surface_mark_dirty (shell->render_surface);
+
+  cairo_set_source_surface (my_cr, shell->render_surface, x, y);
+  cairo_paint (my_cr);
+
   if (shell->mask)
     {
       if (! shell->mask_surface)
         {
           shell->mask_surface =
             cairo_image_surface_create (CAIRO_FORMAT_A8,
-                                        GIMP_DISPLAY_RENDER_BUF_WIDTH,
-                                        GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+                                        shell->render_buf_width,
+                                        shell->render_buf_height);
         }
 
-      cairo_surface_mark_dirty (shell->mask_surface);
+      cairo_surface_flush (shell->mask_surface);
 
       cairo_stride = cairo_image_surface_get_stride (shell->mask_surface);
-      cairo_data   = cairo_image_surface_get_data (shell->mask_surface) +
-                     mask_src_y * cairo_stride + mask_src_x;
+      cairo_data   = cairo_image_surface_get_data (shell->mask_surface);
 
       gegl_buffer_get (shell->mask,
                        GEGL_RECTANGLE (x - floor (shell->mask_offset_x * scale),
                                        y - floor (shell->mask_offset_y * scale),
-                                       w, h),
+                                       width, height),
                        scale,
                        babl_format ("Y u8"),
                        cairo_data, cairo_stride,
@@ -309,11 +444,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       if (shell->mask_inverted)
         {
-          gint mask_height = h;
+          gint mask_height = height;
 
           while (mask_height--)
             {
-              gint    mask_width = w;
+              gint    mask_width = width;
               guchar *d          = cairo_data;
 
               while (mask_width--)
@@ -326,19 +461,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
               cairo_data += cairo_stride;
             }
         }
+
+      cairo_surface_mark_dirty (shell->mask_surface);
+
+      gimp_cairo_set_source_rgba (my_cr, &shell->mask_color);
+      cairo_mask_surface (my_cr, shell->mask_surface, x, y);
     }
 
-  /*  put it to the screen  */
-  cairo_set_source_surface (cr, xfer,
-                            x - xfer_src_x,
-                            y - xfer_src_y);
-  cairo_paint (cr);
-
-  if (shell->mask)
-    {
-      gimp_cairo_set_source_rgba (cr, &shell->mask_color);
-      cairo_mask_surface (cr, shell->mask_surface,
-                          x - mask_src_x,
-                          y - mask_src_y);
-    }
+  cairo_destroy (my_cr);
 }

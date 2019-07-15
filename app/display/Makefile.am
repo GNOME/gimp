@@ -156,8 +156,6 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-transform.h		\
 	gimpdisplayshell-utils.c		\
 	gimpdisplayshell-utils.h		\
-	gimpdisplayxfer.c			\
-	gimpdisplayxfer.h			\
 	gimpimagewindow.c			\
 	gimpimagewindow.h			\
 	gimpmotionbuffer.c			\

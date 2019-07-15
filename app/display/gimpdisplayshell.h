@@ -166,7 +166,13 @@ struct _GimpDisplayShell
   guchar             *filter_data;     /*  filter_buffer's pixels             */
   gint                filter_stride;   /*  filter_buffer's stride             */
 
-  GimpDisplayXfer   *xfer;             /*  manages image buffer transfers     */
+  cairo_surface_t   *render_cache;
+  cairo_region_t    *render_cache_valid;
+
+  gint               render_buf_width;
+  gint               render_buf_height;
+
+  cairo_surface_t   *render_surface;   /*  buffer for rendering the mask      */
   cairo_surface_t   *mask_surface;     /*  buffer for rendering the mask      */
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 

@@ -29,6 +29,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
@@ -84,6 +85,7 @@ gimp_display_shell_flip (GimpDisplayShell *shell,
       gimp_display_shell_restore_viewport_center (shell, cx, cy);
 
       gimp_display_shell_expose_full (shell);
+      gimp_display_shell_render_invalidate_full (shell);
     }
 }
 
@@ -121,6 +123,7 @@ gimp_display_shell_rotate_to (GimpDisplayShell *shell,
   gimp_display_shell_restore_viewport_center (shell, cx, cy);
 
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 }
 
 void

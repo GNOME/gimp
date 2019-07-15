@@ -61,6 +61,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-profile.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
@@ -840,6 +841,7 @@ gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
       gimp_display_shell_scroll_clamp_and_update (shell);
 
       gimp_display_shell_expose_full (shell);
+      gimp_display_shell_render_invalidate_full (shell);
     }
 }
 
@@ -1048,6 +1050,7 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
       gimp_display_shell_scaled (shell);
 
       gimp_display_shell_expose_full (shell);
+      gimp_display_shell_render_invalidate_full (shell);
     }
 }
 
@@ -1121,6 +1124,7 @@ gimp_display_shell_quality_notify_handler (GObject          *config,
                                            GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 }
 
 static void

@@ -36,6 +36,7 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-rulers.h"
 #include "gimpdisplayshell-scale.h"
@@ -94,6 +95,45 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       gimp_overlay_box_scroll (GIMP_OVERLAY_BOX (shell->canvas),
                                -x_offset, -y_offset);
 
+      if (shell->render_cache)
+        {
+          cairo_surface_t       *surface;
+          cairo_t               *cr;
+
+          surface =
+            cairo_surface_create_similar_image (shell->render_cache,
+                                                CAIRO_FORMAT_ARGB32,
+                                                shell->disp_width,
+                                                shell->disp_height);
+
+          cr = cairo_create (surface);
+          cairo_set_source_surface (cr, shell->render_cache, 0, 0);
+          cairo_paint (cr);
+          cairo_destroy (cr);
+
+          cr = cairo_create (shell->render_cache);
+          cairo_set_source_surface (cr, surface,
+                                    -x_offset, -y_offset);
+          cairo_paint (cr);
+          cairo_destroy (cr);
+
+          cairo_surface_destroy (surface);
+        }
+
+      if (shell->render_cache_valid)
+        {
+          cairo_rectangle_int_t rect;
+
+          cairo_region_translate (shell->render_cache_valid,
+                                  -x_offset, -y_offset);
+
+          rect.x      = 0;
+          rect.y      = 0;
+          rect.width  = shell->disp_width;
+          rect.height = shell->disp_height;
+
+          cairo_region_intersect_rectangle (shell->render_cache_valid, &rect);
+        }
     }
 
   /* re-enable the active tool */
@@ -137,6 +177,7 @@ gimp_display_shell_scroll_set_offset (GimpDisplayShell *shell,
   gimp_display_shell_scrolled (shell);
 
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);

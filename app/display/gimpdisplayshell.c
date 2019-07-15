@@ -723,8 +723,12 @@ gimp_display_shell_dispose (GObject *object)
       shell->filter_idle_id = 0;
     }
 
-  g_clear_pointer (&shell->mask_surface, cairo_surface_destroy);
-  g_clear_pointer (&shell->checkerboard, cairo_pattern_destroy);
+  g_clear_pointer (&shell->render_cache,       cairo_surface_destroy);
+  g_clear_pointer (&shell->render_cache_valid, cairo_region_destroy);
+
+  g_clear_pointer (&shell->render_surface, cairo_surface_destroy);
+  g_clear_pointer (&shell->mask_surface,   cairo_surface_destroy);
+  g_clear_pointer (&shell->checkerboard,   cairo_pattern_destroy);
 
   gimp_display_shell_profile_finalize (shell);
 
@@ -1032,6 +1036,7 @@ gimp_display_shell_profile_changed (GimpColorManaged *managed)
 
   gimp_display_shell_profile_update (shell);
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 }
 
 static void
@@ -1312,6 +1317,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   gimp_display_shell_scaled (shell);
 
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 }
 
 static gboolean
@@ -1377,6 +1383,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_rotate_update_transform (shell);
 
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 
   user_context = gimp_get_user_context (shell->display->gimp);
 
@@ -1867,4 +1874,5 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
   shell->mask_inverted = inverted;
 
   gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
 }

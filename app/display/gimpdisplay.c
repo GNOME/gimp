@@ -44,6 +44,7 @@
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-icon.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 
@@ -897,4 +898,6 @@ gimp_display_paint_area (GimpDisplay *display,
   y2 = ceil  ((gdouble) y2 / PAINT_AREA_CHUNK_HEIGHT) * PAINT_AREA_CHUNK_HEIGHT;
 
   gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
+
+  gimp_display_shell_render_invalidate_area (shell, x1, y1, x2 - x1, y2 - y1);
 }

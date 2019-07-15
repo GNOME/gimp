@@ -18,12 +18,37 @@
 #ifndef __GIMP_DISPLAY_SHELL_RENDER_H__
 #define __GIMP_DISPLAY_SHELL_RENDER_H__
 
-void  gimp_display_shell_render (GimpDisplayShell *shell,
-                                 cairo_t          *cr,
-                                 gint              x,
-                                 gint              y,
-                                 gint              w,
-                                 gint              h,
-                                 gdouble           scale);
+
+#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
+#define GIMP_DISPLAY_RENDER_MAX_SCALE      4.0
+
+
+void     gimp_display_shell_render_invalidate_full (GimpDisplayShell *shell);
+void     gimp_display_shell_render_invalidate_area (GimpDisplayShell *shell,
+                                                    gint              x,
+                                                    gint              y,
+                                                    gint              width,
+                                                    gint              height);
+
+void     gimp_display_shell_render_validate_area   (GimpDisplayShell *shell,
+                                                    gint              x,
+                                                    gint              y,
+                                                    gint              width,
+                                                    gint              height);
+
+gboolean gimp_display_shell_render_is_valid        (GimpDisplayShell *shell,
+                                                    gint              x,
+                                                    gint              y,
+                                                    gint              width,
+                                                    gint              height);
+
+void     gimp_display_shell_render                 (GimpDisplayShell *shell,
+                                                    cairo_t          *cr,
+                                                    gint              x,
+                                                    gint              y,
+                                                    gint              width,
+                                                    gint              height,
+                                                    gdouble           scale);
+
 
 #endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */

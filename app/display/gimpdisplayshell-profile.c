@@ -40,7 +40,6 @@
 #include "gimpdisplayshell-actions.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-profile.h"
-#include "gimpdisplayxfer.h"
 
 #include "gimp-intl.h"
 
@@ -159,8 +158,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   if (shell->filter_transform || shell->profile_transform)
     {
-      gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH;
-      gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
+      gint w = shell->render_buf_width;
+      gint h = shell->render_buf_height;
 
       shell->profile_data =
         gegl_malloc (w * h * babl_format_get_bytes_per_pixel (src_format));

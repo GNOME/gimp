@@ -38,12 +38,12 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-scrollbars.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
-#include "gimpdisplayxfer.h"
 #include "gimpimagewindow.h"
 #include "gimpnavigationeditor.h"
 
@@ -80,9 +80,10 @@ void
 gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                    GimpDisplayShell *shell)
 {
-  GimpCanvasPaddingMode padding_mode;
-  GimpRGB               padding_color;
-  GtkAllocation         allocation;
+  GimpCanvasPaddingMode  padding_mode;
+  GimpRGB                padding_color;
+  GtkAllocation          allocation;
+  const gchar           *env;
 
   gtk_widget_grab_focus (canvas);
 
@@ -115,7 +116,27 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
 
-  shell->xfer = gimp_display_xfer_realize (GTK_WIDGET(shell));
+  shell->render_buf_width  = 256;
+  shell->render_buf_height = 256;
+
+  env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
+
+  if (env)
+    {
+      gint width  = atoi (env);
+      gint height = width;
+
+      env = strchr (env, 'x');
+      if (env)
+        height = atoi (env + 1);
+
+      if (width  > 0 && width  <= 8192 &&
+          height > 0 && height <= 8192)
+        {
+          shell->render_buf_width  = width;
+          shell->render_buf_height = height;
+        }
+    }
 }
 
 static gboolean
@@ -130,6 +151,9 @@ gimp_display_shell_canvas_tick (GtkWidget        *widget,
   if ((shell->disp_width  != allocation.width) ||
       (shell->disp_height != allocation.height))
     {
+      g_clear_pointer (&shell->render_cache, cairo_surface_destroy);
+      gimp_display_shell_render_invalidate_full (shell);
+
       if (shell->zoom_on_resize   &&
           shell->disp_width  > 64 &&
           shell->disp_height > 64 &&

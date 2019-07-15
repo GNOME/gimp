@@ -32,17 +32,10 @@
 
 #include "gimpcanvas.h"
 #include "gimpcanvas-style.h"
-#include "gimpcanvaspath.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpdisplayxfer.h"
-
-
-#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
 
 
 /*  public functions  */
@@ -157,8 +150,8 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
    *  chunk size as necessary, to accommodate for the display
    *  transform and window scale factor.
    */
-  chunk_width  = GIMP_DISPLAY_RENDER_BUF_WIDTH;
-  chunk_height = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
+  chunk_width  = shell->render_buf_width;
+  chunk_height = shell->render_buf_height;
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
   /* multiply the image scale-factor by the window scale-factor, and divide
@@ -197,23 +190,8 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
 
       for (c = 0; c < n_cols; c++)
         {
-          gint    x1 = x + (2 *  c      * w + n_cols) / (2 * n_cols);
-          gint    x2 = x + (2 * (c + 1) * w + n_cols) / (2 * n_cols);
-          gdouble ix1, iy1;
-          gdouble ix2, iy2;
-          gint    ix, iy;
-          gint    iw, ih;
-
-          /* map chunk from screen space to scaled image space */
-          gimp_display_shell_untransform_bounds_with_scale (
-            shell, scale,
-            x1,   y1,   x2,   y2,
-            &ix1, &iy1, &ix2, &iy2);
-
-          ix = floor (ix1);
-          iy = floor (iy1);
-          iw = ceil  (ix2) - ix;
-          ih = ceil  (iy2) - iy;
+          gint x1 = x + (2 *  c      * w + n_cols) / (2 * n_cols);
+          gint x2 = x + (2 * (c + 1) * w + n_cols) / (2 * n_cols);
 
           cairo_save (cr);
 
@@ -221,14 +199,21 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
           cairo_rectangle (cr, x1, y1, x2 - x1, y2 - y1);
           cairo_clip (cr);
 
-          /* transform to scaled image space, and apply uneven scaling */
-          if (shell->rotate_transform)
-            cairo_transform (cr, shell->rotate_transform);
-          cairo_translate (cr, -shell->offset_x, -shell->offset_y);
-          cairo_scale (cr, shell->scale_x / scale, shell->scale_y / scale);
+          if (! gimp_display_shell_render_is_valid (shell,
+                                                    x1, y1, x2 - x1, y2 - y1))
+            {
+              /* render image to the render cache */
+              gimp_display_shell_render (shell, cr,
+                                         x1, y1, x2 - x1, y2 - y1,
+                                         scale);
 
-          /* render image */
-          gimp_display_shell_render (shell, cr, ix, iy, iw, ih, scale);
+              gimp_display_shell_render_validate_area (shell,
+                                                       x1, y1, x2 - x1, y2 - y1);
+            }
+
+          /* render from the render cache to screen */
+          cairo_set_source_surface (cr, shell->render_cache, 0, 0);
+          cairo_paint (cr);
 
           cairo_restore (cr);
 
