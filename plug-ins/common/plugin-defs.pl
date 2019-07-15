@@ -1,6 +1,6 @@
 %plugins = (
     'align-layers' => { ui => 1 },
-    'animation-optimize' => {},
+    'animation-optimize' => { gegl => 1},
 # FIXME 'animation-play' => { ui => 1, gegl => 1 },
     'blinds' => { ui => 1, gegl => 1 },
     'border-average' => { ui => 1, gegl => 1 },
