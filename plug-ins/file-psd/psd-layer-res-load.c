@@ -111,9 +111,9 @@
  PSD_LLL_LINKED_LAYER_3   "lnk3"        -       * Linked layer 3rd key *
 
  * Merged Transparency *
- PSD_LMT_MERGE_TRANS      "Mtrn"        -       * Merged transperency save flag (?) *
- PSD_LMT_MERGE_TRANS_16   "Mt16"        -       * Merged transperency save flag 2 *
- PSD_LMT_MERGE_TRANS_32   "Mt32"        -       * Merged transperency save flag 3 *
+ PSD_LMT_MERGE_TRANS      "Mtrn"        -       * Merged transparency save flag (?) *
+ PSD_LMT_MERGE_TRANS_16   "Mt16"        -       * Merged transparency save flag 2 *
+ PSD_LMT_MERGE_TRANS_32   "Mt32"        -       * Merged transparency save flag 3 *
 
  * Filter Effects *
  PSD_LFFX_FILTER_FX       "FXid"        -       * Filter effects (?) *
