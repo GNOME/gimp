@@ -82,7 +82,7 @@ static gint         sel_x1, sel_y1, sel_x2, sel_y2;
 static gint         has_sel, sel_width, sel_height;
 static SELVALS      selVals;
 static GeglSampler *sel_sampler;
-static gboolean     retVal = TRUE;  /* Toggle if cancle button clicked */
+static gboolean     retVal = TRUE;  /* Toggle if cancel button clicked */
 
 MAIN ()
 
