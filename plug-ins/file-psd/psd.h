@@ -143,9 +143,9 @@
 #define PSD_LLL_LINKED_LAYER_3  "lnk3"          /* Linked layer 3rd key */
 
 /* Merged Transparency */
-#define PSD_LMT_MERGE_TRANS     "Mtrn"          /* Merged transperency save flag (?) */
-#define PSD_LMT_MERGE_TRANS_16  "Mt16"          /* Merged transperency save flag 2 */
-#define PSD_LMT_MERGE_TRANS_32  "Mt32"          /* Merged transperency save flag 3 */
+#define PSD_LMT_MERGE_TRANS     "Mtrn"          /* Merged transparency save flag (?) */
+#define PSD_LMT_MERGE_TRANS_16  "Mt16"          /* Merged transparency save flag 2 */
+#define PSD_LMT_MERGE_TRANS_32  "Mt32"          /* Merged transparency save flag 3 */
 
 /* Filter Effects */
 #define PSD_LFFX_FILTER_FX      "FXid"          /* Filter effects (?) */
