@@ -27,7 +27,7 @@
 ; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
 ;
 ;
-; Blends two or more layers over a backgound, so that an animation can
+; Blends two or more layers over a background, so that an animation can
 ; be saved. A minimum of three layers is required.
 
 (define (script-fu-blend-anim img
