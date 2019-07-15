@@ -961,7 +961,7 @@ save_image (GFile                  *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
-  /* Open file and write some gloabl data */
+  /* Open file and write some global data */
   tif = tiff_open (file, "w", error);
 
   if (! tif)
@@ -1059,7 +1059,7 @@ save_image (GFile                  *file,
   if (tsvals->save_thumbnail)
     save_thumbnail (tsvals, image, tif);
 
-  /* close file so we can savely let exiv2 work on it to write metadata.
+  /* close file so we can safely let exiv2 work on it to write metadata.
    * this can be simplified once multi page TIFF is supported by exiv2
    */
   TIFFFlushData (tif);

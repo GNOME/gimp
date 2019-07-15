@@ -46,7 +46,7 @@ RGB_to_YCoCg (unsigned char *dst, int r, int g, int b)
 static inline int
 rgb_to_luminance (int r, int g, int b)
 {
-  /* ITU-R BT.709 luma coefficents, scaled by 256 */
+  /* ITU-R BT.709 luma coefficients, scaled by 256 */
   return ((r * 54 + g * 182 + b * 20) + 128) >> 8;
 }
 

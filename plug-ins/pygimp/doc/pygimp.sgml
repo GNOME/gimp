@@ -2148,7 +2148,7 @@ main()
 	    <Literal>RUN-NONINTERACTIVE</Literal>) discriminates between
 	    user-driven or scripted calls. In the case of gimpfu-based plug-ins,
 	    it is automatically taken care of internally -- interactive calls
-	    will dismiss all the remaning arguments, and an interface will be
+	    will dismiss all the remaining arguments, and an interface will be
 	    presented (when possible) to the user. The plug-in core Python
 	    function (<Literal>echo()</Literal> in this case), never has to deal
 	    with it.</Para>

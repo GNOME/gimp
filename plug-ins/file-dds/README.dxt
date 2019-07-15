@@ -52,9 +52,9 @@ approximation, but a quite good one.
 The loop after that determines where the 4 actually representable colors lie
 along the line. After that, you simply need to determine which of those 4
 values your current pixel's dot product is closest to. Instead of doing a
-bunch of comparisions per pixel, the code computes the points along the line
+bunch of comparisons per pixel, the code computes the points along the line
 at which the decision would change (that's c0pt, halfpt and c3pt). This would
-still require 3 comparisions; by testing the middle point - which is halfpt -
+still require 3 comparisons; by testing the middle point - which is halfpt -
 first, one point is always excluded from consideration, which reduces the
 number of compares to two in all cases. No big deal, but hey, why not :)
 
@@ -168,8 +168,8 @@ is selected per texture. That's why my original code doesn't support the
 3-color mode of DXT1 at all: I don't think it's useful in practice.
 
 Not sure if all of this is useful to you or not, but I guess it might make
-sense to at least put this in a seperate text file or whatever, because
+sense to at least put this in a separate text file or whatever, because
 otherwise it's really quite hard to see what's going on in some places.
 
 Cheers,
--Fabian "ryg" Giesen 
+-Fabian "ryg" Giesen

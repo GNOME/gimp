@@ -29,7 +29,7 @@
  *                      Value    Time     Space
  *  Coupled-Map Lattice cont.    discrete discrete
  *  Celluar Automata    discrete discrete discrete
- *  Diffrential Eq.     cont.    cont.    cont.
+ *  Differential Eq.    cont.    cont.    cont.
  *
  *  (But this program uses a parameter: hold-rate to avoid very fast changes.
  *  Thus time is rather continuous than discrete.

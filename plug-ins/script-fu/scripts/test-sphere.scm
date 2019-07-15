@@ -141,7 +141,7 @@
 ; Only useful in interactive mode. It will create a widget in the control
 ; dialog. The widget is a combo-box showing all enum values for the given
 ; enum type. This has to be the name of a registered enum, without the
-; "Gimp" prefix. The second parameter speficies the default value, using
+; "Gimp" prefix. The second parameter specifies the default value, using
 ; the enum value's nick.
 ;
 ; Usage:

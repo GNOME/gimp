@@ -525,7 +525,7 @@ class AirBrushTool():
 class AbstractStrokeTool():
 
     def draw(self, layer, strokes, color=None):
-        # We need to mutiply every point by 3, because we are creating a path,
+        # We need to multiply every point by 3, because we are creating a path,
         #  where each point has two additional control points.
         control_points = []
         for i, k in zip(strokes[0::2], strokes[1::2]):
@@ -1712,7 +1712,7 @@ class SpyroWindow(gtk.Window):
 
             add_horizontal_separator(vbox)
 
-            self.progress_bar = gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress errror message.
+            self.progress_bar = gtk.ProgressBar()   # gimpui.ProgressBar() - causes gimppdbprogress error message.
             self.progress_bar.set_size_request(-1, 30)
             vbox.add(self.progress_bar)
             self.progress_bar.show()

@@ -54,7 +54,7 @@ X      T_LAST_SYSTEM_TYPE=14
 |         } _string;
 
      We can use _svalue to hold the actual pointer and _keynum to hold its
-     length. If we couln't reuse existing fields, we could always add other
+     length. If we couldn't reuse existing fields, we could always add other
      alternatives in union _object.
 
      We then proceed to write the function that actually makes a new block.
