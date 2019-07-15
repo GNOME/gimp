@@ -103,7 +103,6 @@ static  gint32            image_id;
 static  gint32            new_image_id;
 static  gint32            total_frames;
 static  gint32           *layers;
-static  GimpDrawable     *drawable;
 static  GimpImageBaseType imagetype;
 static  GimpImageType     drawabletype_alpha;
 static  guchar            pixelstep;
@@ -240,6 +239,7 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
     {
@@ -296,6 +296,26 @@ total_alpha (guchar  *imdata,
   memset (imdata, 0, numpix * bytespp);
 }
 
+static const Babl *
+get_format (gint32 drawable_ID)
+{
+  if (gimp_drawable_is_rgb (drawable_ID))
+    {
+      if (gimp_drawable_has_alpha (drawable_ID))
+        return babl_format ("R'G'B'A u8");
+      else
+        return babl_format ("R'G'B' u8");
+    }
+  else if (gimp_drawable_is_gray (drawable_ID))
+    {
+      if (gimp_drawable_has_alpha (drawable_ID))
+        return babl_format ("Y'A u8");
+      else
+        return babl_format ("Y' u8");
+    }
+
+  return gimp_drawable_get_format (drawable_ID);
+}
 
 static void
 compose_row (gint          frame_num,
@@ -303,12 +323,13 @@ compose_row (gint          frame_num,
              gint          row_num,
              guchar       *dest,
              gint          dest_width,
-             GimpDrawable *drawable,
+             gint32        drawable_ID,
              gboolean      cleanup)
 {
   static guchar *line_buf = NULL;
+  GeglBuffer    *src_buffer;
+  const Babl    *format;
   guchar        *srcptr;
-  GimpPixelRgn   pixel_rgn;
   gint           rawx, rawy, rawbpp, rawwidth, rawheight;
   gint           i;
   gboolean       has_alpha;
@@ -329,20 +350,20 @@ compose_row (gint          frame_num,
       total_alpha (dest, dest_width, pixelstep);
     }
 
-  gimp_drawable_offsets (drawable->drawable_id,
-                         &rawx,
-                         &rawy);
+  gimp_drawable_offsets (drawable_ID, &rawx, &rawy);
 
-  rawheight = gimp_drawable_height (drawable->drawable_id);
+  rawwidth  = gimp_drawable_width (drawable_ID);
+  rawheight = gimp_drawable_height (drawable_ID);
 
   /* this frame has nothing to give us for this row; return */
   if (row_num >= rawheight + rawy ||
       row_num < rawy)
     return;
 
-  rawbpp = gimp_drawable_bpp (drawable->drawable_id);
-  rawwidth = gimp_drawable_width (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  format = get_format (drawable_ID);
+
+  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  rawbpp    = babl_format_get_bytes_per_pixel (format);
 
   if (line_buf)
     {
@@ -353,16 +374,14 @@ compose_row (gint          frame_num,
 
   /* Initialise and fetch the raw new frame row */
 
-  gimp_pixel_rgn_init (&pixel_rgn,
-                       drawable,
-                       0, row_num - rawy,
-                       rawwidth, 1,
-                       FALSE,
-                       FALSE);
-  gimp_pixel_rgn_get_rect (&pixel_rgn,
-                           line_buf,
-                           0, row_num - rawy,
-                           rawwidth, 1);
+  src_buffer = gimp_drawable_get_buffer (drawable_ID);
+
+  gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, row_num - rawy,
+                                               rawwidth, 1), 1.0,
+                   format, line_buf,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  g_object_unref (src_buffer);
 
   /* render... */
 
@@ -380,13 +399,13 @@ compose_row (gint          frame_num,
                 {
                   dest[i*pixelstep +pi] = *(srcptr + pi);
                 }
+
               dest[i*pixelstep + pixelstep - 1] = 255;
             }
         }
 
       srcptr += rawbpp;
     }
-
 }
 
 
@@ -394,7 +413,6 @@ static gint32
 do_optimizations (GimpRunMode run_mode,
                   gboolean    diff_only)
 {
-  GimpPixelRgn   pixel_rgn;
   static guchar *rawframe = NULL;
   guchar        *srcptr;
   guchar        *destptr;
@@ -442,9 +460,6 @@ do_optimizations (GimpRunMode run_mode,
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type (image_id);
   pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
-
-  /*  gimp_tile_cache_ntiles(total_frames * (width / gimp_tile_width() + 1) );*/
-
 
   drawabletype_alpha = (imagetype == GIMP_RGB) ? GIMP_RGBA_IMAGE :
     ((imagetype == GIMP_INDEXED) ? GIMP_INDEXEDA_IMAGE : GIMP_GRAYA_IMAGE);
@@ -510,21 +525,17 @@ do_optimizations (GimpRunMode run_mode,
 
           for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
             {
-              drawable =
-                gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
+              gint32 drawable_ID = layers[total_frames-(this_frame_num+1)];
 
               dispose = get_frame_disposal (this_frame_num);
 
-              compose_row(this_frame_num,
-                          dispose,
-                          row,
-                          these_rows[this_frame_num],
-                          width,
-                          drawable,
-                          FALSE
-                          );
-
-              gimp_drawable_detach(drawable);
+              compose_row (this_frame_num,
+                           dispose,
+                           row,
+                           these_rows[this_frame_num],
+                           width,
+                           drawable_ID,
+                           FALSE);
             }
 
           for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
@@ -637,6 +648,9 @@ do_optimizations (GimpRunMode run_mode,
 
   if (opmode == OPBACKGROUND)
     {
+      GeglBuffer *buffer;
+      const Babl *format;
+
       new_layer_id = gimp_layer_new (new_image_id,
                                      "Backgroundx",
                                      width, height,
@@ -646,17 +660,15 @@ do_optimizations (GimpRunMode run_mode,
 
       gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
 
-      drawable = gimp_drawable_get (new_layer_id);
+      buffer = gimp_drawable_get_buffer (new_layer_id);
 
-      gimp_pixel_rgn_init (&pixel_rgn, drawable,
-                           0, 0,
-                           width, height,
-                           TRUE, FALSE);
-      gimp_pixel_rgn_set_rect (&pixel_rgn, back_frame,
-                               0, 0,
-                               width, height);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_detach (drawable);
+      format = get_format (new_layer_id);
+
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                       format, back_frame,
+                       GEGL_ABYSS_NONE);
+
+      g_object_unref (buffer);
     }
   else
     {
@@ -666,12 +678,11 @@ do_optimizations (GimpRunMode run_mode,
            * BUILD THIS FRAME into our 'this_frame' buffer.
            */
 
-          drawable =
-            gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
+          gint32 drawable_ID = layers[total_frames-(this_frame_num+1)];
 
           /* Image has been closed/etc since we got the layer list? */
           /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-          if (gimp_drawable_width (drawable->drawable_id) == 0)
+          if (gimp_drawable_width (drawable_ID) == 0)
             {
               gimp_quit ();
             }
@@ -686,14 +697,10 @@ do_optimizations (GimpRunMode run_mode,
                            row,
                            &this_frame[pixelstep*width * row],
                            width,
-                           drawable,
+                           drawable_ID,
                            FALSE
                            );
             }
-
-          /* clean up */
-          gimp_drawable_detach(drawable);
-
 
           if (opmode == OPFOREGROUND)
             {
@@ -1056,6 +1063,9 @@ do_optimizations (GimpRunMode run_mode,
             }
           else
             {
+              GeglBuffer *buffer;
+              const Babl *format;
+
               cumulated_delay = this_delay;
 
               last_true_frame =
@@ -1070,23 +1080,24 @@ do_optimizations (GimpRunMode run_mode,
 
               gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
 
-              drawable = gimp_drawable_get (new_layer_id);
+              buffer = gimp_drawable_get_buffer (new_layer_id);
 
-              gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                                   bbox_right-bbox_left,
-                                   bbox_bottom-bbox_top,
-                                   TRUE, FALSE);
-              gimp_pixel_rgn_set_rect (&pixel_rgn, opti_frame, 0, 0,
-                                       bbox_right-bbox_left,
-                                       bbox_bottom-bbox_top);
-              gimp_drawable_flush (drawable);
-              gimp_drawable_detach (drawable);
-              gimp_item_transform_translate (new_layer_id, bbox_left, bbox_top);
+              format = get_format (new_layer_id);
+
+              gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, 0,
+                                               bbox_right-bbox_left,
+                                               bbox_bottom-bbox_top), 0,
+                               format, opti_frame,
+                               GEGL_AUTO_ROWSTRIDE);
+
+              g_object_unref (buffer);
             }
 
           gimp_progress_update (((gdouble) this_frame_num + 1.0) /
                                 ((gdouble) total_frames));
         }
+
       gimp_progress_update (1.0);
     }
 
