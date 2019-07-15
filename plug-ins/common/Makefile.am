@@ -53,7 +53,6 @@ border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
 busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
 checkerboard_libexecdir = $(gimpplugindir)/plug-ins/checkerboard
 cml_explorer_libexecdir = $(gimpplugindir)/plug-ins/cml-explorer
-colorify_libexecdir = $(gimpplugindir)/plug-ins/colorify
 colormap_remap_libexecdir = $(gimpplugindir)/plug-ins/colormap-remap
 compose_libexecdir = $(gimpplugindir)/plug-ins/compose
 contrast_retinex_libexecdir = $(gimpplugindir)/plug-ins/contrast-retinex
@@ -135,7 +134,6 @@ border_average_libexec_PROGRAMS = border-average
 busy_dialog_libexec_PROGRAMS = busy-dialog
 checkerboard_libexec_PROGRAMS = checkerboard
 cml_explorer_libexec_PROGRAMS = cml-explorer
-colorify_libexec_PROGRAMS = colorify
 colormap_remap_libexec_PROGRAMS = colormap-remap
 compose_libexec_PROGRAMS = compose
 contrast_retinex_libexec_PROGRAMS = contrast-retinex
@@ -357,23 +355,6 @@ cml_explorer_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(cml_explorer_RC)
-
-colorify_SOURCES = \
-	colorify.c
-
-colorify_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(colorify_RC)
 
 colormap_remap_SOURCES = \
 	colormap-remap.c
