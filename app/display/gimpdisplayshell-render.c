@@ -425,8 +425,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   cairo_surface_mark_dirty (shell->render_surface);
 
+  /*  SOURCE so the destination's alpha is replaced  */
+  cairo_set_operator (my_cr, CAIRO_OPERATOR_SOURCE);
+
   cairo_set_source_surface (my_cr, shell->render_surface, x, y);
   cairo_paint (my_cr);
+
+  cairo_set_operator (my_cr, CAIRO_OPERATOR_OVER);
 
   if (shell->mask)
     {
