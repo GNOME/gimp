@@ -127,20 +127,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              theight,
                            gdouble           scale)
 {
-  GimpImage  *image;
-  GeglBuffer *buffer;
+  GimpDisplayConfig *display_config;
+  GimpImage         *image;
+  GeglBuffer        *buffer;
 #ifdef USE_NODE_BLIT
-  GeglNode   *node;
+  GeglNode          *node;
 #endif
-  cairo_t    *my_cr;
-  gint        cairo_stride;
-  guchar     *cairo_data;
-  gdouble     x1, y1;
-  gdouble     x2, y2;
-  gint        x;
-  gint        y;
-  gint        width;
-  gint        height;
+
+  cairo_t           *my_cr;
+  gint               cairo_stride;
+  guchar            *cairo_data;
+  gdouble            x1, y1;
+  gdouble            x2, y2;
+  gint               x;
+  gint               y;
+  gint               width;
+  gint               height;
+  gint               filter = GEGL_BUFFER_FILTER_AUTO;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -160,6 +163,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   g_return_if_fail (width  > 0 && width  <= shell->render_buf_width);
   g_return_if_fail (height > 0 && height <= shell->render_buf_height);
+
+  display_config = shell->display->config;
+
+  if (display_config->zoom_quality != GIMP_ZOOM_QUALITY_HIGH)
+    {
+      filter = GEGL_BUFFER_FILTER_NEAREST;
+    }
 
   image  = gimp_display_get_image (shell->display);
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
@@ -255,13 +265,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (x, y, width, height), scale,
                            gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                            shell->profile_data, shell->profile_stride,
-                           GEGL_ABYSS_CLAMP);
+                           GEGL_ABYSS_CLAMP | filter);
 #else
           gegl_node_blit (node,
                           scale, GEGL_RECTANGLE (x, y, width, height),
                           gimp_projectable_get_format (GIMP_PROJECTABLE (image)),
                           shell->profile_data, shell->profile_stride,
-                          GEGL_BLIT_CACHE);
+                          GEGL_BLIT_CACHE | filter);
 #endif
         }
       else
@@ -273,13 +283,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (x, y, width, height), scale,
                            shell->filter_format,
                            shell->filter_data, shell->filter_stride,
-                           GEGL_ABYSS_CLAMP);
+                           GEGL_ABYSS_CLAMP | filter);
 #else
           gegl_node_blit (node,
                           scale, GEGL_RECTANGLE (x, y, width, height),
                           shell->filter_format,
                           shell->filter_data, shell->filter_stride,
-                          GEGL_BLIT_CACHE);
+                          GEGL_BLIT_CACHE | filter);
 #endif
         }
 
@@ -399,13 +409,13 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        GEGL_RECTANGLE (x, y, width, height), scale,
                        babl_format ("cairo-ARGB32"),
                        cairo_data, cairo_stride,
-                       GEGL_ABYSS_CLAMP);
+                       GEGL_ABYSS_CLAMP | filter);
 #else
       gegl_node_blit (node,
                       scale, GEGL_RECTANGLE (x, y, width, height),
                       babl_format ("cairo-ARGB32"),
                       cairo_data, cairo_stride,
-                      GEGL_BLIT_CACHE);
+                      GEGL_BLIT_CACHE | filter);
 #endif
     }
 
@@ -440,7 +450,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        scale,
                        babl_format ("Y u8"),
                        cairo_data, cairo_stride,
-                       GEGL_ABYSS_NONE);
+                       GEGL_ABYSS_NONE | filter);
 
       if (shell->mask_inverted)
         {
