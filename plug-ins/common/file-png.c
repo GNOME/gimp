@@ -1484,7 +1484,8 @@ save_image (const gchar  *filename,
   GimpColorProfile *profile = NULL;   /* Color profile */
   gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
-  const Babl       *file_format;      /* BABL format of file */
+  const Babl       *file_format = NULL; /* BABL format of file */
+  const gchar      *encoding;
   const Babl       *space;
   png_structp       pp;               /* PNG read pointer */
   png_infop         info;             /* PNG info pointer */
@@ -1675,16 +1676,16 @@ save_image (const gchar  *filename,
         if (bit_depth == 8)
           {
             if (out_linear)
-              file_format = babl_format ("RGB u8");
+              encoding = "RGB u8";
             else
-              file_format = babl_format ("R'G'B' u8");
+              encoding = "R'G'B' u8";
           }
         else
           {
             if (out_linear)
-              file_format = babl_format ("RGB u16");
+              encoding = "RGB u16";
             else
-              file_format = babl_format ("R'G'B' u16");
+              encoding = "R'G'B' u16";
           }
         break;
 
@@ -1693,16 +1694,16 @@ save_image (const gchar  *filename,
         if (bit_depth == 8)
           {
             if (out_linear)
-              file_format = babl_format ("RGBA u8");
+              encoding = "RGBA u8";
             else
-              file_format = babl_format ("R'G'B'A u8");
+              encoding = "R'G'B'A u8";
           }
         else
           {
             if (out_linear)
-              file_format = babl_format ("RGBA u16");
+              encoding = "RGBA u16";
             else
-              file_format = babl_format ("R'G'B'A u16");
+              encoding = "R'G'B'A u16";
           }
         break;
 
@@ -1711,16 +1712,16 @@ save_image (const gchar  *filename,
         if (bit_depth == 8)
           {
             if (out_linear)
-              file_format = babl_format ("Y u8");
+              encoding = "Y u8";
             else
-              file_format = babl_format ("Y' u8");
+              encoding = "Y' u8";
           }
         else
           {
             if (out_linear)
-              file_format = babl_format ("Y u16");
+              encoding = "Y u16";
             else
-              file_format = babl_format ("Y' u16");
+              encoding = "Y' u16";
           }
         break;
 
@@ -1729,16 +1730,16 @@ save_image (const gchar  *filename,
         if (bit_depth == 8)
           {
             if (out_linear)
-              file_format = babl_format ("YA u8");
+              encoding = "YA u8";
             else
-              file_format = babl_format ("Y'A u8");
+              encoding = "Y'A u8";
           }
         else
           {
             if (out_linear)
-              file_format = babl_format ("YA u16");
+              encoding = "YA u16";
             else
-              file_format = babl_format ("Y'A u16");
+              encoding = "Y'A u16";
           }
         break;
 
@@ -1770,65 +1771,65 @@ save_image (const gchar  *filename,
         case PNG_FORMAT_RGB8:
           color_type = PNG_COLOR_TYPE_RGB;
           if (out_linear)
-            file_format = babl_format ("RGB u8");
+            encoding = "RGB u8";
           else
-            file_format = babl_format ("R'G'B' u8");
+            encoding = "R'G'B' u8";
           bit_depth = 8;
           break;
         case PNG_FORMAT_GRAY8:
           color_type = PNG_COLOR_TYPE_GRAY;
           if (out_linear)
-            file_format = babl_format ("Y u8");
+            encoding = "Y u8";
           else
-            file_format = babl_format ("Y' u8");
+            encoding = "Y' u8";
           bit_depth = 8;
           break;
         case PNG_FORMAT_RGBA8:
           color_type = PNG_COLOR_TYPE_RGB_ALPHA;
           if (out_linear)
-            file_format = babl_format ("RGBA u8");
+            encoding = "RGBA u8";
           else
-            file_format = babl_format ("R'G'B'A u8");
+            encoding = "R'G'B'A u8";
           bit_depth = 8;
           break;
         case PNG_FORMAT_GRAYA8:
           color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
           if (out_linear)
-            file_format = babl_format ("YA u8");
+            encoding = "YA u8";
           else
-            file_format = babl_format ("Y'A u8");
+            encoding = "Y'A u8";
           bit_depth = 8;
           break;
         case PNG_FORMAT_RGB16:
           color_type = PNG_COLOR_TYPE_RGB;
           if (out_linear)
-            file_format = babl_format ("RGB u16");
+            encoding = "RGB u16";
           else
-            file_format = babl_format ("R'G'B' u16");
+            encoding = "R'G'B' u16";
           bit_depth = 16;
           break;
         case PNG_FORMAT_GRAY16:
           color_type = PNG_COLOR_TYPE_GRAY;
           if (out_linear)
-            file_format = babl_format ("Y u16");
+            encoding = "Y u16";
           else
-            file_format = babl_format ("Y' u16");
+            encoding = "Y' u16";
           bit_depth = 16;
           break;
         case PNG_FORMAT_RGBA16:
           color_type = PNG_COLOR_TYPE_RGB_ALPHA;
           if (out_linear)
-            file_format = babl_format ("RGBA u16");
+            encoding = "RGBA u16";
           else
-            file_format = babl_format ("R'G'B'A u16");
+            encoding = "R'G'B'A u16";
           bit_depth = 16;
           break;
         case PNG_FORMAT_GRAYA16:
           color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
           if (out_linear)
-            file_format = babl_format ("YA u16");
+            encoding = "YA u16";
           else
-            file_format = babl_format ("Y'A u16");
+            encoding = "Y'A u16";
           bit_depth = 16;
           break;
         case PNG_FORMAT_AUTO:
@@ -1836,9 +1837,8 @@ save_image (const gchar  *filename,
       }
     }
 
-  if (! babl_format_is_palette (file_format))
-    file_format = babl_format_with_space (babl_format_get_encoding (file_format),
-                                          space);
+  if (! file_format)
+    file_format = babl_format_with_space (encoding, space);
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
