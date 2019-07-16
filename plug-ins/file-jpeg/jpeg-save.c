@@ -272,6 +272,7 @@ save_image (const gchar  *filename,
 
   GimpImageType     drawable_type;
   GeglBuffer       *buffer;
+  const gchar      *encoding;
   const Babl       *format;
   const Babl       *space;
   JpegSubsampling   subsampling;
@@ -405,9 +406,9 @@ save_image (const gchar  *filename,
       has_alpha = FALSE;
 
       if (out_linear)
-        format = babl_format ("RGB u8");
+        encoding = "RGB u8";
       else
-        format = babl_format ("R'G'B' u8");
+        encoding = "R'G'B' u8";
       break;
 
     case GIMP_GRAY_IMAGE:
@@ -416,9 +417,9 @@ save_image (const gchar  *filename,
       has_alpha = FALSE;
 
       if (out_linear)
-        format = babl_format ("Y u8");
+        encoding = "Y u8";
       else
-        format = babl_format ("Y' u8");
+        encoding = "Y' u8";
       break;
 
     case GIMP_RGBA_IMAGE:
@@ -427,9 +428,9 @@ save_image (const gchar  *filename,
       has_alpha = TRUE;
 
       if (out_linear)
-        format = babl_format ("RGB u8");
+        encoding = "RGB u8";
       else
-        format = babl_format ("R'G'B' u8");
+        encoding = "R'G'B' u8";
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -437,9 +438,9 @@ save_image (const gchar  *filename,
       cinfo.input_components = 2 - 1;
       has_alpha = TRUE;
       if (out_linear)
-        format = babl_format ("Y u8");
+        encoding = "Y u8";
       else
-        format = babl_format ("Y' u8");
+        encoding = "Y' u8";
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -447,7 +448,7 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  format = babl_format_with_space (babl_format_get_encoding (format), space);
+  format = babl_format_with_space (encoding, space);
 
   /* Step 3: set parameters for compression */
 
