@@ -2631,6 +2631,15 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Check _size:"),
                             GTK_GRID (grid), 1, size_group);
 
+  /*  Zoom Quality  */
+  vbox2 = prefs_frame_new (_("Zoom Quality"), GTK_CONTAINER (vbox), FALSE);
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "zoom-quality", 0, 0,
+                            _("_Zoom quality:"),
+                            GTK_GRID (grid), 0, size_group);
+
+  /*  Monitor Resolution  */
   vbox2 = prefs_frame_new (_("Monitor Resolution"),
                            GTK_CONTAINER (vbox), FALSE);
 
