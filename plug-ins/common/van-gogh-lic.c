@@ -102,27 +102,25 @@ static GtkWidget *dialog;
 /************************/
 
 static void
-peek (GimpPixelRgn *src_rgn,
-      gint          x,
-      gint          y,
-      GimpRGB      *color)
+peek (GeglBuffer *buffer,
+      gint        x,
+      gint        y,
+      GimpRGB    *color)
 {
-  static guchar data[4] = { 0, };
-
-  gimp_pixel_rgn_get_pixel (src_rgn, data, x, y);
-  gimp_rgba_set_uchar (color, data[0], data[1], data[2], data[3]);
+  gegl_buffer_sample (buffer, x, y, NULL,
+                      color, babl_format ("R'G'B'A double"),
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 }
 
 static void
-poke (GimpPixelRgn *dest_rgn,
-      gint          x,
-      gint          y,
-      GimpRGB      *color)
+poke (GeglBuffer *buffer,
+      gint        x,
+      gint        y,
+      GimpRGB    *color)
 {
-  static guchar data[4];
-
-  gimp_rgba_get_uchar (color, &data[0], &data[1], &data[2], &data[3]);
-  gimp_pixel_rgn_set_pixel (dest_rgn, data, x, y);
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                   babl_format ("R'G'B'A double"), color,
+                   GEGL_AUTO_ROWSTRIDE);
 }
 
 static gint
@@ -327,17 +325,17 @@ lic_noise (gint    x,
 }
 
 static void
-getpixel (GimpPixelRgn *src_rgn,
-          GimpRGB      *p,
-          gdouble       u,
-          gdouble       v)
+getpixel (GeglBuffer *buffer,
+          GimpRGB    *p,
+          gdouble     u,
+          gdouble     v)
 {
   register gint x1, y1, x2, y2;
   gint width, height;
   static GimpRGB pp[4];
 
-  width = src_rgn->w;
-  height = src_rgn->h;
+  width  = border_w;
+  height = border_h;
 
   x1 = (gint)u;
   y1 = (gint)v;
@@ -355,10 +353,10 @@ getpixel (GimpPixelRgn *src_rgn,
   x2 = (x1 + 1) % width;
   y2 = (y1 + 1) % height;
 
-  peek (src_rgn, x1, y1, &pp[0]);
-  peek (src_rgn, x2, y1, &pp[1]);
-  peek (src_rgn, x1, y2, &pp[2]);
-  peek (src_rgn, x2, y2, &pp[3]);
+  peek (buffer, x1, y1, &pp[0]);
+  peek (buffer, x2, y1, &pp[1]);
+  peek (buffer, x1, y2, &pp[2]);
+  peek (buffer, x2, y2, &pp[3]);
 
   if (source_drw_has_alpha)
     *p = gimp_bilinear_rgba (u, v, pp);
@@ -367,12 +365,12 @@ getpixel (GimpPixelRgn *src_rgn,
 }
 
 static void
-lic_image (GimpPixelRgn *src_rgn,
-           gint          x,
-           gint          y,
-           gdouble       vx,
-           gdouble       vy,
-           GimpRGB      *color)
+lic_image (GeglBuffer *buffer,
+           gint        x,
+           gint        y,
+           gdouble     vx,
+           gdouble     vy,
+           GimpRGB    *color)
 {
   gdouble u, step = 2.0 * l / isteps;
   gdouble xx = (gdouble) x, yy = (gdouble) y;
@@ -389,7 +387,8 @@ lic_image (GimpPixelRgn *src_rgn,
   /* Calculate integral numerically */
   /* ============================== */
 
-  getpixel (src_rgn, &col1, xx + l * c, yy + l * s);
+  getpixel (buffer, &col1, xx + l * c, yy + l * s);
+
   if (source_drw_has_alpha)
     gimp_rgba_multiply (&col1, filter (-l));
   else
@@ -397,7 +396,8 @@ lic_image (GimpPixelRgn *src_rgn,
 
   for (u = -l + step; u <= l; u += step)
     {
-      getpixel (src_rgn, &col2, xx - u * c, yy - u * s);
+      getpixel (buffer, &col2, xx - u * c, yy - u * s);
+
       if (source_drw_has_alpha)
         {
           gimp_rgba_multiply (&col2, filter (u));
@@ -427,35 +427,37 @@ lic_image (GimpPixelRgn *src_rgn,
   *color = col;
 }
 
-static guchar*
-rgb_to_hsl (GimpDrawable     *drawable,
+static guchar *
+rgb_to_hsl (gint32            drawable_ID,
             LICEffectChannel  effect_channel)
 {
-  guchar       *themap, data[4];
-  gint          x, y;
-  GimpRGB       color;
-  GimpHSL       color_hsl;
-  gdouble       val = 0.0;
-  glong         maxc, index = 0;
-  GimpPixelRgn  region;
-  GRand        *gr;
+  GeglBuffer *buffer;
+  guchar     *themap, data[4];
+  gint        x, y;
+  GimpRGB     color;
+  GimpHSL     color_hsl;
+  gdouble     val = 0.0;
+  glong       maxc, index = 0;
+  GRand      *gr;
 
   gr = g_rand_new ();
 
-  maxc = drawable->width * drawable->height;
+  maxc = gimp_drawable_width (drawable_ID) * gimp_drawable_height (drawable_ID);
 
-  gimp_pixel_rgn_init (&region, drawable, border_x, border_y,
-                       border_w, border_h, FALSE, FALSE);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
   themap = g_new (guchar, maxc);
 
-  for (y = 0; y < region.h; y++)
+  for (y = 0; y < border_h; y++)
     {
-      for (x = 0; x < region.w; x++)
+      for (x = 0; x < border_w; x++)
         {
           data[3] = 255;
 
-          gimp_pixel_rgn_get_pixel (&region, data, x, y);
+          gegl_buffer_sample (buffer, x, y, NULL,
+                              data, babl_format ("R'G'B'A u8"),
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
           gimp_rgba_set_uchar (&color, data[0], data[1], data[2], data[3]);
           gimp_rgb_to_hsl (&color, &color_hsl);
 
@@ -479,6 +481,8 @@ rgb_to_hsl (GimpDrawable     *drawable,
         }
     }
 
+  g_object_unref (buffer);
+
   g_rand_free (gr);
 
   return themap;
@@ -486,26 +490,22 @@ rgb_to_hsl (GimpDrawable     *drawable,
 
 
 static void
-compute_lic (GimpDrawable *drawable,
+compute_lic (gint32        drawable_ID,
              const guchar *scalarfield,
              gboolean      rotate)
 {
-  gint xcount, ycount;
-  GimpRGB color;
-  gdouble vx, vy, tmp;
-  GimpPixelRgn src_rgn, dest_rgn;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  gint        xcount, ycount;
+  GimpRGB     color;
+  gdouble     vx, vy, tmp;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       border_x, border_y,
-                       border_w, border_h, FALSE, FALSE);
+  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
 
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       border_x, border_y,
-                       border_w, border_h, TRUE, TRUE);
-
-  for (ycount = 0; ycount < src_rgn.h; ycount++)
+  for (ycount = 0; ycount < border_h; ycount++)
     {
-      for (xcount = 0; xcount < src_rgn.w; xcount++)
+      for (xcount = 0; xcount < border_w; xcount++)
         {
           /* Get derivative at (x,y) and normalize it */
           /* ============================================================== */
@@ -534,8 +534,10 @@ compute_lic (GimpDrawable *drawable,
 
           if (licvals.effect_convolve == 0)
             {
-              peek (&src_rgn, xcount, ycount, &color);
+              peek (src_buffer, xcount, ycount, &color);
+
               tmp = lic_noise (xcount, ycount, vx, vy);
+
               if (source_drw_has_alpha)
                 gimp_rgba_multiply (&color, tmp);
               else
@@ -543,26 +545,31 @@ compute_lic (GimpDrawable *drawable,
             }
           else
             {
-              lic_image (&src_rgn, xcount, ycount, vx, vy, &color);
+              lic_image (src_buffer, xcount, ycount, vx, vy, &color);
             }
-          poke (&dest_rgn, xcount, ycount, &color);
+
+          poke (dest_buffer, xcount, ycount, &color);
         }
 
-      gimp_progress_update ((gfloat) ycount / (gfloat) src_rgn.h);
+      gimp_progress_update ((gfloat) ycount / (gfloat) border_h);
     }
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
+
   gimp_progress_update (1.0);
 }
 
 static void
-compute_image (GimpDrawable *drawable)
+compute_image (gint32 drawable_ID)
 {
-  GimpDrawable *effect;
-  guchar       *scalarfield = NULL;
+  guchar *scalarfield = NULL;
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                      &border_x, &border_y, &border_w, &border_h))
+  if (! gimp_drawable_mask_intersect (drawable_ID,
+                                      &border_x, &border_y,
+                                      &border_w, &border_h))
     return;
 
   gimp_progress_init (_("Van Gogh (LIC)"));
@@ -579,37 +586,33 @@ compute_image (GimpDrawable *drawable)
   maxv = licvals.maxv / 10.0;
   isteps = licvals.intsteps;
 
-  source_drw_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  source_drw_has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  effect = gimp_drawable_get (licvals.effect_image_id);
-
-  effect_width = effect->width;
-  effect_height = effect->height;
+  effect_width =  gimp_drawable_width  (licvals.effect_image_id);
+  effect_height = gimp_drawable_height (licvals.effect_image_id);
 
   switch (licvals.effect_channel)
     {
-      case 0:
-        scalarfield = rgb_to_hsl (effect, LIC_HUE);
-        break;
-      case 1:
-        scalarfield = rgb_to_hsl (effect, LIC_SATURATION);
-        break;
-      case 2:
-        scalarfield = rgb_to_hsl (effect, LIC_BRIGHTNESS);
-        break;
+    case 0:
+      scalarfield = rgb_to_hsl (licvals.effect_image_id, LIC_HUE);
+      break;
+    case 1:
+      scalarfield = rgb_to_hsl (licvals.effect_image_id, LIC_SATURATION);
+      break;
+    case 2:
+      scalarfield = rgb_to_hsl (licvals.effect_image_id, LIC_BRIGHTNESS);
+      break;
     }
 
-  compute_lic (drawable, scalarfield, licvals.effect_operator);
+  compute_lic (drawable_ID, scalarfield, licvals.effect_operator);
 
   g_free (scalarfield);
 
   /* Update image */
   /* ============ */
 
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, border_x, border_y,
-                        border_w, border_h);
+  gimp_drawable_merge_shadow (drawable_ID, TRUE);
+  gimp_drawable_update (drawable_ID, border_x, border_y, border_w, border_h);
 
   gimp_displays_flush ();
 }
@@ -831,13 +834,12 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
+  gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -855,44 +857,40 @@ run (const gchar      *name,
 
   gimp_get_data (PLUG_IN_PROC, &licvals);
 
-  /* Get the specified drawable */
-  /* ========================== */
-
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_ID = param[2].data.d_drawable;
 
   if (status == GIMP_PDB_SUCCESS)
     {
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
 
-      if (gimp_drawable_is_rgb (drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable_ID))
         {
-          /* Set the tile cache size */
-          /* ======================= */
-
-          gimp_tile_cache_ntiles (2*(drawable->width / gimp_tile_width () + 1));
-
           switch (run_mode)
             {
-              case GIMP_RUN_INTERACTIVE:
-                if (create_main_dialog ())
-                  compute_image (drawable);
+            case GIMP_RUN_INTERACTIVE:
+              if (create_main_dialog ())
+                compute_image (drawable_ID);
 
-                gimp_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
+              gimp_set_data (PLUG_IN_PROC, &licvals, sizeof (LicValues));
               break;
-              case GIMP_RUN_WITH_LAST_VALS:
-                compute_image (drawable);
-                break;
-              default:
-                break;
+
+            case GIMP_RUN_WITH_LAST_VALS:
+              compute_image (drawable_ID);
+              break;
+
+            default:
+              break;
             }
         }
       else
-        status = GIMP_PDB_EXECUTION_ERROR;
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
-  gimp_drawable_detach (drawable);
 }
 
 const GimpPlugInInfo PLUG_IN_INFO =
