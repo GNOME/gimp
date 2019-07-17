@@ -402,6 +402,7 @@
 #define GIMP_HELP_FILTER_MOTION_BLUR_CIRCULAR     "gimp-filter-motion-blur-circular"
 #define GIMP_HELP_FILTER_MOTION_BLUR_LINEAR       "gimp-filter-motion-blur-linear"
 #define GIMP_HELP_FILTER_MOTION_BLUR_ZOOM         "gimp-filter-motion-blur-zoom"
+#define GIMP_HELP_FILTER_NEWSPRINT                "gimp-filter-newsprint"
 #define GIMP_HELP_FILTER_NOISE_CELL               "gimp-filter-noise-cell"
 #define GIMP_HELP_FILTER_NOISE_CIE_LCH            "gimp-filter-noise-cie-lch"
 #define GIMP_HELP_FILTER_NOISE_HSV                "gimp-filter-noise-hsv"

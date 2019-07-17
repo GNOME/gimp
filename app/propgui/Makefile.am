@@ -43,6 +43,8 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-motion-blur-linear.h	\
 	gimppropgui-motion-blur-zoom.c		\
 	gimppropgui-motion-blur-zoom.h		\
+	gimppropgui-newsprint.c			\
+	gimppropgui-newsprint.h			\
 	gimppropgui-panorama-projection.c	\
 	gimppropgui-panorama-projection.h	\
 	gimppropgui-recursive-transform.c	\

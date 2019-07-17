@@ -57,6 +57,7 @@
 #include "gimppropgui-motion-blur-circular.h"
 #include "gimppropgui-motion-blur-linear.h"
 #include "gimppropgui-motion-blur-zoom.h"
+#include "gimppropgui-newsprint.h"
 #include "gimppropgui-panorama-projection.h"
 #include "gimppropgui-recursive-transform.h"
 #include "gimppropgui-shadows-highlights.h"
@@ -472,6 +473,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_motion_blur_linear },
   { "GimpGegl-gegl-motion-blur-zoom-config",
     _gimp_prop_gui_new_motion_blur_zoom },
+  { "GimpGegl-gegl-newsprint-config",
+    _gimp_prop_gui_new_newsprint },
   { "GimpGegl-gegl-panorama-projection-config",
     _gimp_prop_gui_new_panorama_projection },
   { "GimpGegl-gegl-recursive-transform-config",
