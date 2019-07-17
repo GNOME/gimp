@@ -43,18 +43,7 @@
 static GimpCMYK * gimp_cmyk_copy (const GimpCMYK *cmyk);
 
 
-GType
-gimp_cmyk_get_type (void)
-{
-  static GType cmyk_type = 0;
-
-  if (!cmyk_type)
-    cmyk_type = g_boxed_type_register_static ("GimpCMYK",
-                                              (GBoxedCopyFunc) gimp_cmyk_copy,
-                                              (GBoxedFreeFunc) g_free);
-
-  return cmyk_type;
-}
+G_DEFINE_BOXED_TYPE (GimpCMYK, gimp_cmyk, gimp_cmyk_copy, g_free)
 
 static GimpCMYK *
 gimp_cmyk_copy (const GimpCMYK *cmyk)

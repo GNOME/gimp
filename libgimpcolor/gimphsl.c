@@ -32,18 +32,7 @@
 static GimpHSL * gimp_hsl_copy (const GimpHSL *hsl);
 
 
-GType
-gimp_hsl_get_type (void)
-{
-  static GType hsl_type = 0;
-
-  if (!hsl_type)
-    hsl_type = g_boxed_type_register_static ("GimpHSL",
-                                              (GBoxedCopyFunc) gimp_hsl_copy,
-                                              (GBoxedFreeFunc) g_free);
-
-  return hsl_type;
-}
+G_DEFINE_BOXED_TYPE (GimpHSL, gimp_hsl, gimp_hsl_copy, g_free)
 
 static GimpHSL *
 gimp_hsl_copy (const GimpHSL *hsl)
