@@ -55,19 +55,7 @@
  * GIMP_TYPE_PARASITE
  */
 
-GType
-gimp_parasite_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpParasite",
-                                         (GBoxedCopyFunc) gimp_parasite_copy,
-                                         (GBoxedFreeFunc) gimp_parasite_free);
-
-  return type;
-}
-
+G_DEFINE_BOXED_TYPE (GimpParasite, gimp_parasite, gimp_parasite_copy, gimp_parasite_free)
 
 /*
  * GIMP_TYPE_PARAM_PARASITE
