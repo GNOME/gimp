@@ -1861,18 +1861,7 @@ gimp_array_free (GimpArray *array)
     }
 }
 
-GType
-gimp_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpArray",
-                                         (GBoxedCopyFunc) gimp_array_copy,
-                                         (GBoxedFreeFunc) gimp_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpArray, gimp_array, gimp_array_copy, gimp_array_free)
 
 
 /*
@@ -2038,19 +2027,7 @@ gimp_value_take_array (GValue *value,
 /*
  * GIMP_TYPE_INT8_ARRAY
  */
-
-GType
-gimp_int8_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpInt8Array",
-                                         (GBoxedCopyFunc) gimp_array_copy,
-                                         (GBoxedFreeFunc) gimp_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpInt8Array, gimp_int8_array, gimp_array_copy, gimp_array_free)
 
 
 /*
@@ -2160,19 +2137,7 @@ gimp_value_take_int8array (GValue *value,
 /*
  * GIMP_TYPE_INT16_ARRAY
  */
-
-GType
-gimp_int16_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpInt16Array",
-                                         (GBoxedCopyFunc) gimp_array_copy,
-                                         (GBoxedFreeFunc) gimp_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpInt16Array, gimp_int16_array, gimp_array_copy, gimp_array_free)
 
 
 /*
@@ -2285,19 +2250,7 @@ gimp_value_take_int16array (GValue *value,
 /*
  * GIMP_TYPE_INT32_ARRAY
  */
-
-GType
-gimp_int32_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpInt32Array",
-                                         (GBoxedCopyFunc) gimp_array_copy,
-                                         (GBoxedFreeFunc) gimp_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpInt32Array, gimp_int32_array, gimp_array_copy, gimp_array_free)
 
 
 /*
@@ -2410,19 +2363,7 @@ gimp_value_take_int32array (GValue *value,
 /*
  * GIMP_TYPE_FLOAT_ARRAY
  */
-
-GType
-gimp_float_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpFloatArray",
-                                         (GBoxedCopyFunc) gimp_array_copy,
-                                         (GBoxedFreeFunc) gimp_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpFloatArray, gimp_float_array, gimp_array_copy, gimp_array_free)
 
 
 /*
@@ -2599,18 +2540,7 @@ gimp_string_array_free (GimpArray *array)
     }
 }
 
-GType
-gimp_string_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpStringArray",
-                                         (GBoxedCopyFunc) gimp_string_array_copy,
-                                         (GBoxedFreeFunc) gimp_string_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpStringArray, gimp_string_array, gimp_array_copy, gimp_array_free)
 
 
 /*
@@ -2803,19 +2733,7 @@ gimp_value_take_stringarray (GValue  *value,
 /*
  * GIMP_TYPE_COLOR_ARRAY
  */
-
-GType
-gimp_color_array_get_type (void)
-{
-  static GType type = 0;
-
-  if (! type)
-    type = g_boxed_type_register_static ("GimpColorArray",
-                                         (GBoxedCopyFunc) gimp_array_copy,
-                                         (GBoxedFreeFunc) gimp_array_free);
-
-  return type;
-}
+G_DEFINE_BOXED_TYPE (GimpColorArray, gimp_color_array, gimp_array_copy, gimp_array_free)
 
 
 /*
