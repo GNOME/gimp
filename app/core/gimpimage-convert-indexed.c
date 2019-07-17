@@ -810,14 +810,6 @@ gimp_image_convert_indexed (GimpImage               *image,
   /*  Set the new base type  */
   old_type = gimp_image_get_base_type (image);
 
-  g_object_set (image, "base-type", GIMP_INDEXED, NULL);
-
-  /* when converting from GRAY, always convert to the new type's
-   * builtin profile
-   */
-  if (old_type == GIMP_GRAY)
-    dest_profile = gimp_image_get_builtin_color_profile (image);
-
   /*  Build histogram if necessary.  */
   rgb_to_lab_fish = babl_fish (babl_format ("R'G'B' float"),
                                babl_format ("CIE Lab float"));
@@ -950,6 +942,16 @@ gimp_image_convert_indexed (GimpImage               *image,
   if (quantobj->second_pass_init)
     quantobj->second_pass_init (quantobj);
 
+  /* Set the base type just before we also set the colormap. In
+   * particular we must not let any GUI code in-between (like progress
+   * update) in order to avoid any context switch. Some various pieces
+   * of the code are relying on proper image state, and an indexed image
+   * without a colormap is not a proper state (it will also have neither
+   * babl format nor profile).
+   * See #3070.
+   */
+  g_object_set (image, "base-type", GIMP_INDEXED, NULL);
+
   /*  Set the generated palette on the image, we need it to
    *  convert the layers. We optionally remove duplicate entries
    *  after the layer conversion.
@@ -968,6 +970,12 @@ gimp_image_convert_indexed (GimpImage               *image,
     gimp_image_set_colormap (image, colormap,
                              quantobj->actual_number_of_colors, TRUE);
   }
+
+  /* when converting from GRAY, always convert to the new type's
+   * builtin profile
+   */
+  if (old_type == GIMP_GRAY)
+    dest_profile = gimp_image_get_builtin_color_profile (image);
 
   /*  Convert all layers  */
   for (list = all_layers;
