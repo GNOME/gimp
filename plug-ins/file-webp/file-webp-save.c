@@ -154,6 +154,7 @@ save_layer (const gchar    *filename,
   guchar           *buffer   = NULL;
   gint              w, h;
   gboolean          has_alpha;
+  const gchar      *encoding;
   const Babl       *format;
   const Babl       *space      = NULL;
   gint              bpp;
@@ -215,19 +216,19 @@ save_layer (const gchar    *filename,
       if (has_alpha)
         {
           if (out_linear)
-            format = babl_format ("RGBA u8");
+            encoding = "RGBA u8";
           else
-            format = babl_format ("R'G'B'A u8");
+            encoding = "R'G'B'A u8";
         }
       else
         {
           if (out_linear)
-            format = babl_format ("RGB u8");
+            encoding = "RGB u8";
           else
-            format = babl_format ("R'G'B' u8");
+            encoding = "R'G'B' u8";
         }
 
-      format = babl_format_with_space (babl_format_get_encoding (format), space);
+      format = babl_format_with_space (encoding, space);
       bpp = babl_format_get_bytes_per_pixel (format);
 
       /* Retrieve the buffer for the layer */
@@ -513,6 +514,7 @@ save_animation (const gchar    *filename,
   gint                   w, h;
   gint                   bpp;
   gboolean               has_alpha;
+  const gchar           *encoding;
   const Babl            *format;
   const Babl            *space   = NULL;
   GimpColorProfile      *profile = NULL;
@@ -609,19 +611,19 @@ save_animation (const gchar    *filename,
           if (has_alpha)
             {
               if (out_linear)
-                format = babl_format ("RGBA u8");
+                encoding = "RGBA u8";
               else
-                format = babl_format ("R'G'B'A u8");
+                encoding = "R'G'B'A u8";
             }
           else
             {
               if (out_linear)
-                format = babl_format ("RGB u8");
+                encoding = "RGB u8";
               else
-                format = babl_format ("R'G'B' u8");
+                encoding = "R'G'B' u8";
             }
 
-          format = babl_format_with_space (babl_format_get_encoding (format), space);
+          format = babl_format_with_space (encoding, space);
           bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
