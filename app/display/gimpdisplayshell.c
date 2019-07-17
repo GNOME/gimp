@@ -303,6 +303,8 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
+  const gchar *env;
+
   shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
   shell->no_image_options   = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
@@ -326,6 +328,28 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->filter_format     = babl_format ("R'G'B'A float");
   shell->filter_profile    = gimp_babl_get_builtin_color_profile (GIMP_RGB,
                                                                   GIMP_TRC_NON_LINEAR);
+
+  shell->render_buf_width  = 256;
+  shell->render_buf_height = 256;
+
+  env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
+
+  if (env)
+    {
+      gint width  = atoi (env);
+      gint height = width;
+
+      env = strchr (env, 'x');
+      if (env)
+        height = atoi (env + 1);
+
+      if (width  > 0 && width  <= 8192 &&
+          height > 0 && height <= 8192)
+        {
+          shell->render_buf_width  = width;
+          shell->render_buf_height = height;
+        }
+    }
 
   shell->motion_buffer   = gimp_motion_buffer_new ();
 

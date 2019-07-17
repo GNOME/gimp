@@ -83,7 +83,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
   GtkAllocation          allocation;
-  const gchar           *env;
 
   gtk_widget_grab_focus (canvas);
 
@@ -115,28 +114,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
-
-  shell->render_buf_width  = 256;
-  shell->render_buf_height = 256;
-
-  env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
-
-  if (env)
-    {
-      gint width  = atoi (env);
-      gint height = width;
-
-      env = strchr (env, 'x');
-      if (env)
-        height = atoi (env + 1);
-
-      if (width  > 0 && width  <= 8192 &&
-          height > 0 && height <= 8192)
-        {
-          shell->render_buf_width  = width;
-          shell->render_buf_height = height;
-        }
-    }
 }
 
 static gboolean
