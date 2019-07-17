@@ -13,7 +13,7 @@
     'crop-zealous' => { gegl => 1 },
     'curve-bend' => { ui => 1, gegl => 1 },
     'decompose' => { ui => 1, gegl => 1 },
-    'depth-merge' => { ui => 1 },
+    'depth-merge' => { ui => 1, gegl => 1 },
     'despeckle' => { ui => 1, gegl => 1 },
     'destripe' => { ui => 1, gegl => 1 },
     'emboss' => { ui => 1 },
