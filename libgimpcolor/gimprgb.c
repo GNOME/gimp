@@ -43,18 +43,7 @@
 static GimpRGB * gimp_rgb_copy (const GimpRGB *rgb);
 
 
-GType
-gimp_rgb_get_type (void)
-{
-  static GType rgb_type = 0;
-
-  if (!rgb_type)
-    rgb_type = g_boxed_type_register_static ("GimpRGB",
-                                             (GBoxedCopyFunc) gimp_rgb_copy,
-                                             (GBoxedFreeFunc) g_free);
-
-  return rgb_type;
-}
+G_DEFINE_BOXED_TYPE (GimpRGB, gimp_rgb, gimp_rgb_copy, g_free)
 
 void
 gimp_value_get_rgb (const GValue *value,
