@@ -49,27 +49,7 @@
 
 static GimpMatrix2 * matrix2_copy                  (const GimpMatrix2 *matrix);
 
-/**
- * gimp_matrix2_get_type:
- *
- * Reveals the object type
- *
- * Returns: the #GType for Matrix2 objects
- *
- * Since: 2.4
- **/
-GType
-gimp_matrix2_get_type (void)
-{
-  static GType matrix_type = 0;
-
-  if (!matrix_type)
-    matrix_type = g_boxed_type_register_static ("GimpMatrix2",
-                                               (GBoxedCopyFunc) matrix2_copy,
-                                               (GBoxedFreeFunc) g_free);
-
-  return matrix_type;
-}
+G_DEFINE_BOXED_TYPE (GimpMatrix2, gimp_matrix2, matrix2_copy, g_free)
 
 
 /*
@@ -267,27 +247,7 @@ gimp_matrix2_mult (const GimpMatrix2 *matrix1,
 
 static GimpMatrix3 * matrix3_copy                  (const GimpMatrix3 *matrix);
 
-/**
- * gimp_matrix3_get_type:
- *
- * Reveals the object type
- *
- * Returns: the #GType for Matrix3 objects
- *
- * Since: 2.8
- **/
-GType
-gimp_matrix3_get_type (void)
-{
-  static GType matrix_type = 0;
-
-  if (!matrix_type)
-    matrix_type = g_boxed_type_register_static ("GimpMatrix3",
-                                               (GBoxedCopyFunc) matrix3_copy,
-                                               (GBoxedFreeFunc) g_free);
-
-  return matrix_type;
-}
+G_DEFINE_BOXED_TYPE (GimpMatrix3, gimp_matrix3, matrix3_copy, g_free)
 
 
 /*
