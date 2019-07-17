@@ -81,15 +81,27 @@ static gboolean
 gimp_display_shell_update_title_idle (gpointer data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image;
 
   shell->title_idle_id = 0;
 
-  if (gimp_display_get_image (shell->display))
+  image = gimp_display_get_image (shell->display);
+  if (image)
     {
       GimpDisplayConfig *config = shell->display->config;
       gchar              title[MAX_TITLE_BUF];
       gchar              status[MAX_TITLE_BUF];
       gint               len;
+
+      /* This is a ugly hack to prevent this function to be called while
+       * an image is being converted to indexed (which may happen as
+       * various context switch happen during progress update). In such
+       * edge case, we end up in an in-between time where the image is
+       * seamingly broken as it has no format (hence no profile either).
+       */
+      if (gimp_image_get_base_type (image) == GIMP_INDEXED &&
+          ! gimp_image_get_layer_format (image, FALSE))
+        return FALSE;
 
       /* format the title */
       len = gimp_display_shell_format_title (shell, title, sizeof (title),
