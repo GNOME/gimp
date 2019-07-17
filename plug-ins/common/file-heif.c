@@ -691,6 +691,7 @@ save_image (GFile             *file,
   struct heif_error         err;
   GOutputStream            *output;
   GeglBuffer               *buffer;
+  const gchar              *encoding;
   const Babl               *format;
   const Babl               *space   = NULL;
   guint8                   *data;
@@ -779,18 +780,18 @@ save_image (GFile             *file,
   if (has_alpha)
     {
       if (out_linear)
-        format = babl_format ("RGBA u8");
+        encoding = "RGBA u8";
       else
-        format = babl_format ("R'G'B'A u8");
+        encoding = "R'G'B'A u8";
     }
   else
     {
       if (out_linear)
-        format = babl_format ("RGB u8");
+        encoding = "RGB u8";
       else
-        format = babl_format ("R'G'B' u8");
+        encoding = "R'G'B' u8";
     }
-  format = babl_format_with_space (babl_format_get_encoding (format), space);
+  format = babl_format_with_space (encoding, space);
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, width, height),
