@@ -479,6 +479,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:cell-noise",
     GIMP_HELP_FILTER_NOISE_CELL },
 
+  { "filters-newsprint", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Newsprint..."), NULL, NULL,
+    "gegl:newsprint",
+    GIMP_HELP_FILTER_NEWSPRINT },
+
   { "filters-noise-cie-lch", GIMP_ICON_GEGL,
     NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
     "gegl:noise-cie-lch",
