@@ -61,7 +61,6 @@
     'hot' => { ui => 1, gegl => 1 },
     'jigsaw' => { ui => 1, gegl => 1 },
     'mail' => { ui => 1, optional => 1 },
-    'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1, gegl => 1 },
     'oilify' => { ui => 1 },
     'plugin-browser' => { ui => 1 },

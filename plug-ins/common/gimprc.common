@@ -59,7 +59,6 @@ guillotine_RC = guillotine.rc.o
 hot_RC = hot.rc.o
 jigsaw_RC = jigsaw.rc.o
 mail_RC = mail.rc.o
-newsprint_RC = newsprint.rc.o
 nl_filter_RC = nl-filter.rc.o
 oilify_RC = oilify.rc.o
 plugin_browser_RC = plugin-browser.rc.o

@@ -107,7 +107,6 @@ guillotine_libexecdir = $(gimpplugindir)/plug-ins/guillotine
 hot_libexecdir = $(gimpplugindir)/plug-ins/hot
 jigsaw_libexecdir = $(gimpplugindir)/plug-ins/jigsaw
 mail_libexecdir = $(gimpplugindir)/plug-ins/mail
-newsprint_libexecdir = $(gimpplugindir)/plug-ins/newsprint
 nl_filter_libexecdir = $(gimpplugindir)/plug-ins/nl-filter
 oilify_libexecdir = $(gimpplugindir)/plug-ins/oilify
 plugin_browser_libexecdir = $(gimpplugindir)/plug-ins/plugin-browser
@@ -188,7 +187,6 @@ guillotine_libexec_PROGRAMS = guillotine
 hot_libexec_PROGRAMS = hot
 jigsaw_libexec_PROGRAMS = jigsaw
 mail_libexec_PROGRAMS = $(MAIL)
-newsprint_libexec_PROGRAMS = newsprint
 nl_filter_libexec_PROGRAMS = nl-filter
 oilify_libexec_PROGRAMS = oilify
 plugin_browser_libexec_PROGRAMS = plugin-browser
@@ -1339,23 +1337,6 @@ mail_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(mail_RC)
-
-newsprint_SOURCES = \
-	newsprint.c
-
-newsprint_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(newsprint_RC)
 
 nl_filter_SOURCES = \
 	nl-filter.c

@@ -136,7 +136,7 @@ wrap_in_gamma_cast (GeglNode     *node,
       cast_format =
         gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
                           gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
-                                               TRUE),
+                                               GIMP_TRC_LINEAR),
                           babl_format_has_alpha (drawable_format),
                           babl_format_get_space (drawable_format));
 
@@ -352,6 +352,47 @@ gaussian_blur (GimpDrawable  *drawable,
     }
 
   return FALSE;
+}
+
+static gint
+newsprint_color_model (gint colorspace)
+{
+  switch (colorspace)
+    {
+    case 0: return 1; /* black on white */
+    case 1: return 2; /* rgb */
+    case 2: return 3; /* cmyk */
+    case 3: return 1; /* black on white */
+    }
+
+  return 2;
+}
+
+static gint
+newsprint_pattern (gint spotfn)
+{
+  switch (spotfn)
+    {
+    case 0: return 1; /* circle */
+    case 1: return 0; /* line */
+    case 2: return 2; /* diamond */
+    case 3: return 4; /* ps circle */
+    case 4: return 2; /* FIXME postscript diamond */
+    }
+
+  return 1;
+}
+
+static gdouble
+newsprint_angle (gdouble angle)
+{
+  while (angle > 180.0)
+    angle -= 360.0;
+
+  while (angle < -180.0)
+    angle += 360.0;
+
+  return angle;
 }
 
 static GimpValueArray *
@@ -2617,6 +2658,94 @@ plug_in_neon_invoker (GimpProcedure         *procedure,
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Neon"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_newsprint_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 cell_width;
+  gint32 colorspace;
+  gint32 k_pullout;
+  gdouble gry_ang;
+  gint32 gry_spotfn;
+  gdouble red_ang;
+  gint32 red_spotfn;
+  gdouble grn_ang;
+  gint32 grn_spotfn;
+  gdouble blu_ang;
+  gint32 blu_spotfn;
+  gint32 oversample;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  cell_width = g_value_get_int (gimp_value_array_index (args, 3));
+  colorspace = g_value_get_int (gimp_value_array_index (args, 4));
+  k_pullout = g_value_get_int (gimp_value_array_index (args, 5));
+  gry_ang = g_value_get_double (gimp_value_array_index (args, 6));
+  gry_spotfn = g_value_get_int (gimp_value_array_index (args, 7));
+  red_ang = g_value_get_double (gimp_value_array_index (args, 8));
+  red_spotfn = g_value_get_int (gimp_value_array_index (args, 9));
+  grn_ang = g_value_get_double (gimp_value_array_index (args, 10));
+  grn_spotfn = g_value_get_int (gimp_value_array_index (args, 11));
+  blu_ang = g_value_get_double (gimp_value_array_index (args, 12));
+  blu_spotfn = g_value_get_int (gimp_value_array_index (args, 13));
+  oversample = g_value_get_int (gimp_value_array_index (args, 14));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gint      color_model = newsprint_color_model (colorspace);
+          gint      pattern     = newsprint_pattern (gry_spotfn);
+          gint      pattern2    = newsprint_pattern (red_spotfn);
+          gint      pattern3    = newsprint_pattern (grn_spotfn);
+          gint      pattern4    = newsprint_pattern (blu_spotfn);
+          gdouble   angle       = newsprint_angle (gry_ang);
+          gdouble   angle2      = newsprint_angle (red_ang);
+          gdouble   angle3      = newsprint_angle (grn_ang);
+          gdouble   angle4      = newsprint_angle (blu_ang);
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",     "gegl:newsprint",
+                                      "color-model",   color_model,
+                                      "black-pullout", (gdouble) k_pullout / 100.0,
+                                      "period",        (gdouble) cell_width,
+                                      "angle",         angle,
+                                      "pattern",       pattern,
+                                      "period2",       (gdouble) cell_width,
+                                      "angle2",        angle2,
+                                      "pattern2",      pattern2,
+                                      "period3",       (gdouble) cell_width,
+                                      "angle3",        angle3,
+                                      "pattern3",      pattern3,
+                                      "period4",       (gdouble) cell_width,
+                                      "angle4",        angle4,
+                                      "pattern4",      pattern4,
+                                      "aa-samples",    oversample,
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Newsprint"),
                                          node);
           g_object_unref (node);
         }
@@ -7009,6 +7138,114 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Effect enhancement variable",
                                                     0.0, 100.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-newsprint
+   */
+  procedure = gimp_procedure_new (plug_in_newsprint_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-newsprint");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-newsprint",
+                                     "Halftone the image to give newspaper-like effect",
+                                     "Halftone the image to give newspaper-like effect",
+                                     "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("cell-width",
+                                                      "cell width",
+                                                      "Screen cell width in pixels",
+                                                      0, 1500, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("colorspace",
+                                                      "colorspace",
+                                                      "Separate to { GRAYSCALE (0), RGB (1), CMYK (2), LUMINANCE (3) }",
+                                                      0, 3, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("k-pullout",
+                                                      "k pullout",
+                                                      "Percentage of black to pullout (CMYK only)",
+                                                      0, 100, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("gry-ang",
+                                                    "gry ang",
+                                                    "Grey/black screen angle (degrees)",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("gry-spotfn",
+                                                      "gry spotfn",
+                                                      "Grey/black spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                      0, 4, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("red-ang",
+                                                    "red ang",
+                                                    "Red/cyan screen angle (degrees)",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("red-spotfn",
+                                                      "red spotfn",
+                                                      "Red/cyan spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                      0, 4, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("grn-ang",
+                                                    "grn ang",
+                                                    "Green/magenta screen angle (degrees)",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("grn-spotfn",
+                                                      "grn spotfn",
+                                                      "Green/magenta spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                      0, 4, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("blu-ang",
+                                                    "blu ang",
+                                                    "Blue/yellow screen angle (degrees)",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("blu-spotfn",
+                                                      "blu spotfn",
+                                                      "Blue/yellow spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                      0, 4, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("oversample",
+                                                      "oversample",
+                                                      "how many times to oversample spot fn",
+                                                      0, 128, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
