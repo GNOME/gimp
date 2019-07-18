@@ -1628,6 +1628,57 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_emboss_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble azimuth;
+  gdouble elevation;
+  gint32 depth;
+  gboolean emboss;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  azimuth = g_value_get_double (gimp_value_array_index (args, 3));
+  elevation = g_value_get_double (gimp_value_array_index (args, 4));
+  depth = g_value_get_int (gimp_value_array_index (args, 5));
+  emboss = g_value_get_boolean (gimp_value_array_index (args, 6));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",  "gegl:emboss",
+                                      "type",       emboss ? 0 : 1,
+                                      "azimuth",    azimuth,
+                                      "elevation",  elevation,
+                                      "depth",      depth,
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Emboss"),
+                                         node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_engrave_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
@@ -5956,6 +6007,66 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }",
                                                       0, 5, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-emboss
+   */
+  procedure = gimp_procedure_new (plug_in_emboss_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-emboss");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-emboss",
+                                     "Simulate an image created by embossing",
+                                     "Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source.",
+                                     "Compatibility procedure. Please see 'gegl:emboss' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:emboss' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("azimuth",
+                                                    "azimuth",
+                                                    "The Light Angle (degrees)",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("elevation",
+                                                    "elevation",
+                                                    "The Elevation Angle (degrees)",
+                                                    0.0, 180, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("depth",
+                                                      "depth",
+                                                      "The Filter Width",
+                                                      1, 99, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("emboss",
+                                                     "emboss",
+                                                     "Emboss (TRUE), Bumpmap (FALSE)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

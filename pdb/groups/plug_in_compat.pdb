@@ -1415,6 +1415,64 @@ CODE
     );
 }
 
+sub plug_in_emboss {
+    $blurb = 'Simulate an image created by embossing';
+
+    $help = <<'HELP';
+Emboss or Bumpmap the given drawable, specifying the angle and
+elevation for the light source.
+HELP
+
+    &std_pdb_compat('gegl:emboss');
+    $date = '2019';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'azimuth', type => '0.0 <= float <= 360.0',
+	  desc => 'The Light Angle (degrees)' },
+	{ name => 'elevation', type => '0.0 <= float <= 180',
+	  desc => 'The Elevation Angle (degrees)' },
+	{ name => 'depth', type => '0 < int32 < 100',
+	  desc => 'The Filter Width' },
+	{ name => 'emboss', type => 'boolean',
+	  desc => 'Emboss (TRUE), Bumpmap (FALSE)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",  "gegl:emboss",
+                                  "type",       emboss ? 0 : 1,
+                                  "azimuth",    azimuth,
+                                  "elevation",  elevation,
+                                  "depth",      depth,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Emboss"),
+                                     node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_engrave {
     $blurb = 'Simulate an antique engraving';
 
@@ -5262,6 +5320,7 @@ CODE
             plug_in_displace_polar
             plug_in_dog
             plug_in_edge
+            plug_in_emboss
             plug_in_engrave
             plug_in_exchange
             plug_in_flarefx

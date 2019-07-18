@@ -14,7 +14,6 @@ decompose_RC = decompose.rc.o
 depth_merge_RC = depth-merge.rc.o
 despeckle_RC = despeckle.rc.o
 destripe_RC = destripe.rc.o
-emboss_RC = emboss.rc.o
 file_aa_RC = file-aa.rc.o
 file_cel_RC = file-cel.rc.o
 file_compressor_RC = file-compressor.rc.o
