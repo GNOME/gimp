@@ -69,7 +69,6 @@
     'jigsaw' => { ui => 1, gegl => 1 },
     'mail' => { ui => 1, optional => 1 },
     'max-rgb' => { ui => 1 },
-    'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1, gegl => 1 },
     'oilify' => { ui => 1 },
     'photocopy' => { ui => 1 },

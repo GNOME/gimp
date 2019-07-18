@@ -116,7 +116,6 @@ hot_libexecdir = $(gimpplugindir)/plug-ins/hot
 jigsaw_libexecdir = $(gimpplugindir)/plug-ins/jigsaw
 mail_libexecdir = $(gimpplugindir)/plug-ins/mail
 max_rgb_libexecdir = $(gimpplugindir)/plug-ins/max-rgb
-newsprint_libexecdir = $(gimpplugindir)/plug-ins/newsprint
 nl_filter_libexecdir = $(gimpplugindir)/plug-ins/nl-filter
 oilify_libexecdir = $(gimpplugindir)/plug-ins/oilify
 photocopy_libexecdir = $(gimpplugindir)/plug-ins/photocopy
@@ -209,7 +208,6 @@ hot_libexec_PROGRAMS = hot
 jigsaw_libexec_PROGRAMS = jigsaw
 mail_libexec_PROGRAMS = $(MAIL)
 max_rgb_libexec_PROGRAMS = max-rgb
-newsprint_libexec_PROGRAMS = newsprint
 nl_filter_libexec_PROGRAMS = nl-filter
 oilify_libexec_PROGRAMS = oilify
 photocopy_libexec_PROGRAMS = photocopy
@@ -1515,23 +1513,6 @@ max_rgb_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(max_rgb_RC)
-
-newsprint_SOURCES = \
-	newsprint.c
-
-newsprint_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(newsprint_RC)
 
 nl_filter_SOURCES = \
 	nl-filter.c
