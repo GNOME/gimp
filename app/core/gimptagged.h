@@ -22,13 +22,9 @@
 #define __GIMP_TAGGED_H__
 
 
-#define GIMP_TYPE_TAGGED               (gimp_tagged_get_type ())
-#define GIMP_IS_TAGGED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAGGED))
-#define GIMP_TAGGED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAGGED, GimpTagged))
-#define GIMP_TAGGED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_TAGGED, GimpTaggedInterface))
+#define GIMP_TYPE_TAGGED (gimp_tagged_get_type ())
+G_DECLARE_INTERFACE (GimpTagged, gimp_tagged, GIMP, TAGGED, GObject)
 
-
-typedef struct _GimpTaggedInterface GimpTaggedInterface;
 
 struct _GimpTaggedInterface
 {
@@ -50,8 +46,6 @@ struct _GimpTaggedInterface
   gchar    * (* get_checksum)   (GimpTagged *tagged);
 };
 
-
-GType      gimp_tagged_get_type       (void) G_GNUC_CONST;
 
 void       gimp_tagged_add_tag        (GimpTagged *tagged,
                                        GimpTag    *tag);

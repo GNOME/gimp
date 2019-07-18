@@ -90,7 +90,7 @@ gimp_tagged_add_tag (GimpTagged *tagged,
   g_return_if_fail (GIMP_IS_TAGGED (tagged));
   g_return_if_fail (GIMP_IS_TAG (tag));
 
-  if (GIMP_TAGGED_GET_INTERFACE (tagged)->add_tag (tagged, tag))
+  if (GIMP_TAGGED_GET_IFACE (tagged)->add_tag (tagged, tag))
     {
       g_signal_emit (tagged, gimp_tagged_signals[TAG_ADDED], 0, tag);
     }
@@ -124,7 +124,7 @@ gimp_tagged_remove_tag (GimpTagged *tagged,
         {
           g_object_ref (tag_ref);
 
-          if (GIMP_TAGGED_GET_INTERFACE (tagged)->remove_tag (tagged, tag_ref))
+          if (GIMP_TAGGED_GET_IFACE (tagged)->remove_tag (tagged, tag_ref))
             {
               g_signal_emit (tagged, gimp_tagged_signals[TAG_REMOVED], 0,
                              tag_ref);
@@ -185,7 +185,7 @@ gimp_tagged_get_tags (GimpTagged *tagged)
 {
   g_return_val_if_fail (GIMP_IS_TAGGED (tagged), NULL);
 
-  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_tags (tagged);
+  return GIMP_TAGGED_GET_IFACE (tagged)->get_tags (tagged);
 }
 
 /**
@@ -207,7 +207,7 @@ gimp_tagged_get_identifier (GimpTagged *tagged)
 {
   g_return_val_if_fail (GIMP_IS_TAGGED (tagged), NULL);
 
-  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_identifier (tagged);
+  return GIMP_TAGGED_GET_IFACE (tagged)->get_identifier (tagged);
 }
 
 /**
@@ -229,7 +229,7 @@ gimp_tagged_get_checksum (GimpTagged *tagged)
 {
   g_return_val_if_fail (GIMP_IS_TAGGED (tagged), FALSE);
 
-  return GIMP_TAGGED_GET_INTERFACE (tagged)->get_checksum (tagged);
+  return GIMP_TAGGED_GET_IFACE (tagged)->get_checksum (tagged);
 }
 
 /**

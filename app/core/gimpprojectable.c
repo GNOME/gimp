@@ -152,7 +152,7 @@ gimp_projectable_get_image (GimpProjectable *projectable)
 
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_image)
     return iface->get_image (projectable);
@@ -167,7 +167,7 @@ gimp_projectable_get_format (GimpProjectable *projectable)
 
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_format)
     return iface->get_format (projectable);
@@ -186,7 +186,7 @@ gimp_projectable_get_offset (GimpProjectable *projectable,
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   *x = 0;
   *y = 0;
@@ -206,7 +206,7 @@ gimp_projectable_get_size (GimpProjectable *projectable,
   g_return_if_fail (width  != NULL);
   g_return_if_fail (height != NULL);
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   *width  = 0;
   *height = 0;
@@ -222,7 +222,7 @@ gimp_projectable_get_graph (GimpProjectable *projectable)
 
   g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_graph)
     return iface->get_graph (projectable);
@@ -237,7 +237,7 @@ gimp_projectable_begin_render (GimpProjectable *projectable)
 
   g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->begin_render)
     iface->begin_render (projectable);
@@ -250,7 +250,7 @@ gimp_projectable_end_render (GimpProjectable *projectable)
 
   g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->end_render)
     iface->end_render (projectable);
@@ -263,7 +263,7 @@ gimp_projectable_invalidate_preview (GimpProjectable *projectable)
 
   g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
 
-  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->invalidate_preview)
     iface->invalidate_preview (projectable);
