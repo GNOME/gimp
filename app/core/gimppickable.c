@@ -122,7 +122,7 @@ gimp_pickable_flush (GimpPickable *pickable)
 
   g_return_if_fail (GIMP_IS_PICKABLE (pickable));
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->flush)
     pickable_iface->flush (pickable);
@@ -135,7 +135,7 @@ gimp_pickable_get_image (GimpPickable *pickable)
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_image)
     return pickable_iface->get_image (pickable);
@@ -150,7 +150,7 @@ gimp_pickable_get_format (GimpPickable *pickable)
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_format)
     return pickable_iface->get_format (pickable);
@@ -165,7 +165,7 @@ gimp_pickable_get_format_with_alpha (GimpPickable *pickable)
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_format_with_alpha)
     return pickable_iface->get_format_with_alpha (pickable);
@@ -180,7 +180,7 @@ gimp_pickable_get_buffer (GimpPickable *pickable)
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_buffer)
     return pickable_iface->get_buffer (pickable);
@@ -203,7 +203,7 @@ gimp_pickable_get_pixel_at (GimpPickable *pickable,
   if (! format)
     format = gimp_pickable_get_format (pickable);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_pixel_at)
     return pickable_iface->get_pixel_at (pickable, x, y, format, pixel);
@@ -226,7 +226,7 @@ gimp_pickable_get_pixel_average (GimpPickable        *pickable,
   if (! format)
     format = gimp_pickable_get_format (pickable);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_pixel_average)
     pickable_iface->get_pixel_average (pickable, rect, format, pixel);
@@ -262,7 +262,7 @@ gimp_pickable_get_opacity_at (GimpPickable *pickable,
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), GIMP_OPACITY_TRANSPARENT);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->get_opacity_at)
     return pickable_iface->get_opacity_at (pickable, x, y);
@@ -285,7 +285,7 @@ gimp_pickable_pixel_to_srgb (GimpPickable *pickable,
   if (! format)
     format = gimp_pickable_get_format (pickable);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->pixel_to_srgb)
     {
@@ -312,7 +312,7 @@ gimp_pickable_srgb_to_pixel (GimpPickable  *pickable,
   if (! format)
     format = gimp_pickable_get_format (pickable);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  pickable_iface = GIMP_PICKABLE_GET_IFACE (pickable);
 
   if (pickable_iface->srgb_to_pixel)
     {
