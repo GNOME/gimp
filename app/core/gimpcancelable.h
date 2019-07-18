@@ -22,13 +22,9 @@
 #define __GIMP_CANCELABLE_H__
 
 
-#define GIMP_TYPE_CANCELABLE               (gimp_cancelable_get_type ())
-#define GIMP_IS_CANCELABLE(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANCELABLE))
-#define GIMP_CANCELABLE(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANCELABLE, GimpCancelable))
-#define GIMP_CANCELABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CANCELABLE, GimpCancelableInterface))
+#define GIMP_TYPE_CANCELABLE (gimp_cancelable_get_type ())
+G_DECLARE_INTERFACE (GimpCancelable, gimp_cancelable, GIMP, CANCELABLE, GObject)
 
-
-typedef struct _GimpCancelableInterface GimpCancelableInterface;
 
 struct _GimpCancelableInterface
 {
@@ -38,8 +34,6 @@ struct _GimpCancelableInterface
   void   (* cancel) (GimpCancelable *cancelable);
 };
 
-
-GType   gimp_cancelable_get_type (void) G_GNUC_CONST;
 
 void    gimp_cancelable_cancel   (GimpCancelable *cancelable);
 

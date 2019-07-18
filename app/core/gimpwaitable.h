@@ -22,13 +22,9 @@
 #define __GIMP_WAITABLE_H__
 
 
-#define GIMP_TYPE_WAITABLE               (gimp_waitable_get_type ())
-#define GIMP_IS_WAITABLE(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_WAITABLE))
-#define GIMP_WAITABLE(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_WAITABLE, GimpWaitable))
-#define GIMP_WAITABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_WAITABLE, GimpWaitableInterface))
+#define GIMP_TYPE_WAITABLE (gimp_waitable_get_type ())
+G_DECLARE_INTERFACE (GimpWaitable, gimp_waitable, GIMP, WAITABLE, GObject)
 
-
-typedef struct _GimpWaitableInterface GimpWaitableInterface;
 
 struct _GimpWaitableInterface
 {
@@ -41,8 +37,6 @@ struct _GimpWaitableInterface
                              gint64        end_time);
 };
 
-
-GType      gimp_waitable_get_type   (void) G_GNUC_CONST;
 
 void       gimp_waitable_wait       (GimpWaitable *waitable);
 gboolean   gimp_waitable_try_wait   (GimpWaitable *waitable);
