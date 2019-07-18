@@ -110,7 +110,7 @@ gimp_color_managed_profile_changed
 GIMP_COLOR_MANAGED
 GIMP_IS_COLOR_MANAGED
 GIMP_TYPE_COLOR_MANAGED
-GIMP_COLOR_MANAGED_GET_INTERFACE
+GIMP_COLOR_MANAGED_GET_IFACE
 gimp_color_managed_get_type
 gimp_color_managed_interface_get_type
 </SECTION>

@@ -31,13 +31,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_COLOR_MANAGED               (gimp_color_managed_get_type ())
-#define GIMP_IS_COLOR_MANAGED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_MANAGED))
-#define GIMP_COLOR_MANAGED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_MANAGED, GimpColorManaged))
-#define GIMP_COLOR_MANAGED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_COLOR_MANAGED, GimpColorManagedInterface))
-
-
-typedef struct _GimpColorManagedInterface GimpColorManagedInterface;
+#define GIMP_TYPE_COLOR_MANAGED (gimp_color_managed_get_type ())
+G_DECLARE_INTERFACE (GimpColorManaged, gimp_color_managed, GIMP, COLOR_MANAGED, GObject)
 
 /**
  * GimpColorManagedInterface:
@@ -64,8 +59,6 @@ struct _GimpColorManagedInterface
   GimpColorProfile * (* get_color_profile) (GimpColorManaged *managed);
 };
 
-
-GType              gimp_color_managed_get_type          (void) G_GNUC_CONST;
 
 const guint8     * gimp_color_managed_get_icc_profile   (GimpColorManaged *managed,
                                                          gsize            *len);
