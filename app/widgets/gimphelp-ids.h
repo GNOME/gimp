@@ -396,6 +396,7 @@
 #define GIMP_HELP_FILTER_LONG_SHADOW              "gimp-filter-long-shadow"
 #define GIMP_HELP_FILTER_MANTIUK_2006             "gimp-filter-manituk-2006"
 #define GIMP_HELP_FILTER_MAZE                     "gimp-filter-maze"
+#define GIMP_HELP_FILTER_MEAN_CURVATURE_BLUR      "gimp-filter-mean-curvature-blur"
 #define GIMP_HELP_FILTER_MEDIAN_BLUR              "gimp-filter-median-blur"
 #define GIMP_HELP_FILTER_MONO_MIXER               "gimp-filter-mono-mixer"
 #define GIMP_HELP_FILTER_MOSAIC                   "gimp-filter-mosaic"
