@@ -6059,7 +6059,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("depth",
                                                       "depth",
                                                       "The Filter Width",
-                                                      1, 99, 0,
+                                                      1, 99, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("emboss",
