@@ -589,14 +589,6 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pencil
-	gimp_pixel_rgn_get_rect
-	gimp_pixel_rgn_get_row
-	gimp_pixel_rgn_init
-	gimp_pixel_rgn_set_rect
-	gimp_pixel_rgn_set_row
-	gimp_pixel_rgns_process
-	gimp_pixel_rgns_register
-	gimp_pixel_rgns_register2
 	gimp_plugin_domain_register
 	gimp_plugin_enable_precision
 	gimp_plugin_get_pdb_error_handler
