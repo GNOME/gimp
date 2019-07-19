@@ -69,7 +69,6 @@ jigsaw_RC = jigsaw.rc.o
 mail_RC = mail.rc.o
 max_rgb_RC = max-rgb.rc.o
 nl_filter_RC = nl-filter.rc.o
-oilify_RC = oilify.rc.o
 photocopy_RC = photocopy.rc.o
 plugin_browser_RC = plugin-browser.rc.o
 procedure_browser_RC = procedure-browser.rc.o
