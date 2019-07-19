@@ -321,7 +321,6 @@ gimpinclude_HEADERS = \
 	gimpproceduraldb.h		\
 	gimpprogress.h			\
 	gimpselection.h			\
-	gimptile.h			\
 	\
 	gimpui.h			\
 	gimpuitypes.h			\

@@ -31,6 +31,7 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+#include "gimptile.h"
 
 
 /**
@@ -54,37 +55,9 @@ void         gimp_read_expect_msg   (GimpWireMessage *msg,
 
 static void  gimp_tile_get          (GimpTile        *tile);
 static void  gimp_tile_put          (GimpTile        *tile);
-static void  gimp_tile_cache_insert (GimpTile        *tile);
-static void  gimp_tile_cache_flush  (GimpTile        *tile);
-
-
-/*  private variables  */
-
-static GHashTable * tile_hash_table = NULL;
-static GList      * tile_list_head  = NULL;
-static GList      * tile_list_tail  = NULL;
-static gulong       max_tile_size   = 0;
-static gulong       cur_cache_size  = 0;
-static gulong       max_cache_size  = 0;
 
 
 /*  public functions  */
-
-void
-_gimp_tile_ref (GimpTile *tile)
-{
-  g_return_if_fail (tile != NULL);
-
-  tile->ref_count++;
-
-  if (tile->ref_count == 1)
-    {
-      gimp_tile_get (tile);
-      tile->dirty = FALSE;
-    }
-
-  gimp_tile_cache_insert (tile);
-}
 
 void
 _gimp_tile_ref_nocache (GimpTile *tile,
@@ -135,47 +108,6 @@ _gimp_tile_flush (GimpTile *tile)
     {
       gimp_tile_put (tile);
       tile->dirty = FALSE;
-    }
-}
-
-/**
- * gimp_tile_cache_ntiles:
- * @ntiles: number of tiles that should fit into the cache
- *
- * Sets the size of the tile cache on the plug-in side. This function
- * is similar to gimp_tile_cache_size() but supports specifying the
- * number of tiles directly.
- *
- * If your plug-in access pixels tile-by-tile, it doesn't need a tile
- * cache at all. If however the plug-in accesses drawable pixel data
- * row-by-row, it should set the tile cache large enough to hold the
- * number of tiles per row. Double this size if your plug-in uses
- * shadow tiles.
- **/
-void
-gimp_tile_cache_ntiles (gulong ntiles)
-{
-  max_cache_size = (ntiles *
-                    gimp_tile_width () *
-                    gimp_tile_height () * 4);
-}
-
-void
-_gimp_tile_cache_flush_drawable (GimpDrawable *drawable)
-{
-  GList *list;
-
-  g_return_if_fail (drawable != NULL);
-
-  list = tile_list_head;
-  while (list)
-    {
-      GimpTile *tile = list->data;
-
-      list = list->next;
-
-      if (tile->drawable == drawable)
-        gimp_tile_cache_flush (tile);
     }
 }
 
@@ -280,130 +212,4 @@ gimp_tile_put (GimpTile *tile)
   gimp_read_expect_msg (&msg, GP_TILE_ACK);
   gp_unlock ();
   gimp_wire_destroy (&msg);
-}
-
-/* This function is nearly identical to the function 'tile_cache_insert'
- *  in the file 'tile_cache.c' which is part of the main gimp application.
- */
-static void
-gimp_tile_cache_insert (GimpTile *tile)
-{
-  GList *list;
-
-  if (!tile_hash_table)
-    {
-      tile_hash_table = g_hash_table_new (g_direct_hash, NULL);
-      max_tile_size = gimp_tile_width () * gimp_tile_height () * 4;
-    }
-
-  /* First check and see if the tile is already
-   *  in the cache. In that case we will simply place
-   *  it at the end of the tile list to indicate that
-   *  it was the most recently accessed tile.
-   */
-  list = g_hash_table_lookup (tile_hash_table, tile);
-
-  if (list)
-    {
-      /* The tile was already in the cache. Place it at
-       *  the end of the tile list.
-       */
-
-      /* If the tile is already at the end of the list, we are done */
-      if (list == tile_list_tail)
-        return;
-
-      /* At this point we have at least two elements in our list */
-      g_assert (tile_list_head != tile_list_tail);
-
-      tile_list_head = g_list_remove_link (tile_list_head, list);
-
-      tile_list_tail = g_list_last (g_list_concat (tile_list_tail, list));
-    }
-  else
-    {
-      /* The tile was not in the cache. First check and see
-       *  if there is room in the cache. If not then we'll have
-       *  to make room first. Note: it might be the case that the
-       *  cache is smaller than the size of a tile in which case
-       *  it won't be possible to put it in the cache.
-       */
-
-      if ((cur_cache_size + max_tile_size) > max_cache_size)
-        {
-          while (tile_list_head &&
-                 (cur_cache_size +
-                  max_cache_size * FREE_QUANTUM) > max_cache_size)
-            {
-              gimp_tile_cache_flush ((GimpTile *) tile_list_head->data);
-            }
-
-          if ((cur_cache_size + max_tile_size) > max_cache_size)
-            return;
-        }
-
-      /* Place the tile at the end of the tile list.
-       */
-      tile_list_tail = g_list_append (tile_list_tail, tile);
-
-      if (! tile_list_head)
-        tile_list_head = tile_list_tail;
-
-      tile_list_tail = g_list_last (tile_list_tail);
-
-      /* Add the tiles list node to the tile hash table.
-       */
-      g_hash_table_insert (tile_hash_table, tile, tile_list_tail);
-
-      /* Note the increase in the number of bytes the cache
-       *  is referencing.
-       */
-      cur_cache_size += max_tile_size;
-
-      /* Reference the tile so that it won't be returned to
-       *  the main gimp application immediately.
-       */
-      tile->ref_count++;
-    }
-}
-
-static void
-gimp_tile_cache_flush (GimpTile *tile)
-{
-  GList *list;
-
-  if (! tile_hash_table)
-    return;
-
-  /* Find where the tile is in the cache.
-   */
-  list = g_hash_table_lookup (tile_hash_table, tile);
-
-  if (list)
-    {
-      /* If the tile is in the cache, then remove it from the
-       *  tile list.
-       */
-      if (list == tile_list_tail)
-        tile_list_tail = tile_list_tail->prev;
-
-      tile_list_head = g_list_remove_link (tile_list_head, list);
-
-      if (! tile_list_head)
-        tile_list_tail = NULL;
-
-      /* Remove the tile from the tile hash table.
-       */
-      g_hash_table_remove (tile_hash_table, tile);
-      g_list_free (list);
-
-      /* Note the decrease in the number of bytes the cache
-       *  is referencing.
-       */
-      cur_cache_size -= max_tile_size;
-
-      /* Unreference the tile.
-       */
-      _gimp_tile_unref (tile, FALSE);
-    }
 }

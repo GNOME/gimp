@@ -25,6 +25,7 @@
 #define GIMP_DISABLE_DEPRECATION_WARNINGS
 
 #include "gimp.h"
+#include "gimptile.h"
 #include "gimptilebackendplugin.h"
 
 
@@ -158,11 +159,6 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
       break;
 
     case GEGL_TILE_FLUSH:
-      g_mutex_lock (&backend_plugin_mutex);
-
-      gimp_drawable_flush (backend_plugin->priv->drawable);
-
-      g_mutex_unlock (&backend_plugin_mutex);
       break;
 
     default:

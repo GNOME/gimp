@@ -51,7 +51,6 @@
 #include <libgimp/gimpproceduraldb.h>
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpselection.h>
-#include <libgimp/gimptile.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 

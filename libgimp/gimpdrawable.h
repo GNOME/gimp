@@ -52,8 +52,6 @@ GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
 GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID);
 GIMP_DEPRECATED
 void           gimp_drawable_detach                 (GimpDrawable  *drawable);
-GIMP_DEPRECATED_FOR(gegl_buffer_flush)
-void           gimp_drawable_flush                  (GimpDrawable  *drawable);
 GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
 GimpTile     * gimp_drawable_get_tile               (GimpDrawable  *drawable,
                                                      gboolean       shadow,

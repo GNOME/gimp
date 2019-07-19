@@ -683,7 +683,6 @@ EXPORTS
 	gimp_text_layer_set_letter_spacing
 	gimp_text_layer_set_line_spacing
 	gimp_text_layer_set_text
-	gimp_tile_cache_ntiles
 	gimp_tile_height
 	gimp_tile_width
 	gimp_uninstall_temp_proc

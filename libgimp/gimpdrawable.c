@@ -23,6 +23,7 @@
 #define GIMP_DISABLE_DEPRECATION_WARNINGS
 
 #include "gimp.h"
+#include "gimptile.h"
 
 #include "gimptilebackendplugin.h"
 
@@ -92,8 +93,6 @@ gimp_drawable_detach (GimpDrawable *drawable)
 {
   g_return_if_fail (drawable != NULL);
 
-  gimp_drawable_flush (drawable);
-
   if (drawable->tiles)
     g_free (drawable->tiles);
 
@@ -101,50 +100,6 @@ gimp_drawable_detach (GimpDrawable *drawable)
     g_free (drawable->shadow_tiles);
 
   g_slice_free (GimpDrawable, drawable);
-}
-
-/**
- * gimp_drawable_flush:
- * @drawable: The #GimpDrawable whose tile data is to be transferred
- * to the core.
- *
- * This function causes all tile data in the tile list of @drawable to be
- * transferred to the core.  It is usually called in situations where a
- * plug-in acts on a drawable, and then needs to read the results of its
- * actions.  Data transferred back from the core will not generally be valid
- * unless gimp_drawable_flush() has been called beforehand.
- **/
-void
-gimp_drawable_flush (GimpDrawable *drawable)
-{
-  GimpTile *tiles;
-  gint      n_tiles;
-  gint      i;
-
-  g_return_if_fail (drawable != NULL);
-
-  if (drawable->tiles)
-    {
-      tiles   = drawable->tiles;
-      n_tiles = drawable->ntile_rows * drawable->ntile_cols;
-
-      for (i = 0; i < n_tiles; i++)
-        if ((tiles[i].ref_count > 0) && tiles[i].dirty)
-          _gimp_tile_flush (&tiles[i]);
-    }
-
-  if (drawable->shadow_tiles)
-    {
-      tiles   = drawable->shadow_tiles;
-      n_tiles = drawable->ntile_rows * drawable->ntile_cols;
-
-      for (i = 0; i < n_tiles; i++)
-        if ((tiles[i].ref_count > 0) && tiles[i].dirty)
-          _gimp_tile_flush (&tiles[i]);
-    }
-
-  /*  nuke all references to this drawable from the cache  */
-  _gimp_tile_cache_flush_drawable (drawable);
 }
 
 GimpTile *
