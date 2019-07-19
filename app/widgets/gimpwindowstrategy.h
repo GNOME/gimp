@@ -22,13 +22,9 @@
 #define __GIMP_WINDOW_STRATEGY_H__
 
 
-#define GIMP_TYPE_WINDOW_STRATEGY               (gimp_window_strategy_get_type ())
-#define GIMP_WINDOW_STRATEGY(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_WINDOW_STRATEGY, GimpWindowStrategy))
-#define GIMP_IS_WINDOW_STRATEGY(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_WINDOW_STRATEGY))
-#define GIMP_WINDOW_STRATEGY_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_WINDOW_STRATEGY, GimpWindowStrategyInterface))
+#define GIMP_TYPE_WINDOW_STRATEGY (gimp_window_strategy_get_type ())
+G_DECLARE_INTERFACE (GimpWindowStrategy, gimp_window_strategy, GIMP, WINDOW_STRATEGY, GObject)
 
-
-typedef struct _GimpWindowStrategyInterface GimpWindowStrategyInterface;
 
 struct _GimpWindowStrategyInterface
 {
@@ -42,8 +38,6 @@ struct _GimpWindowStrategyInterface
                                         const gchar        *identifiers);
 };
 
-
-GType       gimp_window_strategy_get_type             (void) G_GNUC_CONST;
 
 GtkWidget * gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                        Gimp               *gimp,
