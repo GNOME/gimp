@@ -98,7 +98,6 @@ file_xmc_libexecdir = $(gimpplugindir)/plug-ins/file-xmc
 file_xpm_libexecdir = $(gimpplugindir)/plug-ins/file-xpm
 file_xwd_libexecdir = $(gimpplugindir)/plug-ins/file-xwd
 film_libexecdir = $(gimpplugindir)/plug-ins/film
-filter_pack_libexecdir = $(gimpplugindir)/plug-ins/filter-pack
 goat_exercise_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise
 gradient_map_libexecdir = $(gimpplugindir)/plug-ins/gradient-map
 grid_libexecdir = $(gimpplugindir)/plug-ins/grid
@@ -176,7 +175,6 @@ file_xmc_libexec_PROGRAMS = $(FILE_XMC)
 file_xpm_libexec_PROGRAMS = $(FILE_XPM)
 file_xwd_libexec_PROGRAMS = file-xwd
 film_libexec_PROGRAMS = film
-filter_pack_libexec_PROGRAMS = filter-pack
 goat_exercise_libexec_PROGRAMS = goat-exercise
 gradient_map_libexec_PROGRAMS = gradient-map
 grid_libexec_PROGRAMS = grid
@@ -1181,23 +1179,6 @@ film_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(film_RC)
-
-filter_pack_SOURCES = \
-	filter-pack.c
-
-filter_pack_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(filter_pack_RC)
 
 goat_exercise_SOURCES = \
 	goat-exercise.c

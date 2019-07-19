@@ -50,7 +50,6 @@ file_xmc_RC = file-xmc.rc.o
 file_xpm_RC = file-xpm.rc.o
 file_xwd_RC = file-xwd.rc.o
 film_RC = film.rc.o
-filter_pack_RC = filter-pack.rc.o
 goat_exercise_RC = goat-exercise.rc.o
 gradient_map_RC = gradient-map.rc.o
 grid_RC = grid.rc.o
