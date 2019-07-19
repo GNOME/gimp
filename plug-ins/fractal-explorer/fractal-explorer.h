@@ -201,7 +201,6 @@ extern gchar       *fractalexplorer_path;
 extern explorer_interface_t wint;
 
 extern explorer_vals_t wvals;
-extern GimpDrawable   *drawable;
 
 
 /**********************************************************************
