@@ -2911,6 +2911,115 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_oilify2_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 mask_size;
+  gint32 mode;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  mask_size = g_value_get_int (gimp_value_array_index (args, 3));
+  mode = g_value_get_int (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",       "gegl:oilify",
+                                      "mask-radius",     MAX (1, mask_size / 2),
+                                      "use-inten",       mode ? TRUE : FALSE,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Oilify"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_oilify_enhanced2_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 mode;
+  gint32 mask_size;
+  GimpDrawable *mask_size_map;
+  gint32 exponent;
+  GimpDrawable *exponent_map;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  mode = g_value_get_int (gimp_value_array_index (args, 3));
+  mask_size = g_value_get_int (gimp_value_array_index (args, 4));
+  mask_size_map = gimp_value_get_drawable (gimp_value_array_index (args, 5), gimp);
+  exponent = g_value_get_int (gimp_value_array_index (args, 6));
+  exponent_map = gimp_value_get_drawable (gimp_value_array_index (args, 7), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:oilify",
+                                      "mask-radius", MAX (1, mask_size / 2),
+                                      "use-inten",   mode ? TRUE : FALSE,
+                                      "exponent",    exponent,
+                                      NULL);
+
+          if (mask_size_map)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (node, mask_size_map);
+              gegl_node_connect_to (src_node, "output", node, "aux");
+            }
+
+          if (exponent_map)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (node, exponent_map);
+              gegl_node_connect_to (src_node, "output", node, "aux2");
+            }
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Oilify"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_papertile_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -7466,6 +7575,120 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Random hue",
                                                       0, 360, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-oilify2
+   */
+  procedure = gimp_procedure_new (plug_in_oilify2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-oilify2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-oilify2",
+                                     "Smear colors to simulate an oil painting",
+                                     "This function performs the well-known oil-paint effect on the specified drawable.",
+                                     "Compatibility procedure. Please see 'gegl:oilify' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:oilify' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("mask-size",
+                                                      "mask size",
+                                                      "Oil paint mask size",
+                                                      1, 200, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("mode",
+                                                      "mode",
+                                                      "Algorithm { RGB (0), INTENSITY (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-oilify-enhanced2
+   */
+  procedure = gimp_procedure_new (plug_in_oilify_enhanced2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-oilify-enhanced2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-oilify-enhanced2",
+                                     "Smear colors to simulate an oil painting",
+                                     "This function performs the well-known oil-paint effect on the specified drawable.",
+                                     "Compatibility procedure. Please see 'gegl:oilify' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:oilify' for credits.",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("mode",
+                                                      "mode",
+                                                      "Algorithm { RGB (0), INTENSITY (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("mask-size",
+                                                      "mask size",
+                                                      "Oil paint mask size",
+                                                      1, 200, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("mask-size-map",
+                                                            "mask size map",
+                                                            "Mask size control map",
+                                                            pdb->gimp, TRUE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("exponent",
+                                                      "exponent",
+                                                      "Oil paint exponent",
+                                                      1, 20, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("exponent-map",
+                                                            "exponent map",
+                                                            "Exponent control map",
+                                                            pdb->gimp, TRUE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

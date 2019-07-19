@@ -107,7 +107,6 @@ hot_libexecdir = $(gimpplugindir)/plug-ins/hot
 jigsaw_libexecdir = $(gimpplugindir)/plug-ins/jigsaw
 mail_libexecdir = $(gimpplugindir)/plug-ins/mail
 nl_filter_libexecdir = $(gimpplugindir)/plug-ins/nl-filter
-oilify_libexecdir = $(gimpplugindir)/plug-ins/oilify
 plugin_browser_libexecdir = $(gimpplugindir)/plug-ins/plugin-browser
 procedure_browser_libexecdir = $(gimpplugindir)/plug-ins/procedure-browser
 qbist_libexecdir = $(gimpplugindir)/plug-ins/qbist
@@ -186,7 +185,6 @@ hot_libexec_PROGRAMS = hot
 jigsaw_libexec_PROGRAMS = jigsaw
 mail_libexec_PROGRAMS = $(MAIL)
 nl_filter_libexec_PROGRAMS = nl-filter
-oilify_libexec_PROGRAMS = oilify
 plugin_browser_libexec_PROGRAMS = plugin-browser
 procedure_browser_libexec_PROGRAMS = procedure-browser
 qbist_libexec_PROGRAMS = qbist
@@ -1336,23 +1334,6 @@ nl_filter_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
-
-oilify_SOURCES = \
-	oilify.c
-
-oilify_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(oilify_RC)
 
 plugin_browser_SOURCES = \
 	plugin-browser.c

@@ -1214,26 +1214,26 @@ HELP
     $date = '2015';
 
     @inargs = (
-  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
-    desc => 'The run mode' },
-  { name => 'image', type => 'image', dead => 1,
-    desc => 'Input image (unused)' },
-  { name => 'drawable', type => 'drawable',
-    desc => 'Input drawable' },
-  { name => 'amount_x', type => '-500.0 <= float <= 500.0',
-    desc => 'Displace multiplier for radial direction' },
-  { name => 'amount_y', type => '-500.0 <= float <= 500.0',
-    desc => 'Displace multiplier for tangent direction' },
-  { name => 'do_x', type => 'boolean',
-    desc => 'Displace in radial direction ?' },
-  { name => 'do_y', type => 'boolean',
-    desc => 'Displace in tangent direction ?' },
-  { name => 'displace_map_x', type => 'drawable',
-    desc => 'Displacement map for radial direction' },
-  { name => 'displace_map_y', type => 'drawable',
-    desc => 'Displacement map for tangent direction' },
-  { name => 'displace_type', type => '1 <= int32 <= 3',
-    desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'amount_x', type => '-500.0 <= float <= 500.0',
+          desc => 'Displace multiplier for radial direction' },
+        { name => 'amount_y', type => '-500.0 <= float <= 500.0',
+          desc => 'Displace multiplier for tangent direction' },
+        { name => 'do_x', type => 'boolean',
+          desc => 'Displace in radial direction ?' },
+        { name => 'do_y', type => 'boolean',
+          desc => 'Displace in tangent direction ?' },
+        { name => 'displace_map_x', type => 'drawable',
+          desc => 'Displacement map for radial direction' },
+        { name => 'displace_map_y', type => 'drawable',
+          desc => 'Displacement map for tangent direction' },
+        { name => 'displace_type', type => '1 <= int32 <= 3',
+          desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
     );
 
     %invoke = (
@@ -2881,6 +2881,129 @@ HELP
 
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Supernova"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_oilify2 {
+    $blurb = 'Smear colors to simulate an oil painting';
+
+    $help = <<'HELP';
+This function performs the well-known oil-paint effect on the
+specified drawable.
+HELP
+
+    &std_pdb_compat('gegl:oilify');
+    $date = '2019';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'mask_size', type => '1 <= int32 <= 200',
+          desc => 'Oil paint mask size' },
+        { name => 'mode', type => '0 <= int32 <= 1',
+          desc => 'Algorithm { RGB (0), INTENSITY (1) }' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",       "gegl:oilify",
+                                  "mask-radius",     MAX (1, mask_size / 2),
+                                  "use-inten",       mode ? TRUE : FALSE,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Oilify"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_oilify_enhanced2 {
+    $blurb = 'Smear colors to simulate an oil painting';
+
+    $help = <<'HELP';
+This function performs the well-known oil-paint effect on the
+specified drawable.
+HELP
+
+    &std_pdb_compat('gegl:oilify');
+    $date = '2019';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'mode', type => '0 <= int32 <= 1',
+          desc => 'Algorithm { RGB (0), INTENSITY (1) }' },
+        { name => 'mask_size', type => '1 <= int32 <= 200',
+          desc => 'Oil paint mask size' },
+        { name => 'mask_size_map', type => 'drawable', none_ok => 1,
+          desc => 'Mask size control map' },
+        { name => 'exponent', type => '1 <= int32 <= 20',
+          desc => 'Oil paint exponent' },
+        { name => 'exponent_map', type => 'drawable', none_ok => 1,
+          desc => 'Exponent control map' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",   "gegl:oilify",
+                                  "mask-radius", MAX (1, mask_size / 2),
+                                  "use-inten",   mode ? TRUE : FALSE,
+                                  "exponent",    exponent,
+                                  NULL);
+
+      if (mask_size_map)
+        {
+          GeglNode *src_node;
+          src_node = create_buffer_source_node (node, mask_size_map);
+          gegl_node_connect_to (src_node, "output", node, "aux");
+        }
+
+      if (exponent_map)
+        {
+          GeglNode *src_node;
+          src_node = create_buffer_source_node (node, exponent_map);
+          gegl_node_connect_to (src_node, "output", node, "aux2");
+        }
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Oilify"),
                                      node);
       g_object_unref (node);
     }
@@ -5344,6 +5467,8 @@ CODE
             plug_in_newsprint
             plug_in_normalize
             plug_in_nova
+            plug_in_oilify2
+            plug_in_oilify_enhanced2
             plug_in_papertile
             plug_in_photocopy
             plug_in_pixelize

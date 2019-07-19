@@ -61,7 +61,6 @@
     'jigsaw' => { ui => 1, gegl => 1 },
     'mail' => { ui => 1, optional => 1 },
     'nl-filter' => { ui => 1, gegl => 1 },
-    'oilify' => { ui => 1 },
     'plugin-browser' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
     'qbist' => { ui => 1, gegl => 1 },
