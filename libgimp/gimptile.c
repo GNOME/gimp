@@ -71,7 +71,7 @@ static gulong       max_cache_size  = 0;
 /*  public functions  */
 
 void
-gimp_tile_ref (GimpTile *tile)
+_gimp_tile_ref (GimpTile *tile)
 {
   g_return_if_fail (tile != NULL);
 
@@ -109,8 +109,8 @@ _gimp_tile_ref_nocache (GimpTile *tile,
 }
 
 void
-gimp_tile_unref (GimpTile *tile,
-                 gboolean  dirty)
+_gimp_tile_unref (GimpTile *tile,
+                  gboolean  dirty)
 {
   g_return_if_fail (tile != NULL);
   g_return_if_fail (tile->ref_count > 0);
@@ -404,6 +404,6 @@ gimp_tile_cache_flush (GimpTile *tile)
 
       /* Unreference the tile.
        */
-      gimp_tile_unref (tile, FALSE);
+      _gimp_tile_unref (tile, FALSE);
     }
 }

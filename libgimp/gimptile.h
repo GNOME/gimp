@@ -45,16 +45,14 @@ struct _GimpTile
 
 
 GIMP_DEPRECATED
-void    gimp_tile_ref          (GimpTile  *tile);
-GIMP_DEPRECATED
-void    gimp_tile_unref        (GimpTile  *tile,
-                                gboolean   dirty);
-GIMP_DEPRECATED
 void    gimp_tile_cache_ntiles (gulong     ntiles);
 
 
 /*  private function  */
 
+G_GNUC_INTERNAL void _gimp_tile_ref                  (GimpTile     *tile);
+G_GNUC_INTERNAL void _gimp_tile_unref                (GimpTile     *tile,
+                                                      gboolean      dirty);
 G_GNUC_INTERNAL void _gimp_tile_ref_nocache          (GimpTile     *tile,
                                                       gboolean      init);
 

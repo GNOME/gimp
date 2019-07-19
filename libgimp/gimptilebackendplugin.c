@@ -226,7 +226,7 @@ gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
               }
           }
 
-          gimp_tile_unref (gimp_tile, FALSE);
+          _gimp_tile_unref (gimp_tile, FALSE);
         }
     }
 
@@ -276,7 +276,7 @@ gimp_tile_write_mul (GimpTileBackendPlugin *backend_plugin,
                       gimp_tile_stride);
           }
 
-          gimp_tile_unref (gimp_tile, TRUE);
+          _gimp_tile_unref (gimp_tile, TRUE);
         }
     }
 }

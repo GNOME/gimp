@@ -187,7 +187,7 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
   g_return_if_fail (y >= 0 && y < pr->drawable->height);
 
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-  gimp_tile_ref (tile);
+  _gimp_tile_ref (tile);
 
   tile_data = (tile->data +
                tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
@@ -195,7 +195,7 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
   for (b = 0; b < tile->bpp; b++)
     *buf++ = *tile_data++;
 
-  gimp_tile_unref (tile, FALSE);
+  _gimp_tile_unref (tile, FALSE);
 }
 
 /**
@@ -235,7 +235,7 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
       gint          boundary;
 
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-      gimp_tile_ref (tile);
+      _gimp_tile_ref (tile);
 
       tile_data = (tile->data +
                    tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
@@ -250,7 +250,7 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
       x = min;
       buf += inc;
 
-      gimp_tile_unref (tile, FALSE);
+      _gimp_tile_unref (tile, FALSE);
     }
 }
 
@@ -293,7 +293,7 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
       gint          b;
 
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-      gimp_tile_ref (tile);
+      _gimp_tile_ref (tile);
 
       tile_data = (tile->data +
                    tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
@@ -309,7 +309,7 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
           tile_data += inc;
         }
 
-      gimp_tile_unref (tile, FALSE);
+      _gimp_tile_unref (tile, FALSE);
     }
 }
 
@@ -368,7 +368,7 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
           GimpTile *tile;
 
           tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-          gimp_tile_ref (tile);
+          _gimp_tile_ref (tile);
 
           xstep = tile->ewidth - (x % TILE_WIDTH);
           ystep = tile->eheight - (y % TILE_HEIGHT);
@@ -389,7 +389,7 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
               memcpy (dest, src, (xboundary - x) * bpp);
             }
 
-          gimp_tile_unref (tile, FALSE);
+          _gimp_tile_unref (tile, FALSE);
           x += xstep;
         }
 
@@ -422,7 +422,7 @@ gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
   g_return_if_fail (y >= 0 && y < pr->drawable->height);
 
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-  gimp_tile_ref (tile);
+  _gimp_tile_ref (tile);
 
   tile_data = tile->data + tile->bpp * (tile->ewidth *
                                         (y % TILE_HEIGHT) + (x % TILE_WIDTH));
@@ -430,7 +430,7 @@ gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
   for (b = 0; b < tile->bpp; b++)
     *tile_data++ = *buf++;
 
-  gimp_tile_unref (tile, TRUE);
+  _gimp_tile_unref (tile, TRUE);
 }
 
 /**
@@ -469,7 +469,7 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
   while (x < end)
     {
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-      gimp_tile_ref (tile);
+      _gimp_tile_ref (tile);
 
       tile_data = (tile->data +
                    tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
@@ -484,7 +484,7 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
       x = min;
       buf += inc;
 
-      gimp_tile_unref (tile, TRUE);
+      _gimp_tile_unref (tile, TRUE);
     }
 }
 
@@ -525,7 +525,7 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
       gint      boundary;
 
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-      gimp_tile_ref (tile);
+      _gimp_tile_ref (tile);
 
       tile_data = (tile->data +
                    tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
@@ -543,7 +543,7 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
           tile_data += inc;
         }
 
-      gimp_tile_unref (tile, TRUE);
+      _gimp_tile_unref (tile, TRUE);
     }
 }
 
@@ -602,7 +602,7 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
           GimpTile *tile;
 
           tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-          gimp_tile_ref (tile);
+          _gimp_tile_ref (tile);
 
           xstep = tile->ewidth - (x % TILE_WIDTH);
           ystep = tile->eheight - (y % TILE_HEIGHT);
@@ -623,7 +623,7 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
               memcpy (dest, src, (xboundary - x) * bpp);
             }
 
-          gimp_tile_unref (tile, TRUE);
+          _gimp_tile_unref (tile, TRUE);
           x += xstep;
         }
 
@@ -770,7 +770,7 @@ gimp_pixel_rgns_process (gpointer pri_ptr)
                                                         prh->pr->shadow,
                                                         prh->pr->x,
                                                         prh->pr->y);
-              gimp_tile_unref (tile, prh->pr->dirty);
+              _gimp_tile_unref (tile, prh->pr->dirty);
             }
 
           prh->pr->x += pri->portion_width;
@@ -927,7 +927,7 @@ gimp_pixel_rgn_configure (GimpPixelRgnHolder   *prh,
                                       prh->pr->shadow,
                                       prh->pr->x,
                                       prh->pr->y);
-      gimp_tile_ref (tile);
+      _gimp_tile_ref (tile);
 
       offx = prh->pr->x % TILE_WIDTH;
       offy = prh->pr->y % TILE_HEIGHT;
