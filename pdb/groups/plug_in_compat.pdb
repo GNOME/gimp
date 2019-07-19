@@ -1438,7 +1438,7 @@ HELP
 	{ name => 'elevation', type => '0.0 <= float <= 180',
 	  desc => 'The Elevation Angle (degrees)' },
 	{ name => 'depth', type => '0 < int32 < 100',
-	  desc => 'The Filter Width' },
+          default => 1, desc => 'The Filter Width' },
 	{ name => 'emboss', type => 'boolean',
 	  desc => 'Emboss (TRUE), Bumpmap (FALSE)' }
     );
