@@ -291,7 +291,7 @@ gimp_container_view_get_private (GimpContainerView *view)
     {
       GimpContainerViewInterface *view_iface;
 
-      view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
+      view_iface = GIMP_CONTAINER_VIEW_GET_IFACE (view);
 
       private = g_slice_new0 (GimpContainerViewPrivate);
 
@@ -375,7 +375,7 @@ gimp_container_view_set_container (GimpContainerView *view,
 
   if (container != private->container)
     {
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_container (view, container);
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->set_container (view, container);
 
       g_object_notify (G_OBJECT (view), "container");
     }
@@ -453,7 +453,7 @@ gimp_container_view_set_context (GimpContainerView *view,
 
   if (context != private->context)
     {
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_context (view, context);
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->set_context (view, context);
 
       g_object_notify (G_OBJECT (view), "context");
     }
@@ -496,7 +496,7 @@ gimp_container_view_set_selection_mode (GimpContainerView *view,
   g_return_if_fail (mode == GTK_SELECTION_SINGLE ||
                     mode == GTK_SELECTION_MULTIPLE);
 
-  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_selection_mode (view, mode);
+  GIMP_CONTAINER_VIEW_GET_IFACE (view)->set_selection_mode (view, mode);
 }
 
 static void
@@ -545,7 +545,7 @@ gimp_container_view_set_view_size (GimpContainerView *view,
       private->view_size         = view_size;
       private->view_border_width = view_border_width;
 
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_view_size (view);
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->set_view_size (view);
 
       g_object_freeze_notify (G_OBJECT (view));
       g_object_notify (G_OBJECT (view), "view-size");
@@ -799,7 +799,7 @@ gimp_container_view_get_selected (GimpContainerView  *view,
 {
   g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), 0);
 
-  return GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->get_selected (view, list);
+  return GIMP_CONTAINER_VIEW_GET_IFACE (view)->get_selected (view, list);
 }
 
 static gint
@@ -933,7 +933,7 @@ gimp_container_view_get_property (GObject    *object,
 static void
 gimp_container_view_clear_items (GimpContainerView *view)
 {
-  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->clear_items (view);
+  GIMP_CONTAINER_VIEW_GET_IFACE (view)->clear_items (view);
 }
 
 static void
@@ -968,7 +968,7 @@ gimp_container_view_add_container (GimpContainerView *view,
                                    G_CALLBACK (gimp_container_view_name_changed),
                                    view);
 
-      if (GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->expand_item)
+      if (GIMP_CONTAINER_VIEW_GET_IFACE (view)->expand_item)
         {
           private->expanded_changed_handler =
             gimp_tree_handler_connect (container,
@@ -1005,7 +1005,7 @@ gimp_container_view_add_foreach (GimpViewable      *viewable,
   gpointer                    parent_insert_data = NULL;
   gpointer                    insert_data;
 
-  view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
+  view_iface = GIMP_CONTAINER_VIEW_GET_IFACE (view);
   private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   parent = gimp_viewable_get_parent (viewable);
@@ -1040,7 +1040,7 @@ gimp_container_view_add (GimpContainerView *view,
   gpointer                    insert_data;
   gint                        index;
 
-  view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
+  view_iface = GIMP_CONTAINER_VIEW_GET_IFACE (view);
   private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   index = gimp_container_get_child_index (container,
@@ -1132,7 +1132,7 @@ gimp_container_view_remove (GimpContainerView *view,
 
   if (insert_data)
     {
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->remove_item (view,
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->remove_item (view,
                                                              viewable,
                                                              insert_data);
 
@@ -1153,7 +1153,7 @@ gimp_container_view_reorder (GimpContainerView *view,
 
   if (insert_data)
     {
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->reorder_item (view,
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->reorder_item (view,
                                                               viewable,
                                                               new_index,
                                                               insert_data);
@@ -1205,7 +1205,7 @@ gimp_container_view_name_changed (GimpViewable      *viewable,
 
   if (insert_data)
     {
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->rename_item (view,
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->rename_item (view,
                                                              viewable,
                                                              insert_data);
     }
@@ -1222,7 +1222,7 @@ gimp_container_view_expanded_changed (GimpViewable      *viewable,
 
   if (insert_data)
     {
-      GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->expand_item (view,
+      GIMP_CONTAINER_VIEW_GET_IFACE (view)->expand_item (view,
                                                              viewable,
                                                              insert_data);
     }

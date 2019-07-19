@@ -341,7 +341,7 @@ dockable_actions_update (GimpActionGroup *group,
   else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
     SET_ACTIVE ("dockable-tab-style-preview-name", TRUE);
 
-  docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+  docked_iface = GIMP_DOCKED_GET_IFACE (docked);
   SET_SENSITIVE ("dockable-tab-style-preview",
                  docked_iface->get_preview);
   SET_SENSITIVE ("dockable-tab-style-preview-name",

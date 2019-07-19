@@ -56,7 +56,7 @@ gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed)
 
   g_return_val_if_fail (GIMP_IS_SESSION_MANAGED (session_managed), NULL);
 
-  iface = GIMP_SESSION_MANAGED_GET_INTERFACE (session_managed);
+  iface = GIMP_SESSION_MANAGED_GET_IFACE (session_managed);
 
   if (iface->get_aux_info)
     return iface->get_aux_info (session_managed);
@@ -80,7 +80,7 @@ gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,
 
   g_return_if_fail (GIMP_IS_SESSION_MANAGED (session_managed));
 
-  iface = GIMP_SESSION_MANAGED_GET_INTERFACE (session_managed);
+  iface = GIMP_SESSION_MANAGED_GET_IFACE (session_managed);
 
   if (iface->set_aux_info)
     iface->set_aux_info (session_managed, aux_info);
