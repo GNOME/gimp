@@ -236,8 +236,6 @@ libgimp_sources = \
 	gimpprogress.h		\
 	gimpselection.c		\
 	gimpselection.h		\
-	gimptile.c		\
-	gimptile.h		\
 	gimptilebackendplugin.c \
 	gimptilebackendplugin.h \
 	gimpunitcache.c		\

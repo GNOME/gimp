@@ -29,8 +29,6 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpPlugInInfo  GimpPlugInInfo;
-typedef struct _GimpTile        GimpTile;
-typedef struct _GimpDrawable    GimpDrawable;
 typedef struct _GimpParamDef    GimpParamDef;
 typedef struct _GimpParamRegion GimpParamRegion;
 typedef union  _GimpParamData   GimpParamData;

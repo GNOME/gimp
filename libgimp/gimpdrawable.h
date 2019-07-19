@@ -29,34 +29,12 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-struct _GimpDrawable
-{
-  gint32    drawable_id;   /* drawable ID */
-  guint     width;         /* width of drawble */
-  guint     height;        /* height of drawble */
-  guint     bpp;           /* bytes per pixel of drawable */
-  guint     ntile_rows;    /* # of tile rows */
-  guint     ntile_cols;    /* # of tile columns */
-  GimpTile *tiles;         /* the normal tiles */
-  GimpTile *shadow_tiles;  /* the shadow tiles */
-};
-
 
 GeglBuffer   * gimp_drawable_get_buffer             (gint32         drawable_ID);
 GeglBuffer   * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
 
 const Babl   * gimp_drawable_get_format             (gint32         drawable_ID);
 const Babl   * gimp_drawable_get_thumbnail_format   (gint32         drawable_ID);
-
-GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
-GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID);
-GIMP_DEPRECATED
-void           gimp_drawable_detach                 (GimpDrawable  *drawable);
-GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
-GimpTile     * gimp_drawable_get_tile               (GimpDrawable  *drawable,
-                                                     gboolean       shadow,
-                                                     gint           row,
-                                                     gint           col);
 
 guchar       * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
                                                      gint          *width,
