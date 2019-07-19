@@ -294,9 +294,6 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->plug_in_manager->current_plug_in)
-    gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
-
   /* this only transfers the encoding, losing the space, see the
    * code in libgimp/gimpdrawable.c which reconstructs the actual
    * format in the plug-in process
@@ -521,8 +518,7 @@ sub drawable_bpp {
     $blurb = 'Returns the bytes per pixel.';
 
     $help = <<'HELP';
-This procedure returns the number of bytes per pixel, which corresponds to
-the number of components unless gimp_plugin_enable_precision() was called.
+This procedure returns the number of bytes per pixel.
 HELP
 
     &std_pdb_misc;
@@ -541,12 +537,6 @@ HELP
 	code => <<'CODE'
 {
   const Babl *format = gimp_drawable_get_format (drawable);
-
-  if (! gimp->plug_in_manager->current_plug_in ||
-      ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
-    {
-      format = gimp_babl_compat_u8_format (format);
-    }
 
   bpp = babl_format_get_bytes_per_pixel (format);
 }
@@ -669,12 +659,6 @@ HELP
 {
   const Babl *format = gimp_drawable_get_format (drawable);
 
-  if (! gimp->plug_in_manager->current_plug_in ||
-      ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
-    {
-      format = gimp_babl_compat_u8_format (format);
-    }
-
   if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
       y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
     {
@@ -722,12 +706,6 @@ HELP
 	code => <<'CODE'
 {
   const Babl *format = gimp_drawable_get_format (drawable);
-
-  if (! gimp->plug_in_manager->current_plug_in ||
-      ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
-    {
-      format = gimp_babl_compat_u8_format (format);
-    }
 
   if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
                                    GIMP_PDB_ITEM_CONTENT, error) &&

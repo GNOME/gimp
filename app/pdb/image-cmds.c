@@ -194,9 +194,6 @@ image_new_with_precision_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp->plug_in_manager->current_plug_in)
-        gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
-
       if (gimp_babl_is_valid (type, precision))
         {
           image = gimp_create_image (gimp, width, height, type,
@@ -320,9 +317,6 @@ image_get_precision_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp->plug_in_manager->current_plug_in)
-        gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
-
       precision = gimp_image_get_precision (image);
     }
 

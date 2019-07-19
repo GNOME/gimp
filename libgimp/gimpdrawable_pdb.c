@@ -299,9 +299,7 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
  *
  * Returns the bytes per pixel.
  *
- * This procedure returns the number of bytes per pixel, which
- * corresponds to the number of components unless
- * gimp_plugin_enable_precision() was called.
+ * This procedure returns the number of bytes per pixel.
  *
  * Returns: Bytes per pixel.
  **/

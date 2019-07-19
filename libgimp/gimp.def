@@ -586,13 +586,11 @@ EXPORTS
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_plugin_domain_register
-	gimp_plugin_enable_precision
 	gimp_plugin_get_pdb_error_handler
 	gimp_plugin_help_register
 	gimp_plugin_icon_register
 	gimp_plugin_menu_branch_register
 	gimp_plugin_menu_register
-	gimp_plugin_precision_enabled
 	gimp_plugin_set_pdb_error_handler
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data

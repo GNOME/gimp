@@ -103,8 +103,6 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
 GeglBuffer *
 gimp_drawable_get_buffer (gint32 drawable_ID)
 {
-  gimp_plugin_enable_precision ();
-
   if (gimp_item_is_valid (drawable_ID))
     {
       GeglTileBackend *backend;
@@ -138,8 +136,6 @@ gimp_drawable_get_buffer (gint32 drawable_ID)
 GeglBuffer *
 gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
 {
-  gimp_plugin_enable_precision ();
-
   if (gimp_item_is_valid (drawable_ID))
     {
       GeglTileBackend *backend;

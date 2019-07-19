@@ -42,8 +42,6 @@
 #include "operations/gimpcurvesconfig.h"
 #include "operations/gimphuesaturationconfig.h"
 #include "operations/gimplevelsconfig.h"
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimppluginmanager.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -404,18 +402,10 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
           GimpHistogram *histogram;
           gint           n_bins;
           gint           start;
-          gboolean       precision_enabled;
           GimpTRCType    trc;
           gint           end;
 
-          precision_enabled =
-            gimp->plug_in_manager->current_plug_in &&
-            gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in);
-
-          if (precision_enabled)
-            trc = gimp_drawable_get_trc (drawable);
-          else
-            trc = GIMP_TRC_NON_LINEAR;
+          trc = gimp_drawable_get_trc (drawable);
 
           histogram = gimp_histogram_new (trc);
           gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
@@ -438,7 +428,7 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
 
           g_object_unref (histogram);
 
-          if (n_bins == 256 || ! precision_enabled)
+          if (n_bins == 256)
             {
               mean    *= 255;
               std_dev *= 255;

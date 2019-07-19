@@ -1047,19 +1047,3 @@ gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
 
   return GIMP_PDB_ERROR_HANDLER_INTERNAL;
 }
-
-void
-gimp_plug_in_enable_precision (GimpPlugIn *plug_in)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-
-  plug_in->precision = TRUE;
-}
-
-gboolean
-gimp_plug_in_precision_enabled (GimpPlugIn *plug_in)
-{
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
-
-  return plug_in->precision;
-}

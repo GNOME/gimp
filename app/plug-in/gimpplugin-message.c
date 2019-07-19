@@ -315,11 +315,6 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
 
   format = gegl_buffer_get_format (buffer);
 
-  if (! gimp_plug_in_precision_enabled (plug_in))
-    {
-      format = gimp_babl_compat_u8_format (format);
-    }
-
   if (tile_data.use_shm)
     {
       gegl_buffer_set (buffer, &tile_rect, 0, format,
@@ -410,11 +405,6 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
     }
 
   format = gegl_buffer_get_format (buffer);
-
-  if (! gimp_plug_in_precision_enabled (plug_in))
-    {
-      format = gimp_babl_compat_u8_format (format);
-    }
 
   tile_size = (babl_format_get_bytes_per_pixel (format) *
                tile_rect.width * tile_rect.height);
