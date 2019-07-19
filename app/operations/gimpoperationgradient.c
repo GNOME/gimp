@@ -158,6 +158,10 @@ static void            gradient_put_pixel                        (gint          
                                                                   GimpRGB               *color,
                                                                   gpointer               put_pixel_data);
 
+static void            gradient_dither_pixel                     (GimpRGB               *color,
+                                                                  GRand                 *dither_rand,
+                                                                  gfloat                *dest);
+
 static gboolean        gimp_operation_gradient_process           (GeglOperation         *operation,
                                                                   GeglBuffer            *input,
                                                                   GeglBuffer            *output,
@@ -985,22 +989,9 @@ gradient_put_pixel (gint      x,
 
   if (ppd->dither_rand)
     {
-      gfloat r, g, b, a;
-      gint   i = g_rand_int (ppd->dither_rand);
+      gradient_dither_pixel (color, ppd->dither_rand, dest);
 
-      r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-      g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-      b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-
-      if (color->a > 0.0 && color->a < 1.0)
-        a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0;
-      else
-        a = color->a;
-
-      *dest++ = MAX (r, 0.0);
-      *dest++ = MAX (g, 0.0);
-      *dest++ = MAX (b, 0.0);
-      *dest++ = MAX (a, 0.0);
+      dest += 4;
     }
   else
     {
@@ -1009,6 +1000,31 @@ gradient_put_pixel (gint      x,
       *dest++ = color->b;
       *dest++ = color->a;
     }
+}
+
+static void
+gradient_dither_pixel (GimpRGB *color,
+                       GRand   *dither_rand,
+                       gfloat  *dest)
+{
+  gfloat r, g, b, a;
+  guint  i;
+
+  i = g_rand_int (dither_rand);
+
+  r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0; i >>= 8;
+  g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0; i >>= 8;
+  b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0; i >>= 8;
+
+  if (color->a > 0.0 && color->a < 1.0)
+    a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0 - 0.5 / 256.0;
+  else
+    a = color->a;
+
+  *dest++ = CLAMP (r, 0.0, 1.0);
+  *dest++ = CLAMP (g, 0.0, 1.0);
+  *dest++ = CLAMP (b, 0.0, 1.0);
+  *dest++ = CLAMP (a, 0.0, 1.0);
 }
 
 static gboolean
@@ -1138,24 +1154,11 @@ gimp_operation_gradient_process (GeglOperation       *operation,
                 for (x = roi->x; x < endx; x++)
                   {
                     GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
-                    gfloat   r, g, b, a;
-                    gint     i = g_rand_int (dither_rand);
 
                     gradient_render_pixel (x, y, &color, &rbd);
+                    gradient_dither_pixel (&color, dither_rand, dest);
 
-                    r = color.r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-                    g = color.g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-                    b = color.b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-
-                    if (color.a > 0.0 && color.a < 1.0)
-                      a = color.a + (gdouble) (i & 0xff) / 256.0 / 256.0;
-                    else
-                      a = color.a;
-
-                    *dest++ = MAX (r, 0.0);
-                    *dest++ = MAX (g, 0.0);
-                    *dest++ = MAX (b, 0.0);
-                    *dest++ = MAX (a, 0.0);
+                    dest += 4;
                   }
             }
           else
