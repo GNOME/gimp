@@ -22,13 +22,8 @@
 #define __GIMP_ACTION_H__
 
 
-#define GIMP_TYPE_ACTION               (gimp_action_get_type ())
-#define GIMP_ACTION(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION, GimpAction))
-#define GIMP_IS_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ACTION))
-#define GIMP_ACTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE((obj), GIMP_TYPE_ACTION, GimpActionInterface))
-
-
-typedef struct _GimpActionInterface GimpActionInterface;
+#define GIMP_TYPE_ACTION (gimp_action_get_type ())
+G_DECLARE_INTERFACE (GimpAction, gimp_action, GIMP, ACTION, GtkAction)
 
 struct _GimpActionInterface
 {
@@ -40,8 +35,6 @@ struct _GimpActionInterface
                          GVariant   *value);
 };
 
-
-GType         gimp_action_get_type            (void) G_GNUC_CONST;
 
 void          gimp_action_init                (GimpAction    *action);
 

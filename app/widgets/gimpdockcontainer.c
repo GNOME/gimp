@@ -56,7 +56,7 @@ gimp_dock_container_get_docks (GimpDockContainer *container)
 
   g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
 
-  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_docks)
     return iface->get_docks (container);
@@ -77,7 +77,7 @@ gimp_dock_container_get_dialog_factory (GimpDockContainer *container)
 
   g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
 
-  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_dialog_factory)
     return iface->get_dialog_factory (container);
@@ -98,7 +98,7 @@ gimp_dock_container_get_ui_manager (GimpDockContainer *container)
 
   g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
 
-  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_ui_manager)
     return iface->get_ui_manager (container);
@@ -123,7 +123,7 @@ gimp_dock_container_add_dock (GimpDockContainer   *container,
 
   g_return_if_fail (GIMP_IS_DOCK_CONTAINER (container));
 
-  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->add_dock)
     iface->add_dock (container,
@@ -148,7 +148,7 @@ gimp_dock_container_get_dock_side (GimpDockContainer   *container,
 
   g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), -1);
 
-  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+  iface = GIMP_DOCK_CONTAINER_GET_IFACE (container);
 
   if (iface->get_dock_side)
     return iface->get_dock_side (container, dock);

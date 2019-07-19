@@ -35,13 +35,9 @@ typedef enum
 } GimpContainerViewProp;
 
 
-#define GIMP_TYPE_CONTAINER_VIEW               (gimp_container_view_get_type ())
-#define GIMP_CONTAINER_VIEW(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerView))
-#define GIMP_IS_CONTAINER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
-#define GIMP_CONTAINER_VIEW_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewInterface))
+#define GIMP_TYPE_CONTAINER_VIEW (gimp_container_view_get_type ())
+G_DECLARE_INTERFACE (GimpContainerView, gimp_container_view, GIMP, CONTAINER_VIEW, GtkWidget)
 
-
-typedef struct _GimpContainerViewInterface GimpContainerViewInterface;
 
 struct _GimpContainerViewInterface
 {
@@ -97,8 +93,6 @@ struct _GimpContainerViewInterface
   gboolean        model_is_tree;
 };
 
-
-GType              gimp_container_view_get_type           (void) G_GNUC_CONST;
 
 GimpContainer    * gimp_container_view_get_container      (GimpContainerView  *view);
 void               gimp_container_view_set_container      (GimpContainerView  *view,
