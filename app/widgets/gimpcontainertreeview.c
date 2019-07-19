@@ -252,7 +252,7 @@ gimp_container_tree_view_constructed (GObject *object)
                                   "enable-search",   FALSE,
                                   "headers-visible", FALSE,
                                   "has-tooltip",     TRUE,
-                                  "show-expanders",  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->model_is_tree,
+                                  "show-expanders",  GIMP_CONTAINER_VIEW_GET_IFACE (view)->model_is_tree,
                                   NULL);
 
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
