@@ -589,13 +589,9 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pencil
-	gimp_pixel_rgn_get_col
-	gimp_pixel_rgn_get_pixel
 	gimp_pixel_rgn_get_rect
 	gimp_pixel_rgn_get_row
 	gimp_pixel_rgn_init
-	gimp_pixel_rgn_set_col
-	gimp_pixel_rgn_set_pixel
 	gimp_pixel_rgn_set_rect
 	gimp_pixel_rgn_set_row
 	gimp_pixel_rgns_process

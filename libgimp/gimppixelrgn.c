@@ -160,45 +160,6 @@ gimp_drawable_get_tile2 (GimpDrawable *drawable,
 }
 
 /**
- * gimp_pixel_rgn_get_pixel:
- * @pr:    a pointer to a previously initialized #GimpPixelRgn.
- * @buf:   a pointer to an array of #guchar
- * @x:     the x coordinate of the wanted pixel (relative to the drawable)
- * @y:     the y coordinate of the wanted pixel (relative to the drawable)
- *
- * Fill the buffer pointed by @buf with the value of the pixel at (@x, @y)
- * in the region @pr. @buf should be large enough to hold the pixel value
- * (1 #guchar for an indexed or grayscale drawable, 2 #guchar for
- * indexed with alpha or grayscale with alpha drawable, 3 #guchar for
- * rgb drawable and 4 #guchar for rgb with alpha drawable.
- **/
-void
-gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
-                          guchar       *buf,
-                          gint          x,
-                          gint          y)
-{
-  GimpTile     *tile;
-  const guchar *tile_data;
-  gint          b;
-
-  g_return_if_fail (pr != NULL && pr->drawable != NULL);
-  g_return_if_fail (x >= 0 && x < pr->drawable->width);
-  g_return_if_fail (y >= 0 && y < pr->drawable->height);
-
-  tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-  _gimp_tile_ref (tile);
-
-  tile_data = (tile->data +
-               tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
-
-  for (b = 0; b < tile->bpp; b++)
-    *buf++ = *tile_data++;
-
-  _gimp_tile_unref (tile, FALSE);
-}
-
-/**
  * gimp_pixel_rgn_get_row:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
@@ -249,65 +210,6 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 
       x = min;
       buf += inc;
-
-      _gimp_tile_unref (tile, FALSE);
-    }
-}
-
-/**
- * gimp_pixel_rgn_get_col:
- * @pr:     a pointer to a previously initialized #GimpPixelRgn.
- * @buf:    a pointer to an array of #guchar
- * @x:      the x coordinate of the first pixel (relative to the drawable).
- * @y:      the y coordinate of the first pixel (relative to the drawable).
- * @height: the number of pixels to get.
- *
- * Get several pixels of a region's column. This function fills the buffer
- * @buf with the values of the pixels from (@x, @y) to (@x, @y+@height-1).
- * @buf should be large enough to hold all these values.
- *
- **/
-void
-gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
-                        guchar       *buf,
-                        gint          x,
-                        gint          y,
-                        gint          height)
-{
-  gint end;
-
-  g_return_if_fail (pr != NULL && pr->drawable != NULL);
-  g_return_if_fail (buf != NULL);
-  g_return_if_fail (x >= 0 && x < pr->drawable->width);
-  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
-  g_return_if_fail (height >= 0);
-
-  end = y + height;
-
-  while (y < end)
-    {
-      GimpTile     *tile;
-      const guchar *tile_data;
-      gint          inc;
-      gint          boundary;
-      gint          b;
-
-      tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-      _gimp_tile_ref (tile);
-
-      tile_data = (tile->data +
-                   tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
-
-      boundary = y + (tile->eheight - (y % TILE_HEIGHT));
-      inc = tile->bpp * tile->ewidth;
-
-      for ( ; y < end && y < boundary; y++)
-        {
-          for (b = 0; b < tile->bpp; b++)
-            *buf++ = tile_data[b];
-
-          tile_data += inc;
-        }
 
       _gimp_tile_unref (tile, FALSE);
     }
@@ -398,42 +300,6 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
 }
 
 /**
- * gimp_pixel_rgn_set_pixel:
- * @pr:   a pointer to a previously initialized #GimpPixelRgn.
- * @buf:  a pointer to an array of #guchar.
- * @x:    the x coordinate of the pixel (relative to the drawable).
- * @y:    the y coordinate of the pixel (relative to the drawable).
- *
- * Set the pixel at (@x, @y) to the values from @buf.
- **/
-void
-gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
-                          const guchar *buf,
-                          gint          x,
-                          gint          y)
-{
-  GimpTile *tile;
-  guchar   *tile_data;
-  gint      b;
-
-  g_return_if_fail (pr != NULL && pr->drawable != NULL);
-  g_return_if_fail (buf != NULL);
-  g_return_if_fail (x >= 0 && x < pr->drawable->width);
-  g_return_if_fail (y >= 0 && y < pr->drawable->height);
-
-  tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-  _gimp_tile_ref (tile);
-
-  tile_data = tile->data + tile->bpp * (tile->ewidth *
-                                        (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-
-  for (b = 0; b < tile->bpp; b++)
-    *tile_data++ = *buf++;
-
-  _gimp_tile_unref (tile, TRUE);
-}
-
-/**
  * gimp_pixel_rgn_set_row:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
@@ -483,65 +349,6 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
 
       x = min;
       buf += inc;
-
-      _gimp_tile_unref (tile, TRUE);
-    }
-}
-
-/**
- * gimp_pixel_rgn_set_col:
- * @pr:     a pointer to a previously initialized #GimpPixelRgn.
- * @buf:    a pointer to an array of #guchar
- * @x:      the x coordinate of the first pixel (relative to the drawable).
- * @y:      the y coordinate of the first pixel (relative to the drawable).
- * @height: the number of pixels to set.
- *
- * Set several pixels of a region's column. This function draws the pixels
- * from (@x, @y) to (@x, @y+@height-1) using the values from the buffer @buf.
- * @buf should be large enough to hold all these values.
- **/
-void
-gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
-                        const guchar *buf,
-                        gint          x,
-                        gint          y,
-                        gint          height)
-{
-  gint      end;
-
-  g_return_if_fail (pr != NULL && pr->drawable != NULL);
-  g_return_if_fail (buf != NULL);
-  g_return_if_fail (x >= 0 && x < pr->drawable->width);
-  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
-  g_return_if_fail (height >= 0);
-
-  end = y + height;
-
-  while (y < end)
-    {
-      GimpTile *tile;
-      guchar   *tile_data;
-      gint      inc;
-      gint      boundary;
-
-      tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
-      _gimp_tile_ref (tile);
-
-      tile_data = (tile->data +
-                   tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
-
-      boundary = y + (tile->eheight - (y % TILE_HEIGHT));
-      inc = tile->bpp * tile->ewidth;
-
-      for ( ; y < end && y < boundary; y++)
-        {
-          gint b;
-
-          for (b = 0; b < tile->bpp; b++)
-            tile_data[b] = *buf++;
-
-          tile_data += inc;
-        }
 
       _gimp_tile_unref (tile, TRUE);
     }
