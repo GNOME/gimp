@@ -70,7 +70,7 @@ static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
 FALSE, TRUE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
-static GimpDrawable *_drawable;
+static gint32        _drawable_id;
 static GdkCursorType _cursor = GDK_TOP_LEFT_ARROW;
 static gboolean     _show_url = TRUE;
 static gchar       *_filename = NULL;
@@ -93,7 +93,7 @@ static void  run    (const gchar      *name,
                      const GimpParam  *param,
                      gint             *nreturn_vals,
                      GimpParam       **return_vals);
-static gint  dialog (GimpDrawable     *drawable);
+static gint  dialog (gint32            drawable_id);
 
 const GimpPlugInInfo PLUG_IN_INFO = {
    NULL,                        /* init_proc */
@@ -140,35 +140,31 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
    static GimpParam values[1];
-   GimpDrawable *drawable;
    GimpRunMode run_mode;
+   gint32      drawable_id;
    GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
    INIT_I18N ();
+   gegl_init (NULL, NULL);
 
    *nreturn_vals = 1;
    *return_vals = values;
 
-   /*  Get the specified drawable  */
-   drawable = gimp_drawable_get(param[2].data.d_drawable);
-   _drawable = drawable;
+   run_mode    = param[0].data.d_int32;
+   drawable_id = param[2].data.d_drawable;
+
+   _drawable_id = drawable_id;
    _image_name = gimp_image_get_name(param[1].data.d_image);
    _image_width = gimp_image_width(param[1].data.d_image);
    _image_height = gimp_image_height(param[1].data.d_image);
 
-   _map_info.color = gimp_drawable_is_rgb(drawable->drawable_id);
-
-   run_mode = (GimpRunMode) param[0].data.d_int32;
+   _map_info.color = gimp_drawable_is_rgb(drawable_id);
 
    if (run_mode == GIMP_RUN_INTERACTIVE) {
-      if (!dialog(drawable)) {
+      if (!dialog(drawable_id)) {
          /* The dialog was closed, or something similarly evil happened. */
          status = GIMP_PDB_EXECUTION_ERROR;
       }
-   }
-
-   if (status == GIMP_PDB_SUCCESS) {
-      gimp_drawable_detach(drawable);
    }
 
    values[0].type = GIMP_PDB_STATUS;
@@ -1189,7 +1185,7 @@ do_send_to_back(void)
 void
 do_use_gimp_guides_dialog(void)
 {
-  command_execute (gimp_guides_command_new (_shapes, _drawable));
+  command_execute (gimp_guides_command_new (_shapes, _drawable_id));
 }
 
 void
@@ -1211,7 +1207,7 @@ factory_move_down(void)
 }
 
 static gint
-dialog(GimpDrawable *drawable)
+dialog(gint32 drawable_id)
 {
    GtkWidget    *dlg;
    GtkWidget    *hbox;
@@ -1266,7 +1262,8 @@ dialog(GimpDrawable *drawable)
    /* selection_set_edit_command(tools, factory_edit); */
    gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
 
-   _preview = make_preview(drawable);
+   _preview = make_preview(drawable_id);
+
    g_signal_connect(_preview->preview, "motion-notify-event",
                     G_CALLBACK(preview_move), NULL);
    g_signal_connect(_preview->preview, "enter-notify-event",

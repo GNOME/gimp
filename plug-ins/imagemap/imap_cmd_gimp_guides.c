@@ -41,7 +41,7 @@ typedef struct {
    DefaultDialog_t      *dialog;
 
    ObjectList_t         *list;
-   GimpDrawable         *drawable;
+   gint32                drawable_id;
 
    GtkWidget            *alternate;
    GtkWidget            *all;
@@ -67,7 +67,7 @@ gimp_guides_ok_cb(gpointer data)
    GSList *vguides, *vg;
    gboolean all;
    const gchar *url;
-   gint32 image_ID = gimp_item_get_image (param->drawable->drawable_id);
+   gint32 image_ID = gimp_item_get_image (param->drawable_id);
 
    /* First get some dialog values */
 
@@ -208,21 +208,21 @@ make_gimp_guides_dialog(void)
 
 static void
 init_gimp_guides_dialog(GimpGuidesDialog_t *dialog, ObjectList_t *list,
-                        GimpDrawable *drawable)
+                        gint32 drawable_id)
 {
    dialog->list = list;
-   dialog->drawable = drawable;
+   dialog->drawable_id = drawable_id;
 }
 
 static void
-do_create_gimp_guides_dialog(ObjectList_t *list, GimpDrawable *drawable)
+do_create_gimp_guides_dialog(ObjectList_t *list, gint32 drawable_id)
 {
    static GimpGuidesDialog_t *dialog;
 
    if (!dialog)
       dialog = make_gimp_guides_dialog();
 
-   init_gimp_guides_dialog(dialog, list, drawable);
+   init_gimp_guides_dialog(dialog, list, drawable_id);
    default_dialog_show(dialog->dialog);
 }
 
@@ -236,17 +236,17 @@ static CommandClass_t gimp_guides_command_class = {
 };
 
 typedef struct {
-   Command_t parent;
-   ObjectList_t *list;
-   GimpDrawable *drawable;
+  Command_t parent;
+  ObjectList_t *list;
+  gint32 drawable_id;
 } GimpGuidesCommand_t;
 
 Command_t*
-gimp_guides_command_new(ObjectList_t *list, GimpDrawable *drawable)
+gimp_guides_command_new(ObjectList_t *list, gint32 drawable_id)
 {
    GimpGuidesCommand_t *command = g_new(GimpGuidesCommand_t, 1);
    command->list = list;
-   command->drawable = drawable;
+   command->drawable_id = drawable_id;
    return command_init(&command->parent, _("Use Gimp Guides"),
                        &gimp_guides_command_class);
 }
@@ -255,6 +255,6 @@ static CmdExecuteValue_t
 gimp_guides_command_execute(Command_t *parent)
 {
    GimpGuidesCommand_t *command = (GimpGuidesCommand_t*) parent;
-   do_create_gimp_guides_dialog(command->list, command->drawable);
+   do_create_gimp_guides_dialog(command->list, command->drawable_id);
    return CMD_DESTRUCT;
 }
