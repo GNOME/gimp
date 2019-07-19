@@ -79,6 +79,7 @@ LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(gimpressionist_RC)

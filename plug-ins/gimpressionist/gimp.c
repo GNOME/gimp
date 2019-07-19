@@ -52,9 +52,9 @@ const GimpPlugInInfo PLUG_IN_INFO = {
         run     /* run_proc */
 }; /* PLUG_IN_INFO */
 
-static GimpDrawable *drawable;
-static ppm_t         infile =  {0, 0, NULL};
-static ppm_t         inalpha = {0, 0, NULL};
+static gint32 drawable_id;
+static ppm_t  infile =  {0, 0, NULL};
+static ppm_t  inalpha = {0, 0, NULL};
 
 
 void
@@ -140,11 +140,12 @@ run (const gchar      *name,
   *return_vals  = values;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   /* Get the active drawable info */
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
-  img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  drawable_id = param[2].data.d_drawable;
+  img_has_alpha = gimp_drawable_has_alpha (drawable_id);
 
   random_generator = g_rand_new ();
 
@@ -155,7 +156,7 @@ run (const gchar      *name,
   {
     gint x1, y1, width, height; /* Not used. */
 
-    if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+    if (! gimp_drawable_mask_intersect (drawable_id,
                                         &x1, &y1, &width, &height))
       {
         values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
@@ -163,8 +164,6 @@ run (const gchar      *name,
         values[1].type          = GIMP_PDB_STRING;
         values[1].data.d_string = _("The selection does not intersect "
                                     "the active layer or mask.");
-
-        gimp_drawable_detach (drawable);
 
         return;
       }
@@ -193,8 +192,8 @@ run (const gchar      *name,
       break;
     }
   if ((status == GIMP_PDB_SUCCESS) &&
-      (gimp_drawable_is_rgb (drawable->drawable_id) ||
-       gimp_drawable_is_gray (drawable->drawable_id)))
+      (gimp_drawable_is_rgb (drawable_id) ||
+       gimp_drawable_is_gray (drawable_id)))
     {
 
       if (with_specified_preset)
@@ -247,52 +246,77 @@ run (const gchar      *name,
   size_map_free_resources ();
 
   values[0].data.d_status = status;
+}
 
-  gimp_drawable_detach (drawable);
+static const Babl *
+get_u8_format (gint32 drawable_id)
+{
+  if (gimp_drawable_is_rgb (drawable_id))
+    {
+      if (gimp_drawable_has_alpha (drawable_id))
+        return babl_format ("R'G'B'A u8");
+      else
+        return babl_format ("R'G'B' u8");
+    }
+  else
+    {
+      if (gimp_drawable_has_alpha (drawable_id))
+        return babl_format ("Y'A u8");
+      else
+        return babl_format ("Y' u8");
+    }
 }
 
 void
 grabarea (void)
 {
-  GimpPixelRgn  src_rgn;
-  ppm_t        *p;
-  gint          x1, y1;
-  gint          x, y;
-  gint          width, height;
-  gint          row, col;
-  gint          rowstride;
-  gpointer      pr;
+  GeglBuffer         *src_buffer;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
+  ppm_t              *p;
+  gint                x1, y1;
+  gint                x, y;
+  gint                width, height;
+  gint                row, col;
+  gint                rowstride;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_id,
                                       &x1, &y1, &width, &height))
     return;
 
   ppm_new (&infile, width, height);
   p = &infile;
 
-  if (gimp_drawable_has_alpha (drawable->drawable_id))
+  format = get_u8_format (drawable_id);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+
+  if (gimp_drawable_has_alpha (drawable_id))
     ppm_new (&inalpha, width, height);
 
   rowstride = p->width * 3;
 
-  gimp_pixel_rgn_init (&src_rgn,
-                       drawable, x1, y1, width, height, FALSE, FALSE);
+  src_buffer = gimp_drawable_get_buffer (drawable_id);
 
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   GEGL_RECTANGLE (x1, y1, width, height), 0,
+                                   format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src = src_rgn.data;
+      GeglRectangle  roi = iter->items[0].roi;
+      const guchar  *src = iter->items[0].data;
 
-      switch (src_rgn.bpp)
+      switch (bpp)
         {
         case 1:
-          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
               const guchar *s      = src;
               guchar       *tmprow = p->col + row * rowstride;
 
-              for (x = 0, col = src_rgn.x - x1; x < src_rgn.w; x++, col++)
+              for (x = 0, col = roi.x - x1; x < roi.width; x++, col++)
                 {
                   gint k = col * 3;
 
@@ -303,18 +327,18 @@ grabarea (void)
                   s++;
                 }
 
-              src += src_rgn.rowstride;
+              src += bpp * roi.width;
             }
           break;
 
         case 2:
-          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
               const guchar *s       = src;
               guchar       *tmprow  = p->col + row * rowstride;
               guchar       *tmparow = inalpha.col + row * rowstride;
 
-              for (x = 0, col = src_rgn.x - x1; x < src_rgn.w; x++, col++)
+              for (x = 0, col = roi.x - x1; x < roi.width; x++, col++)
                 {
                   gint k = col * 3;
 
@@ -326,29 +350,29 @@ grabarea (void)
                   s += 2;
                 }
 
-              src += src_rgn.rowstride;
+              src += bpp * roi.width;
             }
           break;
 
         case 3:
-          col = src_rgn.x - x1;
+          col = roi.x - x1;
 
-          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
-              memcpy (p->col + row * rowstride + col * 3, src, src_rgn.w * 3);
+              memcpy (p->col + row * rowstride + col * 3, src, roi.width * 3);
 
-              src += src_rgn.rowstride;
+              src += bpp * roi.width;
             }
           break;
 
         case 4:
-          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
               const guchar *s       = src;
               guchar       *tmprow  = p->col + row * rowstride;
               guchar       *tmparow = inalpha.col + row * rowstride;
 
-              for (x = 0, col = src_rgn.x - x1; x < src_rgn.w; x++, col++)
+              for (x = 0, col = roi.x - x1; x < roi.width; x++, col++)
                 {
                   gint k = col * 3;
 
@@ -360,33 +384,39 @@ grabarea (void)
                   s += 4;
                 }
 
-              src += src_rgn.rowstride;
+              src += bpp * roi.width;
             }
           break;
         }
     }
+
+  g_object_unref (src_buffer);
 }
 
 static void
 gimpressionist_main (void)
 {
-  GimpPixelRgn  dest_rgn;
-  ppm_t        *p;
-  gint          x1, y1;
-  gint          x, y;
-  gint          width, height;
-  gint          row, col;
-  gint          rowstride;
-  gint          count;
-  glong         done;
-  glong         total;
-  gpointer      pr;
+  GeglBuffer         *dest_buffer;
+  GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
+  ppm_t              *p;
+  gint                x1, y1;
+  gint                x, y;
+  gint                width, height;
+  gint                row, col;
+  gint                rowstride;
+  glong               done = 0;
+  glong               total;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_id,
                                       &x1, &y1, &width, &height))
     return;
 
   total = width * height;
+
+  format = get_u8_format (drawable_id);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   gimp_progress_init (_("Painting"));
 
@@ -399,24 +429,27 @@ gimpressionist_main (void)
 
   rowstride = p->width * 3;
 
-  gimp_pixel_rgn_init (&dest_rgn,
-                       drawable, x1, y1, width, height, TRUE, TRUE);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
 
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn), count = 0, done = 0;
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr), count++)
+  iter = gegl_buffer_iterator_new (dest_buffer,
+                                   GEGL_RECTANGLE (x1, y1, width, height), 0,
+                                   format,
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+
+  while (gegl_buffer_iterator_next (iter))
     {
-      guchar *dest = dest_rgn.data;
+      GeglRectangle  roi  = iter->items[0].roi;
+      guchar        *dest = iter->items[0].data;
 
-      switch (dest_rgn.bpp)
+      switch (bpp)
         {
         case 1:
-          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
               guchar       *d       = dest;
               const guchar *tmprow  = p->col + row * rowstride;
 
-              for (x = 0, col = dest_rgn.x - x1; x < dest_rgn.w; x++, col++)
+              for (x = 0, col = roi.x - x1; x < roi.width; x++, col++)
                 {
                   gint k = col * 3;
 
@@ -425,18 +458,18 @@ gimpressionist_main (void)
                                              tmprow[k + 2]);
                 }
 
-              dest += dest_rgn.rowstride;
+              dest += bpp * roi.width;
             }
           break;
 
         case 2:
-          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
               guchar       *d       = dest;
               const guchar *tmprow  = p->col + row * rowstride;
               const guchar *tmparow = inalpha.col + row * rowstride;
 
-              for (x = 0, col = dest_rgn.x - x1; x < dest_rgn.w; x++, col++)
+              for (x = 0, col = roi.x - x1; x < roi.width; x++, col++)
                 {
                   gint k     = col * 3;
                   gint value = GIMP_RGB_LUMINANCE (tmprow[k + 0],
@@ -449,29 +482,29 @@ gimpressionist_main (void)
                   d += 2;
                 }
 
-              dest += dest_rgn.rowstride;
+              dest += bpp * roi.width;
             }
           break;
 
         case 3:
-          col = dest_rgn.x - x1;
+          col = roi.x - x1;
 
-          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
-              memcpy (dest, p->col + row * rowstride + col * 3, dest_rgn.w * 3);
+              memcpy (dest, p->col + row * rowstride + col * 3, roi.width * 3);
 
-              dest += dest_rgn.rowstride;
+              dest += bpp * roi.width;
             }
           break;
 
         case 4:
-          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
+          for (y = 0, row = roi.y - y1; y < roi.height; y++, row++)
             {
               guchar       *d       = dest;
               const guchar *tmprow  = p->col + row * rowstride;
               const guchar *tmparow = inalpha.col + row * rowstride;
 
-              for (x = 0, col = dest_rgn.x - x1; x < dest_rgn.w; x++, col++)
+              for (x = 0, col = roi.x - x1; x < roi.width; x++, col++)
                 {
                   gint k = col * 3;
 
@@ -483,19 +516,20 @@ gimpressionist_main (void)
                   d += 4;
                 }
 
-              dest += dest_rgn.rowstride;
+              dest += bpp * roi.width;
             }
           break;
         }
 
-      done += dest_rgn.w * dest_rgn.h;
+      done += roi.width * roi.height;
 
-      if (count % 16 == 0)
-        gimp_progress_update (0.8 + 0.2 * done / total);
+      gimp_progress_update (0.8 + 0.2 * done / total);
     }
 
+  g_object_unref (dest_buffer);
+
   gimp_progress_update (1.0);
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_update (drawable_id, x1, y1, width, height);
 }
