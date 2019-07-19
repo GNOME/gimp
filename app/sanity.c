@@ -660,6 +660,7 @@ sanity_check_gegl_ops (void)
     "gegl:map-relative",
     "gegl:matting-global",
     "gegl:maze",
+    "gegl:mean-curvature-blur",
     "gegl:median-blur",
     "gegl:mirrors",
     "gegl:mono-mixer",

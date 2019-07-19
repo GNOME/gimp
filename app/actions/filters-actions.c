@@ -444,6 +444,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:maze",
     GIMP_HELP_FILTER_MAZE },
 
+  { "filters-mean-curvature-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "Mean C_urvature Blur..."), NULL, NULL,
+    "gegl:mean-curvature-blur",
+    GIMP_HELP_FILTER_MEAN_CURVATURE_BLUR },
+
   { "filters-median-blur", GIMP_ICON_GEGL,
     NC_("filters-action", "_Median Blur..."), NULL, NULL,
     "gegl:median-blur",
