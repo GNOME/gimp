@@ -138,6 +138,7 @@ typedef enum
 
   /* misc */
   VARIABLE_MIPMAPED,
+  VARIABLE_ACTIVE_THREADS,
   VARIABLE_ASYNC_RUNNING,
   VARIABLE_TILE_ALLOC_TOTAL,
   VARIABLE_SCRATCH_TOTAL,
@@ -684,6 +685,15 @@ static const VariableInfo variables[] =
     .data             = "zoom-total"
   },
 
+  [VARIABLE_ACTIVE_THREADS] =
+  { .name             = "active-threads",
+    .title            = NC_("dashboard-variable", "Threads"),
+    .description      = N_("Number of active worker threads"),
+    .type             = VARIABLE_TYPE_INTEGER,
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "active-threads"
+  },
+
   [VARIABLE_ASYNC_RUNNING] =
   { .name             = "async-running",
     .title            = NC_("dashboard-variable", "Async"),
@@ -919,6 +929,9 @@ static const GroupInfo groups[] =
     .fields           = (const FieldInfo[])
                         {
                           { .variable       = VARIABLE_MIPMAPED,
+                            .default_active = TRUE
+                          },
+                          { .variable       = VARIABLE_ACTIVE_THREADS,
                             .default_active = TRUE
                           },
                           { .variable       = VARIABLE_ASYNC_RUNNING,
