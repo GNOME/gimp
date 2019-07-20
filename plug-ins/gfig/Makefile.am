@@ -44,6 +44,8 @@ gfig_SOURCES = \
 	gfig-ellipse.h		\
 	gfig-grid.c		\
 	gfig-grid.h		\
+	gfig-icons.c		\
+	gfig-icons.h		\
 	gfig-line.c		\
 	gfig-line.h		\
 	gfig-poly.c		\
@@ -56,8 +58,6 @@ gfig_SOURCES = \
 	gfig-spiral.h		\
 	gfig-star.c		\
 	gfig-star.h		\
-	gfig-stock.c		\
-	gfig-stock.h		\
 	gfig-style.c		\
 	gfig-style.h    	\
 	gfig-types.h

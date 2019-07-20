@@ -22,25 +22,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GFIG_STOCK_H__
-#define __GFIG_STOCK_H__
+#include "config.h"
 
-#define GFIG_STOCK_BEZIER         "gfig-bezier"
-#define GFIG_STOCK_CIRCLE         "gfig-circle"
-#define GFIG_STOCK_COPY_OBJECT    "gfig-copy-object"
-#define GFIG_STOCK_CURVE          "gfig-curve"
-#define GFIG_STOCK_DELETE_OBJECT  "gfig-delete"
-#define GFIG_STOCK_ELLIPSE        "gfig-ellipse"
-#define GFIG_STOCK_LINE           "gfig-line"
-#define GFIG_STOCK_MOVE_OBJECT    "gfig-move-object"
-#define GFIG_STOCK_MOVE_POINT     "gfig-move-point"
-#define GFIG_STOCK_POLYGON        "gfig-polygon"
-#define GFIG_STOCK_RECTANGLE      "gfig-rectangle"
-#define GFIG_STOCK_SELECT_OBJECT  "gfig-select-object"
-#define GFIG_STOCK_SHOW_ALL       "gfig-show-all"
-#define GFIG_STOCK_SPIRAL         "gfig-spiral"
-#define GFIG_STOCK_STAR           "gfig-star"
+#include <gtk/gtk.h>
 
-void  gfig_stock_init (void);
+#include "gfig-icons.h"
 
-#endif /* __GFIG_STOCK_H__ */
+#include "images/gfig-icon-images.h"
+#include "images/gfig-icon-images.c"
+
+#include "libgimp/stdplugins-intl.h"
+
+
+void
+gfig_icons_init (void)
+{
+  static gboolean initialized = FALSE;
+
+  GtkIconTheme *icon_theme;
+
+  if (initialized)
+    return;
+
+  initialized = TRUE;
+
+  icon_theme = gtk_icon_theme_get_default ();
+
+  gtk_icon_theme_add_resource_path (icon_theme, "/org/gimp/gfig/icons");
+}

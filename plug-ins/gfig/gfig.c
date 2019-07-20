@@ -45,12 +45,12 @@
 #include "gfig-dobject.h"
 #include "gfig-ellipse.h"
 #include "gfig-grid.h"
+#include "gfig-icons.h"
 #include "gfig-line.h"
 #include "gfig-poly.h"
 #include "gfig-preview.h"
 #include "gfig-spiral.h"
 #include "gfig-star.h"
-#include "gfig-stock.h"
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -1,35 +1,39 @@
 ## Process this file with automake to produce Makefile.in
 
 STOCK_IMAGES = \
-	stock-bezier.png	\
-	stock-circle.png	\
-	stock-copy-object.png	\
-	stock-curve.png		\
-	stock-delete-object.png	\
-	stock-ellipse.png	\
-	stock-line.png		\
-	stock-move-object.png	\
-	stock-move-point.png	\
-	stock-polygon.png	\
-	stock-rectangle.png	\
-	stock-select-object.png \
-	stock-show-all.png      \
-	stock-spiral.png	\
-	stock-star.png		\
-	stock-logo.png
+	gfig-bezier.png		\
+	gfig-circle.png		\
+	gfig-copy-object.png	\
+	gfig-curve.png		\
+	gfig-delete-object.png	\
+	gfig-ellipse.png	\
+	gfig-line.png		\
+	gfig-move-object.png	\
+	gfig-move-point.png	\
+	gfig-polygon.png	\
+	gfig-rectangle.png	\
+	gfig-select-object.png	\
+	gfig-show-all.png	\
+	gfig-spiral.png		\
+	gfig-star.png		\
+	gfig-logo.png
 
-EXTRA_DIST = $(STOCK_IMAGES)
+EXTRA_DIST =
+	$(STOCK_IMAGES)		\
+	gfig-icon-images.gresource.xml
 
-noinst_DATA = gfig-stock-pixbufs.h
-CLEANFILES = $(noinst_DATA) stock-icons.list
+noinst_DATA = \
+	gfig-icon-images.c	\
+	gfig-icon-images.h
 
-stock-icons.list: $(STOCK_IMAGES) Makefile.am
-	( rm -f $@; \
-          for image in $(STOCK_IMAGES); do \
-            echo $$image | \
-              sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
-	    echo "  $(srcdir)/$$image" >> $@; \
-	  done )
+CLEANFILES = $(noinst_DATA)
 
-$(srcdir)/gfig-stock-pixbufs.h: stock-icons.list
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
+gfig-icon-images.h: gfig-icon-images.gresource.xml
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-header \
+	  --target=$@ gfig-icon-images.gresource.xml
+
+gfig-icon-images.c: gfig-icon-images.h
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ gfig-icon-images.gresource.xml

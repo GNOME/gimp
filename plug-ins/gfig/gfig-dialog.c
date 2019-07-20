@@ -51,13 +51,13 @@
 #include "gfig-dobject.h"
 #include "gfig-ellipse.h"
 #include "gfig-grid.h"
+#include "gfig-icons.h"
 #include "gfig-line.h"
 #include "gfig-poly.h"
 #include "gfig-preview.h"
 #include "gfig-rectangle.h"
 #include "gfig-spiral.h"
 #include "gfig-star.h"
-#include "gfig-stock.h"
 
 #define SEL_BUTTON_WIDTH  100
 #define SEL_BUTTON_HEIGHT  20
@@ -256,7 +256,7 @@ gfig_dialog (void)
       gfig_context->using_new_layer = TRUE;
     }
 
-  gfig_stock_init ();
+  gfig_icons_init ();
 
   path = gimp_gimprc_query ("gfig-path");
 
@@ -924,53 +924,53 @@ create_ui_manager (GtkWidget *window)
       N_("_Next"), "<control>L", N_("Show next object"),
       G_CALLBACK (select_button_clicked_gt) },
 
-    { "show_all", GFIG_STOCK_SHOW_ALL,
+    { "show_all", GFIG_ICON_SHOW_ALL,
       N_("Show _all"), "<control>A", N_("Show all objects"),
       G_CALLBACK (select_button_clicked_eq) }
   };
   static GtkRadioActionEntry radio_actions[] =
   {
-    { "line", GFIG_STOCK_LINE,
+    { "line", GFIG_ICON_LINE,
       NULL, "L", N_("Create line"), LINE },
 
-    { "rectangle", GFIG_STOCK_RECTANGLE,
+    { "rectangle", GFIG_ICON_RECTANGLE,
       NULL, "R", N_("Create rectangle"), RECTANGLE },
 
-    { "circle", GFIG_STOCK_CIRCLE,
+    { "circle", GFIG_ICON_CIRCLE,
       NULL, "C", N_("Create circle"), CIRCLE },
 
-    { "ellipse", GFIG_STOCK_ELLIPSE,
+    { "ellipse", GFIG_ICON_ELLIPSE,
       NULL, "E", N_("Create ellipse"), ELLIPSE },
 
-    { "arc", GFIG_STOCK_CURVE,
+    { "arc", GFIG_ICON_CURVE,
       NULL, "A", N_("Create arc"), ARC },
 
-    { "polygon", GFIG_STOCK_POLYGON,
+    { "polygon", GFIG_ICON_POLYGON,
       NULL, "P", N_("Create reg polygon"), POLY },
 
-    { "star", GFIG_STOCK_STAR,
+    { "star", GFIG_ICON_STAR,
       NULL, "S", N_("Create star"), STAR },
 
-    { "spiral", GFIG_STOCK_SPIRAL,
+    { "spiral", GFIG_ICON_SPIRAL,
        NULL, "I", N_("Create spiral"), SPIRAL },
 
-    { "bezier", GFIG_STOCK_BEZIER,
+    { "bezier", GFIG_ICON_BEZIER,
       NULL, "B", N_("Create bezier curve. "
                     "Shift + Button ends object creation."), BEZIER },
 
-    { "move_obj", GFIG_STOCK_MOVE_OBJECT,
+    { "move_obj", GFIG_ICON_MOVE_OBJECT,
       NULL, "M", N_("Move an object"), MOVE_OBJ },
 
-    { "move_point", GFIG_STOCK_MOVE_POINT,
+    { "move_point", GFIG_ICON_MOVE_POINT,
       NULL, "V", N_("Move a single point"), MOVE_POINT },
 
-    { "copy", GFIG_STOCK_COPY_OBJECT,
+    { "copy", GFIG_ICON_COPY_OBJECT,
       NULL, "Y", N_("Copy an object"), COPY_OBJ },
 
-    { "delete", GFIG_STOCK_DELETE_OBJECT,
+    { "delete", GFIG_ICON_DELETE_OBJECT,
       NULL, "D", N_("Delete an object"), DEL_OBJ },
 
-    { "select", GFIG_STOCK_SELECT_OBJECT,
+    { "select", GFIG_ICON_SELECT_OBJECT,
       NULL, "A", N_("Select an object"), SELECT_OBJ }
   };
 

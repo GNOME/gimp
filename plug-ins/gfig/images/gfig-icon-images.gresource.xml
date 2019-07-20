@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gimp/gfig/icons">
+    <file preprocess="to-pixdata">gfig-bezier.png</file>
+    <file preprocess="to-pixdata">gfig-circle.png</file>
+    <file preprocess="to-pixdata">gfig-copy-object.png</file>
+    <file preprocess="to-pixdata">gfig-curve.png</file>
+    <file preprocess="to-pixdata">gfig-delete-object.png</file>
+    <file preprocess="to-pixdata">gfig-ellipse.png</file>
+    <file preprocess="to-pixdata">gfig-line.png</file>
+    <file preprocess="to-pixdata">gfig-move-object.png</file>
+    <file preprocess="to-pixdata">gfig-move-point.png</file>
+    <file preprocess="to-pixdata">gfig-polygon.png</file>
+    <file preprocess="to-pixdata">gfig-rectangle.png</file>
+    <file preprocess="to-pixdata">gfig-select-object.png</file>
+    <file preprocess="to-pixdata">gfig-show-all.png</file>
+    <file preprocess="to-pixdata">gfig-spiral.png</file>
+    <file preprocess="to-pixdata">gfig-star.png</file>
+    <file preprocess="to-pixdata">gfig-logo.png</file>
+  </gresource>
+</gresources>

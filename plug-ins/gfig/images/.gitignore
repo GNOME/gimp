@@ -1,6 +1,4 @@
 /Makefile
 /Makefile.in
-/.xvpics
-/.thumbnails
-/stock-icons.list
-/gfig-stock-pixbufs.h
+/gfig-icon-images.c
+/gfig-icon-images.h
