@@ -1,0 +1,145 @@
+stages:
+  - dependencies
+  - gegl
+
+variables:
+  BABL_DIR: "_babl_install"
+  BABL_PREFIX: "$CI_PROJECT_DIR/$BABL_DIR"
+
+cache:
+  paths:
+  - _pacman_cache
+
+image: archlinux/base:latest
+
+.babl-base:
+  stage: dependencies
+  artifacts:
+    paths:
+    - $BABL_DIR
+  variables:
+    GIT_DEPTH: "5"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir `pwd`/_pacman_cache git base-devel meson lcms2
+    - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/babl.git _babl
+    - cd _babl
+    - mkdir _build
+
+babl-git-autotools:
+  extends: .babl-base
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd _build
+    - ../autogen.sh --prefix="$BABL_PREFIX"
+    - make
+    - make install
+
+babl-git-meson:
+  extends: .babl-base
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - meson -Dprefix="$BABL_PREFIX" _build
+    - ninja -C _build
+    - ninja -C _build install
+
+babl-min-autotools:
+  extends: .babl-base
+  script:
+    - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
+    - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
+    - git checkout MIN_VERSION
+    - cd _build
+    - ../autogen.sh --prefix="$BABL_PREFIX"
+    - make
+    - make install
+
+babl-min-meson:
+  extends: .babl-base
+  script:
+    - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
+    - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
+    - git checkout MIN_VERSION
+    - meson -Dprefix="$BABL_PREFIX" _build
+    - ninja -C _build
+    - ninja -C _build install
+
+.build-gegl:
+  stage: gegl
+  variables:
+    GIT_DEPTH: "15"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir `pwd`/_pacman_cache
+        base-devel
+        ffmpeg
+        graphviz
+        jasper
+        json-glib
+        lcms2
+        libgexiv2
+        libraw
+        librsvg
+        libspiro
+        libtiff
+        luajit
+        openexr
+        python
+        sdl2
+        suitesparse
+  script:
+   - mkdir _build
+   - cd _build
+   - PKG_CONFIG_PATH=$BABL_PREFIX/lib/pkgconfig ../autogen.sh $CONFIG_OPTIONS
+   - LD_LIBRARY_PATH="$BABL_PREFIX/lib:$LD_LIBRARY_PATH" make
+   - LD_LIBRARY_PATH="$BABL_PREFIX/lib:$LD_LIBRARY_PATH" make check
+
+.build-default:
+  extends: .build-gegl
+  variables:
+    CONFIG_OPTIONS: ""
+
+.build-all:
+  extends: .build-gegl
+  variables:
+    CONFIG_OPTIONS: "--enable-debug --enable-mmx --enable-sse --enable-profile --enable-docs"
+
+build-default-git-autotools:
+  extends: .build-default
+  dependencies:
+    - babl-git-autotools
+
+build-default-git-meson:
+  extends: .build-default
+  dependencies:
+    - babl-git-meson
+
+build-default-min-autotools:
+  extends: .build-default
+  dependencies:
+    - babl-min-autotools
+
+build-default-min-meson:
+  extends: .build-default
+  dependencies:
+    - babl-min-meson
+
+build-all-git-autotools:
+  extends: .build-all
+  dependencies:
+    - babl-git-autotools
+
+build-all-git-meson:
+  extends: .build-all
+  dependencies:
+    - babl-git-meson
+
+build-all-min-autotools:
+  extends: .build-all
+  dependencies:
+    - babl-min-autotools
+
+build-all-min-meson:
+  extends: .build-all
+  dependencies:
+    - babl-min-meson
