@@ -30,6 +30,8 @@ libexec_PROGRAMS = lighting
 lighting_SOURCES = \
 	lighting-apply.c	\
 	lighting-apply.h	\
+	lighting-icons.c	\
+	lighting-icons.h	\
 	lighting-image.c	\
 	lighting-image.h	\
 	lighting-main.c		\
@@ -38,8 +40,6 @@ lighting_SOURCES = \
 	lighting-preview.h	\
 	lighting-shade.c	\
 	lighting-shade.h	\
-	lighting-stock.c	\
-	lighting-stock.h	\
 	lighting-ui.c		\
 	lighting-ui.h
 

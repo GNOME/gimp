@@ -1,29 +1,33 @@
 ## Process this file with automake to produce Makefile.in
 
 STOCK_IMAGES = \
-	stock-intensity-ambient-high.png	\
-	stock-intensity-ambient-low.png		\
-	stock-intensity-diffuse-high.png	\
-	stock-intensity-diffuse-low.png		\
-	stock-reflectivity-diffuse-high.png	\
-	stock-reflectivity-diffuse-low.png	\
-	stock-reflectivity-specular-high.png	\
-	stock-reflectivity-specular-low.png	\
-	stock-reflectivity-highlight-high.png	\
-	stock-reflectivity-highlight-low.png
+	lighting-intensity-ambient-high.png		\
+	lighting-intensity-ambient-low.png		\
+	lighting-intensity-diffuse-high.png		\
+	lighting-intensity-diffuse-low.png		\
+	lighting-reflectivity-diffuse-high.png		\
+	lighting-reflectivity-diffuse-low.png		\
+	lighting-reflectivity-specular-high.png		\
+	lighting-reflectivity-specular-low.png		\
+	lighting-reflectivity-highlight-high.png	\
+	lighting-reflectivity-highlight-low.png
 
-EXTRA_DIST = $(STOCK_IMAGES)
+EXTRA_DIST =
+	$(STOCK_IMAGES)		\
+	lighting-icon-images.gresource.xml
 
-noinst_DATA = stock-pixbufs.h
-CLEANFILES = $(noinst_DATA) stock-icons.list
+noinst_DATA = \
+	lighting-icon-images.c	\
+	lighting-icon-images.h
 
-stock-icons.list: $(STOCK_IMAGES) Makefile.am
-	( rm -f $@; \
-          for image in $(STOCK_IMAGES); do \
-            echo $$image | \
-              sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
-	    echo "  $(srcdir)/$$image" >> $@; \
-	  done )
+CLEANFILES = $(noinst_DATA)
 
-$(srcdir)/stock-pixbufs.h: stock-icons.list
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
+lighting-icon-images.h: lighting-icon-images.gresource.xml
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-header \
+	  --target=$@ lighting-icon-images.gresource.xml
+
+lighting-icon-images.c: lighting-icon-images.h
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ lighting-icon-images.gresource.xml

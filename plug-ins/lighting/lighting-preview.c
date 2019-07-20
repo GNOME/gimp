@@ -246,7 +246,7 @@ check_handle_hit (gint xpos, gint ypos)
 
 
 static void
-draw_handles (void)
+draw_handles (cairo_t *cr)
 {
   gdouble     dxpos, dypos;
   gint        startx, starty, pw, ph;
@@ -291,16 +291,15 @@ draw_handles (void)
 
   if (mapvals.lightsource[k].type != NO_LIGHT)
     {
-      GdkColor  color;
-      cairo_t *cr;
-      cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
+      GdkRGBA  color;
 
       cairo_set_line_width (cr, 1.0);
 
-      color.red   = 0x0;
-      color.green = 0x4000;
-      color.blue  = 0xFFFF;
-      gdk_cairo_set_source_color (cr, &color);
+      color.red   = 0.0;
+      color.green = 0.2;
+      color.blue  = 1.0;
+      color.alpha = 1.0;
+      gdk_cairo_set_source_rgba (cr, &color);
 
       /* draw circle at light position */
       switch (mapvals.lightsource[k].type)
@@ -322,7 +321,6 @@ draw_handles (void)
         case NO_LIGHT:
           break;
         }
-      cairo_destroy (cr);
     }
 }
 
@@ -440,7 +438,7 @@ preview_draw (GtkWidget *area,
   /* draw symbols if enabled in UI */
   if (mapvals.interactive_preview)
     {
-      draw_handles ();
+      draw_handles (cr);
     }
 
   return FALSE;

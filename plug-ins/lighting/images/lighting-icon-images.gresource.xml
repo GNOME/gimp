@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/gimp/lighting/icons">
+    <file preprocess="to-pixdata">lighting-intensity-ambient-high.png</file>
+    <file preprocess="to-pixdata">lighting-intensity-ambient-low.png</file>
+    <file preprocess="to-pixdata">lighting-intensity-diffuse-high.png</file>
+    <file preprocess="to-pixdata">lighting-intensity-diffuse-low.png</file>
+    <file preprocess="to-pixdata">lighting-reflectivity-diffuse-high.png</file>
+    <file preprocess="to-pixdata">lighting-reflectivity-diffuse-low.png</file>
+    <file preprocess="to-pixdata">lighting-reflectivity-specular-high.png</file>
+    <file preprocess="to-pixdata">lighting-reflectivity-specular-low.png</file>
+    <file preprocess="to-pixdata">lighting-reflectivity-highlight-high.png</file>
+    <file preprocess="to-pixdata">lighting-reflectivity-highlight-low.png</file>
+  </gresource>
+</gresources>
