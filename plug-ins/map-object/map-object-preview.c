@@ -213,17 +213,18 @@ draw_light_marker (cairo_t *cr,
                    gint xpos,
                    gint ypos)
 {
-  GdkColor color;
+  GdkRGBA color;
 
   if (mapvals.lightsource.type != POINT_LIGHT)
     return;
 
   cairo_set_line_width (cr, 1.0);
 
-  color.red   = 0x0;
-  color.green = 0x4000;
-  color.blue  = 0xFFFF;
-  gdk_cairo_set_source_color (cr, &color);
+  color.red   = 0.0;
+  color.green = 0.2;
+  color.blue  = 1.0;
+  color.alpha = 1.0;
+  gdk_cairo_set_source_rgba (cr, &color);
 
   lightx = xpos;
   lighty = ypos;

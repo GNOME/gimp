@@ -9,11 +9,11 @@
 
 #include "arcball.h"
 #include "map-object-ui.h"
+#include "map-object-icons.h"
 #include "map-object-image.h"
 #include "map-object-apply.h"
 #include "map-object-preview.h"
 #include "map-object-main.h"
-#include "map-object-stock.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -784,8 +784,8 @@ create_material_page (void)
 
   /* Ambient intensity */
 
-  image = gtk_image_new_from_stock (STOCK_INTENSITY_AMBIENT_LOW,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_INTENSITY_AMBIENT_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                     _("Ambient:"), 0.0, 0.5,
                                     image, 1);
@@ -804,15 +804,15 @@ create_material_page (void)
                            _("Amount of original color to show where no "
                              "direct light falls"), NULL);
 
-  image = gtk_image_new_from_stock (STOCK_INTENSITY_AMBIENT_HIGH,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_INTENSITY_AMBIENT_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_grid_attach (GTK_GRID (grid), image, 3, 0, 1, 1);
   gtk_widget_show (image);
 
   /* Diffuse intensity */
 
-  image = gtk_image_new_from_stock (STOCK_INTENSITY_DIFFUSE_LOW,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_INTENSITY_DIFFUSE_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                     _("Diffuse:"), 0.0, 0.5,
                                     image, 1);
@@ -831,8 +831,8 @@ create_material_page (void)
                            _("Intensity of original color when lit by a light "
                              "source"), NULL);
 
-  image = gtk_image_new_from_stock (STOCK_INTENSITY_DIFFUSE_HIGH,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_INTENSITY_DIFFUSE_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_grid_attach (GTK_GRID (grid), image, 3, 1, 1, 1);
   gtk_widget_show (image);
 
@@ -853,8 +853,8 @@ create_material_page (void)
 
   /* Diffuse reflection */
 
-  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_DIFFUSE_LOW,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_REFLECTIVITY_DIFFUSE_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                     _("Diffuse:"), 0.0, 0.5,
                                     image, 1);
@@ -873,15 +873,15 @@ create_material_page (void)
                            _("Higher values makes the object reflect more "
                              "light (appear lighter)"), NULL);
 
-  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_DIFFUSE_HIGH,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_REFLECTIVITY_DIFFUSE_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_grid_attach (GTK_GRID (grid), image, 3, 0, 1, 1);
   gtk_widget_show (image);
 
   /* Specular reflection */
 
-  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_SPECULAR_LOW,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_REFLECTIVITY_SPECULAR_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                     _("Specular:"), 0.0, 0.5,
                                     image, 1);
@@ -900,15 +900,15 @@ create_material_page (void)
                            _("Controls how intense the highlights will be"),
                            NULL);
 
-  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_SPECULAR_HIGH,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_REFLECTIVITY_SPECULAR_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_grid_attach (GTK_GRID (grid), image, 3, 1, 1, 1);
   gtk_widget_show (image);
 
   /* Highlight */
 
-  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_HIGHLIGHT_LOW,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_REFLECTIVITY_HIGHLIGHT_LOW,
+                                        GTK_ICON_SIZE_BUTTON);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                                     _("Highlight:"), 0.0, 0.5,
                                     image, 1);
@@ -927,8 +927,8 @@ create_material_page (void)
                            _("Higher values makes the highlights more focused"),
                            NULL);
 
-  image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_HIGHLIGHT_HIGH,
-                                    GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (MAPOBJECT_REFLECTIVITY_HIGHLIGHT_HIGH,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_grid_attach (GTK_GRID (grid), image, 3, 2, 1, 1);
   gtk_widget_show (image);
 

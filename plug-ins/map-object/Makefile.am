@@ -30,6 +30,8 @@ map_object_SOURCES = \
 	arcball.h		\
 	map-object-apply.c	\
 	map-object-apply.h	\
+	map-object-icons.c	\
+	map-object-icons.h	\
 	map-object-image.c	\
 	map-object-image.h	\
 	map-object-main.c	\
@@ -38,8 +40,6 @@ map_object_SOURCES = \
 	map-object-preview.h	\
 	map-object-shade.c	\
 	map-object-shade.h	\
-	map-object-stock.c	\
-	map-object-stock.h	\
 	map-object-ui.c		\
 	map-object-ui.h
 
