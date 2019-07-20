@@ -1,5 +1,9 @@
-/* gimptilebackendtilemanager.c
- * Copyright (C) 2012 Øyvind Kolås <pippin@gimp.org>
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimptilebackendplugin.c
+ * Copyright (C) 2011-2019 Øyvind Kolås <pippin@gimp.org>
+ *                         Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -227,7 +231,7 @@ gimp_tile_read (GimpTileBackendPlugin *backend_plugin,
 
   if (gimp_tile.ewidth * gimp_tile.eheight * priv->bpp == tile_size)
     {
-      memcpy (tile_data, (gchar *) gimp_tile.data, tile_size);
+      memcpy (tile_data, gimp_tile.data, tile_size);
     }
   else
     {
@@ -237,8 +241,8 @@ gimp_tile_read (GimpTileBackendPlugin *backend_plugin,
 
       for (row = 0; row < gimp_tile.eheight; row++)
         {
-          memcpy (tile_data + row * tile_stride,
-                  (gchar *) gimp_tile.data + row * gimp_tile_stride,
+          memcpy (tile_data      + row * tile_stride,
+                  gimp_tile.data + row * gimp_tile_stride,
                   gimp_tile_stride);
         }
     }
@@ -270,7 +274,7 @@ gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
 
   if (gimp_tile.ewidth * gimp_tile.eheight * priv->bpp == tile_size)
     {
-      memcpy ((gchar *) gimp_tile.data, tile_data, tile_size);
+      memcpy (gimp_tile.data, tile_data, tile_size);
     }
   else
     {
@@ -280,8 +284,8 @@ gimp_tile_write (GimpTileBackendPlugin *backend_plugin,
 
       for (row = 0; row < gimp_tile.eheight; row++)
         {
-          memcpy ((gchar *) gimp_tile.data + row * gimp_tile_stride,
-                  tile_data + row * tile_stride,
+          memcpy (gimp_tile.data + row * gimp_tile_stride,
+                  tile_data      + row * tile_stride,
                   gimp_tile_stride);
         }
     }
@@ -421,11 +425,15 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
   tile_data.data        = NULL;
 
   if (tile_info->use_shm)
-    memcpy (gimp_shm_addr (),
-            tile->data,
-            tile->ewidth * tile->eheight * priv->bpp);
+    {
+      memcpy (gimp_shm_addr (),
+              tile->data,
+              tile->ewidth * tile->eheight * priv->bpp);
+    }
   else
-    tile_data.data = tile->data;
+    {
+      tile_data.data = tile->data;
+    }
 
   if (! gp_tile_data_write (_writechannel, &tile_data, NULL))
     gimp_quit ();
@@ -437,5 +445,6 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
 
   gimp_read_expect_msg (&msg, GP_TILE_ACK);
   gp_unlock ();
+
   gimp_wire_destroy (&msg);
 }

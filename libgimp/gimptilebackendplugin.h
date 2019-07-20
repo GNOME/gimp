@@ -1,8 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptilebackendtilemanager.h
- * Copyright (C) 2011 Øyvind Kolås <pippin@gimp.org>
+ * gimptilebackendplugin.h
+ * Copyright (C) 2011-2019 Øyvind Kolås <pippin@gimp.org>
+ *                         Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,4 +57,4 @@ GeglTileBackend * _gimp_tile_backend_plugin_new      (gint32 drawable_id,
 
 G_END_DECLS
 
-#endif /* __GIMP_TILE_BACKEND_plugin_H__ */
+#endif /* __GIMP_TILE_BACKEND_PLUGIN_H__ */
