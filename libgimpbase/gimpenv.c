@@ -36,7 +36,6 @@
 #include <gio/gio.h>
 #include <glib/gstdio.h>
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 
 #define __GIMP_ENV_C__
