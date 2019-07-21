@@ -1582,10 +1582,6 @@ static void
 bender_update (BenderDialog *cd,
                int           update)
 {
-  GtkStyle *graph_style = gtk_widget_get_style (cd->graph);
-  gint      i;
-  gint      other;
-
   if (update & UP_PREVIEW)
     {
       gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (cd->shell)),
@@ -1616,75 +1612,9 @@ bender_update (BenderDialog *cd,
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
     }
+
   if ((update & UP_GRAPH) && (update & UP_DRAW))
-    {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (cd->graph));
-
-      cairo_set_line_width (cr, 1.0);
-      cairo_translate (cr, 0.5, 0.5);
-
-      /*  Clear the background  */
-      gdk_cairo_set_source_color (cr, &graph_style->bg[GTK_STATE_NORMAL]);
-      cairo_paint (cr);
-
-      /*  Draw the grid lines  */
-      for (i = 0; i < 5; i++)
-        {
-          cairo_move_to (cr, RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
-          cairo_line_to (cr, GRAPH_WIDTH + RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
-
-          cairo_move_to (cr, i * (GRAPH_WIDTH / 4) + RADIUS, RADIUS);
-          cairo_line_to (cr, i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
-        }
-
-      gdk_cairo_set_source_color (cr, &graph_style->dark[GTK_STATE_NORMAL]);
-      cairo_stroke (cr);
-
-      /*  Draw the other curve  */
-      other = (cd->outline == 0) ? 1 : 0;
-
-      cairo_move_to (cr, RADIUS, 255 - cd->curve[other][0] + RADIUS);
-
-      for (i = 1; i < 256; i++)
-        {
-          cairo_line_to (cr, i + RADIUS, 255 - cd->curve[other][i] + RADIUS);
-        }
-
-      gdk_cairo_set_source_color (cr, &graph_style->dark[GTK_STATE_NORMAL]);
-      cairo_stroke (cr);
-
-      /*  Draw the active curve  */
-      cairo_move_to (cr, RADIUS, 255 - cd->curve[cd->outline][0] + RADIUS);
-
-      for (i = 1; i < 256; i++)
-        {
-          cairo_line_to (cr, i + RADIUS, 255 - cd->curve[cd->outline][i] + RADIUS);
-        }
-
-      /*  Draw the points  */
-      if (cd->curve_type == SMOOTH)
-        {
-          for (i = 0; i < 17; i++)
-            {
-              if (cd->points[cd->outline][i][0] != -1)
-                {
-                  cairo_new_sub_path (cr);
-                  cairo_arc (cr,
-                             (cd->points[cd->outline][i][0] * 255.0) + RADIUS,
-                             255 - (cd->points[cd->outline][i][1] * 255.0) + RADIUS,
-                             RADIUS,
-                             0, 2 * G_PI);
-                }
-            }
-        }
-
-      gdk_cairo_set_source_color (cr, &graph_style->black);
-      cairo_stroke (cr);
-
-      cairo_destroy (cr);
-    }
+    gtk_widget_queue_draw (cd->graph);
 }
 
 static void
@@ -2237,8 +2167,13 @@ bender_graph_events (GtkWidget    *widget,
   new_type      = GDK_X_CURSOR;
   closest_point = 0;
 
+  if (! gdk_event_get_device (event))
+    return FALSE;
+
   /*  get the pointer position  */
-  gdk_window_get_pointer (gtk_widget_get_window (cd->graph), &tx, &ty, NULL);
+  gdk_window_get_device_position (gtk_widget_get_window (cd->graph),
+                                  gdk_event_get_device (event),
+                                  &tx, &ty, NULL);
   x = CLAMP ((tx - RADIUS), 0, 255);
   y = CLAMP ((ty - RADIUS), 0, 255);
 
@@ -2401,7 +2336,72 @@ bender_graph_draw (GtkWidget    *widget,
                    cairo_t      *cr,
                    BenderDialog *cd)
 {
-  bender_update (cd, UP_GRAPH | UP_DRAW);
+  GdkRGBA black = { 0.0, 0.0, 0.0, 1.0 };
+  GdkRGBA white = { 1.0, 1.0, 1.0, 1.0 };
+  GdkRGBA gray  = { 0.5, 0.5, 0.5, 1.0 };
+  gint    i;
+  gint    other;
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_translate (cr, 0.5, 0.5);
+
+  /*  Clear the background  */
+  gdk_cairo_set_source_rgba (cr, &white);
+  cairo_paint (cr);
+
+  /*  Draw the grid lines  */
+  for (i = 0; i < 5; i++)
+    {
+      cairo_move_to (cr, RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
+      cairo_line_to (cr, GRAPH_WIDTH + RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
+
+      cairo_move_to (cr, i * (GRAPH_WIDTH / 4) + RADIUS, RADIUS);
+      cairo_line_to (cr, i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
+    }
+
+  gdk_cairo_set_source_rgba (cr, &gray);
+  cairo_stroke (cr);
+
+  /*  Draw the other curve  */
+  other = (cd->outline == 0) ? 1 : 0;
+
+  cairo_move_to (cr, RADIUS, 255 - cd->curve[other][0] + RADIUS);
+
+  for (i = 1; i < 256; i++)
+    {
+      cairo_line_to (cr, i + RADIUS, 255 - cd->curve[other][i] + RADIUS);
+    }
+
+  gdk_cairo_set_source_rgba (cr, &gray);
+  cairo_stroke (cr);
+
+  /*  Draw the active curve  */
+  cairo_move_to (cr, RADIUS, 255 - cd->curve[cd->outline][0] + RADIUS);
+
+  for (i = 1; i < 256; i++)
+    {
+      cairo_line_to (cr, i + RADIUS, 255 - cd->curve[cd->outline][i] + RADIUS);
+    }
+
+  /*  Draw the points  */
+  if (cd->curve_type == SMOOTH)
+    {
+      for (i = 0; i < 17; i++)
+        {
+          if (cd->points[cd->outline][i][0] != -1)
+            {
+              cairo_new_sub_path (cr);
+              cairo_arc (cr,
+                         (cd->points[cd->outline][i][0] * 255.0) + RADIUS,
+                         255 - (cd->points[cd->outline][i][1] * 255.0) + RADIUS,
+                         RADIUS,
+                         0, 2 * G_PI);
+            }
+        }
+    }
+
+  gdk_cairo_set_source_rgba (cr, &black);
+  cairo_stroke (cr);
 
   return FALSE;
 }
