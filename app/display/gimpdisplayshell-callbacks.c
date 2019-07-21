@@ -116,26 +116,31 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
 }
 
-static gboolean
-gimp_display_shell_canvas_tick (GtkWidget        *widget,
-                                GdkFrameClock    *frame_clock,
-                                GimpDisplayShell *shell)
+typedef struct
 {
-  GtkAllocation allocation;
+  GimpDisplayShell *shell;
+  gint              prev_width;
+  gint              prev_height;
+} TickClosure;
+
+static gboolean
+gimp_display_shell_canvas_tick (GtkWidget     *widget,
+                                GdkFrameClock *frame_clock,
+                                TickClosure   *tick)
+{
+  GimpDisplayShell *shell = tick->shell;
+  GtkAllocation     allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  if ((shell->disp_width  != allocation.width) ||
-      (shell->disp_height != allocation.height))
+  if ((tick->prev_width  != allocation.width) ||
+      (tick->prev_height != allocation.height))
     {
-      g_clear_pointer (&shell->render_cache, cairo_surface_destroy);
-      gimp_display_shell_render_invalidate_full (shell);
-
       if (shell->zoom_on_resize   &&
-          shell->disp_width  > 64 &&
-          shell->disp_height > 64 &&
-          allocation.width   > 64 &&
-          allocation.height  > 64)
+          tick->prev_width  > 64 &&
+          tick->prev_height > 64 &&
+          allocation.width  > 64 &&
+          allocation.height > 64)
         {
           gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
           gint    offset_x;
@@ -148,8 +153,8 @@ gimp_display_shell_canvas_tick (GtkWidget        *widget,
            */
           scale *= (sqrt (SQR (allocation.width) +
                           SQR (allocation.height)) /
-                    sqrt (SQR (shell->disp_width) +
-                          SQR (shell->disp_height)));
+                    sqrt (SQR (tick->prev_width) +
+                          SQR (tick->prev_height)));
 
           offset_x = UNSCALEX (shell, shell->offset_x);
           offset_y = UNSCALEX (shell, shell->offset_y);
@@ -159,9 +164,6 @@ gimp_display_shell_canvas_tick (GtkWidget        *widget,
           shell->offset_x = SCALEX (shell, offset_x);
           shell->offset_y = SCALEY (shell, offset_y);
         }
-
-      shell->disp_width  = allocation.width;
-      shell->disp_height = allocation.height;
 
       /* When we size-allocate due to resize of the top level window,
        * we want some additional logic. Don't apply it on
@@ -224,6 +226,8 @@ gimp_display_shell_canvas_tick (GtkWidget        *widget,
   /* undo size request from gimp_display_shell_constructed() */
   gtk_widget_set_size_request (widget, -1, -1);
 
+  g_free (tick);
+
   return G_SOURCE_REMOVE;
 }
 
@@ -232,13 +236,31 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
                                          GtkAllocation    *allocation,
                                          GimpDisplayShell *shell)
 {
+  TickClosure *tick;
+
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
     return;
 
+  tick = g_new0 (TickClosure, 1);
+
+  tick->shell       = shell;
+  tick->prev_width  = shell->disp_width;
+  tick->prev_height = shell->disp_height;
+
+  if (shell->disp_width  != allocation->width ||
+      shell->disp_height != allocation->height)
+    {
+      g_clear_pointer (&shell->render_cache, cairo_surface_destroy);
+      gimp_display_shell_render_invalidate_full (shell);
+
+      shell->disp_width  = allocation->width;
+      shell->disp_height = allocation->height;
+    }
+
   gtk_widget_add_tick_callback (widget,
                                 (GtkTickCallback) gimp_display_shell_canvas_tick,
-                                shell, NULL);
+                                tick, NULL);
 }
 
 gboolean
