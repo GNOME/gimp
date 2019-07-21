@@ -790,7 +790,7 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
   gegl_buffer_copy (dst_temp, NULL, GEGL_ABYSS_NONE, buffer_dst, NULL);
 
   for (i = 0; i< num_images; i++)
-    if( inputs[i].is_ID)
+    if (inputs[i].is_ID)
       g_object_unref (temp[i]);
 
   g_object_unref (dst_temp);
@@ -1161,7 +1161,6 @@ compose_dialog (const gchar *compose_type,
       GtkAdjustment *scale;
       GtkTreeIter    iter;
       GtkTreeModel  *model;
-      GdkPixbuf     *ico;
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_grid_attach (GTK_GRID (grid), hbox, 0, j, 1, 1);
@@ -1195,17 +1194,13 @@ compose_dialog (const gchar *compose_type,
       combo = gimp_drawable_combo_box_new (check_gray, NULL);
       composeint.channel_menu[j] = combo;
 
-      ico = gtk_widget_render_icon_pixbuf (dialog,
-                                           GIMP_ICON_CHANNEL_GRAY,
-                                           GTK_ICON_SIZE_BUTTON);
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_VALUE,  -1,
-                          GIMP_INT_STORE_LABEL,  _("Mask value"),
-                          GIMP_INT_STORE_PIXBUF, ico,
+      gtk_list_store_set (GTK_LIST_STORE (model),   &iter,
+                          GIMP_INT_STORE_VALUE,     -1,
+                          GIMP_INT_STORE_LABEL,     _("Mask value"),
+                          GIMP_INT_STORE_ICON_NAME, GIMP_ICON_CHANNEL_GRAY,
                           -1);
-      g_object_unref (ico);
       gtk_grid_attach (GTK_GRID (grid), combo, 1, j, 1, 1);
                         // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (combo);
