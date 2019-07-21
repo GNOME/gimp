@@ -153,6 +153,7 @@ gegl-git-autotools:
         gtk-doc
         intltool
         iso-codes
+        xorg-server-xvfb
     - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/gimp.git _gimp
     - cd _gimp
     - mkdir _build
