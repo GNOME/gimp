@@ -31,8 +31,6 @@
 #include "images/gfig-icon-images.h"
 #include "images/gfig-icon-images.c"
 
-#include "libgimp/stdplugins-intl.h"
-
 
 void
 gfig_icons_init (void)
