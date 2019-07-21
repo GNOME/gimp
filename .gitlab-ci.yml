@@ -4,7 +4,7 @@ stages:
 
 variables:
   INSTALL_DIR: "_install"
-  PREFIX: "$CI_PROJECT_DIR/$INSTALL_DIR"
+  INSTALL_PREFIX: "$CI_PROJECT_DIR/$INSTALL_DIR"
 
 cache:
   paths:
@@ -35,39 +35,39 @@ babl-git-autotools:
     GIT_STRATEGY: none
   script:
     - cd _build
-    - ../autogen.sh --prefix="$PREFIX"
+    - ../autogen.sh --prefix="$INSTALL_PREFIX"
     - make
     - make install
 
-babl-git-meson:
-  extends: .babl-base
-  variables:
-    GIT_STRATEGY: none
-  script:
-    - meson -Dprefix="$PREFIX" _build
-    - ninja -C _build
-    - ninja -C _build install
+# babl-git-meson:
+#   extends: .babl-base
+#   variables:
+#     GIT_STRATEGY: none
+#   script:
+#     - meson -Dprefix="$INSTALL_PREFIX" _build
+#     - ninja -C _build
+#     - ninja -C _build install
 
-babl-min-autotools:
-  extends: .babl-base
-  script:
-    - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
-    - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
-    - git checkout MIN_VERSION
-    - cd _build
-    - ../autogen.sh --prefix="$PREFIX"
-    - make
-    - make install
+# babl-min-autotools:
+#   extends: .babl-base
+#   script:
+#     - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
+#     - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
+#     - git checkout MIN_VERSION
+#     - cd _build
+#     - ../autogen.sh --prefix="$INSTALL_PREFIX"
+#     - make
+#     - make install
 
-babl-min-meson:
-  extends: .babl-base
-  script:
-    - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
-    - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
-    - git checkout MIN_VERSION
-    - meson -Dprefix="$PREFIX" _build
-    - ninja -C _build
-    - ninja -C _build install
+# babl-min-meson:
+#   extends: .babl-base
+#   script:
+#     - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
+#     - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
+#     - git checkout MIN_VERSION
+#     - meson -Dprefix="$INSTALL_PREFIX" _build
+#     - ninja -C _build
+#     - ninja -C _build install
 
 .gegl-base:
   stage: dependencies
@@ -108,9 +108,9 @@ gegl-git-autotools:
     GIT_STRATEGY: none
   script:
     - cd _build
-    - PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$PREFIX" $CONFIG_OPTIONS
-    - LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH" make
-    - LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH" make install
+    - PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make install
 
 .gimp-base:
   stage: gimp
@@ -160,9 +160,9 @@ gegl-git-autotools:
     GIT_STRATEGY: none
   script:
     - cd _build
-    - PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$PREFIX" $CONFIG_OPTIONS
-    - LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH" make
-    - LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH" make check
+    - PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make check
 
 .build-default:
   extends: .build-gimp
