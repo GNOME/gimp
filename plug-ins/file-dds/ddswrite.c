@@ -1798,14 +1798,14 @@ savetype_selected (GtkWidget *widget,
     case DDS_SAVE_SELECTED_LAYER:
     case DDS_SAVE_CUBEMAP:
     case DDS_SAVE_ARRAY:
-      gtk_widget_set_sensitive (compress_opt, 1);
+      gtk_widget_set_sensitive (compress_opt, TRUE);
       break;
 
     case DDS_SAVE_VOLUMEMAP:
       dds_write_vals.compression = DDS_COMPRESS_NONE;
       gtk_combo_box_set_active (GTK_COMBO_BOX (compress_opt),
                                 DDS_COMPRESS_NONE);
-      gtk_widget_set_sensitive (compress_opt, 0);
+      gtk_widget_set_sensitive (compress_opt, FALSE);
       break;
     }
 
@@ -1863,12 +1863,12 @@ transindex_clicked (GtkWidget *widget,
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       dds_write_vals.transindex = 0;
-      gtk_widget_set_sensitive (spin, 1);
+      gtk_widget_set_sensitive (spin, TRUE);
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (spin), 0);
     }
   else
     {
-      gtk_widget_set_sensitive (spin, 0);
+      gtk_widget_set_sensitive (spin, FALSE);
       dds_write_vals.transindex = -1;
     }
 }
@@ -1879,14 +1879,6 @@ transindex_changed (GtkWidget *widget,
 {
   dds_write_vals.transindex =
     gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
-}
-
-static void
-adv_opt_expanded (GtkWidget *widget,
-                  gpointer   data)
-{
-  dds_write_vals.show_adv_opt =
-    ! gtk_expander_get_expanded (GTK_EXPANDER (widget));
 }
 
 static void
@@ -1945,13 +1937,12 @@ save_dialog (gint32 image_id,
              gint32 drawable_id)
 {
   GtkWidget *dlg;
-  GtkWidget *vbox, *vbox2, *hbox;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *table;
-  GtkWidget *label;
   GtkWidget *opt;
   GtkWidget *check;
   GtkWidget *spin;
-  GtkWidget *expander;
   GtkWidget *frame;
   GimpImageBaseType basetype;
 
@@ -1973,33 +1964,26 @@ save_dialog (gint32 image_id,
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dlg), 0);
+  gtk_window_set_resizable (GTK_WINDOW (dlg), FALSE);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      vbox, 1, 1, 0);
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (4, 2, 0);
+  table = gtk_table_new (6, 2, 0);
   gtk_widget_show (table);
-  gtk_box_pack_start (GTK_BOX (vbox), table, 1, 1, 0);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 8);
-
-  label = gtk_label_new (_("Compression:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
 
   opt = string_value_combo_new (compression_strings,
                                 dds_write_vals.compression);
-  gtk_widget_show (opt);
-  gtk_table_attach (GTK_TABLE (table), opt, 1, 2, 0, 1,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("_Compression:"),
+                             0.0, 0.5,
+                             opt, 1, FALSE);
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (compression_selected),
@@ -2007,18 +1991,24 @@ save_dialog (gint32 image_id,
 
   compress_opt = opt;
 
-  label = gtk_label_new (_("Format:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
+  check = gtk_check_button_new_with_label (_("Use perceptual error metric"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_write_vals.perceptual_metric);
+  gtk_table_attach (GTK_TABLE (table), check, 1, 2, 1, 2,
+                    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (check);
+
+  g_signal_connect (check, "clicked",
+                    G_CALLBACK (toggle_clicked),
+                    &dds_write_vals.perceptual_metric);
+
+  pm_chk = check;
 
   opt = string_value_combo_new (format_strings, dds_write_vals.format);
-  gtk_widget_show (opt);
-  gtk_table_attach (GTK_TABLE (table), opt, 1, 2, 1, 2,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("_Format:"),
+                             0.0, 0.5,
+                             opt, 1, FALSE);
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (string_value_combo_selected),
@@ -2028,18 +2018,11 @@ save_dialog (gint32 image_id,
 
   format_opt = opt;
 
-  label = gtk_label_new (_("Save:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-
   opt = string_value_combo_new (save_type_strings, dds_write_vals.savetype);
-  gtk_widget_show (opt);
-  gtk_table_attach (GTK_TABLE (table), opt, 1, 2, 2, 3,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                             _("_Save:"),
+                             0.0, 0.5,
+                             opt, 1, FALSE);
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (savetype_selected),
@@ -2049,26 +2032,19 @@ save_dialog (gint32 image_id,
   string_value_combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
   string_value_combo_set_item_sensitive (opt, DDS_SAVE_ARRAY, is_array);
 
-  label = gtk_label_new (_("Mipmaps:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-
-  opt = string_value_combo_new (mipmap_strings,
-                                dds_write_vals.mipmaps);
-  gtk_widget_show (opt);
-  gtk_table_attach (GTK_TABLE (table), opt, 1, 2, 3, 4,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  opt = string_value_combo_new (mipmap_strings, dds_write_vals.mipmaps);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+                             _("_Mipmaps:"),
+                             0.0, 0.5,
+                             opt, 1, FALSE);
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (mipmaps_selected),
                     &image_id);
 
   string_value_combo_set_item_sensitive (opt, DDS_MIPMAP_EXISTING,
-                                         check_mipmaps (image_id, dds_write_vals.savetype));
+                                         check_mipmaps (image_id,
+                                                        dds_write_vals.savetype));
 
   mipmap_opt = opt;
 
@@ -2078,24 +2054,25 @@ save_dialog (gint32 image_id,
 
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, 1, 1, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   check = gtk_check_button_new_with_label (_("Transparent index:"));
-  gtk_box_pack_start (GTK_BOX (hbox), check, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
   g_signal_connect (check, "clicked",
                     G_CALLBACK (transindex_clicked),
                     NULL);
 
-  spin = gimp_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 255, 1, 1, 0)), 1, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spin, 1, 1, 0);
+  spin = gimp_spin_button_new
+    (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 255, 1, 1, 0)), 1, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin),
                                      GTK_UPDATE_IF_VALID);
   gtk_widget_show (spin);
 
-  g_signal_connect (spin, "value_changed",
+  g_signal_connect (spin, "value-changed",
                     G_CALLBACK (transindex_changed),
                     NULL);
 
@@ -2103,16 +2080,16 @@ save_dialog (gint32 image_id,
 
   if (basetype != GIMP_INDEXED)
     {
-      gtk_widget_set_sensitive (check, 0);
-      gtk_widget_set_sensitive (spin, 0);
+      gtk_widget_set_sensitive (check, FALSE);
+      gtk_widget_set_sensitive (spin, FALSE);
     }
   else if (dds_write_vals.transindex < 0)
     {
-      gtk_widget_set_sensitive (spin, 0);
+      gtk_widget_set_sensitive (spin, FALSE);
     }
   else if (dds_write_vals.transindex >= 0)
     {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), 1);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), TRUE);
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (spin),
                                  dds_write_vals.transindex);
     }
@@ -2121,75 +2098,25 @@ save_dialog (gint32 image_id,
     {
       dds_write_vals.compression = DDS_COMPRESS_NONE;
       string_value_combo_set_active (compress_opt, DDS_COMPRESS_NONE);
-      gtk_widget_set_sensitive (compress_opt, 0);
+      gtk_widget_set_sensitive (compress_opt, FALSE);
     }
 
-  expander = gtk_expander_new (_("<b>Advanced Options</b>"));
-  gtk_expander_set_use_markup (GTK_EXPANDER (expander), 1);
-  gtk_expander_set_expanded (GTK_EXPANDER (expander),
-                             dds_write_vals.show_adv_opt);
-  gtk_expander_set_spacing (GTK_EXPANDER (expander), 8);
-  gtk_box_pack_start (GTK_BOX (vbox), expander, 1, 1, 0);
-  gtk_widget_show (expander);
-
-  g_signal_connect (expander, "activate",
-                    G_CALLBACK (adv_opt_expanded),
-                    NULL);
-
-
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
-  gtk_container_add (GTK_CONTAINER (expander), vbox2);
-  gtk_widget_show (vbox2);
-
-  frame = gtk_frame_new (_("Compression"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, 1, 1, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (1, 2, 0);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 8);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 8);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  check = gtk_check_button_new_with_label (_("Use perceptual error metric"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
-                                dds_write_vals.perceptual_metric);
-  gtk_table_attach (GTK_TABLE (table), check, 0, 2, 0, 1,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_widget_show (check);
-
-  g_signal_connect (check, "clicked",
-                    G_CALLBACK (toggle_clicked),
-                    &dds_write_vals.perceptual_metric);
-
-  pm_chk = check;
-
-  frame = gtk_frame_new (_("Mipmaps"));
-  gtk_box_pack_start (GTK_BOX (vbox2), frame, 1, 1, 0);
+  frame = gimp_frame_new (_("Mipmap Options"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (7, 2, 0);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 8);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 8);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Filter:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-
   opt = string_value_combo_new (mipmap_filter_strings,
                                 dds_write_vals.mipmap_filter);
-  gtk_widget_show (opt);
-  gtk_table_attach (GTK_TABLE (table), opt, 1, 2, 0, 1,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("_F_ilter:"),
+                             0.0, 0.5,
+                             opt, 1, FALSE);
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (string_value_combo_selected),
@@ -2197,19 +2124,12 @@ save_dialog (gint32 image_id,
 
   mipmap_filter_opt = opt;
 
-  label = gtk_label_new (_("Wrap mode:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-
   opt = string_value_combo_new (mipmap_wrap_strings,
                                 dds_write_vals.mipmap_wrap);
-  gtk_widget_show (opt);
-  gtk_table_attach (GTK_TABLE (table), opt, 1, 2, 1, 2,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("_Wrap mode:"),
+                             0.0, 0.5,
+                             opt, 1, FALSE);
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (string_value_combo_selected),
@@ -2218,10 +2138,11 @@ save_dialog (gint32 image_id,
   mipmap_wrap_opt = opt;
 
   check = gtk_check_button_new_with_label (_("Apply gamma correction"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_write_vals.gamma_correct && dds_write_vals.mipmaps);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_write_vals.gamma_correct &&
+                                dds_write_vals.mipmaps);
   gtk_table_attach (GTK_TABLE (table), check, 1, 2, 2, 3,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
+                    GTK_FILL, 0, 0, 0);
   gtk_widget_show (check);
 
   g_signal_connect (check, "clicked",
@@ -2231,10 +2152,11 @@ save_dialog (gint32 image_id,
   gamma_chk = check;
 
   check = gtk_check_button_new_with_label (_("Use sRGB colorspace"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_write_vals.gamma_correct && dds_write_vals.srgb);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_write_vals.gamma_correct &&
+                                dds_write_vals.srgb);
   gtk_table_attach (GTK_TABLE (table), check, 1, 2, 3, 4,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
+                    GTK_FILL, 0, 0, 0);
   gtk_widget_show (check);
 
   g_signal_connect (check, "clicked",
@@ -2243,19 +2165,14 @@ save_dialog (gint32 image_id,
 
   srgb_chk = check;
 
-  label = gtk_label_new (_("Gamma:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-
-  spin = gimp_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.gamma, 1e-05, 100, 0.1, 0.5, 0)), 1, 1);
-  gtk_table_attach (GTK_TABLE (table), spin, 1, 2, 4, 5,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  spin = gimp_spin_button_new
+    (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.gamma,
+                                         1e-05, 100, 0.1, 0.5, 0)), 1, 1);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin), GTK_UPDATE_IF_VALID);
-  gtk_widget_show (spin);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+                             _("_Gamma:"),
+                             0.0, 0.5,
+                             spin, 1, FALSE);
 
   g_signal_connect (spin, "value_changed",
                     G_CALLBACK (gamma_changed),
@@ -2264,10 +2181,11 @@ save_dialog (gint32 image_id,
   gamma_spin = spin;
 
   check = gtk_check_button_new_with_label (_("Preserve alpha test coverage"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_write_vals.preserve_alpha_coverage && dds_write_vals.mipmaps);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_write_vals.preserve_alpha_coverage &&
+                                dds_write_vals.mipmaps);
   gtk_table_attach (GTK_TABLE (table), check, 1, 2, 5, 6,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
+                    GTK_FILL, 0, 0, 0);
   gtk_widget_show (check);
 
   g_signal_connect (check, "clicked",
@@ -2276,19 +2194,14 @@ save_dialog (gint32 image_id,
 
   alpha_coverage_chk = check;
 
-  label = gtk_label_new (_("Alpha test threshold:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
-                    (GtkAttachOptions)(GTK_FILL),
-                    (GtkAttachOptions)(0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
-
-  spin = gimp_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.alpha_test_threshold, 0, 1, 0.01, 0.1, 0)), 1, 2);
-  gtk_table_attach (GTK_TABLE (table), spin, 1, 2, 6, 7,
-                    (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions)(GTK_EXPAND), 0, 0);
+  spin = gimp_spin_button_new
+    (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.alpha_test_threshold,
+                                         0, 1, 0.01, 0.1, 0)), 1, 2);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin), GTK_UPDATE_IF_VALID);
-  gtk_widget_show (spin);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
+                             _("_Alpha test threshold:"),
+                             0.0, 0.5,
+                             spin, 1, FALSE);
 
   g_signal_connect (spin, "value_changed",
                     G_CALLBACK (alpha_test_threshold_changed),
