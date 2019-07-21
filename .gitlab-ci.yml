@@ -1,5 +1,6 @@
 stages:
-  - dependencies
+  - babl
+  - gegl
   - gimp
 
 variables:
@@ -13,7 +14,7 @@ cache:
 image: archlinux/base:latest
 
 .babl-base:
-  stage: dependencies
+  stage: babl
   artifacts:
     paths:
     - $INSTALL_DIR
@@ -70,7 +71,7 @@ babl-git-autotools:
 #     - ninja -C _build install
 
 .gegl-base:
-  stage: dependencies
+  stage: gegl
   artifacts:
     paths:
     - $INSTALL_DIR
