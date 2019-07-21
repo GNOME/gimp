@@ -156,7 +156,7 @@ void        aff_element_draw                 (AffElement  *elem,
                                               gint         width,
                                               gint         height,
                                               cairo_t     *cr,
-                                              GdkColor    *color,
+                                              GdkRGBA     *color,
                                               PangoLayout *layout);
 
 

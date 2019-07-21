@@ -1476,19 +1476,20 @@ static gboolean
 design_area_draw (GtkWidget *widget,
                   cairo_t   *cr)
 {
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkStateType   state = gtk_widget_get_state (widget);
-  cairo_t       *design_cr;
-  GtkAllocation  allocation;
-  PangoLayout   *layout;
-  gint           i;
-  gint           cx, cy;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  cairo_t         *design_cr;
+  GtkAllocation    allocation;
+  PangoLayout     *layout;
+  GdkRGBA          black = { 0.0, 0.0, 0.0, 1.0 };
+  GdkRGBA          white = { 1.0, 1.0, 1.0, 1.0 };
+  gint             i;
+  gint             cx, cy;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   design_cr = cairo_create (ifsDesign->surface);
 
-  gdk_cairo_set_source_color (design_cr, &style->bg[state]);
+  gdk_cairo_set_source_rgba (design_cr, &white);
   cairo_paint (design_cr);
 
   cairo_set_line_join (design_cr, CAIRO_LINE_JOIN_ROUND);
@@ -1506,7 +1507,7 @@ design_area_draw (GtkWidget *widget,
   cairo_move_to (design_cr, cx, cy - 10);
   cairo_line_to (design_cr, cx, cy + 10);
 
-  gdk_cairo_set_source_color (design_cr, &style->fg[state]);
+  gdk_cairo_set_source_rgba (design_cr, &black);
   cairo_set_line_width (design_cr, 1.0);
   cairo_stroke (design_cr);
 
@@ -1518,7 +1519,7 @@ design_area_draw (GtkWidget *widget,
                         allocation.width,
                         allocation.height,
                         design_cr,
-                        &style->fg[state],
+                        &black,
                         layout);
     }
 

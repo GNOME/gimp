@@ -718,7 +718,7 @@ aff_element_draw (AffElement  *elem,
                   gint         width,
                   gint         height,
                   cairo_t     *cr,
-                  GdkColor    *color,
+                  GdkRGBA     *color,
                   PangoLayout *layout)
 {
   PangoRectangle rect;
@@ -727,7 +727,7 @@ aff_element_draw (AffElement  *elem,
   pango_layout_set_text (layout, elem->name, -1);
   pango_layout_get_pixel_extents (layout, NULL, &rect);
 
-  gdk_cairo_set_source_color (cr, color);
+  gdk_cairo_set_source_rgba (cr, color);
 
   cairo_move_to (cr,
                  elem->v.x * width - rect.width  / 2,
