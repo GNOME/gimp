@@ -25,9 +25,9 @@ CLEANFILES = $(noinst_DATA)
 lighting-icon-images.h: lighting-icon-images.gresource.xml
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-header \
-	  --target=$@ lighting-icon-images.gresource.xml
+	  --target=$@ $(srcdir)/lighting-icon-images.gresource.xml
 
 lighting-icon-images.c: lighting-icon-images.h
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ lighting-icon-images.gresource.xml
+	  --target=$@ $(srcdir)/lighting-icon-images.gresource.xml

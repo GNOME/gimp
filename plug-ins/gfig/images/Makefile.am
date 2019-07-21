@@ -31,9 +31,9 @@ CLEANFILES = $(noinst_DATA)
 gfig-icon-images.h: gfig-icon-images.gresource.xml
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-header \
-	  --target=$@ gfig-icon-images.gresource.xml
+	  --target=$@ $(srcdir)/gfig-icon-images.gresource.xml
 
 gfig-icon-images.c: gfig-icon-images.h
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ gfig-icon-images.gresource.xml
+	  --target=$@ $(srcdir)/gfig-icon-images.gresource.xml
