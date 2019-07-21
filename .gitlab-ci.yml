@@ -1,0 +1,25 @@
+image: fedora:rawhide
+
+stages:
+  - build
+
+build-gimp:
+  stage: build
+  except:
+    - tags
+  before_script:
+    - dnf update -y --nogpgcheck
+    # Get the build-dep plugin
+    - dnf install -y dnf-plugins-core redhat-rpm-config --nogpgcheck
+    # Build the dependencies
+    - dnf builddep -y gimp --nogpgcheck
+    # Some reasons aren't part of the RPM dependencies
+    - dnf install -y libtool gtk3-devel --nogpgcheck
+  script:
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh
+    - make -j8
+  artifacts:
+    paths:
+      - "config.h"
