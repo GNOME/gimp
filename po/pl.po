@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-14 16:14+0200\n"
-"PO-Revision-Date: 2019-07-14 16:15+0200\n"
+"POT-Creation-Date: 2019-07-21 13:45+0200\n"
+"PO-Revision-Date: 2019-07-21 13:48+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -902,6 +902,7 @@ msgid "Buffers"
 msgstr "Bufory"
 
 #: ../app/actions/actions.c:120 ../app/dialogs/dialogs.c:375
+#: ../app/propgui/gimppropgui-newsprint.c:160
 #: ../app/widgets/gimppickablepopup.c:246
 msgid "Channels"
 msgstr "Kanały"
@@ -5196,329 +5197,339 @@ msgstr "_Labirynt…"
 
 #: ../app/actions/filters-actions.c:448
 msgctxt "filters-action"
+msgid "Mean C_urvature Blur..."
+msgstr "R_ozmycie średniej krzywizny…"
+
+#: ../app/actions/filters-actions.c:453
+msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "_Rozmycie środkowe…"
 
-#: ../app/actions/filters-actions.c:453
+#: ../app/actions/filters-actions.c:458
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mikser monochromatyczny…"
 
-#: ../app/actions/filters-actions.c:458
+#: ../app/actions/filters-actions.c:463
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaika…"
 
-#: ../app/actions/filters-actions.c:463
+#: ../app/actions/filters-actions.c:468
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Koliste rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:468
+#: ../app/actions/filters-actions.c:473
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Liniowe rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:473
+#: ../app/actions/filters-actions.c:478
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Rozmycie ruchu powiększenia…"
 
-#: ../app/actions/filters-actions.c:478
+#: ../app/actions/filters-actions.c:483
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Szum _komórkowy…"
 
-#: ../app/actions/filters-actions.c:483
+#: ../app/actions/filters-actions.c:488
+msgctxt "filters-action"
+msgid "_Newsprint..."
+msgstr "_Papier gazetowy…"
+
+#: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Szum lch CIE…"
 
-#: ../app/actions/filters-actions.c:488
+#: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Szum HSV…"
 
-#: ../app/actions/filters-actions.c:493
+#: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Wygnieć…"
 
-#: ../app/actions/filters-actions.c:498
+#: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Szum _Perlina…"
 
-#: ../app/actions/filters-actions.c:503
+#: ../app/actions/filters-actions.c:513
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Wyciosaj…"
 
-#: ../app/actions/filters-actions.c:508
+#: ../app/actions/filters-actions.c:518
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Szum _RGB…"
 
-#: ../app/actions/filters-actions.c:513
+#: ../app/actions/filters-actions.c:523
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "R_edukcja szumu…"
 
-#: ../app/actions/filters-actions.c:518
+#: ../app/actions/filters-actions.c:528
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Szum Simplex…"
 
-#: ../app/actions/filters-actions.c:523
+#: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Rozszarp…"
 
-#: ../app/actions/filters-actions.c:528
+#: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Jednolity szum…"
 
-#: ../app/actions/filters-actions.c:533
+#: ../app/actions/filters-actions.c:543
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Rozrzuć…"
 
-#: ../app/actions/filters-actions.c:538
+#: ../app/actions/filters-actions.c:548
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "_Przesunięcie…"
 
-#: ../app/actions/filters-actions.c:543
+#: ../app/actions/filters-actions.c:553
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Farba _olejna…"
 
-#: ../app/actions/filters-actions.c:548
+#: ../app/actions/filters-actions.c:558
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Rzut panoramy…"
 
-#: ../app/actions/filters-actions.c:553
+#: ../app/actions/filters-actions.c:563
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopia…"
 
-#: ../app/actions/filters-actions.c:558
+#: ../app/actions/filters-actions.c:568
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikselizuj…"
 
-#: ../app/actions/filters-actions.c:563
+#: ../app/actions/filters-actions.c:573
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma…"
 
-#: ../app/actions/filters-actions.c:568
+#: ../app/actions/filters-actions.c:578
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Współrzędne p_olarne…"
 
-#: ../app/actions/filters-actions.c:573
+#: ../app/actions/filters-actions.c:583
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Redukcja kolorów…"
 
-#: ../app/actions/filters-actions.c:578
+#: ../app/actions/filters-actions.c:588
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Przekształcenie rekurencyjne…"
 
-#: ../app/actions/filters-actions.c:583
+#: ../app/actions/filters-actions.c:593
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Usuwanie efektu _czerwonych oczu…"
 
-#: ../app/actions/filters-actions.c:588
+#: ../app/actions/filters-actions.c:598
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:593
+#: ../app/actions/filters-actions.c:603
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "Przy_cięcie RGB…"
 
-#: ../app/actions/filters-actions.c:598
+#: ../app/actions/filters-actions.c:608
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Falowanie…"
 
-#: ../app/actions/filters-actions.c:603
+#: ../app/actions/filters-actions.c:613
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Nasycenie…"
 
-#: ../app/actions/filters-actions.c:608
+#: ../app/actions/filters-actions.c:618
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Pół_spłaszczenie…"
 
-#: ../app/actions/filters-actions.c:613
+#: ../app/actions/filters-actions.c:623
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:618
+#: ../app/actions/filters-actions.c:628
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Cień i podświetlenie…"
 
-#: ../app/actions/filters-actions.c:623
+#: ../app/actions/filters-actions.c:633
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Przesuń…"
 
-#: ../app/actions/filters-actions.c:628
+#: ../app/actions/filters-actions.c:638
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus…"
 
-#: ../app/actions/filters-actions.c:633
+#: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_SLIC…"
 
-#: ../app/actions/filters-actions.c:638
+#: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symetryczni najbliżsi sąsiedzi…"
 
-#: ../app/actions/filters-actions.c:643
+#: ../app/actions/filters-actions.c:653
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Lekki żar…"
 
-#: ../app/actions/filters-actions.c:648
+#: ../app/actions/filters-actions.c:658
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Utwórz kulę…"
 
-#: ../app/actions/filters-actions.c:653
+#: ../app/actions/filters-actions.c:663
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_pirala…"
 
-#: ../app/actions/filters-actions.c:658
+#: ../app/actions/filters-actions.c:668
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Rozciągnij kontrast…"
 
-#: ../app/actions/filters-actions.c:663
+#: ../app/actions/filters-actions.c:673
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_STRESS…"
 
-#: ../app/actions/filters-actions.c:668
+#: ../app/actions/filters-actions.c:678
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nowa…"
 
-#: ../app/actions/filters-actions.c:673
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "P_rogowanie…"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:688
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Próg alfy…"
 
-#: ../app/actions/filters-actions.c:683
+#: ../app/actions/filters-actions.c:693
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Szklane płytki…"
 
-#: ../app/actions/filters-actions.c:688
+#: ../app/actions/filters-actions.c:698
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Kawałki papieru…"
 
-#: ../app/actions/filters-actions.c:693
+#: ../app/actions/filters-actions.c:703
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Bezszwowe kafelki…"
 
-#: ../app/actions/filters-actions.c:698
+#: ../app/actions/filters-actions.c:708
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Wyostrz (_maska wyostrzająca)…"
 
-#: ../app/actions/filters-actions.c:703
+#: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Rozprowadzanie _wartości…"
 
-#: ../app/actions/filters-actions.c:708
+#: ../app/actions/filters-actions.c:718
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradacja wideo…"
 
-#: ../app/actions/filters-actions.c:713
+#: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Winieta…"
 
-#: ../app/actions/filters-actions.c:718
+#: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Piksele wody…"
 
-#: ../app/actions/filters-actions.c:723
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Fale…"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:738
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "S_kręć i zaciśnij…"
 
-#: ../app/actions/filters-actions.c:733
+#: ../app/actions/filters-actions.c:743
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_iatr…"
 
-#: ../app/actions/filters-actions.c:741
+#: ../app/actions/filters-actions.c:751
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:743
+#: ../app/actions/filters-actions.c:753
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Uruchamia ponownie ostatnio używany filtr z tymi samymi ustawieniami"
 
-#: ../app/actions/filters-actions.c:748
+#: ../app/actions/filters-actions.c:758
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Wyświetl ponownie ostatni"
 
-#: ../app/actions/filters-actions.c:749
+#: ../app/actions/filters-actions.c:759
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:1080
+#: ../app/actions/filters-actions.c:1090
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:1081
+#: ../app/actions/filters-actions.c:1091
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl „%s” ponownie"
 
-#: ../app/actions/filters-actions.c:1119
+#: ../app/actions/filters-actions.c:1129
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:1121
+#: ../app/actions/filters-actions.c:1131
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -17428,6 +17439,7 @@ msgid "Image Size"
 msgstr "Wymiary obrazu"
 
 #: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:429
+#: ../app/propgui/gimppropgui-newsprint.c:262
 msgid "Quality"
 msgstr "Jakość"
 
@@ -20293,304 +20305,314 @@ msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "Rozmycie Gaussa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:412
+#: ../app/pdb/plug-in-compat-cmds.c:453
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr "Alien Map"
 
-#: ../app/pdb/plug-in-compat-cmds.c:449
+#: ../app/pdb/plug-in-compat-cmds.c:490
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Wygładzenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:492
+#: ../app/pdb/plug-in-compat-cmds.c:533
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "Nałożenie płótna"
 
-#: ../app/pdb/plug-in-compat-cmds.c:552
+#: ../app/pdb/plug-in-compat-cmds.c:593
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "Zastosowanie soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:598
+#: ../app/pdb/plug-in-compat-cmds.c:639
 msgid "Autocrop image"
 msgstr "Automatyczne kadrowanie obrazu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:660
+#: ../app/pdb/plug-in-compat-cmds.c:701
 msgid "Autocrop layer"
 msgstr "Automatyczne kadrowanie warstwy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:707
+#: ../app/pdb/plug-in-compat-cmds.c:748
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Rozciągnięcie kontrastu HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:861
+#: ../app/pdb/plug-in-compat-cmds.c:902
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Rozciągnięcie kontrastu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:940
+#: ../app/pdb/plug-in-compat-cmds.c:981
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Mikser kanałów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:984
+#: ../app/pdb/plug-in-compat-cmds.c:1025
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Zmiana koloru na alfę"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1030
+#: ../app/pdb/plug-in-compat-cmds.c:1071
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "Macierz „matrix” ma tylko %d elementy, musi mieć 25"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1038
+#: ../app/pdb/plug-in-compat-cmds.c:1079
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Macierz „channels” ma tylko %d elementy, musi mieć 5"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1110
+#: ../app/pdb/plug-in-compat-cmds.c:1151
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Zniekształcenia macierzowe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1172
+#: ../app/pdb/plug-in-compat-cmds.c:1213
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kubizm"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1217
+#: ../app/pdb/plug-in-compat-cmds.c:1258
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Usunięcie przeplotu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1296
+#: ../app/pdb/plug-in-compat-cmds.c:1337
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Desenie dyfrakcyjne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1455
+#: ../app/pdb/plug-in-compat-cmds.c:1496
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Krawędź"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1499
+#: ../app/pdb/plug-in-compat-cmds.c:1540
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Grawerowanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1572
+#: ../app/pdb/plug-in-compat-cmds.c:1613
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Wymiana kolorów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1620
+#: ../app/pdb/plug-in-compat-cmds.c:1661
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Błysk soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1804
+#: ../app/pdb/plug-in-compat-cmds.c:1845
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Szklane płytki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1857
+#: ../app/pdb/plug-in-compat-cmds.c:1898
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Szum HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2136 ../app/pdb/plug-in-compat-cmds.c:2191
+#: ../app/pdb/plug-in-compat-cmds.c:2177 ../app/pdb/plug-in-compat-cmds.c:2232
 msgid "Set color profile"
 msgstr "Ustaw profil kolorów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2246
+#: ../app/pdb/plug-in-compat-cmds.c:2287
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Iluzja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2283
+#: ../app/pdb/plug-in-compat-cmds.c:2324
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2359
+#: ../app/pdb/plug-in-compat-cmds.c:2400
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Zniekształcenie soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2399
+#: ../app/pdb/plug-in-compat-cmds.c:2440
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Bezszwowe kafelki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2466
+#: ../app/pdb/plug-in-compat-cmds.c:2507
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirynt"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2549 ../app/pdb/plug-in-compat-cmds.c:2633
+#: ../app/pdb/plug-in-compat-cmds.c:2590 ../app/pdb/plug-in-compat-cmds.c:2674
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Rozmycie ruchu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2734
+#: ../app/pdb/plug-in-compat-cmds.c:2775
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaika"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2778
+#: ../app/pdb/plug-in-compat-cmds.c:2819
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2818
+#: ../app/pdb/plug-in-compat-cmds.c:2907
+msgctxt "undo-type"
+msgid "Newsprint"
+msgstr "Papier gazetowy"
+
+#: ../app/pdb/plug-in-compat-cmds.c:2947
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalizacja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2880
+#: ../app/pdb/plug-in-compat-cmds.c:3009
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernowa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2970
+#: ../app/pdb/plug-in-compat-cmds.c:3053 ../app/pdb/plug-in-compat-cmds.c:3118
+msgctxt "undo-type"
+msgid "Oilify"
+msgstr "Farba olejna"
+
+#: ../app/pdb/plug-in-compat-cmds.c:3208
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Kawałki papieru"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3011 ../app/pdb/plug-in-compat-cmds.c:3054
+#: ../app/pdb/plug-in-compat-cmds.c:3249 ../app/pdb/plug-in-compat-cmds.c:3292
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikselizacja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3105
+#: ../app/pdb/plug-in-compat-cmds.c:3343
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3159
+#: ../app/pdb/plug-in-compat-cmds.c:3397
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Współrzędne polarne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3199
+#: ../app/pdb/plug-in-compat-cmds.c:3437
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Usunięcie efektu czerwonych oczu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3252
+#: ../app/pdb/plug-in-compat-cmds.c:3490
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Losowe wygniecenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3305
+#: ../app/pdb/plug-in-compat-cmds.c:3543
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Losowe wyciosanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3358
+#: ../app/pdb/plug-in-compat-cmds.c:3596
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Losowe rozszarpanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3433
+#: ../app/pdb/plug-in-compat-cmds.c:3671
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Szum RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3503
+#: ../app/pdb/plug-in-compat-cmds.c:3741
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Falowanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3628
+#: ../app/pdb/plug-in-compat-cmds.c:3866
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Dodanie szumu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3672
+#: ../app/pdb/plug-in-compat-cmds.c:3910
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Wybiórcze rozmycie Gaussa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3716
+#: ../app/pdb/plug-in-compat-cmds.c:3954
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Półspłaszczenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3759
+#: ../app/pdb/plug-in-compat-cmds.c:3997
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Przesunięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3862
+#: ../app/pdb/plug-in-compat-cmds.c:4100
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3910
+#: ../app/pdb/plug-in-compat-cmds.c:4148
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3971
+#: ../app/pdb/plug-in-compat-cmds.c:4209
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Jednolity szum"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4015
+#: ../app/pdb/plug-in-compat-cmds.c:4253
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Rozrzucenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4056
+#: ../app/pdb/plug-in-compat-cmds.c:4294
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Próg alfy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4102
+#: ../app/pdb/plug-in-compat-cmds.c:4340
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Wyostrzenie (maska wyostrzająca)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4148
+#: ../app/pdb/plug-in-compat-cmds.c:4386
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Wideo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4185
+#: ../app/pdb/plug-in-compat-cmds.c:4423
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Odwrócenie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4289
+#: ../app/pdb/plug-in-compat-cmds.c:4527
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Rozprowadzanie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4336
+#: ../app/pdb/plug-in-compat-cmds.c:4574
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Rozciągnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4383
+#: ../app/pdb/plug-in-compat-cmds.c:4621
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erozja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4446
+#: ../app/pdb/plug-in-compat-cmds.c:4684
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Fale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4494
+#: ../app/pdb/plug-in-compat-cmds.c:4732
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Skręcenie i zaciśnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4546
+#: ../app/pdb/plug-in-compat-cmds.c:4784
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Wiatr"
@@ -20832,31 +20854,37 @@ msgstr "Modyfikacja poziomów kolorów"
 
 #: ../app/propgui/gimppropgui-color-balance.c:119
 #: ../app/propgui/gimppropgui-hue-saturation.c:138
+#: ../app/propgui/gimppropgui-newsprint.c:95
 msgid "Cyan"
 msgstr "Niebieskozielony"
 
 #: ../app/propgui/gimppropgui-color-balance.c:119
 #: ../app/propgui/gimppropgui-hue-saturation.c:135
+#: ../app/propgui/gimppropgui-newsprint.c:94
 msgid "Red"
 msgstr "Czerwony"
 
 #: ../app/propgui/gimppropgui-color-balance.c:123
 #: ../app/propgui/gimppropgui-hue-saturation.c:140
+#: ../app/propgui/gimppropgui-newsprint.c:95
 msgid "Magenta"
 msgstr "Purpurowy"
 
 #: ../app/propgui/gimppropgui-color-balance.c:123
 #: ../app/propgui/gimppropgui-hue-saturation.c:137
+#: ../app/propgui/gimppropgui-newsprint.c:94
 msgid "Green"
 msgstr "Zielony"
 
 #: ../app/propgui/gimppropgui-color-balance.c:127
 #: ../app/propgui/gimppropgui-hue-saturation.c:136
+#: ../app/propgui/gimppropgui-newsprint.c:95
 msgid "Yellow"
 msgstr "Żółty"
 
 #: ../app/propgui/gimppropgui-color-balance.c:127
 #: ../app/propgui/gimppropgui-hue-saturation.c:139
+#: ../app/propgui/gimppropgui-newsprint.c:94
 msgid "Blue"
 msgstr "Niebieski"
 
@@ -21008,6 +21036,31 @@ msgstr "Liniowe rozmycie ruchu: "
 msgid "Zoom Motion Blur: "
 msgstr "Rozmycie ruchu powiększenia: "
 
+#: ../app/propgui/gimppropgui-newsprint.c:92
+msgid "White"
+msgstr "Biały"
+
+#: ../app/propgui/gimppropgui-newsprint.c:93
+#: ../app/propgui/gimppropgui-newsprint.c:95
+msgid "Black"
+msgstr "Czarny"
+
+#: ../app/propgui/gimppropgui-newsprint.c:236
+msgid "Lock patterns"
+msgstr "Zablokowanie deseni"
+
+#: ../app/propgui/gimppropgui-newsprint.c:245
+msgid "Lock periods"
+msgstr "Zablokowanie okresów"
+
+#: ../app/propgui/gimppropgui-newsprint.c:254
+msgid "Lock angles"
+msgstr "Zablokowanie kątów"
+
+#: ../app/propgui/gimppropgui-newsprint.c:276
+msgid "Effects"
+msgstr "Efekty"
+
 #: ../app/propgui/gimppropgui-panorama-projection.c:125
 msgid "Panorama Projection: "
 msgstr "Rzut panoramy: "
@@ -21133,11 +21186,11 @@ msgstr "Wybiera z listy często używanych temperatur kolorów"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: ../app/propgui/gimppropgui.c:390
+#: ../app/propgui/gimppropgui.c:391
 msgid "Pick color from the image"
 msgstr "Proszę wybrać kolor z obrazu"
 
-#: ../app/propgui/gimppropgui.c:540
+#: ../app/propgui/gimppropgui.c:543
 msgid "This operation has no editable properties"
 msgstr "To działanie nie ma modyfikowalnych właściwości"
 
@@ -22279,8 +22332,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:545
-#: ../app/tools/gimpgegltool.c:546 ../app/tools/gimpoperationtool.c:136
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:547
+#: ../app/tools/gimpgegltool.c:548 ../app/tools/gimpoperationtool.c:136
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -22293,7 +22346,7 @@ msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:490
+#: ../app/tools/gimpgegltool.c:492
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -25156,301 +25209,310 @@ msgstr "Wystąpiło kilka krytycznych błędów programu GIMP."
 msgid "_Restart GIMP"
 msgstr "_Uruchom program GIMP ponownie"
 
-#: ../app/widgets/gimpdashboard.c:456 ../app/widgets/gimpdashboard.c:508
+#: ../app/widgets/gimpdashboard.c:457 ../app/widgets/gimpdashboard.c:509
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Zajęte"
 
-#: ../app/widgets/gimpdashboard.c:457
+#: ../app/widgets/gimpdashboard.c:458
 msgid "Tile cache occupied size"
 msgstr "Rozmiar zajętej pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:466
+#: ../app/widgets/gimpdashboard.c:467
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maksymalnie"
 
-#: ../app/widgets/gimpdashboard.c:467
+#: ../app/widgets/gimpdashboard.c:468
 msgid "Maximal tile cache occupied size"
 msgstr "Maksymalny rozmiar zajętej pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:476 ../app/widgets/gimpdashboard.c:528
+#: ../app/widgets/gimpdashboard.c:477 ../app/widgets/gimpdashboard.c:529
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Ograniczenie"
 
-#: ../app/widgets/gimpdashboard.c:477
+#: ../app/widgets/gimpdashboard.c:478
 msgid "Tile cache size limit"
 msgstr "Ograniczenie rozmiaru pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:485 ../app/widgets/gimpdashboard.c:611
+#: ../app/widgets/gimpdashboard.c:486 ../app/widgets/gimpdashboard.c:612
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Kompresja"
 
-#: ../app/widgets/gimpdashboard.c:486
+#: ../app/widgets/gimpdashboard.c:487
 msgid "Tile cache compression ratio"
 msgstr "Współczynnik kompresji pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:495
+#: ../app/widgets/gimpdashboard.c:496
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Trafienia/pudła"
 
-#: ../app/widgets/gimpdashboard.c:496
+#: ../app/widgets/gimpdashboard.c:497
 msgid "Tile cache hit/miss ratio"
 msgstr "Proporcja trafień do pudeł pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:509
+#: ../app/widgets/gimpdashboard.c:510
 msgid "Swap file occupied size"
 msgstr "Rozmiar zajętego pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:518 ../app/widgets/gimpdashboard.c:675
+#: ../app/widgets/gimpdashboard.c:519 ../app/widgets/gimpdashboard.c:676
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/widgets/gimpdashboard.c:519
+#: ../app/widgets/gimpdashboard.c:520
 msgid "Swap file size"
 msgstr "Rozmiar pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:529
+#: ../app/widgets/gimpdashboard.c:530
 msgid "Swap file size limit"
 msgstr "Ograniczenie rozmiaru pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:536
+#: ../app/widgets/gimpdashboard.c:537
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "W kolejce"
 
-#: ../app/widgets/gimpdashboard.c:537
+#: ../app/widgets/gimpdashboard.c:538
 msgid "Size of data queued for writing to the swap"
 msgstr "Rozmiar danych w kolejce do zapisania w pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:546
+#: ../app/widgets/gimpdashboard.c:547
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Opóźnienia kolejki"
 
-#: ../app/widgets/gimpdashboard.c:547
+#: ../app/widgets/gimpdashboard.c:548
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Ile razy zapis do pamięci wymiany był opóźniony z powodu pełnej kolejki"
 
-#: ../app/widgets/gimpdashboard.c:556
+#: ../app/widgets/gimpdashboard.c:557
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Pełna kolejka"
 
-#: ../app/widgets/gimpdashboard.c:557
+#: ../app/widgets/gimpdashboard.c:558
 msgid "Whether the swap queue is full"
 msgstr "Czy kolejka pamięci wymiany jest pełna"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:568
+#: ../app/widgets/gimpdashboard.c:569
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Odczytane"
 
-#: ../app/widgets/gimpdashboard.c:569
+#: ../app/widgets/gimpdashboard.c:570
 msgid "Total amount of data read from the swap"
 msgstr "Całkowita ilość danych odczytanych z pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:578
+#: ../app/widgets/gimpdashboard.c:579
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Przepustowość odczytu"
 
-#: ../app/widgets/gimpdashboard.c:579
+#: ../app/widgets/gimpdashboard.c:580
 msgid "The rate at which data is read from the swap"
 msgstr "Prędkość, z jaką dane są odczytywane z pamięci wymiany"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:591
+#: ../app/widgets/gimpdashboard.c:592
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Zapisane"
 
-#: ../app/widgets/gimpdashboard.c:592
+#: ../app/widgets/gimpdashboard.c:593
 msgid "Total amount of data written to the swap"
 msgstr "Całkowita ilość danych zapisanych do pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:601
+#: ../app/widgets/gimpdashboard.c:602
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Przepustowość zapisu"
 
-#: ../app/widgets/gimpdashboard.c:602
+#: ../app/widgets/gimpdashboard.c:603
 msgid "The rate at which data is written to the swap"
 msgstr "Prędkość, z jaką dane są zapisywane w pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:612
+#: ../app/widgets/gimpdashboard.c:613
 msgid "Swap compression ratio"
 msgstr "Współczynnik kompresji pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:625
+#: ../app/widgets/gimpdashboard.c:626
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Użycie"
 
-#: ../app/widgets/gimpdashboard.c:626
+#: ../app/widgets/gimpdashboard.c:627
 msgid "Total CPU usage"
 msgstr "Całkowite użycie procesora"
 
-#: ../app/widgets/gimpdashboard.c:634 ../app/widgets/gimpdashboard.c:643
+#: ../app/widgets/gimpdashboard.c:635 ../app/widgets/gimpdashboard.c:644
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Aktywny"
 
-#: ../app/widgets/gimpdashboard.c:635
+#: ../app/widgets/gimpdashboard.c:636
 msgid "Whether the CPU is active"
 msgstr "Czy procesor jest aktywny"
 
-#: ../app/widgets/gimpdashboard.c:644
+#: ../app/widgets/gimpdashboard.c:645
 msgid "Total amount of time the CPU has been active"
 msgstr "Całkowity czas, przez jaki procesor był aktywny"
 
-#: ../app/widgets/gimpdashboard.c:657
+#: ../app/widgets/gimpdashboard.c:658
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Użyte"
 
-#: ../app/widgets/gimpdashboard.c:658
+#: ../app/widgets/gimpdashboard.c:659
 msgid "Amount of memory used by the process"
 msgstr "Pamięć używana przez proces"
 
-#: ../app/widgets/gimpdashboard.c:666
+#: ../app/widgets/gimpdashboard.c:667
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Dostępne"
 
-#: ../app/widgets/gimpdashboard.c:667
+#: ../app/widgets/gimpdashboard.c:668
 msgid "Amount of available physical memory"
 msgstr "Dostępna pamięć fizyczna"
 
-#: ../app/widgets/gimpdashboard.c:676
+#: ../app/widgets/gimpdashboard.c:677
 msgid "Physical memory size"
 msgstr "Rozmiar pamięci fizycznej"
 
-#: ../app/widgets/gimpdashboard.c:687
+#: ../app/widgets/gimpdashboard.c:688
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmapowane"
 
-#: ../app/widgets/gimpdashboard.c:688
+#: ../app/widgets/gimpdashboard.c:689
 msgid "Total size of processed mipmapped data"
 msgstr "Całkowity rozmiar przetworzonych mipmapowanych danych"
 
-#: ../app/widgets/gimpdashboard.c:696
+#: ../app/widgets/gimpdashboard.c:697
+msgctxt "dashboard-variable"
+msgid "Threads"
+msgstr "Wątki"
+
+#: ../app/widgets/gimpdashboard.c:698
+msgid "Number of active worker threads"
+msgstr "Liczba aktywnych wątków roboczych"
+
+#: ../app/widgets/gimpdashboard.c:706
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asynchroniczne"
 
-#: ../app/widgets/gimpdashboard.c:697
+#: ../app/widgets/gimpdashboard.c:707
 msgid "Number of ongoing asynchronous operations"
 msgstr "Liczba trwających działań asynchronicznych"
 
-#: ../app/widgets/gimpdashboard.c:705
+#: ../app/widgets/gimpdashboard.c:715
 msgctxt "dashboard-variable"
 msgid "Tile"
 msgstr "Kafle"
 
-#: ../app/widgets/gimpdashboard.c:706
+#: ../app/widgets/gimpdashboard.c:716
 msgid "Total size of tile memory"
 msgstr "Całkowity rozmiar pamięci kafli"
 
-#: ../app/widgets/gimpdashboard.c:715
+#: ../app/widgets/gimpdashboard.c:725
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Brudnopis"
 
-#: ../app/widgets/gimpdashboard.c:716
+#: ../app/widgets/gimpdashboard.c:726
 msgid "Total size of scratch memory"
 msgstr "Całkowity rozmiar pamięci brudnopisu"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
 #.
-#: ../app/widgets/gimpdashboard.c:727
+#: ../app/widgets/gimpdashboard.c:737
 msgctxt "dashboard-variable"
 msgid "TempBuf"
 msgstr "Bufory tymczasowe"
 
-#: ../app/widgets/gimpdashboard.c:728
+#: ../app/widgets/gimpdashboard.c:738
 msgid "Total size of temporary buffers"
 msgstr "Całkowity rozmiar buforów tymczasowych"
 
-#: ../app/widgets/gimpdashboard.c:740
+#: ../app/widgets/gimpdashboard.c:750
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Pamięć podręczna"
 
-#: ../app/widgets/gimpdashboard.c:741
+#: ../app/widgets/gimpdashboard.c:751
 msgid "In-memory tile cache"
 msgstr "Pamięć podręczna kafli w pamięci"
 
-#: ../app/widgets/gimpdashboard.c:777
+#: ../app/widgets/gimpdashboard.c:787
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Pamięć wymiany"
 
-#: ../app/widgets/gimpdashboard.c:778
+#: ../app/widgets/gimpdashboard.c:788
 msgid "On-disk tile swap"
 msgstr "Pamięć wymiany kafli na dysku"
 
-#: ../app/widgets/gimpdashboard.c:842
+#: ../app/widgets/gimpdashboard.c:852
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "Procesor"
 
-#: ../app/widgets/gimpdashboard.c:843
+#: ../app/widgets/gimpdashboard.c:853
 msgid "CPU usage"
 msgstr "Użycie procesora"
 
-#: ../app/widgets/gimpdashboard.c:878
+#: ../app/widgets/gimpdashboard.c:888
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Pamięć"
 
-#: ../app/widgets/gimpdashboard.c:879
+#: ../app/widgets/gimpdashboard.c:889
 msgid "Memory usage"
 msgstr "Użycie pamięci"
 
-#: ../app/widgets/gimpdashboard.c:887
+#: ../app/widgets/gimpdashboard.c:897
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Pamięć podręczna"
 
-#: ../app/widgets/gimpdashboard.c:921
+#: ../app/widgets/gimpdashboard.c:931
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Różne"
 
-#: ../app/widgets/gimpdashboard.c:922
+#: ../app/widgets/gimpdashboard.c:932
 msgid "Miscellaneous information"
 msgstr "Różne informacje"
 
-#: ../app/widgets/gimpdashboard.c:1109
+#: ../app/widgets/gimpdashboard.c:1122
 msgid "Select fields"
 msgstr "Zaznacz pola"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3197
+#: ../app/widgets/gimpdashboard.c:3210
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:3206 ../app/widgets/gimpdashboard.c:4104
+#: ../app/widgets/gimpdashboard.c:3219 ../app/widgets/gimpdashboard.c:4117
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Tak"
 
-#: ../app/widgets/gimpdashboard.c:3207 ../app/widgets/gimpdashboard.c:4105
+#: ../app/widgets/gimpdashboard.c:3220 ../app/widgets/gimpdashboard.c:4118
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nie"
@@ -25459,7 +25521,7 @@ msgstr "Nie"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3291
+#: ../app/widgets/gimpdashboard.c:3304
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -25470,16 +25532,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4094
+#: ../app/widgets/gimpdashboard.c:4107
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4172
+#: ../app/widgets/gimpdashboard.c:4185
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:4500
+#: ../app/widgets/gimpdashboard.c:4513
 msgid "Resolving symbol information..."
 msgstr "Rozwiązywanie informacji o symbolach…"
 
