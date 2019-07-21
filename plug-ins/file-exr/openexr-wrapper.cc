@@ -48,11 +48,15 @@
 #endif
 #endif
 
+/* ignore deprecated warnings from OpenEXR headers */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
 #include <ImfInputFile.h>
 #include <ImfChannelList.h>
 #include <ImfRgbaFile.h>
 #include <ImfRgbaYca.h>
 #include <ImfStandardAttributes.h>
+#pragma GCC diagnostic pop
 
 #include "exr-attribute-blob.h"
 #include "openexr-wrapper.h"
