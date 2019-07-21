@@ -180,23 +180,23 @@ build-default-git-autotools:
     - babl-git-autotools
     - gegl-git-autotools
 
-build-default-git-meson:
-  extends: .build-default
-  dependencies:
-    - babl-git-meson
-    - gegl-git-meson
+# build-default-git-meson:
+#   extends: .build-default
+#   dependencies:
+#     - babl-git-meson
+#     - gegl-git-meson
 
-build-default-min-autotools:
-  extends: .build-default
-  dependencies:
-    - babl-min-autotools
-    - gegl-git-meson
+# build-default-min-autotools:
+#   extends: .build-default
+#   dependencies:
+#     - babl-min-autotools
+#     - gegl-min-autotools
 
-build-default-min-meson:
-  extends: .build-default
-  dependencies:
-    - babl-min-meson
-    - gegl-min-meson
+# build-default-min-meson:
+#   extends: .build-default
+#   dependencies:
+#     - babl-min-meson
+#     - gegl-min-meson
 
 build-all-git-autotools:
   extends: .build-all
@@ -204,20 +204,20 @@ build-all-git-autotools:
     - babl-git-autotools
     - gegl-git-autotools
 
-build-all-git-meson:
-  extends: .build-all
-  dependencies:
-    - babl-git-meson
-    - gegl-git-meson
+# build-all-git-meson:
+#   extends: .build-all
+#   dependencies:
+#     - babl-git-meson
+#     - gegl-git-meson
 
-build-all-min-autotools:
-  extends: .build-all
-  dependencies:
-    - babl-min-autotools
-    - gegl-min-autotools
+# build-all-min-autotools:
+#   extends: .build-all
+#   dependencies:
+#     - babl-min-autotools
+#     - gegl-min-autotools
 
-build-all-min-meson:
-  extends: .build-all
-  dependencies:
-    - babl-min-meson
-    - gegl-min-meson
+# build-all-min-meson:
+#   extends: .build-all
+#   dependencies:
+#     - babl-min-meson
+#     - gegl-min-meson
