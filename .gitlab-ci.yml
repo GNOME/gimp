@@ -113,7 +113,7 @@ gegl-git-autotools:
     - LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH" make install
 
 .gimp-base:
-  stage: dependencies
+  stage: gimp
   artifacts:
     paths:
     - $INSTALL_DIR
