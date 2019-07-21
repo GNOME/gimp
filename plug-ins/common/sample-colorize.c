@@ -205,8 +205,12 @@ static void   free_colors               (void);
 static void   levels_update             (gint          update);
 static gint   level_in_events           (GtkWidget    *widget,
                                          GdkEvent     *event);
+static gint   level_in_draw             (GtkWidget    *widget,
+                                         cairo_t      *cr);
 static gint   level_out_events          (GtkWidget    *widget,
                                          GdkEvent     *event);
+static gint   level_out_draw            (GtkWidget    *widget,
+                                         cairo_t      *cr);
 static void   calculate_level_transfers (void);
 static void   get_pixel                 (t_GDRW       *gdrw,
                                          gint32        x,
@@ -925,20 +929,20 @@ update_preview (gint32 *id_ptr)
 }
 
 static void
-levels_draw_slider (cairo_t  *cr,
-                    GdkColor *border_color,
-                    GdkColor *fill_color,
-                    gint      xpos)
+levels_draw_slider (cairo_t *cr,
+                    GdkRGBA *border_color,
+                    GdkRGBA *fill_color,
+                    gint     xpos)
 {
   cairo_move_to (cr, xpos, 0);
   cairo_line_to (cr, xpos - (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
   cairo_line_to (cr, xpos + (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
   cairo_line_to (cr, xpos, 0);
 
-  gdk_cairo_set_source_color (cr, fill_color);
+  gdk_cairo_set_source_rgba (cr, fill_color);
   cairo_fill_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, border_color);
+  gdk_cairo_set_source_rgba (cr, border_color);
   cairo_stroke (cr);
 }
 
@@ -1008,66 +1012,10 @@ levels_update (gint update)
     }
 
   if (update & INPUT_SLIDERS)
-    {
-      GtkStyle *style = gtk_widget_get_style (g_di.in_lvl_drawarea);
-      cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (g_di.in_lvl_drawarea));
-      gdouble   width, mid, tmp;
-
-      gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
-      cairo_paint (cr);
-
-      cairo_translate (cr, 0.5, 0.5);
-      cairo_set_line_width (cr, 1.0);
-
-      g_di.slider_pos[0] = DA_WIDTH * ((double) g_values.lvl_in_min / 255.0);
-      g_di.slider_pos[2] = DA_WIDTH * ((double) g_values.lvl_in_max / 255.0);
-
-      width = (double) (g_di.slider_pos[2] - g_di.slider_pos[0]) / 2.0;
-      mid = g_di.slider_pos[0] + width;
-      tmp = log10 (1.0 / g_values.lvl_in_gamma);
-      g_di.slider_pos[1] = (int) (mid + width * tmp + 0.5);
-
-      levels_draw_slider (cr,
-                          &style->black,
-                          &style->dark[GTK_STATE_NORMAL],
-                          g_di.slider_pos[1]);
-      levels_draw_slider (cr,
-                          &style->black,
-                          &style->black,
-                          g_di.slider_pos[0]);
-      levels_draw_slider (cr,
-                          &style->black,
-                          &style->white,
-                          g_di.slider_pos[2]);
-
-      cairo_destroy (cr);
-    }
+    gtk_widget_queue_draw (g_di.in_lvl_drawarea);
 
   if (update & OUTPUT_SLIDERS)
-    {
-      GtkStyle *style = gtk_widget_get_style (g_di.sample_drawarea);
-      cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (g_di.sample_drawarea));
-
-      gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
-      cairo_paint (cr);
-
-      cairo_translate (cr, 0.5, 0.5);
-      cairo_set_line_width (cr, 1.0);
-
-      g_di.slider_pos[3] = DA_WIDTH * ((double) g_values.lvl_out_min / 255.0);
-      g_di.slider_pos[4] = DA_WIDTH * ((double) g_values.lvl_out_max / 255.0);
-
-      levels_draw_slider (cr,
-                          &style->black,
-                          &style->black,
-                          g_di.slider_pos[3]);
-      levels_draw_slider (cr,
-                          &style->black,
-                          &style->black,
-                          g_di.slider_pos[4]);
-
-      cairo_destroy (cr);
-    }
+    gtk_widget_queue_draw (g_di.sample_drawarea);
 }
 
 static gboolean
@@ -1083,13 +1031,6 @@ level_in_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      if (g_Sdebug)
-        g_printf ("EVENT: GDK_EXPOSE\n");
-      if (widget == g_di.in_lvl_drawarea)
-        levels_update (INPUT_SLIDERS);
-      break;
-
     case GDK_BUTTON_PRESS:
       if (g_Sdebug)
         g_printf ("EVENT: GDK_BUTTON_PRESS\n");
@@ -1185,6 +1126,44 @@ level_in_events (GtkWidget *widget,
 }
 
 static gboolean
+level_in_draw (GtkWidget *widget,
+               cairo_t   *cr)
+{
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  gdouble          width, mid, tmp;
+  GdkRGBA          black = { 0.0, 0.0, 0.0, 1.0 };
+  GdkRGBA          white = { 1.0, 1.0, 1.0, 1.0 };
+  GdkRGBA          gray  = { 0.5, 0.5, 0.5, 1.0 };
+
+  gtk_render_background (style, cr, 0, 0,
+                         gtk_widget_get_allocated_width  (widget),
+                         gtk_widget_get_allocated_height (widget));
+
+  cairo_translate (cr, 0.5, 0.5);
+  cairo_set_line_width (cr, 1.0);
+
+  g_di.slider_pos[0] = DA_WIDTH * ((double) g_values.lvl_in_min / 255.0);
+  g_di.slider_pos[2] = DA_WIDTH * ((double) g_values.lvl_in_max / 255.0);
+
+  width = (double) (g_di.slider_pos[2] - g_di.slider_pos[0]) / 2.0;
+  mid = g_di.slider_pos[0] + width;
+  tmp = log10 (1.0 / g_values.lvl_in_gamma);
+  g_di.slider_pos[1] = (int) (mid + width * tmp + 0.5);
+
+  levels_draw_slider (cr,
+                      &black, &gray,
+                      g_di.slider_pos[1]);
+  levels_draw_slider (cr,
+                      &black, &black,
+                      g_di.slider_pos[0]);
+  levels_draw_slider (cr,
+                      &black, &white,
+                      g_di.slider_pos[2]);
+
+  return FALSE;
+}
+
+static gboolean
 level_out_events (GtkWidget *widget,
                   GdkEvent  *event)
 {
@@ -1196,13 +1175,6 @@ level_out_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      if (g_Sdebug)
-        g_printf ("OUT_EVENT: GDK_EXPOSE\n");
-      if (widget == g_di.sample_drawarea)
-        levels_update (OUTPUT_SLIDERS);
-      break;
-
     case GDK_BUTTON_PRESS:
       if (g_Sdebug)
         g_printf ("OUT_EVENT: GDK_BUTTON_PRESS\n");
@@ -1278,6 +1250,34 @@ level_out_events (GtkWidget *widget,
 
   return FALSE;
 }
+
+static gboolean
+level_out_draw (GtkWidget *widget,
+                cairo_t   *cr)
+{
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GdkRGBA          black = { 0.0, 0.0, 0.0, 1.0 };
+
+  gtk_render_background (style, cr, 0, 0,
+                         gtk_widget_get_allocated_width  (widget),
+                         gtk_widget_get_allocated_height (widget));
+
+  cairo_translate (cr, 0.5, 0.5);
+  cairo_set_line_width (cr, 1.0);
+
+  g_di.slider_pos[3] = DA_WIDTH * ((double) g_values.lvl_out_min / 255.0);
+  g_di.slider_pos[4] = DA_WIDTH * ((double) g_values.lvl_out_max / 255.0);
+
+  levels_draw_slider (cr,
+                      &black, &black,
+                      g_di.slider_pos[3]);
+  levels_draw_slider (cr,
+                      &black, &black,
+                      g_di.slider_pos[4]);
+
+  return FALSE;
+}
+
 
 
 /* ============================================================================
@@ -1512,6 +1512,9 @@ smp_dialog (void)
   g_signal_connect (g_di.in_lvl_drawarea, "event",
                     G_CALLBACK (level_in_events),
                     NULL);
+  g_signal_connect (g_di.in_lvl_drawarea, "draw",
+                    G_CALLBACK (level_in_draw),
+                    NULL);
 
   gtk_widget_show (vbox2);
   gtk_widget_show (frame);
@@ -1543,6 +1546,9 @@ smp_dialog (void)
 
   g_signal_connect (g_di.sample_drawarea, "event",
                     G_CALLBACK (level_out_events),
+                    NULL);
+  g_signal_connect (g_di.sample_drawarea, "draw",
+                    G_CALLBACK (level_out_draw),
                     NULL);
 
   gtk_widget_show (vbox2);
