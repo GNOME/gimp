@@ -1,0 +1,14 @@
+stages:
+  - build-flatpak
+
+flatpak:master:
+  image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
+  stage: build-flatpak
+  script:
+    - flatpak-builder --stop-at=gimp _build build/flatpak/org.gimp.GIMP-nightly.json
+    - flatpak build _build./autogen.sh
+    - flatpak build _build make -j8
+    - flatpak-builder --finish-only --repo=repo _build build/flatpak/org.gimp.GIMP-nightly.json
+  cache:
+    paths:
+      - .flatpak-builder/cache
