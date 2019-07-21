@@ -125,6 +125,7 @@ gegl-git-autotools:
         git
         base-devel
         meson
+        appstream-glib
         dbus-glib
         desktop-file-utils
         glib-networking
@@ -162,7 +163,7 @@ gegl-git-autotools:
     GIT_STRATEGY: none
   script:
     - cd _build
-    - PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
+    - LIBMYPAINT_CFLAGS="-I/usr/include/libmypaint-1.3 -I/usr/include/json-c" LIBMYPAINT_LIBS="-lmypaint -ljson-c" PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
     - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make
     - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make check
 
