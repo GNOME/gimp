@@ -28,8 +28,8 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "imap_icons.h"
 #include "imap_statusbar.h"
-#include "imap_stock.h"
 
 StatusBar_t*
 make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
@@ -48,8 +48,8 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_show(statusbar->status);
 
    /* (x, y) coordinate */
-   iconw = gtk_image_new_from_stock(IMAP_STOCK_COORD,
-                                    GTK_ICON_SIZE_SMALL_TOOLBAR);
+   iconw = gtk_image_new_from_icon_name (IMAP_COORD,
+                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
 
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
@@ -62,8 +62,8 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
    gtk_widget_show(statusbar->xy);
 
    /* Dimension info */
-   iconw = gtk_image_new_from_stock(IMAP_STOCK_DIMENSION,
-                                    GTK_ICON_SIZE_SMALL_TOOLBAR);
+   iconw = gtk_image_new_from_icon_name (IMAP_DIMENSION,
+                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
 

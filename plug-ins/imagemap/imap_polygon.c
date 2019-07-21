@@ -29,12 +29,12 @@
 #include "libgimp/gimpui.h"
 
 #include "imap_commands.h"
+#include "imap_icons.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_menu.h"
 #include "imap_object_popup.h"
 #include "imap_polygon.h"
-#include "imap_stock.h"
 #include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -66,7 +66,7 @@ static void polygon_write_cern(Object_t* obj, gpointer param,
 static void polygon_write_ncsa(Object_t* obj, gpointer param,
                                OutputFunc_t output);
 static void polygon_do_popup(Object_t *obj, GdkEventButton *event);
-static const gchar* polygon_get_stock_icon_name(void);
+static const gchar* polygon_get_icon_name(void);
 
 static ObjectClass_t polygon_class = {
    N_("_Polygon"),
@@ -93,7 +93,7 @@ static ObjectClass_t polygon_class = {
    polygon_write_cern,
    polygon_write_ncsa,
    polygon_do_popup,
-   polygon_get_stock_icon_name
+   polygon_get_icon_name
 };
 
 Object_t*
@@ -751,9 +751,9 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
 }
 
 static const gchar*
-polygon_get_stock_icon_name(void)
+polygon_get_icon_name(void)
 {
-   return IMAP_STOCK_POLYGON;
+   return IMAP_POLYGON;
 }
 
 static GList *_prev_link;

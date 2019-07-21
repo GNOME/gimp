@@ -267,7 +267,7 @@ render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell,
               GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
-  g_object_set(cell, "stock-id", object_get_stock_icon_name(obj), NULL);
+  g_object_set(cell, "icon-name", object_get_icon_name(obj), NULL);
 }
 
 static void

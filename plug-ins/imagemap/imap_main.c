@@ -39,6 +39,7 @@
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_file.h"
+#include "imap_icons.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_misc.h"
@@ -50,7 +51,6 @@
 #include "imap_settings.h"
 #include "imap_source.h"
 #include "imap_statusbar.h"
-#include "imap_stock.h"
 #include "imap_string.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -1245,7 +1245,7 @@ dialog(gint32 drawable_id)
    gtk_container_add (GTK_CONTAINER (dlg), main_vbox);
    gtk_widget_show (main_vbox);
 
-   init_stock_icons();
+   init_icons();
 
    /* Create menu */
    make_menu(main_vbox, dlg);

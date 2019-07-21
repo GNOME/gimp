@@ -29,6 +29,7 @@
 #include "imap_circle.h"
 #include "imap_file.h"
 #include "imap_grid.h"
+#include "imap_icons.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_menu_funcs.h"
@@ -36,7 +37,6 @@
 #include "imap_preferences.h"
 #include "imap_rectangle.h"
 #include "imap_settings.h"
-#include "imap_stock.h"
 #include "imap_source.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -181,9 +181,9 @@ static const GtkActionEntry entries[] =
   { "Preferences", GIMP_ICON_PREFERENCES_SYSTEM,
     NULL, NULL, N_("Preferences"),
     do_preferences_dialog},
-  { "MoveToFront", IMAP_STOCK_TO_FRONT, "", NULL, N_("Move Area to Front"),
+  { "MoveToFront", IMAP_TO_FRONT, "", NULL, N_("Move Area to Front"),
     do_move_to_front},
-  { "SendToBack", IMAP_STOCK_TO_BACK, "", NULL, N_("Move Area to Bottom"),
+  { "SendToBack", IMAP_TO_BACK, "", NULL, N_("Move Area to Bottom"),
     do_send_to_back},
   { "DeleteArea", NULL, N_("Delete Area"), NULL, NULL, NULL},
   { "MoveUp", GIMP_ICON_GO_UP, N_("Move Up"), NULL, NULL, NULL},
@@ -231,11 +231,11 @@ static const GtkRadioActionEntry color_entries[] = {
 static const GtkRadioActionEntry mapping_entries[] = {
   { "Arrow", GIMP_ICON_CURSOR, N_("Arrow"), NULL,
     N_("Select existing area"), 0},
-  { "Rectangle", IMAP_STOCK_RECTANGLE, N_("Rectangle"), NULL,
+  { "Rectangle", IMAP_RECTANGLE, N_("Rectangle"), NULL,
     N_("Define Rectangle area"), 1},
-  { "Circle", IMAP_STOCK_CIRCLE, N_("Circle"), NULL,
+  { "Circle", IMAP_CIRCLE, N_("Circle"), NULL,
     N_("Define Circle/Oval area"), 2},
-  { "Polygon", IMAP_STOCK_POLYGON, N_("Polygon"), NULL,
+  { "Polygon", IMAP_POLYGON, N_("Polygon"), NULL,
     N_("Define Polygon area"), 3},
 };
 

@@ -1,27 +1,31 @@
 ## Process this file with automake to produce Makefile.in
 
-STOCK_IMAGES = \
-	stock-circle.png	\
-	stock-coord.png		\
-	stock-dimension.png	\
-	stock-java.png		\
-	stock-polygon.png	\
-	stock-rectangle.png	\
-	stock-to-back.png	\
-	stock-to-front.png
+ICON_IMAGES = \
+	imagemap-circle.png	\
+	imagemap-coord.png	\
+	imagemap-dimension.png	\
+	imagemap-java.png	\
+	imagemap-polygon.png	\
+	imagemap-rectangle.png	\
+	imagemap-to-back.png	\
+	imagemap-to-front.png
 
-EXTRA_DIST = $(STOCK_IMAGES)
+EXTRA_DIST = \
+	$(ICON_IMAGES)	\
+	imagemap-icon-images.gresource.xml
 
-noinst_DATA = imap-stock-pixbufs.h
-CLEANFILES = $(noinst_DATA) stock-icons.list
+noinst_DATA = \
+	imagemap-icon-images.c	\
+	imagemap-icon-images.h
 
-stock-icons.list: $(STOCK_IMAGES) Makefile.am
-	( rm -f $@; \
-          for image in $(STOCK_IMAGES); do \
-            echo $$image | \
-              sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
-	    echo "  $(srcdir)/$$image" >> $@; \
-	  done )
+CLEANFILES = $(noinst_DATA)
 
-$(srcdir)/imap-stock-pixbufs.h: stock-icons.list
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
+imagemap-icon-images.h: imagemap-icon-images.gresource.xml
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-header \
+	  --target=$@ $(srcdir)/imagemap-icon-images.gresource.xml
+
+imagemap-icon-images.c: imagemap-icon-images.h
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ $(srcdir)/imagemap-icon-images.gresource.xml

@@ -32,8 +32,8 @@
 #include "imap_commands.h"
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
+#include "imap_icons.h"
 #include "imap_main.h"
-#include "imap_stock.h"
 #include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -87,7 +87,7 @@ set_url(GtkWidget *widget, AreaInfoDialog_t *param, const gchar *prefix)
      }
    else
      {
-       if (gtk_widget_get_state (widget) & GTK_STATE_SELECTED)
+       if (gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_SELECTED)
          {
            char *p;
            gchar *url = g_strdup(gtk_entry_get_text(GTK_ENTRY(param->url)));
@@ -327,7 +327,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    dialog->infotab = obj->class->create_info_widget(frame);
 
-   append_page (notebook, vbox, obj->class->get_stock_icon_name (),
+   append_page (notebook, vbox, obj->class->get_icon_name (),
                 gettext (obj->class->name));
 }
 
@@ -357,7 +357,7 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_grid (grid, 9, 0, "on_Blur (HTML 4.0):");
    dialog->blur = create_entry_in_grid (grid, label, 10, 0);
 
-   append_page (notebook, vbox, IMAP_STOCK_JAVA, _("_JavaScript"));
+   append_page (notebook, vbox, IMAP_JAVA, _("_JavaScript"));
 }
 
 static gboolean

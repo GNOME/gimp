@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,20 +20,28 @@
  *
  */
 
-#ifndef _IMAP_STOCK_H
-#define _IMAP_STOCK_H
+#include "config.h"
 
-#define IMAP_STOCK_ARROW        "imap-arrow"
-#define IMAP_STOCK_CIRCLE       "imap-circle"
-#define IMAP_STOCK_COORD        "imap-coord"
-#define IMAP_STOCK_DIMENSION    "imap-dimension"
-#define IMAP_STOCK_JAVA         "imap-java"
-#define IMAP_STOCK_LINK         "imap-link"
-#define IMAP_STOCK_POLYGON      "imap-polygon"
-#define IMAP_STOCK_RECTANGLE    "imap-rectangle"
-#define IMAP_STOCK_TO_BACK      "imap-to-back"
-#define IMAP_STOCK_TO_FRONT     "imap-to-front"
+#include <gtk/gtk.h>
 
-void init_stock_icons(void);
+#include "imap_icons.h"
 
-#endif /* _IMAP_STOCK_H */
+#include "images/imagemap-icon-images.h"
+#include "images/imagemap-icon-images.c"
+
+void
+init_icons (void)
+{
+  static gboolean initialized = FALSE;
+
+  GtkIconTheme *icon_theme;
+
+  if (initialized)
+    return;
+
+  initialized = TRUE;
+
+  icon_theme = gtk_icon_theme_get_default ();
+
+  gtk_icon_theme_add_resource_path (icon_theme, "/org/gimp/imagemap/icons");
+}

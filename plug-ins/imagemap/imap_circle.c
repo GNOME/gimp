@@ -28,10 +28,10 @@
 #include <gtk/gtk.h>
 
 #include "imap_circle.h"
+#include "imap_icons.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
-#include "imap_stock.h"
 #include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -57,7 +57,7 @@ static void circle_write_cern(Object_t* obj, gpointer param,
                               OutputFunc_t output);
 static void circle_write_ncsa(Object_t* obj, gpointer param,
                               OutputFunc_t output);
-static const gchar* circle_get_stock_icon_name(void);
+static const gchar* circle_get_icon_name(void);
 
 static ObjectClass_t circle_class = {
    N_("C_ircle"),
@@ -84,7 +84,7 @@ static ObjectClass_t circle_class = {
    circle_write_cern,
    circle_write_ncsa,
    object_do_popup,
-   circle_get_stock_icon_name
+   circle_get_icon_name
 };
 
 Object_t*
@@ -335,9 +335,9 @@ circle_write_ncsa(Object_t *obj, gpointer param, OutputFunc_t output)
 }
 
 static const gchar*
-circle_get_stock_icon_name(void)
+circle_get_icon_name(void)
 {
-   return IMAP_STOCK_CIRCLE;
+   return IMAP_CIRCLE;
 }
 
 static gint _start_x, _start_y;

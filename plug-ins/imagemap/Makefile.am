@@ -89,6 +89,8 @@ imagemap_SOURCES = \
 	imap_file.h			\
 	imap_grid.c			\
 	imap_grid.h			\
+	imap_icons.c			\
+	imap_icons.h			\
 	imap_main.c			\
 	imap_main.h			\
 	imap_menu.c			\
@@ -120,8 +122,6 @@ imagemap_SOURCES = \
 	imap_settings.h			\
 	imap_source.c			\
 	imap_source.h			\
-	imap_stock.c			\
-	imap_stock.h			\
 	imap_statusbar.c		\
 	imap_statusbar.h		\
 	imap_string.c			\

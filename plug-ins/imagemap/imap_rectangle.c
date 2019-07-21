@@ -29,11 +29,11 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "imap_icons.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_rectangle.h"
-#include "imap_stock.h"
 #include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -62,7 +62,7 @@ static void rectangle_write_cern(Object_t *obj, gpointer param,
                                  OutputFunc_t output);
 static void rectangle_write_ncsa(Object_t *obj, gpointer param,
                                  OutputFunc_t output);
-static const gchar* rectangle_get_stock_icon_name(void);
+static const gchar* rectangle_get_icon_name(void);
 
 static ObjectClass_t rectangle_class = {
    N_("_Rectangle"),
@@ -89,7 +89,7 @@ static ObjectClass_t rectangle_class = {
    rectangle_write_cern,
    rectangle_write_ncsa,
    object_do_popup,
-   rectangle_get_stock_icon_name
+   rectangle_get_icon_name
 };
 
 Object_t*
@@ -478,9 +478,9 @@ rectangle_write_ncsa(Object_t *obj, gpointer param, OutputFunc_t output)
 }
 
 static const gchar*
-rectangle_get_stock_icon_name(void)
+rectangle_get_icon_name(void)
 {
-   return IMAP_STOCK_RECTANGLE;
+   return IMAP_RECTANGLE;
 }
 
 static gboolean
