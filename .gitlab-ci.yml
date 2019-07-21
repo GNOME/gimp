@@ -166,21 +166,21 @@ gegl-git-autotools:
     - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make
     - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make check
 
-.build-default:
-  extends: .build-gimp
-  variables:
-    CONFIG_OPTIONS: ""
+# .build-default:
+#   extends: .build-gimp
+#   variables:
+#     CONFIG_OPTIONS: ""
 
 .build-all:
   extends: .build-gimp
   variables:
     CONFIG_OPTIONS: "--enable-debug"
 
-build-default-git-autotools:
-  extends: .build-default
-  dependencies:
-    - babl-git-autotools
-    - gegl-git-autotools
+# build-default-git-autotools:
+#   extends: .build-default
+#   dependencies:
+#     - babl-git-autotools
+#     - gegl-git-autotools
 
 # build-default-git-meson:
 #   extends: .build-default
