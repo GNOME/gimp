@@ -172,7 +172,7 @@ gegl-git-autotools:
     when: on_failure
     expire_in: 1 week
     paths:
-      - app/tests/
+      - app/tests/*.log
 
 # .build-default:
 #   extends: .build-gimp
