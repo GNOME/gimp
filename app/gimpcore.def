@@ -560,8 +560,6 @@ EXPORTS
 	gimp_text_layer_set
 	gimp_text_undo_get_type
 	gimp_text_vectors_new
-	gimp_threads_enter
-	gimp_threads_leave
 	gimp_tool_info_get_standard
 	gimp_tool_info_get_type
 	gimp_tool_info_new
