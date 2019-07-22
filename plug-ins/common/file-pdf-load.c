@@ -376,13 +376,10 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[7];
-  GimpRunMode       run_mode;
   GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
   gint32            image_ID = -1;
   PopplerDocument  *doc      = NULL;
   GError           *error    = NULL;
-
-  run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
 
@@ -395,7 +392,9 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0 || strcmp (name, LOAD2_PROC) == 0)
     {
       PdfSelectedPages pages = { 0, NULL };
+      GimpRunMode      run_mode;
 
+      run_mode = param[0].data.d_int32;
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -584,7 +583,8 @@ run (const gchar      *name,
 
           doc = open_document (param[0].data.d_string,
                                loadvals.PDF_password,
-                               run_mode, &error);
+                               GIMP_RUN_NONINTERACTIVE,
+                               &error);
 
           if (doc)
             {
@@ -612,7 +612,10 @@ run (const gchar      *name,
 
               gimp_image_undo_disable (image);
 
+
+              babl_init ();
               layer_from_surface (image, "thumbnail", 0, surface, 0.0, 1.0);
+              babl_exit ();
               cairo_surface_destroy (surface);
 
               gimp_image_undo_enable (image);
