@@ -521,19 +521,24 @@ load_rsvg_size (const gchar  *filename,
           break;
         case G_IO_STATUS_EOF:
           success = rsvg_handle_close (handle, error);
+
+          if (success)
+            {
+              rsvg_handle_get_dimensions (handle, &dim);
+
+              if (dim.width > 0 && dim.height > 0)
+                {
+                  vals->width  = dim.width;
+                  vals->height = dim.height;
+
+                  done = TRUE;
+                }
+            }
+
           break;
         case G_IO_STATUS_NORMAL:
           success = rsvg_handle_write (handle,
                                        (const guchar *) buf, len, error);
-          rsvg_handle_get_dimensions (handle, &dim);
-
-          if (dim.width > 0 && dim.height > 0)
-            {
-              vals->width  = dim.width;
-              vals->height = dim.height;
-
-              done = TRUE;
-            }
           break;
         case G_IO_STATUS_AGAIN:
           break;
