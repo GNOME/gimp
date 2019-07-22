@@ -126,6 +126,7 @@ gegl-git-autotools:
         base-devel
         meson
         appstream-glib
+        at-spi2-atk
         dbus-glib
         desktop-file-utils
         glib-networking
