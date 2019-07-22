@@ -413,63 +413,23 @@ load_rsvg_pixbuf (const gchar  *filename,
 {
   GdkPixbuf  *pixbuf  = NULL;
   RsvgHandle *handle;
-  GIOChannel *io;
-  gchar      *uri;
-  GIOStatus   status  = G_IO_STATUS_NORMAL;
-  gboolean    success = TRUE;
+  GFile      *file;
 
-  io = g_io_channel_new_file (filename, "r", error);
-  if (!io)
-    return NULL;
+  file = g_file_new_for_path (filename);
 
-  g_io_channel_set_encoding (io, NULL, NULL);
+  handle = rsvg_handle_new_from_gfile_sync (file, RSVG_HANDLE_FLAGS_NONE, NULL, error);
 
-  handle = rsvg_handle_new ();
-  rsvg_handle_set_dpi (handle, vals->resolution);
+  g_object_unref (file);
 
-  /*  set the base URI so that librsvg can resolve relative paths  */
-  uri = g_filename_to_uri (filename, NULL, NULL);
-  if (uri)
+  if (!handle)
     {
-      gchar *p = strrchr (uri, '/');
-
-      if (p)
-        *p = '\0';
-
-      rsvg_handle_set_base_uri (handle, uri);
-      g_free (uri);
+      return NULL;
     }
 
+  rsvg_handle_set_dpi (handle, vals->resolution);
   rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
 
-  while (success && status != G_IO_STATUS_EOF)
-    {
-      gchar  buf[8192];
-      gsize  len;
-
-      status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
-
-      switch (status)
-        {
-        case G_IO_STATUS_ERROR:
-          success = FALSE;
-          break;
-        case G_IO_STATUS_EOF:
-          success = rsvg_handle_close (handle, error);
-          break;
-        case G_IO_STATUS_NORMAL:
-          success = rsvg_handle_write (handle,
-                                       (const guchar *) buf, len, error);
-          break;
-        case G_IO_STATUS_AGAIN:
-          break;
-        }
-    }
-
-  g_io_channel_unref (io);
-
-  if (success)
-    pixbuf = rsvg_handle_get_pixbuf (handle);
+  pixbuf = rsvg_handle_get_pixbuf (handle);
 
   g_object_unref (handle);
 
@@ -478,71 +438,48 @@ load_rsvg_pixbuf (const gchar  *filename,
 
 static GtkWidget *size_label = NULL;
 
-/*  This function retrieves the pixel size from an SVG file. Parsing
- *  stops after the first chunk that provided the parser with enough
- *  information to determine the size. This is usually the opening
- *  <svg> element and should thus be in the first chunk (1024 bytes).
- */
+/*  This function retrieves the pixel size from an SVG file.  */
 static gboolean
 load_rsvg_size (const gchar  *filename,
                 SvgLoadVals  *vals,
                 GError      **error)
 {
-  RsvgHandle *handle;
-  GIOChannel *io;
-  GIOStatus   status  = G_IO_STATUS_NORMAL;
-  gboolean    success = TRUE;
-  gboolean    done    = FALSE;
+  RsvgHandle        *handle;
+  GFile             *file;
+  RsvgDimensionData  dim;
+  gboolean           has_size;
 
-  io = g_io_channel_new_file (filename, "r", error);
-  if (!io)
-    return FALSE;
+  file = g_file_new_for_path (filename);
 
-  g_io_channel_set_encoding (io, NULL, NULL);
+  handle = rsvg_handle_new_from_gfile_sync (file, RSVG_HANDLE_FLAGS_NONE, NULL, error);
 
-  handle = rsvg_handle_new ();
+  g_object_unref (file);
+
+  if (!handle)
+    {
+      return FALSE;
+    }
+
   rsvg_handle_set_dpi (handle, vals->resolution);
 
-  vals->width  = SVG_DEFAULT_SIZE;
-  vals->height = SVG_DEFAULT_SIZE;
+  rsvg_handle_get_dimensions (handle, &dim);
 
-  while (success && status != G_IO_STATUS_EOF && (! done))
+  if (dim.width > 0 && dim.height > 0)
     {
-      gchar                 buf[1024];
-      gsize                 len;
-      RsvgDimensionData     dim = { 0, 0, 0.0, 0.0 };
-
-      status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
-
-      switch (status)
-        {
-        case G_IO_STATUS_ERROR:
-          success = FALSE;
-          break;
-        case G_IO_STATUS_EOF:
-          success = rsvg_handle_close (handle, error);
-          break;
-        case G_IO_STATUS_NORMAL:
-          success = rsvg_handle_write (handle,
-                                       (const guchar *) buf, len, error);
-          rsvg_handle_get_dimensions (handle, &dim);
-
-          if (dim.width > 0 && dim.height > 0)
-            {
-              vals->width  = dim.width;
-              vals->height = dim.height;
-
-              done = TRUE;
-            }
-          break;
-        case G_IO_STATUS_AGAIN:
-          break;
-        }
+      vals->width  = dim.width;
+      vals->height = dim.height;
+      has_size = TRUE;
+    }
+  else
+    {
+      vals->width  = SVG_DEFAULT_SIZE;
+      vals->height = SVG_DEFAULT_SIZE;
+      has_size = FALSE;
     }
 
     if (size_label)
       {
-        if (done)
+        if (has_size)
           {
             gchar *text = g_strdup_printf (_("%d × %d"),
                                            vals->width, vals->height);
@@ -556,13 +493,12 @@ load_rsvg_size (const gchar  *filename,
           }
       }
 
-  g_io_channel_unref (io);
   g_object_unref (handle);
 
   if (vals->width  < 1)  vals->width  = 1;
   if (vals->height < 1)  vals->height = 1;
 
-  return success;
+  return TRUE;
 }
 
 
