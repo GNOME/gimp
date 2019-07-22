@@ -1035,6 +1035,7 @@ file_pdf_load_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(POPPLER_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
