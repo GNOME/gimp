@@ -154,7 +154,7 @@ map_lightness (GimpHueSaturationConfig *config,
                GimpHueRange             range,
                gdouble                  value)
 {
-  gdouble v = (config->lightness[GIMP_HUE_RANGE_ALL] + config->lightness[range]) / 2.0;
+  gdouble v = (config->lightness[GIMP_HUE_RANGE_ALL] + config->lightness[range]);
 
   if (v < 0)
     return value * (v + 1.0);
