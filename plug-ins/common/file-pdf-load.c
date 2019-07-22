@@ -613,9 +613,7 @@ run (const gchar      *name,
               gimp_image_undo_disable (image);
 
 
-              babl_init ();
               layer_from_surface (image, "thumbnail", 0, surface, 0.0, 1.0);
-              babl_exit ();
               cairo_surface_destroy (surface);
 
               gimp_image_undo_enable (image);
@@ -935,11 +933,19 @@ layer_from_surface (gint32           image,
                     gdouble          progress_start,
                     gdouble          progress_scale)
 {
-  gint32 layer = gimp_layer_new_from_surface (image, layer_name, surface,
-                                              progress_start,
-                                              progress_start + progress_scale);
+  gint32 layer;
 
+  /* This may have already been run for the interactive code path,
+   * as part of gimp_ui_init(), but it doesn't hurt to init again
+   * (needed for non-interactive calls too), as long as we match the
+   * exit.
+   */
+  babl_init ();
+  layer = gimp_layer_new_from_surface (image, layer_name, surface,
+                                       progress_start,
+                                       progress_start + progress_scale);
   gimp_image_insert_layer (image, layer, -1, position);
+  babl_exit ();
 
   return layer;
 }
