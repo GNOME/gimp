@@ -355,6 +355,8 @@ preview_events (GtkWidget *area,
                 update_light (event->motion.x, event->motion.y);
                 update_light_pos_entries ();
                 mapvals.livepreview = live;
+
+                gtk_widget_queue_draw (previewarea);
               }
             else
               {

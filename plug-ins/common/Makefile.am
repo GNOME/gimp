@@ -48,6 +48,7 @@ AM_CPPFLAGS = \
 
 align_layers_libexecdir = $(gimpplugindir)/plug-ins/align-layers
 animation_optimize_libexecdir = $(gimpplugindir)/plug-ins/animation-optimize
+animation_play_libexecdir = $(gimpplugindir)/plug-ins/animation-play
 blinds_libexecdir = $(gimpplugindir)/plug-ins/blinds
 border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
 busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
@@ -125,6 +126,7 @@ web_page_libexecdir = $(gimpplugindir)/plug-ins/web-page
 
 align_layers_libexec_PROGRAMS = align-layers
 animation_optimize_libexec_PROGRAMS = animation-optimize
+animation_play_libexec_PROGRAMS = animation-play
 blinds_libexec_PROGRAMS = blinds
 border_average_libexec_PROGRAMS = border-average
 busy_dialog_libexec_PROGRAMS = busy-dialog
@@ -257,6 +259,24 @@ animation_optimize_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_optimize_RC)
+
+animation_play_SOURCES = \
+	animation-play.c
+
+animation_play_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(animation_play_RC)
 
 blinds_SOURCES = \
 	blinds.c
@@ -872,6 +892,7 @@ file_pdf_load_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(POPPLER_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\

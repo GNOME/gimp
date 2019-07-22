@@ -79,10 +79,15 @@ static void        initialize                (void);
 static void        build_dialog              (gchar           *imagename);
 static void        refresh_dialog            (gchar           *imagename);
 
-static void        da_size_callback          (GtkWidget *widget,
-                                              GtkAllocation *allocation, void *data);
-static void        sda_size_callback         (GtkWidget *widget,
-                                              GtkAllocation *allocation, void *data);
+static void        da_size_callback          (GtkWidget       *widget,
+                                              GtkAllocation   *allocation,
+                                              gpointer         data);
+
+static void        sda_realize_callback      (GtkWidget       *widget,
+                                              gpointer         data);
+static void        sda_size_callback         (GtkWidget       *widget,
+                                              GtkAllocation   *allocation,
+                                              gpointer         data);
 
 static void        window_destroy            (GtkWidget       *widget);
 static void        play_callback             (GtkToggleAction *action);
@@ -104,17 +109,15 @@ static void        zoomcombo_activated       (GtkEntry        *combo,
 static void        zoomcombo_changed         (GtkWidget       *combo,
                                               gpointer         data);
 static gboolean    repaint_sda               (GtkWidget       *darea,
-                                              GdkEventExpose  *event,
+                                              cairo_t         *cr,
                                               gpointer         data);
 static gboolean    repaint_da                (GtkWidget       *darea,
-                                              GdkEventExpose  *event,
+                                              cairo_t         *cr,
                                               gpointer         data);
 
 static void        init_frames               (void);
 static void        render_frame              (gint32           whichframe);
 static void        show_frame                (void);
-static void        total_alpha_preview       (void);
-static void        update_alpha_preview      (void);
 static void        update_combobox           (void);
 static gdouble     get_duration_factor       (gint             index);
 static gint        get_fps                   (gint             index);
@@ -153,29 +156,23 @@ static GtkWidget         *zoomcombo                 = NULL;
 static GtkWidget         *frame_disposal_combo      = NULL;
 
 static gint32             image_id;
-static guint              width                     = -1,
-                          height                    = -1;
+static guint              width                     = -1;
+static guint              height                    = -1;
 static gint32            *layers                    = NULL;
 static gint32             total_layers              = 0;
 
 static GtkWidget         *drawing_area              = NULL;
-static guchar            *drawing_area_data         = NULL;
-static guint              drawing_area_width        = -1,
-                          drawing_area_height       = -1;
-static guchar            *preview_alpha1_data       = NULL;
-static guchar            *preview_alpha2_data       = NULL;
+static cairo_surface_t   *drawing_area_surface      = NULL;
+static guint              drawing_area_width        = -1;
+static guint              drawing_area_height       = -1;
 
 static GtkWidget         *shape_window              = NULL;
-static GtkWidget         *shape_drawing_area        = NULL;
-static guchar            *shape_drawing_area_data   = NULL;
-static guint              shape_drawing_area_width  = -1,
-                          shape_drawing_area_height = -1;
-static gchar             *shape_preview_mask        = NULL;
-
+static cairo_surface_t   *shape_drawing_area_surface= NULL;
+static guint              shape_drawing_area_width  = -1;
+static guint              shape_drawing_area_height = -1;
 
 static gint32             total_frames              = 0;
 static gint32            *frames                    = NULL;
-static guchar            *rawframe                  = NULL;
 static guint32           *frame_durations           = NULL;
 static guint              frame_number              = 0;
 
@@ -267,37 +264,6 @@ run (const gchar      *name,
   gegl_exit ();
 }
 
-static void
-reshape_from_bitmap (const gchar *bitmap)
-{
-  static gchar *prev_bitmap = NULL;
-  static guint  prev_width = -1;
-  static guint  prev_height = -1;
-
-  if ((!prev_bitmap) ||
-      prev_width != shape_drawing_area_width || prev_height != shape_drawing_area_height ||
-      (memcmp (prev_bitmap, bitmap, (shape_drawing_area_width * shape_drawing_area_height) / 8 + shape_drawing_area_height)))
-    {
-      GdkBitmap *shape_mask;
-
-      shape_mask = gdk_bitmap_create_from_data (gtk_widget_get_window (shape_window),
-                                                bitmap,
-                                                shape_drawing_area_width, shape_drawing_area_height);
-      gtk_widget_shape_combine_mask (shape_window, shape_mask, 0, 0);
-      g_object_unref (shape_mask);
-
-      if (!prev_bitmap || prev_width != shape_drawing_area_width || prev_height != shape_drawing_area_height)
-        {
-          g_free(prev_bitmap);
-          prev_bitmap = g_malloc ((shape_drawing_area_width * shape_drawing_area_height) / 8 + shape_drawing_area_height);
-          prev_width = shape_drawing_area_width;
-          prev_height = shape_drawing_area_height;
-        }
-
-      memcpy (prev_bitmap, bitmap, (shape_drawing_area_width * shape_drawing_area_height) / 8 + shape_drawing_area_height);
-    }
-}
-
 static gboolean
 popup_menu (GtkWidget      *widget,
             GdkEventButton *event)
@@ -325,20 +291,19 @@ button_press (GtkWidget      *widget,
  * because there is no full control of the WM.
  * data is always NULL. */
 static void
-da_size_callback (GtkWidget *widget,
-                  GtkAllocation *allocation, void *data)
+da_size_callback (GtkWidget     *widget,
+                  GtkAllocation *allocation,
+                  gpointer       data)
 {
-  if (allocation->width == drawing_area_width && allocation->height == drawing_area_height)
+  if (allocation->width  == drawing_area_width &&
+      allocation->height == drawing_area_height)
     return;
 
-  drawing_area_width = allocation->width;
+  drawing_area_width  = allocation->width;
   drawing_area_height = allocation->height;
-  scale = MIN ((gdouble) drawing_area_width / (gdouble) width, (gdouble) drawing_area_height / (gdouble) height);
 
-  g_free (drawing_area_data);
-  drawing_area_data = g_malloc (drawing_area_width * drawing_area_height * 3);
-
-  update_alpha_preview ();
+  scale = MIN ((gdouble) drawing_area_width  / (gdouble) width,
+               (gdouble) drawing_area_height / (gdouble) height);
 
   if (! detached)
     {
@@ -354,10 +319,6 @@ da_size_callback (GtkWidget *widget,
           g_free (new_entry_text);
         }
 
-      /* Update the rawframe. */
-      g_free (rawframe);
-      rawframe = g_malloc ((unsigned long) drawing_area_width * drawing_area_height * 4);
-
       /* As we re-allocated the drawn data, let's render it again. */
       if (frame_number < total_frames)
         render_frame (frame_number);
@@ -365,32 +326,42 @@ da_size_callback (GtkWidget *widget,
   else
     {
       /* Set "alpha grid" background. */
-      total_alpha_preview ();
-      repaint_da(drawing_area, NULL, NULL);
+      gtk_widget_queue_draw (drawing_area);
     }
 }
 
-/*
- * Update the actual shape drawing area metrics, which may be different as requested,
- * They *should* be the same as the drawing area, but the safe way is to make sure
- * and process it separately.
- * data is always NULL. */
 static void
-sda_size_callback (GtkWidget *widget,
-                   GtkAllocation *allocation, void *data)
+sda_realize_callback (GtkWidget *widget,
+                      gpointer   data)
 {
-  if (allocation->width == shape_drawing_area_width && allocation->height == shape_drawing_area_height)
+  GdkCursor *cursor;
+
+  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                       GDK_HAND2);
+  gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
+  g_object_unref (cursor);
+}
+
+/*
+ * Update the actual shape drawing area metrics, which may be
+ * different as requested, They *should* be the same as the drawing
+ * area, but the safe way is to make sure and process it separately.
+ * data is always NULL.
+ */
+static void
+sda_size_callback (GtkWidget     *widget,
+                   GtkAllocation *allocation,
+                   gpointer       data)
+{
+  if (allocation->width  == shape_drawing_area_width &&
+      allocation->height == shape_drawing_area_height)
     return;
 
-  shape_drawing_area_width = allocation->width;
+  shape_drawing_area_width  = allocation->width;
   shape_drawing_area_height = allocation->height;
-  shape_scale = MIN ((gdouble) shape_drawing_area_width / (gdouble) width, (gdouble) shape_drawing_area_height / (gdouble) height);
 
-  g_free (shape_drawing_area_data);
-  g_free (shape_preview_mask);
-
-  shape_drawing_area_data = g_malloc (shape_drawing_area_width * shape_drawing_area_height * 3);
-  shape_preview_mask = g_malloc ((shape_drawing_area_width * shape_drawing_area_height) / 8 + 1 + shape_drawing_area_height);
+  shape_scale = MIN ((gdouble) shape_drawing_area_width  / (gdouble) width,
+                     (gdouble) shape_drawing_area_height / (gdouble) height);
 
   if (detached)
     {
@@ -400,15 +371,12 @@ sda_size_callback (GtkWidget *widget,
       zoomcombo_text_child = GTK_ENTRY (gtk_bin_get_child (GTK_BIN (zoomcombo)));
       if (zoomcombo_text_child)
         {
-          char* new_entry_text = g_strdup_printf  (_("%.1f %%"), shape_scale * 100.0);
+          char* new_entry_text = g_strdup_printf  (_("%.1f %%"),
+                                                   shape_scale * 100.0);
 
           gtk_entry_set_text (zoomcombo_text_child, new_entry_text);
           g_free (new_entry_text);
         }
-
-      /* Update the rawframe. */
-      g_free (rawframe);
-      rawframe = g_malloc ((unsigned long) shape_drawing_area_width * shape_drawing_area_height * 4);
 
       if (frame_number < total_frames)
         render_frame (frame_number);
@@ -462,7 +430,9 @@ shape_motion (GtkWidget      *widget,
   GdkModifierType  mask;
   gint             xp, yp;
 
-  gdk_window_get_pointer (root_win, &xp, &yp, &mask);
+  gdk_window_get_device_position (root_win,
+                                  gdk_event_get_device ((GdkEvent *) event),
+                                  &xp, &yp, &mask);
 
   /* if a button is still held by the time we process this event... */
   if (mask & GDK_BUTTON1_MASK)
@@ -483,39 +453,49 @@ shape_motion (GtkWidget      *widget,
 }
 
 static gboolean
-repaint_da (GtkWidget      *darea,
-            GdkEventExpose *event,
-            gpointer        data)
+repaint_da (GtkWidget *darea,
+            cairo_t   *cr,
+            gpointer   data)
 {
-  GtkStyle *style = gtk_widget_get_style (darea);
+  cairo_pattern_t *check;
+  GimpRGB          light;
+  GimpRGB          dark;
+  guchar           l, d;
 
-  gdk_draw_rgb_image (gtk_widget_get_window (darea),
-                      style->white_gc,
-                      (gint) ((drawing_area_width - scale * width) / 2),
-                      (gint) ((drawing_area_height - scale * height) / 2),
-                      drawing_area_width, drawing_area_height,
-                      (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
-                      drawing_area_data, drawing_area_width * 3);
+  gimp_checks_get_shades (GIMP_CHECK_SIZE_SMALL_CHECKS, &l, &d);
 
-  return TRUE;
+  gimp_rgba_set_uchar (&light, l, l, l, 255);
+  gimp_rgba_set_uchar (&dark,  d, d, d, 255);
+
+  check = gimp_cairo_checkerboard_create (cr, 32, &light, &dark);
+
+  cairo_set_source (cr, check);
+  cairo_paint (cr);
+  cairo_pattern_destroy (check);
+
+  cairo_set_source_surface (cr, drawing_area_surface, 0, 0);
+  cairo_paint (cr);
+
+  return FALSE;
 }
 
 static gboolean
-repaint_sda (GtkWidget      *darea,
-             GdkEventExpose *event,
-             gpointer        data)
+repaint_sda (GtkWidget *darea,
+             cairo_t   *cr,
+             gpointer   data)
 {
-  GtkStyle *style = gtk_widget_get_style (darea);
+  gboolean rgba;
 
-  gdk_draw_rgb_image (gtk_widget_get_window (darea),
-                      style->white_gc,
-                      (gint) ((shape_drawing_area_width - shape_scale * width) / 2),
-                      (gint) ((shape_drawing_area_height - shape_scale * height) / 2),
-                      shape_drawing_area_width, shape_drawing_area_height,
-                      (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
-                      shape_drawing_area_data, shape_drawing_area_width * 3);
+  rgba = gdk_screen_get_rgba_visual (gtk_widget_get_screen (darea)) != NULL;
 
-  return TRUE;
+  if (rgba)
+    cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+
+  cairo_set_source_surface (cr, shape_drawing_area_surface, 0, 0);
+
+  cairo_paint (cr);
+
+  return FALSE;
 }
 
 static void
@@ -558,21 +538,17 @@ detach_callback (GtkToggleAction *action)
 
       gtk_widget_show (shape_window);
 
-      if (!gtk_widget_get_realized (drawing_area))
+      if (! gtk_widget_get_realized (drawing_area))
         gtk_widget_realize (drawing_area);
-      if (!gtk_widget_get_realized (shape_drawing_area))
-        gtk_widget_realize (shape_drawing_area);
+
+      if (! gtk_widget_get_realized (shape_window))
+        gtk_widget_realize (shape_window);
 
       gdk_window_get_origin (gtk_widget_get_window (drawing_area), &x, &y);
 
       gtk_window_move (GTK_WINDOW (shape_window), x + 6, y + 6);
 
-      gdk_window_set_back_pixmap (gtk_widget_get_window (shape_drawing_area), NULL, TRUE);
-
-
-      /* Set "alpha grid" background. */
-      total_alpha_preview ();
-      repaint_da(drawing_area, NULL, NULL);
+      gtk_widget_queue_draw (drawing_area);
     }
   else
     gtk_widget_hide (shape_window);
@@ -720,10 +696,10 @@ ui_manager_new (GtkWidget *window)
 static void
 refresh_dialog (gchar *imagename)
 {
-  gchar     *name;
-  GdkScreen *screen;
-  guint      screen_width, screen_height;
-  gint       window_width, window_height;
+  gchar        *name;
+  GdkMonitor   *monitor;
+  GdkRectangle  workarea;
+  gint          window_width, window_height;
 
   /* Image Name */
   name = g_strconcat (_("Animation Playback:"), " ", imagename, NULL);
@@ -731,33 +707,42 @@ refresh_dialog (gchar *imagename)
   g_free (name);
 
   /* Update GUI size. */
-  screen = gtk_widget_get_screen (window);
-  screen_height = gdk_screen_get_height (screen);
-  screen_width = gdk_screen_get_width (screen);
+  monitor = gimp_widget_get_monitor (window);
+  gdk_monitor_get_workarea (monitor, &workarea);
   gtk_window_get_size (GTK_WINDOW (window), &window_width, &window_height);
 
   /* if the *window* size is bigger than the screen size,
    * diminish the drawing area by as much, then compute the corresponding scale. */
-  if (window_width + 50 > screen_width || window_height + 50 > screen_height)
-  {
-      guint expected_drawing_area_width = MAX (1, width - window_width + screen_width);
-      guint expected_drawing_area_height = MAX (1, height - window_height + screen_height);
-      gdouble expected_scale = MIN ((gdouble) expected_drawing_area_width / (gdouble) width,
-                                    (gdouble) expected_drawing_area_height / (gdouble) height);
+  if (window_width  + 50 > workarea.width ||
+      window_height + 50 > workarea.height)
+    {
+      guint expected_drawing_area_width  = MAX (1,
+                                                width -
+                                                window_width + workarea.width);
+      guint expected_drawing_area_height = MAX (1,
+                                                height -
+                                                window_height + workarea.height);
+      gdouble expected_scale = MIN ((gdouble) expected_drawing_area_width /
+                                    (gdouble) width,
+                                    (gdouble) expected_drawing_area_height /
+                                    (gdouble) height);
+
       update_scale (expected_scale);
 
       /* There is unfortunately no good way to know the size of the decorations, taskbars, etc.
        * So we take a wild guess by making the window slightly smaller to fit into any case. */
       gtk_window_set_default_size (GTK_WINDOW (window),
-                                   MIN (expected_drawing_area_width + 20, screen_width - 60),
-                                   MIN (expected_drawing_area_height + 90, screen_height - 60));
+                                   MIN (expected_drawing_area_width + 20,
+                                        workarea.width - 60),
+                                   MIN (expected_drawing_area_height + 90,
+                                        workarea.height - 60));
 
-      gtk_window_reshow_with_initial_size (GTK_WINDOW (window));
-  }
+      gtk_widget_show (window);
+    }
 }
 
 static void
-build_dialog (gchar             *imagename)
+build_dialog (gchar *imagename)
 {
   GtkWidget   *toolbar;
   GtkWidget   *frame;
@@ -768,12 +753,11 @@ build_dialog (gchar             *imagename)
   GtkWidget   *abox;
   GtkToolItem *item;
   GtkAction   *action;
-  GdkCursor   *cursor;
+  GdkVisual   *rgba;
   gint         index;
   gchar       *text;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
-
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_role (GTK_WINDOW (window), "animation-playback");
@@ -948,24 +932,22 @@ build_dialog (gchar             *imagename)
 
   /* shape_drawing_area for detached feature. */
   shape_window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_app_paintable (shape_window, TRUE);
   gtk_window_set_resizable (GTK_WINDOW (shape_window), FALSE);
+  gtk_window_set_decorated (GTK_WINDOW (shape_window), FALSE);
+  gtk_widget_add_events (shape_window, GDK_BUTTON_PRESS_MASK);
 
-  shape_drawing_area = gtk_drawing_area_new ();
-  gtk_container_add (GTK_CONTAINER (shape_window), shape_drawing_area);
-  gtk_widget_show (shape_drawing_area);
-  gtk_widget_add_events (shape_drawing_area, GDK_BUTTON_PRESS_MASK);
-  gtk_widget_realize (shape_drawing_area);
+  rgba = gdk_screen_get_rgba_visual (gdk_screen_get_default ());
 
-  gdk_window_set_back_pixmap (gtk_widget_get_window (shape_window), NULL, FALSE);
+  if (rgba && gdk_screen_is_composited (gdk_screen_get_default ()))
+    gtk_widget_set_visual (shape_window, rgba);
 
-  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
-                                       GDK_HAND2);
-  gdk_window_set_cursor (gtk_widget_get_window (shape_window), cursor);
-  g_object_unref (cursor);
-
-  g_signal_connect(shape_drawing_area, "size-allocate",
-                   G_CALLBACK(sda_size_callback),
-                   NULL);
+  g_signal_connect (shape_window, "realize",
+                    G_CALLBACK (sda_realize_callback),
+                    NULL);
+  g_signal_connect (shape_window, "size-allocate",
+                    G_CALLBACK (sda_size_callback),
+                    NULL);
   g_signal_connect (shape_window, "button-press-event",
                     G_CALLBACK (shape_pressed),
                     NULL);
@@ -979,18 +961,19 @@ build_dialog (gchar             *imagename)
   g_object_set_data (G_OBJECT (shape_window),
                      "cursor-offset", g_new0 (CursorOffset, 1));
 
-  g_signal_connect (drawing_area, "expose-event",
+  g_signal_connect (drawing_area, "draw",
                     G_CALLBACK (repaint_da),
                     NULL);
 
-  g_signal_connect (shape_drawing_area, "expose-event",
+  g_signal_connect (shape_window, "draw",
                     G_CALLBACK (repaint_sda),
                     NULL);
 
   /* We request a minimum size *after* having connecting the
-   * size-allocate signal for correct initialization. */
+   * size-allocate signal for correct initialization.
+   */
   gtk_widget_set_size_request (drawing_area, width, height);
-  gtk_widget_set_size_request (shape_drawing_area, width, height);
+  gtk_widget_set_size_request (shape_window, width, height);
 
   root_win = gdk_get_default_root_window ();
 }
@@ -1115,94 +1098,53 @@ initialize (void)
 static void
 render_frame (gint32 whichframe)
 {
-  GeglBuffer    *buffer;
-  gint           i, j, k;
-  guchar        *srcptr;
-  guchar        *destptr;
-  GtkWidget     *da;
-  guint          drawing_width, drawing_height;
-  gdouble        drawing_scale;
-  guchar        *preview_data;
+  GeglBuffer       *buffer;
+  GtkWidget        *da;
+  cairo_surface_t **drawing_surface;
+  guint             drawing_width, drawing_height;
+  gdouble           drawing_scale;
 
   g_assert (whichframe < total_frames);
 
   if (detached)
     {
-      da = shape_drawing_area;
-      preview_data = shape_drawing_area_data;
-      drawing_width = shape_drawing_area_width;
-      drawing_height = shape_drawing_area_height;
-      drawing_scale = shape_scale;
+      da              = shape_window;
+      drawing_surface = &shape_drawing_area_surface;
+      drawing_width   = shape_drawing_area_width;
+      drawing_height  = shape_drawing_area_height;
+      drawing_scale   = shape_scale;
     }
   else
     {
-      da = drawing_area;
-      preview_data = drawing_area_data;
-      drawing_width = drawing_area_width;
-      drawing_height = drawing_area_height;
-      drawing_scale = scale;
-
-      /* Set "alpha grid" background. */
-      total_alpha_preview ();
+      da              = drawing_area;
+      drawing_surface = &drawing_area_surface;
+      drawing_width   = drawing_area_width;
+      drawing_height  = drawing_area_height;
+      drawing_scale   = scale;
     }
 
   buffer = gimp_drawable_get_buffer (frames[whichframe]);
 
+  if (*drawing_surface)
+    cairo_surface_destroy (*drawing_surface);
+
+  *drawing_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                                 drawing_width,
+                                                 drawing_height);
+
+  cairo_surface_flush (*drawing_surface);
+
   /* Fetch and scale the whole raw new frame */
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, drawing_width, drawing_height),
-                   drawing_scale, babl_format ("R'G'B'A u8"),
-                   rawframe, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+                   drawing_scale, babl_format ("cairo-ARGB32"),
+                   cairo_image_surface_get_data (*drawing_surface),
+                   cairo_image_surface_get_stride (*drawing_surface),
+                   GEGL_ABYSS_CLAMP);
 
-  /* Number of pixels. */
-  i = drawing_width * drawing_height;
-  destptr = preview_data;
-  srcptr  = rawframe;
-  while (i--)
-    {
-      if (! (srcptr[3] & 128))
-        {
-          srcptr  += 4;
-          destptr += 3;
-          continue;
-        }
-
-      *(destptr++) = *(srcptr++);
-      *(destptr++) = *(srcptr++);
-      *(destptr++) = *(srcptr++);
-
-      srcptr++;
-    }
-
-  /* calculate the shape mask */
-  if (detached)
-    {
-      memset (shape_preview_mask, 0, (drawing_width * drawing_height) / 8 + drawing_height);
-      srcptr = rawframe + 3;
-
-      for (j = 0; j < drawing_height; j++)
-        {
-          k = j * ((7 + drawing_width) / 8);
-
-          for (i = 0; i < drawing_width; i++)
-            {
-              if ((*srcptr) & 128)
-                shape_preview_mask[k + i/8] |= (1 << (i&7));
-
-              srcptr += 4;
-            }
-        }
-      reshape_from_bitmap (shape_preview_mask);
-    }
+  cairo_surface_mark_dirty (*drawing_surface);
 
   /* Display the preview buffer. */
-  gdk_draw_rgb_image (gtk_widget_get_window (da),
-                      (gtk_widget_get_style (da))->white_gc,
-                      (gint) ((drawing_width - drawing_scale * width) / 2),
-                      (gint) ((drawing_height - drawing_scale * height) / 2),
-                      drawing_width, drawing_height,
-                      (total_frames == 1 ?
-                       GDK_RGB_DITHER_MAX : DITHERTYPE),
-                      preview_data, drawing_width * 3);
+  gtk_widget_queue_draw (da);
 
   /* clean up */
   g_object_unref (buffer);
@@ -1223,53 +1165,6 @@ show_frame (void)
   g_free (text);
 }
 
-static void
-update_alpha_preview (void)
-{
-  gint i;
-
-  g_free (preview_alpha1_data);
-  g_free (preview_alpha2_data);
-
-  preview_alpha1_data = g_malloc (drawing_area_width * 3);
-  preview_alpha2_data = g_malloc (drawing_area_width * 3);
-
-  for (i = 0; i < drawing_area_width; i++)
-    {
-      if (i & 8)
-        {
-          preview_alpha1_data[i*3 + 0] =
-          preview_alpha1_data[i*3 + 1] =
-          preview_alpha1_data[i*3 + 2] = 102;
-          preview_alpha2_data[i*3 + 0] =
-          preview_alpha2_data[i*3 + 1] =
-          preview_alpha2_data[i*3 + 2] = 154;
-        }
-      else
-        {
-          preview_alpha1_data[i*3 + 0] =
-          preview_alpha1_data[i*3 + 1] =
-          preview_alpha1_data[i*3 + 2] = 154;
-          preview_alpha2_data[i*3 + 0] =
-          preview_alpha2_data[i*3 + 1] =
-          preview_alpha2_data[i*3 + 2] = 102;
-        }
-    }
-}
-
-static void
-total_alpha_preview (void)
-{
-  gint i;
-
-  for (i = 0; i < drawing_area_height; i++)
-    {
-      if (i & 8)
-        memcpy (&drawing_area_data[i * 3 * drawing_area_width], preview_alpha1_data, 3 * drawing_area_width);
-      else
-        memcpy (&drawing_area_data[i * 3 * drawing_area_width], preview_alpha2_data, 3 * drawing_area_width);
-    }
-}
 
 /* Util. */
 
@@ -1541,15 +1436,18 @@ speed_reset_callback (GtkAction *action)
 }
 
 static void
-framecombo_changed (GtkWidget *combo, gpointer data)
+framecombo_changed (GtkWidget *combo,
+                    gpointer   data)
 {
-  settings.default_frame_disposal = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+  settings.default_frame_disposal =
+    gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
   init_frames ();
   render_frame (frame_number);
 }
 
 static void
-speedcombo_changed (GtkWidget *combo, gpointer data)
+speedcombo_changed (GtkWidget *combo,
+                    gpointer   data)
 {
   GtkAction * action;
 
@@ -1578,19 +1476,24 @@ update_scale (gdouble scale)
   if (scale <= 0.5)
     scale = 0.501;
 
-  expected_drawing_area_width = width * scale;
+  expected_drawing_area_width  = width  * scale;
   expected_drawing_area_height = height * scale;
 
-  gtk_widget_set_size_request (drawing_area, expected_drawing_area_width, expected_drawing_area_height);
-  gtk_widget_set_size_request (shape_drawing_area, expected_drawing_area_width, expected_drawing_area_height);
+  gtk_widget_set_size_request (drawing_area,
+                               expected_drawing_area_width,
+                               expected_drawing_area_height);
+  gtk_widget_set_size_request (shape_window,
+                               expected_drawing_area_width,
+                               expected_drawing_area_height);
+
   /* I force the shape window to a smaller size if we scale down. */
   if (detached)
     {
       gint x, y;
 
       gdk_window_get_origin (gtk_widget_get_window (shape_window), &x, &y);
-      gtk_window_reshow_with_initial_size (GTK_WINDOW (shape_window));
       gtk_window_move (GTK_WINDOW (shape_window), x, y);
+      gtk_widget_show (shape_window);
     }
 }
 
@@ -1598,7 +1501,8 @@ update_scale (gdouble scale)
  * Callback emitted when the user hits the Enter key of the zoom combo.
  */
 static void
-zoomcombo_activated (GtkEntry *combo, gpointer data)
+zoomcombo_activated (GtkEntry *combo,
+                     gpointer  data)
 {
   update_scale (get_scale (-1));
 }
@@ -1610,7 +1514,8 @@ zoomcombo_activated (GtkEntry *combo, gpointer data)
  * signals after each character deleted or added.
  */
 static void
-zoomcombo_changed (GtkWidget *combo, gpointer data)
+zoomcombo_changed (GtkWidget *combo,
+                   gpointer   data)
 {
   gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
@@ -1620,9 +1525,11 @@ zoomcombo_changed (GtkWidget *combo, gpointer data)
 }
 
 static void
-fpscombo_changed (GtkWidget *combo, gpointer data)
+fpscombo_changed (GtkWidget *combo,
+                  gpointer   data)
 {
-  settings.default_frame_duration = 1000 / get_fps (gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
+  settings.default_frame_duration =
+    1000 / get_fps (gtk_combo_box_get_active (GTK_COMBO_BOX (combo)));
 }
 
 static void

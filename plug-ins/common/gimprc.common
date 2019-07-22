@@ -1,5 +1,6 @@
 align_layers_RC = align-layers.rc.o
 animation_optimize_RC = animation-optimize.rc.o
+animation_play_RC = animation-play.rc.o
 blinds_RC = blinds.rc.o
 border_average_RC = border-average.rc.o
 busy_dialog_RC = busy-dialog.rc.o
