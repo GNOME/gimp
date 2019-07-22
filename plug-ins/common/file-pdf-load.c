@@ -382,6 +382,7 @@ run (const gchar      *name,
   GError           *error    = NULL;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -660,6 +661,8 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
+
+  gegl_exit ();
 }
 
 static PopplerDocument*
@@ -754,17 +757,10 @@ layer_from_surface (gint32           image,
 {
   gint32 layer;
 
-  /* This may have already been run for the interactive code path,
-   * as part of gimp_ui_init(), but it doesn't hurt to init again
-   * (needed for non-interactive calls too), as long as we match the
-   * exit.
-   */
-  babl_init ();
   layer = gimp_layer_new_from_surface (image, layer_name, surface,
                                        progress_start,
                                        progress_start + progress_scale);
   gimp_image_insert_layer (image, layer, -1, position);
-  babl_exit ();
 
   return layer;
 }
