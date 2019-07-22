@@ -99,11 +99,12 @@ parse_int(void)
 }
 
 static void
-parse_color(GdkColor *gdk_color)
+parse_color(GdkRGBA *color)
 {
-   gdk_color->red = (guint16) parse_int();
-   gdk_color->green = (guint16) parse_int();
-   gdk_color->blue = (guint16) parse_int();
+  color->red   = (gdouble) parse_int() / 255.0;
+  color->green = (gdouble) parse_int() / 255.0;
+  color->blue  = (gdouble) parse_int() / 255.0;
+  color->alpha = 1.0;
 }
 
 static void
@@ -222,23 +223,29 @@ preferences_save(PreferencesData_t *data)
       fprintf(out, "(mru-size %d)\n", data->mru_size);
 
       fprintf(out, "(normal-fg-color %d %d %d)\n",
-              colors->normal_fg.red, colors->normal_fg.green,
-              colors->normal_fg.blue);
+              ROUND (colors->normal_fg.red * 255.0),
+              ROUND (colors->normal_fg.green * 255.0),
+              ROUND (colors->normal_fg.blue * 255.0));
       fprintf(out, "(normal-bg-color %d %d %d)\n",
-              colors->normal_bg.red, colors->normal_bg.green,
-              colors->normal_bg.blue);
+              ROUND (colors->normal_bg.red * 255.0),
+              ROUND (colors->normal_bg.green * 255.0),
+              ROUND (colors->normal_bg.blue * 255.0));
       fprintf(out, "(selected-fg-color %d %d %d)\n",
-              colors->selected_fg.red, colors->selected_fg.green,
-              colors->selected_fg.blue);
+              ROUND (colors->selected_fg.red * 255.0),
+              ROUND (colors->selected_fg.green * 255.0),
+              ROUND (colors->selected_fg.blue * 255.0));
       fprintf(out, "(selected-bg-color %d %d %d)\n",
-              colors->selected_bg.red, colors->selected_bg.green,
-              colors->selected_bg.blue);
+              ROUND (colors->selected_bg.red * 255.0),
+              ROUND (colors->selected_bg.green * 255.0),
+              ROUND (colors->selected_bg.blue * 255.0));
       fprintf(out, "(interactive-fg-color %d %d %d)\n",
-              colors->interactive_fg.red, colors->interactive_fg.green,
-              colors->interactive_fg.blue);
+              ROUND (colors->interactive_fg.red * 255.0),
+              ROUND (colors->interactive_fg.green * 255.0),
+              ROUND (colors->interactive_fg.blue * 255.0));
       fprintf(out, "(interactive-bg-color %d %d %d)\n",
-              colors->interactive_bg.red, colors->interactive_bg.green,
-              colors->interactive_bg.blue);
+              ROUND (colors->interactive_bg.red * 255.0),
+              ROUND (colors->interactive_bg.green * 255.0),
+              ROUND (colors->interactive_bg.blue * 255.0));
 
       mru_write(get_mru(), out);
 
@@ -292,13 +299,15 @@ preferences_ok_cb(gpointer data)
 }
 
 static void
-get_button_color (GtkWidget *button, GdkColor *color)
+get_button_color (GtkWidget *button,
+                  GdkRGBA   *color)
 {
   GimpRGB rgb;
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &rgb);
-  color->red = rgb.r * 0xffff;
-  color->green = rgb.g * 0xffff;
-  color->blue = rgb.b * 0xffff;
+  color->red   = rgb.r;
+  color->green = rgb.g;
+  color->blue  = rgb.b;
+  color->alpha = 1.0;
 }
 
 static void
@@ -313,16 +322,16 @@ get_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
 }
 
 static void
-set_button_color (GtkWidget *button, GdkColor *color)
+set_button_color (GtkWidget *button,
+                  GdkRGBA   *color)
 {
-  GimpRGB rgb;
-  gimp_rgb_set (&rgb, color->red, color->green, color->blue);
-  gimp_rgb_multiply (&rgb, 1.0 / 0xffff);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button), &rgb);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button),
+                               (GimpRGB *) color);
 }
 
 static void
-set_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
+set_button_colors(PreferencesDialog_t *dialog,
+                  ColorSelData_t      *colors)
 {
   set_button_color (dialog->normal_fg, &colors->normal_fg);
   set_button_color (dialog->normal_bg, &colors->normal_bg);

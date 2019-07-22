@@ -463,7 +463,6 @@ polygon_create_info_widget(GtkWidget *frame)
 
    props->store = gtk_list_store_new (1, G_TYPE_POINTER);
    view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (props->store));
-   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(view), TRUE);
    g_object_unref (props->store);
    gtk_widget_show (view);
 

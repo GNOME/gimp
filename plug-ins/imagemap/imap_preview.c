@@ -77,20 +77,11 @@ preview_get_height(GtkWidget *preview)
 static void
 render_background(Preview_t *preview_base)
 {
-   GtkWidget      *preview = preview_base->preview;
-   GtkStyle       *style;
-   const GdkColor *bg_color;
-
-   gtk_widget_ensure_style (preview);
-
-   style    = gtk_widget_get_style (preview);
-   bg_color = &style->bg[GTK_STATE_NORMAL];
+   GtkWidget *preview = preview_base->preview;
 
    gimp_preview_area_fill (GIMP_PREVIEW_AREA (preview),
                            0, 0, G_MAXINT, G_MAXINT,
-                           bg_color->red   >> 8,
-                           bg_color->green >> 8,
-                           bg_color->blue  >> 8);
+                           255, 255, 255);
 }
 
 static void
@@ -145,32 +136,28 @@ arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
 }
 
 static gboolean
-preview_expose(GtkWidget *widget, GdkEventExpose *event)
+preview_draw (GtkWidget *widget,
+              cairo_t   *cr)
 {
-   cairo_t *cr;
-   gint width = preview_get_width (widget);
-   gint height = preview_get_height (widget);
+  gint width = preview_get_width (widget);
+  gint height = preview_get_height (widget);
 
-   cr = gdk_cairo_create (event->window);
-   gdk_cairo_region (cr, event->region);
-   cairo_clip (cr);
-   cairo_set_line_width (cr, 1.);
-   draw_grid (cr, width, height);
+  cairo_set_line_width (cr, 1.);
+  draw_grid (cr, width, height);
 
-   draw_shapes (cr);
+  draw_shapes (cr);
 
-   if (_tmp_obj)
-   {
+  if (_tmp_obj)
+    {
       /* this is a bit of a hack */
       gdouble dash = 4.;
       _tmp_obj->selected |= 4;
       cairo_set_source_rgb (cr, 1., 0., 1.);
       cairo_set_dash (cr, &dash, 1, dash);
       object_draw (_tmp_obj, cr);
-   }
+    }
 
-   cairo_destroy (cr);
-   return FALSE;
+  return FALSE;
 }
 
 void
@@ -287,8 +274,8 @@ make_preview (gint32 drawable_id)
    g_object_set_data (G_OBJECT (preview), "preview", data);
    gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK);
 
-   g_signal_connect_after (preview, "expose-event",
-                           G_CALLBACK (preview_expose),
+   g_signal_connect_after (preview, "draw",
+                           G_CALLBACK (preview_draw),
                            data);
    g_signal_connect (preview, "size-allocate",
                      G_CALLBACK (preview_size_allocate),
@@ -325,7 +312,8 @@ make_preview (gint32 drawable_id)
                      G_CALLBACK (arrow_cb),
                      NULL);
 
-   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+   arrow = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
+                                         GTK_ICON_SIZE_BUTTON);
    gtk_container_add (GTK_CONTAINER (button), arrow);
    gtk_widget_show (arrow);
 
