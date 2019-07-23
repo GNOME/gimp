@@ -25,6 +25,7 @@ GIMP_IS_CONFIG
 GIMP_TYPE_CONFIG
 GIMP_CONFIG_GET_INTERFACE
 gimp_config_interface_get_type
+gimp_config_get_type
 </SECTION>
 
 <SECTION>

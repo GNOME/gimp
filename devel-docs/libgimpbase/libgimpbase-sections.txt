@@ -216,7 +216,10 @@ gimp_data_directory
 gimp_locale_directory
 gimp_plug_in_directory
 gimp_sysconf_directory
+gimp_cache_directory
+gimp_temp_directory
 gimp_directory_file
+gimp_installation_directory_file
 gimp_data_directory_file
 gimp_locale_directory_file
 gimp_sysconf_directory_file
@@ -340,6 +343,7 @@ gimp_param_parasite_get_type
 GIMP_PIXPIPE_MAXDIM
 GimpPixPipeParams
 gimp_pixpipe_params_init
+gimp_pixpipe_params_free
 gimp_pixpipe_params_parse
 gimp_pixpipe_params_build
 </SECTION>
