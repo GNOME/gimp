@@ -212,7 +212,7 @@ create_chain_button (void)
   gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_colummn_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (align), grid);
   chain = gimp_chain_button_new (GIMP_CHAIN_LEFT);
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
@@ -413,7 +413,7 @@ create_enum_combo_box (void)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_TYPE);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), GIMP_BLUE_CHANNEL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), GIMP_CHANNEL_BLUE);
   gtk_container_add (GTK_CONTAINER (align), combo);
   gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox),
