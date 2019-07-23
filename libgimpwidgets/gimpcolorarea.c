@@ -657,8 +657,8 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
 
 /**
  * gimp_color_area_set_out_of_gamut:
- * @area:   a #GimpColorArea widget.
- * @config: a #GimpColorConfig object.
+ * @area:         a #GimpColorArea widget.
+ * @out_of_gamut: whether to show an out-of-gamut indicator
  *
  * Sets the color area to render as an out-of-gamut color, i.e. with a
  * small triangle on a corner using the color management out of gamut

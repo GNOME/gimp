@@ -85,7 +85,7 @@ void          gimp_chain_button_set_active    (GimpChainButton   *button,
                                                gboolean           active);
 gboolean      gimp_chain_button_get_active    (GimpChainButton   *button);
 
-GtkWidget * gimp_chain_button_get_button (GimpChainButton   *button);
+GtkWidget   * gimp_chain_button_get_button    (GimpChainButton   *button);
 
 
 G_END_DECLS
