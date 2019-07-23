@@ -45,7 +45,6 @@
       <xi:include href="xml/gimpdrawable.xml" />
       <xi:include href="xml/gimpdrawablecolor.xml" />
       <xi:include href="xml/gimpdrawableedit.xml" />
-      <xi:include href="xml/gimpdrawabletransform.xml" />
       <xi:include href="xml/gimpedit.xml" />
       <xi:include href="xml/gimpfileops.xml" />
       <xi:include href="xml/gimpfloatingsel.xml" />
@@ -64,9 +63,6 @@
       <xi:include href="xml/gimplayer.xml" />
       <xi:include href="xml/gimppaths.xml" />
       <xi:include href="xml/gimppixbuf.xml" />
-      <xi:include href="xml/gimppixelfetcher.xml" />
-      <xi:include href="xml/gimppixelrgn.xml" />
-      <xi:include href="xml/gimpregioniterator.xml" />
       <xi:include href="xml/gimpselection.xml" />
       <xi:include href="xml/gimptextlayer.xml" />
       <xi:include href="xml/gimptexttool.xml" />
