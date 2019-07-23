@@ -24,7 +24,7 @@ GIMP_CONFIG
 GIMP_IS_CONFIG
 GIMP_TYPE_CONFIG
 GIMP_CONFIG_GET_INTERFACE
-gimp_config_interface_get_type
+gimp_config_get_type
 </SECTION>
 
 <SECTION>
@@ -67,21 +67,6 @@ GIMP_CONFIG_PROP_STRING
 GIMP_CONFIG_PROP_UINT64
 GIMP_CONFIG_PROP_UINT
 GIMP_CONFIG_PROP_UNIT
-GIMP_CONFIG_INSTALL_PROP_BOOLEAN
-GIMP_CONFIG_INSTALL_PROP_BOXED
-GIMP_CONFIG_INSTALL_PROP_RGB
-GIMP_CONFIG_INSTALL_PROP_DOUBLE
-GIMP_CONFIG_INSTALL_PROP_RESOLUTION
-GIMP_CONFIG_INSTALL_PROP_ENUM
-GIMP_CONFIG_INSTALL_PROP_INT
-GIMP_CONFIG_INSTALL_PROP_MATRIX2
-GIMP_CONFIG_INSTALL_PROP_MEMSIZE
-GIMP_CONFIG_INSTALL_PROP_PATH
-GIMP_CONFIG_INSTALL_PROP_STRING
-GIMP_CONFIG_INSTALL_PROP_UINT
-GIMP_CONFIG_INSTALL_PROP_UNIT
-GIMP_CONFIG_INSTALL_PROP_OBJECT
-GIMP_CONFIG_INSTALL_PROP_POINTER
 </SECTION>
 
 <SECTION>
@@ -98,6 +83,7 @@ gimp_file_get_config_path
 gimp_config_build_data_path
 gimp_config_build_writable_path
 gimp_config_build_plug_in_path
+gimp_config_build_system_path
 GIMP_VALUE_HOLDS_CONFIG_PATH
 <SUBSECTION Standard>
 GIMP_TYPE_CONFIG_PATH
@@ -183,6 +169,7 @@ gimp_color_config_get_simulation_intent
 gimp_color_config_get_simulation_bpc
 gimp_color_config_get_simulation_optimize
 gimp_color_config_get_simulation_gamut_check
+gimp_color_config_get_out_of_gamut_color
 gimp_color_config_get_rgb_color_profile
 gimp_color_config_get_gray_color_profile
 gimp_color_config_get_cmyk_color_profile
@@ -191,6 +178,7 @@ gimp_color_config_get_simulation_color_profile
 <SUBSECTION Standard>
 GimpColorConfig
 GimpColorConfigClass
+GimpColorConfigPrivate
 GIMP_COLOR_CONFIG
 GIMP_IS_COLOR_CONFIG
 GIMP_TYPE_COLOR_CONFIG
