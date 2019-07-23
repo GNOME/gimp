@@ -16,7 +16,6 @@
     <xi:include href="xml/gimpmath.xml" />
     <xi:include href="xml/gimpmatrix.xml" />
     <xi:include href="xml/gimpvector.xml" />
-    <xi:include href="xml/gimpmd5.xml" />
   </part>
 
   <index id="api-index-full">

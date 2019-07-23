@@ -13,12 +13,6 @@ gimp_rad_to_deg
 </SECTION>
 
 <SECTION>
-<FILE>gimpmd5</FILE>
-<TITLE>GimpMD5</TITLE>
-gimp_md5_get_digest
-</SECTION>
-
-<SECTION>
 <FILE>gimpmatrix</FILE>
 <TITLE>GimpMatrix</TITLE>
 GimpMatrix2

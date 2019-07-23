@@ -1,13 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
 # The name of the module.
-DOC_MODULE = libgimpmath
+DOC_MODULE = libgimpmath3
 
 # The top-level SGML file.
 DOC_MAIN_SGML_FILE = $(DOC_MODULE)-docs.sgml
 
 # The directory containing the source code.
-DOC_SOURCE_DIR = $(top_srcdir)/$(DOC_MODULE)
+DOC_SOURCE_DIR = $(top_srcdir)/libgimpmath
 
 # Extra options to pass to gtkdoc-scangobj
 SCANGOBJ_OPTIONS =
