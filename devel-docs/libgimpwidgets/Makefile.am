@@ -1,13 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
 # The name of the module.
-DOC_MODULE = libgimpwidgets
+DOC_MODULE = libgimpwidgets3
 
 # The top-level SGML file.
 DOC_MAIN_SGML_FILE = $(DOC_MODULE)-docs.sgml
 
 # The directory containing the source code.
-DOC_SOURCE_DIR = $(top_srcdir)/$(DOC_MODULE)
+DOC_SOURCE_DIR = $(top_srcdir)/libgimpwidgets
 
 # Extra options to pass to gtkdoc-scangobj
 # make sure babl is initialized, otherwise we segfault.
@@ -28,6 +28,8 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
+	gimp-icon-pixbufs.h		\
+	gimp-color-picker-cursors.h	\
 	gimpcolorprofilestore-private.h	\
 	gimpeevl.h			\
 	gimpwidgets-private.h

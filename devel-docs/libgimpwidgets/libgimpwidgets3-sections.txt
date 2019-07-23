@@ -4,10 +4,14 @@
 GimpBrowser
 gimp_browser_new
 gimp_browser_add_search_types
+gimp_browser_get_left_vbox
+gimp_browser_get_right_vbox
+gimp_browser_set_search_summary
 gimp_browser_set_widget
 gimp_browser_show_message
 <SUBSECTION Standard>
 GimpBrowserClass
+GimpBrowserPrivate
 GIMP_BROWSER
 GIMP_IS_BROWSER
 GIMP_TYPE_BROWSER
@@ -43,6 +47,7 @@ GimpButton
 gimp_button_new
 gimp_button_extended_clicked
 <SUBSECTION Standard>
+GimpButtonPrivate
 GIMP_BUTTON
 GIMP_IS_BUTTON
 GIMP_TYPE_BUTTON
@@ -67,6 +72,7 @@ GimpCellRendererColor
 gimp_cell_renderer_color_new
 <SUBSECTION Standard>
 GimpCellRendererColorClass
+GimpCellRendererColorPrivate
 GIMP_CELL_RENDERER_COLOR
 GIMP_IS_CELL_RENDERER_COLOR
 GIMP_TYPE_CELL_RENDERER_COLOR
@@ -84,6 +90,7 @@ gimp_cell_renderer_toggle_new
 gimp_cell_renderer_toggle_clicked
 <SUBSECTION Standard>
 GimpCellRendererToggleClass
+GimpCellRendererTogglePrivate
 GIMP_CELL_RENDERER_TOGGLE
 GIMP_IS_CELL_RENDERER_TOGGLE
 GIMP_TYPE_CELL_RENDERER_TOGGLE
@@ -103,7 +110,9 @@ gimp_chain_button_get_icon_size
 gimp_chain_button_set_icon_size
 gimp_chain_button_set_active
 gimp_chain_button_get_active
+gimp_chain_button_get_button
 <SUBSECTION Standard>
+GimpChainButtonPrivate
 GIMP_CHAIN_BUTTON
 GIMP_IS_CHAIN_BUTTON
 GIMP_TYPE_CHAIN_BUTTON
@@ -127,8 +136,10 @@ gimp_color_area_get_color
 gimp_color_area_has_alpha
 gimp_color_area_set_type
 gimp_color_area_set_draw_border
+gimp_color_area_set_out_of_gamut
 gimp_color_area_set_color_config
 <SUBSECTION Standard>
+GimpColorAreaPrivate
 GIMP_COLOR_AREA
 GIMP_IS_COLOR_AREA
 GIMP_TYPE_COLOR_AREA
@@ -157,6 +168,7 @@ gimp_color_button_set_type
 gimp_color_button_set_color_config
 gimp_color_button_get_ui_manager
 <SUBSECTION Standard>
+GimpColorButtonPrivate
 GIMP_COLOR_BUTTON
 GIMP_IS_COLOR_BUTTON
 GIMP_TYPE_COLOR_BUTTON
@@ -176,6 +188,7 @@ gimp_color_hex_entry_set_color
 gimp_color_hex_entry_get_color
 <SUBSECTION Standard>
 GimpColorHexEntryClass
+GimpColorHexEntryPrivate
 GIMP_COLOR_HEX_ENTRY
 GIMP_IS_COLOR_HEX_ENTRY
 GIMP_TYPE_COLOR_HEX_ENTRY
@@ -195,6 +208,7 @@ gimp_color_scale_set_color
 gimp_color_scale_set_color_config
 <SUBSECTION Standard>
 GimpColorScaleClass
+GimpColorScalePrivate
 GIMP_COLOR_SCALE
 GIMP_IS_COLOR_SCALE
 GIMP_TYPE_COLOR_SCALE
@@ -218,7 +232,10 @@ gimp_color_selection_get_old_color
 gimp_color_selection_reset
 gimp_color_selection_color_changed
 gimp_color_selection_set_config
+gimp_color_selection_get_notebook
+gimp_color_selection_get_right_vbox
 <SUBSECTION Standard>
+GimpColorSelectionPrivate
 GIMP_COLOR_SELECTION
 GIMP_IS_COLOR_SELECTION
 GIMP_TYPE_COLOR_SELECTION
@@ -252,14 +269,12 @@ gimp_color_profile_chooser_dialog_get_type
 GimpColorProfileComboBox
 gimp_color_profile_combo_box_new
 gimp_color_profile_combo_box_new_with_model
-gimp_color_profile_combo_box_add
 gimp_color_profile_combo_box_add_file
-gimp_color_profile_combo_box_set_active
 gimp_color_profile_combo_box_set_active_file
-gimp_color_profile_combo_box_get_active
 gimp_color_profile_combo_box_get_active_file
 <SUBSECTION Standard>
 GimpColorProfileComboBoxClass
+GimpColorProfileComboBoxPrivate
 GIMP_COLOR_PROFILE_COMBO_BOX
 GIMP_IS_COLOR_PROFILE_COMBO_BOX
 GIMP_TYPE_COLOR_PROFILE_COMBO_BOX
@@ -274,10 +289,10 @@ GIMP_COLOR_PROFILE_COMBO_BOX_GET_CLASS
 <TITLE>GimpColorProfileStore</TITLE>
 GimpColorProfileStore
 gimp_color_profile_store_new
-gimp_color_profile_store_add
 gimp_color_profile_store_add_file
 <SUBSECTION Standard>
 GimpColorProfileStoreClass
+GimpColorProfileStorePrivate
 GIMP_COLOR_PROFILE_STORE
 GIMP_IS_COLOR_PROFILE_STORE
 GIMP_TYPE_COLOR_PROFILE_STORE
@@ -314,10 +329,10 @@ gimp_enum_store_new
 gimp_enum_store_new_with_range
 gimp_enum_store_new_with_values
 gimp_enum_store_new_with_values_valist
-gimp_enum_store_set_stock_prefix
 gimp_enum_store_set_icon_prefix
 <SUBSECTION Standard>
 GimpEnumStoreClass
+GimpEnumStorePrivate
 GIMP_ENUM_STORE
 GIMP_IS_ENUM_STORE
 GIMP_TYPE_ENUM_STORE
@@ -333,10 +348,10 @@ GIMP_ENUM_STORE_GET_CLASS
 GimpEnumComboBox
 gimp_enum_combo_box_new
 gimp_enum_combo_box_new_with_model
-gimp_enum_combo_box_set_stock_prefix
 gimp_enum_combo_box_set_icon_prefix
 <SUBSECTION Standard>
 GimpEnumComboBoxClass
+GimpEnumComboBoxPrivate
 GIMP_ENUM_COMBO_BOX
 GIMP_IS_ENUM_COMBO_BOX
 GIMP_TYPE_ENUM_COMBO_BOX
@@ -354,6 +369,7 @@ gimp_enum_label_new
 gimp_enum_label_set_value
 <SUBSECTION Standard>
 GimpEnumLabelClass
+GimpEnumLabelPrivate
 GIMP_ENUM_LABEL
 GIMP_IS_ENUM_LABEL
 GIMP_TYPE_ENUM_LABEL
@@ -371,6 +387,7 @@ gimp_file_entry_new
 gimp_file_entry_get_filename
 gimp_file_entry_set_filename
 <SUBSECTION Standard>
+GimpFileEntryPrivate
 GIMP_FILE_ENTRY
 GIMP_IS_FILE_ENTRY
 GIMP_TYPE_FILE_ENTRY
@@ -388,6 +405,7 @@ GimpFrame
 gimp_frame_new
 <SUBSECTION Standard>
 GimpFrameClass
+GimpFramePrivate
 GIMP_FRAME
 GIMP_IS_FRAME
 GIMP_TYPE_FRAME
@@ -430,6 +448,7 @@ gimp_page_selector_select_range
 gimp_page_selector_get_selected_range
 <SUBSECTION Standard>
 GimpPageSelectorClass
+GimpPageSelectorPrivate
 GIMP_PAGE_SELECTOR
 GIMP_IS_PAGE_SELECTOR
 GIMP_TYPE_PAGE_SELECTOR
@@ -453,6 +472,7 @@ gimp_path_editor_set_writable_path
 gimp_path_editor_get_dir_writable
 gimp_path_editor_set_dir_writable
 <SUBSECTION Standard>
+GimpPathEditorPrivate
 GIMP_PATH_EDITOR
 GIMP_IS_PATH_EDITOR
 GIMP_TYPE_PATH_EDITOR
@@ -461,23 +481,6 @@ GimpPathEditorClass
 GIMP_PATH_EDITOR_CLASS
 GIMP_IS_PATH_EDITOR_CLASS
 GIMP_PATH_EDITOR_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimppixmap</FILE>
-<TITLE>GimpPixmap</TITLE>
-GimpPixmap
-gimp_pixmap_new
-gimp_pixmap_set
-<SUBSECTION Standard>
-GIMP_PIXMAP
-GIMP_IS_PIXMAP
-GIMP_TYPE_PIXMAP
-gimp_pixmap_get_type
-GimpPixmapClass
-GIMP_PIXMAP_CLASS
-GIMP_IS_PIXMAP_CLASS
-GIMP_PIXMAP_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -490,6 +493,7 @@ gimp_int_store_lookup_by_value
 gimp_int_store_lookup_by_user_data
 <SUBSECTION Standard>
 GimpIntStoreClass
+GimpIntStorePrivate
 GIMP_INT_STORE
 GIMP_IS_INT_STORE
 GIMP_TYPE_INT_STORE
@@ -522,6 +526,7 @@ gimp_int_combo_box_connect
 gimp_int_combo_box_set_sensitivity
 <SUBSECTION Standard>
 GimpIntComboBoxClass
+GimpIntComboBoxPrivate
 GIMP_INT_COMBO_BOX
 GIMP_IS_INT_COMBO_BOX
 GIMP_TYPE_INT_COMBO_BOX
@@ -536,12 +541,8 @@ gimp_int_combo_box_layout_get_type
 <SECTION>
 <FILE>gimpspinbutton</FILE>
 <TITLE>GimpSpinButton</TITLE>
-gimp_spin_button_new_
-gimp_spin_button_new_with_range
 gimp_spin_button_new
-gimp_spin_button_new_I
-gimp_spin_button_new_I_3
-gimp_spin_button_new_I_9
+gimp_spin_button_new_with_range
 <SUBSECTION Standard>
 GIMP_IS_SPIN_BUTTON
 GIMP_SPIN_BUTTON
@@ -564,6 +565,7 @@ gimp_string_combo_box_set_active
 gimp_string_combo_box_get_active
 <SUBSECTION Standard>
 GimpStringComboBoxClass
+GimpStringComboBoxPrivate
 GIMP_STRING_COMBO_BOX
 GIMP_IS_STRING_COMBO_BOX
 GIMP_TYPE_STRING_COMBO_BOX
@@ -580,8 +582,10 @@ GimpMemsizeEntry
 gimp_memsize_entry_new
 gimp_memsize_entry_set_value
 gimp_memsize_entry_get_value
+gimp_memsize_entry_get_spinbutton
 <SUBSECTION Standard>
 GimpMemsizeEntryClass
+GimpMemsizeEntryPrivate
 GIMP_MEMSIZE_ENTRY
 GIMP_IS_MEMSIZE_ENTRY
 GIMP_TYPE_MEMSIZE_ENTRY
@@ -599,6 +603,9 @@ GimpSizeEntryField
 GimpSizeEntryUpdatePolicy
 gimp_size_entry_new
 gimp_size_entry_add_field
+gimp_size_entry_get_update_policy
+gimp_size_entry_get_n_fields
+gimp_size_entry_get_unit_combo
 gimp_size_entry_attach_label
 gimp_size_entry_set_resolution
 gimp_size_entry_set_size
@@ -611,12 +618,13 @@ gimp_size_entry_get_refval
 gimp_size_entry_set_refval
 gimp_size_entry_get_unit
 gimp_size_entry_set_unit
-gimp_size_entry_set_pixel_digits
 gimp_size_entry_show_unit_menu
+gimp_size_entry_set_pixel_digits
 gimp_size_entry_grab_focus
 gimp_size_entry_set_activates_default
 gimp_size_entry_get_help_widget
 <SUBSECTION Standard>
+GimpSizeEntryPrivate
 GIMP_SIZE_ENTRY
 GIMP_IS_SIZE_ENTRY
 GIMP_TYPE_SIZE_ENTRY
@@ -648,6 +656,7 @@ gimp_number_pair_entry_set_user_override
 gimp_number_pair_entry_get_default_text
 gimp_number_pair_entry_set_default_text
 <SUBSECTION Standard>
+GimpNumberPairEntryPrivate
 GIMP_NUMBER_PAIR_ENTRY
 GIMP_IS_NUMBER_PAIR_ENTRY
 GIMP_TYPE_NUMBER_PAIR_ENTRY
@@ -675,6 +684,7 @@ gimp_ruler_add_track_widget
 gimp_ruler_remove_track_widget
 <SUBSECTION Standard>
 GimpRulerClass
+GimpRulerPrivate
 GIMP_RULER
 GIMP_IS_RULER
 GIMP_TYPE_RULER
@@ -701,6 +711,7 @@ gimp_unit_store_get_value
 gimp_unit_store_get_values
 <SUBSECTION Standard>
 GimpUnitStoreClass
+GimpUnitStorePrivate
 GIMP_UNIT_STORE
 GIMP_IS_UNIT_STORE
 GIMP_TYPE_UNIT_STORE
@@ -719,6 +730,7 @@ gimp_unit_combo_box_new_with_model
 gimp_unit_combo_box_get_active
 gimp_unit_combo_box_set_active
 <SUBSECTION Standard>
+GimpUnitComboBoxPrivate
 GIMP_UNIT_COMBO_BOX
 GIMP_IS_UNIT_COMBO_BOX
 GIMP_TYPE_UNIT_COMBO_BOX
@@ -730,26 +742,6 @@ GIMP_UNIT_COMBO_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpunitmenu</FILE>
-<TITLE>GimpUnitMenu</TITLE>
-GimpUnitMenu
-gimp_unit_menu_new
-gimp_unit_menu_set_unit
-gimp_unit_menu_get_unit
-gimp_unit_menu_get_pixel_digits
-gimp_unit_menu_set_pixel_digits
-<SUBSECTION Standard>
-GIMP_UNIT_MENU
-GIMP_IS_UNIT_MENU
-GIMP_TYPE_UNIT_MENU
-gimp_unit_menu_get_type
-GimpUnitMenuClass
-GIMP_UNIT_MENU_CLASS
-GIMP_IS_UNIT_MENU_CLASS
-GIMP_UNIT_MENU_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpoffsetarea</FILE>
 <TITLE>GimpOffsetArea</TITLE>
 GimpOffsetArea
@@ -758,6 +750,7 @@ gimp_offset_area_set_size
 gimp_offset_area_set_offsets
 gimp_offset_area_set_pixbuf
 <SUBSECTION Standard>
+GimpOffsetAreaPrivate
 GIMP_OFFSET_AREA
 GIMP_IS_OFFSET_AREA
 GIMP_TYPE_OFFSET_AREA
@@ -779,7 +772,10 @@ gimp_dialog_add_buttons
 gimp_dialog_add_buttons_valist
 gimp_dialog_run
 gimp_dialogs_show_help_button
+gimp_dialog_set_alternative_button_order
+gimp_dialog_set_alternative_button_order_from_array
 <SUBSECTION Standard>
+GimpDialogPrivate
 GIMP_TYPE_DIALOG
 GIMP_DIALOG
 GIMP_IS_DIALOG
@@ -795,8 +791,6 @@ GIMP_DIALOG_GET_CLASS
 <TITLE>GimpHelpUI</TITLE>
 GimpHelpFunc
 GIMP_HELP_ID
-gimp_help_enable_tooltips
-gimp_help_disable_tooltips
 gimp_standard_help_func
 gimp_help_connect
 gimp_help_set_help_data
@@ -825,7 +819,6 @@ GIMP_QUERY_BOX_VBOX
 <SECTION>
 <FILE>gimpicons</FILE>
 <TITLE>GimpIcons</TITLE>
-gimp_stock_init
 gimp_icons_init
 gimp_icons_set_icon_theme
 <SUBSECTION Icons>
@@ -1124,215 +1117,6 @@ GIMP_ICON_ZOOM_ORIGINAL
 GIMP_ICON_ZOOM_OUT
 GIMP_ICON_ZOOM_FIT_BEST
 GIMP_ICON_ZOOM_FOLLOW_WINDOW
-<SUBSECTION Stock IDs>
-GIMP_STOCK_ANCHOR
-GIMP_STOCK_CENTER
-GIMP_STOCK_DUPLICATE
-GIMP_STOCK_EDIT
-GIMP_STOCK_RESET
-GIMP_STOCK_CLOSE
-GIMP_STOCK_MENU_LEFT
-GIMP_STOCK_MENU_RIGHT
-GIMP_STOCK_MOVE_TO_SCREEN
-GIMP_STOCK_INVERT
-GIMP_STOCK_LAYER_TO_IMAGESIZE
-GIMP_STOCK_MERGE_DOWN
-GIMP_STOCK_NAVIGATION
-GIMP_STOCK_PASTE_AS_NEW
-GIMP_STOCK_PASTE_INTO
-GIMP_STOCK_PATH_STROKE
-GIMP_STOCK_PLUGIN
-GIMP_STOCK_QUICK_MASK_OFF
-GIMP_STOCK_QUICK_MASK_ON
-GIMP_STOCK_HISTOGRAM
-GIMP_STOCK_HISTOGRAM_LINEAR
-GIMP_STOCK_HISTOGRAM_LOGARITHMIC
-GIMP_STOCK_RESHOW_FILTER
-GIMP_STOCK_RESIZE
-GIMP_STOCK_FLIP_HORIZONTAL
-GIMP_STOCK_FLIP_VERTICAL
-GIMP_STOCK_ROTATE_180
-GIMP_STOCK_ROTATE_270
-GIMP_STOCK_ROTATE_90
-GIMP_STOCK_SCALE
-GIMP_STOCK_LINKED
-GIMP_STOCK_VISIBLE
-GIMP_STOCK_LIST
-GIMP_STOCK_GRID
-GIMP_STOCK_PORTRAIT
-GIMP_STOCK_LANDSCAPE
-GIMP_STOCK_VIDEO
-GIMP_STOCK_WEB
-GIMP_STOCK_IMAGE
-GIMP_STOCK_LAYER
-GIMP_STOCK_LAYER_MASK
-GIMP_STOCK_CHANNEL
-GIMP_STOCK_CHANNEL_RED
-GIMP_STOCK_CHANNEL_GREEN
-GIMP_STOCK_CHANNEL_BLUE
-GIMP_STOCK_CHANNEL_GRAY
-GIMP_STOCK_CHANNEL_INDEXED
-GIMP_STOCK_CHANNEL_ALPHA
-GIMP_STOCK_PATH
-GIMP_STOCK_TEXT_LAYER
-GIMP_STOCK_FLOATING_SELECTION
-GIMP_STOCK_TEMPLATE
-GIMP_STOCK_IMAGES
-GIMP_STOCK_LAYERS
-GIMP_STOCK_CHANNELS
-GIMP_STOCK_PATHS
-GIMP_STOCK_COLORMAP
-GIMP_STOCK_INDEXED_PALETTE
-GIMP_STOCK_CURSOR
-GIMP_STOCK_SAMPLE_POINT
-GIMP_STOCK_SHAPE_CIRCLE
-GIMP_STOCK_SHAPE_SQUARE
-GIMP_STOCK_SHAPE_DIAMOND
-GIMP_STOCK_CAP_BUTT
-GIMP_STOCK_CAP_ROUND
-GIMP_STOCK_CAP_SQUARE
-GIMP_STOCK_JOIN_MITER
-GIMP_STOCK_JOIN_ROUND
-GIMP_STOCK_JOIN_BEVEL
-GIMP_STOCK_SELECTION
-GIMP_STOCK_SELECTION_ALL
-GIMP_STOCK_SELECTION_NONE
-GIMP_STOCK_SELECTION_GROW
-GIMP_STOCK_SELECTION_SHRINK
-GIMP_STOCK_SELECTION_BORDER
-GIMP_STOCK_SELECTION_ADD
-GIMP_STOCK_SELECTION_SUBTRACT
-GIMP_STOCK_SELECTION_REPLACE
-GIMP_STOCK_SELECTION_INTERSECT
-GIMP_STOCK_SELECTION_STROKE
-GIMP_STOCK_SELECTION_TO_CHANNEL
-GIMP_STOCK_SELECTION_TO_PATH
-GIMP_STOCK_GRADIENT_LINEAR
-GIMP_STOCK_GRADIENT_BILINEAR
-GIMP_STOCK_GRADIENT_RADIAL
-GIMP_STOCK_GRADIENT_SQUARE
-GIMP_STOCK_GRADIENT_CONICAL_SYMMETRIC
-GIMP_STOCK_GRADIENT_CONICAL_ASYMMETRIC
-GIMP_STOCK_GRADIENT_SHAPEBURST_SPHERICAL
-GIMP_STOCK_GRADIENT_SHAPEBURST_ANGULAR
-GIMP_STOCK_GRADIENT_SHAPEBURST_DIMPLED
-GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE
-GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE
-GIMP_STOCK_GRAVITY_NORTH_WEST
-GIMP_STOCK_GRAVITY_NORTH
-GIMP_STOCK_GRAVITY_NORTH_EAST
-GIMP_STOCK_GRAVITY_WEST
-GIMP_STOCK_GRAVITY_EAST
-GIMP_STOCK_GRAVITY_SOUTH_WEST
-GIMP_STOCK_GRAVITY_SOUTH
-GIMP_STOCK_GRAVITY_SOUTH_EAST
-GIMP_STOCK_HCENTER
-GIMP_STOCK_VCENTER
-GIMP_STOCK_CHAR_PICKER
-GIMP_STOCK_LETTER_SPACING
-GIMP_STOCK_LINE_SPACING
-GIMP_STOCK_TEXT_DIR_LTR
-GIMP_STOCK_TEXT_DIR_RTL
-GIMP_STOCK_PRINT_RESOLUTION
-GIMP_STOCK_TOOLS
-GIMP_STOCK_TOOL_OPTIONS
-GIMP_STOCK_DEVICE_STATUS
-GIMP_STOCK_INPUT_DEVICE
-GIMP_STOCK_DISPLAY_FILTER
-GIMP_STOCK_CURVE_FREE
-GIMP_STOCK_CURVE_SMOOTH
-GIMP_STOCK_COLOR_PICKER_BLACK
-GIMP_STOCK_COLOR_PICKER_GRAY
-GIMP_STOCK_COLOR_PICKER_WHITE
-GIMP_STOCK_COLOR_TRIANGLE
-GIMP_STOCK_COLOR_PICK_FROM_SCREEN
-GIMP_STOCK_CONVERT_GRAYSCALE
-GIMP_STOCK_CONVERT_INDEXED
-GIMP_STOCK_CONVERT_RGB
-GIMP_STOCK_TRANSPARENCY
-GIMP_STOCK_DEFAULT_COLORS
-GIMP_STOCK_SWAP_COLORS
-GIMP_STOCK_UNDO_HISTORY
-GIMP_STOCK_HCHAIN
-GIMP_STOCK_HCHAIN_BROKEN
-GIMP_STOCK_VCHAIN
-GIMP_STOCK_VCHAIN_BROKEN
-GIMP_STOCK_TEXTURE
-GIMP_STOCK_FRAME
-GIMP_STOCK_ERROR
-GIMP_STOCK_INFO
-GIMP_STOCK_QUESTION
-GIMP_STOCK_WARNING
-GIMP_STOCK_GEGL
-GIMP_STOCK_USER_MANUAL
-GIMP_STOCK_WILBER
-GIMP_STOCK_WILBER_EEK
-GIMP_STOCK_ZOOM_FOLLOW_WINDOW
-GIMP_STOCK_TOOL_AIRBRUSH
-GIMP_STOCK_TOOL_ALIGN
-GIMP_STOCK_TOOL_BLEND
-GIMP_STOCK_TOOL_BLUR
-GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST
-GIMP_STOCK_TOOL_BUCKET_FILL
-GIMP_STOCK_TOOL_BY_COLOR_SELECT
-GIMP_STOCK_TOOL_CAGE
-GIMP_STOCK_TOOL_CLONE
-GIMP_STOCK_TOOL_COLOR_BALANCE
-GIMP_STOCK_TOOL_COLOR_PICKER
-GIMP_STOCK_TOOL_COLORIZE
-GIMP_STOCK_TOOL_CROP
-GIMP_STOCK_TOOL_CURVES
-GIMP_STOCK_TOOL_DESATURATE
-GIMP_STOCK_TOOL_DODGE
-GIMP_STOCK_TOOL_ELLIPSE_SELECT
-GIMP_STOCK_TOOL_ERASER
-GIMP_STOCK_TOOL_FLIP
-GIMP_STOCK_TOOL_FOREGROUND_SELECT
-GIMP_STOCK_TOOL_FREE_SELECT
-GIMP_STOCK_TOOL_FUZZY_SELECT
-GIMP_STOCK_TOOL_HEAL
-GIMP_STOCK_TOOL_HUE_SATURATION
-GIMP_STOCK_TOOL_INK
-GIMP_STOCK_TOOL_ISCISSORS
-GIMP_STOCK_TOOL_LEVELS
-GIMP_STOCK_TOOL_MEASURE
-GIMP_STOCK_TOOL_MOVE
-GIMP_STOCK_TOOL_PAINTBRUSH
-GIMP_STOCK_TOOL_PATH
-GIMP_STOCK_TOOL_PENCIL
-GIMP_STOCK_TOOL_PERSPECTIVE
-GIMP_STOCK_TOOL_PERSPECTIVE_CLONE
-GIMP_STOCK_TOOL_POSTERIZE
-GIMP_STOCK_TOOL_RECT_SELECT
-GIMP_STOCK_TOOL_ROTATE
-GIMP_STOCK_TOOL_SCALE
-GIMP_STOCK_TOOL_SHEAR
-GIMP_STOCK_TOOL_SMUDGE
-GIMP_STOCK_TOOL_TEXT
-GIMP_STOCK_TOOL_THRESHOLD
-GIMP_STOCK_TOOL_ZOOM
-GIMP_STOCK_CONTROLLER
-GIMP_STOCK_CONTROLLER_KEYBOARD
-GIMP_STOCK_CONTROLLER_LINUX_INPUT
-GIMP_STOCK_CONTROLLER_MIDI
-GIMP_STOCK_CONTROLLER_MOUSE
-GIMP_STOCK_CONTROLLER_WHEEL
-GIMP_STOCK_DISPLAY_FILTER_COLORBLIND
-GIMP_STOCK_DISPLAY_FILTER_CONTRAST
-GIMP_STOCK_DISPLAY_FILTER_GAMMA
-GIMP_STOCK_DISPLAY_FILTER_LCMS
-GIMP_STOCK_DISPLAY_FILTER_PROOF
-GIMP_STOCK_QMASK_ON
-GIMP_STOCK_QMASK_OFF
-GIMP_STOCK_BRUSH
-GIMP_STOCK_DYNAMICS
-GIMP_STOCK_BUFFER
-GIMP_STOCK_DETACH
-GIMP_STOCK_FONT
-GIMP_STOCK_GRADIENT
-GIMP_STOCK_PALETTE
-GIMP_STOCK_PATTERN
-GIMP_STOCK_TOOL_PRESET
 </SECTION>
 
 <SECTION>
@@ -1342,9 +1126,6 @@ gimp_enum_radio_box_new
 gimp_enum_radio_box_new_with_range
 gimp_enum_radio_frame_new
 gimp_enum_radio_frame_new_with_range
-gimp_enum_stock_box_new
-gimp_enum_stock_box_new_with_range
-gimp_enum_stock_box_set_child_padding
 gimp_enum_icon_box_new
 gimp_enum_icon_box_new_with_range
 gimp_enum_icon_box_set_child_padding
@@ -1402,7 +1183,6 @@ gimp_prop_enum_combo_box_new
 gimp_prop_enum_label_new
 gimp_prop_enum_radio_box_new
 gimp_prop_enum_radio_frame_new
-gimp_prop_enum_stock_box_new
 gimp_prop_enum_icon_box_new
 gimp_prop_expander_new
 gimp_prop_file_chooser_button_new
@@ -1417,7 +1197,6 @@ gimp_prop_path_editor_new
 gimp_prop_scale_entry_new
 gimp_prop_size_entry_new
 gimp_prop_spin_button_new
-gimp_prop_stock_image_new
 gimp_prop_string_combo_box_new
 gimp_prop_text_buffer_new
 gimp_prop_unit_combo_box_new
@@ -1428,14 +1207,11 @@ gimp_prop_unit_menu_new
 <FILE>gimpcolordisplay</FILE>
 <TITLE>GimpColorDisplay</TITLE>
 GimpColorDisplay
-gimp_color_display_new
 gimp_color_display_clone
 gimp_color_display_set_enabled
 gimp_color_display_get_enabled
 gimp_color_display_get_config
 gimp_color_display_get_managed
-gimp_color_display_convert
-gimp_color_display_convert_surface
 gimp_color_display_convert_buffer
 gimp_color_display_load_state
 gimp_color_display_save_state
@@ -1444,6 +1220,7 @@ gimp_color_display_configure_reset
 gimp_color_display_changed
 <SUBSECTION Standard>
 GimpColorDisplayClass
+GimpColorDisplayPrivate
 GIMP_COLOR_DISPLAY
 GIMP_IS_COLOR_DISPLAY
 GIMP_TYPE_COLOR_DISPLAY
@@ -1460,15 +1237,15 @@ GimpColorDisplayStack
 gimp_color_display_stack_new
 gimp_color_display_stack_clone
 gimp_color_display_stack_changed
+gimp_color_display_stack_get_filters
 gimp_color_display_stack_add
 gimp_color_display_stack_remove
 gimp_color_display_stack_reorder_up
 gimp_color_display_stack_reorder_down
-gimp_color_display_stack_convert
-gimp_color_display_stack_convert_surface
 gimp_color_display_stack_convert_buffer
 <SUBSECTION Standard>
 GimpColorDisplayStackClass
+GimpColorDisplayStackPrivate
 GIMP_COLOR_DISPLAY_STACK
 GIMP_IS_COLOR_DISPLAY_STACK
 GIMP_TYPE_COLOR_DISPLAY_STACK
@@ -1505,6 +1282,7 @@ gimp_color_selector_model_visible_changed
 gimp_color_selector_set_config
 <SUBSECTION Standard>
 GimpColorSelectorClass
+GimpColorSelectorPrivate
 GIMP_COLOR_SELECTOR
 GIMP_IS_COLOR_SELECTOR
 GIMP_TYPE_COLOR_SELECTOR
@@ -1523,8 +1301,12 @@ gimp_color_selector_model_get_type
 <TITLE>GimpColorNotebook</TITLE>
 GimpColorNotebook
 gimp_color_notebook_set_has_page
+gimp_color_notebook_get_current_selector
+gimp_color_notebook_get_notebook
+gimp_color_notebook_get_selectors
 <SUBSECTION Standard>
 GimpColorNotebookClass
+GimpColorNotebookPrivate
 GIMP_COLOR_NOTEBOOK
 GIMP_IS_COLOR_NOTEBOOK
 GIMP_TYPE_COLOR_NOTEBOOK
@@ -1565,6 +1347,7 @@ GimpPickButton
 gimp_pick_button_new
 <SUBSECTION Standard>
 GimpPickButtonClass
+GimpPickButtonPrivate
 GIMP_PICK_BUTTON
 GIMP_IS_PICK_BUTTON
 GIMP_TYPE_PICK_BUTTON
@@ -1585,11 +1368,13 @@ gimp_preview_area_blend
 gimp_preview_area_mask
 gimp_preview_area_set_offsets
 gimp_preview_area_set_colormap
+gimp_preview_area_set_color_config
+gimp_preview_area_get_size
 gimp_preview_area_set_max_size
 gimp_preview_area_menu_popup
-gimp_preview_area_set_color_config
 <SUBSECTION Standard>
 GimpPreviewAreaClass
+GimpPreviewAreaPrivate
 GIMP_PREVIEW_AREA
 GIMP_IS_PREVIEW_AREA
 GIMP_TYPE_PREVIEW_AREA
@@ -1605,19 +1390,27 @@ GIMP_PREVIEW_AREA_GET_CLASS
 GimpPreview
 gimp_preview_get_update
 gimp_preview_set_update
+gimp_preview_get_bounds
 gimp_preview_set_bounds
+gimp_preview_set_size
 gimp_preview_get_size
+gimp_preview_get_offsets
+gimp_preview_set_offsets
 gimp_preview_get_position
 gimp_preview_transform
 gimp_preview_untransform
+gimp_preview_get_frame
+gimp_preview_get_grid
 gimp_preview_get_area
 gimp_preview_draw
 gimp_preview_draw_buffer
 gimp_preview_invalidate
+gimp_preview_get_default_cursor
 gimp_preview_set_default_cursor
 gimp_preview_get_controls
 <SUBSECTION Standard>
 GimpPreviewClass
+GimpPreviewPrivate
 GIMP_PREVIEW
 GIMP_IS_PREVIEW
 GIMP_TYPE_PREVIEW
@@ -1633,10 +1426,13 @@ GIMP_PREVIEW_GET_CLASS
 GimpScrolledPreview
 gimp_scrolled_preview_set_position
 gimp_scrolled_preview_set_policy
+gimp_scrolled_preview_get_adjustments
 gimp_scrolled_preview_freeze
 gimp_scrolled_preview_thaw
+gimp_scroll_adjustment_values
 <SUBSECTION Standard>
 GimpScrolledPreviewClass
+GimpScrolledPreviewPrivate
 GIMP_SCROLLED_PREVIEW
 GIMP_IS_SCROLLED_PREVIEW
 GIMP_TYPE_SCROLLED_PREVIEW
@@ -1653,7 +1449,7 @@ gimp_label_set_attributes
 gimp_widget_get_monitor
 gimp_get_monitor_at_pointer
 gimp_widget_track_monitor
-gimp_screen_get_color_profile
+gimp_monitor_get_color_profile
 gimp_widget_get_color_profile
 gimp_widget_get_color_transform
 </SECTION>
@@ -1672,6 +1468,7 @@ gimp_zoom_button_new
 gimp_zoom_model_zoom_step
 <SUBSECTION Standard>
 GimpZoomModelClass
+GimpZoomModelPrivate
 GIMP_ZOOM_MODEL
 GIMP_IS_ZOOM_MODEL
 GIMP_TYPE_ZOOM_MODEL
@@ -1681,23 +1478,6 @@ GIMP_IS_ZOOM_MODEL_CLASS
 GIMP_ZOOM_MODEL_GET_CLASS
 GIMP_TYPE_ZOOM_TYPE
 gimp_zoom_type_get_type
-</SECTION>
-
-<SECTION>
-<FILE>gimpoldwidgets</FILE>
-gimp_int_option_menu_new
-gimp_int_option_menu_set_history
-GimpIntOptionMenuSensitivityCallback
-gimp_int_option_menu_set_sensitive
-gimp_option_menu_new
-gimp_option_menu_new2
-gimp_option_menu_set_history
-GimpOptionMenuSensitivityCallback
-gimp_option_menu_set_sensitive
-gimp_menu_item_update
-gimp_toggle_button_sensitive_update
-gimp_pixmap_button_new
-gimp_unit_menu_update
 </SECTION>
 
 <SECTION>
@@ -1717,6 +1497,7 @@ gimp_controller_get_event_blurb
 gimp_controller_event
 <SUBSECTION Standard>
 GimpControllerClass
+GimpControllerPrivate
 GIMP_CONTROLLER
 GIMP_IS_CONTROLLER
 GIMP_TYPE_CONTROLLER
@@ -1724,24 +1505,4 @@ gimp_controller_get_type
 GIMP_CONTROLLER_CLASS
 GIMP_IS_CONTROLLER_CLASS
 GIMP_CONTROLLER_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimp3migration</FILE>
-GdkModifierIntent
-gdk_event_triggers_context_menu
-gdk_keymap_get_modifier_mask
-gdk_cairo_get_clip_rectangle
-gdk_screen_get_monitor_workarea
-gtk_box_new
-gtk_button_box_new
-gtk_paned_new
-gtk_scale_new
-gtk_scrollbar_new
-gtk_separator_new
-gtk_widget_get_modifier_mask
-gtk_label_get_xalign
-gtk_label_get_yalign
-gtk_label_set_xalign
-gtk_label_set_yalign
 </SECTION>
