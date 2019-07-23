@@ -160,6 +160,7 @@ gimp_scanner_parse_matrix2
 <TITLE>GimpColorConfig</TITLE>
 GimpColorManagementMode
 GimpColorRenderingIntent
+GimpColorConfig
 gimp_color_config_get_mode
 gimp_color_config_get_display_intent
 gimp_color_config_get_display_bpc
@@ -176,7 +177,6 @@ gimp_color_config_get_cmyk_color_profile
 gimp_color_config_get_display_color_profile
 gimp_color_config_get_simulation_color_profile
 <SUBSECTION Standard>
-GimpColorConfig
 GimpColorConfigClass
 GimpColorConfigPrivate
 GIMP_COLOR_CONFIG

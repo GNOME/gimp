@@ -19,7 +19,10 @@ SCAN_OPTIONS = --deprecated-guards="GIMP_DISABLE_DEPRECATED"
 MKDB_OPTIONS = --sgml-mode --output-format=xml --name-space=gimp
 
 # Extra options to supply to gtkdoc-fixref
-FIXXREF_OPTIONS = --extra-dir=../libgimpbase/html --extra-dir=../libgimpcolor/html --extra-dir=../libgimpmath/html
+FIXXREF_OPTIONS = \
+	--extra-dir=../libgimpbase/html		\
+	--extra-dir=../libgimpcolor/html	\
+	--extra-dir=../libgimpmath/html
 
 # Used for dependencies
 HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h

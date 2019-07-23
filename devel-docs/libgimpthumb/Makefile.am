@@ -19,7 +19,8 @@ SCAN_OPTIONS =
 MKDB_OPTIONS = --sgml-mode --output-format=xml --name-space=gimp
 
 # Extra options to supply to gtkdoc-fixref
-FIXXREF_OPTIONS = --extra-dir=../libgimpmath/html
+FIXXREF_OPTIONS = \
+	--extra-dir=../libgimpmath/html
 
 # Used for dependencies
 HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h

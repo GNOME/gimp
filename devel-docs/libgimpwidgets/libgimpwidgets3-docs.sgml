@@ -102,13 +102,6 @@
     <xi:include href="xml/gimpwidgetsutils.xml" />
   </part>
 
-  <part id="libgimpwidgets-deprecated">
-    <title>Deprecated API</title>
-    <xi:include href="xml/gimpoldwidgets.xml" />
-    <xi:include href="xml/gimppixmap.xml" />
-    <xi:include href="xml/gimpunitmenu.xml" />
-  </part>
-
   <index id="api-index-full">
     <title>Index</title>
     <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
@@ -140,6 +133,10 @@
   <index role="2.10.10" id="api-index-2-10-10">
     <title>Index of new symbols in GIMP 2.10.10</title>
     <xi:include href="xml/api-index-2.10.10.xml"><xi:fallback /></xi:include>
+  </index>
+  <index role="3.0" id="api-index-3-0">
+    <title>Index of new symbols in GIMP 3.0</title>
+    <xi:include href="xml/api-index-3.0.xml"><xi:fallback /></xi:include>
   </index>
   <index role="deprecated" id="api-index-deprecated">
     <title>Index of deprecated symbols</title>

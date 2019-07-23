@@ -19,7 +19,12 @@ SCAN_OPTIONS = --deprecated-guards="GIMP_DISABLE_DEPRECATED"
 MKDB_OPTIONS = --sgml-mode --output-format=xml --name-space=gimp
 
 # Extra options to supply to gtkdoc-fixref
-FIXXREF_OPTIONS = --extra-dir=../libgimpbase/html --extra-dir=../libgimpcolor/html --extra-dir=../libgimpconfig/html --extra-dir=../libgimpmath/html --extra-dir=../libgimpwidgets/html
+FIXXREF_OPTIONS = \
+	--extra-dir=../libgimpbase/html		\
+	--extra-dir=../libgimpcolor/html	\
+	--extra-dir=../libgimpconfig/html	\
+	--extra-dir=../libgimpmath/html		\
+	--extra-dir=../libgimpwidgets/html
 
 # Used for dependencies
 HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h
@@ -48,9 +53,8 @@ GTKDOC_CFLAGS = \
 	@CFLAGS@		\
 	-I$(top_srcdir) 	\
 	-I$(top_builddir) 	\
-	$(GEGL_CFLAGS)		\
-	@GTK_CFLAGS@		\
-	-UGTK_DISABLE_SINGLE_INCLUDES
+	@GEGL_CFLAGS@		\
+	@GTK_CFLAGS@
 
 GTKDOC_LIBS = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la		\
@@ -60,6 +64,7 @@ GTKDOC_LIBS = \
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la	\
 	$(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la			\
 	$(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la		\
+	@GEGL_LIBS@								\
 	@GTK_LIBS@
 
 
