@@ -130,6 +130,7 @@ gegl-git-autotools:
         at-spi2-atk
         dbus-glib
         desktop-file-utils
+        ffmpeg
         glib-networking
         gtk3
         hicolor-icon-theme
