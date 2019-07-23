@@ -1092,7 +1092,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
  * results in a square segment shape (or gap shape).
  *
  * This setting affects the following procedures:
- * gimp_drawable_edit_stroke_selection_(),
+ * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
  *
  * Returns: TRUE on success.

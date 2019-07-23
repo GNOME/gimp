@@ -893,7 +893,7 @@ results in a square segment shape (or gap shape).
 
 
 This setting affects the following procedures:
-gimp_drawable_edit_stroke_selection_(), gimp_drawable_edit_stroke_item().
+gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
 HELP
 
     &mitch_pdb_misc('2015', '2.10');

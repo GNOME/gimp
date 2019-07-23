@@ -3763,7 +3763,7 @@ register_context_procs (GimpPDB *pdb)
                                      "\n"
                                      "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
                                      "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection-', 'gimp-drawable-edit-stroke-item'.",
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
