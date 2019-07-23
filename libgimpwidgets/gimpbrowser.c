@@ -295,7 +295,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
  *
  * Returns: The left vbox.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  **/
 GtkWidget *
 gimp_browser_get_left_vbox (GimpBrowser *browser)
@@ -315,7 +315,7 @@ gimp_browser_get_left_vbox (GimpBrowser *browser)
  *
  * Returns: The right vbox.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  **/
 GtkWidget *
 gimp_browser_get_right_vbox (GimpBrowser *browser)
@@ -336,7 +336,7 @@ gimp_browser_get_right_vbox (GimpBrowser *browser)
  *
  * Sets the search summary text.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  **/
 void
 gimp_browser_set_search_summary (GimpBrowser *browser,

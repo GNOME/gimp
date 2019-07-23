@@ -315,8 +315,8 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
  * @paint_mode: Initial paint mode.  -1 means to use current paint mode.
  *
  * Creates a new #GtkWidget that completely controls the selection of
- * a #GimpBrush.  This widget is suitable for placement in a table in
- * a plug-in dialog.
+ * a brush. This widget is suitable for placement in a table in a
+ * plug-in dialog.
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *

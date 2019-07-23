@@ -554,7 +554,7 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
  *
  * Return value: The #GtkNotebook inside.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  **/
 GtkWidget *
 gimp_color_notebook_get_notebook (GimpColorNotebook *notebook)
@@ -570,7 +570,7 @@ gimp_color_notebook_get_notebook (GimpColorNotebook *notebook)
  *
  * Return value: The notebook's list of #GimpColorSelector's.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  **/
 GList *
 gimp_color_notebook_get_selectors (GimpColorNotebook *notebook)
@@ -586,7 +586,7 @@ gimp_color_notebook_get_selectors (GimpColorNotebook *notebook)
  *
  * Return value: The active page's #GimpColorSelector.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  **/
 GimpColorSelector *
 gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook)

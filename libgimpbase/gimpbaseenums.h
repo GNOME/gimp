@@ -473,6 +473,7 @@ typedef enum
  * @GIMP_GRADIENT_SEGMENT_SINE:              Sinusoidal
  * @GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: Spherical (increasing)
  * @GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: Spherical (decreasing)
+ * @GIMP_GRADIENT_SEGMENT_STEP:              Step
  *
  * Transition functions for gradient segments.
  **/
@@ -971,7 +972,6 @@ typedef enum
  * @GIMP_PRECISION_DOUBLE_LINEAR:     64-bit linear floating point
  * @GIMP_PRECISION_DOUBLE_NON_LINEAR: 64-bit non-linear floating point
  * @GIMP_PRECISION_DOUBLE_PERCEPTUAL: 64-bit perceptual floating point
- *
  * @GIMP_PRECISION_U8_GAMMA:      deprecated alias for
  *                                @GIMP_PRECISION_U8_NON_LINEAR
  * @GIMP_PRECISION_U16_GAMMA:     deprecated alias for

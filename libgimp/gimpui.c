@@ -195,7 +195,7 @@ gimp_ui_get_foreign_window (guint32 window)
 
 /**
  * gimp_ui_get_display_window:
- * @gdisp_ID: a #GimpDisplay ID.
+ * @gdisp_ID: a GimpDisplay ID.
  *
  * Returns the #GdkWindow of a display window. The purpose is to allow
  * to make plug-in dialogs transient to the image display as explained

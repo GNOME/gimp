@@ -65,6 +65,12 @@ gboolean     gimp_param_spec_rgb_has_alpha (GParamSpec     *pspec);
 
 /*  RGB and RGBA color types and operations taken from LibGCK  */
 
+/**
+ * GimpRGBCompositeMode:
+ * @GIMP_RGB_COMPOSITE_NONE: don't do compositing
+ * @GIMP_RGB_COMPOSITE_NORMAL: composite on top
+ * @GIMP_RGB_COMPOSITE_BEHIND: composite behind
+ **/
 typedef enum
 {
   GIMP_RGB_COMPOSITE_NONE = 0,

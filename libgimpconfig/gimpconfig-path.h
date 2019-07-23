@@ -46,6 +46,15 @@ GType               gimp_config_path_get_type        (void) G_GNUC_CONST;
  * GIMP_TYPE_PARAM_CONFIG_PATH
  */
 
+/**
+ * GimpConfigPathType:
+ * @GIMP_CONFIG_PATH_FILE:      A single file
+ * @GIMP_CONFIG_PATH_FILE_LIST: A list of files
+ * @GIMP_CONFIG_PATH_DIR:       A single folder
+ * @GIMP_CONFIG_PATH_DIR_LIST:  A list of folders
+ *
+ * Types of config paths.
+ **/
 typedef enum
 {
   GIMP_CONFIG_PATH_FILE,

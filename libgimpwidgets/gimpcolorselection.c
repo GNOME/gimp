@@ -597,7 +597,7 @@ gimp_color_selection_set_config (GimpColorSelection *selection,
  *
  * Returns: The selection's #GimpColorNotebook.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  */
 GtkWidget *
 gimp_color_selection_get_notebook (GimpColorSelection *selection)
@@ -613,7 +613,7 @@ gimp_color_selection_get_notebook (GimpColorSelection *selection)
  *
  * Returns: The selection's right #GtkBox which contains the color scales.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  */
 GtkWidget *
 gimp_color_selection_get_right_vbox (GimpColorSelection *selection)

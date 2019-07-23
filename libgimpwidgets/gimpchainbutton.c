@@ -425,7 +425,7 @@ gimp_chain_button_get_active (GimpChainButton *button)
  *
  * Returns: The #GimpChainButton's button.
  *
- * Since: GIMP 3.0
+ * Since: 3.0
  */
 GtkWidget *
 gimp_chain_button_get_button (GimpChainButton *button)

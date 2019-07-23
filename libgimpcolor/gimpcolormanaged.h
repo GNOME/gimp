@@ -39,6 +39,16 @@ G_BEGIN_DECLS
 
 typedef struct _GimpColorManagedInterface GimpColorManagedInterface;
 
+/**
+ * GimpColorManagedInterface:
+ * @base_iface: The parent interface
+ * @get_icc_profile: Returns the ICC profile of the pixels managed by
+ *                   the object
+ * @profile_changed: This signal is emitted when the object's color profile
+ *                   has changed
+ * @get_color_profile: Returns the #GimpColorProfile of the pixels managed
+ *                     by the object
+ **/
 struct _GimpColorManagedInterface
 {
   GTypeInterface  base_iface;

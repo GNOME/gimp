@@ -79,9 +79,15 @@ typedef enum
 
 GQuark  gimp_module_error_quark (void) G_GNUC_CONST;
 
+/**
+ * GimpModuleError:
+ * @GIMP_MODULE_FAILED: Generic error condition
+ *
+ * Types of errors returned by modules
+ **/
 typedef enum
 {
-  GIMP_MODULE_FAILED             /* generic error condition */
+  GIMP_MODULE_FAILED
 } GimpModuleError;
 
 

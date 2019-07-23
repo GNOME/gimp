@@ -87,7 +87,7 @@ gimp_busy_box_class_init (GimpBusyBoxClass *klass)
    * Specifies the displayed message.
    *
    * Since: 2.10.4
-   */
+   **/
   g_object_class_install_property (object_class, PROP_MESSAGE,
                                    g_param_spec_string ("message",
                                                         NULL, NULL,

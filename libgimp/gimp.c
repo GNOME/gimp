@@ -266,7 +266,7 @@ static gchar             *pdb_error_message  = NULL;
  * and the 'argc' and 'argv' that are passed to "main".
  *
  * Returns: an exit status as defined by the C library,
- *          on success %EXIT_SUCCESS.
+ *          on success EXIT_SUCCESS.
  **/
 gint
 gimp_main (const GimpPlugInInfo *info,

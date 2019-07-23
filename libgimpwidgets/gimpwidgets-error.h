@@ -29,6 +29,12 @@
 G_BEGIN_DECLS
 
 
+/**
+ * GimpWidgetsError:
+ * @GIMP_WIDGETS_PARSE_ERROR: A parse error has occured
+ *
+ * Types of errors returned by libgimpwidgets functions
+ **/
 typedef enum
 {
   GIMP_WIDGETS_PARSE_ERROR
