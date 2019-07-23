@@ -2863,29 +2863,27 @@ plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
 plug-ins/common/Makefile
 modules/Makefile
-]
-dnl devel-docs/Makefile
-dnl devel-docs/app/Makefile
-dnl devel-docs/app/version
-dnl devel-docs/libgimp/Makefile
-dnl devel-docs/libgimp/version
-dnl devel-docs/libgimpbase/Makefile
-dnl devel-docs/libgimpbase/version
-dnl devel-docs/libgimpconfig/Makefile
-dnl devel-docs/libgimpconfig/version
-dnl devel-docs/libgimpcolor/Makefile
-dnl devel-docs/libgimpcolor/version
-dnl devel-docs/libgimpmath/Makefile
-dnl devel-docs/libgimpmath/version
-dnl devel-docs/libgimpmodule/Makefile
-dnl devel-docs/libgimpmodule/version
-dnl devel-docs/libgimpthumb/Makefile
-dnl devel-docs/libgimpthumb/version
-dnl devel-docs/libgimpwidgets/Makefile
-dnl devel-docs/libgimpwidgets/version
-dnl devel-docs/performance-logs/Makefile
-dnl devel-docs/tools/Makefile
-[
+devel-docs/Makefile
+devel-docs/app/Makefile
+devel-docs/app/version
+devel-docs/libgimp/Makefile
+devel-docs/libgimp/version
+devel-docs/libgimpbase/Makefile
+devel-docs/libgimpbase/version
+devel-docs/libgimpconfig/Makefile
+devel-docs/libgimpconfig/version
+devel-docs/libgimpcolor/Makefile
+devel-docs/libgimpcolor/version
+devel-docs/libgimpmath/Makefile
+devel-docs/libgimpmath/version
+devel-docs/libgimpmodule/Makefile
+devel-docs/libgimpmodule/version
+devel-docs/libgimpthumb/Makefile
+devel-docs/libgimpthumb/version
+devel-docs/libgimpwidgets/Makefile
+devel-docs/libgimpwidgets/version
+devel-docs/performance-logs/Makefile
+devel-docs/tools/Makefile
 docs/Makefile
 menus/Makefile
 cursors/Makefile
