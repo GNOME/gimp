@@ -790,15 +790,25 @@ gimp_group_layer_translate (GimpLayer *layer,
   /*  redirect stack updates to the drawable, rather than to the projection  */
   private->direct_update++;
 
-  /*  if this is a nested group layer, we need to update the child-layers'
-   *  original area *before* updating the group's offset.  once we update the
-   *  group's offset, our parent's size will also be updated, and the
-   *  subsequent area-updates of the child layers during translation will be
-   *  clipped to the updated parent bounds, potentially failing to update their
-   *  original area.  see issue #3484.
+  /*  translate the child layers *before* updating the group's offset, so that,
+   *  if this is a nested group, the parent's bounds still reflect the original
+   *  layer positions.  This prevents the original area of the child layers,
+   *  which is updated as part of their translation, from being clipped to the
+   *  post-translation parent bounds (see issue #3484).  The new area of the
+   *  child layers, which is likewise updated as part of translation, *may* get
+   *  clipped to the old parent bounds, but the corresponding region will be
+   *  updated anyway when the parent is resized, once we update the group's
+   *  offset.
    */
-  if (gimp_viewable_get_depth (GIMP_VIEWABLE (group)) > 0)
-    gimp_drawable_update_all (GIMP_DRAWABLE (group));
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *child = list->data;
+
+      /*  don't push an undo here because undo will call us again  */
+      gimp_item_translate (child, offset_x, offset_y, FALSE);
+    }
 
   gimp_item_get_offset (GIMP_ITEM (group), &x, &y);
 
@@ -817,16 +827,6 @@ gimp_group_layer_translate (GimpLayer *layer,
 
   /*  update the group layer offset  */
   gimp_item_set_offset (GIMP_ITEM (group), x, y);
-
-  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
-       list;
-       list = g_list_next (list))
-    {
-      GimpItem *child = list->data;
-
-      /*  don't push an undo here because undo will call us again  */
-      gimp_item_translate (child, offset_x, offset_y, FALSE);
-    }
 
   /*  redirect stack updates back to the projection  */
   private->direct_update--;
