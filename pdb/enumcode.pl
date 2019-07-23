@@ -77,9 +77,23 @@ foreach (sort keys %enums) {
 
 	print ENUMFILE "\n#define GIMP_TYPE_$gtype (gimp_$func\_get_type ())\n\n";
 	print ENUMFILE "GType gimp_$func\_get_type (void) G_GNUC_CONST;\n\n";
+
+	print ENUMFILE "/**\n";
+	print ENUMFILE " * $_:\n";
+
+	my $enum = $enums{$_};
+
+	foreach $symbol (@{$enum->{symbols}}) {
+	    print ENUMFILE " * @" . $symbol . ": " . $symbol . "\n";
+	}
+
+	print ENUMFILE " *\n";
+	print ENUMFILE " * Extracted from app/" . $enums{$_}->{header} . "\n";
+	print ENUMFILE " **/\n";
+
 	print ENUMFILE "typedef enum\n{\n";
 
-	my $enum = $enums{$_}; my $body = "";
+	my $body = "";
 
 	foreach $symbol (@{$enum->{symbols}}) {
 	    my $sym = $symbol;
