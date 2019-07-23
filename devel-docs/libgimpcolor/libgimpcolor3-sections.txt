@@ -62,8 +62,6 @@ gimp_rgb_clamp
 gimp_rgb_gamma
 gimp_rgb_luminance
 gimp_rgb_luminance_uchar
-gimp_rgb_intensity
-gimp_rgb_intensity_uchar
 gimp_rgb_composite
 gimp_rgba_set
 gimp_rgba_set_pixel
@@ -79,10 +77,6 @@ GIMP_RGB_LUMINANCE
 GIMP_RGB_LUMINANCE_RED
 GIMP_RGB_LUMINANCE_GREEN
 GIMP_RGB_LUMINANCE_BLUE
-GIMP_RGB_INTENSITY
-GIMP_RGB_INTENSITY_RED
-GIMP_RGB_INTENSITY_GREEN
-GIMP_RGB_INTENSITY_BLUE
 GIMP_TYPE_RGB
 GIMP_TYPE_PARAM_RGB
 gimp_param_spec_rgb
@@ -105,17 +99,6 @@ gimp_rgb_to_cmyk
 gimp_hsv_to_rgb
 gimp_hsl_to_rgb
 gimp_cmyk_to_rgb
-gimp_rgb_to_hwb
-gimp_hwb_to_rgb
-gimp_rgb_to_hsv_int
-gimp_hsv_to_rgb_int
-gimp_rgb_to_hsl_int
-gimp_rgb_to_cmyk_int
-gimp_cmyk_to_rgb_int
-gimp_rgb_to_l_int
-gimp_hsl_to_rgb_int
-gimp_rgb_to_hsv4
-gimp_hsv_to_rgb4
 </SECTION>
 
 <SECTION>
@@ -219,7 +202,6 @@ gimp_bilinear_16
 gimp_bilinear_32
 gimp_bilinear_rgb
 gimp_bilinear_rgba
-gimp_bilinear_pixels_8
 </SECTION>
 
 <SECTION>
