@@ -20,7 +20,6 @@ gimp_flags_set_value_descriptions
 GimpAddMaskType
 GimpBlendMode
 GimpBrushGeneratedShape
-GimpBucketFillMode
 GimpCapStyle
 GimpChannelOps
 GimpChannelType
@@ -78,7 +77,6 @@ GimpVectorsStrokeType
 GIMP_TYPE_ADD_MASK_TYPE
 GIMP_TYPE_BLEND_MODE
 GIMP_TYPE_BRUSH_GENERATED_SHAPE
-GIMP_TYPE_BUCKET_FILL_MODE
 GIMP_TYPE_CAP_STYLE
 GIMP_TYPE_CHANNEL_OPS
 GIMP_TYPE_CHANNEL_TYPE
@@ -130,7 +128,6 @@ GIMP_TYPE_TEXT_JUSTIFICATION
 GIMP_TYPE_TRANSFER_MODE
 GIMP_TYPE_TRANSFORM_DIRECTION
 GIMP_TYPE_TRANSFORM_RESIZE
-GIMP_TYPE_USER_DIRECTORY
 GIMP_TYPE_VECTORS_STROKE_TYPE
 gimp_add_mask_type_get_type
 gimp_brush_generated_shape_get_type
@@ -153,7 +150,6 @@ gimp_precision_get_type
 gimp_rotation_type_get_type
 gimp_select_criterion_get_type
 gimp_blend_mode_get_type
-gimp_bucket_fill_mode_get_type
 gimp_channel_ops_get_type
 gimp_channel_type_get_type
 gimp_check_size_get_type
@@ -187,7 +183,6 @@ gimp_text_justification_get_type
 gimp_transfer_mode_get_type
 gimp_transform_direction_get_type
 gimp_transform_resize_get_type
-gimp_user_directory_get_type
 gimp_vectors_stroke_type_get_type
 </SECTION>
 
@@ -214,9 +209,12 @@ gimp_directory
 gimp_installation_directory
 gimp_data_directory
 gimp_locale_directory
-gimp_plug_in_directory
 gimp_sysconf_directory
+gimp_plug_in_directory
+gimp_cache_directory
+gimp_temp_directory
 gimp_directory_file
+gimp_installation_directory_file
 gimp_data_directory_file
 gimp_locale_directory_file
 gimp_sysconf_directory_file
@@ -243,7 +241,6 @@ GIMP_MAX_MEMSIZE
 <FILE>gimpmemsize</FILE>
 gimp_memsize_serialize
 gimp_memsize_deserialize
-gimp_memsize_to_string
 GIMP_TYPE_MEMSIZE
 GIMP_TYPE_PARAM_MEMSIZE
 GIMP_IS_PARAM_SPEC_MEMSIZE
@@ -342,6 +339,7 @@ GimpPixPipeParams
 gimp_pixpipe_params_init
 gimp_pixpipe_params_parse
 gimp_pixpipe_params_build
+gimp_pixpipe_params_free
 </SECTION>
 
 <SECTION>
@@ -443,12 +441,4 @@ GIMPVAR
 gimp_major_version
 gimp_minor_version
 gimp_micro_version
-</SECTION>
-
-<SECTION>
-<FILE>gimpdatafiles</FILE>
-GimpDatafileData
-GimpDatafileLoaderFunc
-gimp_datafiles_check_extension
-gimp_datafiles_read_directories
 </SECTION>
