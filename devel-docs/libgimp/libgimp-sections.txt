@@ -35,6 +35,7 @@ gimp_install_cmap
 gimp_min_colors
 gimp_show_tool_tips
 gimp_show_help_button
+gimp_export_color_profile
 gimp_export_exif
 gimp_export_iptc
 gimp_export_xmp
@@ -369,6 +370,7 @@ GimpDrawable
 gimp_drawable_get_buffer
 gimp_drawable_get_shadow_buffer
 gimp_drawable_get_format
+gimp_drawable_get_thumbnail_format
 gimp_drawable_get
 gimp_drawable_detach
 gimp_drawable_flush
