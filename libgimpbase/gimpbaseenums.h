@@ -603,6 +603,7 @@ typedef enum
  * @GIMP_GRADIENT_SEGMENT_SINE:              Sinusoidal
  * @GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: Spherical (increasing)
  * @GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: Spherical (decreasing)
+ * @GIMP_GRADIENT_SEGMENT_STEP:              Step
  *
  * Transition functions for gradient segments.
  **/

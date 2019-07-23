@@ -32,6 +32,17 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpColorTransformFlags:
+ * @GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE: optimize for accuracy rather
+ *   than for speed
+ * @GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK: mark out of gamut colors in the
+ *   transform result
+ * @GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION: do black point
+ *   compensation
+ *
+ * Flags for modifying #GimpColorTransform's behavior.
+ **/
 typedef enum
 {
   GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE               = 0x0100,

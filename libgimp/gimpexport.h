@@ -31,6 +31,20 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpExportCapabilities:
+ * @GIMP_EXPORT_CAN_HANDLE_RGB:                 Handles RGB images
+ * @GIMP_EXPORT_CAN_HANDLE_GRAY:                Handles grayscale images
+ * @GIMP_EXPORT_CAN_HANDLE_INDEXED:             Handles indexed images
+ * @GIMP_EXPORT_CAN_HANDLE_BITMAP:              Handles two-color indexed images
+ * @GIMP_EXPORT_CAN_HANDLE_ALPHA:               Handles alpha channels
+ * @GIMP_EXPORT_CAN_HANDLE_LAYERS:              Hanldes layers
+ * @GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION: Handles aminations of layers
+ * @GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS:         Handles layer masks
+ * @GIMP_EXPORT_NEEDS_ALPHA:                    Needs alpha channels
+ *
+ * The types of images and layers an export procedure can handle
+ **/
 typedef enum
 {
   GIMP_EXPORT_CAN_HANDLE_RGB                 = 1 << 0,
@@ -44,6 +58,15 @@ typedef enum
   GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 8
 } GimpExportCapabilities;
 
+
+/**
+ * GimpExportReturn:
+ * @GIMP_EXPORT_CANCEL: The export was cancelled
+ * @GIMP_EXPORT_IGNORE: The image is unmodified but export shall continue anyway
+ * @GIMP_EXPORT_EXPORT: The chosen transforms were applied to the image
+ *
+ * Possible return values of gimp_export_image().
+ **/
 typedef enum
 {
   GIMP_EXPORT_CANCEL,
@@ -51,10 +74,12 @@ typedef enum
   GIMP_EXPORT_EXPORT
 } GimpExportReturn;
 
+
 GimpExportReturn   gimp_export_image                   (gint32                 *image_ID,
                                                         gint32                 *drawable_ID,
                                                         const gchar            *format_name,
                                                         GimpExportCapabilities  capabilities);
+
 GtkWidget        * gimp_export_dialog_new              (const gchar            *format_name,
                                                         const gchar            *role,
                                                         const gchar            *help_id);

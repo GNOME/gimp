@@ -50,6 +50,15 @@ typedef struct _GimpControllerEventTrigger GimpControllerEventTrigger;
 typedef struct _GimpControllerEventValue   GimpControllerEventValue;
 typedef union  _GimpControllerEvent        GimpControllerEvent;
 
+/**
+ * GimpControllerEventAny:
+ * @type:     The event's #GimpControllerEventType
+ * @source:   The event's source #GimpController
+ * @event_id: The event's ID
+ *
+ * Generic controller event. Every event has these three members at the
+ * beginning of its struct
+ **/
 struct _GimpControllerEventAny
 {
   GimpControllerEventType  type;
@@ -57,6 +66,14 @@ struct _GimpControllerEventAny
   gint                     event_id;
 };
 
+/**
+ * GimpControllerEventTrigger:
+ * @type:     The event's #GimpControllerEventType
+ * @source:   The event's source #GimpController
+ * @event_id: The event's ID
+ *
+ * Trigger controller event.
+ **/
 struct _GimpControllerEventTrigger
 {
   GimpControllerEventType  type;
@@ -64,6 +81,15 @@ struct _GimpControllerEventTrigger
   gint                     event_id;
 };
 
+/**
+ * GimpControllerEventValue:
+ * @type:     The event's #GimpControllerEventType
+ * @source:   The event's source #GimpController
+ * @event_id: The event's ID
+ * @value:    The event's value
+ *
+ * Value controller event.
+ **/
 struct _GimpControllerEventValue
 {
   GimpControllerEventType  type;
@@ -72,6 +98,15 @@ struct _GimpControllerEventValue
   GValue                   value;
 };
 
+/**
+ * GimpControllerEvent:
+ * @type:    The event type
+ * @any:     GimpControllerEventAny
+ * @trigger: GimpControllerEventTrigger
+ * @value:   GimpControllerEventValue
+ *
+ * A union to hjold all event event types
+ **/
 union _GimpControllerEvent
 {
   GimpControllerEventType    type;

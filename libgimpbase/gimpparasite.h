@@ -68,13 +68,20 @@ GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
 #define GIMP_PARASITE_GRANDPARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 16)
 
 
+/**
+ * GimpParasite:
+ * @name:  the parasite name, USE A UNIQUE PREFIX
+ * @flags: the parasite flags, like save in XCF etc.
+ * @size:  the parasite size in bytes
+ * @data:  the parasite data, the owner os the parasite is responsible
+ *   for tracking byte order and internal structure
+ **/
 struct _GimpParasite
 {
-  gchar    *name;   /* The name of the parasite. USE A UNIQUE PREFIX! */
-  guint32   flags;  /* save Parasite in XCF file, etc.                */
-  guint32   size;   /* amount of data                                 */
-  gpointer  data;   /* a pointer to the data.  plugin is              *
-                     * responsible for tracking byte order            */
+  gchar    *name;
+  guint32   flags;
+  guint32   size;
+  gpointer  data;
 };
 
 

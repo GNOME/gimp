@@ -31,6 +31,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpPixbufTransparency:
+ * @GIMP_PIXBUF_KEEP_ALPHA:   Create a pixbuf with alpha
+ * @GIMP_PIXBUF_SMALL_CHECKS: Show transparency as small checks
+ * @GIMP_PIXBUF_LARGE_CHECKS: Show transparency as large checks
+ *
+ * How to deal with transparency when creating thubnail pixbufs from
+ * images and drawables.
+ **/
 typedef enum
 {
   GIMP_PIXBUF_KEEP_ALPHA,
