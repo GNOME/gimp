@@ -16,9 +16,9 @@ gimp_thumbnail_save_failure
 gimp_thumbnail_delete_failure
 gimp_thumbnail_delete_others
 gimp_thumbnail_has_failed
-
 <SUBSECTION Standard>
 GimpThumbnailClass
+GimpThumbnailPrivate
 GIMP_THUMBNAIL
 GIMP_IS_THUMBNAIL
 GIMP_TYPE_THUMBNAIL
