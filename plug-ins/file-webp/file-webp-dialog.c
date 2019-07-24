@@ -81,8 +81,7 @@ show_maxkeyframe_hints (GtkAdjustment *adj,
 
 gboolean
 save_dialog (WebPSaveParams *params,
-             gint32          image_ID,
-             gint32          n_layers)
+             gint32          image_ID)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -96,12 +95,14 @@ save_dialog (WebPSaveParams *params,
   GtkWidget *combo;
   GtkObject *quality_scale;
   GtkObject *alpha_quality_scale;
+  gint32     nlayers;
   gboolean   animation_supported = FALSE;
   gboolean   run;
   gchar     *text;
   gint       row = 0;
 
-  animation_supported = n_layers > 1;
+  g_free (gimp_image_get_layers (image_ID, &nlayers));
+  animation_supported = nlayers > 1;
 
   /* Create the dialog */
   dialog = gimp_export_dialog_new (_("WebP"), PLUG_IN_BINARY, SAVE_PROC);

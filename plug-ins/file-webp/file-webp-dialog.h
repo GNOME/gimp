@@ -27,8 +27,7 @@
 
 
 gboolean   save_dialog (WebPSaveParams *params,
-                        gint32          image_ID,
-                        gint32          n_layers);
+                        gint32          image_ID);
 
 
 #endif /* __WEBP_DIALOG_H__ */

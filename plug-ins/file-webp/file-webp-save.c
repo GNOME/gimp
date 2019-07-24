@@ -762,8 +762,6 @@ save_animation (const gchar    *filename,
 
 gboolean
 save_image (const gchar            *filename,
-            gint32                  nLayers,
-            gint32                 *allLayers,
             gint32                  image_ID,
             gint32                  drawable_ID,
             GimpMetadata           *metadata,
@@ -773,32 +771,32 @@ save_image (const gchar            *filename,
 {
   GFile    *file;
   gboolean  status = FALSE;
+  gint32   *layers;
+  gint      nlayers;
 
-  if (nLayers == 0)
-    return FALSE;
+  layers = gimp_image_get_layers (image_ID, &nlayers);
+
+  if (nlayers == 0)
+    {
+      g_free (layers);
+      return FALSE;
+    }
 
   g_printerr ("Saving WebP file %s\n", filename);
 
-  if (nLayers == 1)
+  if (params->animation)
     {
-      status = save_layer (filename, nLayers, image_ID, drawable_ID, params,
-                           error);
+      status = save_animation (filename,
+                               nlayers, layers, image_ID, drawable_ID, params,
+                               error);
     }
   else
     {
-      if (! params->animation)
-        {
-          status = save_layer (filename,
-                               nLayers, image_ID, drawable_ID, params,
-                               error);
-        }
-      else
-        {
-          status = save_animation (filename,
-                                   nLayers, allLayers, image_ID, drawable_ID,
-                                   params, error);
-        }
+      status = save_layer (filename,
+                           nlayers, image_ID, drawable_ID, params, error);
     }
+
+  g_free (layers);
 
   if (metadata)
     {

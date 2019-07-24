@@ -43,8 +43,6 @@ typedef struct
 
 
 gboolean   save_image (const gchar            *filename,
-                       gint32                  nLayers,
-                       gint32                 *allLayers,
                        gint32                  image_ID,
                        gint32                  drawable_ID,
                        GimpMetadata           *metadata,
