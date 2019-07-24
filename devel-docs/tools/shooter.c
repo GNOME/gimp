@@ -1,17 +1,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gegl.h>
-#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
-
-#include <X11/extensions/shape.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -23,30 +14,6 @@
 #include "units.h"
 #include "widgets.h"
 
-
-static Window
-find_toplevel_window (Display *display,
-                      Window   xid)
-{
-  Window  root, parent, *children;
-  guint   nchildren;
-
-  do
-    {
-      if (XQueryTree (display, xid,
-                      &root, &parent, &children, &nchildren) == 0)
-        {
-          g_warning ("Couldn't find window manager window");
-          return 0;
-        }
-
-      if (root == parent)
-        return xid;
-
-      xid = parent;
-    }
-  while (TRUE);
-}
 
 static GdkPixbuf *
 add_border_to_shot (GdkPixbuf *pixbuf)
@@ -70,125 +37,48 @@ add_border_to_shot (GdkPixbuf *pixbuf)
 }
 
 static GdkPixbuf *
-remove_shaped_area (GdkPixbuf *pixbuf,
-                    Window     window)
+take_window_shot (GtkWidget *widget)
 {
-  Display    *display;
-  GdkPixbuf  *retval;
-  XRectangle *rectangles;
-  gint        rectangle_count, rectangle_order;
-  gint        i;
+  GtkAllocation    allocation;
+  cairo_surface_t *surface;
+  cairo_t         *cr;
+  GdkPixbuf       *pixbuf;
 
-  retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
-                           gdk_pixbuf_get_width (pixbuf),
-                           gdk_pixbuf_get_height (pixbuf));
+  allocation.x = 0;
+  allocation.y = 0;
+  gtk_widget_get_preferred_width  (widget, NULL, &allocation.width);
+  gtk_widget_get_preferred_height (widget, NULL, &allocation.height);
 
-  gdk_pixbuf_fill (retval, 0);
+  gtk_widget_size_allocate (widget, &allocation);
+  gtk_widget_get_allocation (widget, &allocation);
 
-  display = gdk_x11_display_get_xdisplay (gdk_display_get_default ());
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                        allocation.width,
+                                        allocation.height);
+  cr = cairo_create (surface);
+  gtk_widget_draw (widget, cr);
+  cairo_destroy (cr);
 
-  rectangles = XShapeGetRectangles (display, window, ShapeBounding,
-                                    &rectangle_count, &rectangle_order);
+  pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0,
+                                        allocation.width,
+                                        allocation.height);
 
-  for (i = 0; i < rectangle_count; i++)
+  cairo_surface_destroy (surface);
+
+  if (GTK_IS_OFFSCREEN_WINDOW (widget))
     {
-      int y, x;
+      GdkPixbuf *tmp;
 
-      for (y = rectangles[i].y;
-           y < rectangles[i].y + rectangles[i].height;
-           y++)
-        {
-          const guchar *src_pixels;
-          guchar       *dest_pixels;
+      tmp = add_border_to_shot (pixbuf);
 
-          src_pixels = gdk_pixbuf_get_pixels (pixbuf) +
-            y * gdk_pixbuf_get_rowstride (pixbuf) +
-            rectangles[i].x * (gdk_pixbuf_get_has_alpha (pixbuf) ? 4 : 3);
+      g_object_unref (pixbuf);
 
-          dest_pixels = gdk_pixbuf_get_pixels (retval) +
-            y * gdk_pixbuf_get_rowstride (retval) +
-            rectangles[i].x * 4;
+      pixbuf = create_shadowed_pixbuf (tmp);
 
-          for (x = rectangles[i].x;
-               x < rectangles[i].x + rectangles[i].width;
-               x++)
-            {
-              *dest_pixels++ = *src_pixels ++;
-              *dest_pixels++ = *src_pixels ++;
-              *dest_pixels++ = *src_pixels ++;
-              *dest_pixels++ = 255;
-
-              if (gdk_pixbuf_get_has_alpha (pixbuf))
-                src_pixels++;
-            }
-        }
+      g_object_unref (tmp);
     }
 
-  return retval;
-}
-
-static GdkPixbuf *
-take_window_shot (Window   child,
-                  gboolean include_decoration)
-{
-  GdkDisplay *display;
-  GdkScreen  *screen;
-  GdkWindow  *window;
-  Window      xid;
-  gint        x_orig, y_orig;
-  gint        x = 0, y = 0;
-  gint        width, height;
-  GdkPixbuf  *tmp, *tmp2;
-  GdkPixbuf  *retval;
-
-  display = gdk_display_get_default ();
-  screen = gdk_screen_get_default ();
-
-  if (include_decoration)
-    xid = find_toplevel_window (gdk_x11_display_get_xdisplay (display), child);
-  else
-    xid = child;
-
-  window = gdk_x11_window_foreign_new_for_display (display, xid);
-
-  width  = gdk_window_get_width  (window);
-  height = gdk_window_get_height (window);
-  gdk_window_get_origin (window, &x_orig, &y_orig);
-
-  if (x_orig < 0)
-    {
-      x = - x_orig;
-      width = width + x_orig;
-      x_orig = 0;
-    }
-
-  if (y_orig < 0)
-    {
-      y = - y_orig;
-      height = height + y_orig;
-      y_orig = 0;
-    }
-
-  if (x_orig + width > gdk_screen_get_width (screen))
-    width = gdk_screen_get_width (screen) - x_orig;
-
-  if (y_orig + height > gdk_screen_get_height (screen))
-    height = gdk_screen_get_height (screen) - y_orig;
-
-  tmp = gdk_pixbuf_get_from_window (window,
-                                    x, y, width, height);
-
-  if (include_decoration)
-    tmp2 = remove_shaped_area (tmp, xid);
-  else
-    tmp2 = add_border_to_shot (tmp);
-
-  retval = create_shadowed_pixbuf (tmp2);
-
-  g_object_unref (tmp);
-  g_object_unref (tmp2);
-
-  return retval;
+  return pixbuf;
 }
 
 static gboolean
@@ -196,6 +86,7 @@ shooter_get_foreground (GimpRGB *color)
 {
   color->r = color->g = color->b = 0.0;
   color->a = 1.0;
+
   return TRUE;
 }
 
@@ -204,6 +95,7 @@ shooter_get_background (GimpRGB *color)
 {
   color->r = color->g = color->b = 1.0;
   color->a = 1.0;
+
   return TRUE;
 }
 
@@ -232,11 +124,11 @@ shooter_ensure_modules (void)
 }
 
 int
-main (int argc, char **argv)
+main (int    argc,
+      char **argv)
 {
-  GdkPixbuf *screenshot = NULL;
-  GList     *toplevels;
-  GList     *node;
+  GList *toplevels;
+  GList *node;
 
   g_set_application_name ("GIMP documentation shooter");
 
@@ -245,8 +137,6 @@ main (int argc, char **argv)
    */
   if (! gtk_init_check (&argc, &argv))
     return EXIT_SUCCESS;
-
-  gtk_rc_add_default_file (gimp_gtkrc ());
 
   units_init ();
 
@@ -259,39 +149,29 @@ main (int argc, char **argv)
 
   for (node = toplevels; node; node = g_list_next (node))
     {
-      GdkWindow  *window;
-      WidgetInfo *info;
-      XID         xid;
-      gchar      *filename;
+      WidgetInfo *info       = node->data;
+      GdkPixbuf  *screenshot = NULL;
 
-      info = node->data;
-
-      gtk_widget_show (info->window);
-
-      window = gtk_widget_get_window (info->window);
-
-      gtk_widget_show_now (info->window);
-      gtk_widget_queue_draw (info->window);
+      gtk_widget_show (info->widget);
+      gtk_widget_queue_draw (info->widget);
 
       while (gtk_events_pending ())
+        gtk_main_iteration ();
+
+      screenshot = take_window_shot (info->widget);
+
+      if (screenshot)
         {
-          gtk_main_iteration ();
+          gchar *filename;
+
+          filename = g_strdup_printf ("%s.png", info->name);
+          gdk_pixbuf_save (screenshot, filename, "png", NULL, NULL);
+          g_free(filename);
+
+          g_object_unref (screenshot);
         }
-      sleep (1);
 
-      while (gtk_events_pending ())
-        {
-          gtk_main_iteration ();
-        }
-
-      xid = gdk_x11_window_get_xid (window);
-      screenshot = take_window_shot (xid, info->include_decorations);
-
-      filename = g_strdup_printf ("%s.png", info->name);
-      gdk_pixbuf_save (screenshot, filename, "png", NULL, NULL);
-      g_free(filename);
-
-      gtk_widget_hide (info->window);
+      gtk_widget_hide (info->widget);
     }
 
   return EXIT_SUCCESS;
