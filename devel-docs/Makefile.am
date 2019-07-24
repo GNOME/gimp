@@ -33,7 +33,6 @@ EXTRA_DIST = \
 	libtool-instructions.txt	\
 	parasites.txt			\
 	pat.txt				\
-	gegl-porting-plan.txt		\
 	gtkbuilder-porting-guide.txt	\
 	release-howto.txt		\
 	structure.xml			\
