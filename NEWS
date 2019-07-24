@@ -20,6 +20,9 @@ Core:
     anymore at the first layer or channel error; instead it tries to
     load more layers/channels to salvage as much data as possible from a
     corrupted XCF file.
+  - In gimp:gradient, fix dithering to correspond to how we actually round float
+    values to 8-bit.  In particular, this avoids introducing noise when a
+    component is fixed at 0 or 1 along a segment.
 
 Tools:
 
@@ -27,10 +30,9 @@ Tools:
     are now working even when the selection is not committed. Starting a
     fast copy|cut-paste will automatically close the polygon and commit
     the selection, accelerating fast usage of free selections.
-  - Foreground-select tool: new 'Grayscale' Preview Mode.
-  - Foreground selection tool: color selector for "On color" preview
-    (original preview mode) now available, to select any color and
-    opacity for the preview.
+  - Foreground Select tool: new 'Grayscale' Preview Mode. Also, a color selector
+    for "On color" preview (original preview mode) now available, to select any
+    color and opacity for the preview.
 
 Plug-ins:
 
@@ -38,8 +40,9 @@ Plug-ins:
     flame, blinds, jigsaw, gradient-flare, checkerboard, tile-small,
     curve-bend, sample-colorize, map-object, lighting, grid, despeckle,
     sphere-designer, contrast-retinex, hot, sparkle, cml-explorer, destripe,
-    twain.
-  - Added color profile support for HEIF (only when libheif 1.4.0 is
+    twain, animation-optimize, depth-merge, warp, imagemap, gimpressionist
+  - Port of filters to GEGL with floats support: van-gogh-lic.
+  - Add color profile support for HEIF (only when libheif 1.4.0 is
     available).
   - TIFF import will now ask (in interactive mode) how to process
     unspecified TIFF channels: non-premultiplied (used to be the
@@ -52,12 +55,37 @@ Plug-ins:
   - HEIF export dialog now has a "Save color profile" checkbox allowing
     to not export with a profile when needed (needs libheif 1.4.0 or
     higher).
-  - Text layers in layer groups are now exported as proper texts to PDF.
+  - PDF exporting: text layers in layer groups are now exported as proper text.
+  - Cleaned up the file-dds GUI, removed the "Advanced" expander.
+
+Performance:
+
+  - Adde an active-thread variable to the dashboard's misc group, showing the
+    number of active worker threads.
+  - Reduce time complexity of layer-group translation. When translating a layer
+    group, avoid separately updating the original area of the child layers
+    before translating them (as per the fix to issue #3484), as this results in
+    quadratic time complexity w.r.t. to the maximal subgroup nesting level.
+    Instead, simply defer the updating of the group's offset until *after*
+    translating the child layers, so that their original area isn't clipped by
+    the parent, while their new area is still properly updated even if the
+    parent's size changes.
 
 User interface:
 
-  - gegl:bayer-matrix and gegl:linear-sinusoid added to the `Filters ->
-    Render -> Pattern` menu.
+  - Replace old filters with GEGL operation counterparts: edge-neon
+    (gegl:edge-neon), contrast-normalize (gegl:stretch-contrast), oilify
+    (gegl:oilify)
+  - Add gegl:bayer-matrix and gegl:linear-sinusoid to Filters -> Render ->
+    Pattern.
+  - Add gegl:newsprint to Filters -> Distorts.
+  - Add gegl:mean-curvature-blur to Filters -> Blur.
+
+Devel docs:
+
+  - Update the libgimpconfig and libgimpbase docs.
+  - Update docs with missing symbols and types.
+  - New docs for structs and enums.
 
 Installers:
 
@@ -67,7 +95,7 @@ Installers:
 
 Translations:
 
-  - British English, Croatian, Dutch, French, Polish, Spanish, Turkish.
+  - British English, Croatian, Dutch, French, Greek, Polish, Spanish, Turkish.
 
 Bugfixes:
 
