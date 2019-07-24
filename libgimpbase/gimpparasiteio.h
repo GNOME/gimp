@@ -42,36 +42,31 @@ typedef struct _GimpPixPipeParams GimpPixPipeParams;
 
 /**
  * GimpPixPipeParams:
- * @step:                  Step
- * @ncells:                Number of cells
- * @dim:                   Dimension
- * @cols:                  Columns
- * @rows:                  Rows
- * @cellwidth:             Cell width
- * @cellheight:            Cell height
- * @placement:             Placement
- * @free_placement_string: Unused, ignore
- * @rank:                  Rank
- * @selection:             Selection
- * @free_selection_string: Unused, ignore
+ * @step:       Step
+ * @ncells:     Number of cells
+ * @dim:        Dimension
+ * @cols:       Columns
+ * @rows:       Rows
+ * @cellwidth:  Cell width
+ * @cellheight: Cell height
+ * @placement:  Placement
+ * @rank:       Rank
+ * @selection:  Selection
  *
  * PLease somebody help documenting this.
  **/
 struct _GimpPixPipeParams
 {
-  gint      step;
-  gint      ncells;
-  gint      dim;
-  gint      cols;
-  gint      rows;
-  gint      cellwidth;
-  gint      cellheight;
-  gchar    *placement;
-  gboolean  free_placement_string;
-  gint      rank[GIMP_PIXPIPE_MAXDIM];
-  gchar    *selection[GIMP_PIXPIPE_MAXDIM];
-  /* this flag is now useless. All selection strings are allocated. */
-  gboolean  free_selection_string;
+  gint   step;
+  gint   ncells;
+  gint   dim;
+  gint   cols;
+  gint   rows;
+  gint   cellwidth;
+  gint   cellheight;
+  gchar *placement;
+  gint   rank[GIMP_PIXPIPE_MAXDIM];
+  gchar *selection[GIMP_PIXPIPE_MAXDIM];
 };
 
 /* Initialize with dummy values */
