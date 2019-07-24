@@ -40,6 +40,23 @@ G_BEGIN_DECLS
 
 typedef struct _GimpPixPipeParams GimpPixPipeParams;
 
+/**
+ * GimpPixPipeParams:
+ * @step:                  Step
+ * @ncells:                Number of cells
+ * @dim:                   Dimension
+ * @cols:                  Columns
+ * @rows:                  Rows
+ * @cellwidth:             Cell width
+ * @cellheight:            Cell height
+ * @placement:             Placement
+ * @free_placement_string: Unused, ignore
+ * @rank:                  Rank
+ * @selection:             Selection
+ * @free_selection_string: Unused, ignore
+ *
+ * PLease somebody help documenting this.
+ **/
 struct _GimpPixPipeParams
 {
   gint      step;
