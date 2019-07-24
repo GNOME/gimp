@@ -91,7 +91,7 @@ lib_LTLIBRARIES = libgimpbase-@GIMP_API_VERSION@.la
 	@:
 
 
-libgimpbase_sources = \
+libgimpbase_introspectable = \
 	gimpbase.h		\
 	gimpbaseenums.h		\
 	gimpcompatenums.h	\
@@ -131,9 +131,12 @@ libgimpbase_sources = \
 	gimputils.h            	\
 	gimpvaluearray.c	\
 	gimpvaluearray.h	\
-	gimpwin32-io.h		\
 	gimpwire.c		\
 	gimpwire.h
+
+libgimpbase_sources = \
+	gimpwin32-io.h		\
+	$(libgimpbase_introspectable)
 
 libgimpbase_built_sources = \
 	gimpbaseenums.c		\
@@ -259,3 +262,26 @@ $(srcdir)/gimpcompatenums.c: xgen-cec
 	fi
 
 DISTCLEANFILES = gimpversion.h
+
+### GObject introspection
+
+-include $(INTROSPECTION_MAKEFILE)
+INTROSPECTION_GIRS =
+INTROSPECTION_SCANNER_ARGS = --warn-all --add-include-path="$(srcdir)" --add-include-path="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
+INTROSPECTION_COMPILER_ARGS = --includedir="$(srcdir)" --includedir="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
+INTROSPECTION_SCANNER_ENV = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
+
+Gimp-@GIMP_API_VERSION@.gir: libgimpbase-@GIMP_API_VERSION@.la Makefile
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = GObject-2.0 GLib-2.0
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = $(AM_CFLAGS) $(AM_CPPFLAGS) -I$(top_builddir) -I$(top_srcdir)
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = libgimpbase-@GIMP_API_VERSION@.la
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = $(libgimpbase_introspectable)
+INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
+
+girdir = $(datadir)/gir-1.0
+gir_DATA = $(INTROSPECTION_GIRS)
+
+typelibdir = $(libdir)/girepository-1.0
+typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
+
+CLEANFILES += $(gir_DATA) $(typelib_DATA)

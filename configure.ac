@@ -23,7 +23,10 @@ m4_define([gimp_binary_age],
 # m4_define([gimp_version], [2.99.1])
 
 # This is the X.Y used in -lgimp-X.Y
-m4_define([gimp_api_version], [3.0])
+m4_define([gimp_api_major_version], [3])
+m4_define([gimp_api_minor_version], [0])
+m4_define([gimp_api_version],
+          [gimp_api_major_version.gimp_api_minor_version])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
@@ -63,6 +66,7 @@ m4_define([gtk_required_version], [3.22.29])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([intltool_required_version], [0.40.1])
+m4_define([introspection_required_version], [1.32.0])
 m4_define([lcms_required_version], [2.8])
 m4_define([libgudev_required_version], [167])
 m4_define([libheif_required_version], [1.3.2])
@@ -110,6 +114,8 @@ GIMP_INTERFACE_AGE=gimp_interface_age
 GIMP_BINARY_AGE=gimp_binary_age
 GIMP_VERSION=gimp_version
 GIMP_REAL_VERSION=gimp_real_version
+GIMP_API_MAJOR_VERSION=gimp_api_major_version
+GIMP_API_MINOR_VERSION=gimp_api_minor_version
 GIMP_API_VERSION=gimp_api_version
 GIMP_APP_VERSION=gimp_app_version
 GIMP_PLUGIN_VERSION=gimp_plugin_version
@@ -127,6 +133,8 @@ AC_SUBST(GIMP_INTERFACE_AGE)
 AC_SUBST(GIMP_BINARY_AGE)
 AC_SUBST(GIMP_VERSION)
 AC_SUBST(GIMP_REAL_VERSION)
+AC_SUBST(GIMP_API_MAJOR_VERSION)
+AC_SUBST(GIMP_API_MINOR_VERSION)
 AC_SUBST(GIMP_API_VERSION)
 AC_SUBST(GIMP_APP_VERSION)
 AC_SUBST(GIMP_PLUGIN_VERSION)
@@ -2225,6 +2233,11 @@ AC_ARG_WITH(pdbgen,
 
 AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 
+#################################
+# Check for GObject Introspection
+#################################
+
+GOBJECT_INTROSPECTION_CHECK(introspection_required_version)
 
 ##################
 # Check for python
