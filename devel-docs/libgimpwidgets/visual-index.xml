@@ -4,8 +4,14 @@
 
 <para role="gallery" xml:base="visual-index.xml">
 
+  <link linkend="GimpBrowser">
+    <inlinegraphic fileref="gimp-widget-browser.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpButton">
     <inlinegraphic fileref="gimp-widget-button.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpBusyBox">
+    <inlinegraphic fileref="gimp-widget-busy-box.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpChainButton">
     <inlinegraphic fileref="gimp-widget-chain-button.png" format="PNG"></inlinegraphic>
@@ -28,17 +34,26 @@
   <link linkend="GimpColorProfileComboBox">
     <inlinegraphic fileref="gimp-widget-color-profile-combo-box.png" format="PNG"></inlinegraphic>
   </link>
+  <link linkend="GimpColorProfileView">
+    <inlinegraphic fileref="gimp-widget-color-profile-view.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpDialog">
     <inlinegraphic fileref="gimp-widget-dialog.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpEnumComboBox">
     <inlinegraphic fileref="gimp-widget-enum-combo-box.png" format="PNG"></inlinegraphic>
   </link>
+  <link linkend="GimpEnumLabel">
+    <inlinegraphic fileref="gimp-widget-enum-label.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpFileEntry">
     <inlinegraphic fileref="gimp-widget-file-entry.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpFrame">
     <inlinegraphic fileref="gimp-widget-frame.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpHintBox">
+    <inlinegraphic fileref="gimp-widget-hint-box.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpIntComboBox">
     <inlinegraphic fileref="gimp-widget-int-combo-box.png" format="PNG"></inlinegraphic>
@@ -67,7 +82,7 @@
   <link linkend="GimpStringComboBox">
     <inlinegraphic fileref="gimp-widget-string-combo-box.png" format="PNG"></inlinegraphic>
   </link>
-  <link linkend="GimpUnitMenu">
-    <inlinegraphic fileref="gimp-widget-unit-menu.png" format="PNG"></inlinegraphic>
+  <link linkend="GimpUnitComboBox">
+    <inlinegraphic fileref="gimp-widget-unit-combo-box.png" format="PNG"></inlinegraphic>
   </link>
 </para>
