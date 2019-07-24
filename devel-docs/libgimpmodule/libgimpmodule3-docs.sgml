@@ -5,7 +5,7 @@
 <book lang="en" id="libgimpmodule" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <bookinfo>
-    <title>GIMP Module Library Reference Manual</title>
+    <title>GIMP 3 Module Library Reference Manual</title>
     <releaseinfo>
       for GIMP <xi:include href="version" parse="text"/>
     </releaseinfo>

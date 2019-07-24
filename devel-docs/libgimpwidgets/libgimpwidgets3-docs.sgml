@@ -5,7 +5,7 @@
 <book lang="en" id="libgimpwidgets" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <bookinfo>
-    <title>GIMP Widgets Library Reference Manual</title>
+    <title>GIMP 3 Widgets Library Reference Manual</title>
     <releaseinfo>
       for GIMP <xi:include href="version" parse="text"/>
     </releaseinfo>
