@@ -34,6 +34,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolorprofileview
+ * @title: GimpColorProfileView
+ * @short_description: A widget for viewing color profile properties
+ *
+ * A widget for viewing the properties of a #GimpColorProfile.
+ **/
+
+
 struct _GimpColorProfileViewPrivate
 {
   GimpColorProfile *profile;

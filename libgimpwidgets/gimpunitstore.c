@@ -30,6 +30,15 @@
 #include "gimpunitstore.h"
 
 
+/**
+ * SECTION: gimpunitstore
+ * @title: GimpUnitStore
+ * @short_description: A model for units
+ *
+ * A model for #GimpUnit views
+ **/
+
+
 enum
 {
   PROP_0,
