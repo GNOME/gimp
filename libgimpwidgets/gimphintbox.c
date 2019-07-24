@@ -36,24 +36,17 @@
  **/
 
 
-typedef GtkBoxClass  GimpHintBoxClass;
-
-typedef struct
-{
-  GtkBox    parent_instance;
-
-  gchar    *icon_name;
-  gchar    *hint;
-} GimpHintBox;
-
-#define GIMP_HINT_BOX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HINT_BOX, GimpHintBox))
-
-
 enum
 {
   PROP_0,
   PROP_ICON_NAME,
   PROP_HINT
+};
+
+struct _GimpHintBoxPrivate
+{
+  gchar *icon_name;
+  gchar *hint;
 };
 
 
@@ -69,7 +62,7 @@ static void   gimp_hint_box_get_property (GObject      *object,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpHintBox, gimp_hint_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpHintBox, gimp_hint_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_hint_box_parent_class
 
@@ -104,6 +97,8 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
 static void
 gimp_hint_box_init (GimpHintBox *box)
 {
+  box->priv = gimp_hint_box_get_instance_private (box);
+
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
 }
@@ -119,9 +114,9 @@ gimp_hint_box_constructed (GObject *object)
 
   gtk_box_set_spacing (GTK_BOX (box), 12);
 
-  if (box->icon_name)
+  if (box->priv->icon_name)
     {
-      image = gtk_image_new_from_icon_name (box->icon_name,
+      image = gtk_image_new_from_icon_name (box->priv->icon_name,
                                             GTK_ICON_SIZE_DIALOG);
     }
 
@@ -132,7 +127,7 @@ gimp_hint_box_constructed (GObject *object)
     }
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   box->hint,
+                        "label",   box->priv->hint,
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
@@ -151,17 +146,8 @@ gimp_hint_box_finalize (GObject *object)
 {
   GimpHintBox *box = GIMP_HINT_BOX (object);
 
-  if (box->icon_name)
-    {
-      g_free (box->icon_name);
-      box->icon_name = NULL;
-    }
-
-  if (box->hint)
-    {
-      g_free (box->hint);
-      box->hint = NULL;
-    }
+  g_clear_pointer (&box->priv->icon_name, g_free);
+  g_clear_pointer (&box->priv->hint,      g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -177,11 +163,11 @@ gimp_hint_box_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ICON_NAME:
-      box->icon_name = g_value_dup_string (value);
+      box->priv->icon_name = g_value_dup_string (value);
       break;
 
     case PROP_HINT:
-      box->hint = g_value_dup_string (value);
+      box->priv->hint = g_value_dup_string (value);
       break;
 
     default:
@@ -201,11 +187,11 @@ gimp_hint_box_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_ICON_NAME:
-      g_value_set_string (value, box->icon_name);
+      g_value_set_string (value, box->priv->icon_name);
       break;
 
     case PROP_HINT:
-      g_value_set_string (value, box->hint);
+      g_value_set_string (value, box->priv->hint);
       break;
 
     default:
