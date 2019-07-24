@@ -418,9 +418,17 @@ GIMP_FRAME_GET_CLASS
 <SECTION>
 <FILE>gimphintbox</FILE>
 <TITLE>GimpHintBox</TITLE>
+GimpHintBox
 gimp_hint_box_new
 <SUBSECTION Standard>
+GIMP_HINT_BOX
+GIMP_HINT_BOX_CLASS
+GIMP_IS_HINT_BOX_CLASS
+GIMP_HINT_BOX_GET_CLASS
+GIMP_IS_HINT_BOX
 GIMP_TYPE_HINT_BOX
+GimpHintBoxClass
+GimpHintBoxPrivate
 gimp_hint_box_get_type
 </SECTION>
 
