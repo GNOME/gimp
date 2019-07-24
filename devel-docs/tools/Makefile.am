@@ -15,9 +15,9 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 
 
 AM_CPPFLAGS = \
-	$(GTK_CFLAGS)			\
-	 -DTOP_SRCDIR=\"$(top_srcdir)\"	\
+	-DTOP_SRCDIR=\"$(top_srcdir)\"	\
 	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
 	$(GEGL_CFLAGS)
 
 AM_LDFLAGS = $(mwindows)
@@ -43,8 +43,7 @@ doc_shooter_LDADD = \
 	$(libgimpmath)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(X_LIBS) -lX11 -lXext
+	$(GTK_LIBS)
 
 
 EXTRA_PROGRAMS = doc-shooter

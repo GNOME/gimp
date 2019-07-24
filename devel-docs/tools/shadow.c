@@ -98,8 +98,8 @@ create_shadow (GdkPixbuf *src)
                   src_y = -(BLUR_RADIUS + SHADOW_OFFSET) + y - (filter->size >> 1) + i;
                   src_x = -(BLUR_RADIUS + SHADOW_OFFSET) + x - (filter->size >> 1) + j;
 
-                  if (src_y < 0 || src_y > gdk_pixbuf_get_height (src) ||
-                      src_x < 0 || src_x > gdk_pixbuf_get_width (src))
+                  if (src_y < 0 || src_y >= gdk_pixbuf_get_height (src) ||
+                      src_x < 0 || src_x >= gdk_pixbuf_get_width (src))
                     continue;
 
                   sumr += src_pixels [src_y * src_rowstride +
