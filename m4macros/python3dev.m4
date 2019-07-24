@@ -231,7 +231,7 @@ fi
 dnl deduce PYTHON_INCLUDES
 py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
 py_exec_prefix=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
-PYTHON_INCLUDES="-I${py_prefix}/include${py_versiondir}"
+PYTHON_INCLUDES=`$PKG_CONFIG --cflags-only-I python-${PYTHON_VERSION}`
 if test "$py_prefix" != "$py_exec_prefix"; then
   PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_exec_prefix}/include${py_versiondir}"
 fi

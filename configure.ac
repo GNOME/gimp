@@ -82,7 +82,6 @@ m4_define([poppler_required_version], [0.69.0])
 m4_define([poppler_data_required_version], [0.4.9])
 m4_define([pycairo_required_version], [1.0.2])
 m4_define([pygtk_required_version], [2.10.4])
-# m4_define([python2_required_version], [2.5.0])
 m4_define([python3_required_version], [3.6.0])
 m4_define([rsvg_required_version], [2.40.6])
 m4_define([webkitgtk_required_version], [2.20.3])
@@ -181,7 +180,6 @@ PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 PERL_REQUIRED_VERSION=perl_required_version
 POPPLER_REQUIRED_VERSION=poppler_required_version
 POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
-# PYTHON2_REQUIRED_VERSION=python2_required_version
 PYTHON3_REQUIRED_VERSION=python3_required_version
 RSVG_REQUIRED_VERSION=rsvg_required_version
 WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
@@ -216,7 +214,6 @@ AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(POPPLER_REQUIRED_VERSION)
 AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
 AC_SUBST(PYTHON3_REQUIRED_VERSION)
-# AC_SUBST(PYTHON2_REQUIRED_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
 AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
@@ -2256,7 +2253,8 @@ m4_define([pycheck_error], [
   - $1
       *** Please install $2, or skip building the python scripting extension by
       *** passing --disable-python to configure (but then you will not be able
-      *** to use scripts for GIMP that are written in Python)."])
+      *** to use scripts for GIMP that are written in Python)."
+  enable_python="no"])
 
 if test "x$enable_python" != xno; then
   enable_python="yes"
@@ -3037,7 +3035,7 @@ Optional Plug-Ins:
   Heif >= 1.4.0:             $have_libheif_1_4_0
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
-  Python 3:                $enable_python
+  Python 3:                  $enable_python
   TWAIN (Win32):             $os_win32
   Webpage:                   $have_webkit
   WMF:                       $have_libwmf
