@@ -24,8 +24,5 @@ void       gimp_display_shell_filter_set (GimpDisplayShell      *shell,
 
 gboolean   gimp_display_shell_has_filter (GimpDisplayShell      *shell);
 
-GimpColorDisplayStack *
-           gimp_display_shell_filter_new (GimpDisplayShell      *shell);
-
 
 #endif /* __GIMP_DISPLAY_SHELL_FILTER_H__ */

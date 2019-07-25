@@ -381,21 +381,20 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 static void
 gimp_display_shell_constructed (GObject *object)
 {
-  GimpDisplayShell      *shell = GIMP_DISPLAY_SHELL (object);
-  GimpDisplayConfig     *config;
-  GimpImage             *image;
-  GimpColorDisplayStack *filter;
-  GtkWidget             *main_vbox;
-  GtkWidget             *upper_hbox;
-  GtkWidget             *right_vbox;
-  GtkWidget             *lower_hbox;
-  GtkWidget             *inner_table;
-  GtkWidget             *gtk_image;
-  GimpAction            *action;
-  gint                   image_width;
-  gint                   image_height;
-  gint                   shell_width;
-  gint                   shell_height;
+  GimpDisplayShell  *shell = GIMP_DISPLAY_SHELL (object);
+  GimpDisplayConfig *config;
+  GimpImage         *image;
+  GtkWidget         *main_vbox;
+  GtkWidget         *upper_hbox;
+  GtkWidget         *right_vbox;
+  GtkWidget         *lower_hbox;
+  GtkWidget         *inner_table;
+  GtkWidget         *gtk_image;
+  GimpAction        *action;
+  gint               image_width;
+  gint               image_height;
+  gint               shell_width;
+  gint               shell_height;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -763,16 +762,6 @@ gimp_display_shell_constructed (GObject *object)
 
   gtk_widget_show (GTK_WIDGET (shell->canvas));
 
-  /*  add display filters  */
-
-  filter = gimp_display_shell_filter_new (shell);
-
-  if (filter)
-    {
-      gimp_display_shell_filter_set (shell, filter);
-      g_object_unref (filter);
-    }
-
   if (image)
     {
       gimp_display_shell_connect (shell);
@@ -814,8 +803,7 @@ gimp_display_shell_dispose (GObject *object)
   if (shell->selection)
     gimp_display_shell_selection_free (shell);
 
-  if (shell->filter_stack)
-    gimp_display_shell_filter_set (shell, NULL);
+  gimp_display_shell_filter_set (shell, NULL);
 
   if (shell->filter_idle_id)
     {
