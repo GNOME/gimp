@@ -118,6 +118,7 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+#include "gimpplugin-private.h"
 #include "gimpunitcache.h"
 
 #include "libgimp-intl.h"
@@ -156,6 +157,11 @@ typedef enum
 void gimp_read_expect_msg   (GimpWireMessage *msg,
                              gint             type);
 
+
+static gint       gimp_main_internal           (GType                 plug_in_type,
+                                                const GimpPlugInInfo *info,
+                                                gint                  argc,
+                                                gchar                *argv[]);
 
 static void       gimp_close                   (void);
 static void       gimp_debug_stop              (void);
@@ -249,7 +255,8 @@ static const GDebugKey gimp_debug_keys[] =
   { "on",             GIMP_DEBUG_DEFAULT        }
 };
 
-static GimpPlugInInfo PLUG_IN_INFO;
+static GimpPlugIn     *PLUG_IN;
+static GimpPlugInInfo  PLUG_IN_INFO;
 
 
 static GimpPDBStatusType  pdb_error_status   = GIMP_PDB_SUCCESS;
@@ -284,20 +291,50 @@ gimp_plug_in_info_set_callbacks (GimpPlugInInfo *info,
 
 /**
  * gimp_main:
- * @info: the PLUG_IN_INFO structure
- * @argc: the number of arguments
- * @argv: (array length=argc): the arguments
+ * @plug_in_type: the type of the #GimpPlugIn subclass of the plug-in
+ * @argc:         the number of arguments
+ * @argv:         (array length=argc): the arguments
  *
- * The main procedure that must be called with the PLUG_IN_INFO structure
- * and the 'argc' and 'argv' that are passed to "main".
+ * The main procedure that must be called with the plug-in's
+ * #GimpPlugIn subclass type and the 'argc' and 'argv' that are passed
+ * to "main".
  *
  * Returns: an exit status as defined by the C library,
  *          on success EXIT_SUCCESS.
  **/
 gint
-gimp_main (const GimpPlugInInfo *info,
-           gint                  argc,
-           gchar                *argv[])
+gimp_main (GType  plug_in_type,
+           gint   argc,
+           gchar *argv[])
+{
+  return gimp_main_internal (plug_in_type, NULL, argc, argv);
+}
+
+/**
+ * gimp_main_legacy:
+ * @info: the #GimpPlugInInfo structure
+ * @argc: the number of arguments
+ * @argv: (array length=argc): the arguments
+ *
+ * The main procedure that must be called with the #GimpPlugInInfo
+ * structure and the 'argc' and 'argv' that are passed to "main".
+ *
+ * Returns: an exit status as defined by the C library,
+ *          on success EXIT_SUCCESS.
+ **/
+gint
+gimp_main_legacy (const GimpPlugInInfo *info,
+                  gint                  argc,
+                  gchar                *argv[])
+{
+  return gimp_main_internal (G_TYPE_NONE, info, argc, argv);
+}
+
+static gint
+gimp_main_internal (GType                 plug_in_type,
+                    const GimpPlugInInfo *info,
+                    gint                  argc,
+                    gchar                *argv[])
 {
   enum
   {
@@ -462,9 +499,19 @@ gimp_main (const GimpPlugInInfo *info,
     }
 #endif
 
-  g_assert (info != NULL);
+  g_assert ((plug_in_type != G_TYPE_NONE && info == NULL) ||
+            (plug_in_type == G_TYPE_NONE && info != NULL));
 
-  PLUG_IN_INFO = *info;
+  if (plug_in_type != G_TYPE_NONE)
+    {
+      PLUG_IN = g_object_new (plug_in_type, NULL);
+
+      g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
+    }
+  else
+    {
+      PLUG_IN_INFO = *info;
+    }
 
   if ((argc != N_ARGS) || (strcmp (argv[ARG_GIMP], "-gimp") != 0))
     {
@@ -676,14 +723,29 @@ gimp_main (const GimpPlugInInfo *info,
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
     {
-      if (PLUG_IN_INFO.init_proc)
-        gp_has_init_write (_writechannel, NULL);
+      if (PLUG_IN)
+        {
+          if (GIMP_PLUG_IN_GET_CLASS (PLUG_IN)->init)
+            gp_has_init_write (_writechannel, NULL);
+        }
+      else
+        {
+          if (PLUG_IN_INFO.init_proc)
+            gp_has_init_write (_writechannel, NULL);
+        }
 
       if (gimp_debug_flags & GIMP_DEBUG_QUERY)
         gimp_debug_stop ();
 
-      if (PLUG_IN_INFO.query_proc)
-        (* PLUG_IN_INFO.query_proc) ();
+      if (PLUG_IN)
+        {
+          _gimp_plug_in_query (PLUG_IN);
+        }
+      else
+        {
+          if (PLUG_IN_INFO.query_proc)
+            PLUG_IN_INFO.query_proc ();
+        }
 
       gimp_close ();
 
@@ -695,8 +757,15 @@ gimp_main (const GimpPlugInInfo *info,
       if (gimp_debug_flags & GIMP_DEBUG_INIT)
         gimp_debug_stop ();
 
-      if (PLUG_IN_INFO.init_proc)
-        (* PLUG_IN_INFO.init_proc) ();
+      if (PLUG_IN)
+        {
+          _gimp_plug_in_init (PLUG_IN);
+        }
+      else
+        {
+          if (PLUG_IN_INFO.init_proc)
+            PLUG_IN_INFO.init_proc ();
+        }
 
       gimp_close ();
 
@@ -1768,8 +1837,15 @@ gimp_close (void)
   if (gimp_debug_flags & GIMP_DEBUG_QUIT)
     gimp_debug_stop ();
 
-  if (PLUG_IN_INFO.quit_proc)
-    (* PLUG_IN_INFO.quit_proc) ();
+  if (PLUG_IN)
+    {
+      _gimp_plug_in_quit (PLUG_IN);
+    }
+  else
+    {
+      if (PLUG_IN_INFO.quit_proc)
+        PLUG_IN_INFO.quit_proc ();
+    }
 
 #if defined(USE_SYSV_SHM)
 
@@ -2294,16 +2370,27 @@ gimp_config (GPConfig *config)
 static void
 gimp_proc_run (GPProcRun *proc_run)
 {
-  if (PLUG_IN_INFO.run_proc)
+  if (PLUG_IN || PLUG_IN_INFO.run_proc)
     {
       GPProcReturn  proc_return;
       GimpParam    *return_vals;
       gint          n_return_vals;
 
-      (* PLUG_IN_INFO.run_proc) (proc_run->name,
+      if (PLUG_IN)
+        {
+          _gimp_plug_in_run (PLUG_IN,
+                             proc_run->name,
+                             proc_run->nparams,
+                             (GimpParam *) proc_run->params,
+                             &n_return_vals, &return_vals);
+         }
+      else
+        {
+          PLUG_IN_INFO.run_proc (proc_run->name,
                                  proc_run->nparams,
                                  (GimpParam *) proc_run->params,
                                  &n_return_vals, &return_vals);
+        }
 
       proc_return.name    = proc_run->name;
       proc_return.nparams = n_return_vals;

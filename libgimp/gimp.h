@@ -74,12 +74,14 @@ G_BEGIN_DECLS
  * The init procedure is run at every GIMP startup.
  */
 typedef void (* GimpInitProc)  (void);
+
 /**
  * GimpQuitProc:
  *
  * The quit procedure is run each time the plug-in ends.
  */
 typedef void (* GimpQuitProc)  (void);
+
 /**
  * GimpQueryProc:
  *
@@ -87,6 +89,7 @@ typedef void (* GimpQuitProc)  (void);
  * time after a plug-in is installed, or if it has been updated.
  */
 typedef void (* GimpQueryProc) (void);
+
 /**
  * GimpRunProc:
  * @name: the name of the procedure which has been called.
@@ -177,6 +180,71 @@ struct _GimpParam
 
 
 /**
+ * GIMP_MAIN:
+ * @plug_in_type: The #GType of the plug-in's #GimpPlugIn subclass
+ *
+ * A macro that expands to the appropriate main() function for the
+ * platform being compiled for.
+ *
+ * To use this macro, simply place a line that contains just the code
+ *
+ * GIMP_MAIN (MY_TYPE_PLUG_IN)
+ *
+ * at the toplevel of your file. No semicolon should be used.
+ **/
+
+#ifdef G_OS_WIN32
+
+/* Define WinMain() because plug-ins are built as GUI applications. Also
+ * define a main() in case some plug-in still is built as a console
+ * application.
+ */
+#  ifdef __GNUC__
+#    ifndef _stdcall
+#      define _stdcall __attribute__((stdcall))
+#    endif
+#  endif
+
+#  define GIMP_MAIN(plug_in_type)                       \
+   struct HINSTANCE__;                                  \
+                                                        \
+   int _stdcall                                         \
+   WinMain (struct HINSTANCE__ *hInstance,              \
+            struct HINSTANCE__ *hPrevInstance,          \
+            char *lpszCmdLine,                          \
+            int   nCmdShow);                            \
+                                                        \
+   int _stdcall                                         \
+   WinMain (struct HINSTANCE__ *hInstance,              \
+            struct HINSTANCE__ *hPrevInstance,          \
+            char *lpszCmdLine,                          \
+            int   nCmdShow)                             \
+   {                                                    \
+     return gimp_main (plug_in_type,                    \
+                       _argc, __argv);                  \
+   }                                                    \
+                                                        \
+   int                                                  \
+   main (int argc, char *argv[])                        \
+   {                                                    \
+     /* Use __argc and __argv here, too, as they work   \
+      * better with mingw-w64.                          \
+      */                                                \
+     return gimp_main (plug_in_type,                    \
+                       __argc, __argv);                 \
+   }
+#else
+#  define GIMP_MAIN(plug_in_type)                       \
+   int                                                  \
+   main (int argc, char *argv[])                        \
+   {                                                    \
+     return gimp_main (plug_in_type,                    \
+                       argc, argv);                     \
+   }
+#endif
+
+
+/**
  * MAIN:
  *
  * A macro that expands to the appropriate main() function for the
@@ -213,7 +281,8 @@ struct _GimpParam
             char *lpszCmdLine,                          \
             int   nCmdShow)                             \
    {                                                    \
-     return gimp_main (&PLUG_IN_INFO, __argc, __argv);  \
+     return gimp_main_legacy (&PLUG_IN_INFO,            \
+                              _argc, __argv);           \
    }                                                    \
                                                         \
    int                                                  \
@@ -222,14 +291,16 @@ struct _GimpParam
      /* Use __argc and __argv here, too, as they work   \
       * better with mingw-w64.                          \
       */                                                \
-     return gimp_main (&PLUG_IN_INFO, __argc, __argv);  \
+     return gimp_main_legacy (&PLUG_IN_INFO,            \
+                              __argc, __argv);          \
    }
 #else
 #  define MAIN()                                        \
    int                                                  \
    main (int argc, char *argv[])                        \
    {                                                    \
-     return gimp_main (&PLUG_IN_INFO, argc, argv);      \
+     return gimp_main_legacy (&PLUG_IN_INFO,            \
+                              argc, argv);              \
    }
 #endif
 
@@ -240,10 +311,18 @@ void           gimp_plug_in_info_set_callbacks    (GimpPlugInInfo *info,
                                                    GimpQueryProc   query_proc,
                                                    GimpRunProc     run_proc);
 
-/* The main procedure that must be called with the PLUG_IN_INFO structure
- * and the 'argc' and 'argv' that are passed to "main".
+/* The main procedure that must be called with the PLUG_IN_INFO
+ * structure and the 'argc' and 'argv' that are passed to "main".
  */
-gint           gimp_main                (const GimpPlugInInfo *info,
+gint           gimp_main_legacy         (const GimpPlugInInfo *info,
+                                         gint                  argc,
+                                         gchar                *argv[]);
+
+/* The main procedure that must be called with the plug-in's
+ * GimpPlugIn subclass type and the 'argc' and 'argv' that are passed
+ * to "main".
+ */
+gint           gimp_main                (GType                 plug_in_type,
                                          gint                  argc,
                                          gchar                *argv[]);
 
