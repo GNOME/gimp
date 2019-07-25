@@ -132,7 +132,7 @@ GType gimp_matting_preview_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
- GIMP_MATTING_PREVIEW_MODE_ON_COLOR,        /*< desc="On color" >*/
+ GIMP_MATTING_PREVIEW_MODE_ON_COLOR,        /*< desc="Color" >*/
  GIMP_MATTING_PREVIEW_MODE_GRAYSCALE,       /*< desc="Grayscale" >*/
 } GimpMattingPreviewMode;
 
