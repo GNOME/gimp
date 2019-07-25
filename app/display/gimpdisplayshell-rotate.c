@@ -36,6 +36,9 @@
 #include "gimpdisplayshell-transform.h"
 
 
+#define ANGLE_EPSILON 1e-3
+
+
 /*  local function prototypes  */
 
 static void   gimp_display_shell_save_viewport_center    (GimpDisplayShell *shell,
@@ -168,8 +171,12 @@ gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  g_free (shell->rotate_transform);
-  g_free (shell->rotate_untransform);
+  g_clear_pointer (&shell->rotate_transform,   g_free);
+  g_clear_pointer (&shell->rotate_untransform, g_free);
+
+  if (fabs (shell->rotate_angle)         < ANGLE_EPSILON ||
+      fabs (360.0 - shell->rotate_angle) < ANGLE_EPSILON)
+    shell->rotate_angle = 0.0;
 
   if ((shell->rotate_angle != 0.0 ||
        shell->flip_horizontally   ||
@@ -204,11 +211,6 @@ gimp_display_shell_rotate_update_transform (GimpDisplayShell *shell)
 
       *shell->rotate_untransform = *shell->rotate_transform;
       cairo_matrix_invert (shell->rotate_untransform);
-    }
-  else
-    {
-      shell->rotate_transform   = NULL;
-      shell->rotate_untransform = NULL;
     }
 }
 
