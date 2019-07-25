@@ -91,7 +91,8 @@ gimp_busy_box_class_init (GimpBusyBoxClass *klass)
    **/
   g_object_class_install_property (object_class, PROP_MESSAGE,
                                    g_param_spec_string ("message",
-                                                        NULL, NULL,
+                                                        "Message",
+                                                        "The message to display",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
