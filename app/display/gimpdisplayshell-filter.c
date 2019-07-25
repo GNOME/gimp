@@ -28,6 +28,7 @@
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-profile.h"
+#include "gimpdisplayshell-render.h"
 
 
 /*  local function prototypes  */
