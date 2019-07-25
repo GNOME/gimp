@@ -260,7 +260,7 @@ static gchar             *pdb_error_message  = NULL;
  * gimp_main:
  * @info: the PLUG_IN_INFO structure
  * @argc: the number of arguments
- * @argv: the arguments
+ * @argv: (array length=argc): the arguments
  *
  * The main procedure that must be called with the PLUG_IN_INFO structure
  * and the 'argc' and 'argv' that are passed to "main".
