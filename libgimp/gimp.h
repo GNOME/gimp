@@ -234,6 +234,12 @@ struct _GimpParam
 #endif
 
 
+void           gimp_plug_in_info_set_callbacks    (GimpPlugInInfo *info,
+                                                   GimpInitProc    init_proc,
+                                                   GimpQuitProc    quit_proc,
+                                                   GimpQueryProc   query_proc,
+                                                   GimpRunProc     run_proc);
+
 /* The main procedure that must be called with the PLUG_IN_INFO structure
  * and the 'argc' and 'argv' that are passed to "main".
  */
