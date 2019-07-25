@@ -242,7 +242,7 @@ gimp_matting_preview_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_MATTING_PREVIEW_MODE_ON_COLOR, NC_("matting-preview-mode", "On color"), NULL },
+    { GIMP_MATTING_PREVIEW_MODE_ON_COLOR, NC_("matting-preview-mode", "Color"), NULL },
     { GIMP_MATTING_PREVIEW_MODE_GRAYSCALE, NC_("matting-preview-mode", "Grayscale"), NULL },
     { 0, NULL, NULL }
   };
