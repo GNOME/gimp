@@ -215,24 +215,12 @@ gimp_unit_store_finalize (GObject *object)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (object);
 
-  if (private->short_format)
-    {
-      g_free (private->short_format);
-      private->short_format = NULL;
-    }
+  g_clear_pointer (&private->short_format, g_free);
+  g_clear_pointer (&private->long_format,  g_free);
 
-  if (private->long_format)
-    {
-      g_free (private->long_format);
-      private->long_format = NULL;
-    }
-
-  if (private->num_values > 0)
-    {
-      g_free (private->values);
-      g_free (private->resolutions);
-      private->num_values = 0;
-    }
+  g_clear_pointer (&private->values,      g_free);
+  g_clear_pointer (&private->resolutions, g_free);
+  private->num_values = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

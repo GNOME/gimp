@@ -113,8 +113,7 @@ gimp_enum_label_finalize (GObject *object)
 {
   GimpEnumLabel *enum_label = GIMP_ENUM_LABEL (object);
 
-  if (enum_label->enum_class)
-    g_type_class_unref (enum_label->enum_class);
+  g_clear_pointer (&enum_label->enum_class, g_type_class_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

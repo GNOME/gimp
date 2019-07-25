@@ -113,23 +113,9 @@ gimp_module_finalize (GObject *object)
 {
   GimpModule *module = GIMP_MODULE (object);
 
-  if (module->info)
-    {
-      gimp_module_info_free (module->info);
-      module->info = NULL;
-    }
-
-  if (module->last_module_error)
-    {
-      g_free (module->last_module_error);
-      module->last_module_error = NULL;
-    }
-
-  if (module->filename)
-    {
-      g_free (module->filename);
-      module->filename = NULL;
-    }
+  g_clear_pointer (&module->info,              gimp_module_info_free);
+  g_clear_pointer (&module->last_module_error, g_free);
+  g_clear_pointer (&module->filename,          g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

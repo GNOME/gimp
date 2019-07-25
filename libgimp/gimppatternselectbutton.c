@@ -350,14 +350,9 @@ gimp_pattern_select_button_finalize (GObject *object)
 
   priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (object);
 
-  g_free (priv->pattern_name);
-  priv->pattern_name = NULL;
-
-  g_free (priv->mask_data);
-  priv->mask_data = NULL;
-
-  g_free (priv->title);
-  priv->title = NULL;
+  g_clear_pointer (&priv->pattern_name, g_free);
+  g_clear_pointer (&priv->mask_data,    g_free);
+  g_clear_pointer (&priv->title,        g_free);
 
   G_OBJECT_CLASS (gimp_pattern_select_button_parent_class)->finalize (object);
 }

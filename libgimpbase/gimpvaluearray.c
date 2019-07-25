@@ -195,6 +195,7 @@ gimp_value_array_unref (GimpValueArray *value_array)
           if (G_VALUE_TYPE (value) != 0) /* we allow unset values in the array */
             g_value_unset (value);
         }
+
       g_free (value_array->values);
       g_slice_free (GimpValueArray, value_array);
     }
@@ -430,13 +431,11 @@ static void
 gimp_param_value_array_finalize (GParamSpec *pspec)
 {
   GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
-  GParamSpecClass *parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_VALUE_ARRAY));
+  GParamSpecClass         *parent_class;
 
-  if (aspec->element_spec)
-    {
-      g_param_spec_unref (aspec->element_spec);
-      aspec->element_spec = NULL;
-    }
+  parent_class = g_type_class_peek (g_type_parent (GIMP_TYPE_PARAM_VALUE_ARRAY));
+
+  g_clear_pointer (&aspec->element_spec, g_param_spec_unref);
 
   parent_class->finalize (pspec);
 }
@@ -447,7 +446,7 @@ gimp_param_value_array_set_default (GParamSpec *pspec,
 {
   GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
 
-  if (!value->data[0].v_pointer && aspec->fixed_n_elements)
+  if (! value->data[0].v_pointer && aspec->fixed_n_elements)
     value->data[0].v_pointer = gimp_value_array_new (aspec->fixed_n_elements);
 
   if (value->data[0].v_pointer)
@@ -462,11 +461,11 @@ static gboolean
 gimp_param_value_array_validate (GParamSpec *pspec,
                                  GValue     *value)
 {
-  GimpParamSpecValueArray *aspec = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
-  GimpValueArray *value_array = value->data[0].v_pointer;
-  guint changed = 0;
+  GimpParamSpecValueArray *aspec       = GIMP_PARAM_SPEC_VALUE_ARRAY (pspec);
+  GimpValueArray          *value_array = value->data[0].v_pointer;
+  guint                    changed     = 0;
 
-  if (!value->data[0].v_pointer && aspec->fixed_n_elements)
+  if (! value->data[0].v_pointer && aspec->fixed_n_elements)
     value->data[0].v_pointer = gimp_value_array_new (aspec->fixed_n_elements);
 
   if (value->data[0].v_pointer)
