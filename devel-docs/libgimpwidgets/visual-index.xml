@@ -25,8 +25,17 @@
   <link linkend="GimpColorHexEntry">
     <inlinegraphic fileref="gimp-widget-color-hex-entry.png" format="PNG"></inlinegraphic>
   </link>
+  <link linkend="GimpColorNotebook">
+    <inlinegraphic fileref="gimp-widget-color-notebook.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpColorScale">
     <inlinegraphic fileref="gimp-widget-color-scale.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorScales">
+    <inlinegraphic fileref="gimp-widget-color-scales.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorSelect">
+    <inlinegraphic fileref="gimp-widget-color-select.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpColorSelection">
     <inlinegraphic fileref="gimp-widget-color-selection.png" format="PNG"></inlinegraphic>
@@ -78,6 +87,9 @@
   </link>
   <link linkend="GimpPreviewArea">
     <inlinegraphic fileref="gimp-widget-preview-area.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpRuler">
+    <inlinegraphic fileref="gimp-widget-ruler.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpStringComboBox">
     <inlinegraphic fileref="gimp-widget-string-combo-box.png" format="PNG"></inlinegraphic>

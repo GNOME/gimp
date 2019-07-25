@@ -175,19 +175,19 @@ create_chain_button (void)
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
   gtk_grid_attach (GTK_GRID (grid), chain, 0, 0, 1, 2);
 
-  label = gtk_label_new ("Linked ");
+  label = gtk_label_new ("Linked\nItems");
   gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
 
-  label = gtk_label_new ("Linked ");
+  label = gtk_label_new ("Linked\nItems");
   gtk_grid_attach (GTK_GRID (grid), label, 1, 1, 1, 1);
 
   separator = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
   gtk_grid_attach (GTK_GRID (grid), separator, 2, 0, 1, 2);
 
-  label = gtk_label_new (" Unlinked");
+  label = gtk_label_new ("Unlinked\nItems");
   gtk_grid_attach (GTK_GRID (grid), label, 3, 0, 1, 1);
 
-  label = gtk_label_new (" Unlinked");
+  label = gtk_label_new ("Unlinked\nItems");
   gtk_grid_attach (GTK_GRID (grid), label, 3, 1, 1, 1);
 
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
@@ -272,6 +272,35 @@ create_color_hex_entry (void)
 }
 
 static WidgetInfo *
+create_color_notebook (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *notebook;
+  GtkWidget *label;
+  GimpRGB    rgb;
+  GimpHSV    hsv;
+
+  color_init (&rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+
+  notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
+                                      &rgb, &hsv,
+                                      GIMP_COLOR_SELECTOR_HUE);
+  gtk_widget_set_halign (notebook, GTK_ALIGN_FILL);
+  gtk_widget_set_valign (notebook, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
+  gtk_widget_show (notebook);
+
+  label = gtk_label_new ("Color Scales");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return new_widget_info ("gimp-widget-color-notebook", vbox, FALSE, SMALL);
+}
+
+static WidgetInfo *
 create_color_profile_combo_box (void)
 {
   GtkWidget *vbox;
@@ -341,6 +370,64 @@ create_color_scale (void)
                       gtk_label_new ("Color Scale"), FALSE, FALSE, 0);
 
   return new_widget_info ("gimp-widget-color-scale", vbox, TRUE, SMALL);
+}
+
+static WidgetInfo *
+create_color_scales (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *scales;
+  GtkWidget *label;
+  GimpRGB    rgb;
+  GimpHSV    hsv;
+
+  color_init (&rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+
+  scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES,
+                                    &rgb, &hsv,
+                                    GIMP_COLOR_SELECTOR_HUE);
+  gtk_widget_set_halign (scales, GTK_ALIGN_FILL);
+  gtk_widget_set_valign (scales, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox), scales, TRUE, TRUE, 0);
+  gtk_widget_show (scales);
+
+  label = gtk_label_new ("Color Scales");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return new_widget_info ("gimp-widget-color-scales", vbox, FALSE, SMALL);
+}
+
+static WidgetInfo *
+create_color_select (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *select;
+  GtkWidget *label;
+  GimpRGB    rgb;
+  GimpHSV    hsv;
+
+  color_init (&rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+
+  select = gimp_color_selector_new (GIMP_TYPE_COLOR_SELECT,
+                                    &rgb, &hsv,
+                                    GIMP_COLOR_SELECTOR_HUE);
+  gtk_widget_set_halign (select, GTK_ALIGN_FILL);
+  gtk_widget_set_valign (select, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox), select, TRUE, TRUE, 0);
+  gtk_widget_show (select);
+
+  label = gtk_label_new ("Color Select");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  return new_widget_info ("gimp-widget-color-select", vbox, FALSE, SMALL);
 }
 
 static WidgetInfo *
@@ -635,48 +722,68 @@ create_pick_button (void)
   return new_widget_info ("gimp-widget-pick-button", vbox, TRUE, SMALL);
 }
 
-static gboolean
-area_realize (GimpPreviewArea *area)
+static WidgetInfo *
+create_preview_area (void)
 {
-  GdkPixbuf *pixbuf;
+  GtkWidget     *vbox;
+  GtkWidget     *area;
+  GdkPixbuf     *pixbuf;
+  GtkAllocation  allocation;
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
 
   pixbuf = load_image ("wilber-wizard.png");
+
+  allocation.x      = 0;
+  allocation.y      = 0;
+  allocation.width  = gdk_pixbuf_get_width (pixbuf);
+  allocation.height = gdk_pixbuf_get_height (pixbuf);
+
+  area = gimp_preview_area_new ();
+  gtk_widget_set_halign (area, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (area, GTK_ALIGN_CENTER);
+  gtk_widget_set_size_request (area, allocation.width, allocation.height);
+  gtk_widget_size_allocate (area, &allocation);
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (area), 0, 0,
                           gdk_pixbuf_get_width (pixbuf),
                           gdk_pixbuf_get_height (pixbuf),
                           GIMP_RGBA_IMAGE,
                           gdk_pixbuf_get_pixels (pixbuf),
                           gdk_pixbuf_get_rowstride (pixbuf));
-  g_object_unref (pixbuf);
-
-  return FALSE;
-}
-
-static WidgetInfo *
-create_preview_area (void)
-{
-  GtkWidget *vbox;
-  GtkWidget *area;
-  GdkPixbuf *pixbuf;
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-
-  area =  gimp_preview_area_new ();
-  gtk_widget_set_halign (area, GTK_ALIGN_CENTER);
-  gtk_widget_set_valign (area, GTK_ALIGN_CENTER);
-  g_signal_connect (area, "realize",
-                    G_CALLBACK (area_realize), NULL);
-  pixbuf = load_image ("wilber-wizard.png");
-  gtk_widget_set_size_request (area,
-                               gdk_pixbuf_get_width (pixbuf),
-                               gdk_pixbuf_get_height (pixbuf));
-  g_object_unref (pixbuf);
   gtk_box_pack_start (GTK_BOX (vbox), area, TRUE, TRUE, 0);
+
+  g_object_unref (pixbuf);
 
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Preview Area"), FALSE, FALSE, 0);
 
   return new_widget_info ("gimp-widget-preview-area", vbox, TRUE, MEDIUM);
+}
+
+static WidgetInfo *
+create_ruler (void)
+{
+  GtkWidget *grid;
+  GtkWidget *ruler;
+
+  grid = gtk_grid_new ();
+  gtk_widget_set_size_request (grid, 200, 200);
+
+  ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_widget_set_hexpand (ruler, TRUE);
+  gimp_ruler_set_range (GIMP_RULER (ruler), 0, 100, 100);
+  gimp_ruler_set_position (GIMP_RULER (ruler), 25);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 1, 1);
+
+  ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
+  gtk_widget_set_vexpand (ruler, TRUE);
+  gimp_ruler_set_range (GIMP_RULER (ruler), 0, 100, 100);
+  gimp_ruler_set_position (GIMP_RULER (ruler), 75);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 1);
+
+  gtk_grid_attach (GTK_GRID (grid), gtk_label_new ("Ruler"), 1, 1, 1, 1);
+
+  return new_widget_info ("gimp-widget-ruler", grid, TRUE, MEDIUM);
 }
 
 static WidgetInfo *
@@ -736,10 +843,14 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_color_area ());
   retval = g_list_append (retval, create_color_button ());
   retval = g_list_append (retval, create_color_hex_entry ());
+  /* put selection before notebook, selection ensures the modules */
+  retval = g_list_append (retval, create_color_selection ());
+  retval = g_list_append (retval, create_color_notebook ());
   retval = g_list_append (retval, create_color_profile_combo_box ());
   retval = g_list_append (retval, create_color_profile_view ());
   retval = g_list_append (retval, create_color_scale ());
-  retval = g_list_append (retval, create_color_selection ());
+  retval = g_list_append (retval, create_color_scales ());
+  retval = g_list_append (retval, create_color_select ());
   retval = g_list_append (retval, create_dialog ());
   retval = g_list_append (retval, create_enum_combo_box ());
   retval = g_list_append (retval, create_enum_label ());
@@ -754,6 +865,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_path_editor ());
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());
+  retval = g_list_append (retval, create_ruler ());
   retval = g_list_append (retval, create_string_combo_box ());
   retval = g_list_append (retval, create_unit_combo_box ());
 
