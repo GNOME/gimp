@@ -54,16 +54,12 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
       g_signal_handlers_disconnect_by_func (shell->filter_stack,
                                             gimp_display_shell_filter_changed,
                                             shell);
-
-      g_object_unref (shell->filter_stack);
     }
 
-  shell->filter_stack = stack;
+  g_set_object (&shell->filter_stack, stack);
 
   if (shell->filter_stack)
     {
-      g_object_ref (shell->filter_stack);
-
       g_signal_connect (shell->filter_stack, "changed",
                         G_CALLBACK (gimp_display_shell_filter_changed),
                         shell);
@@ -92,42 +88,6 @@ gimp_display_shell_has_filter (GimpDisplayShell *shell)
     }
 
   return FALSE;
-}
-
-GimpColorDisplayStack *
-gimp_display_shell_filter_new (GimpDisplayShell *shell)
-{
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-
-#if 0
-  /*  disabled because we use gimpdisplayshell-profile now, keep
-   *  the code around for reference.
-   */
-  if (config->display_module)
-    {
-      GType type = g_type_from_name (config->display_module);
-
-      if (g_type_is_a (type, GIMP_TYPE_COLOR_DISPLAY))
-        {
-          GimpColorDisplay      *display;
-          GimpColorDisplayStack *stack;
-
-          display = g_object_new (type,
-                                  "color-config",  config,
-                                  "color-managed", shell,
-                                  NULL);
-
-          stack = gimp_color_display_stack_new ();
-
-          gimp_color_display_stack_add (stack, display);
-          g_object_unref (display);
-
-          return stack;
-        }
-    }
-#endif
-
-  return NULL;
 }
 
 
