@@ -24,6 +24,55 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpplugin
+ * @title: GimpPlugIn
+ * @short_description: The base class for plug-ins to derive from
+ *
+ * The base class for plug-ins to derive from. Manages the plug-in's
+ * #GimpProcedure objects.
+ *
+ * Since: 3.0
+ **/
+
+
+struct _GimpPlugInPrivate
+{
+  gint foo;
+};
+
+
+static void   gimp_plug_in_finalize (GObject *object);
+
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
+
+#define parent_class gimp_plug_in_parent_class
+
+
+static void
+gimp_plug_in_class_init (GimpPlugInClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gimp_plug_in_finalize;
+}
+
+static void
+gimp_plug_in_init (GimpPlugIn *plug_in)
+{
+  plug_in->priv = gimp_plug_in_get_instance_private (plug_in);
+}
+
+static void
+gimp_plug_in_finalize (GObject *object)
+{
+}
+
+
+/*  unrelated old API  */
+
 gboolean
 gimp_plugin_icon_register (const gchar  *procedure_name,
                            GimpIconType  icon_type,

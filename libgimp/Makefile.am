@@ -106,10 +106,15 @@ libgimp_sources = \
 libgimp_built_sources = \
 	gimpenums.c
 
+libgimp_private_sources = \
+	gimpplugin-private.c	\
+	gimpplugin-private.h
+
 libgimp_extra_sources = gimpenums.c.tail
 
 libgimp_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimp_built_sources)	\
+	$(libgimp_private_sources)	\
 	$(libgimp_sources)
 
 libgimpui_sources = \

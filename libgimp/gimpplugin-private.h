@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimptypes.h
+ * gimpplugin-private.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,26 +18,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TYPES_H__
-#define __GIMP_TYPES_H__
-
-#include <libgimpbase/gimpbasetypes.h>
+#ifndef __GIMP_PLUG_IN_PRIVATE_H__
+#define __GIMP_PLUG_IN_PRIVATE_H__
 
 G_BEGIN_DECLS
 
-/* For information look into the html documentation */
+void   _gimp_plug_in_init  (GimpPlugIn *plug_in);
+void   _gimp_plug_in_quit  (GimpPlugIn *plug_in);
+void   _gimp_plug_in_query (GimpPlugIn *plug_in);
 
-
-typedef struct _GimpPlugIn      GimpPlugIn;
-typedef struct _GimpProcedure   GimpProcedure;
-
-typedef struct _GimpPlugInInfo  GimpPlugInInfo;
-typedef struct _GimpParamDef    GimpParamDef;
-typedef struct _GimpParamRegion GimpParamRegion;
-typedef union  _GimpParamData   GimpParamData;
-typedef struct _GimpParam       GimpParam;
+/* temp */
+void   _gimp_plug_in_run   (GimpPlugIn       *plug_in,
+                            const gchar      *name,
+                            gint              n_params,
+                            const GimpParam  *param,
+                            gint             *n_return_vals,
+                            GimpParam       **return_vals);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_TYPES_H__ */
+#endif /* __GIMP_PLUG_IN_PRIVATE_H__ */
