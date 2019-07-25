@@ -257,6 +257,30 @@ static gchar             *pdb_error_message  = NULL;
 
 
 /**
+ * gimp_plug_in_info_set_callbacks:
+ * @info: the PLUG_IN_INFO structure
+ * @init_proc:  (closure) (scope async) (nullable): the init procedure
+ * @quit_proc:  (closure) (scope async) (nullable): the quit procedure
+ * @query_proc: (closure) (scope async) (nullable): the query procedure
+ * @run_proc:   (closure) (scope async) (nullable): the run procedure
+ *
+ * The procedure that must be called with the PLUG_IN_INFO structure to
+ * set the initialization, query, run and quit callbacks.
+ **/
+void
+gimp_plug_in_info_set_callbacks (GimpPlugInInfo *info,
+                                 GimpInitProc    init_proc,
+                                 GimpQuitProc    quit_proc,
+                                 GimpQueryProc   query_proc,
+                                 GimpRunProc     run_proc)
+{
+  info->init_proc  = init_proc;
+  info->quit_proc  = quit_proc;
+  info->query_proc = query_proc;
+  info->run_proc   = run_proc;
+}
+
+/**
  * gimp_main:
  * @info: the PLUG_IN_INFO structure
  * @argc: the number of arguments
