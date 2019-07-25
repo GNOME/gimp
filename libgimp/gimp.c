@@ -266,6 +266,8 @@ static gchar             *pdb_error_message  = NULL;
  *
  * The procedure that must be called with the PLUG_IN_INFO structure to
  * set the initialization, query, run and quit callbacks.
+ *
+ * Since: 3.0
  **/
 void
 gimp_plug_in_info_set_callbacks (GimpPlugInInfo *info,

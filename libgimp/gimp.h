@@ -77,7 +77,7 @@ typedef void (* GimpInitProc)  (void);
 /**
  * GimpQuitProc:
  *
- * The quit procedure is run when GIMP closes.
+ * The quit procedure is run each time the plug-in ends.
  */
 typedef void (* GimpQuitProc)  (void);
 /**
