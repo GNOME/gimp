@@ -30,8 +30,8 @@ Tools:
     are now working even when the selection is not committed. Starting a
     fast copy|cut-paste will automatically close the polygon and commit
     the selection, accelerating fast usage of free selections.
-  - Foreground Select tool: new 'Grayscale' Preview Mode. Also, a color selector
-    for "On color" preview (original preview mode) now available, to select any
+  - Foreground Select tool: new "Grayscale" Preview Mode. Also, a color selector
+    for "Color" preview (original preview mode) now available, to select any
     color and opacity for the preview.
 
 Plug-ins:
