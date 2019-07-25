@@ -92,8 +92,8 @@ typedef void (* GimpQueryProc) (void);
  * @name: the name of the procedure which has been called.
  * @n_params: the number of parameters passed to the procedure.
  * @param: (array length=n_params): the parameters passed to @name.
- * @n_return_vals: the number of values returned by @name.
- * @return_vals: (array length=n_return_vals): the returned values.
+ * @n_return_vals: (out caller-allocates): the number of values returned by @name.
+ * @return_vals: (array length=n_return_vals) (out callee-allocates): the returned values.
  *
  * The run procedure is run during the lifetime of the GIMP session,
  * each time a plug-in procedure is called.

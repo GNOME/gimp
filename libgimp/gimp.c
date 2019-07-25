@@ -741,21 +741,21 @@ gimp_quit (void)
 
 /**
  * gimp_install_procedure:
- * @name:          the procedure's name.
- * @blurb:         a short text describing what the procedure does.
- * @help:          the help text for the procedure (usually considerably
- *                 longer than @blurb).
- * @author:        the procedure's author(s).
- * @copyright:     the procedure's copyright.
- * @date:          the date the procedure was added.
- * @menu_label:    the label to use for the procedure's menu entry,
- *                 or #NULL if the procedure has no menu entry.
- * @image_types:   the drawable types the procedure can handle.
- * @type:          the type of the procedure.
- * @n_params:      the number of parameters the procedure takes.
- * @n_return_vals: the number of return values the procedure returns.
- * @params:        the procedure's parameters.
- * @return_vals:   the procedure's return values.
+ * @name:                                      the procedure's name.
+ * @blurb:                                     a short text describing what the procedure does.
+ * @help:                                      the help text for the procedure (usually considerably
+ *                                             longer than @blurb).
+ * @author:                                    the procedure's author(s).
+ * @copyright:                                 the procedure's copyright.
+ * @date:                                      the date the procedure was added.
+ * @menu_label:                                the label to use for the procedure's menu entry,
+ *                                             or #NULL if the procedure has no menu entry.
+ * @image_types:                               the drawable types the procedure can handle.
+ * @type:                                      the type of the procedure.
+ * @n_params:                                  the number of parameters the procedure takes.
+ * @n_return_vals:                             the number of return values the procedure returns.
+ * @params: (array length=n_params):           the procedure's parameters.
+ * @return_vals: (array length=n_return_vals): the procedure's return values.
  *
  * Installs a new procedure with the PDB (procedural database).
  *
