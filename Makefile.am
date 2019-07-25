@@ -168,3 +168,48 @@ git-version.h: update-git-version-header
 	fi
 
 .PHONY: update-git-version-header
+
+### GObject introspection
+
+-include $(INTROSPECTION_MAKEFILE)
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpbase/Makefile.gi
+include $(top_srcdir)/libgimp/Makefile.gi
+
+INTROSPECTION_GIRS =
+INTROSPECTION_SCANNER_ARGS = --warn-all --add-include-path="$(srcdir)" --add-include-path="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
+INTROSPECTION_COMPILER_ARGS = --includedir="$(srcdir)" --includedir="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
+INTROSPECTION_SCANNER_ENV = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
+
+Gimp-@GIMP_API_VERSION@.gir: libgimpbase/libgimpbase-@GIMP_API_VERSION@.la libgimp/libgimp-@GIMP_API_VERSION@.la libgimp/libgimpui-@GIMP_API_VERSION@.la Makefile
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = GObject-2.0 GLib-2.0
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
+	-DGIMP_BASE_COMPILATION	\
+	-DGIMP_COMPILATION	\
+	$(AM_CFLAGS)		\
+	$(AM_CPPFLAGS)		\
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	$(CAIRO_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
+	$(GEGL_CFLAGS)		\
+	$(GTK_CFLAGS)
+
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
+	libgimpbase/libgimpbase-@GIMP_API_VERSION@.la	\
+	libgimp/libgimp-@GIMP_API_VERSION@.la		\
+	libgimp/libgimpui-@GIMP_API_VERSION@.la
+
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
+	$(libgimpbase_introspectable)					\
+	$(libgimp_introspectable)
+
+INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
+
+girdir = $(datadir)/gir-1.0
+gir_DATA = $(INTROSPECTION_GIRS)
+
+typelibdir = $(libdir)/girepository-1.0
+typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
+
+CLEANFILES += $(gir_DATA) $(typelib_DATA)
