@@ -122,11 +122,7 @@ gimp_enum_label_finalize (GObject *object)
 {
   GimpEnumLabelPrivate *private = GET_PRIVATE (object);
 
-  if (private->enum_class)
-    {
-      g_type_class_unref (private->enum_class);
-      private->enum_class = NULL;
-    }
+  g_clear_pointer (&private->enum_class, g_type_class_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

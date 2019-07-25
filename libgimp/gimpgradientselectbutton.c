@@ -325,14 +325,9 @@ gimp_gradient_select_button_finalize (GObject *object)
 {
   GimpGradientSelectButtonPrivate *priv = GET_PRIVATE (object);
 
-  g_free (priv->gradient_name);
-  priv->gradient_name = NULL;
-
-  g_free (priv->gradient_data);
-  priv->gradient_data = NULL;
-
-  g_free (priv->title);
-  priv->title = NULL;
+  g_clear_pointer (&priv->gradient_name, g_free);
+  g_clear_pointer (&priv->gradient_data, g_free);
+  g_clear_pointer (&priv->title,         g_free);
 
   G_OBJECT_CLASS (gimp_gradient_select_button_parent_class)->finalize (object);
 }
