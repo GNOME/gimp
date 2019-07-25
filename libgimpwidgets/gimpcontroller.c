@@ -133,17 +133,8 @@ gimp_controller_finalize (GObject *object)
 {
   GimpController *controller = GIMP_CONTROLLER (object);
 
-  if (controller->name)
-    {
-      g_free (controller->name);
-      controller->name = NULL;
-    }
-
-  if (controller->state)
-    {
-      g_free (controller->state);
-      controller->state = NULL;
-    }
+  g_clear_pointer (&controller->name,  g_free);
+  g_clear_pointer (&controller->state, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

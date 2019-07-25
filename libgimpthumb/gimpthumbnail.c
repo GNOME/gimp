@@ -244,31 +244,11 @@ gimp_thumbnail_finalize (GObject *object)
 {
   GimpThumbnail *thumbnail = GIMP_THUMBNAIL (object);
 
-  if (thumbnail->image_uri)
-    {
-      g_free (thumbnail->image_uri);
-      thumbnail->image_uri = NULL;
-    }
-  if (thumbnail->image_filename)
-    {
-      g_free (thumbnail->image_filename);
-      thumbnail->image_filename = NULL;
-    }
-  if (thumbnail->image_mimetype)
-    {
-      g_free (thumbnail->image_mimetype);
-      thumbnail->image_mimetype = NULL;
-    }
-  if (thumbnail->image_type)
-    {
-      g_free (thumbnail->image_type);
-      thumbnail->image_type = NULL;
-    }
-  if (thumbnail->thumb_filename)
-    {
-      g_free (thumbnail->thumb_filename);
-      thumbnail->thumb_filename = NULL;
-    }
+  g_clear_pointer (&thumbnail->image_uri,      g_free);
+  g_clear_pointer (&thumbnail->image_filename, g_free);
+  g_clear_pointer (&thumbnail->image_mimetype, g_free);
+  g_clear_pointer (&thumbnail->image_type,     g_free);
+  g_clear_pointer (&thumbnail->thumb_filename, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -405,17 +385,8 @@ gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
 
   thumbnail->image_uri = g_strdup (uri);
 
-  if (thumbnail->image_filename)
-    {
-      g_free (thumbnail->image_filename);
-      thumbnail->image_filename = NULL;
-    }
-
-  if (thumbnail->thumb_filename)
-    {
-      g_free (thumbnail->thumb_filename);
-      thumbnail->thumb_filename = NULL;
-    }
+  g_clear_pointer (&thumbnail->image_filename, g_free);
+  g_clear_pointer (&thumbnail->thumb_filename, g_free);
 
   thumbnail->thumb_size     = -1;
   thumbnail->thumb_filesize = 0;

@@ -347,18 +347,10 @@ gimp_number_pair_entry_finalize (GObject *object)
 {
   GimpNumberPairEntryPrivate *priv = GET_PRIVATE (object);
 
-  if (priv->separators)
-    {
-      g_free (priv->separators);
-      priv->separators     = NULL;
-      priv->num_separators = 0;
-    }
+  g_clear_pointer (&priv->separators, g_free);
+  priv->num_separators = 0;
 
-  if (priv->default_text)
-    {
-      g_free (priv->default_text);
-      priv->default_text = NULL;
-    }
+  g_clear_pointer (&priv->default_text, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
