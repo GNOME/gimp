@@ -129,7 +129,7 @@ image_list_invoker (GimpProcedure         *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_images);
-  gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), image_ids, num_images);
+  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), image_ids, num_images);
 
   return return_vals;
 }
@@ -455,7 +455,7 @@ image_get_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), layer_ids, num_layers);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), layer_ids, num_layers);
     }
 
   return return_vals;
@@ -500,7 +500,7 @@ image_get_channels_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), channel_ids, num_channels);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), channel_ids, num_channels);
     }
 
   return return_vals;
@@ -545,7 +545,7 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), vector_ids, num_vectors);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), vector_ids, num_vectors);
     }
 
   return return_vals;
@@ -1481,7 +1481,7 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_bytes);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 2), colormap, num_bytes);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), colormap, num_bytes);
     }
 
   return return_vals;
@@ -1502,7 +1502,7 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  colormap = gimp_value_get_int8array (gimp_value_array_index (args, 2));
+  colormap = gimp_value_get_int8_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1693,7 +1693,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 2), actual_height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
@@ -2752,7 +2752,7 @@ image_get_parasite_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_parasites);
-      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
     }
 
   return return_vals;

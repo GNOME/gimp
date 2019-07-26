@@ -144,7 +144,7 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 4), num_color_bytes);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 5), color_bytes, num_color_bytes);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 5), color_bytes, num_color_bytes);
     }
 
   return return_vals;

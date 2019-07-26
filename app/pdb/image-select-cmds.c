@@ -292,7 +292,7 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   operation = g_value_get_enum (gimp_value_array_index (args, 1));
   num_segs = g_value_get_int (gimp_value_array_index (args, 2));
-  segs = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  segs = gimp_value_get_float_array (gimp_value_array_index (args, 3));
 
   if (success)
     {

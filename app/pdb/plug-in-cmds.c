@@ -78,17 +78,17 @@ plugins_query_invoker (GimpProcedure         *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_plugins);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), menu_path, num_plugins);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), menu_path, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 3), num_plugins);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 4), plugin_accelerator, num_plugins);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 4), plugin_accelerator, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 5), num_plugins);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 6), plugin_location, num_plugins);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 6), plugin_location, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 7), num_plugins);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 8), plugin_image_type, num_plugins);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 8), plugin_image_type, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 9), num_plugins);
-  gimp_value_take_int32array (gimp_value_array_index (return_vals, 10), plugin_install_time, num_plugins);
+  gimp_value_take_int32_array (gimp_value_array_index (return_vals, 10), plugin_install_time, num_plugins);
   g_value_set_int (gimp_value_array_index (return_vals, 11), num_plugins);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 12), plugin_real_name, num_plugins);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 12), plugin_real_name, num_plugins);
 
   return return_vals;
 }
@@ -247,7 +247,7 @@ plugin_icon_register_invoker (GimpProcedure         *procedure,
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
   icon_type = g_value_get_enum (gimp_value_array_index (args, 1));
   icon_data_length = g_value_get_int (gimp_value_array_index (args, 2));
-  icon_data = gimp_value_get_int8array (gimp_value_array_index (args, 3));
+  icon_data = gimp_value_get_int8_array (gimp_value_array_index (args, 3));
 
   if (success)
     {

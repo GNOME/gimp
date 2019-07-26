@@ -84,7 +84,7 @@ patterns_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_patterns);
-      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), pattern_list, num_patterns);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), pattern_list, num_patterns);
     }
 
   return return_vals;

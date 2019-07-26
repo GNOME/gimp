@@ -195,7 +195,7 @@ get_parasite_list_invoker (GimpProcedure         *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_parasites);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
 
   return return_vals;
 }

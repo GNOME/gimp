@@ -249,7 +249,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), layer_ids, num_layers);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), layer_ids, num_layers);
     }
 
   return return_vals;
@@ -377,7 +377,7 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 1), width);
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), thumb_data_count);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 4), thumb_data, thumb_data_count);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 4), thumb_data, thumb_data_count);
     }
 
   return return_vals;

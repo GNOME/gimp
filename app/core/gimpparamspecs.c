@@ -2157,7 +2157,7 @@ gimp_param_spec_int8_array (const gchar *name,
 }
 
 const guint8 *
-gimp_value_get_int8array (const GValue *value)
+gimp_value_get_int8_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT8_ARRAY (value), NULL);
 
@@ -2165,7 +2165,7 @@ gimp_value_get_int8array (const GValue *value)
 }
 
 guint8 *
-gimp_value_dup_int8array (const GValue *value)
+gimp_value_dup_int8_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT8_ARRAY (value), NULL);
 
@@ -2173,9 +2173,9 @@ gimp_value_dup_int8array (const GValue *value)
 }
 
 void
-gimp_value_set_int8array (GValue       *value,
-                          const guint8 *data,
-                          gsize         length)
+gimp_value_set_int8_array (GValue       *value,
+                           const guint8 *data,
+                           gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT8_ARRAY (value));
 
@@ -2183,9 +2183,9 @@ gimp_value_set_int8array (GValue       *value,
 }
 
 void
-gimp_value_set_static_int8array (GValue       *value,
-                                 const guint8 *data,
-                                 gsize         length)
+gimp_value_set_static_int8_array (GValue       *value,
+                                  const guint8 *data,
+                                  gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT8_ARRAY (value));
 
@@ -2193,9 +2193,9 @@ gimp_value_set_static_int8array (GValue       *value,
 }
 
 void
-gimp_value_take_int8array (GValue *value,
-                           guint8 *data,
-                           gsize   length)
+gimp_value_take_int8_array (GValue *value,
+                            guint8 *data,
+                            gsize   length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT8_ARRAY (value));
 
@@ -2279,7 +2279,7 @@ gimp_param_spec_int16_array (const gchar *name,
 }
 
 const gint16 *
-gimp_value_get_int16array (const GValue *value)
+gimp_value_get_int16_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value), NULL);
 
@@ -2287,7 +2287,7 @@ gimp_value_get_int16array (const GValue *value)
 }
 
 gint16 *
-gimp_value_dup_int16array (const GValue *value)
+gimp_value_dup_int16_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value), NULL);
 
@@ -2295,9 +2295,9 @@ gimp_value_dup_int16array (const GValue *value)
 }
 
 void
-gimp_value_set_int16array (GValue       *value,
-                           const gint16 *data,
-                           gsize         length)
+gimp_value_set_int16_array (GValue       *value,
+                            const gint16 *data,
+                            gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value));
 
@@ -2306,9 +2306,9 @@ gimp_value_set_int16array (GValue       *value,
 }
 
 void
-gimp_value_set_static_int16array (GValue       *value,
-                                  const gint16 *data,
-                                  gsize         length)
+gimp_value_set_static_int16_array (GValue       *value,
+                                   const gint16 *data,
+                                   gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value));
 
@@ -2317,9 +2317,9 @@ gimp_value_set_static_int16array (GValue       *value,
 }
 
 void
-gimp_value_take_int16array (GValue *value,
-                            gint16 *data,
-                            gsize   length)
+gimp_value_take_int16_array (GValue *value,
+                             gint16 *data,
+                             gsize   length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT16_ARRAY (value));
 
@@ -2404,7 +2404,7 @@ gimp_param_spec_int32_array (const gchar *name,
 }
 
 const gint32 *
-gimp_value_get_int32array (const GValue *value)
+gimp_value_get_int32_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value), NULL);
 
@@ -2412,7 +2412,7 @@ gimp_value_get_int32array (const GValue *value)
 }
 
 gint32 *
-gimp_value_dup_int32array (const GValue *value)
+gimp_value_dup_int32_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value), NULL);
 
@@ -2420,9 +2420,9 @@ gimp_value_dup_int32array (const GValue *value)
 }
 
 void
-gimp_value_set_int32array (GValue       *value,
-                           const gint32 *data,
-                           gsize         length)
+gimp_value_set_int32_array (GValue       *value,
+                            const gint32 *data,
+                            gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value));
 
@@ -2431,9 +2431,9 @@ gimp_value_set_int32array (GValue       *value,
 }
 
 void
-gimp_value_set_static_int32array (GValue       *value,
-                                  const gint32 *data,
-                                  gsize         length)
+gimp_value_set_static_int32_array (GValue       *value,
+                                   const gint32 *data,
+                                   gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value));
 
@@ -2442,9 +2442,9 @@ gimp_value_set_static_int32array (GValue       *value,
 }
 
 void
-gimp_value_take_int32array (GValue *value,
-                            gint32 *data,
-                            gsize   length)
+gimp_value_take_int32_array (GValue *value,
+                             gint32 *data,
+                             gsize   length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_INT32_ARRAY (value));
 
@@ -2529,7 +2529,7 @@ gimp_param_spec_float_array (const gchar *name,
 }
 
 const gdouble *
-gimp_value_get_floatarray (const GValue *value)
+gimp_value_get_float_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), NULL);
 
@@ -2537,7 +2537,7 @@ gimp_value_get_floatarray (const GValue *value)
 }
 
 gdouble *
-gimp_value_dup_floatarray (const GValue *value)
+gimp_value_dup_float_array (const GValue *value)
 {
   g_return_val_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value), NULL);
 
@@ -2545,9 +2545,9 @@ gimp_value_dup_floatarray (const GValue *value)
 }
 
 void
-gimp_value_set_floatarray (GValue        *value,
-                           const gdouble *data,
-                           gsize         length)
+gimp_value_set_float_array (GValue        *value,
+                            const gdouble *data,
+                            gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
 
@@ -2556,9 +2556,9 @@ gimp_value_set_floatarray (GValue        *value,
 }
 
 void
-gimp_value_set_static_floatarray (GValue        *value,
-                                  const gdouble *data,
-                                  gsize         length)
+gimp_value_set_static_float_array (GValue        *value,
+                                   const gdouble *data,
+                                   gsize         length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
 
@@ -2567,9 +2567,9 @@ gimp_value_set_static_floatarray (GValue        *value,
 }
 
 void
-gimp_value_take_floatarray (GValue  *value,
-                            gdouble *data,
-                            gsize    length)
+gimp_value_take_float_array (GValue  *value,
+                             gdouble *data,
+                             gsize    length)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value));
 
@@ -2765,7 +2765,7 @@ gimp_param_spec_string_array (const gchar *name,
 }
 
 const gchar **
-gimp_value_get_stringarray (const GValue *value)
+gimp_value_get_string_array (const GValue *value)
 {
   GimpArray *array;
 
@@ -2780,7 +2780,7 @@ gimp_value_get_stringarray (const GValue *value)
 }
 
 gchar **
-gimp_value_dup_stringarray (const GValue *value)
+gimp_value_dup_string_array (const GValue *value)
 {
   GimpArray *array;
 
@@ -2803,9 +2803,9 @@ gimp_value_dup_stringarray (const GValue *value)
 }
 
 void
-gimp_value_set_stringarray (GValue       *value,
-                            const gchar **data,
-                            gsize         length)
+gimp_value_set_string_array (GValue       *value,
+                             const gchar **data,
+                             gsize         length)
 {
   GimpArray *array;
 
@@ -2817,9 +2817,9 @@ gimp_value_set_stringarray (GValue       *value,
 }
 
 void
-gimp_value_set_static_stringarray (GValue       *value,
-                                   const gchar **data,
-                                   gsize         length)
+gimp_value_set_static_string_array (GValue       *value,
+                                    const gchar **data,
+                                    gsize         length)
 {
   GimpArray *array;
 
@@ -2831,9 +2831,9 @@ gimp_value_set_static_stringarray (GValue       *value,
 }
 
 void
-gimp_value_take_stringarray (GValue  *value,
-                             gchar  **data,
-                             gsize    length)
+gimp_value_take_string_array (GValue  *value,
+                              gchar  **data,
+                              gsize    length)
 {
   GimpArray *array;
 
@@ -2847,16 +2847,16 @@ gimp_value_take_stringarray (GValue  *value,
 
 
 /*
- * GIMP_TYPE_COLOR_ARRAY
+ * GIMP_TYPE_RGB_ARRAY
  */
 
 GType
-gimp_color_array_get_type (void)
+gimp_rgb_array_get_type (void)
 {
   static GType type = 0;
 
   if (! type)
-    type = g_boxed_type_register_static ("GimpColorArray",
+    type = g_boxed_type_register_static ("GimpRgbArray",
                                          (GBoxedCopyFunc) gimp_array_copy,
                                          (GBoxedFreeFunc) gimp_array_free);
 
@@ -2865,14 +2865,14 @@ gimp_color_array_get_type (void)
 
 
 /*
- * GIMP_TYPE_PARAM_COLOR_ARRAY
+ * GIMP_TYPE_PARAM_RGB_ARRAY
  */
 
-static void  gimp_param_color_array_class_init (GParamSpecClass *klass);
-static void  gimp_param_color_array_init       (GParamSpec      *pspec);
+static void  gimp_param_rgb_array_class_init (GParamSpecClass *klass);
+static void  gimp_param_rgb_array_init       (GParamSpec      *pspec);
 
 GType
-gimp_param_color_array_get_type (void)
+gimp_param_rgb_array_get_type (void)
 {
   static GType type = 0;
 
@@ -2882,89 +2882,89 @@ gimp_param_color_array_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_color_array_class_init,
+        (GClassInitFunc) gimp_param_rgb_array_class_init,
         NULL, NULL,
         sizeof (GimpParamSpecArray),
         0,
-        (GInstanceInitFunc) gimp_param_color_array_init
+        (GInstanceInitFunc) gimp_param_rgb_array_init
       };
 
       type = g_type_register_static (G_TYPE_PARAM_BOXED,
-                                     "GimpParamColorArray", &info, 0);
+                                     "GimpParamRGBArray", &info, 0);
     }
 
   return type;
 }
 
 static void
-gimp_param_color_array_class_init (GParamSpecClass *klass)
+gimp_param_rgb_array_class_init (GParamSpecClass *klass)
 {
-  klass->value_type = GIMP_TYPE_COLOR_ARRAY;
+  klass->value_type = GIMP_TYPE_RGB_ARRAY;
 }
 
 static void
-gimp_param_color_array_init (GParamSpec *pspec)
+gimp_param_rgb_array_init (GParamSpec *pspec)
 {
 }
 
 GParamSpec *
-gimp_param_spec_color_array (const gchar *name,
-                             const gchar *nick,
-                             const gchar *blurb,
-                             GParamFlags  flags)
+gimp_param_spec_rgb_array (const gchar *name,
+                           const gchar *nick,
+                           const gchar *blurb,
+                           GParamFlags  flags)
 {
-  GimpParamSpecColorArray *array_spec;
+  GimpParamSpecRGBArray *array_spec;
 
-  array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_COLOR_ARRAY,
+  array_spec = g_param_spec_internal (GIMP_TYPE_PARAM_RGB_ARRAY,
                                       name, nick, blurb, flags);
 
   return G_PARAM_SPEC (array_spec);
 }
 
 const GimpRGB *
-gimp_value_get_colorarray (const GValue *value)
+gimp_value_get_rgb_array (const GValue *value)
 {
-  g_return_val_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value), NULL);
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_RGB_ARRAY (value), NULL);
 
   return (const GimpRGB *) gimp_value_get_array (value);
 }
 
 GimpRGB *
-gimp_value_dup_colorarray (const GValue *value)
+gimp_value_dup_rgb_array (const GValue *value)
 {
-  g_return_val_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value), NULL);
+  g_return_val_if_fail (GIMP_VALUE_HOLDS_RGB_ARRAY (value), NULL);
 
   return (GimpRGB *) gimp_value_dup_array (value);
 }
 
 void
-gimp_value_set_colorarray (GValue        *value,
-                           const GimpRGB *data,
-                           gsize         length)
+gimp_value_set_rgb_array (GValue        *value,
+                          const GimpRGB *data,
+                          gsize         length)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value));
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB_ARRAY (value));
 
   gimp_value_set_array (value, (const guint8 *) data,
                         length * sizeof (GimpRGB));
 }
 
 void
-gimp_value_set_static_colorarray (GValue        *value,
-                                  const GimpRGB *data,
-                                  gsize          length)
+gimp_value_set_static_rgb_array (GValue        *value,
+                                 const GimpRGB *data,
+                                 gsize          length)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value));
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB_ARRAY (value));
 
   gimp_value_set_static_array (value, (const guint8 *) data,
                                length * sizeof (GimpRGB));
 }
 
 void
-gimp_value_take_colorarray (GValue  *value,
-                            GimpRGB *data,
-                            gsize    length)
+gimp_value_take_rgb_array (GValue  *value,
+                           GimpRGB *data,
+                           gsize    length)
 {
-  g_return_if_fail (GIMP_VALUE_HOLDS_COLOR_ARRAY (value));
+  g_return_if_fail (GIMP_VALUE_HOLDS_RGB_ARRAY (value));
 
   gimp_value_take_array (value, (guint8 *) data,
                          length * sizeof (GimpRGB));

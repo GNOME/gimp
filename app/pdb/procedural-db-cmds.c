@@ -131,7 +131,7 @@ procedural_db_query_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_matches);
-      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), procedure_names, num_matches);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), procedure_names, num_matches);
     }
 
   return return_vals;
@@ -408,7 +408,7 @@ procedural_db_get_data_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), bytes);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 2), data, bytes);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), data, bytes);
     }
 
   return return_vals;
@@ -464,7 +464,7 @@ procedural_db_set_data_invoker (GimpProcedure         *procedure,
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
   bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  data = gimp_value_get_int8array (gimp_value_array_index (args, 2));
+  data = gimp_value_get_int8_array (gimp_value_array_index (args, 2));
 
   if (success)
     {

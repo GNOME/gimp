@@ -384,16 +384,16 @@ gimp_help_browser (Gimp         *gimp,
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 5);
 
-      g_value_set_int             (gimp_value_array_index (args, 0),
-                                   GIMP_RUN_INTERACTIVE);
-      g_value_set_int             (gimp_value_array_index (args, 1),
-                                   n_domains);
-      gimp_value_take_stringarray (gimp_value_array_index (args, 2),
-                                   help_domains, n_domains);
-      g_value_set_int             (gimp_value_array_index (args, 3),
-                                   n_domains);
-      gimp_value_take_stringarray (gimp_value_array_index (args, 4),
-                                   help_uris, n_domains);
+      g_value_set_int              (gimp_value_array_index (args, 0),
+                                    GIMP_RUN_INTERACTIVE);
+      g_value_set_int              (gimp_value_array_index (args, 1),
+                                    n_domains);
+      gimp_value_take_string_array (gimp_value_array_index (args, 2),
+                                    help_domains, n_domains);
+      g_value_set_int              (gimp_value_array_index (args, 3),
+                                    n_domains);
+      gimp_value_take_string_array (gimp_value_array_index (args, 4),
+                                    help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
@@ -541,14 +541,14 @@ gimp_help_call (Gimp         *gimp,
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 4);
 
-      g_value_set_int             (gimp_value_array_index (args, 0),
-                                   n_domains);
-      gimp_value_take_stringarray (gimp_value_array_index (args, 1),
-                                   help_domains, n_domains);
-      g_value_set_int             (gimp_value_array_index (args, 2),
-                                   n_domains);
-      gimp_value_take_stringarray (gimp_value_array_index (args, 3),
-                                   help_uris, n_domains);
+      g_value_set_int              (gimp_value_array_index (args, 0),
+                                    n_domains);
+      gimp_value_take_string_array (gimp_value_array_index (args, 1),
+                                    help_domains, n_domains);
+      g_value_set_int              (gimp_value_array_index (args, 2),
+                                    n_domains);
+      gimp_value_take_string_array (gimp_value_array_index (args, 3),
+                                    help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp), progress,

@@ -552,10 +552,10 @@ CODE
     }
     elsif ($pdbtype eq 'colorarray') {
 	$pspec = <<CODE;
-gimp_param_spec_color_array ("$name",
-                             "$nick",
-                             "$blurb",
-                             $flags)
+gimp_param_spec_rgb_array ("$name",
+                           "$nick",
+                           "$blurb",
+                           $flags)
 CODE
     }
     else {
