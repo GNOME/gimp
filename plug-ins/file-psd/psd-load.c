@@ -328,6 +328,7 @@ read_header_block (PSDimage  *img_a,
       && img_a->color_mode != PSD_GRAYSCALE
       && img_a->color_mode != PSD_INDEXED
       && img_a->color_mode != PSD_RGB
+      && img_a->color_mode != PSD_MULTICHANNEL
       && img_a->color_mode != PSD_DUOTONE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -982,6 +983,7 @@ create_gimp_image (PSDimage    *img_a,
 
   switch (img_a->color_mode)
     {
+    case PSD_MULTICHANNEL:
     case PSD_GRAYSCALE:
     case PSD_DUOTONE:
       img_a->base_type = GIMP_GRAY;
@@ -1721,6 +1723,7 @@ add_merged_image (gint32     image_id,
     bps++;
 
   if ((img_a->color_mode == PSD_BITMAP ||
+       img_a->color_mode == PSD_MULTICHANNEL ||
        img_a->color_mode == PSD_GRAYSCALE ||
        img_a->color_mode == PSD_DUOTONE ||
        img_a->color_mode == PSD_INDEXED) &&
