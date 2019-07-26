@@ -45,6 +45,7 @@
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimppaletteselect.h>
+#include <libgimp/gimpparamspecs.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppixbuf.h>
 #include <libgimp/gimpplugin.h>
