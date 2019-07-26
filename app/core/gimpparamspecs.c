@@ -913,7 +913,9 @@ gimp_value_set_item (GValue   *value,
 {
   g_return_if_fail (item == NULL || GIMP_IS_ITEM (item));
 
-  /* FIXME remove hack as soon as bug #375864 is fixed */
+  /* This could all be less messy, see
+   * https://gitlab.gnome.org/GNOME/glib/issues/66
+   */
 
   if (GIMP_VALUE_HOLDS_ITEM_ID (value))
     {
@@ -1067,7 +1069,34 @@ gimp_value_set_drawable (GValue       *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_DRAWABLE_ID (value));
   g_return_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable));
 
-  value->data[0].v_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+  if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value))
+    {
+      value->data[0].v_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+    }
+  else if (GIMP_VALUE_HOLDS_LAYER_ID (value) &&
+           (drawable == NULL || GIMP_IS_LAYER (drawable)))
+    {
+      gimp_value_set_layer (value, GIMP_LAYER (drawable));
+    }
+  else if (GIMP_VALUE_HOLDS_CHANNEL_ID (value) &&
+           (drawable == NULL || GIMP_IS_CHANNEL (drawable)))
+    {
+      gimp_value_set_channel (value, GIMP_CHANNEL (drawable));
+    }
+  else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
+           (drawable == NULL || GIMP_IS_LAYER_MASK (drawable)))
+    {
+      gimp_value_set_layer_mask (value, GIMP_LAYER_MASK (drawable));
+    }
+  else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
+           (drawable == NULL || GIMP_IS_SELECTION (drawable)))
+    {
+      gimp_value_set_selection (value, GIMP_SELECTION (drawable));
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
 }
 
 
@@ -1297,7 +1326,24 @@ gimp_value_set_channel (GValue      *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_CHANNEL_ID (value));
   g_return_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel));
 
-  value->data[0].v_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+  if (GIMP_VALUE_HOLDS_CHANNEL_ID (value))
+    {
+      value->data[0].v_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+    }
+  else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
+           (channel == NULL || GIMP_IS_LAYER_MASK (channel)))
+    {
+      gimp_value_set_layer_mask (value, GIMP_LAYER_MASK (channel));
+    }
+  else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
+           (channel == NULL || GIMP_IS_SELECTION (channel)))
+    {
+      gimp_value_set_selection (value, GIMP_SELECTION (channel));
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
 }
 
 
