@@ -33,7 +33,6 @@ typedef struct _GimpProcedure   GimpProcedure;
 
 typedef struct _GimpPlugInInfo  GimpPlugInInfo;
 typedef struct _GimpParamDef    GimpParamDef;
-typedef struct _GimpParamRegion GimpParamRegion;
 typedef union  _GimpParamData   GimpParamData;
 typedef struct _GimpParam       GimpParam;
 

@@ -134,14 +134,6 @@ struct _GimpParamDef
   gchar          *description;
 };
 
-struct _GimpParamRegion
-{
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
-};
-
 union _GimpParamData
 {
   gint32            d_int32;
