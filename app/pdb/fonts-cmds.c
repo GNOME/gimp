@@ -86,7 +86,7 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_fonts);
-      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), font_list, num_fonts);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), font_list, num_fonts);
     }
 
   return return_vals;

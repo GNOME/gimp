@@ -202,7 +202,7 @@ vectors_get_strokes_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_strokes);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), stroke_ids, num_strokes);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), stroke_ids, num_strokes);
     }
 
   return return_vals;
@@ -669,7 +669,7 @@ vectors_stroke_get_points_invoker (GimpProcedure         *procedure,
     {
       g_value_set_enum (gimp_value_array_index (return_vals, 1), type);
       g_value_set_int (gimp_value_array_index (return_vals, 2), num_points);
-      gimp_value_take_floatarray (gimp_value_array_index (return_vals, 3), controlpoints, num_points);
+      gimp_value_take_float_array (gimp_value_array_index (return_vals, 3), controlpoints, num_points);
       g_value_set_boolean (gimp_value_array_index (return_vals, 4), closed);
     }
 
@@ -696,7 +696,7 @@ vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   type = g_value_get_enum (gimp_value_array_index (args, 1));
   num_points = g_value_get_int (gimp_value_array_index (args, 2));
-  controlpoints = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  controlpoints = gimp_value_get_float_array (gimp_value_array_index (args, 3));
   closed = g_value_get_boolean (gimp_value_array_index (args, 4));
 
   if (success)
@@ -806,7 +806,7 @@ vectors_stroke_interpolate_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_coords);
-      gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), coords, num_coords);
+      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), coords, num_coords);
       g_value_set_boolean (gimp_value_array_index (return_vals, 3), closed);
     }
 
@@ -1159,7 +1159,7 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), vectors_ids, num_vectors);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), vectors_ids, num_vectors);
     }
 
   return return_vals;
@@ -1223,7 +1223,7 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), vectors_ids, num_vectors);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), vectors_ids, num_vectors);
     }
 
   return return_vals;

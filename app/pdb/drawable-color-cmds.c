@@ -211,7 +211,7 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   num_values = g_value_get_int (gimp_value_array_index (args, 2));
-  values = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  values = gimp_value_get_float_array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -260,7 +260,7 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   num_points = g_value_get_int (gimp_value_array_index (args, 2));
-  points = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  points = gimp_value_get_float_array (gimp_value_array_index (args, 3));
 
   if (success)
     {

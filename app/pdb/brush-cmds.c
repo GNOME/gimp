@@ -393,10 +393,10 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), mask_bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 4), num_mask_bytes);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 5), mask_bytes, num_mask_bytes);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 5), mask_bytes, num_mask_bytes);
       g_value_set_int (gimp_value_array_index (return_vals, 6), color_bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 7), num_color_bytes);
-      gimp_value_take_int8array (gimp_value_array_index (return_vals, 8), color_bytes, num_color_bytes);
+      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 8), color_bytes, num_color_bytes);
     }
 
   return return_vals;

@@ -438,7 +438,7 @@ item_get_children_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_children);
-      gimp_value_take_int32array (gimp_value_array_index (return_vals, 2), child_ids, num_children);
+      gimp_value_take_int32_array (gimp_value_array_index (return_vals, 2), child_ids, num_children);
     }
 
   return return_vals;
@@ -986,7 +986,7 @@ item_get_parasite_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_parasites);
-      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), parasites, num_parasites);
     }
 
   return return_vals;

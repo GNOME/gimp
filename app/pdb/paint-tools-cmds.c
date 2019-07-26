@@ -117,7 +117,7 @@ airbrush_invoker (GimpProcedure         *procedure,
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   pressure = g_value_get_double (gimp_value_array_index (args, 1));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 2));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -164,7 +164,7 @@ airbrush_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -215,7 +215,7 @@ clone_invoker (GimpProcedure         *procedure,
   src_x = g_value_get_double (gimp_value_array_index (args, 3));
   src_y = g_value_get_double (gimp_value_array_index (args, 4));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 5));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 6));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 6));
 
   if (success)
     {
@@ -265,7 +265,7 @@ clone_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -312,7 +312,7 @@ convolve_invoker (GimpProcedure         *procedure,
   pressure = g_value_get_double (gimp_value_array_index (args, 1));
   convolve_type = g_value_get_enum (gimp_value_array_index (args, 2));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 3));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 4));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -360,7 +360,7 @@ convolve_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -409,7 +409,7 @@ dodgeburn_invoker (GimpProcedure         *procedure,
   dodgeburn_type = g_value_get_enum (gimp_value_array_index (args, 2));
   dodgeburn_mode = g_value_get_enum (gimp_value_array_index (args, 3));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 4));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 5));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -458,7 +458,7 @@ dodgeburn_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -503,7 +503,7 @@ eraser_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
   hardness = g_value_get_enum (gimp_value_array_index (args, 3));
   method = g_value_get_enum (gimp_value_array_index (args, 4));
 
@@ -553,7 +553,7 @@ eraser_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -602,7 +602,7 @@ heal_invoker (GimpProcedure         *procedure,
   src_x = g_value_get_double (gimp_value_array_index (args, 2));
   src_y = g_value_get_double (gimp_value_array_index (args, 3));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 4));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 5));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -648,7 +648,7 @@ heal_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -695,7 +695,7 @@ paintbrush_invoker (GimpProcedure         *procedure,
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   fade_out = g_value_get_double (gimp_value_array_index (args, 1));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 2));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 3));
   method = g_value_get_enum (gimp_value_array_index (args, 4));
   gradient_length = g_value_get_double (gimp_value_array_index (args, 5));
 
@@ -776,7 +776,7 @@ paintbrush_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -819,7 +819,7 @@ pencil_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -864,7 +864,7 @@ smudge_invoker (GimpProcedure         *procedure,
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   pressure = g_value_get_double (gimp_value_array_index (args, 1));
   num_strokes = g_value_get_int (gimp_value_array_index (args, 2));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -911,7 +911,7 @@ smudge_default_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   num_strokes = g_value_get_int (gimp_value_array_index (args, 1));
-  strokes = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  strokes = gimp_value_get_float_array (gimp_value_array_index (args, 2));
 
   if (success)
     {

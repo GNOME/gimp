@@ -123,7 +123,7 @@ context_list_paint_methods_invoker (GimpProcedure         *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_paint_methods);
-  gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), paint_methods, num_paint_methods);
+  gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), paint_methods, num_paint_methods);
 
   return return_vals;
 }
@@ -759,7 +759,7 @@ context_get_line_dash_pattern_invoker (GimpProcedure         *procedure,
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
 
   g_value_set_int (gimp_value_array_index (return_vals, 1), num_dashes);
-  gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), dashes, num_dashes);
+  gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), dashes, num_dashes);
 
   return return_vals;
 }
@@ -777,7 +777,7 @@ context_set_line_dash_pattern_invoker (GimpProcedure         *procedure,
   const gdouble *dashes;
 
   num_dashes = g_value_get_int (gimp_value_array_index (args, 0));
-  dashes = gimp_value_get_floatarray (gimp_value_array_index (args, 1));
+  dashes = gimp_value_get_float_array (gimp_value_array_index (args, 1));
 
   if (success)
     {

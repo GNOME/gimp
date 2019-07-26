@@ -377,7 +377,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
-      gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
+      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
     }
 
   return return_vals;
@@ -402,7 +402,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
   num_samples = g_value_get_int (gimp_value_array_index (args, 1));
-  positions = gimp_value_get_floatarray (gimp_value_array_index (args, 2));
+  positions = gimp_value_get_float_array (gimp_value_array_index (args, 2));
   reverse = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (success)
@@ -448,7 +448,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_color_samples);
-      gimp_value_take_floatarray (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
+      gimp_value_take_float_array (gimp_value_array_index (return_vals, 2), color_samples, num_color_samples);
     }
 
   return return_vals;

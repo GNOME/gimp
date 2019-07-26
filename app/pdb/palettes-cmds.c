@@ -83,7 +83,7 @@ palettes_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_palettes);
-      gimp_value_take_stringarray (gimp_value_array_index (return_vals, 2), palette_list, num_palettes);
+      gimp_value_take_string_array (gimp_value_array_index (return_vals, 2), palette_list, num_palettes);
     }
 
   return return_vals;

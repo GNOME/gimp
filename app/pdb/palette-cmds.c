@@ -303,7 +303,7 @@ palette_get_colors_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_colors);
-      gimp_value_take_colorarray (gimp_value_array_index (return_vals, 2), colors, num_colors);
+      gimp_value_take_rgb_array (gimp_value_array_index (return_vals, 2), colors, num_colors);
     }
 
   return return_vals;
@@ -816,10 +816,10 @@ register_palette_procs (GimpPDB *pdb)
                                                           0, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_color_array ("colors",
-                                                                "colors",
-                                                                "The colors in the palette",
-                                                                GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_rgb_array ("colors",
+                                                              "colors",
+                                                              "The colors in the palette",
+                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
