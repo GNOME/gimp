@@ -134,6 +134,8 @@ libgimp_introspectable = \
 	$(top_srcdir)/libgimp/gimplayer.h		\
 	$(top_srcdir)/libgimp/gimppaletteselect.c	\
 	$(top_srcdir)/libgimp/gimppaletteselect.h	\
+	$(top_srcdir)/libgimp/gimpparamspecs.c		\
+	$(top_srcdir)/libgimp/gimpparamspecs.h		\
 	$(top_srcdir)/libgimp/gimppatternselect.c	\
 	$(top_srcdir)/libgimp/gimppatternselect.h	\
 	$(top_srcdir)/libgimp/gimppixbuf.c		\
