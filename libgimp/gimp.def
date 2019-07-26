@@ -468,7 +468,7 @@ EXPORTS
 	gimp_item_detach_parasite
 	gimp_item_get_children
 	gimp_item_get_color_tag
-        gimp_item_get_expanded
+	gimp_item_get_expanded
 	gimp_item_get_image
 	gimp_item_get_linked
 	gimp_item_get_lock_content
@@ -489,7 +489,7 @@ EXPORTS
 	gimp_item_is_valid
 	gimp_item_is_vectors
 	gimp_item_set_color_tag
-        gimp_item_set_expanded
+	gimp_item_set_expanded
 	gimp_item_set_linked
 	gimp_item_set_lock_content
 	gimp_item_set_lock_position
@@ -547,6 +547,7 @@ EXPORTS
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
 	gimp_main
+	gimp_main_legacy
 	gimp_message
 	gimp_message_get_handler
 	gimp_message_set_handler
@@ -585,6 +586,12 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pencil
+	gimp_plug_in_add_procedure
+	gimp_plug_in_get_procedure
+	gimp_plug_in_get_procedures
+	gimp_plug_in_get_type
+	gimp_plug_in_info_set_callbacks
+	gimp_plug_in_remove_procedure
 	gimp_plugin_domain_register
 	gimp_plugin_get_pdb_error_handler
 	gimp_plugin_help_register
@@ -592,8 +599,6 @@ EXPORTS
 	gimp_plugin_menu_branch_register
 	gimp_plugin_menu_register
 	gimp_plugin_set_pdb_error_handler
-	gimp_plug_in_get_type
-	gimp_plug_in_info_set_callbacks
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
@@ -604,6 +609,20 @@ EXPORTS
 	gimp_procedural_db_query
 	gimp_procedural_db_set_data
 	gimp_procedural_db_temp_name
+	gimp_procedure_add_argument
+	gimp_procedure_add_return_value
+	gimp_procedure_get_arguments
+	gimp_procedure_get_blurb
+	gimp_procedure_get_help_id
+	gimp_procedure_get_label
+	gimp_procedure_get_name
+	gimp_procedure_get_return_values
+	gimp_procedure_get_type
+	gimp_procedure_new
+	gimp_procedure_new_legacy
+	gimp_procedure_run
+	gimp_procedure_run_legacy
+	gimp_procedure_set_strings
 	gimp_progress_cancel
 	gimp_progress_end
 	gimp_progress_get_window_handle

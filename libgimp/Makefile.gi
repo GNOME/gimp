@@ -142,6 +142,8 @@ libgimp_introspectable = \
 	$(top_srcdir)/libgimp/gimpplugin.h		\
 	$(top_srcdir)/libgimp/gimpproceduraldb.c	\
 	$(top_srcdir)/libgimp/gimpproceduraldb.h	\
+	$(top_srcdir)/libgimp/gimpprocedure.c		\
+	$(top_srcdir)/libgimp/gimpprocedure.h		\
 	$(top_srcdir)/libgimp/gimpprogress.c		\
 	$(top_srcdir)/libgimp/gimpprogress.h		\
 	$(top_srcdir)/libgimp/gimpselection.c		\
@@ -150,7 +152,7 @@ libgimp_introspectable = \
 libgimpui_introspectable =				\
 	$(top_srcdir)/libgimp/gimpui.c			\
 	$(top_srcdir)/libgimp/gimpui.h			\
-	$(top_srcdir)/libgimp/gimpuitypes.h			\
+	$(top_srcdir)/libgimp/gimpuitypes.h		\
 	$(top_srcdir)/libgimp/gimpaspectpreview.c     	\
 	$(top_srcdir)/libgimp/gimpaspectpreview.h     	\
 	$(top_srcdir)/libgimp/gimpbrushselectbutton.c	\
