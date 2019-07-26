@@ -31,7 +31,7 @@ void   _gimp_plug_in_query (GimpPlugIn *plug_in);
 void   _gimp_plug_in_run   (GimpPlugIn       *plug_in,
                             const gchar      *name,
                             gint              n_params,
-                            const GimpParam  *param,
+                            const GimpParam  *params,
                             gint             *n_return_vals,
                             GimpParam       **return_vals);
 

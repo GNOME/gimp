@@ -12,6 +12,7 @@ libgimp/gimpimagemetadata.c
 libgimp/gimppaletteselectbutton.c
 libgimp/gimppatternselectbutton.c
 libgimp/gimpprocbrowserdialog.c
+libgimp/gimpprocedure.c
 libgimp/gimpprocview.c
 libgimp/gimpunitcache.c
 

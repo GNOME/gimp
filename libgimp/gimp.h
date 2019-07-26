@@ -49,6 +49,7 @@
 #include <libgimp/gimppixbuf.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpproceduraldb.h>
+#include <libgimp/gimpprocedure.h>
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpselection.h>
 

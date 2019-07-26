@@ -39,7 +39,7 @@
 
 struct _GimpPlugInPrivate
 {
-  gint foo;
+  GList *procedures;
 };
 
 
@@ -68,6 +68,73 @@ gimp_plug_in_init (GimpPlugIn *plug_in)
 static void
 gimp_plug_in_finalize (GObject *object)
 {
+  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+
+  if (plug_in->priv->procedures)
+    {
+      g_list_free_full (plug_in->priv->procedures, g_object_unref);
+      plug_in->priv->procedures = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+void
+gimp_plug_in_add_procedure (GimpPlugIn    *plug_in,
+                            GimpProcedure *procedure)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  plug_in->priv->procedures = g_list_prepend (plug_in->priv->procedures,
+                                              g_object_ref (procedure));
+}
+
+void
+gimp_plug_in_remove_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
+{
+  GimpProcedure *procedure;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (name != NULL);
+
+  procedure = gimp_plug_in_get_procedure (plug_in, name);
+
+  if (procedure)
+    {
+      plug_in->priv->procedures = g_list_remove (plug_in->priv->procedures,
+                                                 procedure);
+      g_object_unref (procedure);
+    }
+}
+
+GList *
+gimp_plug_in_get_procedures (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  return plug_in->priv->procedures;
+}
+
+GimpProcedure *
+gimp_plug_in_get_procedure (GimpPlugIn  *plug_in,
+                            const gchar *name)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  for (list = plug_in->priv->procedures; list; list = g_list_next (list))
+    {
+      GimpProcedure *procedure = list->data;
+
+      if (! strcmp (name, gimp_procedure_get_name (procedure)))
+        return procedure;
+    }
+
+  return NULL;
 }
 
 
