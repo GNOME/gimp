@@ -29,6 +29,7 @@
 #include <libgimpbase/gimplimits.h>
 #include <libgimpbase/gimpmemsize.h>
 #include <libgimpbase/gimpmetadata.h>
+#include <libgimpbase/gimpparamspecs.h>
 #include <libgimpbase/gimpparasite.h>
 #include <libgimpbase/gimprectangle.h>
 #include <libgimpbase/gimpunit.h>

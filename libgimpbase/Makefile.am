@@ -51,10 +51,10 @@ libgimpbaseincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpbase
 AM_CPPFLAGS = \
 	-DPREFIX=\""$(prefix)"\"				\
 	-DGIMPDIR=\""$(gimpdir)"\"				\
-	-DGIMPDATADIR=\""$(gimpdatadir)"\"				\
+	-DGIMPDATADIR=\""$(gimpdatadir)"\"			\
 	-DLOCALEDIR=\""$(gimplocaledir)"\"			\
 	-DPLUGINDIR=\""$(gimpplugindir)"\"			\
-	-DGIMPSYSCONFDIR=\""$(gimpsysconfdir)"\"			\
+	-DGIMPSYSCONFDIR=\""$(gimpsysconfdir)"\"		\
 	-DGIMP_PACKAGE=\""@PACKAGE@"\"				\
 	-DGIMP_DATA_VERSION=\"$(GIMP_DATA_VERSION)\"		\
 	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"		\
@@ -125,6 +125,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpcpuaccel.h		\
 	gimplimits.h		\
 	gimpparam.h		\
+	gimpparamspecs.h	\
 	gimpversion.h		\
 	\
 	gimpchecks.h		\
