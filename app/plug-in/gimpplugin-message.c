@@ -755,7 +755,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
               null_name = TRUE;
             }
           else if (! (VALIDATE         (proc_install->params[i].name) &&
-                      VALIDATE_OR_NULL (proc_install->params[i].description)))
+                      VALIDATE_OR_NULL (proc_install->params[i].nick) &&
+                      VALIDATE_OR_NULL (proc_install->params[i].blurb)))
             {
               valid_utf8 = FALSE;
             }
@@ -768,7 +769,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
               null_name = TRUE;
             }
           else if (! (VALIDATE         (proc_install->return_vals[i].name) &&
-                      VALIDATE_OR_NULL (proc_install->return_vals[i].description)))
+                      VALIDATE_OR_NULL (proc_install->return_vals[i].nick) &&
+                      VALIDATE_OR_NULL (proc_install->return_vals[i].blurb)))
             {
               valid_utf8 = FALSE;
             }
@@ -861,7 +863,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         gimp_pdb_compat_param_spec (plug_in->manager->gimp,
                                     proc_install->params[i].type,
                                     proc_install->params[i].name,
-                                    proc_install->params[i].description);
+                                    proc_install->params[i].nick,
+                                    proc_install->params[i].blurb);
 
       gimp_procedure_add_argument (procedure, pspec);
     }
@@ -872,7 +875,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
         gimp_pdb_compat_param_spec (plug_in->manager->gimp,
                                     proc_install->return_vals[i].type,
                                     proc_install->return_vals[i].name,
-                                    proc_install->return_vals[i].description);
+                                    proc_install->return_vals[i].nick,
+                                    proc_install->return_vals[i].blurb);
 
       gimp_procedure_add_return_value (procedure, pspec);
     }

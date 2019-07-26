@@ -743,8 +743,9 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 {
   GTokenType  token;
   gint        arg_type;
-  gchar      *name = NULL;
-  gchar      *desc = NULL;
+  gchar      *name  = NULL;
+  gchar      *nick  = NULL;
+  gchar      *blurb = NULL;
   GParamSpec *pspec;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
@@ -770,7 +771,12 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       token = G_TOKEN_STRING;
       goto error;
     }
-  if (! gimp_scanner_parse_string (scanner, &desc))
+  if (! gimp_scanner_parse_string (scanner, &nick))
+    {
+      token = G_TOKEN_STRING;
+      goto error;
+    }
+  if (! gimp_scanner_parse_string (scanner, &blurb))
     {
       token = G_TOKEN_STRING;
       goto error;
@@ -784,7 +790,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  pspec = gimp_pdb_compat_param_spec (gimp, arg_type, name, desc);
+  pspec = gimp_pdb_compat_param_spec (gimp, arg_type, name, nick, blurb);
 
   if (return_value)
     gimp_procedure_add_return_value (procedure, pspec);
@@ -794,7 +800,8 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
  error:
 
   g_free (name);
-  g_free (desc);
+  g_free (nick);
+  g_free (blurb);
 
   return token;
 }
@@ -1064,6 +1071,8 @@ plug_in_rc_write (GSList  *plug_in_defs,
                   gimp_config_writer_string (writer,
                                              g_param_spec_get_name (pspec));
                   gimp_config_writer_string (writer,
+                                             g_param_spec_get_nick (pspec));
+                  gimp_config_writer_string (writer,
                                              g_param_spec_get_blurb (pspec));
 
                   gimp_config_writer_close (writer);
@@ -1079,6 +1088,8 @@ plug_in_rc_write (GSList  *plug_in_defs,
 
                   gimp_config_writer_string (writer,
                                              g_param_spec_get_name (pspec));
+                  gimp_config_writer_string (writer,
+                                             g_param_spec_get_nick (pspec));
                   gimp_config_writer_string (writer,
                                              g_param_spec_get_blurb (pspec));
 

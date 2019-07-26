@@ -18,6 +18,8 @@ libgimpbase_introspectable = \
 	$(top_srcdir)/libgimpbase/gimpmemsize.h			\
 	$(top_srcdir)/libgimpbase/gimpmetadata.c		\
 	$(top_srcdir)/libgimpbase/gimpmetadata.h		\
+	$(top_srcdir)/libgimpbase/gimpparamspecs.c		\
+	$(top_srcdir)/libgimpbase/gimpparamspecs.h		\
 	$(top_srcdir)/libgimpbase/gimpparasite.c		\
 	$(top_srcdir)/libgimpbase/gimpparasite.h		\
 	$(top_srcdir)/libgimpbase/gimpparasiteio.c		\
