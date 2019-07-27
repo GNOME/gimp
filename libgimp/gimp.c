@@ -118,6 +118,8 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+#include "gimpgpcompat.h"
+#include "gimpgpparamspecs.h"
 #include "gimpplugin-private.h"
 #include "gimpunitcache.h"
 
@@ -255,8 +257,8 @@ static const GDebugKey gimp_debug_keys[] =
   { "on",             GIMP_DEBUG_DEFAULT        }
 };
 
-static GimpPlugIn     *PLUG_IN;
-static GimpPlugInInfo  PLUG_IN_INFO;
+static GimpPlugIn     *PLUG_IN      = NULL;
+static GimpPlugInInfo  PLUG_IN_INFO = { 0, };
 
 
 static GimpPDBStatusType  pdb_error_status   = GIMP_PDB_SUCCESS;
@@ -725,7 +727,7 @@ gimp_main_internal (GType                 plug_in_type,
     {
       if (PLUG_IN)
         {
-          if (GIMP_PLUG_IN_GET_CLASS (PLUG_IN)->init)
+          if (GIMP_PLUG_IN_GET_CLASS (PLUG_IN)->init_procedures)
             gp_has_init_write (_writechannel, NULL);
         }
       else
@@ -889,7 +891,9 @@ gimp_install_procedure (const gchar        *name,
                         const GimpParamDef *params,
                         const GimpParamDef *return_vals)
 {
-  GPProcInstall proc_install;
+  GPProcInstall  proc_install;
+  GList         *pspecs = NULL;
+  gint           i;
 
   g_return_if_fail (name != NULL);
   g_return_if_fail (type != GIMP_INTERNAL);
@@ -909,11 +913,41 @@ gimp_install_procedure (const gchar        *name,
   proc_install.type         = type;
   proc_install.nparams      = n_params;
   proc_install.nreturn_vals = n_return_vals;
-  proc_install.params       = (GPParamDef *) params;
-  proc_install.return_vals  = (GPParamDef *) return_vals;
+  proc_install.params       = g_new0 (GPParamDef, n_params);
+  proc_install.return_vals  = g_new0 (GPParamDef, n_return_vals);
+
+  for (i = 0; i < n_params; i++)
+    {
+      GParamSpec *pspec = _gimp_gp_compat_param_spec (params[i].type,
+                                                      params[i].name,
+                                                      params[i].name,
+                                                      params[i].description);
+
+      _gimp_param_spec_to_gp_param_def (pspec, &proc_install.params[i]);
+
+      pspecs = g_list_prepend (pspecs, pspec);
+    }
+
+  for (i = 0; i < n_return_vals; i++)
+    {
+      GParamSpec *pspec = _gimp_gp_compat_param_spec (return_vals[i].type,
+                                                      return_vals[i].name,
+                                                      return_vals[i].name,
+                                                      return_vals[i].description);
+
+      _gimp_param_spec_to_gp_param_def (pspec, &proc_install.return_vals[i]);
+
+      pspecs = g_list_prepend (pspecs, pspec);
+    }
 
   if (! gp_proc_install_write (_writechannel, &proc_install, NULL))
     gimp_quit ();
+
+  g_list_foreach (pspecs, (GFunc) g_param_spec_ref_sink, NULL);
+  g_list_free_full (pspecs, (GDestroyNotify) g_param_spec_unref);
+
+  g_free (proc_install.params);
+  g_free (proc_install.return_vals);
 }
 
 /**
@@ -2373,16 +2407,41 @@ gimp_proc_run (GPProcRun *proc_run)
   if (PLUG_IN || PLUG_IN_INFO.run_proc)
     {
       GPProcReturn  proc_return;
-      GimpParam    *return_vals;
-      gint          n_return_vals;
+      GimpParam    *return_vals   = NULL;
+      gint          n_return_vals = 0;
 
       if (PLUG_IN)
         {
-          _gimp_plug_in_run (PLUG_IN,
-                             proc_run->name,
-                             proc_run->nparams,
-                             (GimpParam *) proc_run->params,
-                             &n_return_vals, &return_vals);
+          GimpProcedure   *procedure;
+          GimpValueArray  *arguments;
+          GimpValueArray  *return_values;
+          GParamSpec     **arg_specs;
+          gint             n_arg_specs;
+
+          procedure = gimp_plug_in_create_procedure (PLUG_IN, proc_run->name);
+
+          if (procedure)
+            {
+              arg_specs = gimp_procedure_get_arguments (procedure,
+                                                        &n_arg_specs);
+
+              arguments = _gimp_pdb_params_to_args (arg_specs,
+                                                    n_arg_specs,
+                                                    (GimpParam *) proc_run->params,
+                                                    proc_run->nparams,
+                                                    FALSE, FALSE);
+
+              return_values = gimp_procedure_run (procedure, arguments);
+
+              gimp_value_array_unref (arguments);
+
+              n_return_vals = gimp_value_array_length (return_values);
+              return_vals   = _gimp_pdb_args_to_params (return_values, TRUE);
+
+              gimp_value_array_unref (return_values);
+
+              g_object_unref (procedure);
+            }
          }
       else
         {

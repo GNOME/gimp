@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpplugin-private.h
+ * gimpprocedure-private.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,17 +18,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PRIVATE_H__
-#define __GIMP_PLUG_IN_PRIVATE_H__
+#ifndef __GIMP_PROCEDURE_PRIVATE_H__
+#define __GIMP_PROCEDURE_PRIVATE_H__
 
 G_BEGIN_DECLS
 
 
-void   _gimp_plug_in_init  (GimpPlugIn *plug_in);
-void   _gimp_plug_in_query (GimpPlugIn *plug_in);
-void   _gimp_plug_in_quit  (GimpPlugIn *plug_in);
+void _gimp_procedure_register (GimpProcedure *procedure);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PLUG_IN_PRIVATE_H__ */
+#endif  /*  __GIMP_PROCEDURE_H__  */

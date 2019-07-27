@@ -231,9 +231,9 @@ file_open_image (Gimp                *gimp,
     gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                         context, progress, error,
                                         gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_INT32, run_mode,
-                                        G_TYPE_STRING,   path,
-                                        G_TYPE_STRING,   entered_uri,
+                                        GIMP_TYPE_RUN_MODE, run_mode,
+                                        G_TYPE_STRING,      path,
+                                        G_TYPE_STRING,      entered_uri,
                                         G_TYPE_NONE);
 
   if (progress)

@@ -447,11 +447,12 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                               NULL);
 
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("run-mode",
-                                                      "Run mode",
-                                                      "Run mode",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_enum ("run-mode",
+                                                     "Run mode",
+                                                     "Run mode",
+                                                     GIMP_TYPE_RUN_MODE,
+                                                     GIMP_RUN_INTERACTIVE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "Image",

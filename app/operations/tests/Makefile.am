@@ -30,7 +30,6 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type

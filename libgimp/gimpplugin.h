@@ -52,12 +52,13 @@ struct _GimpPlugInClass
 {
   GObjectClass  parent_class;
 
-  void             (* init)             (GimpPlugIn  *plug_in);
   void             (* quit)             (GimpPlugIn  *plug_in);
-  void             (* query)            (GimpPlugIn  *plug_in);
 
-  gchar         ** (* list_procedures)  (GimpPlugIn  *plug_in,
+  gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in,
                                          gint        *n_procedures);
+  gchar         ** (* query_procedures) (GimpPlugIn  *plug_in,
+                                         gint        *n_procedures);
+
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
                                          const gchar *name);
 
@@ -74,6 +75,9 @@ struct _GimpPlugInClass
 
 
 GType           gimp_plug_in_get_type         (void) G_GNUC_CONST;
+
+GimpProcedure * gimp_plug_in_create_procedure (GimpPlugIn    *plug_in,
+                                               const gchar   *name);
 
 void            gimp_plug_in_add_procedure    (GimpPlugIn    *plug_in,
                                                GimpProcedure *procedure);

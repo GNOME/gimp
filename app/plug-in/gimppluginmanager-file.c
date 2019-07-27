@@ -45,6 +45,13 @@ static gboolean   file_procedure_in_group (GimpPlugInProcedure    *file_proc,
 
 /*  public functions  */
 
+static inline gboolean
+GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
+{
+  return (G_IS_PARAM_SPEC_ENUM (pspec) &&
+          pspec->value_type == GIMP_TYPE_RUN_MODE);
+}
+
 gboolean
 gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
                                             const gchar       *name,
@@ -78,7 +85,7 @@ gimp_plug_in_manager_register_load_handler (GimpPlugInManager *manager,
 
   if (((procedure->num_args   < 3)                        ||
        (procedure->num_values < 1)                        ||
-       ! GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) ||
+       ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
        ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
        ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]) ||
        (! file_proc->generic_file_proc &&
@@ -130,7 +137,7 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
   procedure = GIMP_PROCEDURE (file_proc);
 
   if ((procedure->num_args < 5)                             ||
-      ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
+      ! GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) ||
       ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
       ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
       ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||

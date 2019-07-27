@@ -28,14 +28,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-typedef GimpValueArray * (* GimpRunFunc)    (GimpProcedure         *procedure,
-                                             const GimpValueArray  *args,
-                                             GError               **error);
-typedef void             (* GimpRunFuncOld) (GimpProcedure         *procedure,
-                                             gint                   n_params,
-                                             const GimpParam       *params,
-                                             gint                  *n_return_vals,
-                                             GimpParam            **return_vals);
+typedef GimpValueArray * (* GimpRunFunc) (GimpProcedure        *procedure,
+                                          const GimpValueArray *args);
 
 
 #define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
@@ -64,43 +58,50 @@ struct _GimpProcedureClass
 
 GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 
-GimpProcedure  * gimp_procedure_new                (const gchar      *name,
-                                                    GimpRunFunc       run_func);
-GimpProcedure  * gimp_procedure_new_legacy         (const gchar      *name,
-                                                    GimpRunFuncOld    run_func_old);
+GimpProcedure  * gimp_procedure_new                (const gchar       *name,
+                                                    GimpRunFunc        run_func);
 
-void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
-                                                    const gchar      *blurb,
-                                                    const gchar      *help,
-                                                    const gchar      *help_id,
-                                                    const gchar      *author,
-                                                    const gchar      *copyright,
-                                                    const gchar      *date);
+void             gimp_procedure_set_strings        (GimpProcedure     *procedure,
+                                                    const gchar       *menu_label,
+                                                    const gchar       *blurb,
+                                                    const gchar       *help,
+                                                    const gchar       *help_id,
+                                                    const gchar       *author,
+                                                    const gchar       *copyright,
+                                                    const gchar       *date,
+                                                    const gchar       *image_types);
 
-const gchar    * gimp_procedure_get_name           (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_label          (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_blurb          (GimpProcedure    *procedure);
-const gchar    * gimp_procedure_get_help_id        (GimpProcedure    *procedure);
+const gchar    * gimp_procedure_get_name           (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_blurb          (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_help           (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_help_id        (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_author         (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_copyright      (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_date           (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_image_types    (GimpProcedure     *procedure);
 
-void             gimp_procedure_add_argument       (GimpProcedure    *procedure,
-                                                    GParamSpec       *pspec);
-void             gimp_procedure_add_return_value   (GimpProcedure    *procedure,
-                                                    GParamSpec       *pspec);
+void             gimp_procedure_add_menu_path      (GimpProcedure     *procedure,
+                                                    const gchar       *menu_path);
+GList          * gimp_procedure_get_menu_paths     (GimpProcedure     *procedure);
 
-GimpValueArray * gimp_procedure_get_arguments      (GimpProcedure    *procedure);
-GimpValueArray * gimp_procedure_get_return_values  (GimpProcedure    *procedure,
-                                                    gboolean          success,
-                                                    const GError     *error);
+void             gimp_procedure_add_argument       (GimpProcedure     *procedure,
+                                                    GParamSpec        *pspec);
+void             gimp_procedure_add_return_value   (GimpProcedure     *procedure,
+                                                    GParamSpec        *pspec);
 
-GimpValueArray * gimp_procedure_run                (GimpProcedure    *procedure,
-                                                    GimpValueArray   *args,
-                                                    GError          **error);
+GParamSpec    ** gimp_procedure_get_arguments      (GimpProcedure     *procedure,
+                                                    gint              *n_arguments);
+GParamSpec    ** gimp_procedure_get_return_values  (GimpProcedure     *procedure,
+                                                    gint              *n_return_values);
 
-void             gimp_procedure_run_legacy         (GimpProcedure    *procedure,
-                                                    gint              n_params,
-                                                    const GimpParam  *params,
-                                                    gint             *n_return_vals,
-                                                    GimpParam       **return_vals);
+GimpValueArray * gimp_procedure_new_arguments      (GimpProcedure     *procedure);
+GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure     *procedure,
+                                                    GimpPDBStatusType  status,
+                                                    const GError      *error);
+
+GimpValueArray * gimp_procedure_run                (GimpProcedure     *procedure,
+                                                    GimpValueArray    *args);
 
 
 G_END_DECLS

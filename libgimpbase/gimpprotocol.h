@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0103
+#define GIMP_PROTOCOL_VERSION  0x0104
 
 
 enum
@@ -46,17 +46,36 @@ enum
   GP_HAS_INIT
 };
 
+typedef enum
+{
+  GP_PARAM_DEF_TYPE_DEFAULT,
+  GP_PARAM_DEF_TYPE_INT,
+  GP_PARAM_DEF_TYPE_ENUM,
+  GP_PARAM_DEF_TYPE_BOOLEAN,
+  GP_PARAM_DEF_TYPE_FLOAT,
+  GP_PARAM_DEF_TYPE_STRING,
+  GP_PARAM_DEF_TYPE_COLOR,
+  GP_PARAM_DEF_TYPE_ID
+} GPParamDefType;
 
-typedef struct _GPConfig        GPConfig;
-typedef struct _GPTileReq       GPTileReq;
-typedef struct _GPTileAck       GPTileAck;
-typedef struct _GPTileData      GPTileData;
-typedef struct _GPParam         GPParam;
-typedef struct _GPParamDef      GPParamDef;
-typedef struct _GPProcRun       GPProcRun;
-typedef struct _GPProcReturn    GPProcReturn;
-typedef struct _GPProcInstall   GPProcInstall;
-typedef struct _GPProcUninstall GPProcUninstall;
+
+typedef struct _GPConfig          GPConfig;
+typedef struct _GPTileReq         GPTileReq;
+typedef struct _GPTileAck         GPTileAck;
+typedef struct _GPTileData        GPTileData;
+typedef struct _GPParam           GPParam;
+typedef struct _GPParamDef        GPParamDef;
+typedef struct _GPParamDefInt     GPParamDefInt;
+typedef struct _GPParamDefEnum    GPParamDefEnum;
+typedef struct _GPParamDefBoolean GPParamDefBoolean;
+typedef struct _GPParamDefFloat   GPParamDefFloat;
+typedef struct _GPParamDefString  GPParamDefString;
+typedef struct _GPParamDefColor   GPParamDefColor;
+typedef struct _GPParamDefID      GPParamDefID;
+typedef struct _GPProcRun         GPProcRun;
+typedef struct _GPProcReturn      GPProcReturn;
+typedef struct _GPProcInstall     GPProcInstall;
+typedef struct _GPProcUninstall   GPProcUninstall;
 
 
 struct _GPConfig
@@ -126,6 +145,7 @@ struct _GPParam
     gint32        d_image;
     gint32        d_item;
     gint32        d_layer;
+    gint32        d_layer_mask;
     gint32        d_channel;
     gint32        d_drawable;
     gint32        d_selection;
@@ -136,11 +156,68 @@ struct _GPParam
   } data;
 };
 
+struct _GPParamDefInt
+{
+  gint32 min_val;
+  gint32 max_val;
+  gint32 default_val;
+};
+
+struct _GPParamDefEnum
+{
+  gchar  *type_name;
+  gint32  default_val;
+};
+
+struct _GPParamDefBoolean
+{
+  gint32 default_val;
+};
+
+struct _GPParamDefFloat
+{
+  gdouble min_val;
+  gdouble max_val;
+  gdouble default_val;
+};
+
+struct _GPParamDefString
+{
+  gint32  allow_non_utf8;
+  gint32  null_ok;
+  gint32  non_empty;
+  gchar  *default_val;
+};
+
+struct _GPParamDefColor
+{
+  gint32  has_alpha;
+  GimpRGB default_val;
+};
+
+struct _GPParamDefID
+{
+  gint32 none_ok;
+};
+
 struct _GPParamDef
 {
-  guint32  type;
-  gchar   *name;
-  gchar   *description;
+  GPParamDefType  param_def_type;
+  gchar          *type_name;
+  gchar          *name;
+  gchar          *nick;
+  gchar          *blurb;
+
+  union
+  {
+    GPParamDefInt     m_int;
+    GPParamDefEnum    m_enum;
+    GPParamDefBoolean m_boolean;
+    GPParamDefFloat   m_float;
+    GPParamDefString  m_string;
+    GPParamDefColor   m_color;
+    GPParamDefID      m_id;
+  } meta;
 };
 
 struct _GPProcRun

@@ -20,13 +20,9 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 #include "gimpplugin-private.h"
-
-
-static void   gimp_plug_in_add_procedures (GimpPlugIn *plug_in);
+#include "gimpprocedure-private.h"
 
 
 /*  public functions  */
@@ -34,10 +30,51 @@ static void   gimp_plug_in_add_procedures (GimpPlugIn *plug_in);
 void
 _gimp_plug_in_init (GimpPlugIn *plug_in)
 {
+  gchar **procedures;
+  gint    n_procedures;
+  gint    i;
+
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init)
-    GIMP_PLUG_IN_GET_CLASS (plug_in)->init (plug_in);
+  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+    return;
+
+  procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in,
+                                                                  &n_procedures);
+
+  for (i = 0; i < n_procedures; i++)
+    {
+      GimpProcedure *procedure;
+
+      procedure = gimp_plug_in_create_procedure (plug_in, procedures[i]);
+      _gimp_procedure_register (procedure);
+      g_object_unref (procedure);
+    }
+}
+
+void
+_gimp_plug_in_query (GimpPlugIn *plug_in)
+{
+  gchar **procedures;
+  gint    n_procedures;
+  gint    i;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
+    return;
+
+  procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in,
+                                                                   &n_procedures);
+
+  for (i = 0; i < n_procedures; i++)
+    {
+      GimpProcedure *procedure;
+
+      procedure = gimp_plug_in_create_procedure (plug_in, procedures[i]);
+      _gimp_procedure_register (procedure);
+      g_object_unref (procedure);
+    }
 }
 
 void
@@ -47,73 +84,4 @@ _gimp_plug_in_quit (GimpPlugIn *plug_in)
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->quit)
     GIMP_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
-}
-
-void
-_gimp_plug_in_query (GimpPlugIn *plug_in)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query)
-    GIMP_PLUG_IN_GET_CLASS (plug_in)->query (plug_in);
-
-  gimp_plug_in_add_procedures (plug_in);
-}
-
-void
-_gimp_plug_in_run (GimpPlugIn       *plug_in,
-                   const gchar      *name,
-                   gint              n_params,
-                   const GimpParam  *params,
-                   gint             *n_return_vals,
-                   GimpParam       **return_vals)
-{
-  GimpProcedure *procedure;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (name != NULL);
-
-  gimp_plug_in_add_procedures (plug_in);
-
-  procedure = gimp_plug_in_get_procedure (plug_in, name);
-
-  if (procedure)
-    {
-      gimp_procedure_run_legacy (procedure,
-                                 n_params,      params,
-                                 n_return_vals, return_vals);
-    }
-}
-
-
-/*  private functions  */
-
-static void
-gimp_plug_in_add_procedures (GimpPlugIn *plug_in)
-{
-  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->list_procedures &&
-      GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
-    {
-      gchar **procedures;
-      gint    n_procedures;
-      gint    i;
-
-      procedures =
-        GIMP_PLUG_IN_GET_CLASS (plug_in)->list_procedures (plug_in,
-                                                           &n_procedures);
-
-      for (i = 0; i < n_procedures; i++)
-        {
-          GimpProcedure *procedure;
-
-          procedure =
-            GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
-                                                                procedures[i]);
-
-          gimp_plug_in_add_procedure (plug_in, procedure);
-          g_object_unref (procedure);
-        }
-
-      g_strfreev (procedures);
-    }
 }

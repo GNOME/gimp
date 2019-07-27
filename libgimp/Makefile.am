@@ -107,10 +107,18 @@ libgimp_built_sources = \
 	gimpenums.c
 
 libgimp_private_sources = \
+	gimpgpcompat.c		\
+	gimpgpcompat.h		\
+	gimpgpparamspecs.c	\
+	gimpgpparamspecs.h	\
 	gimpplugin-private.c	\
-	gimpplugin-private.h
+	gimpplugin-private.h	\
+	gimpprocedure-private.c	\
+	gimpprocedure-private.h
 
-libgimp_extra_sources = gimpenums.c.tail
+libgimp_extra_sources = \
+	gimpenums.c.tail	\
+	gimpgpparamspecs-body.c
 
 libgimp_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimp_built_sources)	\

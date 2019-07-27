@@ -1,6 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpgpparamspecs.h
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,15 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_COMPAT_H__
-#define __GIMP_PDB_COMPAT_H__
+#ifndef __GIMP_GP_PARAM_SPECS_H__
+#define __GIMP_GP_PARAM_SPECS_H__
 
 
-GType            gimp_pdb_compat_arg_type_to_gtype   (GimpPDBArgType  type);
-GimpPDBArgType   gimp_pdb_compat_arg_type_from_gtype (GType           type);
+/*  function names start with an underscore because we incude code
+ *  from libgimp/ which is private there
+ */
 
-void             gimp_pdb_compat_procs_register (GimpPDB           *pdb,
-                                                 GimpPDBCompatMode  compat_mode);
+void         _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
+                                               GPParamDef *param_def);
+
+GParamSpec * _gimp_gp_param_def_to_param_spec (Gimp       *gimp,
+                                               GPParamDef *param_def);
 
 
-#endif  /*  __GIMP_PDB_COMPAT_H__  */
+#endif /* __GIMP_GP_PARAM_SPECS_H__ */
