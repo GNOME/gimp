@@ -197,7 +197,16 @@ Gimp-@GIMP_API_VERSION@.gir: \
 	libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la		\
 	Makefile
 
-Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = GObject-2.0 GLib-2.0
+# The various other GObject-Introspected libraries our API references
+# (i.e. types used in parameters or returned values).
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
+	cairo-1.0	\
+	GdkPixbuf-2.0	\
+	Gegl-0.4	\
+	Gio-2.0		\
+	GLib-2.0	\
+	GObject-2.0
+
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
 	-DGIMP_COMPILATION		\
 	-DGIMP_BASE_COMPILATION		\
