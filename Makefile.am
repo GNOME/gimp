@@ -173,36 +173,67 @@ git-version.h: update-git-version-header
 
 -include $(INTROSPECTION_MAKEFILE)
 AUTOMAKE_OPTIONS = subdir-objects
-include $(top_srcdir)/libgimpbase/Makefile.gi
 include $(top_srcdir)/libgimp/Makefile.gi
+include $(top_srcdir)/libgimpbase/Makefile.gi
+include $(top_srcdir)/libgimpcolor/Makefile.gi
+include $(top_srcdir)/libgimpconfig/Makefile.gi
+include $(top_srcdir)/libgimpmath/Makefile.gi
+include $(top_srcdir)/libgimpmodule/Makefile.gi
+include $(top_srcdir)/libgimpthumb/Makefile.gi
 
 INTROSPECTION_GIRS =
 INTROSPECTION_SCANNER_ARGS = --warn-all --add-include-path="$(srcdir)" --add-include-path="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
 INTROSPECTION_COMPILER_ARGS = --includedir="$(srcdir)" --includedir="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
 INTROSPECTION_SCANNER_ENV = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
 
-Gimp-@GIMP_API_VERSION@.gir: libgimpbase/libgimpbase-@GIMP_API_VERSION@.la libgimp/libgimp-@GIMP_API_VERSION@.la libgimp/libgimpui-@GIMP_API_VERSION@.la Makefile
+Gimp-@GIMP_API_VERSION@.gir: \
+	libgimp/libgimp-@GIMP_API_VERSION@.la			\
+	libgimp/libgimpui-@GIMP_API_VERSION@.la			\
+	libgimpbase/libgimpbase-@GIMP_API_VERSION@.la		\
+	libgimpcolor/libgimpcolor-@GIMP_API_VERSION@.la		\
+	libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
+	libgimpmath/libgimpmath-@GIMP_API_VERSION@.la		\
+	libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la	\
+	libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la		\
+	Makefile
+
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = GObject-2.0 GLib-2.0
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
-	-DGIMP_BASE_COMPILATION	\
-	-DGIMP_COMPILATION	\
-	$(AM_CFLAGS)		\
-	$(AM_CPPFLAGS)		\
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	$(CAIRO_CFLAGS)		\
-	$(GDK_PIXBUF_CFLAGS)	\
-	$(GEGL_CFLAGS)		\
+	-DGIMP_COMPILATION		\
+	-DGIMP_BASE_COMPILATION		\
+	-DGIMP_COLOR_COMPILATION	\
+	-DGIMP_CONFIG_COMPILATION	\
+	-DGIMP_MATH_COMPILATION		\
+	-DGIMP_MODULE_COMPILATION	\
+	-DGIMP_THUMB_COMPILATION	\
+	$(AM_CFLAGS)			\
+	$(AM_CPPFLAGS)			\
+	-I$(top_builddir)		\
+	-I$(top_srcdir)			\
+	$(CAIRO_CFLAGS)			\
+	$(GDK_PIXBUF_CFLAGS)		\
+	$(BABL_CFLAGS)			\
+	$(GEGL_CFLAGS)			\
 	$(GTK_CFLAGS)
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
-	libgimpbase/libgimpbase-@GIMP_API_VERSION@.la	\
-	libgimp/libgimp-@GIMP_API_VERSION@.la		\
-	libgimp/libgimpui-@GIMP_API_VERSION@.la
+	libgimp/libgimp-@GIMP_API_VERSION@.la	      		\
+	libgimp/libgimpui-@GIMP_API_VERSION@.la	       		\
+	libgimpbase/libgimpbase-@GIMP_API_VERSION@.la  		\
+	libgimpcolor/libgimpcolor-@GIMP_API_VERSION@.la		\
+	libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
+	libgimpmath/libgimpmath-@GIMP_API_VERSION@.la		\
+	libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la	\
+	libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
+	$(libgimp_introspectable)					\
 	$(libgimpbase_introspectable)					\
-	$(libgimp_introspectable)
+	$(libgimpcolor_introspectable)					\
+	$(libgimpconfig_introspectable)					\
+	$(libgimpmath_introspectable)					\
+	$(libgimpmodule_introspectable)					\
+	$(libgimpthumb_introspectable)
 
 INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
 

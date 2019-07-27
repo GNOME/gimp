@@ -70,25 +70,16 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpthumb-@GIMP_API_VERSION@.la
 
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpthumb/Makefile.gi
+
 libgimpthumb_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpthumb.h		\
-	gimpthumb-enums.c	\
-	gimpthumb-enums.h	\
-	gimpthumb-error.c	\
-	gimpthumb-error.h	\
-	gimpthumb-types.h	\
-	gimpthumb-utils.c	\
-	gimpthumb-utils.h	\
-	gimpthumbnail.c		\
-	gimpthumbnail.h
+	$(libgimpthumb_introspectable_headers)
 
 libgimpthumbinclude_HEADERS = \
 	gimpthumb.h		\
-	gimpthumb-enums.h	\
-	gimpthumb-error.h	\
-	gimpthumb-types.h	\
-	gimpthumb-utils.h	\
-	gimpthumbnail.h
+	$(libgimpthumb_introspectable_headers)
 
 libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
