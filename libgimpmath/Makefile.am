@@ -58,19 +58,14 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpmath-@GIMP_API_VERSION@.la
 
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpmath/Makefile.gi
+
 libgimpmath_@GIMP_API_VERSION@_la_SOURCES = \
-	gimpmath.h	\
-	gimpmathtypes.h	\
-	gimpmatrix.c	\
-	gimpmatrix.h	\
-	gimpvector.c	\
-	gimpvector.h
+	$(libgimpmath_introspectable)
 
 libgimpmathinclude_HEADERS = \
-	gimpmath.h	\
-	gimpmathtypes.h	\
-	gimpmatrix.h	\
-	gimpvector.h
+	$(libgimpmath_introspectable_headers)
 
 libgimpmath_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

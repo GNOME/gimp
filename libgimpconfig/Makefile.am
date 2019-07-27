@@ -59,30 +59,12 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpconfig-@GIMP_API_VERSION@.la
 
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpconfig/Makefile.gi
+
 libgimpconfig_sources = 		\
 	gimpconfig.h			\
-	gimpconfigenums.h		\
-	gimpconfigtypes.h		\
-	\
-	gimpconfig-iface.c		\
-	gimpconfig-iface.h		\
-	gimpconfig-deserialize.c	\
-	gimpconfig-deserialize.h	\
-	gimpconfig-error.c		\
-	gimpconfig-error.h		\
-	gimpconfig-params.h		\
-	gimpconfig-path.c		\
-	gimpconfig-path.h		\
-	gimpconfig-serialize.c		\
-	gimpconfig-serialize.h		\
-	gimpconfig-utils.c		\
-	gimpconfig-utils.h		\
-	gimpconfigwriter.c		\
-	gimpconfigwriter.h		\
-	gimpscanner.c			\
-	gimpscanner.h			\
-	gimpcolorconfig.c		\
-	gimpcolorconfig.h
+	$(libgimpconfig_introspectable)
 
 libgimpconfig_built_sources = \
 	gimpconfigenums.c
@@ -91,22 +73,9 @@ libgimpconfig_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimpconfig_sources)	\
 	$(libgimpconfig_built_sources)
 
-
 libgimpconfiginclude_HEADERS = \
 	gimpconfig.h			\
-	gimpconfigenums.h		\
-	gimpconfigtypes.h		\
-	gimpconfig-iface.h		\
-	gimpconfig-deserialize.h	\
-	gimpconfig-error.h		\
-	gimpconfig-params.h		\
-	gimpconfig-path.h		\
-	gimpconfig-serialize.h		\
-	gimpconfig-utils.h		\
-	gimpconfigwriter.h		\
-	gimpscanner.h			\
-	gimpcolorconfig.h
-
+	$(libgimpconfig_introspectable_headers)
 
 libgimpconfig_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

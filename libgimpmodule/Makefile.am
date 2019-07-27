@@ -56,17 +56,14 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpmodule-@GIMP_API_VERSION@.la
 
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpmodule/Makefile.gi
+
 libgimpmodule_@GIMP_API_VERSION@_la_SOURCES = \
-	gimpmoduletypes.h	\
-	gimpmodule.c		\
-	gimpmodule.h		\
-	gimpmoduledb.c		\
-	gimpmoduledb.h
+	$(libgimpmodule_introspectable)
 
 libgimpmoduleinclude_HEADERS = \
-	gimpmoduletypes.h	\
-	gimpmodule.h		\
-	gimpmoduledb.h
+	$(libgimpmodule_introspectable_headers)
 
 libgimpmodule_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

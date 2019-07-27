@@ -61,50 +61,16 @@ EXTRA_DIST = \
 
 lib_LTLIBRARIES = libgimpcolor-@GIMP_API_VERSION@.la
 
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpcolor/Makefile.gi
+
 libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpcolor.h			\
-	gimpcolortypes.h		\
-	gimpadaptivesupersample.c	\
-	gimpadaptivesupersample.h	\
-	gimpbilinear.c			\
-	gimpbilinear.h			\
-	gimpcairo.c			\
-	gimpcairo.h			\
-	gimpcmyk.c			\
-	gimpcmyk.h			\
-	gimpcolormanaged.c		\
-	gimpcolormanaged.h		\
-	gimpcolorprofile.c		\
-	gimpcolorprofile.h		\
-	gimpcolorspace.c		\
-	gimpcolorspace.h		\
-	gimpcolortransform.c		\
-	gimpcolortransform.h		\
-	gimphsl.c			\
-	gimphsl.h			\
-	gimphsv.c			\
-	gimphsv.h			\
-	gimppixbuf.c			\
-	gimppixbuf.h			\
-	gimprgb.c			\
-	gimprgb.h			\
-	gimprgb-parse.c
+	$(libgimpcolor_introspectable)
 
 libgimpcolorinclude_HEADERS = \
 	gimpcolor.h			\
-	gimpcolortypes.h		\
-	gimpadaptivesupersample.h	\
-	gimpbilinear.h			\
-	gimpcairo.h			\
-	gimpcmyk.h			\
-	gimpcolormanaged.h		\
-	gimpcolorprofile.h		\
-	gimpcolorspace.h		\
-	gimpcolortransform.h		\
-	gimphsl.h			\
-	gimphsv.h			\
-	gimppixbuf.h			\
-	gimprgb.h
+	$(libgimpcolor_introspectable_headers)
 
 libgimpcolor_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
