@@ -33,163 +33,16 @@
 #include "gimp-pdb-compat.h"
 
 
+/*  local function prototypes  */
+
+static gchar * gimp_pdb_compat_arg_type_to_string (GimpPDBArgType type);
+
+
 /*  public functions  */
-
-GParamSpec *
-gimp_pdb_compat_param_spec (Gimp           *gimp,
-                            GimpPDBArgType  arg_type,
-                            const gchar    *name,
-                            const gchar    *desc)
-{
-  GParamSpec *pspec = NULL;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-
-  switch (arg_type)
-    {
-    case GIMP_PDB_INT32:
-      pspec = gimp_param_spec_int32 (name, name, desc,
-                                     G_MININT32, G_MAXINT32, 0,
-                                     G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_INT16:
-      pspec = gimp_param_spec_int16 (name, name, desc,
-                                     G_MININT16, G_MAXINT16, 0,
-                                     G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_INT8:
-      pspec = gimp_param_spec_int8 (name, name, desc,
-                                    0, G_MAXUINT8, 0,
-                                    G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_FLOAT:
-      pspec = g_param_spec_double (name, name, desc,
-                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                                   G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_STRING:
-      pspec = gimp_param_spec_string (name, name, desc,
-                                      TRUE, TRUE, FALSE,
-                                      NULL,
-                                      G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_INT32ARRAY:
-      pspec = gimp_param_spec_int32_array (name, name, desc,
-                                           G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_INT16ARRAY:
-      pspec = gimp_param_spec_int16_array (name, name, desc,
-                                           G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_INT8ARRAY:
-      pspec = gimp_param_spec_int8_array (name, name, desc,
-                                          G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_FLOATARRAY:
-      pspec = gimp_param_spec_float_array (name, name, desc,
-                                           G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_STRINGARRAY:
-      pspec = gimp_param_spec_string_array (name, name, desc,
-                                            G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_COLOR:
-      pspec = gimp_param_spec_rgb (name, name, desc,
-                                   TRUE, NULL,
-                                   G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_ITEM:
-      pspec = gimp_param_spec_item_id (name, name, desc,
-                                       gimp, TRUE,
-                                       G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_DISPLAY:
-      pspec = gimp_param_spec_display_id (name, name, desc,
-                                          gimp, TRUE,
-                                          G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_IMAGE:
-      pspec = gimp_param_spec_image_id (name, name, desc,
-                                        gimp, TRUE,
-                                        G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_LAYER:
-      pspec = gimp_param_spec_layer_id (name, name, desc,
-                                        gimp, TRUE,
-                                        G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_CHANNEL:
-      pspec = gimp_param_spec_channel_id (name, name, desc,
-                                          gimp, TRUE,
-                                          G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_DRAWABLE:
-      pspec = gimp_param_spec_drawable_id (name, name, desc,
-                                           gimp, TRUE,
-                                           G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_SELECTION:
-      pspec = gimp_param_spec_selection_id (name, name, desc,
-                                            gimp, TRUE,
-                                            G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_COLORARRAY:
-      pspec = gimp_param_spec_rgb_array (name, name, desc,
-                                         G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_VECTORS:
-      pspec = gimp_param_spec_vectors_id (name, name, desc,
-                                          gimp, TRUE,
-                                          G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_PARASITE:
-      pspec = gimp_param_spec_parasite (name, name, desc,
-                                        G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_STATUS:
-      pspec = g_param_spec_enum (name, name, desc,
-                                 GIMP_TYPE_PDB_STATUS_TYPE,
-                                 GIMP_PDB_EXECUTION_ERROR,
-                                 G_PARAM_READWRITE);
-      break;
-
-    case GIMP_PDB_END:
-      break;
-    }
-
-  if (! pspec)
-    g_warning ("%s: returning NULL for %s (%s)",
-               G_STRFUNC, name, gimp_pdb_compat_arg_type_to_string (arg_type));
-
-  return pspec;
-}
 
 GType
 gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
 {
-
   switch (type)
     {
     case GIMP_PDB_INT32:
@@ -340,20 +193,6 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
   return pdb_type;
 }
 
-gchar *
-gimp_pdb_compat_arg_type_to_string (GimpPDBArgType type)
-{
-  const gchar *name;
-
-  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
-                             &name, NULL, NULL, NULL))
-    {
-      return  g_strdup_printf ("(PDB type %d unknown)", type);
-    }
-
-  return g_strdup (name);
-}
-
 void
 gimp_pdb_compat_procs_register (GimpPDB           *pdb,
                                 GimpPDBCompatMode  compat_mode)
@@ -500,4 +339,21 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
                                             compat_procs[i].old_name,
                                             compat_procs[i].new_name);
     }
+}
+
+
+/*  private functions  */
+
+static gchar *
+gimp_pdb_compat_arg_type_to_string (GimpPDBArgType type)
+{
+  const gchar *name;
+
+  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
+                             &name, NULL, NULL, NULL))
+    {
+      return  g_strdup_printf ("(PDB type %d unknown)", type);
+    }
+
+  return g_strdup (name);
 }

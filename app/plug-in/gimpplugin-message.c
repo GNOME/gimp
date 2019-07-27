@@ -42,6 +42,7 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimppdberror.h"
 
+#include "gimpgpparamspecs.h"
 #include "gimpplugin.h"
 #include "gimpplugin-cleanup.h"
 #include "gimpplugin-message.h"
@@ -711,13 +712,17 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   for (i = 1; i < proc_install->nparams; i++)
     {
-      if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
-           proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
-           proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
-           proc_install->params[i].type == GIMP_PDB_STRINGARRAY ||
-           proc_install->params[i].type == GIMP_PDB_COLORARRAY)
+      GPParamDef *param_def      = &proc_install->params[i];
+      GPParamDef *prev_param_def = &proc_install->params[i - 1];
+
+      if ((! strcmp (param_def->type_name, "GimpParamInt32Array")     ||
+           ! strcmp (param_def->type_name, "GimpParamInt16Array")     ||
+           ! strcmp (param_def->type_name, "GimpParamInt8Array")      ||
+           ! strcmp (param_def->type_name, "GimpParamIntFloatArray")  ||
+           ! strcmp (param_def->type_name, "GimpParamIntStringArray") ||
+           ! strcmp (param_def->type_name, "GimpParamIntColorArray"))
           &&
-          proc_install->params[i - 1].type != GIMP_PDB_INT32)
+          strcmp (prev_param_def->type_name, "GimpParamInt32"))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                         "Plug-in \"%s\"\n(%s)\n\n"
@@ -755,7 +760,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
               null_name = TRUE;
             }
           else if (! (VALIDATE         (proc_install->params[i].name) &&
-                      VALIDATE_OR_NULL (proc_install->params[i].description)))
+                      VALIDATE_OR_NULL (proc_install->params[i].nick) &&
+                      VALIDATE_OR_NULL (proc_install->params[i].blurb)))
             {
               valid_utf8 = FALSE;
             }
@@ -768,7 +774,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
               null_name = TRUE;
             }
           else if (! (VALIDATE         (proc_install->return_vals[i].name) &&
-                      VALIDATE_OR_NULL (proc_install->return_vals[i].description)))
+                      VALIDATE_OR_NULL (proc_install->return_vals[i].nick) &&
+                      VALIDATE_OR_NULL (proc_install->return_vals[i].blurb)))
             {
               valid_utf8 = FALSE;
             }
@@ -858,23 +865,44 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   for (i = 0; i < proc_install->nparams; i++)
     {
       GParamSpec *pspec =
-        gimp_pdb_compat_param_spec (plug_in->manager->gimp,
-                                    proc_install->params[i].type,
-                                    proc_install->params[i].name,
-                                    proc_install->params[i].description);
+        _gimp_gp_param_def_to_param_spec (plug_in->manager->gimp,
+                                          &proc_install->params[i]);
 
-      gimp_procedure_add_argument (procedure, pspec);
+      if (pspec)
+        {
+          if (i == 0 &&
+              GIMP_IS_PARAM_SPEC_INT32 (pspec) &&
+              (! strcmp ("run-mode", g_param_spec_get_name (pspec)) ||
+               ! strcmp ("run_mode", g_param_spec_get_name (pspec))))
+            {
+              GParamSpec *enum_spec =
+                g_param_spec_enum (g_param_spec_get_name (pspec),
+                                   g_param_spec_get_nick (pspec),
+                                   g_param_spec_get_blurb (pspec),
+                                   GIMP_TYPE_RUN_MODE,
+                                   G_PARAM_SPEC_INT (pspec)->default_value,
+                                   pspec->flags);
+
+              gimp_procedure_add_argument (procedure, enum_spec);
+
+              g_param_spec_ref_sink (pspec);
+              g_param_spec_unref (pspec);
+            }
+          else
+            {
+              gimp_procedure_add_argument (procedure, pspec);
+            }
+        }
     }
 
   for (i = 0; i < proc_install->nreturn_vals; i++)
     {
       GParamSpec *pspec =
-        gimp_pdb_compat_param_spec (plug_in->manager->gimp,
-                                    proc_install->return_vals[i].type,
-                                    proc_install->return_vals[i].name,
-                                    proc_install->return_vals[i].description);
+        _gimp_gp_param_def_to_param_spec (plug_in->manager->gimp,
+                                          &proc_install->return_vals[i]);
 
-      gimp_procedure_add_return_value (procedure, pspec);
+      if (pspec)
+        gimp_procedure_add_return_value (procedure, pspec);
     }
 
   /*  Install the procedure  */

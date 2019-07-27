@@ -79,6 +79,23 @@ gimp_plug_in_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+
+/*  public functions  */
+
+GimpProcedure *
+gimp_plug_in_create_procedure (GimpPlugIn    *plug_in,
+                               const gchar   *name)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
+    return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
+                                                               name);
+
+  return NULL;
+}
+
 void
 gimp_plug_in_add_procedure (GimpPlugIn    *plug_in,
                             GimpProcedure *procedure)

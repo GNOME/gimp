@@ -134,6 +134,13 @@ gimp_batch_exit_after_callback (Gimp *gimp)
   exit (EXIT_SUCCESS);
 }
 
+static inline gboolean
+GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
+{
+  return (G_IS_PARAM_SPEC_ENUM (pspec) &&
+          pspec->value_type == GIMP_TYPE_RUN_MODE);
+}
+
 static void
 gimp_batch_run_cmd (Gimp          *gimp,
                     const gchar   *proc_name,
@@ -149,12 +156,16 @@ gimp_batch_run_cmd (Gimp          *gimp,
   args = gimp_procedure_get_arguments (procedure);
 
   if (procedure->num_args > i &&
-      GIMP_IS_PARAM_SPEC_INT32 (procedure->args[i]))
-    g_value_set_int (gimp_value_array_index (args, i++), run_mode);
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[i]))
+    {
+      g_value_set_enum (gimp_value_array_index (args, i++), run_mode);
+    }
 
   if (procedure->num_args > i &&
       GIMP_IS_PARAM_SPEC_STRING (procedure->args[i]))
-    g_value_set_static_string (gimp_value_array_index (args, i++), cmd);
+    {
+      g_value_set_static_string (gimp_value_array_index (args, i++), cmd);
+    }
 
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,

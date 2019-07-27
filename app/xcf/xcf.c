@@ -135,11 +135,12 @@ xcf_init (Gimp *gimp)
                                      NULL);
 
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("dummy-param",
-                                                      "Dummy Param",
-                                                      "Dummy parameter",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_enum ("dummy-param",
+                                                     "Dummy Param",
+                                                     "Dummy parameter",
+                                                     GIMP_TYPE_RUN_MODE,
+                                                     GIMP_RUN_INTERACTIVE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "Image",
@@ -207,11 +208,12 @@ xcf_init (Gimp *gimp)
                                      NULL);
 
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("dummy-param",
-                                                      "Dummy Param",
-                                                      "Dummy parameter",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_enum ("dummy-param",
+                                                     "Dummy Param",
+                                                     "Dummy parameter",
+                                                     GIMP_TYPE_RUN_MODE,
+                                                     GIMP_RUN_INTERACTIVE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("filename",
                                                        "Filename",

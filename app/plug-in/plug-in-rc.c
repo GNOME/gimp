@@ -33,6 +33,7 @@
 
 #include "pdb/gimp-pdb-compat.h"
 
+#include "gimpgpparamspecs.h"
 #include "gimpplugindef.h"
 #include "gimppluginprocedure.h"
 #include "plug-in-rc.h"
@@ -742,9 +743,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
                               gboolean       return_value)
 {
   GTokenType  token;
-  gint        arg_type;
-  gchar      *name = NULL;
-  gchar      *desc = NULL;
+  GPParamDef  param_def = { 0, };
   GParamSpec *pspec;
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
@@ -760,20 +759,124 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       goto error;
     }
 
-  if (! gimp_scanner_parse_int (scanner, (gint *) &arg_type))
+  if (! gimp_scanner_parse_int (scanner, (gint *) &param_def.param_def_type))
     {
       token = G_TOKEN_INT;
       goto error;
     }
-  if (! gimp_scanner_parse_string (scanner, &name))
+
+  if (! gimp_scanner_parse_string (scanner, &param_def.type_name) ||
+      ! gimp_scanner_parse_string (scanner, &param_def.name)      ||
+      ! gimp_scanner_parse_string (scanner, &param_def.nick)      ||
+      ! gimp_scanner_parse_string (scanner, &param_def.blurb))
     {
       token = G_TOKEN_STRING;
       goto error;
     }
-  if (! gimp_scanner_parse_string (scanner, &desc))
+
+  switch (param_def.param_def_type)
     {
-      token = G_TOKEN_STRING;
-      goto error;
+    case GP_PARAM_DEF_TYPE_DEFAULT:
+      break;
+
+    case GP_PARAM_DEF_TYPE_INT:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_int.min_val) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_int.max_val) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_int.default_val))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_ENUM:
+      if (! gimp_scanner_parse_string (scanner,
+                                       &param_def.meta.m_enum.type_name))
+        {
+          token = G_TOKEN_STRING;
+          goto error;
+        }
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_enum.default_val))
+        {
+          token = G_TOKEN_STRING;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_BOOLEAN:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_boolean.default_val))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_FLOAT:
+      if (! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_float.min_val) ||
+          ! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_float.max_val) ||
+          ! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_float.default_val))
+        {
+          token = G_TOKEN_FLOAT;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_STRING:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_string.allow_non_utf8) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_string.null_ok) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_string.non_empty))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      if (! gimp_scanner_parse_string (scanner,
+                                       &param_def.meta.m_string.default_val))
+        {
+          token = G_TOKEN_STRING;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_COLOR:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_color.has_alpha))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      if (! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_color.default_val.r) ||
+          ! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_color.default_val.g) ||
+          ! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_color.default_val.b) ||
+          ! gimp_scanner_parse_float (scanner,
+                                      &param_def.meta.m_color.default_val.a))
+        {
+          token = G_TOKEN_FLOAT;
+          goto error;
+        }
+      break;
+
+    case GP_PARAM_DEF_TYPE_ID:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_id.none_ok))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      break;
     }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
@@ -784,7 +887,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
   token = G_TOKEN_LEFT_PAREN;
 
-  pspec = gimp_pdb_compat_param_spec (gimp, arg_type, name, desc);
+  pspec = _gimp_gp_param_def_to_param_spec (gimp, &param_def);
 
   if (return_value)
     gimp_procedure_add_return_value (procedure, pspec);
@@ -793,8 +896,33 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 
  error:
 
-  g_free (name);
-  g_free (desc);
+  g_free (param_def.type_name);
+  g_free (param_def.name);
+  g_free (param_def.nick);
+  g_free (param_def.blurb);
+
+  switch (param_def.param_def_type)
+    {
+    case GP_PARAM_DEF_TYPE_DEFAULT:
+    case GP_PARAM_DEF_TYPE_INT:
+      break;
+
+    case GP_PARAM_DEF_TYPE_ENUM:
+      g_free (param_def.meta.m_enum.type_name);
+      break;
+
+    case GP_PARAM_DEF_TYPE_BOOLEAN:
+    case GP_PARAM_DEF_TYPE_FLOAT:
+      break;
+
+    case GP_PARAM_DEF_TYPE_STRING:
+      g_free (param_def.meta.m_string.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_COLOR:
+    case GP_PARAM_DEF_TYPE_ID:
+      break;
+    }
 
   return token;
 }
@@ -863,6 +991,80 @@ plug_in_has_init_deserialize (GScanner      *scanner,
 
 
 /* serialize functions */
+
+static void
+plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
+                           GParamSpec       *pspec)
+{
+  GPParamDef param_def = { 0, };
+
+  _gimp_param_spec_to_gp_param_def (pspec, &param_def);
+
+  gimp_config_writer_open (writer, "proc-arg");
+  gimp_config_writer_printf (writer, "%d", param_def.param_def_type);
+
+  gimp_config_writer_string (writer, param_def.type_name);
+  gimp_config_writer_string (writer, g_param_spec_get_name (pspec));
+  gimp_config_writer_string (writer, g_param_spec_get_nick (pspec));
+  gimp_config_writer_string (writer, g_param_spec_get_blurb (pspec));
+
+  switch (param_def.param_def_type)
+    {
+    case GP_PARAM_DEF_TYPE_DEFAULT:
+      break;
+
+    case GP_PARAM_DEF_TYPE_INT:
+      gimp_config_writer_printf (writer, "%d %d %d",
+                                 param_def.meta.m_int.min_val,
+                                 param_def.meta.m_int.max_val,
+                                 param_def.meta.m_int.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_ENUM:
+      gimp_config_writer_string (writer,
+                                 param_def.meta.m_enum.type_name);
+      gimp_config_writer_printf (writer, "%d",
+                                 param_def.meta.m_enum.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_BOOLEAN:
+      gimp_config_writer_printf (writer, "%d",
+                                 param_def.meta.m_boolean.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_FLOAT:
+      gimp_config_writer_printf (writer, "%f %f %f",
+                                 param_def.meta.m_float.min_val,
+                                 param_def.meta.m_float.max_val,
+                                 param_def.meta.m_float.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_STRING:
+      gimp_config_writer_printf (writer, "%d %d %d",
+                                 param_def.meta.m_string.allow_non_utf8,
+                                 param_def.meta.m_string.null_ok,
+                                 param_def.meta.m_string.non_empty);
+      gimp_config_writer_string (writer,
+                                 param_def.meta.m_string.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_COLOR:
+      gimp_config_writer_printf (writer, "%d %f %f %f %f",
+                                 param_def.meta.m_color.has_alpha,
+                                 param_def.meta.m_color.default_val.r,
+                                 param_def.meta.m_color.default_val.g,
+                                 param_def.meta.m_color.default_val.b,
+                                 param_def.meta.m_color.default_val.a);
+      break;
+
+    case GP_PARAM_DEF_TYPE_ID:
+      gimp_config_writer_printf (writer, "%d",
+                                 param_def.meta.m_id.none_ok);
+      break;
+    }
+
+  gimp_config_writer_close (writer);
+}
 
 gboolean
 plug_in_rc_write (GSList  *plug_in_defs,
@@ -1057,32 +1259,14 @@ plug_in_rc_write (GSList  *plug_in_defs,
                 {
                   GParamSpec *pspec = procedure->args[i];
 
-                  gimp_config_writer_open (writer, "proc-arg");
-                  gimp_config_writer_printf (writer, "%d",
-                                             gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec)));
-
-                  gimp_config_writer_string (writer,
-                                             g_param_spec_get_name (pspec));
-                  gimp_config_writer_string (writer,
-                                             g_param_spec_get_blurb (pspec));
-
-                  gimp_config_writer_close (writer);
+                  plug_in_rc_write_proc_arg (writer, pspec);
                 }
 
               for (i = 0; i < procedure->num_values; i++)
                 {
                   GParamSpec *pspec = procedure->values[i];
 
-                  gimp_config_writer_open (writer, "proc-arg");
-                  gimp_config_writer_printf (writer, "%d",
-                                             gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec)));
-
-                  gimp_config_writer_string (writer,
-                                             g_param_spec_get_name (pspec));
-                  gimp_config_writer_string (writer,
-                                             g_param_spec_get_blurb (pspec));
-
-                  gimp_config_writer_close (writer);
+                  plug_in_rc_write_proc_arg (writer, pspec);
                 }
 
               gimp_config_writer_close (writer);

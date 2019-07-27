@@ -442,6 +442,13 @@ gimp_plug_in_procedure_real_get_file (GimpPlugInProcedure *procedure)
   return procedure->file;
 }
 
+static inline gboolean
+GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
+{
+  return (G_IS_PARAM_SPEC_ENUM (pspec) &&
+          pspec->value_type == GIMP_TYPE_RUN_MODE);
+}
+
 static gboolean
 gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
                                       Gimp                *gimp,
@@ -459,7 +466,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
 
       if ((procedure->num_args   >= 3)                     &&
           (procedure->num_values >= 1)                     &&
-          GIMP_IS_PARAM_SPEC_INT32    (procedure->args[0]) &&
+          GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
           G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
           G_IS_PARAM_SPEC_STRING      (procedure->args[2]) &&
           GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
@@ -467,7 +474,7 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
           uri_value = gimp_value_array_index (args, 1);
         }
       else if ((procedure->num_args >= 5)                          &&
-               GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) &&
+               GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) &&
                GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
                GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) &&
                G_IS_PARAM_SPEC_STRING         (procedure->args[3]) &&
@@ -613,69 +620,69 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   if (g_str_has_prefix (menu_path, "<Image>"))
     {
       if ((procedure->num_args < 1) ||
-          ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]))
         {
-          required = "INT32";
+          required = "(INT32 | ENUM GimpRunMode)";
           goto failure;
         }
     }
   else if (g_str_has_prefix (menu_path, "<Layers>"))
     {
-      if ((procedure->num_args < 3)                             ||
-          ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
+      if ((procedure->num_args < 3)                          ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]) ||
           ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
-                               == GIMP_TYPE_PARAM_LAYER_ID ||
+                               == GIMP_TYPE_PARAM_LAYER_ID   ||
              G_TYPE_FROM_INSTANCE (procedure->args[2])
                                == GIMP_TYPE_PARAM_DRAWABLE_ID))
         {
-          required = "INT32, IMAGE, (LAYER | DRAWABLE)";
+          required = "(INT32 | ENUM GimpRunMode), IMAGE, (LAYER | DRAWABLE)";
           goto failure;
         }
     }
   else if (g_str_has_prefix (menu_path, "<Channels>"))
     {
-      if ((procedure->num_args < 3)                             ||
-          ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
+      if ((procedure->num_args < 3)                          ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]) ||
           ! (G_TYPE_FROM_INSTANCE (procedure->args[2])
                                == GIMP_TYPE_PARAM_CHANNEL_ID ||
              G_TYPE_FROM_INSTANCE (procedure->args[2])
                                == GIMP_TYPE_PARAM_DRAWABLE_ID))
         {
-          required = "INT32, IMAGE, (CHANNEL | DRAWABLE)";
+          required = "(INT32 | ENUM GimpRunMode), IMAGE, (CHANNEL | DRAWABLE)";
           goto failure;
         }
     }
   else if (g_str_has_prefix (menu_path, "<Vectors>"))
     {
       if ((procedure->num_args < 3)                            ||
-          ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE   (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE_ID   (procedure->args[1]) ||
           ! GIMP_IS_PARAM_SPEC_VECTORS_ID (procedure->args[2]))
         {
-          required = "INT32, IMAGE, VECTORS";
+          required = "(INT32 | ENUM GimpRunMode), IMAGE, VECTORS";
           goto failure;
         }
     }
   else if (g_str_has_prefix (menu_path, "<Colormap>"))
     {
-      if ((procedure->num_args < 2)                            ||
-          ! GIMP_IS_PARAM_SPEC_INT32      (procedure->args[0]) ||
-          ! GIMP_IS_PARAM_SPEC_IMAGE_ID   (procedure->args[1]))
+      if ((procedure->num_args < 2)                          ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[1]))
         {
-          required = "INT32, IMAGE";
+          required = "(INT32 | ENUM GimpRunMode), IMAGE";
           goto failure;
         }
     }
   else if (g_str_has_prefix (menu_path, "<Load>"))
     {
-      if ((procedure->num_args < 3)                       ||
-          ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]) ||
-          ! G_IS_PARAM_SPEC_STRING   (procedure->args[1]) ||
-          ! G_IS_PARAM_SPEC_STRING   (procedure->args[2]))
+      if ((procedure->num_args < 3)                          ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+          ! G_IS_PARAM_SPEC_STRING      (procedure->args[1]) ||
+          ! G_IS_PARAM_SPEC_STRING      (procedure->args[2]))
         {
-          required = "INT32, STRING, STRING";
+          required = "(INT32 | ENUM GimpRunMode), STRING, STRING";
           goto failure;
         }
 
@@ -689,13 +696,13 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   else if (g_str_has_prefix (menu_path, "<Save>"))
     {
       if ((procedure->num_args < 5)                             ||
-          ! GIMP_IS_PARAM_SPEC_INT32       (procedure->args[0]) ||
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) ||
           ! GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) ||
           ! GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) ||
           ! G_IS_PARAM_SPEC_STRING         (procedure->args[3]) ||
           ! G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
         {
-          required = "INT32, IMAGE, DRAWABLE, STRING, STRING";
+          required = "(INT32 | ENUM GimpRunMode), IMAGE, DRAWABLE, STRING, STRING";
           goto failure;
         }
     }
@@ -710,9 +717,9 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
            g_str_has_prefix (menu_path, "<Buffers>"))
     {
       if ((procedure->num_args < 1) ||
-          ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
+          ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]))
         {
-          required = "INT32";
+          required = "(INT32 | ENUM GimpRunMode)";
           goto failure;
         }
     }

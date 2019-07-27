@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpplugin-private.h
+ * gimpgpparamspecs.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,17 +18,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_PRIVATE_H__
-#define __GIMP_PLUG_IN_PRIVATE_H__
+#include "config.h"
 
-G_BEGIN_DECLS
+#include <cairo.h>
+#include <gio/gio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpbase/gimpprotocol.h"
+
+#include "gimp.h"
+#include "gimpgpparamspecs.h"
 
 
-void   _gimp_plug_in_init  (GimpPlugIn *plug_in);
-void   _gimp_plug_in_query (GimpPlugIn *plug_in);
-void   _gimp_plug_in_quit  (GimpPlugIn *plug_in);
+/*  public functions  */
 
-
-G_END_DECLS
-
-#endif /* __GIMP_PLUG_IN_PRIVATE_H__ */
+/*  include the implementation of _gimp_param_spec_to_gp_param_def()
+ *  from libgimp, they are identical.
+ */
+#include "gimpgpparamspecs-body.c"

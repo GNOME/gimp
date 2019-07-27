@@ -27,74 +27,132 @@
 #define PLUG_IN_PROC "plug-in-goat-exercise"
 
 
-/* Declare local functions.
- */
-static void   query       (void);
-static void   run         (const gchar      *name,
-                           gint              nparams,
-                           const GimpParam  *param,
-                           gint             *nreturn_vals,
-                           GimpParam       **return_vals);
+typedef struct _Goat      Goat;
+typedef struct _GoatClass GoatClass;
 
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Goat
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn parent_instance;
 };
 
-MAIN ()
+struct _GoatClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+/* Declare local functions.
+ */
+
+#define GOAT_TYPE  (goat_get_type ())
+#define GOAT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOAT_TYPE, Goat))
+
+GType                   goat_get_type         (void) G_GNUC_CONST;
+
+static gchar         ** goat_query_procedures (GimpPlugIn           *plug_in,
+                                               gint                 *n_procedures);
+static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * goat_run              (GimpProcedure        *procedure,
+                                               const GimpValueArray *args);
+
+
+G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GOAT_TYPE)
 
 
 static void
-query (void)
+goat_class_init (GoatClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Exercise a goat"),
-                          "takes a goat for a walk",
-                          "Øyvind Kolås <pippin@gimp.org>",
-                          "Øyvind Kolås <pippin@gimp.org>",
-                          "21march 2012",
-                          N_("Goat-exercise"),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters");
+  plug_in_class->query_procedures = goat_query_procedures;
+  plug_in_class->create_procedure = goat_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+goat_init (Goat *goat)
 {
-  static GimpParam   values[1];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             drawable_id;
-  gint               x, y, width, height;
+}
+
+static gchar **
+goat_query_procedures (GimpPlugIn *plug_in,
+                       gint       *n_procedures)
+{
+  gchar **procedures = g_new0 (gchar *, 2);
+
+  procedures[0] = g_strdup (PLUG_IN_PROC);
+
+  *n_procedures = 1;
+
+  return procedures;
+}
+
+static GimpProcedure *
+goat_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (name, goat_run);
+
+      gimp_procedure_set_strings (procedure,
+                                  N_("Goat-exercise"),
+                                  N_("Exercise a goat"),
+                                  "takes a goat for a walk",
+                                  PLUG_IN_PROC,
+                                  "Øyvind Kolås <pippin@gimp.org>",
+                                  "Øyvind Kolås <pippin@gimp.org>",
+                                  "21march 2012",
+                                  "RGB*, INDEXED*, GRAY*");
+
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters");
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_NONINTERACTIVE,
+                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_image_id ("image",
+                                                             "Image",
+                                                             "The input image",
+                                                             FALSE,
+                                                             G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "Drawable",
+                                                                "The input drawable",
+                                                                FALSE,
+                                                                G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+goat_run (GimpProcedure        *procedure,
+          const GimpValueArray *args)
+{
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            drawable_id;
+  gint              x, y, width, height;
 
   INIT_I18N();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals = values;
+  g_printerr ("goat run %d %d %d\n",
+              g_value_get_enum           (gimp_value_array_index (args, 0)),
+              gimp_value_get_image_id    (gimp_value_array_index (args, 1)),
+              gimp_value_get_drawable_id (gimp_value_array_index (args, 2)));
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  drawable_id = param[2].data.d_drawable;
+  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
 
   if (gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
     {
@@ -114,6 +172,7 @@ run (const gchar      *name,
       gimp_displays_flush ();
     }
 
-  values[0].data.d_status = status;
   gegl_exit ();
+
+  return gimp_procedure_new_return_values (procedure, status, NULL);
 }
