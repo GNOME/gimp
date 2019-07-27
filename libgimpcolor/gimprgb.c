@@ -765,8 +765,29 @@ gimp_param_spec_rgb (const gchar   *name,
 
   if (default_value)
     cspec->default_value = *default_value;
+  else
+    gimp_rgba_set (&cspec->default_value, 0.0, 0.0, 0.0, 1.0);
 
   return G_PARAM_SPEC (cspec);
+}
+
+/**
+ * gimp_param_spec_rgb_get_default:
+ * @pspec:         a #GimpParamSpecRGB.
+ * @default_value: return location for @pspec's default value
+ *
+ * Returns the @pspec's default color value.
+ *
+ * Since: 2.10.12
+ **/
+void
+gimp_param_spec_rgb_get_default (GParamSpec *pspec,
+                                 GimpRGB    *default_value)
+{
+  g_return_if_fail (GIMP_IS_PARAM_SPEC_RGB (pspec));
+  g_return_if_fail (default_value != NULL);
+
+  *default_value = GIMP_PARAM_SPEC_RGB (pspec)->default_value;
 }
 
 /**
