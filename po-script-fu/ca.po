@@ -126,7 +126,7 @@ msgstr "Tan_ca"
 
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
-msgstr "Benvinguts al TinyScheme"
+msgstr "Us donem la benvinguda al TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Interactive Scheme Development"
