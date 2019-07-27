@@ -51,16 +51,18 @@ void    gimp_value_set_rgb          (GValue        *value,
 #define GIMP_IS_PARAM_SPEC_RGB(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RGB))
 
 
-GType        gimp_param_rgb_get_type       (void) G_GNUC_CONST;
+GType        gimp_param_rgb_get_type         (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_rgb           (const gchar    *name,
-                                            const gchar    *nick,
-                                            const gchar    *blurb,
-                                            gboolean        has_alpha,
-                                            const GimpRGB  *default_value,
-                                            GParamFlags     flags);
+GParamSpec * gimp_param_spec_rgb             (const gchar    *name,
+                                              const gchar    *nick,
+                                              const gchar    *blurb,
+                                              gboolean        has_alpha,
+                                              const GimpRGB  *default_value,
+                                              GParamFlags     flags);
 
-gboolean     gimp_param_spec_rgb_has_alpha (GParamSpec     *pspec);
+void         gimp_param_spec_rgb_get_default (GParamSpec     *pspec,
+                                              GimpRGB        *default_value);
+gboolean     gimp_param_spec_rgb_has_alpha   (GParamSpec     *pspec);
 
 
 /*  RGB and RGBA color types and operations taken from LibGCK  */
