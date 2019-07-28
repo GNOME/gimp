@@ -152,6 +152,25 @@ gimp_gegl_node_is_point_operation (GeglNode *node)
          GEGL_IS_OPERATION_POINT_COMPOSER3 (operation);
 }
 
+gboolean
+gimp_gegl_node_is_area_filter_operation (GeglNode *node)
+{
+  GeglOperation *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), FALSE);
+
+  operation = gegl_node_get_gegl_operation (node);
+
+  if (! operation)
+    return FALSE;
+
+  return GEGL_IS_OPERATION_AREA_FILTER (operation) ||
+         /* be conservative and return TRUE for meta ops, since they may
+          * involve an area op
+          */
+         GEGL_IS_OPERATION_META (operation);
+}
+
 const Babl *
 gimp_gegl_node_get_format (GeglNode    *node,
                            const gchar *pad_name)
