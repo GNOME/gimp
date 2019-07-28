@@ -1,0 +1,237 @@
+stages:
+  - babl
+  - gegl
+  - gimp
+
+variables:
+  INSTALL_DIR: "_install"
+  INSTALL_PREFIX: "$CI_PROJECT_DIR/$INSTALL_DIR"
+
+cache:
+  paths:
+  - _pacman_cache
+
+image: archlinux/base:latest
+
+.babl-base:
+  stage: babl
+  artifacts:
+    paths:
+    - $INSTALL_DIR
+  variables:
+    GIT_DEPTH: "5"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir `pwd`/_pacman_cache
+        git
+        base-devel
+        meson
+        lcms2
+    - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/babl.git _babl
+    - cd _babl
+    - mkdir _build
+
+babl-git-autotools:
+  extends: .babl-base
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd _build
+    - ../autogen.sh --prefix="$INSTALL_PREFIX"
+    - make -j `nproc`
+    - make install
+
+# babl-git-meson:
+#   extends: .babl-base
+#   variables:
+#     GIT_STRATEGY: none
+#   script:
+#     - meson -Dprefix="$INSTALL_PREFIX" _build
+#     - ninja -C _build
+#     - ninja -C _build install
+
+# babl-min-autotools:
+#   extends: .babl-base
+#   script:
+#     - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
+#     - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
+#     - git checkout MIN_VERSION
+#     - cd _build
+#     - ../autogen.sh --prefix="$INSTALL_PREFIX"
+#     - make
+#     - make install
+
+# babl-min-meson:
+#   extends: .babl-base
+#   script:
+#     - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
+#     - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
+#     - git checkout MIN_VERSION
+#     - meson -Dprefix="$INSTALL_PREFIX" _build
+#     - ninja -C _build
+#     - ninja -C _build install
+
+.gegl-base:
+  stage: gegl
+  artifacts:
+    paths:
+    - $INSTALL_DIR
+  variables:
+    GIT_DEPTH: "5"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir `pwd`/_pacman_cache
+        git
+        base-devel
+        meson
+        lcms2
+        base-devel
+        ffmpeg
+        graphviz
+        jasper
+        json-glib
+        lcms2
+        libgexiv2
+        libraw
+        librsvg
+        libspiro
+        libtiff
+        luajit
+        openexr
+        python
+        sdl2
+        suitesparse
+    - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/gegl.git _gegl
+    - cd _gegl
+    - mkdir _build
+
+gegl-git-autotools:
+  extends: .gegl-base
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd _build
+    - PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make -j `nproc`
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make install
+
+.gimp-base:
+  stage: gimp
+  artifacts:
+    paths:
+    - $INSTALL_DIR
+  variables:
+    GIT_DEPTH: "5"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir `pwd`/_pacman_cache
+        git
+        base-devel
+        meson
+        appstream-glib
+        at-spi2-core
+        at-spi2-atk
+        dbus-glib
+        desktop-file-utils
+        ffmpeg
+        glib-networking
+        gobject-introspection
+        gtk3
+        hicolor-icon-theme
+        jasper
+        lcms2
+        libexif
+        libgudev
+        libheif
+        libmng
+        libmypaint
+        librsvg
+        libwebp
+        libwmf
+        libxmu
+        libxpm
+        mypaint-brushes
+        openexr
+        poppler-data
+        pygtk
+        alsa-lib
+        ghostscript
+        poppler-glib
+        gtk-doc
+        intltool
+        iso-codes
+        xorg-server-xvfb
+    - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/gimp.git _gimp
+    - cd _gimp
+    - mkdir _build
+
+.build-gimp:
+  extends: .gimp-base
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cd _build
+    - LIBMYPAINT_CFLAGS="-I/usr/include/libmypaint-1.3 -I/usr/include/json-c" LIBMYPAINT_LIBS="-lmypaint-1.3 -ljson-c" PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
+    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make -j `nproc`
+#    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make check
+  artifacts:
+    name: "app-tests-logs-$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    when: on_failure
+    expire_in: 1 week
+    paths:
+      - _gimp/_build/app/tests/
+
+# .build-default:
+#   extends: .build-gimp
+#   variables:
+#     CONFIG_OPTIONS: ""
+
+.build-all:
+  extends: .build-gimp
+  variables:
+    CONFIG_OPTIONS: "--enable-debug"
+
+# build-default-git-autotools:
+#   extends: .build-default
+#   dependencies:
+#     - babl-git-autotools
+#     - gegl-git-autotools
+
+# build-default-git-meson:
+#   extends: .build-default
+#   dependencies:
+#     - babl-git-meson
+#     - gegl-git-meson
+
+# build-default-min-autotools:
+#   extends: .build-default
+#   dependencies:
+#     - babl-min-autotools
+#     - gegl-min-autotools
+
+# build-default-min-meson:
+#   extends: .build-default
+#   dependencies:
+#     - babl-min-meson
+#     - gegl-min-meson
+
+build-all-git-autotools:
+  extends: .build-all
+  dependencies:
+    - babl-git-autotools
+    - gegl-git-autotools
+
+# build-all-git-meson:
+#   extends: .build-all
+#   dependencies:
+#     - babl-git-meson
+#     - gegl-git-meson
+
+# build-all-min-autotools:
+#   extends: .build-all
+#   dependencies:
+#     - babl-min-autotools
+#     - gegl-min-autotools
+
+# build-all-min-meson:
+#   extends: .build-all
+#   dependencies:
+#     - babl-min-meson
+#     - gegl-min-meson
