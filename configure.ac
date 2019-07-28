@@ -2237,7 +2237,7 @@ AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 # Check for GObject Introspection
 #################################
 
-GOBJECT_INTROSPECTION_CHECK(introspection_required_version)
+GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
 
 ##################
 # Check for python
