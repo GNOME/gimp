@@ -75,6 +75,7 @@ include $(top_srcdir)/libgimpthumb/Makefile.gi
 
 libgimpthumb_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpthumb.h		\
+	gimpthumb-enums.c	\
 	$(libgimpthumb_introspectable)
 
 libgimpthumbinclude_HEADERS = \
