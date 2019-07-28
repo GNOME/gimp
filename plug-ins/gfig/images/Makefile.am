@@ -18,7 +18,7 @@ STOCK_IMAGES = \
 	gfig-star.png		\
 	gfig-logo.png
 
-EXTRA_DIST =
+EXTRA_DIST = \
 	$(STOCK_IMAGES)		\
 	gfig-icon-images.gresource.xml
 
