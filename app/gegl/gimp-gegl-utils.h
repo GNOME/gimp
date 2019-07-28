@@ -34,6 +34,7 @@ void         gimp_gegl_progress_connect              (GeglNode            *node,
 
 gboolean     gimp_gegl_node_is_source_operation      (GeglNode            *node);
 gboolean     gimp_gegl_node_is_point_operation       (GeglNode            *node);
+gboolean     gimp_gegl_node_is_area_filter_operation (GeglNode            *node);
 
 const Babl * gimp_gegl_node_get_format               (GeglNode            *node,
                                                       const gchar         *pad_name);
