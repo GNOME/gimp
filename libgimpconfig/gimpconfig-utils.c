@@ -158,7 +158,7 @@ gimp_config_diff_other (GObject     *a,
  * exist in both object classes and are of the same value_type are
  * compared.
  *
- * Return value: a GList of differing GParamSpecs.
+ * Return value: (transfer container) (element-type GParamSpec): a GList of differing GParamSpecs.
  *
  * Since: 2.4
  **/
