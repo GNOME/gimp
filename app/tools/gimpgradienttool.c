@@ -30,6 +30,8 @@
 
 #include "config/gimpguiconfig.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "operations/gimp-operation-config.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
@@ -886,6 +888,9 @@ gimp_gradient_tool_create_graph (GimpGradientTool *gradient_tool)
                        gradient_tool->render_node,
                        output,
                        NULL);
+
+  gimp_gegl_node_set_underlying_operation (gradient_tool->graph,
+                                           gradient_tool->render_node);
 
   gimp_gradient_tool_update_graph (gradient_tool);
 }
