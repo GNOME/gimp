@@ -31,9 +31,7 @@
 
 #include "core/gimp.h"
 
-#include "pdb/gimp-pdb-compat.h"
-
-#include "gimpgpparamspecs.h"
+#include "gimpgpparams.h"
 #include "gimpplugindef.h"
 #include "gimppluginprocedure.h"
 #include "plug-in-rc.h"
@@ -41,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 5
+#define PLUG_IN_RC_FILE_VERSION 6
 
 
 /*

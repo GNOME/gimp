@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgpparamspecs.c
+ * gimpgpparams.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,7 +30,7 @@
 #include "libgimpbase/gimpprotocol.h"
 
 #include "gimp.h"
-#include "gimpgpparamspecs.h"
+#include "gimpgpparams.h"
 
 
 /*  public functions  */
@@ -38,4 +38,4 @@
 /*  include the implementation of _gimp_param_spec_to_gp_param_def()
  *  from libgimp, they are identical.
  */
-#include "gimpgpparamspecs-body.c"
+#include "gimpgpparams-body.c"

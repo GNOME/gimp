@@ -30,15 +30,10 @@ GParamSpec     * _gimp_gp_compat_param_spec   (GimpPDBArgType   arg_type,
 GType            _gimp_pdb_arg_type_to_gtype  (GimpPDBArgType   type);
 GimpPDBArgType   _gimp_pdb_gtype_to_arg_type  (GType            type);
 
-gchar          * _gimp_pdb_arg_type_to_string (GimpPDBArgType   type);
-
-GimpValueArray * _gimp_pdb_params_to_args     (GParamSpec     **pspecs,
-                                               gint             n_pspecs,
-                                               const GimpParam *params,
+GimpValueArray * _gimp_params_to_value_array  (const GimpParam *params,
                                                gint             n_params,
-                                               gboolean         return_values,
                                                gboolean         full_copy);
-GimpParam      * _gimp_pdb_args_to_params     (GimpValueArray  *args,
+GimpParam      * _gimp_value_array_to_params  (GimpValueArray  *args,
                                                gboolean         full_copy);
 
 

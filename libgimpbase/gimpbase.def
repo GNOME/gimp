@@ -278,7 +278,6 @@ EXPORTS
 	gp_has_init_write
 	gp_init
 	gp_lock
-	gp_params_destroy
 	gp_proc_install_write
 	gp_proc_return_write
 	gp_proc_run_write

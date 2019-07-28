@@ -33,93 +33,7 @@
 #include "gimp-pdb-compat.h"
 
 
-/*  local function prototypes  */
-
-static gchar * gimp_pdb_compat_arg_type_to_string (GimpPDBArgType type);
-
-
 /*  public functions  */
-
-GType
-gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
-{
-  switch (type)
-    {
-    case GIMP_PDB_INT32:
-      return GIMP_TYPE_INT32;
-
-    case GIMP_PDB_INT16:
-      return GIMP_TYPE_INT16;
-
-    case GIMP_PDB_INT8:
-      return GIMP_TYPE_INT8;
-
-    case GIMP_PDB_FLOAT:
-      return G_TYPE_DOUBLE;
-
-    case GIMP_PDB_STRING:
-      return G_TYPE_STRING;
-
-    case GIMP_PDB_INT32ARRAY:
-      return GIMP_TYPE_INT32_ARRAY;
-
-    case GIMP_PDB_INT16ARRAY:
-      return GIMP_TYPE_INT16_ARRAY;
-
-    case GIMP_PDB_INT8ARRAY:
-      return GIMP_TYPE_INT8_ARRAY;
-
-    case GIMP_PDB_FLOATARRAY:
-      return GIMP_TYPE_FLOAT_ARRAY;
-
-    case GIMP_PDB_STRINGARRAY:
-      return GIMP_TYPE_STRING_ARRAY;
-
-    case GIMP_PDB_COLOR:
-      return GIMP_TYPE_RGB;
-
-    case GIMP_PDB_ITEM:
-      return GIMP_TYPE_ITEM_ID;
-
-    case GIMP_PDB_DISPLAY:
-      return GIMP_TYPE_DISPLAY_ID;
-
-    case GIMP_PDB_IMAGE:
-      return GIMP_TYPE_IMAGE_ID;
-
-    case GIMP_PDB_LAYER:
-      return GIMP_TYPE_LAYER_ID;
-
-    case GIMP_PDB_CHANNEL:
-      return GIMP_TYPE_CHANNEL_ID;
-
-    case GIMP_PDB_DRAWABLE:
-      return GIMP_TYPE_DRAWABLE_ID;
-
-    case GIMP_PDB_SELECTION:
-      return GIMP_TYPE_SELECTION_ID;
-
-    case GIMP_PDB_COLORARRAY:
-      return GIMP_TYPE_RGB_ARRAY;
-
-    case GIMP_PDB_VECTORS:
-      return GIMP_TYPE_VECTORS_ID;
-
-    case GIMP_PDB_PARASITE:
-      return GIMP_TYPE_PARASITE;
-
-    case GIMP_PDB_STATUS:
-      return GIMP_TYPE_PDB_STATUS_TYPE;
-
-    case GIMP_PDB_END:
-      break;
-    }
-
-  g_warning ("%s: returning G_TYPE_NONE for %d (%s)",
-             G_STRFUNC, type, gimp_pdb_compat_arg_type_to_string (type));
-
-  return G_TYPE_NONE;
-}
 
 GimpPDBArgType
 gimp_pdb_compat_arg_type_from_gtype (GType type)
@@ -182,13 +96,6 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
     }
 
   pdb_type = GPOINTER_TO_INT (g_type_get_qdata (type, pdb_type_quark));
-
-#if 0
-  g_printerr ("%s: arg_type = %p (%s)  ->  %d (%s)\n",
-              G_STRFUNC,
-              (gpointer) type, g_type_name (type),
-              pdb_type, gimp_pdb_arg_type_to_string (pdb_type));
-#endif
 
   return pdb_type;
 }
@@ -339,21 +246,4 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
                                             compat_procs[i].old_name,
                                             compat_procs[i].new_name);
     }
-}
-
-
-/*  private functions  */
-
-static gchar *
-gimp_pdb_compat_arg_type_to_string (GimpPDBArgType type)
-{
-  const gchar *name;
-
-  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
-                             &name, NULL, NULL, NULL))
-    {
-      return  g_strdup_printf ("(PDB type %d unknown)", type);
-    }
-
-  return g_strdup (name);
 }

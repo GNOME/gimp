@@ -39,6 +39,7 @@
 
 #include "pdb/gimppdbcontext.h"
 
+#include "gimpgpparams.h"
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimpplugindef.h"
@@ -48,7 +49,6 @@
 #include "gimppluginmanager-call.h"
 #include "gimppluginshm.h"
 #include "gimptemporaryprocedure.h"
-#include "plug-in-params.h"
 
 #include "gimp-intl.h"
 
@@ -228,7 +228,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = gimp_value_array_length (args);
-      proc_run.params  = plug_in_args_to_params (args, FALSE);
+      proc_run.params  = _gimp_value_array_to_gp_params (args, FALSE);
 
       if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
           ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
@@ -323,7 +323,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = gimp_value_array_length (args);
-      proc_run.params  = plug_in_args_to_params (args, FALSE);
+      proc_run.params  = _gimp_value_array_to_gp_params (args, FALSE);
 
       if (! gp_temp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
           ! gimp_wire_flush (plug_in->my_write, plug_in))
