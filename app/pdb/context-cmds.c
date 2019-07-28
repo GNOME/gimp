@@ -4576,7 +4576,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("name",
                                                            "name",
-                                                           "The name of the active palette",
+                                                           "(transfer full): The name of the active palette",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

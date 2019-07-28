@@ -195,7 +195,7 @@ HELP
 
     @outargs = (
         { name => 'num_colors', type => 'int32', void_ret => 1,
-          desc => 'The number of colors in the palette' }
+          desc => '(out): The number of colors in the palette' }
     );
 
     %invoke = (
@@ -425,7 +425,7 @@ HELP
 
     @outargs = (
         { name => 'color', type => 'color', void_ret => 1,
-          desc => 'The color requested' }
+          desc => '(out): The color requested' }
     );
 
     %invoke = (
