@@ -12,7 +12,7 @@ STOCK_IMAGES = \
 	lighting-reflectivity-highlight-high.png	\
 	lighting-reflectivity-highlight-low.png
 
-EXTRA_DIST =
+EXTRA_DIST = \
 	$(STOCK_IMAGES)		\
 	lighting-icon-images.gresource.xml
 
