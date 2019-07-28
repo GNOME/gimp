@@ -204,6 +204,8 @@ static gboolean   gimp_extension_read          (GIOChannel      *channel,
 static void       gimp_set_pdb_error           (const GimpParam *return_vals,
                                                 gint             n_return_vals);
 
+static gpointer   gimp_param_copy              (gpointer         boxed);
+static void       gimp_param_free              (gpointer         boxed);
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
@@ -289,6 +291,126 @@ gimp_plug_in_info_set_callbacks (GimpPlugInInfo *info,
   info->quit_proc  = quit_proc;
   info->query_proc = query_proc;
   info->run_proc   = run_proc;
+}
+
+/**
+ * gimp_param_from_int32:
+ * @value: the #gint32 value to set.
+ *
+ * The procedure creates a new #GimpParam for a int32 value.
+ *
+ * Returns: (transfer full): A newly allocated #GimpParam.
+ *
+ * Since: 3.0
+ **/
+GimpParam *
+gimp_param_from_int32 (gint32 value)
+{
+  GimpParam * param = g_new0 (GimpParam, 1);
+
+  param->type = GIMP_PDB_INT32;
+  param->data.d_int32 = value;
+
+  return param;
+}
+
+/**
+ * gimp_param_get_int32:
+ * @param: the #GimpParam.
+ *
+ * Unwrap the integer value contained in @param. Running this function
+ * if @param is not an int32 #GimpParam is a programming error.
+ *
+ * Returns: the #gint32 value contained in @param.
+ *
+ * Since: 3.0
+ **/
+gint32
+gimp_param_get_int32 (GimpParam *param)
+{
+  g_return_val_if_fail (param->type == GIMP_PDB_INT32, 0);
+
+  return param->data.d_int32;
+}
+
+/**
+ * gimp_param_from_status:
+ * @value: the #GimpPDBStatusType value to set.
+ *
+ * The procedure creates a new #GimpParam for a status value.
+ *
+ * Returns: (transfer full): A newly allocated #GimpParam.
+ *
+ * Since: 3.0
+ **/
+GimpParam *
+gimp_param_from_status (GimpPDBStatusType value)
+{
+  GimpParam * param = g_new0 (GimpParam, 1);
+
+  param->type = GIMP_PDB_STATUS;
+  param->data.d_status = value;
+
+  return param;
+}
+
+/**
+ * gimp_param_get_status:
+ * @param: the #GimpParam.
+ *
+ * Unwrap the status value contained in @param. Running this function
+ * if @param is not a status #GimpParam is a programming error.
+ *
+ * Returns: the #GimpPDBStatusType value contained in @param.
+ *
+ * Since: 3.0
+ **/
+GimpPDBStatusType
+gimp_param_get_status (GimpParam *param)
+{
+  g_return_val_if_fail (param->type == GIMP_PDB_STATUS, 0);
+
+  return param->data.d_status;
+}
+
+/**
+ * gimp_param_from_string:
+ * @value: the string value to set.
+ *
+ * The procedure creates a new #GimpParam for a string value.
+ *
+ * Returns: (transfer full): A newly allocated #GimpParam.
+ *
+ * Since: 3.0
+ **/
+GimpParam *
+gimp_param_from_string (gchar *value)
+{
+  GimpParam * param = g_new0 (GimpParam, 1);
+
+  param->type = GIMP_PDB_STRING;
+  param->data.d_string = g_strdup (value);
+
+  return param;
+}
+
+/**
+ * gimp_param_get_string:
+ * @param: the #GimpParam.
+ *
+ * Unwrap the string value contained in @param. Running this function
+ * if @param is not a string #GimpParam is a programming error.
+ *
+ * Returns: the string value contained in @param.
+ *
+ * Since: 3.0
+ **/
+gchar *
+gimp_param_get_string (GimpParam *param)
+{
+  g_return_val_if_fail (param->type == GIMP_PDB_STRING, NULL);
+
+  return param->data.d_string;
 }
 
 /**
@@ -2582,3 +2704,87 @@ gimp_set_pdb_error (const GimpParam *return_vals,
       break;
     }
 }
+
+/* Define boxed type functions. */
+
+static gpointer
+gimp_param_copy (gpointer boxed)
+{
+  GimpParam *param = boxed;
+  GimpParam *new_param;
+
+  new_param = g_slice_new (GimpParam);
+  new_param->type = param->type;
+  switch (param->type)
+    {
+    case GIMP_PDB_STRING:
+      new_param->data.d_string = g_strdup (param->data.d_string);
+      break;
+    case GIMP_PDB_INT32ARRAY:
+    case GIMP_PDB_INT16ARRAY:
+    case GIMP_PDB_INT8ARRAY:
+    case GIMP_PDB_FLOATARRAY:
+    case GIMP_PDB_COLORARRAY:
+    case GIMP_PDB_STRINGARRAY:
+      /* XXX: we can't copy these because we don't know the size, and
+       * we are bounded by the GBoxed copy function signature.
+       * Anyway this is only temporary until we replace GimpParam in the
+       * new API.
+       */
+      g_return_val_if_reached (new_param);
+      break;
+    default:
+      new_param->data = param->data;
+      break;
+    }
+
+  return new_param;
+}
+
+static void
+gimp_param_free (gpointer boxed)
+{
+  GimpParam *param = boxed;
+
+  switch (param->type)
+    {
+    case GIMP_PDB_STRING:
+      g_free (param->data.d_string);
+      break;
+    case GIMP_PDB_INT32ARRAY:
+      g_free (param->data.d_int32array);
+      break;
+    case GIMP_PDB_INT16ARRAY:
+      g_free (param->data.d_int16array);
+      break;
+    case GIMP_PDB_INT8ARRAY:
+      g_free (param->data.d_int8array);
+      break;
+    case GIMP_PDB_FLOATARRAY:
+      g_free (param->data.d_floatarray);
+      break;
+    case GIMP_PDB_COLORARRAY:
+      g_free (param->data.d_colorarray);
+      break;
+    case GIMP_PDB_STRINGARRAY:
+      /* XXX: we also want to free each element string. Unfortunately
+       * this type is not zero-terminated or anything of the sort to
+       * determine the number of elements.
+       * It uses the previous parameter, but we cannot have such value
+       * in a GBoxed's free function.
+       * Since this is all most likely temporary code until we update
+       * the plug-in API, let's just leak for now.
+       */
+      g_free (param->data.d_stringarray);
+      break;
+    default:
+      /* Pass-through. */
+      break;
+    }
+
+  g_slice_free (GimpParam, boxed);
+}
+
+G_DEFINE_BOXED_TYPE (GimpParam, gimp_param,
+                     gimp_param_copy,
+                     gimp_param_free)
