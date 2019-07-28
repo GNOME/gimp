@@ -586,6 +586,12 @@ EXPORTS
 	gimp_param_channel_id_get_type
 	gimp_param_display_id_get_type
 	gimp_param_drawable_id_get_type
+	gimp_param_from_int32
+	gimp_param_from_status
+	gimp_param_from_string
+	gimp_param_get_int32
+	gimp_param_get_status
+	gimp_param_get_string
 	gimp_param_image_id_get_type
 	gimp_param_item_id_get_type
 	gimp_param_layer_id_get_type
