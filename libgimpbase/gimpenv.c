@@ -743,7 +743,8 @@ gimp_child_file (const gchar *parent,
  *
  * Since: 2.10
  *
- * Returns: a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full):
+ *          a new @GFile for the path, Free with g_object_unref().
  **/
 GFile *
 gimp_directory_file (const gchar *first_element,
@@ -773,7 +774,8 @@ gimp_directory_file (const gchar *first_element,
  *
  * Since: 2.10.10
  *
- * Returns: a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full):
+ *          a new @GFile for the path, Free with g_object_unref().
  **/
 GFile *
 gimp_installation_directory_file (const gchar *first_element,
@@ -803,7 +805,8 @@ gimp_installation_directory_file (const gchar *first_element,
  *
  * Since: 2.10
  *
- * Returns: a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full):
+ *          a new @GFile for the path, Free with g_object_unref().
  **/
 GFile *
 gimp_data_directory_file (const gchar *first_element,
@@ -833,7 +836,8 @@ gimp_data_directory_file (const gchar *first_element,
  *
  * Since: 2.10
  *
- * Returns: a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full):
+ *          a new @GFile for the path, Free with g_object_unref().
  **/
 GFile *
 gimp_locale_directory_file (const gchar *first_element,
@@ -863,7 +867,8 @@ gimp_locale_directory_file (const gchar *first_element,
  *
  * Since: 2.10
  *
- * Returns: a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full):
+ *          a new @GFile for the path, Free with g_object_unref().
  **/
 GFile *
 gimp_sysconf_directory_file (const gchar *first_element,
@@ -893,7 +898,8 @@ gimp_sysconf_directory_file (const gchar *first_element,
  *
  * Since: 2.10
  *
- * Returns: a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full):
+ *          a new @GFile for the path, Free with g_object_unref().
  **/
 GFile *
 gimp_plug_in_directory_file (const gchar *first_element,
@@ -1028,10 +1034,11 @@ gimp_path_runtime_fix (gchar **path)
  * @path:         A list of directories separated by #G_SEARCHPATH_SEPARATOR.
  * @max_paths:    The maximum number of directories to return.
  * @check:        %TRUE if you want the directories to be checked.
- * @check_failed: Returns a #GList of path elements for which the
- *                check failed.
+ * @check_failed: (element-type filename) (out callee-allocates):
+                  Returns a #GList of path elements for which the check failed.
  *
- * Returns: A #GList of all directories in @path.
+ * Returns: (element-type filename) (transfer full):
+            A #GList of all directories in @path.
  **/
 GList *
 gimp_path_parse (const gchar  *path,
@@ -1111,9 +1118,11 @@ gimp_path_parse (const gchar  *path,
 
 /**
  * gimp_path_to_str:
- * @path: A list of directories as returned by gimp_path_parse().
+ * @path: (element-type filename):
+ *        A list of directories as returned by gimp_path_parse().
  *
- * Returns: A searchpath string separated by #G_SEARCHPATH_SEPARATOR.
+ * Returns: (type filename) (transfer full):
+ *          A searchpath string separated by #G_SEARCHPATH_SEPARATOR.
  **/
 gchar *
 gimp_path_to_str (GList *path)
@@ -1145,7 +1154,8 @@ gimp_path_to_str (GList *path)
 
 /**
  * gimp_path_free:
- * @path: A list of directories as returned by gimp_path_parse().
+ * @path: (element-type filename):
+ *        A list of directories as returned by gimp_path_parse().
  *
  * This function frees the memory allocated for the list and the strings
  * it contains.
@@ -1158,7 +1168,8 @@ gimp_path_free (GList *path)
 
 /**
  * gimp_path_get_user_writable_dir:
- * @path: A list of directories as returned by gimp_path_parse().
+ * @path: (element-type filename):
+ *        A list of directories as returned by gimp_path_parse().
  *
  * Note that you have to g_free() the returned string.
  *

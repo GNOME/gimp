@@ -473,7 +473,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
  *
  * Creates a new #GimpMetadata instance.
  *
- * Return value: The new #GimpMetadata.
+ * Return value: (transfer full): The new #GimpMetadata.
  *
  * Since: 2.10
  */
@@ -505,7 +505,8 @@ gimp_metadata_new (void)
  *
  * Duplicates a #GimpMetadata instance.
  *
- * Return value: The new #GimpMetadata, or %NULL if @metadata is %NULL.
+ * Return value: (transfer full):
+ *               The new #GimpMetadata, or %NULL if @metadata is %NULL.
  *
  * Since: 2.10
  */
@@ -680,7 +681,7 @@ gimp_metadata_deserialize_error (GMarkupParseContext *context,
  * Deserializes a string of XML that has been created by
  * gimp_metadata_serialize().
  *
- * Return value: The new #GimpMetadata.
+ * Return value: (transfer full): The new #GimpMetadata.
  *
  * Since: 2.10
  */
@@ -855,7 +856,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
  *
  * Loads #GimpMetadata from @file.
  *
- * Return value: The loaded #GimpMetadata.
+ * Return value: (transfer full): The loaded #GimpMetadata.
  *
  * Since: 2.10
  */

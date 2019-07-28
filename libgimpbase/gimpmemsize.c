@@ -246,7 +246,7 @@ gimp_param_memsize_class_init (GParamSpecClass *class)
  * Creates a param spec to hold a memory size value.
  * See g_param_spec_internal() for more information.
  *
- * Returns: a newly allocated #GParamSpec instance
+ * Returns: (transfer full): a newly allocated #GParamSpec instance
  *
  * Since: 2.4
  **/
