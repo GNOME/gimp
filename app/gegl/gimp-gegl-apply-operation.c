@@ -39,6 +39,17 @@
 #include "gimp-gegl-utils.h"
 
 
+/* iteration interval when applying an operation interactively
+ * (with progress indication)
+ */
+#define APPLY_OPERATION_INTERACTIVE_INTERVAL    (1.0 / 8.0) /* seconds */
+
+/* iteration interval when applying an operation non-interactively
+ * (without progress indication)
+ */
+#define APPLY_OPERATION_NON_INTERACTIVE_INTERVAL 1.0 /* seconds */
+
+
 void
 gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
                            GimpProgress        *progress,
@@ -81,6 +92,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   GeglNode          *gegl;
   GeglNode          *effect;
   GeglNode          *dest_node;
+  GeglNode          *underlying_operation;
   GeglNode          *operation_src_node = NULL;
   GimpChunkIterator *iter;
   cairo_region_t    *region;
@@ -107,13 +119,11 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   effect = operation;
 
+  underlying_operation = gimp_gegl_node_get_underlying_operation (operation);
+
   if (src_buffer)
     {
       GeglNode *src_node;
-      GeglNode *underlying_operation;
-
-      underlying_operation =
-        gimp_gegl_node_get_underlying_operation (operation);
 
       /* dup() because reading and writing the same buffer doesn't
        * generally work with non-point ops when working in chunks.
@@ -246,6 +256,33 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
     }
 
   iter = gimp_chunk_iterator_new (region);
+
+  if (progress &&
+      /* avoid the interactive iteration interval for area filters (or meta ops
+       * that potentially involve area filters), since their processing speed
+       * tends to be sensitive to the chunk size.
+       */
+      ! gimp_gegl_node_is_area_filter_operation (underlying_operation))
+    {
+      /* we use a shorter iteration interval for interactive use (when there's
+       * progress indication), to stay responsive.
+       */
+      gimp_chunk_iterator_set_interval (
+        iter,
+        APPLY_OPERATION_INTERACTIVE_INTERVAL);
+    }
+  else
+    {
+      /* we use a longer iteration interval for non-interactive use (when
+       * there's no progress indication), or when applying an area filter (see
+       * above), as this generally allows for faster processing.  we don't
+       * avoid chunking altogether, since *some* chunking is still desirable to
+       * reduce the space needed for intermediate results.
+       */
+      gimp_chunk_iterator_set_interval (
+        iter,
+        APPLY_OPERATION_NON_INTERACTIVE_INTERVAL);
+    }
 
   while (gimp_chunk_iterator_next (iter))
     {
