@@ -3,6 +3,18 @@
 
 #define protected
 
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe"; ValueType: string; ValueName: "FriendlyAppName"; ValueData: "GIMP"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe,1"
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"" ""%1"""
+
+Root: HKA; Subkey: "Software\GIMP {#MAJOR}.{#MINOR}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\GIMP {#MAJOR}.{#MINOR}\Capabilities"; ValueType: string; ValueName: "ApplicationName"; ValueData: "GIMP"
+Root: HKA; Subkey: "Software\GIMP {#MAJOR}.{#MINOR}\Capabilities"; ValueType: string; ValueName: "ApplicationIcon"; ValueData: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe,0"
+Root: HKA; Subkey: "Software\GIMP {#MAJOR}.{#MINOR}\Capabilities"; ValueType: string; ValueName: "ApplicationDescription"; ValueData: "GIMP is a free raster graphics editor used for image retouching and editing, free-form drawing, converting between different image formats, and more specialized tasks."
+
+Root: HKA; Subkey: "Software\RegisteredApplications"; ValueType: string; ValueName: "GIMP {#MAJOR}.{#MINOR}"; ValueData: "Software\GIMP {#MAJOR}.{#MINOR}\Capabilities"; Flags: uninsdeletevalue
+
 #define FileHandle
 #define FileLine
 
@@ -15,11 +27,12 @@
 		#else
 			#pragma message "Processing associations.list: " + FileLine
 ;
-Root: HKA; Subkey: "Software\Classes\.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP2.{#FileLine}"; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP2.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#ICON_VERSION}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe,1"
 Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe\SupportedTypes"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: ""
+Root: HKA; Subkey: "Software\GIMP {#MAJOR}.{#MINOR}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".{#FileLine}"; ValueData: "GIMP2.{#FileLine}"
 		#endif
 	#endif
 #endsub
@@ -31,9 +44,9 @@ Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\shell\open\command"; Valu
   #expr FileClose(FileHandle)
 #endif
 ;special case for .ico files
-Root: HKA; Subkey: "Software\Classes\.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP2.ico"; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP2.ico"; ValueData: ""; Flags: uninsdeletevalue
 Root: HKA; Subkey: "Software\Classes\GIMP2.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#ICON_VERSION}"; Flags: uninsdeletekey
 Root: HKA; Subkey: "Software\Classes\GIMP2.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
 Root: HKA; Subkey: "Software\Classes\GIMP2.ico\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"" ""%1"""
-
+Root: HKA; Subkey: "Software\Classes\Applications\gimp-{#MAJOR}.{#MINOR}.exe\SupportedTypes"; ValueType: string; ValueName: ".ico"; ValueData: ""
+Root: HKA; Subkey: "Software\GIMP {#MAJOR}.{#MINOR}\Capabilities\FileAssociations"; ValueType: string; ValueName: ".ico"; ValueData: "GIMP2.{#FileLine}"
