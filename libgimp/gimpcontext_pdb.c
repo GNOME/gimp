@@ -2232,7 +2232,7 @@ gimp_context_set_gradient_reverse (gboolean reverse)
  *
  * This procedure returns the name of the the currently active palette.
  *
- * Returns: The name of the active palette.
+ * Returns: (transfer full): The name of the active palette.
  *
  * Since: 2.2
  **/
