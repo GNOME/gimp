@@ -2957,9 +2957,7 @@ m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
-]
-dnl po-python/Makefile.in
-[
+po-python/Makefile.in
 po-script-fu/Makefile.in
 po-tips/Makefile.in
 po-windows-installer/Makefile.in
@@ -3002,7 +3000,7 @@ m4_define([generate_po_makefile], [
 ])
 
 generate_po_makefile([po-libgimp])
-#generate_po_makefile([po-python])
+generate_po_makefile([po-python])
 generate_po_makefile([po-plug-ins])
 generate_po_makefile([po-script-fu])
 generate_po_makefile([po-tips])
