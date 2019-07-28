@@ -114,7 +114,7 @@ msgstr "Si traceu un camí (Edita-&gt;Traça el Camí), podreu utilitzar les ein
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
-msgstr "Si teniu masses coses a la pantalla, podeu prémer <tt>Tab</tt> en una finestra d'imatge per a commutar la caixa d'eines i els altres diàlegs."
+msgstr "Si teniu massa coses a la pantalla, podeu prémer <tt>Tab</tt> en una finestra d'imatge per a commutar la caixa d'eines i els altres diàlegs."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -152,7 +152,7 @@ msgid ""
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
 "window managers can be configured to ignore the <tt>Alt</tt> key or to use "
 "the <tt>Super</tt> key (or \"Windows logo\") instead."
-msgstr "Podeu ajustar o moure una selecció utilitzant <tt>Alt</tt>-arrossega. Si això fa que es mogui la finestra serà perquè el vostre gestor de finestres ja fa servir la tecla <tt>Alt</tt>. La majoria de gestors de finestres es poden configurar perquè ignorin la tecla <tt>Alt</tt> o perquè utilitzin la tecla <tt>Super</tt> (o el «logotip de Windows»)."
+msgstr "Podeu ajustar o moure una selecció utilitzant <tt>Alt</tt>-arrossega. Si això fa que es mogui la finestra serà perquè el vostre gestor de finestres ja fa servir la tecla <tt>Alt</tt>. La majoria de gestors de finestres es poden configurar perquè ignorin la tecla <tt>Alt</tt> o perquè utilitzin la tecla <tt>Súper</tt> (o el «logotip de Windows»)."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
