@@ -2869,6 +2869,7 @@ plug-ins/print/Makefile
 dnl plug-ins/pygimp/Makefile
 dnl plug-ins/pygimp/plug-ins/Makefile
 [
+plug-ins/python/Makefile
 plug-ins/screenshot/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/ftx/Makefile

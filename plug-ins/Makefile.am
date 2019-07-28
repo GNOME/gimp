@@ -14,6 +14,7 @@ endif
 
 if BUILD_PYTHON
 pygimp = pygimp
+python = python
 endif
 
 if OS_WIN32
@@ -55,6 +56,7 @@ SUBDIRS = \
 	metadata		\
 	pagecurl		\
 	$(print)		\
+	$(python)		\
 	screenshot		\
 	selection-to-path	\
 	$(twain)		\
