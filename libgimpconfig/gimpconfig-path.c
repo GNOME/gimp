@@ -139,7 +139,7 @@ gimp_param_config_path_class_init (GParamSpecClass *class)
  * or list of file or dir names.
  * See g_param_spec_internal() for more information.
  *
- * Returns: a newly allocated #GParamSpec instance
+ * Returns: (transfer full): a newly allocated #GParamSpec instance
  *
  * Since: 2.4
  **/
@@ -350,7 +350,8 @@ gimp_config_path_expand (const gchar  *path,
  * gimp_path_parse(), then turns the filenames returned by
  * gimp_path_parse() into GFile using g_file_new_for_path().
  *
- * Return value: a #GList of newly allocated #GFile objects.
+ * Return value: (element-type GFile) (transfer full):
+                 a #GList of newly allocated #GFile objects.
  *
  * Since: 2.10
  **/
@@ -441,7 +442,7 @@ gimp_config_path_unexpand (const gchar  *path,
  *
  * To reverse the expansion, use gimp_file_get_config_path().
  *
- * Return value: a newly allocated #GFile, or %NULL if the expansion failed.
+ * Return value: (transfer full): a newly allocated #GFile, or %NULL if the expansion failed.
  *
  * Since: 2.10
  **/
