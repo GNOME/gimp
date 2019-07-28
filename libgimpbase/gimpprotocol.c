@@ -1106,18 +1106,9 @@ _gp_param_def_read (GIOChannel *channel,
       if (! _gimp_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_color.has_alpha, 1,
                                    user_data) ||
-          ! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_color.default_val.r, 1,
-                                    user_data) ||
-          ! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_color.default_val.g, 1,
-                                    user_data) ||
-          ! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_color.default_val.b, 1,
-                                    user_data) ||
-          ! _gimp_wire_read_double (channel,
-                                    &param_def->meta.m_color.default_val.a, 1,
-                                    user_data))
+          ! _gimp_wire_read_color (channel,
+                                   &param_def->meta.m_color.default_val, 1,
+                                   user_data))
         return FALSE;
       break;
 
@@ -1368,18 +1359,9 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_color.has_alpha, 1,
                                     user_data) ||
-          ! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_color.default_val.r, 1,
-                                     user_data) ||
-          ! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_color.default_val.g, 1,
-                                     user_data) ||
-          ! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_color.default_val.b, 1,
-                                     user_data) ||
-          ! _gimp_wire_write_double (channel,
-                                     &param_def->meta.m_color.default_val.a, 1,
-                                     user_data))
+          ! _gimp_wire_write_color (channel,
+                                    &param_def->meta.m_color.default_val, 1,
+                                    user_data))
         return FALSE;
       break;
 
