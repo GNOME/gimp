@@ -102,9 +102,7 @@ def query():
         [ param ],
         [ retval ])
     Gimp.plugin_menu_register("python-fu-palette-to-gradient", "<Palettes>")
-
-    #Gimp.plugin_domain_register("gimp20-python", Gimp.locale_directory())
-    #gettext.install("gimp20-python", localedir=Gimp.locale_directory(), codeset='utf-8')
+    Gimp.plugin_domain_register("gimp30-python", Gimp.locale_directory())
 
 info = Gimp.PlugInInfo ()
 info.set_callbacks (None, None, query, run)
