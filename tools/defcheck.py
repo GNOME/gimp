@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 """
 defcheck.py -- Consistency check for the .def files.
@@ -29,7 +29,7 @@ Needs the tool "nm" to work
 
 """
 
-import sys, commands
+import sys, subprocess
 
 from os import path
 
@@ -51,7 +51,7 @@ srcdir = None
 if len(sys.argv) > 1:
    srcdir = sys.argv[1]
    if not path.exists(srcdir):
-      print "Directory '%s' does not exist" % srcdir
+      print("Directory '%s' does not exist" % srcdir)
       sys.exit (-1)
 
 for df in def_files:
@@ -63,11 +63,11 @@ for df in def_files:
    if srcdir:
       filename = path.join(srcdir, df)
    try:
-      defsymbols = file (filename).read ().split ()[1:]
-   except IOError, message:
-      print message
+      defsymbols = open (filename).read ().split ()[1:]
+   except IOError as message:
+      print(message)
       if not srcdir:
-         print "You should run this script from the toplevel source directory."
+         print("You should run this script from the toplevel source directory.")
       sys.exit (-1)
 
    doublesymbols = []
@@ -81,10 +81,10 @@ for df in def_files:
          unsortindex = i+1
          break;
 
-   status, nm = commands.getstatusoutput ("nm --defined-only --extern-only " +
-                                          libname)
+   status, nm = subprocess.getstatusoutput ("nm --defined-only --extern-only " +
+                                            libname)
    if status != 0:
-      print "trouble reading %s - has it been compiled?" % libname
+      print("trouble reading %s - has it been compiled?" % libname)
       continue
 
    nmsymbols = nm.split()[2::3]
@@ -94,32 +94,32 @@ for df in def_files:
    missing_nms  = [s for s in defsymbols if s not in nmsymbols]
 
    if unsortindex >= 0 or missing_defs or missing_nms or doublesymbols:
-      print
-      print "Problem found in", filename
+      print()
+      print("Problem found in", filename)
 
       if missing_defs:
-         print "  the following symbols are in the library,"
-         print "  but are not listed in the .def-file:"
+         print("  the following symbols are in the library,")
+         print("  but are not listed in the .def-file:")
          for s in missing_defs:
-            print "     +", s
-         print
+            print("     +", s)
+         print()
 
       if missing_nms:
-         print "  the following symbols are listed in the .def-file,"
-         print "  but are not exported by the library."
+         print("  the following symbols are listed in the .def-file,")
+         print("  but are not exported by the library.")
          for s in missing_nms:
-            print "     -", s
-         print
+            print("     -", s)
+         print()
 
       if doublesymbols:
-         print "  the following symbols are listed multiple times in the .def-file,"
+         print("  the following symbols are listed multiple times in the .def-file,")
          for s in doublesymbols:
-            print "     : %s (line %d)" % s
-         print
+            print("     : %s (line %d)" % s)
+         print()
 
       if unsortindex >= 0:
-         print "  the .def-file is not properly sorted (line %d)" % (unsortindex + 2)
-         print
+         print("  the .def-file is not properly sorted (line %d)" % (unsortindex + 2))
+         print()
 
       have_errors = -1
 
