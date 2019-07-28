@@ -101,7 +101,7 @@ msgid ""
 msgstr ""
 "El GIMP ja està llest per ser instal·lat. Cliqueu en el botó Instal·la per "
 "instal·lar usant els paràmetres per defecte o cliqueu el botó Personalitza "
-"si us agrada un major control sobre el que voleu instal·lar."
+"si us agrada un major control sobre què voleu instal·lar."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"

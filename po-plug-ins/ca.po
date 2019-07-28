@@ -31,7 +31,7 @@ msgstr "Alinea les capes visibles de la imatge"
 
 #: ../plug-ins/common/align-layers.c:163
 msgid "Align Visi_ble Layers..."
-msgstr "Alinea les capes visi_bles…"
+msgstr "Alinea les capes visi_bles..."
 
 #: ../plug-ins/common/align-layers.c:207
 msgid "There are not enough layers to align."
@@ -3662,7 +3662,7 @@ msgstr "Error en llegir el fragment d'informació del canal"
 #, c-format
 msgid "Invalid bitmap type %d in channel information chunk"
 msgstr ""
-"El tipus %d mapa de bits  no és vàlid al fragment d'informació del canal"
+"El tipus %d mapa de bits no és vàlid al fragment d'informació del canal"
 
 #: ../plug-ins/common/file-psp.c:1602
 #, c-format
@@ -7749,7 +7749,7 @@ msgstr "Lineal"
 
 #: ../plug-ins/flame/flame.c:751 ../plug-ins/lighting/lighting-ui.c:857
 msgid "Sinusoidal"
-msgstr "Sinusoïdal"
+msgstr "Sinusoidal"
 
 #: ../plug-ins/flame/flame.c:752 ../plug-ins/lighting/lighting-ui.c:858
 msgid "Spherical"

@@ -263,7 +263,7 @@ msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
-"Les capes de text ara poden representar textos verticals (amb varies "
+"Les capes de text ara poden representar textos verticals (amb vàries "
 "orientacions de caràcters i direccions de línia)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
@@ -311,7 +311,7 @@ msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
-"GIMP 2.10.4 inclou la correcció de moltes errades així com també varies "
+"GIMP 2.10.4 inclou la correcció de moltes errades així com també vàries "
 "optimitzacions. Les més notables són:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
@@ -509,7 +509,7 @@ msgid ""
 "fixes, most notable improvements are:"
 msgstr ""
 "GIMP 2.10.0-RC1 és la primera versió candidata abans de la versió estable de "
-"GIMP 2.10.0, que es centra en la depuració i l'estabilitat. A part de les "
+"GIMP 2.10.0, que se centra en la depuració i l'estabilitat. A part de les "
 "moltes solucions d'errors, les millores més notables són:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
@@ -558,7 +558,7 @@ msgid ""
 "while focusing on bugfixing and stability."
 msgstr ""
 "GIMP 2.9.8 introdueix l'edició de degradats al llenç i diverses millores "
-"mentre es centra en la definició d'errors i l'estabilitat."
+"mentre se centra en la definició d'errors i l'estabilitat."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "On-canvas gradient editing"
@@ -2944,7 +2944,7 @@ msgstr "_Avís d'espai d'intercanvi baix"
 #: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
-msgstr "Puja el tauler de control quan la mida d'intercanvi s'apropa al limit"
+msgstr "Puja el tauler de control quan la mida d'intercanvi s'apropa al límit"
 
 #: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
@@ -3072,7 +3072,7 @@ msgstr "Afegeix un marcador"
 
 #: ../app/actions/dashboard-commands.c:199
 msgid "Enter a description for the marker"
-msgstr "Introduïu una descripció per a al marcador"
+msgstr "Introduïu una descripció pel marcador"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:382
 #: ../app/actions/file-commands.c:204 ../app/dialogs/file-open-dialog.c:225
@@ -5465,7 +5465,7 @@ msgstr "_Píxels aquosos..."
 #: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "_Waves..."
-msgstr "_Ones circumcèntriques..."
+msgstr "_Ones..."
 
 #: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
@@ -5674,7 +5674,7 @@ msgstr "_Corbat"
 #: ../app/actions/gradient-editor-actions.c:328
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
-msgstr "_Sinusoïdal"
+msgstr "_Sinusoidal"
 
 #: ../app/actions/gradient-editor-actions.c:333
 msgctxt "gradient-editor-blending"
@@ -10935,7 +10935,7 @@ msgid ""
 "resolution information."
 msgstr ""
 "Estableix la resolució horitzontal del monitor, en punts per polzada. Si "
-"s'estableix a 0, força què el servidor X demani informació de les dues "
+"s'estableix a 0, força que el servidor X demani informació de les dues "
 "resolucions, horitzontal i vertical."
 
 #: ../app/config/gimprc-blurbs.h:271
@@ -10945,7 +10945,7 @@ msgid ""
 "resolution information."
 msgstr ""
 "Estableix la resolució vertical del monitor, en punts per polzada. Si "
-"s'estableix a 0, força què el servidor X demani informació de les dues "
+"s'estableix a 0, força que el servidor X demani informació de les dues "
 "resolucions, horitzontal i vertical."
 
 #: ../app/config/gimprc-blurbs.h:276
@@ -10987,7 +10987,7 @@ msgid ""
 "previews are more expensive than ordinary layer previews."
 msgstr ""
 "Defineix si el GIMP crearà previsualitzacions dels grups de capes. Les "
-"previsualitzacions del grups de capes són més costoses que les "
+"previsualitzacions dels grups de capes són més costoses que les "
 "previsualitzacions de capa ordinàries."
 
 #: ../app/config/gimprc-blurbs.h:320
@@ -13301,7 +13301,7 @@ msgstr "còpia de %s"
 #: ../app/core/gimpdatafactory.c:610 ../app/tools/gimptextoptions.c:536
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
-msgstr "S'està carregant lletres tipogràfiques (pot tardar una mica...)"
+msgstr "S'estan carregant lletres tipogràfiques (pot tardar una mica...)"
 
 #: ../app/core/gimpdatafactory.c:947
 #, c-format
@@ -20740,7 +20740,7 @@ msgstr "Erosiona"
 #: ../app/pdb/plug-in-compat-cmds.c:4081
 msgctxt "undo-type"
 msgid "Waves"
-msgstr "Ones circumcèntriques"
+msgstr "Ones"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4129
 msgctxt "undo-type"
@@ -23692,7 +23692,7 @@ msgstr "Te_xt"
 
 #: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
-msgstr "S'està carregant les lletres tipogràfiques encara"
+msgstr "S'estan carregant les lletres tipogràfiques encara"
 
 #: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
@@ -25410,7 +25410,7 @@ msgstr "Utilitzat"
 
 #: ../app/widgets/gimpdashboard.c:649
 msgid "Amount of memory used by the process"
-msgstr "Quantitat de memòria utilitzada al procès"
+msgstr "Quantitat de memòria utilitzada al procés"
 
 #: ../app/widgets/gimpdashboard.c:657
 msgctxt "dashboard-variable"
@@ -26271,7 +26271,7 @@ msgid ""
 "has no\n"
 "sample points"
 msgstr ""
-"Aquest imatge\n"
+"Aquesta imatge\n"
 "no té\n"
 "punts de mostratge"
 
