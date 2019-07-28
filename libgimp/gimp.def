@@ -592,6 +592,7 @@ EXPORTS
 	gimp_param_get_int32
 	gimp_param_get_status
 	gimp_param_get_string
+	gimp_param_get_type
 	gimp_param_image_id_get_type
 	gimp_param_item_id_get_type
 	gimp_param_layer_id_get_type
@@ -618,6 +619,7 @@ EXPORTS
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_plug_in_add_procedure
+	gimp_plug_in_create_procedure
 	gimp_plug_in_get_procedure
 	gimp_plug_in_get_procedures
 	gimp_plug_in_get_type
@@ -641,18 +643,25 @@ EXPORTS
 	gimp_procedural_db_set_data
 	gimp_procedural_db_temp_name
 	gimp_procedure_add_argument
+	gimp_procedure_add_menu_path
 	gimp_procedure_add_return_value
 	gimp_procedure_get_arguments
+	gimp_procedure_get_author
 	gimp_procedure_get_blurb
+	gimp_procedure_get_copyright
+	gimp_procedure_get_date
+	gimp_procedure_get_help
 	gimp_procedure_get_help_id
-	gimp_procedure_get_label
+	gimp_procedure_get_image_types
+	gimp_procedure_get_menu_label
+	gimp_procedure_get_menu_paths
 	gimp_procedure_get_name
 	gimp_procedure_get_return_values
 	gimp_procedure_get_type
 	gimp_procedure_new
-	gimp_procedure_new_legacy
+	gimp_procedure_new_arguments
+	gimp_procedure_new_return_values
 	gimp_procedure_run
-	gimp_procedure_run_legacy
 	gimp_procedure_set_strings
 	gimp_progress_cancel
 	gimp_progress_end
