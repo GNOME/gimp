@@ -273,7 +273,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   GimpTool    *active_tool;
   const gchar *tool_name;
 
-  run_mode = g_value_get_int    (gimp_value_array_index (args, 0));
+  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
   settings = g_value_get_object (gimp_value_array_index (args, 3));
 
   if (! settings &&

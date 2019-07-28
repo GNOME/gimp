@@ -91,7 +91,6 @@
 #include "gimppluginmanager-help-domain.h"
 #include "gimppluginmanager-locale-domain.h"
 #include "gimptemporaryprocedure.h"
-#include "plug-in-params.h"
 
 #include "gimp-intl.h"
 

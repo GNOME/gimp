@@ -496,7 +496,7 @@ gui_wait (Gimp         *gimp,
   args = gimp_procedure_get_arguments (procedure);
   gimp_value_array_truncate (args, 5);
 
-  g_value_set_int    (gimp_value_array_index (args, 0),
+  g_value_set_enum   (gimp_value_array_index (args, 0),
                       GIMP_RUN_INTERACTIVE);
   g_value_set_int    (gimp_value_array_index (args, 1),
                       output_pipe[0]);

@@ -406,7 +406,7 @@ vectors_selection_to_vectors_cmd_callback (GimpAction *action,
   args = gimp_procedure_get_arguments (procedure);
   gimp_value_array_truncate (args, 2);
 
-  g_value_set_int      (gimp_value_array_index (args, 0),
+  g_value_set_enum     (gimp_value_array_index (args, 0),
                         GIMP_RUN_INTERACTIVE);
   gimp_value_set_image (gimp_value_array_index (args, 1),
                         image);

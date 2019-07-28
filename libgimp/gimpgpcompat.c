@@ -32,6 +32,13 @@
 #include "gimpgpcompat.h"
 
 
+/*  local function prototypes  */
+
+static gchar * _gimp_pdb_arg_type_to_string (GimpPDBArgType type);
+
+
+/*  public functions  */
+
 GParamSpec *
 _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
                             const gchar    *name,
@@ -335,33 +342,14 @@ _gimp_pdb_gtype_to_arg_type (GType type)
   return pdb_type;
 }
 
-gchar *
-_gimp_pdb_arg_type_to_string (GimpPDBArgType type)
-{
-  const gchar *name;
-
-  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
-                             &name, NULL, NULL, NULL))
-    {
-      return g_strdup_printf ("(PDB type %d unknown)", type);
-    }
-
-  return g_strdup (name);
-}
-
 GimpValueArray *
-_gimp_pdb_params_to_args (GParamSpec      **pspecs,
-                          gint              n_pspecs,
-                          const GimpParam  *params,
-                          gint              n_params,
-                          gboolean          return_values,
-                          gboolean          full_copy)
+_gimp_params_to_value_array (const GimpParam  *params,
+                             gint              n_params,
+                             gboolean          full_copy)
 {
   GimpValueArray *args;
   gint            i;
 
-  g_return_val_if_fail ((pspecs != NULL && n_pspecs  > 0) ||
-                        (pspecs == NULL && n_pspecs == 0), NULL);
   g_return_val_if_fail ((params != NULL && n_params  > 0) ||
                         (params == NULL && n_params == 0), NULL);
 
@@ -370,39 +358,8 @@ _gimp_pdb_params_to_args (GParamSpec      **pspecs,
   for (i = 0; i < n_params; i++)
     {
       GValue value = G_VALUE_INIT;
-      GType  type;
+      GType  type  = _gimp_pdb_arg_type_to_gtype (params[i].type);
       gint   count;
-
-      /*  first get the fallback compat GType that matches the pdb type  */
-      type = _gimp_pdb_arg_type_to_gtype (params[i].type);
-
-      /*  then try to try to be more specific by looking at the param
-       *  spec (return values have one additional value (the status),
-       *  skip that, it's not in the array of param specs)
-       */
-      if (i > 0 || ! return_values)
-        {
-          gint pspec_index = i;
-
-          if (return_values)
-            pspec_index--;
-
-          /*  are there param specs left?  */
-          if (pspec_index < n_pspecs)
-            {
-              GType          pspec_gtype;
-              GimpPDBArgType pspec_arg_type;
-
-              pspec_gtype    = G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]);
-              pspec_arg_type = _gimp_pdb_gtype_to_arg_type (pspec_gtype);
-
-              /*  if the param spec's GType, mapped to a pdb type, matches
-               *  the passed pdb type, use the param spec's GType
-               */
-              if (pspec_arg_type == params[i].type)
-                type = pspec_gtype;
-            }
-        }
 
       g_value_init (&value, type);
 
@@ -575,8 +532,8 @@ _gimp_pdb_params_to_args (GParamSpec      **pspecs,
 }
 
 GimpParam *
-_gimp_pdb_args_to_params (GimpValueArray *args,
-                          gboolean        full_copy)
+_gimp_value_array_to_params (GimpValueArray *args,
+                             gboolean        full_copy)
 {
   GimpParam *params;
   gint       length;
@@ -753,4 +710,21 @@ _gimp_pdb_args_to_params (GimpValueArray *args,
     }
 
   return params;
+}
+
+
+/*  private functions  */
+
+gchar *
+_gimp_pdb_arg_type_to_string (GimpPDBArgType type)
+{
+  const gchar *name;
+
+  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
+                             &name, NULL, NULL, NULL))
+    {
+      return g_strdup_printf ("(PDB type %d unknown)", type);
+    }
+
+  return g_strdup (name);
 }

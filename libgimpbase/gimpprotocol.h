@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0104
+#define GIMP_PROTOCOL_VERSION  0x0105
 
 
 enum
@@ -48,6 +48,17 @@ enum
 
 typedef enum
 {
+  GP_PARAM_TYPE_INT,
+  GP_PARAM_TYPE_FLOAT,
+  GP_PARAM_TYPE_STRING,
+  GP_PARAM_TYPE_COLOR,
+  GP_PARAM_TYPE_PARASITE,
+  GP_PARAM_TYPE_ARRAY,
+  GP_PARAM_TYPE_STRING_ARRAY
+} GPParamType;
+
+typedef enum
+{
   GP_PARAM_DEF_TYPE_DEFAULT,
   GP_PARAM_DEF_TYPE_INT,
   GP_PARAM_DEF_TYPE_ENUM,
@@ -59,23 +70,25 @@ typedef enum
 } GPParamDefType;
 
 
-typedef struct _GPConfig          GPConfig;
-typedef struct _GPTileReq         GPTileReq;
-typedef struct _GPTileAck         GPTileAck;
-typedef struct _GPTileData        GPTileData;
-typedef struct _GPParam           GPParam;
-typedef struct _GPParamDef        GPParamDef;
-typedef struct _GPParamDefInt     GPParamDefInt;
-typedef struct _GPParamDefEnum    GPParamDefEnum;
-typedef struct _GPParamDefBoolean GPParamDefBoolean;
-typedef struct _GPParamDefFloat   GPParamDefFloat;
-typedef struct _GPParamDefString  GPParamDefString;
-typedef struct _GPParamDefColor   GPParamDefColor;
-typedef struct _GPParamDefID      GPParamDefID;
-typedef struct _GPProcRun         GPProcRun;
-typedef struct _GPProcReturn      GPProcReturn;
-typedef struct _GPProcInstall     GPProcInstall;
-typedef struct _GPProcUninstall   GPProcUninstall;
+typedef struct _GPConfig           GPConfig;
+typedef struct _GPTileReq          GPTileReq;
+typedef struct _GPTileAck          GPTileAck;
+typedef struct _GPTileData         GPTileData;
+typedef struct _GPParam            GPParam;
+typedef struct _GPParamArray       GPParamArray;
+typedef struct _GPParamStringArray GPParamStringArray;
+typedef struct _GPParamDef         GPParamDef;
+typedef struct _GPParamDefInt      GPParamDefInt;
+typedef struct _GPParamDefEnum     GPParamDefEnum;
+typedef struct _GPParamDefBoolean  GPParamDefBoolean;
+typedef struct _GPParamDefFloat    GPParamDefFloat;
+typedef struct _GPParamDefString   GPParamDefString;
+typedef struct _GPParamDefColor    GPParamDefColor;
+typedef struct _GPParamDefID       GPParamDefID;
+typedef struct _GPProcRun          GPProcRun;
+typedef struct _GPProcReturn       GPProcReturn;
+typedef struct _GPProcInstall      GPProcInstall;
+typedef struct _GPProcUninstall    GPProcUninstall;
 
 
 struct _GPConfig
@@ -123,36 +136,32 @@ struct _GPTileData
   guchar  *data;
 };
 
+struct _GPParamArray
+{
+  guint32  size;
+  guint8  *data;
+};
+
+struct _GPParamStringArray
+{
+  guint32   size;
+  gchar   **data;
+};
+
 struct _GPParam
 {
-  guint32 type;
+  GPParamType  param_type;
+  gchar       *type_name;
 
   union
   {
-    gint32        d_int32;
-    gint16        d_int16;
-    guint8        d_int8;
-    gdouble       d_float;
-    gchar        *d_string;
-    gint32       *d_int32array;
-    gint16       *d_int16array;
-    guint8       *d_int8array;
-    gdouble      *d_floatarray;
-    gchar       **d_stringarray;
-    GimpRGB      *d_colorarray;
-    GimpRGB       d_color;
-    gint32        d_display;
-    gint32        d_image;
-    gint32        d_item;
-    gint32        d_layer;
-    gint32        d_layer_mask;
-    gint32        d_channel;
-    gint32        d_drawable;
-    gint32        d_selection;
-    gint32        d_boundary;
-    gint32        d_vectors;
-    gint32        d_status;
-    GimpParasite  d_parasite;
+    gint32              d_int;
+    gdouble             d_float;
+    gchar              *d_string;
+    GimpRGB             d_color;
+    GimpParasite        d_parasite;
+    GPParamArray        d_array;
+    GPParamStringArray  d_string_array;
   } data;
 };
 
@@ -258,6 +267,8 @@ struct _GPProcUninstall
 
 
 void      gp_init                   (void);
+void      gp_lock                   (void);
+void      gp_unlock                 (void);
 
 gboolean  gp_quit_write             (GIOChannel      *channel,
                                      gpointer         user_data);
@@ -294,12 +305,6 @@ gboolean  gp_extension_ack_write    (GIOChannel      *channel,
                                      gpointer         user_data);
 gboolean  gp_has_init_write         (GIOChannel      *channel,
                                      gpointer         user_data);
-
-void      gp_params_destroy         (GPParam         *params,
-                                     gint             nparams);
-
-void      gp_lock                   (void);
-void      gp_unlock                 (void);
 
 
 G_END_DECLS

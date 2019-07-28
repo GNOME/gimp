@@ -30,7 +30,7 @@
 #include "libgimpbase/gimpprotocol.h"
 
 #include "gimp.h"
-#include "gimpgpparamspecs.h"
+#include "gimpgpparams.h"
 #include "gimpprocedure-private.h"
 
 

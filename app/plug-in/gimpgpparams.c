@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpgpparamspecs.c
+ * gimpgpparams.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,15 +32,20 @@
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
-#include "gimpgpparamspecs.h"
+#include "gimpgpparams.h"
 
 
 /*  public functions  */
 
-/*  include the implementation of _gimp_param_spec_to_gp_param_def()
+/*  include the implementations of
+ *
+ *  _gimp_param_spec_to_gp_param_def()
+ *  _gimp_gp_params_to_value_array()
+ *  _gimp_value_array_to_gp_params()
+ *
  *  from libgimp, they are identical.
  */
-#include "../../libgimp/gimpgpparamspecs-body.c"
+#include "../../libgimp/gimpgpparams-body.c"
 
 GParamSpec *
 _gimp_gp_param_def_to_param_spec (Gimp       *gimp,
