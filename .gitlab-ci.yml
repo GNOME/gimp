@@ -132,6 +132,7 @@ gegl-git-autotools:
         desktop-file-utils
         ffmpeg
         glib-networking
+        gobject-introspection
         gtk3
         hicolor-icon-theme
         jasper
