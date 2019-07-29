@@ -205,8 +205,7 @@ static gboolean   gimp_extension_read          (GIOChannel      *channel,
                                                 GIOCondition     condition,
                                                 gpointer         data);
 
-static void       gimp_set_pdb_error           (const GimpParam *return_vals,
-                                                gint             n_return_vals);
+static void       gimp_set_pdb_error           (GimpValueArray  *return_vals);
 
 static gpointer   gimp_param_copy              (gpointer         boxed);
 static void       gimp_param_free              (gpointer         boxed);
@@ -1511,10 +1510,10 @@ gimp_run_procedure2 (const gchar     *name,
   *n_return_vals = gimp_value_array_length (return_values);
   return_vals    = _gimp_value_array_to_params (return_values, TRUE);
 
+  gimp_set_pdb_error (return_values);
+
   gimp_value_array_unref (return_values);
   gimp_wire_destroy (&msg);
-
-  gimp_set_pdb_error (return_vals, *n_return_vals);
 
   return return_vals;
 }
@@ -2828,31 +2827,34 @@ gimp_extension_read (GIOChannel  *channel,
 }
 
 static void
-gimp_set_pdb_error (const GimpParam *return_vals,
-                    gint             n_return_vals)
+gimp_set_pdb_error (GimpValueArray *return_values)
 {
-  if (pdb_error_message)
+  g_clear_pointer (&pdb_error_message, g_free);
+  pdb_error_status = GIMP_PDB_SUCCESS;
+
+  if (gimp_value_array_length (return_values) > 0)
     {
-      g_free (pdb_error_message);
-      pdb_error_message = NULL;
-    }
+      pdb_error_status =
+        g_value_get_enum (gimp_value_array_index (return_values, 0));
 
-  pdb_error_status = return_vals[0].data.d_status;
-
-  switch (pdb_error_status)
-    {
-    case GIMP_PDB_SUCCESS:
-    case GIMP_PDB_PASS_THROUGH:
-      break;
-
-    case GIMP_PDB_EXECUTION_ERROR:
-    case GIMP_PDB_CALLING_ERROR:
-    case GIMP_PDB_CANCEL:
-      if (n_return_vals > 1 && return_vals[1].type == GIMP_PDB_STRING)
+      switch (pdb_error_status)
         {
-          pdb_error_message = g_strdup (return_vals[1].data.d_string);
+        case GIMP_PDB_SUCCESS:
+        case GIMP_PDB_PASS_THROUGH:
+          break;
+
+        case GIMP_PDB_EXECUTION_ERROR:
+        case GIMP_PDB_CALLING_ERROR:
+        case GIMP_PDB_CANCEL:
+          if (gimp_value_array_length (return_values) > 1)
+            {
+              GValue *value = gimp_value_array_index (return_values, 1);
+
+              if (G_VALUE_HOLDS_STRING (value))
+                pdb_error_message = g_value_dup_string (value);
+            }
+          break;
         }
-      break;
     }
 }
 
