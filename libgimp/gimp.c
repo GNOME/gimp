@@ -1474,17 +1474,38 @@ gimp_run_procedure2 (const gchar     *name,
                      gint             n_params,
                      const GimpParam *params)
 {
-  GPProcRun        proc_run;
-  GPProcReturn    *proc_return;
-  GimpValueArray  *arguments;
-  GimpValueArray  *return_values;
-  GimpWireMessage  msg;
-  GimpParam       *return_vals;
+  GimpValueArray *arguments;
+  GimpValueArray *return_values;
+  GimpParam      *return_vals;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (n_return_vals != NULL, NULL);
 
   arguments = _gimp_params_to_value_array (params, n_params, FALSE);
+
+  return_values = gimp_run_procedure_with_array (name, arguments);
+
+  gimp_value_array_unref (arguments);
+
+  *n_return_vals = gimp_value_array_length (return_values);
+  return_vals    = _gimp_value_array_to_params (return_values, TRUE);
+
+  gimp_value_array_unref (return_values);
+
+  return return_vals;
+}
+
+GimpValueArray *
+gimp_run_procedure_with_array (const gchar    *name,
+                               GimpValueArray *arguments)
+{
+  GPProcRun        proc_run;
+  GPProcReturn    *proc_return;
+  GimpWireMessage  msg;
+  GimpValueArray  *return_values;
+
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (arguments != NULL, NULL);
 
   proc_run.name    = (gchar *) name;
   proc_run.nparams = gimp_value_array_length (arguments);
@@ -1493,9 +1514,6 @@ gimp_run_procedure2 (const gchar     *name,
   gp_lock ();
   if (! gp_proc_run_write (_writechannel, &proc_run, NULL))
     gimp_quit ();
-
-  g_free (proc_run.params);
-  gimp_value_array_unref (arguments);
 
   gimp_read_expect_msg (&msg, GP_PROC_RETURN);
   gp_unlock ();
@@ -1507,15 +1525,11 @@ gimp_run_procedure2 (const gchar     *name,
                                                   proc_return->nparams,
                                                   TRUE, FALSE);
 
-  *n_return_vals = gimp_value_array_length (return_values);
-  return_vals    = _gimp_value_array_to_params (return_values, TRUE);
+  gimp_wire_destroy (&msg);
 
   gimp_set_pdb_error (return_values);
 
-  gimp_value_array_unref (return_values);
-  gimp_wire_destroy (&msg);
-
-  return return_vals;
+  return return_values;
 }
 
 /**
