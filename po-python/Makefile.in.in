@@ -97,6 +97,10 @@ all-yes: $(CATALOGS)
 all-no:
 
 $(GETTEXT_PACKAGE).pot: $(POTFILES)
+	@if test "x$(INTLTOOL_UPDATE)" = "x/bin/true"; then \
+		echo "Warning: pot generation deactivated on VPATH builds."; \
+		echo "         See commit c96006919."; \
+	fi
 	$(GENPOT)
 
 install: install-data
@@ -180,6 +184,11 @@ dist distdir: $(DISTFILES)
 	done
 
 update-po: Makefile
+	@if test "x$(INTLTOOL_UPDATE)" = "x/bin/true"; then \
+		echo "Error: po generation deactivated on VPATH builds."; \
+		echo "       See commit c96006919."; \
+		false; \
+	fi
 	$(MAKE) $(GETTEXT_PACKAGE).pot
 	tmpdir=`pwd`; \
 	linguas="$(USE_LINGUAS)"; \
