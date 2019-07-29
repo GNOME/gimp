@@ -1165,9 +1165,9 @@ gimp_string_array_new (const gchar **data,
 
   array = g_slice_new0 (GimpArray);
 
-  if (! static_data)
+  if (! static_data && data)
     {
-      gchar **tmp = g_new (gchar *, length);
+      gchar **tmp = g_new0 (gchar *, length + 1);
       gint    i;
 
       for (i = 0; i < length; i++)
@@ -1361,7 +1361,7 @@ gimp_value_dup_string_array (const GValue *value)
 
   if (array)
     {
-      gchar **ret = g_memdup (array->data, array->length * sizeof (gchar *));
+      gchar **ret = g_memdup (array->data, (array->length + 1) * sizeof (gchar *));
       gint    i;
 
       for (i = 0; i < array->length; i++)
