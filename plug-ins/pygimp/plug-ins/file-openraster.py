@@ -349,6 +349,7 @@ register(
         (PF_INT, 'image-height', 'Height of full-sized image')
     ],
     thumbnail_ora, #callback
+    no_run_mode_param = True
 )
 
 register(
