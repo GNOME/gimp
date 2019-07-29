@@ -180,6 +180,7 @@ include $(top_srcdir)/libgimpconfig/Makefile.gi
 include $(top_srcdir)/libgimpmath/Makefile.gi
 include $(top_srcdir)/libgimpmodule/Makefile.gi
 include $(top_srcdir)/libgimpthumb/Makefile.gi
+include $(top_srcdir)/libgimpwidgets/Makefile.gi
 
 INTROSPECTION_GIRS =
 INTROSPECTION_SCANNER_ARGS = --warn-all --add-include-path="$(srcdir)" --add-include-path="$(shell $(PKG_CONFIG) --define-variable=datadir="$(datadir)" --variable=girdir gobject-introspection-1.0)"
@@ -195,6 +196,7 @@ Gimp-@GIMP_API_VERSION@.gir: \
 	libgimpmath/libgimpmath-@GIMP_API_VERSION@.la		\
 	libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la	\
 	libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la		\
+	libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la	\
 	Makefile
 
 # The various other GObject-Introspected libraries our API references
@@ -215,6 +217,7 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
 	-DGIMP_MATH_COMPILATION		\
 	-DGIMP_MODULE_COMPILATION	\
 	-DGIMP_THUMB_COMPILATION	\
+	-DGIMP_WIDGETS_COMPILATION	\
 	$(AM_CFLAGS)			\
 	$(AM_CPPFLAGS)			\
 	-I$(top_builddir)		\
@@ -233,7 +236,8 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
 	libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
 	libgimpmath/libgimpmath-@GIMP_API_VERSION@.la		\
 	libgimpmodule/libgimpmodule-@GIMP_API_VERSION@.la	\
-	libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la
+	libgimpthumb/libgimpthumb-@GIMP_API_VERSION@.la		\
+	libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimp_introspectable)					\
@@ -243,7 +247,8 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimpconfig_introspectable)					\
 	$(libgimpmath_introspectable)					\
 	$(libgimpmodule_introspectable)					\
-	$(libgimpthumb_introspectable)
+	$(libgimpthumb_introspectable)					\
+	$(libgimpwidgets_introspectable)
 
 INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
 

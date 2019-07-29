@@ -73,129 +73,25 @@ AM_LDFLAGS = \
 
 lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
 
+AUTOMAKE_OPTIONS = subdir-objects
+include $(top_srcdir)/libgimpwidgets/Makefile.gi
+
 libgimpwidgets_sources = \
-	gimpbrowser.c			\
-	gimpbrowser.h			\
-	gimpbusybox.c			\
-	gimpbusybox.h			\
-	gimpbutton.c			\
-	gimpbutton.h			\
-	gimpcairo-utils.c		\
-	gimpcairo-utils.h		\
-	gimpcellrenderercolor.c		\
-	gimpcellrenderercolor.h		\
-	gimpcellrenderertoggle.c	\
-	gimpcellrenderertoggle.h	\
-	gimpchainbutton.c		\
-	gimpchainbutton.h		\
-	gimpcolorarea.c			\
-	gimpcolorarea.h			\
-	gimpcolorbutton.c		\
-	gimpcolorbutton.h		\
-	gimpcolordisplay.c		\
-	gimpcolordisplay.h		\
-	gimpcolordisplaystack.c		\
-	gimpcolordisplaystack.h		\
-	gimpcolorhexentry.c		\
-	gimpcolorhexentry.h		\
-	gimpcolornotebook.c		\
-	gimpcolornotebook.h		\
-	gimpcolorprofilechooserdialog.c	\
-	gimpcolorprofilechooserdialog.h	\
-	gimpcolorprofilecombobox.c	\
-	gimpcolorprofilecombobox.h	\
 	gimpcolorprofilestore-private.h	\
-	gimpcolorprofilestore.c		\
-	gimpcolorprofilestore.h		\
-	gimpcolorprofileview.c		\
-	gimpcolorprofileview.h		\
 	gimpcolorscale.c		\
 	gimpcolorscale.h		\
 	gimpcolorscales.c		\
 	gimpcolorscales.h		\
 	gimpcolorselect.c		\
 	gimpcolorselect.h		\
-	gimpcolorselection.c		\
-	gimpcolorselection.h		\
-	gimpcolorselector.c		\
-	gimpcolorselector.h		\
 	gimpcontroller.c		\
 	gimpcontroller.h		\
-	gimpdialog.c			\
-	gimpdialog.h			\
 	gimpeevl.c			\
 	gimpeevl.h			\
-	gimpenumcombobox.c		\
-	gimpenumcombobox.h		\
-	gimpenumlabel.c			\
-	gimpenumlabel.h			\
-	gimpenumstore.c			\
-	gimpenumstore.h			\
-	gimpenumwidgets.c		\
-	gimpenumwidgets.h		\
-	gimpfileentry.c			\
-	gimpfileentry.h			\
-	gimpframe.c			\
-	gimpframe.h			\
-	gimphelpui.c			\
-	gimphelpui.h			\
-	gimphintbox.c			\
-	gimphintbox.h			\
-	gimpicons.c			\
-	gimpicons.h			\
-	gimpintcombobox.c		\
-	gimpintcombobox.h		\
-	gimpintstore.c			\
-	gimpintstore.h			\
-	gimpmemsizeentry.c		\
-	gimpmemsizeentry.h		\
-	gimpnumberpairentry.c		\
-	gimpnumberpairentry.h		\
-	gimpoffsetarea.c		\
-	gimpoffsetarea.h		\
-	gimppageselector.c		\
-	gimppageselector.h		\
-	gimppatheditor.c		\
-	gimppatheditor.h		\
-	gimppickbutton.c		\
-	gimppickbutton.h		\
 	gimppickbutton-private.h	\
-	gimppreview.c			\
-	gimppreview.h			\
-	gimppreviewarea.c		\
-	gimppreviewarea.h		\
-	gimppropwidgets.c		\
-	gimppropwidgets.h		\
-	gimpquerybox.c			\
-	gimpquerybox.h			\
-	gimpruler.c			\
-	gimpruler.h			\
-	gimpscaleentry.c		\
-	gimpscaleentry.h		\
-	gimpscrolledpreview.c		\
-	gimpscrolledpreview.h		\
-	gimpsizeentry.c			\
-	gimpsizeentry.h			\
-	gimpspinbutton.c		\
-	gimpspinbutton.h		\
-	gimpstringcombobox.c		\
-	gimpstringcombobox.h		\
-	gimpunitcombobox.c		\
-	gimpunitcombobox.h		\
-	gimpunitstore.c			\
-	gimpunitstore.h			\
-	gimpwidgets-error.c		\
-	gimpwidgets-error.h		\
 	gimpwidgets-private.c		\
 	gimpwidgets-private.h		\
-	gimpwidgets.c			\
-	gimpwidgets.h			\
-	gimpwidgetsenums.h		\
-	gimpwidgetstypes.h		\
-	gimpwidgetsutils.c		\
-	gimpwidgetsutils.h		\
-	gimpzoommodel.c			\
-	gimpzoommodel.h
+	$(libgimpwidgets_introspectable)
 
 libgimpwidgets_built_sources = \
 	gimp-color-picker-cursors.c	\
@@ -213,65 +109,11 @@ libgimpwidgets_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimpwidgets_sources)
 
 libgimpwidgetsinclude_HEADERS = \
-	gimpbrowser.h			\
-	gimpbusybox.h			\
-	gimpbutton.h			\
-	gimpcairo-utils.h		\
-	gimpcellrenderercolor.h		\
-	gimpcellrenderertoggle.h	\
-	gimpchainbutton.h		\
-	gimpcolorarea.h			\
-	gimpcolorbutton.h		\
-	gimpcolordisplay.h		\
-	gimpcolordisplaystack.h		\
-	gimpcolorhexentry.h		\
-	gimpcolornotebook.h		\
-	gimpcolorprofilechooserdialog.h	\
-	gimpcolorprofilecombobox.h	\
-	gimpcolorprofilestore.h		\
-	gimpcolorprofileview.h		\
 	gimpcolorscale.h		\
 	gimpcolorscales.h		\
 	gimpcolorselect.h		\
-	gimpcolorselection.h		\
-	gimpcolorselector.h		\
 	gimpcontroller.h		\
-	gimpdialog.h			\
-	gimpenumcombobox.h		\
-	gimpenumlabel.h			\
-	gimpenumstore.h			\
-	gimpenumwidgets.h		\
-	gimpfileentry.h			\
-	gimpframe.h			\
-	gimphelpui.h			\
-	gimphintbox.h			\
-	gimpicons.h			\
-	gimpintcombobox.h		\
-	gimpintstore.h			\
-	gimpmemsizeentry.h		\
-	gimpnumberpairentry.h		\
-	gimpoffsetarea.h		\
-	gimppageselector.h		\
-	gimppatheditor.h		\
-	gimppickbutton.h		\
-	gimppreview.h			\
-	gimppreviewarea.h		\
-	gimppropwidgets.h		\
-	gimpquerybox.h			\
-	gimpruler.h			\
-	gimpscaleentry.h		\
-	gimpscrolledpreview.h		\
-	gimpsizeentry.h			\
-	gimpspinbutton.h		\
-	gimpstringcombobox.h		\
-	gimpunitcombobox.h		\
-	gimpunitstore.h			\
-	gimpwidgets-error.h		\
-	gimpwidgets.h			\
-	gimpwidgetsenums.h		\
-	gimpwidgetstypes.h		\
-	gimpwidgetsutils.h		\
-	gimpzoommodel.h
+	$(libgimpwidgets_introspectable_headers)
 
 libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
