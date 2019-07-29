@@ -62,3 +62,20 @@ EXTRA_DIST = \
 #	$(console_scripts)
 
 CLEANFILES = $(scripts) $(test_scripts)
+
+# Python interpreter file.
+
+pyinterpdir = $(gimpplugindir)/interpreters
+pyinterpfile = $(pyinterpdir)/pygimp.interp
+
+install-interp-file:
+	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
+	echo 'python=$(PYBIN_PATH)' > '$(DESTDIR)$(pyinterpfile)'
+	echo 'python3=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
+	echo '/usr/bin/python=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
+	echo ":Python:E::py::`basename $(PYTHON)`:" >> '$(DESTDIR)$(pyinterpfile)'
+
+install-data-local: install-interp-file
+
+uninstall-local:
+	rm -f '$(DESTDIR)$(pyinterpfile)'
