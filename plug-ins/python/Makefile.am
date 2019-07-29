@@ -1,5 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS = \
+	python-console
+
 pluginexecdir = $(gimpplugindir)/plug-ins
 
 source_scripts = \
@@ -50,16 +53,8 @@ if GIMP_UNSTABLE
 nobase_pluginexec_SCRIPTS += $(test_scripts)
 endif
 
-# python-console has a data file.
-# Therefore let's move it to its own sub-directory.
-#consoleexecdir = $(gimpplugindir)/plug-ins/python-console
-#console_scripts = python-console.py
-#consoleexec_SCRIPTS = $(console_scripts)
-#dist_consoleexec_DATA = pyconsole.py
-
 EXTRA_DIST = \
 	$(source_scripts)
-#	$(console_scripts)
 
 CLEANFILES = $(scripts) $(test_scripts)
 

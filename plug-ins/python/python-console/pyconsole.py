@@ -38,15 +38,23 @@
 # The use case is: you have a python program, you create this widget,
 # and inspect your program interiors.
 
-import gtk
-import gtk.gdk as gdk
-import gobject
-import pango
-import gtk.keysyms as _keys
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+gi.require_version('Gdk', '3.0')
+from gi.repository import Gdk
+from gi.repository import GObject
+from gi.repository import Pango
 import code
 import sys
 import keyword
 import re
+
+def pango_pixels(value):
+    # The PANGO_PIXELS macro is not accessible through GObject
+    # Introspection. Just reimplement it:
+    # #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
+    return (value + 512) >> 10
 
 # commonprefix() from posixpath
 def _commonprefix(m):
@@ -92,7 +100,7 @@ class _ReadLine(object):
 
             if text != self.items[self.ptr]:
                 self.edited[self.ptr] = text
-            elif self.edited.has_key(self.ptr):
+            elif self.ptr in self.edited:
                 del self.edited[self.ptr]
 
             self.ptr = self.ptr + dir
@@ -111,8 +119,8 @@ class _ReadLine(object):
 
         self.quit_func = quit_func
 
-        self.set_wrap_mode(gtk.WRAP_CHAR)
-        self.modify_font(pango.FontDescription("Monospace"))
+        self.set_wrap_mode(Gtk.WrapMode.CHAR)
+        self.modify_font(Pango.FontDescription("Monospace"))
 
         self.buffer = self.get_buffer()
         self.buffer.connect("insert-text", self.on_buf_insert)
@@ -166,7 +174,7 @@ class _ReadLine(object):
             self.thaw_undo()
 
         self.__move_cursor_to(iter)
-        self.scroll_to_mark(self.cursor, 0.2)
+        self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
 
         self.in_raw_input = True
 
@@ -184,7 +192,7 @@ class _ReadLine(object):
         self.in_modal_raw_input = True
 
         while self.in_modal_raw_input:
-            gtk.main_iteration()
+            Gtk.main_iteration()
 
         self.ps = orig_ps
         self.in_modal_raw_input = False
@@ -204,7 +212,7 @@ class _ReadLine(object):
         if iter.compare(self.__get_start()) >= 0 and \
            iter.compare(self.__get_end()) <= 0:
                 buffer.move_mark_by_name("cursor", iter)
-                self.scroll_to_mark(self.cursor, 0.2)
+                self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
 
     def __insert(self, iter, text):
         self.do_insert = True
@@ -267,37 +275,37 @@ class _ReadLine(object):
 
     # We overload the key press event handler to handle "special keys"
     # when in input mode to make history browsing, completions, etc. work.
-    def do_key_press_event(self, event, parent_type):
+    def do_key_press_event(self, event):
         if not self.in_raw_input:
-            return parent_type.do_key_press_event(self, event)
+            return Gtk.TextView.do_key_press_event(self, event)
 
         tab_pressed = self.tab_pressed
         self.tab_pressed = 0
         handled = True
 
-        state = event.state & (gdk.SHIFT_MASK |
-                                gdk.CONTROL_MASK |
-                                gdk.MOD1_MASK)
+        state = event.state & (Gdk.ModifierType.SHIFT_MASK |
+                               Gdk.ModifierType.CONTROL_MASK |
+                               Gdk.ModifierType.MOD1_MASK)
         keyval = event.keyval
 
         if not state:
-            if keyval == _keys.Escape:
+            if keyval == Gdk.KEY_Escape:
                 pass
-            elif keyval == _keys.Return:
+            elif keyval == Gdk.KEY_Return:
                 self._commit()
-            elif keyval == _keys.Up:
+            elif keyval == Gdk.KEY_Up:
                 self.__history(-1)
-            elif keyval == _keys.Down:
+            elif keyval == Gdk.KEY_Down:
                 self.__history(1)
-            elif keyval == _keys.Left:
+            elif keyval == Gdk.KEY_Left:
                 self.__move_cursor(-1)
-            elif keyval == _keys.Right:
+            elif keyval == Gdk.KEY_Right:
                 self.__move_cursor(1)
-            elif keyval == _keys.Home:
+            elif keyval == Gdk.KEY_Home:
                 self.__move_cursor(-10000)
-            elif keyval == _keys.End:
+            elif keyval == Gdk.KEY_End:
                 self.__move_cursor(10000)
-            elif keyval == _keys.Tab:
+            elif keyval == Gdk.KEY_Tab:
                 cursor = self.__get_cursor()
                 if cursor.starts_line():
                     handled = False
@@ -310,12 +318,12 @@ class _ReadLine(object):
                         self.__complete()
             else:
                 handled = False
-        elif state == gdk.CONTROL_MASK:
-            if keyval == _keys.u:
+        elif state == Gdk.ModifierType.CONTROL_MASK:
+            if keyval == Gdk.KEY_u:
                 start = self.__get_start()
                 end = self.__get_cursor()
                 self.__delete(start, end)
-            elif keyval == _keys.d:
+            elif keyval == Gdk.KEY_d:
                 if self.quit_func:
                     self.quit_func()
             else:
@@ -325,7 +333,7 @@ class _ReadLine(object):
 
         # Handle ordinary keys
         if not handled:
-            return parent_type.do_key_press_event(self, event)
+            return Gtk.TextView.do_key_press_event(self, event)
         else:
             return True
 
@@ -335,7 +343,7 @@ class _ReadLine(object):
         if not new_text is None:
             self.__replace_line(new_text)
         self.__move_cursor(0)
-        self.scroll_to_mark(self.cursor, 0.2)
+        self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
 
     def __get_cursor(self):
         '''Returns an iterator at the current cursor position.'''
@@ -393,14 +401,15 @@ class _ReadLine(object):
         '''Estimate the number of characters that will fit in the area
         currently allocated to this widget.'''
 
-        if not (self.flags() & gtk.REALIZED):
+        if not self.get_realized():
             return 80
 
         context = self.get_pango_context()
         metrics = context.get_metrics(context.get_font_description(),
                                       context.get_language())
         pix_width = metrics.get_approximate_char_width()
-        return self.allocation.width * pango.SCALE / pix_width
+        allocation = Gtk.Widget.get_allocation(self)
+        return allocation.width * Pango.SCALE / pix_width
 
     def __print_completions(self, completions):
         line_start = self.__get_text(self.__get_start(), self.__get_cursor())
@@ -423,21 +432,21 @@ class _ReadLine(object):
             n_columns = total
             col_width = width / total
 
-        for i in range(col_length):
+        for i in range(int(col_length)):
             for j in range(n_columns):
                 ind = i + j*col_length
                 if ind < total:
                     if j == n_columns - 1:
                         n_spaces = 0
                     else:
-                        n_spaces = col_width - len(completions[ind])
-                    self.__insert(iter, completions[ind] + " " * n_spaces)
+                        n_spaces = int(col_width - len(completions[int(ind)]))
+                    self.__insert(iter, completions[int(ind)] + " " * n_spaces)
             self.__insert(iter, "\n")
 
         self.__insert(iter, "%s%s%s" % (self.ps, line_start, line_end))
         iter.set_line_offset(len(self.ps) + len(line_start))
         self.__move_cursor_to(iter)
-        self.scroll_to_mark(self.cursor, 0.2)
+        self.scroll_to_mark(self.cursor, 0.2, False, 0.0, 0.0)
 
     def __complete(self):
         text = self.__get_text(self.__get_start(), self.__get_cursor())
@@ -524,9 +533,9 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         # The builtin raw_input function reads from stdin, we don't want
         # this. Therefore, replace this function with our own modal raw
         # input function.
-        exec "import __builtin__" in self.locals
-        self.locals['__builtin__'].__dict__['raw_input'] = lambda text='': self.modal_raw_input(text)
-        self.locals['__builtin__'].__dict__['input'] = lambda text='': self.modal_input(text)
+        exec ("import builtins", self.locals)
+        #self.locals['builtins'].__dict__['raw_input'] = lambda text='': self.modal_raw_input(text)
+        self.locals['builtins'].__dict__['input'] = lambda text='': self.modal_input(text)
 
         self.start_script = start_script
         self.completer = completer
@@ -601,10 +610,10 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
             self.showtraceback()
 
     def runcode(self, code):
-        if gtk.pygtk_version[1] < 8:
-            self.do_command(code)
-        else:
-            self.emit("command", code)
+        #if gtk.pygtk_version[1] < 8:
+        self.do_command(code)
+        #else:
+            #self.emit("command", code)
 
     def complete_attr(self, start, end):
         try:
@@ -655,7 +664,7 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         except: pass
 
         try:
-            exec "import __builtin__" in self.locals
+            exec("import __builtin__", self.locals)
             strings.extend(eval("dir(__builtin__)", self.locals))
         except:
             pass
@@ -668,35 +677,34 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         return completions
 
 
-def ReadLineType(t=gtk.TextView):
+def ReadLineType(t=Gtk.TextView):
     class readline(t, _ReadLine):
         def __init__(self, *args, **kwargs):
             t.__init__(self)
             _ReadLine.__init__(self, *args, **kwargs)
         def do_key_press_event(self, event):
-            return _ReadLine.do_key_press_event(self, event, t)
-    gobject.type_register(readline)
+            return _ReadLine.do_key_press_event(self, event)
+    GObject.type_register(readline)
     return readline
 
-def ConsoleType(t=gtk.TextView):
+def ConsoleType(t=Gtk.TextView):
     class console_type(t, _Console):
         __gsignals__ = {
-            'command' : (gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, (object,)),
-            'key-press-event' : 'override'
+            'command' : (GObject.SIGNAL_RUN_LAST, GObject.TYPE_NONE, (object,)),
           }
 
         def __init__(self, *args, **kwargs):
-            if gtk.pygtk_version[1] < 8:
-                gobject.GObject.__init__(self)
-            else:
-                t.__init__(self)
+            #if gtk.pygtk_version[1] < 8:
+            GObject.GObject.__init__(self)
+            #else:
+                #t.__init__(self)
             _Console.__init__(self, *args, **kwargs)
 
         def do_command(self, code):
             return _Console.do_command(self, code)
 
         def do_key_press_event(self, event):
-            return _Console.do_key_press_event(self, event, t)
+            return _Console.do_key_press_event(self, event)
 
         def get_default_size(self):
             context = self.get_pango_context()
@@ -706,13 +714,13 @@ def ConsoleType(t=gtk.TextView):
             height = metrics.get_ascent() + metrics.get_descent()
 
             # Default to a 80x40 console
-            width = pango.PIXELS(int(width * 80 * 1.05))
-            height = pango.PIXELS(height * 40)
+            width = pango_pixels(int(width * 80 * 1.05))
+            height = pango_pixels(height * 40)
 
             return width, height
 
-    if gtk.pygtk_version[1] < 8:
-        gobject.type_register(console_type)
+    #if gtk.pygtk_version[1] < 8:
+    GObject.type_register(console_type)
 
     return console_type
 
@@ -720,14 +728,14 @@ ReadLine = ReadLineType()
 Console = ConsoleType()
 
 def _make_window():
-    window = gtk.Window()
+    window = Gtk.Window()
     window.set_title("pyconsole.py")
-    swin = gtk.ScrolledWindow()
-    swin.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
+    swin = Gtk.ScrolledWindow()
+    swin.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.ALWAYS)
     window.add(swin)
     console = Console(banner="Hello there!",
                       use_rlcompleter=False,
-                      start_script="from gtk import *\n")
+                      start_script="gi.require_version('Gimp', '3.0')\nfrom gi.repository import Gimp\n")
     swin.add(console)
 
     width, height = console.get_default_size()
@@ -736,9 +744,9 @@ def _make_window():
     window.set_default_size(width + sb_width, height)
     window.show_all()
 
-    if not gtk.main_level():
-        window.connect("destroy", gtk.main_quit)
-        gtk.main()
+    if not Gtk.main_level():
+        window.connect("destroy", Gtk.main_quit)
+        Gtk.main()
 
     return console
 
