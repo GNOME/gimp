@@ -1511,7 +1511,7 @@ gimp_run_procedure2 (const gchar     *name,
   *n_return_vals = gimp_value_array_length (return_values);
   return_vals    = _gimp_value_array_to_params (return_values, TRUE);
 
-  //gimp_value_array_unref (return_values);
+  gimp_value_array_unref (return_values);
   gimp_wire_destroy (&msg);
 
   gimp_set_pdb_error (return_vals, *n_return_vals);
