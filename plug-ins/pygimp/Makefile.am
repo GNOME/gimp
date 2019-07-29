@@ -143,26 +143,17 @@ codegen_files = \
 	gimpui.override
 
 pyenvdir = $(gimpplugindir)/environ
-pyinterpdir = $(gimpplugindir)/interpreters
 
 pyenvfile = $(pyenvdir)/pygimp.env
-pyinterpfile = $(pyinterpdir)/pygimp.interp
 
 install-env-file:
 	$(mkinstalldirs) '$(DESTDIR)$(pyenvdir)'
 	echo '$(path_separator) PYTHONPATH=$${gimp_plug_in_dir}/$(pygimpbase)' > '$(DESTDIR)$(pyenvfile)'
 
-install-interp-file:
-	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
-	echo 'python=$(PYBIN_PATH)' > '$(DESTDIR)$(pyinterpfile)'
-	echo 'python2=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
-	echo '/usr/bin/python=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
-	echo ":Python:E::py::`basename $(PYTHON)`:" >> '$(DESTDIR)$(pyinterpfile)'
-
-install-data-local: install-env-file install-interp-file
+install-data-local: install-env-file
 
 uninstall-local:
-	rm -f '$(DESTDIR)$(pyenvfile)' '$(DESTDIR)$(pyinterpfile)'
+	rm -f '$(DESTDIR)$(pyenvfile)'
 
 EXTRA_DIST = \
 	$(pygimp_DATA)		\
