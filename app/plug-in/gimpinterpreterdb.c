@@ -721,14 +721,22 @@ resolve_sh_bang (GimpInterpreterDB  *db,
     {
       if (strcmp ("/usr/bin/env", name) == 0)
         {
-          /* Shift program name and arguments to the right. */
-          name = cp;
+          program = g_hash_table_lookup (db->programs, cp);
 
-          for ( ; *cp && (*cp != ' ') && (*cp != '\t'); cp++)
-            ;
+          if (program)
+            {
+              /* Shift program name and arguments to the right, if and
+               * only if we recorded a specific interpreter for such
+               * script. Otherwise let `env` tool do its job.
+               */
+              name = cp;
 
-          while ((*cp == ' ') || (*cp == '\t'))
-            *cp++ = '\0';
+              for ( ; *cp && (*cp != ' ') && (*cp != '\t'); cp++)
+                ;
+
+              while ((*cp == ' ') || (*cp == '\t'))
+                *cp++ = '\0';
+            }
         }
 
       if (*cp)
