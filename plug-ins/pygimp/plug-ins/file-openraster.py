@@ -79,8 +79,16 @@ def get_group_layer_attributes(layer):
 def thumbnail_ora(filename, thumb_size):
     # FIXME: Untested. Does not seem to be used at all? should be run
     # when registered and there is no thumbnail in cache
-
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
+    original_name = filename
+    try:
+        if not isinstance(filename, str):
+            filename = filename.decode("utf-8")
+        orafile = zipfile.ZipFile(filename.encode(sys.getfilesystemencoding() or "utf-8"))
+    except (UnicodeDecodeError, IOError):
+        # Someone may try to open an actually garbled name, and pass a raw
+        # non-utf 8 filename:
+        orafile = zipfile.ZipFile(original_name)
     orafile = zipfile.ZipFile(filename)
     stack, w, h = get_image_attributes(orafile)
 
@@ -90,7 +98,7 @@ def thumbnail_ora(filename, thumb_size):
     f.write(orafile.read('Thumbnails/thumbnail.png'))
     f.close()
 
-    img = pdb['file-png-load'](tmp)
+    img = pdb['file-png-load'](tmp, 'tmp.png')
     # TODO: scaling
     os.remove(tmp)
     os.rmdir(tempdir)
@@ -349,6 +357,7 @@ register(
         (PF_INT, 'image-height', 'Height of full-sized image')
     ],
     thumbnail_ora, #callback
+    run_mode_param = False
 )
 
 register(

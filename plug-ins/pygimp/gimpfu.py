@@ -208,7 +208,7 @@ _registered_plugins_ = {}
 
 def register(proc_name, blurb, help, author, copyright, date, label,
              imagetypes, params, results, function,
-             menu=None, domain=None, on_query=None, on_run=None):
+             menu=None, domain=None, on_query=None, on_run=None, run_mode_param=True):
     """This is called to register a new plug-in."""
 
     # First perform some sanity checks on the data
@@ -290,14 +290,14 @@ def register(proc_name, blurb, help, author, copyright, date, label,
                                        date, label, imagetypes,
                                        plugin_type, params, results,
                                        function, menu, domain,
-                                       on_query, on_run)
+                                       on_query, on_run, run_mode_param)
 
 def _query():
     for plugin in _registered_plugins_.keys():
         (blurb, help, author, copyright, date,
          label, imagetypes, plugin_type,
          params, results, function, menu, domain,
-         on_query, on_run) = _registered_plugins_[plugin]
+         on_query, on_run, has_param_run_mode) = _registered_plugins_[plugin]
 
         def make_params(params):
             return [(_type_mapping[x[0]],
@@ -306,8 +306,9 @@ def _query():
 
         params = make_params(params)
         # add the run mode argument ...
-        params.insert(0, (PDB_INT32, "run-mode",
-                                     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"))
+        if has_param_run_mode:
+            params.insert(0, (PDB_INT32, "run-mode",
+                                         "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"))
 
         results = make_params(results)
 
@@ -333,7 +334,7 @@ def _get_defaults(proc_name):
     (blurb, help, author, copyright, date,
      label, imagetypes, plugin_type,
      params, results, function, menu, domain,
-     on_query, on_run) = _registered_plugins_[proc_name]
+     on_query, on_run, has_run_mode) = _registered_plugins_[proc_name]
 
     key = "python-fu-save--" + proc_name
 
@@ -353,7 +354,7 @@ def _interact(proc_name, start_params):
     (blurb, help, author, copyright, date,
      label, imagetypes, plugin_type,
      params, results, function, menu, domain,
-     on_query, on_run) = _registered_plugins_[proc_name]
+     on_query, on_run, has_run_mode) = _registered_plugins_[proc_name]
 
     def run_script(run_params):
         params = start_params + tuple(run_params)
@@ -827,11 +828,13 @@ def _run(proc_name, params):
         return apply(func, params[1:])
 
     script_params = _registered_plugins_[proc_name][8]
+    has_param_run_mode  = _registered_plugins_[proc_name][15]
 
     min_args = 0
-    if len(params) > 1:
-        for i in range(1, len(params)):
-            param_type = _obj_mapping[script_params[i - 1][0]]
+    start_param_idx = 1 if has_param_run_mode else 0
+    if len(params) > start_param_idx:
+        for i in range(start_param_idx, len(params)):
+            param_type = _obj_mapping[script_params[i - start_param_idx][0]]
             if not isinstance(params[i], param_type):
                 break
 
@@ -850,11 +853,11 @@ def _run(proc_name, params):
 
     if run_mode == RUN_INTERACTIVE:
         try:
-            res = _interact(proc_name, params[1:])
+            res = _interact(proc_name, params[start_param_idx:])
         except CancelError:
             return
     else:
-        res = apply(func, params[1:])
+        res = apply(func, params[start_param_idx:])
 
     gimp.displays_flush()
 
