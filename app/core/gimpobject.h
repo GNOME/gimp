@@ -33,8 +33,6 @@ typedef struct _GimpObjectClass    GimpObjectClass;
 struct _GimpObject
 {
   GObject            parent_instance;
-
-  GimpObjectPrivate *p;
 };
 
 struct _GimpObjectClass
