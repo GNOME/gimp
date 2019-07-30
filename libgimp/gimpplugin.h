@@ -100,13 +100,6 @@ GimpProcedure * gimp_plug_in_get_temp_procedure     (GimpPlugIn    *plug_in,
                                                      const gchar   *name);
 
 
-/*  unrelated old API  */
-
-gboolean gimp_plugin_icon_register (const gchar  *procedure_name,
-                                    GimpIconType  icon_type,
-                                    const guint8 *icon_data);
-
-
 G_END_DECLS
 
 #endif /* __GIMP_PLUG_IN_H__ */

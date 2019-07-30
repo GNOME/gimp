@@ -293,6 +293,15 @@ void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
                                          gint             n_params);
 
 
+/* gimp_plugin API that should now be done by using GimpPlugIn and
+ * GimpProcedure
+ */
+
+gboolean   gimp_plugin_icon_register (const gchar  *procedure_name,
+                                      GimpIconType  icon_type,
+                                      const guint8 *icon_data);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_LEGACY_H__ */
