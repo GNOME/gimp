@@ -167,14 +167,10 @@ gimp_palette_mru_save (GimpPaletteMru *mru,
       GimpPaletteEntry *entry = list->data;
       gchar             buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
-      g_ascii_formatd (buf[0],
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", entry->color.r);
-      g_ascii_formatd (buf[1],
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", entry->color.g);
-      g_ascii_formatd (buf[2],
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", entry->color.b);
-      g_ascii_formatd (buf[3],
-                       G_ASCII_DTOSTR_BUF_SIZE, "%f", entry->color.a);
+      g_ascii_dtostr (buf[0], G_ASCII_DTOSTR_BUF_SIZE, entry->color.r);
+      g_ascii_dtostr (buf[1], G_ASCII_DTOSTR_BUF_SIZE, entry->color.g);
+      g_ascii_dtostr (buf[2], G_ASCII_DTOSTR_BUF_SIZE, entry->color.b);
+      g_ascii_dtostr (buf[3], G_ASCII_DTOSTR_BUF_SIZE, entry->color.a);
 
       gimp_config_writer_open (writer, "color-rgba");
       gimp_config_writer_printf (writer, "%s %s %s %s",

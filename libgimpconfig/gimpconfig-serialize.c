@@ -418,7 +418,7 @@ gimp_config_serialize_value (const GValue *value,
       else
         v_double = (gdouble) g_value_get_float (value);
 
-      g_ascii_formatd (buf, sizeof (buf), "%f", v_double);
+      g_ascii_dtostr (buf, sizeof (buf), v_double);
       g_string_append (str, buf);
       return TRUE;
     }
@@ -441,8 +441,8 @@ gimp_config_serialize_value (const GValue *value,
 
           for (i = 0, k = 0; i < 2; i++)
             for (j = 0; j < 2; j++, k++)
-              g_ascii_formatd (buf[k],
-                               G_ASCII_DTOSTR_BUF_SIZE, "%f", trafo->coeff[i][j]);
+              g_ascii_dtostr (buf[k], G_ASCII_DTOSTR_BUF_SIZE,
+                              trafo->coeff[i][j]);
 
           g_string_append_printf (str, "(matrix %s %s %s %s)",
                                   buf[0], buf[1], buf[2], buf[3]);
@@ -552,13 +552,13 @@ gimp_config_serialize_rgb (const GValue *value,
     {
       gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
-      g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->r);
-      g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->g);
-      g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->b);
+      g_ascii_dtostr (buf[0], G_ASCII_DTOSTR_BUF_SIZE, rgb->r);
+      g_ascii_dtostr (buf[1], G_ASCII_DTOSTR_BUF_SIZE, rgb->g);
+      g_ascii_dtostr (buf[2], G_ASCII_DTOSTR_BUF_SIZE, rgb->b);
 
       if (has_alpha)
         {
-          g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->a);
+          g_ascii_dtostr (buf[3], G_ASCII_DTOSTR_BUF_SIZE, rgb->a);
 
           g_string_append_printf (str, "(color-rgba %s %s %s %s)",
                                   buf[0], buf[1], buf[2], buf[3]);
