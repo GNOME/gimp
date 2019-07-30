@@ -19,21 +19,9 @@
 #define __GIMP_OBJECT_H__
 
 
-#define GIMP_TYPE_OBJECT            (gimp_object_get_type ())
-#define GIMP_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OBJECT, GimpObject))
-#define GIMP_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OBJECT, GimpObjectClass))
-#define GIMP_IS_OBJECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OBJECT))
-#define GIMP_IS_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT))
-#define GIMP_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OBJECT, GimpObjectClass))
+#define GIMP_TYPE_OBJECT (gimp_object_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GimpObject, gimp_object, GIMP, OBJECT, GObject)
 
-
-typedef struct _GimpObjectPrivate  GimpObjectPrivate;
-typedef struct _GimpObjectClass    GimpObjectClass;
-
-struct _GimpObject
-{
-  GObject            parent_instance;
-};
 
 struct _GimpObjectClass
 {
@@ -48,8 +36,6 @@ struct _GimpObjectClass
                             gint64     *gui_size);
 };
 
-
-GType         gimp_object_get_type        (void) G_GNUC_CONST;
 
 void          gimp_object_set_name        (GimpObject       *object,
                                            const gchar      *name);
