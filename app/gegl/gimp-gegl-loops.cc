@@ -25,6 +25,7 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <gegl-buffer-backend.h>
 
 extern "C"
 {
@@ -63,23 +64,70 @@ gimp_gegl_buffer_copy (GeglBuffer          *src_buffer,
                        GeglBuffer          *dest_buffer,
                        const GeglRectangle *dest_rect)
 {
+  GeglRectangle real_dest_rect;
+
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  if (! src_rect)
+    src_rect = gegl_buffer_get_extent (src_buffer);
+
+  if (! dest_rect)
+    dest_rect = src_rect;
+
+  real_dest_rect        = *dest_rect;
+  real_dest_rect.width  = src_rect->width;
+  real_dest_rect.height = src_rect->height;
+
+  dest_rect = &real_dest_rect;
 
   if (gegl_buffer_get_format (src_buffer) ==
       gegl_buffer_get_format (dest_buffer))
     {
+      gboolean      skip_abyss = FALSE;
+      GeglRectangle src_abyss;
+      GeglRectangle dest_abyss;
+
+      if (abyss_policy == GEGL_ABYSS_NONE)
+        {
+          src_abyss  = *gegl_buffer_get_abyss (src_buffer);
+          dest_abyss = *gegl_buffer_get_abyss (dest_buffer);
+
+          skip_abyss = ! (gegl_rectangle_contains (&src_abyss,  src_rect) &&
+                          gegl_rectangle_contains (&dest_abyss, dest_rect));
+        }
+
+      if (skip_abyss)
+        {
+          if (src_buffer < dest_buffer)
+            {
+              gegl_tile_handler_lock (GEGL_TILE_HANDLER (src_buffer));
+              gegl_tile_handler_lock (GEGL_TILE_HANDLER (dest_buffer));
+            }
+          else
+            {
+              gegl_tile_handler_lock (GEGL_TILE_HANDLER (dest_buffer));
+              gegl_tile_handler_lock (GEGL_TILE_HANDLER (src_buffer));
+            }
+
+          gegl_buffer_set_abyss (src_buffer,  src_rect);
+          gegl_buffer_set_abyss (dest_buffer, dest_rect);
+        }
+
       gegl_buffer_copy (src_buffer, src_rect, abyss_policy,
                         dest_buffer, dest_rect);
+
+      if (skip_abyss)
+        {
+          gegl_buffer_set_abyss (src_buffer,  &src_abyss);
+          gegl_buffer_set_abyss (dest_buffer, &dest_abyss);
+
+          gegl_tile_handler_unlock (GEGL_TILE_HANDLER (src_buffer));
+          gegl_tile_handler_unlock (GEGL_TILE_HANDLER (dest_buffer));
+        }
     }
   else
     {
-      if (! src_rect)
-        src_rect = gegl_buffer_get_extent (src_buffer);
-
-      if (! dest_rect)
-        dest_rect = src_rect;
-
       gegl_parallel_distribute_area (
         src_rect, PIXELS_PER_THREAD,
         [=] (const GeglRectangle *src_area)
