@@ -47,6 +47,9 @@ _gimp_procedure_register (GimpProcedure *procedure)
   gint           n_return_vals;
   GList         *list;
   GPProcInstall  proc_install;
+  GimpIconType   icon_type;
+  const guint8  *icon_data;
+  gint           icon_data_length;
   gint           i;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
@@ -82,6 +85,12 @@ _gimp_procedure_register (GimpProcedure *procedure)
 
   if (! gp_proc_install_write (_writechannel, &proc_install, NULL))
     gimp_quit ();
+
+  icon_type = gimp_procedure_get_icon (procedure,
+                                       &icon_data, &icon_data_length);
+  if (icon_data)
+    _gimp_plugin_icon_register (gimp_procedure_get_name (procedure),
+                                icon_type, icon_data_length, icon_data);
 
   g_free (proc_install.params);
   g_free (proc_install.return_vals);

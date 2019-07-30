@@ -74,19 +74,30 @@ struct _GimpPlugInClass
 };
 
 
-GType           gimp_plug_in_get_type         (void) G_GNUC_CONST;
+GType           gimp_plug_in_get_type               (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_plug_in_create_procedure (GimpPlugIn    *plug_in,
-                                               const gchar   *name);
+void            gimp_plug_in_set_translation_domain (GimpPlugIn    *plug_in,
+                                                     const gchar   *domain_name,
+                                                     GFile         *domain_path);
+void            gimp_plug_in_set_help_domain        (GimpPlugIn    *plug_in,
+                                                     const gchar   *domain_name,
+                                                     GFile         *domain_uri);
 
-void            gimp_plug_in_add_procedure    (GimpPlugIn    *plug_in,
-                                               GimpProcedure *procedure);
-void            gimp_plug_in_remove_procedure (GimpPlugIn    *plug_in,
-                                               const gchar   *name);
+void            gimp_plug_in_add_menu_branch        (GimpPlugIn    *plug_in,
+                                                     const gchar   *menu_path,
+                                                     const gchar   *menu_label);
 
-GList         * gimp_plug_in_get_procedures   (GimpPlugIn   *plug_in);
-GimpProcedure * gimp_plug_in_get_procedure    (GimpPlugIn   *plug_in,
-                                               const gchar  *name);
+GimpProcedure * gimp_plug_in_create_procedure       (GimpPlugIn    *plug_in,
+                                                     const gchar   *name);
+
+void            gimp_plug_in_add_procedure          (GimpPlugIn    *plug_in,
+                                                     GimpProcedure *procedure);
+void            gimp_plug_in_remove_procedure       (GimpPlugIn    *plug_in,
+                                                     const gchar   *name);
+
+GList         * gimp_plug_in_get_procedures         (GimpPlugIn    *plug_in);
+GimpProcedure * gimp_plug_in_get_procedure          (GimpPlugIn    *plug_in,
+                                                     const gchar   *name);
 
 
 /*  unrelated old API  */

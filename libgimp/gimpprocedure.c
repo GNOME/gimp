@@ -61,6 +61,10 @@ struct _GimpProcedurePrivate
   gchar            *date;           /* Date field                     */
   gchar            *image_types;
 
+  GimpIconType      icon_type;
+  guint8           *icon_data;
+  gint              icon_data_length;
+
   GList            *menu_paths;
 
   gint32            n_args;         /* Number of procedure arguments  */
@@ -112,6 +116,9 @@ gimp_procedure_finalize (GObject *object)
   g_clear_pointer (&procedure->priv->name, g_free);
 
   gimp_procedure_free_strings (procedure);
+
+  g_clear_pointer (&procedure->priv->icon_data, g_free);
+  procedure->priv->icon_data_length = 0;
 
   g_list_free_full (procedure->priv->menu_paths, g_free);
   procedure->priv->menu_paths = NULL;
@@ -250,6 +257,61 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   return procedure->priv->image_types;
+}
+
+void
+gimp_procedure_set_icon (GimpProcedure *procedure,
+                         GimpIconType   icon_type,
+                         const guint8  *icon_data)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (icon_data != NULL);
+  g_return_if_fail (icon_data != procedure->priv->icon_data);
+
+  g_clear_pointer (&procedure->priv->icon_data, g_free);
+  procedure->priv->icon_data_length = 0;
+
+  procedure->priv->icon_type = icon_type;
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      procedure->priv->icon_data =
+        (guint8 *) g_strdup ((const gchar *) icon_data);
+
+      procedure->priv->icon_data_length =
+        strlen ((const gchar *) icon_data);
+      break;
+
+    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+      g_return_if_fail (g_ntohl (*((gint32 *) icon_data)) == 0x47646b50);
+
+      procedure->priv->icon_data_length =
+        g_ntohl (*((gint32 *) (icon_data + 4)));
+
+      procedure->priv->icon_data =
+        g_memdup (icon_data, procedure->priv->icon_data_length);
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
+}
+
+GimpIconType
+gimp_procedure_get_icon (GimpProcedure  *procedure,
+                         const guint8  **icon_data,
+                         gint           *icon_data_length)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), -1);
+  g_return_val_if_fail (icon_data != NULL, -1);
+  g_return_val_if_fail (icon_data_length != NULL, -1);
+
+  *icon_data        = (guint8 *) procedure->priv->icon_data;
+  *icon_data_length = procedure->priv->icon_data_length;
+
+  return procedure->priv->icon_type;
 }
 
 void
