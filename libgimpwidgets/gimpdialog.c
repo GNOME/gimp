@@ -344,7 +344,7 @@ gimp_dialog_response (GtkDialog *dialog,
 
 
 /**
- * gimp_dialog_new:
+ * gimp_dialog_new: (skip)
  * @title:        The dialog's title which will be set with
  *                gtk_window_set_title().
  * @role:         The dialog's @role which will be set with
@@ -395,7 +395,7 @@ gimp_dialog_new (const gchar    *title,
 }
 
 /**
- * gimp_dialog_new_valist:
+ * gimp_dialog_new_valist: (skip)
  * @title:        The dialog's title which will be set with
  *                gtk_window_set_title().
  * @role:         The dialog's @role which will be set with
@@ -467,7 +467,7 @@ gimp_dialog_new_valist (const gchar    *title,
  * except it ensures there is only one help button and automatically
  * sets the RESPONSE_OK widget as the default response.
  *
- * Return value: the button widget that was added.
+ * Return value: (type Gtk.Widget) (transfer none): the button widget that was added.
  **/
 GtkWidget *
 gimp_dialog_add_button (GimpDialog  *dialog,
@@ -516,7 +516,7 @@ gimp_dialog_add_button (GimpDialog  *dialog,
 }
 
 /**
- * gimp_dialog_add_buttons:
+ * gimp_dialog_add_buttons: (skip)
  * @dialog: The @dialog to add buttons to.
  * @...: button_text-response_id pairs.
  *
@@ -537,7 +537,7 @@ gimp_dialog_add_buttons (GimpDialog *dialog,
 }
 
 /**
- * gimp_dialog_add_buttons_valist:
+ * gimp_dialog_add_buttons_valist: (skip)
  * @dialog: The @dialog to add buttons to.
  * @args:   The buttons as va_list.
  *
@@ -699,7 +699,7 @@ gimp_dialog_set_alternative_button_order_from_array (GimpDialog *dialog,
 }
 
 /**
- * gimp_dialogs_show_help_button:
+ * gimp_dialogs_show_help_button: (skip)
  * @show: whether a help button should be added when creating a GimpDialog
  *
  * This function is for internal use only.
