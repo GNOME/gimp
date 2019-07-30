@@ -348,20 +348,22 @@ help_load_idle (gpointer data)
 
       if (uri)
         {
-          GimpParam *return_vals;
-          gint       n_return_vals;
+          GimpValueArray *args;
+          GimpValueArray *return_vals;
 
 #ifdef GIMP_HELP_DEBUG
           g_printerr ("help: calling '%s' for '%s'\n",
                       idle_help->procedure, uri);
 #endif
 
-          return_vals = gimp_run_procedure (idle_help->procedure,
-                                            &n_return_vals,
-                                            GIMP_PDB_STRING, uri,
-                                            GIMP_PDB_END);
+          args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                                  G_TYPE_NONE);
+          g_value_set_string (gimp_value_array_index (args, 0), uri);
 
-          gimp_destroy_params (return_vals, n_return_vals);
+          return_vals = gimp_run_procedure_with_array (idle_help->procedure,
+                                                       args);
+          gimp_value_array_unref (args);
+          gimp_value_array_unref (return_vals);
 
           g_free (uri);
         }
