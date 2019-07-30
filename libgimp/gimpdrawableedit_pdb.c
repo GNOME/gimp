@@ -101,7 +101,7 @@ gimp_drawable_edit_fill (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_FILL_TYPE,
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), fill_type);
@@ -155,7 +155,7 @@ gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_FILL_TYPE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_NONE);
@@ -226,7 +226,7 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_GRADIENT_TYPE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_BOOLEAN,
                                           GIMP_TYPE_INT32,

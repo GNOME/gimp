@@ -66,7 +66,7 @@ gimp_brushes_popup (const gchar   *brush_callback,
                                           G_TYPE_STRING,
                                           G_TYPE_DOUBLE,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_MODE,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), brush_callback);
   g_value_set_string (gimp_value_array_index (args, 1), popup_title);
@@ -147,7 +147,7 @@ gimp_brushes_set_popup (const gchar   *brush_callback,
                                           G_TYPE_STRING,
                                           G_TYPE_DOUBLE,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_MODE,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), brush_callback);
   g_value_set_string (gimp_value_array_index (args, 1), brush_name);

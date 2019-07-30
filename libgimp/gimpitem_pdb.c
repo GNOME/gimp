@@ -997,7 +997,7 @@ gimp_item_set_color_tag (gint32       item_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_COLOR_TAG,
                                           G_TYPE_NONE);
   gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), color_tag);

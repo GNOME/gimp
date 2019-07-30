@@ -121,7 +121,7 @@ gimp_channel_new_from_component (gint32           image_ID,
   gint32 channel_ID = -1;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_TYPE,
                                           G_TYPE_STRING,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
@@ -203,7 +203,7 @@ gimp_channel_combine_masks (gint32         channel1_ID,
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
                                           GIMP_TYPE_CHANNEL_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
                                           G_TYPE_NONE);

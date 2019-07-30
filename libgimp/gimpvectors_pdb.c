@@ -554,7 +554,7 @@ gimp_vectors_stroke_flip (gint32              vectors_ID,
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ORIENTATION_TYPE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_NONE);
   gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
@@ -720,7 +720,7 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
   gint stroke_id = 0;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_VECTORS_STROKE_TYPE,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_FLOAT_ARRAY,
                                           G_TYPE_BOOLEAN,

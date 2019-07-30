@@ -90,7 +90,7 @@ gimp_text_fontname (gint32        image_ID,
                                           GIMP_TYPE_INT32,
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_DOUBLE,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_SIZE_TYPE,
                                           G_TYPE_STRING,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
@@ -155,7 +155,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
 
   args = gimp_value_array_new_from_types (G_TYPE_STRING,
                                           G_TYPE_DOUBLE,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_SIZE_TYPE,
                                           G_TYPE_STRING,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), text);

@@ -242,7 +242,7 @@ gimp_image_flip (gint32              image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ORIENTATION_TYPE,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), flip_type);
@@ -278,7 +278,7 @@ gimp_image_rotate (gint32           image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ROTATION_TYPE,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), rotate_type);

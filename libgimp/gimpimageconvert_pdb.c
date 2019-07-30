@@ -144,8 +144,8 @@ gimp_image_convert_indexed (gint32                  image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CONVERT_DITHER_TYPE,
+                                          GIMP_TYPE_CONVERT_PALETTE_TYPE,
                                           GIMP_TYPE_INT32,
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_BOOLEAN,
@@ -241,7 +241,7 @@ gimp_image_convert_precision (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_PRECISION,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), precision);

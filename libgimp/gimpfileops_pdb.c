@@ -61,7 +61,7 @@ gimp_file_load (GimpRunMode  run_mode,
   GimpValueArray *return_vals;
   gint32 image_ID = -1;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_RUN_MODE,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
                                           G_TYPE_NONE);
@@ -107,7 +107,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   GimpValueArray *return_vals;
   gint32 layer_ID = -1;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_RUN_MODE,
                                           GIMP_TYPE_IMAGE_ID,
                                           G_TYPE_STRING,
                                           G_TYPE_NONE);
@@ -155,7 +155,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
   GimpValueArray *return_vals;
   gint *layer_ids = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_RUN_MODE,
                                           GIMP_TYPE_IMAGE_ID,
                                           G_TYPE_STRING,
                                           G_TYPE_NONE);
@@ -211,7 +211,7 @@ gimp_file_save (GimpRunMode  run_mode,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_RUN_MODE,
                                           GIMP_TYPE_IMAGE_ID,
                                           GIMP_TYPE_DRAWABLE_ID,
                                           G_TYPE_STRING,

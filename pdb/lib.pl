@@ -143,7 +143,7 @@ sub generate {
 	my $arg_array = "";
 	my $argc = 0;
 	foreach (@inargs) {
-	    my ($type) = &arg_parse($_->{type});
+	    my ($type, @typeinfo) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
 	    my $var = $_->{name};
 	    my $desc = exists $_->{desc} ? $_->{desc} : "";
@@ -153,7 +153,19 @@ sub generate {
 	    $var .= '_ID' if $arg->{id};
 
 	    # This gets passed to gimp_value_array_new_with_types()
-	    $value_array .= "$arg->{gtype},\n" . " " x 42;
+	    if ($type eq 'enum') {
+		$enum_type = $typeinfo[0];
+		$enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
+		$enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
+		$enum_type =~ tr/[a-z]/[A-Z]/;
+		$enum_type =~ s/^GIMP/GIMP_TYPE/;
+		$enum_type =~ s/^GEGL/GEGL_TYPE/;
+
+		$value_array .= "$enum_type,\n" .  " " x 42;
+	    }
+	    else {
+		$value_array .= "$arg->{gtype},\n" . " " x 42;
+	    }
 
 	    $value = "gimp_value_array_index (args, $argc)";
 
