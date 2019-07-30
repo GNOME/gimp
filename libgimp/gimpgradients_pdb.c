@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpgradients
+ * SECTION: gimpgradients_pdb
  * @title: gimpgradients
  * @short_description: Operations related to gradients.
  *

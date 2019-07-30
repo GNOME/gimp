@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpgimprc
+ * SECTION: gimpgimprc_pdb
  * @title: gimpgimprc
  * @short_description: Interactions with settings from gimprc.
  *

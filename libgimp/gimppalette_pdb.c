@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppalette
+ * SECTION: gimppalette_pdb
  * @title: gimppalette
  * @short_description: Functions operating on a single palette.
  *

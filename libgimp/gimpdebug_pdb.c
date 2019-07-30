@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpdebug
+ * SECTION: gimpdebug_pdb
  * @title: gimpdebug
  * @short_description: Debug utility functions
  *

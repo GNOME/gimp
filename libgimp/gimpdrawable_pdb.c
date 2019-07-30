@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpdrawable
+ * SECTION: gimpdrawable_pdb
  * @title: gimpdrawable
  * @short_description: Functions to manipulate drawables.
  *

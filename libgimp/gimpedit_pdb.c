@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpedit
+ * SECTION: gimpedit_pdb
  * @title: gimpedit
  * @short_description: Edit menu functions (cut, copy, paste, clear, etc.)
  *

@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimagetransform
+ * SECTION: gimpimagetransform_pdb
  * @title: gimpimagetransform
  * @short_description: Transformations on images.
  *

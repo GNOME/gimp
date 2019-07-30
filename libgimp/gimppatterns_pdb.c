@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppatterns
+ * SECTION: gimppatterns_pdb
  * @title: gimppatterns
  * @short_description: Functions relating to patterns.
  *

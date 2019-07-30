@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpbrushes
+ * SECTION: gimpbrushes_pdb
  * @title: gimpbrushes
  * @short_description: Functions for manipulating brushes.
  *

@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppaletteselect
+ * SECTION: gimppaletteselect_pdb
  * @title: gimppaletteselect
  * @short_description: Functions providing a palette selection dialog.
  *

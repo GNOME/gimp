@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppatternselect
+ * SECTION: gimppatternselect_pdb
  * @title: gimppatternselect
  * @short_description: Functions providing a pattern selection dialog.
  *
