@@ -47,9 +47,5 @@ gboolean     gimp_gegl_param_spec_has_key            (GParamSpec          *pspec
                                                       const gchar         *key,
                                                       const gchar         *value);
 
-void         gimp_gegl_rectangle_align_to_tile_grid  (GeglRectangle       *dest,
-                                                      const GeglRectangle *src,
-                                                      GeglBuffer          *buffer);
-
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

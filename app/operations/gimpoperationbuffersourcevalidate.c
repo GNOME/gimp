@@ -26,7 +26,6 @@
 
 #include "operations-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimptilehandlervalidate.h"
 
 #include "gimpoperationbuffersourcevalidate.h"
@@ -239,8 +238,9 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
           GeglRectangle rect;
 
           /* align the rectangle to the tile grid */
-          gimp_gegl_rectangle_align_to_tile_grid (
-            &rect, result, buffer_source_validate->buffer);
+          gegl_rectangle_align_to_buffer (
+            &rect, result, buffer_source_validate->buffer,
+            GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
           gimp_tile_handler_validate_validate (validate_handler,
                                                buffer_source_validate->buffer,

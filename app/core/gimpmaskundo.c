@@ -23,7 +23,6 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-memsize.h"
 #include "gimpchannel.h"
@@ -116,8 +115,8 @@ gimp_mask_undo_constructed (GObject *object)
       GeglBuffer    *buffer = gimp_drawable_get_buffer (drawable);
       GeglRectangle  rect;
 
-      gimp_gegl_rectangle_align_to_tile_grid (&rect, &mask_undo->bounds,
-                                              buffer);
+      gegl_rectangle_align_to_buffer (&rect, &mask_undo->bounds, buffer,
+                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
       mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                            rect.width,
@@ -211,7 +210,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
     {
       GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
 
-      gimp_gegl_rectangle_align_to_tile_grid (&rect, &bounds, buffer);
+      gegl_rectangle_align_to_buffer (&rect, &bounds, buffer,
+                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                     rect.width, rect.height),

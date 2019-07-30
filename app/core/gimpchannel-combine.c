@@ -28,7 +28,6 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-mask-combine.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
@@ -119,7 +118,8 @@ gimp_channel_combine_clear (GimpChannel         *mask,
 
       update_area = area;
 
-      gimp_gegl_rectangle_align_to_tile_grid (&area, &area, buffer);
+      gegl_rectangle_align_to_buffer (&area, &area, buffer,
+                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
     }
 
   gegl_buffer_clear (buffer, &area);

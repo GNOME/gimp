@@ -31,7 +31,6 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-atomic.h"
 #include "gimp-parallel.h"
@@ -321,7 +320,8 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
   if (histogram->priv->calculate_async)
     gimp_async_cancel_and_wait (histogram->priv->calculate_async);
 
-  gimp_gegl_rectangle_align_to_tile_grid (&rect, buffer_rect, buffer);
+  gegl_rectangle_align_to_buffer (&rect, buffer_rect, buffer,
+                                  GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
   context = g_slice_new0 (CalculateContext);
 
@@ -340,7 +340,8 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
       else
         context->mask_rect = *gegl_buffer_get_extent (mask);
 
-      gimp_gegl_rectangle_align_to_tile_grid (&rect, &context->mask_rect, mask);
+      gegl_rectangle_align_to_buffer (&rect, &context->mask_rect, mask,
+                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
       context->mask = gegl_buffer_new (&rect, gegl_buffer_get_format (mask));
 
