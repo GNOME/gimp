@@ -673,6 +673,32 @@ gimp_dialog_run (GimpDialog *dialog)
 }
 
 /**
+ * gimp_dialog_set_alternative_button_order_from_array:
+ * @dialog:                         The #GimpDialog
+ * @n_buttons:                      The size of @order
+ * @order: (array length=n_buttons) array of buttons' response ids.
+ *
+ * Reorder @dialog's buttons if "gtk-alternative-button-order" setting
+ * is set to TRUE. This is mostly a wrapper around the GTK function
+ * gtk_dialog_set_alternative_button_order(), except it won't output a
+ * deprecation warning.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_dialog_set_alternative_button_order_from_array (GimpDialog *dialog,
+                                                     gint        n_buttons,
+                                                     gint       *order)
+{
+  /* since we don't know yet what to do about alternative button order,
+   * just hide the warnings for now...
+   */
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
+  gtk_dialog_set_alternative_button_order_from_array (dialog, n_buttons, order);
+  G_GNUC_END_IGNORE_DEPRECATIONS;
+}
+
+/**
  * gimp_dialogs_show_help_button:
  * @show: whether a help button should be added when creating a GimpDialog
  *
