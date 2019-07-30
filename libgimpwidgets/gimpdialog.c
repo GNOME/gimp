@@ -674,9 +674,9 @@ gimp_dialog_run (GimpDialog *dialog)
 
 /**
  * gimp_dialog_set_alternative_button_order_from_array:
- * @dialog:                         The #GimpDialog
- * @n_buttons:                      The size of @order
- * @order: (array length=n_buttons) array of buttons' response ids.
+ * @dialog:                          The #GimpDialog
+ * @n_buttons:                       The size of @order
+ * @order: (array length=n_buttons): array of buttons' response ids.
  *
  * Reorder @dialog's buttons if "gtk-alternative-button-order" setting
  * is set to TRUE. This is mostly a wrapper around the GTK function
