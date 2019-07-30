@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 
 
@@ -54,19 +52,22 @@
 gchar *
 _gimp_drawable_get_format (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *format = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-get-format",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    format = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-get-format",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    format = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return format;
 }
@@ -88,19 +89,22 @@ _gimp_drawable_get_format (gint32 drawable_ID)
 gchar *
 _gimp_drawable_get_thumbnail_format (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *format = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-get-thumbnail-format",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    format = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-get-thumbnail-format",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    format = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return format;
 }
@@ -118,19 +122,22 @@ _gimp_drawable_get_thumbnail_format (gint32 drawable_ID)
 GimpImageType
 gimp_drawable_type (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   GimpImageType type = 0;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-type",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    type = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-type",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return type;
 }
@@ -151,19 +158,22 @@ gimp_drawable_type (gint32 drawable_ID)
 GimpImageType
 gimp_drawable_type_with_alpha (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   GimpImageType type_with_alpha = 0;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-type-with-alpha",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    type_with_alpha = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-type-with-alpha",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    type_with_alpha = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return type_with_alpha;
 }
@@ -183,19 +193,22 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
 gboolean
 gimp_drawable_has_alpha (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean has_alpha = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-has-alpha",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    has_alpha = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-has-alpha",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    has_alpha = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return has_alpha;
 }
@@ -214,19 +227,22 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
 gboolean
 gimp_drawable_is_rgb (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean is_rgb = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-is-rgb",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    is_rgb = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-is-rgb",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    is_rgb = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return is_rgb;
 }
@@ -245,19 +261,22 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
 gboolean
 gimp_drawable_is_gray (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean is_gray = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-is-gray",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    is_gray = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-is-gray",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    is_gray = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return is_gray;
 }
@@ -276,19 +295,22 @@ gimp_drawable_is_gray (gint32 drawable_ID)
 gboolean
 gimp_drawable_is_indexed (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean is_indexed = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-is-indexed",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    is_indexed = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-is-indexed",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    is_indexed = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return is_indexed;
 }
@@ -306,19 +328,22 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
 gint
 gimp_drawable_bpp (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint bpp = 0;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-bpp",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    bpp = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-bpp",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    bpp = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return bpp;
 }
@@ -336,19 +361,22 @@ gimp_drawable_bpp (gint32 drawable_ID)
 gint
 gimp_drawable_width (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint width = 0;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-width",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    width = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-width",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return width;
 }
@@ -366,19 +394,22 @@ gimp_drawable_width (gint32 drawable_ID)
 gint
 gimp_drawable_height (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint height = 0;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-height",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    height = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-height",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    height = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return height;
 }
@@ -402,27 +433,30 @@ gimp_drawable_offsets (gint32  drawable_ID,
                        gint   *offset_x,
                        gint   *offset_y)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-offsets",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-offsets",
+                                               args);
+  gimp_value_array_unref (args);
 
   *offset_x = 0;
   *offset_y = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *offset_x = return_vals[1].data.d_int32;
-      *offset_y = return_vals[2].data.d_int32;
+      *offset_x = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *offset_y = g_value_get_int (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -460,25 +494,28 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
                            gint   *x2,
                            gint   *y2)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-mask-bounds",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-mask-bounds",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      non_empty = return_vals[1].data.d_int32;
-      *x1 = return_vals[2].data.d_int32;
-      *y1 = return_vals[3].data.d_int32;
-      *x2 = return_vals[4].data.d_int32;
-      *y2 = return_vals[5].data.d_int32;
+      non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+      *x1 = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *y1 = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *x2 = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *y2 = g_value_get_int (gimp_value_array_index (return_vals, 5));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return non_empty;
 }
@@ -511,25 +548,28 @@ gimp_drawable_mask_intersect (gint32  drawable_ID,
                               gint   *width,
                               gint   *height)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-mask-intersect",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-mask-intersect",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      non_empty = return_vals[1].data.d_int32;
-      *x = return_vals[2].data.d_int32;
-      *y = return_vals[3].data.d_int32;
-      *width = return_vals[4].data.d_int32;
-      *height = return_vals[5].data.d_int32;
+      non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+      *x = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *y = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 5));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return non_empty;
 }
@@ -552,19 +592,23 @@ gboolean
 gimp_drawable_merge_shadow (gint32   drawable_ID,
                             gboolean undo)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-merge-shadow",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, undo,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_boolean (gimp_value_array_index (args, 1), undo);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-merge-shadow",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -587,18 +631,21 @@ gimp_drawable_merge_shadow (gint32   drawable_ID,
 gboolean
 gimp_drawable_free_shadow (gint32 drawable_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-free-shadow",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-free-shadow",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -627,22 +674,29 @@ gimp_drawable_update (gint32 drawable_ID,
                       gint   width,
                       gint   height)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-update",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, x,
-                                    GIMP_PDB_INT32, y,
-                                    GIMP_PDB_INT32, width,
-                                    GIMP_PDB_INT32, height,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), x);
+  g_value_set_int (gimp_value_array_index (args, 2), y);
+  g_value_set_int (gimp_value_array_index (args, 3), width);
+  g_value_set_int (gimp_value_array_index (args, 4), height);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-update",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -668,29 +722,31 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
                          gint    y_coord,
                          gint   *num_channels)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   guint8 *pixel = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-get-pixel",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, x_coord,
-                                    GIMP_PDB_INT32, y_coord,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), x_coord);
+  g_value_set_int (gimp_value_array_index (args, 2), y_coord);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-get-pixel",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_channels = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      *num_channels = return_vals[1].data.d_int32;
-      pixel = g_new (guint8, *num_channels);
-      memcpy (pixel,
-              return_vals[2].data.d_int8array,
-              *num_channels * sizeof (guint8));
+      *num_channels = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      pixel = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return pixel;
 }
@@ -720,22 +776,29 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
                          gint          num_channels,
                          const guint8 *pixel)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-set-pixel",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, x_coord,
-                                    GIMP_PDB_INT32, y_coord,
-                                    GIMP_PDB_INT32, num_channels,
-                                    GIMP_PDB_INT8ARRAY, pixel,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT8_ARRAY,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), x_coord);
+  g_value_set_int (gimp_value_array_index (args, 2), y_coord);
+  g_value_set_int (gimp_value_array_index (args, 3), num_channels);
+  gimp_value_set_int8_array (gimp_value_array_index (args, 4), pixel, num_channels);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-set-pixel",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -765,19 +828,23 @@ gboolean
 gimp_drawable_fill (gint32       drawable_ID,
                     GimpFillType fill_type)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-fill",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, fill_type,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_enum (gimp_value_array_index (args, 1), fill_type);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-fill",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -809,22 +876,29 @@ gimp_drawable_offset (gint32         drawable_ID,
                       gint           offset_x,
                       gint           offset_y)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-offset",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, wrap_around,
-                                    GIMP_PDB_INT32, fill_type,
-                                    GIMP_PDB_INT32, offset_x,
-                                    GIMP_PDB_INT32, offset_y,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_boolean (gimp_value_array_index (args, 1), wrap_around);
+  g_value_set_enum (gimp_value_array_index (args, 2), fill_type);
+  g_value_set_int (gimp_value_array_index (args, 3), offset_x);
+  g_value_set_int (gimp_value_array_index (args, 4), offset_y);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-offset",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -859,16 +933,21 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
                           gint    *thumbnail_data_count,
                           guint8 **thumbnail_data)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-thumbnail",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, width,
-                                    GIMP_PDB_INT32, height,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), width);
+  g_value_set_int (gimp_value_array_index (args, 2), height);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-thumbnail",
+                                               args);
+  gimp_value_array_unref (args);
 
   *actual_width = 0;
   *actual_height = 0;
@@ -876,21 +955,18 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *actual_width = return_vals[1].data.d_int32;
-      *actual_height = return_vals[2].data.d_int32;
-      *bpp = return_vals[3].data.d_int32;
-      *thumbnail_data_count = return_vals[4].data.d_int32;
-      *thumbnail_data = g_new (guint8, *thumbnail_data_count);
-      memcpy (*thumbnail_data,
-              return_vals[5].data.d_int8array,
-              *thumbnail_data_count * sizeof (guint8));
+      *actual_width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *actual_height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *thumbnail_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -935,20 +1011,29 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
                               gint    *thumbnail_data_count,
                               guint8 **thumbnail_data)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-sub-thumbnail",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, src_x,
-                                    GIMP_PDB_INT32, src_y,
-                                    GIMP_PDB_INT32, src_width,
-                                    GIMP_PDB_INT32, src_height,
-                                    GIMP_PDB_INT32, dest_width,
-                                    GIMP_PDB_INT32, dest_height,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), src_x);
+  g_value_set_int (gimp_value_array_index (args, 2), src_y);
+  g_value_set_int (gimp_value_array_index (args, 3), src_width);
+  g_value_set_int (gimp_value_array_index (args, 4), src_height);
+  g_value_set_int (gimp_value_array_index (args, 5), dest_width);
+  g_value_set_int (gimp_value_array_index (args, 6), dest_height);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-sub-thumbnail",
+                                               args);
+  gimp_value_array_unref (args);
 
   *width = 0;
   *height = 0;
@@ -956,21 +1041,18 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *width = return_vals[1].data.d_int32;
-      *height = return_vals[2].data.d_int32;
-      *bpp = return_vals[3].data.d_int32;
-      *thumbnail_data_count = return_vals[4].data.d_int32;
-      *thumbnail_data = g_new (guint8, *thumbnail_data_count);
-      memcpy (*thumbnail_data,
-              return_vals[5].data.d_int8array,
-              *thumbnail_data_count * sizeof (guint8));
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *thumbnail_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -995,20 +1077,25 @@ gimp_drawable_foreground_extract (gint32                    drawable_ID,
                                   GimpForegroundExtractMode mode,
                                   gint32                    mask_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-foreground-extract",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, mode,
-                                    GIMP_PDB_DRAWABLE, mask_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_enum (gimp_value_array_index (args, 1), mode);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 2), mask_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-drawable-foreground-extract",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }

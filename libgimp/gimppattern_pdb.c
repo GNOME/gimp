@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 
 
@@ -58,29 +56,32 @@ gimp_pattern_get_info (const gchar *name,
                        gint        *height,
                        gint        *bpp)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-pattern-get-info",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-info",
+                                               args);
+  gimp_value_array_unref (args);
 
   *width = 0;
   *height = 0;
   *bpp = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *width = return_vals[1].data.d_int32;
-      *height = return_vals[2].data.d_int32;
-      *bpp = return_vals[3].data.d_int32;
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -112,14 +113,17 @@ gimp_pattern_get_pixels (const gchar  *name,
                          gint         *num_color_bytes,
                          guint8      **color_bytes)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-pattern-get-pixels",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-pixels",
+                                               args);
+  gimp_value_array_unref (args);
 
   *width = 0;
   *height = 0;
@@ -127,21 +131,18 @@ gimp_pattern_get_pixels (const gchar  *name,
   *num_color_bytes = 0;
   *color_bytes = NULL;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *width = return_vals[1].data.d_int32;
-      *height = return_vals[2].data.d_int32;
-      *bpp = return_vals[3].data.d_int32;
-      *num_color_bytes = return_vals[4].data.d_int32;
-      *color_bytes = g_new (guint8, *num_color_bytes);
-      memcpy (*color_bytes,
-              return_vals[5].data.d_int8array,
-              *num_color_bytes * sizeof (guint8));
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *num_color_bytes = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *color_bytes = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }

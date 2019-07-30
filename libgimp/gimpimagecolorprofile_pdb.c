@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 
 
@@ -55,27 +53,27 @@ guint8 *
 _gimp_image_get_color_profile (gint32  image_ID,
                                gint   *num_bytes)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-image-get-color-profile",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-image-get-color-profile",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_bytes = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      *num_bytes = return_vals[1].data.d_int32;
-      profile_data = g_new (guint8, *num_bytes);
-      memcpy (profile_data,
-              return_vals[2].data.d_int8array,
-              *num_bytes * sizeof (guint8));
+      *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      profile_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return profile_data;
 }
@@ -102,27 +100,27 @@ guint8 *
 _gimp_image_get_effective_color_profile (gint32  image_ID,
                                          gint   *num_bytes)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-image-get-effective-color-profile",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-image-get-effective-color-profile",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_bytes = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      *num_bytes = return_vals[1].data.d_int32;
-      profile_data = g_new (guint8, *num_bytes);
-      memcpy (profile_data,
-              return_vals[2].data.d_int8array,
-              *num_bytes * sizeof (guint8));
+      *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      profile_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return profile_data;
 }
@@ -150,20 +148,25 @@ _gimp_image_set_color_profile (gint32        image_ID,
                                gint          num_bytes,
                                const guint8 *color_profile)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-set-color-profile",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, num_bytes,
-                                    GIMP_PDB_INT8ARRAY, color_profile,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT8_ARRAY,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), num_bytes);
+  gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-set-color-profile",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -190,19 +193,23 @@ gboolean
 gimp_image_set_color_profile_from_file (gint32       image_ID,
                                         const gchar *uri)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-set-color-profile-from-file",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_STRING, uri,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_string (gimp_value_array_index (args, 1), uri);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-set-color-profile-from-file",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -233,22 +240,29 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
                                    GimpColorRenderingIntent  intent,
                                    gboolean                  bpc)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-convert-color-profile",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, num_bytes,
-                                    GIMP_PDB_INT8ARRAY, color_profile,
-                                    GIMP_PDB_INT32, intent,
-                                    GIMP_PDB_INT32, bpc,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT8_ARRAY,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), num_bytes);
+  gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+  g_value_set_enum (gimp_value_array_index (args, 3), intent);
+  g_value_set_boolean (gimp_value_array_index (args, 4), bpc);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-convert-color-profile",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -277,21 +291,27 @@ gimp_image_convert_color_profile_from_file (gint32                    image_ID,
                                             GimpColorRenderingIntent  intent,
                                             gboolean                  bpc)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-convert-color-profile-from-file",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_STRING, uri,
-                                    GIMP_PDB_INT32, intent,
-                                    GIMP_PDB_INT32, bpc,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_STRING,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_string (gimp_value_array_index (args, 1), uri);
+  g_value_set_enum (gimp_value_array_index (args, 2), intent);
+  g_value_set_boolean (gimp_value_array_index (args, 3), bpc);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-convert-color-profile-from-file",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }

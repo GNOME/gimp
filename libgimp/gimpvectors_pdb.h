@@ -124,14 +124,14 @@ gboolean              gimp_vectors_import_from_file          (gint32            
                                                               gboolean                merge,
                                                               gboolean                scale,
                                                               gint                   *num_vectors,
-                                                              gint32                **vectors_ids);
+                                                              gint                  **vectors_ids);
 gboolean              gimp_vectors_import_from_string        (gint32                  image_ID,
                                                               const gchar            *string,
                                                               gint                    length,
                                                               gboolean                merge,
                                                               gboolean                scale,
                                                               gint                   *num_vectors,
-                                                              gint32                **vectors_ids);
+                                                              gint                  **vectors_ids);
 gboolean              gimp_vectors_export_to_file            (gint32                  image_ID,
                                                               const gchar            *filename,
                                                               gint32                  vectors_ID);

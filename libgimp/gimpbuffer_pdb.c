@@ -53,30 +53,27 @@ gchar **
 gimp_buffers_get_list (const gchar *filter,
                        gint        *num_buffers)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar **buffer_list = NULL;
-  gint i;
 
-  return_vals = gimp_run_procedure ("gimp-buffers-get-list",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, filter,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), filter);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-buffers-get-list",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_buffers = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      *num_buffers = return_vals[1].data.d_int32;
-      if (*num_buffers > 0)
-        {
-          buffer_list = g_new0 (gchar *, *num_buffers + 1);
-          for (i = 0; i < *num_buffers; i++)
-            buffer_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
-        }
+      *num_buffers = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      buffer_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return buffer_list;
 }
@@ -98,20 +95,24 @@ gchar *
 gimp_buffer_rename (const gchar *buffer_name,
                     const gchar *new_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *real_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-buffer-rename",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, buffer_name,
-                                    GIMP_PDB_STRING, new_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
+  g_value_set_string (gimp_value_array_index (args, 1), new_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    real_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-buffer-rename",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    real_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return real_name;
 }
@@ -131,18 +132,21 @@ gimp_buffer_rename (const gchar *buffer_name,
 gboolean
 gimp_buffer_delete (const gchar *buffer_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-buffer-delete",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, buffer_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-buffer-delete",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -162,19 +166,22 @@ gimp_buffer_delete (const gchar *buffer_name)
 gint
 gimp_buffer_get_width (const gchar *buffer_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint width = 0;
 
-  return_vals = gimp_run_procedure ("gimp-buffer-get-width",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, buffer_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    width = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-width",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return width;
 }
@@ -194,19 +201,22 @@ gimp_buffer_get_width (const gchar *buffer_name)
 gint
 gimp_buffer_get_height (const gchar *buffer_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint height = 0;
 
-  return_vals = gimp_run_procedure ("gimp-buffer-get-height",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, buffer_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    height = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-height",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    height = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return height;
 }
@@ -226,19 +236,22 @@ gimp_buffer_get_height (const gchar *buffer_name)
 gint
 gimp_buffer_get_bytes (const gchar *buffer_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint bytes = 0;
 
-  return_vals = gimp_run_procedure ("gimp-buffer-get-bytes",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, buffer_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    bytes = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-bytes",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return bytes;
 }
@@ -258,19 +271,22 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
 GimpImageBaseType
 gimp_buffer_get_image_type (const gchar *buffer_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   GimpImageBaseType image_type = 0;
 
-  return_vals = gimp_run_procedure ("gimp-buffer-get-image-type",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, buffer_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    image_type = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-image-type",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    image_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return image_type;
 }
