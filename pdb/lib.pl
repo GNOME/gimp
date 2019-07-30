@@ -293,10 +293,6 @@ CODE
                 my $desc = exists $_->{desc} ? $_->{desc} : "";
 		my $arg = $arg_types{$type};
 		my $var;
-	    
-		if ($type =~ /boolean|enum|guide|sample_point/) {
-		    $type = 'int32';
-		}
 
 		# The return value variable
 		$var = "";
