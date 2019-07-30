@@ -73,11 +73,11 @@ def run(name, n_params, params):
             Gtk.Dialog.add_button(self, "Close", Gtk.ResponseType.CLOSE)
 
             Gtk.Widget.set_name (self, PROC_NAME)
-            Gtk.Dialog.set_alternative_button_order_from_array(self,
-                                                               [ Gtk.ResponseType.CLOSE,
-                                                                 RESPONSE_BROWSE,
-                                                                 RESPONSE_CLEAR,
-                                                                 Gtk.ResponseType.OK ])
+            Gimp.Dialog.set_alternative_button_order_from_array(self,
+                                                                [ Gtk.ResponseType.CLOSE,
+                                                                  RESPONSE_BROWSE,
+                                                                  RESPONSE_CLEAR,
+                                                                  Gtk.ResponseType.OK ])
 
             self.cons = GimpConsole(quit_func=lambda: Gtk.main_quit())
 
@@ -174,9 +174,9 @@ def run(name, n_params, params):
                 Gtk.Dialog.add_button(dlg, "Close", Gtk.ResponseType.CLOSE)
 
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                Gtk.Dialog.set_alternative_button_order_from_array(dlg,
-                                                                   [ Gtk.ResponseType.CLOSE,
-                                                                     Gtk.ResponseType.APPLY ])
+                Gimp.Dialog.set_alternative_button_order_from_array(dlg,
+                                                                    [ Gtk.ResponseType.CLOSE,
+                                                                      Gtk.ResponseType.APPLY ])
 
                 dlg.connect('response', self.browse_response)
                 dlg.connect('row-activated',
@@ -225,9 +225,9 @@ def run(name, n_params, params):
                 Gtk.Dialog.add_button(dlg, "Cancel", Gtk.ResponseType.CANCEL)
                 Gtk.Dialog.add_button(dlg, "Save", Gtk.ResponseType.OK)
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
-                Gtk.Dialog.set_alternative_button_order_from_array(dlg,
-                                                                   [ Gtk.ResponseType.OK,
-                                                                     Gtk.ResponseType.CANCEL ])
+                Gimp.Dialog.set_alternative_button_order_from_array(dlg,
+                                                                    [ Gtk.ResponseType.OK,
+                                                                      Gtk.ResponseType.CANCEL ])
 
                 dlg.connect('response', self.save_response)
 
