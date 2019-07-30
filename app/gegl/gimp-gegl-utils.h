@@ -47,5 +47,7 @@ gboolean     gimp_gegl_param_spec_has_key            (GParamSpec          *pspec
                                                       const gchar         *key,
                                                       const gchar         *value);
 
+GeglBuffer * gimp_gegl_buffer_dup                    (GeglBuffer          *buffer);
+
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
