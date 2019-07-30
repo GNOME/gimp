@@ -390,6 +390,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
                                      GScanner   *scanner)
 {
   GTokenType token;
+  GTokenType next_token;
   GType      value_type;
   gboolean   negate = FALSE;
 
@@ -435,7 +436,13 @@ gimp_config_deserialize_fundamental (GValue     *value,
       break;
     }
 
-  if (g_scanner_peek_next_token (scanner) != token)
+  next_token = g_scanner_peek_next_token (scanner);
+
+  /* we parse integers into floats too, because g_ascii_dtostr()
+   * serialized whole number without decimal point
+   */
+  if (next_token != token &&
+      ! (token == G_TOKEN_FLOAT && next_token == G_TOKEN_INT))
     {
       return token;
     }
@@ -497,12 +504,21 @@ gimp_config_deserialize_fundamental (GValue     *value,
       break;
 
     case G_TYPE_FLOAT:
-      g_value_set_float (value, negate ?
-                         - scanner->value.v_float : scanner->value.v_float);
+      if (next_token == G_TOKEN_FLOAT)
+        g_value_set_float (value, negate ?
+                           - scanner->value.v_float : scanner->value.v_float);
+      else
+        g_value_set_float (value, negate ?
+                           - scanner->value.v_int : scanner->value.v_int);
       break;
+
     case G_TYPE_DOUBLE:
-      g_value_set_double (value, negate ?
-                          - scanner->value.v_float: scanner->value.v_float);
+      if (next_token == G_TOKEN_FLOAT)
+        g_value_set_double (value, negate ?
+                            - scanner->value.v_float: scanner->value.v_float);
+      else
+        g_value_set_double (value, negate ?
+                            - scanner->value.v_int: scanner->value.v_int);
       break;
 
     default:
