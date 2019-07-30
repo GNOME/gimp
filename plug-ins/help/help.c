@@ -39,6 +39,19 @@
 #define GIMP_HELP_TEMP_EXT_PROC   "extension-gimp-help-temp"
 
 
+typedef struct _Help      Help;
+typedef struct _HelpClass HelpClass;
+
+struct _Help
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _HelpClass
+{
+  GimpPlugInClass parent_class;
+};
+
 typedef struct
 {
   gchar *procedure;
@@ -50,89 +63,130 @@ typedef struct
 
 /*  forward declarations  */
 
-static void     query             (void);
-static void     run               (const gchar      *name,
-                                   gint              nparams,
-                                   const GimpParam  *param,
-                                   gint             *nreturn_vals,
-                                   GimpParam       **return_vals);
+#define HELP_TYPE  (help_get_type ())
+#define HELP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HELP_TYPE, Help))
 
-static void     temp_proc_install (void);
-static void     temp_proc_run     (const gchar      *name,
-                                   gint              nparams,
-                                   const GimpParam  *param,
-                                   gint             *nreturn_vals,
-                                   GimpParam       **return_vals);
+GType                   help_get_type          (void) G_GNUC_CONST;
 
-static void     load_help         (const gchar      *procedure,
-                                   const gchar      *help_domain,
-                                   const gchar      *help_locales,
-                                   const gchar      *help_id);
-static gboolean load_help_idle    (gpointer          data);
+static gchar         ** help_query_procedures  (GimpPlugIn           *plug_in,
+                                                gint                 *n_procedures);
+static GimpProcedure  * help_create_procedure  (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
 
-static GimpHelpProgress * load_help_progress_new (void);
+static GimpValueArray * help_run               (GimpProcedure        *procedure,
+                                                const GimpValueArray *args);
+static GimpValueArray * help_temp_run          (GimpProcedure        *procedure,
+                                                const GimpValueArray *args);
 
+static void             help_temp_proc_install (GimpPlugIn           *plug_in);
+static void             help_load              (const gchar          *procedure,
+                                                const gchar          *help_domain,
+                                                const gchar          *help_locales,
+                                                const gchar          *help_id);
+static gboolean         help_load_idle         (gpointer              data);
 
-/*  local variables  */
+static GimpHelpProgress * help_load_progress_new (void);
+
 
 static GMainLoop *main_loop = NULL;
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Help, help, GIMP_TYPE_PLUG_IN)
 
+GIMP_MAIN (HELP_TYPE)
 
-MAIN ()
 
 static void
-query (void)
+help_class_init (HelpClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,       "num-domain-names", "" },
-    { GIMP_PDB_STRINGARRAY, "domain-names",     "" },
-    { GIMP_PDB_INT32,       "num-domain-uris",  "" },
-    { GIMP_PDB_STRINGARRAY, "domain-uris",      "" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (GIMP_HELP_EXT_PROC,
-                          "", /* FIXME */
-                          "", /* FIXME */
-                          "Sven Neumann <sven@gimp.org>, "
-                          "Michael Natterer <mitch@gimp.org>, "
-                          "Henrik Brix Andersen <brix@gimp.org>",
-                          "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                          "1999-2008",
-                          NULL,
-                          "",
-                          GIMP_EXTENSION,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+  plug_in_class->query_procedures = help_query_procedures;
+  plug_in_class->create_procedure = help_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+help_init (Help *help)
 {
-  static GimpParam  values[1];
+}
+
+static gchar **
+help_query_procedures (GimpPlugIn *plug_in,
+                       gint       *n_procedures)
+{
+  gchar **procedures = g_new0 (gchar *, 2);
+
+  procedures[0] = g_strdup (GIMP_HELP_EXT_PROC);
+
+  *n_procedures = 1;
+
+  return procedures;
+}
+
+static GimpProcedure *
+help_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, GIMP_HELP_EXT_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_EXTENSION, help_run);
+
+      gimp_procedure_set_strings (procedure,
+                                  NULL,
+                                  "", /* FIXME */
+                                  "", /* FIXME */
+                                  NULL,
+                                  "Sven Neumann <sven@gimp.org>, "
+                                  "Michael Natterer <mitch@gimp.org>, "
+                                  "Henrik Brix Andersen <brix@gimp.org>",
+                                  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                                  "1999-2008",
+                                  "");
+
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_int32 ("num-domain-names",
+                                                          "Num Domain Names",
+                                                          "Num domain names",
+                                                          0, G_MAXINT, 0,
+                                                          G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_string_array ("domain-names",
+                                                                 "Domain Names",
+                                                                 "Domain names",
+                                                                 G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_int32 ("num-domain-uris",
+                                                          "Num Domain URIs",
+                                                          "Num domain URIs",
+                                                          0, G_MAXINT, 0,
+                                                          G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_string_array ("domain-uris",
+                                                                 "Domain URIs",
+                                                                 "Domain URIs",
+                                                                 G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+help_run (GimpProcedure        *procedure,
+          const GimpValueArray *args)
+{
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
 
   /*  make sure all the arguments are there  */
-  if (nparams == 4)
+  if (gimp_value_array_length (args) == 4)
     {
-      if (! gimp_help_init (param[0].data.d_int32,
-                            param[1].data.d_stringarray,
-                            param[2].data.d_int32,
-                            param[3].data.d_stringarray))
+      if (! gimp_help_init
+              (g_value_get_int             (gimp_value_array_index (args, 0)),
+               gimp_value_get_string_array (gimp_value_array_index (args, 1)),
+               g_value_get_int             (gimp_value_array_index (args, 2)),
+               gimp_value_get_string_array (gimp_value_array_index (args, 3))))
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
@@ -148,7 +202,7 @@ run (const gchar      *name,
     {
       main_loop = g_main_loop_new (NULL, FALSE);
 
-      temp_proc_install ();
+      help_temp_proc_install (gimp_procedure_get_plug_in (procedure));
 
       gimp_extension_ack ();
       gimp_extension_enable ();
@@ -161,85 +215,95 @@ run (const gchar      *name,
       gimp_uninstall_temp_proc (GIMP_HELP_TEMP_EXT_PROC);
     }
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  return gimp_procedure_new_return_values (procedure, status, NULL);
 }
 
 static void
-temp_proc_install (void)
+help_temp_proc_install (GimpPlugIn *plug_in)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_STRING, "procedure",    "The procedure of the browser to use" },
-    { GIMP_PDB_STRING, "help-domain",  "Help domain to use" },
-    { GIMP_PDB_STRING, "help-locales", "Language to use"    },
-    { GIMP_PDB_STRING, "help-id",      "Help ID to open"    }
-  };
+  GimpProcedure *procedure;
 
-  gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_PROC,
-                          "DON'T USE THIS ONE",
-                          "(Temporary procedure)",
-                          "Sven Neumann <sven@gimp.org>, "
-                          "Michael Natterer <mitch@gimp.org>"
-                          "Henrik Brix Andersen <brix@gimp.org",
-                          "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                          "1999-2008",
-                          NULL,
-                          "",
-                          GIMP_TEMPORARY,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL,
-                          temp_proc_run);
+  procedure = gimp_procedure_new (plug_in, GIMP_HELP_TEMP_EXT_PROC,
+                                  GIMP_TEMPORARY, help_temp_run);
+
+  gimp_procedure_set_strings (procedure,
+                              NULL,
+                              "DON'T USE THIS ONE",
+                              "(Temporary procedure)",
+                              NULL,
+                              "Sven Neumann <sven@gimp.org>, "
+                              "Michael Natterer <mitch@gimp.org>"
+                              "Henrik Brix Andersen <brix@gimp.org",
+                              "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                              "1999-2008",
+                              "");
+
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_string ("help-proc",
+                                                    "The procedure of the browser to use",
+                                                    "The procedure of the browser to use",
+                                                    NULL,
+                                                    G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_string ("help-domain",
+                                                    "Help domain to use",
+                                                    "Help domain to use",
+                                                    NULL,
+                                                    G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_string ("help-locales",
+                                                    "Language to use",
+                                                    "Language to use",
+                                                    NULL,
+                                                    G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_string ("help-id",
+                                                    "Help ID to open",
+                                                    "Help ID to open",
+                                                    NULL,
+                                                    G_PARAM_READWRITE));
+
+  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  g_object_unref (procedure);
 }
 
-static void
-temp_proc_run (const gchar      *name,
-               gint              nparams,
-               const GimpParam  *param,
-               gint             *nreturn_vals,
-               GimpParam       **return_vals)
+static GimpValueArray *
+help_temp_run (GimpProcedure        *procedure,
+               const GimpValueArray *args)
 {
-  static GimpParam   values[1];
   GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
-  const gchar       *procedure    = NULL;
+  const gchar       *help_proc    = NULL;
   const gchar       *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
   const gchar       *help_locales = NULL;
   const gchar       *help_id      = GIMP_HELP_DEFAULT_ID;
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
   /*  make sure all the arguments are there  */
-  if (nparams == 4)
+  if (gimp_value_array_length (args) == 4)
     {
-      if (param[0].data.d_string && strlen (param[0].data.d_string))
-        procedure = param[0].data.d_string;
+      if (g_value_get_string (gimp_value_array_index (args, 0)))
+        help_proc = g_value_get_string (gimp_value_array_index (args, 0));
 
-      if (param[1].data.d_string && strlen (param[1].data.d_string))
-        help_domain = param[1].data.d_string;
+      if (g_value_get_string (gimp_value_array_index (args, 1)))
+        help_domain = g_value_get_string (gimp_value_array_index (args, 1));
 
-      if (param[2].data.d_string && strlen (param[2].data.d_string))
-        help_locales = param[2].data.d_string;
+      if (g_value_get_string (gimp_value_array_index (args, 2)))
+        help_locales = g_value_get_string (gimp_value_array_index (args, 2));
 
-      if (param[3].data.d_string && strlen (param[3].data.d_string))
-        help_id = param[3].data.d_string;
+      if (g_value_get_string (gimp_value_array_index (args, 3)))
+        help_id = g_value_get_string (gimp_value_array_index (args, 3));
     }
 
-  if (! procedure)
+  if (! help_proc)
     status = GIMP_PDB_CALLING_ERROR;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
   if (status == GIMP_PDB_SUCCESS)
-    load_help (procedure, help_domain, help_locales, help_id);
+    help_load (help_proc, help_domain, help_locales, help_id);
+
+  return gimp_procedure_new_return_values (procedure, status, NULL);
 }
 
 static void
-load_help (const gchar *procedure,
+help_load (const gchar *procedure,
            const gchar *help_domain,
            const gchar *help_locales,
            const gchar *help_id)
@@ -251,11 +315,11 @@ load_help (const gchar *procedure,
   idle_help->help_locales = g_strdup (help_locales);
   idle_help->help_id      = g_strdup (help_id);
 
-  g_idle_add (load_help_idle, idle_help);
+  g_idle_add (help_load_idle, idle_help);
 }
 
 static gboolean
-load_help_idle (gpointer data)
+help_load_idle (gpointer data)
 {
   IdleHelp       *idle_help = data;
   GimpHelpDomain *domain;
@@ -272,7 +336,7 @@ load_help_idle (gpointer data)
       locales = gimp_help_parse_locales (idle_help->help_locales);
 
       if (! g_str_has_prefix (domain->help_uri, "file:"))
-        progress = load_help_progress_new ();
+        progress = help_load_progress_new ();
 
       uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
                                   progress, NULL, &fatal_error);
@@ -318,7 +382,7 @@ load_help_idle (gpointer data)
 }
 
 static void
-load_help_progress_start (const gchar *message,
+help_load_progress_start (const gchar *message,
                           gboolean     cancelable,
                           gpointer     user_data)
 {
@@ -326,26 +390,26 @@ load_help_progress_start (const gchar *message,
 }
 
 static void
-load_help_progress_update (gdouble  value,
+help_load_progress_update (gdouble  value,
                            gpointer user_data)
 {
   gimp_progress_update (value);
 }
 
 static void
-load_help_progress_end (gpointer user_data)
+help_load_progress_end (gpointer user_data)
 {
   gimp_progress_end ();
 }
 
 static GimpHelpProgress *
-load_help_progress_new (void)
+help_load_progress_new (void)
 {
   static const GimpHelpProgressVTable vtable =
   {
-    load_help_progress_start,
-    load_help_progress_end,
-    load_help_progress_update
+    help_load_progress_start,
+    help_load_progress_end,
+    help_load_progress_update
   };
 
   return gimp_help_progress_new (&vtable, NULL);

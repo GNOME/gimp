@@ -43,9 +43,9 @@
 
 
 gboolean         gimp_help_init            (gint            n_domain_names,
-                                            gchar         **domain_names,
+                                            const gchar   **domain_names,
                                             gint            n_domain_uris,
-                                            gchar         **domain_uris);
+                                            const gchar   **domain_uris);
 void             gimp_help_exit            (void);
 
 void             gimp_help_register_domain (const gchar    *domain_name,
