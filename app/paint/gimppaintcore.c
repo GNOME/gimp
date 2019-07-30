@@ -32,7 +32,6 @@
 
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimpapplicator.h"
 
 #include "core/gimp.h"
@@ -511,7 +510,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
                                 gimp_item_get_height (GIMP_ITEM (drawable)),
                                 &rect.x, &rect.y, &rect.width, &rect.height);
 
-      gimp_gegl_rectangle_align_to_tile_grid (&rect, &rect, core->undo_buffer);
+      gegl_rectangle_align_to_buffer (&rect, &rect, core->undo_buffer,
+                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                    core->undo_desc);
@@ -1045,9 +1045,10 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                                 core->paint_buffer_y,
                                                 width, height);
 
-          gimp_gegl_rectangle_align_to_tile_grid (
+          gegl_rectangle_align_to_buffer (
             &aligned_combined_mask_rect, &combined_mask_rect,
-            gimp_drawable_get_buffer (drawable));
+            gimp_drawable_get_buffer (drawable),
+            GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
           combined_mask_buffer = gegl_buffer_new (&aligned_combined_mask_rect,
                                                   babl_format ("Y float"));

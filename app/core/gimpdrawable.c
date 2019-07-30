@@ -30,7 +30,7 @@
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/gimptilehandlerbuffer.h"
 
 #include "gimp-memsize.h"
 #include "gimp-utils.h"
@@ -918,10 +918,11 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
       GeglBuffer    *drawable_buffer = gimp_drawable_get_buffer (drawable);
       GeglRectangle  drawable_rect;
 
-      gimp_gegl_rectangle_align_to_tile_grid (
+      gegl_rectangle_align_to_buffer (
         &drawable_rect,
         GEGL_RECTANGLE (x, y, width, height),
-        drawable_buffer);
+        drawable_buffer,
+        GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
       x      = drawable_rect.x;
       y      = drawable_rect.y;

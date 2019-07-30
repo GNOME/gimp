@@ -36,7 +36,6 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 #include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
@@ -1268,7 +1267,8 @@ gimp_channel_real_clear (GimpChannel *channel,
       rect.height = gimp_item_get_height (GIMP_ITEM (channel));
     }
 
-  gimp_gegl_rectangle_align_to_tile_grid (&aligned_rect, &rect, buffer);
+  gegl_rectangle_align_to_buffer (&aligned_rect, &rect, buffer,
+                                  GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
   gegl_buffer_clear (buffer, &aligned_rect);
 
