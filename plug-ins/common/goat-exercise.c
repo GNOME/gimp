@@ -99,7 +99,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (name, goat_run);
+      procedure = gimp_procedure_new (plug_in, name,
+                                      GIMP_PLUGIN, goat_run);
 
       gimp_procedure_set_strings (procedure,
                                   N_("Goat-exercise"),
