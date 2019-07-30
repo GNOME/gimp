@@ -99,30 +99,36 @@ ifsvals_parse_color (GScanner *scanner,
     return G_TOKEN_LEFT_CURLY;
 
   token = g_scanner_get_next_token (scanner);
-  if (token != G_TOKEN_FLOAT)
+  if (token == G_TOKEN_FLOAT)
+    result->r = scanner->value.v_float;
+  else if (token == G_TOKEN_INT)
+    result->r = scanner->value.v_int;
+  else
     return G_TOKEN_FLOAT;
-
-  result->r = scanner->value.v_float;
 
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_COMMA)
     return G_TOKEN_COMMA;
 
   token = g_scanner_get_next_token (scanner);
-  if (token != G_TOKEN_FLOAT)
+  if (token == G_TOKEN_FLOAT)
+    result->g = scanner->value.v_float;
+  else if (token == G_TOKEN_INT)
+    result->g = scanner->value.v_int;
+  else
     return G_TOKEN_FLOAT;
-
-  result->g = scanner->value.v_float;
 
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_COMMA)
     return G_TOKEN_COMMA;
 
   token = g_scanner_get_next_token (scanner);
-  if (token != G_TOKEN_FLOAT)
+  if (token == G_TOKEN_FLOAT)
+    result->b = scanner->value.v_float;
+  else if (token == G_TOKEN_INT)
+    result->b = scanner->value.v_int;
+  else
     return G_TOKEN_FLOAT;
-
-  result->b = scanner->value.v_float;
 
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_RIGHT_CURLY)
@@ -151,6 +157,11 @@ parse_genuine_float (GScanner *scanner,
   if (token == G_TOKEN_FLOAT)
     {
       *result = negate ? -scanner->value.v_float : scanner->value.v_float;
+      return G_TOKEN_NONE;
+    }
+  else if (token == G_TOKEN_INT)
+    {
+      *result = negate ? -scanner->value.v_int : scanner->value.v_int;
       return G_TOKEN_NONE;
     }
   else
@@ -269,10 +280,13 @@ ifsvals_parse_element (GScanner       *scanner,
 
 	case TOKEN_PROB:
 	  token = g_scanner_get_next_token (scanner);
-	  if (token != G_TOKEN_FLOAT)
+	  if (token == G_TOKEN_FLOAT)
+            result->prob = scanner->value.v_float;
+          else if (token == G_TOKEN_INT)
+            result->prob = scanner->value.v_int;
+          else
 	    return G_TOKEN_FLOAT;
 
-	  result->prob = scanner->value.v_float;
 	  break;
 
 	default:
