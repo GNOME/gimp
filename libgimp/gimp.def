@@ -682,7 +682,6 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
-	gimp_read_expect_msg
 	gimp_register_file_handler_mime
 	gimp_register_file_handler_priority
 	gimp_register_file_handler_raw
