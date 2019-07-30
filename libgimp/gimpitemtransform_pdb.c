@@ -129,7 +129,7 @@ gimp_item_transform_flip_simple (gint32              item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ORIENTATION_TYPE,
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_NONE);
@@ -362,7 +362,7 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ROTATION_TYPE,
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -576,7 +576,7 @@ gimp_item_transform_shear (gint32              item_ID,
   gint32 ret_item_ID = -1;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ORIENTATION_TYPE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_NONE);
   gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);

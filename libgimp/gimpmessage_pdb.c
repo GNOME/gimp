@@ -118,7 +118,7 @@ gimp_message_set_handler (GimpMessageHandlerType handler)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_MESSAGE_HANDLER_TYPE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), handler);
 

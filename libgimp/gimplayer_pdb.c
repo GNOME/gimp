@@ -71,10 +71,10 @@ _gimp_layer_new (gint32         image_ID,
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_IMAGE_TYPE,
                                           G_TYPE_STRING,
                                           G_TYPE_DOUBLE,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_MODE,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_int (gimp_value_array_index (args, 1), width);
@@ -554,7 +554,7 @@ gimp_layer_create_mask (gint32          layer_ID,
   gint32 mask_ID = -1;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ADD_MASK_TYPE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), mask_type);
@@ -704,7 +704,7 @@ gimp_layer_remove_mask (gint32            layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_MASK_APPLY_MODE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), mode);
@@ -1171,7 +1171,7 @@ gimp_layer_set_mode (gint32        layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_MODE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), mode);
@@ -1244,7 +1244,7 @@ gimp_layer_set_blend_space (gint32              layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_COLOR_SPACE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), blend_space);
@@ -1317,7 +1317,7 @@ gimp_layer_set_composite_space (gint32              layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_COLOR_SPACE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), composite_space);
@@ -1390,7 +1390,7 @@ gimp_layer_set_composite_mode (gint32                 layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_LAYER_COMPOSITE_MODE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), composite_mode);

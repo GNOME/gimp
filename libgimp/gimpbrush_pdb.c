@@ -527,7 +527,7 @@ gimp_brush_set_shape (const gchar             *name,
   GimpBrushGeneratedShape shape_out = 0;
 
   args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), name);
   g_value_set_enum (gimp_value_array_index (args, 1), shape_in);

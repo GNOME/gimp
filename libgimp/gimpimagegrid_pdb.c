@@ -428,7 +428,7 @@ gimp_image_grid_set_style (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_GRID_STYLE,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), style);

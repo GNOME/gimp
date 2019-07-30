@@ -76,7 +76,7 @@ gimp_image_select_color (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           GIMP_TYPE_DRAWABLE_ID,
                                           GIMP_TYPE_RGB,
                                           G_TYPE_NONE);
@@ -149,7 +149,7 @@ gimp_image_select_contiguous_color (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           GIMP_TYPE_DRAWABLE_ID,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -206,7 +206,7 @@ gimp_image_select_rectangle (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -272,7 +272,7 @@ gimp_image_select_round_rectangle (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -336,7 +336,7 @@ gimp_image_select_ellipse (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -397,7 +397,7 @@ gimp_image_select_polygon (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_FLOAT_ARRAY,
                                           G_TYPE_NONE);
@@ -448,7 +448,7 @@ gimp_image_select_item (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_CHANNEL_OPS,
                                           GIMP_TYPE_ITEM_ID,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);

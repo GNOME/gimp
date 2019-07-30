@@ -224,7 +224,7 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_ICON_TYPE,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT8_ARRAY,
                                           G_TYPE_NONE);
@@ -270,7 +270,7 @@ gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_PDB_ERROR_HANDLER,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), handler);
 

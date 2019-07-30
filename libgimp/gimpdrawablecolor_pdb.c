@@ -116,7 +116,7 @@ gimp_drawable_color_balance (gint32           drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_TRANSFER_MODE,
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -220,7 +220,7 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_FLOAT_ARRAY,
                                           G_TYPE_NONE);
@@ -271,7 +271,7 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_FLOAT_ARRAY,
                                           G_TYPE_NONE);
@@ -316,7 +316,7 @@ gimp_drawable_desaturate (gint32             drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_DESATURATE_MODE,
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), desaturate_mode);
@@ -429,7 +429,7 @@ gimp_drawable_histogram (gint32                drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_NONE);
@@ -500,7 +500,7 @@ gimp_drawable_hue_saturation (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_HUE_RANGE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
@@ -612,7 +612,7 @@ gimp_drawable_levels (gint32               drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_BOOLEAN,
@@ -746,7 +746,7 @@ gimp_drawable_threshold (gint32               drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_DOUBLE,
                                           G_TYPE_NONE);

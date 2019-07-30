@@ -498,7 +498,7 @@ gimp_text_layer_set_hint_style (gint32            layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_TEXT_HINT_STYLE,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), style);
@@ -722,7 +722,7 @@ gimp_text_layer_set_base_direction (gint32            layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_TEXT_DIRECTION,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), direction);
@@ -797,7 +797,7 @@ gimp_text_layer_set_justification (gint32                layer_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_TEXT_JUSTIFICATION,
                                           G_TYPE_NONE);
   gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), justify);

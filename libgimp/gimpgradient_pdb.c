@@ -986,7 +986,7 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
   args = gimp_value_array_new_from_types (G_TYPE_STRING,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_GRADIENT_SEGMENT_TYPE,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), name);
   g_value_set_int (gimp_value_array_index (args, 1), start_segment);
@@ -1033,7 +1033,7 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
   args = gimp_value_array_new_from_types (G_TYPE_STRING,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_GRADIENT_SEGMENT_COLOR,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), name);
   g_value_set_int (gimp_value_array_index (args, 1), start_segment);

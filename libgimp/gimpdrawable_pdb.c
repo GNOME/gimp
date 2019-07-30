@@ -833,7 +833,7 @@ gimp_drawable_fill (gint32       drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_FILL_TYPE,
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), fill_type);
@@ -882,7 +882,7 @@ gimp_drawable_offset (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
                                           G_TYPE_BOOLEAN,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_OFFSET_TYPE,
                                           GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
                                           G_TYPE_NONE);
@@ -1082,7 +1082,7 @@ gimp_drawable_foreground_extract (gint32                    drawable_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_ENUM,
+                                          GIMP_TYPE_FOREGROUND_EXTRACT_MODE,
                                           GIMP_TYPE_DRAWABLE_ID,
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);

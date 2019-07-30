@@ -305,7 +305,7 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_STROKE_METHOD,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), stroke_method);
 
@@ -654,7 +654,7 @@ gimp_context_set_paint_mode (GimpLayerMode paint_mode)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_MODE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), paint_mode);
 
@@ -866,7 +866,7 @@ gimp_context_set_line_cap_style (GimpCapStyle cap_style)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_CAP_STYLE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), cap_style);
 
@@ -937,7 +937,7 @@ gimp_context_set_line_join_style (GimpJoinStyle join_style)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_JOIN_STYLE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), join_style);
 
@@ -2227,7 +2227,7 @@ gimp_context_set_gradient_blend_color_space (GimpGradientBlendColorSpace blend_c
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), blend_color_space);
 
@@ -2293,7 +2293,7 @@ gimp_context_set_gradient_repeat_mode (GimpRepeatMode repeat_mode)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_REPEAT_MODE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), repeat_mode);
 
@@ -2888,7 +2888,7 @@ gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_SELECT_CRITERION,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), sample_criterion);
 
@@ -3253,7 +3253,7 @@ gimp_context_set_distance_metric (GeglDistanceMetric metric)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GEGL_TYPE_DISTANCE_METRIC,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), metric);
 
@@ -3330,7 +3330,7 @@ gimp_context_set_interpolation (GimpInterpolationType interpolation)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_INTERPOLATION_TYPE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), interpolation);
 
@@ -3404,7 +3404,7 @@ gimp_context_set_transform_direction (GimpTransformDirection transform_direction
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_TRANSFORM_DIRECTION,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), transform_direction);
 
@@ -3482,7 +3482,7 @@ gimp_context_set_transform_resize (GimpTransformResize transform_resize)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_TRANSFORM_RESIZE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), transform_resize);
 
@@ -3878,7 +3878,7 @@ gimp_context_set_ink_blob_type (GimpInkBlobType type)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_ENUM,
+  args = gimp_value_array_new_from_types (GIMP_TYPE_INK_BLOB_TYPE,
                                           G_TYPE_NONE);
   g_value_set_enum (gimp_value_array_index (args, 0), type);
 
