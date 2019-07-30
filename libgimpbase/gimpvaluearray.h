@@ -41,6 +41,12 @@ G_BEGIN_DECLS
 GType            gimp_value_array_get_type (void) G_GNUC_CONST;
 
 GimpValueArray * gimp_value_array_new      (gint                  n_prealloced);
+GimpValueArray * gimp_value_array_new_from_types
+                                           (GType                 first_type,
+                                            ...);
+GimpValueArray * gimp_value_array_new_from_types_valist
+                                           (GType                 first_type,
+                                            va_list               va_args);
 
 GimpValueArray * gimp_value_array_ref      (GimpValueArray       *value_array);
 void             gimp_value_array_unref    (GimpValueArray       *value_array);
