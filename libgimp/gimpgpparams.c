@@ -2,6 +2,7 @@
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * gimpgpparams.c
+ * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,9 +34,7 @@
 #include "gimpgpparams.h"
 
 
-/*  public functions  */
-
-/*  include the implementation of _gimp_param_spec_to_gp_param_def()
- *  from libgimp, they are identical.
+/*  include the implementation, they are shared between app/ and
+ *  libgimp/ but need different headers.
  */
 #include "gimpgpparams-body.c"

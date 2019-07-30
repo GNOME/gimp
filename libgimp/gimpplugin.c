@@ -2,6 +2,7 @@
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * gimpplugin.c
+ * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -147,8 +148,8 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
 }
 
 GimpProcedure *
-gimp_plug_in_create_procedure (GimpPlugIn    *plug_in,
-                               const gchar   *name)
+gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
+                               const gchar *name)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -166,6 +167,8 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (gimp_procedure_get_proc_type (procedure) ==
+                    GIMP_TEMPORARY);
 
   plug_in->priv->temp_procedures = g_list_prepend (plug_in->priv->temp_procedures,
                                                    g_object_ref (procedure));
