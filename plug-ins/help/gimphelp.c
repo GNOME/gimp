@@ -47,10 +47,10 @@ static GHashTable  *domain_hash = NULL;
 /*  public functions  */
 
 gboolean
-gimp_help_init (gint    num_domain_names,
-                gchar **domain_names,
-                gint    num_domain_uris,
-                gchar **domain_uris)
+gimp_help_init (gint          num_domain_names,
+                const gchar **domain_names,
+                gint          num_domain_uris,
+                const gchar **domain_uris)
 {
   gint i;
 
