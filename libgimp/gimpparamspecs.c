@@ -178,8 +178,6 @@ gimp_value_set_image_id (GValue *value,
                          gint32  image_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_IMAGE_ID (value));
-  g_return_if_fail (image_id == -1 || image_id == 0 ||
-                    gimp_image_is_valid (image_id));
 
   value->data[0].v_int = image_id;
 }
@@ -334,57 +332,9 @@ void
 gimp_value_set_item_id (GValue *value,
                         gint32  item_id)
 {
-  g_return_if_fail (item_id == -1 || item_id == 0 ||
-                    gimp_item_is_valid (item_id));
+  g_return_if_fail (GIMP_VALUE_HOLDS_ITEM_ID (value));
 
-  /* This could all be less messy, see
-   * https://gitlab.gnome.org/GNOME/glib/issues/66
-   */
-
-  if (GIMP_VALUE_HOLDS_ITEM_ID (value))
-    {
-      value->data[0].v_int = item_id;
-    }
-  else if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value) &&
-           (item_id == -1 || item_id == 0 ||
-            gimp_item_is_drawable (item_id)))
-    {
-      gimp_value_set_drawable_id (value, item_id);
-    }
-  else if (GIMP_VALUE_HOLDS_LAYER_ID (value) &&
-           (item_id == -1 || item_id == 0 ||
-            gimp_item_is_layer (item_id)))
-    {
-      gimp_value_set_layer_id (value, item_id);
-    }
-  else if (GIMP_VALUE_HOLDS_CHANNEL_ID (value) &&
-           (item_id == -1 || item_id == 0 ||
-            gimp_item_is_channel (item_id)))
-    {
-      gimp_value_set_channel_id (value, item_id);
-    }
-  else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
-           (item_id == -1 || item_id == 0 ||
-            gimp_item_is_layer_mask (item_id)))
-    {
-      gimp_value_set_layer_mask_id (value, item_id);
-    }
-  else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
-           (item_id == -1 || item_id == 0 ||
-            gimp_item_is_selection (item_id)))
-    {
-      gimp_value_set_selection_id (value, item_id);
-    }
-  else if (GIMP_VALUE_HOLDS_VECTORS_ID (value) &&
-           (item_id == -1 || item_id == 0 ||
-            gimp_item_is_vectors (item_id)))
-    {
-      gimp_value_set_vectors_id (value, item_id);
-    }
-  else
-    {
-      g_return_if_reached ();
-    }
+  value->data[0].v_int = item_id;
 }
 
 
@@ -503,42 +453,8 @@ gimp_value_set_drawable_id (GValue *value,
                             gint32  drawable_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_DRAWABLE_ID (value));
-  g_return_if_fail (drawable_id == -1 || drawable_id == 0 ||
-                    (gimp_item_is_valid (drawable_id) &&
-                     gimp_item_is_drawable (drawable_id)));
 
-  if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value))
-    {
-      value->data[0].v_int = drawable_id;
-    }
-  else if (GIMP_VALUE_HOLDS_LAYER_ID (value) &&
-           (drawable_id == -1 || drawable_id == 0 ||
-            gimp_item_is_layer (drawable_id)))
-    {
-      gimp_value_set_layer_id (value, drawable_id);
-    }
-  else if (GIMP_VALUE_HOLDS_CHANNEL_ID (value) &&
-           (drawable_id == -1 || drawable_id == 0 ||
-            gimp_item_is_channel (drawable_id)))
-    {
-      gimp_value_set_channel_id (value, drawable_id);
-    }
-  else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
-           (drawable_id == -1 || drawable_id == 0 ||
-            gimp_item_is_layer_mask (drawable_id)))
-    {
-      gimp_value_set_layer_mask_id (value, drawable_id);
-    }
-  else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
-           (drawable_id == -1 || drawable_id == 0 ||
-            gimp_item_is_selection (drawable_id)))
-    {
-      gimp_value_set_selection_id (value, drawable_id);
-    }
-  else
-    {
-      g_return_if_reached ();
-    }
+  value->data[0].v_int = drawable_id;
 }
 
 
@@ -657,9 +573,6 @@ gimp_value_set_layer_id (GValue *value,
                          gint32  layer_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_LAYER_ID (value));
-  g_return_if_fail (layer_id == -1 || layer_id == 0 ||
-                    (gimp_item_is_valid (layer_id) &&
-                     gimp_item_is_layer (layer_id)));
 
   value->data[0].v_int = layer_id;
 }
@@ -780,30 +693,8 @@ gimp_value_set_channel_id (GValue *value,
                            gint32  channel_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_CHANNEL_ID (value));
-  g_return_if_fail (channel_id == -1 || channel_id == 0 ||
-                    (gimp_item_is_valid (channel_id) &&
-                     gimp_item_is_channel (channel_id)));
 
-  if (GIMP_VALUE_HOLDS_CHANNEL_ID (value))
-    {
-      value->data[0].v_int = channel_id;
-    }
-  else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
-           (channel_id == -1 || channel_id == 0 ||
-            gimp_item_is_layer_mask (channel_id)))
-    {
-      gimp_value_set_layer_mask_id (value, channel_id);
-    }
-  else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
-           (channel_id == -1 || channel_id == 0 ||
-            gimp_item_is_selection (channel_id)))
-    {
-      gimp_value_set_selection_id (value, channel_id);
-    }
-  else
-    {
-      g_return_if_reached ();
-    }
+  value->data[0].v_int = channel_id;
 }
 
 
@@ -922,9 +813,6 @@ gimp_value_set_layer_mask_id (GValue *value,
                               gint32  layer_mask_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value));
-  g_return_if_fail (layer_mask_id == -1 || layer_mask_id == 0 ||
-                    (gimp_item_is_valid (layer_mask_id) &&
-                     gimp_item_is_layer_mask (layer_mask_id)));
 
   value->data[0].v_int = layer_mask_id;
 }
@@ -1045,9 +933,6 @@ gimp_value_set_selection_id (GValue *value,
                              gint32  selection_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_SELECTION_ID (value));
-  g_return_if_fail (selection_id == -1 || selection_id == 0 ||
-                    (gimp_item_is_valid (selection_id) &&
-                     gimp_item_is_selection (selection_id)));
 
   value->data[0].v_int = selection_id;
 }
@@ -1168,9 +1053,6 @@ gimp_value_set_vectors_id (GValue *value,
                            gint32  vectors_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_VECTORS_ID (value));
-  g_return_if_fail (vectors_id == -1 || vectors_id == 0 ||
-                    (gimp_item_is_valid (vectors_id) &&
-                     gimp_item_is_vectors (vectors_id)));
 
   value->data[0].v_int = vectors_id;
 }
@@ -1326,8 +1208,6 @@ gimp_value_set_display_id (GValue *value,
                            gint32  display_id)
 {
   g_return_if_fail (GIMP_VALUE_HOLDS_DISPLAY_ID (value));
-  g_return_if_fail (display_id == -1 || display_id == 0 ||
-                    gimp_display_is_valid (display_id));
 
   value->data[0].v_int = display_id;
 }
