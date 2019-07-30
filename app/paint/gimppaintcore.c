@@ -568,11 +568,18 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                 gimp_item_get_height (GIMP_ITEM (drawable)),
                                 &x, &y, &width, &height))
     {
+      GeglRectangle rect;
+
+      gegl_rectangle_align_to_buffer (&rect,
+                                      GEGL_RECTANGLE (x, y, width, height),
+                                      gimp_drawable_get_buffer (drawable),
+                                      GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+
       gimp_gegl_buffer_copy (core->undo_buffer,
-                             GEGL_RECTANGLE (x, y, width, height),
+                             &rect,
                              GEGL_ABYSS_NONE,
                              gimp_drawable_get_buffer (drawable),
-                             GEGL_RECTANGLE (x, y, width, height));
+                             &rect);
     }
 
   g_clear_object (&core->undo_buffer);
