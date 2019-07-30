@@ -57,11 +57,8 @@
 #include "gimp-intl.h"
 
 
-#define PAINT_COPY_CHUNK_WIDTH    128
-#define PAINT_COPY_CHUNK_HEIGHT   128
-
-#define PAINT_UPDATE_CHUNK_WIDTH   32
-#define PAINT_UPDATE_CHUNK_HEIGHT  32
+#define PAINT_UPDATE_CHUNK_WIDTH  32
+#define PAINT_UPDATE_CHUNK_HEIGHT 32
 
 
 enum
@@ -1076,48 +1073,50 @@ gimp_drawable_update (GimpDrawable *drawable,
     {
       GeglRectangle rect;
 
-      rect.x      = floor ((gdouble) x            / PAINT_COPY_CHUNK_WIDTH)  * PAINT_COPY_CHUNK_WIDTH;
-      rect.y      = floor ((gdouble) y            / PAINT_COPY_CHUNK_HEIGHT) * PAINT_COPY_CHUNK_HEIGHT;
-      rect.width  = ceil  ((gdouble) (x + width)  / PAINT_COPY_CHUNK_WIDTH)  * PAINT_COPY_CHUNK_WIDTH  - rect.x;
-      rect.height = ceil  ((gdouble) (y + height) / PAINT_COPY_CHUNK_HEIGHT) * PAINT_COPY_CHUNK_HEIGHT - rect.y;
-
       if (gegl_rectangle_intersect (
             &rect,
-            &rect,
+            GEGL_RECTANGLE (x, y, width, height),
             GEGL_RECTANGLE (0, 0,
                             gimp_item_get_width  (GIMP_ITEM (drawable)),
                             gimp_item_get_height (GIMP_ITEM (drawable)))))
         {
+          GeglRectangle aligned_rect;
+
+          gegl_rectangle_align_to_buffer (&aligned_rect, &rect,
+                                          gimp_drawable_get_buffer (drawable),
+                                          GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+
           if (drawable->private->paint_copy_region)
             {
               cairo_region_union_rectangle (
                 drawable->private->paint_copy_region,
-                (const cairo_rectangle_int_t *) &rect);
+                (const cairo_rectangle_int_t *) &aligned_rect);
             }
           else
             {
               drawable->private->paint_copy_region =
                 cairo_region_create_rectangle (
-                  (const cairo_rectangle_int_t *) &rect);
+                  (const cairo_rectangle_int_t *) &aligned_rect);
             }
 
-            rect.x      = floor ((gdouble) x            / PAINT_UPDATE_CHUNK_WIDTH)  * PAINT_UPDATE_CHUNK_WIDTH;
-            rect.y      = floor ((gdouble) y            / PAINT_UPDATE_CHUNK_HEIGHT) * PAINT_UPDATE_CHUNK_HEIGHT;
-            rect.width  = ceil  ((gdouble) (x + width)  / PAINT_UPDATE_CHUNK_WIDTH)  * PAINT_UPDATE_CHUNK_WIDTH  - rect.x;
-            rect.height = ceil  ((gdouble) (y + height) / PAINT_UPDATE_CHUNK_HEIGHT) * PAINT_UPDATE_CHUNK_HEIGHT - rect.y;
+          gegl_rectangle_align (&aligned_rect, &rect,
+                                GEGL_RECTANGLE (0, 0,
+                                                PAINT_UPDATE_CHUNK_WIDTH,
+                                                PAINT_UPDATE_CHUNK_HEIGHT),
+                                GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
-            if (drawable->private->paint_update_region)
-              {
-                cairo_region_union_rectangle (
-                  drawable->private->paint_update_region,
-                  (const cairo_rectangle_int_t *) &rect);
-              }
-            else
-              {
-                drawable->private->paint_update_region =
-                  cairo_region_create_rectangle (
-                    (const cairo_rectangle_int_t *) &rect);
-              }
+          if (drawable->private->paint_update_region)
+            {
+              cairo_region_union_rectangle (
+                drawable->private->paint_update_region,
+                (const cairo_rectangle_int_t *) &aligned_rect);
+            }
+          else
+            {
+              drawable->private->paint_update_region =
+                cairo_region_create_rectangle (
+                  (const cairo_rectangle_int_t *) &aligned_rect);
+            }
         }
     }
 }
