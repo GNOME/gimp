@@ -334,8 +334,8 @@ gimp_unitrc_save (Gimp *gimp)
 
           gimp_config_writer_open (writer, "factor");
           gimp_config_writer_print (writer,
-                                    g_ascii_formatd (buf, sizeof (buf), "%f",
-                                                     _gimp_unit_get_factor (gimp, i)),
+                                    g_ascii_dtostr (buf, sizeof (buf),
+                                                    _gimp_unit_get_factor (gimp, i)),
                                     -1);
           gimp_config_writer_close (writer);
 
