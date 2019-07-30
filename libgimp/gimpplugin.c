@@ -24,6 +24,7 @@
 
 #include "gimp.h"
 #include "gimpplugin-private.h"
+#include "gimpprocedure-private.h"
 
 
 /**
@@ -66,10 +67,10 @@ gimp_plug_in_finalize (GObject *object)
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
   GList      *list;
 
-  if (plug_in->priv->procedures)
+  if (plug_in->priv->temp_procedures)
     {
-      g_list_free_full (plug_in->priv->procedures, g_object_unref);
-      plug_in->priv->procedures = NULL;
+      g_list_free_full (plug_in->priv->temp_procedures, g_object_unref);
+      plug_in->priv->temp_procedures = NULL;
     }
 
   g_clear_pointer (&plug_in->priv->translation_domain_name, g_free);
@@ -160,53 +161,57 @@ gimp_plug_in_create_procedure (GimpPlugIn    *plug_in,
 }
 
 void
-gimp_plug_in_add_procedure (GimpPlugIn    *plug_in,
-                            GimpProcedure *procedure)
+gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
+                                 GimpProcedure *procedure)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  plug_in->priv->procedures = g_list_prepend (plug_in->priv->procedures,
-                                              g_object_ref (procedure));
+  plug_in->priv->temp_procedures = g_list_prepend (plug_in->priv->temp_procedures,
+                                                   g_object_ref (procedure));
+
+  _gimp_procedure_register (procedure);
 }
 
 void
-gimp_plug_in_remove_procedure (GimpPlugIn  *plug_in,
-                               const gchar *name)
+gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
+                                    const gchar *name)
 {
   GimpProcedure *procedure;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (name != NULL);
 
-  procedure = gimp_plug_in_get_procedure (plug_in, name);
+  procedure = gimp_plug_in_get_temp_procedure (plug_in, name);
 
   if (procedure)
     {
-      plug_in->priv->procedures = g_list_remove (plug_in->priv->procedures,
-                                                 procedure);
+      _gimp_procedure_unregister (procedure);
+
+      plug_in->priv->temp_procedures = g_list_remove (plug_in->priv->temp_procedures,
+                                                      procedure);
       g_object_unref (procedure);
     }
 }
 
 GList *
-gimp_plug_in_get_procedures (GimpPlugIn *plug_in)
+gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
-  return plug_in->priv->procedures;
+  return plug_in->priv->temp_procedures;
 }
 
 GimpProcedure *
-gimp_plug_in_get_procedure (GimpPlugIn  *plug_in,
-                            const gchar *name)
+gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
+                                 const gchar *name)
 {
   GList *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  for (list = plug_in->priv->procedures; list; list = g_list_next (list))
+  for (list = plug_in->priv->temp_procedures; list; list = g_list_next (list))
     {
       GimpProcedure *procedure = list->data;
 

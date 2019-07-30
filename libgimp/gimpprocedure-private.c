@@ -34,13 +34,14 @@
 #include "gimpprocedure-private.h"
 
 
+extern GIOChannel *_writechannel;
+
+
 /*  public functions  */
 
 void
 _gimp_procedure_register (GimpProcedure *procedure)
 {
-  extern GIOChannel *_writechannel;
-
   GParamSpec   **args;
   GParamSpec   **return_vals;
   gint           n_args;
@@ -65,7 +66,7 @@ _gimp_procedure_register (GimpProcedure *procedure)
   proc_install.date         = (gchar *) gimp_procedure_get_date (procedure);
   proc_install.menu_label   = (gchar *) gimp_procedure_get_menu_label (procedure);
   proc_install.image_types  = (gchar *) gimp_procedure_get_image_types (procedure);
-  proc_install.type         = GIMP_PLUGIN;
+  proc_install.type         = gimp_procedure_get_proc_type (procedure);
   proc_install.nparams      = n_args;
   proc_install.nreturn_vals = n_return_vals;
   proc_install.params       = g_new0 (GPParamDef, n_args);
@@ -102,4 +103,15 @@ _gimp_procedure_register (GimpProcedure *procedure)
       gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
                                  list->data);
     }
+}
+
+void
+_gimp_procedure_unregister (GimpProcedure *procedure)
+{
+  GPProcUninstall proc_uninstall;
+
+  proc_uninstall.name = (gchar *) gimp_procedure_get_name (procedure);
+
+  if (! gp_proc_uninstall_write (_writechannel, &proc_uninstall, NULL))
+    gimp_quit ();
 }

@@ -58,8 +58,13 @@ struct _GimpProcedureClass
 
 GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 
-GimpProcedure  * gimp_procedure_new                (const gchar       *name,
+GimpProcedure  * gimp_procedure_new                (GimpPlugIn        *plug_in,
+                                                    const gchar       *name,
+                                                    GimpPDBProcType    proc_type,
                                                     GimpRunFunc        run_func);
+
+GimpPlugIn     * gimp_procedure_get_plug_in        (GimpProcedure     *procedure);
+GimpPDBProcType  gimp_procedure_get_proc_type      (GimpProcedure     *procedure);
 
 void             gimp_procedure_set_strings        (GimpProcedure     *procedure,
                                                     const gchar       *menu_label,

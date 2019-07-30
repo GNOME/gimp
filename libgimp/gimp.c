@@ -2699,7 +2699,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
     {
       GimpProcedure *procedure;
 
-      procedure = gimp_plug_in_get_procedure (PLUG_IN, proc_run->name);
+      procedure = gimp_plug_in_get_temp_procedure (PLUG_IN, proc_run->name);
 
       if (procedure)
         {
