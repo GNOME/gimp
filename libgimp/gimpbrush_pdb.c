@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 
 
@@ -52,19 +50,22 @@
 gchar *
 gimp_brush_new (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-brush-new",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    actual_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-new",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return actual_name;
 }
@@ -85,19 +86,22 @@ gimp_brush_new (const gchar *name)
 gchar *
 gimp_brush_duplicate (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *copy_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-brush-duplicate",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    copy_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-duplicate",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    copy_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return copy_name;
 }
@@ -117,19 +121,22 @@ gimp_brush_duplicate (const gchar *name)
 gboolean
 gimp_brush_is_generated (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean generated = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-is-generated",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    generated = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-is-generated",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    generated = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return generated;
 }
@@ -152,20 +159,24 @@ gchar *
 gimp_brush_rename (const gchar *name,
                    const gchar *new_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-brush-rename",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_STRING, new_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_string (gimp_value_array_index (args, 1), new_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    actual_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-rename",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return actual_name;
 }
@@ -185,18 +196,21 @@ gimp_brush_rename (const gchar *name,
 gboolean
 gimp_brush_delete (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-delete",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-delete",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -216,19 +230,22 @@ gimp_brush_delete (const gchar *name)
 gboolean
 gimp_brush_is_editable (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-is-editable",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    editable = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-is-editable",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    editable = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return editable;
 }
@@ -257,31 +274,34 @@ gimp_brush_get_info (const gchar *name,
                      gint        *mask_bpp,
                      gint        *color_bpp)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-info",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-info",
+                                               args);
+  gimp_value_array_unref (args);
 
   *width = 0;
   *height = 0;
   *mask_bpp = 0;
   *color_bpp = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *width = return_vals[1].data.d_int32;
-      *height = return_vals[2].data.d_int32;
-      *mask_bpp = return_vals[3].data.d_int32;
-      *color_bpp = return_vals[4].data.d_int32;
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *mask_bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *color_bpp = g_value_get_int (gimp_value_array_index (return_vals, 4));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -318,14 +338,17 @@ gimp_brush_get_pixels (const gchar  *name,
                        gint         *num_color_bytes,
                        guint8      **color_bytes)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-pixels",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-pixels",
+                                               args);
+  gimp_value_array_unref (args);
 
   *width = 0;
   *height = 0;
@@ -336,27 +359,21 @@ gimp_brush_get_pixels (const gchar  *name,
   *num_color_bytes = 0;
   *color_bytes = NULL;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *width = return_vals[1].data.d_int32;
-      *height = return_vals[2].data.d_int32;
-      *mask_bpp = return_vals[3].data.d_int32;
-      *num_mask_bytes = return_vals[4].data.d_int32;
-      *mask_bytes = g_new (guint8, *num_mask_bytes);
-      memcpy (*mask_bytes,
-              return_vals[5].data.d_int8array,
-              *num_mask_bytes * sizeof (guint8));
-      *color_bpp = return_vals[6].data.d_int32;
-      *num_color_bytes = return_vals[7].data.d_int32;
-      *color_bytes = g_new (guint8, *num_color_bytes);
-      memcpy (*color_bytes,
-              return_vals[8].data.d_int8array,
-              *num_color_bytes * sizeof (guint8));
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *mask_bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *num_mask_bytes = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *mask_bytes = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
+      *color_bpp = g_value_get_int (gimp_value_array_index (return_vals, 6));
+      *num_color_bytes = g_value_get_int (gimp_value_array_index (return_vals, 7));
+      *color_bytes = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 8));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -380,23 +397,26 @@ gboolean
 gimp_brush_get_spacing (const gchar *name,
                         gint        *spacing)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-spacing",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-spacing",
+                                               args);
+  gimp_value_array_unref (args);
 
   *spacing = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *spacing = return_vals[1].data.d_int32;
+    *spacing = g_value_get_int (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -419,19 +439,23 @@ gboolean
 gimp_brush_set_spacing (const gchar *name,
                         gint         spacing)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-spacing",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, spacing,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), spacing);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-spacing",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -456,19 +480,22 @@ gimp_brush_set_spacing (const gchar *name,
 GimpBrushGeneratedShape
 gimp_brush_get_shape (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   GimpBrushGeneratedShape shape = 0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-shape",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    shape = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-shape",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    shape = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return shape;
 }
@@ -495,20 +522,24 @@ GimpBrushGeneratedShape
 gimp_brush_set_shape (const gchar             *name,
                       GimpBrushGeneratedShape  shape_in)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   GimpBrushGeneratedShape shape_out = 0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-shape",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, shape_in,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_enum (gimp_value_array_index (args, 1), shape_in);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    shape_out = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-shape",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    shape_out = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return shape_out;
 }
@@ -529,19 +560,22 @@ gimp_brush_set_shape (const gchar             *name,
 gdouble
 gimp_brush_get_radius (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble radius = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-radius",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    radius = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-radius",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    radius = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return radius;
 }
@@ -564,20 +598,24 @@ gdouble
 gimp_brush_set_radius (const gchar *name,
                        gdouble      radius_in)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble radius_out = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-radius",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_FLOAT, radius_in,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_double (gimp_value_array_index (args, 1), radius_in);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    radius_out = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-radius",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    radius_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return radius_out;
 }
@@ -598,19 +636,22 @@ gimp_brush_set_radius (const gchar *name,
 gint
 gimp_brush_get_spikes (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint spikes = 0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-spikes",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    spikes = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-spikes",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    spikes = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return spikes;
 }
@@ -633,20 +674,24 @@ gint
 gimp_brush_set_spikes (const gchar *name,
                        gint         spikes_in)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint spikes_out = 0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-spikes",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, spikes_in,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), spikes_in);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    spikes_out = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-spikes",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    spikes_out = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return spikes_out;
 }
@@ -669,19 +714,22 @@ gimp_brush_set_spikes (const gchar *name,
 gdouble
 gimp_brush_get_hardness (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble hardness = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-hardness",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    hardness = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-hardness",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    hardness = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return hardness;
 }
@@ -705,20 +753,24 @@ gdouble
 gimp_brush_set_hardness (const gchar *name,
                          gdouble      hardness_in)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble hardness_out = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-hardness",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_FLOAT, hardness_in,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_double (gimp_value_array_index (args, 1), hardness_in);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    hardness_out = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-hardness",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    hardness_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return hardness_out;
 }
@@ -740,19 +792,22 @@ gimp_brush_set_hardness (const gchar *name,
 gdouble
 gimp_brush_get_aspect_ratio (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble aspect_ratio = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-aspect-ratio",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    aspect_ratio = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-aspect-ratio",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    aspect_ratio = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return aspect_ratio;
 }
@@ -776,20 +831,24 @@ gdouble
 gimp_brush_set_aspect_ratio (const gchar *name,
                              gdouble      aspect_ratio_in)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble aspect_ratio_out = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-aspect-ratio",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_FLOAT, aspect_ratio_in,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_double (gimp_value_array_index (args, 1), aspect_ratio_in);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    aspect_ratio_out = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-aspect-ratio",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    aspect_ratio_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return aspect_ratio_out;
 }
@@ -810,19 +869,22 @@ gimp_brush_set_aspect_ratio (const gchar *name,
 gdouble
 gimp_brush_get_angle (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble angle = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-get-angle",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    angle = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-get-angle",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    angle = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return angle;
 }
@@ -845,20 +907,24 @@ gdouble
 gimp_brush_set_angle (const gchar *name,
                       gdouble      angle_in)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble angle_out = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-brush-set-angle",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_FLOAT, angle_in,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_double (gimp_value_array_index (args, 1), angle_in);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    angle_out = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-brush-set-angle",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    angle_out = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return angle_out;
 }

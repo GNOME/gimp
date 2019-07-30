@@ -64,14 +64,17 @@ gimp_selection_bounds (gint32    image_ID,
                        gint     *x2,
                        gint     *y2)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-bounds",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-bounds",
+                                               args);
+  gimp_value_array_unref (args);
 
   *non_empty = FALSE;
   *x1 = 0;
@@ -79,18 +82,18 @@ gimp_selection_bounds (gint32    image_ID,
   *x2 = 0;
   *y2 = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *non_empty = return_vals[1].data.d_int32;
-      *x1 = return_vals[2].data.d_int32;
-      *y1 = return_vals[3].data.d_int32;
-      *x2 = return_vals[4].data.d_int32;
-      *y2 = return_vals[5].data.d_int32;
+      *non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+      *x1 = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *y1 = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *x2 = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *y2 = g_value_get_int (gimp_value_array_index (return_vals, 5));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -113,21 +116,26 @@ gimp_selection_value (gint32 image_ID,
                       gint   x,
                       gint   y)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint value = 0;
 
-  return_vals = gimp_run_procedure ("gimp-selection-value",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, x,
-                                    GIMP_PDB_INT32, y,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), x);
+  g_value_set_int (gimp_value_array_index (args, 2), y);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    value = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-value",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    value = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return value;
 }
@@ -146,19 +154,22 @@ gimp_selection_value (gint32 image_ID,
 gboolean
 gimp_selection_is_empty (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean is_empty = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-is-empty",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    is_empty = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-is-empty",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    is_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return is_empty;
 }
@@ -184,20 +195,25 @@ gimp_selection_translate (gint32 image_ID,
                           gint   offx,
                           gint   offy)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-translate",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, offx,
-                                    GIMP_PDB_INT32, offy,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), offx);
+  g_value_set_int (gimp_value_array_index (args, 2), offy);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-translate",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -224,21 +240,26 @@ _gimp_selection_float (gint32 drawable_ID,
                        gint   offx,
                        gint   offy)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint32 layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-selection-float",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, offx,
-                                    GIMP_PDB_INT32, offy,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), offx);
+  g_value_set_int (gimp_value_array_index (args, 2), offy);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    layer_ID = return_vals[1].data.d_layer;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-float",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return layer_ID;
 }
@@ -257,18 +278,21 @@ _gimp_selection_float (gint32 drawable_ID,
 gboolean
 gimp_selection_invert (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-invert",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-invert",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -289,18 +313,21 @@ gimp_selection_invert (gint32 image_ID)
 gboolean
 gimp_selection_sharpen (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-sharpen",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-sharpen",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -319,18 +346,21 @@ gimp_selection_sharpen (gint32 image_ID)
 gboolean
 gimp_selection_all (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-all",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-all",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -349,18 +379,21 @@ gimp_selection_all (gint32 image_ID)
 gboolean
 gimp_selection_none (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-none",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-none",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -381,19 +414,23 @@ gboolean
 gimp_selection_feather (gint32  image_ID,
                         gdouble radius)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-feather",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_FLOAT, radius,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_double (gimp_value_array_index (args, 1), radius);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-feather",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -415,19 +452,23 @@ gboolean
 gimp_selection_border (gint32 image_ID,
                        gint   radius)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-border",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, radius,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), radius);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-border",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -448,19 +489,23 @@ gboolean
 gimp_selection_grow (gint32 image_ID,
                      gint   steps)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-grow",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, steps,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), steps);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-grow",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -482,19 +527,23 @@ gboolean
 gimp_selection_shrink (gint32 image_ID,
                        gint   steps)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-shrink",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, steps,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), steps);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-shrink",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -517,18 +566,21 @@ gimp_selection_shrink (gint32 image_ID,
 gboolean
 gimp_selection_flood (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-selection-flood",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-flood",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -548,19 +600,22 @@ gimp_selection_flood (gint32 image_ID)
 gint32
 gimp_selection_save (gint32 image_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint32 channel_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-selection-save",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    channel_ID = return_vals[1].data.d_channel;
+  return_vals = gimp_run_procedure_with_array ("gimp-selection-save",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return channel_ID;
 }

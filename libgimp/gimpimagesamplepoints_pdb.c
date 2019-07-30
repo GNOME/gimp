@@ -55,21 +55,26 @@ gimp_image_add_sample_point (gint32 image_ID,
                              gint   position_x,
                              gint   position_y)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint32 sample_point_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-image-add-sample-point",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, position_x,
-                                    GIMP_PDB_INT32, position_y,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_int (gimp_value_array_index (args, 1), position_x);
+  g_value_set_int (gimp_value_array_index (args, 2), position_y);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    sample_point_ID = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-add-sample-point",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    sample_point_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return sample_point_ID;
 }
@@ -92,19 +97,23 @@ gboolean
 gimp_image_delete_sample_point (gint32 image_ID,
                                 gint32 sample_point_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-delete-sample-point",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, sample_point_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_uint (gimp_value_array_index (args, 1), sample_point_ID);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-delete-sample-point",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -131,20 +140,24 @@ gint32
 gimp_image_find_next_sample_point (gint32 image_ID,
                                    gint32 sample_point_ID)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint32 next_sample_point_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-image-find-next-sample-point",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, sample_point_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_uint (gimp_value_array_index (args, 1), sample_point_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    next_sample_point_ID = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-image-find-next-sample-point",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    next_sample_point_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return next_sample_point_ID;
 }
@@ -170,23 +183,27 @@ gimp_image_get_sample_point_position (gint32  image_ID,
                                       gint32  sample_point_ID,
                                       gint   *position_y)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint position_x = G_MININT;
 
-  return_vals = gimp_run_procedure ("gimp-image-get-sample-point-position",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, sample_point_ID,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  g_value_set_uint (gimp_value_array_index (args, 1), sample_point_ID);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  return_vals = gimp_run_procedure_with_array ("gimp-image-get-sample-point-position",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      position_x = return_vals[1].data.d_int32;
-      *position_y = return_vals[2].data.d_int32;
+      position_x = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *position_y = g_value_get_int (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return position_x;
 }

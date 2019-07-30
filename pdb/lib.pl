@@ -136,12 +136,42 @@ sub generate {
 	}
 
 	# The parameters to the function
-	my $arglist = ""; my $argpass = "";
-	my $argdesc = ""; my $sincedesc = "";
+	my $arglist = "";
+	my $argdesc = "";
+	my $sincedesc = "";
+	my $value_array = "";
+	my $arg_array = "";
+	my $argc = 0;
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
-	    my $desc = exists $_->{desc} ? $_->{desc} : "";
 	    my $arg = $arg_types{$type};
+	    my $var = $_->{name};
+	    my $desc = exists $_->{desc} ? $_->{desc} : "";
+	    my $var_len;
+	    my $value;
+
+	    $var .= '_ID' if $arg->{id};
+
+	    # This gets passed to gimp_value_array_new_with_types()
+	    $value_array .= "$arg->{gtype},\n" . " " x 42;
+
+	    $value = "gimp_value_array_index (args, $argc)";
+
+	    if (exists $_->{array}) {
+		my $arrayarg = $_->{array};
+
+		if (exists $arrayarg->{name}) {
+		    $var_len = $arrayarg->{name};
+		}
+		else {
+		    $var_len = 'num_' . $_->{name};
+		}
+	    }
+
+	    # This is the list of g_value_set_foo
+	    $arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
+
+	    $argc++;
 
 	    $wrapped = "_" if exists $_->{wrap};
 
@@ -156,22 +186,13 @@ sub generate {
 	    $argdesc .= '_ID' if $arg->{id};
 	    $argdesc .= ": $desc";
 
-	    # This is what's passed into gimp_run_procedure
-	    $argpass .= "\n" . ' ' x 36;
-	    $argpass .= "GIMP_PDB_$arg->{name}, ";
-
-	    $argpass .= "$_->{name}";
-	    $argpass .= '_ID' if $arg->{id};
-
-	    $argpass .= ',';
-
             unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
             $argdesc .= "\n";
 	}
 
 	# This marshals the return value(s)
 	my $return_args = "";
-	my $return_marshal = "gimp_destroy_params (return_vals, nreturn_vals);";
+	my $return_marshal = "gimp_value_array_unref (return_vals);";
 
 	# return success/failure boolean if we don't have anything else
 	if ($rettype eq 'void') {
@@ -253,14 +274,14 @@ sub generate {
 
 	    if ($rettype eq 'void') {
 		$return_marshal .= <<CODE;
-success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
 CODE
 	    }
 	    else {
 		$return_marshal .= <<CODE;
-if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
 CODE
 	    }
 
@@ -273,107 +294,34 @@ CODE
 		my $arg = $arg_types{$type};
 		my $var;
 	    
-		my $ch = "";
-		my $cf = "";
-
-		if ($type =~ /^string(array)?/) {
-		    $ch = 'g_strdup (';
-		    $cf = ')';
-		}
-		elsif ($type =~ /parasite/) {
-		    $ch = 'gimp_parasite_copy (&';
-		    $cf = ')';
-		}
-		elsif ($type =~ /boolean|enum|guide|sample_point/) {
+		if ($type =~ /boolean|enum|guide|sample_point/) {
 		    $type = 'int32';
 		}
 
-		if (exists $_->{num}) {
-		    $numpos = $argc;
-		    $numtype = $type;
-		    if (!exists $_->{no_lib}) {
-			$arglist .= "gint \*$_->{libname}, ";
-			$argdesc .= " * \@$_->{libname}: $desc";
-		    }
+		# The return value variable
+		$var = "";
+
+		unless (exists $_->{retval}) {
+		    $var .= '*';
+		    $arglist .= &libtype($_, 1);
+		    $arglist .= '*' unless exists $arg->{struct};
+		    $arglist .= "$_->{libname}";
+		    $arglist .= '_ID' if $arg->{id};
+		    $arglist .= ', ';
+
+		    $argdesc .= " * \@$_->{libname}";
+		    $argdesc .= '_ID' if $arg->{id};
+		    $argdesc .= ": $desc";
 		}
-		elsif (exists $_->{array}) {
-		    my $datatype = $arg->{type};
-		    chop $datatype;
-		    $datatype =~ s/ *$//;
 
-		    my $var = $_->{libname}; my $dh = ""; my $df = "";
-		    unless (exists $_->{retval}) {
-			$var = "*$var"; $dh = "(*"; $df = ")";
-			if ($type eq 'stringarray') {
-			    $arglist .= "$datatype**$_->{libname}, ";
-			}
-			else {
-			    $arglist .= "$datatype **$_->{libname}, ";
-			}
-			$argdesc .= " * \@$_->{libname}: $desc";
-		    }
+		$var = exists $_->{retval} ? "" : '*';
+		$var .= $_->{libname};
+		$var .= '_ID' if $arg->{id};
 
-		    if ($ch || $cf) {
-			$return_args .= "\n" . ' ' x 2 . "gint i;";
-		    }
+		$value = "gimp_value_array_index (return_vals, $argc)";
 
-		    my $numvar = '*' . $_->{array}->{name};
-		    $numvar = "num_$_->{name}" if exists $_->{array}->{no_lib};
-
-		    $return_marshal .= <<NUMVAR;
-      $numvar = return_vals[$numpos].data.d_$numtype;
-NUMVAR
-
-                    if ($type =~ /stringarray/) {
-                        $return_marshal .= <<CP;
-      if ($numvar > 0)
-        {
-          $var = g_new0 ($datatype, $numvar + 1);
-          for (i = 0; i < $numvar; i++)
-            $dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
-        }
-CP
-	            }
-                    else {
-                        $return_marshal .= <<NEW . (($ch || $cf) ? <<CP1 : <<CP2);
-      $var = g_new ($datatype, $numvar);
-NEW
-      for (i = 0; i < $numvar; i++)
-        $dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
-CP1
-      memcpy ($var,
-              return_vals[$argc].data.d_$type,
-              $numvar * sizeof ($datatype));
-CP2
-                    }
-		    $out->{headers} = "#include <string.h>\n" unless ($ch || $cf);
-                }
-		else {
-		    # The return value variable
-		    $var = "";
-
-		    unless (exists $_->{retval}) {
-			$var .= '*';
-			$arglist .= &libtype($_, 1);
-			$arglist .= '*' unless exists $arg->{struct};
-			$arglist .= "$_->{libname}";
-			$arglist .= '_ID' if $arg->{id};
-			$arglist .= ', ';
-
-			$argdesc .= " * \@$_->{libname}";
-			$argdesc .= '_ID' if $arg->{id};
-			$argdesc .= ": $desc";
-		    }
-
-		    $var = exists $_->{retval} ? "" : '*';
-		    $var .= $_->{libname};
-		    $var .= '_ID' if $arg->{id};
-
-		    $return_marshal .= ' ' x 2 if $#outargs;
-		    $return_marshal .= <<CODE
-    $var = ${ch}return_vals[$argc].data.d_$type${cf};
-CODE
-		}
+		$return_marshal .= ' ' x 2 if $#outargs;
+		$return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
 
                 if ($argdesc) {
                     unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
@@ -386,7 +334,7 @@ CODE
 
 	    $return_marshal .= <<'CODE';
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
 CODE
 	    unless ($retvoid) {
@@ -398,7 +346,7 @@ CODE
 	}
 	else {
 	    $return_marshal = <<CODE;
-success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   $return_marshal
 
@@ -505,12 +453,14 @@ $retdesc$sincedesc
 $rettype
 $wrapped$funcname ($clist)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;$return_args
+  GimpValueArray *args;
+  GimpValueArray *return_vals;$return_args
 
-  return_vals = gimp_run_procedure ("gimp-$proc->{canonical_name}",
-                                    \&nreturn_vals,$argpass
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (${value_array}G_TYPE_NONE);
+$arg_array
+  return_vals = gimp_run_procedure_with_array ("gimp-$proc->{canonical_name}",
+                                               args);
+  gimp_value_array_unref (args);
 
   $return_marshal
 }

@@ -50,17 +50,19 @@
 gboolean
 gimp_dynamics_refresh (void)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-dynamics-refresh",
-                                    &nreturn_vals,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_NONE);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-dynamics-refresh",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -84,30 +86,27 @@ gchar **
 gimp_dynamics_get_list (const gchar *filter,
                         gint        *num_dynamics)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar **dynamics_list = NULL;
-  gint i;
 
-  return_vals = gimp_run_procedure ("gimp-dynamics-get-list",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, filter,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), filter);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-dynamics-get-list",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_dynamics = 0;
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
-      *num_dynamics = return_vals[1].data.d_int32;
-      if (*num_dynamics > 0)
-        {
-          dynamics_list = g_new0 (gchar *, *num_dynamics + 1);
-          for (i = 0; i < *num_dynamics; i++)
-            dynamics_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
-        }
+      *num_dynamics = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      dynamics_list = gimp_value_dup_string_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return dynamics_list;
 }

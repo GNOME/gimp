@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 
 
@@ -51,19 +49,22 @@
 gchar *
 gimp_gradient_new (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-new",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    actual_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-new",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return actual_name;
 }
@@ -83,19 +84,22 @@ gimp_gradient_new (const gchar *name)
 gchar *
 gimp_gradient_duplicate (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *copy_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-duplicate",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    copy_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-duplicate",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    copy_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return copy_name;
 }
@@ -115,19 +119,22 @@ gimp_gradient_duplicate (const gchar *name)
 gboolean
 gimp_gradient_is_editable (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-is-editable",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    editable = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-is-editable",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    editable = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return editable;
 }
@@ -149,20 +156,24 @@ gchar *
 gimp_gradient_rename (const gchar *name,
                       const gchar *new_name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-rename",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_STRING, new_name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_string (gimp_value_array_index (args, 1), new_name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    actual_name = g_strdup (return_vals[1].data.d_string);
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-rename",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    actual_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return actual_name;
 }
@@ -182,18 +193,21 @@ gimp_gradient_rename (const gchar *name,
 gboolean
 gimp_gradient_delete (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-delete",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-delete",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -214,19 +228,22 @@ gimp_gradient_delete (const gchar *name)
 gint
 gimp_gradient_get_number_of_segments (const gchar *name)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint num_segments = 0;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-get-number-of-segments",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    num_segments = return_vals[1].data.d_int32;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-get-number-of-segments",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    num_segments = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return num_segments;
 }
@@ -260,32 +277,34 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
                                    gint         *num_color_samples,
                                    gdouble     **color_samples)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-get-uniform-samples",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, num_samples,
-                                    GIMP_PDB_INT32, reverse,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), num_samples);
+  g_value_set_boolean (gimp_value_array_index (args, 2), reverse);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-get-uniform-samples",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_color_samples = 0;
   *color_samples = NULL;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *num_color_samples = return_vals[1].data.d_int32;
-      *color_samples = g_new (gdouble, *num_color_samples);
-      memcpy (*color_samples,
-              return_vals[2].data.d_floatarray,
-              *num_color_samples * sizeof (gdouble));
+      *num_color_samples = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *color_samples = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -320,33 +339,36 @@ gimp_gradient_get_custom_samples (const gchar    *name,
                                   gint           *num_color_samples,
                                   gdouble       **color_samples)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-get-custom-samples",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, num_samples,
-                                    GIMP_PDB_FLOATARRAY, positions,
-                                    GIMP_PDB_INT32, reverse,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_FLOAT_ARRAY,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), num_samples);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), positions, num_samples);
+  g_value_set_boolean (gimp_value_array_index (args, 3), reverse);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-get-custom-samples",
+                                               args);
+  gimp_value_array_unref (args);
 
   *num_color_samples = 0;
   *color_samples = NULL;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *num_color_samples = return_vals[1].data.d_int32;
-      *color_samples = g_new (gdouble, *num_color_samples);
-      memcpy (*color_samples,
-              return_vals[2].data.d_floatarray,
-              *num_color_samples * sizeof (gdouble));
+      *num_color_samples = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *color_samples = gimp_value_dup_float_array (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -373,27 +395,31 @@ gimp_gradient_segment_get_left_color (const gchar *name,
                                       GimpRGB     *color,
                                       gdouble     *opacity)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-left-color",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-left-color",
+                                               args);
+  gimp_value_array_unref (args);
 
   *opacity = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *color = return_vals[1].data.d_color;
-      *opacity = return_vals[2].data.d_float;
+      gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
+      *opacity = g_value_get_double (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -420,21 +446,27 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
                                       const GimpRGB *color,
                                       gdouble        opacity)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-set-left-color",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_COLOR, color,
-                                    GIMP_PDB_FLOAT, opacity,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_RGB,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+  gimp_value_set_rgb (gimp_value_array_index (args, 2), color);
+  g_value_set_double (gimp_value_array_index (args, 3), opacity);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-left-color",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -461,27 +493,31 @@ gimp_gradient_segment_get_right_color (const gchar *name,
                                        GimpRGB     *color,
                                        gdouble     *opacity)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-right-color",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-right-color",
+                                               args);
+  gimp_value_array_unref (args);
 
   *opacity = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *color = return_vals[1].data.d_color;
-      *opacity = return_vals[2].data.d_float;
+      gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*color);
+      *opacity = g_value_get_double (gimp_value_array_index (return_vals, 2));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -508,21 +544,27 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
                                        const GimpRGB *color,
                                        gdouble        opacity)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-set-right-color",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_COLOR, color,
-                                    GIMP_PDB_FLOAT, opacity,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_RGB,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+  gimp_value_set_rgb (gimp_value_array_index (args, 2), color);
+  g_value_set_double (gimp_value_array_index (args, 3), opacity);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-right-color",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -547,24 +589,28 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
                                     gint         segment,
                                     gdouble     *pos)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-left-pos",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-left-pos",
+                                               args);
+  gimp_value_array_unref (args);
 
   *pos = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *pos = return_vals[1].data.d_float;
+    *pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -594,25 +640,30 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
                                     gdouble      pos,
                                     gdouble     *final_pos)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-set-left-pos",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_FLOAT, pos,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+  g_value_set_double (gimp_value_array_index (args, 2), pos);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-left-pos",
+                                               args);
+  gimp_value_array_unref (args);
 
   *final_pos = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *final_pos = return_vals[1].data.d_float;
+    *final_pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -637,24 +688,28 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
                                       gint         segment,
                                       gdouble     *pos)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-middle-pos",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-middle-pos",
+                                               args);
+  gimp_value_array_unref (args);
 
   *pos = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *pos = return_vals[1].data.d_float;
+    *pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -683,25 +738,30 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
                                       gdouble      pos,
                                       gdouble     *final_pos)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-set-middle-pos",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_FLOAT, pos,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+  g_value_set_double (gimp_value_array_index (args, 2), pos);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-middle-pos",
+                                               args);
+  gimp_value_array_unref (args);
 
   *final_pos = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *final_pos = return_vals[1].data.d_float;
+    *final_pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -726,24 +786,28 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
                                      gint         segment,
                                      gdouble     *pos)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-right-pos",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-right-pos",
+                                               args);
+  gimp_value_array_unref (args);
 
   *pos = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *pos = return_vals[1].data.d_float;
+    *pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -773,25 +837,30 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
                                      gdouble      pos,
                                      gdouble     *final_pos)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-set-right-pos",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_FLOAT, pos,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+  g_value_set_double (gimp_value_array_index (args, 2), pos);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-right-pos",
+                                               args);
+  gimp_value_array_unref (args);
 
   *final_pos = 0.0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *final_pos = return_vals[1].data.d_float;
+    *final_pos = g_value_get_double (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -816,24 +885,28 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
                                              gint                     segment,
                                              GimpGradientSegmentType *blend_func)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-blending-function",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-blending-function",
+                                               args);
+  gimp_value_array_unref (args);
 
   *blend_func = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *blend_func = return_vals[1].data.d_int32;
+    *blend_func = g_value_get_enum (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -858,24 +931,28 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
                                          gint                      segment,
                                          GimpGradientSegmentColor *coloring_type)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-get-coloring-type",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), segment);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-coloring-type",
+                                               args);
+  gimp_value_array_unref (args);
 
   *coloring_type = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
-    *coloring_type = return_vals[1].data.d_int32;
+    *coloring_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -902,21 +979,27 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
                                                    gint                     end_segment,
                                                    GimpGradientSegmentType  blending_function)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-set-blending-function",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_INT32, blending_function,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
+  g_value_set_enum (gimp_value_array_index (args, 3), blending_function);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-set-blending-function",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -943,21 +1026,27 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
                                                gint                      end_segment,
                                                GimpGradientSegmentColor  coloring_type)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-set-coloring-type",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_INT32, coloring_type,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
+  g_value_set_enum (gimp_value_array_index (args, 3), coloring_type);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-set-coloring-type",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -981,20 +1070,25 @@ gimp_gradient_segment_range_flip (const gchar *name,
                                   gint         start_segment,
                                   gint         end_segment)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-flip",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-flip",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1022,21 +1116,27 @@ gimp_gradient_segment_range_replicate (const gchar *name,
                                        gint         end_segment,
                                        gint         replicate_times)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-replicate",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_INT32, replicate_times,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
+  g_value_set_int (gimp_value_array_index (args, 3), replicate_times);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-replicate",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1061,20 +1161,25 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
                                             gint         start_segment,
                                             gint         end_segment)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-split-midpoint",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-split-midpoint",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1101,21 +1206,27 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
                                            gint         end_segment,
                                            gint         split_parts)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-split-uniform",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_INT32, split_parts,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
+  g_value_set_int (gimp_value_array_index (args, 3), split_parts);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-split-uniform",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1139,20 +1250,25 @@ gimp_gradient_segment_range_delete (const gchar *name,
                                     gint         start_segment,
                                     gint         end_segment)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-delete",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-delete",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1177,20 +1293,25 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
                                                   gint         start_segment,
                                                   gint         end_segment)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-redistribute-handles",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-redistribute-handles",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1216,20 +1337,25 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
                                           gint         start_segment,
                                           gint         end_segment)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-blend-colors",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-blend-colors",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1255,20 +1381,25 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
                                            gint         start_segment,
                                            gint         end_segment)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-blend-opacity",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-blend-opacity",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
@@ -1298,23 +1429,30 @@ gimp_gradient_segment_range_move (const gchar *name,
                                   gdouble      delta,
                                   gboolean     control_compress)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gdouble final_delta = 0.0;
 
-  return_vals = gimp_run_procedure ("gimp-gradient-segment-range-move",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_INT32, start_segment,
-                                    GIMP_PDB_INT32, end_segment,
-                                    GIMP_PDB_FLOAT, delta,
-                                    GIMP_PDB_INT32, control_compress,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), name);
+  g_value_set_int (gimp_value_array_index (args, 1), start_segment);
+  g_value_set_int (gimp_value_array_index (args, 2), end_segment);
+  g_value_set_double (gimp_value_array_index (args, 3), delta);
+  g_value_set_boolean (gimp_value_array_index (args, 4), control_compress);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    final_delta = return_vals[1].data.d_float;
+  return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-move",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    final_delta = g_value_get_double (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return final_delta;
 }

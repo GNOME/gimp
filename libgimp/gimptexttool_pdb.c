@@ -78,28 +78,40 @@ gimp_text_fontname (gint32        image_ID,
                     GimpSizeType  size_type,
                     const gchar  *fontname)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gint32 text_layer_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp-text-fontname",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_FLOAT, x,
-                                    GIMP_PDB_FLOAT, y,
-                                    GIMP_PDB_STRING, text,
-                                    GIMP_PDB_INT32, border,
-                                    GIMP_PDB_INT32, antialias,
-                                    GIMP_PDB_FLOAT, size,
-                                    GIMP_PDB_INT32, size_type,
-                                    GIMP_PDB_STRING, fontname,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+                                          GIMP_TYPE_DRAWABLE_ID,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_BOOLEAN,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
+  gimp_value_set_drawable_id (gimp_value_array_index (args, 1), drawable_ID);
+  g_value_set_double (gimp_value_array_index (args, 2), x);
+  g_value_set_double (gimp_value_array_index (args, 3), y);
+  g_value_set_string (gimp_value_array_index (args, 4), text);
+  g_value_set_int (gimp_value_array_index (args, 5), border);
+  g_value_set_boolean (gimp_value_array_index (args, 6), antialias);
+  g_value_set_double (gimp_value_array_index (args, 7), size);
+  g_value_set_enum (gimp_value_array_index (args, 8), size_type);
+  g_value_set_string (gimp_value_array_index (args, 9), fontname);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    text_layer_ID = return_vals[1].data.d_layer;
+  return_vals = gimp_run_procedure_with_array ("gimp-text-fontname",
+                                               args);
+  gimp_value_array_unref (args);
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    text_layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
 
   return text_layer_ID;
 }
@@ -137,34 +149,40 @@ gimp_text_get_extents_fontname (const gchar  *text,
                                 gint         *ascent,
                                 gint         *descent)
 {
-  GimpParam *return_vals;
-  gint nreturn_vals;
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-text-get-extents-fontname",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, text,
-                                    GIMP_PDB_FLOAT, size,
-                                    GIMP_PDB_INT32, size_type,
-                                    GIMP_PDB_STRING, fontname,
-                                    GIMP_PDB_END);
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_DOUBLE,
+                                          G_TYPE_ENUM,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), text);
+  g_value_set_double (gimp_value_array_index (args, 1), size);
+  g_value_set_enum (gimp_value_array_index (args, 2), size_type);
+  g_value_set_string (gimp_value_array_index (args, 3), fontname);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-text-get-extents-fontname",
+                                               args);
+  gimp_value_array_unref (args);
 
   *width = 0;
   *height = 0;
   *ascent = 0;
   *descent = 0;
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
     {
-      *width = return_vals[1].data.d_int32;
-      *height = return_vals[2].data.d_int32;
-      *ascent = return_vals[3].data.d_int32;
-      *descent = return_vals[4].data.d_int32;
+      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *ascent = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *descent = g_value_get_int (gimp_value_array_index (return_vals, 4));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 
   return success;
 }
