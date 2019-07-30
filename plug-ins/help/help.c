@@ -200,9 +200,11 @@ help_run (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpPlugIn *plug_in = gimp_procedure_get_plug_in (procedure);
+
       main_loop = g_main_loop_new (NULL, FALSE);
 
-      help_temp_proc_install (gimp_procedure_get_plug_in (procedure));
+      help_temp_proc_install (plug_in);
 
       gimp_extension_ack ();
       gimp_extension_enable ();
@@ -212,7 +214,7 @@ help_run (GimpProcedure        *procedure,
       g_main_loop_unref (main_loop);
       main_loop = NULL;
 
-      gimp_uninstall_temp_proc (GIMP_HELP_TEMP_EXT_PROC);
+      gimp_plug_in_remove_temp_procedure (plug_in, GIMP_HELP_TEMP_EXT_PROC);
     }
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
