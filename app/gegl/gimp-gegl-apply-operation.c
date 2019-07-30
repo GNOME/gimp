@@ -133,7 +133,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
           ! (gimp_gegl_node_is_point_operation  (underlying_operation) ||
              gimp_gegl_node_is_source_operation (underlying_operation)))
         {
-          src_buffer = gegl_buffer_dup (src_buffer);
+          src_buffer = gimp_gegl_buffer_dup (src_buffer);
         }
       else
         {

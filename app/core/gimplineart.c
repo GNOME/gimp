@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-parallel.h"
 #include "gimp-priorities.h"
@@ -648,7 +649,8 @@ gimp_line_art_prepare_async (GimpLineArt *line_art,
 
   gimp_pickable_flush (line_art->priv->input);
 
-  buffer = gegl_buffer_dup (gimp_pickable_get_buffer (line_art->priv->input));
+  buffer = gimp_gegl_buffer_dup (
+    gimp_pickable_get_buffer (line_art->priv->input));
 
   data  = line_art_data_new (buffer, line_art);
 
@@ -1062,7 +1064,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
             goto end3;
 
           g_object_unref (closed);
-          closed = gegl_buffer_dup (strokes);
+          closed = gimp_gegl_buffer_dup (strokes);
 
           /* Draw splines */
           while (candidates)
