@@ -140,7 +140,7 @@ gimp_image_new (gint              width,
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
+                                          gimp_image_base_type_get_type(),
                                           G_TYPE_NONE);
   g_value_set_int (gimp_value_array_index (args, 0), width);
   g_value_set_int (gimp_value_array_index (args, 1), height);
@@ -189,8 +189,8 @@ gimp_image_new_with_precision (gint              width,
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_INT32,
                                           GIMP_TYPE_INT32,
-                                          G_TYPE_ENUM,
-                                          G_TYPE_ENUM,
+                                          gimp_image_base_type_get_type(),
+                                          gimp_precision_get_type(),
                                           G_TYPE_NONE);
   g_value_set_int (gimp_value_array_index (args, 0), width);
   g_value_set_int (gimp_value_array_index (args, 1), height);
@@ -1651,7 +1651,7 @@ gimp_image_merge_visible_layers (gint32        image_ID,
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          gimp_merge_type_get_type(),
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), merge_type);
@@ -1697,7 +1697,7 @@ gimp_image_merge_down (gint32        image_ID,
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
                                           GIMP_TYPE_LAYER_ID,
-                                          G_TYPE_ENUM,
+                                          gimp_merge_type_get_type(),
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   gimp_value_set_layer_id (gimp_value_array_index (args, 1), merge_layer_ID);
@@ -2287,7 +2287,7 @@ gimp_image_get_component_active (gint32          image_ID,
   gboolean active = FALSE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          gimp_channel_type_get_type(),
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), component);
@@ -2329,7 +2329,7 @@ gimp_image_set_component_active (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          gimp_channel_type_get_type(),
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
@@ -2371,7 +2371,7 @@ gimp_image_get_component_visible (gint32          image_ID,
   gboolean visible = FALSE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          gimp_channel_type_get_type(),
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), component);
@@ -2413,7 +2413,7 @@ gimp_image_set_component_visible (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_ENUM,
+                                          gimp_channel_type_get_type(),
                                           G_TYPE_BOOLEAN,
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
