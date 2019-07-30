@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpdynamics
+ * SECTION: gimpdynamics_pdb
  * @title: gimpdynamics
  * @short_description: Operations related to paint dynamics.
  *

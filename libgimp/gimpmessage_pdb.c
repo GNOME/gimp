@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpmessage
+ * SECTION: gimpmessage_pdb
  * @title: gimpmessage
  * @short_description: Display a dialog box with a message.
  *

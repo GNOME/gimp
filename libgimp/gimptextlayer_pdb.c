@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimptextlayer
+ * SECTION: gimptextlayer_pdb
  * @title: gimptextlayer
  * @short_description: Functions for querying and manipulating text layers.
  *

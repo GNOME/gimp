@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpfonts
+ * SECTION: gimpfonts_pdb
  * @title: gimpfonts
  * @short_description: Operations related to fonts.
  *

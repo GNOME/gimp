@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimplayer
+ * SECTION: gimplayer_pdb
  * @title: gimplayer
  * @short_description: Operations on a single layer.
  *

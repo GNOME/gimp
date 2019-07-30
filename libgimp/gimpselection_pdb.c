@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpselection
+ * SECTION: gimpselection_pdb
  * @title: gimpselection
  * @short_description: Functions for manipulating selections.
  *

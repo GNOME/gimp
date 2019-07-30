@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpgradientselect
+ * SECTION: gimpgradientselect_pdb
  * @title: gimpgradientselect
  * @short_description: Functions providing a gradient selection dialog.
  *

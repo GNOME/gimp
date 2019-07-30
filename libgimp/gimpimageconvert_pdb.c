@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimageconvert
+ * SECTION: gimpimageconvert_pdb
  * @title: gimpimageconvert
  * @short_description: Conversions between RGB, indexed, and grayscale modes.
  *

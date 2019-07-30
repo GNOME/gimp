@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimageselect
+ * SECTION: gimpimageselect_pdb
  * @title: gimpimageselect
  * @short_description: Modify the image's selection.
  *

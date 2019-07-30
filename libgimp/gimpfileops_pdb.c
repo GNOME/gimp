@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpfileops
+ * SECTION: gimpfileops_pdb
  * @title: gimpfileops
  * @short_description: Image file operations (load, save, etc.)
  *

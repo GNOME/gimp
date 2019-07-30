@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpcontext
+ * SECTION: gimpcontext_pdb
  * @title: gimpcontext
  * @short_description: Functions to manipulate a plug-in's context.
  *

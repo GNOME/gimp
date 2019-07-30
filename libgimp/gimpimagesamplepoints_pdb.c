@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimagesamplepoints
+ * SECTION: gimpimagesamplepoints_pdb
  * @title: gimpimagesamplepoints
  * @short_description: Functions for manipulating an image's sample points.
  *

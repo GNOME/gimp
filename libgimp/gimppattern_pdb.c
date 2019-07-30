@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppattern
+ * SECTION: gimppattern_pdb
  * @title: gimppattern
  * @short_description: Functions operating on a single pattern.
  *

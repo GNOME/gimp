@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimagegrid
+ * SECTION: gimpimagegrid_pdb
  * @title: gimpimagegrid
  * @short_description: Functions manuipulating an image's grid.
  *

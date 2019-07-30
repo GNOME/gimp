@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpfloatingsel
+ * SECTION: gimpfloatingsel_pdb
  * @title: gimpfloatingsel
  * @short_description: Functions for removing or attaching floating selections.
  *

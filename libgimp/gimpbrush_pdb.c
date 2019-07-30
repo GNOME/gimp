@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpbrush
+ * SECTION: gimpbrush_pdb
  * @title: gimpbrush
  * @short_description: Functions operating on a single brush.
  *

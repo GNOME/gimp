@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimagecolorprofile
+ * SECTION: gimpimagecolorprofile_pdb
  * @title: gimpimagecolorprofile
  * @short_description: Operations on an image's color profile.
  *
