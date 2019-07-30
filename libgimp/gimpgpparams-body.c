@@ -59,6 +59,17 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_int.max_val     = uspec->maximum;
       param_def->meta.m_int.default_val = uspec->default_value;
     }
+  else if (pspec_type == GIMP_TYPE_PARAM_UNIT)
+    {
+      GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
+      GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_UNIT;
+
+      param_def->meta.m_unit.allow_pixels  = (ispec->minimum < GIMP_UNIT_INCH);
+      param_def->meta.m_unit.allow_percent = uspec->allow_percent;
+      param_def->meta.m_unit.default_val   = ispec->default_value;
+    }
   else if (pspec_type == G_TYPE_PARAM_ENUM)
     {
       GParamSpecEnum *espec     = G_PARAM_SPEC_ENUM (pspec);
@@ -211,7 +222,8 @@ _gimp_gp_params_to_value_array (GParamSpec **pspecs,
 
       if (type == G_TYPE_INT      ||
           type == GIMP_TYPE_INT32 ||
-          type == GIMP_TYPE_INT16)
+          type == GIMP_TYPE_INT16 ||
+          type == GIMP_TYPE_UNIT)
         {
           g_value_set_int (&value, params[i].data.d_int);
         }
@@ -379,7 +391,8 @@ _gimp_value_array_to_gp_params (GimpValueArray  *args,
 
       if (type == G_TYPE_INT      ||
           type == GIMP_TYPE_INT32 ||
-          type == GIMP_TYPE_INT16)
+          type == GIMP_TYPE_INT16 ||
+          type == GIMP_TYPE_UNIT)
         {
           params[i].param_type = GP_PARAM_TYPE_INT;
 

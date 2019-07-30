@@ -1076,6 +1076,19 @@ _gp_param_def_read (GIOChannel *channel,
         return FALSE;
       break;
 
+    case GP_PARAM_DEF_TYPE_UNIT:
+      if (! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_unit.allow_pixels, 1,
+                                   user_data) ||
+          ! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_unit.allow_percent, 1,
+                                   user_data) ||
+          ! _gimp_wire_read_int32 (channel,
+                                   (guint32 *) &param_def->meta.m_unit.default_val, 1,
+                                   user_data))
+        return FALSE;
+      break;
+
     case GP_PARAM_DEF_TYPE_ENUM:
       if (! _gimp_wire_read_string (channel,
                                     &param_def->meta.m_enum.type_name, 1,
@@ -1155,6 +1168,7 @@ _gp_param_def_destroy (GPParamDef *param_def)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_UNIT:
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
@@ -1325,6 +1339,19 @@ _gp_param_def_write (GIOChannel *channel,
                                     user_data) ||
           ! _gimp_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_int.default_val, 1,
+                                    user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_UNIT:
+      if (! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_unit.allow_pixels, 1,
+                                    user_data) ||
+          ! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_unit.allow_percent, 1,
+                                    user_data) ||
+          ! _gimp_wire_write_int32 (channel,
+                                    (guint32 *) &param_def->meta.m_unit.default_val, 1,
                                     user_data))
         return FALSE;
       break;
