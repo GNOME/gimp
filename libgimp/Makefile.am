@@ -152,6 +152,7 @@ gimpinclude_HEADERS = \
 	gimpimage.h			\
 	gimpimagecolorprofile.h		\
 	gimplayer.h			\
+	gimplegacy.h			\
 	gimppaletteselect.h		\
 	gimpparamspecs.h		\
 	gimppatternselect.h		\
