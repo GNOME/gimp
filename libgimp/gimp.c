@@ -115,9 +115,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpbase-private.h"
 #include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+#include "gimp-private.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
@@ -155,9 +155,6 @@ typedef enum
 } GimpDebugFlag;
 
 #define WRITE_BUFFER_SIZE  1024
-
-void gimp_read_expect_msg   (GimpWireMessage *msg,
-                             gint             type);
 
 
 static gint       gimp_main_internal           (GType                 plug_in_type,
@@ -212,8 +209,8 @@ static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
 static gchar                         *plug_in_backtrace_path = NULL;
 #endif
 
-static GIOChannel                   *_readchannel            = NULL;
-GIOChannel                          *_writechannel           = NULL;
+static GIOChannel                   *_gimp_readchannel       = NULL;
+GIOChannel                          *_gimp_writechannel      = NULL;
 
 #ifdef USE_WIN32_SHM
 static HANDLE shm_handle;
@@ -597,21 +594,21 @@ gimp_main_internal (GType                 plug_in_type,
 #endif
 
 #ifdef G_OS_WIN32
-  _readchannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
-  _writechannel = g_io_channel_win32_new_fd (atoi (argv[ARG_WRITE_FD]));
+  _gimp_readchannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
+  _gimp_writechannel = g_io_channel_win32_new_fd (atoi (argv[ARG_WRITE_FD]));
 #else
-  _readchannel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
-  _writechannel = g_io_channel_unix_new (atoi (argv[ARG_WRITE_FD]));
+  _gimp_readchannel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
+  _gimp_writechannel = g_io_channel_unix_new (atoi (argv[ARG_WRITE_FD]));
 #endif
 
-  g_io_channel_set_encoding (_readchannel, NULL, NULL);
-  g_io_channel_set_encoding (_writechannel, NULL, NULL);
+  g_io_channel_set_encoding (_gimp_readchannel, NULL, NULL);
+  g_io_channel_set_encoding (_gimp_writechannel, NULL, NULL);
 
-  g_io_channel_set_buffered (_readchannel, FALSE);
-  g_io_channel_set_buffered (_writechannel, FALSE);
+  g_io_channel_set_buffered (_gimp_readchannel, FALSE);
+  g_io_channel_set_buffered (_gimp_writechannel, FALSE);
 
-  g_io_channel_set_close_on_unref (_readchannel, TRUE);
-  g_io_channel_set_close_on_unref (_writechannel, TRUE);
+  g_io_channel_set_close_on_unref (_gimp_readchannel, TRUE);
+  g_io_channel_set_close_on_unref (_gimp_writechannel, TRUE);
 
   gp_init ();
 
@@ -743,12 +740,12 @@ gimp_main_internal (GType                 plug_in_type,
       if (PLUG_IN)
         {
           if (GIMP_PLUG_IN_GET_CLASS (PLUG_IN)->init_procedures)
-            gp_has_init_write (_writechannel, NULL);
+            gp_has_init_write (_gimp_writechannel, NULL);
         }
       else
         {
           if (PLUG_IN_INFO.init_proc)
-            gp_has_init_write (_writechannel, NULL);
+            gp_has_init_write (_gimp_writechannel, NULL);
         }
 
       if (gimp_debug_flags & GIMP_DEBUG_QUERY)
@@ -796,7 +793,7 @@ gimp_main_internal (GType                 plug_in_type,
 
   _gimp_temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
-  g_io_add_watch (_readchannel,
+  g_io_add_watch (_gimp_readchannel,
                   G_IO_ERR | G_IO_HUP,
                   gimp_plugin_io_error_handler,
                   NULL);
@@ -826,12 +823,12 @@ gimp_quit (void)
 }
 
 void
-gimp_read_expect_msg (GimpWireMessage *msg,
-                      gint             type)
+_gimp_read_expect_msg (GimpWireMessage *msg,
+                       gint             type)
 {
   while (TRUE)
     {
-      if (! gimp_wire_read_msg (_readchannel, msg, NULL))
+      if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
         gimp_quit ();
 
       if (msg->type == type)
@@ -867,10 +864,10 @@ gimp_run_procedure_with_array (const gchar    *name,
   proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
 
   gp_lock ();
-  if (! gp_proc_run_write (_writechannel, &proc_run, NULL))
+  if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
     gimp_quit ();
 
-  gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+  _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
   gp_unlock ();
 
   proc_return = msg.data;
@@ -1260,7 +1257,7 @@ gimp_get_progname (void)
 void
 gimp_extension_ack (void)
 {
-  if (! gp_extension_ack_write (_writechannel, NULL))
+  if (! gp_extension_ack_write (_gimp_writechannel, NULL))
     gimp_quit ();
 }
 
@@ -1296,7 +1293,8 @@ gimp_extension_enable (void)
 
   if (! callback_added)
     {
-      g_io_add_watch (_readchannel, G_IO_IN | G_IO_PRI, gimp_extension_read,
+      g_io_add_watch (_gimp_readchannel, G_IO_IN | G_IO_PRI,
+                      gimp_extension_read,
                       NULL);
 
       callback_added = TRUE;
@@ -1340,7 +1338,7 @@ gimp_extension_process (guint timeout)
         tvp = NULL;
 
       FD_ZERO (&readfds);
-      FD_SET (g_io_channel_unix_get_fd (_readchannel), &readfds);
+      FD_SET (g_io_channel_unix_get_fd (_gimp_readchannel), &readfds);
 
       if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
         {
@@ -1363,7 +1361,7 @@ gimp_extension_process (guint timeout)
   if (timeout == 0)
     timeout = -1;
 
-  g_io_channel_win32_make_pollfd (_readchannel, G_IO_IN, &pollfd);
+  g_io_channel_win32_make_pollfd (_gimp_readchannel, G_IO_IN, &pollfd);
 
   if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
     gimp_single_message ();
@@ -1406,7 +1404,7 @@ gimp_close (void)
 
 #endif
 
-  gp_quit_write (_writechannel, NULL);
+  gp_quit_write (_gimp_writechannel, NULL);
 }
 
 static void
@@ -1728,7 +1726,7 @@ gimp_loop (void)
 
   while (TRUE)
     {
-      if (! gimp_wire_read_msg (_readchannel, &msg, NULL))
+      if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
         {
           gimp_close ();
           return;
@@ -1934,7 +1932,7 @@ gimp_proc_run (GPProcRun *proc_run)
                               &proc_return);
     }
 
-  if (! gp_proc_return_write (_writechannel, &proc_return, NULL))
+  if (! gp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
     gimp_quit ();
 }
 
@@ -1975,7 +1973,7 @@ gimp_temp_proc_run (GPProcRun *proc_run)
         }
     }
 
-  if (! gp_temp_proc_return_write (_writechannel, &proc_return, NULL))
+  if (! gp_temp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
     gimp_quit ();
 }
 
@@ -2070,7 +2068,7 @@ gimp_single_message (void)
   GimpWireMessage msg;
 
   /* Run a temp function */
-  if (! gimp_wire_read_msg (_readchannel, &msg, NULL))
+  if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
     gimp_quit ();
 
   gimp_process_message (&msg);

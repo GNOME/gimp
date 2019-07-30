@@ -25,9 +25,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpbase-private.h"
 #include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
+#include "gimp-private.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
 
@@ -45,10 +45,6 @@
 
 static gpointer   gimp_param_copy (gpointer boxed);
 static void       gimp_param_free (gpointer boxed);
-
-
-extern GHashTable *_gimp_temp_proc_ht;
-extern GIOChannel *_writechannel;
 
 
 /**
@@ -327,7 +323,7 @@ gimp_install_procedure (const gchar        *name,
       pspecs = g_list_prepend (pspecs, pspec);
     }
 
-  if (! gp_proc_install_write (_writechannel, &proc_install, NULL))
+  if (! gp_proc_install_write (_gimp_writechannel, &proc_install, NULL))
     gimp_quit ();
 
   g_list_foreach (pspecs, (GFunc) g_param_spec_ref_sink, NULL);
@@ -432,7 +428,7 @@ gimp_uninstall_temp_proc (const gchar *name)
 
   proc_uninstall.name = (gchar *) name;
 
-  if (! gp_proc_uninstall_write (_writechannel, &proc_uninstall, NULL))
+  if (! gp_proc_uninstall_write (_gimp_writechannel, &proc_uninstall, NULL))
     gimp_quit ();
 
   found = g_hash_table_lookup_extended (_gimp_temp_proc_ht, name, &hash_name,

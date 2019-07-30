@@ -30,11 +30,9 @@
 #include "libgimpbase/gimpprotocol.h"
 
 #include "gimp.h"
+#include "gimp-private.h"
 #include "gimpgpparams.h"
 #include "gimpprocedure-private.h"
-
-
-extern GIOChannel *_writechannel;
 
 
 /*  public functions  */
@@ -84,7 +82,7 @@ _gimp_procedure_register (GimpProcedure *procedure)
                                         &proc_install.return_vals[i]);
     }
 
-  if (! gp_proc_install_write (_writechannel, &proc_install, NULL))
+  if (! gp_proc_install_write (_gimp_writechannel, &proc_install, NULL))
     gimp_quit ();
 
   icon_type = gimp_procedure_get_icon (procedure,
@@ -112,6 +110,6 @@ _gimp_procedure_unregister (GimpProcedure *procedure)
 
   proc_uninstall.name = (gchar *) gimp_procedure_get_name (procedure);
 
-  if (! gp_proc_uninstall_write (_writechannel, &proc_uninstall, NULL))
+  if (! gp_proc_uninstall_write (_gimp_writechannel, &proc_uninstall, NULL))
     gimp_quit ();
 }
