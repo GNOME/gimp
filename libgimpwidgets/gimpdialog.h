@@ -93,21 +93,22 @@ void        gimp_dialog_add_buttons_valist (GimpDialog     *dialog,
 
 gint        gimp_dialog_run                (GimpDialog     *dialog);
 
+void        gimp_dialog_set_alternative_button_order_from_array
+                                           (GimpDialog     *dialog,
+                                            gint            n_buttons,
+                                            gint           *order);
+
 /*  for internal use only!  */
 void        gimp_dialogs_show_help_button  (gboolean        show);
 
-
-/*  since we don't know yet what to do about alternative button order,
- *  just hide the warnings for now...
+/* gimp_dialog_set_alternative_button_order() doesn't need a dedicated
+ * wrapper function because anyway it won't be introspectable.
+ * GObject-Introspection bindings will have to use
+ * gimp_dialog_set_alternative_button_order_from_array().
  */
 #define gimp_dialog_set_alternative_button_order(d,f...) \
   G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                      \
   gtk_dialog_set_alternative_button_order(d,f);          \
-  G_GNUC_END_IGNORE_DEPRECATIONS;
-
-#define gimp_dialog_set_alternative_button_order_from_array(d,n,o) \
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                                \
-  gtk_dialog_set_alternative_button_order_from_array(d,n,o);       \
   G_GNUC_END_IGNORE_DEPRECATIONS;
 
 
