@@ -28,7 +28,6 @@
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpdrawable.h"
@@ -165,10 +164,11 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
         gimp_applicator_set_output_format (applicator, NULL);
     }
 
-  gimp_gegl_rectangle_align_to_tile_grid (
+  gegl_rectangle_align_to_buffer (
     &undo_rect,
     &rect,
-    gimp_drawable_get_buffer (drawable));
+    gimp_drawable_get_buffer (drawable),
+    GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
   undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                  undo_rect.width,
