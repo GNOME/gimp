@@ -37,6 +37,7 @@
 
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
@@ -1360,7 +1361,7 @@ gimp_foreground_select_undo_pop (StrokeUndo *undo,
   GeglBuffer *buffer;
   gint        width, height;
 
-  buffer = gegl_buffer_dup (undo->saved_trimap);
+  buffer = gimp_gegl_buffer_dup (undo->saved_trimap);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);

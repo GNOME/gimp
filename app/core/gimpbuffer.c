@@ -28,6 +28,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-memsize.h"
 #include "gimpbuffer.h"
@@ -390,7 +391,7 @@ gimp_buffer_new (GeglBuffer    *buffer,
                               NULL);
 
   if (copy_pixels)
-    gimp_buffer->buffer = gegl_buffer_dup (buffer);
+    gimp_buffer->buffer = gimp_gegl_buffer_dup (buffer);
   else
     gimp_buffer->buffer = g_object_ref (buffer);
 

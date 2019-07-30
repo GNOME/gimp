@@ -31,6 +31,8 @@
 
 #include "config/gimpguiconfig.h" /* playground */
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpdrawablefilter.h"
@@ -296,7 +298,7 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
           return;
         }
 
-      sc->paste = gegl_buffer_dup (gimp_buffer_get_buffer (buffer));
+      sc->paste = gimp_gegl_buffer_dup (gimp_buffer_get_buffer (buffer));
       g_object_unref (buffer);
 
       sc->width  = gegl_buffer_get_width  (sc->paste);
