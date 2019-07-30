@@ -207,9 +207,6 @@ static gboolean   gimp_extension_read          (GIOChannel      *channel,
 
 static void       gimp_set_pdb_error           (GimpValueArray  *return_vals);
 
-static gpointer   gimp_param_copy              (gpointer         boxed);
-static void       gimp_param_free              (gpointer         boxed);
-
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
 static gchar                         *plug_in_backtrace_path = NULL;
@@ -264,7 +261,6 @@ static const GDebugKey gimp_debug_keys[] =
 
 static GimpPlugIn     *PLUG_IN      = NULL;
 static GimpPlugInInfo  PLUG_IN_INFO = { 0, };
-
 
 static GimpPDBStatusType  pdb_error_status   = GIMP_PDB_SUCCESS;
 static gchar             *pdb_error_message  = NULL;
@@ -2123,87 +2119,3 @@ gimp_set_pdb_error (GimpValueArray *return_values)
         }
     }
 }
-
-/* Define boxed type functions. */
-
-static gpointer
-gimp_param_copy (gpointer boxed)
-{
-  GimpParam *param = boxed;
-  GimpParam *new_param;
-
-  new_param = g_slice_new (GimpParam);
-  new_param->type = param->type;
-  switch (param->type)
-    {
-    case GIMP_PDB_STRING:
-      new_param->data.d_string = g_strdup (param->data.d_string);
-      break;
-    case GIMP_PDB_INT32ARRAY:
-    case GIMP_PDB_INT16ARRAY:
-    case GIMP_PDB_INT8ARRAY:
-    case GIMP_PDB_FLOATARRAY:
-    case GIMP_PDB_COLORARRAY:
-    case GIMP_PDB_STRINGARRAY:
-      /* XXX: we can't copy these because we don't know the size, and
-       * we are bounded by the GBoxed copy function signature.
-       * Anyway this is only temporary until we replace GimpParam in the
-       * new API.
-       */
-      g_return_val_if_reached (new_param);
-      break;
-    default:
-      new_param->data = param->data;
-      break;
-    }
-
-  return new_param;
-}
-
-static void
-gimp_param_free (gpointer boxed)
-{
-  GimpParam *param = boxed;
-
-  switch (param->type)
-    {
-    case GIMP_PDB_STRING:
-      g_free (param->data.d_string);
-      break;
-    case GIMP_PDB_INT32ARRAY:
-      g_free (param->data.d_int32array);
-      break;
-    case GIMP_PDB_INT16ARRAY:
-      g_free (param->data.d_int16array);
-      break;
-    case GIMP_PDB_INT8ARRAY:
-      g_free (param->data.d_int8array);
-      break;
-    case GIMP_PDB_FLOATARRAY:
-      g_free (param->data.d_floatarray);
-      break;
-    case GIMP_PDB_COLORARRAY:
-      g_free (param->data.d_colorarray);
-      break;
-    case GIMP_PDB_STRINGARRAY:
-      /* XXX: we also want to free each element string. Unfortunately
-       * this type is not zero-terminated or anything of the sort to
-       * determine the number of elements.
-       * It uses the previous parameter, but we cannot have such value
-       * in a GBoxed's free function.
-       * Since this is all most likely temporary code until we update
-       * the plug-in API, let's just leak for now.
-       */
-      g_free (param->data.d_stringarray);
-      break;
-    default:
-      /* Pass-through. */
-      break;
-    }
-
-  g_slice_free (GimpParam, boxed);
-}
-
-G_DEFINE_BOXED_TYPE (GimpParam, gimp_param,
-                     gimp_param_copy,
-                     gimp_param_free)
