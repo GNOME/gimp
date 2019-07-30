@@ -226,7 +226,14 @@ dnl Win32 doesn't have a versioned directory for headers
 if test "$PYTHON_PLATFORM" != "win32"; then
   py_versiondir="/python${PYTHON_VERSION}"
 else
-  py_versiondir=
+   case "$host" in
+  *-*-mingw*)
+    py_versiondir="/python${PYTHON_VERSION}"
+    ;;
+  *)
+    py_versiondir=
+    ;;
+  esac
 fi
 dnl deduce PYTHON_INCLUDES
 py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
