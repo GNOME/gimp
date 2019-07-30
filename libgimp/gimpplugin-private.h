@@ -34,8 +34,6 @@ struct _GimpPlugInMenuBranch
 
 struct _GimpPlugInPrivate
 {
-  GList *procedures;
-
   gchar *translation_domain_name;
   GFile *translation_domain_path;
 
@@ -43,6 +41,8 @@ struct _GimpPlugInPrivate
   GFile *help_domain_uri;
 
   GList *menu_branches;
+
+  GList *temp_procedures;
 };
 
 

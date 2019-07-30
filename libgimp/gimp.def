@@ -619,13 +619,13 @@ EXPORTS
 	gimp_patterns_set_popup
 	gimp_pencil
 	gimp_plug_in_add_menu_branch
-	gimp_plug_in_add_procedure
+	gimp_plug_in_add_temp_procedure
 	gimp_plug_in_create_procedure
-	gimp_plug_in_get_procedure
-	gimp_plug_in_get_procedures
+	gimp_plug_in_get_temp_procedure
+	gimp_plug_in_get_temp_procedures
 	gimp_plug_in_get_type
 	gimp_plug_in_info_set_callbacks
-	gimp_plug_in_remove_procedure
+	gimp_plug_in_remove_temp_procedure
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_translation_domain
 	gimp_plugin_domain_register
@@ -660,6 +660,8 @@ EXPORTS
 	gimp_procedure_get_menu_label
 	gimp_procedure_get_menu_paths
 	gimp_procedure_get_name
+	gimp_procedure_get_plug_in
+	gimp_procedure_get_proc_type
 	gimp_procedure_get_return_values
 	gimp_procedure_get_type
 	gimp_procedure_new

@@ -51,6 +51,9 @@ gimp_pdb_error_quark (void)
 
 struct _GimpProcedurePrivate
 {
+  GimpPlugIn       *plug_in;        /* the procedure's plug-in        */
+  GimpPDBProcType   proc_type;      /* procedure type                 */
+
   gchar            *name;           /* procedure name                 */
   gchar            *menu_label;
   gchar            *blurb;          /* Short procedure description    */
@@ -113,6 +116,7 @@ gimp_procedure_finalize (GObject *object)
   GimpProcedure *procedure = GIMP_PROCEDURE (object);
   gint           i;
 
+  g_clear_object  (&procedure->priv->plug_in);
   g_clear_pointer (&procedure->priv->name, g_free);
 
   gimp_procedure_free_strings (procedure);
@@ -146,20 +150,42 @@ gimp_procedure_finalize (GObject *object)
 /*  public functions  */
 
 GimpProcedure  *
-gimp_procedure_new (const gchar *name,
-                    GimpRunFunc  run_func)
+gimp_procedure_new (GimpPlugIn      *plug_in,
+                    const gchar     *name,
+                    GimpPDBProcType  proc_type,
+                    GimpRunFunc      run_func)
 {
   GimpProcedure *procedure;
 
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (proc_type != GIMP_INTERNAL, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
   procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
 
-  procedure->priv->name     = g_strdup (name);
-  procedure->priv->run_func = run_func;
+  procedure->priv->plug_in   = g_object_ref (plug_in);
+  procedure->priv->proc_type = proc_type;
+  procedure->priv->name      = g_strdup (name);
+  procedure->priv->run_func  = run_func;
 
   return procedure;
+}
+
+GimpPlugIn *
+gimp_procedure_get_plug_in (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return procedure->priv->plug_in;
+}
+
+GimpPDBProcType
+gimp_procedure_get_proc_type (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), GIMP_PLUGIN);
+
+  return procedure->priv->proc_type;
 }
 
 void
