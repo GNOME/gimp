@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 6
+#define PLUG_IN_RC_FILE_VERSION 7
 
 
 /*
@@ -1008,6 +1008,8 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
 
   switch (param_def.param_def_type)
     {
+      gchar double_string[G_ASCII_DTOSTR_BUF_SIZE];
+
     case GP_PARAM_DEF_TYPE_DEFAULT:
       break;
 
@@ -1031,10 +1033,16 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_FLOAT:
-      gimp_config_writer_printf (writer, "%f %f %f",
-                                 param_def.meta.m_float.min_val,
-                                 param_def.meta.m_float.max_val,
-                                 param_def.meta.m_float.default_val);
+      gimp_config_writer_printf (writer, "%s %s %s",
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_float.min_val),
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_float.max_val),
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_float.default_val));
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
@@ -1047,12 +1055,20 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
-      gimp_config_writer_printf (writer, "%d %f %f %f %f",
+      gimp_config_writer_printf (writer, "%d %s %s %s %s",
                                  param_def.meta.m_color.has_alpha,
-                                 param_def.meta.m_color.default_val.r,
-                                 param_def.meta.m_color.default_val.g,
-                                 param_def.meta.m_color.default_val.b,
-                                 param_def.meta.m_color.default_val.a);
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_color.default_val.r),
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_color.default_val.g),
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_color.default_val.b),
+                                 g_ascii_dtostr (double_string,
+                                                 sizeof (double_string),
+                                                 param_def.meta.m_color.default_val.a));
       break;
 
     case GP_PARAM_DEF_TYPE_ID:
