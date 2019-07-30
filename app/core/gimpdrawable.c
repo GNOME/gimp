@@ -31,7 +31,6 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
-#include "gegl/gimptilehandlerbuffer.h"
 
 #include "gimp-memsize.h"
 #include "gimp-utils.h"
