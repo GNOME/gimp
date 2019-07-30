@@ -24,6 +24,28 @@
 G_BEGIN_DECLS
 
 
+typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
+
+struct _GimpPlugInMenuBranch
+{
+  gchar *menu_path;
+  gchar *menu_label;
+};
+
+struct _GimpPlugInPrivate
+{
+  GList *procedures;
+
+  gchar *translation_domain_name;
+  GFile *translation_domain_path;
+
+  gchar *help_domain_name;
+  GFile *help_domain_uri;
+
+  GList *menu_branches;
+};
+
+
 void   _gimp_plug_in_init  (GimpPlugIn *plug_in);
 void   _gimp_plug_in_query (GimpPlugIn *plug_in);
 void   _gimp_plug_in_quit  (GimpPlugIn *plug_in);

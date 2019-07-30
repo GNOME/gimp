@@ -618,6 +618,7 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pencil
+	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_procedure
 	gimp_plug_in_create_procedure
 	gimp_plug_in_get_procedure
@@ -625,6 +626,8 @@ EXPORTS
 	gimp_plug_in_get_type
 	gimp_plug_in_info_set_callbacks
 	gimp_plug_in_remove_procedure
+	gimp_plug_in_set_help_domain
+	gimp_plug_in_set_translation_domain
 	gimp_plugin_domain_register
 	gimp_plugin_get_pdb_error_handler
 	gimp_plugin_help_register
@@ -652,6 +655,7 @@ EXPORTS
 	gimp_procedure_get_date
 	gimp_procedure_get_help
 	gimp_procedure_get_help_id
+	gimp_procedure_get_icon
 	gimp_procedure_get_image_types
 	gimp_procedure_get_menu_label
 	gimp_procedure_get_menu_paths
@@ -662,6 +666,7 @@ EXPORTS
 	gimp_procedure_new_arguments
 	gimp_procedure_new_return_values
 	gimp_procedure_run
+	gimp_procedure_set_icon
 	gimp_procedure_set_strings
 	gimp_progress_cancel
 	gimp_progress_end
@@ -686,6 +691,7 @@ EXPORTS
 	gimp_register_thumbnail_loader
 	gimp_run_procedure
 	gimp_run_procedure2
+	gimp_run_procedure_with_array
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
