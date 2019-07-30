@@ -30,35 +30,14 @@ image: archlinux/base:latest
     - cd _babl
     - mkdir _build
 
-babl-git-autotools:
+babl-git-meson:
   extends: .babl-base
   variables:
     GIT_STRATEGY: none
   script:
-    - cd _build
-    - ../autogen.sh --prefix="$INSTALL_PREFIX"
-    - make -j `nproc`
-    - make install
-
-# babl-git-meson:
-#   extends: .babl-base
-#   variables:
-#     GIT_STRATEGY: none
-#   script:
-#     - meson -Dprefix="$INSTALL_PREFIX" _build
-#     - ninja -C _build
-#     - ninja -C _build install
-
-# babl-min-autotools:
-#   extends: .babl-base
-#   script:
-#     - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
-#     - git fetch --no-tags origin "refs/tags/BABL_`cat .babl_min_version`:refs/tags/MIN_VERSION"
-#     - git checkout MIN_VERSION
-#     - cd _build
-#     - ../autogen.sh --prefix="$INSTALL_PREFIX"
-#     - make
-#     - make install
+    - meson -Dprefix="$INSTALL_PREFIX" _build
+    - ninja -C _build
+    - ninja -C _build install
 
 # babl-min-meson:
 #   extends: .babl-base
@@ -212,10 +191,10 @@ gegl-git-autotools:
 #     - babl-min-meson
 #     - gegl-min-meson
 
-build-all-git-autotools:
+build-all-git:
   extends: .build-all
   dependencies:
-    - babl-git-autotools
+    - babl-git-meson
     - gegl-git-autotools
 
 # build-all-git-meson:
