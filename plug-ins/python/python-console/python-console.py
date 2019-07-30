@@ -67,10 +67,10 @@ def run(name, n_params, params):
             self.set_property("help-id", PROC_NAME)
             Gtk.Window.set_title(self, _("Python Console"))
             Gtk.Window.set_role(self, PROC_NAME)
-            Gtk.Dialog.add_button(self, "Save", Gtk.ResponseType.OK)
-            Gtk.Dialog.add_button(self, "Clear", RESPONSE_CLEAR)
+            Gtk.Dialog.add_button(self, "_Save", Gtk.ResponseType.OK)
+            Gtk.Dialog.add_button(self, "Cl_ear", RESPONSE_CLEAR)
             Gtk.Dialog.add_button(self, _("_Browse..."), RESPONSE_BROWSE)
-            Gtk.Dialog.add_button(self, "Close", Gtk.ResponseType.CLOSE)
+            Gtk.Dialog.add_button(self, "_Close", Gtk.ResponseType.CLOSE)
 
             Gtk.Widget.set_name (self, PROC_NAME)
             Gimp.Dialog.set_alternative_button_order_from_array(self,
@@ -222,8 +222,8 @@ def run(name, n_params, params):
                 dlg = Gtk.FileChooserDialog()
                 Gtk.Window.set_title(dlg, _("Save Python-Fu Console Output"))
                 Gtk.Window.set_transient_for(dlg, self)
-                Gtk.Dialog.add_button(dlg, "Cancel", Gtk.ResponseType.CANCEL)
-                Gtk.Dialog.add_button(dlg, "Save", Gtk.ResponseType.OK)
+                Gtk.Dialog.add_button(dlg, "_Cancel", Gtk.ResponseType.CANCEL)
+                Gtk.Dialog.add_button(dlg, "_Save", Gtk.ResponseType.OK)
                 Gtk.Dialog.set_default_response(self, Gtk.ResponseType.OK)
                 Gimp.Dialog.set_alternative_button_order_from_array(dlg,
                                                                     [ Gtk.ResponseType.OK,
