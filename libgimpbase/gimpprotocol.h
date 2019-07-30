@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0105
+#define GIMP_PROTOCOL_VERSION  0x0106
 
 
 enum
@@ -61,6 +61,7 @@ typedef enum
 {
   GP_PARAM_DEF_TYPE_DEFAULT,
   GP_PARAM_DEF_TYPE_INT,
+  GP_PARAM_DEF_TYPE_UNIT,
   GP_PARAM_DEF_TYPE_ENUM,
   GP_PARAM_DEF_TYPE_BOOLEAN,
   GP_PARAM_DEF_TYPE_FLOAT,
@@ -79,6 +80,7 @@ typedef struct _GPParamArray       GPParamArray;
 typedef struct _GPParamStringArray GPParamStringArray;
 typedef struct _GPParamDef         GPParamDef;
 typedef struct _GPParamDefInt      GPParamDefInt;
+typedef struct _GPParamDefUnit     GPParamDefUnit;
 typedef struct _GPParamDefEnum     GPParamDefEnum;
 typedef struct _GPParamDefBoolean  GPParamDefBoolean;
 typedef struct _GPParamDefFloat    GPParamDefFloat;
@@ -172,6 +174,13 @@ struct _GPParamDefInt
   gint32 default_val;
 };
 
+struct _GPParamDefUnit
+{
+  gint32 allow_pixels;
+  gint32 allow_percent;
+  gint32 default_val;
+};
+
 struct _GPParamDefEnum
 {
   gchar  *type_name;
@@ -220,6 +229,7 @@ struct _GPParamDef
   union
   {
     GPParamDefInt     m_int;
+    GPParamDefUnit    m_unit;
     GPParamDefEnum    m_enum;
     GPParamDefBoolean m_boolean;
     GPParamDefFloat   m_float;

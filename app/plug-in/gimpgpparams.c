@@ -104,6 +104,15 @@ _gimp_gp_param_def_to_param_spec (Gimp       *gimp,
                                      flags);
       break;
 
+    case GP_PARAM_DEF_TYPE_UNIT:
+      if (! strcmp (param_def->type_name, "GimpParamUnit"))
+        return gimp_param_spec_unit (name, nick, blurb,
+                                     param_def->meta.m_unit.allow_pixels,
+                                     param_def->meta.m_unit.allow_percent,
+                                     param_def->meta.m_unit.default_val,
+                                     flags);
+      break;
+
     case GP_PARAM_DEF_TYPE_ENUM:
       if (! strcmp (param_def->type_name, "GParamEnum"))
         return g_param_spec_enum (name, nick, blurb,
