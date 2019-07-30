@@ -2,6 +2,7 @@
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * gimpgpparams-body.c
+ * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
