@@ -20,6 +20,7 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -111,6 +112,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                   "RGB*, INDEXED*, GRAY*");
 
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters");
+      gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME,
+                               (const guint8 *) GIMP_ICON_GEGL);
 
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_enum ("run-mode",
