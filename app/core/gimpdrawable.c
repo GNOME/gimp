@@ -30,6 +30,7 @@
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimptilehandlerbuffer.h"
 
 #include "gimp-memsize.h"
@@ -504,7 +505,7 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
       GeglBuffer    *new_buffer;
 
-      new_buffer = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+      new_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
       gimp_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
@@ -972,7 +973,7 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
   gint        width  = gegl_buffer_get_width (buffer);
   gint        height = gegl_buffer_get_height (buffer);
 
-  tmp = gegl_buffer_dup (buffer);
+  tmp = gimp_gegl_buffer_dup (buffer);
 
   gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                          GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
@@ -1760,7 +1761,7 @@ gimp_drawable_start_paint (GimpDrawable *drawable)
       g_return_if_fail (drawable->private->paint_copy_region == NULL);
       g_return_if_fail (drawable->private->paint_update_region == NULL);
 
-      drawable->private->paint_buffer = gegl_buffer_dup (buffer);
+      drawable->private->paint_buffer = gimp_gegl_buffer_dup (buffer);
     }
 
   drawable->private->paint_count++;

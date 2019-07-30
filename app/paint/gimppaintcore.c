@@ -33,6 +33,7 @@
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimpapplicator.h"
 
 #include "core/gimp.h"
@@ -391,7 +392,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
   if (core->undo_buffer)
     g_object_unref (core->undo_buffer);
 
-  core->undo_buffer = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+  core->undo_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
   /*  Allocate the saved proj structure  */
   g_clear_object (&core->saved_proj_buffer);
@@ -400,7 +401,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
     {
       GeglBuffer *buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
 
-      core->saved_proj_buffer = gegl_buffer_dup (buffer);
+      core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer);
     }
 
   /*  Allocate the canvas blocks structure  */
