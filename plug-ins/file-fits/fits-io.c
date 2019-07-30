@@ -173,7 +173,7 @@ static gint fits_ieee64_motorola = 0;
 
 #define FITS_WRITE_DOUBLECARD(fp,key,value) \
 { gchar card[81], dbl[21], *istr; \
-  g_ascii_formatd (dbl, sizeof(dbl), "%f", (gdouble)value); \
+  g_ascii_dtostr (dbl, sizeof(dbl), (gdouble)value); \
   istr = strstr (dbl, "e"); \
   if (istr) *istr = 'E'; \
   g_snprintf (card, sizeof (card), \

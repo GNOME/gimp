@@ -955,8 +955,8 @@ gimp_levels_config_save_cruft (GimpLevelsConfig  *config,
                               (gint) (config->high_input[i]  * 255.999),
                               (gint) (config->low_output[i]  * 255.999),
                               (gint) (config->high_output[i] * 255.999),
-                              g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                                               config->gamma[i]));
+                              g_ascii_dtostr (buf, G_ASCII_DTOSTR_BUF_SIZE,
+                                              config->gamma[i]));
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,

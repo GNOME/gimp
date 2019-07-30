@@ -1492,34 +1492,34 @@ save_options (FILE * fp)
 
   fprintf (fp, "fractaltype: %i\n", wvals.fractaltype);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.xmin);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.xmin);
   fprintf (fp, "xmin: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.xmax);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.xmax);
   fprintf (fp, "xmax: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.ymin);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.ymin);
   fprintf (fp, "ymin: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.ymax);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.ymax);
   fprintf (fp, "ymax: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.iter);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.iter);
   fprintf (fp, "iter: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.cx);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.cx);
   fprintf (fp, "cx: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.cy);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.cy);
   fprintf (fp, "cy: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.redstretch * 128.0);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.redstretch * 128.0);
   fprintf (fp, "redstretch: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.greenstretch * 128.0);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.greenstretch * 128.0);
   fprintf (fp, "greenstretch: %s\n", buf);
 
-  g_ascii_formatd (buf, sizeof (buf), "%0.15f", wvals.bluestretch * 128.0);
+  g_ascii_dtostr (buf, sizeof (buf), wvals.bluestretch * 128.0);
   fprintf (fp, "bluestretch: %s\n", buf);
 
   fprintf (fp, "redmode: %i\n", wvals.redmode);
