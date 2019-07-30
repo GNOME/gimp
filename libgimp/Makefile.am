@@ -107,6 +107,7 @@ libgimp_built_sources = \
 	gimpenums.c
 
 libgimp_private_sources = \
+	gimplegacy.c		\
 	gimpgpcompat.c		\
 	gimpgpcompat.h		\
 	gimpgpparams.c		\
