@@ -140,64 +140,62 @@ G_BEGIN_DECLS
  * GimpPlugIn subclass type and the 'argc' and 'argv' that are passed
  * to "main".
  */
-gint           gimp_main                (GType                 plug_in_type,
-                                         gint                  argc,
-                                         gchar                *argv[]);
+gint                gimp_main                 (GType  plug_in_type,
+                                               gint   argc,
+                                               gchar *argv[]);
 
 /* Forcefully causes the gimp library to exit and
  *  close down its connection to main gimp application.
  */
-void           gimp_quit                (void) G_GNUC_NORETURN;
+void                gimp_quit                 (void) G_GNUC_NORETURN;
 
 /* Notify the main GIMP application that the extension is ready to run
  */
-void           gimp_extension_ack       (void);
+void                gimp_extension_ack        (void);
 
 /* Enable asynchronous processing of temp_procs
  */
-void           gimp_extension_enable    (void);
+void                gimp_extension_enable     (void);
 
 /* Process one temp_proc and return
  */
-void           gimp_extension_process   (guint            timeout);
+void                gimp_extension_process    (guint  timeout);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified as a GimpValueArray, so are the return values.
  *
  * FIXME this API is not final!
  */
-GimpValueArray * gimp_run_procedure_with_array (const gchar    *name,
-                                                GimpValueArray *arguments);
+GimpValueArray    * gimp_run_procedure_with_array (const gchar    *name,
+                                                   GimpValueArray *arguments);
 
-/* Retrieve the error message for the last procedure call.
+/* Retrieve the error message and return status for the last procedure
+ * call.
  */
-const gchar  * gimp_get_pdb_error       (void);
-
-/* Retrieve the return status for the last procedure call.
- */
-GimpPDBStatusType gimp_get_pdb_status   (void);
+const gchar       * gimp_get_pdb_error        (void);
+GimpPDBStatusType   gimp_get_pdb_status       (void);
 
 /* Return various constants given by the GIMP core at plug-in config time.
  */
-guint          gimp_tile_width           (void) G_GNUC_CONST;
-guint          gimp_tile_height          (void) G_GNUC_CONST;
-gint           gimp_shm_ID               (void) G_GNUC_CONST;
-guchar       * gimp_shm_addr             (void) G_GNUC_CONST;
-gboolean       gimp_show_help_button     (void) G_GNUC_CONST;
-gboolean       gimp_export_color_profile (void) G_GNUC_CONST;
-gboolean       gimp_export_exif          (void) G_GNUC_CONST;
-gboolean       gimp_export_xmp           (void) G_GNUC_CONST;
-gboolean       gimp_export_iptc          (void) G_GNUC_CONST;
-GimpCheckSize  gimp_check_size           (void) G_GNUC_CONST;
-GimpCheckType  gimp_check_type           (void) G_GNUC_CONST;
-gint32         gimp_default_display      (void) G_GNUC_CONST;
-const gchar  * gimp_wm_class             (void) G_GNUC_CONST;
-const gchar  * gimp_display_name         (void) G_GNUC_CONST;
-gint           gimp_monitor_number       (void) G_GNUC_CONST;
-guint32        gimp_user_time            (void) G_GNUC_CONST;
-const gchar  * gimp_icon_theme_dir       (void) G_GNUC_CONST;
+guint               gimp_tile_width           (void) G_GNUC_CONST;
+guint               gimp_tile_height          (void) G_GNUC_CONST;
+gint                gimp_shm_ID               (void) G_GNUC_CONST;
+guchar            * gimp_shm_addr             (void) G_GNUC_CONST;
+gboolean            gimp_show_help_button     (void) G_GNUC_CONST;
+gboolean            gimp_export_color_profile (void) G_GNUC_CONST;
+gboolean            gimp_export_exif          (void) G_GNUC_CONST;
+gboolean            gimp_export_xmp           (void) G_GNUC_CONST;
+gboolean            gimp_export_iptc          (void) G_GNUC_CONST;
+GimpCheckSize       gimp_check_size           (void) G_GNUC_CONST;
+GimpCheckType       gimp_check_type           (void) G_GNUC_CONST;
+gint32              gimp_default_display      (void) G_GNUC_CONST;
+const gchar       * gimp_wm_class             (void) G_GNUC_CONST;
+const gchar       * gimp_display_name         (void) G_GNUC_CONST;
+gint                gimp_monitor_number       (void) G_GNUC_CONST;
+guint32             gimp_user_time            (void) G_GNUC_CONST;
+const gchar       * gimp_icon_theme_dir       (void) G_GNUC_CONST;
 
-const gchar  * gimp_get_progname         (void) G_GNUC_CONST;
+const gchar       * gimp_get_progname         (void) G_GNUC_CONST;
 
 
 G_END_DECLS
