@@ -568,17 +568,30 @@ gimp_scanner_parse_float (GScanner *scanner,
       g_scanner_get_next_token (scanner);
     }
 
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_FLOAT)
-    return FALSE;
+  if (g_scanner_peek_next_token (scanner) == G_TOKEN_FLOAT)
+    {
+      g_scanner_get_next_token (scanner);
 
-  g_scanner_get_next_token (scanner);
+      if (negate)
+        *dest = -scanner->value.v_float;
+      else
+        *dest = scanner->value.v_float;
 
-  if (negate)
-    *dest = -scanner->value.v_float;
-  else
-    *dest = scanner->value.v_float;
+      return TRUE;
+    }
+  else if (g_scanner_peek_next_token (scanner) == G_TOKEN_INT)
+    {
+      g_scanner_get_next_token (scanner);
 
-  return TRUE;
+      if (negate)
+        *dest = -scanner->value.v_int;
+      else
+        *dest = scanner->value.v_int;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 /**
