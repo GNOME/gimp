@@ -29,6 +29,7 @@
 
 #include "core/gimpprogress.h"
 
+#include "gimp-gegl-loops.h"
 #include "gimp-gegl-utils.h"
 
 
@@ -229,4 +230,53 @@ gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
     return TRUE;
 
   return FALSE;
+}
+
+GeglBuffer *
+gimp_gegl_buffer_dup (GeglBuffer *buffer)
+{
+  GeglBuffer          *new_buffer;
+  const GeglRectangle *extent;
+  const GeglRectangle *abyss;
+  GeglRectangle        rect;
+  gint                 shift_x;
+  gint                 shift_y;
+  gint                 tile_width;
+  gint                 tile_height;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+
+  extent = gegl_buffer_get_extent (buffer);
+  abyss  = gegl_buffer_get_abyss  (buffer);
+
+  g_object_get (buffer,
+                "shift-x",     &shift_x,
+                "shift-y",     &shift_y,
+                "tile-width",  &tile_width,
+                "tile-height", &tile_height,
+                NULL);
+
+  new_buffer = g_object_new (GEGL_TYPE_BUFFER,
+                             "format",       gegl_buffer_get_format (buffer),
+                             "x",            extent->x,
+                             "y",            extent->y,
+                             "width",        extent->width,
+                             "height",       extent->height,
+                             "abyss-x",      abyss->x,
+                             "abyss-y",      abyss->y,
+                             "abyss-width",  abyss->width,
+                             "abyss-height", abyss->height,
+                             "shift-x",      shift_x,
+                             "shift-y",      shift_y,
+                             "tile-width",   tile_width,
+                             "tile-height",  tile_height,
+                             NULL);
+
+  gegl_rectangle_align_to_buffer (&rect, extent, buffer,
+                                  GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+
+  gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+                         new_buffer, &rect);
+
+  return new_buffer;
 }
