@@ -32,8 +32,8 @@
  * This procedure returns the image's color profile, or NULL if the
  * image has no color profile assigned.
  *
- * Returns: The image's color profile. The returned value
- *          must be freed with g_object_unref().
+ * Returns: (transfer full): The image's color profile. The returned
+ *          value must be freed with g_object_unref().
  *
  * Since: 2.10
  **/
@@ -105,8 +105,8 @@ gimp_image_set_color_profile (gint32            image_ID,
  * assigned to the image. If there is no default RGB profile configured
  * in preferences either, a generated default RGB profile is returned.
  *
- * Returns: The color profile. The returned value
- *          must be freed with g_object_unref().
+ * Returns: (transfer full): The color profile. The returned value must
+ *          be freed with g_object_unref().
  *
  * Since: 2.10
  **/

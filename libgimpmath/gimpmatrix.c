@@ -193,7 +193,7 @@ gimp_param_matrix2_values_cmp (GParamSpec   *pspec,
  * Creates a param spec to hold a #GimpMatrix2 value.
  * See g_param_spec_internal() for more information.
  *
- * Returns: a newly allocated #GParamSpec instance
+ * Returns: (transfer full): a newly allocated #GParamSpec instance
  *
  * Since: 2.4
  **/
@@ -411,7 +411,7 @@ gimp_param_matrix3_values_cmp (GParamSpec   *pspec,
  * Creates a param spec to hold a #GimpMatrix3 value.
  * See g_param_spec_internal() for more information.
  *
- * Returns: a newly allocated #GParamSpec instance
+ * Returns: (transfer full): a newly allocated #GParamSpec instance
  *
  * Since: 2.8
  **/

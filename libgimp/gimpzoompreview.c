@@ -836,7 +836,8 @@ gimp_zoom_preview_get_drawable_id (GimpZoomPreview *preview)
  *
  * Returns the #GimpZoomModel the preview is using.
  *
- * Return Value: a pointer to the #GimpZoomModel owned by the @preview
+ * Return Value: (transfer none): a pointer to the #GimpZoomModel owned
+ *               by the @preview
  *
  * Since: 2.4
  **/

@@ -65,7 +65,7 @@ static gboolean    gimp_image_metadata_rotate_dialog (gint32             image_I
  * Loads and returns metadata from @file to be passed into
  * gimp_image_metadata_load_finish().
  *
- * Returns: The file's metadata.
+ * Returns: (transfer full): The file's metadata.
  *
  * Since: 2.10
  */
@@ -220,7 +220,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  * The suggested value for GIMP_METADATA_SAVE_THUMBNAIL is determined by
  * whether there was a thumbnail in the previously imported image.
  *
- * Returns: The image's metadata, prepared for saving.
+ * Returns: (transfer full): The image's metadata, prepared for saving.
  *
  * Since: 2.10
  */

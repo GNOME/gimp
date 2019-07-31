@@ -108,7 +108,8 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  *
  * Returns exif/iptc/xmp metadata from the image.
  *
- * Returns: The exif/ptc/xmp metadata, or %NULL if there is none.
+ * Returns: (transfer full): The exif/ptc/xmp metadata, or %NULL if
+ *          there is none.
  *
  * Since: 2.10
  **/
