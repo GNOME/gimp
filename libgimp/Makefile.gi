@@ -149,7 +149,14 @@ libgimp_introspectable = \
 	$(top_srcdir)/libgimp/gimpprogress.c		\
 	$(top_srcdir)/libgimp/gimpprogress.h		\
 	$(top_srcdir)/libgimp/gimpselection.c		\
-	$(top_srcdir)/libgimp/gimpselection.h
+	$(top_srcdir)/libgimp/gimpselection.h		\
+	\
+	$(top_srcdir)/libgimp/gimplegacy.c		\
+	$(top_srcdir)/libgimp/gimplegacy.h
+
+# Let's keep gimplegacy as introspectable until we figure out how to use
+# the new GimpPlugIn API in bindings. TODO: remove later and put back
+# into libgimp_private_sources.
 
 libgimpui_introspectable =				\
 	$(top_srcdir)/libgimp/gimpui.c			\
