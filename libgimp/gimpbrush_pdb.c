@@ -42,8 +42,8 @@
  *
  * This procedure creates a new, uninitialized brush.
  *
- * Returns: The actual new brush name. The returned value must be freed
- * with g_free().
+ * Returns: (transfer full) The actual new brush name. The returned
+ * value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -78,8 +78,8 @@ gimp_brush_new (const gchar *name)
  *
  * This procedure creates an identical brush by a different name.
  *
- * Returns: The name of the brush's copy. The returned value must be
- * freed with g_free().
+ * Returns: (transfer full) The name of the brush's copy. The returned
+ * value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -150,8 +150,8 @@ gimp_brush_is_generated (const gchar *name)
  *
  * This procedure renames a brush.
  *
- * Returns: The actual new name of the brush. The returned value must
- * be freed with g_free().
+ * Returns: (transfer full) The actual new name of the brush. The
+ * returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -313,10 +313,10 @@ gimp_brush_get_info (const gchar *name,
  * @height: The brush height.
  * @mask_bpp: The brush mask bpp.
  * @num_mask_bytes: Length of brush mask data.
- * @mask_bytes: The brush mask data.
+ * @mask_bytes: (transfer full) The brush mask data.
  * @color_bpp: The brush color bpp.
  * @num_color_bytes: Length of brush color data.
- * @color_bytes: The brush color data.
+ * @color_bytes: (transfer full) The brush color data.
  *
  * Retrieves information about the specified brush.
  *

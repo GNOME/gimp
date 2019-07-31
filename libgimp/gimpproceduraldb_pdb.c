@@ -43,7 +43,8 @@
  * This procedure generates a temporary PDB entry name that is
  * guaranteed to be unique.
  *
- * Returns: A unique temporary name for a temporary PDB entry.
+ * Returns: (transfer full) A unique temporary name for a temporary PDB
+ * entry.
  **/
 gchar *
 gimp_procedural_db_temp_name (void)
@@ -110,7 +111,7 @@ gimp_procedural_db_dump (const gchar *filename)
  * @date: The regex for procedure date.
  * @proc_type: The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
  * @num_matches: The number of matching procedures.
- * @procedure_names: The list of procedure names.
+ * @procedure_names: (transfer full) The list of procedure names.
  *
  * Queries the procedural database for its contents using regular
  * expression matching.
@@ -220,11 +221,11 @@ gimp_procedural_db_proc_exists (const gchar *procedure_name)
 /**
  * _gimp_procedural_db_proc_info:
  * @procedure_name: The procedure name.
- * @blurb: A short blurb.
- * @help: Detailed procedure help.
- * @author: Author(s) of the procedure.
- * @copyright: The copyright.
- * @date: Copyright date.
+ * @blurb: (transfer full) A short blurb.
+ * @help: (transfer full) Detailed procedure help.
+ * @author: (transfer full) Author(s) of the procedure.
+ * @copyright: (transfer full) The copyright.
+ * @date: (transfer full) Copyright date.
  * @proc_type: The procedure type.
  * @num_args: The number of input arguments.
  * @num_values: The number of return values.
@@ -297,8 +298,8 @@ _gimp_procedural_db_proc_info (const gchar      *procedure_name,
  * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  * @arg_type: The type of argument.
- * @arg_name: The name of the argument.
- * @arg_desc: A description of the argument.
+ * @arg_name: (transfer full) The name of the argument.
+ * @arg_desc: (transfer full) A description of the argument.
  *
  * Queries the procedural database for information on the specified
  * procedure's argument.
@@ -352,8 +353,8 @@ gimp_procedural_db_proc_arg (const gchar     *procedure_name,
  * @procedure_name: The procedure name.
  * @val_num: The return value number.
  * @val_type: The type of return value.
- * @val_name: The name of the return value.
- * @val_desc: A description of the return value.
+ * @val_name: (transfer full) The name of the return value.
+ * @val_desc: (transfer full) A description of the return value.
  *
  * Queries the procedural database for information on the specified
  * procedure's return value.
@@ -407,7 +408,7 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
  * _gimp_procedural_db_get_data:
  * @identifier: The identifier associated with data.
  * @bytes: The number of bytes in the data.
- * @data: A byte array containing data.
+ * @data: (transfer full) A byte array containing data.
  *
  * Returns data associated with the specified identifier.
  *

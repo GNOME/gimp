@@ -45,7 +45,7 @@
  * encoding. In order to get to the real format, the libbgimp C wrapper
  * must be used.
  *
- * Returns: The drawable's Babl format.
+ * Returns: (transfer full) The drawable's Babl format.
  *
  * Since: 2.10
  **/
@@ -82,7 +82,7 @@ _gimp_drawable_get_format (gint32 drawable_ID)
  * Thumbnails are always 8-bit images, see gimp_drawable_thumbnail()
  * and gimp_drawable_sub_thmbnail().
  *
- * Returns: The drawable's thumbnail Babl format.
+ * Returns: (transfer full) The drawable's thumbnail Babl format.
  *
  * Since: 2.10.14
  **/
@@ -714,7 +714,7 @@ gimp_drawable_update (gint32 drawable_ID,
  * The 'num_channels' argument must always be equal to the
  * bytes-per-pixel value for the specified drawable.
  *
- * Returns: The pixel value.
+ * Returns: (transfer full) The pixel value.
  **/
 guint8 *
 gimp_drawable_get_pixel (gint32  drawable_ID,
@@ -912,7 +912,7 @@ gimp_drawable_offset (gint32         drawable_ID,
  * @actual_height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: The thumbnail data.
+ * @thumbnail_data: (transfer full) The thumbnail data.
  *
  * Get a thumbnail of a drawable.
  *
@@ -984,7 +984,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
  * @height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: The thumbnail data.
+ * @thumbnail_data: (transfer full) The thumbnail data.
  *
  * Get a thumbnail of a sub-area of a drawable drawable.
  *

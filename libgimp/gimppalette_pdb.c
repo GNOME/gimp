@@ -42,7 +42,7 @@
  *
  * This procedure creates a new, uninitialized palette
  *
- * Returns: The actual new palette name.
+ * Returns: (transfer full) The actual new palette name.
  *
  * Since: 2.2
  **/
@@ -77,7 +77,7 @@ gimp_palette_new (const gchar *name)
  *
  * This procedure creates an identical palette by a different name
  *
- * Returns: The name of the palette's copy.
+ * Returns: (transfer full) The name of the palette's copy.
  *
  * Since: 2.2
  **/
@@ -113,7 +113,7 @@ gimp_palette_duplicate (const gchar *name)
  *
  * This procedure renames a palette
  *
- * Returns: The actual new name of the palette.
+ * Returns: (transfer full) The actual new name of the palette.
  *
  * Since: 2.2
  **/
@@ -263,7 +263,7 @@ gimp_palette_get_info (const gchar *name,
  *
  * This procedure retrieves all color entries of the specified palette.
  *
- * Returns: The colors in the palette.
+ * Returns: (transfer full) The colors in the palette.
  *
  * Since: 2.6
  **/
@@ -554,7 +554,7 @@ gimp_palette_entry_set_color (const gchar   *name,
  * gimp_palette_entry_get_name:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
- * @entry_name: The name requested.
+ * @entry_name: (transfer full) The name requested.
  *
  * Gets the specified palette entry from the specified palette.
  *

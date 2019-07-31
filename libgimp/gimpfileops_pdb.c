@@ -141,7 +141,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * needs to be added to the existing image with
  * gimp_image_insert_layer().
  *
- * Returns: The list of loaded layers.
+ * Returns: (transfer full) The list of loaded layers.
  *
  * Since: 2.4
  **/
