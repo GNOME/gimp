@@ -73,7 +73,7 @@ gimp_image_is_valid (gint32 image_ID)
 
 /**
  * gimp_image_list:
- * @num_images: The number of images currently open.
+ * @num_images: (out) The number of images currently open.
  *
  * Returns the list of images currently open.
  *
@@ -455,7 +455,7 @@ gimp_image_height (gint32 image_ID)
 /**
  * gimp_image_get_layers:
  * @image_ID: The image.
- * @num_layers: The number of layers contained in the image.
+ * @num_layers: (out) The number of layers contained in the image.
  *
  * Returns the list of layers contained in the specified image.
  *
@@ -498,7 +498,7 @@ gimp_image_get_layers (gint32  image_ID,
 /**
  * gimp_image_get_channels:
  * @image_ID: The image.
- * @num_channels: The number of channels contained in the image.
+ * @num_channels: (out) The number of channels contained in the image.
  *
  * Returns the list of channels contained in the specified image.
  *
@@ -544,7 +544,7 @@ gimp_image_get_channels (gint32  image_ID,
 /**
  * gimp_image_get_vectors:
  * @image_ID: The image.
- * @num_vectors: The number of vectors contained in the image.
+ * @num_vectors: (out) The number of vectors contained in the image.
  *
  * Returns the list of vectors contained in the specified image.
  *
@@ -737,7 +737,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * @sample_merged: Use the composite image, not the drawable.
  * @sample_average: Average the color of all the pixels in a specified radius.
  * @average_radius: The radius of pixels to average.
- * @color: The return color.
+ * @color: (out) The return color.
  *
  * Determine the color at the given drawable coordinates
  *
@@ -1721,7 +1721,7 @@ gimp_image_merge_down (gint32        image_ID,
 /**
  * _gimp_image_get_colormap:
  * @image_ID: The image.
- * @num_bytes: Number of bytes in the colormap array.
+ * @num_bytes: (out) Number of bytes in the colormap array.
  *
  * Returns the image's colormap
  *
@@ -1954,11 +1954,11 @@ gimp_image_is_dirty (gint32 image_ID)
  * @image_ID: The image.
  * @width: The requested thumbnail width.
  * @height: The requested thumbnail height.
- * @actual_width: The previews width.
- * @actual_height: The previews height.
- * @bpp: The previews bpp.
- * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: (element-type guint8) (transfer full) The thumbnail data.
+ * @actual_width: (out) The previews width.
+ * @actual_height: (out) The previews height.
+ * @bpp: (out) The previews bpp.
+ * @thumbnail_data_count: (out) The number of bytes in thumbnail data.
+ * @thumbnail_data: (out) (element-type guint8) (transfer full) The thumbnail data.
  *
  * Get a thumbnail of an image.
  *
@@ -2708,8 +2708,8 @@ gimp_image_get_name (gint32 image_ID)
 /**
  * gimp_image_get_resolution:
  * @image_ID: The image.
- * @xresolution: The resolution in the x-axis, in dots per inch.
- * @yresolution: The resolution in the y-axis, in dots per inch.
+ * @xresolution: (out) The resolution in the x-axis, in dots per inch.
+ * @yresolution: (out) The resolution in the y-axis, in dots per inch.
  *
  * Returns the specified image's resolution.
  *
@@ -3308,7 +3308,7 @@ gimp_image_get_parasite (gint32       image_ID,
 /**
  * gimp_image_get_parasite_list:
  * @image_ID: The image.
- * @num_parasites: The number of attached parasites.
+ * @num_parasites: (out) The number of attached parasites.
  *
  * List all parasites.
  *

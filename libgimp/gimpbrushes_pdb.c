@@ -67,7 +67,7 @@ gimp_brushes_refresh (void)
 /**
  * gimp_brushes_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_brushes: The number of brushes in the brush list.
+ * @num_brushes: (out) The number of brushes in the brush list.
  *
  * Retrieve a complete listing of the available brushes.
  *

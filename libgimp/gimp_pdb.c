@@ -207,7 +207,7 @@ gimp_get_parasite (const gchar *name)
 
 /**
  * gimp_get_parasite_list:
- * @num_parasites: The number of attached parasites.
+ * @num_parasites: (out) The number of attached parasites.
  *
  * List all parasites.
  *

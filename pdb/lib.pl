@@ -328,10 +328,10 @@ CODE
 		    $argdesc .= '_ID' if $arg->{id};
 
 		    if (exists $arg->{return_annotate}) {
-			$argdesc .= ": $arg->{return_annotate} $desc";
+			$argdesc .= ": (out) $arg->{return_annotate} $desc";
 		    }
 		    else {
-			$argdesc .= ": $desc";
+			$argdesc .= ": (out) $desc";
 		    }
 		}
 

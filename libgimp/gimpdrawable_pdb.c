@@ -417,8 +417,8 @@ gimp_drawable_height (gint32 drawable_ID)
 /**
  * gimp_drawable_offsets:
  * @drawable_ID: The drawable.
- * @offset_x: x offset of drawable.
- * @offset_y: y offset of drawable.
+ * @offset_x: (out) x offset of drawable.
+ * @offset_y: (out) y offset of drawable.
  *
  * Returns the offsets for the drawable.
  *
@@ -464,10 +464,10 @@ gimp_drawable_offsets (gint32  drawable_ID,
 /**
  * gimp_drawable_mask_bounds:
  * @drawable_ID: The drawable.
- * @x1: x coordinate of the upper left corner of selection bounds.
- * @y1: y coordinate of the upper left corner of selection bounds.
- * @x2: x coordinate of the lower right corner of selection bounds.
- * @y2: y coordinate of the lower right corner of selection bounds.
+ * @x1: (out) x coordinate of the upper left corner of selection bounds.
+ * @y1: (out) y coordinate of the upper left corner of selection bounds.
+ * @x2: (out) x coordinate of the lower right corner of selection bounds.
+ * @y2: (out) y coordinate of the lower right corner of selection bounds.
  *
  * Find the bounding box of the current selection in relation to the
  * specified drawable.
@@ -523,10 +523,10 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
 /**
  * gimp_drawable_mask_intersect:
  * @drawable_ID: The drawable.
- * @x: x coordinate of the upper left corner of the intersection.
- * @y: y coordinate of the upper left corner of the intersection.
- * @width: width of the intersection.
- * @height: height of the intersection.
+ * @x: (out) x coordinate of the upper left corner of the intersection.
+ * @y: (out) y coordinate of the upper left corner of the intersection.
+ * @width: (out) width of the intersection.
+ * @height: (out) height of the intersection.
  *
  * Find the bounding box of the current selection in relation to the
  * specified drawable.
@@ -706,7 +706,7 @@ gimp_drawable_update (gint32 drawable_ID,
  * @drawable_ID: The drawable.
  * @x_coord: The x coordinate.
  * @y_coord: The y coordinate.
- * @num_channels: The number of channels for the pixel.
+ * @num_channels: (out) The number of channels for the pixel.
  *
  * Gets the value of the pixel at the specified coordinates.
  *
@@ -908,11 +908,11 @@ gimp_drawable_offset (gint32         drawable_ID,
  * @drawable_ID: The drawable.
  * @width: The requested thumbnail width.
  * @height: The requested thumbnail height.
- * @actual_width: The previews width.
- * @actual_height: The previews height.
- * @bpp: The previews bpp.
- * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: (element-type guint8) (transfer full) The thumbnail data.
+ * @actual_width: (out) The previews width.
+ * @actual_height: (out) The previews height.
+ * @bpp: (out) The previews bpp.
+ * @thumbnail_data_count: (out) The number of bytes in thumbnail data.
+ * @thumbnail_data: (out) (element-type guint8) (transfer full) The thumbnail data.
  *
  * Get a thumbnail of a drawable.
  *
@@ -980,11 +980,11 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
  * @src_height: The height of the area.
  * @dest_width: The thumbnail width.
  * @dest_height: The thumbnail height.
- * @width: The previews width.
- * @height: The previews height.
- * @bpp: The previews bpp.
- * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: (element-type guint8) (transfer full) The thumbnail data.
+ * @width: (out) The previews width.
+ * @height: (out) The previews height.
+ * @bpp: (out) The previews bpp.
+ * @thumbnail_data_count: (out) The number of bytes in thumbnail data.
+ * @thumbnail_data: (out) (element-type guint8) (transfer full) The thumbnail data.
  *
  * Get a thumbnail of a sub-area of a drawable drawable.
  *

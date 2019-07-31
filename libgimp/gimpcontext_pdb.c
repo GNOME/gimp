@@ -138,8 +138,8 @@ gimp_context_set_defaults (void)
 
 /**
  * gimp_context_list_paint_methods:
- * @num_paint_methods: The number of the available paint methods.
- * @paint_methods: (element-type gchar*) (transfer full) The names of the available paint methods.
+ * @num_paint_methods: (out) The number of the available paint methods.
+ * @paint_methods: (out) (element-type gchar*) (transfer full) The names of the available paint methods.
  *
  * Lists the available paint methods.
  *
@@ -322,7 +322,7 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
 
 /**
  * gimp_context_get_foreground:
- * @foreground: The foreground color.
+ * @foreground: (out) The foreground color.
  *
  * Get the current GIMP foreground color.
  *
@@ -395,7 +395,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
 
 /**
  * gimp_context_get_background:
- * @background: The background color.
+ * @background: (out) The background color.
  *
  * Get the current GIMP background color.
  *
@@ -1099,8 +1099,8 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
 
 /**
  * gimp_context_get_line_dash_pattern:
- * @num_dashes: The number of dashes in the dash_pattern array.
- * @dashes: (elemen-type gdouble) (transfer full) The line dash pattern setting.
+ * @num_dashes: (out) The number of dashes in the dash_pattern array.
+ * @dashes: (out) (elemen-type gdouble) (transfer full) The line dash pattern setting.
  *
  * Get the line dash pattern setting.
  *
@@ -2672,8 +2672,8 @@ gimp_context_set_feather (gboolean feather)
 
 /**
  * gimp_context_get_feather_radius:
- * @feather_radius_x: The horizontal feather radius.
- * @feather_radius_y: The vertical feather radius.
+ * @feather_radius_x: (out) The horizontal feather radius.
+ * @feather_radius_y: (out) The vertical feather radius.
  *
  * Get the feather radius setting.
  *
