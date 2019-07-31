@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpdrawableedit_pdb
+ * SECTION: gimpdrawableedit
  * @title: gimpdrawableedit
  * @short_description: Drawable edit functions (clear, fill, gradient, stroke etc.)
  *

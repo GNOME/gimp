@@ -661,7 +661,7 @@ HEADER
 
 
 /**
- * SECTION: $main::grp{$group}->{doc_title}_pdb
+ * SECTION: $main::grp{$group}->{doc_title}
  * \@title: $main::grp{$group}->{doc_title}
  * \@short_description: $main::grp{$group}->{doc_short_desc}
  *

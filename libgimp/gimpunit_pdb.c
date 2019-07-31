@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpunit_pdb
+ * SECTION: gimpunit
  * @title: gimpunit
  * @short_description: Provides a collection of predefined units and functions for creating user-defined units.
  *

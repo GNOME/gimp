@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimptexttool_pdb
+ * SECTION: gimptexttool
  * @title: gimptexttool
  * @short_description: Functions for controlling the text tool.
  *

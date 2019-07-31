@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimageundo_pdb
+ * SECTION: gimpimageundo
  * @title: gimpimageundo
  * @short_description: Control of image undo/redo.
  *

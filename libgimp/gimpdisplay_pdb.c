@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpdisplay_pdb
+ * SECTION: gimpdisplay
  * @title: gimpdisplay
  * @short_description: Functions to create, delete and flush displays (views) on an image.
  *

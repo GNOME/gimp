@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimageguides_pdb
+ * SECTION: gimpimageguides
  * @title: gimpimageguides
  * @short_description: Functions for manipulating an image's guides.
  *

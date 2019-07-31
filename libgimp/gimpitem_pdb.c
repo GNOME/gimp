@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpitem_pdb
+ * SECTION: gimpitem
  * @title: gimpitem
  * @short_description: Functions to manipulate items.
  *

@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpbrushselect_pdb
+ * SECTION: gimpbrushselect
  * @title: gimpbrushselect
  * @short_description: Functions providing a brush selection dialog.
  *

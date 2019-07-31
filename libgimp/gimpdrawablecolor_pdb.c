@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpdrawablecolor_pdb
+ * SECTION: gimpdrawablecolor
  * @title: gimpdrawablecolor
  * @short_description: Functions for manipulating a drawable's color.
  *

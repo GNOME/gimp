@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimp_pdb
+ * SECTION: gimp
  * @title: gimp
  * @short_description: Miscellaneous procedures
  *
