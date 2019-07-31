@@ -616,7 +616,7 @@ gimp_ruler_set_unit (GimpRuler *ruler,
  * gimp_ruler_get_unit:
  * @ruler: a #GimpRuler
  *
- * Return value: the unit currently used in the @ruler widget.
+ * Return value: (transfer none): the unit currently used in the @ruler widget.
  *
  * Since: 2.8
  **/

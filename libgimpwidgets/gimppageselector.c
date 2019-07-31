@@ -597,7 +597,7 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
- * Returns: The page's thumbnail, or %NULL if none is set. The returned
+ * Returns: (transfer none): The page's thumbnail, or %NULL if none is set. The returned
  *          pixbuf is owned by #GimpPageSelector and must not be
  *          unref'ed when no longer needed.
  *
