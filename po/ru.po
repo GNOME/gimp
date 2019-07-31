@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-24 18:26+0300\n"
-"PO-Revision-Date: 2019-07-25 22:54+0300\n"
+"PO-Revision-Date: 2019-07-29 17:44+0300\n"
 "Last-Translator: Julia Dronova <juliette.tux@gmail.com>\n"
 "Language-Team: Russian <kde-i18n-doc@kde.org>\n"
 "Language: ru\n"
@@ -39,7 +39,8 @@ msgid ""
 "distributed program for such tasks as photo retouching, image composition "
 "and image authoring."
 msgstr ""
-"GIMP — это акроним английского словосочетания GNU Image Manipulation Program. "
+"GIMP — это акроним английского словосочетания \"GNU Image Manipulation"
+" Program\". "
 "Это свободно распространяемая программа для выполнения таких задач, как"
 " ретуширование "
 "фотографий, создания композиций, а также рисования своих собственных"
@@ -75,11 +76,16 @@ msgid "Photo editing in GIMP"
 msgstr "Редактирование фотографий в GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
+#, fuzzy
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
 "available, in particular for curves editing:"
 msgstr ""
+"GIMP 2.10.12 — значительный релиз в части исправления ошибок, вполне "
+"ожидаемых после выхода версии 2.10.10 с огромным числом изменений. Но и "
+"в этой версии есть свои собственные замечательные улучшения, в частности, "
+"касающиеся редактирования кривых:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "Improved curves interaction overall"
@@ -95,15 +101,15 @@ msgstr "Поддержка слоёв в TIFF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Discovery of user-installed fonts in Windows"
-msgstr ""
+msgstr "Обнаружение шрифтов, установленных пользователем в Windows"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Incremental mode in the Dodge/Burn tool"
-msgstr ""
+msgstr "Инкрементный режим инструмента «Осветление/затемнение»»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Free Select tool creates preliminary selection"
-msgstr ""
+msgstr "Инструмент «Свободное выделение» создаёт предварительное выделение"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid ""
@@ -119,26 +125,37 @@ msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
+"Инструмент «Плоская заливка»: новый параметр «Залить при помощи выделения "
+"контурного рисунка» для не полностью закрытых зон контурного рисунка"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
+"В инструменте «Плоская заливка» можно теперь быстро выбирать цвет "
+"с помощью сочетания 'Ctrl+щелчок мышью'"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
+"Инструмент «Плоская заливка» теперь позволяет удерживать мышь в режимах"
+" заливки "
+"«Залить похожие цвета» и «Залить при помощи выделения контурного рисунка»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
+"Инструмент «Масштаб» выполняет масштабирование вокруг центра даже "
+"при его настройке с помощью цифрового ввода"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr ""
+"Инструмент «Трансформации»  теперь по умолчанию сохраняет соотношение сторон "
+"при увеличении или уменьшении масштаба"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
@@ -152,14 +169,17 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
+"Новый общий модификатор холста 'Alt + щелчок колёсиком' для выбора слоёв"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
+"Параметрические кисти теперь имеют точность в 32 бита с плавающей "
+"запятой для избежания постеризации"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Clipboard brushes and pattern can now be duplicated"
-msgstr ""
+msgstr "Кисти и текстуры из буфера обмена теперь можно копировать."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
@@ -173,21 +193,28 @@ msgstr ""
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
+"Новый графический диалог на холсте (простые линии) для размывания вращением, "
+"проводкой и наездом камеры."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Several optimizations including faster layer group rendering"
-msgstr ""
+msgstr "Ряд оптимизаций, в том числе более быстрая отрисовка групп слоёв"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
+"Файлы подкачки и кэша больше не сохраняются в каталоге с конфигурационными"
+" файлами"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
 msgstr ""
+"Некоторые операции сохранения/экспорта файлов стали более устойчивыми к"
+" ошибкам "
+"за счёт отмены сохранения неполных файлов."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "HiDPI support improvements"
@@ -196,108 +223,145 @@ msgstr "Улучшена поддержка HiDPI"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "New preference to choose the default export file type"
 msgstr ""
+"В диалог параметров добавлена возможность выбора формата файла экспорта "
+"по умолчанию"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
 msgstr ""
+"Новая возможность для экспорта форматов PNG, JPEG и TIFF с цветовым профилем; "
+"PSD всегда экспортируются с цветовым профилем"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "New DDS format loading/exporting plug-in"
-msgstr ""
+msgstr "Новое расширение для загрузки/экспорта в формате DDS"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
 msgstr ""
+"Полностью переписанное расширение Spyrogimp с новыми возможностями "
+"и улучшенным взаимодействием"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
+"GIMP 2.10.8 — релиз, в основном направленный на исправление ошибок кода "
+"и оптимизацию. В частности, релиз представил:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#, fuzzy
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
+"Адаптивный размер порции данных во время визуализации проекций, что"
+" динамически улучшает отзывчивость"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
-msgstr ""
+msgstr "В Windows улучшено обнаружение RawTherapee (версии 5.5 и выше)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
+"Более внятная и заметная информация о совместимости формата XCF в диалоге "
+"сохранения."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#, fuzzy
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
+"Было добавлено несколько инструментов журналирования производительности, а "
+"на панель монитора ресурсов добавлена возможность записи журналов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#, fuzzy
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr ""
+"В GIMP 2.10.6 присутствует огромное число исправленных ошибок, оптимизаций "
+"и возможностей. Наиболее значительные изменения:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#, fuzzy
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
+"Текстовые слои теперь могут представлять вертикальные тексты "
+"(с возможностью различных ориентаций символов и направлений письма)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr ""
+msgstr "Новый фильтр «Маленькая планета» (gegl:stereographic-projection)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "New \"Long Shadow\" filter"
-msgstr ""
+msgstr "Новый фильтр «Длинная тень»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
+"Параметр «Выровнять» инструмента «Измеритель» теперь предоставляет"
+" возможность "
+"выравнивания по вертикали"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
+"Предварительный просмотр областей данных теперь отрисовывается асинхронно, "
+"а предварительный просмотр групп слоёв теперь можно отключить в «Параметрах»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
+"Новое поле «Асинхр.» в группе «Разное» на панели монитора ресурсов,"
+" показывающее "
+"число асинхронных операций, выполняющихся в данных момент."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
+"Фильтрация по формату файлов в диалогах открытия/сохранения/экспорта стала"
+" более понятной"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
-msgstr ""
+msgstr "Новый язык интерфейса: Маратхи (теперь GIMP переводится на 81 язык)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
+"В GIMP 2.10.4 включено большое число исправлений, а также некоторые"
+" оптимизации. "
+"Наиболее значительные изменения:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
+"Выравнивание в инструменте «Измеритель»: слои можно поворачивать, "
+"используя в качестве горизонта линию измерения"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Fast startup: fonts loading is not blocking startup anymore"
@@ -309,16 +373,25 @@ msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
+"Добавление тегов к шрифтам с тем же самым пользовательским интерфейсом, что и"
+" для "
+"кистей, текстур и градиентов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#, fuzzy
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
+"Поддержка PSD: возможность импорта предварительной версии композитного"
+" изображения PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
+"Обновление панели монитора ресурсов: новая группа «Память» и улучшенная"
+" группа "
+"«Подкачка» с несколькими показателями"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
@@ -326,6 +399,9 @@ msgid ""
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
+"Второй релиз в серии 2.10, вышедший спустя очень короткое время после 2.10.0, "
+"в основном является версией исправления ошибок мажорного релиза. Было "
+"исправлено несколько десятков багов."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
@@ -334,6 +410,11 @@ msgid ""
 "\"Recursive Transform\". These are nice examples of our relaxed feature "
 "policy in stable micro releases."
 msgstr ""
+"Кроме того, представлено новое расширение для поддержки формата HEIF, как для"
+" импорта, "
+"так и для экспорта, а также два новых фильтра: «Наложение на сферу» и "
+"«Рекурсивная трансформация». Это прекрасные примеры нашей нестрогой политики "
+"возможностей в стабильном микро-релизе."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid ""
@@ -18083,7 +18164,7 @@ msgstr "Щёлкните и потащите, чтобы переместить 
 
 #: ../app/display/gimptoolline.c:1566
 msgid "Release to remove the slider"
-msgstr "Отпустите, чтобы удалить этот регулятор"
+msgstr "Отпустите, чтобы удалить этот ползунок"
 
 #: ../app/display/gimptoolline.c:1570
 #, c-format
@@ -18093,28 +18174,28 @@ msgstr "%s для ограничения шага угла"
 #: ../app/display/gimptoolline.c:1580
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr ""
-"Щёлкните и потащите, чтобы сместить регулятор; потащите назад для удаления "
-"регулятора"
+"Щёлкните и потащите, чтобы сместить ползунок; потащите назад для удаления "
+"ползунка"
 
 #: ../app/display/gimptoolline.c:1585
 msgid "Click-Drag to move or remove the slider"
-msgstr "Щёлкните и потащите, чтобы переместить или удалить регулятор"
+msgstr "Щёлкните и потащите, чтобы переместить или удалить ползунок"
 
 #: ../app/display/gimptoolline.c:1590
 msgid "Click-Drag to move the slider"
-msgstr "Щёлкните и потащите, чтобы переместить регулятор"
+msgstr "Щёлкните и тащите, чтобы переместить ползунок"
 
 #: ../app/display/gimptoolline.c:1601
 msgid "Click-Drag away to remove the slider"
-msgstr "Щёлкните и потащите в сторону, чтобы удалить регулятор"
+msgstr "Щёлкните и потащите в сторону, чтобы удалить ползунок"
 
 #: ../app/display/gimptoolline.c:1605
 msgid "Click-Drag to remove the slider"
-msgstr "Щёлкните и потащите, чтобы удалить регулятор"
+msgstr "Щёлкните и потащите, чтобы удалить ползунок"
 
 #: ../app/display/gimptoolline.c:1616
 msgid "Click or Click-Drag to add a new slider"
-msgstr "Щёлкните или щёлкните и потащите, чтобы добавить регулятор"
+msgstr "Щёлкните или щёлкните и потащите, чтобы добавить новый ползунок"
 
 #: ../app/display/gimptoolline.c:1622
 msgid "Click-Drag to move the line"
@@ -21773,8 +21854,10 @@ msgid "Click to set a new clone source"
 msgstr "Нажмите для получения источника штампа"
 
 #: ../app/tools/gimpcoloroptions.c:70
+#, fuzzy
 msgid "Use merged color value from all composited visible layers"
-msgstr "Использовать все видимые слои при выделении области"
+msgstr ""
+"Использовать объединённое значение цвета со всех видимых композитных слоёв"
 
 #: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
@@ -22916,7 +22999,7 @@ msgstr "Ориентировка (%s)"
 #. the straighten button
 #: ../app/tools/gimpmeasureoptions.c:161 ../app/tools/gimpmeasureoptions.c:171
 msgid "Straighten"
-msgstr "Выпрямить"
+msgstr "Выровнять"
 
 #: ../app/tools/gimpmeasureoptions.c:175
 msgid "Rotate the active layer, selection or path by the measured angle"
@@ -22937,11 +23020,11 @@ msgstr "_Измеритель"
 #: ../app/tools/gimpmeasuretool.c:153
 msgctxt "undo-type"
 msgid "Straighten"
-msgstr "Выпрямить"
+msgstr "Выровнять"
 
 #: ../app/tools/gimpmeasuretool.c:154
 msgid "Straightening"
-msgstr "Выпрямление"
+msgstr "Выравнивание"
 
 #: ../app/tools/gimpmeasuretool.c:173
 msgid "Click-Drag to create a line"
@@ -22951,19 +23034,19 @@ msgstr "Потяните для создания линии"
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten by %-3.3g°"
-msgstr "Выпрямить на %-3.3g°"
+msgstr "Выровнять на %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:370
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten Horizontally by %-3.3g°"
-msgstr "Выпрямить по горизонтали на %-3.3g°"
+msgstr "Выровнять по горизонтали на %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:375
 #, c-format
 msgctxt "undo-type"
 msgid "Straighten Vertically by %-3.3g°"
-msgstr "Выпрямить по вертикали на %-3.3g°"
+msgstr "Выровнять по вертикали на %-3.3g°"
 
 #: ../app/tools/gimpmeasuretool.c:452
 msgid "Add Guides"
@@ -23145,13 +23228,13 @@ msgstr "Инструмент GEGL: выполнение произвольной
 #: ../app/tools/gimpoperationtool.c:548
 #, c-format
 msgid "Aux Input"
-msgstr "Дополнительный ввод"
+msgstr "Ввод Aux"
 
 #. don't translate "Aux"
 #: ../app/tools/gimpoperationtool.c:554
-#, fuzzy, c-format
+#, c-format
 msgid "Aux%d Input"
-msgstr "Дополнительный ввод"
+msgstr "Ввод Aux%d"
 
 #: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
@@ -25719,7 +25802,7 @@ msgstr "Вращение"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:153
 msgid "Slider"
-msgstr "Регулятор"
+msgstr "Ползунок"
 
 #. the axes
 #. The axes of an input device
