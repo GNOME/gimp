@@ -24,6 +24,8 @@
 
 #include "widgets-types.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/gimpdashpattern.h"
 
 #include "gimpcellrendererdashes.h"

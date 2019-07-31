@@ -20,7 +20,10 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
 #include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 

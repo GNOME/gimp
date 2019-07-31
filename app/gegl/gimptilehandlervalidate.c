@@ -18,7 +18,10 @@
 #include "config.h"
 
 #include <cairo.h>
+#include <gio/gio.h>
 #include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "gimp-gegl-types.h"
 

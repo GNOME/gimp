@@ -23,6 +23,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "display-types.h"
 
 #include "gimpcanvas-style.h"

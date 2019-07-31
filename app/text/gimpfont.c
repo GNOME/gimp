@@ -36,6 +36,8 @@
 #include <ft2build.h>
 #include FT_TRUETYPE_TABLES_H
 
+#include "libgimpbase/gimpbase.h"
+
 #include "text-types.h"
 
 #include "core/gimptempbuf.h"

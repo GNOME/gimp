@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "config/gimpconfig-utils.h"
 #include "config/gimpguiconfig.h"
 
