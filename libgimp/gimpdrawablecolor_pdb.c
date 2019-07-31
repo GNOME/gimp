@@ -194,7 +194,7 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
  * @num_values: The number of values in the new curve.
- * @values: (element-type gdouble) The explicit curve.
+ * @values: (array length=num_values) (element-type gdouble) The explicit curve.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *
@@ -245,7 +245,7 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
  * @num_points: The number of values in the control point array.
- * @points: (element-type gdouble) The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
+ * @points: (array length=num_points) (element-type gdouble) The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *

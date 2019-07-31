@@ -691,7 +691,7 @@ gimp_vectors_stroke_get_points (gint32     vectors_ID,
  * @vectors_ID: The vectors object.
  * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
  * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
- * @controlpoints: (element-type gdouble) List of the x- and y-coordinates of the control points.
+ * @controlpoints: (array length=num_points) (element-type gdouble) List of the x- and y-coordinates of the control points.
  * @closed: Whether the stroke is to be closed or not.
  *
  * Adds a stroke of a given type to the vectors object.

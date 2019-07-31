@@ -491,7 +491,7 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
  * _gimp_procedural_db_set_data:
  * @identifier: The identifier associated with data.
  * @bytes: The number of bytes in the data.
- * @data: (element-type guint8) A byte array containing data.
+ * @data: (array length=bytes) (element-type guint8) A byte array containing data.
  *
  * Associates the specified identifier with the supplied data.
  *
