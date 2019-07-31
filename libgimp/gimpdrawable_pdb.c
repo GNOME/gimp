@@ -757,7 +757,7 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
  * @x_coord: The x coordinate.
  * @y_coord: The y coordinate.
  * @num_channels: The number of channels for the pixel.
- * @pixel: The pixel value.
+ * @pixel: (element-type guint8) The pixel value.
  *
  * Sets the value of the pixel at the specified coordinates.
  *

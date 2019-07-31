@@ -365,7 +365,7 @@ gimp_image_select_ellipse (gint32         image_ID,
  * @image_ID: The image.
  * @operation: The selection operation.
  * @num_segs: Number of points (count 1 coordinate as two points).
- * @segs: Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
+ * @segs: (element-type gdouble) Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
  *
  * Create a polygonal selection over the specified image.
  *

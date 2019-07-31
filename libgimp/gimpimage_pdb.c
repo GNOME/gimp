@@ -1767,7 +1767,7 @@ _gimp_image_get_colormap (gint32  image_ID,
  * _gimp_image_set_colormap:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the colormap array.
- * @colormap: The new colormap values.
+ * @colormap: (element-type guint8) The new colormap values.
  *
  * Sets the entries in the image's colormap.
  *

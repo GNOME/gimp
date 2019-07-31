@@ -254,7 +254,7 @@ gimp_gradient_get_number_of_segments (const gchar *name)
  * @num_samples: The number of samples to take.
  * @reverse: Use the reverse gradient.
  * @num_color_samples: (out) Length of the color_samples array (4 * num_samples).
- * @color_samples: (out) (elemen-type gdouble) (transfer full) Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
+ * @color_samples: (out) (element-type gdouble) (transfer full) Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
  * Sample the specified in uniform parts.
  *
@@ -313,10 +313,10 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
  * gimp_gradient_get_custom_samples:
  * @name: The gradient name.
  * @num_samples: The number of samples to take.
- * @positions: The list of positions to sample along the gradient.
+ * @positions: (element-type gdouble) The list of positions to sample along the gradient.
  * @reverse: Use the reverse gradient.
  * @num_color_samples: (out) Length of the color_samples array (4 * num_samples).
- * @color_samples: (out) (elemen-type gdouble) (transfer full) Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
+ * @color_samples: (out) (element-type gdouble) (transfer full) Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
  * Sample the specified gradient in custom positions.
  *

@@ -131,7 +131,7 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
  * _gimp_image_set_color_profile:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: The new serialized color profile.
+ * @color_profile: (element-type guint8) The new serialized color profile.
  *
  * Sets the image's color profile
  *
@@ -220,7 +220,7 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
  * _gimp_image_convert_color_profile:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: The serialized color profile.
+ * @color_profile: (element-type guint8) The serialized color profile.
  * @intent: Rendering intent.
  * @bpc: Black point compensation.
  *
