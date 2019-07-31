@@ -120,10 +120,16 @@ sub generate {
 
 	my $rettype;
 	if ($retarg) {
+	    my ($type) = &arg_parse($retarg->{type});
+	    my $argtype = $arg_types{$type};
 	    $rettype = &libtype($retarg, 1);
 	    chop $rettype unless $rettype =~ /\*$/;
 
 	    $retarg->{retval} = 1;
+
+	    if (exists $argtype->{return_annotate}) {
+		$retdesc .= "$argtype->{return_annotate} ";
+	    }
 
 	    $retdesc .= exists $retarg->{desc} ? $retarg->{desc} : "";
 
@@ -320,7 +326,13 @@ CODE
 
 		    $argdesc .= " * \@$_->{libname}";
 		    $argdesc .= '_ID' if $arg->{id};
-		    $argdesc .= ": $desc";
+
+		    if (exists $arg->{return_annotate}) {
+			$argdesc .= ": $arg->{return_annotate} $desc";
+		    }
+		    else {
+			$argdesc .= ": $desc";
+		    }
 		}
 
 		$var = exists $_->{retval} ? "" : '*';

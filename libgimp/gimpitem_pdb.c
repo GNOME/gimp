@@ -469,7 +469,7 @@ gimp_item_get_parent (gint32 item_ID)
  * This procedure returns the list of items which are children of the
  * specified item. The order is topmost to bottommost.
  *
- * Returns: The item's list of children.
+ * Returns: (transfer full) The item's list of children.
  *
  * Since: 2.8
  **/
@@ -583,7 +583,7 @@ gimp_item_set_expanded (gint32   item_ID,
  *
  * This procedure returns the specified item's name.
  *
- * Returns: The item name.
+ * Returns: (transfer full) The item name.
  *
  * Since: 2.8
  **/
@@ -1177,7 +1177,7 @@ gimp_item_detach_parasite (gint32       item_ID,
  *
  * Finds and returns the parasite that is attached to an item.
  *
- * Returns: The found parasite.
+ * Returns: (transfer full) The found parasite.
  *
  * Since: 2.8
  **/
@@ -1216,8 +1216,8 @@ gimp_item_get_parasite (gint32       item_ID,
  *
  * Returns a list of all parasites currently attached the an item.
  *
- * Returns: The names of currently attached parasites. The returned
- * value must be freed with g_strfreev().
+ * Returns: (transfer full) The names of currently attached parasites.
+ * The returned value must be freed with g_strfreev().
  *
  * Since: 2.8
  **/

@@ -79,8 +79,8 @@ gimp_image_is_valid (gint32 image_ID)
  *
  * This procedure returns the list of images currently open in GIMP.
  *
- * Returns: The list of images currently open. The returned value must
- * be freed with g_free().
+ * Returns: (transfer full) The list of images currently open. The
+ * returned value must be freed with g_free().
  **/
 gint *
 gimp_image_list (gint *num_images)
@@ -462,8 +462,8 @@ gimp_image_height (gint32 image_ID)
  * This procedure returns the list of layers contained in the specified
  * image. The order of layers is from topmost to bottommost.
  *
- * Returns: The list of layers contained in the image. The returned
- * value must be freed with g_free().
+ * Returns: (transfer full) The list of layers contained in the image.
+ * The returned value must be freed with g_free().
  **/
 gint *
 gimp_image_get_layers (gint32  image_ID,
@@ -507,8 +507,8 @@ gimp_image_get_layers (gint32  image_ID,
  * \"channels\" are custom channels and do not include the image's
  * color components.
  *
- * Returns: The list of channels contained in the image. The returned
- * value must be freed with g_free().
+ * Returns: (transfer full) The list of channels contained in the
+ * image. The returned value must be freed with g_free().
  **/
 gint *
 gimp_image_get_channels (gint32  image_ID,
@@ -549,8 +549,8 @@ gimp_image_get_channels (gint32  image_ID,
  * This procedure returns the list of vectors contained in the
  * specified image.
  *
- * Returns: The list of vectors contained in the image. The returned
- * value must be freed with g_free().
+ * Returns: (transfer full) The list of vectors contained in the image.
+ * The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -1728,8 +1728,8 @@ gimp_image_merge_down (gint32        image_ID,
  * 3. If the image is not in Indexed color mode, no colormap is
  * returned.
  *
- * Returns: The image's colormap. The returned value must be freed with
- * g_free().
+ * Returns: (transfer full) The image's colormap. The returned value
+ * must be freed with g_free().
  **/
 guint8 *
 _gimp_image_get_colormap (gint32  image_ID,
@@ -1812,7 +1812,7 @@ _gimp_image_set_colormap (gint32        image_ID,
  *
  * Returns exif/iptc/xmp metadata from the image.
  *
- * Returns: The exif/ptc/xmp metadata as a string.
+ * Returns: (transfer full) The exif/ptc/xmp metadata as a string.
  **/
 gchar *
 _gimp_image_get_metadata (gint32 image_ID)
@@ -1955,7 +1955,7 @@ gimp_image_is_dirty (gint32 image_ID)
  * @actual_height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: The thumbnail data.
+ * @thumbnail_data: (transfer full) The thumbnail data.
  *
  * Get a thumbnail of an image.
  *
@@ -2443,8 +2443,8 @@ gimp_image_set_component_visible (gint32          image_ID,
  * Otherwise, this function returns %NULL. See also
  * gimp_image_get_uri().
  *
- * Returns: The filename. The returned value must be freed with
- * g_free().
+ * Returns: (transfer full) The filename. The returned value must be
+ * freed with g_free().
  **/
 gchar *
 gimp_image_get_filename (gint32 image_ID)
@@ -2520,7 +2520,8 @@ gimp_image_set_filename (gint32       image_ID,
  * and not yet saved, or gimp-image-get-exported-uri if the image has
  * been exported to a non-GIMP file format.
  *
- * Returns: The URI. The returned value must be freed with g_free().
+ * Returns: (transfer full) The URI. The returned value must be freed
+ * with g_free().
  *
  * Since: 2.8
  **/
@@ -2556,8 +2557,8 @@ gimp_image_get_uri (gint32 image_ID)
  * This procedure returns the XCF URI associated with the image. If
  * there is no such URI, this procedure returns %NULL.
  *
- * Returns: The imported URI. The returned value must be freed with
- * g_free().
+ * Returns: (transfer full) The imported URI. The returned value must
+ * be freed with g_free().
  *
  * Since: 2.8
  **/
@@ -2595,8 +2596,8 @@ gimp_image_get_xcf_uri (gint32 image_ID)
  * image was not imported, or has since been saved in the native Gimp
  * format, this procedure returns %NULL.
  *
- * Returns: The imported URI. The returned value must be freed with
- * g_free().
+ * Returns: (transfer full) The imported URI. The returned value must
+ * be freed with g_free().
  *
  * Since: 2.8
  **/
@@ -2633,8 +2634,8 @@ gimp_image_get_imported_uri (gint32 image_ID)
  * if the image was exported a non-native GIMP format. If the image was
  * not exported, this procedure returns %NULL.
  *
- * Returns: The exported URI. The returned value must be freed with
- * g_free().
+ * Returns: (transfer full) The exported URI. The returned value must
+ * be freed with g_free().
  *
  * Since: 2.8
  **/
@@ -2675,7 +2676,8 @@ gimp_image_get_exported_uri (gint32 image_ID)
  * '(imported)' etc. and should only be used to label user interface
  * elements. Never use it to construct filenames.
  *
- * Returns: The name. The returned value must be freed with g_free().
+ * Returns: (transfer full) The name. The returned value must be freed
+ * with g_free().
  **/
 gchar *
 gimp_image_get_name (gint32 image_ID)
@@ -3270,7 +3272,7 @@ gimp_image_detach_parasite (gint32       image_ID,
  * Finds and returns the parasite that was previously attached to an
  * image.
  *
- * Returns: The found parasite.
+ * Returns: (transfer full) The found parasite.
  *
  * Since: 2.8
  **/
@@ -3309,8 +3311,8 @@ gimp_image_get_parasite (gint32       image_ID,
  *
  * Returns a list of all currently attached parasites.
  *
- * Returns: The names of currently attached parasites. The returned
- * value must be freed with g_strfreev().
+ * Returns: (transfer full) The names of currently attached parasites.
+ * The returned value must be freed with g_strfreev().
  *
  * Since: 2.8
  **/

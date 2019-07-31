@@ -139,7 +139,7 @@ gimp_context_set_defaults (void)
 /**
  * gimp_context_list_paint_methods:
  * @num_paint_methods: The number of the available paint methods.
- * @paint_methods: The names of the available paint methods.
+ * @paint_methods: (transfer full) The names of the available paint methods.
  *
  * Lists the available paint methods.
  *
@@ -188,7 +188,7 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
  * This procedure returns the name of the currently active paint
  * method.
  *
- * Returns: The name of the active paint method.
+ * Returns: (transfer full) The name of the active paint method.
  *
  * Since: 2.4
  **/
@@ -1100,7 +1100,7 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
 /**
  * gimp_context_get_line_dash_pattern:
  * @num_dashes: The number of dashes in the dash_pattern array.
- * @dashes: The line dash pattern setting.
+ * @dashes: (transfer full) The line dash pattern setting.
  *
  * Get the line dash pattern setting.
  *
@@ -1196,7 +1196,7 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
  * paint operations and stroke operations use this brush to control the
  * application of paint to the image.
  *
- * Returns: The name of the active brush.
+ * Returns: (transfer full) The name of the active brush.
  *
  * Since: 2.2
  **/
@@ -1762,7 +1762,7 @@ gimp_context_set_brush_force (gdouble force)
  * dynamics. All paint operations and stroke operations use this paint
  * dynamics to control the application of paint to the image.
  *
- * Returns: The name of the active paint dynamics.
+ * Returns: (transfer full) The name of the active paint dynamics.
  *
  * Since: 2.8
  **/
@@ -1834,7 +1834,7 @@ gimp_context_set_dynamics (const gchar *name)
  * This procedure returns the name of the currently active MyPaint
  * brush.
  *
- * Returns: The name of the active MyPaint brush.
+ * Returns: (transfer full) The name of the active MyPaint brush.
  *
  * Since: 2.10
  **/
@@ -1907,7 +1907,7 @@ gimp_context_set_mypaint_brush (const gchar *name)
  * clone and bucket-fill operations with patterns will use this pattern
  * to control the application of paint to the image.
  *
- * Returns: The name of the active pattern.
+ * Returns: (transfer full) The name of the active pattern.
  *
  * Since: 2.2
  **/
@@ -1978,7 +1978,7 @@ gimp_context_set_pattern (const gchar *name)
  *
  * This procedure returns the name of the currently active gradient.
  *
- * Returns: The name of the active gradient.
+ * Returns: (transfer full) The name of the active gradient.
  *
  * Since: 2.2
  **/
@@ -2383,7 +2383,8 @@ gimp_context_set_gradient_reverse (gboolean reverse)
  *
  * This procedure returns the name of the the currently active palette.
  *
- * Returns: (transfer full): The name of the active palette.
+ * Returns: (transfer full) (transfer full): The name of the active
+ * palette.
  *
  * Since: 2.2
  **/
@@ -2454,7 +2455,7 @@ gimp_context_set_palette (const gchar *name)
  *
  * This procedure returns the name of the currently active font.
  *
- * Returns: The name of the active font.
+ * Returns: (transfer full) The name of the active font.
  *
  * Since: 2.2
  **/
