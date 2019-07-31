@@ -94,7 +94,7 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
  * drawable when the buffer gets destroyed, or when gegl_buffer_flush()
  * is called.
  *
- * Return value: The #GeglBuffer.
+ * Return value: (transfer full): The #GeglBuffer.
  *
  * See Also: gimp_drawable_get_shadow_buffer()
  *
@@ -127,7 +127,7 @@ gimp_drawable_get_buffer (gint32 drawable_ID)
  * synced back with the core drawable's shadow tiles when the buffer
  * gets destroyed, or when gegl_buffer_flush() is called.
  *
- * Return value: The #GeglBuffer.
+ * Return value: (transfer full): The #GeglBuffer.
  *
  * See Also: gimp_drawable_get_shadow_buffer()
  *

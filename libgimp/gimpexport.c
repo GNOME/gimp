@@ -1035,7 +1035,7 @@ gimp_export_image (gint32                 *image_ID,
  * %GTK_RESPONSE_OK, and when the Cancel button is clicked it is
  * %GTK_RESPONSE_CANCEL.
  *
- * Returns: The new export dialog.
+ * Returns: (transfer full): The new export dialog.
  *
  * Since: 2.8
  **/
@@ -1076,7 +1076,7 @@ gimp_export_dialog_new (const gchar *format_name,
  * Returns the #GtkVBox of the passed export dialog to be filled with
  * export options.
  *
- * Returns: The #GtkVBox to fill with export options.
+ * Returns: (transfer none): The #GtkVBox to fill with export options.
  *
  * Since: 2.8
  **/

@@ -52,7 +52,7 @@ static GdkPixbuf * gimp_pixbuf_from_data (guchar                 *data,
  * Retrieves a thumbnail pixbuf for the image identified by @image_ID.
  * The thumbnail will be not larger than the requested size.
  *
- * Return value: a new #GdkPixbuf
+ * Return value: (transfer full): a new #GdkPixbuf
  *
  * Since: 2.2
  **/
@@ -93,7 +93,7 @@ gimp_image_get_thumbnail (gint32                  image_ID,
  * @drawable_ID. The thumbnail will be not larger than the requested
  * size.
  *
- * Return value: a new #GdkPixbuf
+ * Return value: (transfer full): a new #GdkPixbuf
  *
  * Since: 2.2
  **/
@@ -139,7 +139,7 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
  * @drawable_ID. The thumbnail will be not larger than the requested
  * size.
  *
- * Return value: a new #GdkPixbuf
+ * Return value: (transfer full): a new #GdkPixbuf
  *
  * Since: 2.2
  **/
