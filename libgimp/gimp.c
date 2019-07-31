@@ -126,17 +126,6 @@
 #include "libgimp-intl.h"
 
 
-/**
- * SECTION: gimp
- * @title: Gimp
- * @short_description: Main functions needed for building a GIMP plug-in.
- *                     This header includes all other GIMP Library headers.
- *
- * Main functions needed for building a GIMP plug-in. This header
- * includes all other GIMP Library headers.
- **/
-
-
 #define TILE_MAP_SIZE (_tile_width * _tile_height * 32)
 
 #define ERRMSG_SHM_FAILED "Could not attach to gimp shared memory segment"

@@ -35,6 +35,7 @@ sub desc_wrap {
     my $leading = ' * ';
     my $wrapped;
 
+    $str =~ s/\s+$//; # trim trailing whitespace
     $str =~ s/&/&amp\;/g;
     $str =~ s/\</&lt\;/g;
     $str =~ s/\>/&gt\;/g;
