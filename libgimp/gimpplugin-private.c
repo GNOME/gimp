@@ -28,7 +28,8 @@
 
 /*  local function prototpes  */
 
-static void   gimp_plug_in_register (GimpPlugIn *plug_in);
+static void   gimp_plug_in_register (GimpPlugIn *plug_in,
+                                     gboolean    init);
 
 
 /*  public functions  */
@@ -41,7 +42,7 @@ _gimp_plug_in_init (GimpPlugIn *plug_in)
   if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
     return;
 
-  gimp_plug_in_register (plug_in);
+  gimp_plug_in_register (plug_in, TRUE);
 }
 
 void
@@ -52,7 +53,7 @@ _gimp_plug_in_query (GimpPlugIn *plug_in)
   if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
     return;
 
-  gimp_plug_in_register (plug_in);
+  gimp_plug_in_register (plug_in, FALSE);
 }
 
 void
@@ -68,24 +69,38 @@ _gimp_plug_in_quit (GimpPlugIn *plug_in)
 /*  private functions  */
 
 static void
-gimp_plug_in_register (GimpPlugIn *plug_in)
+gimp_plug_in_register (GimpPlugIn *plug_in,
+                       gboolean    init)
 {
   gchar **procedures;
   gint    n_procedures;
   gint    i;
   GList  *list;
 
-  procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in,
-                                                                   &n_procedures);
+  if (init)
+    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in,
+                                                                    &n_procedures);
+  else
+    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in,
+                                                                     &n_procedures);
 
   for (i = 0; i < n_procedures; i++)
     {
       GimpProcedure *procedure;
 
       procedure = gimp_plug_in_create_procedure (plug_in, procedures[i]);
-      _gimp_procedure_register (procedure);
-      g_object_unref (procedure);
+      if (procedure)
+        {
+          _gimp_procedure_register (procedure);
+          g_object_unref (procedure);
+        }
+      else
+        {
+          g_warning ("Plug-in failed to create procedure '%s'\n",
+                     procedures[i]);
+        }
     }
+  g_clear_pointer (&procedures, g_strfreev);
 
   if (plug_in->priv->translation_domain_name)
     {
