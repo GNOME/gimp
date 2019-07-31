@@ -53,13 +53,72 @@ struct _GimpPlugInClass
 {
   GObjectClass  parent_class;
 
+  /**
+   * quit:
+   * @plug_in: a #GimpPlugIn.
+   *
+   * This method can be overridden by a plug-in which needs to perform
+   * some actions upon quitting.
+   */
   void             (* quit)             (GimpPlugIn  *plug_in);
 
+  /**
+   * init_procedures:
+   * @plug_in: a #GimpPlugIn.
+   * @n_procedures: (out) number of procedures.
+   *
+   * This method can be overridden by all plug-ins to return a newly
+   * allocated array of allocated strings naming procedures registered
+   * by this plug-in.
+   * This array of strings must be NULL-terminated (i.e. freeable by
+   * g_strfreev()).
+   *
+   * It is different from query_procedures() in that init happens at every
+   * startup, whereas query happens only once in the life of a plug-in
+   * (right after installation or update). Hence init_procedures()
+   * typically returns procedures dependent to runtime conditions (such
+   * as the presence of a third-party tool), whereas query_procedures()
+   * would usually return unconditional and always available procedures.
+   * Most of the time, you only want to override query_procedures() and
+   * leave init_procedures() untouched.
+   *
+   * Returns: (out) (array length=n_procedures) (transfer full) (element-type gchar):
+   *          the names of the procedures registered by @plug_in.
+   */
   gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in,
                                          gint        *n_procedures);
+  /**
+   * query_procedures:
+   * @plug_in: a #GimpPlugIn.
+   * @n_procedures: (out) number of procedures.
+   *
+   * This method can be overridden by all plug-ins to return a newly
+   * allocated array of allocated strings naming the procedures
+   * registered by this plug-in.
+   * This array of strings must be NULL-terminated (i.e. freeable by
+   * g_strfreev()).
+   *
+   * See documentation of init_procedures() for differences.
+   *
+   * Returns: (out) (array length=n_procedures) (transfer full) (element-type gchar):
+   *          the names of the procedures registered by @plug_in.
+   */
   gchar         ** (* query_procedures) (GimpPlugIn  *plug_in,
                                          gint        *n_procedures);
 
+  /**
+   * create_procedure:
+   * @plug_in: a #GimpPlugIn.
+   * @name: procedure name.
+   *
+   * This method should be overridden by all plug-ins and return a newly
+   * allocated #GimpProcedure named @name.
+   * It will be called for every @name as returned by query_procedures()
+   * so care must be taken.
+   *
+   * Returns: (out) (array length=n_procedures) (transfer full) (element-type gchar):
+   *          the names of the procedures registered by @plug_in.
+   */
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
                                          const gchar *name);
 
