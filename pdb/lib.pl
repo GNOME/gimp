@@ -104,8 +104,14 @@ sub generate {
 
 	# Find the return argument (defaults to the first arg if not
 	# explicitly set
-	my $retarg  = undef; $retvoid = 0;
-	foreach (@outargs) { $retarg = $_, last if exists $_->{retval} }
+	my $retarg  = undef;
+	my $retindex = 0;
+	$retvoid = 0;
+	foreach (@outargs) {
+	    $retarg = $_, last if exists $_->{retval};
+	    $retindex++;
+	}
+
 	unless ($retarg) {
 	    if (scalar @outargs) {
 		if (exists $outargs[0]->{void_ret}) {
@@ -126,6 +132,10 @@ sub generate {
 	    chop $rettype unless $rettype =~ /\*$/;
 
 	    $retarg->{retval} = 1;
+
+	    if (exists $argtype->{array}) {
+		$retdesc .= "(array length=@outargs[$retindex - 2]->{name}) ";
+	    }
 
 	    if (exists $argtype->{out_annotate}) {
 		$retdesc .= "$argtype->{out_annotate} ";
@@ -338,6 +348,10 @@ CODE
 		    $argdesc .= '_ID' if $arg->{id};
 		    $argdesc .= ": (out) ";
 
+		    if (exists $arg->{array}) {
+			$argdesc .= "(array length=@outargs[$argc - 2]->{name}) ";
+		    }
+
 		    if (exists $arg->{out_annotate}) {
 			$argdesc .= "$arg->{out_annotate} ";
 		    }
@@ -358,6 +372,7 @@ CODE
                     unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
                     unless ($argdesc =~ /\n$/)       { $argdesc .= "\n" }
 		}
+
 		$argc++;
 	    }
 

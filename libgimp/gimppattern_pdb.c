@@ -93,7 +93,7 @@ gimp_pattern_get_info (const gchar *name,
  * @height: (out) The pattern height.
  * @bpp: (out) The pattern bpp.
  * @num_color_bytes: (out) Number of pattern bytes.
- * @color_bytes: (out) (element-type guint8) (transfer full) The pattern data.
+ * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full) The pattern data.
  *
  * Retrieve information about the specified pattern (including pixels).
  *
