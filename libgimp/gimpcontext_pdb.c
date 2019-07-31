@@ -1100,7 +1100,7 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
 /**
  * gimp_context_get_line_dash_pattern:
  * @num_dashes: (out) The number of dashes in the dash_pattern array.
- * @dashes: (out) (elemen-type gdouble) (transfer full) The line dash pattern setting.
+ * @dashes: (out) (element-type gdouble) (transfer full) The line dash pattern setting.
  *
  * Get the line dash pattern setting.
  *
@@ -1143,7 +1143,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
 /**
  * gimp_context_set_line_dash_pattern:
  * @num_dashes: The number of dashes in the dash_pattern array.
- * @dashes: The line dash pattern setting.
+ * @dashes: (element-type gdouble) The line dash pattern setting.
  *
  * Set the line dash pattern setting.
  *

@@ -635,7 +635,7 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  * @num_points: (out) The number of floats returned.
- * @controlpoints: (out) (elemen-type gdouble) (transfer full) List of the control points for the stroke (x0, y0, x1, y1, ...).
+ * @controlpoints: (out) (element-type gdouble) (transfer full) List of the control points for the stroke (x0, y0, x1, y1, ...).
  * @closed: (out) Whether the stroke is closed or not.
  *
  * returns the control points of a stroke.
@@ -691,7 +691,7 @@ gimp_vectors_stroke_get_points (gint32     vectors_ID,
  * @vectors_ID: The vectors object.
  * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
  * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
- * @controlpoints: List of the x- and y-coordinates of the control points.
+ * @controlpoints: (element-type gdouble) List of the x- and y-coordinates of the control points.
  * @closed: Whether the stroke is to be closed or not.
  *
  * Adds a stroke of a given type to the vectors object.
@@ -756,7 +756,7 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
  *
  * returns polygonal approximation of the stroke.
  *
- * Returns: (elemen-type gdouble) (transfer full) List of the coords
+ * Returns: (element-type gdouble) (transfer full) List of the coords
  * along the path (x0, y0, x1, y1, ...).
  *
  * Since: 2.4

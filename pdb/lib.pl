@@ -127,8 +127,8 @@ sub generate {
 
 	    $retarg->{retval} = 1;
 
-	    if (exists $argtype->{return_annotate}) {
-		$retdesc .= "$argtype->{return_annotate} ";
+	    if (exists $argtype->{out_annotate}) {
+		$retdesc .= "$argtype->{out_annotate} ";
 	    }
 
 	    $retdesc .= exists $retarg->{desc} ? $retarg->{desc} : "";
@@ -190,8 +190,6 @@ sub generate {
 	    # This is the list of g_value_set_foo
 	    $arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
 
-	    $argc++;
-
 	    $wrapped = "_" if exists $_->{wrap};
 
 	    $usednames{$_->{name}}++;
@@ -203,10 +201,18 @@ sub generate {
 
 	    $argdesc .= " * \@$_->{name}";
 	    $argdesc .= '_ID' if $arg->{id};
-	    $argdesc .= ": $desc";
+	    $argdesc .= ": ";
+
+	    if (exists $arg->{in_annotate}) {
+		$argdesc .= "$arg->{in_annotate} ";
+	    }
+
+	    $argdesc .= "$desc";
 
             unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
             $argdesc .= "\n";
+
+	    $argc++;
 	}
 
 	# This marshals the return value(s)
@@ -326,13 +332,13 @@ CODE
 
 		    $argdesc .= " * \@$_->{libname}";
 		    $argdesc .= '_ID' if $arg->{id};
+		    $argdesc .= ": (out) ";
 
-		    if (exists $arg->{return_annotate}) {
-			$argdesc .= ": (out) $arg->{return_annotate} $desc";
+		    if (exists $arg->{out_annotate}) {
+			$argdesc .= "$arg->{out_annotate} ";
 		    }
-		    else {
-			$argdesc .= ": (out) $desc";
-		    }
+
+		    $argdesc .= "$desc";
 		}
 
 		$var = exists $_->{retval} ? "" : '*';

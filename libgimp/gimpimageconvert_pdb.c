@@ -175,7 +175,7 @@ gimp_image_convert_indexed (gint32                  image_ID,
  * @width: Width of the matrix (0 to reset to default matrix).
  * @height: Height of the matrix (0 to reset to default matrix).
  * @matrix_length: The length of 'matrix'.
- * @matrix: The matrix -- all values must be >= 1.
+ * @matrix: (element-type guint8) The matrix -- all values must be >= 1.
  *
  * Set dither matrix for conversion to indexed
  *
