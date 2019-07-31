@@ -79,8 +79,8 @@ gimp_image_is_valid (gint32 image_ID)
  *
  * This procedure returns the list of images currently open in GIMP.
  *
- * Returns: (transfer full) The list of images currently open. The
- * returned value must be freed with g_free().
+ * Returns: (element-type gint32) (transfer full) The list of images
+ * currently open. The returned value must be freed with g_free().
  **/
 gint *
 gimp_image_list (gint *num_images)
@@ -462,8 +462,9 @@ gimp_image_height (gint32 image_ID)
  * This procedure returns the list of layers contained in the specified
  * image. The order of layers is from topmost to bottommost.
  *
- * Returns: (transfer full) The list of layers contained in the image.
- * The returned value must be freed with g_free().
+ * Returns: (element-type gint32) (transfer full) The list of layers
+ * contained in the image. The returned value must be freed with
+ * g_free().
  **/
 gint *
 gimp_image_get_layers (gint32  image_ID,
@@ -507,8 +508,9 @@ gimp_image_get_layers (gint32  image_ID,
  * \"channels\" are custom channels and do not include the image's
  * color components.
  *
- * Returns: (transfer full) The list of channels contained in the
- * image. The returned value must be freed with g_free().
+ * Returns: (element-type gint32) (transfer full) The list of channels
+ * contained in the image. The returned value must be freed with
+ * g_free().
  **/
 gint *
 gimp_image_get_channels (gint32  image_ID,
@@ -549,8 +551,9 @@ gimp_image_get_channels (gint32  image_ID,
  * This procedure returns the list of vectors contained in the
  * specified image.
  *
- * Returns: (transfer full) The list of vectors contained in the image.
- * The returned value must be freed with g_free().
+ * Returns: (element-type gint32) (transfer full) The list of vectors
+ * contained in the image. The returned value must be freed with
+ * g_free().
  *
  * Since: 2.4
  **/
@@ -1728,8 +1731,8 @@ gimp_image_merge_down (gint32        image_ID,
  * 3. If the image is not in Indexed color mode, no colormap is
  * returned.
  *
- * Returns: (transfer full) The image's colormap. The returned value
- * must be freed with g_free().
+ * Returns: (element-type guint8) (transfer full) The image's colormap.
+ * The returned value must be freed with g_free().
  **/
 guint8 *
 _gimp_image_get_colormap (gint32  image_ID,
@@ -1955,7 +1958,7 @@ gimp_image_is_dirty (gint32 image_ID)
  * @actual_height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: (transfer full) The thumbnail data.
+ * @thumbnail_data: (element-type guint8) (transfer full) The thumbnail data.
  *
  * Get a thumbnail of an image.
  *
@@ -3311,8 +3314,9 @@ gimp_image_get_parasite (gint32       image_ID,
  *
  * Returns a list of all currently attached parasites.
  *
- * Returns: (transfer full) The names of currently attached parasites.
- * The returned value must be freed with g_strfreev().
+ * Returns: (element-type gchar*) (transfer full) The names of
+ * currently attached parasites. The returned value must be freed with
+ * g_strfreev().
  *
  * Since: 2.8
  **/

@@ -139,7 +139,7 @@ gimp_context_set_defaults (void)
 /**
  * gimp_context_list_paint_methods:
  * @num_paint_methods: The number of the available paint methods.
- * @paint_methods: (transfer full) The names of the available paint methods.
+ * @paint_methods: (element-type gchar*) (transfer full) The names of the available paint methods.
  *
  * Lists the available paint methods.
  *
@@ -1100,7 +1100,7 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
 /**
  * gimp_context_get_line_dash_pattern:
  * @num_dashes: The number of dashes in the dash_pattern array.
- * @dashes: (transfer full) The line dash pattern setting.
+ * @dashes: (elemen-type gdouble) (transfer full) The line dash pattern setting.
  *
  * Get the line dash pattern setting.
  *

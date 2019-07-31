@@ -44,8 +44,8 @@
  * This procedure returns a complete listing of available named
  * buffers.
  *
- * Returns: (transfer full) The list of buffer names. The returned
- * value must be freed with g_strfreev().
+ * Returns: (element-type gchar*) (transfer full) The list of buffer
+ * names. The returned value must be freed with g_strfreev().
  *
  * Since: 2.4
  **/

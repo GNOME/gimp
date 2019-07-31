@@ -313,10 +313,10 @@ gimp_brush_get_info (const gchar *name,
  * @height: The brush height.
  * @mask_bpp: The brush mask bpp.
  * @num_mask_bytes: Length of brush mask data.
- * @mask_bytes: (transfer full) The brush mask data.
+ * @mask_bytes: (element-type guint8) (transfer full) The brush mask data.
  * @color_bpp: The brush color bpp.
  * @num_color_bytes: Length of brush color data.
- * @color_bytes: (transfer full) The brush color data.
+ * @color_bytes: (element-type guint8) (transfer full) The brush color data.
  *
  * Retrieves information about the specified brush.
  *

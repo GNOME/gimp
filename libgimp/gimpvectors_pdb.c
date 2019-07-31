@@ -161,7 +161,8 @@ gimp_vectors_copy (gint32 vectors_ID)
  * Returns an Array with the stroke-IDs associated with the passed
  * path.
  *
- * Returns: (transfer full) List of the strokes belonging to the path.
+ * Returns: (element-type gint32) (transfer full) List of the strokes
+ * belonging to the path.
  *
  * Since: 2.4
  **/
@@ -634,7 +635,7 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  * @num_points: The number of floats returned.
- * @controlpoints: (transfer full) List of the control points for the stroke (x0, y0, x1, y1, ...).
+ * @controlpoints: (elemen-type gdouble) (transfer full) List of the control points for the stroke (x0, y0, x1, y1, ...).
  * @closed: Whether the stroke is closed or not.
  *
  * returns the control points of a stroke.
@@ -755,8 +756,8 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
  *
  * returns polygonal approximation of the stroke.
  *
- * Returns: (transfer full) List of the coords along the path (x0, y0,
- * x1, y1, ...).
+ * Returns: (elemen-type gdouble) (transfer full) List of the coords
+ * along the path (x0, y0, x1, y1, ...).
  *
  * Since: 2.4
  **/
@@ -1066,7 +1067,7 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: The number of newly created vectors.
- * @vectors_ids: (transfer full) The list of newly created vectors.
+ * @vectors_ids: (element-type gint32) (transfer full) The list of newly created vectors.
  *
  * Import paths from an SVG file.
  *
@@ -1127,7 +1128,7 @@ gimp_vectors_import_from_file (gint32        image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  * @num_vectors: The number of newly created vectors.
- * @vectors_ids: (transfer full) The list of newly created vectors.
+ * @vectors_ids: (element-type gint32) (transfer full) The list of newly created vectors.
  *
  * Import paths from an SVG string.
  *
