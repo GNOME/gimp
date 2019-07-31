@@ -203,6 +203,10 @@ sub generate {
 	    $argdesc .= '_ID' if $arg->{id};
 	    $argdesc .= ": ";
 
+	    if (exists $arg->{array}) {
+		$argdesc .= "(array length=@inargs[$argc - 1]->{name}) ";
+	    }
+
 	    if (exists $arg->{in_annotate}) {
 		$argdesc .= "$arg->{in_annotate} ";
 	    }

@@ -1143,7 +1143,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
 /**
  * gimp_context_set_line_dash_pattern:
  * @num_dashes: The number of dashes in the dash_pattern array.
- * @dashes: (element-type gdouble) The line dash pattern setting.
+ * @dashes: (array length=num_dashes) (element-type gdouble) The line dash pattern setting.
  *
  * Set the line dash pattern setting.
  *
