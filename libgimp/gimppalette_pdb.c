@@ -263,7 +263,8 @@ gimp_palette_get_info (const gchar *name,
  *
  * This procedure retrieves all color entries of the specified palette.
  *
- * Returns: (transfer full) The colors in the palette.
+ * Returns: (element-type GimpRGB) (transfer full) The colors in the
+ * palette.
  *
  * Since: 2.6
  **/

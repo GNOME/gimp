@@ -714,7 +714,7 @@ gimp_drawable_update (gint32 drawable_ID,
  * The 'num_channels' argument must always be equal to the
  * bytes-per-pixel value for the specified drawable.
  *
- * Returns: (transfer full) The pixel value.
+ * Returns: (element-type guint8) (transfer full) The pixel value.
  **/
 guint8 *
 gimp_drawable_get_pixel (gint32  drawable_ID,
@@ -912,7 +912,7 @@ gimp_drawable_offset (gint32         drawable_ID,
  * @actual_height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: (transfer full) The thumbnail data.
+ * @thumbnail_data: (element-type guint8) (transfer full) The thumbnail data.
  *
  * Get a thumbnail of a drawable.
  *
@@ -984,7 +984,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
  * @height: The previews height.
  * @bpp: The previews bpp.
  * @thumbnail_data_count: The number of bytes in thumbnail data.
- * @thumbnail_data: (transfer full) The thumbnail data.
+ * @thumbnail_data: (element-type guint8) (transfer full) The thumbnail data.
  *
  * Get a thumbnail of a sub-area of a drawable drawable.
  *

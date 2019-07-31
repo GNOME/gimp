@@ -111,7 +111,7 @@ gimp_procedural_db_dump (const gchar *filename)
  * @date: The regex for procedure date.
  * @proc_type: The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
  * @num_matches: The number of matching procedures.
- * @procedure_names: (transfer full) The list of procedure names.
+ * @procedure_names: (element-type gchar*) (transfer full) The list of procedure names.
  *
  * Queries the procedural database for its contents using regular
  * expression matching.
@@ -408,7 +408,7 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
  * _gimp_procedural_db_get_data:
  * @identifier: The identifier associated with data.
  * @bytes: The number of bytes in the data.
- * @data: (transfer full) A byte array containing data.
+ * @data: (element-type guint8) (transfer full) A byte array containing data.
  *
  * Returns data associated with the specified identifier.
  *
