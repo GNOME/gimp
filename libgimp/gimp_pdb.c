@@ -26,11 +26,15 @@
 
 
 /**
- * SECTION: gimp
- * @title: gimp
- * @short_description: Miscellaneous procedures
+ * SECTION: Gimp
+ * @title: Gimp
+ * @short_description: Main functions needed for building a GIMP plug-in.
  *
- * Miscellaneous procedures not fitting in any category.
+ * Main functions needed for building a GIMP plug-in.
+ * This header includes all other GIMP Library headers.
+ *
+ * Also contains some miscellaneous procedures that don't fit in any
+ * other category.
  **/
 
 
