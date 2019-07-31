@@ -462,7 +462,7 @@ gimp_item_get_parent (gint32 item_ID)
 /**
  * gimp_item_get_children:
  * @item_ID: The item.
- * @num_children: (out) The item's number of children.
+ * @num_children: (out): The item's number of children.
  *
  * Returns the item's list of children.
  *
@@ -470,7 +470,7 @@ gimp_item_get_parent (gint32 item_ID)
  * specified item. The order is topmost to bottommost.
  *
  * Returns: (array length=num_children) (element-type gint32) (transfer
- * full) The item's list of children.
+ * full): The item's list of children.
  *
  * Since: 2.8
  **/
@@ -584,7 +584,7 @@ gimp_item_set_expanded (gint32   item_ID,
  *
  * This procedure returns the specified item's name.
  *
- * Returns: (transfer full) The item name.
+ * Returns: (transfer full): The item name.
  *
  * Since: 2.8
  **/
@@ -1178,7 +1178,7 @@ gimp_item_detach_parasite (gint32       item_ID,
  *
  * Finds and returns the parasite that is attached to an item.
  *
- * Returns: (transfer full) The found parasite.
+ * Returns: (transfer full): The found parasite.
  *
  * Since: 2.8
  **/
@@ -1211,14 +1211,14 @@ gimp_item_get_parasite (gint32       item_ID,
 /**
  * gimp_item_get_parasite_list:
  * @item_ID: The item.
- * @num_parasites: (out) The number of attached parasites.
+ * @num_parasites: (out): The number of attached parasites.
  *
  * List all parasites.
  *
  * Returns a list of all parasites currently attached the an item.
  *
  * Returns: (array length=num_parasites) (element-type gchar*)
- * (transfer full) The names of currently attached parasites. The
+ * (transfer full): The names of currently attached parasites. The
  * returned value must be freed with g_strfreev().
  *
  * Since: 2.8

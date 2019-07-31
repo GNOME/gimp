@@ -46,7 +46,7 @@
  * This procedure returns the version number of the currently running
  * GIMP.
  *
- * Returns: (transfer full) GIMP version number.
+ * Returns: (transfer full): GIMP version number.
  **/
 gchar *
 gimp_version (void)
@@ -178,7 +178,7 @@ gimp_detach_parasite (const gchar *name)
  *
  * Finds and returns the global parasite that was previously attached.
  *
- * Returns: (transfer full) The found parasite.
+ * Returns: (transfer full): The found parasite.
  *
  * Since: 2.8
  **/
@@ -207,14 +207,14 @@ gimp_get_parasite (const gchar *name)
 
 /**
  * gimp_get_parasite_list:
- * @num_parasites: (out) The number of attached parasites.
+ * @num_parasites: (out): The number of attached parasites.
  *
  * List all parasites.
  *
  * Returns a list of all currently attached global parasites.
  *
  * Returns: (array length=num_parasites) (element-type gchar*)
- * (transfer full) The names of currently attached parasites. The
+ * (transfer full): The names of currently attached parasites. The
  * returned value must be freed with g_strfreev().
  *
  * Since: 2.8
@@ -254,7 +254,7 @@ gimp_get_parasite_list (gint *num_parasites)
  * Generates a unique filename using the temp path supplied in the
  * user's gimprc.
  *
- * Returns: (transfer full) The new temp filename.
+ * Returns: (transfer full): The new temp filename.
  **/
 gchar *
 gimp_temp_name (const gchar *extension)

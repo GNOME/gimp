@@ -39,7 +39,7 @@
  * @drawable_ID: The affected drawable.
  * @pressure: The pressure of the airbrush strokes.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Paint in the current brush with varying pressure. Paint application
  * is time-dependent.
@@ -86,7 +86,7 @@ gimp_airbrush (gint32         drawable_ID,
  * gimp_airbrush_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Paint in the current brush with varying pressure. Paint application
  * is time-dependent.
@@ -134,7 +134,7 @@ gimp_airbrush_default (gint32         drawable_ID,
  * @src_x: The x coordinate in the source image.
  * @src_y: The y coordinate in the source image.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Clone from the source to the dest drawable using the current brush
  *
@@ -197,7 +197,7 @@ gimp_clone (gint32         drawable_ID,
  * gimp_clone_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Clone from the source to the dest drawable using the current brush
  *
@@ -244,7 +244,7 @@ gimp_clone_default (gint32         drawable_ID,
  * @pressure: The pressure.
  * @convolve_type: Convolve type.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Convolve (Blur, Sharpen) using the current brush.
  *
@@ -293,7 +293,7 @@ gimp_convolve (gint32            drawable_ID,
  * gimp_convolve_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Convolve (Blur, Sharpen) using the current brush.
  *
@@ -340,7 +340,7 @@ gimp_convolve_default (gint32         drawable_ID,
  * @dodgeburn_type: The type either dodge or burn.
  * @dodgeburn_mode: The mode.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Dodgeburn image with varying exposure.
  *
@@ -389,7 +389,7 @@ gimp_dodgeburn (gint32             drawable_ID,
  * gimp_dodgeburn_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Dodgeburn image with varying exposure. This is the same as the
  * gimp_dodgeburn() function except that the exposure, type and mode
@@ -432,7 +432,7 @@ gimp_dodgeburn_default (gint32         drawable_ID,
  * gimp_eraser:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  * @hardness: How to apply the brush.
  * @method: The paint method to use.
  *
@@ -484,7 +484,7 @@ gimp_eraser (gint32                    drawable_ID,
  * gimp_eraser_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Erase using the current brush.
  *
@@ -531,7 +531,7 @@ gimp_eraser_default (gint32         drawable_ID,
  * @src_x: The x coordinate in the source image.
  * @src_y: The y coordinate in the source image.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Heal from the source to the dest drawable using the current brush
  *
@@ -587,7 +587,7 @@ gimp_heal (gint32         drawable_ID,
  * gimp_heal_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Heal from the source to the dest drawable using the current brush
  *
@@ -635,7 +635,7 @@ gimp_heal_default (gint32         drawable_ID,
  * @drawable_ID: The affected drawable.
  * @fade_out: Fade out parameter.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  * @method: The paint method to use.
  * @gradient_length: Length of gradient to draw.
  *
@@ -695,7 +695,7 @@ gimp_paintbrush (gint32                    drawable_ID,
  * gimp_paintbrush_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Paint in the current brush. The fade out parameter and pull colors
  * from a gradient parameter are set from the paintbrush options
@@ -748,7 +748,7 @@ gimp_paintbrush_default (gint32         drawable_ID,
  * gimp_pencil:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Paint in the current brush without sub-pixel sampling.
  *
@@ -794,7 +794,7 @@ gimp_pencil (gint32         drawable_ID,
  * @drawable_ID: The affected drawable.
  * @pressure: The pressure of the smudge strokes.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Smudge image with varying pressure.
  *
@@ -839,7 +839,7 @@ gimp_smudge (gint32         drawable_ID,
  * gimp_smudge_default:
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
- * @strokes: (array length=num_strokes) (element-type gdouble) Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
  *
  * Smudge image with varying pressure.
  *

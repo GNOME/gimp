@@ -67,7 +67,7 @@ gimp_brushes_refresh (void)
 /**
  * gimp_brushes_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_brushes: (out) The number of brushes in the brush list.
+ * @num_brushes: (out): The number of brushes in the brush list.
  *
  * Retrieve a complete listing of the available brushes.
  *
@@ -76,8 +76,8 @@ gimp_brushes_refresh (void)
  * gimp_context_set_brush() procedure.
  *
  * Returns: (array length=num_brushes) (element-type gchar*) (transfer
- * full) The list of brush names. The returned value must be freed with
- * g_strfreev().
+ * full): The list of brush names. The returned value must be freed
+ * with g_strfreev().
  **/
 gchar **
 gimp_brushes_get_list (const gchar *filter,

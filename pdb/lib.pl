@@ -88,7 +88,7 @@ sub generate {
 
 	my $funcname = "gimp_$name"; my $wrapped = "";
 	my %usednames;
-	my $retdesc = "Returns: ";
+	my $retdesc = "Returns:";
 
 	if ($proc->{deprecated}) {
 	    if ($proc->{deprecated} eq 'NONE') {
@@ -134,14 +134,17 @@ sub generate {
 	    $retarg->{retval} = 1;
 
 	    if (exists $argtype->{array}) {
-		$retdesc .= "(array length=@outargs[$retindex - 2]->{name}) ";
+		$retdesc .= " (array length=@outargs[$retindex - 2]->{name})";
 	    }
 
 	    if (exists $argtype->{out_annotate}) {
-		$retdesc .= "$argtype->{out_annotate} ";
+		$retdesc .= " $argtype->{out_annotate}";
 	    }
+	    if (exists $argtype->{array} || exists $argtype->{out_annotate}) {
+		$retdesc .= ":";
+            }
 
-	    $retdesc .= exists $retarg->{desc} ? $retarg->{desc} : "";
+	    $retdesc .= exists $retarg->{desc} ? " $retarg->{desc}" : "";
 
 	    if ($retarg->{type} eq 'stringarray') {
 		$retdesc .= ". The returned value must be freed with g_strfreev().";
@@ -211,17 +214,21 @@ sub generate {
 
 	    $argdesc .= " * \@$_->{name}";
 	    $argdesc .= '_ID' if $arg->{id};
-	    $argdesc .= ": ";
+	    $argdesc .= ":";
 
 	    if (exists $arg->{array}) {
-		$argdesc .= "(array length=@inargs[$argc - 1]->{name}) ";
+		$argdesc .= " (array length=@inargs[$argc - 1]->{name})";
 	    }
 
 	    if (exists $arg->{in_annotate}) {
-		$argdesc .= "$arg->{in_annotate} ";
+		$argdesc .= " $arg->{in_annotate}";
 	    }
 
-	    $argdesc .= "$desc";
+	    if (exists $arg->{array} || exists $arg->{in_annotate}) {
+		$argdesc .= ":";
+            }
+
+	    $argdesc .= " $desc";
 
             unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
             $argdesc .= "\n";
@@ -236,7 +243,7 @@ sub generate {
 	# return success/failure boolean if we don't have anything else
 	if ($rettype eq 'void') {
 	    $return_args .= "\n" . ' ' x 2 . "gboolean success = TRUE;";
-	    $retdesc .= "TRUE on success.";
+	    $retdesc .= " TRUE on success.";
 	}
 
 	# We only need to bother with this if we have to return a value
@@ -346,17 +353,17 @@ CODE
 
 		    $argdesc .= " * \@$_->{libname}";
 		    $argdesc .= '_ID' if $arg->{id};
-		    $argdesc .= ": (out) ";
+		    $argdesc .= ": (out)";
 
 		    if (exists $arg->{array}) {
-			$argdesc .= "(array length=@outargs[$argc - 2]->{name}) ";
+			$argdesc .= " (array length=@outargs[$argc - 2]->{name})";
 		    }
 
 		    if (exists $arg->{out_annotate}) {
-			$argdesc .= "$arg->{out_annotate} ";
+			$argdesc .= " $arg->{out_annotate}";
 		    }
 
-		    $argdesc .= "$desc";
+		    $argdesc .= ": $desc";
 		}
 
 		$var = exists $_->{retval} ? "" : '*';

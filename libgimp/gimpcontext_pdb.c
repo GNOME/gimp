@@ -138,8 +138,8 @@ gimp_context_set_defaults (void)
 
 /**
  * gimp_context_list_paint_methods:
- * @num_paint_methods: (out) The number of the available paint methods.
- * @paint_methods: (out) (array length=num_paint_methods) (element-type gchar*) (transfer full) The names of the available paint methods.
+ * @num_paint_methods: (out): The number of the available paint methods.
+ * @paint_methods: (out) (array length=num_paint_methods) (element-type gchar*) (transfer full): The names of the available paint methods.
  *
  * Lists the available paint methods.
  *
@@ -188,7 +188,7 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
  * This procedure returns the name of the currently active paint
  * method.
  *
- * Returns: (transfer full) The name of the active paint method.
+ * Returns: (transfer full): The name of the active paint method.
  *
  * Since: 2.4
  **/
@@ -322,7 +322,7 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
 
 /**
  * gimp_context_get_foreground:
- * @foreground: (out) The foreground color.
+ * @foreground: (out): The foreground color.
  *
  * Get the current GIMP foreground color.
  *
@@ -395,7 +395,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
 
 /**
  * gimp_context_get_background:
- * @background: (out) The background color.
+ * @background: (out): The background color.
  *
  * Get the current GIMP background color.
  *
@@ -1099,8 +1099,8 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
 
 /**
  * gimp_context_get_line_dash_pattern:
- * @num_dashes: (out) The number of dashes in the dash_pattern array.
- * @dashes: (out) (array length=num_dashes) (element-type gdouble) (transfer full) The line dash pattern setting.
+ * @num_dashes: (out): The number of dashes in the dash_pattern array.
+ * @dashes: (out) (array length=num_dashes) (element-type gdouble) (transfer full): The line dash pattern setting.
  *
  * Get the line dash pattern setting.
  *
@@ -1143,7 +1143,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
 /**
  * gimp_context_set_line_dash_pattern:
  * @num_dashes: The number of dashes in the dash_pattern array.
- * @dashes: (array length=num_dashes) (element-type gdouble) The line dash pattern setting.
+ * @dashes: (array length=num_dashes) (element-type gdouble): The line dash pattern setting.
  *
  * Set the line dash pattern setting.
  *
@@ -1196,7 +1196,7 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
  * paint operations and stroke operations use this brush to control the
  * application of paint to the image.
  *
- * Returns: (transfer full) The name of the active brush.
+ * Returns: (transfer full): The name of the active brush.
  *
  * Since: 2.2
  **/
@@ -1762,7 +1762,7 @@ gimp_context_set_brush_force (gdouble force)
  * dynamics. All paint operations and stroke operations use this paint
  * dynamics to control the application of paint to the image.
  *
- * Returns: (transfer full) The name of the active paint dynamics.
+ * Returns: (transfer full): The name of the active paint dynamics.
  *
  * Since: 2.8
  **/
@@ -1834,7 +1834,7 @@ gimp_context_set_dynamics (const gchar *name)
  * This procedure returns the name of the currently active MyPaint
  * brush.
  *
- * Returns: (transfer full) The name of the active MyPaint brush.
+ * Returns: (transfer full): The name of the active MyPaint brush.
  *
  * Since: 2.10
  **/
@@ -1907,7 +1907,7 @@ gimp_context_set_mypaint_brush (const gchar *name)
  * clone and bucket-fill operations with patterns will use this pattern
  * to control the application of paint to the image.
  *
- * Returns: (transfer full) The name of the active pattern.
+ * Returns: (transfer full): The name of the active pattern.
  *
  * Since: 2.2
  **/
@@ -1978,7 +1978,7 @@ gimp_context_set_pattern (const gchar *name)
  *
  * This procedure returns the name of the currently active gradient.
  *
- * Returns: (transfer full) The name of the active gradient.
+ * Returns: (transfer full): The name of the active gradient.
  *
  * Since: 2.2
  **/
@@ -2383,7 +2383,7 @@ gimp_context_set_gradient_reverse (gboolean reverse)
  *
  * This procedure returns the name of the the currently active palette.
  *
- * Returns: (transfer full) (transfer full): The name of the active
+ * Returns: (transfer full): (transfer full): The name of the active
  * palette.
  *
  * Since: 2.2
@@ -2455,7 +2455,7 @@ gimp_context_set_palette (const gchar *name)
  *
  * This procedure returns the name of the currently active font.
  *
- * Returns: (transfer full) The name of the active font.
+ * Returns: (transfer full): The name of the active font.
  *
  * Since: 2.2
  **/
@@ -2672,8 +2672,8 @@ gimp_context_set_feather (gboolean feather)
 
 /**
  * gimp_context_get_feather_radius:
- * @feather_radius_x: (out) The horizontal feather radius.
- * @feather_radius_y: (out) The vertical feather radius.
+ * @feather_radius_x: (out): The horizontal feather radius.
+ * @feather_radius_y: (out): The vertical feather radius.
  *
  * Get the feather radius setting.
  *

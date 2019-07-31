@@ -132,7 +132,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * @run_mode: The run mode.
  * @image_ID: Destination image.
  * @filename: The name of the file to load.
- * @num_layers: (out) The number of loaded layers.
+ * @num_layers: (out): The number of loaded layers.
  *
  * Loads an image file as layers for an existing image.
  *
@@ -142,7 +142,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * gimp_image_insert_layer().
  *
  * Returns: (array length=num_layers) (element-type gint32) (transfer
- * full) The list of loaded layers.
+ * full): The list of loaded layers.
  *
  * Since: 2.4
  **/

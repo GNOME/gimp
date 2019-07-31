@@ -42,7 +42,7 @@
  *
  * This procedure creates a new, uninitialized brush.
  *
- * Returns: (transfer full) The actual new brush name. The returned
+ * Returns: (transfer full): The actual new brush name. The returned
  * value must be freed with g_free().
  *
  * Since: 2.2
@@ -78,7 +78,7 @@ gimp_brush_new (const gchar *name)
  *
  * This procedure creates an identical brush by a different name.
  *
- * Returns: (transfer full) The name of the brush's copy. The returned
+ * Returns: (transfer full): The name of the brush's copy. The returned
  * value must be freed with g_free().
  *
  * Since: 2.2
@@ -150,7 +150,7 @@ gimp_brush_is_generated (const gchar *name)
  *
  * This procedure renames a brush.
  *
- * Returns: (transfer full) The actual new name of the brush. The
+ * Returns: (transfer full): The actual new name of the brush. The
  * returned value must be freed with g_free().
  *
  * Since: 2.2
@@ -253,10 +253,10 @@ gimp_brush_is_editable (const gchar *name)
 /**
  * gimp_brush_get_info:
  * @name: The brush name.
- * @width: (out) The brush width.
- * @height: (out) The brush height.
- * @mask_bpp: (out) The brush mask bpp.
- * @color_bpp: (out) The brush color bpp.
+ * @width: (out): The brush width.
+ * @height: (out): The brush height.
+ * @mask_bpp: (out): The brush mask bpp.
+ * @color_bpp: (out): The brush color bpp.
  *
  * Retrieves information about the specified brush.
  *
@@ -309,14 +309,14 @@ gimp_brush_get_info (const gchar *name,
 /**
  * gimp_brush_get_pixels:
  * @name: The brush name.
- * @width: (out) The brush width.
- * @height: (out) The brush height.
- * @mask_bpp: (out) The brush mask bpp.
- * @num_mask_bytes: (out) Length of brush mask data.
- * @mask_bytes: (out) (array length=num_mask_bytes) (element-type guint8) (transfer full) The brush mask data.
- * @color_bpp: (out) The brush color bpp.
- * @num_color_bytes: (out) Length of brush color data.
- * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full) The brush color data.
+ * @width: (out): The brush width.
+ * @height: (out): The brush height.
+ * @mask_bpp: (out): The brush mask bpp.
+ * @num_mask_bytes: (out): Length of brush mask data.
+ * @mask_bytes: (out) (array length=num_mask_bytes) (element-type guint8) (transfer full): The brush mask data.
+ * @color_bpp: (out): The brush color bpp.
+ * @num_color_bytes: (out): Length of brush color data.
+ * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full): The brush color data.
  *
  * Retrieves information about the specified brush.
  *
@@ -381,7 +381,7 @@ gimp_brush_get_pixels (const gchar  *name,
 /**
  * gimp_brush_get_spacing:
  * @name: The brush name.
- * @spacing: (out) The brush spacing.
+ * @spacing: (out): The brush spacing.
  *
  * Gets the brush spacing.
  *

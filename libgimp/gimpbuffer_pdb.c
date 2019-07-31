@@ -37,7 +37,7 @@
 /**
  * gimp_buffers_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_buffers: (out) The number of buffers.
+ * @num_buffers: (out): The number of buffers.
  *
  * Retrieve a complete listing of the available buffers.
  *
@@ -45,7 +45,7 @@
  * buffers.
  *
  * Returns: (array length=num_buffers) (element-type gchar*) (transfer
- * full) The list of buffer names. The returned value must be freed
+ * full): The list of buffer names. The returned value must be freed
  * with g_strfreev().
  *
  * Since: 2.4
@@ -88,7 +88,7 @@ gimp_buffers_get_list (const gchar *filter,
  *
  * This procedure renames a named buffer.
  *
- * Returns: (transfer full) The real name given to the buffer.
+ * Returns: (transfer full): The real name given to the buffer.
  *
  * Since: 2.4
  **/

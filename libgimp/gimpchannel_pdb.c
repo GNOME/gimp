@@ -369,7 +369,7 @@ gimp_channel_set_opacity (gint32  channel_ID,
 /**
  * gimp_channel_get_color:
  * @channel_ID: The channel.
- * @color: (out) The channel compositing color.
+ * @color: (out): The channel compositing color.
  *
  * Get the compositing color of the specified channel.
  *

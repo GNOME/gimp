@@ -254,7 +254,7 @@ gimp_edit_paste_as_new_image (void)
  * later pasting, regardless of any intermediate copy or cut
  * operations.
  *
- * Returns: (transfer full) The real name given to the buffer, or NULL
+ * Returns: (transfer full): The real name given to the buffer, or NULL
  * if the cut failed.
  *
  * Since: 2.4
@@ -297,7 +297,7 @@ gimp_edit_named_cut (gint32       drawable_ID,
  * later pasting, regardless of any intermediate copy or cut
  * operations.
  *
- * Returns: (transfer full) The real name given to the buffer, or NULL
+ * Returns: (transfer full): The real name given to the buffer, or NULL
  * if the copy failed.
  *
  * Since: 2.4
@@ -340,7 +340,7 @@ gimp_edit_named_copy (gint32       drawable_ID,
  * available for later pasting, regardless of any intermediate copy or
  * cut operations.
  *
- * Returns: (transfer full) The real name given to the buffer, or NULL
+ * Returns: (transfer full): The real name given to the buffer, or NULL
  * if the copy failed.
  *
  * Since: 2.4

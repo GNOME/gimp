@@ -98,7 +98,7 @@ gimp_text_layer_new (gint32       image_ID,
  *
  * This procedure returns the text from a text layer as a string.
  *
- * Returns: (transfer full) The text from the specified text layer.
+ * Returns: (transfer full): The text from the specified text layer.
  *
  * Since: 2.6
  **/
@@ -175,7 +175,7 @@ gimp_text_layer_set_text (gint32       layer_ID,
  * markup. Note: Setting the markup of a text layer using Pango's
  * markup is not supported for now.
  *
- * Returns: (transfer full) The markup which represents the style of
+ * Returns: (transfer full): The markup which represents the style of
  * the specified text layer.
  *
  * Since: 2.8
@@ -211,7 +211,7 @@ gimp_text_layer_get_markup (gint32 layer_ID)
  *
  * This procedure returns the name of the font from a text layer.
  *
- * Returns: (transfer full) The font which is used in the specified
+ * Returns: (transfer full): The font which is used in the specified
  * text layer.
  *
  * Since: 2.6
@@ -280,7 +280,7 @@ gimp_text_layer_set_font (gint32       layer_ID,
 /**
  * gimp_text_layer_get_font_size:
  * @layer_ID: The text layer.
- * @unit: (out) The unit used for the font size.
+ * @unit: (out): The unit used for the font size.
  *
  * Get the font size from a text layer.
  *
@@ -598,7 +598,7 @@ gimp_text_layer_set_kerning (gint32   layer_ID,
  * This procedure returns the language string which is set for the text
  * in the text layer.
  *
- * Returns: (transfer full) The language used in the text layer.
+ * Returns: (transfer full): The language used in the text layer.
  *
  * Since: 2.6
  **/
@@ -817,7 +817,7 @@ gimp_text_layer_set_justification (gint32                layer_ID,
 /**
  * gimp_text_layer_get_color:
  * @layer_ID: The text layer.
- * @color: (out) The color of the text.
+ * @color: (out): The color of the text.
  *
  * Get the color of the text in a text layer.
  *

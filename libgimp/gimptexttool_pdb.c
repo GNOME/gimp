@@ -122,10 +122,10 @@ gimp_text_fontname (gint32        image_ID,
  * @size: The size of text in either pixels or points.
  * @size_type: The units of specified size.
  * @fontname: The name of the font.
- * @width: (out) The width of the specified font.
- * @height: (out) The height of the specified font.
- * @ascent: (out) The ascent of the specified font.
- * @descent: (out) The descent of the specified font.
+ * @width: (out): The width of the specified font.
+ * @height: (out): The height of the specified font.
+ * @ascent: (out): The ascent of the specified font.
+ * @descent: (out): The descent of the specified font.
  *
  * Get extents of the bounding box for the specified text.
  *

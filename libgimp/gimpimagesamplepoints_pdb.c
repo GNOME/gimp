@@ -166,7 +166,7 @@ gimp_image_find_next_sample_point (gint32 image_ID,
  * gimp_image_get_sample_point_position:
  * @image_ID: The image.
  * @sample_point_ID: The guide.
- * @position_y: (out) The sample points's position relative to top of image.
+ * @position_y: (out): The sample points's position relative to top of image.
  *
  * Get position of a sample point on an image.
  *
