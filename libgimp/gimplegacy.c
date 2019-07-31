@@ -348,9 +348,12 @@ gimp_install_procedure (const gchar        *name,
  * @type:          the type of the procedure.
  * @n_params:      the number of parameters the procedure takes.
  * @n_return_vals: the number of return values the procedure returns.
- * @params:        the procedure's parameters.
- * @return_vals:   the procedure's return values.
- * @run_proc:      the function to call for executing the procedure.
+ * @params: (array length=n_params):
+ *                 the procedure's parameters.
+ * @return_vals: (array length=n_return_vals):
+ *                 the procedure's return values.
+ * @run_proc: (closure) (scope async):
+ *                 the function to call for executing the procedure.
  *
  * Installs a new temporary procedure with the PDB (procedural database).
  *
@@ -441,7 +444,7 @@ gimp_uninstall_temp_proc (const gchar *name)
 }
 
 /**
- * gimp_run_procedure:
+ * gimp_run_procedure: (skip)
  * @name:          the name of the procedure to run
  * @n_return_vals: return location for the number of return values
  * @...:           list of procedure parameters
@@ -644,7 +647,7 @@ gimp_run_procedure (const gchar *name,
 }
 
 /**
- * gimp_run_procedure2:
+ * gimp_run_procedure2: (rename-to gimp_run_procedure)
  * @name:          the name of the procedure to run
  * @n_return_vals: return location for the number of return values
  * @n_params:      the number of parameters the procedure takes.
