@@ -27,6 +27,8 @@
 
 #include "widgets-types.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/gimpcontainer.h"
 #include "core/gimpviewable.h"
 

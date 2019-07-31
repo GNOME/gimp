@@ -5,7 +5,6 @@ libgimpbase_introspectable = \
 	$(top_srcdir)/libgimpbase/gimpbasetypes.h		\
 	$(top_srcdir)/libgimpbase/gimpbasetypes.c		\
 	$(top_srcdir)/libgimpbase/gimplimits.h			\
-	$(top_srcdir)/libgimpbase/gimpparam.h			\
 	$(top_builddir)/libgimpbase/gimpversion.h		\
 	\
 	$(top_srcdir)/libgimpbase/gimpchecks.c           	\

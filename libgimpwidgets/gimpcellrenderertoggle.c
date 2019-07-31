@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpwidgetstypes.h"
 
 #include "gimpwidgetsmarshal.h"

@@ -26,6 +26,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "display-types.h"
 
 #include "core/gimpmarshal.h"

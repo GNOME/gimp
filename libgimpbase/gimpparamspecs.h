@@ -29,10 +29,49 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+
+/**
+ * GIMP_PARAM_NO_VALIDATE:
+ *
+ * Since 3.0
+ */
 /*
  * Keep in sync with libgimpconfig/gimpconfig-params.h
  */
 #define GIMP_PARAM_NO_VALIDATE (1 << (6 + G_PARAM_USER_SHIFT))
+
+/**
+ * GIMP_PARAM_STATIC_STRINGS:
+ *
+ * Since: 2.4
+ **/
+#define GIMP_PARAM_STATIC_STRINGS (G_PARAM_STATIC_NAME | \
+                                   G_PARAM_STATIC_NICK | \
+                                   G_PARAM_STATIC_BLURB)
+
+/**
+ * GIMP_PARAM_READABLE:
+ *
+ * Since: 2.4
+ **/
+#define GIMP_PARAM_READABLE       (G_PARAM_READABLE    | \
+                                   GIMP_PARAM_STATIC_STRINGS)
+
+/**
+ * GIMP_PARAM_WRITABLE:
+ *
+ * Since: 2.4
+ **/
+#define GIMP_PARAM_WRITABLE       (G_PARAM_WRITABLE    | \
+                                   GIMP_PARAM_STATIC_STRINGS)
+
+/**
+ * GIMP_PARAM_READWRITE:
+ *
+ * Since: 2.4
+ **/
+#define GIMP_PARAM_READWRITE      (G_PARAM_READWRITE   | \
+                                   GIMP_PARAM_STATIC_STRINGS)
 
 
 /*

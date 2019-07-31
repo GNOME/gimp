@@ -23,6 +23,8 @@
 #include <appstream-glib.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "config/gimpxmlparser.h"

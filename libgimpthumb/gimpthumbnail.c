@@ -35,7 +35,7 @@
 #include <glib/gstdio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpparam.h"
+#include "libgimpbase/gimpbase.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"

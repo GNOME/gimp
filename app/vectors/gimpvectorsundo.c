@@ -22,6 +22,8 @@
 
 #include "vectors-types.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/gimpimage.h"
 
 #include "gimpvectors.h"

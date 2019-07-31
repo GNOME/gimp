@@ -24,6 +24,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpwidgetstypes.h"
 
 #include "gimpbusybox.h"

@@ -26,6 +26,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 

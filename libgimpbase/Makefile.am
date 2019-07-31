@@ -124,7 +124,6 @@ libgimpbaseinclude_HEADERS = \
 	gimpbasetypes.h		\
 	gimpcpuaccel.h		\
 	gimplimits.h		\
-	gimpparam.h		\
 	gimpparamspecs.h	\
 	gimpversion.h		\
 	\

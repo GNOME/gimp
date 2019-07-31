@@ -23,7 +23,9 @@
 #include <stdlib.h>
 #include <string.h> /* strcmp */
 
-#include <glib-object.h>
+#include <gio/gio.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 

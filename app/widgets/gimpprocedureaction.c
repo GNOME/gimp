@@ -25,6 +25,8 @@
 
 #include "widgets-types.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb/gimpprocedure.h"
 
 #include "gimpaction.h"

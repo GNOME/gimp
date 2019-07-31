@@ -25,6 +25,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
