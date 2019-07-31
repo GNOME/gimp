@@ -44,9 +44,9 @@
  * This procedure returns the image's color profile, or NULL if the
  * image has no color profile assigned.
  *
- * Returns: (element-type guint8) (transfer full) The image's
- * serialized color profile. The returned value must be freed with
- * g_free().
+ * Returns: (array length=num_bytes) (element-type guint8) (transfer
+ * full) The image's serialized color profile. The returned value must
+ * be freed with g_free().
  *
  * Since: 2.10
  **/
@@ -92,9 +92,9 @@ _gimp_image_get_color_profile (gint32  image_ID,
  * or a generated default RGB or grayscale profile, according to the
  * image's type.
  *
- * Returns: (element-type guint8) (transfer full) The image's
- * serialized color profile. The returned value must be freed with
- * g_free().
+ * Returns: (array length=num_bytes) (element-type guint8) (transfer
+ * full) The image's serialized color profile. The returned value must
+ * be freed with g_free().
  *
  * Since: 2.10
  **/

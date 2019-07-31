@@ -213,9 +213,9 @@ gimp_get_parasite (const gchar *name)
  *
  * Returns a list of all currently attached global parasites.
  *
- * Returns: (element-type gchar*) (transfer full) The names of
- * currently attached parasites. The returned value must be freed with
- * g_strfreev().
+ * Returns: (array length=num_parasites) (element-type gchar*)
+ * (transfer full) The names of currently attached parasites. The
+ * returned value must be freed with g_strfreev().
  *
  * Since: 2.8
  **/

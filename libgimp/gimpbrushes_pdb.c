@@ -75,8 +75,9 @@ gimp_brushes_refresh (void)
  * Each name returned can be used as input to the
  * gimp_context_set_brush() procedure.
  *
- * Returns: (element-type gchar*) (transfer full) The list of brush
- * names. The returned value must be freed with g_strfreev().
+ * Returns: (array length=num_brushes) (element-type gchar*) (transfer
+ * full) The list of brush names. The returned value must be freed with
+ * g_strfreev().
  **/
 gchar **
 gimp_brushes_get_list (const gchar *filter,
