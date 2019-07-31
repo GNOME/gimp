@@ -37,7 +37,7 @@
 /**
  * _gimp_image_get_color_profile:
  * @image_ID: The image.
- * @num_bytes: (out) Number of bytes in the color_profile array.
+ * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the image's color profile
  *
@@ -45,7 +45,7 @@
  * image has no color profile assigned.
  *
  * Returns: (array length=num_bytes) (element-type guint8) (transfer
- * full) The image's serialized color profile. The returned value must
+ * full): The image's serialized color profile. The returned value must
  * be freed with g_free().
  *
  * Since: 2.10
@@ -82,7 +82,7 @@ _gimp_image_get_color_profile (gint32  image_ID,
 /**
  * _gimp_image_get_effective_color_profile:
  * @image_ID: The image.
- * @num_bytes: (out) Number of bytes in the color_profile array.
+ * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the color profile that is used for the image
  *
@@ -93,7 +93,7 @@ _gimp_image_get_color_profile (gint32  image_ID,
  * image's type.
  *
  * Returns: (array length=num_bytes) (element-type guint8) (transfer
- * full) The image's serialized color profile. The returned value must
+ * full): The image's serialized color profile. The returned value must
  * be freed with g_free().
  *
  * Since: 2.10
@@ -131,7 +131,7 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
  * _gimp_image_set_color_profile:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: (array length=num_bytes) (element-type guint8) The new serialized color profile.
+ * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized color profile.
  *
  * Sets the image's color profile
  *
@@ -220,7 +220,7 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
  * _gimp_image_convert_color_profile:
  * @image_ID: The image.
  * @num_bytes: Number of bytes in the color_profile array.
- * @color_profile: (array length=num_bytes) (element-type guint8) The serialized color profile.
+ * @color_profile: (array length=num_bytes) (element-type guint8): The serialized color profile.
  * @intent: Rendering intent.
  * @bpc: Black point compensation.
  *

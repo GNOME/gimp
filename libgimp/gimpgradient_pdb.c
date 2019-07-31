@@ -42,7 +42,7 @@
  *
  * This procedure creates a new, uninitialized gradient
  *
- * Returns: (transfer full) The actual new gradient name.
+ * Returns: (transfer full): The actual new gradient name.
  *
  * Since: 2.2
  **/
@@ -77,7 +77,7 @@ gimp_gradient_new (const gchar *name)
  *
  * This procedure creates an identical gradient by a different name
  *
- * Returns: (transfer full) The name of the gradient's copy.
+ * Returns: (transfer full): The name of the gradient's copy.
  *
  * Since: 2.2
  **/
@@ -148,7 +148,7 @@ gimp_gradient_is_editable (const gchar *name)
  *
  * This procedure renames a gradient
  *
- * Returns: (transfer full) The actual new name of the gradient.
+ * Returns: (transfer full): The actual new name of the gradient.
  *
  * Since: 2.2
  **/
@@ -253,8 +253,8 @@ gimp_gradient_get_number_of_segments (const gchar *name)
  * @name: The gradient name.
  * @num_samples: The number of samples to take.
  * @reverse: Use the reverse gradient.
- * @num_color_samples: (out) Length of the color_samples array (4 * num_samples).
- * @color_samples: (out) (array length=num_color_samples) (element-type gdouble) (transfer full) Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
+ * @num_color_samples: (out): Length of the color_samples array (4 * num_samples).
+ * @color_samples: (out) (array length=num_color_samples) (element-type gdouble) (transfer full): Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
  * Sample the specified in uniform parts.
  *
@@ -313,10 +313,10 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
  * gimp_gradient_get_custom_samples:
  * @name: The gradient name.
  * @num_samples: The number of samples to take.
- * @positions: (array length=num_samples) (element-type gdouble) The list of positions to sample along the gradient.
+ * @positions: (array length=num_samples) (element-type gdouble): The list of positions to sample along the gradient.
  * @reverse: Use the reverse gradient.
- * @num_color_samples: (out) Length of the color_samples array (4 * num_samples).
- * @color_samples: (out) (array length=num_color_samples) (element-type gdouble) (transfer full) Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
+ * @num_color_samples: (out): Length of the color_samples array (4 * num_samples).
+ * @color_samples: (out) (array length=num_color_samples) (element-type gdouble) (transfer full): Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
  * Sample the specified gradient in custom positions.
  *
@@ -377,8 +377,8 @@ gimp_gradient_get_custom_samples (const gchar    *name,
  * gimp_gradient_segment_get_left_color:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @color: (out) The return color.
- * @opacity: (out) The opacity of the endpoint.
+ * @color: (out): The return color.
+ * @opacity: (out): The opacity of the endpoint.
  *
  * Retrieves the left endpoint color of the specified segment
  *
@@ -475,8 +475,8 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
  * gimp_gradient_segment_get_right_color:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @color: (out) The return color.
- * @opacity: (out) The opacity of the endpoint.
+ * @color: (out): The return color.
+ * @opacity: (out): The opacity of the endpoint.
  *
  * Retrieves the right endpoint color of the specified segment
  *
@@ -573,7 +573,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
  * gimp_gradient_segment_get_left_pos:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @pos: (out) The return position.
+ * @pos: (out): The return position.
  *
  * Retrieves the left endpoint position of the specified segment
  *
@@ -620,7 +620,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint to.
- * @final_pos: (out) The return position.
+ * @final_pos: (out): The return position.
  *
  * Sets the left endpoint position of the specified segment
  *
@@ -672,7 +672,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
  * gimp_gradient_segment_get_middle_pos:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @pos: (out) The return position.
+ * @pos: (out): The return position.
  *
  * Retrieves the middle point position of the specified segment
  *
@@ -719,7 +719,7 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint to.
- * @final_pos: (out) The return position.
+ * @final_pos: (out): The return position.
  *
  * Sets the middle point position of the specified segment
  *
@@ -770,7 +770,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
  * gimp_gradient_segment_get_right_pos:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @pos: (out) The return position.
+ * @pos: (out): The return position.
  *
  * Retrieves the right endpoint position of the specified segment
  *
@@ -817,7 +817,7 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
  * @pos: The position to set the guidepoint to.
- * @final_pos: (out) The return position.
+ * @final_pos: (out): The return position.
  *
  * Sets the right endpoint position of the specified segment
  *
@@ -869,7 +869,7 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
  * gimp_gradient_segment_get_blending_function:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @blend_func: (out) The blending function of the segment.
+ * @blend_func: (out): The blending function of the segment.
  *
  * Retrieves the gradient segment's blending function
  *
@@ -915,7 +915,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
  * gimp_gradient_segment_get_coloring_type:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @coloring_type: (out) The coloring type of the segment.
+ * @coloring_type: (out): The coloring type of the segment.
  *
  * Retrieves the gradient segment's coloring type
  *

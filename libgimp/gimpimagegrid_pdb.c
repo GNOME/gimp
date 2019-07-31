@@ -37,8 +37,8 @@
 /**
  * gimp_image_grid_get_spacing:
  * @image_ID: The image.
- * @xspacing: (out) The image's grid horizontal spacing.
- * @yspacing: (out) The image's grid vertical spacing.
+ * @xspacing: (out): The image's grid horizontal spacing.
+ * @yspacing: (out): The image's grid vertical spacing.
  *
  * Gets the spacing of an image's grid.
  *
@@ -128,8 +128,8 @@ gimp_image_grid_set_spacing (gint32  image_ID,
 /**
  * gimp_image_grid_get_offset:
  * @image_ID: The image.
- * @xoffset: (out) The image's grid horizontal offset.
- * @yoffset: (out) The image's grid vertical offset.
+ * @xoffset: (out): The image's grid horizontal offset.
+ * @yoffset: (out): The image's grid vertical offset.
  *
  * Gets the offset of an image's grid.
  *
@@ -219,7 +219,7 @@ gimp_image_grid_set_offset (gint32  image_ID,
 /**
  * gimp_image_grid_get_foreground_color:
  * @image_ID: The image.
- * @fgcolor: (out) The image's grid foreground color.
+ * @fgcolor: (out): The image's grid foreground color.
  *
  * Sets the foreground color of an image's grid.
  *
@@ -296,7 +296,7 @@ gimp_image_grid_set_foreground_color (gint32         image_ID,
 /**
  * gimp_image_grid_get_background_color:
  * @image_ID: The image.
- * @bgcolor: (out) The image's grid background color.
+ * @bgcolor: (out): The image's grid background color.
  *
  * Sets the background color of an image's grid.
  *

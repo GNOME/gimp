@@ -154,7 +154,7 @@ gimp_vectors_copy (gint32 vectors_ID)
 /**
  * gimp_vectors_get_strokes:
  * @vectors_ID: The vectors object.
- * @num_strokes: (out) The number of strokes returned.
+ * @num_strokes: (out): The number of strokes returned.
  *
  * List the strokes associated with the passed path.
  *
@@ -162,7 +162,7 @@ gimp_vectors_copy (gint32 vectors_ID)
  * path.
  *
  * Returns: (array length=num_strokes) (element-type gint32) (transfer
- * full) List of the strokes belonging to the path.
+ * full): List of the strokes belonging to the path.
  *
  * Since: 2.4
  **/
@@ -244,10 +244,10 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
  * @stroke_id: The stroke ID.
  * @dist: The given distance.
  * @precision: The precision used for the approximation.
- * @x_point: (out) The x position of the point.
- * @y_point: (out) The y position of the point.
- * @slope: (out) The slope (dy / dx) at the specified point.
- * @valid: (out) Indicator for the validity of the returned data.
+ * @x_point: (out): The x position of the point.
+ * @y_point: (out): The y position of the point.
+ * @slope: (out): The slope (dy / dx) at the specified point.
+ * @valid: (out): Indicator for the validity of the returned data.
  *
  * Get point at a specified distance along the stroke.
  *
@@ -634,9 +634,9 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
  * gimp_vectors_stroke_get_points:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
- * @num_points: (out) The number of floats returned.
- * @controlpoints: (out) (array length=num_points) (element-type gdouble) (transfer full) List of the control points for the stroke (x0, y0, x1, y1, ...).
- * @closed: (out) Whether the stroke is closed or not.
+ * @num_points: (out): The number of floats returned.
+ * @controlpoints: (out) (array length=num_points) (element-type gdouble) (transfer full): List of the control points for the stroke (x0, y0, x1, y1, ...).
+ * @closed: (out): Whether the stroke is closed or not.
  *
  * returns the control points of a stroke.
  *
@@ -691,7 +691,7 @@ gimp_vectors_stroke_get_points (gint32     vectors_ID,
  * @vectors_ID: The vectors object.
  * @type: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
  * @num_points: The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).
- * @controlpoints: (array length=num_points) (element-type gdouble) List of the x- and y-coordinates of the control points.
+ * @controlpoints: (array length=num_points) (element-type gdouble): List of the x- and y-coordinates of the control points.
  * @closed: Whether the stroke is to be closed or not.
  *
  * Adds a stroke of a given type to the vectors object.
@@ -749,15 +749,15 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  * @precision: The precision used for the approximation.
- * @num_coords: (out) The number of floats returned.
- * @closed: (out) Whether the stroke is closed or not.
+ * @num_coords: (out): The number of floats returned.
+ * @closed: (out): Whether the stroke is closed or not.
  *
  * returns polygonal approximation of the stroke.
  *
  * returns polygonal approximation of the stroke.
  *
  * Returns: (array length=coords) (element-type gdouble) (transfer
- * full) List of the coords along the path (x0, y0, x1, y1, ...).
+ * full): List of the coords along the path (x0, y0, x1, y1, ...).
  *
  * Since: 2.4
  **/
@@ -1066,8 +1066,8 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
  * @filename: The name of the SVG file to import.
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
- * @num_vectors: (out) The number of newly created vectors.
- * @vectors_ids: (out) (array length=num_vectors) (element-type gint32) (transfer full) The list of newly created vectors.
+ * @num_vectors: (out): The number of newly created vectors.
+ * @vectors_ids: (out) (array length=num_vectors) (element-type gint32) (transfer full): The list of newly created vectors.
  *
  * Import paths from an SVG file.
  *
@@ -1127,8 +1127,8 @@ gimp_vectors_import_from_file (gint32        image_ID,
  * @length: Number of bytes in string or -1 if the string is NULL terminated.
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
- * @num_vectors: (out) The number of newly created vectors.
- * @vectors_ids: (out) (array length=num_vectors) (element-type gint32) (transfer full) The list of newly created vectors.
+ * @num_vectors: (out): The number of newly created vectors.
+ * @vectors_ids: (out) (array length=num_vectors) (element-type gint32) (transfer full): The list of newly created vectors.
  *
  * Import paths from an SVG string.
  *
@@ -1242,7 +1242,7 @@ gimp_vectors_export_to_file (gint32       image_ID,
  * string that holds a complete XML document. If you pass 0 as the
  * 'vectors' argument, then all paths in the image will be exported.
  *
- * Returns: (transfer full) A string whose contents are a complete SVG
+ * Returns: (transfer full): A string whose contents are a complete SVG
  * document.
  *
  * Since: 2.6

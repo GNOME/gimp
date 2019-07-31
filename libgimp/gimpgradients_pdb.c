@@ -67,7 +67,7 @@ gimp_gradients_refresh (void)
 /**
  * gimp_gradients_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_gradients: (out) The number of loaded gradients.
+ * @num_gradients: (out): The number of loaded gradients.
  *
  * Retrieve the list of loaded gradients.
  *
@@ -76,7 +76,7 @@ gimp_gradients_refresh (void)
  * to set the active gradient.
  *
  * Returns: (array length=num_gradients) (element-type gchar*)
- * (transfer full) The list of gradient names. The returned value must
+ * (transfer full): The list of gradient names. The returned value must
  * be freed with g_strfreev().
  **/
 gchar **

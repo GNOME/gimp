@@ -194,7 +194,7 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
  * @num_values: The number of values in the new curve.
- * @values: (array length=num_values) (element-type gdouble) The explicit curve.
+ * @values: (array length=num_values) (element-type gdouble): The explicit curve.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *
@@ -245,7 +245,7 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
  * @num_points: The number of values in the control point array.
- * @points: (array length=num_points) (element-type gdouble) The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
+ * @points: (array length=num_points) (element-type gdouble): The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *
@@ -382,12 +382,12 @@ gimp_drawable_equalize (gint32   drawable_ID,
  * @channel: The channel to query.
  * @start_range: Start of the intensity measurement range.
  * @end_range: End of the intensity measurement range.
- * @mean: (out) Mean intensity value.
- * @std_dev: (out) Standard deviation of intensity values.
- * @median: (out) Median intensity value.
- * @pixels: (out) Alpha-weighted pixel count for entire image.
- * @count: (out) Alpha-weighted pixel count for range.
- * @percentile: (out) Percentile that range falls under.
+ * @mean: (out): Mean intensity value.
+ * @std_dev: (out): Standard deviation of intensity values.
+ * @median: (out): Median intensity value.
+ * @pixels: (out): Alpha-weighted pixel count for entire image.
+ * @count: (out): Alpha-weighted pixel count for range.
+ * @percentile: (out): Percentile that range falls under.
  *
  * Returns information on the intensity histogram for the specified
  * drawable.

@@ -50,7 +50,7 @@
  * string. Entries not corresponding to this format will cause warnings
  * to be issued on gimprc parsing and will not be queryable.
  *
- * Returns: (transfer full) The value associated with the queried
+ * Returns: (transfer full): The value associated with the queried
  * token.
  **/
 gchar *
@@ -123,7 +123,7 @@ gimp_gimprc_set (const gchar *token,
  *
  * Returns a copy of the default image comment.
  *
- * Returns: (transfer full) Default image comment.
+ * Returns: (transfer full): Default image comment.
  **/
 gchar *
 gimp_get_default_comment (void)
@@ -180,8 +180,8 @@ gimp_get_default_unit (void)
 
 /**
  * gimp_get_monitor_resolution:
- * @xres: (out) X resolution.
- * @yres: (out) Y resolution.
+ * @xres: (out): X resolution.
+ * @yres: (out): Y resolution.
  *
  * Get the monitor resolution as specified in the Preferences.
  *
@@ -230,7 +230,7 @@ gimp_get_monitor_resolution (gdouble *xres,
  * Returns a string that can be deserialized into a GimpColorConfig
  * object representing the current color management configuration.
  *
- * Returns: (transfer full) Serialized color management configuration.
+ * Returns: (transfer full): Serialized color management configuration.
  *
  * Since: 2.4
  **/
@@ -262,7 +262,7 @@ _gimp_get_color_configuration (void)
  *
  * Returns a copy of the list of modules which should not be loaded.
  *
- * Returns: (transfer full) The list of modules.
+ * Returns: (transfer full): The list of modules.
  **/
 gchar *
 gimp_get_module_load_inhibit (void)

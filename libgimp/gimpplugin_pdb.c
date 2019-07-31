@@ -203,7 +203,7 @@ gimp_plugin_menu_branch_register (const gchar *menu_path,
  * @procedure_name: The procedure for which to install the icon.
  * @icon_type: The type of the icon.
  * @icon_data_length: The length of 'icon-data'.
- * @icon_data: (array length=icon_data_length) (element-type guint8) The procedure's icon. The format depends on the 'icon_type' parameter.
+ * @icon_data: (array length=icon_data_length) (element-type guint8): The procedure's icon. The format depends on the 'icon_type' parameter.
  *
  * Register an icon for a plug-in procedure.
  *
