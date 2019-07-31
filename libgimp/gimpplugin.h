@@ -54,7 +54,7 @@ struct _GimpPlugInClass
   GObjectClass  parent_class;
 
   /**
-   * quit:
+   * GimpPlugInClass::quit:
    * @plug_in: a #GimpPlugIn.
    *
    * This method can be overridden by a plug-in which needs to perform
@@ -63,9 +63,9 @@ struct _GimpPlugInClass
   void             (* quit)             (GimpPlugIn  *plug_in);
 
   /**
-   * init_procedures:
+   * GimpPlugInClass::init_procedures:
    * @plug_in: a #GimpPlugIn.
-   * @n_procedures: (out) number of procedures.
+   * @n_procedures: (out): number of procedures.
    *
    * This method can be overridden by all plug-ins to return a newly
    * allocated array of allocated strings naming procedures registered
@@ -82,15 +82,15 @@ struct _GimpPlugInClass
    * Most of the time, you only want to override query_procedures() and
    * leave init_procedures() untouched.
    *
-   * Returns: (out) (array length=n_procedures) (transfer full) (element-type gchar):
+   * Returns: (array length=n_procedures) (transfer full):
    *          the names of the procedures registered by @plug_in.
    */
   gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in,
                                          gint        *n_procedures);
   /**
-   * query_procedures:
+   * GimpPlugInClass::query_procedures:
    * @plug_in: a #GimpPlugIn.
-   * @n_procedures: (out) number of procedures.
+   * @n_procedures: (out): number of procedures.
    *
    * This method can be overridden by all plug-ins to return a newly
    * allocated array of allocated strings naming the procedures
@@ -100,14 +100,14 @@ struct _GimpPlugInClass
    *
    * See documentation of init_procedures() for differences.
    *
-   * Returns: (out) (array length=n_procedures) (transfer full) (element-type gchar):
+   * Returns: (array length=n_procedures) (transfer full):
    *          the names of the procedures registered by @plug_in.
    */
   gchar         ** (* query_procedures) (GimpPlugIn  *plug_in,
                                          gint        *n_procedures);
 
   /**
-   * create_procedure:
+   * GimpPlugInClass::create_procedure:
    * @plug_in: a #GimpPlugIn.
    * @name: procedure name.
    *
@@ -116,8 +116,8 @@ struct _GimpPlugInClass
    * It will be called for every @name as returned by query_procedures()
    * so care must be taken.
    *
-   * Returns: (out) (array length=n_procedures) (transfer full) (element-type gchar):
-   *          the names of the procedures registered by @plug_in.
+   * Returns: (transfer full):
+   *          the procedure to be registered by @plug_in.
    */
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
                                          const gchar *name);
