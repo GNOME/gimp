@@ -72,7 +72,7 @@ gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
  * be kept around for as long as the buffer exists; otherwise the
  * pixels are copied.
  *
- * Return value: a new #GeglBuffer.
+ * Return value: (transfer full): a new #GeglBuffer.
  *
  * Since: 2.10
  **/

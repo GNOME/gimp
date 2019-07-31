@@ -744,7 +744,7 @@ gimp_param_rgb_values_cmp (GParamSpec   *pspec,
  * Creates a param spec to hold an #GimpRGB value.
  * See g_param_spec_internal() for more information.
  *
- * Returns: a newly allocated #GParamSpec instance
+ * Returns: (transfer full): a newly allocated #GParamSpec instance
  *
  * Since: 2.4
  **/

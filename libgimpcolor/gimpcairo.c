@@ -181,7 +181,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
  * It must only be called on image surfaces, calling it on other surface
  * types is an error.
  *
- * Return value: a #GeglBuffer
+ * Return value: (transfer full): a #GeglBuffer
  *
  * Since: 2.10
  **/
