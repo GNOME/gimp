@@ -2536,12 +2536,12 @@ msgstr ""
 #: ../plug-ins/common/file-heif.c:456 ../plug-ins/common/file-heif.c:474
 #, c-format
 msgid "Loading HEIF image failed: %s"
-msgstr "S'ha produït un error en carrega la imatge HEIF: %s"
+msgstr "S'ha produït un error en carregar la imatge HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:406
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
-"S'ha produït un error en carrega la imatge HEIF: el fitxer d'entrada no "
+"S'ha produït un error en carregar la imatge HEIF: el fitxer d'entrada no "
 "conté imatges que es puguin llegir"
 
 #: ../plug-ins/common/file-heif.c:537
@@ -6944,7 +6944,7 @@ msgstr "Comprimit (PNG)"
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
 msgid "Could not read '%lu' bytes"
-msgstr "No s'ha pogut llegir «%lu» bits"
+msgstr "No s'han pogut llegir «%lu» bytes"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
@@ -7664,7 +7664,7 @@ msgstr "la partició és més gran de 16M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
-msgstr "no es poden eliminar els bits"
+msgstr "no es poden buidar els bytes"
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
