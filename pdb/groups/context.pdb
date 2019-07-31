@@ -1965,7 +1965,7 @@ HELP
 
     @outargs = (
 	{ name  => 'name', type  => 'string',
-	  desc  => '(transfer full): The name of the active palette' }
+	  desc  => 'The name of the active palette' }
     );
 
     %invoke = (

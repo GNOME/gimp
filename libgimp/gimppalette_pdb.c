@@ -215,7 +215,7 @@ gimp_palette_is_editable (const gchar *name)
 /**
  * gimp_palette_get_info:
  * @name: The palette name.
- * @num_colors: (out): (out): The number of colors in the palette.
+ * @num_colors: (out): The number of colors in the palette.
  *
  * Retrieve information about the specified palette.
  *
@@ -466,7 +466,7 @@ gimp_palette_delete_entry (const gchar *name,
  * gimp_palette_entry_get_color:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
- * @color: (out): (out): The color requested.
+ * @color: (out): The color requested.
  *
  * Gets the specified palette entry from the specified palette.
  *

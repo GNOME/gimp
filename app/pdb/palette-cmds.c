@@ -782,7 +782,7 @@ register_palette_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("num-colors",
                                                           "num colors",
-                                                          "(out): The number of colors in the palette",
+                                                          "The number of colors in the palette",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -987,7 +987,7 @@ register_palette_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("color",
                                                         "color",
-                                                        "(out): The color requested",
+                                                        "The color requested",
                                                         FALSE,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
