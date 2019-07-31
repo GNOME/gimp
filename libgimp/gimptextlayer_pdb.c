@@ -280,7 +280,7 @@ gimp_text_layer_set_font (gint32       layer_ID,
 /**
  * gimp_text_layer_get_font_size:
  * @layer_ID: The text layer.
- * @unit: The unit used for the font size.
+ * @unit: (out) The unit used for the font size.
  *
  * Get the font size from a text layer.
  *
@@ -817,7 +817,7 @@ gimp_text_layer_set_justification (gint32                layer_ID,
 /**
  * gimp_text_layer_get_color:
  * @layer_ID: The text layer.
- * @color: The color of the text.
+ * @color: (out) The color of the text.
  *
  * Get the color of the text in a text layer.
  *

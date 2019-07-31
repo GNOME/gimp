@@ -68,7 +68,7 @@ gimp_fonts_refresh (void)
 /**
  * gimp_fonts_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_fonts: The number of available fonts.
+ * @num_fonts: (out) The number of available fonts.
  *
  * Retrieve the list of loaded fonts.
  *

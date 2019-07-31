@@ -382,12 +382,12 @@ gimp_drawable_equalize (gint32   drawable_ID,
  * @channel: The channel to query.
  * @start_range: Start of the intensity measurement range.
  * @end_range: End of the intensity measurement range.
- * @mean: Mean intensity value.
- * @std_dev: Standard deviation of intensity values.
- * @median: Median intensity value.
- * @pixels: Alpha-weighted pixel count for entire image.
- * @count: Alpha-weighted pixel count for range.
- * @percentile: Percentile that range falls under.
+ * @mean: (out) Mean intensity value.
+ * @std_dev: (out) Standard deviation of intensity values.
+ * @median: (out) Median intensity value.
+ * @pixels: (out) Alpha-weighted pixel count for entire image.
+ * @count: (out) Alpha-weighted pixel count for range.
+ * @percentile: (out) Percentile that range falls under.
  *
  * Returns information on the intensity histogram for the specified
  * drawable.

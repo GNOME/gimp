@@ -67,7 +67,7 @@ gimp_palettes_refresh (void)
 /**
  * gimp_palettes_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_palettes: The number of palettes in the list.
+ * @num_palettes: (out) The number of palettes in the list.
  *
  * Retrieves a list of all of the available palettes
  *

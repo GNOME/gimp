@@ -180,8 +180,8 @@ gimp_get_default_unit (void)
 
 /**
  * gimp_get_monitor_resolution:
- * @xres: X resolution.
- * @yres: Y resolution.
+ * @xres: (out) X resolution.
+ * @yres: (out) Y resolution.
  *
  * Get the monitor resolution as specified in the Preferences.
  *

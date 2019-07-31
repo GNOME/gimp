@@ -37,7 +37,7 @@
 /**
  * _gimp_image_get_color_profile:
  * @image_ID: The image.
- * @num_bytes: Number of bytes in the color_profile array.
+ * @num_bytes: (out) Number of bytes in the color_profile array.
  *
  * Returns the image's color profile
  *
@@ -82,7 +82,7 @@ _gimp_image_get_color_profile (gint32  image_ID,
 /**
  * _gimp_image_get_effective_color_profile:
  * @image_ID: The image.
- * @num_bytes: Number of bytes in the color_profile array.
+ * @num_bytes: (out) Number of bytes in the color_profile array.
  *
  * Returns the color profile that is used for the image
  *

@@ -37,9 +37,9 @@
 /**
  * gimp_pattern_get_info:
  * @name: The pattern name.
- * @width: The pattern width.
- * @height: The pattern height.
- * @bpp: The pattern bpp.
+ * @width: (out) The pattern width.
+ * @height: (out) The pattern height.
+ * @bpp: (out) The pattern bpp.
  *
  * Retrieve information about the specified pattern.
  *
@@ -89,11 +89,11 @@ gimp_pattern_get_info (const gchar *name,
 /**
  * gimp_pattern_get_pixels:
  * @name: The pattern name.
- * @width: The pattern width.
- * @height: The pattern height.
- * @bpp: The pattern bpp.
- * @num_color_bytes: Number of pattern bytes.
- * @color_bytes: (element-type guint8) (transfer full) The pattern data.
+ * @width: (out) The pattern width.
+ * @height: (out) The pattern height.
+ * @bpp: (out) The pattern bpp.
+ * @num_color_bytes: (out) Number of pattern bytes.
+ * @color_bytes: (out) (element-type guint8) (transfer full) The pattern data.
  *
  * Retrieve information about the specified pattern (including pixels).
  *

@@ -37,11 +37,11 @@
 /**
  * gimp_selection_bounds:
  * @image_ID: The image.
- * @non_empty: TRUE if there is a selection.
- * @x1: x coordinate of upper left corner of selection bounds.
- * @y1: y coordinate of upper left corner of selection bounds.
- * @x2: x coordinate of lower right corner of selection bounds.
- * @y2: y coordinate of lower right corner of selection bounds.
+ * @non_empty: (out) TRUE if there is a selection.
+ * @x1: (out) x coordinate of upper left corner of selection bounds.
+ * @y1: (out) y coordinate of upper left corner of selection bounds.
+ * @x2: (out) x coordinate of lower right corner of selection bounds.
+ * @y2: (out) y coordinate of lower right corner of selection bounds.
  *
  * Find the bounding box of the current selection.
  *

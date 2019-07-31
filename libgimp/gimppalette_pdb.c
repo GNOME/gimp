@@ -215,7 +215,7 @@ gimp_palette_is_editable (const gchar *name)
 /**
  * gimp_palette_get_info:
  * @name: The palette name.
- * @num_colors: (out): The number of colors in the palette.
+ * @num_colors: (out) (out): The number of colors in the palette.
  *
  * Retrieve information about the specified palette.
  *
@@ -257,7 +257,7 @@ gimp_palette_get_info (const gchar *name,
 /**
  * gimp_palette_get_colors:
  * @name: The palette name.
- * @num_colors: Length of the colors array.
+ * @num_colors: (out) Length of the colors array.
  *
  * Gets all colors from the specified palette.
  *
@@ -378,7 +378,7 @@ gimp_palette_set_columns (const gchar *name,
  * @name: The palette name.
  * @entry_name: The name of the entry.
  * @color: The new entry's color color.
- * @entry_num: The index of the added entry.
+ * @entry_num: (out) The index of the added entry.
  *
  * Adds a palette entry to the specified palette.
  *
@@ -466,7 +466,7 @@ gimp_palette_delete_entry (const gchar *name,
  * gimp_palette_entry_get_color:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
- * @color: (out): The color requested.
+ * @color: (out) (out): The color requested.
  *
  * Gets the specified palette entry from the specified palette.
  *
@@ -555,7 +555,7 @@ gimp_palette_entry_set_color (const gchar   *name,
  * gimp_palette_entry_get_name:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
- * @entry_name: (transfer full) The name requested.
+ * @entry_name: (out) (transfer full) The name requested.
  *
  * Gets the specified palette entry from the specified palette.
  *

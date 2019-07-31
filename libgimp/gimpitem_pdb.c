@@ -462,7 +462,7 @@ gimp_item_get_parent (gint32 item_ID)
 /**
  * gimp_item_get_children:
  * @item_ID: The item.
- * @num_children: The item's number of children.
+ * @num_children: (out) The item's number of children.
  *
  * Returns the item's list of children.
  *
@@ -1211,7 +1211,7 @@ gimp_item_get_parasite (gint32       item_ID,
 /**
  * gimp_item_get_parasite_list:
  * @item_ID: The item.
- * @num_parasites: The number of attached parasites.
+ * @num_parasites: (out) The number of attached parasites.
  *
  * List all parasites.
  *

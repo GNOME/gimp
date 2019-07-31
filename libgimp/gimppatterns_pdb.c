@@ -67,7 +67,7 @@ gimp_patterns_refresh (void)
 /**
  * gimp_patterns_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_patterns: The number of patterns in the pattern list.
+ * @num_patterns: (out) The number of patterns in the pattern list.
  *
  * Retrieve a complete listing of the available patterns.
  *

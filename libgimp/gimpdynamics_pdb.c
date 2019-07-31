@@ -70,7 +70,7 @@ gimp_dynamics_refresh (void)
 /**
  * gimp_dynamics_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_dynamics: The number of available paint dynamics.
+ * @num_dynamics: (out) The number of available paint dynamics.
  *
  * Retrieve the list of loaded paint dynamics.
  *

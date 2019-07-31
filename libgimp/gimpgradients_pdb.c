@@ -67,7 +67,7 @@ gimp_gradients_refresh (void)
 /**
  * gimp_gradients_get_list:
  * @filter: An optional regular expression used to filter the list.
- * @num_gradients: The number of loaded gradients.
+ * @num_gradients: (out) The number of loaded gradients.
  *
  * Retrieve the list of loaded gradients.
  *
