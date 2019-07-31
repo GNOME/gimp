@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpgradient_pdb
+ * SECTION: gimpgradient
  * @title: gimpgradient
  * @short_description: Functions operating on a single gradient.
  *

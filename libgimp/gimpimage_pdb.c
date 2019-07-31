@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpimage_pdb
+ * SECTION: gimpimage
  * @title: gimpimage
  * @short_description: Operations on complete images.
  *

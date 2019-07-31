@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpfontselect_pdb
+ * SECTION: gimpfontselect
  * @title: gimpfontselect
  * @short_description: Functions providing a font selection dialog.
  *

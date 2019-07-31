@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpproceduraldb_pdb
+ * SECTION: gimpproceduraldb
  * @title: gimpproceduraldb
  * @short_description: Functions for querying and changing procedural database (PDB) entries.
  *

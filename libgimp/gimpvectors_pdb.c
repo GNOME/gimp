@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpvectors_pdb
+ * SECTION: gimpvectors
  * @title: gimpvectors
  * @short_description: Functions for querying and manipulating vectors.
  *

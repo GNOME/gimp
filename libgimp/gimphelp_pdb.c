@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimphelp_pdb
+ * SECTION: gimphelp
  * @title: gimphelp
  * @short_description: Loading help pages using gimp_help.
  *

@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpitemtransform_pdb
+ * SECTION: gimpitemtransform
  * @title: gimpitemtransform
  * @short_description: Functions to perform transformations on items.
  *

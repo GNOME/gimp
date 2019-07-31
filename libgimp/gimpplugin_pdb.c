@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpplugin_pdb
+ * SECTION: gimpplugin
  * @title: gimpplugin
  * @short_description: Functions useful for plug-ins, e.g. registration and progress indicators.
  *

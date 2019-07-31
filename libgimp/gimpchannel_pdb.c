@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpchannel_pdb
+ * SECTION: gimpchannel
  * @title: gimpchannel
  * @short_description: Functions for manipulating channels.
  *

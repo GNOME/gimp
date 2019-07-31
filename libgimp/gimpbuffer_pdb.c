@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpbuffer_pdb
+ * SECTION: gimpbuffer
  * @title: gimpbuffer
  * @short_description: Functions for manipulating cut buffers.
  *

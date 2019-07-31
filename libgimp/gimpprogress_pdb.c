@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimpprogress_pdb
+ * SECTION: gimpprogress
  * @title: gimpprogress
  * @short_description: Functions for embedding the progress bar into a plug-in's GUI.
  *

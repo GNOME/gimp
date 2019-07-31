@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppalettes_pdb
+ * SECTION: gimppalettes
  * @title: gimppalettes
  * @short_description: Operations related to palettes.
  *

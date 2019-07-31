@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: gimppainttools_pdb
+ * SECTION: gimppainttools
  * @title: gimppainttools
  * @short_description: Access to toolbox paint tools.
  *
