@@ -201,8 +201,7 @@ static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  gboolean            push_undo,
                                                  const gchar        *undo_desc,
                                                  GeglBuffer         *buffer,
-                                                 gint                offset_x,
-                                                 gint                offset_y);
+                                                 const GeglRectangle *bounds);
 
 static GimpColorProfile *
                gimp_layer_get_color_profile     (GimpColorManaged   *managed);
@@ -1506,12 +1505,11 @@ gimp_layer_get_active_mask (GimpDrawable *drawable)
 }
 
 static void
-gimp_layer_set_buffer (GimpDrawable *drawable,
-                       gboolean      push_undo,
-                       const gchar  *undo_desc,
-                       GeglBuffer   *buffer,
-                       gint          offset_x,
-                       gint          offset_y)
+gimp_layer_set_buffer (GimpDrawable        *drawable,
+                       gboolean             push_undo,
+                       const gchar         *undo_desc,
+                       GeglBuffer          *buffer,
+                       const GeglRectangle *bounds)
 {
   GeglBuffer *old_buffer = gimp_drawable_get_buffer (drawable);
   gint        old_trc    = -1;
@@ -1521,8 +1519,7 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
-                                                  buffer,
-                                                  offset_x, offset_y);
+                                                  buffer, bounds);
 
   if (gimp_filter_peek_node (GIMP_FILTER (drawable)))
     {

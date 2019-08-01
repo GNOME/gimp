@@ -158,8 +158,7 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
               gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),
                                              FALSE, NULL,
                                              group_layer_undo->mask_buffer,
-                                             group_layer_undo->mask_bounds.x,
-                                             group_layer_undo->mask_bounds.y,
+                                             &group_layer_undo->mask_bounds,
                                              TRUE);
             }
         }
