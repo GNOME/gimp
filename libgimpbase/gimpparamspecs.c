@@ -88,6 +88,20 @@ gimp_param_int32_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_int32:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @minimum: the minimum accepted value.
+ * @maximum: the maximum accepted value.
+ * @default_value: the default value.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new int32 #GParamSpec with the given specifications.
+ *
+ * Returns: (transfer full) (type GObject.ParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_int32 (const gchar *name,
                        const gchar *nick,
