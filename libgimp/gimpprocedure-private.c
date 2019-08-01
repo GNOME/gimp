@@ -60,7 +60,7 @@ _gimp_procedure_register (GimpProcedure *procedure)
   proc_install.name         = (gchar *) gimp_procedure_get_name (procedure);
   proc_install.blurb        = (gchar *) gimp_procedure_get_blurb (procedure);
   proc_install.help         = (gchar *) gimp_procedure_get_help (procedure);
-  proc_install.author       = (gchar *) gimp_procedure_get_author (procedure);
+  proc_install.author       = (gchar *) gimp_procedure_get_authors (procedure);
   proc_install.copyright    = (gchar *) gimp_procedure_get_copyright (procedure);
   proc_install.date         = (gchar *) gimp_procedure_get_date (procedure);
   proc_install.menu_label   = (gchar *) gimp_procedure_get_menu_label (procedure);

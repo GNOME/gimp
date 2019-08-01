@@ -63,7 +63,7 @@ struct _GimpProcedurePrivate
   gchar            *blurb;          /* Short procedure description    */
   gchar            *help;           /* Detailed help instructions     */
   gchar            *help_id;
-  gchar            *author;         /* Author field                   */
+  gchar            *authors;        /* Authors field                  */
   gchar            *copyright;      /* Copyright field                */
   gchar            *date;           /* Date field                     */
   gchar            *image_types;
@@ -130,6 +130,9 @@ gimp_procedure_finalize (GObject *object)
 
   gimp_procedure_free_strings (procedure);
 
+  g_clear_pointer (&procedure->priv->authors,     g_free);
+  g_clear_pointer (&procedure->priv->copyright,   g_free);
+  g_clear_pointer (&procedure->priv->date,        g_free);
   g_clear_pointer (&procedure->priv->image_types, g_free);
 
   g_clear_pointer (&procedure->priv->icon_data, g_free);
@@ -222,6 +225,14 @@ gimp_procedure_new (GimpPlugIn      *plug_in,
   return procedure;
 }
 
+/**
+ * gimp_procedure_get_plug_in:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: (transfer none): The #GimpPlugIn given in gimp_procedure_new().
+ *
+ * Since: 3.0
+ **/
 GimpPlugIn *
 gimp_procedure_get_plug_in (GimpProcedure *procedure)
 {
@@ -230,6 +241,14 @@ gimp_procedure_get_plug_in (GimpProcedure *procedure)
   return procedure->priv->plug_in;
 }
 
+/**
+ * gimp_procedure_get_name:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's name given in gimp_procedure_new().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_name (GimpProcedure *procedure)
 {
@@ -238,6 +257,14 @@ gimp_procedure_get_name (GimpProcedure *procedure)
   return procedure->priv->name;
 }
 
+/**
+ * gimp_procedure_get_proc_type:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's type given in gimp_procedure_new().
+ *
+ * Since: 3.0
+ **/
 GimpPDBProcType
 gimp_procedure_get_proc_type (GimpProcedure *procedure)
 {
@@ -251,10 +278,7 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
                             const gchar   *menu_label,
                             const gchar   *blurb,
                             const gchar   *help,
-                            const gchar   *help_id,
-                            const gchar   *author,
-                            const gchar   *copyright,
-                            const gchar   *date)
+                            const gchar   *help_id)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
@@ -264,11 +288,17 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
   procedure->priv->blurb         = g_strdup (blurb);
   procedure->priv->help          = g_strdup (help);
   procedure->priv->help_id       = g_strdup (help_id);
-  procedure->priv->author        = g_strdup (author);
-  procedure->priv->copyright     = g_strdup (copyright);
-  procedure->priv->date          = g_strdup (date);
 }
 
+/**
+ * gimp_procedure_get_menu_label:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's menu label given in
+ *          gimp_procedure_set_strings().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_menu_label (GimpProcedure *procedure)
 {
@@ -277,6 +307,15 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
   return procedure->priv->menu_label;
 }
 
+/**
+ * gimp_procedure_get_blurb:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's blurb given in
+ *          gimp_procedure_set_strings().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_blurb (GimpProcedure *procedure)
 {
@@ -285,6 +324,15 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
   return procedure->priv->blurb;
 }
 
+/**
+ * gimp_procedure_get_help:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's help text given in
+ *          gimp_procedure_set_strings().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_help (GimpProcedure *procedure)
 {
@@ -293,6 +341,15 @@ gimp_procedure_get_help (GimpProcedure *procedure)
   return procedure->priv->help;
 }
 
+/**
+ * gimp_procedure_get_help_id:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's help ID given in
+ *          gimp_procedure_set_strings().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_help_id (GimpProcedure *procedure)
 {
@@ -301,14 +358,60 @@ gimp_procedure_get_help_id (GimpProcedure *procedure)
   return procedure->priv->help_id;
 }
 
+/**
+ * gimp_procedure_set_attribution:
+ * @procedure: A #GimpProcedure.
+ * @authors:   The @procedure's author(s).
+ * @copyright: The @procedure's copyright.
+ * @data:      The @procedure's date (written or pushished).
+ *
+ * Sets various attribution strings on @procedure.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_set_attribution (GimpProcedure *procedure,
+                                const gchar   *authors,
+                                const gchar   *copyright,
+                                const gchar   *date)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  g_free (procedure->priv->authors);
+  g_free (procedure->priv->copyright);
+  g_free (procedure->priv->date);
+
+  procedure->priv->authors   = g_strdup (authors);
+  procedure->priv->copyright = g_strdup (copyright);
+  procedure->priv->date      = g_strdup (date);
+}
+
+/**
+ * gimp_procedure_get_author:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's authors given in
+ *          gimp_procedure_set_attribution().
+ *
+ * Since: 3.0
+ **/
 const gchar *
-gimp_procedure_get_author (GimpProcedure *procedure)
+gimp_procedure_get_authors (GimpProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
-  return procedure->priv->author;
+  return procedure->priv->authors;
 }
 
+/**
+ * gimp_procedure_get_copyright:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's copyright given in
+ *          gimp_procedure_set_attribution().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_copyright (GimpProcedure *procedure)
 {
@@ -317,6 +420,15 @@ gimp_procedure_get_copyright (GimpProcedure *procedure)
   return procedure->priv->copyright;
 }
 
+/**
+ * gimp_procedure_get_date:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: The procedure's date given in
+ *          gimp_procedure_set_attribution().
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_date (GimpProcedure *procedure)
 {
@@ -422,17 +534,46 @@ gimp_procedure_get_icon (GimpProcedure  *procedure,
   return procedure->priv->icon_type;
 }
 
+/**
+ * gimp_procedure_add_menu_path:
+ * @procedure: A #GimpProcedure.
+ * @menu_path: The @procedure's additional menu path.
+ *
+ * Adds a menu path to te procedure. Only procedures which have a menu
+ * label can add a menu path.
+ *
+ * Menu paths are untranslated paths to menus and submenus with the
+ * syntax:
+ *
+ * &lt;Prefix&gt;/Path/To/Submenu
+ *
+ * for instance:
+ *
+ * &lt;Image&gt;/Layer/Transform
+ *
+ * Since: 3.0
+ **/
 void
 gimp_procedure_add_menu_path (GimpProcedure *procedure,
                               const gchar   *menu_path)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (menu_path != NULL);
+  g_return_if_fail (procedure->priv->menu_label != NULL);
 
   procedure->priv->menu_paths = g_list_append (procedure->priv->menu_paths,
                                                g_strdup (menu_path));
 }
 
+/**
+ * gimp_procedure_get_menu_paths:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: (transfer none) (element-type gchar*): the @procedure's
+ *          menu paths as added with gimp_procedure_add_menu_path().
+ *
+ * Since: 3.0
+ **/
 GList *
 gimp_procedure_get_menu_paths (GimpProcedure *procedure)
 {
@@ -449,7 +590,7 @@ gimp_procedure_get_menu_paths (GimpProcedure *procedure)
  * Add a new argument to @procedure according to @pspec specifications.
  * The arguments will be ordered according to the call order to
  * gimp_procedure_add_argument().
- */
+ **/
 void
 gimp_procedure_add_argument (GimpProcedure *procedure,
                              GParamSpec    *pspec)
@@ -475,7 +616,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
  * Add a new return value to @procedure according to @pspec
  * specifications. The returned values will be ordered according to the
  * call order to * gimp_procedure_add_return_value().
- */
+ **/
 void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
@@ -493,6 +634,17 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   procedure->priv->n_values++;
 }
 
+/**
+ * gimp_procedure_get_arguments:
+ * @procedure:   A #GimpProcedure.
+ * @n_arguments: (out) Returns the number of arguments.
+ *
+ * Returns: (transfer none) (array n-elements=n_arguments): An array
+ *          of @GParamSpec in the order added with
+ *          gimp_procedure_add_argument().
+ *
+ * Since: 3.0
+ **/
 GParamSpec **
 gimp_procedure_get_arguments (GimpProcedure *procedure,
                               gint          *n_arguments)
@@ -505,6 +657,17 @@ gimp_procedure_get_arguments (GimpProcedure *procedure,
   return procedure->priv->args;
 }
 
+/**
+ * gimp_procedure_get_return_values:
+ * @procedure:       A #GimpProcedure.
+ * @n_return_values: (out) Returns the number of return values.
+ *
+ * Returns: (transfer none) (array n-elements=n_return_values): An array
+ *          of @GParamSpec in the order added with
+ *          gimp_procedure_add_return_value().
+ *
+ * Since: 3.0
+ **/
 GParamSpec **
 gimp_procedure_get_return_values (GimpProcedure *procedure,
                                   gint          *n_return_values)
@@ -553,7 +716,7 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
  *
  * Returns: the expected #GimpValueArray as could be returned by a
  *          #GimpRunFunc.
- */
+ **/
 GimpValueArray *
 gimp_procedure_new_return_values (GimpProcedure     *procedure,
                                   GimpPDBStatusType  status,
@@ -703,9 +866,6 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
   g_clear_pointer (&procedure->priv->blurb,       g_free);
   g_clear_pointer (&procedure->priv->help,        g_free);
   g_clear_pointer (&procedure->priv->help_id,     g_free);
-  g_clear_pointer (&procedure->priv->author,      g_free);
-  g_clear_pointer (&procedure->priv->copyright,   g_free);
-  g_clear_pointer (&procedure->priv->date,        g_free);
 }
 
 static gboolean

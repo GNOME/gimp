@@ -139,12 +139,14 @@ help_create_procedure (GimpPlugIn  *plug_in,
                                   NULL,
                                   "", /* FIXME */
                                   "", /* FIXME */
-                                  NULL,
-                                  "Sven Neumann <sven@gimp.org>, "
-                                  "Michael Natterer <mitch@gimp.org>, "
-                                  "Henrik Brix Andersen <brix@gimp.org>",
-                                  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                                  "1999-2008");
+                                  NULL);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Sven Neumann <sven@gimp.org>, "
+                                      "Michael Natterer <mitch@gimp.org>, "
+                                      "Henrik Brix Andersen <brix@gimp.org>",
+                                      "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                                      "1999-2008");
 
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_int32 ("num-domain-names",
@@ -235,12 +237,14 @@ help_temp_proc_install (GimpPlugIn *plug_in)
                               NULL,
                               "DON'T USE THIS ONE",
                               "(Temporary procedure)",
-                              NULL,
-                              "Sven Neumann <sven@gimp.org>, "
-                              "Michael Natterer <mitch@gimp.org>"
-                              "Henrik Brix Andersen <brix@gimp.org",
-                              "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                              "1999-2008");
+                              NULL);
+
+  gimp_procedure_set_attribution (procedure,
+                                  "Sven Neumann <sven@gimp.org>, "
+                                  "Michael Natterer <mitch@gimp.org>"
+                                  "Henrik Brix Andersen <brix@gimp.org",
+                                  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                                  "1999-2008");
 
   gimp_procedure_add_argument (procedure,
                                g_param_spec_string ("help-proc",

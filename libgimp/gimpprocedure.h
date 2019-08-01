@@ -90,16 +90,18 @@ void             gimp_procedure_set_strings        (GimpProcedure     *procedure
                                                     const gchar       *menu_label,
                                                     const gchar       *blurb,
                                                     const gchar       *help,
-                                                    const gchar       *help_id,
-                                                    const gchar       *author,
-                                                    const gchar       *copyright,
-                                                    const gchar       *date);
+                                                    const gchar       *help_id);
 
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_blurb          (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_help           (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_help_id        (GimpProcedure     *procedure);
-const gchar    * gimp_procedure_get_author         (GimpProcedure     *procedure);
+
+void             gimp_procedure_set_attribution    (GimpProcedure     *procedure,
+                                                    const gchar       *authors,
+                                                    const gchar       *copyright,
+                                                    const gchar       *date);
+const gchar    * gimp_procedure_get_authors        (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_copyright      (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_date           (GimpProcedure     *procedure);
 
