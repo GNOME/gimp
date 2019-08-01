@@ -112,6 +112,72 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   if (! dest_rect)
     dest_rect = gegl_buffer_get_extent (dest_buffer);
 
+  if (progress)
+    {
+      if (gimp_progress_is_active (progress))
+        {
+          if (undo_desc)
+            gimp_progress_set_text_literal (progress, undo_desc);
+
+          progress_started = FALSE;
+          cancelable       = FALSE;
+        }
+      else
+        {
+          gimp_progress_start (progress, cancelable, "%s", undo_desc);
+
+          if (cancelable)
+            g_signal_connect (progress, "cancel",
+                              G_CALLBACK (gimp_gegl_apply_operation_cancel),
+                              &cancel);
+
+          progress_started = TRUE;
+        }
+    }
+  else
+    {
+      cancelable = FALSE;
+    }
+
+  gegl_buffer_freeze_changed (dest_buffer);
+
+  all_pixels  = dest_rect->width * dest_rect->height;
+  done_pixels = 0;
+
+  region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) dest_rect);
+
+  if (cache)
+    {
+      gint i;
+
+      for (i = 0; i < n_valid_rects; i++)
+        {
+          GeglRectangle valid_rect;
+
+          if (! gegl_rectangle_intersect (&valid_rect,
+                                          &valid_rects[i], dest_rect))
+            {
+              continue;
+            }
+
+          gimp_gegl_buffer_copy (cache,       &valid_rect, GEGL_ABYSS_NONE,
+                                 dest_buffer, &valid_rect);
+
+          cairo_region_subtract_rectangle (region,
+                                           (cairo_rectangle_int_t *)
+                                           &valid_rect);
+
+          done_pixels += valid_rect.width * valid_rect.height;
+
+          if (progress)
+            {
+              gimp_progress_set_value (progress,
+                                       (gdouble) done_pixels /
+                                       (gdouble) all_pixels);
+            }
+        }
+    }
+
   gegl = gegl_node_new ();
 
   if (! gegl_node_get_parent (operation))
@@ -188,72 +254,6 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   gegl_node_connect_to (effect,    "output",
                         dest_node, "input");
-
-  if (progress)
-    {
-      if (gimp_progress_is_active (progress))
-        {
-          if (undo_desc)
-            gimp_progress_set_text_literal (progress, undo_desc);
-
-          progress_started = FALSE;
-          cancelable       = FALSE;
-        }
-      else
-        {
-          gimp_progress_start (progress, cancelable, "%s", undo_desc);
-
-          if (cancelable)
-            g_signal_connect (progress, "cancel",
-                              G_CALLBACK (gimp_gegl_apply_operation_cancel),
-                              &cancel);
-
-          progress_started = TRUE;
-        }
-    }
-  else
-    {
-      cancelable = FALSE;
-    }
-
-  gegl_buffer_freeze_changed (dest_buffer);
-
-  all_pixels  = dest_rect->width * dest_rect->height;
-  done_pixels = 0;
-
-  region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) dest_rect);
-
-  if (cache)
-    {
-      gint i;
-
-      for (i = 0; i < n_valid_rects; i++)
-        {
-          GeglRectangle valid_rect;
-
-          if (! gegl_rectangle_intersect (&valid_rect,
-                                          &valid_rects[i], dest_rect))
-            {
-              continue;
-            }
-
-          gimp_gegl_buffer_copy (cache,       &valid_rect, GEGL_ABYSS_NONE,
-                                 dest_buffer, &valid_rect);
-
-          cairo_region_subtract_rectangle (region,
-                                           (cairo_rectangle_int_t *)
-                                           &valid_rect);
-
-          done_pixels += valid_rect.width * valid_rect.height;
-
-          if (progress)
-            {
-              gimp_progress_set_value (progress,
-                                       (gdouble) done_pixels /
-                                       (gdouble) all_pixels);
-            }
-        }
-    }
 
   iter = gimp_chunk_iterator_new (region);
 
