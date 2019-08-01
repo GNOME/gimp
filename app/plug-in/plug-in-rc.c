@@ -790,6 +790,19 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
         }
       break;
 
+    case GP_PARAM_DEF_TYPE_UNIT:
+      if (! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_unit.allow_pixels) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_unit.allow_percent) ||
+          ! gimp_scanner_parse_int (scanner,
+                                    &param_def.meta.m_unit.default_val))
+        {
+          token = G_TOKEN_INT;
+          goto error;
+        }
+      break;
+
     case GP_PARAM_DEF_TYPE_ENUM:
       if (! gimp_scanner_parse_string (scanner,
                                        &param_def.meta.m_enum.type_name))
@@ -903,6 +916,7 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
     case GP_PARAM_DEF_TYPE_INT:
+    case GP_PARAM_DEF_TYPE_UNIT:
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
@@ -1018,6 +1032,13 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
                                  param_def.meta.m_int.min_val,
                                  param_def.meta.m_int.max_val,
                                  param_def.meta.m_int.default_val);
+      break;
+
+    case GP_PARAM_DEF_TYPE_UNIT:
+      gimp_config_writer_printf (writer, "%d %d %d",
+                                 param_def.meta.m_unit.allow_pixels,
+                                 param_def.meta.m_unit.allow_percent,
+                                 param_def.meta.m_unit.default_val);
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
