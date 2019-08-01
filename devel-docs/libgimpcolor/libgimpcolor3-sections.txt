@@ -1,6 +1,5 @@
 <SECTION>
 <FILE>gimpcmyk</FILE>
-<TITLE>GimpCMYK</TITLE>
 GimpCMYK
 gimp_cmyk_set
 gimp_cmyk_set_uchar
@@ -15,7 +14,6 @@ gimp_cmyk_get_type
 
 <SECTION>
 <FILE>gimphsv</FILE>
-<TITLE>GimpHSV</TITLE>
 GimpHSV
 GimpHSL
 gimp_hsv_set
@@ -39,7 +37,6 @@ gimp_pixbuf_get_icc_profile
 
 <SECTION>
 <FILE>gimprgb</FILE>
-<TITLE>GimpRGB</TITLE>
 GimpRGB
 GimpRGBCompositeMode
 gimp_rgb_set
@@ -80,6 +77,7 @@ GIMP_RGB_LUMINANCE_BLUE
 GIMP_TYPE_RGB
 GIMP_TYPE_PARAM_RGB
 gimp_param_spec_rgb
+gimp_param_spec_rgb_get_default
 gimp_param_spec_rgb_has_alpha
 GIMP_VALUE_HOLDS_RGB
 gimp_value_get_rgb
@@ -103,7 +101,6 @@ gimp_cmyk_to_rgb
 
 <SECTION>
 <FILE>gimpcolormanaged</FILE>
-<TITLE>GimpColorManaged</TITLE>
 GimpColorManaged
 GimpColorManagedInterface
 gimp_color_managed_get_icc_profile
@@ -120,7 +117,6 @@ gimp_color_managed_interface_get_type
 
 <SECTION>
 <FILE>gimpcolorprofile</FILE>
-<TITLE>GimpColorProfile</TITLE>
 GimpColorProfile
 gimp_color_profile_new_rgb_srgb
 gimp_color_profile_new_rgb_srgb_linear
@@ -164,7 +160,6 @@ gimp_color_profile_get_type
 
 <SECTION>
 <FILE>gimpcolortransform</FILE>
-<TITLE>GimpColorTransform</TITLE>
 GimpColorTransformFlags
 GimpColorTransform
 gimp_color_transform_new
@@ -186,7 +181,6 @@ gimp_color_transform_get_type
 
 <SECTION>
 <FILE>gimpadaptivesupersample</FILE>
-<TITLE>GimpAdaptiveSupersample</TITLE>
 GimpProgressFunc
 GimpPutPixelFunc
 GimpRenderFunc
@@ -195,7 +189,6 @@ gimp_adaptive_supersample_area
 
 <SECTION>
 <FILE>gimpbilinear</FILE>
-<TITLE>GimpBilinear</TITLE>
 gimp_bilinear
 gimp_bilinear_8
 gimp_bilinear_16
@@ -206,7 +199,6 @@ gimp_bilinear_rgba
 
 <SECTION>
 <FILE>gimpcairo</FILE>
-<TITLE>GimpCairo</TITLE>
 gimp_cairo_set_source_rgb
 gimp_cairo_set_source_rgba
 gimp_cairo_checkerboard_create
