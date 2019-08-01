@@ -55,7 +55,7 @@
  * with up to three or four values. Often it is better to use a
  * #GimpEnumComboBox instead.
  *
- * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
+ * Return value: (transfer full): a new #GtkVBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.4
  **/
@@ -97,7 +97,7 @@ gimp_enum_radio_box_new (GType       enum_type,
  * of radio buttons, but additionally it supports limiting the range
  * of available enum values.
  *
- * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
+ * Return value: (transfer full): a new #GtkVBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.4
  **/
@@ -169,7 +169,7 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
  * Calls gimp_enum_radio_box_new() and puts the resulting vbox into a
  * #GtkFrame.
  *
- * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
+ * Return value: (transfer full): a new #GtkFrame holding a group of #GtkRadioButtons.
  *
  * Since: 2.4
  **/
@@ -218,7 +218,7 @@ gimp_enum_radio_frame_new (GType       enum_type,
  * Calls gimp_enum_radio_box_new_with_range() and puts the resulting
  * vbox into a #GtkFrame.
  *
- * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
+ * Return value: (transfer full): a new #GtkFrame holding a group of #GtkRadioButtons.
  *
  * Since: 2.4
  **/
@@ -271,7 +271,7 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
  * icon name for each icon is created by appending the enum_value's
  * nick to the given @icon_prefix.
  *
- * Return value: a new horizontal #GtkBox holding a group of #GtkRadioButtons.
+ * Return value: (transfer full): a new horizontal #GtkBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.10
  **/
@@ -318,7 +318,7 @@ gimp_enum_icon_box_new (GType         enum_type,
  * of radio buttons, but additionally it supports limiting the range
  * of available enum values.
  *
- * Return value: a new horizontal #GtkBox holding a group of #GtkRadioButtons.
+ * Return value: (transfer full): a new horizontal #GtkBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.10
  **/
