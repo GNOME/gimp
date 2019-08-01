@@ -55,6 +55,8 @@ GimpDrawableFilter *
                                                 GeglNode            *operation,
                                                 const gchar         *icon_name);
 
+void       gimp_drawable_filter_set_clip       (GimpDrawableFilter  *filter,
+                                                gboolean             clip);
 void       gimp_drawable_filter_set_region     (GimpDrawableFilter  *filter,
                                                 GimpFilterRegion     region);
 void       gimp_drawable_filter_set_crop       (GimpDrawableFilter  *filter,
