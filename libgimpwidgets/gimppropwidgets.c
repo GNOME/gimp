@@ -2792,7 +2792,7 @@ static gint   gimp_prop_size_entry_num_chars   (gdouble        lower,
  * single value.  Use gimp_prop_coordinates_new() to create a size
  * entry holding two values.
  *
- * Return value:  A new #GimpSizeEntry widget.
+ * Return value: (transfer full): A new #GimpSizeEntry widget.
  *
  * Since: 2.4
  */

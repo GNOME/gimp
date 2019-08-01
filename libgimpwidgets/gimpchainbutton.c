@@ -425,7 +425,7 @@ gimp_chain_button_get_active (GimpChainButton *button)
  * gimp_chain_button_get_button
  * @button: A #GimpChainButton.
  *
- * Returns: The #GimpChainButton's button.
+ * Returns: (transfer none): The #GimpChainButton's button.
  *
  * Since: 3.0
  */

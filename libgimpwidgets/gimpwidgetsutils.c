@@ -118,7 +118,7 @@ find_mnemonic_widget (GtkWidget *widget,
  * Note that the @label_text can be %NULL and that the widget will be
  * attached starting at (@column + 1) in this case, too.
  *
- * Returns: The created #GtkLabel.
+ * Returns: (transfer none): The created #GtkLabel.
  **/
 GtkWidget *
 gimp_grid_attach_aligned (GtkGrid     *grid,
@@ -474,7 +474,7 @@ monitor_number (GdkMonitor *monitor)
  *
  * Since: 3.0
  *
- * Return value: the monitor's #GimpColorProfile, or %NULL.
+ * Return value: (transfer full): the monitor's #GimpColorProfile, or %NULL.
  **/
 GimpColorProfile *
 gimp_monitor_get_color_profile (GdkMonitor *monitor)

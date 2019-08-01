@@ -53,7 +53,7 @@
  * Convenience function to create a group of radio buttons embedded into
  * a #GtkFrame or #GtkVBox.
  *
- * Returns: A #GtkFrame or #GtkVBox (depending on @in_frame).
+ * Returns: (transfer full): A #GtkFrame or #GtkVBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_radio_group_new (gboolean            in_frame,
@@ -162,7 +162,7 @@ gimp_radio_group_new (gboolean            in_frame,
  * Convenience function to create a group of radio buttons embedded into
  * a #GtkFrame or #GtkVBox.
  *
- * Returns: A #GtkFrame or #GtkVBox (depending on @in_frame).
+ * Returns: (transfer full): A #GtkFrame or #GtkVBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_radio_group_new2 (gboolean         in_frame,
@@ -269,7 +269,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
  * pointers, since that is a very common case (mapping an enum to a radio
  * group).
  *
- * Returns: A #GtkFrame or #GtkVBox (depending on @in_frame).
+ * Returns: (transfer full): A #GtkFrame or #GtkVBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_int_radio_group_new (gboolean         in_frame,
@@ -435,8 +435,8 @@ gimp_random_seed_update (GtkWidget *widget,
  * Creates a widget that allows the user to control how the random number
  * generator is initialized.
  *
- * Returns: A #GtkHBox containing a #GtkSpinButton for the seed and
- *          a #GtkButton for setting a random seed.
+ * Returns: (transfer full): A #GtkHBox containing a #GtkSpinButton for
+ *          the seed and a #GtkButton for setting a random seed.
  **/
 GtkWidget *
 gimp_random_seed_new (guint    *seed,
@@ -658,7 +658,7 @@ gimp_coordinates_chainbutton_toggled (GimpChainButton *button,
  * coordinates/sizes with a #GimpChainButton attached to constrain either the
  * two fields' values or the ratio between them.
  *
- * Returns: The new #GimpSizeEntry.
+ * Returns: (transfer full): The new #GimpSizeEntry.
  **/
 GtkWidget *
 gimp_coordinates_new (GimpUnit         unit,
