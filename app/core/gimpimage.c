@@ -194,6 +194,7 @@ static void
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
+static GeglRectangle gimp_image_get_bounding_box (GimpProjectable   *projectable);
 static GeglNode   * gimp_image_get_graph         (GimpProjectable   *projectable);
 static GimpImage  * gimp_image_get_image         (GimpProjectable   *projectable);
 static const Babl * gimp_image_get_proj_format   (GimpProjectable   *projectable);
@@ -678,7 +679,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->flush              = gimp_image_projectable_flush;
   iface->get_image          = gimp_image_get_image;
   iface->get_format         = gimp_image_get_proj_format;
-  iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
+  iface->get_bounding_box   = gimp_image_get_bounding_box;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
 }
@@ -1477,6 +1478,16 @@ gimp_image_srgb_to_pixel (GimpPickable  *pickable,
 {
   gimp_image_color_profile_srgb_to_pixel (GIMP_IMAGE (pickable),
                                           color, format, pixel);
+}
+
+static GeglRectangle
+gimp_image_get_bounding_box (GimpProjectable *projectable)
+{
+  GimpImage *image = GIMP_IMAGE (projectable);
+
+  return *GEGL_RECTANGLE (0, 0,
+                          gimp_image_get_width  (image),
+                          gimp_image_get_height (image));
 }
 
 static GeglNode *
