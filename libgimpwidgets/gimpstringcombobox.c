@@ -104,7 +104,7 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
   /**
-   * GimpStringComboBox:id-column:
+   * GimpStringComboBox:label-column:
    *
    * The column in the associated GtkTreeModel that holds strings to
    * be used as labels in the combo-box.
