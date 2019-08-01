@@ -51,6 +51,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-pick-color.h"
+#include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
@@ -156,6 +157,8 @@ static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_to
 
 static void      gimp_filter_tool_create_filter  (GimpFilterTool      *filter_tool);
 
+static void      gimp_filter_tool_update_dialog  (GimpFilterTool      *filter_tool);
+
 static void      gimp_filter_tool_region_changed (GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_flush          (GimpDrawableFilter  *filter,
@@ -252,6 +255,7 @@ gimp_filter_tool_finalize (GObject *object)
   g_clear_object (&filter_tool->gui);
   filter_tool->settings_box      = NULL;
   filter_tool->controller_toggle = NULL;
+  filter_tool->clip_combo        = NULL;
   filter_tool->region_combo      = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -316,7 +320,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       GtkWidget *expander;
       GtkWidget *frame;
       GtkWidget *vbox2;
-      gchar     *operation_name;
 
       /*  disabled for at least GIMP 2.8  */
       filter_tool->overlay = FALSE;
@@ -414,10 +417,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gtk_widget_show (toggle);
 
       /*  The area combo  */
-      gegl_node_get (filter_tool->operation,
-                     "operation", &operation_name,
-                     NULL);
-
       filter_tool->region_combo =
         gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
                                       "region",
@@ -425,14 +424,16 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gtk_box_pack_end (GTK_BOX (vbox), filter_tool->region_combo,
                         FALSE, FALSE, 0);
 
-      if (! gimp_gegl_node_is_point_operation (filter_tool->operation) ||
-          (operation_name                                              &&
-           gegl_operation_get_key (operation_name, "position-dependent")))
-        {
-          gtk_widget_show (filter_tool->region_combo);
-        }
-
-      g_free (operation_name);
+      /*  The clipping combo  */
+      filter_tool->clip_combo =
+        gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
+                                      "clip",
+                                      GIMP_TRANSFORM_RESIZE_ADJUST,
+                                      GIMP_TRANSFORM_RESIZE_CLIP);
+      gimp_int_combo_box_set_label (
+        GIMP_INT_COMBO_BOX (filter_tool->clip_combo), _("Clipping"));
+      gtk_box_pack_end (GTK_BOX (vbox), filter_tool->clip_combo,
+                        FALSE, FALSE, 0);
 
       /*  Fill in subclass widgets  */
       gimp_filter_tool_dialog (filter_tool);
@@ -798,6 +799,13 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       gimp_tool_widget_set_visible (filter_tool->widget,
                                     filter_options->controller);
     }
+  else if (! strcmp (pspec->name, "clip") &&
+           filter_tool->filter)
+    {
+      gimp_drawable_filter_set_clip (filter_tool->filter,
+                                     filter_options->clip ==
+                                     GIMP_TRANSFORM_RESIZE_CLIP);
+    }
   else if (! strcmp (pspec->name, "region") &&
            filter_tool->filter)
     {
@@ -986,6 +994,7 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
       g_clear_object (&filter_tool->gui);
       filter_tool->settings_box      = NULL;
       filter_tool->controller_toggle = NULL;
+      filter_tool->clip_combo        = NULL;
       filter_tool->region_combo      = NULL;
     }
 
@@ -1099,6 +1108,9 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
                                                   filter_tool->operation,
                                                   gimp_tool_get_icon_name (tool));
 
+  gimp_drawable_filter_set_clip       (filter_tool->filter,
+                                       options->clip ==
+                                       GIMP_TRANSFORM_RESIZE_CLIP);
   gimp_drawable_filter_set_region     (filter_tool->filter,
                                        options->region);
   gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
@@ -1114,6 +1126,45 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   if (options->preview)
     gimp_drawable_filter_apply (filter_tool->filter, NULL);
+}
+
+static void
+gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
+{
+  GimpTool *tool = GIMP_TOOL (filter_tool);
+
+  if (filter_tool->gui)
+    {
+      GimpImage   *image = gimp_display_get_image (tool->display);
+      GimpChannel *mask  = gimp_image_get_mask (image);
+      gchar       *operation_name;
+
+      gegl_node_get (filter_tool->operation,
+                     "operation", &operation_name,
+                     NULL);
+
+      if (gimp_channel_is_empty (mask))
+        {
+          gtk_widget_set_visible (
+            filter_tool->clip_combo,
+            GIMP_IS_LAYER (tool->drawable) &&
+            ! gimp_gegl_node_is_point_operation (filter_tool->operation));
+
+          gtk_widget_hide (filter_tool->region_combo);
+        }
+      else
+        {
+          gtk_widget_hide (filter_tool->clip_combo);
+
+          gtk_widget_set_visible (
+            filter_tool->region_combo,
+            ! gimp_gegl_node_is_point_operation (filter_tool->operation) ||
+            (operation_name                                              &&
+             gegl_operation_get_key (operation_name, "position-dependent")));
+        }
+
+      g_free (operation_name);
+    }
 }
 
 static void
@@ -1164,13 +1215,7 @@ gimp_filter_tool_mask_changed (GimpImage      *image,
 {
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
 
-  if (filter_tool->gui)
-    {
-      GimpChannel *mask = gimp_image_get_mask (image);
-
-      gtk_widget_set_sensitive (filter_tool->region_combo,
-                                ! gimp_channel_is_empty (mask));
-    }
+  gimp_filter_tool_update_dialog (filter_tool);
 
   if (options->region == GIMP_FILTER_REGION_SELECTION)
     gimp_filter_tool_region_changed (filter_tool);
@@ -1500,20 +1545,15 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                      gimp_tool_get_help_id (tool));
     }
 
-  if (gegl_operation_get_key (operation_name, "position-dependent"))
+  if (gimp_gegl_node_is_point_operation (filter_tool->operation) &&
+      ! gegl_operation_get_key (operation_name, "position-dependent"))
     {
-      if (filter_tool->gui)
-        gtk_widget_show (filter_tool->region_combo);
-    }
-  else
-    {
-      if (filter_tool->gui)
-        gtk_widget_hide (filter_tool->region_combo);
-
       g_object_set (GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool),
                     "region", GIMP_FILTER_REGION_SELECTION,
                     NULL);
     }
+
+  gimp_filter_tool_update_dialog (filter_tool);
 
   g_free (operation_name);
 
