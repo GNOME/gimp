@@ -97,6 +97,27 @@ gimp_plug_in_finalize (GObject *object)
 
 /*  public functions  */
 
+/**
+ * gimp_plug_in_set_translation_domain:
+ * @plug_in:     A #GimpPlugIn.
+ * @domain_name: The name of the textdomain (must be unique).
+ * @domain_path: The absolute path to the compiled message catalog
+ *               (may be %NULL).
+ *
+ * Sets a textdomain for localisation for the @plug_in.
+ *
+ * This function adds a textdomain to the list of domains Gimp
+ * searches for strings when translating its menu entries. There is no
+ * need to call this function for plug-ins that have their strings
+ * included in the 'gimp-std-plugins' domain as that is used by
+ * default. If the compiled message catalog is not in the standard
+ * location, you may specify an absolute path to another
+ * location. This function can only be called in the
+ * GimpPlugIn::query() function of a plug-in and it has to be called
+ * before any procedure is installed.
+ *
+ * Since: 3.0
+ **/
 void
 gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
                                      const gchar *domain_name,
@@ -112,6 +133,22 @@ gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
   g_set_object (&plug_in->priv->translation_domain_path, domain_path);
 }
 
+/**
+ * gimp_plug_in_set_help_domain:
+ * @plug_in:     A #GimpPlugIn.
+ * @domain_name: The XML namespace of the plug-in's help pages.
+ * @domain_uri:  The root URI of the plug-in's help pages.
+ *
+ * Set a help domain and path for the @plug_in.
+ *
+ * This function registers user documentation for the calling plug-in
+ * with the GIMP help system. The domain_uri parameter points to the
+ * root directory where the plug-in help is installed. For each
+ * supported language there should be a file called 'gimp-help.xml'
+ * that maps the help IDs to the actual help files.
+ *
+ * Since: 3.0
+ **/
 void
 gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
                               const gchar *domain_name,
@@ -127,6 +164,26 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
   g_set_object (&plug_in->priv->help_domain_uri, domain_uri);
 }
 
+/**
+ * gimp_plug_in_add_menu_branch:
+ * @plug_in:    A #GimpPlugIn
+ * @menu_path:  The sub-menu's menu path.
+ * @menu_label: The menu label of the sub-menu.
+ *
+ * Add a new sub-menu to thr GIMP menus.
+ *
+ * This function installs a sub-menu which does not belong to any
+ * procedure at the location @menu_path.
+ *
+ * For translations of tooltips to work properly, @menu_label should
+ * only be marked for translation but passed to this function
+ * untranslated, for example using N_("Submenu"). GIMP will look up
+ * the translation in the textdomain registered for the plug-in.
+ *
+ * See also: gimp_procedure_add_menu_path().
+ *
+ * Since: 3.0
+ **/
 void
 gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
                               const gchar *menu_path,
@@ -147,6 +204,21 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
                                                 branch);
 }
 
+/**
+ * gimp_plug_in_create_procedure:
+ * @plug_in: A #GimpPlugIn
+ * @name:    A procedure name.
+ *
+ * This functiond creates a new procedure and is called when a plug-in
+ * instance is started by GIMP when one of the %GIMP_PLUGIN or
+ * %GIMP_EXTENSION procedures it implements is invoked.
+ *
+ * This function will only ever be called with names returned by
+ * implementations of GimpPlugIn::init_procedures() or
+ * GimpPlugIn::query_procedures().
+ *
+ * Returns: (transfer full): The newly created #GimpProcedure.
+ **/
 GimpProcedure *
 gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
                                const gchar *name)
@@ -161,6 +233,29 @@ gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
   return NULL;
 }
 
+/**
+ * gimp_plug_in_add_temp_procedure:
+ * @plug_in:   A #GimpPlugIn
+ * @procedure: A #GimpProcedure of type %GIMP_TEMPORARY.
+ *
+ * This function adds a temporary procedure to @plug_in. It is usually
+ * called from a %GIMP_EXTENSION procedure's GimpProcedure::run().
+ *
+ * A temporary procedure is a procedure which is only available while
+ * one of your plug-in's "real" procedures is running.
+ *
+ * The procedure's type <emphasis>must</emphasis> be %GIMP_TEMPORARY
+ * or the function will fail.
+ *
+ * NOTE: Normally, plug-in communication is triggered by the plug-in
+ * and the GIMP core only responds to the plug-in's requests. You must
+ * explicitly enable receiving of temporary procedure run requests
+ * using either gimp_extension_enable() or
+ * gimp_extension_process(). See this functions' documentation for
+ * details.
+ *
+ * Since: 3.0
+ **/
 void
 gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
                                  GimpProcedure *procedure)
@@ -176,6 +271,16 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
   _gimp_procedure_register (procedure);
 }
 
+/**
+ * gimp_plug_in_add_temp_procedure:
+ * @plug_in: A #GimpPlugIn
+ * @name:    The name of a #GimpProcedure added to @plug_in.
+ *
+ * This function removes a temporary procedure from @plug_in by the
+ * procedure's @name.
+ *
+ * Since: 3.0
+ **/
 void
 gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
                                     const gchar *name)
@@ -197,6 +302,19 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
     }
 }
 
+/**
+ * gimp_plug_in_get_temp_procedures:
+ * @plug_in: A #GimpPlugIn
+ * @name:    The name of a #GimpProcedure added to @plug_in.
+ *
+ * This function retrieves the list of temporary procedure of @plug_in as
+ * added with gimp_plug_in_add_temp_procedure().
+ *
+ * Returns: (transfer none) (element-type GimpProcedure): The list of
+ *          procedures.
+ *
+ * Since: 3.0
+ **/
 GList *
 gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
 {
@@ -205,6 +323,18 @@ gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
   return plug_in->priv->temp_procedures;
 }
 
+/**
+ * gimp_plug_in_get_temp_procedure:
+ * @plug_in: A #GimpPlugIn
+ * @name:    The name of a #GimpProcedure added to @plug_in.
+ *
+ * This function retrieves a temporary procedure from @plug_in by the
+ * procedure's @name.
+ *
+ * Returns: (transfer none): The procedure if registered, or %NULL.
+ *
+ * Since: 3.0
+ **/
 GimpProcedure *
 gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
                                  const gchar *name)
