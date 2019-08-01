@@ -107,10 +107,12 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                   N_("Goat-exercise"),
                                   N_("Exercise a goat"),
                                   "takes a goat for a walk",
-                                  PLUG_IN_PROC,
-                                  "Øyvind Kolås <pippin@gimp.org>",
-                                  "Øyvind Kolås <pippin@gimp.org>",
-                                  "21march 2012");
+                                  PLUG_IN_PROC);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Øyvind Kolås <pippin@gimp.org>",
+                                      "Øyvind Kolås <pippin@gimp.org>",
+                                      "21march 2012");
 
       gimp_procedure_set_image_types (procedure,
                                       "RGB*, INDEXED*, GRAY*");
