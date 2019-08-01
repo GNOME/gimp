@@ -377,8 +377,9 @@ gimp_color_selector_set_color (GimpColorSelector *selector,
 /**
  * gimp_color_selector_get_color:
  * @selector: A #GimpColorSelector widget.
- * @rgb:      Return location for the color.
- * @hsv:      Return location for the same same color in HSV.
+ * @rgb:      (out caller-allocates): Return location for the color.
+ * @hsv:      (out caller-allocates): Return location for the same same
+ *            color in HSV.
  *
  * Retrieves the color shown in the @selector widget.
  *

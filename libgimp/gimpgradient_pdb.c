@@ -377,7 +377,7 @@ gimp_gradient_get_custom_samples (const gchar    *name,
  * gimp_gradient_segment_get_left_color:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @color: (out): The return color.
+ * @color: (out caller-allocates): The return color.
  * @opacity: (out): The opacity of the endpoint.
  *
  * Retrieves the left endpoint color of the specified segment
@@ -475,7 +475,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
  * gimp_gradient_segment_get_right_color:
  * @name: The gradient name.
  * @segment: The index of the segment within the gradient.
- * @color: (out): The return color.
+ * @color: (out caller-allocates): The return color.
  * @opacity: (out): The opacity of the endpoint.
  *
  * Retrieves the right endpoint color of the specified segment

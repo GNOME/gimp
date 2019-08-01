@@ -649,7 +649,7 @@ enum
  * gimp_scanner_parse_color:
  * @scanner: A #GScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @dest: Pointer to a color to store the result
+ * @dest: (out caller-allocates): Pointer to a color to store the result
  *
  * Return value: %TRUE on success
  *

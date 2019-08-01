@@ -219,7 +219,7 @@ gimp_image_grid_set_offset (gint32  image_ID,
 /**
  * gimp_image_grid_get_foreground_color:
  * @image_ID: The image.
- * @fgcolor: (out): The image's grid foreground color.
+ * @fgcolor: (out caller-allocates): The image's grid foreground color.
  *
  * Sets the foreground color of an image's grid.
  *
@@ -296,7 +296,7 @@ gimp_image_grid_set_foreground_color (gint32         image_ID,
 /**
  * gimp_image_grid_get_background_color:
  * @image_ID: The image.
- * @bgcolor: (out): The image's grid background color.
+ * @bgcolor: (out caller-allocates): The image's grid background color.
  *
  * Sets the background color of an image's grid.
  *

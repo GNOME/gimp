@@ -554,8 +554,9 @@ gimp_color_area_set_color (GimpColorArea *area,
 
 /**
  * gimp_color_area_get_color:
- * @area: Pointer to a #GimpColorArea.
- * @color: Pointer to a #GimpRGB struct that is used to return the color.
+ * @area:  Pointer to a #GimpColorArea.
+ * @color: (out caller-allocates): Pointer to a #GimpRGB struct
+ *         that is used to return the color.
  *
  * Retrieves the current color of the @area.
  **/

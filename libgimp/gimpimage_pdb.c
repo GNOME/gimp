@@ -738,7 +738,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * @sample_merged: Use the composite image, not the drawable.
  * @sample_average: Average the color of all the pixels in a specified radius.
  * @average_radius: The radius of pixels to average.
- * @color: (out): The return color.
+ * @color: (out caller-allocates): The return color.
  *
  * Determine the color at the given drawable coordinates
  *

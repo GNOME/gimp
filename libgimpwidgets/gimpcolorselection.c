@@ -471,7 +471,8 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
 /**
  * gimp_color_selection_get_color:
  * @selection: A #GimpColorSelection widget.
- * @color:     (out): Return location for the @selection's current @color.
+ * @color:     (out caller-allocates): Return location for the
+ *             @selection's current @color.
  *
  * This function returns the #GimpColorSelection's current color.
  **/
@@ -509,7 +510,8 @@ gimp_color_selection_set_old_color (GimpColorSelection *selection,
 /**
  * gimp_color_selection_get_old_color:
  * @selection: A #GimpColorSelection widget.
- * @color:     (out): Return location for the @selection's old @color.
+ * @color:     (out caller-allocates): Return location for the
+ *             @selection's old @color.
  *
  * This function returns the #GimpColorSelection's old color.
  **/

@@ -466,7 +466,7 @@ gimp_palette_delete_entry (const gchar *name,
  * gimp_palette_entry_get_color:
  * @name: The palette name.
  * @entry_num: The entry to retrieve.
- * @color: (out): The color requested.
+ * @color: (out caller-allocates): The color requested.
  *
  * Gets the specified palette entry from the specified palette.
  *

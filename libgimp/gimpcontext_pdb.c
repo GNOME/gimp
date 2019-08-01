@@ -322,7 +322,7 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
 
 /**
  * gimp_context_get_foreground:
- * @foreground: (out): The foreground color.
+ * @foreground: (out caller-allocates): The foreground color.
  *
  * Get the current GIMP foreground color.
  *
@@ -395,7 +395,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
 
 /**
  * gimp_context_get_background:
- * @background: (out): The background color.
+ * @background: (out caller-allocates): The background color.
  *
  * Get the current GIMP background color.
  *

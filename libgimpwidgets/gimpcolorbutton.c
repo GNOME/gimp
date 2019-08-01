@@ -725,7 +725,8 @@ gimp_color_button_set_color (GimpColorButton *button,
 /**
  * gimp_color_button_get_color:
  * @button: Pointer to a #GimpColorButton.
- * @color:  Pointer to a #GimpRGB struct used to return the color.
+ * @color:  (out caller-allocates): Pointer to a #GimpRGB struct
+ *          used to return the color.
  *
  * Retrieves the currently set color from the @button.
  **/
