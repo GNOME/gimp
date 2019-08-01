@@ -103,11 +103,12 @@ goat_create_procedure (GimpPlugIn  *plug_in,
       procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
                                       goat_run, NULL, NULL);
 
-      gimp_procedure_set_strings (procedure,
-                                  N_("Goat-exercise"),
-                                  N_("Exercise a goat"),
-                                  "takes a goat for a walk",
-                                  PLUG_IN_PROC);
+      gimp_procedure_set_menu_label (procedure, N_("Goat-exercise"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Exercise a goat"),
+                                        "takes a goat for a walk",
+                                        PLUG_IN_PROC);
 
       gimp_procedure_set_attribution (procedure,
                                       "Øyvind Kolås <pippin@gimp.org>",

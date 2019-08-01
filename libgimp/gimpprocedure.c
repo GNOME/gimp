@@ -88,7 +88,6 @@ struct _GimpProcedurePrivate
 
 static void       gimp_procedure_finalize      (GObject         *object);
 
-static void       gimp_procedure_free_strings  (GimpProcedure   *procedure);
 static gboolean   gimp_procedure_validate_args (GimpProcedure   *procedure,
                                                 GParamSpec     **param_specs,
                                                 gint             n_param_specs,
@@ -126,10 +125,12 @@ gimp_procedure_finalize (GObject *object)
     procedure->priv->run_data_destroy (procedure->priv->run_data);
 
   g_clear_object  (&procedure->priv->plug_in);
-  g_clear_pointer (&procedure->priv->name, g_free);
 
-  gimp_procedure_free_strings (procedure);
-
+  g_clear_pointer (&procedure->priv->name,        g_free);
+  g_clear_pointer (&procedure->priv->menu_label,  g_free);
+  g_clear_pointer (&procedure->priv->blurb,       g_free);
+  g_clear_pointer (&procedure->priv->help,        g_free);
+  g_clear_pointer (&procedure->priv->help_id,     g_free);
   g_clear_pointer (&procedure->priv->authors,     g_free);
   g_clear_pointer (&procedure->priv->copyright,   g_free);
   g_clear_pointer (&procedure->priv->date,        g_free);
@@ -273,21 +274,29 @@ gimp_procedure_get_proc_type (GimpProcedure *procedure)
   return procedure->priv->proc_type;
 }
 
+/**
+ * gimp_procedure_set_menu_label:
+ * @procedure:  A #GimpProcedure.
+ * @menu_label: The @procedure's menu label.
+ *
+ * Sets the label to use for the @procedure's menu entry, The
+ * location(s) where to register in the menu hierarchy is chosen using
+ * gimp_procedure_add_menu_path().
+ *
+ * For translations of menu labels to work properly, this string
+ * should only be marked for translation but passed to this function
+ * untranslated, for example using N_("Label").
+ *
+ * Since: 3.0
+ **/
 void
-gimp_procedure_set_strings (GimpProcedure *procedure,
-                            const gchar   *menu_label,
-                            const gchar   *blurb,
-                            const gchar   *help,
-                            const gchar   *help_id)
+gimp_procedure_set_menu_label (GimpProcedure *procedure,
+                               const gchar   *menu_label)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  gimp_procedure_free_strings (procedure);
-
-  procedure->priv->menu_label    = g_strdup (menu_label);
-  procedure->priv->blurb         = g_strdup (blurb);
-  procedure->priv->help          = g_strdup (help);
-  procedure->priv->help_id       = g_strdup (help_id);
+  g_clear_pointer (&procedure->priv->menu_label,  g_free);
+  procedure->priv->menu_label = g_strdup (menu_label);
 }
 
 /**
@@ -308,11 +317,48 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
 }
 
 /**
+ * gimp_procedure_set_documentation:
+ * @procedure: A #GimpProcedure.
+ * @blurb:     The @procedure's blurb.
+ * @help:      The @procedure's help text.
+ * @help_id:   The @procedure's help ID.
+ *
+ * @blurb is used as the @procedure's tooltip when represented in the UI,
+ * for example as a menu entry.
+ *
+ * For translations of tooltips to work properly, this string should
+ * only be marked for translation but passed to this function
+ * untranslated, for example using N_("Blurb").
+ *
+ * @help: is a free-form text that's meant as documentation for
+ * developers of scripts and plug-ins.
+ *
+ * Sets various documentation strings on @procedure.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_set_documentation (GimpProcedure *procedure,
+                                  const gchar   *blurb,
+                                  const gchar   *help,
+                                  const gchar   *help_id)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  g_clear_pointer (&procedure->priv->blurb,       g_free);
+  g_clear_pointer (&procedure->priv->help,        g_free);
+  g_clear_pointer (&procedure->priv->help_id,     g_free);
+
+  procedure->priv->blurb   = g_strdup (blurb);
+  procedure->priv->help    = g_strdup (help);
+  procedure->priv->help_id = g_strdup (help_id);
+}
+
+/**
  * gimp_procedure_get_blurb:
  * @procedure: A #GimpProcedure.
  *
- * Returns: The procedure's blurb given in
- *          gimp_procedure_set_strings().
+ * Returns: The procedure's blurb given in gimp_procedure_set_help().
  *
  * Since: 3.0
  **/
@@ -329,7 +375,7 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's help text given in
- *          gimp_procedure_set_strings().
+ *          gimp_procedure_set_help().
  *
  * Since: 3.0
  **/
@@ -346,7 +392,7 @@ gimp_procedure_get_help (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's help ID given in
- *          gimp_procedure_set_strings().
+ *          gimp_procedure_set_help().
  *
  * Since: 3.0
  **/
@@ -862,15 +908,6 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
 
 
 /*  private functions  */
-
-static void
-gimp_procedure_free_strings (GimpProcedure *procedure)
-{
-  g_clear_pointer (&procedure->priv->menu_label,  g_free);
-  g_clear_pointer (&procedure->priv->blurb,       g_free);
-  g_clear_pointer (&procedure->priv->help,        g_free);
-  g_clear_pointer (&procedure->priv->help_id,     g_free);
-}
 
 static gboolean
 gimp_procedure_validate_args (GimpProcedure  *procedure,

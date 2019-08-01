@@ -86,13 +86,14 @@ GimpPlugIn     * gimp_procedure_get_plug_in        (GimpProcedure     *procedure
 const gchar    * gimp_procedure_get_name           (GimpProcedure     *procedure);
 GimpPDBProcType  gimp_procedure_get_proc_type      (GimpProcedure     *procedure);
 
-void             gimp_procedure_set_strings        (GimpProcedure     *procedure,
-                                                    const gchar       *menu_label,
+void             gimp_procedure_set_menu_label     (GimpProcedure     *procedure,
+                                                    const gchar       *menu_label);
+const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
+
+void             gimp_procedure_set_documentation  (GimpProcedure     *procedure,
                                                     const gchar       *blurb,
                                                     const gchar       *help,
                                                     const gchar       *help_id);
-
-const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_blurb          (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_help           (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_help_id        (GimpProcedure     *procedure);
