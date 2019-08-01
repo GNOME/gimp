@@ -99,14 +99,14 @@ gimp_operation_compose_crop_class_init (GimpOperationComposeCropClass *klass)
                                    g_param_spec_int ("x",
                                                      "x",
                                                      "x",
-                                                     0, G_MAXINT, 0,
+                                                     G_MININT, G_MAXINT, 0,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_int ("y",
                                                      "y",
                                                      "y",
-                                                     0, G_MAXINT, 0,
+                                                     G_MININT, G_MAXINT, 0,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_WIDTH,
