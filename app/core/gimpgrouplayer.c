@@ -58,6 +58,7 @@ struct _GimpGroupLayerPrivate
   GeglNode       *parent_source_node;
   GeglNode       *graph;
   GeglNode       *offset_node;
+  GeglRectangle   bounding_box;
   gint            suspend_resize;
   gint            suspend_mask;
   GeglBuffer     *suspended_mask_buffer;
@@ -70,8 +71,6 @@ struct _GimpGroupLayerPrivate
   /*  hackish temp states to make the projection/tiles stuff work  */
   const Babl     *convert_format;
   gboolean        reallocate_projection;
-  gint            reallocate_width;
-  gint            reallocate_height;
 };
 
 #define GET_PRIVATE(item) ((GimpGroupLayerPrivate *) gimp_group_layer_get_instance_private ((GimpGroupLayer *) (item)))
@@ -350,6 +349,9 @@ gimp_group_layer_init (GimpGroupLayer *group)
                               G_CALLBACK (gimp_group_layer_child_move),
                               group);
   gimp_container_add_handler (private->children, "size-changed",
+                              G_CALLBACK (gimp_group_layer_child_resize),
+                              group);
+  gimp_container_add_handler (private->children, "bounding-box-changed",
                               G_CALLBACK (gimp_group_layer_child_resize),
                               group);
   gimp_container_add_handler (private->children, "active-changed",
@@ -1040,12 +1042,6 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
       gimp_image_undo_push_group_layer_convert (image, NULL, group);
     }
 
-  /*  Force allocation of a same-size projection, in case the group
-   *  layer is empty
-   */
-  private->reallocate_width  = gimp_item_get_width  (GIMP_ITEM (group));
-  private->reallocate_height = gimp_item_get_height (GIMP_ITEM (group));
-
   /*  Need to temporarily set the projectable's format to the new
    *  values so the projection will create its tiles with the right
    *  depth
@@ -1066,9 +1062,6 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
 
   /*  reset, the actual format is right now  */
   private->convert_format = NULL;
-
-  private->reallocate_width  = 0;
-  private->reallocate_height = 0;
 }
 
 static GeglNode *
@@ -1161,9 +1154,13 @@ gimp_group_layer_excludes_backdrop_changed (GimpLayer *layer)
 static void
 gimp_group_layer_mask_changed (GimpLayer *layer)
 {
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+
   g_warn_if_fail (GET_PRIVATE (layer)->suspend_mask == 0);
 
   gimp_layer_update_effective_mode (layer);
+
+  gimp_group_layer_update_size (group);
 
   if (GIMP_LAYER_CLASS (parent_class)->mask_changed)
     GIMP_LAYER_CLASS (parent_class)->mask_changed (layer);
@@ -1338,24 +1335,8 @@ static GeglRectangle
 gimp_group_layer_get_bounding_box (GimpProjectable *projectable)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
-  GeglRectangle          bounding_box;
 
-  bounding_box.x = 0;
-  bounding_box.y = 0;
-
-  if (private->reallocate_width  != 0 &&
-      private->reallocate_height != 0)
-    {
-      bounding_box.width  = private->reallocate_width;
-      bounding_box.height = private->reallocate_height;
-    }
-  else
-    {
-      bounding_box.width  = gimp_item_get_width  (GIMP_ITEM (projectable));
-      bounding_box.height = gimp_item_get_height (GIMP_ITEM (projectable));
-    }
-
-  return bounding_box;
+  return private->bounding_box;
 }
 
 static GeglNode *
@@ -1894,29 +1875,38 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
   GimpItem              *item       = GIMP_ITEM (group);
   GimpLayer             *layer      = GIMP_LAYER (group);
   GimpItem              *mask       = GIMP_ITEM (gimp_layer_get_mask (layer));
-  gint                   old_x      = gimp_item_get_offset_x (item);
-  gint                   old_y      = gimp_item_get_offset_y (item);
-  gint                   old_width  = gimp_item_get_width  (item);
-  gint                   old_height = gimp_item_get_height (item);
-  gint                   x          = 0;
-  gint                   y          = 0;
-  gint                   width      = 1;
-  gint                   height     = 1;
+  GeglRectangle          old_bounds;
+  GeglRectangle          bounds;
+  GeglRectangle          old_bounding_box;
+  GeglRectangle          bounding_box;
   gboolean               first      = TRUE;
   gboolean               size_changed;
   gboolean               resize_mask;
   GList                 *list;
 
+  old_bounds.x      = gimp_item_get_offset_x (item);
+  old_bounds.y      = gimp_item_get_offset_y (item);
+  old_bounds.width  = gimp_item_get_width    (item);
+  old_bounds.height = gimp_item_get_height   (item);
+
+  bounds.x          = 0;
+  bounds.y          = 0;
+  bounds.width      = 1;
+  bounds.height     = 1;
+
+  old_bounding_box  = private->bounding_box;
+  bounding_box      = bounds;
+
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
        list;
        list = g_list_next (list))
     {
-      GimpItem *child = list->data;
-      gint      child_width;
-      gint      child_height;
+      GimpItem      *child = list->data;
+      GeglRectangle  child_bounds;
+      GeglRectangle  child_bounding_box;
 
       if (! gimp_viewable_get_size (GIMP_VIEWABLE (child),
-                                    &child_width, &child_height))
+                                    &child_bounds.width, &child_bounds.height))
         {
           /*  ignore children without content (empty group layers);
            *  see bug 777017
@@ -1924,39 +1914,47 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           continue;
         }
 
+      gimp_item_get_offset (child, &child_bounds.x, &child_bounds.y);
+
+      child_bounding_box =
+        gimp_drawable_get_bounding_box (GIMP_DRAWABLE (child));
+
+      child_bounding_box.x += child_bounds.x;
+      child_bounding_box.y += child_bounds.y;
+
       if (first)
         {
-          x      = gimp_item_get_offset_x (child);
-          y      = gimp_item_get_offset_y (child);
-          width  = child_width;
-          height = child_height;
+          bounds       = child_bounds;
+          bounding_box = child_bounding_box;
 
           first = FALSE;
         }
       else
         {
-          gimp_rectangle_union (x, y, width, height,
-                                gimp_item_get_offset_x (child),
-                                gimp_item_get_offset_y (child),
-                                child_width,
-                                child_height,
-                                &x, &y, &width, &height);
+          gegl_rectangle_bounding_box (&bounds,
+                                       &bounds, &child_bounds);
+          gegl_rectangle_bounding_box (&bounding_box,
+                                       &bounding_box, &child_bounding_box);
         }
     }
 
-  size_changed = (x      != old_x     ||
-                  y      != old_y     ||
-                  width  != old_width ||
-                  height != old_height);
+  if (mask)
+    bounding_box = bounds;
 
-  resize_mask = mask && size_changed;
+  bounding_box.x -= bounds.x;
+  bounding_box.y -= bounds.y;
+
+  size_changed = ! (gegl_rectangle_equal (&bounds,       &old_bounds) &&
+                    gegl_rectangle_equal (&bounding_box, &old_bounding_box));
+
+  resize_mask = mask && ! gegl_rectangle_equal (&bounds, &old_bounds);
 
   /* if we show the mask, invalidate the old mask area */
   if (resize_mask && gimp_layer_get_show_mask (layer))
     {
       gimp_drawable_update (GIMP_DRAWABLE (group),
-                            gimp_item_get_offset_x (mask) - old_x,
-                            gimp_item_get_offset_y (mask) - old_y,
+                            gimp_item_get_offset_x (mask) - old_bounds.x,
+                            gimp_item_get_offset_y (mask) - old_bounds.y,
                             gimp_item_get_width    (mask),
                             gimp_item_get_height   (mask));
     }
@@ -1971,21 +1969,20 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
        */
       if (private->offset_node)
         gegl_node_set (private->offset_node,
-                       "x", (gdouble) -x,
-                       "y", (gdouble) -y,
+                       "x", (gdouble) -bounds.x,
+                       "y", (gdouble) -bounds.y,
                        NULL);
 
       /* update our offset *before* calling gimp_pickable_get_buffer(), so
        * that if our graph isn't constructed yet, the offset node picks
        * up the right coordinates in gimp_group_layer_get_graph().
        */
-      gimp_item_set_offset (item, x, y);
+      gimp_item_set_offset (item, bounds.x, bounds.y);
 
-      /*  temporarily change the return values of gimp_viewable_get_size()
-       *  so the projection allocates itself correctly
+      /* update the bounding box before updating the projection, so that it
+       * picks up the right size.
        */
-      private->reallocate_width  = width;
-      private->reallocate_height = height;
+      private->bounding_box = bounding_box;
 
       if (private->reallocate_projection)
         {
@@ -2001,24 +1998,20 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
            * new buffer with an offset, rather than re-renders the graph.
            */
           gimp_projectable_bounds_changed (GIMP_PROJECTABLE (group),
-                                           old_x, old_y, old_width, old_height);
+                                           old_bounds.x, old_bounds.y);
         }
 
       buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
       gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                      FALSE, NULL,
-                                     buffer, NULL,
+                                     buffer, &bounds,
                                      FALSE /* don't update the drawable, the
                                             * flush() below will take care of
                                             * that.
                                             */);
 
       gimp_group_layer_flush (group);
-
-      /*  reset, the actual size is correct now  */
-      private->reallocate_width  = 0;
-      private->reallocate_height = 0;
     }
 
   /* resize the mask if not transforming (in which case, GimpLayer takes care
@@ -2031,8 +2024,8 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
   if (resize_mask && gimp_layer_get_show_mask (layer))
     {
       gimp_drawable_update (GIMP_DRAWABLE (group),
-                            gimp_item_get_offset_x (mask) - x,
-                            gimp_item_get_offset_y (mask) - y,
+                            gimp_item_get_offset_x (mask) - bounds.x,
+                            gimp_item_get_offset_y (mask) - bounds.y,
                             gimp_item_get_width    (mask),
                             gimp_item_get_height   (mask));
     }
