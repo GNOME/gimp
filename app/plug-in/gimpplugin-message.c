@@ -745,7 +745,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       VALIDATE         (canonical)                &&
       VALIDATE_OR_NULL (proc_install->blurb)      &&
       VALIDATE_OR_NULL (proc_install->help)       &&
-      VALIDATE_OR_NULL (proc_install->author)     &&
+      VALIDATE_OR_NULL (proc_install->authors)    &&
       VALIDATE_OR_NULL (proc_install->copyright)  &&
       VALIDATE_OR_NULL (proc_install->date))
     {
@@ -851,7 +851,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                               proc_install->name,
                               proc_install->blurb,
                               proc_install->help,
-                              proc_install->author,
+                              proc_install->authors,
                               proc_install->copyright,
                               proc_install->date,
                               NULL);

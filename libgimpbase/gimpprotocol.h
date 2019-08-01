@@ -258,7 +258,7 @@ struct _GPProcInstall
   gchar      *name;
   gchar      *blurb;
   gchar      *help;
-  gchar      *author;
+  gchar      *authors;
   gchar      *copyright;
   gchar      *date;
   gchar      *menu_label;

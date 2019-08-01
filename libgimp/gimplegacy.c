@@ -288,7 +288,7 @@ gimp_install_procedure (const gchar        *name,
   proc_install.name         = (gchar *) name;
   proc_install.blurb        = (gchar *) blurb;
   proc_install.help         = (gchar *) help;
-  proc_install.author       = (gchar *) author;
+  proc_install.authors      = (gchar *) author;
   proc_install.copyright    = (gchar *) copyright;
   proc_install.date         = (gchar *) date;
   proc_install.menu_label   = (gchar *) menu_label;

@@ -147,7 +147,7 @@ gimp_procedure_get_memsize (GimpObject *object,
       memsize += gimp_string_get_memsize (procedure->original_name);
       memsize += gimp_string_get_memsize (procedure->blurb);
       memsize += gimp_string_get_memsize (procedure->help);
-      memsize += gimp_string_get_memsize (procedure->author);
+      memsize += gimp_string_get_memsize (procedure->authors);
       memsize += gimp_string_get_memsize (procedure->copyright);
       memsize += gimp_string_get_memsize (procedure->date);
       memsize += gimp_string_get_memsize (procedure->deprecated);
@@ -267,7 +267,7 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
                             const gchar   *original_name,
                             const gchar   *blurb,
                             const gchar   *help,
-                            const gchar   *author,
+                            const gchar   *authors,
                             const gchar   *copyright,
                             const gchar   *date,
                             const gchar   *deprecated)
@@ -279,7 +279,7 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
   procedure->original_name = g_strdup (original_name);
   procedure->blurb         = g_strdup (blurb);
   procedure->help          = g_strdup (help);
-  procedure->author        = g_strdup (author);
+  procedure->authors       = g_strdup (authors);
   procedure->copyright     = g_strdup (copyright);
   procedure->date          = g_strdup (date);
   procedure->deprecated    = g_strdup (deprecated);
@@ -292,7 +292,7 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
                                    const gchar   *original_name,
                                    const gchar   *blurb,
                                    const gchar   *help,
-                                   const gchar   *author,
+                                   const gchar   *authors,
                                    const gchar   *copyright,
                                    const gchar   *date,
                                    const gchar   *deprecated)
@@ -304,7 +304,7 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
   procedure->original_name = (gchar *) original_name;
   procedure->blurb         = (gchar *) blurb;
   procedure->help          = (gchar *) help;
-  procedure->author        = (gchar *) author;
+  procedure->authors       = (gchar *) authors;
   procedure->copyright     = (gchar *) copyright;
   procedure->date          = (gchar *) date;
   procedure->deprecated    = (gchar *) deprecated;
@@ -317,7 +317,7 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
                              gchar         *original_name,
                              gchar         *blurb,
                              gchar         *help,
-                             gchar         *author,
+                             gchar         *authors,
                              gchar         *copyright,
                              gchar         *date,
                              gchar         *deprecated)
@@ -329,7 +329,7 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
   procedure->original_name = original_name;
   procedure->blurb         = blurb;
   procedure->help          = help;
-  procedure->author        = author;
+  procedure->authors       = authors;
   procedure->copyright     = copyright;
   procedure->date          = date;
   procedure->deprecated    = deprecated;
@@ -710,7 +710,7 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
       g_free (procedure->original_name);
       g_free (procedure->blurb);
       g_free (procedure->help);
-      g_free (procedure->author);
+      g_free (procedure->authors);
       g_free (procedure->copyright);
       g_free (procedure->date);
       g_free (procedure->deprecated);
@@ -719,7 +719,7 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
   procedure->original_name = NULL;
   procedure->blurb         = NULL;
   procedure->help          = NULL;
-  procedure->author        = NULL;
+  procedure->authors       = NULL;
   procedure->copyright     = NULL;
   procedure->date          = NULL;
   procedure->deprecated    = NULL;
