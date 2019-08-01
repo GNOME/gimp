@@ -559,7 +559,7 @@ gimp_size_entry_get_unit_combo (GimpSizeEntry *gse)
  *
  * Attaches a #GtkLabel to the #GimpSizeEntry (which is a #GtkGrid).
  *
- * Returns: (transfer full): A pointer to the new #GtkLabel widget.
+ * Returns: (transfer none): A pointer to the new #GtkLabel widget.
  **/
 GtkWidget *
 gimp_size_entry_attach_label (GimpSizeEntry *gse,

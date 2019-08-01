@@ -568,7 +568,8 @@ gimp_color_notebook_get_notebook (GimpColorNotebook *notebook)
  * gimp_color_notebook_get_selectors:
  * @notebook:  A #GimpColorNotebook widget.
  *
- * Return value: (transfer none): The notebook's list of #GimpColorSelector's.
+ * Return value: (element-type GimpColorSelector) (transfer-none): The
+ *               notebook's list of #GimpColorSelector's.
  *
  * Since: 3.0
  **/

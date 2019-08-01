@@ -414,7 +414,8 @@ gimp_color_display_get_enabled (GimpColorDisplay *display)
  * gimp_color_display_get_config:
  * @display:
  *
- * Return value: (transfer none): a pointer to the #GimpColorConfig object or %NULL.
+ * Return value: (transfer none): a pointer to the #GimpColorConfig
+ *               object or %NULL.
  *
  * Since: 2.4
  **/
@@ -430,7 +431,8 @@ gimp_color_display_get_config (GimpColorDisplay *display)
  * gimp_color_display_get_managed:
  * @display:
  *
- * Return value: (transfer none): a pointer to the #GimpColorManaged object or %NULL.
+ * Return value: (transfer none): a pointer to the #GimpColorManaged
+ *               object or %NULL.
  *
  * Since: 2.4
  **/
