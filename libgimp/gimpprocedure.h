@@ -113,7 +113,7 @@ GParamSpec    ** gimp_procedure_get_return_values  (GimpProcedure     *procedure
 GimpValueArray * gimp_procedure_new_arguments      (GimpProcedure     *procedure);
 GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure     *procedure,
                                                     GimpPDBStatusType  status,
-                                                    const GError      *error);
+                                                    GError            *error);
 
 GimpValueArray * gimp_procedure_run                (GimpProcedure     *procedure,
                                                     GimpValueArray    *args);
