@@ -476,8 +476,9 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
  * gimp_procedure_new_return_values:
  * @procedure: the #GimpProcedure.
  * @status:    the success status of the procedure run.
- * @error:     (nullable): an optional #GError. This parameter should be
- *             set if @status is either #GIMP_PDB_EXECUTION_ERROR or
+ * @error:     (in) (nullable) (transfer full):
+ *             an optional #GError. This parameter should be set if
+ *             @status is either #GIMP_PDB_EXECUTION_ERROR or
  *             #GIMP_PDB_CALLING_ERROR.
  *
  * Format the expected return values from procedures, using the return
@@ -489,7 +490,7 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
 GimpValueArray *
 gimp_procedure_new_return_values (GimpProcedure     *procedure,
                                   GimpPDBStatusType  status,
-                                  const GError      *error)
+                                  GError            *error)
 {
   GimpValueArray *args;
   GValue          value = G_VALUE_INIT;
@@ -539,6 +540,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
     default:
       g_return_val_if_reached (NULL);
     }
+  g_clear_error (&error);
 
   return args;
 }
