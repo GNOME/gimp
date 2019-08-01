@@ -79,8 +79,7 @@ void             gimp_procedure_set_strings        (GimpProcedure     *procedure
                                                     const gchar       *help_id,
                                                     const gchar       *author,
                                                     const gchar       *copyright,
-                                                    const gchar       *date,
-                                                    const gchar       *image_types);
+                                                    const gchar       *date);
 
 const gchar    * gimp_procedure_get_name           (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
@@ -90,6 +89,9 @@ const gchar    * gimp_procedure_get_help_id        (GimpProcedure     *procedure
 const gchar    * gimp_procedure_get_author         (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_copyright      (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_date           (GimpProcedure     *procedure);
+
+void             gimp_procedure_set_image_types    (GimpProcedure     *procedure,
+                                                    const gchar       *image_types);
 const gchar    * gimp_procedure_get_image_types    (GimpProcedure     *procedure);
 
 void             gimp_procedure_set_icon           (GimpProcedure     *procedure,

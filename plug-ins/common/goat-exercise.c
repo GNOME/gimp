@@ -110,8 +110,10 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                   PLUG_IN_PROC,
                                   "Øyvind Kolås <pippin@gimp.org>",
                                   "Øyvind Kolås <pippin@gimp.org>",
-                                  "21march 2012",
-                                  "RGB*, INDEXED*, GRAY*");
+                                  "21march 2012");
+
+      gimp_procedure_set_image_types (procedure,
+                                      "RGB*, INDEXED*, GRAY*");
 
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters");
       gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME,

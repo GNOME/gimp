@@ -144,8 +144,7 @@ help_create_procedure (GimpPlugIn  *plug_in,
                                   "Michael Natterer <mitch@gimp.org>, "
                                   "Henrik Brix Andersen <brix@gimp.org>",
                                   "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                                  "1999-2008",
-                                  "");
+                                  "1999-2008");
 
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_int32 ("num-domain-names",
@@ -241,8 +240,7 @@ help_temp_proc_install (GimpPlugIn *plug_in)
                               "Michael Natterer <mitch@gimp.org>"
                               "Henrik Brix Andersen <brix@gimp.org",
                               "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                              "1999-2008",
-                              "");
+                              "1999-2008");
 
   gimp_procedure_add_argument (procedure,
                                g_param_spec_string ("help-proc",

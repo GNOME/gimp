@@ -169,6 +169,20 @@ gimp_procedure_finalize (GObject *object)
  * Creates a new procedure named @name which will call @run_func when
  * invoked.
  *
+ * The @name parameter is mandatory and should be unique, or it will
+ * overwrite an already existing procedure (overwrite procedures only
+ * if you know what you're doing).
+ *
+ * @proc_type should be %GIMP_PLUGIN for "normal" plug-ins. Using
+ * %GIMP_EXTENSION means that the plug-in will add temporary
+ * procedures. Therefore, the GIMP core will wait until the
+ * %GIMP_EXTENSION procedure has called gimp_extension_ack(), which
+ * means that the procedure has done its initialization, installed its
+ * temporary procedures and is ready to run. %GIMP_TEMPORARY must be
+ * used for temporary procedures that are created during a plug-ins
+ * lifetime.  They must be added to the #GimpPlugIn using
+ * gimp_plug_in_add_temp_procedure().
+ *
  * Returns: a new #GimpProcedure.
  **/
 GimpProcedure  *
@@ -222,8 +236,7 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
                             const gchar   *help_id,
                             const gchar   *author,
                             const gchar   *copyright,
-                            const gchar   *date,
-                            const gchar   *image_types)
+                            const gchar   *date)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
@@ -236,7 +249,6 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
   procedure->priv->author        = g_strdup (author);
   procedure->priv->copyright     = g_strdup (copyright);
   procedure->priv->date          = g_strdup (date);
-  procedure->priv->image_types   = g_strdup (image_types);
 }
 
 const gchar *
@@ -303,6 +315,40 @@ gimp_procedure_get_date (GimpProcedure *procedure)
   return procedure->priv->date;
 }
 
+/**
+ * gimp_procedure_set_image_types:
+ * @image_types the image types this procedure can operate on.
+ *
+ * This is a comma separated list of image types, or actually drawable
+ * types, that this procedure can deal with. Wildcards are possible
+ * here, so you could say "RGB*" instead of "RGB, RGBA" or "*" for all
+ * image types.
+ *
+ * Supported types are "RGB", "GRAY", "INDEXED" and their variants
+ * with alpha.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_set_image_types (GimpProcedure *procedure,
+                                const gchar   *image_types)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  g_free (procedure->priv->image_types);
+  procedure->priv->image_types = g_strdup (image_types);
+}
+
+/**
+ * gimp_procedure_get_image_types:
+ *
+ * This procedure retrieves the list of image types the procedure can
+ * operate on. See gimp_procedure_set_image_types().
+ *
+ * Returns: The image types.
+ *
+ * Since: 3.0
+ **/
 const gchar *
 gimp_procedure_get_image_types (GimpProcedure *procedure)
 {
