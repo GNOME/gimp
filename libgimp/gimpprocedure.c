@@ -152,6 +152,18 @@ gimp_procedure_finalize (GObject *object)
 
 /*  public functions  */
 
+/**
+ * gimp_procedure_new:
+ * @plug_in:   a #GimpPlugIn.
+ * @name:      the new procedure's name.
+ * @proc_type: the new procedure's #GimpPDBProcType.
+ * @run_func: (scope async): the run function for the new procedure.
+ *
+ * Creates a new procedure named @name which will call @run_func when
+ * invoked.
+ *
+ * Returns: a new #GimpProcedure.
+ **/
 GimpProcedure  *
 gimp_procedure_new (GimpPlugIn      *plug_in,
                     const gchar     *name,
@@ -362,6 +374,15 @@ gimp_procedure_get_menu_paths (GimpProcedure *procedure)
   return procedure->priv->menu_paths;
 }
 
+/**
+ * gimp_procedure_add_argument:
+ * @procedure: the #GimpProcedure.
+ * @pspec: the argument specification.
+ *
+ * Add a new argument to @procedure according to @pspec specifications.
+ * The arguments will be ordered according to the call order to
+ * gimp_procedure_add_argument().
+ */
 void
 gimp_procedure_add_argument (GimpProcedure *procedure,
                              GParamSpec    *pspec)
@@ -379,6 +400,15 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
   procedure->priv->n_args++;
 }
 
+/**
+ * gimp_procedure_add_return_value:
+ * @procedure: the #GimpProcedure.
+ * @pspec: the return value specification.
+ *
+ * Add a new return value to @procedure according to @pspec
+ * specifications. The returned values will be ordered according to the
+ * call order to * gimp_procedure_add_return_value().
+ */
 void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
                                  GParamSpec    *pspec)
@@ -442,6 +472,20 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
   return args;
 }
 
+/**
+ * gimp_procedure_new_return_values:
+ * @procedure: the #GimpProcedure.
+ * @status: the success status of the procedure run.
+ * @error: (nullable): an optional #GError. This parameter should be set
+ *         if @status is either #GIMP_PDB_EXECUTION_ERROR or
+ *         #GIMP_PDB_CALLING_ERROR.
+ *
+ * Format the expected return values from procedures, using the return
+ * values set with gimp_procedure_add_return_value().
+ *
+ * Returns: the expected #GimpValueArray as could be returned by a
+ *          #GimpRunFunc.
+ */
 GimpValueArray *
 gimp_procedure_new_return_values (GimpProcedure     *procedure,
                                   GimpPDBStatusType  status,
