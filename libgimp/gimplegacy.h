@@ -261,6 +261,10 @@ void           gimp_install_temp_proc   (const gchar        *name,
  */
 void           gimp_uninstall_temp_proc (const gchar        *name);
 
+/* Notify the main GIMP application that the extension is ready to run
+ */
+void           gimp_extension_ack       (void);
+
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
  *  values are returned in the 'GimpParam*' array.

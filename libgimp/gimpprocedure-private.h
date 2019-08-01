@@ -25,8 +25,9 @@
 G_BEGIN_DECLS
 
 
-void _gimp_procedure_register   (GimpProcedure *procedure);
-void _gimp_procedure_unregister (GimpProcedure *procedure);
+void _gimp_procedure_register        (GimpProcedure *procedure);
+void _gimp_procedure_unregister      (GimpProcedure *procedure);
+void _gimp_procedure_extension_ready (GimpProcedure *procedure);
 
 
 G_END_DECLS

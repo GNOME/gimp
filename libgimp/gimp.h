@@ -149,10 +149,6 @@ gint                gimp_main                 (GType  plug_in_type,
  */
 void                gimp_quit                 (void) G_GNUC_NORETURN;
 
-/* Notify the main GIMP application that the extension is ready to run
- */
-void                gimp_extension_ack        (void);
-
 /* Enable asynchronous processing of temp_procs
  */
 void                gimp_extension_enable     (void);
