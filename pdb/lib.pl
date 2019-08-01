@@ -707,8 +707,10 @@ HEADER
         print CFILE qq/#include "config.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
-	$long_desc = &desc_wrap($main::grp{$group}->{doc_long_desc});
-	print CFILE <<SECTION_DOCS;
+
+	if (exists $main::grp{$group}->{doc_title}) {
+	    $long_desc = &desc_wrap($main::grp{$group}->{doc_long_desc});
+	    print CFILE <<SECTION_DOCS;
 
 
 /**
@@ -720,6 +722,8 @@ ${long_desc}
  **/
 
 SECTION_DOCS
+}
+
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;
