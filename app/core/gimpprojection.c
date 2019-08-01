@@ -163,8 +163,6 @@ static void
 static void   gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
                                                           gint             old_x,
                                                           gint             old_y,
-                                                          gint             old_w,
-                                                          gint             old_h,
                                                           GimpProjection  *proj);
 
 
@@ -365,10 +363,10 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
   if (! proj->priv->buffer)
     {
-      gint width;
-      gint height;
+      GeglRectangle bounding_box;
 
-      gimp_projectable_get_size (proj->priv->projectable, &width, &height);
+      bounding_box =
+        gimp_projectable_get_bounding_box (proj->priv->projectable);
 
       gimp_projection_allocate_buffer (proj);
 
@@ -379,7 +377,9 @@ gimp_projection_get_buffer (GimpPickable *pickable)
        *  image appear incrementally, but it keeps everything
        *  responsive.
        */
-      gimp_projection_add_update_area (proj, 0, 0, width, height);
+      gimp_projection_add_update_area (proj,
+                                       bounding_box.x,     bounding_box.y,
+                                       bounding_box.width, bounding_box.height);
       proj->priv->invalidate_preview = TRUE;
       gimp_projection_flush (proj);
     }
@@ -565,18 +565,17 @@ gimp_projection_finish_draw (GimpProjection *proj)
 static void
 gimp_projection_allocate_buffer (GimpProjection *proj)
 {
-  const Babl *format;
-  gint        width;
-  gint        height;
+  const Babl    *format;
+  GeglRectangle  bounding_box;
 
   if (proj->priv->buffer)
     return;
 
-  format = gimp_projection_get_format (GIMP_PICKABLE (proj));
-  gimp_projectable_get_size (proj->priv->projectable, &width, &height);
+  format       = gimp_projection_get_format (GIMP_PICKABLE (proj));
+  bounding_box =
+    gimp_projectable_get_bounding_box (proj->priv->projectable);
 
-  proj->priv->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                        format);
+  proj->priv->buffer = gegl_buffer_new (&bounding_box, format);
 
   proj->priv->validate_handler =
     GIMP_TILE_HANDLER_VALIDATE (
@@ -613,9 +612,9 @@ gimp_projection_add_update_area (GimpProjection *proj,
                                  gint            h)
 {
   cairo_rectangle_int_t rect;
-  gint                  width, height;
+  GeglRectangle         bounding_box;
 
-  gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
+  bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
 
   /*  align the rectangle to the UPDATE_CHUNK_WIDTH x UPDATE_CHUNK_HEIGHT grid,
    *  to decrease the complexity of the update area.
@@ -628,9 +627,8 @@ gimp_projection_add_update_area (GimpProjection *proj,
   w -= x;
   h -= y;
 
-  if (gimp_rectangle_intersect (x, y, w, h,
-                                0, 0, width, height,
-                                &rect.x, &rect.y, &rect.width, &rect.height))
+  if (gegl_rectangle_intersect ((GeglRectangle *) &rect,
+                                GEGL_RECTANGLE (x, y, w, h), &bounding_box))
     {
       if (proj->priv->update_region)
         cairo_region_union_rectangle (proj->priv->update_region, &rect);
@@ -695,13 +693,13 @@ gimp_projection_update_priority_rect (GimpProjection *proj)
   if (proj->priv->iter)
     {
       GeglRectangle rect;
+      GeglRectangle bounding_box;
       gint          off_x, off_y;
-      gint          width, height;
 
       rect = proj->priv->priority_rect;
 
       gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-      gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
+      bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
 
       /*  subtract the projectable's offsets because the list of update
        *  areas is in tile-pyramid coordinates, but our external API is
@@ -710,9 +708,7 @@ gimp_projection_update_priority_rect (GimpProjection *proj)
       rect.x -= off_x;
       rect.y -= off_y;
 
-      gegl_rectangle_intersect (&rect,
-                                &rect,
-                                GEGL_RECTANGLE (0, 0, width, height));
+      gegl_rectangle_intersect (&rect, &rect, &bounding_box);
 
       gimp_chunk_iterator_set_priority_rect (proj->priv->iter, &rect);
     }
@@ -880,29 +876,29 @@ gimp_projection_paint_area (GimpProjection *proj,
                             gint            w,
                             gint            h)
 {
-  gint off_x, off_y;
-  gint width, height;
+  gint          off_x, off_y;
+  GeglRectangle bounding_box;
+  GeglRectangle rect;
 
   gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-  gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
+  bounding_box = gimp_projectable_get_bounding_box (proj->priv->projectable);
 
-  if (gimp_rectangle_intersect (x, y, w, h,
-                                0, 0, width, height,
-                                &x, &y, &w, &h))
+  if (gegl_rectangle_intersect (&rect,
+                                GEGL_RECTANGLE (x, y, w, h), &bounding_box))
     {
       if (now)
         {
           gimp_tile_handler_validate_validate (
             proj->priv->validate_handler,
             proj->priv->buffer,
-            GEGL_RECTANGLE (x, y, w, h),
+            &rect,
             FALSE);
         }
       else
         {
           gimp_tile_handler_validate_invalidate (
             proj->priv->validate_handler,
-            GEGL_RECTANGLE (x, y, w, h));
+            &rect);
         }
 
       /*  add the projectable's offsets because the list of update areas
@@ -911,10 +907,10 @@ gimp_projection_paint_area (GimpProjection *proj,
        */
       g_signal_emit (proj, projection_signals[UPDATE], 0,
                      now,
-                     x + off_x,
-                     y + off_y,
-                     w,
-                     h);
+                     rect.x + off_x,
+                     rect.y + off_y,
+                     rect.width,
+                     rect.height);
     }
 }
 
@@ -958,26 +954,31 @@ static void
 gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
                                                GimpProjection  *proj)
 {
-  gint width, height;
+  GeglRectangle bounding_box;
 
   gimp_projection_free_buffer (proj);
 
-  gimp_projectable_get_size (projectable, &width, &height);
+  bounding_box = gimp_projectable_get_bounding_box (projectable);
 
-  gimp_projection_add_update_area (proj, 0, 0, width, height);
+  gimp_projection_add_update_area (proj,
+                                   bounding_box.x,     bounding_box.y,
+                                   bounding_box.width, bounding_box.height);
 }
 
 static void
 gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
                                             gint             old_x,
                                             gint             old_y,
-                                            gint             old_w,
-                                            gint             old_h,
                                             GimpProjection  *proj)
 {
   GeglBuffer              *old_buffer = proj->priv->buffer;
   GimpTileHandlerValidate *old_validate_handler;
-  gint                     x, y, w, h;
+  GeglRectangle            old_bounding_box;
+  GeglRectangle            bounding_box;
+  GeglRectangle            old_bounds;
+  GeglRectangle            bounds;
+  GeglRectangle            int_bounds;
+  gint                     x, y;
   gint                     dx, dy;
 
   if (! old_buffer)
@@ -987,23 +988,34 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
       return;
     }
 
+  old_bounding_box = *gegl_buffer_get_extent (old_buffer);
+
   gimp_projectable_get_offset (projectable, &x, &y);
-  gimp_projectable_get_size   (projectable, &w, &h);
+  bounding_box = gimp_projectable_get_bounding_box (projectable);
 
-  if (x == old_x && y == old_y && w == old_w && h == old_h)
-    return;
+  if (x == old_x && y == old_y &&
+      gegl_rectangle_equal (&bounding_box, &old_bounding_box))
+    {
+      return;
+    }
 
-  if (! gimp_rectangle_intersect (x,     y,     w,     h,
-                                  old_x, old_y, old_w, old_h,
-                                  NULL,  NULL,  NULL,  NULL))
+  old_bounds    = old_bounding_box;
+  old_bounds.x += old_x;
+  old_bounds.y += old_y;
+
+  bounds        = bounding_box;
+  bounds.x     += x;
+  bounds.y     += y;
+
+  if (! gegl_rectangle_intersect (&int_bounds, &bounds, &old_bounds))
     {
       gimp_projection_projectable_structure_changed (projectable, proj);
 
       return;
     }
 
-  dx = old_x - x;
-  dy = old_y - y;
+  dx = x - old_x;
+  dy = y - old_y;
 
 #if 1
   /* FIXME:  when there's an offset between the new bounds and the old bounds,
@@ -1038,9 +1050,15 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
   gimp_projection_allocate_buffer (proj);
 
   gimp_tile_handler_validate_buffer_copy (old_buffer,
-                                          GEGL_RECTANGLE (0, 0, old_w, old_h),
+                                          GEGL_RECTANGLE (int_bounds.x - old_x,
+                                                          int_bounds.y - old_y,
+                                                          int_bounds.width,
+                                                          int_bounds.height),
                                           proj->priv->buffer,
-                                          GEGL_RECTANGLE (dx, dy, old_w, old_h));
+                                          GEGL_RECTANGLE (int_bounds.x - x,
+                                                          int_bounds.y - y,
+                                                          int_bounds.width,
+                                                          int_bounds.height));
 
   if (old_validate_handler)
     {
@@ -1053,20 +1071,49 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
   if (proj->priv->update_region)
     {
-      const cairo_rectangle_int_t bounds = {0, 0, w, h};
-
-      cairo_region_translate           (proj->priv->update_region, dx, dy);
-      cairo_region_intersect_rectangle (proj->priv->update_region, &bounds);
+      cairo_region_translate (proj->priv->update_region, dx, dy);
+      cairo_region_intersect_rectangle (
+        proj->priv->update_region,
+        (const cairo_rectangle_int_t *) &bounding_box);
     }
 
-  if (dx > 0)
-    gimp_projection_add_update_area (proj, 0, 0, dx, h);
-  if (dy > 0)
-    gimp_projection_add_update_area (proj, 0, 0, w, dy);
-  if (dx + old_w < w)
-    gimp_projection_add_update_area (proj, dx + old_w, 0, w - (dx + old_w), h);
-  if (dy + old_h < h)
-    gimp_projection_add_update_area (proj, 0, dy + old_h, w, h - (dy + old_h));
+  int_bounds.x -= x;
+  int_bounds.y -= y;
+
+  if (int_bounds.x > bounding_box.x)
+    {
+      gimp_projection_add_update_area (proj,
+                                       bounding_box.x,
+                                       bounding_box.y,
+                                       int_bounds.x - bounding_box.x,
+                                       bounding_box.height);
+    }
+  if (int_bounds.y > bounding_box.y)
+    {
+      gimp_projection_add_update_area (proj,
+                                       bounding_box.x,
+                                       bounding_box.y,
+                                       bounding_box.width,
+                                       int_bounds.y - bounding_box.y);
+    }
+  if (int_bounds.x + int_bounds.width < bounding_box.x + bounding_box.width)
+    {
+      gimp_projection_add_update_area (proj,
+                                       int_bounds.x + int_bounds.width,
+                                       bounding_box.y,
+                                       bounding_box.x + bounding_box.width -
+                                       (int_bounds.x  + int_bounds.width),
+                                       bounding_box.height);
+    }
+  if (int_bounds.y + int_bounds.height < bounding_box.y + bounding_box.height)
+    {
+      gimp_projection_add_update_area (proj,
+                                       bounding_box.x,
+                                       int_bounds.y + int_bounds.height,
+                                       bounding_box.width,
+                                       bounding_box.y + bounding_box.height -
+                                       (int_bounds.y  + int_bounds.height));
+    }
 
   proj->priv->invalidate_preview = TRUE;
 }

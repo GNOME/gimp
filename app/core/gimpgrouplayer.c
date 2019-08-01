@@ -178,6 +178,8 @@ static gboolean
               gimp_group_layer_get_excludes_backdrop (GimpLayer         *layer);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
+static GeglRectangle
+                   gimp_group_layer_get_bounding_box (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
 static void            gimp_group_layer_begin_render (GimpProjectable *projectable);
 static void            gimp_group_layer_end_render   (GimpProjectable *projectable);
@@ -312,7 +314,7 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->get_image          = (GimpImage * (*) (GimpProjectable *)) gimp_item_get_image;
   iface->get_format         = gimp_group_layer_get_format;
   iface->get_offset         = (void (*) (GimpProjectable*, gint*, gint*)) gimp_item_get_offset;
-  iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_viewable_get_size;
+  iface->get_bounding_box   = gimp_group_layer_get_bounding_box;
   iface->get_graph          = gimp_group_layer_get_graph;
   iface->begin_render       = gimp_group_layer_begin_render;
   iface->end_render         = gimp_group_layer_end_render;
@@ -457,29 +459,16 @@ gimp_group_layer_get_size (GimpViewable *viewable,
                            gint         *height)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (viewable);
-  gboolean               result;
 
-  if (private->reallocate_width  != 0 &&
-      private->reallocate_height != 0)
+  /*  return the size only if there are children ...  */
+  if (! gimp_container_is_empty (private->children))
     {
-      *width  = private->reallocate_width;
-      *height = private->reallocate_height;
-
-      return TRUE;
+      return GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable,
+                                                           width, height);
     }
 
-  result = GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable,
-                                                         width, height);
-
-  /* if the group is empty, return "no content" through
-   * gimp_viewable_get_size(), but make sure to set *width and *height anyway,
-   * so that the correct size is reported to the projection through
-   * gimp_projectable_get_size().  see issue #3134.
-   */
-  if (gimp_container_is_empty (private->children))
-    result = FALSE;
-
-  return result;
+  /*  ... otherwise, return "no content"  */
+  return FALSE;
 }
 
 static GimpContainer *
@@ -1339,6 +1328,30 @@ gimp_group_layer_get_format (GimpProjectable *projectable)
   precision = gimp_drawable_get_precision (GIMP_DRAWABLE (projectable));
 
   return get_projection_format (projectable, base_type, precision);
+}
+
+static GeglRectangle
+gimp_group_layer_get_bounding_box (GimpProjectable *projectable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
+  GeglRectangle          bounding_box;
+
+  bounding_box.x = 0;
+  bounding_box.y = 0;
+
+  if (private->reallocate_width  != 0 &&
+      private->reallocate_height != 0)
+    {
+      bounding_box.width  = private->reallocate_width;
+      bounding_box.height = private->reallocate_height;
+    }
+  else
+    {
+      bounding_box.width  = gimp_item_get_width  (GIMP_ITEM (projectable));
+      bounding_box.height = gimp_item_get_height (GIMP_ITEM (projectable));
+    }
+
+  return bounding_box;
 }
 
 static GeglNode *
