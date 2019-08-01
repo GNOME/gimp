@@ -135,7 +135,10 @@ floating_sel_anchor (GimpLayer *layer)
     }
 
   if (filter)
-    gimp_drawable_merge_filter (drawable, filter, NULL, NULL, FALSE, FALSE);
+    {
+      gimp_drawable_merge_filter (drawable, filter, NULL, NULL,
+                                  TRUE, FALSE, FALSE);
+    }
 
   gimp_image_remove_layer (image, layer, TRUE, NULL);
 
