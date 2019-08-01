@@ -135,12 +135,6 @@ help_create_procedure (GimpPlugIn  *plug_in,
       procedure = gimp_procedure_new (plug_in, name, GIMP_EXTENSION,
                                       help_run, NULL, NULL);
 
-      gimp_procedure_set_strings (procedure,
-                                  NULL,
-                                  "", /* FIXME */
-                                  "", /* FIXME */
-                                  NULL);
-
       gimp_procedure_set_attribution (procedure,
                                       "Sven Neumann <sven@gimp.org>, "
                                       "Michael Natterer <mitch@gimp.org>, "
@@ -232,12 +226,6 @@ help_temp_proc_install (GimpPlugIn *plug_in)
 
   procedure = gimp_procedure_new (plug_in, GIMP_HELP_TEMP_EXT_PROC,
                                   GIMP_TEMPORARY, help_temp_run, NULL, NULL);
-
-  gimp_procedure_set_strings (procedure,
-                              NULL,
-                              "DON'T USE THIS ONE",
-                              "(Temporary procedure)",
-                              NULL);
 
   gimp_procedure_set_attribution (procedure,
                                   "Sven Neumann <sven@gimp.org>, "
