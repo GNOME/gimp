@@ -28,7 +28,7 @@ sub plugins_query {
     );
 
     @outargs = (
-	{ name => 'menu_path', type => 'stringarray',
+	{ name => 'menu_path', type => 'stringarray', wrap => 1,
 	  desc => 'The menu path of the plug-in',
 	  array => { name => 'num_plugins',
 		     desc => 'The number of plug-ins' } },
@@ -88,7 +88,7 @@ HELP
     &neo_pdb_misc('2000');
 
     @inargs = (
-	{ name => 'domain_name', type => 'string',
+	{ name => 'domain_name', type => 'string', wrap => 1,
 	  desc => 'The name of the textdomain (must be unique)' },
 	{ name => 'domain_path', type => 'string', no_validate => 1,
 	  desc => 'The absolute path to the compiled message catalog (may be
@@ -129,7 +129,7 @@ HELP
     &mitch_pdb_misc('2000');
 
     @inargs = (
-	{ name => 'domain_name', type => 'string',
+	{ name => 'domain_name', type => 'string', wrap => 1,
 	  desc => "The XML namespace of the plug-in's help pages" },
 	{ name => 'domain_uri', type => 'string',
 	  desc => "The root URI of the plug-in's help pages" }
@@ -164,7 +164,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string', non_empty => 1,
+	{ name => 'procedure_name', type => 'string', wrap => 1, non_empty => 1,
 	  desc => 'The procedure for which to install the menu path' },
 	{ name => 'menu_path', type => 'string',
 	  desc => "The procedure's additional menu path" }
@@ -202,7 +202,7 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'menu_path', type => 'string',
+	{ name => 'menu_path', type => 'string', wrap => 1,
 	  desc => "The sub-menu's menu path" },
 	{ name => 'menu_name', type => 'string',
 	  desc => 'The name of the sub-menu' }
@@ -367,8 +367,8 @@ CODE
 @procs = qw(plugins_query
 	    plugin_domain_register
             plugin_help_register
-            plugin_menu_register
             plugin_menu_branch_register
+            plugin_menu_register
             plugin_icon_register
             plugin_set_pdb_error_handler
             plugin_get_pdb_error_handler);

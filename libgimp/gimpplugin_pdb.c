@@ -36,7 +36,7 @@
 
 
 /**
- * gimp_plugin_domain_register:
+ * _gimp_plugin_domain_register:
  * @domain_name: The name of the textdomain (must be unique).
  * @domain_path: The absolute path to the compiled message catalog (may be NULL).
  *
@@ -54,8 +54,8 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_plugin_domain_register (const gchar *domain_name,
-                             const gchar *domain_path)
+_gimp_plugin_domain_register (const gchar *domain_name,
+                              const gchar *domain_path)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -79,7 +79,7 @@ gimp_plugin_domain_register (const gchar *domain_name,
 }
 
 /**
- * gimp_plugin_help_register:
+ * _gimp_plugin_help_register:
  * @domain_name: The XML namespace of the plug-in's help pages.
  * @domain_uri: The root URI of the plug-in's help pages.
  *
@@ -94,8 +94,8 @@ gimp_plugin_domain_register (const gchar *domain_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_plugin_help_register (const gchar *domain_name,
-                           const gchar *domain_uri)
+_gimp_plugin_help_register (const gchar *domain_name,
+                            const gchar *domain_uri)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -119,46 +119,7 @@ gimp_plugin_help_register (const gchar *domain_name,
 }
 
 /**
- * gimp_plugin_menu_register:
- * @procedure_name: The procedure for which to install the menu path.
- * @menu_path: The procedure's additional menu path.
- *
- * Register an additional menu path for a plug-in procedure.
- *
- * This procedure installs an additional menu entry for the given
- * procedure.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.2
- **/
-gboolean
-gimp_plugin_menu_register (const gchar *procedure_name,
-                           const gchar *menu_path)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_string (gimp_value_array_index (args, 1), menu_path);
-
-  return_vals = gimp_run_procedure_with_array ("gimp-plugin-menu-register",
-                                               args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * gimp_plugin_menu_branch_register:
+ * _gimp_plugin_menu_branch_register:
  * @menu_path: The sub-menu's menu path.
  * @menu_name: The name of the sub-menu.
  *
@@ -174,8 +135,8 @@ gimp_plugin_menu_register (const gchar *procedure_name,
  * Since: 2.4
  **/
 gboolean
-gimp_plugin_menu_branch_register (const gchar *menu_path,
-                                  const gchar *menu_name)
+_gimp_plugin_menu_branch_register (const gchar *menu_path,
+                                   const gchar *menu_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -188,6 +149,45 @@ gimp_plugin_menu_branch_register (const gchar *menu_path,
   g_value_set_string (gimp_value_array_index (args, 1), menu_name);
 
   return_vals = gimp_run_procedure_with_array ("gimp-plugin-menu-branch-register",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_plugin_menu_register:
+ * @procedure_name: The procedure for which to install the menu path.
+ * @menu_path: The procedure's additional menu path.
+ *
+ * Register an additional menu path for a plug-in procedure.
+ *
+ * This procedure installs an additional menu entry for the given
+ * procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.2
+ **/
+gboolean
+_gimp_plugin_menu_register (const gchar *procedure_name,
+                            const gchar *menu_path)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          G_TYPE_STRING,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
+  g_value_set_string (gimp_value_array_index (args, 1), menu_path);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-plugin-menu-register",
                                                args);
   gimp_value_array_unref (args);
 
