@@ -211,13 +211,14 @@ static void
 gimp_drawable_stack_drawable_active (GimpItem          *item,
                                      GimpDrawableStack *stack)
 {
-  gint offset_x;
-  gint offset_y;
+  GeglRectangle bounding_box;
 
-  gimp_item_get_offset (item, &offset_x, &offset_y);
+  bounding_box = gimp_drawable_get_bounding_box (GIMP_DRAWABLE (item));
+
+  bounding_box.x += gimp_item_get_offset_x (item);
+  bounding_box.y += gimp_item_get_offset_y (item);
 
   gimp_drawable_stack_update (stack,
-                              offset_x, offset_y,
-                              gimp_item_get_width  (item),
-                              gimp_item_get_height (item));
+                              bounding_box.x,     bounding_box.y,
+                              bounding_box.width, bounding_box.height);
 }

@@ -65,6 +65,7 @@ enum
   UPDATE,
   FORMAT_CHANGED,
   ALPHA_CHANGED,
+  BOUNDING_BOX_CHANGED,
   LAST_SIGNAL
 };
 
@@ -188,6 +189,9 @@ static void       gimp_drawable_real_set_buffer    (GimpDrawable      *drawable,
                                                     GeglBuffer        *buffer,
                                                     const GeglRectangle *bounds);
 
+static GeglRectangle gimp_drawable_real_get_bounding_box
+                                                   (GimpDrawable      *drawable);
+
 static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
                                                     const gchar       *undo_desc,
                                                     GeglBuffer        *buffer,
@@ -257,6 +261,15 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_drawable_signals[BOUNDING_BOX_CHANGED] =
+    g_signal_new ("bounding-box-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDrawableClass, bounding_box_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->dispose           = gimp_drawable_dispose;
   object_class->finalize          = gimp_drawable_finalize;
   object_class->set_property      = gimp_drawable_set_property;
@@ -283,6 +296,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->update                   = gimp_drawable_real_update;
   klass->format_changed           = NULL;
   klass->alpha_changed            = NULL;
+  klass->bounding_box_changed     = NULL;
   klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
   klass->update_all               = gimp_drawable_real_update_all;
   klass->invalidate_boundary      = NULL;
@@ -292,6 +306,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->apply_buffer             = gimp_drawable_real_apply_buffer;
   klass->get_buffer               = gimp_drawable_real_get_buffer;
   klass->set_buffer               = gimp_drawable_real_set_buffer;
+  klass->get_bounding_box         = gimp_drawable_real_get_bounding_box;
   klass->push_undo                = gimp_drawable_real_push_undo;
   klass->swap_pixels              = gimp_drawable_real_swap_pixels;
   klass->get_source_node          = gimp_drawable_real_get_source_node;
@@ -900,6 +915,8 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
                       bounds->height ? bounds->height :
                                        gegl_buffer_get_height (buffer));
 
+  gimp_drawable_update_bounding_box (drawable);
+
   if (gimp_drawable_get_format (drawable) != old_format)
     gimp_drawable_format_changed (drawable);
 
@@ -909,6 +926,20 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
   g_object_notify (G_OBJECT (drawable), "buffer");
 
   g_object_thaw_notify (G_OBJECT (drawable));
+}
+
+static GeglRectangle
+gimp_drawable_real_get_bounding_box (GimpDrawable *drawable)
+{
+  GimpItem      *item = GIMP_ITEM (drawable);
+  GeglRectangle  bounding_box;
+
+  bounding_box.x      = 0;
+  bounding_box.y      = 0;
+  bounding_box.width  = gimp_item_get_width  (item);
+  bounding_box.height = gimp_item_get_height (item);
+
+  return bounding_box;
 }
 
 static void
@@ -1069,11 +1100,25 @@ gimp_drawable_update (GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (width == -1)
-    width = gimp_item_get_width (GIMP_ITEM (drawable));
+  if (width < 0)
+    {
+      GeglRectangle bounding_box;
 
-  if (height == -1)
-    height = gimp_item_get_height (GIMP_ITEM (drawable));
+      bounding_box = gimp_drawable_get_bounding_box (drawable);
+
+      x     = bounding_box.x;
+      width = bounding_box.width;
+    }
+
+  if (height < 0)
+    {
+      GeglRectangle bounding_box;
+
+      bounding_box = gimp_drawable_get_bounding_box (drawable);
+
+      y      = bounding_box.y;
+      height = bounding_box.height;
+    }
 
   if (drawable->private->paint_count == 0)
     {
@@ -1511,6 +1556,71 @@ gimp_drawable_get_mode_node (GimpDrawable *drawable)
     gimp_filter_get_node (GIMP_FILTER (drawable));
 
   return drawable->private->mode_node;
+}
+
+GeglRectangle
+gimp_drawable_get_bounding_box (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable),
+                        *GEGL_RECTANGLE (0, 0, 0, 0));
+
+  if (gegl_rectangle_is_empty (&drawable->private->bounding_box))
+    gimp_drawable_update_bounding_box (drawable);
+
+  return drawable->private->bounding_box;
+}
+
+gboolean
+gimp_drawable_update_bounding_box (GimpDrawable *drawable)
+{
+  GeglRectangle bounding_box;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  bounding_box =
+    GIMP_DRAWABLE_GET_CLASS (drawable)->get_bounding_box (drawable);
+
+  if (! gegl_rectangle_equal (&bounding_box, &drawable->private->bounding_box))
+    {
+      GeglRectangle old_bounding_box = drawable->private->bounding_box;
+      GeglRectangle diff_rects[4];
+      gint          n_diff_rects;
+      gint          i;
+
+      n_diff_rects = gegl_rectangle_subtract (diff_rects,
+                                              &old_bounding_box,
+                                              &bounding_box);
+
+      for (i = 0; i < n_diff_rects; i++)
+        {
+          gimp_drawable_update (drawable,
+                                diff_rects[i].x,
+                                diff_rects[i].y,
+                                diff_rects[i].width,
+                                diff_rects[i].height);
+        }
+
+      drawable->private->bounding_box = bounding_box;
+
+      g_signal_emit (drawable, gimp_drawable_signals[BOUNDING_BOX_CHANGED], 0);
+
+      n_diff_rects = gegl_rectangle_subtract (diff_rects,
+                                              &bounding_box,
+                                              &old_bounding_box);
+
+      for (i = 0; i < n_diff_rects; i++)
+        {
+          gimp_drawable_update (drawable,
+                                diff_rects[i].x,
+                                diff_rects[i].y,
+                                diff_rects[i].width,
+                                diff_rects[i].height);
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 void

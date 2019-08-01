@@ -52,6 +52,7 @@ struct _GimpDrawableClass
                                            gint                  height);
   void          (* format_changed)        (GimpDrawable         *drawable);
   void          (* alpha_changed)         (GimpDrawable         *drawable);
+  void          (* bounding_box_changed)  (GimpDrawable         *drawable);
 
   /*  virtual functions  */
   gint64        (* estimate_memsize)      (GimpDrawable         *drawable,
@@ -91,6 +92,7 @@ struct _GimpDrawableClass
                                            const gchar          *undo_desc,
                                            GeglBuffer           *buffer,
                                            const GeglRectangle  *bounds);
+  GeglRectangle (* get_bounding_box)      (GimpDrawable         *drawable);
   void          (* push_undo)             (GimpDrawable         *drawable,
                                            const gchar          *undo_desc,
                                            GeglBuffer           *buffer,
@@ -182,6 +184,10 @@ void            gimp_drawable_set_format         (GimpDrawable       *drawable,
 
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
+
+GeglRectangle   gimp_drawable_get_bounding_box   (GimpDrawable       *drawable);
+gboolean        gimp_drawable_update_bounding_box
+                                                 (GimpDrawable       *drawable);
 
 void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
                                                   GeglBuffer         *buffer,
