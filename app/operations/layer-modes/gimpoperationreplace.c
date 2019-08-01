@@ -30,6 +30,7 @@
 #include "gimpoperationreplace.h"
 
 
+static GeglRectangle              gimp_operation_replace_get_bounding_box    (GeglOperation        *op);
 static gboolean                   gimp_operation_replace_parent_process      (GeglOperation        *op,
                                                                               GeglOperationContext *context,
                                                                               const gchar          *output_prop,
@@ -64,6 +65,7 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
                                  "description", "GIMP replace mode operation",
                                  NULL);
 
+  operation_class->get_bounding_box     = gimp_operation_replace_get_bounding_box;
   operation_class->process              = gimp_operation_replace_parent_process;
 
   layer_mode_class->process             = gimp_operation_replace_process;
@@ -73,6 +75,59 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
 static void
 gimp_operation_replace_init (GimpOperationReplace *self)
 {
+}
+
+static GeglRectangle
+gimp_operation_replace_get_bounding_box (GeglOperation *op)
+{
+  GimpOperationLayerMode   *self     = (gpointer) op;
+  GeglRectangle            *in_rect;
+  GeglRectangle            *aux_rect;
+  GeglRectangle            *aux2_rect;
+  GeglRectangle             src_rect = {};
+  GeglRectangle             dst_rect = {};
+  GeglRectangle             result;
+  GimpLayerCompositeRegion  included_region;
+
+  in_rect   = gegl_operation_source_get_bounding_box (op, "input");
+  aux_rect  = gegl_operation_source_get_bounding_box (op, "aux");
+  aux2_rect = gegl_operation_source_get_bounding_box (op, "aux2");
+
+  if (in_rect)
+    dst_rect = *in_rect;
+
+  if (aux_rect)
+    {
+      src_rect = *aux_rect;
+
+      if (aux2_rect)
+        gegl_rectangle_intersect (&src_rect, &src_rect, aux2_rect);
+    }
+
+  if (self->is_last_node)
+    {
+      included_region = GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+    }
+  else
+    {
+      included_region = gimp_layer_mode_get_included_region (self->layer_mode,
+                                                             self->composite_mode);
+    }
+
+  if (self->opacity == 0.0)
+    included_region &= ~GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+  else if (self->opacity == 1.0 && ! aux2_rect)
+    included_region &= ~GIMP_LAYER_COMPOSITE_REGION_DESTINATION;
+
+  gegl_rectangle_intersect (&result, &src_rect, &dst_rect);
+
+  if (included_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE)
+    gegl_rectangle_bounding_box (&result, &result, &src_rect);
+
+  if (included_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION)
+    gegl_rectangle_bounding_box (&result, &result, &dst_rect);
+
+  return result;
 }
 
 static gboolean
