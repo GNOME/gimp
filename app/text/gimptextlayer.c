@@ -95,8 +95,7 @@ static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
                                                   const gchar       *undo_desc,
                                                   GeglBuffer        *buffer,
-                                                  gint               offset_x,
-                                                  gint               offset_y);
+                                                  const GeglRectangle *bounds);
 static void       gimp_text_layer_push_undo      (GimpDrawable      *drawable,
                                                   const gchar       *undo_desc,
                                                   GeglBuffer        *buffer,
@@ -323,12 +322,11 @@ gimp_text_layer_rename (GimpItem     *item,
 }
 
 static void
-gimp_text_layer_set_buffer (GimpDrawable *drawable,
-                            gboolean      push_undo,
-                            const gchar  *undo_desc,
-                            GeglBuffer   *buffer,
-                            gint          offset_x,
-                            gint          offset_y)
+gimp_text_layer_set_buffer (GimpDrawable        *drawable,
+                            gboolean             push_undo,
+                            const gchar         *undo_desc,
+                            GeglBuffer          *buffer,
+                            const GeglRectangle *bounds)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
@@ -339,8 +337,7 @@ gimp_text_layer_set_buffer (GimpDrawable *drawable,
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
-                                                  buffer,
-                                                  offset_x, offset_y);
+                                                  buffer, bounds);
 
   if (push_undo && ! layer->modified)
     {

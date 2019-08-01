@@ -185,8 +185,7 @@ static void       gimp_drawable_real_set_buffer    (GimpDrawable      *drawable,
                                                     gboolean           push_undo,
                                                     const gchar       *undo_desc,
                                                     GeglBuffer        *buffer,
-                                                    gint               offset_x,
-                                                    gint               offset_y);
+                                                    const GeglRectangle *bounds);
 
 static void       gimp_drawable_real_push_undo     (GimpDrawable      *drawable,
                                                     const gchar       *undo_desc,
@@ -535,7 +534,8 @@ gimp_drawable_scale (GimpItem              *item,
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
                                  new_buffer,
-                                 new_offset_x, new_offset_y,
+                                 GEGL_RECTANGLE (new_offset_x, new_offset_y,
+                                                 0,            0),
                                  TRUE);
   g_object_unref (new_buffer);
 }
@@ -614,7 +614,8 @@ gimp_drawable_resize (GimpItem     *item,
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
                                  new_buffer,
-                                 new_offset_x, new_offset_y,
+                                 GEGL_RECTANGLE (new_offset_x, new_offset_y,
+                                                 0,            0),
                                  TRUE);
   g_object_unref (new_buffer);
 }
@@ -851,12 +852,11 @@ gimp_drawable_real_get_buffer (GimpDrawable *drawable)
 }
 
 static void
-gimp_drawable_real_set_buffer (GimpDrawable *drawable,
-                               gboolean      push_undo,
-                               const gchar  *undo_desc,
-                               GeglBuffer   *buffer,
-                               gint          offset_x,
-                               gint          offset_y)
+gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
+                               gboolean             push_undo,
+                               const gchar         *undo_desc,
+                               GeglBuffer          *buffer,
+                               const GeglRectangle *bounds)
 {
   GimpItem   *item          = GIMP_ITEM (drawable);
   const Babl *old_format    = NULL;
@@ -883,10 +883,12 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                    "buffer", gimp_drawable_get_buffer (drawable),
                    NULL);
 
-  gimp_item_set_offset (item, offset_x, offset_y);
+  gimp_item_set_offset (item, bounds->x, bounds->y);
   gimp_item_set_size (item,
-                      gegl_buffer_get_width  (buffer),
-                      gegl_buffer_get_height (buffer));
+                      bounds->width  ? bounds->width :
+                                       gegl_buffer_get_width (buffer),
+                      bounds->height ? bounds->height :
+                                       gegl_buffer_get_height (buffer));
 
   if (gimp_drawable_get_format (drawable) != old_format)
     gimp_drawable_format_changed (drawable);
@@ -1294,30 +1296,26 @@ gimp_drawable_set_buffer (GimpDrawable *drawable,
                           const gchar  *undo_desc,
                           GeglBuffer   *buffer)
 {
-  gint offset_x, offset_y;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
-
-  gimp_drawable_set_buffer_full (drawable, push_undo, undo_desc, buffer,
-                                 offset_x, offset_y, TRUE);
+  gimp_drawable_set_buffer_full (drawable, push_undo, undo_desc, buffer, NULL,
+                                 TRUE);
 }
 
 void
-gimp_drawable_set_buffer_full (GimpDrawable *drawable,
-                               gboolean      push_undo,
-                               const gchar  *undo_desc,
-                               GeglBuffer   *buffer,
-                               gint          offset_x,
-                               gint          offset_y,
-                               gboolean      update)
+gimp_drawable_set_buffer_full (GimpDrawable        *drawable,
+                               gboolean             push_undo,
+                               const gchar         *undo_desc,
+                               GeglBuffer          *buffer,
+                               const GeglRectangle *bounds,
+                               gboolean             update)
 {
-  GimpItem *item;
+  GimpItem      *item;
+  GeglRectangle  curr_bounds;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
@@ -1327,21 +1325,40 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  if (update                                                            &&
-      (gimp_item_get_width  (item)   != gegl_buffer_get_width (buffer)  ||
-       gimp_item_get_height (item)   != gegl_buffer_get_height (buffer) ||
-       gimp_item_get_offset_x (item) != offset_x                        ||
-       gimp_item_get_offset_y (item) != offset_y))
+  if (! bounds)
     {
-      gimp_drawable_update (drawable, 0, 0, -1, -1);
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            &curr_bounds.x, &curr_bounds.y);
+
+      curr_bounds.width  = 0;
+      curr_bounds.height = 0;
+
+      bounds = &curr_bounds;
+    }
+
+  if (update && gimp_drawable_get_buffer (drawable))
+    {
+      GeglBuffer    *old_buffer = gimp_drawable_get_buffer (drawable);
+      GeglRectangle  old_extent;
+      GeglRectangle  new_extent;
+
+      old_extent = *gegl_buffer_get_extent (old_buffer);
+      old_extent.x += gimp_item_get_offset_x (item);
+      old_extent.y += gimp_item_get_offset_x (item);
+
+      new_extent = *gegl_buffer_get_extent (buffer);
+      new_extent.x += bounds->x;
+      new_extent.y += bounds->y;
+
+      if (! gegl_rectangle_equal (&old_extent, &new_extent))
+        gimp_drawable_update (drawable, 0, 0, -1, -1);
     }
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->set_buffer (drawable,
                                                   push_undo, undo_desc,
-                                                  buffer,
-                                                  offset_x, offset_y);
+                                                  buffer, bounds);
 
   g_object_thaw_notify (G_OBJECT (drawable));
 

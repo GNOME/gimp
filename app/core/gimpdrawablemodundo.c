@@ -198,7 +198,9 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
                         &drawable_mod_undo->offset_y);
 
   gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
-                                 buffer, offset_x, offset_y, TRUE);
+                                 buffer,
+                                 GEGL_RECTANGLE (offset_x, offset_y, 0, 0),
+                                 TRUE);
   g_object_unref (buffer);
 }
 

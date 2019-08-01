@@ -89,8 +89,7 @@ struct _GimpDrawableClass
                                            gboolean              push_undo,
                                            const gchar          *undo_desc,
                                            GeglBuffer           *buffer,
-                                           gint                  offset_x,
-                                           gint                  offset_y);
+                                           const GeglRectangle  *bounds);
   void          (* push_undo)             (GimpDrawable         *drawable,
                                            const gchar          *undo_desc,
                                            GeglBuffer           *buffer,
@@ -168,8 +167,7 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer,
-                                                  gint                offset_x,
-                                                  gint                offset_y,
+                                                  const GeglRectangle *bounds,
                                                   gboolean            update);
 
 void            gimp_drawable_steal_buffer       (GimpDrawable       *drawable,
