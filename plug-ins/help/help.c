@@ -209,7 +209,7 @@ help_run (GimpProcedure        *procedure,
 
       help_temp_proc_install (plug_in);
 
-      gimp_extension_ack ();
+      gimp_procedure_extension_ready (procedure);
       gimp_extension_enable ();
 
       g_main_loop_run (main_loop);
