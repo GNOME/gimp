@@ -888,7 +888,7 @@ gimp_color_button_set_color_config (GimpColorButton *button,
  * gimp_color_button_get_ui_manager:
  * @button: a #GimpColorButton.
  *
- * Returns: The @button's #GtkUIManager.
+ * Returns: (transfer none): The @button's #GtkUIManager.
  *
  * Since: 2.10
  **/

@@ -540,7 +540,7 @@ zoom_out_button_callback (GimpZoomModel *model,
  * @zoom_type:
  * @icon_size: use 0 for a button with text labels
  *
- * Return value: a newly created GtkButton
+ * Return value: (transfer full): a newly created GtkButton
  *
  * Since GIMP 2.4
  **/
