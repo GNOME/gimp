@@ -290,16 +290,12 @@ gimp_rectangle_union
 </SECTION>
 
 <SECTION>
-<FILE>gimpparam</FILE>
+<FILE>gimpparamspecs</FILE>
+GIMP_PARAM_NO_VALIDATE
 GIMP_PARAM_STATIC_STRINGS
 GIMP_PARAM_READABLE
 GIMP_PARAM_WRITABLE
 GIMP_PARAM_READWRITE
-</SECTION>
-
-<SECTION>
-<FILE>gimpparamspecs</FILE>
-GIMP_PARAM_NO_VALIDATE
 gimp_param_spec_int32
 gimp_param_spec_int16
 gimp_param_spec_int8
