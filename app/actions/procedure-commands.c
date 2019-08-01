@@ -60,7 +60,8 @@ procedure_commands_get_run_mode_arg (GimpProcedure *procedure)
       n_args++;
     }
 
-  gimp_value_array_truncate (args, n_args);
+  if (n_args > 0)
+    gimp_value_array_truncate (args, n_args);
 
   return args;
 }
@@ -75,9 +76,13 @@ procedure_commands_get_data_args (GimpProcedure *procedure,
   args = gimp_procedure_get_arguments (procedure);
 
   /* initialize the first argument  */
-  g_value_set_enum (gimp_value_array_index (args, n_args),
-                    GIMP_RUN_INTERACTIVE);
-  n_args++;
+  if (gimp_value_array_length (args) > n_args &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[n_args]))
+    {
+      g_value_set_enum (gimp_value_array_index (args, n_args),
+                        GIMP_RUN_INTERACTIVE);
+      n_args++;
+    }
 
   if (gimp_value_array_length (args) > n_args &&
       GIMP_IS_PARAM_SPEC_STRING (procedure->args[n_args]))
@@ -96,7 +101,8 @@ procedure_commands_get_data_args (GimpProcedure *procedure,
         }
     }
 
-  gimp_value_array_truncate (args, n_args);
+  if (n_args > 0)
+    gimp_value_array_truncate (args, n_args);
 
   return args;
 }
@@ -111,9 +117,13 @@ procedure_commands_get_image_args (GimpProcedure   *procedure,
   args = gimp_procedure_get_arguments (procedure);
 
   /* initialize the first argument  */
-  g_value_set_enum (gimp_value_array_index (args, n_args),
-                    GIMP_RUN_INTERACTIVE);
-  n_args++;
+  if (gimp_value_array_length (args) > n_args &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[n_args]))
+    {
+      g_value_set_enum (gimp_value_array_index (args, n_args),
+                        GIMP_RUN_INTERACTIVE);
+      n_args++;
+    }
 
   if (gimp_value_array_length (args) > n_args &&
       GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[n_args]))
@@ -131,7 +141,8 @@ procedure_commands_get_image_args (GimpProcedure   *procedure,
         }
     }
 
-  gimp_value_array_truncate (args, n_args);
+  if (n_args)
+    gimp_value_array_truncate (args, n_args);
 
   return args;
 }
@@ -147,9 +158,13 @@ procedure_commands_get_item_args (GimpProcedure *procedure,
   args = gimp_procedure_get_arguments (procedure);
 
   /* initialize the first argument  */
-  g_value_set_enum (gimp_value_array_index (args, n_args),
-                    GIMP_RUN_INTERACTIVE);
-  n_args++;
+  if (gimp_value_array_length (args) > n_args &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[n_args]))
+    {
+      g_value_set_enum (gimp_value_array_index (args, n_args),
+                        GIMP_RUN_INTERACTIVE);
+      n_args++;
+    }
 
   if (gimp_value_array_length (args) > n_args &&
       GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->args[n_args]))
@@ -180,7 +195,8 @@ procedure_commands_get_item_args (GimpProcedure *procedure,
         }
     }
 
-  gimp_value_array_truncate (args, n_args);
+  if (n_args)
+    gimp_value_array_truncate (args, n_args);
 
   return args;
 }
@@ -196,9 +212,13 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
   args = gimp_procedure_get_arguments (procedure);
 
   /* initialize the first argument  */
-  g_value_set_enum (gimp_value_array_index (args, n_args),
-                    GIMP_RUN_INTERACTIVE);
-  n_args++;
+  if (gimp_value_array_length (args) > n_args &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[n_args]))
+    {
+      g_value_set_enum (gimp_value_array_index (args, n_args),
+                        GIMP_RUN_INTERACTIVE);
+      n_args++;
+    }
 
   if (gimp_value_array_length (args) > n_args &&
       GIMP_IS_PARAM_SPEC_DISPLAY_ID (procedure->args[n_args]))
@@ -256,7 +276,8 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
       n_args++;
     }
 
-  gimp_value_array_truncate (args, n_args);
+  if (n_args)
+    gimp_value_array_truncate (args, n_args);
 
   return args;
 }
@@ -275,8 +296,10 @@ procedure_commands_run_procedure (GimpProcedure  *procedure,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (args != NULL, FALSE);
 
-  g_value_set_enum (gimp_value_array_index (args, 0),
-                    GIMP_RUN_NONINTERACTIVE);
+  if (gimp_value_array_length (args) > 0 &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]))
+    g_value_set_enum (gimp_value_array_index (args, 0),
+                      GIMP_RUN_NONINTERACTIVE);
 
   return_vals = gimp_procedure_execute (procedure, gimp,
                                         gimp_get_user_context (gimp),
@@ -313,8 +336,10 @@ procedure_commands_run_procedure_async (GimpProcedure  *procedure,
   g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), FALSE);
   g_return_val_if_fail (args != NULL, FALSE);
 
-  g_value_set_enum (gimp_value_array_index (args, 0),
-                    run_mode);
+  if (gimp_value_array_length (args) > 0 &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]))
+    g_value_set_enum (gimp_value_array_index (args, 0),
+                      run_mode);
 
   gimp_procedure_execute_async (procedure, gimp,
                                 gimp_get_user_context (gimp),
