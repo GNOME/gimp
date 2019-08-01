@@ -1599,7 +1599,21 @@ _gp_params_read (GIOChannel  *channel,
       return;
     }
 
-  *params = g_new0 (GPParam, *nparams);
+  *params = g_try_new0 (GPParam, *nparams);
+
+  /* We may read crap on the wire (and as a consequence try to allocate
+   * far too much), which would be a plug-in error.
+   */
+  if (*params == NULL)
+    {
+      /* Output on stderr but no WARNING/CRITICAL. This is likely a
+       * plug-in bug sending bogus data, not a core bug.
+       */
+      g_printerr ("%s: failed to allocate %u parameters\n",
+                  G_STRFUNC, *nparams);
+      *nparams = 0;
+      return;
+    }
 
   for (i = 0; i < *nparams; i++)
     {
