@@ -68,48 +68,49 @@ typedef void (* CompositeFunc) (const gfloat *in,
                                 gint          samples);
 
 
-static void       gimp_operation_layer_mode_set_property   (GObject                *object,
-                                                            guint                   property_id,
-                                                            const GValue           *value,
-                                                            GParamSpec             *pspec);
-static void       gimp_operation_layer_mode_get_property   (GObject                *object,
-                                                            guint                   property_id,
-                                                            GValue                 *value,
-                                                            GParamSpec             *pspec);
+static void            gimp_operation_layer_mode_set_property     (GObject                *object,
+                                                                   guint                   property_id,
+                                                                   const GValue           *value,
+                                                                   GParamSpec             *pspec);
+static void            gimp_operation_layer_mode_get_property     (GObject                *object,
+                                                                   guint                   property_id,
+                                                                   GValue                 *value,
+                                                                   GParamSpec             *pspec);
 
-static void       gimp_operation_layer_mode_prepare        (GeglOperation          *operation);
-static gboolean   gimp_operation_layer_mode_parent_process (GeglOperation          *operation,
-                                                            GeglOperationContext   *context,
-                                                            const gchar            *output_prop,
-                                                            const GeglRectangle    *result,
-                                                            gint                    level);
+static void            gimp_operation_layer_mode_prepare          (GeglOperation          *operation);
+static GeglRectangle   gimp_operation_layer_mode_get_bounding_box (GeglOperation          *operation);
+static gboolean        gimp_operation_layer_mode_parent_process   (GeglOperation          *operation,
+                                                                   GeglOperationContext   *context,
+                                                                   const gchar            *output_prop,
+                                                                   const GeglRectangle    *result,
+                                                                   gint                    level);
 
-static gboolean   gimp_operation_layer_mode_process        (GeglOperation          *operation,
-                                                            void                   *in,
-                                                            void                   *layer,
-                                                            void                   *mask,
-                                                            void                   *out,
-                                                            glong                   samples,
-                                                            const GeglRectangle    *roi,
-                                                            gint                    level);
+static gboolean        gimp_operation_layer_mode_process          (GeglOperation          *operation,
+                                                                   void                   *in,
+                                                                   void                   *layer,
+                                                                   void                   *mask,
+                                                                   void                   *out,
+                                                                   glong                   samples,
+                                                                   const GeglRectangle    *roi,
+                                                                   gint                    level);
 
-static gboolean   gimp_operation_layer_mode_real_process   (GeglOperation          *operation,
-                                                            void                   *in,
-                                                            void                   *layer,
-                                                            void                   *mask,
-                                                            void                   *out,
-                                                            glong                   samples,
-                                                            const GeglRectangle    *roi,
-                                                            gint                    level);
+static gboolean        gimp_operation_layer_mode_real_process     (GeglOperation          *operation,
+                                                                   void                   *in,
+                                                                   void                   *layer,
+                                                                   void                   *mask,
+                                                                   void                   *out,
+                                                                   glong                   samples,
+                                                                   const GeglRectangle    *roi,
+                                                                   gint                    level);
 
-static gboolean   process_last_node                        (GeglOperation       *operation,
-                                                            void                *in,
-                                                            void                *layer,
-                                                            void                *mask,
-                                                            void                *out,
-                                                            glong                samples,
-                                                            const GeglRectangle *roi,
-                                                            gint                 level);
+static gboolean        process_last_node                          (GeglOperation       *operation,
+                                                                   void                *in,
+                                                                   void                *layer,
+                                                                   void                *mask,
+                                                                   void                *out,
+                                                                   glong                samples,
+                                                                   const GeglRectangle *roi,
+                                                                   gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
@@ -141,16 +142,17 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   gegl_operation_class_set_keys (operation_class,
                                  "name", "gimp:layer-mode", NULL);
 
-  object_class->set_property     = gimp_operation_layer_mode_set_property;
-  object_class->get_property     = gimp_operation_layer_mode_get_property;
+  object_class->set_property        = gimp_operation_layer_mode_set_property;
+  object_class->get_property        = gimp_operation_layer_mode_get_property;
 
-  operation_class->prepare       = gimp_operation_layer_mode_prepare;
-  operation_class->process       = gimp_operation_layer_mode_parent_process;
+  operation_class->prepare          = gimp_operation_layer_mode_prepare;
+  operation_class->get_bounding_box = gimp_operation_layer_mode_get_bounding_box;
+  operation_class->process          = gimp_operation_layer_mode_parent_process;
 
-  point_composer3_class->process = gimp_operation_layer_mode_process;
+  point_composer3_class->process    = gimp_operation_layer_mode_process;
 
-  klass->process                 = gimp_operation_layer_mode_real_process;
-  klass->get_affected_region     = NULL;
+  klass->process                    = gimp_operation_layer_mode_real_process;
+  klass->get_affected_region        = NULL;
 
   g_object_class_install_property (object_class, PROP_LAYER_MODE,
                                    g_param_spec_enum ("layer-mode",
@@ -368,6 +370,57 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "output", format);
   gegl_operation_set_format (operation, "aux",    format);
   gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
+}
+
+static GeglRectangle
+gimp_operation_layer_mode_get_bounding_box (GeglOperation *op)
+{
+  GimpOperationLayerMode   *self     = (gpointer) op;
+  GeglRectangle            *in_rect;
+  GeglRectangle            *aux_rect;
+  GeglRectangle            *aux2_rect;
+  GeglRectangle             src_rect = {};
+  GeglRectangle             dst_rect = {};
+  GeglRectangle             result;
+  GimpLayerCompositeRegion  included_region;
+
+  in_rect   = gegl_operation_source_get_bounding_box (op, "input");
+  aux_rect  = gegl_operation_source_get_bounding_box (op, "aux");
+  aux2_rect = gegl_operation_source_get_bounding_box (op, "aux2");
+
+  if (in_rect)
+    dst_rect = *in_rect;
+
+  if (aux_rect)
+    {
+      src_rect = *aux_rect;
+
+      if (aux2_rect)
+        gegl_rectangle_intersect (&src_rect, &src_rect, aux2_rect);
+    }
+
+  if (self->is_last_node)
+    {
+      included_region = GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+    }
+  else
+    {
+      included_region = gimp_layer_mode_get_included_region (self->layer_mode,
+                                                             self->composite_mode);
+    }
+
+  if (self->opacity == 0.0)
+    included_region &= ~GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+
+  gegl_rectangle_intersect (&result, &src_rect, &dst_rect);
+
+  if (included_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE)
+    gegl_rectangle_bounding_box (&result, &result, &src_rect);
+
+  if (included_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION)
+    gegl_rectangle_bounding_box (&result, &result, &dst_rect);
+
+  return result;
 }
 
 static gboolean
