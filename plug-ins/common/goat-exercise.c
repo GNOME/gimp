@@ -56,7 +56,8 @@ static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * goat_run              (GimpProcedure        *procedure,
-                                               const GimpValueArray *args);
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 
 
 G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
@@ -99,8 +100,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PLUGIN, goat_run);
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      goat_run, NULL, NULL);
 
       gimp_procedure_set_strings (procedure,
                                   N_("Goat-exercise"),
@@ -142,7 +143,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 goat_run (GimpProcedure        *procedure,
-          const GimpValueArray *args)
+          const GimpValueArray *args,
+          gpointer              run_data)
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            drawable_id;

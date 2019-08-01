@@ -80,6 +80,8 @@ struct _GimpProcedurePrivate
   GParamSpec      **values;         /* Array of return values         */
 
   GimpRunFunc       run_func;
+  gpointer          run_data;
+  GDestroyNotify    run_data_destroy;
 };
 
 
@@ -119,6 +121,9 @@ gimp_procedure_finalize (GObject *object)
   GimpProcedure *procedure = GIMP_PROCEDURE (object);
   gint           i;
 
+  if (procedure->priv->run_data_destroy)
+    procedure->priv->run_data_destroy (procedure->priv->run_data);
+
   g_clear_object  (&procedure->priv->plug_in);
   g_clear_pointer (&procedure->priv->name, g_free);
 
@@ -157,7 +162,9 @@ gimp_procedure_finalize (GObject *object)
  * @plug_in:   a #GimpPlugIn.
  * @name:      the new procedure's name.
  * @proc_type: the new procedure's #GimpPDBProcType.
- * @run_func: (scope async): the run function for the new procedure.
+ * @run_func:  the run function for the new procedure.
+ * @run_data:  user data passed to @run_func.
+ * @run_data_destroy: (nullable) free function for @run_data, or %NULL.
  *
  * Creates a new procedure named @name which will call @run_func when
  * invoked.
@@ -168,7 +175,9 @@ GimpProcedure  *
 gimp_procedure_new (GimpPlugIn      *plug_in,
                     const gchar     *name,
                     GimpPDBProcType  proc_type,
-                    GimpRunFunc      run_func)
+                    GimpRunFunc      run_func,
+                    gpointer         run_data,
+                    GDestroyNotify   run_data_destroy)
 {
   GimpProcedure *procedure;
 
@@ -179,10 +188,12 @@ gimp_procedure_new (GimpPlugIn      *plug_in,
 
   procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
 
-  procedure->priv->plug_in   = g_object_ref (plug_in);
-  procedure->priv->proc_type = proc_type;
-  procedure->priv->name      = g_strdup (name);
-  procedure->priv->run_func  = run_func;
+  procedure->priv->plug_in           = g_object_ref (plug_in);
+  procedure->priv->proc_type         = proc_type;
+  procedure->priv->name              = g_strdup (name);
+  procedure->priv->run_func          = run_func;
+  procedure->priv->run_data          = run_data;
+  procedure->priv->run_data_destroy  = run_data_destroy;
 
   return procedure;
 }
@@ -569,7 +580,8 @@ gimp_procedure_run (GimpProcedure   *procedure,
     }
 
   /*  call the procedure  */
-  return_vals = procedure->priv->run_func (procedure, args);
+  return_vals = procedure->priv->run_func (procedure, args,
+                                           procedure->priv->run_data);
 
   if (! return_vals)
     {

@@ -32,7 +32,8 @@ G_BEGIN_DECLS
 
 
 typedef GimpValueArray * (* GimpRunFunc) (GimpProcedure        *procedure,
-                                          const GimpValueArray *args);
+                                          const GimpValueArray *args,
+                                          gpointer              run_data);
 
 
 #define GIMP_TYPE_PROCEDURE            (gimp_procedure_get_type ())
@@ -64,7 +65,9 @@ GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
 GimpProcedure  * gimp_procedure_new                (GimpPlugIn        *plug_in,
                                                     const gchar       *name,
                                                     GimpPDBProcType    proc_type,
-                                                    GimpRunFunc        run_func);
+                                                    GimpRunFunc        run_func,
+                                                    gpointer           run_data,
+                                                    GDestroyNotify     run_data_destroy);
 
 GimpPlugIn     * gimp_procedure_get_plug_in        (GimpProcedure     *procedure);
 GimpPDBProcType  gimp_procedure_get_proc_type      (GimpProcedure     *procedure);
