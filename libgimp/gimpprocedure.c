@@ -377,7 +377,7 @@ gimp_procedure_get_menu_paths (GimpProcedure *procedure)
 /**
  * gimp_procedure_add_argument:
  * @procedure: the #GimpProcedure.
- * @pspec: the argument specification.
+ * @pspec:     (transfer full): the argument specification.
  *
  * Add a new argument to @procedure according to @pspec specifications.
  * The arguments will be ordered according to the call order to
@@ -403,7 +403,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
 /**
  * gimp_procedure_add_return_value:
  * @procedure: the #GimpProcedure.
- * @pspec: the return value specification.
+ * @pspec:     (transfer full): the return value specification.
  *
  * Add a new return value to @procedure according to @pspec
  * specifications. The returned values will be ordered according to the
@@ -417,7 +417,7 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
   procedure->priv->values = g_renew (GParamSpec *, procedure->priv->values,
-                               procedure->priv->n_values + 1);
+                                     procedure->priv->n_values + 1);
 
   procedure->priv->values[procedure->priv->n_values] = pspec;
 
@@ -475,10 +475,10 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
 /**
  * gimp_procedure_new_return_values:
  * @procedure: the #GimpProcedure.
- * @status: the success status of the procedure run.
- * @error: (nullable): an optional #GError. This parameter should be set
- *         if @status is either #GIMP_PDB_EXECUTION_ERROR or
- *         #GIMP_PDB_CALLING_ERROR.
+ * @status:    the success status of the procedure run.
+ * @error:     (nullable): an optional #GError. This parameter should be
+ *             set if @status is either #GIMP_PDB_EXECUTION_ERROR or
+ *             #GIMP_PDB_CALLING_ERROR.
  *
  * Format the expected return values from procedures, using the return
  * values set with gimp_procedure_add_return_value().
