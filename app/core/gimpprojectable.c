@@ -90,10 +90,8 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpProjectableInterface, bounds_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT_INT_INT,
-                  G_TYPE_NONE, 4,
-                  G_TYPE_INT,
-                  G_TYPE_INT,
+                  gimp_marshal_VOID__INT_INT,
+                  G_TYPE_NONE, 2,
                   G_TYPE_INT,
                   G_TYPE_INT);
 }
@@ -135,14 +133,12 @@ gimp_projectable_structure_changed (GimpProjectable *projectable)
 void
 gimp_projectable_bounds_changed (GimpProjectable *projectable,
                                  gint             old_x,
-                                 gint             old_y,
-                                 gint             old_width,
-                                 gint             old_height)
+                                 gint             old_y)
 {
   g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
 
   g_signal_emit (projectable, projectable_signals[BOUNDS_CHANGED], 0,
-                 old_x, old_y, old_width, old_height);
+                 old_x, old_y);
 }
 
 GimpImage *
@@ -195,24 +191,20 @@ gimp_projectable_get_offset (GimpProjectable *projectable,
     iface->get_offset (projectable, x, y);
 }
 
-void
-gimp_projectable_get_size (GimpProjectable *projectable,
-                           gint            *width,
-                           gint            *height)
+GeglRectangle
+gimp_projectable_get_bounding_box (GimpProjectable *projectable)
 {
   GimpProjectableInterface *iface;
+  GeglRectangle             result = {};
 
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
-  g_return_if_fail (width  != NULL);
-  g_return_if_fail (height != NULL);
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), result);
 
   iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
 
-  *width  = 0;
-  *height = 0;
+  if (iface->get_bounding_box)
+    result = iface->get_bounding_box (projectable);
 
-  if (iface->get_size)
-    iface->get_size (projectable, width, height);
+  return result;
 }
 
 GeglNode *
