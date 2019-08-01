@@ -53,7 +53,7 @@
 /**
  * gimp_rgb_to_hsv:
  * @rgb: A color value in the RGB colorspace
- * @hsv: The value converted to the HSV colorspace
+ * @hsv: (out caller-allocates): The value converted to the HSV colorspace
  *
  * Does a conversion from RGB to HSV (Hue, Saturation,
  * Value) colorspace.
@@ -106,7 +106,7 @@ gimp_rgb_to_hsv (const GimpRGB *rgb,
 /**
  * gimp_hsv_to_rgb:
  * @hsv: A color value in the HSV colorspace
- * @rgb: The returned RGB value.
+ * @rgb: (out caller-allocates): The returned RGB value.
  *
  * Converts a color value from HSV to RGB colorspace
  **/
@@ -185,7 +185,7 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
 /**
  * gimp_rgb_to_hsl:
  * @rgb: A color value in the RGB colorspace
- * @hsl: The value converted to HSL
+ * @hsl: (out caller-allocates): The value converted to HSL
  *
  * Convert an RGB color value to a HSL (Hue, Saturation, Lightness)
  * color value.
@@ -271,7 +271,8 @@ gimp_hsl_value (gdouble n1,
 /**
  * gimp_hsl_to_rgb:
  * @hsl: A color value in the HSL colorspace
- * @rgb: The value converted to a value in the RGB colorspace
+ * @rgb: (out caller-allocates): The value converted to a value
+ *       in the RGB colorspace
  *
  * Convert a HSL color value to an RGB color value.
  **/
@@ -314,7 +315,8 @@ gimp_hsl_to_rgb (const GimpHSL *hsl,
  * @rgb: A value in the RGB colorspace
  * @pullout: A scaling value (0-1) indicating how much black should be
  *           pulled out
- * @cmyk: The input value naively converted to the CMYK colorspace
+ * @cmyk: (out caller-allocates): The input value naively converted
+ *        to the CMYK colorspace
  *
  * Does a naive conversion from RGB to CMYK colorspace. A simple
  * formula that doesn't take any color-profiles into account is used.
@@ -363,7 +365,7 @@ gimp_rgb_to_cmyk (const GimpRGB  *rgb,
 /**
  * gimp_cmyk_to_rgb:
  * @cmyk: A color value in the CMYK colorspace
- * @rgb: The value converted to the RGB colorspace
+ * @rgb: (out caller-allocates): The value converted to the RGB colorspace
  *
  * Does a simple transformation from the CMYK colorspace to the RGB
  * colorspace, without taking color profiles into account.

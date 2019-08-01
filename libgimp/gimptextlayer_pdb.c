@@ -817,7 +817,7 @@ gimp_text_layer_set_justification (gint32                layer_ID,
 /**
  * gimp_text_layer_get_color:
  * @layer_ID: The text layer.
- * @color: (out): The color of the text.
+ * @color: (out caller-allocates): The color of the text.
  *
  * Get the color of the text in a text layer.
  *

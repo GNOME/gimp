@@ -353,7 +353,13 @@ CODE
 
 		    $argdesc .= " * \@$_->{libname}";
 		    $argdesc .= '_ID' if $arg->{id};
-		    $argdesc .= ": (out)";
+
+		    if ($arg->{name} eq 'COLOR') {
+			$argdesc .= ": (out caller-allocates)";
+		    }
+		    else {
+			$argdesc .= ": (out)";
+		    }
 
 		    if (exists $arg->{array}) {
 			$argdesc .= " (array length=@outargs[$argc - 2]->{name})";

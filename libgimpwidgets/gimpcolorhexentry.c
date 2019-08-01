@@ -250,7 +250,7 @@ gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
 /**
  * gimp_color_hex_entry_get_color:
  * @entry: a #GimpColorHexEntry widget
- * @color: pointer to a #GimpRGB
+ * @color: (out caller-allocates): pointer to a #GimpRGB
  *
  * Retrieves the color value displayed by a #GimpColorHexEntry.
  *

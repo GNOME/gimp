@@ -159,7 +159,7 @@ gimp_rgb_set_pixel (GimpRGB       *rgb,
  * gimp_rgb_get_pixel:
  * @rgb:    a #GimpRGB struct
  * @format: a Babl format
- * @pixel:  pointer to the destination pixel
+ * @pixel:  (out caller-allocates): pointer to the destination pixel
  *
  * Writes the red, green, blue and alpha components of @rgb to the
  * color stored in @pixel. The pixel format of @pixel is determined by
@@ -428,7 +428,7 @@ gimp_rgba_set_pixel (GimpRGB       *rgba,
  * gimp_rgba_get_pixel:
  * @rgba:   a #GimpRGB struct
  * @format: a Babl format
- * @pixel:  pointer to the destination pixel
+ * @pixel:  (out caller-allocates): pointer to the destination pixel
  *
  * Writes the red, green, blue and alpha components of @rgba to the
  * color stored in @pixel. The pixel format of @pixel is determined by
