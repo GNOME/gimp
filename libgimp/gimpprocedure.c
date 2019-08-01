@@ -693,8 +693,10 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
 
   for (i = 0; i < procedure->priv->n_args; i++)
     {
-      g_value_init (&value,
-                    G_PARAM_SPEC_VALUE_TYPE (procedure->priv->args[i]));
+      GParamSpec *pspec = procedure->priv->args[i];
+
+      g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+      g_param_value_set_default (pspec, &value);
       gimp_value_array_append (args, &value);
       g_value_unset (&value);
     }
@@ -742,8 +744,10 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
 
       for (i = 0; i < procedure->priv->n_values; i++)
         {
-          g_value_init (&value,
-                        G_PARAM_SPEC_VALUE_TYPE (procedure->priv->values[i]));
+          GParamSpec *pspec = procedure->priv->values[i];
+
+          g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+          g_param_value_set_default (pspec, &value);
           gimp_value_array_append (args, &value);
           g_value_unset (&value);
         }
