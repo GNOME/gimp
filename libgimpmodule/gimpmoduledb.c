@@ -195,7 +195,8 @@ gimp_module_db_new (gboolean verbose)
  * Returns a #GList of the modules kept by @db. The list must not be
  * modified or freed.
  *
- * Return value: a #GList of #GimpModule instances.
+ * Return value: (element-type GimpModule) (transfer none): a #GList
+ * of #GimpModule instances.
  *
  * Since: 3.0
  **/
