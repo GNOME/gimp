@@ -74,9 +74,11 @@ static GimpProcedure  * help_create_procedure  (GimpPlugIn           *plug_in,
                                                 const gchar          *name);
 
 static GimpValueArray * help_run               (GimpProcedure        *procedure,
-                                                const GimpValueArray *args);
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
 static GimpValueArray * help_temp_run          (GimpProcedure        *procedure,
-                                                const GimpValueArray *args);
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
 
 static void             help_temp_proc_install (GimpPlugIn           *plug_in);
 static void             help_load              (const gchar          *procedure,
@@ -130,7 +132,8 @@ help_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, GIMP_HELP_EXT_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_EXTENSION, help_run);
+      procedure = gimp_procedure_new (plug_in, name, GIMP_EXTENSION,
+                                      help_run, NULL, NULL);
 
       gimp_procedure_set_strings (procedure,
                                   NULL,
@@ -173,7 +176,8 @@ help_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 help_run (GimpProcedure        *procedure,
-          const GimpValueArray *args)
+          const GimpValueArray *args,
+          gpointer              run_data)
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
@@ -226,7 +230,7 @@ help_temp_proc_install (GimpPlugIn *plug_in)
   GimpProcedure *procedure;
 
   procedure = gimp_procedure_new (plug_in, GIMP_HELP_TEMP_EXT_PROC,
-                                  GIMP_TEMPORARY, help_temp_run);
+                                  GIMP_TEMPORARY, help_temp_run, NULL, NULL);
 
   gimp_procedure_set_strings (procedure,
                               NULL,
@@ -271,7 +275,8 @@ help_temp_proc_install (GimpPlugIn *plug_in)
 
 static GimpValueArray *
 help_temp_run (GimpProcedure        *procedure,
-               const GimpValueArray *args)
+               const GimpValueArray *args,
+               gpointer              run_data)
 {
   GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
   const gchar       *help_proc    = NULL;
