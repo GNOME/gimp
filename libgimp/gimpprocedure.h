@@ -31,6 +31,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpRunFunc:
+ * @procedure: the #GimpProcedure that runs.
+ * @args:      the @procedure's arguments.
+ * @run_data:  the run_data given in gimp_procedure_new().
+ *
+ * The run function is run during the lifetime of the GIMP session,
+ * each time a plug-in procedure is called.
+ *
+ * Returns: (transfer full): the @procedure's return values.
+ *
+ * Since: 3.0
+ **/
 typedef GimpValueArray * (* GimpRunFunc) (GimpProcedure        *procedure,
                                           const GimpValueArray *args,
                                           gpointer              run_data);
@@ -70,6 +83,7 @@ GimpProcedure  * gimp_procedure_new                (GimpPlugIn        *plug_in,
                                                     GDestroyNotify     run_data_destroy);
 
 GimpPlugIn     * gimp_procedure_get_plug_in        (GimpProcedure     *procedure);
+const gchar    * gimp_procedure_get_name           (GimpProcedure     *procedure);
 GimpPDBProcType  gimp_procedure_get_proc_type      (GimpProcedure     *procedure);
 
 void             gimp_procedure_set_strings        (GimpProcedure     *procedure,
@@ -81,7 +95,6 @@ void             gimp_procedure_set_strings        (GimpProcedure     *procedure
                                                     const gchar       *copyright,
                                                     const gchar       *date);
 
-const gchar    * gimp_procedure_get_name           (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_blurb          (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_help           (GimpProcedure     *procedure);
