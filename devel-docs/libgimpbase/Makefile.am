@@ -46,8 +46,16 @@ extra_files =
 
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
-GTKDOC_CFLAGS =
-GTKDOC_LIBS =
+GTKDOC_CFLAGS = \
+	@CFLAGS@		\
+	-I$(top_srcdir) 	\
+	-I$(top_builddir) 	\
+	@GEGL_CFLAGS@
+
+GTKDOC_LIBS = \
+	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la	\
+	@GEGL_LIBS@
 
 
 include $(top_srcdir)/gtk-doc.make
