@@ -40,7 +40,7 @@
 
 /**
  * SECTION: gimpparasite
- * @title: gimpparasite
+ * @title: GimpParasite
  * @short_description: Arbitrary pieces of data which can be attached
  *                     to various GIMP objects.
  * @see_also: gimp_image_parasite_attach(),

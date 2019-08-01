@@ -69,7 +69,7 @@ struct _GimpMetadataClass
 
 /**
  * SECTION: gimpmetadata
- * @title: gimpmetadata
+ * @title: GimpMetadata
  * @short_description: Basic functions for handling #GimpMetadata objects.
  * @see_also: gimp_image_metadata_load_prepare(),
  *            gimp_image_metadata_load_finish(),
