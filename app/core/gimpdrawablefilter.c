@@ -448,6 +448,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                                             GIMP_FILTER (filter),
                                             progress,
                                             gimp_object_get_name (filter),
+                                            TRUE,
                                             cancellable,
                                             FALSE);
 
