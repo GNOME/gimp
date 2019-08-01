@@ -130,6 +130,8 @@ gimp_procedure_finalize (GObject *object)
 
   gimp_procedure_free_strings (procedure);
 
+  g_clear_pointer (&procedure->priv->image_types, g_free);
+
   g_clear_pointer (&procedure->priv->icon_data, g_free);
   procedure->priv->icon_data_length = 0;
 
@@ -186,6 +188,11 @@ gimp_procedure_finalize (GObject *object)
  * created during a plug-ins lifetime. They must be added to the
  * #GimpPlugIn using gimp_plug_in_add_temp_procedure().
  *
+ * @run_func is called via gimp_procedure_run().
+ *
+ * For %GIMP_PLUGIN and %GIMP_EXTENSION procedures the call of
+ * @run_func is basically the lifetime of the plug-in.
+ *
  * Returns: a new #GimpProcedure.
  **/
 GimpProcedure  *
@@ -223,6 +230,14 @@ gimp_procedure_get_plug_in (GimpProcedure *procedure)
   return procedure->priv->plug_in;
 }
 
+const gchar *
+gimp_procedure_get_name (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return procedure->priv->name;
+}
+
 GimpPDBProcType
 gimp_procedure_get_proc_type (GimpProcedure *procedure)
 {
@@ -252,14 +267,6 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
   procedure->priv->author        = g_strdup (author);
   procedure->priv->copyright     = g_strdup (copyright);
   procedure->priv->date          = g_strdup (date);
-}
-
-const gchar *
-gimp_procedure_get_name (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  return procedure->priv->name;
 }
 
 const gchar *
@@ -605,9 +612,20 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
   return args;
 }
 
+/**
+ * gimp_procedure_run:
+ * @procedure: a @GimpProcedure.
+ * @args:      the @procedure's arguments.
+ *
+ * Runs the procedure, calling the run_func given in gimp_procedure_new().
+ *
+ * Returns: (transfer-full): The @procedure's return values.
+ *
+ * Since: 3.0
+ **/
 GimpValueArray *
-gimp_procedure_run (GimpProcedure   *procedure,
-                    GimpValueArray  *args)
+gimp_procedure_run (GimpProcedure  *procedure,
+                    GimpValueArray *args)
 {
   GimpValueArray *return_vals;
   GError         *error = NULL;
@@ -688,7 +706,6 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
   g_clear_pointer (&procedure->priv->author,      g_free);
   g_clear_pointer (&procedure->priv->copyright,   g_free);
   g_clear_pointer (&procedure->priv->date,        g_free);
-  g_clear_pointer (&procedure->priv->image_types, g_free);
 }
 
 static gboolean
