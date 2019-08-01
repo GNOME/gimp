@@ -236,7 +236,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkGrid.
  *
- * Returns: The #GtkSpinButton's #GtkAdjustment.
+ * Returns: (transfer none): The #GtkSpinButton's #GtkAdjustment.
  **/
 GtkAdjustment *
 gimp_scale_entry_new (GtkGrid     *grid,
@@ -290,7 +290,7 @@ gimp_scale_entry_new (GtkGrid     *grid,
  * This function creates a #GtkLabel, a #GimpColorScale and a
  * #GtkSpinButton and attaches them to a 3-column #GtkGrid.
  *
- * Returns: (transfer full): The #GtkSpinButton's #GtkAdjustment.
+ * Returns: (transfer none): The #GtkSpinButton's #GtkAdjustment.
  **/
 GtkAdjustment *
 gimp_color_scale_entry_new (GtkGrid     *grid,
