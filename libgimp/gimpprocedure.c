@@ -184,9 +184,18 @@ gimp_procedure_finalize (GObject *object)
  *
  * Using %GIMP_EXTENSION means that the plug-in will add temporary
  * procedures. Therefore, the GIMP core will wait until the
- * %GIMP_EXTENSION procedure has called gimp_extension_ack(), which
- * means that the procedure has done its initialization, installed its
- * temporary procedures and is ready to run.
+ * %GIMP_EXTENSION procedure has called
+ * gimp_procedure_extension_ready(), which means that the procedure
+ * has done its initialization, installed its temporary procedures and
+ * is ready to run.
+ *
+ * <emphasis>Not calling gimp_procedure_extension_reads() from a
+ * %GIMP_EXTENSION procedure will cause the GIMP core to lock
+ * up.</emphasis>
+ *
+ * Additionally, a %GIMP_EXTENSION procedure with no arguments added
+ * is an "automatic" extension that will be automatically started on
+ * each GIMP startup.
  *
  * %GIMP_TEMPORARY must be used for temporary procedures that are
  * created during a plug-ins lifetime. They must be added to the
@@ -283,9 +292,10 @@ gimp_procedure_get_proc_type (GimpProcedure *procedure)
  * location(s) where to register in the menu hierarchy is chosen using
  * gimp_procedure_add_menu_path().
  *
- * For translations of menu labels to work properly, this string
+ * For translations of menu labels to work properly, @menu_label
  * should only be marked for translation but passed to this function
- * untranslated, for example using N_("Label").
+ * untranslated, for example using N_("Label"). GIMP will look up the
+ * translation in the textdomain registered for the plug-in.
  *
  * Since: 3.0
  **/
@@ -295,7 +305,7 @@ gimp_procedure_set_menu_label (GimpProcedure *procedure,
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_clear_pointer (&procedure->priv->menu_label,  g_free);
+  g_clear_pointer (&procedure->priv->menu_label, g_free);
   procedure->priv->menu_label = g_strdup (menu_label);
 }
 
@@ -326,9 +336,10 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * @blurb is used as the @procedure's tooltip when represented in the UI,
  * for example as a menu entry.
  *
- * For translations of tooltips to work properly, this string should
- * only be marked for translation but passed to this function
- * untranslated, for example using N_("Blurb").
+ * For translations of tooltips to work properly, @blurb should only
+ * be marked for translation but passed to this function untranslated,
+ * for example using N_("Blurb"). GIMP will look up the translation in
+ * the textdomain registered for the plug-in.
  *
  * @help: is a free-form text that's meant as documentation for
  * developers of scripts and plug-ins.
@@ -345,9 +356,9 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
-  g_clear_pointer (&procedure->priv->blurb,       g_free);
-  g_clear_pointer (&procedure->priv->help,        g_free);
-  g_clear_pointer (&procedure->priv->help_id,     g_free);
+  g_clear_pointer (&procedure->priv->blurb,   g_free);
+  g_clear_pointer (&procedure->priv->help,    g_free);
+  g_clear_pointer (&procedure->priv->help_id, g_free);
 
   procedure->priv->blurb   = g_strdup (blurb);
   procedure->priv->help    = g_strdup (help);
@@ -596,6 +607,8 @@ gimp_procedure_get_icon (GimpProcedure  *procedure,
  * for instance:
  *
  * &lt;Image&gt;/Layer/Transform
+ *
+ * See also: gimp_plug_in_add_menu_branch().
  *
  * Since: 3.0
  **/
