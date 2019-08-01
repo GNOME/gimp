@@ -65,6 +65,7 @@ struct _GimpDrawableFilter
 
   gboolean                has_input;
 
+  gboolean                clip;
   GimpFilterRegion        region;
   gboolean                crop_enabled;
   GeglRectangle           crop_rect;
@@ -80,6 +81,7 @@ struct _GimpDrawableFilter
   gboolean                gamma_hack;
 
   GeglRectangle           filter_area;
+  gboolean                filter_clip;
 
   GeglNode               *translate;
   GeglNode               *crop_before;
@@ -95,6 +97,8 @@ struct _GimpDrawableFilter
 static void       gimp_drawable_filter_dispose            (GObject             *object);
 static void       gimp_drawable_filter_finalize           (GObject             *object);
 
+static void       gimp_drawable_filter_sync_clip          (GimpDrawableFilter  *filter,
+                                                           gboolean             sync_region);
 static void       gimp_drawable_filter_sync_region        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_crop          (GimpDrawableFilter  *filter,
                                                            gboolean             old_crop_enabled,
@@ -161,6 +165,7 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
 static void
 gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
 {
+  drawable_filter->clip              = TRUE;
   drawable_filter->region            = GIMP_FILTER_REGION_SELECTION;
   drawable_filter->preview_alignment = GIMP_ALIGN_LEFT;
   drawable_filter->preview_position  = 1.0;
@@ -282,6 +287,20 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                         node,               "aux");
 
   return filter;
+}
+
+void
+gimp_drawable_filter_set_clip (GimpDrawableFilter *filter,
+                               gboolean            clip)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if (clip != filter->clip)
+    {
+      filter->clip = clip;
+
+      gimp_drawable_filter_sync_clip (filter, TRUE);
+    }
 }
 
 void
@@ -456,6 +475,11 @@ gimp_drawable_filter_apply (GimpDrawableFilter  *filter,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (filter->drawable)));
 
   gimp_drawable_filter_add_filter (filter);
+
+  gimp_drawable_filter_sync_clip (filter, TRUE);
+
+  gimp_drawable_update_bounding_box (filter->drawable);
+
   gimp_drawable_filter_update_drawable (filter, area);
 }
 
@@ -481,7 +505,7 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                                             GIMP_FILTER (filter),
                                             progress,
                                             gimp_object_get_name (filter),
-                                            TRUE,
+                                            filter->filter_clip,
                                             cancellable,
                                             FALSE);
 
@@ -511,6 +535,46 @@ gimp_drawable_filter_abort (GimpDrawableFilter *filter)
 /*  private functions  */
 
 static void
+gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
+                                gboolean            sync_region)
+{
+  gboolean clip = filter->clip;
+
+  if (! clip)
+    {
+      if (! GIMP_IS_LAYER (filter->drawable))
+        clip = TRUE;
+    }
+
+  if (! clip)
+    {
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
+      GimpChannel *mask  = gimp_image_get_mask (image);
+
+      if (! gimp_channel_is_empty (mask))
+        clip = TRUE;
+    }
+
+  if (! clip)
+    {
+      GeglRectangle bounding_box;
+
+      bounding_box = gegl_node_get_bounding_box (filter->operation);
+
+      if (gegl_rectangle_is_infinite_plane (&bounding_box))
+        clip = TRUE;
+    }
+
+  if (clip != filter->filter_clip)
+    {
+      filter->filter_clip = clip;
+
+      if (sync_region)
+        gimp_drawable_filter_sync_region (filter);
+    }
+}
+
+static void
 gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
 {
   if (filter->region == GIMP_FILTER_REGION_SELECTION)
@@ -528,10 +592,22 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                          NULL);
         }
 
-      gegl_node_set (filter->crop_after,
-                     "width",  (gdouble) filter->filter_area.width,
-                     "height", (gdouble) filter->filter_area.height,
-                     NULL);
+      if (filter->filter_clip)
+        {
+          gegl_node_set (filter->crop_after,
+                         "operation", "gegl:crop",
+                         "x",         0.0,
+                         "y",         0.0,
+                         "width",     (gdouble) filter->filter_area.width,
+                         "height",    (gdouble) filter->filter_area.height,
+                         NULL);
+        }
+      else
+        {
+          gegl_node_set (filter->crop_after,
+                         "operation", "gegl:nop",
+                         NULL);
+        }
 
       gimp_applicator_set_apply_offset (filter->applicator,
                                         filter->filter_area.x,
@@ -556,12 +632,30 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                          NULL);
         }
 
-      gegl_node_set (filter->crop_after,
-                     "width",  width,
-                     "height", height,
-                     NULL);
+      if (filter->filter_clip)
+        {
+          gegl_node_set (filter->crop_after,
+                         "operation", "gegl:crop",
+                         "x",         (gdouble) filter->filter_area.x,
+                         "y",         (gdouble) filter->filter_area.y,
+                         "width",     (gdouble) filter->filter_area.width,
+                         "height",    (gdouble) filter->filter_area.height,
+                         NULL);
+        }
+      else
+        {
+          gegl_node_set (filter->crop_after,
+                         "operation", "gegl:nop",
+                         NULL);
+        }
 
       gimp_applicator_set_apply_offset (filter->applicator, 0, 0);
+    }
+
+  if (gimp_drawable_filter_is_filtering (filter))
+    {
+      if (gimp_drawable_update_bounding_box (filter->drawable))
+        g_signal_emit (filter, drawable_filter_signals[FLUSH], 0);
     }
 }
 
@@ -574,37 +668,41 @@ gimp_drawable_filter_get_crop_rect (GimpDrawableFilter  *filter,
                                     gdouble              preview_position,
                                     GeglRectangle       *rect)
 {
-  gint width;
-  gint height;
+  GeglRectangle bounds;
+  gint          width;
+  gint          height;
+  gint          x1, x2;
+  gint          y1, y2;
 
-  rect->x      = 0;
-  rect->y      = 0;
-  rect->width  = gimp_item_get_width  (GIMP_ITEM (filter->drawable));
-  rect->height = gimp_item_get_height (GIMP_ITEM (filter->drawable));
+  bounds = gegl_rectangle_infinite_plane ();
 
-  width  = rect->width;
-  height = rect->height;
+  width  = gimp_item_get_width  (GIMP_ITEM (filter->drawable));
+  height = gimp_item_get_height (GIMP_ITEM (filter->drawable));
+
+  x1 = bounds.x;
+  x2 = bounds.x + bounds.width;
+
+  y1 = bounds.y;
+  y2 = bounds.y + bounds.height;
 
   if (preview_enabled)
     {
       switch (preview_alignment)
         {
         case GIMP_ALIGN_LEFT:
-          rect->width *= preview_position;
+          x2 = width * preview_position;
           break;
 
         case GIMP_ALIGN_RIGHT:
-          rect->width *= (1.0 - preview_position);
-          rect->x = width - rect->width;
+          x1 = width * preview_position;
           break;
 
         case GIMP_ALIGN_TOP:
-          rect->height *= preview_position;
+          y2 = height * preview_position;
           break;
 
         case GIMP_ALIGN_BOTTOM:
-          rect->height *= (1.0 - preview_position);
-          rect->y = height - rect->height;
+          y1 = height * preview_position;
           break;
 
         default:
@@ -612,10 +710,12 @@ gimp_drawable_filter_get_crop_rect (GimpDrawableFilter  *filter,
         }
     }
 
+  gegl_rectangle_set (rect, x1, y1, x2 - x1, y2 - y1);
+
   if (crop_enabled)
     gegl_rectangle_intersect (rect, rect, crop_rect);
 
-  return ! gegl_rectangle_equal_coords (rect, 0, 0, width, height);
+  return ! gegl_rectangle_equal (rect, &bounds);
 }
 
 static void
@@ -649,30 +749,20 @@ gimp_drawable_filter_sync_crop (GimpDrawableFilter  *filter,
 
   gimp_applicator_set_crop (filter->applicator, enabled ? &new_rect : NULL);
 
-  if (update && ! gegl_rectangle_equal (&old_rect, &new_rect))
+  if (update                                     &&
+      gimp_drawable_filter_is_filtering (filter) &&
+      ! gegl_rectangle_equal (&old_rect, &new_rect))
     {
-      cairo_region_t *region;
-      gint            n_rects;
-      gint            i;
+      GeglRectangle diff_rects[4];
+      gint          n_diff_rects;
+      gint          i;
 
-      region = cairo_region_create_rectangle ((cairo_rectangle_int_t *)
-                                              &old_rect);
-      cairo_region_xor_rectangle (region,
-                                  (cairo_rectangle_int_t *) &new_rect);
+      gimp_drawable_update_bounding_box (filter->drawable);
 
-      n_rects = cairo_region_num_rectangles (region);
+      n_diff_rects = gegl_rectangle_xor (diff_rects, &old_rect, &new_rect);
 
-      for (i = 0; i < n_rects; i++)
-        {
-          cairo_rectangle_int_t rect;
-
-          cairo_region_get_rectangle (region, i, &rect);
-
-          gimp_drawable_filter_update_drawable (filter,
-                                                (const GeglRectangle *) &rect);
-        }
-
-      cairo_region_destroy (region);
+      for (i = 0; i < n_diff_rects; i++)
+        gimp_drawable_filter_update_drawable (filter, &diff_rects[i]);
     }
 }
 
@@ -915,6 +1005,7 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       gimp_viewable_preview_freeze (GIMP_VIEWABLE (filter->drawable));
 
       gimp_drawable_filter_sync_mask (filter);
+      gimp_drawable_filter_sync_clip (filter, FALSE);
       gimp_drawable_filter_sync_region (filter);
       gimp_drawable_filter_sync_crop (filter,
                                       filter->crop_enabled,
@@ -932,6 +1023,8 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
 
       gimp_drawable_add_filter (filter->drawable,
                                 GIMP_FILTER (filter));
+
+      gimp_drawable_update_bounding_box (filter->drawable);
 
       g_signal_connect (image, "component-active-changed",
                         G_CALLBACK (gimp_drawable_filter_affect_changed),
@@ -995,6 +1088,8 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
       gimp_drawable_remove_filter (filter->drawable,
                                    GIMP_FILTER (filter));
 
+      gimp_drawable_update_bounding_box (filter->drawable);
+
       gimp_viewable_preview_thaw (GIMP_VIEWABLE (filter->drawable));
 
       return TRUE;
@@ -1007,12 +1102,15 @@ static void
 gimp_drawable_filter_update_drawable (GimpDrawableFilter  *filter,
                                       const GeglRectangle *area)
 {
+  GeglRectangle bounding_box;
   GeglRectangle update_area;
+
+  bounding_box = gimp_drawable_get_bounding_box (filter->drawable);
 
   if (area)
     {
       if (! gegl_rectangle_intersect (&update_area,
-                                      area, &filter->filter_area))
+                                      area, &bounding_box))
         {
           return;
         }
@@ -1028,7 +1126,7 @@ gimp_drawable_filter_update_drawable (GimpDrawableFilter  *filter,
                                           &update_area);
 
       if (! gegl_rectangle_intersect (&update_area,
-                                      &update_area, &filter->filter_area))
+                                      &update_area, &bounding_box))
         {
           return;
         }
@@ -1063,6 +1161,7 @@ gimp_drawable_filter_mask_changed (GimpImage          *image,
   gimp_drawable_filter_update_drawable (filter, NULL);
 
   gimp_drawable_filter_sync_mask (filter);
+  gimp_drawable_filter_sync_clip (filter, FALSE);
   gimp_drawable_filter_sync_region (filter);
 
   gimp_drawable_filter_update_drawable (filter, NULL);
