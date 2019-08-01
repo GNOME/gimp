@@ -123,6 +123,8 @@ GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure     *procedure
 GimpValueArray * gimp_procedure_run                (GimpProcedure     *procedure,
                                                     GimpValueArray    *args);
 
+void             gimp_procedure_extension_ready    (GimpProcedure     *procedure);
+
 
 G_END_DECLS
 

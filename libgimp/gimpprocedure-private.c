@@ -114,3 +114,10 @@ _gimp_procedure_unregister (GimpProcedure *procedure)
   if (! gp_proc_uninstall_write (_gimp_writechannel, &proc_uninstall, NULL))
     gimp_quit ();
 }
+
+void
+_gimp_procedure_extension_ready (GimpProcedure *procedure)
+{
+  if (! gp_extension_ack_write (_gimp_writechannel, NULL))
+    gimp_quit ();
+}

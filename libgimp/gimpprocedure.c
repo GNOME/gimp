@@ -29,6 +29,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "gimp.h"
+#include "gimpprocedure-private.h"
 
 #include "libgimp-intl.h"
 
@@ -173,15 +174,17 @@ gimp_procedure_finalize (GObject *object)
  * overwrite an already existing procedure (overwrite procedures only
  * if you know what you're doing).
  *
- * @proc_type should be %GIMP_PLUGIN for "normal" plug-ins. Using
- * %GIMP_EXTENSION means that the plug-in will add temporary
+ * @proc_type should be %GIMP_PLUGIN for "normal" plug-ins.
+ *
+ * Using %GIMP_EXTENSION means that the plug-in will add temporary
  * procedures. Therefore, the GIMP core will wait until the
  * %GIMP_EXTENSION procedure has called gimp_extension_ack(), which
  * means that the procedure has done its initialization, installed its
- * temporary procedures and is ready to run. %GIMP_TEMPORARY must be
- * used for temporary procedures that are created during a plug-ins
- * lifetime.  They must be added to the #GimpPlugIn using
- * gimp_plug_in_add_temp_procedure().
+ * temporary procedures and is ready to run.
+ *
+ * %GIMP_TEMPORARY must be used for temporary procedures that are
+ * created during a plug-ins lifetime. They must be added to the
+ * #GimpPlugIn using gimp_plug_in_add_temp_procedure().
  *
  * Returns: a new #GimpProcedure.
  **/
@@ -644,6 +647,32 @@ gimp_procedure_run (GimpProcedure   *procedure,
     }
 
   return return_vals;
+}
+
+/**
+ * gimp_procedure_extension_ready:
+ *
+ * Notify the main GIMP application that the extension has been
+ * properly initialized and is ready to run.
+ *
+ * This function <emphasis>must</emphasis> be called from every
+ * procedure's #GimpRunFunc that was created as #GIMP_EXTENSION.
+ *
+ * Subsequently, extensions can process temporary procedure run
+ * requests using either gimp_extension_enable() or
+ * gimp_extension_process().
+ *
+ * See also: gimp_procedure_new().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_extension_ready (GimpProcedure *procedure)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (procedure->priv->proc_type == GIMP_EXTENSION);
+
+  _gimp_procedure_extension_ready (procedure);
 }
 
 

@@ -1229,28 +1229,6 @@ gimp_get_progname (void)
 }
 
 /**
- * gimp_extension_ack:
- *
- * Notify the main GIMP application that the extension has been properly
- * initialized and is ready to run.
- *
- * This function <emphasis>must</emphasis> be called from every
- * procedure that was registered as #GIMP_EXTENSION.
- *
- * Subsequently, extensions can process temporary procedure run
- * requests using either gimp_extension_enable() or
- * gimp_extension_process().
- *
- * See also: gimp_install_procedure(), gimp_install_temp_proc()
- **/
-void
-gimp_extension_ack (void)
-{
-  if (! gp_extension_ack_write (_gimp_writechannel, NULL))
-    gimp_quit ();
-}
-
-/**
  * gimp_extension_enable:
  *
  * Enables asynchronous processing of messages from the main GIMP

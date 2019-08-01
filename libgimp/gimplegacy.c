@@ -444,6 +444,28 @@ gimp_uninstall_temp_proc (const gchar *name)
 }
 
 /**
+ * gimp_extension_ack:
+ *
+ * Notify the main GIMP application that the extension has been properly
+ * initialized and is ready to run.
+ *
+ * This function <emphasis>must</emphasis> be called from every
+ * procedure that was registered as #GIMP_EXTENSION.
+ *
+ * Subsequently, extensions can process temporary procedure run
+ * requests using either gimp_extension_enable() or
+ * gimp_extension_process().
+ *
+ * See also: gimp_install_procedure(), gimp_install_temp_proc()
+ **/
+void
+gimp_extension_ack (void)
+{
+  if (! gp_extension_ack_write (_gimp_writechannel, NULL))
+    gimp_quit ();
+}
+
+/**
  * gimp_run_procedure: (skip)
  * @name:          the name of the procedure to run
  * @n_return_vals: return location for the number of return values
