@@ -817,7 +817,7 @@ gimp_param_spec_rgb (const gchar   *name,
  *
  * Returns the @pspec's default color value.
  *
- * Since: 2.10.12
+ * Since: 2.10.14
  **/
 void
 gimp_param_spec_rgb_get_default (GParamSpec *pspec,
