@@ -63,7 +63,7 @@ struct _PDBQuery
   GRegex   *name_regex;
   GRegex   *blurb_regex;
   GRegex   *help_regex;
-  GRegex   *author_regex;
+  GRegex   *authors_regex;
   GRegex   *copyright_regex;
   GRegex   *date_regex;
   GRegex   *proc_type_regex;
@@ -81,7 +81,7 @@ struct _PDBStrings
 
   gchar    *blurb;
   gchar    *help;
-  gchar    *author;
+  gchar    *authors;
   gchar    *copyright;
   gchar    *date;
 };
@@ -162,7 +162,7 @@ gimp_pdb_query (GimpPDB       *pdb,
                 const gchar   *name,
                 const gchar   *blurb,
                 const gchar   *help,
-                const gchar   *author,
+                const gchar   *authors,
                 const gchar   *copyright,
                 const gchar   *date,
                 const gchar   *proc_type,
@@ -177,7 +177,7 @@ gimp_pdb_query (GimpPDB       *pdb,
   g_return_val_if_fail (name != NULL, FALSE);
   g_return_val_if_fail (blurb != NULL, FALSE);
   g_return_val_if_fail (help != NULL, FALSE);
-  g_return_val_if_fail (author != NULL, FALSE);
+  g_return_val_if_fail (authors != NULL, FALSE);
   g_return_val_if_fail (copyright != NULL, FALSE);
   g_return_val_if_fail (date != NULL, FALSE);
   g_return_val_if_fail (proc_type != NULL, FALSE);
@@ -200,8 +200,8 @@ gimp_pdb_query (GimpPDB       *pdb,
   if (! pdb_query.help_regex)
     goto cleanup;
 
-  pdb_query.author_regex = g_regex_new (author, PDB_REGEX_FLAGS, 0, error);
-  if (! pdb_query.author_regex)
+  pdb_query.authors_regex = g_regex_new (authors, PDB_REGEX_FLAGS, 0, error);
+  if (! pdb_query.authors_regex)
     goto cleanup;
 
   pdb_query.copyright_regex = g_regex_new (copyright, PDB_REGEX_FLAGS, 0, error);
@@ -242,8 +242,8 @@ gimp_pdb_query (GimpPDB       *pdb,
   if (pdb_query.copyright_regex)
     g_regex_unref (pdb_query.copyright_regex);
 
-  if (pdb_query.author_regex)
-    g_regex_unref (pdb_query.author_regex);
+  if (pdb_query.authors_regex)
+    g_regex_unref (pdb_query.authors_regex);
 
   if (pdb_query.help_regex)
     g_regex_unref (pdb_query.help_regex);
@@ -268,7 +268,7 @@ gimp_pdb_proc_info (GimpPDB          *pdb,
                     const gchar      *proc_name,
                     gchar           **blurb,
                     gchar           **help,
-                    gchar           **author,
+                    gchar           **authors,
                     gchar           **copyright,
                     gchar           **date,
                     GimpPDBProcType  *proc_type,
@@ -308,7 +308,7 @@ gimp_pdb_proc_info (GimpPDB          *pdb,
     {
       *blurb      = strings.compat ? strings.blurb : g_strdup (strings.blurb);
       *help       = strings.compat ? strings.help : g_strdup (strings.help);
-      *author     = strings.compat ? strings.author : g_strdup (strings.author);
+      *authors    = strings.compat ? strings.authors : g_strdup (strings.authors);
       *copyright  = strings.compat ? strings.copyright : g_strdup (strings.copyright);
       *date       = strings.compat ? strings.date : g_strdup (strings.date);
       *proc_type  = procedure->proc_type;
@@ -371,7 +371,7 @@ gimp_pdb_query_entry (gpointer key,
   if (match_string (pdb_query->name_regex,      proc_name)         &&
       match_string (pdb_query->blurb_regex,     strings.blurb)     &&
       match_string (pdb_query->help_regex,      strings.help)      &&
-      match_string (pdb_query->author_regex,    strings.author)    &&
+      match_string (pdb_query->authors_regex,   strings.authors)   &&
       match_string (pdb_query->copyright_regex, strings.copyright) &&
       match_string (pdb_query->date_regex,      strings.date)      &&
       match_string (pdb_query->proc_type_regex, type_desc->value_desc))
@@ -525,7 +525,7 @@ gimp_pdb_print_entry (gpointer key,
       output_string (string, strings.help);
 
       g_string_append_printf (string, "  ");
-      output_string (string, strings.author);
+      output_string (string, strings.authors);
 
       g_string_append_printf (string, "  ");
       output_string (string, strings.copyright);
@@ -624,7 +624,7 @@ gimp_pdb_get_strings (PDBStrings    *strings,
       strings->blurb     = g_strdup_printf (COMPAT_BLURB,
                                             gimp_object_get_name (procedure));
       strings->help      = g_strdup (strings->blurb);
-      strings->author    = NULL;
+      strings->authors   = NULL;
       strings->copyright = NULL;
       strings->date      = NULL;
     }
@@ -632,7 +632,7 @@ gimp_pdb_get_strings (PDBStrings    *strings,
     {
       strings->blurb     = procedure->blurb;
       strings->help      = procedure->help;
-      strings->author    = procedure->author;
+      strings->authors   = procedure->authors;
       strings->copyright = procedure->copyright;
       strings->date      = procedure->date;
     }

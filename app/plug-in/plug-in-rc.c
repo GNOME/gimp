@@ -427,7 +427,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &procedure->help))
     return G_TOKEN_STRING;
-  if (! gimp_scanner_parse_string (scanner, &procedure->author))
+  if (! gimp_scanner_parse_string (scanner, &procedure->authors))
     return G_TOKEN_STRING;
   if (! gimp_scanner_parse_string (scanner, &procedure->copyright))
     return G_TOKEN_STRING;
@@ -1172,7 +1172,7 @@ plug_in_rc_write (GSList  *plug_in_defs,
               gimp_config_writer_linefeed (writer);
               gimp_config_writer_string (writer, procedure->help);
               gimp_config_writer_linefeed (writer);
-              gimp_config_writer_string (writer, procedure->author);
+              gimp_config_writer_string (writer, procedure->authors);
               gimp_config_writer_linefeed (writer);
               gimp_config_writer_string (writer, procedure->copyright);
               gimp_config_writer_linefeed (writer);

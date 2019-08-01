@@ -51,7 +51,7 @@ struct _GimpProcedure
   gchar            *original_name;  /* Uncanonicalized procedure name */
   gchar            *blurb;          /* Short procedure description    */
   gchar            *help;           /* Detailed help instructions     */
-  gchar            *author;         /* Author field                   */
+  gchar            *authors;        /* Authors field                  */
   gchar            *copyright;      /* Copyright field                */
   gchar            *date;           /* Date field                     */
   gchar            *deprecated;     /* Replacement if deprecated      */
@@ -100,7 +100,7 @@ void             gimp_procedure_set_strings        (GimpProcedure    *procedure,
                                                     const gchar      *original_name,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
-                                                    const gchar      *author,
+                                                    const gchar      *authors,
                                                     const gchar      *copyright,
                                                     const gchar      *date,
                                                     const gchar      *deprecated);
@@ -108,7 +108,7 @@ void             gimp_procedure_set_static_strings (GimpProcedure    *procedure,
                                                     const gchar      *original_name,
                                                     const gchar      *blurb,
                                                     const gchar      *help,
-                                                    const gchar      *author,
+                                                    const gchar      *authors,
                                                     const gchar      *copyright,
                                                     const gchar      *date,
                                                     const gchar      *deprecated);
@@ -116,7 +116,7 @@ void             gimp_procedure_take_strings       (GimpProcedure    *procedure,
                                                     gchar            *original_name,
                                                     gchar            *blurb,
                                                     gchar            *help,
-                                                    gchar            *author,
+                                                    gchar            *authors,
                                                     gchar            *copyright,
                                                     gchar            *date,
                                                     gchar            *deprecated);
