@@ -201,6 +201,8 @@ static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  const gchar        *undo_desc,
                                                  GeglBuffer         *buffer,
                                                  const GeglRectangle *bounds);
+static GeglRectangle
+               gimp_layer_get_bounding_box      (GimpDrawable       *drawable);
 
 static GimpColorProfile *
                gimp_layer_get_color_profile     (GimpColorManaged   *managed);
@@ -460,6 +462,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->get_active_mask       = gimp_layer_get_active_mask;
   drawable_class->set_buffer            = gimp_layer_set_buffer;
+  drawable_class->get_bounding_box      = gimp_layer_get_bounding_box;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -1499,6 +1502,17 @@ gimp_layer_set_buffer (GimpDrawable        *drawable,
     }
 }
 
+static GeglRectangle
+gimp_layer_get_bounding_box (GimpDrawable *drawable)
+{
+  GimpLayer *layer = GIMP_LAYER (drawable);
+
+  if (gimp_layer_get_mask (layer))
+    return GIMP_DRAWABLE_CLASS (parent_class)->get_bounding_box (drawable);
+
+  return gegl_node_get_bounding_box (gimp_drawable_get_source_node (drawable));
+}
+
 static GimpColorProfile *
 gimp_layer_get_color_profile (GimpColorManaged *managed)
 {
@@ -1866,6 +1880,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
       gimp_layer_update_mode_node (layer);
     }
 
+  gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
+
   if (gimp_layer_get_apply_mask (layer) ||
       gimp_layer_get_show_mask (layer))
     {
@@ -2182,6 +2198,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 
       gimp_layer_update_mode_node (layer);
     }
+
+  gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
 
   /*  If applying actually changed the view  */
   if (view_changed)
