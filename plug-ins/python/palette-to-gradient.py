@@ -16,6 +16,9 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+from gi.repository import GObject
+from gi.repository import GLib
+from gi.repository import Gio
 import sys
 
 import gettext
@@ -47,63 +50,83 @@ def make_gradient(palette, num_segments, num_colors):
               Gimp.param_from_string(gradient)]
     return len(retval), retval
 
-def palette_to_gradient_repeating(palette):
+def palette_to_gradient(procedure, args, data):
+    # Localization
+    plug_in = procedure.get_plug_in()
+    plug_in.set_translation_domain ("gimp30-python",
+                                    Gio.file_new_for_path(Gimp.locale_directory()))
+
+    palette = Gimp.context_get_palette()
     (_, num_colors) = Gimp.palette_get_info(palette)
-    num_segments = num_colors
-    return make_gradient(palette, num_segments, num_colors)
 
-def palette_to_gradient(palette):
-    (_, num_colors) = Gimp.palette_get_info(palette)
-    num_segments = num_colors - 1
-    return make_gradient(palette, num_segments, num_colors)
+    if procedure.get_name() == 'python-fu-palette-to-gradient':
+        num_segments = num_colors - 1
+    else: # 'python-fu-palette-to-gradient-repeating'
+        num_segments = num_colors
+    gradient = make_gradient(palette, num_segments, num_colors)
 
-def run(name, n_params, params):
-    # run_mode = params[0].get_int32()
-    if name == 'python-fu-palette-to-gradient-repeating':
-        return palette_to_gradient_repeating(Gimp.context_get_palette())
-    else:
-        return palette_to_gradient(Gimp.context_get_palette())
+    # XXX: for the error parameter, we want to return None.
+    # Unfortunately even though the argument is (nullable), pygobject
+    # looks like it may have a bug. So workaround is to just set a
+    # generic GLib.Error() since anyway the error won't be process with
+    # GIMP_PDB_SUCCESS status.
+    # See pygobject#351
+    retval = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
-def query():
-    param = Gimp.ParamDef()
-    param.type = Gimp.PDBArgType.INT32
-    param.name = "run-mode"
-    param.description = _("Run mode")
+    # TODO: uncomment when GParamSpec bug is fixed.
+    #value = retval.index(1)
+    #value.set_string (gradient);
+    return retval
 
-    retval = Gimp.ParamDef()
-    retval.type = Gimp.PDBArgType.STRING
-    retval.name = "new-gradient"
-    retval.description = _("Result")
+class PaletteToGradient (Gimp.PlugIn):
+    def do_query_procedures(self):
+        # XXX See pygobject#352 for the weird return value.
+        return ['python-fu-palette-to-gradient',
+                'python-fu-palette-to-gradient-repeating'], 2
 
-    Gimp.install_procedure(
-        "python-fu-palette-to-gradient-repeating",
-        N_("Create a repeating gradient using colors from the palette"),
-        "Create a new repeating gradient using colors from the palette.",
-        "Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
-        "Carol Spears",
-        "2006",
-        N_("Palette to _Repeating Gradient"),
-        "",
-        Gimp.PDBProcType.PLUGIN,
-        [ param ],
-        [ retval ])
-    Gimp.plugin_menu_register("python-fu-palette-to-gradient-repeating", "<Palettes>")
+    def do_create_procedure(self, name):
+        procedure = Gimp.Procedure.new(self, name,
+                                       Gimp.PDBProcType.PLUGIN,
+                                       palette_to_gradient, None)
+        if name == 'python-fu-palette-to-gradient':
+            procedure.set_menu_label(N_("Palette to _Gradient"))
+            procedure.set_documentation(N_("Create a gradient using colors from the palette"),
+                                        "Create a new gradient using colors from the palette.",
+                                        "")
+        elif name == 'python-fu-palette-to-gradient-repeating':
+            procedure.set_menu_label(N_("Palette to _Repeating Gradient"))
+            procedure.set_documentation(N_("Create a repeating gradient using colors from the palette"),
+                                        "Create a new repeating gradient using colors from the palette.",
+                                        "")
+        else:
+            procedure = None
 
-    Gimp.install_procedure(
-        "python-fu-palette-to-gradient",
-        N_("Create a gradient using colors from the palette"),
-        "Create a new gradient using colors from the palette.",
-        "Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
-        "Carol Spears",
-        "2006",
-        N_("Palette to _Gradient"),
-        "",
-        Gimp.PDBProcType.PLUGIN,
-        [ param ],
-        [ retval ])
-    Gimp.plugin_menu_register("python-fu-palette-to-gradient", "<Palettes>")
-    Gimp.plugin_domain_register("gimp30-python", Gimp.locale_directory())
+        if procedure is not None:
+            procedure.set_attribution("Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
+                                      "Carol Spears", "2006")
+            returnspec = GObject.param_spec_string("new-gradient",
+                                                    "Name of the newly created gradient",
+                                                    "Name of the newly created gradient",
+                                                    None,
+                                                    GObject.ParamFlags.READWRITE)
+            # Passing a GObjectParamSpec currently fails.
+            # TODO: see pygobject#227
+            #procedure.add_return_value(returnspec)
 
-info = Gimp.PlugInInfo ()
-info.set_callbacks (None, None, query, run)
-Gimp.main_legacy (info, sys.argv)
+            paramspec = GObject.param_spec_enum("run-mode",
+                                                "Run mode",
+                                                "The run mode",
+                                                Gimp.RunMode.__gtype__,
+                                                Gimp.RunMode.NONINTERACTIVE,
+                                                GObject.ParamFlags.READWRITE)
+            # TODO: see pygobject#227
+            #procedure.add_argument(paramspec)
+
+            # TODO: To be installed in '<Palettes>', we need a run mode
+            # parameter. Wait for the GParamSpec bug to be fixed before
+            # uncommenting.
+            #procedure.add_menu_path ('<Palettes>')
+
+        return procedure
+
+Gimp.main(PaletteToGradient.__gtype__, sys.argv)
