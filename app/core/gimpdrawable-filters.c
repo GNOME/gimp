@@ -29,6 +29,7 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 
+#include "gimp.h"
 #include "gimp-utils.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-filters.h"
@@ -36,6 +37,8 @@
 #include "gimpfilter.h"
 #include "gimpfilterstack.h"
 #include "gimpimage.h"
+#include "gimpimage-undo.h"
+#include "gimplayer.h"
 #include "gimpprogress.h"
 #include "gimpprojection.h"
 
@@ -108,6 +111,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GimpFilter   *filter,
                             GimpProgress *progress,
                             const gchar  *undo_desc,
+                            gboolean      clip,
                             gboolean      cancellable,
                             gboolean      update)
 {
@@ -115,6 +119,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
   GimpApplicator *applicator;
   gboolean        applicator_cache         = FALSE;
   const Babl     *applicator_output_format = NULL;
+  GeglBuffer     *buffer                   = NULL;
+  GeglBuffer     *dest_buffer;
   GeglBuffer     *undo_buffer;
   GeglRectangle   undo_rect;
   GeglBuffer     *cache                    = NULL;
@@ -127,14 +133,37 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
-  image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  applicator = gimp_filter_get_applicator (filter);
+  image       = gimp_item_get_image (GIMP_ITEM (drawable));
+  applicator  = gimp_filter_get_applicator (filter);
+  dest_buffer = gimp_drawable_get_buffer (drawable);
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                  &rect.x, &rect.y,
-                                  &rect.width, &rect.height))
+  rect = gegl_node_get_bounding_box (gimp_filter_get_node (filter));
+
+  if (! clip && gegl_rectangle_equal (&rect,
+                                      gegl_buffer_get_extent (dest_buffer)))
     {
-      return TRUE;
+      clip = TRUE;
+    }
+
+  if (clip)
+    {
+      if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                      &rect.x, &rect.y,
+                                      &rect.width, &rect.height))
+        {
+          return TRUE;
+        }
+    }
+  else
+    {
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                                gimp_drawable_get_format (drawable));
+
+      dest_buffer = g_object_new (GEGL_TYPE_BUFFER,
+                                  "source",  buffer,
+                                  "shift-x", -rect.x,
+                                  "shift-y", -rect.y,
+                                  NULL);
     }
 
   if (applicator)
@@ -164,55 +193,104 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
         gimp_applicator_set_output_format (applicator, NULL);
     }
 
-  gegl_rectangle_align_to_buffer (
-    &undo_rect,
-    &rect,
-    gimp_drawable_get_buffer (drawable),
-    GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
+  if (clip)
+    {
+      gegl_rectangle_align_to_buffer (
+        &undo_rect,
+        &rect,
+        gimp_drawable_get_buffer (drawable),
+        GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
-  undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                 undo_rect.width,
-                                                 undo_rect.height),
-                                 gimp_drawable_get_format (drawable));
+      undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                     undo_rect.width,
+                                                     undo_rect.height),
+                                     gimp_drawable_get_format (drawable));
 
-  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                         &undo_rect,
-                         GEGL_ABYSS_NONE,
-                         undo_buffer,
-                         GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                             &undo_rect,
+                             GEGL_ABYSS_NONE,
+                             undo_buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
+    }
 
   gimp_projection_stop_rendering (gimp_image_get_projection (image));
 
   if (gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
                                         progress, undo_desc,
                                         gimp_filter_get_node (filter),
-                                        gimp_drawable_get_buffer (drawable),
-                                        &rect, FALSE,
+                                        dest_buffer, &rect, FALSE,
                                         cache, rects, n_rects,
                                         cancellable))
     {
       /*  finished successfully  */
 
-      gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
-                               undo_rect.x, undo_rect.y,
-                               undo_rect.width, undo_rect.height);
+      if (clip)
+        {
+          gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
+                                   undo_rect.x, undo_rect.y,
+                                   undo_rect.width, undo_rect.height);
+        }
+      else
+        {
+          GimpLayerMask *mask = NULL;
+          gint           offset_x;
+          gint           offset_y;
+
+          gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+
+          if (GIMP_IS_LAYER (drawable))
+            mask = gimp_layer_get_mask (GIMP_LAYER (drawable));
+
+          if (mask)
+            {
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                                           undo_desc);
+            }
+
+          gimp_drawable_set_buffer_full (
+            drawable, TRUE, undo_desc, buffer,
+            GEGL_RECTANGLE (offset_x + rect.x, offset_y + rect.y, 0, 0),
+            FALSE);
+
+          if (mask)
+            {
+              gimp_item_resize (GIMP_ITEM (mask),
+                                gimp_get_default_context (image->gimp),
+                                GIMP_FILL_TRANSPARENT,
+                                rect.width, rect.height,
+                                rect.x, rect.y);
+
+              gimp_image_undo_group_end (image);
+            }
+        }
     }
   else
     {
       /*  canceled by the user  */
 
-      gimp_gegl_buffer_copy (undo_buffer,
-                             GEGL_RECTANGLE (0, 0,
-                                             undo_rect.width,
-                                             undo_rect.height),
-                             GEGL_ABYSS_NONE,
-                             gimp_drawable_get_buffer (drawable),
-                             &undo_rect);
+      if (clip)
+        {
+          gimp_gegl_buffer_copy (undo_buffer,
+                                 GEGL_RECTANGLE (0, 0,
+                                                 undo_rect.width,
+                                                 undo_rect.height),
+                                 GEGL_ABYSS_NONE,
+                                 gimp_drawable_get_buffer (drawable),
+                                 &undo_rect);
+        }
 
       success = FALSE;
     }
 
-  g_object_unref (undo_buffer);
+  if (clip)
+    {
+      g_object_unref (undo_buffer);
+    }
+  else
+    {
+      g_object_unref (buffer);
+      g_object_unref (dest_buffer);
+    }
 
   if (cache)
     {
