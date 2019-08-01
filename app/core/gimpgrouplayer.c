@@ -1072,9 +1072,7 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
 
   gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                  FALSE, NULL,
-                                 buffer,
-                                 gimp_item_get_offset_x (GIMP_ITEM (group)),
-                                 gimp_item_get_offset_y (GIMP_ITEM (group)),
+                                 buffer, NULL,
                                  TRUE);
 
   /*  reset, the actual format is right now  */
@@ -1997,8 +1995,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
 
       gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                      FALSE, NULL,
-                                     buffer,
-                                     x, y,
+                                     buffer, NULL,
                                      FALSE /* don't update the drawable, the
                                             * flush() below will take care of
                                             * that.
@@ -2104,7 +2101,7 @@ gimp_group_layer_update_mask_size (GimpGroupLayer *group)
 
   gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),
                                  FALSE, NULL,
-                                 buffer, bounds.x, bounds.y,
+                                 buffer, &bounds,
                                  TRUE);
 
   g_object_unref (buffer);

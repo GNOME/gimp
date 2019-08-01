@@ -1120,7 +1120,7 @@ gimp_drawable_transform_paste (GimpDrawable     *drawable,
     {
       gimp_drawable_set_buffer_full (drawable, TRUE, NULL,
                                      buffer,
-                                     offset_x, offset_y,
+                                     GEGL_RECTANGLE (offset_x, offset_y, 0, 0),
                                      TRUE);
     }
 
