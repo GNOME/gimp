@@ -40,28 +40,30 @@ enum
 };
 
 
-static void       gimp_operation_mask_components_get_property (GObject             *object,
-                                                               guint                property_id,
-                                                               GValue              *value,
-                                                               GParamSpec          *pspec);
-static void       gimp_operation_mask_components_set_property (GObject             *object,
-                                                               guint                property_id,
-                                                               const GValue        *value,
-                                                               GParamSpec          *pspec);
+static void            gimp_operation_mask_components_get_property     (GObject             *object,
+                                                                        guint                property_id,
+                                                                        GValue              *value,
+                                                                        GParamSpec          *pspec);
+static void            gimp_operation_mask_components_set_property     (GObject             *object,
+                                                                        guint                property_id,
+                                                                        const GValue        *value,
+                                                                        GParamSpec          *pspec);
 
-static void       gimp_operation_mask_components_prepare      (GeglOperation       *operation);
-static gboolean gimp_operation_mask_components_parent_process (GeglOperation        *operation,
-                                                               GeglOperationContext *context,
-                                                               const gchar          *output_prop,
-                                                               const GeglRectangle  *result,
-                                                               gint                  level);
-static gboolean   gimp_operation_mask_components_process      (GeglOperation       *operation,
-                                                               void                *in_buf,
-                                                               void                *aux_buf,
-                                                               void                *out_buf,
-                                                               glong                samples,
-                                                               const GeglRectangle *roi,
-                                                               gint                 level);
+static void            gimp_operation_mask_components_prepare          (GeglOperation       *operation);
+static GeglRectangle   gimp_operation_mask_components_get_bounding_box (GeglOperation       *operation);
+static gboolean        gimp_operation_mask_components_parent_process   (GeglOperation        *operation,
+                                                                        GeglOperationContext *context,
+                                                                        const gchar          *output_prop,
+                                                                        const GeglRectangle  *result,
+                                                                        gint                  level);
+
+static gboolean        gimp_operation_mask_components_process          (GeglOperation       *operation,
+                                                                        void                *in_buf,
+                                                                        void                *aux_buf,
+                                                                        void                *out_buf,
+                                                                        glong                samples,
+                                                                        const GeglRectangle *roi,
+                                                                        gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationMaskComponents, gimp_operation_mask_components,
@@ -86,10 +88,11 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                  "description", "Selectively pick components from src or aux",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_mask_components_prepare;
-  operation_class->process = gimp_operation_mask_components_parent_process;
+  operation_class->prepare          = gimp_operation_mask_components_prepare;
+  operation_class->get_bounding_box = gimp_operation_mask_components_get_bounding_box;
+  operation_class->process          = gimp_operation_mask_components_parent_process;
 
-  point_class->process     = gimp_operation_mask_components_process;
+  point_class->process              = gimp_operation_mask_components_process;
 
   g_object_class_install_property (object_class, PROP_MASK,
                                    g_param_spec_flags ("mask",
@@ -402,6 +405,37 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
           g_return_if_reached ();
         }
     }
+}
+
+static GeglRectangle
+gimp_operation_mask_components_get_bounding_box (GeglOperation *operation)
+{
+  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
+  GeglRectangle               *in_rect;
+  GeglRectangle               *aux_rect;
+  GeglRectangle                result = {};
+
+  in_rect  = gegl_operation_source_get_bounding_box (operation, "input");
+  aux_rect = gegl_operation_source_get_bounding_box (operation, "aux");
+
+  if (self->mask == 0)
+    {
+      if (in_rect)
+        return *in_rect;
+    }
+  else if (self->mask == GIMP_COMPONENT_MASK_ALL)
+    {
+      if (aux_rect)
+        return *aux_rect;
+    }
+
+  if (in_rect)
+    gegl_rectangle_bounding_box (&result, &result, in_rect);
+
+  if (aux_rect)
+    gegl_rectangle_bounding_box (&result, &result, aux_rect);
+
+  return result;
 }
 
 static gboolean
