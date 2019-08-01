@@ -1,3 +1,5 @@
+/.deps
+/.libs
 /Makefile
 /Makefile.in
 /deprecated
