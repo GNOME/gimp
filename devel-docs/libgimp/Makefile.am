@@ -32,6 +32,10 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
+	gimpgpcompat.h		\
+	gimpgpparams.h		\
+	gimpplugin-private.h	\
+	gimpprocedure-private.h	\
 	gimptilebackendplugin.h	\
 	gimpunit_pdb.h		\
 	gimpunitcache.h		\
