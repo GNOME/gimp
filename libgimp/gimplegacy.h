@@ -27,6 +27,8 @@
 
 G_BEGIN_DECLS
 
+#ifndef GIMP_DISABLE_COMPAT_CRUFT
+
 
 /**
  * GimpInitProc:
@@ -265,6 +267,14 @@ void           gimp_uninstall_temp_proc (const gchar        *name);
  */
 void           gimp_extension_ack       (void);
 
+/* Enable asynchronous processing of temp_procs
+ */
+void           gimp_extension_enable    (void);
+
+/* Process one temp_proc and return
+ */
+void           gimp_extension_process   (guint            timeout);
+
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
  *  values are returned in the 'GimpParam*' array.
@@ -316,6 +326,8 @@ gboolean   gimp_plugin_icon_register        (const gchar  *procedure_name,
                                              GimpIconType  icon_type,
                                              const guint8 *icon_data);
 
+
+#endif /* GIMP_DISABLE_COMPAT_CRUFT */
 
 G_END_DECLS
 

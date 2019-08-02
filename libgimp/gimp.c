@@ -178,18 +178,11 @@ static gboolean   gimp_write                   (GIOChannel      *channel,
 static gboolean   gimp_flush                   (GIOChannel      *channel,
                                                 gpointer         user_data);
 static void       gimp_loop                    (void);
-static void       gimp_config                  (GPConfig        *config);
 static void       gimp_proc_run                (GPProcRun       *proc_run);
-static void       gimp_temp_proc_run           (GPProcRun       *proc_run);
 static void       gimp_proc_run_internal       (GPProcRun       *proc_run,
                                                 GimpProcedure   *procedure,
                                                 GimpRunProc      run_proc,
                                                 GPProcReturn    *proc_return);
-static void       gimp_process_message         (GimpWireMessage *msg);
-static void       gimp_single_message          (void);
-static gboolean   gimp_extension_read          (GIOChannel      *channel,
-                                                GIOCondition     condition,
-                                                gpointer         data);
 
 static void       gimp_set_pdb_error           (GimpValueArray  *return_vals);
 
@@ -198,7 +191,7 @@ static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
 static gchar                         *plug_in_backtrace_path = NULL;
 #endif
 
-static GIOChannel                   *_gimp_readchannel       = NULL;
+GIOChannel                          *_gimp_readchannel       = NULL;
 GIOChannel                          *_gimp_writechannel      = NULL;
 
 #ifdef USE_WIN32_SHM
@@ -811,31 +804,6 @@ gimp_quit (void)
   exit (EXIT_SUCCESS);
 }
 
-void
-_gimp_read_expect_msg (GimpWireMessage *msg,
-                       gint             type)
-{
-  while (TRUE)
-    {
-      if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
-        gimp_quit ();
-
-      if (msg->type == type)
-        return; /* up to the caller to call wire_destroy() */
-
-      if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
-        {
-          gimp_process_message (msg);
-        }
-      else
-        {
-          g_error ("unexpected message: %d", msg->type);
-        }
-
-      gimp_wire_destroy (msg);
-    }
-}
-
 GimpValueArray *
 gimp_run_procedure_with_array (const gchar    *name,
                                GimpValueArray *arguments)
@@ -1228,113 +1196,6 @@ gimp_get_progname (void)
   return progname;
 }
 
-/**
- * gimp_extension_enable:
- *
- * Enables asynchronous processing of messages from the main GIMP
- * application.
- *
- * Normally, a plug-in is not called by GIMP except for the call to
- * the procedure it implements. All subsequent communication is
- * triggered by the plug-in and all messages sent from GIMP to the
- * plug-in are just answers to requests the plug-in made.
- *
- * If the plug-in however registered temporary procedures using
- * gimp_install_temp_proc(), it needs to be able to receive requests
- * to execute them. Usually this will be done by running
- * gimp_extension_process() in an endless loop.
- *
- * If the plug-in cannot use gimp_extension_process(), i.e. if it has
- * a GUI and is hanging around in a #GMainLoop, it must call
- * gimp_extension_enable().
- *
- * Note that the plug-in does not need to be a #GIMP_EXTENSION to
- * register temporary procedures.
- *
- * See also: gimp_install_procedure(), gimp_install_temp_proc()
- **/
-void
-gimp_extension_enable (void)
-{
-  static gboolean callback_added = FALSE;
-
-  if (! callback_added)
-    {
-      g_io_add_watch (_gimp_readchannel, G_IO_IN | G_IO_PRI,
-                      gimp_extension_read,
-                      NULL);
-
-      callback_added = TRUE;
-    }
-}
-
-/**
- * gimp_extension_process:
- * @timeout: The timeout (in ms) to use for the select() call.
- *
- * Processes one message sent by GIMP and returns.
- *
- * Call this function in an endless loop after calling
- * gimp_extension_ack() to process requests for running temporary
- * procedures.
- *
- * See gimp_extension_enable() for an asynchronous way of doing the
- * same if running an endless loop is not an option.
- *
- * See also: gimp_install_procedure(), gimp_install_temp_proc()
- **/
-void
-gimp_extension_process (guint timeout)
-{
-#ifndef G_OS_WIN32
-  gint select_val;
-
-  do
-    {
-      fd_set readfds;
-      struct timeval  tv;
-      struct timeval *tvp;
-
-      if (timeout)
-        {
-          tv.tv_sec  = timeout / 1000;
-          tv.tv_usec = (timeout % 1000) * 1000;
-          tvp = &tv;
-        }
-      else
-        tvp = NULL;
-
-      FD_ZERO (&readfds);
-      FD_SET (g_io_channel_unix_get_fd (_gimp_readchannel), &readfds);
-
-      if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
-        {
-          gimp_single_message ();
-        }
-      else if (select_val == -1 && errno != EINTR)
-        {
-          perror ("gimp_extension_process");
-          gimp_quit ();
-        }
-    }
-  while (select_val == -1 && errno == EINTR);
-#else
-  /* Zero means infinite wait for us, but g_poll and
-   * g_io_channel_win32_poll use -1 to indicate
-   * infinite wait.
-   */
-  GPollFD pollfd;
-
-  if (timeout == 0)
-    timeout = -1;
-
-  g_io_channel_win32_make_pollfd (_gimp_readchannel, G_IO_IN, &pollfd);
-
-  if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
-    gimp_single_message ();
-#endif
-}
-
 
 /*  private functions  */
 
@@ -1707,7 +1568,7 @@ gimp_loop (void)
           return;
 
         case GP_CONFIG:
-          gimp_config (msg.data);
+          _gimp_config (msg.data);
           break;
 
         case GP_TILE_REQ:
@@ -1747,8 +1608,8 @@ gimp_loop (void)
     }
 }
 
-static void
-gimp_config (GPConfig *config)
+void
+_gimp_config (GPConfig *config)
 {
   GFile *file;
   gchar *path;
@@ -1904,47 +1765,6 @@ gimp_proc_run (GPProcRun *proc_run)
 }
 
 static void
-gimp_temp_proc_run (GPProcRun *proc_run)
-{
-  GPProcReturn proc_return;
-
-  if (PLUG_IN)
-    {
-      GimpProcedure *procedure;
-
-      procedure = gimp_plug_in_get_temp_procedure (PLUG_IN, proc_run->name);
-
-      if (procedure)
-        {
-          gimp_proc_run_internal (proc_run, procedure, NULL,
-                                  &proc_return);
-        }
-    }
-  else
-    {
-      GimpRunProc run_proc = g_hash_table_lookup (_gimp_temp_proc_ht,
-                                                  proc_run->name);
-
-      if (run_proc)
-        {
-#ifdef GDK_WINDOWING_QUARTZ
-          if (proc_run->params &&
-              proc_run->params[0].data.d_int == GIMP_RUN_INTERACTIVE)
-            {
-              [NSApp activateIgnoringOtherApps: YES];
-            }
-#endif
-
-          gimp_proc_run_internal (proc_run, NULL, run_proc,
-                                  &proc_return);
-        }
-    }
-
-  if (! gp_temp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
-    gimp_quit ();
-}
-
-static void
 gimp_proc_run_internal (GPProcRun     *proc_run,
                         GimpProcedure *procedure,
                         GimpRunProc    run_proc,
@@ -1990,67 +1810,6 @@ gimp_proc_run_internal (GPProcRun     *proc_run,
   proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
-}
-
-static void
-gimp_process_message (GimpWireMessage *msg)
-{
-  switch (msg->type)
-    {
-    case GP_QUIT:
-      gimp_quit ();
-      break;
-    case GP_CONFIG:
-      gimp_config (msg->data);
-      break;
-    case GP_TILE_REQ:
-    case GP_TILE_ACK:
-    case GP_TILE_DATA:
-      g_warning ("unexpected tile message received (should not happen)");
-      break;
-    case GP_PROC_RUN:
-      g_warning ("unexpected proc run message received (should not happen)");
-      break;
-    case GP_PROC_RETURN:
-      g_warning ("unexpected proc return message received (should not happen)");
-      break;
-    case GP_TEMP_PROC_RUN:
-      gimp_temp_proc_run (msg->data);
-      break;
-    case GP_TEMP_PROC_RETURN:
-      g_warning ("unexpected temp proc return message received (should not happen)");
-      break;
-    case GP_PROC_INSTALL:
-      g_warning ("unexpected proc install message received (should not happen)");
-      break;
-    case GP_HAS_INIT:
-      g_warning ("unexpected has init message received (should not happen)");
-      break;
-    }
-}
-
-static void
-gimp_single_message (void)
-{
-  GimpWireMessage msg;
-
-  /* Run a temp function */
-  if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
-    gimp_quit ();
-
-  gimp_process_message (&msg);
-
-  gimp_wire_destroy (&msg);
-}
-
-static gboolean
-gimp_extension_read (GIOChannel  *channel,
-                     GIOCondition condition,
-                     gpointer     data)
-{
-  gimp_single_message ();
-
-  return TRUE;
 }
 
 static void
