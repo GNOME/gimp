@@ -49,8 +49,8 @@ struct _GimpPlugInPrivate
 };
 
 
-void       _gimp_plug_in_init           (GimpPlugIn  *plug_in);
 void       _gimp_plug_in_query          (GimpPlugIn  *plug_in);
+void       _gimp_plug_in_init           (GimpPlugIn  *plug_in);
 void       _gimp_plug_in_quit           (GimpPlugIn  *plug_in);
 
 gboolean   _gimp_plug_in_extension_read (GIOChannel  *channel,
