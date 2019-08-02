@@ -44,17 +44,6 @@ static void   gimp_plug_in_temp_proc_run   (GimpPlugIn      *plug_in,
 /*  public functions  */
 
 void
-_gimp_plug_in_init (GimpPlugIn *plug_in)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-
-  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
-    return;
-
-  gimp_plug_in_register (plug_in, TRUE);
-}
-
-void
 _gimp_plug_in_query (GimpPlugIn *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
@@ -63,6 +52,17 @@ _gimp_plug_in_query (GimpPlugIn *plug_in)
     return;
 
   gimp_plug_in_register (plug_in, FALSE);
+}
+
+void
+_gimp_plug_in_init (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+    return;
+
+  gimp_plug_in_register (plug_in, TRUE);
 }
 
 void

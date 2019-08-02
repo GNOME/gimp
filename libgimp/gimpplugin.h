@@ -54,13 +54,23 @@ struct _GimpPlugInClass
   GObjectClass  parent_class;
 
   /**
-   * GimpPlugInClass::quit:
+   * GimpPlugInClass::query_procedures:
    * @plug_in: a #GimpPlugIn.
+   * @n_procedures: (out): number of procedures.
    *
-   * This method can be overridden by a plug-in which needs to perform
-   * some actions upon quitting.
+   * This method can be overridden by all plug-ins to return a newly
+   * allocated array of allocated strings naming the procedures
+   * registered by this plug-in.
+   * This array of strings must be NULL-terminated (i.e. freeable by
+   * g_strfreev()).
+   *
+   * See documentation of init_procedures() for differences.
+   *
+   * Returns: (array length=n_procedures) (transfer full):
+   *          the names of the procedures registered by @plug_in.
    */
-  void             (* quit)             (GimpPlugIn  *plug_in);
+  gchar         ** (* query_procedures) (GimpPlugIn  *plug_in,
+                                         gint        *n_procedures);
 
   /**
    * GimpPlugInClass::init_procedures:
@@ -88,25 +98,6 @@ struct _GimpPlugInClass
   gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in,
                                          gint        *n_procedures);
   /**
-   * GimpPlugInClass::query_procedures:
-   * @plug_in: a #GimpPlugIn.
-   * @n_procedures: (out): number of procedures.
-   *
-   * This method can be overridden by all plug-ins to return a newly
-   * allocated array of allocated strings naming the procedures
-   * registered by this plug-in.
-   * This array of strings must be NULL-terminated (i.e. freeable by
-   * g_strfreev()).
-   *
-   * See documentation of init_procedures() for differences.
-   *
-   * Returns: (array length=n_procedures) (transfer full):
-   *          the names of the procedures registered by @plug_in.
-   */
-  gchar         ** (* query_procedures) (GimpPlugIn  *plug_in,
-                                         gint        *n_procedures);
-
-  /**
    * GimpPlugInClass::create_procedure:
    * @plug_in: a #GimpPlugIn.
    * @name: procedure name.
@@ -121,6 +112,15 @@ struct _GimpPlugInClass
    */
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
                                          const gchar *name);
+
+  /**
+   * GimpPlugInClass::quit:
+   * @plug_in: a #GimpPlugIn.
+   *
+   * This method can be overridden by a plug-in which needs to perform
+   * some actions upon quitting.
+   */
+  void             (* quit)             (GimpPlugIn  *plug_in);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
