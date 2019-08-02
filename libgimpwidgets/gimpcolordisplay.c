@@ -288,6 +288,16 @@ gimp_color_display_set_color_managed (GimpColorDisplay *display,
     }
 }
 
+/**
+ * gimp_color_display_clone:
+ * @display: a #GimpColorDisplay
+ *
+ * Creates a copy of @display.
+ *
+ * Returns: (transfer full): a duplicate of @display.
+ *
+ * Since: 1.3.10
+ **/
 GimpColorDisplay *
 gimp_color_display_clone (GimpColorDisplay *display)
 {
@@ -326,6 +336,17 @@ gimp_color_display_convert_buffer (GimpColorDisplay *display,
     }
 }
 
+/**
+ * gimp_color_display_load_state:
+ * @display: a #GimpColorDisplay
+ * @state:   a #GimpParasite
+ *
+ * Configures @display from the contents of the parasite @state.
+ * @state must be a properly serialized configuration for a
+ * #GimpColorDisplay, such as saved by gimp_color_display_save_state().
+ *
+ * Since: 1.3.10
+ **/
 void
 gimp_color_display_load_state (GimpColorDisplay *display,
                                GimpParasite     *state)
@@ -339,6 +360,16 @@ gimp_color_display_load_state (GimpColorDisplay *display,
                                   NULL, NULL);
 }
 
+/**
+ * gimp_color_display_save_state:
+ * @display: a #GimpColorDisplay
+ *
+ * Saves the configuration state of @display as a new parasite.
+ *
+ * Returns: (transfer full): a #GimpParasite
+ *
+ * Since: 1.3.10
+ **/
 GimpParasite *
 gimp_color_display_save_state (GimpColorDisplay *display)
 {
@@ -357,6 +388,18 @@ gimp_color_display_save_state (GimpColorDisplay *display)
   return parasite;
 }
 
+/**
+ * gimp_color_display_configure:
+ * @display: a #GimpColorDisplay
+ *
+ * Creates a configuration widget for @display which can be added to a
+ * container widget.
+ *
+ * Returns: (transfer full): a new configuration widget for @display, or
+ *          %NULL if no specific widget exists.
+ *
+ * Since: 1.3.10
+ **/
 GtkWidget *
 gimp_color_display_configure (GimpColorDisplay *display)
 {
