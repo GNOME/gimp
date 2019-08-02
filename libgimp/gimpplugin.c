@@ -225,8 +225,8 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  * %GIMP_EXTENSION procedures it implements is invoked.
  *
  * This function will only ever be called with names returned by
- * implementations of GimpPlugIn::init_procedures() or
- * GimpPlugIn::query_procedures().
+ * implementations of GimpPlugInClass::init_procedures() or
+ * GimpPlugInClass::query_procedures().
  *
  * Returns: (transfer full): The newly created #GimpProcedure.
  **/

@@ -34,7 +34,7 @@
 /*  local function prototpes  */
 
 static void   gimp_plug_in_register          (GimpPlugIn      *plug_in,
-                                              gboolean         init);
+                                              GList           *procedures);
 static void   gimp_plug_in_loop              (GimpPlugIn      *plug_in);
 static void   gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
                                               GPProcRun       *proc_run);
@@ -52,10 +52,13 @@ _gimp_plug_in_query (GimpPlugIn *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
-    return;
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
+    {
+      GList *procedures =
+        GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in);
 
-  gimp_plug_in_register (plug_in, FALSE);
+      gimp_plug_in_register (plug_in, procedures);
+    }
 }
 
 void
@@ -63,10 +66,13 @@ _gimp_plug_in_init (GimpPlugIn *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
-    return;
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+    {
+      GList *procedures =
+        GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in);
 
-  gimp_plug_in_register (plug_in, TRUE);
+      gimp_plug_in_register (plug_in, procedures);
+    }
 }
 
 void
@@ -103,22 +109,16 @@ _gimp_plug_in_extension_read (GIOChannel  *channel,
 
 static void
 gimp_plug_in_register (GimpPlugIn *plug_in,
-                       gboolean    init)
+                       GList      *procedures)
 {
-  gchar **procedures;
-  gchar **name;
-  GList  *list;
+  GList *list;
 
-  if (init)
-    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in);
-  else
-    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in);
-
-  for (name = procedures; *name; name++)
+  for (list = procedures; list; list = g_list_next (list))
     {
+      const gchar   *name = list->data;
       GimpProcedure *procedure;
 
-      procedure = gimp_plug_in_create_procedure (plug_in, *name);
+      procedure = gimp_plug_in_create_procedure (plug_in, name);
       if (procedure)
         {
           _gimp_procedure_register (procedure);
@@ -126,11 +126,11 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
         }
       else
         {
-          g_warning ("Plug-in failed to create procedure '%s'\n",
-                     *name);
+          g_warning ("Plug-in failed to create procedure '%s'\n", name);
         }
     }
-  g_clear_pointer (&procedures, g_strfreev);
+
+  g_list_free_full (procedures, g_free);
 
   if (plug_in->priv->translation_domain_name)
     {

@@ -58,41 +58,40 @@ struct _GimpPlugInClass
    * @plug_in: a #GimpPlugIn.
    *
    * This method can be overridden by all plug-ins to return a newly
-   * allocated array of allocated strings naming the procedures
+   * allocated GList of allocated strings naming the procedures
    * registered by this plug-in.
-   * This array of strings must be NULL-terminated (i.e. freeable by
-   * g_strfreev()).
    *
-   * See documentation of init_procedures() for differences.
+   * See documentation of GimpPlugInClass::init_procedures() for
+   * differences.
    *
-   * Returns: (array zero-terminated=1) (transfer full):
+   * Returns: (element-type gchar*) (transfer full):
    *          the names of the procedures registered by @plug_in.
    */
-  gchar         ** (* query_procedures) (GimpPlugIn  *plug_in);
+  GList          * (* query_procedures) (GimpPlugIn  *plug_in);
 
   /**
    * GimpPlugInClass::init_procedures:
    * @plug_in: a #GimpPlugIn.
    *
    * This method can be overridden by all plug-ins to return a newly
-   * allocated array of allocated strings naming procedures registered
+   * allocated #GList of allocated strings naming procedures registered
    * by this plug-in.
-   * This array of strings must be NULL-terminated (i.e. freeable by
-   * g_strfreev()).
    *
-   * It is different from query_procedures() in that init happens at every
-   * startup, whereas query happens only once in the life of a plug-in
-   * (right after installation or update). Hence init_procedures()
-   * typically returns procedures dependent to runtime conditions (such
-   * as the presence of a third-party tool), whereas query_procedures()
-   * would usually return unconditional and always available procedures.
-   * Most of the time, you only want to override query_procedures() and
-   * leave init_procedures() untouched.
+   * It is different from GimpPlugInClass::query_procedures() in that
+   * init happens at every startup, whereas query happens only once in
+   * the life of a plug-in (right after installation or update). Hence
+   * GimpPlugInClass::init_procedures() typically returns procedures
+   * dependent to runtime conditions (such as the presence of a
+   * third-party tool), whereas GimpPlugInClass::query_procedures()
+   * would usually return unconditional and always available
+   * procedures.  Most of the time, you only want to override
+   * GimpPlugInClass::query_procedures() and leave
+   * GimpPlugInClass::init_procedures() untouched.
    *
-   * Returns: (array zero-terminated=1) (transfer full):
+   * Returns: (element-type gchar*) (transfer full):
    *          the names of the procedures registered by @plug_in.
    */
-  gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in);
+  GList          * (* init_procedures)  (GimpPlugIn  *plug_in);
 
   /**
    * GimpPlugInClass::create_procedure:
