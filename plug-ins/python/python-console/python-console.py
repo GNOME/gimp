@@ -21,6 +21,8 @@ gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from gi.repository import GObject
+from gi.repository import Gio
 
 import sys
 import pyconsole
@@ -240,30 +242,46 @@ def run(name, n_params, params):
             Gtk.main()
 
     ConsoleDialog().run()
-    retval = [Gimp.param_from_status (Gimp.PDBStatusType.SUCCESS)]
-    return len(retval), retval
 
-def query():
-    param = Gimp.ParamDef()
-    param.type = Gimp.PDBArgType.INT32
-    param.name = "run-mode"
-    param.description = _("Run mode")
+    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
-    Gimp.install_procedure(
-        PROC_NAME,
-        N_("Interactive GIMP Python interpreter"),
-        "Type in commands and see results",
-        "James Henstridge",
-        "James Henstridge",
-        "1997-1999",
-        N_("_Console"),
-        "",
-        Gimp.PDBProcType.PLUGIN,
-        [ param ],
-        [])
-    Gimp.plugin_menu_register(PROC_NAME, "<Image>/Filters/Languages/Python-Fu")
-    Gimp.plugin_domain_register("gimp30-python", Gimp.locale_directory())
+class PythonConsole (Gimp.PlugIn):
+    ## Properties: parameters ##
+    @GObject.Property(type=Gimp.RunMode,
+                      default=Gimp.RunMode.NONINTERACTIVE,
+                      nick="Run mode", blurb="The run mode")
+    def run_mode(self):
+        """Read-write integer property."""
+        return self.runmode
 
-info = Gimp.PlugInInfo ()
-info.set_callbacks (None, None, query, run)
-Gimp.main_legacy (info, sys.argv)
+    @run_mode.setter
+    def run_mode(self, runmode):
+        self.runmode = runmode
+
+    ## GimpPlugIn virtual methods ##
+    def do_query_procedures(self):
+        # Localization
+        self.set_translation_domain ("gimp30-python",
+                                     Gio.file_new_for_path(Gimp.locale_directory()))
+
+        return [ PROC_NAME ]
+
+    def do_create_procedure(self, name):
+        if name == PROC_NAME:
+            procedure = Gimp.Procedure.new(self, name,
+                                           Gimp.PDBProcType.PLUGIN,
+                                           run, None)
+            procedure.set_menu_label(N_("_Console"))
+            procedure.set_documentation(N_("Interactive GIMP Python interpreter"),
+                                        "Type in commands and see results",
+                                        "")
+            procedure.set_attribution("James Henstridge",
+                                      "James Henstridge",
+                                      "1997-1999")
+            procedure.add_argument_from_property(self, "run-mode")
+            procedure.add_menu_path ("<Image>/Filters/Languages/Python-Fu")
+
+            return procedure
+        return None
+
+Gimp.main(PythonConsole.__gtype__, sys.argv)
