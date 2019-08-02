@@ -784,8 +784,8 @@ gimp_file_with_new_extension (GFile *file,
  * Such function unfortunately does not exist in glib, which only allows
  * to delete single files or empty directories by default.
  *
- * Returns: #TRUE if @file was successfully deleted and all its
- * children, #FALSE otherwise with @error filled.
+ * Returns: %TRUE if @file was successfully deleted and all its
+ * children, %FALSE otherwise with @error filled.
  */
 gboolean
 gimp_file_delete_recursive (GFile   *file,

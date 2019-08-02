@@ -166,7 +166,7 @@ gimp_help_connect (GtkWidget    *widget,
  * elements in the GIMP user interface should, if possible, also have
  * a @help_id set for context-sensitive help.
  *
- * This function can be called with #NULL for @tooltip. Use this feature
+ * This function can be called with %NULL for @tooltip. Use this feature
  * if you want to set a help link for a widget which shouldn't have
  * a visible tooltip.
  **/

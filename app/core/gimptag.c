@@ -411,7 +411,7 @@ gimp_tag_is_tag_separator (gunichar c)
  * gimp_tag_or_null_ref:
  * @tag: a #GimpTag
  *
- * A simple wrapper around g_object_ref() that silently accepts #NULL.
+ * A simple wrapper around g_object_ref() that silently accepts %NULL.
  **/
 void
 gimp_tag_or_null_ref (GimpTag *tag_or_null)
@@ -428,7 +428,7 @@ gimp_tag_or_null_ref (GimpTag *tag_or_null)
  * gimp_tag_or_null_unref:
  * @tag: a #GimpTag
  *
- * A simple wrapper around g_object_unref() that silently accepts #NULL.
+ * A simple wrapper around g_object_unref() that silently accepts %NULL.
  **/
 void
 gimp_tag_or_null_unref (GimpTag *tag_or_null)

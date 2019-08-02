@@ -219,10 +219,10 @@ gimp_tagged_get_identifier (GimpTagged *tagged)
  * example if the user has renamed a data file since the last session.
  *
  * If the object does not want to support such remapping (objects not
- * stored in file for example) it can return #NULL.
+ * stored in file for example) it can return %NULL.
  *
  * Return value: checksum string if object needs identifier remapping,
- * #NULL otherwise. Returned string must be freed with #g_free().
+ * %NULL otherwise. Returned string must be freed with #g_free().
  **/
 gchar *
 gimp_tagged_get_checksum (GimpTagged *tagged)
@@ -237,7 +237,7 @@ gimp_tagged_get_checksum (GimpTagged *tagged)
  * @tagged: an object that implements the %GimpTagged interface
  * @tag:    a %GimpTag
  *
- * Return value: #TRUE if the object has @tag, #FALSE otherwise.
+ * Return value: %TRUE if the object has @tag, %FALSE otherwise.
  **/
 gboolean
 gimp_tagged_has_tag (GimpTagged *tagged,

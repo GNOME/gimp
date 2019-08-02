@@ -1035,7 +1035,7 @@ gimp_export_color_profile (void)
  * gimp_export_exif:
  *
  * Returns whether file plug-ins should default to exporting Exif
- * metadata, according preferences (original settings is #FALSE since
+ * metadata, according preferences (original settings is %FALSE since
  * metadata can contain sensitive information).
  *
  * Return value: TRUE if preferences are set to export Exif.
@@ -1052,7 +1052,7 @@ gimp_export_exif (void)
  * gimp_export_xmp:
  *
  * Returns whether file plug-ins should default to exporting XMP
- * metadata, according preferences (original settings is #FALSE since
+ * metadata, according preferences (original settings is %FALSE since
  * metadata can contain sensitive information).
  *
  * Return value: TRUE if preferences are set to export XMP.
@@ -1069,7 +1069,7 @@ gimp_export_xmp (void)
  * gimp_export_iptc:
  *
  * Returns whether file plug-ins should default to exporting IPTC
- * metadata, according preferences (original settings is #FALSE since
+ * metadata, according preferences (original settings is %FALSE since
  * metadata can contain sensitive information).
  *
  * Return value: TRUE if preferences are set to export IPTC.
@@ -1153,7 +1153,7 @@ gimp_wm_class (void)
  * Returns the display to be used for plug-in windows.
  *
  * This is a constant value given at plug-in configuration time.
- * Will return #NULL if GIMP has been started with no GUI, either
+ * Will return %NULL if GIMP has been started with no GUI, either
  * via "--no-interface" flag, or a console build.
  *
  * Return value: the display name
