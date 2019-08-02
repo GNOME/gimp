@@ -43,6 +43,12 @@
  **/
 
 
+static gpointer  gimp_vector2_copy (gpointer boxed);
+static void      gimp_vector2_free (gpointer boxed);
+static gpointer  gimp_vector3_copy (gpointer boxed);
+static void      gimp_vector3_free (gpointer boxed);
+
+
 /*************************/
 /* Some useful constants */
 /*************************/
@@ -1127,3 +1133,52 @@ gimp_vector_3d_to_2d (gint               sx,
       *y = (gdouble) sy + (p->y * (gdouble) h);
     }
 }
+
+/* Private functions for boxed type. */
+
+static gpointer
+gimp_vector2_copy (gpointer boxed)
+{
+  GimpVector2 *vector = boxed;
+  GimpVector2 *new_v;
+
+  new_v = g_slice_new (GimpVector2);
+  new_v->x = vector->x;
+  new_v->y = vector->y;
+
+  return new_v;
+}
+
+static void
+gimp_vector2_free (gpointer boxed)
+{
+  g_slice_free (GimpVector2, boxed);
+}
+
+G_DEFINE_BOXED_TYPE (GimpVector2, gimp_vector2,
+                     gimp_vector2_copy,
+                     gimp_vector2_free)
+
+static gpointer
+gimp_vector3_copy (gpointer boxed)
+{
+  GimpVector3 *vector = boxed;
+  GimpVector3 *new_v;
+
+  new_v = g_slice_new (GimpVector3);
+  new_v->x = vector->x;
+  new_v->y = vector->y;
+  new_v->y = vector->z;
+
+  return new_v;
+}
+
+static void
+gimp_vector3_free (gpointer boxed)
+{
+  g_slice_free (GimpVector3, boxed);
+}
+
+G_DEFINE_BOXED_TYPE (GimpVector3, gimp_vector3,
+                     gimp_vector3_copy,
+                     gimp_vector3_free)
