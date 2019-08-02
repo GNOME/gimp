@@ -132,18 +132,6 @@ struct _GimpParam
 };
 
 /**
- * GIMP_TYPE_PARAM:
- *
- * Boxed type representing parameters and returned values, as passed
- * through the plug-in legacy API.
- *
- * Since: 3.0
- */
-#define GIMP_TYPE_PARAM (gimp_param_get_type ())
-
-GType gimp_param_get_type (void) G_GNUC_CONST;
-
-/**
  * MAIN:
  *
  * A macro that expands to the appropriate main() function for the
@@ -203,21 +191,6 @@ GType gimp_param_get_type (void) G_GNUC_CONST;
    }
 #endif
 
-
-void                gimp_plug_in_info_set_callbacks    (GimpPlugInInfo    *info,
-                                                        GimpInitProc       init_proc,
-                                                        GimpQuitProc       quit_proc,
-                                                        GimpQueryProc      query_proc,
-                                                        GimpRunProc        run_proc);
-
-GimpParam         * gimp_param_from_int32              (gint32             value);
-gint32              gimp_param_get_int32               (GimpParam         *param);
-
-GimpParam         * gimp_param_from_status             (GimpPDBStatusType  value);
-GimpPDBStatusType   gimp_param_get_status              (GimpParam         *param);
-
-GimpParam         * gimp_param_from_string             (gchar             *value);
-gchar             * gimp_param_get_string              (GimpParam         *param);
 
 /* The main procedure that must be called with the PLUG_IN_INFO
  * structure and the 'argc' and 'argv' that are passed to "main".
