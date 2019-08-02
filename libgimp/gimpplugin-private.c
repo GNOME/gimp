@@ -169,16 +169,12 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
       GimpWireMessage msg;
 
       if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
-        {
-          _gimp_close ();
-          return;
-        }
+        return;
 
       switch (msg.type)
         {
         case GP_QUIT:
           gimp_wire_destroy (&msg);
-          _gimp_close ();
           return;
 
         case GP_CONFIG:
@@ -194,7 +190,6 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
         case GP_PROC_RUN:
           gimp_plug_in_proc_run (plug_in, msg.data);
           gimp_wire_destroy (&msg);
-          _gimp_close ();
           return;
 
         case GP_PROC_RETURN:

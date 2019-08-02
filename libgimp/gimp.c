@@ -151,6 +151,7 @@ static gint       gimp_main_internal           (GType                 plug_in_ty
                                                 gint                  argc,
                                                 gchar                *argv[]);
 
+static void       gimp_close                   (void);
 static void       gimp_debug_stop              (void);
 static void       gimp_message_func            (const gchar    *log_domain,
                                                 GLogLevelFlags  log_level,
@@ -735,7 +736,7 @@ gimp_main_internal (GType                 plug_in_type,
             PLUG_IN_INFO.query_proc ();
         }
 
-      _gimp_close ();
+      gimp_close ();
 
       return EXIT_SUCCESS;
     }
@@ -755,7 +756,7 @@ gimp_main_internal (GType                 plug_in_type,
             PLUG_IN_INFO.init_proc ();
         }
 
-      _gimp_close ();
+      gimp_close ();
 
       return EXIT_SUCCESS;
     }
@@ -779,6 +780,8 @@ gimp_main_internal (GType                 plug_in_type,
       _gimp_loop (PLUG_IN_INFO.run_proc);
     }
 
+  gimp_close ();
+
   return EXIT_SUCCESS;
 }
 
@@ -791,7 +794,7 @@ gimp_main_internal (GType                 plug_in_type,
 void
 gimp_quit (void)
 {
-  _gimp_close ();
+  gimp_close ();
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
   if (plug_in_backtrace_path)
@@ -1228,8 +1231,8 @@ gimp_get_progname (void)
 
 /*  private functions  */
 
-void
-_gimp_close (void)
+static void
+gimp_close (void)
 {
   if (gimp_debug_flags & GIMP_DEBUG_QUIT)
     gimp_debug_stop ();

@@ -955,16 +955,12 @@ _gimp_loop (GimpRunProc run_proc)
   while (TRUE)
     {
       if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
-        {
-          _gimp_close ();
-          return;
-        }
+        return;
 
       switch (msg.type)
         {
         case GP_QUIT:
           gimp_wire_destroy (&msg);
-          _gimp_close ();
           return;
 
         case GP_CONFIG:
@@ -980,7 +976,6 @@ _gimp_loop (GimpRunProc run_proc)
         case GP_PROC_RUN:
           gimp_proc_run (msg.data, run_proc);
           gimp_wire_destroy (&msg);
-          _gimp_close ();
           return;
 
         case GP_PROC_RETURN:
