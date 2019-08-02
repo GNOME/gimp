@@ -139,7 +139,8 @@ _gimp_gp_param_def_to_param_spec (Gimp       *gimp,
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! strcmp (param_def->type_name, "GimpParamString"))
+      if (! strcmp (param_def->type_name, "GimpParamString") ||
+          ! strcmp (param_def->type_name, "GParamString"))
         return gimp_param_spec_string (name, nick, blurb,
                                        param_def->meta.m_string.allow_non_utf8,
                                        param_def->meta.m_string.null_ok,

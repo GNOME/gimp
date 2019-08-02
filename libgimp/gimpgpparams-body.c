@@ -99,17 +99,27 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_float.max_val     = dspec->maximum;
       param_def->meta.m_float.default_val = dspec->default_value;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_STRING)
+  else if (pspec_type == GIMP_TYPE_PARAM_STRING ||
+           pspec_type == G_TYPE_PARAM_STRING)
     {
-      GParamSpecString    *gsspec = G_PARAM_SPEC_STRING (pspec);
-      GimpParamSpecString *sspec  = GIMP_PARAM_SPEC_STRING (pspec);
+      GParamSpecString *gsspec = G_PARAM_SPEC_STRING (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_STRING;
 
-      param_def->meta.m_string.allow_non_utf8 = sspec->allow_non_utf8;
       param_def->meta.m_string.null_ok        = ! gsspec->ensure_non_null;
-      param_def->meta.m_string.non_empty      = sspec->non_empty;
       param_def->meta.m_string.default_val    = gsspec->default_value;
+      if (pspec_type == GIMP_TYPE_PARAM_STRING)
+        {
+          GimpParamSpecString *sspec = GIMP_PARAM_SPEC_STRING (pspec);
+
+          param_def->meta.m_string.allow_non_utf8 = sspec->allow_non_utf8;
+          param_def->meta.m_string.non_empty      = sspec->non_empty;
+        }
+      else
+        {
+          param_def->meta.m_string.allow_non_utf8 = FALSE;
+          param_def->meta.m_string.non_empty      = FALSE;
+        }
     }
   else if (pspec_type == GIMP_TYPE_PARAM_RGB)
     {
