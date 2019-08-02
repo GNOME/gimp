@@ -29,12 +29,13 @@ G_BEGIN_DECLS
 
 extern GIOChannel *_gimp_readchannel;
 extern GIOChannel *_gimp_writechannel;
-extern GHashTable *_gimp_temp_proc_ht;
 
 
-void _gimp_config          (GPConfig        *config);
-void _gimp_read_expect_msg (GimpWireMessage *msg,
-                            gint             type);
+void   _gimp_close           (void);
+void   _gimp_config          (GPConfig        *config);
+void   _gimp_loop            (GimpRunProc      run_proc);
+void   _gimp_read_expect_msg (GimpWireMessage *msg,
+                              gint             type);
 
 
 G_END_DECLS

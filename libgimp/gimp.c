@@ -151,7 +151,6 @@ static gint       gimp_main_internal           (GType                 plug_in_ty
                                                 gint                  argc,
                                                 gchar                *argv[]);
 
-static void       gimp_close                   (void);
 static void       gimp_debug_stop              (void);
 static void       gimp_message_func            (const gchar    *log_domain,
                                                 GLogLevelFlags  log_level,
@@ -177,14 +176,9 @@ static gboolean   gimp_write                   (GIOChannel      *channel,
                                                 gpointer         user_data);
 static gboolean   gimp_flush                   (GIOChannel      *channel,
                                                 gpointer         user_data);
-static void       gimp_loop                    (void);
-static void       gimp_proc_run                (GPProcRun       *proc_run);
-static void       gimp_proc_run_internal       (GPProcRun       *proc_run,
-                                                GimpProcedure   *procedure,
-                                                GimpRunProc      run_proc,
-                                                GPProcReturn    *proc_return);
 
 static void       gimp_set_pdb_error           (GimpValueArray  *return_vals);
+
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
@@ -221,8 +215,6 @@ static gchar          write_buffer[WRITE_BUFFER_SIZE];
 static gulong         write_buffer_index = 0;
 
 static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
-
-GHashTable           *_gimp_temp_proc_ht = NULL;
 
 static guint          gimp_debug_flags   = 0;
 
@@ -743,7 +735,7 @@ gimp_main_internal (GType                 plug_in_type,
             PLUG_IN_INFO.query_proc ();
         }
 
-      gimp_close ();
+      _gimp_close ();
 
       return EXIT_SUCCESS;
     }
@@ -763,7 +755,7 @@ gimp_main_internal (GType                 plug_in_type,
             PLUG_IN_INFO.init_proc ();
         }
 
-      gimp_close ();
+      _gimp_close ();
 
       return EXIT_SUCCESS;
     }
@@ -773,14 +765,19 @@ gimp_main_internal (GType                 plug_in_type,
   else if (gimp_debug_flags & GIMP_DEBUG_PID)
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
-  _gimp_temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
-
   g_io_add_watch (_gimp_readchannel,
                   G_IO_ERR | G_IO_HUP,
                   gimp_plugin_io_error_handler,
                   NULL);
 
-  gimp_loop ();
+  if (PLUG_IN)
+    {
+      _gimp_plug_in_run (PLUG_IN);
+    }
+  else
+    {
+      _gimp_loop (PLUG_IN_INFO.run_proc);
+    }
 
   return EXIT_SUCCESS;
 }
@@ -794,7 +791,7 @@ gimp_main_internal (GType                 plug_in_type,
 void
 gimp_quit (void)
 {
-  gimp_close ();
+  _gimp_close ();
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
   if (plug_in_backtrace_path)
@@ -1199,8 +1196,8 @@ gimp_get_progname (void)
 
 /*  private functions  */
 
-static void
-gimp_close (void)
+void
+_gimp_close (void)
 {
   if (gimp_debug_flags & GIMP_DEBUG_QUIT)
     gimp_debug_stop ();
@@ -1547,67 +1544,6 @@ gimp_flush (GIOChannel *channel,
   return TRUE;
 }
 
-static void
-gimp_loop (void)
-{
-  GimpWireMessage msg;
-
-  while (TRUE)
-    {
-      if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
-        {
-          gimp_close ();
-          return;
-        }
-
-      switch (msg.type)
-        {
-        case GP_QUIT:
-          gimp_wire_destroy (&msg);
-          gimp_close ();
-          return;
-
-        case GP_CONFIG:
-          _gimp_config (msg.data);
-          break;
-
-        case GP_TILE_REQ:
-        case GP_TILE_ACK:
-        case GP_TILE_DATA:
-          g_warning ("unexpected tile message received (should not happen)");
-          break;
-
-        case GP_PROC_RUN:
-          gimp_proc_run (msg.data);
-          gimp_wire_destroy (&msg);
-          gimp_close ();
-          return;
-
-        case GP_PROC_RETURN:
-          g_warning ("unexpected proc return message received (should not happen)");
-          break;
-
-        case GP_TEMP_PROC_RUN:
-          g_warning ("unexpected temp proc run message received (should not happen");
-          break;
-
-        case GP_TEMP_PROC_RETURN:
-          g_warning ("unexpected temp proc return message received (should not happen");
-          break;
-
-        case GP_PROC_INSTALL:
-          g_warning ("unexpected proc install message received (should not happen)");
-          break;
-
-        case GP_HAS_INIT:
-          g_warning ("unexpected has init message received (should not happen)");
-          break;
-        }
-
-      gimp_wire_destroy (&msg);
-    }
-}
-
 void
 _gimp_config (GPConfig *config)
 {
@@ -1733,83 +1669,6 @@ _gimp_config (GPConfig *config)
 
 #endif
     }
-}
-
-static void
-gimp_proc_run (GPProcRun *proc_run)
-{
-  GPProcReturn proc_return;
-
-  if (PLUG_IN)
-    {
-      GimpProcedure *procedure;
-
-      procedure = gimp_plug_in_create_procedure (PLUG_IN, proc_run->name);
-
-      if (procedure)
-        {
-          gimp_proc_run_internal (proc_run, procedure, NULL,
-                                  &proc_return);
-
-          g_object_unref (procedure);
-        }
-    }
-  else if (PLUG_IN_INFO.run_proc)
-    {
-      gimp_proc_run_internal (proc_run, NULL, PLUG_IN_INFO.run_proc,
-                              &proc_return);
-    }
-
-  if (! gp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
-    gimp_quit ();
-}
-
-static void
-gimp_proc_run_internal (GPProcRun     *proc_run,
-                        GimpProcedure *procedure,
-                        GimpRunProc    run_proc,
-                        GPProcReturn  *proc_return)
-{
-  GimpValueArray *arguments;
-  GimpValueArray *return_values = NULL;
-
-  arguments = _gimp_gp_params_to_value_array (NULL, 0,
-                                              proc_run->params,
-                                              proc_run->nparams,
-                                              FALSE, FALSE);
-
-  if (procedure)
-    {
-      return_values = gimp_procedure_run (procedure, arguments);
-    }
-  else
-    {
-      GimpParam *params;
-      GimpParam *return_vals;
-      gint       n_params;
-      gint       n_return_vals;
-
-      n_params = gimp_value_array_length (arguments);
-      params   = _gimp_value_array_to_params (arguments, FALSE);
-
-      run_proc (proc_run->name,
-                n_params,       params,
-                &n_return_vals, &return_vals);
-
-      return_values = _gimp_params_to_value_array (return_vals,
-                                                   n_return_vals,
-                                                   FALSE);
-
-      g_free (params);
-    }
-
-  gimp_value_array_unref (arguments);
-
-  proc_return->name    = proc_run->name;
-  proc_return->nparams = gimp_value_array_length (return_values);
-  proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
-
-  gimp_value_array_unref (return_values);
 }
 
 static void

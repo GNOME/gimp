@@ -93,6 +93,7 @@ struct _GimpPlugInClass
    *          the names of the procedures registered by @plug_in.
    */
   gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in);
+
   /**
    * GimpPlugInClass::create_procedure:
    * @plug_in: a #GimpPlugIn.
