@@ -583,7 +583,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
 
 /**
  * gimp_widget_get_color_profile:
- * @monitor: a #GdkMonitor
+ * @widget: a #GtkWidget
  *
  * This function returns the #GimpColorProfile of the monitor @widget is
  * currently displayed on, or %NULL if there is no profile configured.
