@@ -51,11 +51,6 @@ def make_gradient(palette, num_segments, num_colors):
     return len(retval), retval
 
 def palette_to_gradient(procedure, args, data):
-    # Localization
-    plug_in = procedure.get_plug_in()
-    plug_in.set_translation_domain ("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
-
     palette = Gimp.context_get_palette()
     (_, num_colors) = Gimp.palette_get_info(palette)
 
@@ -80,6 +75,10 @@ def palette_to_gradient(procedure, args, data):
 
 class PaletteToGradient (Gimp.PlugIn):
     def do_query_procedures(self):
+        # Localization
+        self.set_translation_domain ("gimp30-python",
+                                     Gio.file_new_for_path(Gimp.locale_directory()))
+
         # XXX See pygobject#352 for the weird return value.
         return ['python-fu-palette-to-gradient',
                 'python-fu-palette-to-gradient-repeating'], 2
