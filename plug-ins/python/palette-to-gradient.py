@@ -46,11 +46,9 @@ def make_gradient(palette, num_segments, num_colors):
                                               color_number, color_right,
                                               100.0)
     Gimp.context_set_gradient(gradient)
-    retval = [Gimp.param_from_status (Gimp.PDBStatusType.SUCCESS),
-              Gimp.param_from_string(gradient)]
-    return len(retval), retval
+    return gradient
 
-def palette_to_gradient(procedure, args, data):
+def run(procedure, args, data):
     palette = Gimp.context_get_palette()
     (_, num_colors) = Gimp.palette_get_info(palette)
 
@@ -68,12 +66,42 @@ def palette_to_gradient(procedure, args, data):
     # See pygobject#351
     retval = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
-    # TODO: uncomment when GParamSpec bug is fixed.
-    #value = retval.index(1)
-    #value.set_string (gradient);
+    # XXX: I don't try to get the GValue with retval.index(1) because it
+    # actually return a string (cf. pygobject#353). Just create a new
+    # GValue and replace the default one with this one.
+    value = GObject.Value(GObject.TYPE_STRING, gradient)
+    retval.remove(1)
+    retval.insert(1, value)
+
     return retval
 
 class PaletteToGradient (Gimp.PlugIn):
+    ## Properties: parameters ##
+    @GObject.Property(type=Gimp.RunMode,
+                      default=Gimp.RunMode.NONINTERACTIVE,
+                      nick="Run mode", blurb="The run mode")
+    def run_mode(self):
+        """Read-write integer property."""
+        return self.runmode
+
+    @run_mode.setter
+    def run_mode(self, runmode):
+        self.runmode = runmode
+
+    ## Properties: return values ##
+    @GObject.Property(type=str,
+                      default="",
+                      nick="Name of the newly created gradient",
+                      blurb="Name of the newly created gradient")
+    def new_gradient(self):
+        """Read-write integer property."""
+        return self.new_gradient
+
+    @new_gradient.setter
+    def new_gradient(self, new_gradient):
+        self.new_gradient = new_gradient
+
+    ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
         # Localization
         self.set_translation_domain ("gimp30-python",
@@ -85,7 +113,7 @@ class PaletteToGradient (Gimp.PlugIn):
     def do_create_procedure(self, name):
         procedure = Gimp.Procedure.new(self, name,
                                        Gimp.PDBProcType.PLUGIN,
-                                       palette_to_gradient, None)
+                                       run, None)
         if name == 'python-fu-palette-to-gradient':
             procedure.set_menu_label(N_("Palette to _Gradient"))
             procedure.set_documentation(N_("Create a gradient using colors from the palette"),
@@ -102,28 +130,13 @@ class PaletteToGradient (Gimp.PlugIn):
         if procedure is not None:
             procedure.set_attribution("Carol Spears, reproduced from previous work by Adrian Likins and Jeff Trefftz",
                                       "Carol Spears", "2006")
-            returnspec = GObject.param_spec_string("new-gradient",
-                                                    "Name of the newly created gradient",
-                                                    "Name of the newly created gradient",
-                                                    None,
-                                                    GObject.ParamFlags.READWRITE)
-            # Passing a GObjectParamSpec currently fails.
-            # TODO: see pygobject#227
-            #procedure.add_return_value(returnspec)
+            # We don't build a GParamSpec ourselves because passing it
+            # around is apparently broken in Python. Hence this trick.
+            # See pygobject#227
+            procedure.add_argument_from_property(self, "run-mode")
+            procedure.add_return_value_from_property(self, "new-gradient")
 
-            paramspec = GObject.param_spec_enum("run-mode",
-                                                "Run mode",
-                                                "The run mode",
-                                                Gimp.RunMode.__gtype__,
-                                                Gimp.RunMode.NONINTERACTIVE,
-                                                GObject.ParamFlags.READWRITE)
-            # TODO: see pygobject#227
-            #procedure.add_argument(paramspec)
-
-            # TODO: To be installed in '<Palettes>', we need a run mode
-            # parameter. Wait for the GParamSpec bug to be fixed before
-            # uncommenting.
-            #procedure.add_menu_path ('<Palettes>')
+            procedure.add_menu_path ('<Palettes>')
 
         return procedure
 
