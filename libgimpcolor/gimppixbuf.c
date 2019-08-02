@@ -123,8 +123,8 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
  * Returns the ICC profile attached to the @pixbuf, or %NULL if there
  * is none.
  *
- * Returns: The ICC profile data, or %NULL. The value should be freed
- *               with g_free().
+ * Returns: (nullable): The ICC profile data, or %NULL.
+ *          The value should be freed with g_free().
  *
  * Since: 2.10
  **/

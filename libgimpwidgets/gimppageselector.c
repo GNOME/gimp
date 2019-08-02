@@ -597,9 +597,9 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
- * Returns: (transfer none): The page's thumbnail, or %NULL if none is set. The returned
- *          pixbuf is owned by #GimpPageSelector and must not be
- *          unref'ed when no longer needed.
+ * Returns: (nullable) (transfer none): The page's thumbnail, or %NULL if none
+ *          is set. The returned pixbuf is owned by #GimpPageSelector and must
+ *          not be unref'ed when no longer needed.
  *
  * Since: 2.4
  **/
@@ -678,9 +678,9 @@ gimp_page_selector_set_page_label (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
- * Returns: The page's label, or %NULL if none is set. This is a newly
- *          allocated string that should be g_free()'d when no longer
- *          needed.
+ * Returns: (nullable) (transfer full): The page's label, or %NULL if none is
+ *          set. This is a newly allocated string that should be g_free()'d
+ *          when no longer needed.
  *
  * Since: 2.4
  **/

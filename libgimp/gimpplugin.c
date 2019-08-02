@@ -341,7 +341,7 @@ gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
  * This function retrieves a temporary procedure from @plug_in by the
  * procedure's @name.
  *
- * Returns: (transfer none): The procedure if registered, or %NULL.
+ * Returns: (nullable) (transfer none): The procedure if registered, or %NULL.
  *
  * Since: 3.0
  **/

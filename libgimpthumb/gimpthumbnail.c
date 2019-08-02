@@ -969,7 +969,7 @@ gimp_thumbnail_debug_notify (GObject    *object,
  * In order to verify if the preview is uptodate, you should check the
  * "thumb_state" property after calling this function.
  *
- * Returns: (transfer full): a preview pixbuf or %NULL if no
+ * Returns: (nullable) (transfer full): a preview pixbuf or %NULL if no
  *               thumbnail was found
  **/
 GdkPixbuf *

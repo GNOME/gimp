@@ -442,7 +442,8 @@ gimp_config_path_unexpand (const gchar  *path,
  *
  * To reverse the expansion, use gimp_file_get_config_path().
  *
- * Returns: (transfer full): a newly allocated #GFile, or %NULL if the expansion failed.
+ * Returns: (nullable) (transfer full): a newly allocated #GFile,
+ *          or %NULL if the expansion failed.
  *
  * Since: 2.10
  **/

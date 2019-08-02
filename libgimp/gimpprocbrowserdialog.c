@@ -284,7 +284,7 @@ gimp_proc_browser_dialog_new (const gchar  *title,
  *
  * Retrieves the name of the currently selected procedure.
  *
- * Returns: The name of the selected procedure of %NULL if no
+ * Returns: (nullable): The name of the selected procedure of %NULL if no
  *               procedure is selected.
  *
  * Since: 2.4

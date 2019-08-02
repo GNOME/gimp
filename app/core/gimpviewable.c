@@ -849,7 +849,7 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
  * method, and executes it, caching the result.  If everything fails,
  * %NULL is returned.
  *
- * Returns: A #GimpTempBuf containing the preview image, or %NULL if
+ * Returns: (nullable): A #GimpTempBuf containing the preview image, or %NULL if
  *          none can be found or created.
  **/
 GimpTempBuf *
@@ -912,7 +912,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
  * then if that fails for a "get_preview" method.  This function does
  * not look for a cached preview.
  *
- * Returns: A #GimpTempBuf containing the preview image, or %NULL if
+ * Returns: (nullable): A #GimpTempBuf containing the preview image, or %NULL if
  *          none can be found or created.
  **/
 GimpTempBuf *
@@ -1006,8 +1006,8 @@ gimp_viewable_get_dummy_preview (GimpViewable *viewable,
  * method, and executes it, caching the result.  If everything fails,
  * %NULL is returned.
  *
- * Returns: A #GdkPixbuf containing the preview pixbuf, or %NULL if none can
- *          be found or created.
+ * Returns: (nullable): A #GdkPixbuf containing the preview pixbuf,
+ *          or %NULL if none can be found or created.
  **/
 GdkPixbuf *
 gimp_viewable_get_pixbuf (GimpViewable *viewable,
@@ -1069,8 +1069,8 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
  * then if that fails for a "get_pixbuf" method.  This function does
  * not look for a cached pixbuf.
  *
- * Returns: A #GdkPixbuf containing the preview, or %NULL if none can
- *          be created.
+ * Returns: (nullable): A #GdkPixbuf containing the preview,
+ *          or %NULL if none can be created.
  **/
 GdkPixbuf *
 gimp_viewable_get_new_pixbuf (GimpViewable *viewable,

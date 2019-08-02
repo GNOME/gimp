@@ -176,7 +176,7 @@ gimp_color_transform_finalize (GObject *object)
  * returns a non-%NULL transform and the code takes care of doing only
  * exactly the requested color transform.
  *
- * Returns: the #GimpColorTransform, or %NULL if there was an error.
+ * Returns: (nullable): the #GimpColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
@@ -306,7 +306,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
  * See gimp_color_transform_new() about the color spaces to transform
  * between.
  *
- * Returns: the #GimpColorTransform, or %NULL if there was an error.
+ * Returns: (nullable): the #GimpColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/

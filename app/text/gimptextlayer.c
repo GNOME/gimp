@@ -429,7 +429,7 @@ gimp_text_layer_convert_type (GimpLayer         *layer,
  *
  * Creates a new text layer.
  *
- * Returns: a new #GimpTextLayer or %NULL in case of a problem
+ * Returns: (nullable): a new #GimpTextLayer or %NULL in case of a problem
  **/
 GimpLayer *
 gimp_text_layer_new (GimpImage *image,
