@@ -382,7 +382,7 @@ gimp_rc_set_autosave (GimpRc   *rc,
  * is returned. If no property is found, the list of unknown tokens
  * attached to the @rc object is searched.
  *
- * Returns: a newly allocated string representing the value or %NULL
+ * Returns: (nullable): a newly allocated string representing the value or %NULL
  *               if the key couldn't be found.
  **/
 gchar *

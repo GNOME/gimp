@@ -264,7 +264,7 @@ jpeg_restore_original_settings (gint32           image_ID,
  * no parasite exists or if it cannot be used, this function returns
  * NULL.
  *
- * Returns: an array of quantization tables, or NULL.
+ * Returns: (nullable): an array of quantization tables, or NULL.
  */
 guint **
 jpeg_restore_original_tables (gint32    image_ID,

@@ -121,7 +121,7 @@ gimp_config_writer_newline (GimpConfigWriter *writer)
  * possible race conditions. The temporary file is then moved to
  * @filename when the writer is closed.
  *
- * Returns: a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
  *
  * Since: 2.4
  **/
@@ -158,7 +158,7 @@ gimp_config_writer_new_file (const gchar  *filename,
  * possible race conditions. The temporary file is then moved to @file
  * when the writer is closed.
  *
- * Returns: a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
  *
  * Since: 2.10
  **/
@@ -234,7 +234,7 @@ gimp_config_writer_new_gfile (GFile        *file,
  * Creates a new #GimpConfigWriter and sets it up to write to
  * @output.
  *
- * Returns: a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
  *
  * Since: 2.10
  **/
@@ -266,7 +266,7 @@ gimp_config_writer_new_stream (GOutputStream  *output,
  * gimp_config_writer_new_fd:
  * @fd:
  *
- * Returns: a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
  *
  * Since: 2.4
  **/
@@ -294,7 +294,7 @@ gimp_config_writer_new_fd (gint fd)
  * gimp_config_writer_new_string:
  * @string:
  *
- * Returns: a new #GimpConfigWriter or %NULL in case of an error
+ * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
  *
  * Since: 2.4
  **/

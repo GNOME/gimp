@@ -650,8 +650,8 @@ gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
  * gimp_number_pair_entry_get_default_text:
  * @entry:  A #GimpNumberPairEntry widget.
  *
- * Returns: the string manually set to be shown, or %NULL if values are
- *          shown in a normal fashion.
+ * Returns: (nullable): the string manually set to be shown,
+ *          or %NULL if values are shown in a normal fashion.
  *
  * Since: 2.4
  */

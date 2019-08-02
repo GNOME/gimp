@@ -55,8 +55,8 @@ gimp_tag_init (GimpTag *tag)
  *
  * If given tag name is not valid, an attempt will be made to fix it.
  *
- * Returns: a new #GimpTag object, or NULL if tag string is invalid and
- * cannot be fixed.
+ * Returns: (nullable) (transfer full): a new #GimpTag object,
+ *          or NULL if tag string is invalid and cannot be fixed.
  **/
 GimpTag *
 gimp_tag_new (const char *tag_string)
@@ -95,8 +95,8 @@ gimp_tag_new (const char *tag_string)
  * unneeded comparisons. If tag is created, however, it does not mean that
  * it would necessarily match with some other tag.
  *
- * Returns: new #GimpTag object, or NULL if tag will not match with any
- * other #GimpTag.
+ * Returns: (nullable) (transfer full): new #GimpTag object,
+ *          or NULL if tag will not match with any other #GimpTag.
  **/
 GimpTag *
 gimp_tag_try_new (const char *tag_string)

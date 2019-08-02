@@ -204,7 +204,7 @@ gimp_ui_get_foreign_window (guint32 window)
  * You shouldn't have to call this function directly. Use
  * gimp_window_set_transient_for_display() instead.
  *
- * Returns: (transfer full): A reference to a #GdkWindow or %NULL.
+ * Returns: (nullable) (transfer full): A reference to a #GdkWindow or %NULL.
  *               You should unref the window using g_object_unref() as
  *               soon as you don't need it any longer.
  *

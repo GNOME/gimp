@@ -167,7 +167,7 @@ gimp_color_profile_finalize (GObject *object)
  *
  * This function opens an ICC color profile from @file.
  *
- * Returns: the #GimpColorProfile, or %NULL. On error, %NULL is
+ * Returns: (nullable): the #GimpColorProfile, or %NULL. On error, %NULL is
  *               returned and @error is set.
  *
  * Since: 2.10
@@ -272,7 +272,7 @@ gimp_color_profile_new_from_file (GFile   *file,
  * This function opens an ICC color profile from memory. On error,
  * %NULL is returned and @error is set.
  *
- * Returns: the #GimpColorProfile, or %NULL.
+ * Returns: (nullable): the #GimpColorProfile, or %NULL.
  *
  * Since: 2.10
  **/
@@ -317,7 +317,7 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
  * @lcms_profile pointer is not retained by the created
  * #GimpColorProfile.
  *
- * Returns: the #GimpColorProfile, or %NULL.
+ * Returns: (nullable): the #GimpColorProfile, or %NULL.
  *
  * Since: 2.10
  **/
@@ -1010,7 +1010,7 @@ gimp_color_profile_new_from_color_profile (GimpColorProfile *profile,
  * This function creates a new RGB #GimpColorProfile with a sRGB gamma
  * TRC and @profile's RGB chromacities and whitepoint.
  *
- * Returns: (transfer full): the new #GimpColorProfile, or %NULL if
+ * Returns: (nullable) (transfer full): the new #GimpColorProfile, or %NULL if
  *               @profile is not an RGB profile or not matrix-based.
  *
  * Since: 2.10
@@ -1030,7 +1030,7 @@ gimp_color_profile_new_srgb_trc_from_color_profile (GimpColorProfile *profile)
  * This function creates a new RGB #GimpColorProfile with a linear TRC
  * and @profile's RGB chromacities and whitepoint.
  *
- * Returns: (transfer full): the new #GimpColorProfile, or %NULL if
+ * Returns: (nullable) (transfer full): the new #GimpColorProfile, or %NULL if
  *               @profile is not an RGB profile or not matrix-based.
  *
  * Since: 2.10
@@ -1578,7 +1578,7 @@ gimp_color_profile_get_format (GimpColorProfile          *profile,
  * Note that this function currently only supports RGB, RGBA, R'G'B',
  * R'G'B'A, Y, YA, Y', Y'A and the cairo-RGB24 and cairo-ARGB32 formats.
  *
- * Returns: the #Babl format to be used instead of @format, or %NULL
+ * Returns: (nullable): the #Babl format to be used instead of @format, or %NULL
  *               if the passed @format is not supported at all.
  *
  * Since: 2.10
