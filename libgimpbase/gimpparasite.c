@@ -170,6 +170,17 @@ gimp_param_parasite_values_cmp (GParamSpec   *pspec,
     return gimp_parasite_compare (parasite1, parasite2);
 }
 
+/**
+ * gimp_param_spec_parasite:
+ * @name: the #GParamSpec's name.
+ * @nick: the #GParamSpec's nick.
+ * @blurb: the #GParamSpec's blurb.
+ * @flags: a combination of #GParamFlags
+ *
+ * Returns: (transfer full): a newly allocated #GimpParamSpecParasite.
+ *
+ * Since: 2.3.8
+ */
 GParamSpec *
 gimp_param_spec_parasite (const gchar *name,
                           const gchar *nick,
@@ -209,6 +220,20 @@ gimp_parasite_print (GimpParasite *parasite)
 }
 #endif
 
+/**
+ * gimp_parasite_new:
+ * @name:  the new #GimpParasite name.
+ * @flags: see libgimpbase/gimpparasite.h macros.
+ * @size:  the size of @data, including a terminal %NULL byte if needed.
+ * @data:  (nullable): the data to save in a parasite.
+ *
+ * Creates a new parasite and save @data which may be a proper text (in
+ * which case you may want to set @size as strlen(@data) + 1) or not.
+ *
+ * Returns: (transfer full): a new #GimpParasite.
+ *
+ * Since: 1.1.23
+ */
 GimpParasite *
 gimp_parasite_new (const gchar    *name,
                    guint32         flags,
@@ -233,6 +258,14 @@ gimp_parasite_new (const gchar    *name,
   return parasite;
 }
 
+/**
+ * gimp_parasite_free:
+ * @parasite: a #GimpParasite
+ *
+ * Free @parasite's dynamically allocated memory.
+ *
+ * Since: 1.1.23
+ */
 void
 gimp_parasite_free (GimpParasite *parasite)
 {
@@ -248,6 +281,17 @@ gimp_parasite_free (GimpParasite *parasite)
   g_slice_free (GimpParasite, parasite);
 }
 
+/**
+ * gimp_parasite_is_type:
+ * @parasite: a #GimpParasite
+ * @name:     a parasite name.
+ *
+ * Compare parasite's names.
+ *
+ * Returns: %TRUE if @parasite is named @name, %FALSE otherwise.
+ *
+ * Since: 1.1.23
+ */
 gboolean
 gimp_parasite_is_type (const GimpParasite *parasite,
                        const gchar        *name)
@@ -258,6 +302,16 @@ gimp_parasite_is_type (const GimpParasite *parasite,
   return (strcmp (parasite->name, name) == 0);
 }
 
+/**
+ * gimp_parasite_copy:
+ * @parasite: a #GimpParasite
+ *
+ * Create a new parasite with all the same values.
+ *
+ * Returns: (transfer full): a newly allocated #GimpParasite with same contents.
+ *
+ * Since: 1.1.23
+ */
 GimpParasite *
 gimp_parasite_copy (const GimpParasite *parasite)
 {
@@ -268,6 +322,17 @@ gimp_parasite_copy (const GimpParasite *parasite)
                             parasite->size, parasite->data);
 }
 
+/**
+ * gimp_parasite_compare:
+ * @a: a #GimpParasite
+ * @b: a #GimpParasite
+ *
+ * Compare parasite's contents.
+ *
+ * Returns: %TRUE if @a and @b have same contents, %FALSE otherwise.
+ *
+ * Since: 1.1.23
+ */
 gboolean
 gimp_parasite_compare (const GimpParasite *a,
                        const GimpParasite *b)
@@ -287,6 +352,14 @@ gimp_parasite_compare (const GimpParasite *a,
   return FALSE;
 }
 
+/**
+ * gimp_parasite_flags:
+ * @parasite: a #GimpParasite
+ *
+ * Returns: @parasite flags.
+ *
+ * Since: 1.1.23
+ */
 gulong
 gimp_parasite_flags (const GimpParasite *parasite)
 {
@@ -296,6 +369,14 @@ gimp_parasite_flags (const GimpParasite *parasite)
   return parasite->flags;
 }
 
+/**
+ * gimp_parasite_is_persistent:
+ * @parasite: a #GimpParasite
+ *
+ * Returns: %TRUE if @parasite is persistent, %FALSE otherwise.
+ *
+ * Since: 1.1.23
+ */
 gboolean
 gimp_parasite_is_persistent (const GimpParasite *parasite)
 {
@@ -305,6 +386,14 @@ gimp_parasite_is_persistent (const GimpParasite *parasite)
   return (parasite->flags & GIMP_PARASITE_PERSISTENT);
 }
 
+/**
+ * gimp_parasite_is_undoable:
+ * @parasite: a #GimpParasite
+ *
+ * Returns: %TRUE if @parasite is undoable, %FALSE otherwise.
+ *
+ * Since: 1.1.23
+ */
 gboolean
 gimp_parasite_is_undoable (const GimpParasite *parasite)
 {
@@ -314,6 +403,15 @@ gimp_parasite_is_undoable (const GimpParasite *parasite)
   return (parasite->flags & GIMP_PARASITE_UNDOABLE);
 }
 
+/**
+ * gimp_parasite_has_flag:
+ * @parasite: a #GimpParasite
+ * @flag:     a parasite flag
+ *
+ * Returns: %TRUE if @parasite has @flag set, %FALSE otherwise.
+ *
+ * Since: 1.1.23
+ */
 gboolean
 gimp_parasite_has_flag (const GimpParasite *parasite,
                         gulong              flag)
@@ -324,6 +422,14 @@ gimp_parasite_has_flag (const GimpParasite *parasite,
   return (parasite->flags & flag);
 }
 
+/**
+ * gimp_parasite_name:
+ * @parasite: a #GimpParasite
+ *
+ * Returns: @parasite's name.
+ *
+ * Since: 1.1.23
+ */
 const gchar *
 gimp_parasite_name (const GimpParasite *parasite)
 {
@@ -333,6 +439,19 @@ gimp_parasite_name (const GimpParasite *parasite)
   return NULL;
 }
 
+/**
+ * gimp_parasite_data:
+ * @parasite: a #GimpParasite
+ *
+ * Gets the parasite's data. It may not necessarily be text, nor is it
+ * guaranteed to be %NULL-terminated. It is your responsibility to also
+ * call gimp_parasite_data_size() and to know how to deal with this
+ * data.
+ *
+ * Returns: @parasite's data.
+ *
+ * Since: 1.1.23
+ */
 gconstpointer
 gimp_parasite_data (const GimpParasite *parasite)
 {
@@ -342,6 +461,14 @@ gimp_parasite_data (const GimpParasite *parasite)
   return NULL;
 }
 
+/**
+ * gimp_parasite_data_size:
+ * @parasite: a #GimpParasite
+ *
+ * Returns: @parasite's data size.
+ *
+ * Since: 1.1.23
+ */
 glong
 gimp_parasite_data_size (const GimpParasite *parasite)
 {
