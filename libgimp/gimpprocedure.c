@@ -171,7 +171,7 @@ gimp_procedure_finalize (GObject *object)
  * @proc_type: the new procedure's #GimpPDBProcType.
  * @run_func:  the run function for the new procedure.
  * @run_data:  user data passed to @run_func.
- * @run_data_destroy: (nullable) free function for @run_data, or %NULL.
+ * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
  *
  * Creates a new procedure named @name which will call @run_func when
  * invoked.
@@ -314,7 +314,7 @@ gimp_procedure_set_menu_label (GimpProcedure *procedure,
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's menu label given in
- *          gimp_procedure_set_strings().
+ *          gimp_procedure_set_menu_label().
  *
  * Since: 3.0
  **/
@@ -341,7 +341,7 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * for example using N_("Blurb"). GIMP will look up the translation in
  * the textdomain registered for the plug-in.
  *
- * @help: is a free-form text that's meant as documentation for
+ * @help is a free-form text that's meant as documentation for
  * developers of scripts and plug-ins.
  *
  * Sets various documentation strings on @procedure.
@@ -369,7 +369,8 @@ gimp_procedure_set_documentation (GimpProcedure *procedure,
  * gimp_procedure_get_blurb:
  * @procedure: A #GimpProcedure.
  *
- * Returns: The procedure's blurb given in gimp_procedure_set_help().
+ * Returns: The procedure's blurb given in
+ *          gimp_procedure_set_documentation().
  *
  * Since: 3.0
  **/
@@ -386,7 +387,7 @@ gimp_procedure_get_blurb (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's help text given in
- *          gimp_procedure_set_help().
+ *          gimp_procedure_set_documentation().
  *
  * Since: 3.0
  **/
@@ -403,7 +404,7 @@ gimp_procedure_get_help (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's help ID given in
- *          gimp_procedure_set_help().
+ *          gimp_procedure_set_documentation().
  *
  * Since: 3.0
  **/
@@ -420,7 +421,7 @@ gimp_procedure_get_help_id (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  * @authors:   The @procedure's author(s).
  * @copyright: The @procedure's copyright.
- * @data:      The @procedure's date (written or pushished).
+ * @date:      The @procedure's date (written or published).
  *
  * Sets various attribution strings on @procedure.
  *
@@ -674,7 +675,7 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
  *
  * Add a new return value to @procedure according to @pspec
  * specifications. The returned values will be ordered according to the
- * call order to * gimp_procedure_add_return_value().
+ * call order to gimp_procedure_add_return_value().
  **/
 void
 gimp_procedure_add_return_value (GimpProcedure *procedure,

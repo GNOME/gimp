@@ -114,7 +114,7 @@ struct _GimpPlugInClass
    * This method should be overridden by all plug-ins and return a newly
    * allocated #GimpProcedure named @name.
    * It will be called for every @name as returned by query_procedures()
-   * so care must be taken.
+   * and init_procedures() so care must be taken to handle them all.
    *
    * Returns: (transfer full):
    *          the procedure to be registered by @plug_in.
