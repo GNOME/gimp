@@ -55,7 +55,7 @@
  * case the filename listbox of the #GtkFileChooser dialog will be
  * set to directory mode.
  *
- * If you specify @check_valid as #TRUE in gimp_file_entry_new() the
+ * If you specify @check_valid as %TRUE in gimp_file_entry_new() the
  * entered filename will be checked for validity and a pixmap will be
  * shown which indicates if the file exists or not.
  *

@@ -241,7 +241,7 @@ gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
  *
  * Returns the @visible property of the @selector's toggles.
  *
- * Return value: #TRUE if the #GimpColorSelector's toggles are visible.
+ * Return value: %TRUE if the #GimpColorSelector's toggles are visible.
  *
  * Since: 2.10
  **/
@@ -288,7 +288,7 @@ gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
  *
  * Returns the @sensitive property of the @selector's toggles.
  *
- * Return value: #TRUE if the #GimpColorSelector's toggles are sensitive.
+ * Return value: %TRUE if the #GimpColorSelector's toggles are sensitive.
  *
  * Since: 2.10
  **/
@@ -332,7 +332,7 @@ gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
  *
  * Returns the @selector's @show_alpha property.
  *
- * Return value: #TRUE if the #GimpColorSelector has alpha controls.
+ * Return value: %TRUE if the #GimpColorSelector has alpha controls.
  *
  * Since: 2.10
  **/

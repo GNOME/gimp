@@ -1851,7 +1851,7 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  * @shell: a #GimpDisplayShell
  * @mask:  a #GimpDrawable (1 byte per pixel)
  * @color: the color to use for drawing the mask
- * @inverted: #TRUE if the mask should be drawn inverted
+ * @inverted: %TRUE if the mask should be drawn inverted
  *
  * Previews a mask originating at offset_x, offset_x. Depending on
  * @inverted, pixels that are selected or not selected are tinted with

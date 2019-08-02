@@ -432,7 +432,7 @@ gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
  *
  * Returns the @selection's @show_alpha property.
  *
- * Return value: #TRUE if the #GimpColorSelection has alpha controls.
+ * Return value: %TRUE if the #GimpColorSelection has alpha controls.
  **/
 gboolean
 gimp_color_selection_get_show_alpha (GimpColorSelection *selection)

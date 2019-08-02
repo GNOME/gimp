@@ -772,7 +772,7 @@ gimp_dialog_factory_add_session_info (GimpDialogFactory *factory,
  * @factory:      a #GimpDialogFactory
  * @monitor:      the #GdkMonitor the dialog should appear on
  * @parent:       the #GtkWidget from which the raised dialog
- *                originated, if applicable, #NULL otherwise.
+ *                originated, if applicable, %NULL otherwise.
  * @identifiers:  a '|' separated list of identifiers of dialogs as
  *                registered with gimp_dialog_factory_register_entry()
  * @view_size:    the initial preview size if a dialog needs to be created
