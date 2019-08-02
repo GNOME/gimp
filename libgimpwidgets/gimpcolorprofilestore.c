@@ -240,7 +240,7 @@ gimp_color_profile_store_get_property (GObject    *object,
  *  gchar *history = gimp_personal_rc_file ("profilerc");
  * </programlisting></informalexample>
  *
- * Return value: a new #GimpColorProfileStore
+ * Returns: a new #GimpColorProfileStore
  *
  * Since: 2.4
  **/
@@ -303,7 +303,7 @@ gimp_color_profile_store_add_file (GimpColorProfileStore *store,
  * @label: label to use for the profile (or %NULL)
  * @iter:  a #GtkTreeIter
  *
- * Return value: %TRUE if the iter is valid and pointing to the item
+ * Returns: %TRUE if the iter is valid and pointing to the item
  *
  * Since: 2.4
  **/

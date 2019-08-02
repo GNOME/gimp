@@ -381,7 +381,7 @@ gimp_number_pair_entry_finalize (GObject *object)
  * The first separator of @separators is used to display the current
  * value.
  *
- * Return value: The new #GimpNumberPairEntry widget.
+ * Returns: The new #GimpNumberPairEntry widget.
  *
  * Since: 2.4
  **/

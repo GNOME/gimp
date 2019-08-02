@@ -71,7 +71,7 @@ gimp_type_set_translation_domain (GType        type,
  * not need to use this function directly, use gimp_enum_get_value()
  * or gimp_enum_value_get_desc() instead.
  *
- * Return value: the translation domain associated with @type
+ * Returns: the translation domain associated with @type
  *               or %NULL if no domain was set
  *
  * Since: 2.2
@@ -111,7 +111,7 @@ gimp_type_set_translation_context (GType        type,
  * use this function directly, use gimp_enum_get_value() or
  * gimp_enum_value_get_desc() instead.
  *
- * Return value: the translation context associated with @type
+ * Returns: the translation context associated with @type
  *               or %NULL if no context was set
  *
  * Since: 2.8

@@ -219,7 +219,7 @@ gimp_progress_bar_get_window (gpointer user_data)
  *
  * Creates a new #GimpProgressBar widget.
  *
- * Return value: the new widget.
+ * Returns: the new widget.
  *
  * Since: 2.2
  **/

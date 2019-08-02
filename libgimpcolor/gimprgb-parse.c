@@ -222,7 +222,7 @@ static const ColorEntry named_colors[] =
  *
  * This function does not touch the alpha component of @rgb.
  *
- * Return value: %TRUE if @name was parsed successfully and @rgb has
+ * Returns: %TRUE if @name was parsed successfully and @rgb has
  *               been set, %FALSE otherwise
  *
  * Since: 2.2
@@ -258,7 +258,7 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
  *
  * This function does not touch the alpha component of @rgb.
  *
- * Return value: %TRUE if @hex was parsed successfully and @rgb has
+ * Returns: %TRUE if @hex was parsed successfully and @rgb has
  *               been set, %FALSE otherwise
  *
  * Since: 2.2
@@ -298,7 +298,7 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
  *
  * This function does not touch the alpha component of @rgb.
  *
- * Return value: %TRUE if @css was parsed successfully and @rgb has been
+ * Returns: %TRUE if @css was parsed successfully and @rgb has been
  *               set, %FALSE otherwise
  *
  * Since: 2.2
@@ -336,7 +336,7 @@ gimp_rgb_parse_css (GimpRGB     *rgb,
  * It doesn't handle the hexadecimal notation or color names because
  * they leave the alpha channel unspecified.
  *
- * Return value: %TRUE if @css was parsed successfully and @rgb has been
+ * Returns: %TRUE if @css was parsed successfully and @rgb has been
  *               set, %FALSE otherwise
  *
  * Since: 2.2
@@ -386,7 +386,7 @@ gimp_rgba_parse_css (GimpRGB     *rgba,
  * arrays are allocated dynamically. You must call g_free() on the
  * @names and @colors arrays when they are not any longer needed.
  *
- * Return value: the number of named colors
+ * Returns: the number of named colors
  *               (i.e. the length of the returned arrays)
  *
  * Since: 2.2

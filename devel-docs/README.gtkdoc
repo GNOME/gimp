@@ -94,7 +94,7 @@ functions (and macros, signals and properties, if you want).
  * #GtkWidget for links to other declarations (which may be documented
  * elsewhere).
  * 
- * Return value: an integer.
+ * Returns: an integer.
  **/
 
 The block starts with '/**'.

@@ -317,7 +317,7 @@ gimp_zoom_model_zoom_out (GimpZoomModel *model)
  *
  * Creates a new #GimpZoomModel.
  *
- * Return value: a new #GimpZoomModel.
+ * Returns: a new #GimpZoomModel.
  *
  * Since GIMP 2.4
  **/
@@ -388,7 +388,7 @@ gimp_zoom_model_zoom (GimpZoomModel *model,
  *
  * Retrieves the current zoom factor of @model.
  *
- * Return value: the current scale factor
+ * Returns: the current scale factor
  *
  * Since GIMP 2.4
  **/
@@ -540,7 +540,7 @@ zoom_out_button_callback (GimpZoomModel *model,
  * @zoom_type:
  * @icon_size: use 0 for a button with text labels
  *
- * Return value: (transfer full): a newly created GtkButton
+ * Returns: (transfer full): a newly created GtkButton
  *
  * Since GIMP 2.4
  **/
@@ -610,7 +610,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
  *
  * Utility function to calculate a new scale factor.
  *
- * Return value: the new scale factor
+ * Returns: the new scale factor
  *
  * Since GIMP 2.4
  **/

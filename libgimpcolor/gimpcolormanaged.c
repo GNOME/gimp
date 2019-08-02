@@ -78,7 +78,7 @@ gimp_color_managed_default_init (GimpColorManagedInterface *iface)
  * @managed: an object the implements the #GimpColorManaged interface
  * @len:     return location for the number of bytes in the profile data
  *
- * Return value: A pointer to a blob of data that represents an ICC
+ * Returns: A pointer to a blob of data that represents an ICC
  *               color profile.
  *
  * Since: 2.4
@@ -109,7 +109,7 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
  * This function always returns a #GimpColorProfile and falls back to
  * gimp_color_profile_new_rgb_srgb() if the method is not implemented.
  *
- * Return value: (transfer full): The @managed's #GimpColorProfile.
+ * Returns: (transfer full): The @managed's #GimpColorProfile.
  *
  * Since: 2.10
  **/

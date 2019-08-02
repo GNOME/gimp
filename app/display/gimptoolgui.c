@@ -210,7 +210,7 @@ gimp_tool_gui_finalize (GObject *object)
  * This function creates a #GimpToolGui using the information stored
  * in @tool_info.
  *
- * Return value: a new #GimpToolGui
+ * Returns: a new #GimpToolGui
  **/
 GimpToolGui *
 gimp_tool_gui_new (GimpToolInfo *tool_info,

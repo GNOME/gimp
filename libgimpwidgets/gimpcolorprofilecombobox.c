@@ -308,7 +308,7 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
  *
  * See also gimp_color_profile_combo_box_new_with_model().
  *
- * Return value: a new #GimpColorProfileComboBox.
+ * Returns: a new #GimpColorProfileComboBox.
  *
  * Since: 2.4
  **/
@@ -342,7 +342,7 @@ gimp_color_profile_combo_box_new (GtkWidget   *dialog,
  *
  * See also gimp_color_profile_combo_box_new().
  *
- * Return value: a new #GimpColorProfileComboBox.
+ * Returns: a new #GimpColorProfileComboBox.
  *
  * Since: 2.4
  **/
@@ -446,7 +446,7 @@ gimp_color_profile_combo_box_set_active_file (GimpColorProfileComboBox *combo,
  * gimp_color_profile_combo_box_get_active_file:
  * @combo: a #GimpColorProfileComboBox
  *
- * Return value: (transfer none): The file of the currently selected
+ * Returns: (transfer none): The file of the currently selected
  *               color profile, release using g_object_unref() when it
  *               is not any longer needed.
  *

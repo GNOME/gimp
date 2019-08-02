@@ -51,7 +51,7 @@
  *
  * Calculates the intersection of two rectangles.
  *
- * Return value: %TRUE if the intersection is non-empty, %FALSE otherwise
+ * Returns: %TRUE if the intersection is non-empty, %FALSE otherwise
  *
  * Since: 2.4
  **/

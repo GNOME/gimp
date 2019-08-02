@@ -793,7 +793,7 @@ gimp_color_button_set_type (GimpColorButton   *button,
  *
  * Returns the color button's @continuous_update property.
  *
- * Return value: the @continuous_update property.
+ * Returns: the @continuous_update property.
  **/
 gboolean
 gimp_color_button_get_update (GimpColorButton *button)

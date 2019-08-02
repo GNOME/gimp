@@ -281,7 +281,7 @@ gimp_image_item_list_transform (GimpImage              *image,
  * This function returns a #GList of #GimpItem<!-- -->s for which the
  * @type and @set criterions match.
  *
- * Return value: The list of items.
+ * Returns: The list of items.
  **/
 GList *
 gimp_image_item_list_get_list (GimpImage        *image,

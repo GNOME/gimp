@@ -442,7 +442,7 @@ gimp_gradient_get_extension (GimpData *data)
  * If you are iterating over an gradient, you should pass the the
  * return value from the last call for @seg.
  *
- * Return value: the gradient segment the color is from
+ * Returns: the gradient segment the color is from
  **/
 GimpGradientSegment *
 gimp_gradient_get_color_at (GimpGradient                *gradient,

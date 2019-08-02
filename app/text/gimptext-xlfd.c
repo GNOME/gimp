@@ -72,7 +72,7 @@ static gchar * launder_font_name        (gchar       *name);
  * "weight", "slant" and "stretch" fields of an X Logical Font
  * Description.
  *
- * Return value: a newly allocated string.
+ * Returns: a newly allocated string.
  **/
 gchar *
 gimp_text_font_name_from_xlfd (const gchar *xlfd)
@@ -133,7 +133,7 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
  * Attempts to extract the font size from an X Logical Font
  * Description.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  **/
 gboolean
 gimp_text_font_size_from_xlfd (const gchar *xlfd,

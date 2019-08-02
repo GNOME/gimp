@@ -693,7 +693,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
  * %factory is a toplevel of dockable factory.
  *
- * Return value: the newly created dialog or an already existing singleton
+ * Returns: the newly created dialog or an already existing singleton
  *               dialog.
  **/
 GtkWidget *
@@ -783,7 +783,7 @@ gimp_dialog_factory_add_session_info (GimpDialogFactory *factory,
  * Implicitly creates the first dialog in the list if none of the dialogs
  * were found.
  *
- * Return value: the raised or newly created dialog.
+ * Returns: the raised or newly created dialog.
  **/
 GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
@@ -843,7 +843,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
  * so callers should check that gimp_dockable_get_dockbook (dockable)
  * is NULL before trying to add it to it's #GimpDockbook.
  *
- * Return value: the newly created #GimpDockable or an already existing
+ * Returns: the newly created #GimpDockable or an already existing
  *               singleton dockable.
  **/
 GtkWidget *

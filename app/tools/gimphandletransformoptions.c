@@ -129,7 +129,7 @@ gimp_handle_transform_options_get_property (GObject    *object,
  *
  * Build the Transform Tool Options.
  *
- * Return value: a container holding the transform tool options
+ * Returns: a container holding the transform tool options
  **/
 GtkWidget *
 gimp_handle_transform_options_gui (GimpToolOptions *tool_options)

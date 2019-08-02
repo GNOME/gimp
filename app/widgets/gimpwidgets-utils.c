@@ -339,7 +339,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
  * returned, so this function is guaranteed to always return a
  * #GdkPixbuf.
  *
- * Return value: a newly allocated #GdkPixbuf containing @icon_name at
+ * Returns: a newly allocated #GdkPixbuf containing @icon_name at
  * size @size or a fallback icon/size.
  **/
 GdkPixbuf *
@@ -533,7 +533,7 @@ gimp_get_mod_string (GdkModifierType modifiers)
  * of the modifier.  They can also be %NULL if the modifier name
  * should be left alone.
  *
- * Return value: a newly allocated string containing the message.
+ * Returns: a newly allocated string containing the message.
  **/
 gchar *
 gimp_suggest_modifiers (const gchar     *message,
@@ -871,7 +871,7 @@ gimp_window_set_hint (GtkWindow      *window,
  * This function is used to pass a window handle to plug-ins so that
  * they can set their dialog windows transient to the parent window.
  *
- * Return value: a native window ID of the window's #GdkWindow or 0
+ * Returns: a native window ID of the window's #GdkWindow or 0
  *               if the window isn't realized yet
  */
 guint32

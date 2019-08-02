@@ -99,7 +99,7 @@ gimp_tool_dialog_dispose (GObject *object)
  * information stored in @tool_info. It also registers the tool with
  * the "toplevel" dialog factory.
  *
- * Return value: a new #GimpViewableDialog
+ * Returns: a new #GimpViewableDialog
  **/
 GtkWidget *
 gimp_tool_dialog_new (GimpToolInfo *tool_info,

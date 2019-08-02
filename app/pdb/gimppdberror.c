@@ -27,7 +27,7 @@
  *
  * This function is never called directly. Use GIMP_PDB_ERROR() instead.
  *
- * Return value: the #GQuark that defines the GimpPlugIn error domain.
+ * Returns: the #GQuark that defines the GimpPlugIn error domain.
  **/
 GQuark
 gimp_pdb_error_quark (void)

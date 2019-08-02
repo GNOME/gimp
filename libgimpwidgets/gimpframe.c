@@ -224,7 +224,7 @@ gimp_frame_get_label_spacing (GimpFrame *frame)
  * bold and the frame content is indented four spaces as suggested by
  * the GNOME HIG (see https://developer.gnome.org/hig/stable/).
  *
- * Return value: a new #GimpFrame widget
+ * Returns: a new #GimpFrame widget
  *
  * Since: 2.2
  **/

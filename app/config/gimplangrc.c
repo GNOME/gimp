@@ -270,7 +270,7 @@ gimp_lang_rc_new (GFile    *system_gimprc,
  *
  * This function looks up the language set in `gimprc`.
  *
- * Return value: a newly allocated string representing the language or
+ * Returns: a newly allocated string representing the language or
  *               %NULL if the key couldn't be found.
  **/
 gchar *

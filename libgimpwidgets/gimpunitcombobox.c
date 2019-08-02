@@ -118,7 +118,7 @@ gimp_unit_combo_box_popup_shown (GtkWidget        *widget,
 /**
  * gimp_unit_combo_box_new:
  *
- * Return value: a new #GimpUnitComboBox.
+ * Returns: a new #GimpUnitComboBox.
  **/
 GtkWidget *
 gimp_unit_combo_box_new (void)
@@ -141,7 +141,7 @@ gimp_unit_combo_box_new (void)
  * gimp_unit_combo_box_new_with_model:
  * @model: a GimpUnitStore
  *
- * Return value: a new #GimpUnitComboBox.
+ * Returns: a new #GimpUnitComboBox.
  **/
 GtkWidget *
 gimp_unit_combo_box_new_with_model (GimpUnitStore *model)

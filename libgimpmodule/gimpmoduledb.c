@@ -174,7 +174,7 @@ gimp_module_db_finalize (GObject *object)
  * Creates a new #GimpModuleDB instance. The @verbose parameter will be
  * passed to the created #GimpModule instances using gimp_module_new().
  *
- * Return value: The new #GimpModuleDB instance.
+ * Returns: The new #GimpModuleDB instance.
  **/
 GimpModuleDB *
 gimp_module_db_new (gboolean verbose)
@@ -195,7 +195,7 @@ gimp_module_db_new (gboolean verbose)
  * Returns a #GList of the modules kept by @db. The list must not be
  * modified or freed.
  *
- * Return value: (element-type GimpModule) (transfer none): a #GList
+ * Returns: (element-type GimpModule) (transfer none): a #GList
  * of #GimpModule instances.
  *
  * Since: 3.0
@@ -232,7 +232,7 @@ gimp_module_db_set_verbose (GimpModuleDB *db,
  *
  * Returns the 'verbose' setting of @db.
  *
- * Return value: the 'verbose' setting.
+ * Returns: the 'verbose' setting.
  *
  * Since: 3.0
  **/
@@ -322,7 +322,7 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
  * Return the #G_SEARCHPATH_SEPARATOR delimited list of module filenames
  * which are excluded from auto-loading.
  *
- * Return value: the @db's @load_inhibit string.
+ * Returns: the @db's @load_inhibit string.
  **/
 const gchar *
 gimp_module_db_get_load_inhibit (GimpModuleDB *db)

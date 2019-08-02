@@ -209,7 +209,7 @@ gimp_hint_box_get_property (GObject    *object,
  * Creates a new widget that shows a text label showing @hint,
  * decorated with a GIMP_ICON_INFO wilber icon.
  *
- * Return value: a new widget
+ * Returns: a new widget
  *
  * Since GIMP 2.4
  **/

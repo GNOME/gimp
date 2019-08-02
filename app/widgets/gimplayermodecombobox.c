@@ -221,7 +221,7 @@ gimp_layer_mode_combo_box_changed (GtkComboBox *gtk_combo)
  * gimp_layer_mode_combo_box_new:
  * Foo.
  *
- * Return value: a new #GimpLayerModeComboBox.
+ * Returns: a new #GimpLayerModeComboBox.
  **/
 GtkWidget *
 gimp_layer_mode_combo_box_new (GimpLayerModeContext context)

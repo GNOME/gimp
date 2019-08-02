@@ -827,7 +827,7 @@ typedef struct
  *
  * Creates a DICOMELEMENT object and inserts it into @elements.
  *
- * Return value: the new head of @elements
+ * Returns: the new head of @elements
 **/
 static GSList *
 dicom_add_element (GSList      *elements,
@@ -884,7 +884,7 @@ dicom_add_element_copy (GSList       *elements,
  * guint16 for @value_rep == %US or guint32 for other values of
  * @value_rep
  *
- * Return value: the new head of @elements
+ * Returns: the new head of @elements
  */
 static GSList *
 dicom_add_element_int (GSList  *elements,
@@ -945,7 +945,7 @@ dicom_elements_destroy (GSList *elements)
  *
  * Removes the specified DICOMELEMENT from @elements and Destroys it
  *
- * Return value: the new head of @elements
+ * Returns: the new head of @elements
 **/
 static GSList *
 dicom_destroy_element (GSList       *elements,
@@ -971,7 +971,7 @@ dicom_destroy_element (GSList       *elements,
  *
  * Determines the equality of @a and @b as strcmp
  *
- * Return value: an integer indicating the equality of @a and @b.
+ * Returns: an integer indicating the equality of @a and @b.
 **/
 static gint
 dicom_elements_compare (gconstpointer a,
@@ -1011,7 +1011,7 @@ dicom_elements_compare (gconstpointer a,
  *
  * Retrieves the specified DICOMELEMENT from @head, if available.
  *
- * Return value: a DICOMELEMENT matching the specified group,element,
+ * Returns: a DICOMELEMENT matching the specified group,element,
  *               or NULL if the specified element was not found.
 **/
 static DICOMELEMENT *
@@ -1031,7 +1031,7 @@ dicom_element_find_by_num (GSList  *head,
  *
  * Reads all DICOMELEMENTs from the specified image's parasites.
  *
- * Return value: a GSList of all known dicom elements
+ * Returns: a GSList of all known dicom elements
 **/
 static GSList *
 dicom_get_elements_list (gint32 image_ID)
@@ -1150,7 +1150,7 @@ dicom_get_elements_list (gint32 image_ID)
  *
  * Removes certain DICOMELEMENTs from the elements list which are specific to the output of this plugin.
  *
- * Return value: the new head of @elements
+ * Returns: the new head of @elements
 **/
 static GSList *
 dicom_remove_gimp_specified_elements (GSList *elements,
@@ -1212,7 +1212,7 @@ dicom_remove_gimp_specified_elements (GSList *elements,
  * Defaults DICOMELEMENTs to the values set by previous version of
  * this plugin, but only if they do not already exist.
  *
- * Return value: the new head of @elements
+ * Returns: the new head of @elements
 **/
 static GSList *
 dicom_ensure_required_elements_present (GSList *elements,
@@ -1512,7 +1512,7 @@ dicom_print_tags(gpointer data,
  *
  * Writes all Dicom tags in @elements to the file @DICOM
  *
- * Return value: the new head of @elements
+ * Returns: the new head of @elements
 **/
 static GSList *
 dicom_add_tags (FILE       *DICOM,

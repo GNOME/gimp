@@ -454,7 +454,7 @@ gimp_extension_process (guint timeout)
  * passes them to gimp_run_procedure2(). Please look there for further
  * information.
  *
- * Return value: the procedure's return values unless there was an error,
+ * Returns: the procedure's return values unless there was an error,
  * in which case the zero-th return value will be the error status, and
  * the first return value will be a string detailing the error.
  **/
@@ -657,7 +657,7 @@ gimp_run_procedure (const gchar *name,
  * As soon as you don't need the return values any longer, you should
  * free them using gimp_destroy_params().
  *
- * Return value: the procedure's return values unless there was an error,
+ * Returns: the procedure's return values unless there was an error,
  * in which case the zero-th return value will be the error status, and
  * if there are two values returned, the other return value will be a
  * string detailing the error.

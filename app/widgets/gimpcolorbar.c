@@ -225,7 +225,7 @@ gimp_color_bar_draw (GtkWidget *widget,
  *
  * Creates a new #GimpColorBar widget.
  *
- * Return value: The new #GimpColorBar widget.
+ * Returns: The new #GimpColorBar widget.
  **/
 GtkWidget *
 gimp_color_bar_new (GtkOrientation  orientation)

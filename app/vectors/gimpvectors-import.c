@@ -206,7 +206,7 @@ static GList    * parse_path_data     (const gchar  *data);
  *
  * Imports one or more paths and basic shapes from a SVG file.
  *
- * Return value: %TRUE on success, %FALSE if an error occurred
+ * Returns: %TRUE on success, %FALSE if an error occurred
  **/
 gboolean
 gimp_vectors_import_file (GimpImage    *image,
@@ -253,7 +253,7 @@ gimp_vectors_import_file (GimpImage    *image,
  *
  * Imports one or more paths and basic shapes from a SVG file.
  *
- * Return value: %TRUE on success, %FALSE if an error occurred
+ * Returns: %TRUE on success, %FALSE if an error occurred
  **/
 gboolean
 gimp_vectors_import_buffer (GimpImage    *image,

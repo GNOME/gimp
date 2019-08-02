@@ -700,7 +700,7 @@ gimp_item_real_resize (GimpItem     *item,
  * @width:    The width to assign the item.
  * @height:   The height to assign the item.
  *
- * Return value: The newly created item.
+ * Returns: The newly created item.
  */
 GimpItem *
 gimp_item_new (GType        type,
@@ -2061,7 +2061,7 @@ gimp_item_set_parasites (GimpItem         *item,
  * fiddle with an item's parasite list directly. This function exists
  * for special purposes only, like when saving an item to XCF.
  *
- * Return value: The @item's #GimpParasiteList.
+ * Returns: The @item's #GimpParasiteList.
  **/
 GimpParasiteList *
 gimp_item_get_parasites (GimpItem *item)

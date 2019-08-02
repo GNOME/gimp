@@ -376,7 +376,7 @@ gimp_list_get_child_index (GimpContainer *container,
  *
  * The returned list has the #GIMP_CONTAINER_POLICY_STRONG.
  *
- * Return value: a new #GimpList object
+ * Returns: a new #GimpList object
  **/
 GimpContainer *
 gimp_list_new (GType    children_type,
@@ -410,7 +410,7 @@ gimp_list_new (GType    children_type,
  *
  * The returned list has the #GIMP_CONTAINER_POLICY_WEAK.
  *
- * Return value: a new #GimpList object
+ * Returns: a new #GimpList object
  **/
 GimpContainer *
 gimp_list_new_weak (GType    children_type,
@@ -482,7 +482,7 @@ gimp_list_set_sort_func (GimpList     *list,
  *
  * Returns the @list's sort function, see gimp_list_set_sort_func().
  *
- * Return Value: The @list's sort function.
+ * Returns: The @list's sort function.
  **/
 GCompareFunc
 gimp_list_get_sort_func (GimpList*list)

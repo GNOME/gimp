@@ -79,7 +79,7 @@ static GtkWidget * gimp_proc_view_create_params (const GimpParamDef *params,
  * @params:
  * @return_vals:
  *
- * Return value: (transfer full): a new widget providing a view on a
+ * Returns: (transfer full): a new widget providing a view on a
  *               GIMP procedure
  *
  * Since: 2.4

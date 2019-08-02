@@ -421,7 +421,7 @@ gimp_preview_area_destroy_transform (GimpPreviewArea *area)
  *
  * Creates a new #GimpPreviewArea widget.
  *
- * Return value: a new #GimpPreviewArea widget.
+ * Returns: a new #GimpPreviewArea widget.
  *
  * Since GIMP 2.2
  **/

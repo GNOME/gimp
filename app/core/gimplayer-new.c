@@ -86,7 +86,7 @@ gimp_layer_new (GimpImage     *image,
  * possibility of transforming the contents to meet the requirements
  * of the target image type
  *
- * Return value: The new layer.
+ * Returns: The new layer.
  **/
 GimpLayer *
 gimp_layer_new_from_buffer (GimpBuffer    *buffer,
@@ -119,7 +119,7 @@ gimp_layer_new_from_buffer (GimpBuffer    *buffer,
  * possibility of transforming the contents to meet the requirements
  * of the target image type
  *
- * Return value: The new layer.
+ * Returns: The new layer.
  **/
 GimpLayer *
 gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
@@ -165,7 +165,7 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
  * possibility of transforming the contents to meet the requirements
  * of the target image type
  *
- * Return value: The new layer.
+ * Returns: The new layer.
  **/
 GimpLayer *
 gimp_layer_new_from_pixbuf (GdkPixbuf     *pixbuf,

@@ -183,7 +183,7 @@ gimp_tag_cache_get_memsize (GimpObject *object,
 /**
  * gimp_tag_cache_new:
  *
- * Return value: creates new GimpTagCache object.
+ * Returns: creates new GimpTagCache object.
  **/
 GimpTagCache *
 gimp_tag_cache_new (void)

@@ -817,7 +817,7 @@ gimp_zoom_preview_new_with_model_from_drawable_id (gint32         drawable_ID,
  *
  * Returns the drawable_ID the #GimpZoomPreview is attached to.
  *
- * Return Value: the drawable_ID that was passed to
+ * Returns: the drawable_ID that was passed to
  * gimp_zoom_preview_new_from_drawable_id().
  *
  * Since: 2.10
@@ -836,7 +836,7 @@ gimp_zoom_preview_get_drawable_id (GimpZoomPreview *preview)
  *
  * Returns the #GimpZoomModel the preview is using.
  *
- * Return Value: (transfer none): a pointer to the #GimpZoomModel owned
+ * Returns: (transfer none): a pointer to the #GimpZoomModel owned
  *               by the @preview
  *
  * Since: 2.4
@@ -855,7 +855,7 @@ gimp_zoom_preview_get_model (GimpZoomPreview *preview)
  *
  * Returns the zoom factor the preview is currently using.
  *
- * Return Value: the current zoom factor
+ * Returns: the current zoom factor
  *
  * Since: 2.4
  **/
@@ -885,7 +885,7 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
  * This function also allow to get the current width, height and bpp of the
  * #GimpZoomPreview.
  *
- * Return Value: newly allocated data that should be released using g_free()
+ * Returns: newly allocated data that should be released using g_free()
  *               when it is not any longer needed
  *
  * Since: 2.4

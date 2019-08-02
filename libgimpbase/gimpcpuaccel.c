@@ -58,7 +58,7 @@ static gboolean  use_cpu_accel = TRUE;
  *
  * Query for CPU acceleration support.
  *
- * Return value: #GimpCpuAccelFlags as supported by the CPU.
+ * Returns: #GimpCpuAccelFlags as supported by the CPU.
  *
  * Since: 2.4
  */

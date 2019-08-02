@@ -344,7 +344,7 @@ gimp_transform_grid_options_get_property (GObject    *object,
  *
  * Build the TransformGrid Tool Options.
  *
- * Return value: a container holding the transform_grid tool options
+ * Returns: a container holding the transform_grid tool options
  **/
 GtkWidget *
 gimp_transform_grid_options_gui (GimpToolOptions *tool_options)

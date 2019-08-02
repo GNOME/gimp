@@ -819,7 +819,7 @@ gimp_restore (Gimp                *gimp,
  * gimp_is_restored:
  * @gimp: a #Gimp object
  *
- * Return value: %TRUE if GIMP is completely started, %FALSE otherwise.
+ * Returns: %TRUE if GIMP is completely started, %FALSE otherwise.
  **/
 gboolean
 gimp_is_restored (Gimp *gimp)

@@ -31,7 +31,7 @@
  *
  * This function is never called directly. Use GIMP_WIDGETS_ERROR() instead.
  *
- * Return value: the #GQuark that defines the GIMP widgets error domain.
+ * Returns: the #GQuark that defines the GIMP widgets error domain.
  **/
 GQuark
 gimp_widgets_error_quark (void)

@@ -213,7 +213,7 @@ gimp_metadata_init (GimpMetadata *metadata)
  *
  * Generate Version 4 UUID/GUID.
  *
- * Return value: The new GUID/UUID string.
+ * Returns: The new GUID/UUID string.
  *
  * Since: 2.10
  */
@@ -473,7 +473,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
  *
  * Creates a new #GimpMetadata instance.
  *
- * Return value: (transfer full): The new #GimpMetadata.
+ * Returns: (transfer full): The new #GimpMetadata.
  *
  * Since: 2.10
  */
@@ -505,7 +505,7 @@ gimp_metadata_new (void)
  *
  * Duplicates a #GimpMetadata instance.
  *
- * Return value: (transfer full):
+ * Returns: (transfer full):
  *               The new #GimpMetadata, or %NULL if @metadata is %NULL.
  *
  * Since: 2.10
@@ -681,7 +681,7 @@ gimp_metadata_deserialize_error (GMarkupParseContext *context,
  * Deserializes a string of XML that has been created by
  * gimp_metadata_serialize().
  *
- * Return value: (transfer full): The new #GimpMetadata.
+ * Returns: (transfer full): The new #GimpMetadata.
  *
  * Since: 2.10
  */
@@ -770,7 +770,7 @@ gimp_metadata_append_tag (GString     *string,
  * Serializes @metadata into an XML string that can later be deserialized
  * using gimp_metadata_deserialize().
  *
- * Return value: The serialized XML string.
+ * Returns: The serialized XML string.
  *
  * Since: 2.10
  */
@@ -856,7 +856,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
  *
  * Loads #GimpMetadata from @file.
  *
- * Return value: (transfer full): The loaded #GimpMetadata.
+ * Returns: (transfer full): The loaded #GimpMetadata.
  *
  * Since: 2.10
  */
@@ -925,7 +925,7 @@ gimp_metadata_load_from_file (GFile   *file,
  *
  * Saves @metadata to @file.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  *
  * Since: 2.10
  */
@@ -986,7 +986,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
  *
  * Sets the tags from a piece of Exif data on @metadata.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  *
  * Since: 2.10
  */
@@ -1060,7 +1060,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
  *
  * Sets the tags from a piece of IPTC data on @metadata.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  *
  * Since: 2.10
  */
@@ -1108,7 +1108,7 @@ gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
  *
  * Sets the tags from a piece of XMP data on @metadata.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  *
  * Since: 2.10
  */
@@ -1208,7 +1208,7 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
  * Returns values based on Exif.Image.XResolution,
  * Exif.Image.YResolution and Exif.Image.ResolutionUnit of @metadata.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  *
  * Since: 2.10
  */
@@ -1344,7 +1344,7 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
  * Exif.Iop.InteroperabilityIndex, Exif.Nikon3.ColorSpace,
  * Exif.Canon.ColorSpace of @metadata.
  *
- * Return value: The colorspace specified by above tags.
+ * Returns: The colorspace specified by above tags.
  *
  * Since: 2.10
  */
@@ -1526,7 +1526,7 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
  *
  * Returns whether @tag is supported in a file of type @mime_type.
  *
- * Return value: %TRUE if the @tag supported with @mime_type, %FALSE otherwise.
+ * Returns: %TRUE if the @tag supported with @mime_type, %FALSE otherwise.
  *
  * Since: 2.10
  */
