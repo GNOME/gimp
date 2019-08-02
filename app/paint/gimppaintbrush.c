@@ -61,6 +61,7 @@ static void       gimp_paintbrush_real_get_paint_params        (GimpPaintbrush  
                                                                 GimpDrawable              *drawable,
                                                                 GimpPaintOptions          *paint_options,
                                                                 GimpSymmetry              *sym,
+                                                                gdouble                    grad_point,
                                                                 GimpLayerMode             *paint_mode,
                                                                 GimpPaintApplicationMode  *paint_appl_mode,
                                                                 const GimpTempBuf        **paint_pixmap,
@@ -179,28 +180,16 @@ gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
                                        GimpDrawable              *drawable,
                                        GimpPaintOptions          *paint_options,
                                        GimpSymmetry              *sym,
+                                       gdouble                    grad_point,
                                        GimpLayerMode             *paint_mode,
                                        GimpPaintApplicationMode  *paint_appl_mode,
                                        const GimpTempBuf        **paint_pixmap,
                                        GimpRGB                   *paint_color)
 {
-  GimpPaintCore    *paint_core = GIMP_PAINT_CORE (paintbrush);
-  GimpBrushCore    *brush_core = GIMP_BRUSH_CORE (paintbrush);
-  GimpContext      *context    = GIMP_CONTEXT (paint_options);
-  GimpDynamics     *dynamics   = brush_core->dynamics;
-  GimpImage        *image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  const GimpCoords *coords     = gimp_symmetry_get_origin (sym);
-  gdouble           fade_point;
-  gdouble           grad_point;
-
-  fade_point = gimp_paint_options_get_fade (paint_options, image,
-                                            paint_core->pixel_dist);
-
-  grad_point = gimp_dynamics_get_linear_value (dynamics,
-                                               GIMP_DYNAMICS_OUTPUT_COLOR,
-                                               coords,
-                                               paint_options,
-                                               fade_point);
+  GimpPaintCore *paint_core = GIMP_PAINT_CORE (paintbrush);
+  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paintbrush);
+  GimpContext   *context    = GIMP_CONTEXT (paint_options);
+  GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (drawable));
 
   *paint_mode = gimp_context_get_paint_mode (context);
 
@@ -247,6 +236,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpDynamics     *dynamics   = brush_core->dynamics;
   GimpImage        *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   gdouble           fade_point;
+  gdouble           grad_point;
   gdouble           force;
   const GimpCoords *coords;
   gint              n_strokes;
@@ -273,6 +263,12 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                                coords);
     }
 
+  grad_point = gimp_dynamics_get_linear_value (dynamics,
+                                               GIMP_DYNAMICS_OUTPUT_COLOR,
+                                               coords,
+                                               paint_options,
+                                               fade_point);
+
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
@@ -291,6 +287,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                                                 drawable,
                                                                 paint_options,
                                                                 sym,
+                                                                grad_point,
                                                                 &paint_mode,
                                                                 &paint_appl_mode,
                                                                 &paint_pixmap,

@@ -54,6 +54,7 @@ struct _GimpPaintbrushClass
                                           GimpDrawable              *drawable,
                                           GimpPaintOptions          *paint_options,
                                           GimpSymmetry              *sym,
+                                          gdouble                    grad_point,
                                           GimpLayerMode             *paint_mode,
                                           GimpPaintApplicationMode  *paint_appl_mode,
                                           const GimpTempBuf        **paint_pixmap,
