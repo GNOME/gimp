@@ -451,17 +451,6 @@ gimp_main_internal (GType                 plug_in_type,
   g_assert ((plug_in_type != G_TYPE_NONE && info == NULL) ||
             (plug_in_type == G_TYPE_NONE && info != NULL));
 
-  if (plug_in_type != G_TYPE_NONE)
-    {
-      PLUG_IN = g_object_new (plug_in_type, NULL);
-
-      g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
-    }
-  else
-    {
-      PLUG_IN_INFO = *info;
-    }
-
   if ((argc != N_ARGS) || (strcmp (argv[ARG_GIMP], "-gimp") != 0))
     {
       g_printerr ("%s is a GIMP plug-in and must be run by GIMP to be used\n",
@@ -653,8 +642,7 @@ gimp_main_internal (GType                 plug_in_type,
     gimp_base_init (&vtable);
   }
 
-  /* initialize i18n support */
-
+  /*  initialize i18n support  */
   setlocale (LC_ALL, "");
 
   bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
@@ -662,8 +650,7 @@ gimp_main_internal (GType                 plug_in_type,
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
 #endif
 
-
-  /* set handler both for the "LibGimp" and "" domains */
+  /*  set handler both for the "LibGimp" and "" domains  */
   {
     const gchar * const log_domains[] =
     {
@@ -701,13 +688,26 @@ gimp_main_internal (GType                 plug_in_type,
       g_log_set_handler (NULL,
                          G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL |
                          G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                         gimp_fatal_func, NULL);
+                         gimp_fatal_func,
+                         NULL);
     }
   else
     {
       g_log_set_handler (NULL,
                          G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
-                         gimp_fatal_func, NULL);
+                         gimp_fatal_func,
+                         NULL);
+    }
+
+  if (plug_in_type != G_TYPE_NONE)
+    {
+      PLUG_IN = g_object_new (plug_in_type, NULL);
+
+      g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
+    }
+  else
+    {
+      PLUG_IN_INFO = *info;
     }
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
