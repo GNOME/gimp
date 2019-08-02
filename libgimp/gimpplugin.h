@@ -56,7 +56,6 @@ struct _GimpPlugInClass
   /**
    * GimpPlugInClass::query_procedures:
    * @plug_in: a #GimpPlugIn.
-   * @n_procedures: (out): number of procedures.
    *
    * This method can be overridden by all plug-ins to return a newly
    * allocated array of allocated strings naming the procedures
@@ -66,16 +65,14 @@ struct _GimpPlugInClass
    *
    * See documentation of init_procedures() for differences.
    *
-   * Returns: (array length=n_procedures) (transfer full):
+   * Returns: (array zero-terminated=1) (transfer full):
    *          the names of the procedures registered by @plug_in.
    */
-  gchar         ** (* query_procedures) (GimpPlugIn  *plug_in,
-                                         gint        *n_procedures);
+  gchar         ** (* query_procedures) (GimpPlugIn  *plug_in);
 
   /**
    * GimpPlugInClass::init_procedures:
    * @plug_in: a #GimpPlugIn.
-   * @n_procedures: (out): number of procedures.
    *
    * This method can be overridden by all plug-ins to return a newly
    * allocated array of allocated strings naming procedures registered
@@ -92,11 +89,10 @@ struct _GimpPlugInClass
    * Most of the time, you only want to override query_procedures() and
    * leave init_procedures() untouched.
    *
-   * Returns: (array length=n_procedures) (transfer full):
+   * Returns: (array zero-terminated=1) (transfer full):
    *          the names of the procedures registered by @plug_in.
    */
-  gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in,
-                                         gint        *n_procedures);
+  gchar         ** (* init_procedures)  (GimpPlugIn  *plug_in);
   /**
    * GimpPlugInClass::create_procedure:
    * @plug_in: a #GimpPlugIn.

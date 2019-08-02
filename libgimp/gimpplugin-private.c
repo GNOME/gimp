@@ -94,22 +94,19 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
                        gboolean    init)
 {
   gchar **procedures;
-  gint    n_procedures;
-  gint    i;
+  gchar **name;
   GList  *list;
 
   if (init)
-    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in,
-                                                                    &n_procedures);
+    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in);
   else
-    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in,
-                                                                     &n_procedures);
+    procedures = GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in);
 
-  for (i = 0; i < n_procedures; i++)
+  for (name = procedures; *name; name++)
     {
       GimpProcedure *procedure;
 
-      procedure = gimp_plug_in_create_procedure (plug_in, procedures[i]);
+      procedure = gimp_plug_in_create_procedure (plug_in, *name);
       if (procedure)
         {
           _gimp_procedure_register (procedure);
@@ -118,7 +115,7 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
       else
         {
           g_warning ("Plug-in failed to create procedure '%s'\n",
-                     procedures[i]);
+                     *name);
         }
     }
   g_clear_pointer (&procedures, g_strfreev);

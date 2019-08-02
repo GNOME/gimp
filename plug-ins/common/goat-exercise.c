@@ -52,8 +52,7 @@ struct _GoatClass
 
 GType                   goat_get_type         (void) G_GNUC_CONST;
 
-static gchar         ** goat_query_procedures (GimpPlugIn           *plug_in,
-                                               gint                 *n_procedures);
+static gchar         ** goat_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
@@ -82,14 +81,11 @@ goat_init (Goat *goat)
 }
 
 static gchar **
-goat_query_procedures (GimpPlugIn *plug_in,
-                       gint       *n_procedures)
+goat_query_procedures (GimpPlugIn *plug_in)
 {
   gchar **procedures = g_new0 (gchar *, 2);
 
   procedures[0] = g_strdup (PLUG_IN_PROC);
-
-  *n_procedures = 1;
 
   return procedures;
 }

@@ -79,9 +79,8 @@ class PaletteToGradient (Gimp.PlugIn):
         self.set_translation_domain ("gimp30-python",
                                      Gio.file_new_for_path(Gimp.locale_directory()))
 
-        # XXX See pygobject#352 for the weird return value.
         return ['python-fu-palette-to-gradient',
-                'python-fu-palette-to-gradient-repeating'], 2
+                'python-fu-palette-to-gradient-repeating']
 
     def do_create_procedure(self, name):
         procedure = Gimp.Procedure.new(self, name,

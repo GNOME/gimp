@@ -70,8 +70,7 @@ typedef struct
 
 GType                   help_get_type          (void) G_GNUC_CONST;
 
-static gchar         ** help_query_procedures  (GimpPlugIn           *plug_in,
-                                                gint                 *n_procedures);
+static gchar         ** help_query_procedures  (GimpPlugIn           *plug_in);
 static GimpProcedure  * help_create_procedure  (GimpPlugIn           *plug_in,
                                                 const gchar          *name);
 
@@ -114,14 +113,11 @@ help_init (Help *help)
 }
 
 static gchar **
-help_query_procedures (GimpPlugIn *plug_in,
-                       gint       *n_procedures)
+help_query_procedures (GimpPlugIn *plug_in)
 {
   gchar **procedures = g_new0 (gchar *, 2);
 
   procedures[0] = g_strdup (GIMP_HELP_EXT_PROC);
-
-  *n_procedures = 1;
 
   return procedures;
 }
