@@ -272,7 +272,7 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
 }
 
 /**
- * gimp_plug_in_add_temp_procedure:
+ * gimp_plug_in_remove_temp_procedure:
  * @plug_in: A #GimpPlugIn
  * @name:    The name of a #GimpProcedure added to @plug_in.
  *
@@ -305,7 +305,6 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 /**
  * gimp_plug_in_get_temp_procedures:
  * @plug_in: A #GimpPlugIn
- * @name:    The name of a #GimpProcedure added to @plug_in.
  *
  * This function retrieves the list of temporary procedure of @plug_in as
  * added with gimp_plug_in_add_temp_procedure().

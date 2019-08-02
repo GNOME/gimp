@@ -697,9 +697,9 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
 /**
  * gimp_procedure_get_arguments:
  * @procedure:   A #GimpProcedure.
- * @n_arguments: (out) Returns the number of arguments.
+ * @n_arguments: (out): Returns the number of arguments.
  *
- * Returns: (transfer none) (array n-elements=n_arguments): An array
+ * Returns: (transfer none) (array length=n_arguments): An array
  *          of @GParamSpec in the order added with
  *          gimp_procedure_add_argument().
  *
@@ -720,9 +720,9 @@ gimp_procedure_get_arguments (GimpProcedure *procedure,
 /**
  * gimp_procedure_get_return_values:
  * @procedure:       A #GimpProcedure.
- * @n_return_values: (out) Returns the number of return values.
+ * @n_return_values: (out): Returns the number of return values.
  *
- * Returns: (transfer none) (array n-elements=n_return_values): An array
+ * Returns: (transfer none) (array length=n_return_values): An array
  *          of @GParamSpec in the order added with
  *          gimp_procedure_add_return_value().
  *
@@ -846,7 +846,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
  *
  * Runs the procedure, calling the run_func given in gimp_procedure_new().
  *
- * Returns: (transfer-full): The @procedure's return values.
+ * Returns: (transfer full): The @procedure's return values.
  *
  * Since: 3.0
  **/
