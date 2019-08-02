@@ -36,8 +36,6 @@
 static void   gimp_plug_in_register          (GimpPlugIn      *plug_in,
                                               gboolean         init);
 static void   gimp_plug_in_loop              (GimpPlugIn      *plug_in);
-static void   gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
-                                              GimpWireMessage *msg);
 static void   gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
                                               GPProcRun       *proc_run);
 static void   gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
@@ -233,14 +231,14 @@ _gimp_plug_in_single_message (GimpPlugIn *plug_in)
   if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
     gimp_quit ();
 
-  gimp_plug_in_process_message (plug_in, &msg);
+  _gimp_plug_in_process_message (plug_in, &msg);
 
   gimp_wire_destroy (&msg);
 }
 
-static void
-gimp_plug_in_process_message (GimpPlugIn      *plug_in,
-                              GimpWireMessage *msg)
+void
+_gimp_plug_in_process_message (GimpPlugIn      *plug_in,
+                               GimpWireMessage *msg)
 {
   switch (msg->type)
     {
