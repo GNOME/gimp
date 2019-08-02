@@ -1099,10 +1099,10 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  * gimp_stack_trace_available:
  * @optimal: whether we get optimal traces.
  *
- * Returns #TRUE if we have dependencies to generate backtraces. If
- * @optimal is #TRUE, the function will return #TRUE only when we
+ * Returns %TRUE if we have dependencies to generate backtraces. If
+ * @optimal is %TRUE, the function will return %TRUE only when we
  * are able to generate optimal traces (i.e. with GDB or LLDB);
- * otherwise we return #TRUE even if only backtrace() API is available.
+ * otherwise we return %TRUE even if only backtrace() API is available.
  *
  * On Win32, we return TRUE if Dr. Mingw is built-in, FALSE otherwise.
  *
@@ -1166,14 +1166,14 @@ gimp_stack_trace_available (gboolean optimal)
  * fails on Win32.
  *
  * The stack trace, once generated, will either be printed to @stream or
- * returned as a newly allocated string in @trace, if not #NULL.
+ * returned as a newly allocated string in @trace, if not %NULL.
  *
  * In some error cases (e.g. segmentation fault), trying to allocate
  * more memory will trigger more segmentation faults and therefore loop
  * our error handling (which is just wrong). Therefore printing to a
  * file description is an implementation without any memory allocation.
 
- * Return value: #TRUE if a stack trace could be generated, #FALSE
+ * Return value: %TRUE if a stack trace could be generated, %FALSE
  * otherwise.
  *
  * Since: 2.10

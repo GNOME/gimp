@@ -91,12 +91,12 @@ static void         connect_notify     (GObject     *config,
  * @button_label:  Toggle widget title appearing as a frame title.
  * @child:         Child #GtkWidget of the returned frame.
  * @button:        Pointer to the #GtkCheckButton used as frame title
- *                 if not #NULL.
+ *                 if not %NULL.
  *
  * Creates a #GimpFrame containing @child, using a #GtkCheckButton as a
  * title whose value is tied to the boolean @property_name.
- * @child will be visible when @property_name is #TRUE, hidden otherwise.
- * If @button_label is #NULL, the @property_name's nick will be used as
+ * @child will be visible when @property_name is %TRUE, hidden otherwise.
+ * If @button_label is %NULL, the @property_name's nick will be used as
  * label of the #GtkCheckButton title.
  *
  * Return value:  A new #GimpFrame widget.
@@ -342,7 +342,7 @@ static void   gimp_prop_color_button_notify   (GObject    *config,
  *
  * Creates a #GimpColorPanel to set and display the value of a #GimpRGB
  * property.  Pressing the button brings up a color selector dialog.
- * If @title is #NULL, the @property_name's nick will be used as label
+ * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
  *
  * Return value:  A new #GimpColorPanel widget.
@@ -461,7 +461,7 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  *
  * Creates a #GimpSpinScale to set and display the value of a
  * gdouble property in a very space-efficient way.
- * If @label is #NULL, the @property_name's nick will be used as label
+ * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
  * The property's lower and upper values will be used as min/max of the
  * #GimpSpinScale.

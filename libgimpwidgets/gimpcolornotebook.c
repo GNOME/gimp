@@ -511,7 +511,7 @@ gimp_color_notebook_remove_selector (GtkContainer      *container,
  * The @page_type passed must be a #GimpColorSelector subtype.
  *
  * Return value: (transfer none): The new page widget, if @has_page was
- *               #TRUE, or #NULL if @has_page was #FALSE.
+ *               %TRUE, or %NULL if @has_page was %FALSE.
  **/
 GtkWidget *
 gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,

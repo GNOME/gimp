@@ -219,7 +219,7 @@ gimp_param_get_string (GimpParam *param)
  * @copyright:                                 the procedure's copyright.
  * @date:                                      the date the procedure was added.
  * @menu_label:                                the label to use for the procedure's menu entry,
- *                                             or #NULL if the procedure has no menu entry.
+ *                                             or %NULL if the procedure has no menu entry.
  * @image_types:                               the drawable types the procedure can handle.
  * @type:                                      the type of the procedure.
  * @n_params:                                  the number of parameters the procedure takes.
@@ -272,7 +272,7 @@ gimp_param_get_string (GimpParam *param)
  * procedure will cause the GIMP core to lock up.</emphasis>
  *
  * Additionally, a %GIMP_EXTENSION procedure with no parameters
- * (@n_params == 0 and @params == #NULL) is an "automatic" extension
+ * (@n_params == 0 and @params == %NULL) is an "automatic" extension
  * that will be automatically started on each GIMP startup.
  **/
 void
@@ -358,7 +358,7 @@ gimp_install_procedure (const gchar        *name,
  * @author:        the procedure's author(s).
  * @copyright:     the procedure's copyright.
  * @date:          the date the procedure was added.
- * @menu_label:    the procedure's menu label, or #NULL if the procedure has
+ * @menu_label:    the procedure's menu label, or %NULL if the procedure has
  *                 no menu entry.
  * @image_types:   the drawable types the procedure can handle.
  * @type:          the type of the procedure.

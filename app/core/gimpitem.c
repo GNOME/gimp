@@ -741,7 +741,7 @@ gimp_item_new (GType        type,
  * gimp_item_remove:
  * @item: the #GimpItem to remove.
  *
- * This function sets the 'removed' flag on @item to #TRUE, and emits
+ * This function sets the 'removed' flag on @item to %TRUE, and emits
  * a 'removed' signal on the item.
  */
 void
@@ -1245,7 +1245,7 @@ gimp_item_end_transform (GimpItem *item,
  * @item:      The #GimpItem to move.
  * @offset_x:  Increment to the X offset of the item.
  * @offset_y:  Increment to the Y offset of the item.
- * @push_undo: If #TRUE, create an entry in the image's undo stack
+ * @push_undo: If %TRUE, create an entry in the image's undo stack
  *             for this action.
  *
  * Adds the specified increments to the X and Y offsets for the item.
@@ -1289,8 +1289,8 @@ gimp_item_translate (GimpItem *item,
  *
  * Scales item dimensions, then snaps them to pixel centers
  *
- * Returns: #FALSE if any dimension reduces to zero as a result
- *          of this; otherwise, returns #TRUE.
+ * Returns: %FALSE if any dimension reduces to zero as a result
+ *          of this; otherwise, returns %TRUE.
  **/
 gboolean
 gimp_item_check_scaling (GimpItem *item,
@@ -1386,9 +1386,9 @@ gimp_item_scale (GimpItem              *item,
  * set of items. In this context, the item's dimensions and offsets
  * from the sides of the containing image all change by these
  * predetermined factors. By fiat, the fixed point of the transform is
- * the upper left hand corner of the image. Returns #FALSE if a
+ * the upper left hand corner of the image. Returns %FALSE if a
  * requested scale factor is zero or if a scaling zero's out a item
- * dimension; returns #TRUE otherwise.
+ * dimension; returns %TRUE otherwise.
  *
  * Use gimp_item_scale() in circumstances where new item width
  * and height dimensions are predetermined instead.
@@ -1396,8 +1396,8 @@ gimp_item_scale (GimpItem              *item,
  * Side effects: Undo set created for item. Old item imagery
  *               scaled & painted to new item tiles.
  *
- * Returns: #TRUE, if the scaled item has positive dimensions
- *          #FALSE if the scaled item has at least one zero dimension
+ * Returns: %TRUE, if the scaled item has positive dimensions
+ *          %FALSE if the scaled item has at least one zero dimension
  **/
 gboolean
 gimp_item_scale_by_factors (GimpItem              *item,
@@ -1427,8 +1427,8 @@ gimp_item_scale_by_factors (GimpItem              *item,
  * Same as gimp_item_scale_by_factors(), but with the option to specify
  * custom input and output points of origin for the transformation.
  *
- * Returns: #TRUE, if the scaled item has positive dimensions
- *          #FALSE if the scaled item has at least one zero dimension
+ * Returns: %TRUE, if the scaled item has positive dimensions
+ *          %FALSE if the scaled item has at least one zero dimension
  **/
 gboolean
 gimp_item_scale_by_factors_with_origin (GimpItem              *item,
@@ -1493,7 +1493,7 @@ gimp_item_scale_by_factors_with_origin (GimpItem              *item,
  * Sets item dimensions to new_width and
  * new_height. Derives vertical and horizontal scaling
  * transforms from new width and height. If local_origin is
- * #TRUE, the fixed point of the scaling transform coincides
+ * %TRUE, the fixed point of the scaling transform coincides
  * with the item's center point.  Otherwise, the fixed
  * point is taken to be [-GimpItem::offset_x, -GimpItem::->offset_y].
  *

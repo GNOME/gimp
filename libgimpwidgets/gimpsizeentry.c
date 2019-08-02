@@ -52,7 +52,7 @@
  *
  * For each field, there can be one or two #GtkSpinButton's to enter
  * "value" and "reference value". If you specify @show_refval as
- * #FALSE in gimp_size_entry_new() there will be only one
+ * %FALSE in gimp_size_entry_new() there will be only one
  * #GtkSpinButton and the #GimpUnitComboBox will contain an item for
  * selecting GIMP_UNIT_PIXEL.
  *
@@ -1557,7 +1557,7 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
  * @show: Boolean
  *
  * Controls whether a unit menu is shown in the size entry.  If
- * @show is #TRUE, the menu is shown; otherwise it is hidden.
+ * @show is %TRUE, the menu is shown; otherwise it is hidden.
  *
  * Since: 2.4
  **/
