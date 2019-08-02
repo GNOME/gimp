@@ -55,7 +55,7 @@ gimp_tag_init (GimpTag *tag)
  *
  * If given tag name is not valid, an attempt will be made to fix it.
  *
- * Return value: a new #GimpTag object, or NULL if tag string is invalid and
+ * Returns: a new #GimpTag object, or NULL if tag string is invalid and
  * cannot be fixed.
  **/
 GimpTag *
@@ -95,7 +95,7 @@ gimp_tag_new (const char *tag_string)
  * unneeded comparisons. If tag is created, however, it does not mean that
  * it would necessarily match with some other tag.
  *
- * Return value: new #GimpTag object, or NULL if tag will not match with any
+ * Returns: new #GimpTag object, or NULL if tag will not match with any
  * other #GimpTag.
  **/
 GimpTag *
@@ -142,7 +142,7 @@ gimp_tag_try_new (const char *tag_string)
  *
  * Retrieve internal status of the tag.
  *
- * Return value: internal status of tag. Internal tags are not saved.
+ * Returns: internal status of tag. Internal tags are not saved.
  **/
 gboolean
 gimp_tag_get_internal (GimpTag *tag)
@@ -176,7 +176,7 @@ gimp_tag_set_internal (GimpTag *tag, gboolean internal)
  *
  * Retrieve name of the tag.
  *
- * Return value: name of tag.
+ * Returns: name of tag.
  **/
 const gchar *
 gimp_tag_get_name (GimpTag *tag)
@@ -193,7 +193,7 @@ gimp_tag_get_name (GimpTag *tag)
  * Hashing function which is useful, for example, to store #GimpTag in
  * a #GHashTable.
  *
- * Return value: hash value for tag.
+ * Returns: hash value for tag.
  **/
 guint
 gimp_tag_get_hash (GimpTag *tag)
@@ -210,7 +210,7 @@ gimp_tag_get_hash (GimpTag *tag)
  *
  * Compares tags for equality according to tag comparison rules.
  *
- * Return value: TRUE if tags are equal, FALSE otherwise.
+ * Returns: TRUE if tags are equal, FALSE otherwise.
  **/
 gboolean
 gimp_tag_equals (GimpTag *tag,
@@ -230,7 +230,7 @@ gimp_tag_equals (GimpTag *tag,
  * Compares tags according to tag comparison rules. Useful for sorting
  * functions.
  *
- * Return value: meaning of return value is the same as in strcmp().
+ * Returns: meaning of return value is the same as in strcmp().
  **/
 int
 gimp_tag_compare_func (const void *p1,
@@ -252,7 +252,7 @@ gimp_tag_compare_func (const void *p1,
  * gimp_tag_compare_func(), but can be used without creating temporary tag
  * object.
  *
- * Return value: meaning of return value is the same as in strcmp().
+ * Returns: meaning of return value is the same as in strcmp().
  **/
 gint
 gimp_tag_compare_with_string (GimpTag     *tag,
@@ -285,7 +285,7 @@ gimp_tag_compare_with_string (GimpTag     *tag,
  * gimp_tag_compare_with_string(), but does not work on the collate key
  * because that can't be matched partially.
  *
- * Return value: wheher #tag starts with @prefix_string.
+ * Returns: wheher #tag starts with @prefix_string.
  **/
 gboolean
 gimp_tag_has_prefix (GimpTag     *tag,
@@ -318,7 +318,7 @@ gimp_tag_has_prefix (GimpTag     *tag,
  *
  * Tries to create a valid tag string from given @tag_string.
  *
- * Return value: a newly allocated tag string in case given @tag_string was
+ * Returns: a newly allocated tag string in case given @tag_string was
  * valid or could be fixed, otherwise NULL. Allocated value should be freed
  * using g_free().
  **/
@@ -382,7 +382,7 @@ gimp_tag_string_make_valid (const gchar *tag_string)
  * Terminal_Punctuation property as specified in the version 5.1.0 of
  * the Unicode Standard.
  *
- * Return value: %TRUE if the character is a tag separator.
+ * Returns: %TRUE if the character is a tag separator.
  */
 gboolean
 gimp_tag_is_tag_separator (gunichar c)

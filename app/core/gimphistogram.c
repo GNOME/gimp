@@ -243,7 +243,7 @@ gimp_histogram_new (GimpTRCType trc)
  * Creates a duplicate of @histogram. The duplicate has a reference
  * count of 1 and contains the values from @histogram.
  *
- * Return value: a newly allocated %GimpHistogram
+ * Returns: a newly allocated %GimpHistogram
  **/
 GimpHistogram *
 gimp_histogram_duplicate (GimpHistogram *histogram)

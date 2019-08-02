@@ -225,7 +225,7 @@ gimp_layer_mode_box_get_property (GObject    *object,
  * gimp_layer_mode_box_new:
  * Foo.
  *
- * Return value: a new #GimpLayerModeBox.
+ * Returns: a new #GimpLayerModeBox.
  **/
 GtkWidget *
 gimp_layer_mode_box_new (GimpLayerModeContext context)

@@ -631,7 +631,7 @@ gimp_color_config_get_out_of_gamut_color (GimpColorConfig *config,
  * @config: a #GimpColorConfig
  * @error:  return location for a #GError
  *
- * Return value: (transfer full): the default RGB color profile.
+ * Returns: (transfer full): the default RGB color profile.
  *
  * Since: 2.10
  **/
@@ -675,7 +675,7 @@ gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
  * @config: a #GimpColorConfig
  * @error:  return location for a #GError
  *
- * Return value: (transfer full): the default grayscale color profile.
+ * Returns: (transfer full): the default grayscale color profile.
  *
  * Since: 2.10
  **/
@@ -719,7 +719,7 @@ gimp_color_config_get_gray_color_profile (GimpColorConfig  *config,
  * @config: a #GimpColorConfig
  * @error:  return location for a #GError
  *
- * Return value: (transfer full): the default CMYK color profile.
+ * Returns: (transfer full): the default CMYK color profile.
  *
  * Since: 2.10
  **/
@@ -763,7 +763,7 @@ gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
  * @config: a #GimpColorConfig
  * @error:  return location for a #GError
  *
- * Return value: (transfer full): the default display color profile.
+ * Returns: (transfer full): the default display color profile.
  *
  * Since: 2.10
  **/
@@ -797,7 +797,7 @@ gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
  * @config: a #GimpColorConfig
  * @error:  return location for a #GError
  *
- * Return value: (transfer full): the default soft-proofing color
+ * Returns: (transfer full): the default soft-proofing color
  *                                profile.
  *
  * Since: 2.10

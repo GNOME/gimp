@@ -176,7 +176,7 @@ gimp_color_transform_finalize (GObject *object)
  * returns a non-%NULL transform and the code takes care of doing only
  * exactly the requested color transform.
  *
- * Return value: the #GimpColorTransform, or %NULL if there was an error.
+ * Returns: the #GimpColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
@@ -306,7 +306,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
  * See gimp_color_transform_new() about the color spaces to transform
  * between.
  *
- * Return value: the #GimpColorTransform, or %NULL if there was an error.
+ * Returns: the #GimpColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
@@ -613,7 +613,7 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
  *
  * This function checks if a GimpColorTransform is needed at all.
  *
- * Return value: %TRUE if pixels can be correctly converted between
+ * Returns: %TRUE if pixels can be correctly converted between
  *               @src_profile and @dest_profile by simply using
  *               gegl_buffer_copy(), babl_process() or similar.
  *

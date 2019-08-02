@@ -545,7 +545,7 @@ print_preview_draw (GtkWidget *widget,
  *
  * Creates a new #PrintPreview widget.
  *
- * Return value: the new #PrintPreview widget.
+ * Returns: the new #PrintPreview widget.
  **/
 GtkWidget *
 print_preview_new (GtkPageSetup *page,

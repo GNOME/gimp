@@ -288,7 +288,7 @@ gimp_config_iface_copy (GimpConfig  *src,
  * overwritten. Basically this function opens @filename for you and
  * calls the serialize function of the @config's #GimpConfigInterface.
  *
- * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
  *
  * Since: 2.4
  **/
@@ -329,7 +329,7 @@ gimp_config_serialize_to_file (GimpConfig   *config,
  * overwritten. Basically this function opens @file for you and calls
  * the serialize function of the @config's #GimpConfigInterface.
  *
- * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
  *
  * Since: 2.10
  **/
@@ -368,7 +368,7 @@ gimp_config_serialize_to_gfile (GimpConfig   *config,
  * Serializes the object properties of @config to the stream specified
  * by @output.
  *
- * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
  *
  * Since: 2.10
  **/
@@ -404,7 +404,7 @@ gimp_config_serialize_to_stream (GimpConfig     *config,
  * Serializes the object properties of @config to the given file
  * descriptor.
  *
- * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
  *
  * Since: 2.4
  **/
@@ -434,7 +434,7 @@ gimp_config_serialize_to_fd (GimpConfig *config,
  *
  * Serializes the object properties of @config to a string.
  *
- * Return value: a newly allocated NUL-terminated string.
+ * Returns: a newly allocated NUL-terminated string.
  *
  * Since: 2.4
  **/
@@ -469,7 +469,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
  * creates a properly configured #GScanner for you and calls the
  * deserialize function of the @config's #GimpConfigInterface.
  *
- * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
  * Since: 2.4
  **/
@@ -517,7 +517,7 @@ gimp_config_deserialize_file (GimpConfig   *config,
  * a properly configured #GScanner for you and calls the deserialize
  * function of the @config's #GimpConfigInterface.
  *
- * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
  * Since: 2.10
  **/
@@ -565,7 +565,7 @@ gimp_config_deserialize_gfile (GimpConfig  *config,
  * #GScanner for you and calls the deserialize function of the
  * @config's #GimpConfigInterface.
  *
- * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
  * Since: 2.10
  **/
@@ -755,7 +755,7 @@ gimp_config_deserialize (GimpConfig *config,
  * only works for objects that are completely defined by their
  * properties.
  *
- * Return value: the duplicated #GimpConfig object
+ * Returns: the duplicated #GimpConfig object
  *
  * Since: 2.4
  **/
@@ -777,7 +777,7 @@ gimp_config_duplicate (GimpConfig *config)
  * works for objects that are completely defined by their
  * properties.
  *
- * Return value: %TRUE if the two objects are equal.
+ * Returns: %TRUE if the two objects are equal.
  *
  * Since: 2.4
  **/
@@ -827,7 +827,7 @@ gimp_config_reset (GimpConfig *config)
  *
  * Properties marked as "construct-only" are not touched.
  *
- * Return value: %TRUE if @dest was modified, %FALSE otherwise
+ * Returns: %TRUE if @dest was modified, %FALSE otherwise
  *
  * Since: 2.6
  **/

@@ -474,7 +474,7 @@ monitor_number (GdkMonitor *monitor)
  *
  * Since: 3.0
  *
- * Return value: (transfer full): the monitor's #GimpColorProfile, or %NULL.
+ * Returns: (transfer full): the monitor's #GimpColorProfile, or %NULL.
  **/
 GimpColorProfile *
 gimp_monitor_get_color_profile (GdkMonitor *monitor)
@@ -590,7 +590,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
  *
  * Since: 3.0
  *
- * Return value: (transfer full): @widget's monitor's #GimpColorProfile, or %NULL.
+ * Returns: (transfer full): @widget's monitor's #GimpColorProfile, or %NULL.
  **/
 GimpColorProfile *
 gimp_widget_get_color_profile (GtkWidget *widget)

@@ -30,7 +30,7 @@
  *
  * This function is never called directly. Use GIMP_EXTENSION_ERROR() instead.
  *
- * Return value: the #GQuark that defines the GimpExtension error domain.
+ * Returns: the #GQuark that defines the GimpExtension error domain.
  **/
 GQuark
 gimp_extension_error_quark (void)

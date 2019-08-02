@@ -124,7 +124,7 @@ scanner_string_utf8_valid (GScanner    *scanner,
  *
  * This function uses the @scanner to configure the properties of @config.
  *
- * Return value: %TRUE on success, %FALSE otherwise.
+ * Returns: %TRUE on success, %FALSE otherwise.
  *
  * Since: 2.4
  **/
@@ -229,7 +229,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
  * shouldn't need to call this function directly. If possible, use
  * gimp_config_deserialize_properties() instead.
  *
- * Return value: %G_TOKEN_RIGHT_PAREN on success, otherwise the
+ * Returns: %G_TOKEN_RIGHT_PAREN on success, otherwise the
  * expected #GTokenType or %G_TOKEN_NONE if the expected token was
  * found but couldn't be parsed.
  *

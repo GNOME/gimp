@@ -257,7 +257,7 @@ gimp_tagged_container_src_thaw (GimpFilteredContainer *filtered_container)
  * objects containing all of the filtering tags. Synchronization with
  * @src_container data is performed automatically.
  *
- * Return value: a new #GimpTaggedContainer object.
+ * Returns: a new #GimpTaggedContainer object.
  **/
 GimpContainer *
 gimp_tagged_container_new (GimpContainer *src_container)
@@ -332,7 +332,7 @@ gimp_tagged_container_set_filter (GimpTaggedContainer *tagged_container,
  * Returns current tag filter. Tag filter is a list of GimpTag objects, which
  * must be contained by each object matching filter criteria.
  *
- * Return value: a list of GimpTag objects used as filter. This value should
+ * Returns: a list of GimpTag objects used as filter. This value should
  *               not be modified or freed.
  **/
 const GList *
@@ -471,7 +471,7 @@ gimp_tagged_container_tag_count_changed (GimpTaggedContainer *container,
  * used filter, it is provided for all available objects (ie. empty
  * filter).
  *
- * Return value: number of distinct tags assigned to all objects in the
+ * Returns: number of distinct tags assigned to all objects in the
  *               container.
  **/
 gint

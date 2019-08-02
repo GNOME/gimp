@@ -95,7 +95,7 @@ static gchar        *thumb_fail_subdir      = NULL;
  * application-specific thumbnails, you can specify a different base
  * directory here.
  *
- * Return value: %TRUE if the library was successfully initialized.
+ * Returns: %TRUE if the library was successfully initialized.
  **/
 gboolean
 gimp_thumb_init (const gchar *creator,
@@ -216,7 +216,7 @@ gimp_thumb_get_thumb_base_dir (void)
  * returned pointer will become invalid if gimp_thumb_init() is used
  * again. It must not be changed or freed.
  *
- * Return value: the thumbnail directory in the encoding of the filesystem
+ * Returns: the thumbnail directory in the encoding of the filesystem
  **/
 const gchar *
 gimp_thumb_get_thumb_dir (GimpThumbSize  size)
@@ -237,7 +237,7 @@ gimp_thumb_get_thumb_dir (GimpThumbSize  size)
  * size.  Unlike gimp_thumb_get_thumb_dir() the returned string is not
  * constant and should be free'd when it is not any longer needed.
  *
- * Return value: the thumbnail directory in the encoding of the filesystem
+ * Returns: the thumbnail directory in the encoding of the filesystem
  *
  * Since: 2.2
  **/
@@ -267,7 +267,7 @@ gimp_thumb_get_thumb_dir_local (const gchar   *dirname,
  * gimp_thumbnail_save_thumb() and gimp_thumbnail_save_failure() will
  * do this for you.
  *
- * Return value: %TRUE is the directory exists, %FALSE if it could not
+ * Returns: %TRUE is the directory exists, %FALSE if it could not
  *               be created
  **/
 gboolean
@@ -315,7 +315,7 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
  * You shouldn't have to call this function directly since
  * gimp_thumbnail_save_thumb_local() will do this for you.
  *
- * Return value: %TRUE is the directory exists, %FALSE if it could not
+ * Returns: %TRUE is the directory exists, %FALSE if it could not
  *               be created
  *
  * Since: 2.2
@@ -379,7 +379,7 @@ gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
  * Creates the name of the thumbnail file of the specified @size that
  * belongs to an image file located at the given @uri.
  *
- * Return value: a newly allocated filename in the encoding of the
+ * Returns: a newly allocated filename in the encoding of the
  *               filesystem or %NULL if @uri points to the user's
  *               thumbnail repository.
  **/
@@ -409,7 +409,7 @@ gimp_thumb_name_from_uri (const gchar   *uri,
  * that belongs to an image file located at the given @uri. Local
  * thumbnails have been introduced with version 0.7 of the spec.
  *
- * Return value: a newly allocated filename in the encoding of the
+ * Returns: a newly allocated filename in the encoding of the
  *               filesystem or %NULL if @uri is a remote file or
  *               points to the user's thumbnail repository.
  *
@@ -472,7 +472,7 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
  * If a thumbnail is found, it's size is written to the variable
  * pointer to by @size and the file location is returned.
  *
- * Return value: a newly allocated string in the encoding of the
+ * Returns: a newly allocated string in the encoding of the
  *               filesystem or %NULL if no thumbnail for @uri was found
  **/
 gchar *
@@ -524,7 +524,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
  * checks if the given @filename exists and returns modification time
  * and file size in 64bit integer values.
  *
- * Return value: The type of the file, or #GIMP_THUMB_FILE_TYPE_NONE if
+ * Returns: The type of the file, or #GIMP_THUMB_FILE_TYPE_NONE if
  *               the file doesn't exist.
  **/
 GimpThumbFileType

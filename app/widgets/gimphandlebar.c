@@ -296,7 +296,7 @@ gimp_handle_bar_motion_notify (GtkWidget      *widget,
  *
  * Creates a new #GimpHandleBar widget.
  *
- * Return value: The new #GimpHandleBar widget.
+ * Returns: The new #GimpHandleBar widget.
  **/
 GtkWidget *
 gimp_handle_bar_new (GtkOrientation  orientation)

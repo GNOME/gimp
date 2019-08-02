@@ -180,7 +180,7 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
  * drawable ID and gimp_int_combo_box_get_active() to retrieve the ID
  * of the selected drawable.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/
@@ -227,7 +227,7 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
  * Creates a new #GimpIntComboBox filled with all currently opened
  * channels. See gimp_drawable_combo_box_new() for more information.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/
@@ -274,7 +274,7 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
  * Creates a new #GimpIntComboBox filled with all currently opened
  * layers. See gimp_drawable_combo_box_new() for more information.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/
@@ -329,7 +329,7 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
  * vectors ID and gimp_int_combo_box_get_active() to retrieve the ID
  * of the selected vectors object.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.4
  **/

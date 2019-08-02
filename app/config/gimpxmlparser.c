@@ -48,7 +48,7 @@ static gboolean parse_encoding (const gchar  *text,
  * GimpXmlParser is a thin wrapper around GMarkupParser. This function
  * creates one for you and sets up a GMarkupParseContext.
  *
- * Return value: a new #GimpXmlParser
+ * Returns: a new #GimpXmlParser
  **/
 GimpXmlParser *
 gimp_xml_parser_new (const GMarkupParser *markup_parser,
@@ -75,7 +75,7 @@ gimp_xml_parser_new (const GMarkupParser *markup_parser,
  * This function creates a GIOChannel for @filename and calls
  * gimp_xml_parser_parse_io_channel() for you.
  *
- * Return value: %TRUE on success, %FALSE otherwise
+ * Returns: %TRUE on success, %FALSE otherwise
  **/
 gboolean
 gimp_xml_parser_parse_file (GimpXmlParser  *parser,
@@ -109,7 +109,7 @@ gimp_xml_parser_parse_file (GimpXmlParser  *parser,
  * This function creates a GIOChannel for @file and calls
  * gimp_xml_parser_parse_io_channel() for you.
  *
- * Return value: %TRUE on success, %FALSE otherwise
+ * Returns: %TRUE on success, %FALSE otherwise
  **/
 gboolean
 gimp_xml_parser_parse_gfile (GimpXmlParser  *parser,
@@ -140,7 +140,7 @@ gimp_xml_parser_parse_gfile (GimpXmlParser  *parser,
  * This function creates a GIOChannel for @fd and calls
  * gimp_xml_parser_parse_io_channel() for you.
  *
- * Return value: %TRUE on success, %FALSE otherwise
+ * Returns: %TRUE on success, %FALSE otherwise
  **/
 gboolean
 gimp_xml_parser_parse_fd (GimpXmlParser  *parser,
@@ -183,7 +183,7 @@ gimp_xml_parser_parse_fd (GimpXmlParser  *parser,
  * will be assumed and parsing may break later if this assumption
  * was wrong.
  *
- * Return value: %TRUE on success, %FALSE otherwise
+ * Returns: %TRUE on success, %FALSE otherwise
  **/
 gboolean
 gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
@@ -269,7 +269,7 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
  *
  * This function uses the given @parser to parse the XML in @buffer.
  *
- * Return value: %TRUE on success, %FALSE otherwise
+ * Returns: %TRUE on success, %FALSE otherwise
  **/
 gboolean
 gimp_xml_parser_parse_buffer (GimpXmlParser  *parser,

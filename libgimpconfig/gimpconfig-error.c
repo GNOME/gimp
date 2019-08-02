@@ -40,7 +40,7 @@
  *
  * This function is never called directly. Use GIMP_CONFIG_ERROR() instead.
  *
- * Return value: the #GQuark that defines the GimpConfig error domain.
+ * Returns: the #GQuark that defines the GimpConfig error domain.
  *
  * Since: 2.4
  **/

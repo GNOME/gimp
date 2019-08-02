@@ -305,7 +305,7 @@ gimp_object_take_name (GimpObject *object,
  * This function gives access to the name of a GimpObject. The
  * returned name belongs to the object and must not be freed.
  *
- * Return value: a pointer to the @object's name
+ * Returns: a pointer to the @object's name
  **/
 const gchar *
 gimp_object_get_name (gconstpointer object)
@@ -372,7 +372,7 @@ gimp_object_name_free (GimpObject *object)
  * correct rules for the current locale. It caches the normalized
  * version of the object name to speed up subsequent calls.
  *
- * Return value: -1 if object1 compares before object2,
+ * Returns: -1 if object1 compares before object2,
  *                0 if they compare equal,
  *                1 if object1 compares after object2.
  **/

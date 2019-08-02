@@ -75,7 +75,7 @@ static void       gimp_scanner_message (GScanner     *scanner,
  * @filename:
  * @error:
  *
- * Return value:
+ * Returns:
  *
  * Since: 2.4
  **/
@@ -101,7 +101,7 @@ gimp_scanner_new_file (const gchar  *filename,
  * @file: a #GFile
  * @error: return location for #GError, or %NULL
  *
- * Return value: The new #GScanner.
+ * Returns: The new #GScanner.
  *
  * Since: 2.10
  **/
@@ -179,7 +179,7 @@ gimp_scanner_new_gfile (GFile   *file,
  * @input: a #GInputStream
  * @error: return location for #GError, or %NULL
  *
- * Return value: The new #GScanner.
+ * Returns: The new #GScanner.
  *
  * Since: 2.10
  **/
@@ -252,7 +252,7 @@ gimp_scanner_new_stream (GInputStream  *input,
  * @text_len:
  * @error:
  *
- * Return value:
+ * Returns:
  *
  * Since: 2.4
  **/
@@ -341,7 +341,7 @@ gimp_scanner_destroy (GScanner *scanner)
  *           gimp_scanner_new_string()
  * @token: the #GTokenType expected as next token.
  *
- * Return value: %TRUE if the next token is @token, %FALSE otherwise.
+ * Returns: %TRUE if the next token is @token, %FALSE otherwise.
  *
  * Since: 2.4
  **/
@@ -363,7 +363,7 @@ gimp_scanner_parse_token (GScanner   *scanner,
  *           gimp_scanner_new_string()
  * @identifier: the expected identifier.
  *
- * Return value: %TRUE if the next token is an identifier and if its
+ * Returns: %TRUE if the next token is an identifier and if its
  * value matches @identifier.
  *
  * Since: 2.4
@@ -389,7 +389,7 @@ gimp_scanner_parse_identifier (GScanner    *scanner,
  *           gimp_scanner_new_string()
  * @dest: Return location for the parsed string
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -426,7 +426,7 @@ gimp_scanner_parse_string (GScanner  *scanner,
  *           gimp_scanner_new_string()
  * @dest: Return location for the parsed string
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -454,7 +454,7 @@ gimp_scanner_parse_string_no_validate (GScanner  *scanner,
  * @length: Length of the data to parse
  * @dest: Return location for the parsed data
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -482,7 +482,7 @@ gimp_scanner_parse_data (GScanner  *scanner,
  *           gimp_scanner_new_string()
  * @dest: Return location for the parsed integer
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -517,7 +517,7 @@ gimp_scanner_parse_int (GScanner *scanner,
  *           gimp_scanner_new_string()
  * @dest: Return location for the parsed integer
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.8
  **/
@@ -552,7 +552,7 @@ gimp_scanner_parse_int64 (GScanner *scanner,
  *           gimp_scanner_new_string()
  * @dest: Return location for the parsed float
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -600,7 +600,7 @@ gimp_scanner_parse_float (GScanner *scanner,
  *           gimp_scanner_new_string()
  * @dest: Return location for the parsed boolean
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -651,7 +651,7 @@ enum
  *           gimp_scanner_new_string()
  * @dest: (out caller-allocates): Pointer to a color to store the result
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/
@@ -771,7 +771,7 @@ gimp_scanner_parse_color (GScanner *scanner,
  *           gimp_scanner_new_string()
  * @dest: Pointer to a matrix to store the result
  *
- * Return value: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.4
  **/

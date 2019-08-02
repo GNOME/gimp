@@ -500,7 +500,7 @@ gimp_color_scale_draw (GtkWidget *widget,
  *
  * Creates a new #GimpColorScale widget.
  *
- * Return value: a new #GimpColorScale widget
+ * Returns: a new #GimpColorScale widget
  **/
 GtkWidget *
 gimp_color_scale_new (GtkOrientation            orientation,

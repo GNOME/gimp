@@ -1662,7 +1662,7 @@ gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
  * if you want to set tooltips using gimp_help_set_help_data() you
  * can use this function to get a pointer to the spinbuttons.
  *
- * Return value: (transfer none): a #GtkWidget pointer that you can attach a tooltip to.
+ * Returns: (transfer none): a #GtkWidget pointer that you can attach a tooltip to.
  **/
 GtkWidget *
 gimp_size_entry_get_help_widget (GimpSizeEntry *gse,

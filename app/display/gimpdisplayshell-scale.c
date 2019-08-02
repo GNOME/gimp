@@ -111,7 +111,7 @@ static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shel
  * Reverts the display to the previously used scale. If no previous
  * scale exist, then the call does nothing.
  *
- * Return value: %TRUE if the scale was reverted, otherwise %FALSE.
+ * Returns: %TRUE if the scale was reverted, otherwise %FALSE.
  **/
 gboolean
 gimp_display_shell_scale_revert (GimpDisplayShell *shell)
@@ -137,7 +137,7 @@ gimp_display_shell_scale_revert (GimpDisplayShell *shell)
  * gimp_display_shell_scale_can_revert:
  * @shell: the #GimpDisplayShell
  *
- * Return value: %TRUE if a previous display scale exists, otherwise %FALSE.
+ * Returns: %TRUE if a previous display scale exists, otherwise %FALSE.
  **/
 gboolean
 gimp_display_shell_scale_can_revert (GimpDisplayShell *shell)

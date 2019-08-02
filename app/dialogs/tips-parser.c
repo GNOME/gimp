@@ -163,7 +163,7 @@ gimp_tip_free (GimpTip *tip)
  * The message set in @error contains a detailed description
  * of the problem.
  *
- * Return value: a #Glist of #GimpTips.
+ * Returns: a #Glist of #GimpTips.
  **/
 GList *
 gimp_tips_from_file (GFile   *file,

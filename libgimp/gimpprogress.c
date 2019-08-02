@@ -62,7 +62,7 @@ static const gdouble   gimp_progress_step    = (1.0 / 256.0);
  * @vtable:    a pointer to a @GimpProgressVtable.
  * @user_data: a pointer that is passed as user_data to all vtable functions.
  *
- * Return value: the name of the temporary procedure that's been installed
+ * Returns: the name of the temporary procedure that's been installed
  *
  * Since: 2.4
  **/
@@ -149,7 +149,7 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
  * Uninstalls a temporary progress procedure that was installed using
  * gimp_progress_install().
  *
- * Return value: the @user_data that was passed to gimp_progress_install().
+ * Returns: the @user_data that was passed to gimp_progress_install().
  *
  * Since: 2.2
  **/

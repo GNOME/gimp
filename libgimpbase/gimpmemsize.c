@@ -74,7 +74,7 @@ gimp_memsize_get_type (void)
  * config files. It should not be displayed to the user. If you need a
  * nice human-readable string please use g_format_size().
  *
- * Return value: A newly allocated string representation of @memsize.
+ * Returns: A newly allocated string representation of @memsize.
  *
  * Since: 2.2
  **/
@@ -99,7 +99,7 @@ gimp_memsize_serialize (guint64 memsize)
  * Parses a string representation of a memory size as returned by
  * gimp_memsize_serialize().
  *
- * Return value: %TRUE if the @string was successfully parsed and
+ * Returns: %TRUE if the @string was successfully parsed and
  *               @memsize has been set, %FALSE otherwise.
  *
  * Since: 2.2

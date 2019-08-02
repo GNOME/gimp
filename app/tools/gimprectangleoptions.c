@@ -1165,7 +1165,7 @@ gimp_rectangle_options_disconnect (GimpRectangleOptions *options,
  * @rectangle_options:
  * @fixed_rule:
  *
- * Return value: %TRUE if @fixed_rule is active, %FALSE otherwise.
+ * Returns: %TRUE if @fixed_rule is active, %FALSE otherwise.
  */
 gboolean
 gimp_rectangle_options_fixed_rule_active (GimpRectangleOptions   *rectangle_options,

@@ -419,7 +419,7 @@ gimp_scale_combo_box_mru_remove_last (GimpScaleComboBox *combo_box)
 /**
  * gimp_scale_combo_box_new:
  *
- * Return value: a new #GimpScaleComboBox.
+ * Returns: a new #GimpScaleComboBox.
  **/
 GtkWidget *
 gimp_scale_combo_box_new (void)

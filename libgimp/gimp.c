@@ -887,7 +887,7 @@ gimp_run_procedure_with_array (const gchar    *name,
  * The returned string is owned by libgimp and must not be freed or
  * modified.
  *
- * Return value: the error message
+ * Returns: the error message
  *
  * Since: 2.6
  **/
@@ -925,7 +925,7 @@ gimp_get_pdb_error (void)
  *
  * Retrieves the status from the last procedure call.
  *
- * Return value: the #GimpPDBStatusType.
+ * Returns: the #GimpPDBStatusType.
  *
  * Since: 2.10
  **/
@@ -942,7 +942,7 @@ gimp_get_pdb_status (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the tile_width
+ * Returns: the tile_width
  **/
 guint
 gimp_tile_width (void)
@@ -957,7 +957,7 @@ gimp_tile_width (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the tile_height
+ * Returns: the tile_height
  **/
 guint
 gimp_tile_height (void)
@@ -973,7 +973,7 @@ gimp_tile_height (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the shared memory ID
+ * Returns: the shared memory ID
  **/
 gint
 gimp_shm_ID (void)
@@ -989,7 +989,7 @@ gimp_shm_ID (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the shared memory address
+ * Returns: the shared memory address
  **/
 guchar *
 gimp_shm_addr (void)
@@ -1005,7 +1005,7 @@ gimp_shm_addr (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the show_help_button boolean
+ * Returns: the show_help_button boolean
  *
  * Since: 2.2
  **/
@@ -1021,7 +1021,7 @@ gimp_show_help_button (void)
  * Returns whether file plug-ins should default to exporting the
  * image's color profile.
  *
- * Return value: TRUE if preferences are set to export the color profile.
+ * Returns: TRUE if preferences are set to export the color profile.
  *
  * Since: 2.10.4
  **/
@@ -1038,7 +1038,7 @@ gimp_export_color_profile (void)
  * metadata, according preferences (original settings is %FALSE since
  * metadata can contain sensitive information).
  *
- * Return value: TRUE if preferences are set to export Exif.
+ * Returns: TRUE if preferences are set to export Exif.
  *
  * Since: 2.10
  **/
@@ -1055,7 +1055,7 @@ gimp_export_exif (void)
  * metadata, according preferences (original settings is %FALSE since
  * metadata can contain sensitive information).
  *
- * Return value: TRUE if preferences are set to export XMP.
+ * Returns: TRUE if preferences are set to export XMP.
  *
  * Since: 2.10
  **/
@@ -1072,7 +1072,7 @@ gimp_export_xmp (void)
  * metadata, according preferences (original settings is %FALSE since
  * metadata can contain sensitive information).
  *
- * Return value: TRUE if preferences are set to export IPTC.
+ * Returns: TRUE if preferences are set to export IPTC.
  *
  * Since: 2.10
  **/
@@ -1089,7 +1089,7 @@ gimp_export_iptc (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the check_size value
+ * Returns: the check_size value
  *
  * Since: 2.2
  **/
@@ -1106,7 +1106,7 @@ gimp_check_size (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the check_type value
+ * Returns: the check_type value
  *
  * Since: 2.2
  **/
@@ -1124,7 +1124,7 @@ gimp_check_type (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the default display ID
+ * Returns: the default display ID
  **/
 gint32
 gimp_default_display (void)
@@ -1139,7 +1139,7 @@ gimp_default_display (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the window manager class
+ * Returns: the window manager class
  **/
 const gchar *
 gimp_wm_class (void)
@@ -1156,7 +1156,7 @@ gimp_wm_class (void)
  * Will return %NULL if GIMP has been started with no GUI, either
  * via "--no-interface" flag, or a console build.
  *
- * Return value: the display name
+ * Returns: the display name
  **/
 const gchar *
 gimp_display_name (void)
@@ -1171,7 +1171,7 @@ gimp_display_name (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the monitor number
+ * Returns: the monitor number
  **/
 gint
 gimp_monitor_number (void)
@@ -1188,7 +1188,7 @@ gimp_monitor_number (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: timestamp for plug-in window
+ * Returns: timestamp for plug-in window
  *
  * Since: 2.6
  **/
@@ -1205,7 +1205,7 @@ gimp_user_time (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Return value: the icon theme directory
+ * Returns: the icon theme directory
  *
  * Since: 2.10.4
  **/
@@ -1220,7 +1220,7 @@ gimp_icon_theme_dir (void)
  *
  * Returns the plug-in's executable name.
  *
- * Return value: the executable name
+ * Returns: the executable name
  **/
 const gchar *
 gimp_get_progname (void)

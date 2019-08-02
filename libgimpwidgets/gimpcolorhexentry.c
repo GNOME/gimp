@@ -195,7 +195,7 @@ gimp_color_hex_entry_constructed (GObject *object)
 /**
  * gimp_color_hex_entry_new:
  *
- * Return value: a new #GimpColorHexEntry widget
+ * Returns: a new #GimpColorHexEntry widget
  *
  * Since: 2.2
  **/

@@ -109,7 +109,7 @@ gimp_display_shell_constrain_line (GimpDisplayShell *shell,
  * into account the shell unit settings and will use the ideal digit
  * precision according to current image resolution.
  *
- * Return value: a newly allocated string containing the enhanced status.
+ * Returns: a newly allocated string containing the enhanced status.
  **/
 gchar *
 gimp_display_shell_get_line_status (GimpDisplayShell *shell,

@@ -190,7 +190,7 @@ gimp_image_scale (GimpImage             *image,
  * Inventory the layer list in image and check that it may be
  * scaled to @new_height and @new_width without problems.
  *
- * Return value: #GIMP_IMAGE_SCALE_OK if scaling the image will shrink none
+ * Returns: #GIMP_IMAGE_SCALE_OK if scaling the image will shrink none
  *               of its layers completely away, and the new image size
  *               is smaller than @max_memsize.
  *               #GIMP_IMAGE_SCALE_TOO_SMALL if scaling would remove some

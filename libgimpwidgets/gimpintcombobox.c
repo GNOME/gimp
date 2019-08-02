@@ -264,7 +264,7 @@ gimp_int_combo_box_get_property (GObject    *object,
  * If you need to construct an empty #GimpIntComboBox, it's best to use
  * g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL).
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/
@@ -294,7 +294,7 @@ gimp_int_combo_box_new (const gchar *first_label,
  * A variant of gimp_int_combo_box_new() that takes a va_list of
  * label/value pairs. Probably only useful for language bindings.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/
@@ -336,7 +336,7 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
  * A variant of gimp_int_combo_box_new() that takes an array of labels.
  * The array indices are used as values.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/
@@ -446,7 +446,7 @@ gimp_int_combo_box_append (GimpIntComboBox *combo_box,
  * Looks up the item that belongs to the given @value and makes it the
  * selected item in the @combo_box.
  *
- * Return value: %TRUE on success or %FALSE if there was no item for
+ * Returns: %TRUE on success or %FALSE if there was no item for
  *               this value.
  *
  * Since: 2.2
@@ -478,7 +478,7 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
  *
  * Retrieves the value of the selected (active) item in the @combo_box.
  *
- * Return value: %TRUE if @value has been set or %FALSE if no item was
+ * Returns: %TRUE if @value has been set or %FALSE if no item was
  *               active.
  *
  * Since: 2.2
@@ -512,7 +512,7 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
  * Looks up the item that has the given @user_data and makes it the
  * selected item in the @combo_box.
  *
- * Return value: %TRUE on success or %FALSE if there was no item for
+ * Returns: %TRUE on success or %FALSE if there was no item for
  *               this user-data.
  *
  * Since: 2.10
@@ -544,7 +544,7 @@ gimp_int_combo_box_set_active_by_user_data (GimpIntComboBox *combo_box,
  *
  * Retrieves the user-data of the selected (active) item in the @combo_box.
  *
- * Return value: %TRUE if @user_data has been set or %FALSE if no item was
+ * Returns: %TRUE if @user_data has been set or %FALSE if no item was
  *               active.
  *
  * Since: 2.10
@@ -587,7 +587,7 @@ gimp_int_combo_box_get_active_user_data (GimpIntComboBox *combo_box,
  * gimp_drawable_combo_box_new(). If you pass an invalid initial
  * @value, the @callback will be called with the default item active.
  *
- * Return value: the signal handler ID as returned by g_signal_connect()
+ * Returns: the signal handler ID as returned by g_signal_connect()
  *
  * Since: 2.2
  **/
@@ -666,7 +666,7 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
  * Returns the label previously set with gimp_int_combo_box_set_label(),
  * or %NULL,
  *
- * Return value: the @combo_box' label.
+ * Returns: the @combo_box' label.
  *
  * Since: 2.10
  **/
@@ -713,7 +713,7 @@ gimp_int_combo_box_set_layout (GimpIntComboBox       *combo_box,
  *
  * Returns the layout of @combo_box
  *
- * Return value: the @combo_box's layout.
+ * Returns: the @combo_box's layout.
  *
  * Since: 2.10
  **/
