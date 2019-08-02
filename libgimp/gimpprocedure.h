@@ -123,8 +123,16 @@ GList          * gimp_procedure_get_menu_paths     (GimpProcedure     *procedure
 
 void             gimp_procedure_add_argument       (GimpProcedure     *procedure,
                                                     GParamSpec        *pspec);
+void             gimp_procedure_add_argument_from_property
+                                                   (GimpProcedure     *procedure,
+                                                    GObject           *config,
+                                                    const gchar       *prop_name);
 void             gimp_procedure_add_return_value   (GimpProcedure     *procedure,
                                                     GParamSpec        *pspec);
+void             gimp_procedure_add_return_value_from_property
+                                                   (GimpProcedure     *procedure,
+                                                    GObject           *config,
+                                                    const gchar       *prop_name);
 
 GParamSpec    ** gimp_procedure_get_arguments      (GimpProcedure     *procedure,
                                                     gint              *n_arguments);

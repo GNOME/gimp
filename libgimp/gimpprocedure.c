@@ -649,7 +649,8 @@ gimp_procedure_get_menu_paths (GimpProcedure *procedure)
  *
  * Add a new argument to @procedure according to @pspec specifications.
  * The arguments will be ordered according to the call order to
- * gimp_procedure_add_argument().
+ * gimp_procedure_add_argument() and
+ * gimp_procedure_add_argument_from_property().
  **/
 void
 gimp_procedure_add_argument (GimpProcedure *procedure,
@@ -669,13 +670,46 @@ gimp_procedure_add_argument (GimpProcedure *procedure,
 }
 
 /**
+ * gimp_procedure_add_argument_from_property:
+ * @procedure: the #GimpProcedure.
+ * @config:    a #GObject.
+ * @prop_name: property name in @config.
+ *
+ * Add a new argument to @procedure according to the specifications of
+ * the property @prop_name registered on @config.
+ *
+ * The arguments will be ordered according to the call order to
+ * gimp_procedure_add_argument() and
+ * gimp_procedure_add_argument_from_property().
+ */
+void
+gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
+                                           GObject       *config,
+                                           const gchar   *prop_name)
+{
+  GParamSpec *pspec;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (prop_name != NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (procedure->priv->plug_in), prop_name);
+
+  g_return_if_fail (pspec != NULL);
+
+  gimp_procedure_add_argument (procedure, pspec);
+}
+
+/**
  * gimp_procedure_add_return_value:
  * @procedure: the #GimpProcedure.
  * @pspec:     (transfer full): the return value specification.
  *
  * Add a new return value to @procedure according to @pspec
- * specifications. The returned values will be ordered according to the
- * call order to gimp_procedure_add_return_value().
+ * specifications.
+ *
+ * The returned values will be ordered according to the call order to
+ * gimp_procedure_add_return_value() and
+ * gimp_procedure_add_return_value_from_property().
  **/
 void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
@@ -692,6 +726,36 @@ gimp_procedure_add_return_value (GimpProcedure *procedure,
   g_param_spec_ref_sink (pspec);
 
   procedure->priv->n_values++;
+}
+
+/**
+ * gimp_procedure_add_return_value_from_property:
+ * @procedure: the #GimpProcedure.
+ * @config:    a #GObject.
+ * @prop_name: property name in @config.
+ *
+ * Add a new return value to @procedure according to the specifications of
+ * the property @prop_name registered on @config.
+ *
+ * The returned values will be ordered according to the call order to
+ * gimp_procedure_add_return_value() and
+ * gimp_procedure_add_return_value_from_property().
+ */
+void
+gimp_procedure_add_return_value_from_property (GimpProcedure *procedure,
+                                               GObject       *config,
+                                               const gchar   *prop_name)
+{
+  GParamSpec *pspec;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (prop_name != NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (procedure->priv->plug_in), prop_name);
+
+  g_return_if_fail (pspec != NULL);
+
+  gimp_procedure_add_return_value (procedure, pspec);
 }
 
 /**
