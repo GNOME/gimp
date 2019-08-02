@@ -44,12 +44,19 @@ struct _GimpPlugInPrivate
   GList *menu_branches;
 
   GList *temp_procedures;
+
+  guint  extension_source_id;
 };
 
 
-void   _gimp_plug_in_init  (GimpPlugIn *plug_in);
-void   _gimp_plug_in_query (GimpPlugIn *plug_in);
-void   _gimp_plug_in_quit  (GimpPlugIn *plug_in);
+void       _gimp_plug_in_init           (GimpPlugIn  *plug_in);
+void       _gimp_plug_in_query          (GimpPlugIn  *plug_in);
+void       _gimp_plug_in_quit           (GimpPlugIn  *plug_in);
+
+gboolean   _gimp_plug_in_extension_read (GIOChannel  *channel,
+                                         GIOCondition condition,
+                                         gpointer     data);
+void       _gimp_plug_in_single_message (GimpPlugIn  *plug_in);
 
 
 G_END_DECLS

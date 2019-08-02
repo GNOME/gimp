@@ -21,9 +21,14 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <string.h>
 
 #include "gimp.h"
+
+#include "libgimpbase/gimpprotocol.h"
+
+#include "gimp-private.h"
 #include "gimpplugin-private.h"
 #include "gimpprocedure-private.h"
 
@@ -67,6 +72,12 @@ gimp_plug_in_finalize (GObject *object)
 {
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
   GList      *list;
+
+  if (plug_in->priv->extension_source_id)
+    {
+      g_source_remove (plug_in->priv->extension_source_id);
+      plug_in->priv->extension_source_id = 0;
+    }
 
   if (plug_in->priv->temp_procedures)
     {
@@ -250,9 +261,9 @@ gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
  * NOTE: Normally, plug-in communication is triggered by the plug-in
  * and the GIMP core only responds to the plug-in's requests. You must
  * explicitly enable receiving of temporary procedure run requests
- * using either gimp_extension_enable() or
- * gimp_extension_process(). See this functions' documentation for
- * details.
+ * using either gimp_plug_in_extension_enable() or
+ * gimp_plug_in_extension_process(). See this functions' documentation
+ * for details.
  *
  * Since: 3.0
  **/
@@ -352,4 +363,127 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
     }
 
   return NULL;
+}
+
+/**
+ * gimp_plug_in_extension_enable:
+ * @plug_in: A #GimpPlugIn
+ *
+ * Enables asynchronous processing of messages from the main GIMP
+ * application.
+ *
+ * Normally, a plug-in is not called by GIMP except for the call to
+ * the procedure it implements. All subsequent communication is
+ * triggered by the plug-in and all messages sent from GIMP to the
+ * plug-in are just answers to requests the plug-in made.
+ *
+ * If the plug-in however registered temporary procedures using
+ * gimp_plug_in_add_temp_procedure(), it needs to be able to receive
+ * requests to execute them. Usually this will be done by running
+ * gimp_plug_in_extension_process() in an endless loop.
+ *
+ * If the plug-in cannot use gimp_plug_in_extension_process(), i.e. if
+ * it has a GUI and is hanging around in a #GMainLoop, it must call
+ * gimp_plug_in_extension_enable().
+ *
+ * Note that the plug-in does not need to be a #GIMP_EXTENSION to
+ * register temporary procedures.
+ *
+ * See also: gimp_plug_in_add_temp_procedure().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (! plug_in->priv->extension_source_id)
+    {
+      plug_in->priv->extension_source_id =
+        g_io_add_watch (_gimp_readchannel, G_IO_IN | G_IO_PRI,
+                        _gimp_plug_in_extension_read,
+                        plug_in);
+    }
+}
+
+/**
+ * gimp_plug_in_extension_process:
+ * @plug_in: A #GimpPlugIn.
+ * @timeout: The timeout (in ms) to use for the select() call.
+ *
+ * Processes one message sent by GIMP and returns.
+ *
+ * Call this function in an endless loop after calling
+ * gimp_plug_in_extension_ready() to process requests for running
+ * temporary procedures.
+ *
+ * See gimp_plug_in_extension_enable() for an asynchronous way of
+ * doing the same if running an endless loop is not an option.
+ *
+ * See also: gimp_plug_in_add_temp_procedure().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_plug_in_extension_process (GimpPlugIn *plug_in,
+                                guint       timeout)
+{
+#ifndef G_OS_WIN32
+
+  gint select_val;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  do
+    {
+      fd_set readfds;
+      struct timeval  tv;
+      struct timeval *tvp;
+
+      if (timeout)
+        {
+          tv.tv_sec  = timeout / 1000;
+          tv.tv_usec = (timeout % 1000) * 1000;
+          tvp = &tv;
+        }
+      else
+        tvp = NULL;
+
+      FD_ZERO (&readfds);
+      FD_SET (g_io_channel_unix_get_fd (_gimp_readchannel), &readfds);
+
+      if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
+        {
+          _gimp_plug_in_single_message (plug_in);
+        }
+      else if (select_val == -1 && errno != EINTR)
+        {
+          perror ("gimp_plug_in_extension_process");
+          gimp_quit ();
+        }
+    }
+  while (select_val == -1 && errno == EINTR);
+
+#else
+
+  /* Zero means infinite wait for us, but g_poll and
+   * g_io_channel_win32_poll use -1 to indicate
+   * infinite wait.
+   */
+  GPollFD pollfd;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (timeout == 0)
+    timeout = -1;
+
+  g_io_channel_win32_make_pollfd (_gimp_readchannel, G_IO_IN, &pollfd);
+
+  if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
+    {
+      _gimp_plug_in_single_message (plug_in);
+    }
+
+#endif
 }

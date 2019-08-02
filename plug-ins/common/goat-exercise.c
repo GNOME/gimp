@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#define GIMP_DISABLE_COMPAR_CRUFT
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 

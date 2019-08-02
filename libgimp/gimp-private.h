@@ -27,10 +27,12 @@ G_BEGIN_DECLS
 #include "libgimpbase/gimpwire.h"
 
 
+extern GIOChannel *_gimp_readchannel;
 extern GIOChannel *_gimp_writechannel;
 extern GHashTable *_gimp_temp_proc_ht;
 
 
+void _gimp_config          (GPConfig        *config);
 void _gimp_read_expect_msg (GimpWireMessage *msg,
                             gint             type);
 

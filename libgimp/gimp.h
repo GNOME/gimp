@@ -149,14 +149,6 @@ gint                gimp_main                 (GType  plug_in_type,
  */
 void                gimp_quit                 (void) G_GNUC_NORETURN;
 
-/* Enable asynchronous processing of temp_procs
- */
-void                gimp_extension_enable     (void);
-
-/* Process one temp_proc and return
- */
-void                gimp_extension_process    (guint  timeout);
-
 /* Run a procedure in the procedure database. The parameters are
  *  specified as a GimpValueArray, so are the return values.
  *
