@@ -193,7 +193,7 @@ gimp_enum_store_add_value (GtkListStore *store,
  * it with enum values. The enum needs to be registered to the type
  * system and should have translatable value names.
  *
- * Return value: a new #GimpEnumStore.
+ * Returns: a new #GimpEnumStore.
  *
  * Since: 2.4
  **/
@@ -226,7 +226,7 @@ gimp_enum_store_new (GType enum_type)
  * to limit the enum values to a certain range. Values smaller than
  * @minimum or larger than @maximum are not added to the store.
  *
- * Return value: a new #GimpEnumStore.
+ * Returns: a new #GimpEnumStore.
  *
  * Since: 2.4
  **/
@@ -270,7 +270,7 @@ gimp_enum_store_new_with_range (GType  enum_type,
  * to explicitly list the enum values that should be added to the
  * store.
  *
- * Return value: a new #GimpEnumStore.
+ * Returns: a new #GimpEnumStore.
  *
  * Since: 2.4
  **/
@@ -299,7 +299,7 @@ gimp_enum_store_new_with_values (GType enum_type,
  *
  * See gimp_enum_store_new_with_values().
  *
- * Return value: a new #GimpEnumStore.
+ * Returns: a new #GimpEnumStore.
  *
  * Since: 2.4
  **/

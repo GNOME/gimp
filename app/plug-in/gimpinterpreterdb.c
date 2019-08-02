@@ -852,7 +852,7 @@ collect_extensions (const gchar *ext,
  * gimp_interpreter_db_get_extensions:
  * @db:
  *
- * Return value: a newly allocated string with all registered file
+ * Returns: a newly allocated string with all registered file
  *               extensions separated by %G_SEARCHPATH_SEPARATOR;
  *               or %NULL if no extensions are registered
  **/

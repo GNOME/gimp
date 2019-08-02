@@ -261,7 +261,7 @@ gimp_sub_progress_message (GimpProgress        *progress,
  * when an action breaks down into multiple sub-actions that itself
  * need a #GimpProgress pointer. See gimp_image_scale() for an example.
  *
- * Return value: a new #GimpProgress object
+ * Returns: a new #GimpProgress object
  */
 GimpProgress *
 gimp_sub_progress_new (GimpProgress *progress)

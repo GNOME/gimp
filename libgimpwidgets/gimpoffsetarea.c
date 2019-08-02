@@ -131,7 +131,7 @@ gimp_offset_area_init (GimpOffsetArea *area)
  * when resizing an image or a drawable to allow the user to interactively
  * specify the new offsets.
  *
- * Return value: the new #GimpOffsetArea widget.
+ * Returns: the new #GimpOffsetArea widget.
  **/
 GtkWidget *
 gimp_offset_area_new (gint orig_width,

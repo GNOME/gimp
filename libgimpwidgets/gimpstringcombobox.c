@@ -261,7 +261,7 @@ gimp_string_model_lookup (GtkTreeModel *model,
  * @id_column:    the model column of the ID
  * @label_column: the modl column of the label
  *
- * Return value: a new #GimpStringComboBox.
+ * Returns: a new #GimpStringComboBox.
  *
  * Since: 2.4
  **/
@@ -291,7 +291,7 @@ gimp_string_combo_box_new (GtkTreeModel *model,
  * Looks up the item that belongs to the given @id and makes it the
  * selected item in the @combo_box.
  *
- * Return value: %TRUE on success or %FALSE if there was no item for
+ * Returns: %TRUE on success or %FALSE if there was no item for
  *               this value.
  *
  * Since: 2.4
@@ -334,7 +334,7 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
  *
  * Retrieves the value of the selected (active) item in the @combo_box.
  *
- * Return value: newly allocated ID string or %NULL if nothing was selected
+ * Returns: newly allocated ID string or %NULL if nothing was selected
  *
  * Since: 2.4
  **/

@@ -180,7 +180,7 @@ gimp_enum_label_set_property (GObject      *object,
  * @enum_type: the #GType of an enum
  * @value:     an enum value
  *
- * Return value: a new #GimpEnumLabel.
+ * Returns: a new #GimpEnumLabel.
  *
  * Since: 2.4
  **/

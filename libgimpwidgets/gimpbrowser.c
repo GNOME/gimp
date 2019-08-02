@@ -218,7 +218,7 @@ gimp_browser_dispose (GObject *object)
  *
  * Create a new #GimpBrowser widget.
  *
- * Return Value: a newly created #GimpBrowser.
+ * Returns: a newly created #GimpBrowser.
  *
  * Since: 2.4
  **/

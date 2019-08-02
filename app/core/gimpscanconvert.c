@@ -64,7 +64,7 @@ struct _GimpScanConvert
  *
  * Create a new scan conversion context.
  *
- * Return value: a newly allocated #GimpScanConvert context.
+ * Returns: a newly allocated #GimpScanConvert context.
  */
 GimpScanConvert *
 gimp_scan_convert_new (void)

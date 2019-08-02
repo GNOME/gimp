@@ -425,7 +425,7 @@ gimp_color_frame_draw (GtkWidget *widget,
  *
  * Creates a new #GimpColorFrame widget.
  *
- * Return value: The new #GimpColorFrame widget.
+ * Returns: The new #GimpColorFrame widget.
  **/
 GtkWidget *
 gimp_color_frame_new (void)

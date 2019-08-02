@@ -27,7 +27,7 @@
  *
  * This function is never called directly. Use GIMP_ERROR() instead.
  *
- * Return value: the #GQuark that defines the general GIMP error domain.
+ * Returns: the #GQuark that defines the general GIMP error domain.
  **/
 GQuark
 gimp_error_quark (void)

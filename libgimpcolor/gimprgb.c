@@ -319,7 +319,7 @@ gimp_rgb_gamma (GimpRGB *rgb,
  * gimp_rgb_luminance:
  * @rgb: a #GimpRGB struct
  *
- * Return value: the luminous intensity of the range from 0.0 to 1.0.
+ * Returns: the luminous intensity of the range from 0.0 to 1.0.
  *
  * Since: 2.4
  **/
@@ -339,7 +339,7 @@ gimp_rgb_luminance (const GimpRGB *rgb)
  * gimp_rgb_luminance_uchar:
  * @rgb: a #GimpRGB struct
  *
- * Return value: the luminous intensity in the range from 0 to 255.
+ * Returns: the luminous intensity in the range from 0 to 255.
  *
  * Since: 2.4
  **/

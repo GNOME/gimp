@@ -417,7 +417,7 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
  * gimp_image_metadata_save_prepare() to @file, taking into account
  * the passed @flags.
  *
- * Return value: Whether the save was successful.
+ * Returns: Whether the save was successful.
  *
  * Since: 2.10
  */

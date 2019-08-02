@@ -172,7 +172,7 @@ gimp_utf8_strtrim (const gchar *str,
  * with "(invalid UTF-8 string)" is returned. If not even the start
  * of @str is valid UTF-8, only "(invalid UTF-8 string)" is returned.
  *
- * Return value: The UTF-8 string as described above.
+ * Returns: The UTF-8 string as described above.
  **/
 gchar *
 gimp_any_to_utf8 (const gchar  *str,
@@ -241,7 +241,7 @@ gimp_any_to_utf8 (const gchar  *str,
  * a filename in the filesystem encoding to a function that expects an
  * UTF-8 encoded filename.
  *
- * Return value: A temporarily valid UTF-8 representation of @filename.
+ * Returns: A temporarily valid UTF-8 representation of @filename.
  *               This string must not be changed or freed.
  **/
 const gchar *
@@ -293,7 +293,7 @@ gimp_filename_to_utf8 (const gchar *filename)
  *
  * Since: 2.10
  *
- * Return value: A temporarily valid UTF-8 representation of @file's name.
+ * Returns: A temporarily valid UTF-8 representation of @file's name.
  *               This string must not be changed or freed.
  **/
 const gchar *
@@ -322,7 +322,7 @@ gimp_file_get_utf8_name (GFile *file)
  *
  * Since: 2.10
  *
- * Return value: %TRUE if @file's URI ends with @extension,
+ * Returns: %TRUE if @file's URI ends with @extension,
  *               %FALSE otherwise.
  **/
 gboolean
@@ -362,7 +362,7 @@ gimp_file_has_extension (GFile       *file,
  *
  * Since: 2.10
  *
- * Return value: %TRUE on success, %FALSE otherwise. On %FALSE, @error
+ * Returns: %TRUE on success, %FALSE otherwise. On %FALSE, @error
  *               is set.
  **/
 gboolean
@@ -533,7 +533,7 @@ gimp_file_show_in_file_manager (GFile   *file,
  * this construct and removes the whole bracket construction to get
  * rid of the mnemonic (see bug 157561).
  *
- * Return value: A (possibly stripped) copy of @str which should be
+ * Returns: A (possibly stripped) copy of @str which should be
  *               freed using g_free() when it is not needed any longer.
  **/
 gchar *
@@ -593,7 +593,7 @@ gimp_strip_uline (const gchar *str)
  * strings with underlines (like filenames) in a place that would convert
  * them to mnemonics.
  *
- * Return value: A (possibly escaped) copy of @str which should be
+ * Returns: A (possibly escaped) copy of @str which should be
  * freed using g_free() when it is not needed any longer.
  *
  * Since: 2.2
@@ -637,7 +637,7 @@ gimp_escape_uline (const gchar *str)
  * and parameter names. Every character of the input string that is
  * not either '-', 'a-z', 'A-Z' or '0-9' will be replaced by a '-'.
  *
- * Return value: The canonicalized identifier. This is a newly
+ * Returns: The canonicalized identifier. This is a newly
  *               allocated string that should be freed with g_free()
  *               when no longer needed.
  *
@@ -676,7 +676,7 @@ gimp_canonicalize_identifier (const gchar *identifier)
  *
  * Retrieves #GimpEnumDesc associated with the given value, or %NULL.
  *
- * Return value: the value's #GimpEnumDesc.
+ * Returns: the value's #GimpEnumDesc.
  *
  * Since: 2.2
  **/
@@ -719,7 +719,7 @@ gimp_enum_get_desc (GEnumClass *enum_class,
  * description and help are returned (if @value_name, @value_nick,
  * @value_desc and @value_help are not %NULL).
  *
- * Return value: %TRUE if @value is valid for the @enum_type,
+ * Returns: %TRUE if @value is valid for the @enum_type,
  *               %FALSE otherwise
  *
  * Since: 2.2
@@ -802,7 +802,7 @@ gimp_enum_get_value (GType         enum_type,
  *
  * Retrieves the translated description for a given @enum_value.
  *
- * Return value: the translated description of the enum value
+ * Returns: the translated description of the enum value
  *
  * Since: 2.2
  **/
@@ -841,7 +841,7 @@ gimp_enum_value_get_desc (GEnumClass *enum_class,
  *
  * Retrieves the translated help for a given @enum_value.
  *
- * Return value: the translated help of the enum value
+ * Returns: the translated help of the enum value
  *
  * Since: 2.2
  **/
@@ -868,7 +868,7 @@ gimp_enum_value_get_help (GEnumClass *enum_class,
  *
  * Retrieves the translated abbreviation for a given @enum_value.
  *
- * Return value: the translated abbreviation of the enum value
+ * Returns: the translated abbreviation of the enum value
  *
  * Since: 2.10
  **/
@@ -900,7 +900,7 @@ gimp_enum_value_get_abbrev (GEnumClass *enum_class,
  *
  * Retrieves the first #GimpFlagsDesc that matches the given value, or %NULL.
  *
- * Return value: the value's #GimpFlagsDesc.
+ * Returns: the value's #GimpFlagsDesc.
  *
  * Since: 2.2
  **/
@@ -943,7 +943,7 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
  * translated description and help are returned (if @value_name,
  * @value_nick, @value_desc and @value_help are not %NULL).
  *
- * Return value: %TRUE if @value is valid for the @flags_type,
+ * Returns: %TRUE if @value is valid for the @flags_type,
  *               %FALSE otherwise
  *
  * Since: 2.2
@@ -1004,7 +1004,7 @@ gimp_flags_get_first_value (GType         flags_type,
  *
  * Retrieves the translated description for a given @flags_value.
  *
- * Return value: the translated description of the flags value
+ * Returns: the translated description of the flags value
  *
  * Since: 2.2
  **/
@@ -1043,7 +1043,7 @@ gimp_flags_value_get_desc (GFlagsClass *flags_class,
  *
  * Retrieves the translated help for a given @flags_value.
  *
- * Return value: the translated help of the flags value
+ * Returns: the translated help of the flags value
  *
  * Since: 2.2
  **/
@@ -1070,7 +1070,7 @@ gimp_flags_value_get_help (GFlagsClass *flags_class,
  *
  * Retrieves the translated abbreviation for a given @flags_value.
  *
- * Return value: the translated abbreviation of the flags value
+ * Returns: the translated abbreviation of the flags value
  *
  * Since: 2.10
  **/
@@ -1173,7 +1173,7 @@ gimp_stack_trace_available (gboolean optimal)
  * our error handling (which is just wrong). Therefore printing to a
  * file description is an implementation without any memory allocation.
 
- * Return value: %TRUE if a stack trace could be generated, %FALSE
+ * Returns: %TRUE if a stack trace could be generated, %FALSE
  * otherwise.
  *
  * Since: 2.10

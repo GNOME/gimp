@@ -1214,7 +1214,7 @@ gimp_data_is_internal (GimpData *data)
  * files. In these three groups, the objects are sorted alphabetically
  * by name, using gimp_object_name_collate().
  *
- * Return value: -1 if @data1 compares before @data2,
+ * Returns: -1 if @data1 compares before @data2,
  *                0 if they compare equal,
  *                1 if @data1 compares after @data2.
  **/
@@ -1236,7 +1236,7 @@ gimp_data_compare (GimpData *data1,
  * This function is used to implement the GIMP_DATA_ERROR macro. It
  * shouldn't be called directly.
  *
- * Return value: the #GQuark to identify error in the GimpData error domain.
+ * Returns: the #GQuark to identify error in the GimpData error domain.
  **/
 GQuark
 gimp_data_error_quark (void)

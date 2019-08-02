@@ -178,7 +178,7 @@ gimp_tagged_set_tags (GimpTagged *tagged,
  * Returns the list of tags assigned to this object. The returned %GList
  * is owned by the @tagged object and must not be modified or destroyed.
  *
- * Return value: a list of tags
+ * Returns: a list of tags
  **/
 GList *
 gimp_tagged_get_tags (GimpTagged *tagged)
@@ -199,7 +199,7 @@ gimp_tagged_get_tags (GimpTagged *tagged)
  * sessions, so for example an instance pointer cannot be used as an
  * identifier.
  *
- * Return value: a newly allocated string containing unique identifier
+ * Returns: a newly allocated string containing unique identifier
  * of the object. It must be freed using #g_free.
  **/
 gchar *
@@ -221,7 +221,7 @@ gimp_tagged_get_identifier (GimpTagged *tagged)
  * If the object does not want to support such remapping (objects not
  * stored in file for example) it can return %NULL.
  *
- * Return value: checksum string if object needs identifier remapping,
+ * Returns: checksum string if object needs identifier remapping,
  * %NULL otherwise. Returned string must be freed with #g_free().
  **/
 gchar *
@@ -237,7 +237,7 @@ gimp_tagged_get_checksum (GimpTagged *tagged)
  * @tagged: an object that implements the %GimpTagged interface
  * @tag:    a %GimpTag
  *
- * Return value: %TRUE if the object has @tag, %FALSE otherwise.
+ * Returns: %TRUE if the object has @tag, %FALSE otherwise.
  **/
 gboolean
 gimp_tagged_has_tag (GimpTagged *tagged,

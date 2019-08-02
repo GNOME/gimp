@@ -1314,7 +1314,7 @@ gimp_color_wheel_focus (GtkWidget        *widget,
  *
  * Creates a new HSV color selector.
  *
- * Return value: A newly-created HSV color selector.
+ * Returns: A newly-created HSV color selector.
  *
  * Since: 2.10
  */
@@ -1484,7 +1484,7 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
  * adjusting the value with the mouse. This function queries whether
  * the HSV color selector is being adjusted or not.
  *
- * Return value: %TRUE if clients can ignore changes to the color value,
+ * Returns: %TRUE if clients can ignore changes to the color value,
  *     since they may be transitory, or %FALSE if they should consider
  *     the color value status to be final.
  *

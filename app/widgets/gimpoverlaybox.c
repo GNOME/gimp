@@ -370,7 +370,7 @@ gimp_overlay_box_pick_embedded_child (GdkWindow      *parent,
  *
  * Creates a new #GimpOverlayBox widget.
  *
- * Return value: a new #GimpOverlayBox widget
+ * Returns: a new #GimpOverlayBox widget
  **/
 GtkWidget *
 gimp_overlay_box_new (void)

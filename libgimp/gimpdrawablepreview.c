@@ -613,7 +613,7 @@ gimp_drawable_preview_new_from_drawable_id (gint32 drawable_ID)
  * gimp_drawable_preview_get_drawable_id:
  * @preview:   a #GimpDrawablePreview widget
  *
- * Return value: the drawable_ID that has been passed to
+ * Returns: the drawable_ID that has been passed to
  *               gimp_drawable_preview_new_from_drawable_id().
  *
  * Since: 2.10

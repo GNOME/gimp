@@ -122,7 +122,7 @@ gimp_image_combo_box_init (GimpImageComboBox *combo_box)
  * active image ID and gimp_int_combo_box_get_active() to retrieve the
  * ID of the selected image.
  *
- * Return value: a new #GimpIntComboBox.
+ * Returns: a new #GimpIntComboBox.
  *
  * Since: 2.2
  **/

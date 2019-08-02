@@ -356,7 +356,7 @@ gimp_config_serialize_property_by_name (GimpConfig       *config,
  *
  * This utility function appends a string representation of #GValue to @str.
  *
- * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
  *
  * Since: 2.4
  **/

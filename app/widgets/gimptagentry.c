@@ -322,7 +322,7 @@ gimp_tag_entry_get_property (GObject    *object,
  * tags selected. When operating in assignment mode, tags are assigned to
  * objects selected and visible in @container.
  *
- * Return value: a new GimpTagEntry widget.
+ * Returns: a new GimpTagEntry widget.
  **/
 GtkWidget *
 gimp_tag_entry_new (GimpTaggedContainer *container,
@@ -814,7 +814,7 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
  * valid as they are fixed when necessary. Only valid tags are
  * returned.
  *
- * Return value: a newly allocated NULL terminated list of strings. It
+ * Returns: a newly allocated NULL terminated list of strings. It
  *               should be freed using g_strfreev().
  **/
 gchar **
@@ -1729,7 +1729,7 @@ gimp_tag_entry_add_to_recent (GimpTagEntry *entry,
  * Tag separator is a single Unicode terminal punctuation
  * character.
  *
- * Return value: returns locale dependent tag separator.
+ * Returns: returns locale dependent tag separator.
  **/
 const gchar *
 gimp_tag_entry_get_separator (void)

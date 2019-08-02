@@ -90,7 +90,7 @@ gimp_cairo_set_source_rgba (cairo_t       *cr,
  *
  * Create a repeating checkerboard pattern.
  *
- * Return value: a new Cairo pattern that can be used as a source on @cr.
+ * Returns: a new Cairo pattern that can be used as a source on @cr.
  *
  * Since: 2.6
  **/
@@ -149,7 +149,7 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
  * This function returns a #Babl format that corresponds to @surface's
  * pixel format.
  *
- * Return value: the #Babl format of @surface.
+ * Returns: the #Babl format of @surface.
  *
  * Since: 2.10
  **/
@@ -181,7 +181,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
  * It must only be called on image surfaces, calling it on other surface
  * types is an error.
  *
- * Return value: (transfer full): a #GeglBuffer
+ * Returns: (transfer full): a #GeglBuffer
  *
  * Since: 2.10
  **/

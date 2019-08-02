@@ -326,7 +326,7 @@ file_open_image (Gimp                *gimp,
  *
  * Attempts to load a thumbnail by using a registered thumbnail loader.
  *
- * Return value: the thumbnail image
+ * Returns: the thumbnail image
  */
 GimpImage *
 file_open_thumbnail (Gimp           *gimp,

@@ -137,7 +137,7 @@ gimp_combo_tag_entry_draw (GtkWidget *widget,
  * Creates a new #GimpComboTagEntry widget which extends #GimpTagEntry by
  * adding ability to pick tags using popup window (similar to combo box).
  *
- * Return value: a new #GimpComboTagEntry widget.
+ * Returns: a new #GimpComboTagEntry widget.
  **/
 GtkWidget *
 gimp_combo_tag_entry_new (GimpTaggedContainer *container,
