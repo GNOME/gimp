@@ -296,7 +296,7 @@ gimp_clipboard_has_curve (Gimp *gimp)
  * The returned #GimpObject needs to be unref'ed when it's no longer
  * needed.
  *
- * Returns: a reference to a #GimpObject or %NULL if there's no
+ * Returns: (nullable): a reference to a #GimpObject or %NULL if there's no
  *               image or buffer in the clipboard
  **/
 GimpObject *
@@ -323,7 +323,7 @@ gimp_clipboard_get_object (Gimp *gimp)
  * The returned #GimpImage needs to be unref'ed when it's no longer
  * needed.
  *
- * Returns: a reference to a #GimpImage or %NULL if there's no
+ * Returns: (nullable): a reference to a #GimpImage or %NULL if there's no
  *               image in the clipboard
  **/
 GimpImage *
@@ -382,7 +382,7 @@ gimp_clipboard_get_image (Gimp *gimp)
  * The returned #GimpBuffer needs to be unref'ed when it's no longer
  * needed.
  *
- * Returns: a reference to a #GimpBuffer or %NULL if there's no
+ * Returns: (nullable): a reference to a #GimpBuffer or %NULL if there's no
  *               image data
  **/
 GimpBuffer *
@@ -448,7 +448,7 @@ gimp_clipboard_get_buffer (Gimp *gimp)
  *
  * The returned data needs to be freed when it's no longer needed.
  *
- * Returns: a reference to a #GimpBuffer or %NULL if there's no
+ * Returns: (nullable): a reference to a #GimpBuffer or %NULL if there's no
  *               image data
  **/
 gchar *
@@ -518,7 +518,7 @@ gimp_clipboard_get_svg (Gimp  *gimp,
  *
  * The returned curve needs to be unref'ed when it's no longer needed.
  *
- * Returns: a reference to a #GimpCurve or %NULL if there's no
+ * Returns: (nullable): a reference to a #GimpCurve or %NULL if there's no
  *               curve data
  **/
 GimpCurve *

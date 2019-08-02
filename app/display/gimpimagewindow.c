@@ -1593,7 +1593,7 @@ gimp_image_window_get_first_dockbook (GimpDockColumns *columns)
  * Gets the default dockbook, which is the dockbook in which new
  * dockables should be put in single-window mode.
  *
- * Returns: The default dockbook for new dockables, or NULL if no
+ * Returns: (nullable): The default dockbook for new dockables, or %NULL if no
  *          dockbook were available.
  **/
 GtkWidget *

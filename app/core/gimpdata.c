@@ -1134,7 +1134,8 @@ gimp_data_is_duplicatable (GimpData *data)
  * copied:  the newly created object is not automatically given an
  * object name, file name, preview, etc.
  *
- * Returns: the newly created copy, or %NULL if @data cannot be copied.
+ * Returns: (nullable) (transfer full): the newly created copy, or %NULL if
+ *          @data cannot be copied.
  **/
 GimpData *
 gimp_data_duplicate (GimpData *data)
