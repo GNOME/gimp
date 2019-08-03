@@ -8,6 +8,8 @@
 /*.files
 /*.includes
 /ChangeLog
+/Gimp-3.0.gir
+/Gimp-3.0.typelib
 /INSTALL
 /Makefile
 /Makefile.in

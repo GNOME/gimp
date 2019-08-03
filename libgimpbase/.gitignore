@@ -1,6 +1,7 @@
 /Makefile
 /Makefile.in
 /makefile.mingw
+/.dirstamp
 /*.lo
 /_libs
 /.libs

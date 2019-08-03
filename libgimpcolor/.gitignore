@@ -2,6 +2,7 @@
 /Makefile.in
 /makefile.mingw
 /test-color-parser
+/.dirstamp
 /*.lo
 /_libs
 /.libs
