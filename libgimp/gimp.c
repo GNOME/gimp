@@ -820,38 +820,6 @@ gimp_quit (void)
   exit (EXIT_SUCCESS);
 }
 
-void
-_gimp_read_expect_msg (GimpWireMessage *msg,
-                       gint             type)
-{
-  while (TRUE)
-    {
-      if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
-        gimp_quit ();
-
-      if (msg->type == type)
-        return; /* up to the caller to call wire_destroy() */
-
-      if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
-        {
-          if (PLUG_IN)
-            {
-              _gimp_plug_in_process_message (PLUG_IN, msg);
-            }
-          else
-            {
-              _gimp_process_message (msg);
-            }
-        }
-      else
-        {
-          g_error ("unexpected message: %d", msg->type);
-        }
-
-      gimp_wire_destroy (msg);
-    }
-}
-
 GimpValueArray *
 gimp_run_procedure_with_array (const gchar    *name,
                                GimpValueArray *arguments)

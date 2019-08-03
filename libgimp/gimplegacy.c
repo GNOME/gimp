@@ -45,6 +45,7 @@
  **/
 
 
+static void       gimp_process_message         (GimpWireMessage *msg);
 static void       gimp_single_message          (void);
 static gboolean   gimp_extension_read          (GIOChannel      *channel,
                                                 GIOCondition     condition,
@@ -437,6 +438,31 @@ gimp_extension_process (guint timeout)
   if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
     gimp_single_message ();
 #endif
+}
+
+void
+_gimp_read_expect_msg (GimpWireMessage *msg,
+                       gint             type)
+{
+  while (TRUE)
+    {
+      if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
+        gimp_quit ();
+
+      if (msg->type == type)
+        return; /* up to the caller to call wire_destroy() */
+
+      if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
+        {
+          gimp_process_message (msg);
+        }
+      else
+        {
+          g_error ("unexpected message: %d", msg->type);
+        }
+
+      gimp_wire_destroy (msg);
+    }
 }
 
 /**
@@ -996,8 +1022,8 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
 
 /*  private functions  */
 
-void
-_gimp_process_message (GimpWireMessage *msg)
+static void
+gimp_process_message (GimpWireMessage *msg)
 {
   switch (msg->type)
     {
@@ -1042,7 +1068,7 @@ gimp_single_message (void)
   if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
     gimp_quit ();
 
-  _gimp_process_message (&msg);
+  gimp_process_message (&msg);
 
   gimp_wire_destroy (&msg);
 }
