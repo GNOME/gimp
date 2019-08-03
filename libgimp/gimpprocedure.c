@@ -690,9 +690,10 @@ gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
   GParamSpec *pspec;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (G_IS_OBJECT (config));
   g_return_if_fail (prop_name != NULL);
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (procedure->priv->plug_in), prop_name);
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
 
   g_return_if_fail (pspec != NULL);
 
@@ -749,9 +750,10 @@ gimp_procedure_add_return_value_from_property (GimpProcedure *procedure,
   GParamSpec *pspec;
 
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (G_IS_OBJECT (config));
   g_return_if_fail (prop_name != NULL);
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (procedure->priv->plug_in), prop_name);
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), prop_name);
 
   g_return_if_fail (pspec != NULL);
 
