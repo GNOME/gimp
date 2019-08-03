@@ -112,12 +112,13 @@
 
 #include <locale.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "gimp.h"
+
 #include "libgimpbase/gimpbase-private.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
-#include "gimp.h"
+
 #include "gimp-private.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
