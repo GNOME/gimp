@@ -83,6 +83,13 @@ _gimp_gp_param_def_to_param_spec (Gimp       *gimp,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
+      if (! strcmp (param_def->type_name, "GParamInt"))
+        return g_param_spec_int (name, nick, blurb,
+                                 param_def->meta.m_int.min_val,
+                                 param_def->meta.m_int.max_val,
+                                 param_def->meta.m_int.default_val,
+                                 flags);
+
       if (! strcmp (param_def->type_name, "GimpParamInt32"))
         return gimp_param_spec_int32 (name, nick, blurb,
                                       param_def->meta.m_int.min_val,

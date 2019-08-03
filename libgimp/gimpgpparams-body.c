@@ -39,7 +39,8 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
   pspec_type = G_PARAM_SPEC_TYPE (pspec);
 
-  if (pspec_type == GIMP_TYPE_PARAM_INT32 ||
+  if (pspec_type == G_TYPE_PARAM_INT      ||
+      pspec_type == GIMP_TYPE_PARAM_INT32 ||
       pspec_type == GIMP_TYPE_PARAM_INT16)
     {
       GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
