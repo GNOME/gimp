@@ -144,6 +144,10 @@ gint                gimp_main                 (GType  plug_in_type,
                                                gint   argc,
                                                gchar *argv[]);
 
+/* Return the GimpPlugIn singleton of this plug-in process
+ */
+GimpPlugIn        * gimp_get_plug_in          (void);
+
 /* Forcefully causes the gimp library to exit and
  *  close down its connection to main gimp application.
  */

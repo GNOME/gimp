@@ -786,6 +786,22 @@ gimp_main_internal (GType                 plug_in_type,
 }
 
 /**
+ * gimp_get_plug_in:
+ *
+ * This function returns the plug-in's #GimpPlugIn instance, which can
+ * exist exactly once per running plug-in program.
+ *
+ * Returns: The plug-in's #GimpPlugIn singleton, or %NULL.
+ *
+ * Since: 3.0
+ **/
+GimpPlugIn *
+gimp_get_plug_in (void)
+{
+  return PLUG_IN;
+}
+
+/**
  * gimp_quit:
  *
  * Forcefully causes the GIMP library to exit and close down its
