@@ -29,6 +29,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
 #include "gimp-private.h"

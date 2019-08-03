@@ -24,9 +24,6 @@
 G_BEGIN_DECLS
 
 
-#include "libgimpbase/gimpwire.h"
-
-
 extern GIOChannel *_gimp_readchannel;
 extern GIOChannel *_gimp_writechannel;
 
