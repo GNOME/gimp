@@ -115,6 +115,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpbase-private.h"
 #include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
 
 #include "gimp.h"
 #include "gimp-private.h"
@@ -840,7 +841,10 @@ gimp_run_procedure_with_array (const gchar    *name,
   if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
     gimp_quit ();
 
-  _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+  if (PLUG_IN)
+    _gimp_plug_in_read_expect_msg (PLUG_IN, &msg, GP_PROC_RETURN);
+  else
+    _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
   gp_unlock ();
 
   proc_return = msg.data;

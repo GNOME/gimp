@@ -24,6 +24,7 @@
 #include "gimp.h"
 
 #include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
 
 #include "gimp-private.h"
 #include "gimpgpparams.h"
@@ -92,6 +93,34 @@ _gimp_plug_in_quit (GimpPlugIn *plug_in)
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->quit)
     GIMP_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
+}
+
+void
+_gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
+                               GimpWireMessage *msg,
+                               gint             type)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  while (TRUE)
+    {
+      if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
+        gimp_quit ();
+
+      if (msg->type == type)
+        return; /* up to the caller to call wire_destroy() */
+
+      if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
+        {
+          gimp_plug_in_process_message (plug_in, msg);
+        }
+      else
+        {
+          g_error ("unexpected message: %d", msg->type);
+        }
+
+      gimp_wire_destroy (msg);
+    }
 }
 
 gboolean

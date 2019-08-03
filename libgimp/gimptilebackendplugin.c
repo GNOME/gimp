@@ -24,14 +24,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gio/gio.h>
-#include <gegl.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpprotocol.h"
-
 #include "gimp.h"
+
+#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
+
 #include "gimp-private.h"
+#include "gimpplugin-private.h"
 #include "gimptilebackendplugin.h"
 
 
@@ -324,7 +323,8 @@ static void
 gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
                GimpTile              *tile)
 {
-  GimpTileBackendPluginPrivate *priv = backend_plugin->priv;
+  GimpTileBackendPluginPrivate *priv    = backend_plugin->priv;
+  GimpPlugIn                   *plug_in = gimp_get_plug_in ();
   GPTileReq                     tile_req;
   GPTileData                   *tile_data;
   GimpWireMessage               msg;
@@ -337,7 +337,10 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
   if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
     gimp_quit ();
 
-  _gimp_read_expect_msg (&msg, GP_TILE_DATA);
+  if (plug_in)
+    _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
+  else
+    _gimp_read_expect_msg (&msg, GP_TILE_DATA);
 
   tile_data = msg.data;
   if (tile_data->drawable_ID != priv->drawable_id ||
@@ -389,7 +392,8 @@ static void
 gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
                GimpTile              *tile)
 {
-  GimpTileBackendPluginPrivate *priv = backend_plugin->priv;
+  GimpTileBackendPluginPrivate *priv    = backend_plugin->priv;
+  GimpPlugIn                   *plug_in = gimp_get_plug_in ();
   GPTileReq                     tile_req;
   GPTileData                    tile_data;
   GPTileData                   *tile_info;
@@ -403,7 +407,10 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
   if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
     gimp_quit ();
 
-  _gimp_read_expect_msg (&msg, GP_TILE_DATA);
+  if (plug_in)
+    _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_DATA);
+  else
+    _gimp_read_expect_msg (&msg, GP_TILE_DATA);
 
   tile_info = msg.data;
 
@@ -435,7 +442,10 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
 
   gimp_wire_destroy (&msg);
 
-  _gimp_read_expect_msg (&msg, GP_TILE_ACK);
+  if (plug_in)
+    _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_ACK);
+  else
+    _gimp_read_expect_msg (&msg, GP_TILE_ACK);
   gp_unlock ();
 
   gimp_wire_destroy (&msg);
