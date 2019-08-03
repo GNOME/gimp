@@ -2,6 +2,7 @@
 /Makefile.in
 /makefile.mingw
 /gimpthumb-enums.c
+/.dirstamp
 /*.lo
 /_libs
 /.libs
