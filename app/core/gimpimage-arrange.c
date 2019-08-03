@@ -48,7 +48,7 @@ static gint    offset_compare  (gconstpointer      a,
  * @image:                The #GimpImage to which the objects belong.
  * @list:                 A #GList of objects to be aligned.
  * @alignment:            The point on each target object to bring into alignment.
- * @reference:            The #GObject to align the targets with, or #NULL.
+ * @reference:            The #GObject to align the targets with, or %NULL.
  * @reference_alignment:  The point on the reference object to align the target item with..
  * @offset:               How much to shift the target from perfect alignment..
  *
@@ -61,7 +61,7 @@ static gint    offset_compare  (gconstpointer      a,
  *
  * The objects in the list are sorted into increasing order before
  * being arranged, where the order is defined by the type of alignment
- * being requested.  If the @reference argument is #NULL, then the
+ * being requested.  If the @reference argument is %NULL, then the
  * first object in the sorted list is used as reference.
  *
  * When there are multiple target objects, they are arranged so that

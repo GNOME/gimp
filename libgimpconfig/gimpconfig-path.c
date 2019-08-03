@@ -305,7 +305,7 @@ gimp_config_build_system_path (const gchar *name)
  *
  * To reverse the expansion, use gimp_config_path_unexpand().
  *
- * Return value: a newly allocated NUL-terminated string
+ * Returns: a newly allocated NUL-terminated string
  *
  * Since: 2.4
  **/
@@ -350,7 +350,7 @@ gimp_config_path_expand (const gchar  *path,
  * gimp_path_parse(), then turns the filenames returned by
  * gimp_path_parse() into GFile using g_file_new_for_path().
  *
- * Return value: (element-type GFile) (transfer full):
+ * Returns: (element-type GFile) (transfer full):
                  a #GList of newly allocated #GFile objects.
  *
  * Since: 2.10
@@ -402,7 +402,7 @@ gimp_config_path_expand_to_files (const gchar  *path,
  * If @recode is %TRUE then @path is in local filesystem encoding,
  * if @recode is %FALSE then @path is assumed to be UTF-8.
  *
- * Return value: a newly allocated NUL-terminated UTF-8 string
+ * Returns: a newly allocated NUL-terminated UTF-8 string
  *
  * Since: 2.10
  **/
@@ -442,7 +442,8 @@ gimp_config_path_unexpand (const gchar  *path,
  *
  * To reverse the expansion, use gimp_file_get_config_path().
  *
- * Return value: (transfer full): a newly allocated #GFile, or %NULL if the expansion failed.
+ * Returns: (nullable) (transfer full): a newly allocated #GFile,
+ *          or %NULL if the expansion failed.
  *
  * Since: 2.10
  **/
@@ -477,7 +478,7 @@ gimp_file_new_for_config_path (const gchar  *path,
  *
  * The inverse operation of gimp_file_new_for_config_path().
  *
- * Return value: a newly allocated NUL-terminated UTF-8 string, or %NULL if
+ * Returns: a newly allocated NUL-terminated UTF-8 string, or %NULL if
  *               unexpanding failed.
  *
  * Since: 2.10

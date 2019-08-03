@@ -381,7 +381,7 @@ gimp_number_pair_entry_finalize (GObject *object)
  * The first separator of @separators is used to display the current
  * value.
  *
- * Return value: The new #GimpNumberPairEntry widget.
+ * Returns: The new #GimpNumberPairEntry widget.
  *
  * Since: 2.4
  **/
@@ -650,8 +650,8 @@ gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
  * gimp_number_pair_entry_get_default_text:
  * @entry:  A #GimpNumberPairEntry widget.
  *
- * Returns: the string manually set to be shown, or %NULL if values are
- *          shown in a normal fashion.
+ * Returns: (nullable): the string manually set to be shown,
+ *          or %NULL if values are shown in a normal fashion.
  *
  * Since: 2.4
  */

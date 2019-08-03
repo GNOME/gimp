@@ -70,7 +70,7 @@ static GHashTable *gimp_temp_proc_ht = NULL;
  * @copyright:                                 the procedure's copyright.
  * @date:                                      the date the procedure was added.
  * @menu_label:                                the label to use for the procedure's menu entry,
- *                                             or #NULL if the procedure has no menu entry.
+ *                                             or %NULL if the procedure has no menu entry.
  * @image_types:                               the drawable types the procedure can handle.
  * @type:                                      the type of the procedure.
  * @n_params:                                  the number of parameters the procedure takes.
@@ -123,7 +123,7 @@ static GHashTable *gimp_temp_proc_ht = NULL;
  * procedure will cause the GIMP core to lock up.</emphasis>
  *
  * Additionally, a %GIMP_EXTENSION procedure with no parameters
- * (@n_params == 0 and @params == #NULL) is an "automatic" extension
+ * (@n_params == 0 and @params == %NULL) is an "automatic" extension
  * that will be automatically started on each GIMP startup.
  **/
 void
@@ -209,7 +209,7 @@ gimp_install_procedure (const gchar        *name,
  * @author:        the procedure's author(s).
  * @copyright:     the procedure's copyright.
  * @date:          the date the procedure was added.
- * @menu_label:    the procedure's menu label, or #NULL if the procedure has
+ * @menu_label:    the procedure's menu label, or %NULL if the procedure has
  *                 no menu entry.
  * @image_types:   the drawable types the procedure can handle.
  * @type:          the type of the procedure.
@@ -454,7 +454,7 @@ gimp_extension_process (guint timeout)
  * passes them to gimp_run_procedure2(). Please look there for further
  * information.
  *
- * Return value: the procedure's return values unless there was an error,
+ * Returns: the procedure's return values unless there was an error,
  * in which case the zero-th return value will be the error status, and
  * the first return value will be a string detailing the error.
  **/
@@ -657,7 +657,7 @@ gimp_run_procedure (const gchar *name,
  * As soon as you don't need the return values any longer, you should
  * free them using gimp_destroy_params().
  *
- * Return value: the procedure's return values unless there was an error,
+ * Returns: the procedure's return values unless there was an error,
  * in which case the zero-th return value will be the error status, and
  * if there are two values returned, the other return value will be a
  * string detailing the error.

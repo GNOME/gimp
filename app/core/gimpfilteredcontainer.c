@@ -297,7 +297,7 @@ gimp_filtered_container_real_src_thaw (GimpFilteredContainer *filtered_container
  * containing all of the filtering tags. Synchronization with @src_container
  * data is performed automatically.
  *
- * Return value: a new #GimpFilteredContainer object.
+ * Returns: a new #GimpFilteredContainer object.
  **/
 GimpContainer *
 gimp_filtered_container_new (GimpContainer        *src_container,

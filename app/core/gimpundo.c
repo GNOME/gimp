@@ -555,7 +555,7 @@ gimp_undo_is_weak (GimpUndo *undo)
  * gimp_undo_get_age:
  * @undo:
  *
- * Return value: the time in seconds since this undo item was created
+ * Returns: the time in seconds since this undo item was created
  */
 gint
 gimp_undo_get_age (GimpUndo *undo)

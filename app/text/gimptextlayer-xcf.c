@@ -176,7 +176,7 @@ gimp_text_layer_set_xcf_flags (GimpTextLayer *text_layer,
  * from XCF files in a backwards-compatible way. Please don't use it
  * for anything else!
  *
- * Return value: a newly allocated #GimpTextLayer object
+ * Returns: a newly allocated #GimpTextLayer object
  **/
 static GimpLayer *
 gimp_text_layer_from_layer (GimpLayer *layer,

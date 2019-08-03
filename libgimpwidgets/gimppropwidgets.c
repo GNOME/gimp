@@ -93,10 +93,10 @@ static void   gimp_prop_check_button_notify   (GObject    *config,
  *
  * Creates a #GtkCheckButton that displays and sets the specified
  * boolean property.
- * If @label is #NULL, the @property_name's nick will be used as label
+ * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned button.
  *
- * Return value: (transfer full): The newly created #GtkCheckButton widget.
+ * Returns: (transfer full): The newly created #GtkCheckButton widget.
  *
  * Since: 2.4
  */
@@ -204,10 +204,10 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  * property of type Enum.  Note that this widget only allows two values
  * for the enum, one corresponding to the "checked" state and the
  * other to the "unchecked" state.
- * If @label is #NULL, the @property_name's nick will be used as label
+ * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned button.
  *
- * Return value: (transfer full): The newly created #GtkCheckButton widget.
+ * Returns: (transfer full): The newly created #GtkCheckButton widget.
  *
  * Since: 2.4
  */
@@ -363,7 +363,7 @@ static void gimp_prop_pointer_combo_box_notify   (GObject    *config,
  * property.  The contents of the widget are determined by @store,
  * which should be created using gimp_int_store_new().
  *
- * Return value: (transfer full): The newly created #GimpIntComboBox widget.
+ * Returns: (transfer full): The newly created #GimpIntComboBox widget.
  *
  * Since: 2.4
  */
@@ -419,7 +419,7 @@ gimp_prop_int_combo_box_new (GObject      *config,
  * Values are GType/gpointer data, and therefore must be stored in the
  * "user-data" column, instead of the usual "value" column.
  *
- * Return value: (transfer full): The newly created #GimpIntComboBox widget.
+ * Returns: (transfer full): The newly created #GimpIntComboBox widget.
  *
  * Since: 2.10
  */
@@ -486,7 +486,7 @@ gimp_prop_pointer_combo_box_new (GObject      *config,
  * enum.  If the two values are equal (e.g., 0, 0), then the full
  * range of the Enum is used.
  *
- * Return value: (transfer full): The newly created #GimpEnumComboBox widget.
+ * Returns: (transfer full): The newly created #GimpEnumComboBox widget.
  *
  * Since: 2.4
  */
@@ -689,7 +689,7 @@ static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
  * displaying the @true_text label, the other displaying the
  * @false_text label.
  *
- * Return value: (transfer full): The newly created #GtkComboBox widget.
+ * Returns: (transfer full): The newly created #GtkComboBox widget.
  *
  * Since: 2.4
  */
@@ -802,10 +802,10 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  * the specified enum property.  The @minimum and @maximum arguments
  * allow only a subset of the enum to be used.  If the two arguments
  * are equal (e.g., 0, 0), then the full range of the enum will be used.
- * If @title is #NULL, the @property_name's nick will be used as label
+ * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned frame.
  *
- * Return value: (transfer full): A #GimpFrame containing the radio buttons.
+ * Returns: (transfer full): A #GimpFrame containing the radio buttons.
  *
  * Since: 2.4
  */
@@ -881,7 +881,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
  * If you want to assign a label to the group of radio buttons, use
  * gimp_prop_enum_radio_frame_new() instead of this function.
  *
- * Return value: (transfer full): A #GtkVBox containing the radio buttons.
+ * Returns: (transfer full): A #GtkVBox containing the radio buttons.
  *
  * Since: 2.4
  */
@@ -951,7 +951,7 @@ static void  gimp_prop_enum_label_notify (GObject    *config,
  * @config:         Object to which property is attached.
  * @property_name:  Name of enum property to be displayed.
  *
- * Return value: (transfer full): The newly created #GimpEnumLabel widget.
+ * Returns: (transfer full): The newly created #GimpEnumLabel widget.
  *
  * Since: 2.4
  */
@@ -1012,10 +1012,10 @@ gimp_prop_enum_label_notify (GObject    *config,
  *
  * Creates a pair of radio buttons which function to set and display
  * the specified boolean property.
- * If @title is #NULL, the @property_name's nick will be used as label
+ * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned frame.
  *
- * Return value: (transfer full): A #GimpFrame containing the radio buttons.
+ * Returns: (transfer full): A #GimpFrame containing the radio buttons.
  *
  * Since: 2.4
  */
@@ -1081,7 +1081,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
  * enum_value's nick to the given @icon_prefix.  See
  * gimp_enum_icon_box_new() for more information.
  *
- * Return value: (transfer full): A #libgimpwidgets-gimpenumiconbox containing the radio buttons.
+ * Returns: (transfer full): A #libgimpwidgets-gimpenumiconbox containing the radio buttons.
  *
  * Since: 2.10
  */
@@ -1200,7 +1200,7 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * Creates a spin button to set and display the value of the
  * specified double property.
  *
- * Return value: (transfer full): A new #libgimpwidgets-gimpspinbutton.
+ * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
  *
  * Since: 2.4
  */
@@ -1259,7 +1259,7 @@ gimp_prop_spin_button_new (GObject     *config,
  * Creates a horizontal scale to control the value of the specified
  * integer or double property.
  *
- * Return value: (transfer full): A new #GtkScale.
+ * Returns: (transfer full): A new #GtkScale.
  *
  * Since: 2.4
  */
@@ -1330,13 +1330,13 @@ gimp_prop_hscale_new (GObject     *config,
  * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
  * to set and display the value of the specified double property.  See
  * gimp_scale_entry_new() for more information.
- * If @label is #NULL, the @property_name's nick will be used as label
+ * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned object.
  *
  * Note that the @scale_limits boolean is the inverse of
  * gimp_scale_entry_new()'s "constrain" parameter.
  *
- * Return value: (transfer full): The #GtkSpinButton's #GtkAdjustment.
+ * Returns: (transfer full): The #GtkSpinButton's #GtkAdjustment.
  *
  * Since: 2.4
  */
@@ -1482,7 +1482,7 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  * which should represent an "opacity" variable with range 0 to 100.
  * See gimp_scale_entry_new() for more information.
  *
- * Return value: (transfer full): The #GtkSpinButton's #GtkAdjustment.
+ * Returns: (transfer full): The #GtkSpinButton's #GtkAdjustment.
  *
  * Since: 2.4
  */
@@ -1709,7 +1709,7 @@ static void   gimp_prop_memsize_notify   (GObject          *config,
  * and display the value of the specified memsize property.  See
  * gimp_memsize_entry_new() for more information.
  *
- * Return value: (transfer full): A new #GimpMemsizeEntry.
+ * Returns: (transfer full): A new #GimpMemsizeEntry.
  *
  * Since: 2.4
  */
@@ -1827,7 +1827,7 @@ static void   gimp_prop_label_notify (GObject    *config,
  * to a string.  If the user should be able to edit the string, use
  * gimp_prop_entry_new() instead.
  *
- * Return value: (transfer full): A new #GtkLabel widget.
+ * Returns: (transfer full): A new #GtkLabel widget.
  *
  * Since: 2.4
  */
@@ -1924,7 +1924,7 @@ static void   gimp_prop_entry_notify   (GObject    *config,
  * Creates a #GtkEntry to set and display the value of the specified
  * string property.
  *
- * Return value: (transfer full): A new #GtkEntry widget.
+ * Returns: (transfer full): A new #GtkEntry widget.
  *
  * Since: 2.4
  */
@@ -2055,7 +2055,7 @@ static void   gimp_prop_text_buffer_notify   (GObject       *config,
  * If @max_len is 0 or negative, the text buffer allows an unlimited
  * number of characters to be entered.
  *
- * Return value: (transfer full): A new #GtkTextBuffer.
+ * Returns: (transfer full): A new #GtkTextBuffer.
  *
  * Since: 2.4
  */
@@ -2208,7 +2208,7 @@ static void   gimp_prop_string_combo_box_notify   (GObject     *config,
  * specified property.  The contents of the widget are determined by
  * @store.
  *
- * Return value: (transfer full): The newly created #GimpStringComboBox widget.
+ * Returns: (transfer full): The newly created #GimpStringComboBox widget.
  *
  * Since: 2.4
  */
@@ -2328,7 +2328,7 @@ static void        gimp_prop_file_chooser_button_notify   (GObject        *confi
  * Note that #GtkFileChooserButton implements the #GtkFileChooser
  * interface; you can use the #GtkFileChooser API with it.
  *
- * Return value: (transfer full): A new #GtkFileChooserButton.
+ * Returns: (transfer full): A new #GtkFileChooserButton.
  *
  * Since: 2.4
  */
@@ -2369,7 +2369,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
  * Note that #GtkFileChooserButton implements the #GtkFileChooser
  * interface; you can use the #GtkFileChooser API with it.
  *
- * Return value: (transfer full): A new #GtkFileChooserButton.
+ * Returns: (transfer full): A new #GtkFileChooserButton.
  *
  * Since: 2.4
  */
@@ -2792,7 +2792,7 @@ static gint   gimp_prop_size_entry_num_chars   (gdouble        lower,
  * single value.  Use gimp_prop_coordinates_new() to create a size
  * entry holding two values.
  *
- * Return value: (transfer full): A new #GimpSizeEntry widget.
+ * Returns: (transfer full): A new #GimpSizeEntry widget.
  *
  * Since: 2.4
  */
@@ -3108,7 +3108,7 @@ static void   gimp_prop_coordinates_notify_unit (GObject       *config,
  * properties, which will usually represent X and Y coordinates, and
  * their associated unit property.
  *
- * Return value: (transfer full): A new #GimpSizeEntry widget.
+ * Returns: (transfer full): A new #GimpSizeEntry widget.
  *
  * Since: 2.4
  */
@@ -3563,7 +3563,7 @@ static void   gimp_prop_color_area_notify   (GObject    *config,
  * Creates a #GimpColorArea to set and display the value of an RGB
  * property.
  *
- * Return value: (transfer full): A new #GimpColorArea widget.
+ * Returns: (transfer full): A new #GimpColorArea widget.
  *
  * Since: 2.4
  */
@@ -3675,7 +3675,7 @@ static void   gimp_prop_unit_combo_box_notify   (GObject    *config,
  * Creates a #GimpUnitComboBox to set and display the value of a Unit
  * property.  See gimp_unit_combo_box_new() for more information.
  *
- * Return value: (transfer full): A new #GimpUnitComboBox widget.
+ * Returns: (transfer full): A new #GimpUnitComboBox widget.
  *
  * Since: 2.8
  */
@@ -3805,7 +3805,7 @@ static void   gimp_prop_icon_image_notify (GObject    *config,
  * specified string property, which should encode an icon name.
  * See gtk_image_new_from_icon_name() for more information.
  *
- * Return value: (transfer full): A new #GtkImage widget.
+ * Returns: (transfer full): A new #GtkImage widget.
  *
  * Since: 2.10
  */
@@ -3882,10 +3882,10 @@ static void   gimp_prop_expander_notify (GObject     *config,
  * Creates a #GtkExpander controlled by the specified boolean property.
  * A value of %TRUE for the property corresponds to the expanded state
  * for the widget.
- * If @label is #NULL, the @property_name's nick will be used as label
+ * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
  *
- * Return value: (transfer full): A new #GtkExpander widget.
+ * Returns: (transfer full): A new #GtkExpander widget.
  *
  * Since: 2.4
  */

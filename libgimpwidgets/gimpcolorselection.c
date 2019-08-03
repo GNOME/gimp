@@ -381,7 +381,7 @@ gimp_color_selection_set_property (GObject      *object,
  *
  * Creates a new #GimpColorSelection widget.
  *
- * Return value: The new #GimpColorSelection widget.
+ * Returns: The new #GimpColorSelection widget.
  **/
 GtkWidget *
 gimp_color_selection_new (void)
@@ -432,7 +432,7 @@ gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
  *
  * Returns the @selection's @show_alpha property.
  *
- * Return value: #TRUE if the #GimpColorSelection has alpha controls.
+ * Returns: %TRUE if the #GimpColorSelection has alpha controls.
  **/
 gboolean
 gimp_color_selection_get_show_alpha (GimpColorSelection *selection)

@@ -217,7 +217,7 @@ gimp_canvas_focus (GtkWidget        *widget,
  * look and work like their #GdkDrawable counterparts. #GimpCanvas
  * gracefully handles attempts to draw on the unrealized widget.
  *
- * Return value: a new #GimpCanvas widget
+ * Returns: a new #GimpCanvas widget
  **/
 GtkWidget *
 gimp_canvas_new (GimpDisplayConfig *config)

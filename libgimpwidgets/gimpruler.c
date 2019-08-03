@@ -381,7 +381,7 @@ gimp_ruler_get_property (GObject    *object,
  *
  * Creates a new ruler.
  *
- * Return value: a new #GimpRuler widget.
+ * Returns: a new #GimpRuler widget.
  *
  * Since: 2.8
  **/
@@ -616,7 +616,7 @@ gimp_ruler_set_unit (GimpRuler *ruler,
  * gimp_ruler_get_unit:
  * @ruler: a #GimpRuler
  *
- * Return value: (transfer none): the unit currently used in the @ruler widget.
+ * Returns: (transfer none): the unit currently used in the @ruler widget.
  *
  * Since: 2.8
  **/
@@ -695,7 +695,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
  * gimp_ruler_get_position:
  * @ruler: a #GimpRuler
  *
- * Return value: the current position of the @ruler widget.
+ * Returns: the current position of the @ruler widget.
  *
  * Since: 2.8
  **/

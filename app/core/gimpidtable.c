@@ -195,7 +195,8 @@ gimp_id_table_replace (GimpIdTable *id_table, gint id, gpointer data)
  *
  * Lookup data based on ID.
  *
- * Returns: The data, or NULL if no data with the given ID was found.
+ * Returns: (nullable) (transfer none): The data,
+ *          or %NULL if no data with the given ID was found.
  **/
 gpointer
 gimp_id_table_lookup (GimpIdTable *id_table, gint id)

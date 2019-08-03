@@ -294,7 +294,7 @@ gimp_projection_get_memsize (GimpObject *object,
  * Calculates a rough estimate of the memory that is required for the
  * projection of an image with the given @width and @height.
  *
- * Return value: a rough estimate of the memory requirements.
+ * Returns: a rough estimate of the memory requirements.
  **/
 gint64
 gimp_projection_estimate_memsize (GimpImageBaseType type,

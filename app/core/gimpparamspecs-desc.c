@@ -160,7 +160,7 @@ gimp_param_spec_enum_desc (GParamSpec *pspec)
  * parameter types used in the PDB and should not be used for anything
  * else.
  *
- * Return value: A newly allocated string describing the parameter.
+ * Returns: A newly allocated string describing the parameter.
  */
 gchar *
 gimp_param_spec_get_desc (GParamSpec *pspec)

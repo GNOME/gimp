@@ -207,7 +207,7 @@ gimp_transform_options_reset (GimpConfig *config)
  *
  * Build the Transform Tool Options.
  *
- * Return value: a container holding the transform tool options
+ * Returns: a container holding the transform tool options
  **/
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options,

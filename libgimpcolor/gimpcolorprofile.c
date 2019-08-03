@@ -167,7 +167,7 @@ gimp_color_profile_finalize (GObject *object)
  *
  * This function opens an ICC color profile from @file.
  *
- * Return value: the #GimpColorProfile, or %NULL. On error, %NULL is
+ * Returns: (nullable): the #GimpColorProfile, or %NULL. On error, %NULL is
  *               returned and @error is set.
  *
  * Since: 2.10
@@ -272,7 +272,7 @@ gimp_color_profile_new_from_file (GFile   *file,
  * This function opens an ICC color profile from memory. On error,
  * %NULL is returned and @error is set.
  *
- * Return value: the #GimpColorProfile, or %NULL.
+ * Returns: (nullable): the #GimpColorProfile, or %NULL.
  *
  * Since: 2.10
  **/
@@ -317,7 +317,7 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
  * @lcms_profile pointer is not retained by the created
  * #GimpColorProfile.
  *
- * Return value: the #GimpColorProfile, or %NULL.
+ * Returns: (nullable): the #GimpColorProfile, or %NULL.
  *
  * Since: 2.10
  **/
@@ -371,7 +371,7 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
  *
  * This function saves @profile to @file as ICC profile.
  *
- * Return value: %TRUE on success, %FALSE if an error occurred.
+ * Returns: %TRUE on success, %FALSE if an error occurred.
  *
  * Since: 2.10
  **/
@@ -402,7 +402,7 @@ gimp_color_profile_save_to_file (GimpColorProfile  *profile,
  * This function returns @profile as ICC profile data. The returned
  * memory belongs to @profile and must not be modified or freed.
  *
- * Return value: a pointer to the IIC profile data.
+ * Returns: a pointer to the IIC profile data.
  *
  * Since: 2.10
  **/
@@ -425,7 +425,7 @@ gimp_color_profile_get_icc_profile (GimpColorProfile  *profile,
  * This function returns @profile's cmsHPROFILE. The returned
  * value belongs to @profile and must not be modified or freed.
  *
- * Return value: a pointer to the cmsHPROFILE.
+ * Returns: a pointer to the cmsHPROFILE.
  *
  * Since: 2.10
  **/
@@ -465,7 +465,7 @@ gimp_color_profile_get_info (GimpColorProfile *profile,
  * gimp_color_profile_get_description:
  * @profile: a #GimpColorProfile
  *
- * Return value: a string containing @profile's description. The
+ * Returns: a string containing @profile's description. The
  *               returned value belongs to @profile and must not be
  *               modified or freed.
  *
@@ -487,7 +487,7 @@ gimp_color_profile_get_description (GimpColorProfile *profile)
  * gimp_color_profile_get_manufacturer:
  * @profile: a #GimpColorProfile
  *
- * Return value: a string containing @profile's manufacturer. The
+ * Returns: a string containing @profile's manufacturer. The
  *               returned value belongs to @profile and must not be
  *               modified or freed.
  *
@@ -509,7 +509,7 @@ gimp_color_profile_get_manufacturer (GimpColorProfile *profile)
  * gimp_color_profile_get_model:
  * @profile: a #GimpColorProfile
  *
- * Return value: a string containing @profile's model. The returned
+ * Returns: a string containing @profile's model. The returned
  *               value belongs to @profile and must not be modified or
  *               freed.
  *
@@ -531,7 +531,7 @@ gimp_color_profile_get_model (GimpColorProfile *profile)
  * gimp_color_profile_get_copyright:
  * @profile: a #GimpColorProfile
  *
- * Return value: a string containing @profile's copyright. The
+ * Returns: a string containing @profile's copyright. The
  *               returned value belongs to @profile and must not be
  *               modified or freed.
  *
@@ -559,7 +559,7 @@ gimp_color_profile_get_copyright (GimpColorProfile *profile)
  * Unlike gimp_color_profile_get_description(), this function always
  * returns a string (as a fallback, it returns "(unnamed profile)").
  *
- * Return value: the @profile's label. The returned value belongs to
+ * Returns: the @profile's label. The returned value belongs to
  *               @profile and must not be modified or freed.
  *
  * Since: 2.10
@@ -592,7 +592,7 @@ gimp_color_profile_get_label (GimpColorProfile *profile)
  * used as detailed information about the profile in a user
  * interface.
  *
- * Return value: the @profile's summary. The returned value belongs to
+ * Returns: the @profile's summary. The returned value belongs to
  *               @profile and must not be modified or freed.
  *
  * Since: 2.10
@@ -651,7 +651,7 @@ gimp_color_profile_get_summary (GimpColorProfile *profile)
  *
  * Compares two profiles.
  *
- * Return value: %TRUE if the profiles are equal, %FALSE otherwise.
+ * Returns: %TRUE if the profiles are equal, %FALSE otherwise.
  *
  * Since: 2.10
  **/
@@ -675,7 +675,7 @@ gimp_color_profile_is_equal (GimpColorProfile *profile1,
  * gimp_color_profile_is_rgb:
  * @profile: a #GimpColorProfile
  *
- * Return value: %TRUE if the profile's color space is RGB, %FALSE
+ * Returns: %TRUE if the profile's color space is RGB, %FALSE
  * otherwise.
  *
  * Since: 2.10
@@ -692,7 +692,7 @@ gimp_color_profile_is_rgb (GimpColorProfile *profile)
  * gimp_color_profile_is_gray:
  * @profile: a #GimpColorProfile
  *
- * Return value: %TRUE if the profile's color space is grayscale, %FALSE
+ * Returns: %TRUE if the profile's color space is grayscale, %FALSE
  * otherwise.
  *
  * Since: 2.10
@@ -709,7 +709,7 @@ gimp_color_profile_is_gray (GimpColorProfile *profile)
  * gimp_color_profile_is_cmyk:
  * @profile: a #GimpColorProfile
  *
- * Return value: %TRUE if the profile's color space is CMYK, %FALSE
+ * Returns: %TRUE if the profile's color space is CMYK, %FALSE
  * otherwise.
  *
  * Since: 2.10
@@ -731,7 +731,7 @@ gimp_color_profile_is_cmyk (GimpColorProfile *profile)
  * is a linear RGB profile or not, some profiles that are LUTs though linear
  * will also return FALSE;
  *
- * Return value: %TRUE if the profile is a matrix shaping profile with linear
+ * Returns: %TRUE if the profile is a matrix shaping profile with linear
  * TRCs, %FALSE otherwise.
  *
  * Since: 2.10
@@ -1010,7 +1010,7 @@ gimp_color_profile_new_from_color_profile (GimpColorProfile *profile,
  * This function creates a new RGB #GimpColorProfile with a sRGB gamma
  * TRC and @profile's RGB chromacities and whitepoint.
  *
- * Return value: (transfer full): the new #GimpColorProfile, or %NULL if
+ * Returns: (nullable) (transfer full): the new #GimpColorProfile, or %NULL if
  *               @profile is not an RGB profile or not matrix-based.
  *
  * Since: 2.10
@@ -1030,7 +1030,7 @@ gimp_color_profile_new_srgb_trc_from_color_profile (GimpColorProfile *profile)
  * This function creates a new RGB #GimpColorProfile with a linear TRC
  * and @profile's RGB chromacities and whitepoint.
  *
- * Return value: (transfer full): the new #GimpColorProfile, or %NULL if
+ * Returns: (nullable) (transfer full): the new #GimpColorProfile, or %NULL if
  *               @profile is not an RGB profile or not matrix-based.
  *
  * Since: 2.10
@@ -1127,7 +1127,7 @@ gimp_color_profile_new_rgb_srgb_internal (void)
  * ArgyllCMS sRGB.icm profile. The resulting sRGB profile's colorants
  * exactly matches the ArgyllCMS sRGB.icm profile colorants.
  *
- * Return value: the sRGB #GimpColorProfile.
+ * Returns: the sRGB #GimpColorProfile.
  *
  * Since: 2.10
  **/
@@ -1202,7 +1202,7 @@ gimp_color_profile_new_rgb_srgb_linear_internal (void)
  * This function creates a profile for babl_model("RGB"). Please
  * somebody write something smarter here.
  *
- * Return value: the linear RGB #GimpColorProfile.
+ * Returns: the linear RGB #GimpColorProfile.
  *
  * Since: 2.10
  **/
@@ -1281,7 +1281,7 @@ gimp_color_profile_new_rgb_adobe_internal (void)
  *
  * This function creates a profile compatible with AbobeRGB (1998).
  *
- * Return value: the AdobeRGB-compatible #GimpColorProfile.
+ * Returns: the AdobeRGB-compatible #GimpColorProfile.
  *
  * Since: 2.10
  **/
@@ -1343,7 +1343,7 @@ gimp_color_profile_new_d65_gray_srgb_trc_internal (void)
  * This function creates a grayscale #GimpColorProfile with an
  * sRGB TRC. See gimp_color_profile_new_rgb_srgb().
  *
- * Return value: the sRGB-gamma grayscale #GimpColorProfile.
+ * Returns: the sRGB-gamma grayscale #GimpColorProfile.
  *
  * Since: 2.10
  **/
@@ -1401,7 +1401,7 @@ gimp_color_profile_new_d65_gray_linear_internal (void)
  * This function creates a profile for babl_model("Y"). Please
  * somebody write something smarter here.
  *
- * Return value: the linear grayscale #GimpColorProfile.
+ * Returns: the linear grayscale #GimpColorProfile.
  *
  * Since: 2.10
  **/
@@ -1465,7 +1465,7 @@ gimp_color_profile_new_d50_gray_lab_trc_internal (void)
  * D50 ICC profile illuminant as the profile white point and the
  * LAB companding curve as the TRC.
  *
- * Return value: a gray profile with the D50 ICC profile illuminant
+ * Returns: a gray profile with the D50 ICC profile illuminant
  * as the profile white point and the LAB companding curve as the TRC.
  * as the TRC.
  *
@@ -1502,7 +1502,7 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
  * This function returns the #Babl space of @profile, for the
  * specified @intent.
  *
- * Return value: the new #Babl space.
+ * Returns: the new #Babl space.
  *
  * Since: 2.10.6
  **/
@@ -1541,7 +1541,7 @@ gimp_color_profile_get_space (GimpColorProfile          *profile,
  * returns a new #Babl format with @profile's RGB primaries and TRC,
  * and @format's pixel layout.
  *
- * Return value: the new #Babl format.
+ * Returns: the new #Babl format.
  *
  * Since: 2.10
  **/
@@ -1578,7 +1578,7 @@ gimp_color_profile_get_format (GimpColorProfile          *profile,
  * Note that this function currently only supports RGB, RGBA, R'G'B',
  * R'G'B'A, Y, YA, Y', Y'A and the cairo-RGB24 and cairo-ARGB32 formats.
  *
- * Return value: the #Babl format to be used instead of @format, or %NULL
+ * Returns: (nullable): the #Babl format to be used instead of @format, or %NULL
  *               if the passed @format is not supported at all.
  *
  * Since: 2.10

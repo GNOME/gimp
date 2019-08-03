@@ -246,7 +246,7 @@ gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
  * each tool. If they were to use this distance, more resources on
  * recalculating the same value would be saved.
  *
- * Return value: %TRUE if the motion was significant enough to be
+ * Returns: %TRUE if the motion was significant enough to be
  *               processed, %FALSE otherwise.
  **/
 gboolean

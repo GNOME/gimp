@@ -881,7 +881,7 @@ gimp_line_art_input_invalidate_preview (GimpViewable *viewable,
  * https://hal.archives-ouvertes.fr/hal-01891876
  *
  * Returns: a new #GeglBuffer of format "Y u8" representing the
- *          binarized @line_art. If @lineart_distmap is not #NULL, a
+ *          binarized @line_art. If @lineart_distmap is not %NULL, a
  *          newly allocated float buffer is returned, which can be used
  *          for overflowing created masks later.
  */
@@ -2065,7 +2065,7 @@ gimp_number_of_transitions (GArray     *pixels,
  * micro-area will be added to @fill_pixels to be later filled along
  * with the candidate pixels.
  *
- * Returns: #TRUE if @pixels should be added to @mask, #FALSE otherwise.
+ * Returns: %TRUE if @pixels should be added to @mask, %FALSE otherwise.
  */
 static gboolean
 gimp_line_art_allow_closure (GeglBuffer *mask,

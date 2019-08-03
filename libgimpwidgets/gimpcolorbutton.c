@@ -793,7 +793,7 @@ gimp_color_button_set_type (GimpColorButton   *button,
  *
  * Returns the color button's @continuous_update property.
  *
- * Return value: the @continuous_update property.
+ * Returns: the @continuous_update property.
  **/
 gboolean
 gimp_color_button_get_update (GimpColorButton *button)
@@ -812,7 +812,7 @@ gimp_color_button_get_update (GimpColorButton *button)
  * @button:     A #GimpColorButton widget.
  * @continuous: The new setting of the @continuous_update property.
  *
- * When set to #TRUE, the @button will emit the "color-changed"
+ * When set to %TRUE, the @button will emit the "color-changed"
  * continuously while the color is changed in the color selection
  * dialog.
  **/

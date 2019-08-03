@@ -217,7 +217,7 @@ gimp_value_array_new_from_types_valist (GType   first_type,
  *
  * Adds a reference to a #GimpValueArray.
  *
- * Return value: the same @value_array
+ * Returns: the same @value_array
  *
  * Since: 2.10
  */

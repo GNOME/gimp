@@ -204,7 +204,7 @@ gimp_module_unload (GTypeModule *module)
  *
  * Creates a new #GimpModule instance.
  *
- * Return value: The new #GimpModule object.
+ * Returns: The new #GimpModule object.
  **/
 GimpModule *
 gimp_module_new (const gchar *filename,
@@ -247,7 +247,7 @@ gimp_module_new (const gchar *filename,
  * may implement. After successful query, the @info field of the
  * #GimpModule struct will be available for further inspection.
  *
- * Return value: %TRUE on success.
+ * Returns: %TRUE on success.
  **/
 gboolean
 gimp_module_query_module (GimpModule *module)
@@ -360,7 +360,7 @@ gimp_module_set_load_inhibit (GimpModule *module,
  * Returns the translated textual representation of a #GimpModuleState.
  * The returned string must not be freed.
  *
- * Return value: The @state's name.
+ * Returns: The @state's name.
  **/
 const gchar *
 gimp_module_state_name (GimpModuleState state)
@@ -384,7 +384,7 @@ gimp_module_state_name (GimpModuleState state)
  *
  * This function is never called directly. Use GIMP_MODULE_ERROR() instead.
  *
- * Return value: the #GQuark that defines the GIMP module error domain.
+ * Returns: the #GQuark that defines the GIMP module error domain.
  *
  * Since: 2.8
  **/
@@ -454,7 +454,7 @@ gimp_module_set_last_error (GimpModule  *module,
  *
  * Creates a newly allocated #GimpModuleInfo struct.
  *
- * Return value: The new #GimpModuleInfo struct.
+ * Returns: The new #GimpModuleInfo struct.
  **/
 GimpModuleInfo *
 gimp_module_info_new (guint32      abi_version,
@@ -482,7 +482,7 @@ gimp_module_info_new (guint32      abi_version,
  *
  * Copies a #GimpModuleInfo struct.
  *
- * Return value: The new copy.
+ * Returns: The new copy.
  **/
 GimpModuleInfo *
 gimp_module_info_copy (const GimpModuleInfo *info)

@@ -850,8 +850,8 @@ gimp_container_get_child_by_index (GimpContainer *container,
  * gimp_container_get_first_child:
  * @container: a #GimpContainer
  *
- * Return value: the first child object stored in @container or %NULL if the
- *               container is empty
+ * Returns: (nullable) (transfer none): the first child object stored in
+ *          @container or %NULL if the container is empty.
  */
 GimpObject *
 gimp_container_get_first_child (GimpContainer *container)
@@ -869,8 +869,8 @@ gimp_container_get_first_child (GimpContainer *container)
  * gimp_container_get_last_child:
  * @container: a #GimpContainer
  *
- * Return value: the last child object stored in @container or %NULL if the
- *               container is empty
+ * Returns: (nullable) (transfer none): the last child object stored in
+ *          @container or %NULL if the container is empty
  */
 GimpObject *
 gimp_container_get_last_child (GimpContainer *container)

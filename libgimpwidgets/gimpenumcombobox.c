@@ -143,7 +143,7 @@ gimp_enum_combo_box_get_property (GObject    *object,
  * the enum values that appear in the combo_box, you can create your
  * own #GimpEnumStore and use gimp_enum_combo_box_new_with_model().
  *
- * Return value: a new #GimpEnumComboBox.
+ * Returns: a new #GimpEnumComboBox.
  *
  * Since: 2.4
  **/
@@ -172,7 +172,7 @@ gimp_enum_combo_box_new (GType enum_type)
  *
  * Creates a #GtkComboBox for the given @enum_store.
  *
- * Return value: a new #GimpEnumComboBox.
+ * Returns: a new #GimpEnumComboBox.
  *
  * Since: 2.4
  **/

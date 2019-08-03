@@ -265,7 +265,7 @@ gimp_int_store_add_empty (GimpIntStore *store)
  * #GimpIntStore is especially useful if the items you want to store
  * are identified using an integer value.
  *
- * Return value: a new #GimpIntStore.
+ * Returns: a new #GimpIntStore.
  *
  * Since: 2.2
  **/
@@ -283,7 +283,7 @@ gimp_int_store_new (void)
  *
  * Iterate over the @model looking for @value.
  *
- * Return value: %TRUE if the value has been located and @iter is
+ * Returns: %TRUE if the value has been located and @iter is
  *               valid, %FALSE otherwise.
  *
  * Since: 2.2
@@ -322,7 +322,7 @@ gimp_int_store_lookup_by_value (GtkTreeModel *model,
  *
  * Iterate over the @model looking for @user_data.
  *
- * Return value: %TRUE if the user-data has been located and @iter is
+ * Returns: %TRUE if the user-data has been located and @iter is
  *               valid, %FALSE otherwise.
  *
  * Since: 2.10

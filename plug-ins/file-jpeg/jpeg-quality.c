@@ -83,7 +83,7 @@ static gint std_chrominance_sum[101] =
  * @cinfo contains the quantization tables read from the DQT markers
  * in the file.
  *
- * Return Value: the JPEG quality setting in the range 1..100, -1..-100 or 0.
+ * Returns: the JPEG quality setting in the range 1..100, -1..-100 or 0.
  */
 gint
 jpeg_detect_quality (struct jpeg_decompress_struct *cinfo)

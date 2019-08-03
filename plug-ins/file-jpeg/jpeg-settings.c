@@ -71,7 +71,7 @@
  * @cinfo contains the quantization tables and the sampling factors
  * for each component.
  *
- * Return Value: TRUE if a parasite has been attached to @image_ID.
+ * Returns: TRUE if a parasite has been attached to @image_ID.
  */
 gboolean
 jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
@@ -161,7 +161,7 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
  * zero, then these tables can be retrieved from the parasite by
  * calling jpeg_restore_original_tables().
  *
- * Return Value: TRUE if a valid parasite was attached to the image
+ * Returns: TRUE if a valid parasite was attached to the image
  */
 gboolean
 jpeg_restore_original_settings (gint32           image_ID,
@@ -264,7 +264,7 @@ jpeg_restore_original_settings (gint32           image_ID,
  * no parasite exists or if it cannot be used, this function returns
  * NULL.
  *
- * Return Value: an array of quantization tables, or NULL.
+ * Returns: (nullable): an array of quantization tables, or NULL.
  */
 guint **
 jpeg_restore_original_tables (gint32    image_ID,

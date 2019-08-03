@@ -54,7 +54,7 @@ static gchar   * gimp_vectors_export_path_data  (GimpVectors *vectors);
  *
  * Exports one or more vectors to a SVG file.
  *
- * Return value: %TRUE on success,
+ * Returns: %TRUE on success,
  *               %FALSE if there was an error writing the file
  **/
 gboolean
@@ -113,7 +113,7 @@ gimp_vectors_export_file (GimpImage    *image,
  *
  * Exports one or more vectors to a SVG string.
  *
- * Return value: a %NUL-terminated string that holds a complete XML document
+ * Returns: a %NUL-terminated string that holds a complete XML document
  **/
 gchar *
 gimp_vectors_export_string (GimpImage   *image,

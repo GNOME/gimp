@@ -510,8 +510,8 @@ gimp_color_notebook_remove_selector (GtkContainer      *container,
  * This function adds and removed pages to / from a #GimpColorNotebook.
  * The @page_type passed must be a #GimpColorSelector subtype.
  *
- * Return value: (transfer none): The new page widget, if @has_page was
- *               #TRUE, or #NULL if @has_page was #FALSE.
+ * Returns: (transfer none): The new page widget, if @has_page was
+ *               %TRUE, or %NULL if @has_page was %FALSE.
  **/
 GtkWidget *
 gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
@@ -552,7 +552,7 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
  * gimp_color_notebook_get_notebook:
  * @notebook:  A #GimpColorNotebook widget.
  *
- * Return value: (transfer none): The #GtkNotebook inside.
+ * Returns: (transfer none): The #GtkNotebook inside.
  *
  * Since: 3.0
  **/
@@ -568,7 +568,7 @@ gimp_color_notebook_get_notebook (GimpColorNotebook *notebook)
  * gimp_color_notebook_get_selectors:
  * @notebook:  A #GimpColorNotebook widget.
  *
- * Return value: (element-type GimpColorSelector) (transfer none): The
+ * Returns: (element-type GimpColorSelector) (transfer none): The
  *               notebook's list of #GimpColorSelector's.
  *
  * Since: 3.0
@@ -585,7 +585,7 @@ gimp_color_notebook_get_selectors (GimpColorNotebook *notebook)
  * gimp_color_notebook_get_current_selector:
  * @notebook:  A #GimpColorNotebook widget.
  *
- * Return value: (transfer none): The active page's #GimpColorSelector.
+ * Returns: (transfer none): The active page's #GimpColorSelector.
  *
  * Since: 3.0
  **/

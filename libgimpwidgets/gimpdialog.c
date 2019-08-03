@@ -469,7 +469,7 @@ gimp_dialog_new_valist (const gchar    *title,
  * except it ensures there is only one help button and automatically
  * sets the RESPONSE_OK widget as the default response.
  *
- * Return value: (type Gtk.Widget) (transfer none): the button widget that was added.
+ * Returns: (type Gtk.Widget) (transfer none): the button widget that was added.
  **/
 GtkWidget *
 gimp_dialog_add_button (GimpDialog  *dialog,
@@ -622,7 +622,7 @@ run_destroy_handler (GtkDialog *dialog,
  * This function does exactly the same as gtk_dialog_run() except it
  * does not make the dialog modal while the #GMainLoop is running.
  *
- * Return value: response ID
+ * Returns: response ID
  **/
 gint
 gimp_dialog_run (GimpDialog *dialog)

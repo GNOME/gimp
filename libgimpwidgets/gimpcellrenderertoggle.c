@@ -533,7 +533,7 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
  * example used in the Layers treeview to indicate and control the
  * layer's visibility by showing %GIMP_STOCK_VISIBLE.
  *
- * Return value: a new #GimpCellRendererToggle
+ * Returns: a new #GimpCellRendererToggle
  *
  * Since: 2.2
  **/

@@ -91,15 +91,15 @@ static void         connect_notify     (GObject     *config,
  * @button_label:  Toggle widget title appearing as a frame title.
  * @child:         Child #GtkWidget of the returned frame.
  * @button:        Pointer to the #GtkCheckButton used as frame title
- *                 if not #NULL.
+ *                 if not %NULL.
  *
  * Creates a #GimpFrame containing @child, using a #GtkCheckButton as a
  * title whose value is tied to the boolean @property_name.
- * @child will be visible when @property_name is #TRUE, hidden otherwise.
- * If @button_label is #NULL, the @property_name's nick will be used as
+ * @child will be visible when @property_name is %TRUE, hidden otherwise.
+ * If @button_label is %NULL, the @property_name's nick will be used as
  * label of the #GtkCheckButton title.
  *
- * Return value:  A new #GimpFrame widget.
+ * Returns:  A new #GimpFrame widget.
  *
  * Since GIMP 2.4
  */
@@ -293,7 +293,7 @@ gimp_prop_radio_button_notify (GObject    *config,
  * Creates a #GimpLayerModeBox widget to display and set the specified
  * Enum property, for which the enum must be #GimpLayerMode.
  *
- * Return value: The newly created #GimpLayerModeBox widget.
+ * Returns: The newly created #GimpLayerModeBox widget.
  *
  * Since GIMP 2.10
  */
@@ -342,10 +342,10 @@ static void   gimp_prop_color_button_notify   (GObject    *config,
  *
  * Creates a #GimpColorPanel to set and display the value of a #GimpRGB
  * property.  Pressing the button brings up a color selector dialog.
- * If @title is #NULL, the @property_name's nick will be used as label
+ * If @title is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
  *
- * Return value:  A new #GimpColorPanel widget.
+ * Returns:  A new #GimpColorPanel widget.
  *
  * Since GIMP 2.4
  */
@@ -461,12 +461,12 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  *
  * Creates a #GimpSpinScale to set and display the value of a
  * gdouble property in a very space-efficient way.
- * If @label is #NULL, the @property_name's nick will be used as label
+ * If @label is %NULL, the @property_name's nick will be used as label
  * of the returned widget.
  * The property's lower and upper values will be used as min/max of the
  * #GimpSpinScale.
  *
- * Return value:  A new #GimpSpinScale widget.
+ * Returns:  A new #GimpSpinScale widget.
  *
  * Since GIMP 2.8
  */
@@ -824,7 +824,7 @@ rad_to_deg (GBinding     *binding,
  * Creates a #GimpDial to set and display the value of a
  * gdouble property that represents an angle.
  *
- * Return value:  A new #GimpDial widget.
+ * Returns:  A new #GimpDial widget.
  *
  * Since GIMP 2.10
  */
@@ -1001,7 +1001,7 @@ static void   gimp_prop_view_notify (GObject      *config,
  *
  * Creates a widget to display the value of a #GimpViewable property.
  *
- * Return value:  A new #GimpView widget.
+ * Returns:  A new #GimpView widget.
  *
  * Since GIMP 2.4
  */
@@ -1152,7 +1152,7 @@ static void  gimp_prop_number_pair_entry_number_pair_user_override_notify
  * @min_valid_value:
  * @max_valid_value:         What to pass to gimp_number_pair_entry_new ().
  *
- * Return value: A #GimpNumberPairEntry widget.
+ * Returns: A #GimpNumberPairEntry widget.
  */
 GtkWidget *
 gimp_prop_number_pair_entry_new (GObject     *config,

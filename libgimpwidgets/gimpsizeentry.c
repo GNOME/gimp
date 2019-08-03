@@ -52,7 +52,7 @@
  *
  * For each field, there can be one or two #GtkSpinButton's to enter
  * "value" and "reference value". If you specify @show_refval as
- * #FALSE in gimp_size_entry_new() there will be only one
+ * %FALSE in gimp_size_entry_new() there will be only one
  * #GtkSpinButton and the #GimpUnitComboBox will contain an item for
  * selecting GIMP_UNIT_PIXEL.
  *
@@ -1557,7 +1557,7 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
  * @show: Boolean
  *
  * Controls whether a unit menu is shown in the size entry.  If
- * @show is #TRUE, the menu is shown; otherwise it is hidden.
+ * @show is %TRUE, the menu is shown; otherwise it is hidden.
  *
  * Since: 2.4
  **/
@@ -1662,7 +1662,7 @@ gimp_size_entry_set_activates_default (GimpSizeEntry *gse,
  * if you want to set tooltips using gimp_help_set_help_data() you
  * can use this function to get a pointer to the spinbuttons.
  *
- * Return value: (transfer none): a #GtkWidget pointer that you can attach a tooltip to.
+ * Returns: (transfer none): a #GtkWidget pointer that you can attach a tooltip to.
  **/
 GtkWidget *
 gimp_size_entry_get_help_widget (GimpSizeEntry *gse,

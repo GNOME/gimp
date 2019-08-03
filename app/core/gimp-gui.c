@@ -264,7 +264,7 @@ gimp_get_display_name (Gimp     *gimp,
  * taken from events caused by user interaction such as key presses or
  * pointer movements. See gdk_x11_display_get_user_time().
  *
- * Return value: the timestamp of the last user interaction
+ * Returns: the timestamp of the last user interaction
  */
 guint32
 gimp_get_user_time (Gimp *gimp)
