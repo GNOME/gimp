@@ -21,15 +21,8 @@
 
 #include "config.h"
 
-#include <cairo.h>
-#include <gegl.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpcolor/gimpcolor.h"
-
 #include "gimp.h"
+
 #include "gimpgpcompat.h"
 
 
