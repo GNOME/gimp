@@ -43,9 +43,9 @@ enum
 enum
 {
   PROP_0,
-  PROP_NAME
+  PROP_NAME,
+  N_PROPS
 };
-
 
 struct _GimpObjectPrivate
 {
@@ -78,6 +78,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpObject, gimp_object, G_TYPE_OBJECT,
 #define parent_class gimp_object_parent_class
 
 static guint object_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *object_props[N_PROPS] = { NULL, };
 
 
 static void
@@ -115,12 +116,13 @@ gimp_object_class_init (GimpObjectClass *klass)
   klass->name_changed        = NULL;
   klass->get_memsize         = gimp_object_real_get_memsize;
 
-  g_object_class_install_property (object_class, PROP_NAME,
-                                   g_param_spec_string ("name",
-                                                        NULL, NULL,
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  object_props[PROP_NAME] = g_param_spec_string ("name",
+                                                 NULL, NULL,
+                                                 NULL,
+                                                 GIMP_PARAM_READWRITE |
+                                                 G_PARAM_CONSTRUCT);
+
+  g_object_class_install_properties (object_class, N_PROPS, object_props);
 }
 
 static void
@@ -229,7 +231,7 @@ gimp_object_set_name (GimpObject  *object,
   object->p->static_name = FALSE;
 
   gimp_object_name_changed (object);
-  g_object_notify (G_OBJECT (object), "name");
+  g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
 }
 
 /**
@@ -256,7 +258,7 @@ gimp_object_set_name_safe (GimpObject  *object,
   object->p->static_name = FALSE;
 
   gimp_object_name_changed (object);
-  g_object_notify (G_OBJECT (object), "name");
+  g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
 }
 
 void
@@ -274,7 +276,7 @@ gimp_object_set_static_name (GimpObject  *object,
   object->p->static_name = TRUE;
 
   gimp_object_name_changed (object);
-  g_object_notify (G_OBJECT (object), "name");
+  g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
 }
 
 void
@@ -295,7 +297,7 @@ gimp_object_take_name (GimpObject *object,
   object->p->static_name = FALSE;
 
   gimp_object_name_changed (object);
-  g_object_notify (G_OBJECT (object), "name");
+  g_object_notify_by_pspec (G_OBJECT (object), object_props[PROP_NAME]);
 }
 
 /**
