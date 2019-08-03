@@ -43,6 +43,16 @@
  **/
 
 
+#define ASSERT_NO_PLUG_IN_EXISTS(strfunc)                               \
+  if (gimp_get_plug_in ())                                              \
+    {                                                                   \
+      g_printerr ("%s ERROR: %s() cannot be called when using the "     \
+                  "new plug-in API\n",                                  \
+                  g_get_prgname (), strfunc);                           \
+      gimp_quit ();                                                     \
+    }
+
+
 static void       gimp_process_message         (GimpWireMessage *msg);
 static void       gimp_single_message          (void);
 static gboolean   gimp_extension_read          (GIOChannel      *channel,
@@ -150,6 +160,8 @@ gimp_install_procedure (const gchar        *name,
                     (n_params > 0  && params != NULL));
   g_return_if_fail ((n_return_vals == 0 && return_vals == NULL) ||
                     (n_return_vals > 0  && return_vals != NULL));
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   proc_install.name         = (gchar *) name;
   proc_install.blurb        = (gchar *) blurb;
@@ -265,6 +277,8 @@ gimp_install_temp_proc (const gchar        *name,
   g_return_if_fail (type == GIMP_TEMPORARY);
   g_return_if_fail (run_proc != NULL);
 
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   gimp_install_procedure (name,
                           blurb, help,
                           author, copyright, date,
@@ -294,6 +308,8 @@ gimp_uninstall_temp_proc (const gchar *name)
   gboolean        found;
 
   g_return_if_fail (name != NULL);
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   proc_uninstall.name = (gchar *) name;
 
@@ -327,6 +343,8 @@ gimp_uninstall_temp_proc (const gchar *name)
 void
 gimp_extension_ack (void)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   if (! gp_extension_ack_write (_gimp_writechannel, NULL))
     gimp_quit ();
 }
@@ -361,6 +379,8 @@ gimp_extension_enable (void)
 {
   static gboolean callback_added = FALSE;
 
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   if (! callback_added)
     {
       g_io_add_watch (_gimp_readchannel, G_IO_IN | G_IO_PRI,
@@ -391,6 +411,8 @@ gimp_extension_process (guint timeout)
 {
 #ifndef G_OS_WIN32
   gint select_val;
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   do
     {
@@ -428,6 +450,8 @@ gimp_extension_process (guint timeout)
    */
   GPollFD pollfd;
 
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   if (timeout == 0)
     timeout = -1;
 
@@ -442,6 +466,8 @@ void
 _gimp_read_expect_msg (GimpWireMessage *msg,
                        gint             type)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   while (TRUE)
     {
       if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
@@ -496,6 +522,8 @@ gimp_run_procedure (const gchar *name,
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (n_return_vals != NULL, NULL);
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   va_start (args, n_return_vals);
   param_type = va_arg (args, GimpPDBArgType);
@@ -699,6 +727,8 @@ gimp_run_procedure2 (const gchar     *name,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (n_return_vals != NULL, NULL);
 
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   arguments = _gimp_params_to_value_array (params, n_params, FALSE);
 
   return_values = gimp_run_procedure_with_array (name, arguments);
@@ -726,6 +756,8 @@ gimp_destroy_params (GimpParam *params,
                      gint       n_params)
 {
   gint i;
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   for (i = 0; i < n_params; i++)
     {
@@ -811,6 +843,8 @@ void
 gimp_destroy_paramdefs (GimpParamDef *paramdefs,
                         gint          n_params)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   while (n_params--)
     {
       g_free (paramdefs[n_params].name);
@@ -824,6 +858,8 @@ void
 _gimp_loop (GimpRunProc run_proc)
 {
   GimpWireMessage msg;
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   gimp_temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
