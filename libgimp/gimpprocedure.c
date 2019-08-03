@@ -922,6 +922,7 @@ gimp_procedure_run (GimpProcedure  *procedure,
 {
   GimpValueArray *return_vals;
   GError         *error = NULL;
+  gint            i;
 
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
@@ -937,6 +938,18 @@ gimp_procedure_run (GimpProcedure  *procedure,
       g_clear_error (&error);
 
       return return_vals;
+    }
+
+  /*  add missing args with default values  */
+  for (i = gimp_value_array_length (args); i < procedure->priv->n_args; i++)
+    {
+      GParamSpec *pspec = procedure->priv->args[i];
+      GValue      value = G_VALUE_INIT;
+
+      g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+      g_param_value_set_default (pspec, &value);
+      gimp_value_array_append (args, &value);
+      g_value_unset (&value);
     }
 
   /*  call the procedure  */
