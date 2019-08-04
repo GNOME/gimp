@@ -25,14 +25,27 @@
 G_BEGIN_DECLS
 
 
+GParamSpec     * _gimp_gp_param_def_to_param_spec (gpointer         gimp,
+                                                   GPParamDef      *param_def);
+
 void             _gimp_param_spec_to_gp_param_def (GParamSpec      *pspec,
                                                    GPParamDef      *param_def);
 
-GimpValueArray * _gimp_gp_params_to_value_array   (GParamSpec     **pspecs,
+void             _gimp_gp_param_to_value          (gpointer         gimp,
+                                                   GPParam         *param,
+                                                   GType            type,
+                                                   GValue          *value,
+                                                   gboolean         full_copy);
+GimpValueArray * _gimp_gp_params_to_value_array   (gpointer         gimp,
+                                                   GParamSpec     **pspecs,
                                                    gint             n_pspecs,
                                                    GPParam         *params,
                                                    gint             n_params,
                                                    gboolean         return_values,
+                                                   gboolean         full_copy);
+
+void             _gimp_value_to_gp_param          (const GValue    *value,
+                                                   GPParam         *param,
                                                    gboolean         full_copy);
 GPParam        * _gimp_value_array_to_gp_params   (GimpValueArray  *args,
                                                    gboolean         full_copy);

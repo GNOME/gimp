@@ -21,7 +21,6 @@ libappplug_in_a_SOURCES = \
 	gimpenvirontable.c			\
 	gimpenvirontable.h			\
 	gimpgpparams.c				\
-	gimpgpparams.h				\
 	gimpinterpreterdb.c			\
 	gimpinterpreterdb.h			\
 	gimpplugindebug.c			\

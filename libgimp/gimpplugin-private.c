@@ -347,7 +347,8 @@ gimp_plug_in_proc_run_internal (GPProcRun     *proc_run,
   GimpValueArray *arguments;
   GimpValueArray *return_values = NULL;
 
-  arguments = _gimp_gp_params_to_value_array (NULL, 0,
+  arguments = _gimp_gp_params_to_value_array (NULL,
+                                              NULL, 0,
                                               proc_run->params,
                                               proc_run->nparams,
                                               FALSE, FALSE);

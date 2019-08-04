@@ -1165,7 +1165,8 @@ gimp_proc_run_internal (GPProcRun     *proc_run,
   gint            n_params;
   gint            n_return_vals;
 
-  arguments = _gimp_gp_params_to_value_array (NULL, 0,
+  arguments = _gimp_gp_params_to_value_array (NULL,
+                                              NULL, 0,
                                               proc_run->params,
                                               proc_run->nparams,
                                               FALSE, FALSE);

@@ -67,7 +67,8 @@ typedef enum
   GP_PARAM_TYPE_COLOR,
   GP_PARAM_TYPE_PARASITE,
   GP_PARAM_TYPE_ARRAY,
-  GP_PARAM_TYPE_STRING_ARRAY
+  GP_PARAM_TYPE_STRING_ARRAY,
+  GP_PARAM_TYPE_PARAM_DEF
 } GPParamType;
 
 
@@ -236,6 +237,7 @@ struct _GPParam
     GimpParasite        d_parasite;
     GPParamArray        d_array;
     GPParamStringArray  d_string_array;
+    GPParamDef          d_param_def;
   } data;
 };
 
