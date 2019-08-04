@@ -398,7 +398,7 @@ gimp_palette_select_button_clicked (GimpPaletteSelectButton *button)
       select_button->temp_callback =
         gimp_palette_select_new (priv->title, priv->palette_name,
                                  gimp_palette_select_button_callback,
-                                 button);
+                                 button, NULL);
     }
 }
 

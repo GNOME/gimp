@@ -37,19 +37,24 @@ typedef struct
   GimpRunBrushCallback  callback;
   gboolean              closing;
   gpointer              data;
+  GDestroyNotify        data_destroy;
 } GimpBrushData;
 
 
 /*  local function prototypes  */
 
-static void      gimp_brush_data_free     (GimpBrushData    *data);
+static void      gimp_brush_data_free     (GimpBrushData       *data);
 
-static void      gimp_temp_brush_run      (const gchar      *name,
-                                           gint              nparams,
-                                           const GimpParam  *param,
-                                           gint             *nreturn_vals,
-                                           GimpParam       **return_vals);
-static gboolean  gimp_temp_brush_run_idle (GimpBrushData    *brush_data);
+static void      gimp_temp_brush_run      (const gchar         *name,
+                                           gint                 nparams,
+                                           const GimpParam     *param,
+                                           gint                *nreturn_vals,
+                                           GimpParam          **return_vals);
+static GimpValueArray *
+                 gimp_temp_brush_run_func (GimpProcedure        *procedure,
+                                           const GimpValueArray *args,
+                                           gpointer              run_data);
+static gboolean  gimp_temp_brush_run_idle (GimpBrushData        *brush_data);
 
 
 /*  private variables  */
@@ -66,66 +71,158 @@ gimp_brush_select_new (const gchar          *title,
                        gint                  spacing,
                        GimpLayerMode         paint_mode,
                        GimpRunBrushCallback  callback,
-                       gpointer              data)
+                       gpointer              data,
+                       GDestroyNotify        data_destroy)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_STRING,    "str",           "String"                     },
-    { GIMP_PDB_FLOAT,     "opacity",       "Opacity"                    },
-    { GIMP_PDB_INT32,     "spacing",       "Spacing"                    },
-    { GIMP_PDB_INT32,     "paint mode",    "Paint mode"                 },
-    { GIMP_PDB_INT32,     "mask width",    "Brush width"                },
-    { GIMP_PDB_INT32,     "mask height"    "Brush height"               },
-    { GIMP_PDB_INT32,     "mask len",      "Length of brush mask data"  },
-    { GIMP_PDB_INT8ARRAY, "mask data",     "The brush mask data"        },
-    { GIMP_PDB_INT32,     "dialog status", "If the dialog was closing "
-                                           "[0 = No, 1 = Yes]"          }
-  };
+  GimpPlugIn    *plug_in        = gimp_get_plug_in ();
+  gchar         *brush_callback = gimp_procedural_db_temp_name ();
+  GimpBrushData *brush_data;
 
-  gchar *brush_callback = gimp_procedural_db_temp_name ();
+  brush_data = g_slice_new0 (GimpBrushData);
 
-  gimp_install_temp_proc (brush_callback,
-                          "Temporary brush popup callback procedure",
-                          "",
-                          "",
-                          "",
-                          "",
-                          NULL,
-                          "",
-                          GIMP_TEMPORARY,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL,
-                          gimp_temp_brush_run);
+  brush_data->brush_callback = brush_callback;
+  brush_data->callback       = callback;
+  brush_data->data           = data;
+  brush_data->data_destroy   = data_destroy;
+
+  if (plug_in)
+    {
+      GimpProcedure *procedure = gimp_procedure_new (plug_in,
+                                                     brush_callback,
+                                                     GIMP_TEMPORARY,
+                                                     gimp_temp_brush_run_func,
+                                                     brush_data,
+                                                     (GDestroyNotify)
+                                                     gimp_brush_data_free);
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_string ("brush-name",
+                                                        "Brush name",
+                                                        "The brush name",
+                                                        NULL,
+                                                        G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_double ("opacity",
+                                                        "Opacity",
+                                                        NULL,
+                                                        0.0, 1.0, 1.0,
+                                                        G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("spacing",
+                                                     "Spacing",
+                                                     NULL,
+                                                     -1, 1000, 20,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("paint-mode",
+                                                      "Paint mode",
+                                                      NULL,
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("mask-width",
+                                                     "Brush width",
+                                                     NULL,
+                                                     0, 10000, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("mask-height",
+                                                     "Brush height",
+                                                     NULL,
+                                                     0, 10000, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_int32 ("mask-len",
+                                                          "Mask length",
+                                                          "Length of brush "
+                                                          "mask data",
+                                                          0, G_MAXINT, 0,
+                                                          G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_int8_array ("mask-data",
+                                                               "Mask data",
+                                                               "The brush mask "
+                                                               "data",
+                                                               G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_boolean ("closing",
+                                                         "Closing",
+                                                         "If the dialog was "
+                                                         "cloaing",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+      gimp_plug_in_add_temp_procedure (plug_in, procedure);
+      g_object_unref (procedure);
+    }
+  else
+    {
+      static const GimpParamDef args[] =
+      {
+        { GIMP_PDB_STRING,    "str",           "String"                     },
+        { GIMP_PDB_FLOAT,     "opacity",       "Opacity"                    },
+        { GIMP_PDB_INT32,     "spacing",       "Spacing"                    },
+        { GIMP_PDB_INT32,     "paint mode",    "Paint mode"                 },
+        { GIMP_PDB_INT32,     "mask width",    "Brush width"                },
+        { GIMP_PDB_INT32,     "mask height"    "Brush height"               },
+        { GIMP_PDB_INT32,     "mask len",      "Length of brush mask data"  },
+        { GIMP_PDB_INT8ARRAY, "mask data",     "The brush mask data"        },
+        { GIMP_PDB_INT32,     "dialog status", "If the dialog was closing "
+                                               "[0 = No, 1 = Yes]"          }
+      };
+
+      gimp_install_temp_proc (brush_callback,
+                              "Temporary brush popup callback procedure",
+                              "",
+                              "",
+                              "",
+                              "",
+                              NULL,
+                              "",
+                              GIMP_TEMPORARY,
+                              G_N_ELEMENTS (args), 0,
+                              args, NULL,
+                              gimp_temp_brush_run);
+    }
 
   if (gimp_brushes_popup (brush_callback, title, brush_name,
                           opacity, spacing, paint_mode))
     {
-      GimpBrushData *brush_data;
-
-      gimp_extension_enable (); /* Allow callbacks to be watched */
-
-      /* Now add to hash table so we can find it again */
-      if (! gimp_brush_select_ht)
+      /* Allow callbacks to be watched */
+      if (plug_in)
         {
-          gimp_brush_select_ht =
-            g_hash_table_new_full (g_str_hash, g_str_equal,
-                                   g_free,
-                                   (GDestroyNotify) gimp_brush_data_free);
+          gimp_plug_in_extension_enable (plug_in);
         }
+      else
+        {
+          gimp_extension_enable ();
 
-      brush_data = g_slice_new0 (GimpBrushData);
+          /* Now add to hash table so we can find it again */
+          if (! gimp_brush_select_ht)
+            {
+              gimp_brush_select_ht =
+                g_hash_table_new_full (g_str_hash, g_str_equal,
+                                       g_free,
+                                       (GDestroyNotify) gimp_brush_data_free);
+            }
 
-      brush_data->brush_callback = brush_callback;
-      brush_data->callback       = callback;
-      brush_data->data           = data;
-
-      g_hash_table_insert (gimp_brush_select_ht, brush_callback, brush_data);
+          g_hash_table_insert (gimp_brush_select_ht, brush_callback,
+                               brush_data);
+        }
 
       return brush_callback;
     }
 
-  gimp_uninstall_temp_proc (brush_callback);
-  g_free (brush_callback);
+  if (plug_in)
+    {
+      gimp_plug_in_remove_temp_procedure (plug_in, brush_callback);
+    }
+  else
+    {
+      gimp_uninstall_temp_proc (brush_callback);
+      gimp_brush_data_free (brush_data);
+    }
 
   return NULL;
 }
@@ -133,31 +230,32 @@ gimp_brush_select_new (const gchar          *title,
 void
 gimp_brush_select_destroy (const gchar *brush_callback)
 {
-  GimpBrushData *brush_data;
+  GimpPlugIn *plug_in = gimp_get_plug_in ();
 
   g_return_if_fail (brush_callback != NULL);
-  g_return_if_fail (gimp_brush_select_ht != NULL);
 
-  brush_data = g_hash_table_lookup (gimp_brush_select_ht, brush_callback);
-
-  if (! brush_data)
+  if (plug_in)
     {
-      g_warning ("Can't find internal brush data");
-      return;
+      gimp_plug_in_remove_temp_procedure (plug_in, brush_callback);
     }
+  else
+    {
+      GimpBrushData *brush_data;
 
-  if (brush_data->idle_id)
-    g_source_remove (brush_data->idle_id);
+      g_return_if_fail (gimp_brush_select_ht != NULL);
 
-  g_free (brush_data->brush_name);
-  g_free (brush_data->brush_mask_data);
+      brush_data = g_hash_table_lookup (gimp_brush_select_ht, brush_callback);
 
-  if (brush_data->brush_callback)
-    gimp_brushes_close_popup (brush_data->brush_callback);
+      if (! brush_data)
+        {
+          g_warning ("Can't find internal brush data");
+          return;
+        }
 
-  gimp_uninstall_temp_proc (brush_callback);
+      g_hash_table_remove (gimp_brush_select_ht, brush_callback);
 
-  g_hash_table_remove (gimp_brush_select_ht, brush_callback);
+      gimp_uninstall_temp_proc (brush_callback);
+    }
 }
 
 
@@ -166,6 +264,18 @@ gimp_brush_select_destroy (const gchar *brush_callback)
 static void
 gimp_brush_data_free (GimpBrushData *data)
 {
+  if (data->idle_id)
+    g_source_remove (data->idle_id);
+
+  if (data->brush_callback)
+    gimp_brushes_close_popup (data->brush_callback);
+
+  g_free (data->brush_name);
+  g_free (data->brush_mask_data);
+
+  if (data->data_destroy)
+    data->data_destroy (data->data);
+
   g_slice_free (GimpBrushData, data);
 }
 
@@ -210,6 +320,32 @@ gimp_temp_brush_run (const gchar      *name,
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
+}
+
+static GimpValueArray *
+gimp_temp_brush_run_func (GimpProcedure        *procedure,
+                          const GimpValueArray *args,
+                          gpointer              run_data)
+{
+  GimpBrushData *data = run_data;
+
+  g_free (data->brush_name);
+  g_free (data->brush_mask_data);
+
+  data->brush_name      = g_value_dup_string (gimp_value_array_index (args, 0));
+  data->opacity         = g_value_get_double (gimp_value_array_index (args, 1));
+  data->spacing         = g_value_get_int    (gimp_value_array_index (args, 2));
+  data->paint_mode      = g_value_get_enum   (gimp_value_array_index (args, 3));
+  data->width           = g_value_get_int    (gimp_value_array_index (args, 4));
+  data->height          = g_value_get_int    (gimp_value_array_index (args, 5));
+  data->brush_mask_data = gimp_value_dup_int8_array (gimp_value_array_index (args, 7));
+  data->closing         = g_value_get_boolean (gimp_value_array_index (args, 8));
+
+  if (! data->idle_id)
+    data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_brush_run_idle,
+                                data);
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gboolean

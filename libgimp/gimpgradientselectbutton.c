@@ -426,7 +426,7 @@ gimp_gradient_select_button_clicked (GimpGradientSelectButton *button)
         gimp_gradient_select_new (priv->title, priv->gradient_name,
                                   priv->sample_size,
                                   gimp_gradient_select_button_callback,
-                                  button);
+                                  button, NULL);
     }
 }
 
