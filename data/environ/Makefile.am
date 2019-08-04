@@ -2,6 +2,8 @@
 
 environdir = $(gimpplugindir)/environ
 
-environ_DATA = default.env
+environ_DATA = \
+	default.env	\
+	python.env
 
 EXTRA_DIST = $(environ_DATA)
