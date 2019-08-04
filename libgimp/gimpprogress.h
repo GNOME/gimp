@@ -57,8 +57,9 @@ struct _GimpProgressVtable
 
 
 const gchar * gimp_progress_install_vtable  (const GimpProgressVtable *vtable,
-                                             gpointer                  user_data);
-gpointer      gimp_progress_uninstall       (const gchar              *progress_callback);
+                                             gpointer                  user_data,
+                                             GDestroyNotify            user_data_destroy);
+void          gimp_progress_uninstall       (const gchar              *progress_callback);
 
 gboolean      gimp_progress_init            (const gchar              *message);
 gboolean      gimp_progress_init_printf     (const gchar              *format,
