@@ -113,12 +113,12 @@ gimp_palette_select_new (const gchar            *title,
   else
     {
       static const GimpParamDef args[] =
-        {
-         { GIMP_PDB_STRING, "str",           "String"                      },
-         { GIMP_PDB_INT32,  "num colors",    "Number of colors"            },
-         { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
-                                              "[0 = No, 1 = Yes]"           }
-        };
+      {
+        { GIMP_PDB_STRING, "str",           "String"                      },
+        { GIMP_PDB_INT32,  "num colors",    "Number of colors"            },
+        { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
+                                            "[0 = No, 1 = Yes]"           }
+      };
 
       gimp_install_temp_proc (palette_callback,
                               "Temporary palette popup callback procedure",
@@ -155,7 +155,8 @@ gimp_palette_select_new (const gchar            *title,
             }
 
           g_hash_table_insert (gimp_palette_select_ht,
-                               palette_callback, palette_data);
+                               g_strdup (palette_callback),
+                               palette_data);
         }
 
       return palette_callback;
@@ -216,7 +217,10 @@ gimp_palette_data_free (GimpPaletteData *data)
     g_source_remove (data->idle_id);
 
   if (data->palette_callback)
-    gimp_palettes_close_popup (data->palette_callback);
+    {
+      gimp_palettes_close_popup (data->palette_callback);
+      g_free (data->palette_callback);
+    }
 
   g_free (data->palette_name);
 
@@ -298,7 +302,8 @@ gimp_temp_palette_run_idle (GimpPaletteData *palette_data)
 
       palette_data->palette_callback = NULL;
       gimp_palette_select_destroy (palette_callback);
+      g_free (palette_callback);
     }
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }

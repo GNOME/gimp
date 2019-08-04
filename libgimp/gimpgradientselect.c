@@ -68,7 +68,7 @@ gimp_gradient_select_new (const gchar             *title,
                           gpointer                 data,
                           GDestroyNotify           data_destroy)
 {
-  GimpPlugIn       *plug_in        = gimp_get_plug_in ();
+  GimpPlugIn       *plug_in           = gimp_get_plug_in ();
   gchar            *gradient_callback = gimp_procedural_db_temp_name ();
   GimpGradientData *gradient_data;
 
@@ -121,13 +121,13 @@ gimp_gradient_select_new (const gchar             *title,
   else
     {
       static const GimpParamDef args[] =
-        {
-         { GIMP_PDB_STRING,    "str",            "String"                     },
-         { GIMP_PDB_INT32,     "gradient width", "Gradient width"             },
-         { GIMP_PDB_FLOATARRAY,"gradient data",  "The gradient mask data"     },
-         { GIMP_PDB_INT32,     "dialog status",  "If the dialog was closing "
-                                                 "[0 = No, 1 = Yes]"          }
-        };
+      {
+        { GIMP_PDB_STRING,    "str",            "String"                     },
+        { GIMP_PDB_INT32,     "gradient width", "Gradient width"             },
+        { GIMP_PDB_FLOATARRAY,"gradient data",  "The gradient mask data"     },
+        { GIMP_PDB_INT32,     "dialog status",  "If the dialog was closing "
+                                                "[0 = No, 1 = Yes]"          }
+      };
 
       gimp_install_temp_proc (gradient_callback,
                               "Temporary gradient popup callback procedure",
@@ -166,7 +166,8 @@ gimp_gradient_select_new (const gchar             *title,
 
 
           g_hash_table_insert (gimp_gradient_select_ht,
-                               gradient_callback, gradient_data);
+                               g_strdup (gradient_callback),
+                               gradient_data);
         }
 
       return gradient_callback;
@@ -227,7 +228,10 @@ gimp_gradient_data_free (GimpGradientData *data)
     g_source_remove (data->idle_id);
 
   if (data->gradient_callback)
-    gimp_gradients_close_popup (data->gradient_callback);
+    {
+      gimp_gradients_close_popup (data->gradient_callback);
+      g_free (data->gradient_callback);
+    }
 
   g_free (data->gradient_name);
   g_free (data->gradient_data);
@@ -319,7 +323,8 @@ gimp_temp_gradient_run_idle (GimpGradientData *gradient_data)
 
       gradient_data->gradient_callback = NULL;
       gimp_gradient_select_destroy (gradient_callback);
+      g_free (gradient_callback);
     }
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }

@@ -207,7 +207,8 @@ gimp_brush_select_new (const gchar          *title,
                                        (GDestroyNotify) gimp_brush_data_free);
             }
 
-          g_hash_table_insert (gimp_brush_select_ht, brush_callback,
+          g_hash_table_insert (gimp_brush_select_ht,
+                               g_strdup (brush_callback),
                                brush_data);
         }
 
@@ -268,7 +269,10 @@ gimp_brush_data_free (GimpBrushData *data)
     g_source_remove (data->idle_id);
 
   if (data->brush_callback)
-    gimp_brushes_close_popup (data->brush_callback);
+    {
+      gimp_brushes_close_popup (data->brush_callback);
+      g_free (data->brush_callback);
+    }
 
   g_free (data->brush_name);
   g_free (data->brush_mask_data);
@@ -370,7 +374,8 @@ gimp_temp_brush_run_idle (GimpBrushData *brush_data)
 
       brush_data->brush_callback = NULL;
       gimp_brush_select_destroy (brush_callback);
+      g_free (brush_callback);
     }
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
