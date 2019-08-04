@@ -80,7 +80,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ENUM;
 
       param_def->meta.m_enum.type_name    = (gchar *) g_type_name (enum_type);
-      param_def->meta.m_float.default_val = espec->default_value;
+      param_def->meta.m_enum.default_val = espec->default_value;
     }
   else if (pspec_type == G_TYPE_PARAM_BOOLEAN)
     {
