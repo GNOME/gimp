@@ -748,7 +748,8 @@ gimp_run_procedure_with_array (const gchar    *name,
 
   proc_return = msg.data;
 
-  return_values = _gimp_gp_params_to_value_array (NULL, 0,
+  return_values = _gimp_gp_params_to_value_array (NULL,
+                                                  NULL, 0,
                                                   proc_return->params,
                                                   proc_return->nparams,
                                                   TRUE, FALSE);

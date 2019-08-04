@@ -28,6 +28,8 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#include "libgimp/gimpgpparams.h"
+
 #include "plug-in-types.h"
 
 #include "gegl/gimp-babl.h"
@@ -41,7 +43,6 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimppdberror.h"
 
-#include "gimpgpparams.h"
 #include "gimpplugin.h"
 #include "gimpplugin-cleanup.h"
 #include "gimpplugin-message.h"
@@ -566,7 +567,8 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
   if (! proc_name)
     proc_name = canonical;
 
-  args = _gimp_gp_params_to_value_array (procedure ? procedure->args     : NULL,
+  args = _gimp_gp_params_to_value_array (plug_in->manager->gimp,
+                                         procedure ? procedure->args     : NULL,
                                          procedure ? procedure->num_args : 0,
                                          proc_run->params,
                                          proc_run->nparams,
@@ -635,7 +637,8 @@ gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
   g_return_if_fail (proc_return != NULL);
 
   proc_frame->return_vals =
-    _gimp_gp_params_to_value_array (proc_frame->procedure->values,
+    _gimp_gp_params_to_value_array (plug_in->manager->gimp,
+                                    proc_frame->procedure->values,
                                     proc_frame->procedure->num_values,
                                     proc_return->params,
                                     proc_return->nparams,
@@ -670,7 +673,8 @@ gimp_plug_in_handle_temp_proc_return (GimpPlugIn   *plug_in,
       GimpPlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
 
       proc_frame->return_vals =
-        _gimp_gp_params_to_value_array (proc_frame->procedure->values,
+        _gimp_gp_params_to_value_array (plug_in->manager->gimp,
+                                        proc_frame->procedure->values,
                                         proc_frame->procedure->num_values,
                                         proc_return->params,
                                         proc_return->nparams,

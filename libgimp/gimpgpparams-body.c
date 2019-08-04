@@ -158,8 +158,168 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     }
 }
 
+void
+_gimp_gp_param_to_value (gpointer  gimp,
+                         GPParam  *param,
+                         GType     type,
+                         GValue   *value,
+                         gboolean  full_copy)
+{
+  g_return_if_fail (param != NULL);
+  g_return_if_fail (value != NULL);
+
+  if (type == G_TYPE_NONE)
+    type = g_type_from_name (param->type_name);
+
+  g_value_init (value, type);
+
+  if (type == G_TYPE_INT      ||
+      type == GIMP_TYPE_INT32 ||
+      type == GIMP_TYPE_INT16 ||
+      type == GIMP_TYPE_UNIT)
+    {
+      g_value_set_int (value, param->data.d_int);
+    }
+  else if (G_VALUE_HOLDS_UINT (value))
+    {
+      g_value_set_uint (value, param->data.d_int);
+    }
+  else if (G_VALUE_HOLDS_ENUM (value))
+    {
+      g_value_set_enum (value, param->data.d_int);
+    }
+  else if (G_VALUE_HOLDS_BOOLEAN (value))
+    {
+      g_value_set_boolean (value, param->data.d_int ? TRUE : FALSE);
+    }
+  else if (G_VALUE_HOLDS_DOUBLE (value))
+    {
+      g_value_set_double (value, param->data.d_float);
+    }
+  else if (G_VALUE_HOLDS_STRING (value))
+    {
+      if (full_copy)
+        g_value_set_string (value, param->data.d_string);
+      else
+        g_value_set_static_string (value, param->data.d_string);
+    }
+  else if (GIMP_VALUE_HOLDS_RGB (value))
+    {
+      gimp_value_set_rgb (value, &param->data.d_color);
+    }
+  else if (GIMP_VALUE_HOLDS_PARASITE (value))
+    {
+      if (full_copy)
+        g_value_set_boxed (value, &param->data.d_parasite);
+      else
+        g_value_set_static_boxed (value, &param->data.d_parasite);
+    }
+  else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+    {
+      if (full_copy)
+        gimp_value_set_int32_array (value,
+                                    (gint32 *) param->data.d_array.data,
+                                    param->data.d_array.size /
+                                    sizeof (gint32));
+      else
+        gimp_value_set_static_int32_array (value,
+                                           (gint32 *) param->data.d_array.data,
+                                           param->data.d_array.size /
+                                           sizeof (gint32));
+    }
+  else if (GIMP_VALUE_HOLDS_INT16_ARRAY (value))
+    {
+      if (full_copy)
+        gimp_value_set_int16_array (value,
+                                    (gint16 *) param->data.d_array.data,
+                                    param->data.d_array.size /
+                                    sizeof (gint16));
+      else
+        gimp_value_set_static_int16_array (value,
+                                           (gint16 *) param->data.d_array.data,
+                                           param->data.d_array.size /
+                                           sizeof (gint16));
+    }
+  else if (GIMP_VALUE_HOLDS_INT8_ARRAY (value))
+    {
+      if (full_copy)
+        gimp_value_set_int8_array (value,
+                                   param->data.d_array.data,
+                                   param->data.d_array.size /
+                                   sizeof (guint8));
+      else
+        gimp_value_set_static_int8_array (value,
+                                          param->data.d_array.data,
+                                          param->data.d_array.size /
+                                          sizeof (guint8));
+    }
+  else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+    {
+      if (full_copy)
+        gimp_value_set_float_array (value,
+                                    (const gdouble *)
+                                    param->data.d_array.data,
+                                    param->data.d_array.size /
+                                    sizeof (gdouble));
+      else
+        gimp_value_set_static_float_array (value,
+                                           (const gdouble *)
+                                           param->data.d_array.data,
+                                           param->data.d_array.size /
+                                           sizeof (gdouble));
+    }
+  else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
+    {
+      if (full_copy)
+        gimp_value_set_string_array (value,
+                                     (const gchar **)
+                                     param->data.d_string_array.data,
+                                     param->data.d_string_array.size);
+      else
+        gimp_value_set_static_string_array (value,
+                                            (const gchar **)
+                                            param->data.d_string_array.data,
+                                            param->data.d_string_array.size);
+    }
+  else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
+    {
+      if (full_copy)
+        gimp_value_set_rgb_array (value,
+                                  (GimpRGB *)
+                                  param->data.d_array.data,
+                                  param->data.d_array.size /
+                                  sizeof (GimpRGB));
+      else
+        gimp_value_set_static_rgb_array (value,
+                                         (GimpRGB *)
+                                         param->data.d_array.data,
+                                         param->data.d_array.size /
+                                         sizeof (GimpRGB));
+    }
+  else if (GIMP_VALUE_HOLDS_DISPLAY_ID    (value) ||
+           GIMP_VALUE_HOLDS_IMAGE_ID      (value) ||
+           GIMP_VALUE_HOLDS_ITEM_ID       (value) ||
+           GIMP_VALUE_HOLDS_DRAWABLE_ID   (value) ||
+           GIMP_VALUE_HOLDS_LAYER_ID      (value) ||
+           GIMP_VALUE_HOLDS_CHANNEL_ID    (value) ||
+           GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) ||
+           GIMP_VALUE_HOLDS_SELECTION_ID  (value) ||
+           GIMP_VALUE_HOLDS_VECTORS_ID    (value))
+    {
+      g_value_set_int (value, param->data.d_int);
+    }
+  else if (G_VALUE_HOLDS_PARAM (value))
+    {
+      GParamSpec *pspec =
+        _gimp_gp_param_def_to_param_spec (gimp, &param->data.d_param_def);
+
+      g_value_take_param (value, pspec);
+    }
+}
+
 GimpValueArray *
-_gimp_gp_params_to_value_array (GParamSpec **pspecs,
+_gimp_gp_params_to_value_array (gpointer     gimp,
+                                GParamSpec **pspecs,
                                 gint         n_pspecs,
                                 GPParam     *params,
                                 gint         n_params,
@@ -230,149 +390,174 @@ _gimp_gp_params_to_value_array (GParamSpec **pspecs,
             }
         }
 
-      g_value_init (&value, type);
-
-      if (type == G_TYPE_INT      ||
-          type == GIMP_TYPE_INT32 ||
-          type == GIMP_TYPE_INT16 ||
-          type == GIMP_TYPE_UNIT)
-        {
-          g_value_set_int (&value, params[i].data.d_int);
-        }
-      else if (G_VALUE_HOLDS_UINT (&value))
-        {
-          g_value_set_uint (&value, params[i].data.d_int);
-        }
-      else if (G_VALUE_HOLDS_ENUM (&value))
-        {
-          g_value_set_enum (&value, params[i].data.d_int);
-        }
-      else if (G_VALUE_HOLDS_BOOLEAN (&value))
-        {
-          g_value_set_boolean (&value, params[i].data.d_int ? TRUE : FALSE);
-        }
-      else if (G_VALUE_HOLDS_DOUBLE (&value))
-        {
-          g_value_set_double (&value, params[i].data.d_float);
-        }
-      else if (G_VALUE_HOLDS_STRING (&value))
-        {
-          if (full_copy)
-            g_value_set_string (&value, params[i].data.d_string);
-          else
-            g_value_set_static_string (&value, params[i].data.d_string);
-        }
-      else if (GIMP_VALUE_HOLDS_RGB (&value))
-        {
-          gimp_value_set_rgb (&value, &params[i].data.d_color);
-        }
-      else if (GIMP_VALUE_HOLDS_PARASITE (&value))
-        {
-          if (full_copy)
-            g_value_set_boxed (&value, &params[i].data.d_parasite);
-          else
-            g_value_set_static_boxed (&value, &params[i].data.d_parasite);
-        }
-      else if (GIMP_VALUE_HOLDS_INT32_ARRAY (&value))
-        {
-          if (full_copy)
-            gimp_value_set_int32_array (&value,
-                                        (gint32 *) params[i].data.d_array.data,
-                                        params[i].data.d_array.size /
-                                        sizeof (gint32));
-          else
-            gimp_value_set_static_int32_array (&value,
-                                               (gint32 *) params[i].data.d_array.data,
-                                               params[i].data.d_array.size /
-                                               sizeof (gint32));
-        }
-      else if (GIMP_VALUE_HOLDS_INT16_ARRAY (&value))
-        {
-          if (full_copy)
-            gimp_value_set_int16_array (&value,
-                                        (gint16 *) params[i].data.d_array.data,
-                                        params[i].data.d_array.size /
-                                        sizeof (gint16));
-          else
-            gimp_value_set_static_int16_array (&value,
-                                               (gint16 *) params[i].data.d_array.data,
-                                               params[i].data.d_array.size /
-                                               sizeof (gint16));
-        }
-      else if (GIMP_VALUE_HOLDS_INT8_ARRAY (&value))
-        {
-          if (full_copy)
-            gimp_value_set_int8_array (&value,
-                                       params[i].data.d_array.data,
-                                       params[i].data.d_array.size /
-                                       sizeof (guint8));
-          else
-            gimp_value_set_static_int8_array (&value,
-                                              params[i].data.d_array.data,
-                                              params[i].data.d_array.size /
-                                              sizeof (guint8));
-        }
-      else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (&value))
-        {
-          if (full_copy)
-            gimp_value_set_float_array (&value,
-                                        (const gdouble *)
-                                        params[i].data.d_array.data,
-                                        params[i].data.d_array.size /
-                                        sizeof (gdouble));
-          else
-            gimp_value_set_static_float_array (&value,
-                                               (const gdouble *)
-                                               params[i].data.d_array.data,
-                                               params[i].data.d_array.size /
-                                               sizeof (gdouble));
-        }
-      else if (GIMP_VALUE_HOLDS_STRING_ARRAY (&value))
-        {
-          if (full_copy)
-            gimp_value_set_string_array (&value,
-                                         (const gchar **)
-                                         params[i].data.d_string_array.data,
-                                         params[i].data.d_string_array.size);
-          else
-            gimp_value_set_static_string_array (&value,
-                                                (const gchar **)
-                                                params[i].data.d_string_array.data,
-                                                params[i].data.d_string_array.size);
-        }
-      else if (GIMP_VALUE_HOLDS_RGB_ARRAY (&value))
-        {
-          if (full_copy)
-            gimp_value_set_rgb_array (&value,
-                                      (GimpRGB *)
-                                      params[i].data.d_array.data,
-                                      params[i].data.d_array.size /
-                                      sizeof (GimpRGB));
-          else
-            gimp_value_set_static_rgb_array (&value,
-                                             (GimpRGB *)
-                                             params[i].data.d_array.data,
-                                             params[i].data.d_array.size /
-                                             sizeof (GimpRGB));
-        }
-      else if (GIMP_VALUE_HOLDS_DISPLAY_ID    (&value) ||
-               GIMP_VALUE_HOLDS_IMAGE_ID      (&value) ||
-               GIMP_VALUE_HOLDS_ITEM_ID       (&value) ||
-               GIMP_VALUE_HOLDS_DRAWABLE_ID   (&value) ||
-               GIMP_VALUE_HOLDS_LAYER_ID      (&value) ||
-               GIMP_VALUE_HOLDS_CHANNEL_ID    (&value) ||
-               GIMP_VALUE_HOLDS_LAYER_MASK_ID (&value) ||
-               GIMP_VALUE_HOLDS_SELECTION_ID  (&value) ||
-               GIMP_VALUE_HOLDS_VECTORS_ID    (&value))
-        {
-          g_value_set_int (&value, params[i].data.d_int);
-        }
+      _gimp_gp_param_to_value (gimp, &params[i], type, &value, full_copy);
 
       gimp_value_array_append (args, &value);
       g_value_unset (&value);
     }
 
   return args;
+}
+
+void
+_gimp_value_to_gp_param (const GValue *value,
+                         GPParam      *param,
+                         gboolean      full_copy)
+{
+  GType type;
+
+  g_return_if_fail (value != NULL);
+  g_return_if_fail (param != NULL);
+
+  type  = G_VALUE_TYPE (value);
+
+  param->param_type = -1;
+
+  if (full_copy)
+    param->type_name = g_strdup (g_type_name (type));
+  else
+    param->type_name = (gchar *) g_type_name (type);
+
+  if (type == G_TYPE_INT      ||
+      type == GIMP_TYPE_INT32 ||
+      type == GIMP_TYPE_INT16 ||
+      type == GIMP_TYPE_UNIT)
+    {
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = g_value_get_int (value);
+    }
+  else if (type == G_TYPE_UINT ||
+           type == GIMP_TYPE_INT8)
+    {
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = g_value_get_uint (value);
+    }
+  else if (G_VALUE_HOLDS_ENUM (value))
+    {
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = g_value_get_enum (value);
+    }
+  else if (G_VALUE_HOLDS_BOOLEAN (value))
+    {
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = g_value_get_boolean (value);
+    }
+  else if (G_VALUE_HOLDS_DOUBLE (value))
+    {
+      param->param_type = GP_PARAM_TYPE_FLOAT;
+
+      param->data.d_float = g_value_get_double (value);
+    }
+  else if (G_VALUE_HOLDS_STRING (value))
+    {
+      param->param_type = GP_PARAM_TYPE_STRING;
+
+      if (full_copy)
+        param->data.d_string = g_value_dup_string (value);
+      else
+        param->data.d_string = (gchar *) g_value_get_string (value);
+    }
+  else if (GIMP_VALUE_HOLDS_RGB (value))
+    {
+      param->param_type = GP_PARAM_TYPE_COLOR;
+
+      gimp_value_get_rgb (value, &param->data.d_color);
+    }
+  else if (GIMP_VALUE_HOLDS_PARASITE (value))
+    {
+      GimpParasite *parasite = (full_copy ?
+                                g_value_dup_boxed (value) :
+                                g_value_get_boxed (value));
+
+      param->param_type = GP_PARAM_TYPE_PARASITE;
+
+      if (parasite)
+        {
+          param->data.d_parasite.name  = parasite->name;
+          param->data.d_parasite.flags = parasite->flags;
+          param->data.d_parasite.size  = parasite->size;
+          param->data.d_parasite.data  = parasite->data;
+
+          if (full_copy)
+            {
+              parasite->name  = NULL;
+              parasite->flags = 0;
+              parasite->size  = 0;
+              parasite->data  = NULL;
+
+              gimp_parasite_free (parasite);
+            }
+        }
+      else
+        {
+          param->data.d_parasite.name  = NULL;
+          param->data.d_parasite.flags = 0;
+          param->data.d_parasite.size  = 0;
+          param->data.d_parasite.data  = NULL;
+        }
+    }
+  else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
+           GIMP_VALUE_HOLDS_INT16_ARRAY (value) ||
+           GIMP_VALUE_HOLDS_INT8_ARRAY  (value) ||
+           GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) ||
+           GIMP_VALUE_HOLDS_RGB_ARRAY (value))
+    {
+      GimpArray *array = g_value_get_boxed (value);
+
+      param->param_type = GP_PARAM_TYPE_ARRAY;
+
+      param->data.d_array.size = array->length;
+
+      if (full_copy)
+        param->data.d_array.data = g_memdup (array->data,
+                                             array->length);
+      else
+        param->data.d_array.data = array->data;
+    }
+  else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
+    {
+      GimpArray *array = g_value_get_boxed (value);
+
+      param->param_type = GP_PARAM_TYPE_STRING_ARRAY;
+
+      param->data.d_string_array.size = array->length;
+
+      if (full_copy)
+        param->data.d_string_array.data =
+          gimp_value_dup_string_array (value);
+      else
+        param->data.d_string_array.data =
+          (gchar **) gimp_value_get_string_array (value);
+    }
+  else if (GIMP_VALUE_HOLDS_DISPLAY_ID (value)    ||
+           GIMP_VALUE_HOLDS_IMAGE_ID (value)      ||
+           GIMP_VALUE_HOLDS_ITEM_ID (value)       ||
+           GIMP_VALUE_HOLDS_DRAWABLE_ID (value)   ||
+           GIMP_VALUE_HOLDS_LAYER_ID (value)      ||
+           GIMP_VALUE_HOLDS_CHANNEL_ID (value)    ||
+           GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) ||
+           GIMP_VALUE_HOLDS_SELECTION_ID (value)  ||
+           GIMP_VALUE_HOLDS_VECTORS_ID (value))
+    {
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = g_value_get_int (value);
+    }
+  else if (G_VALUE_HOLDS_PARAM (value))
+    {
+      param->param_type = GP_PARAM_TYPE_PARAM_DEF;
+
+      _gimp_param_spec_to_gp_param_def (g_value_get_param (value),
+                                        &param->data.d_param_def);
+    }
+
+  if (param->param_type == -1)
+    g_printerr ("%s: GValue contains unsupported type '%s'\n",
+                G_STRFUNC, param->type_name);
 }
 
 GPParam *
@@ -385,155 +570,15 @@ _gimp_value_array_to_gp_params (GimpValueArray  *args,
 
   g_return_val_if_fail (args != NULL, NULL);
 
-  params = g_new0 (GPParam, gimp_value_array_length (args));
-
   length = gimp_value_array_length (args);
+
+  params = g_new0 (GPParam, length);
 
   for (i = 0; i < length; i++)
     {
       GValue *value = gimp_value_array_index (args, i);
-      GType   type  = G_VALUE_TYPE (value);
 
-      params[i].param_type = -1;
-
-      if (full_copy)
-        params[i].type_name = g_strdup (g_type_name (type));
-      else
-        params[i].type_name = (gchar *) g_type_name (type);
-
-      if (type == G_TYPE_INT      ||
-          type == GIMP_TYPE_INT32 ||
-          type == GIMP_TYPE_INT16 ||
-          type == GIMP_TYPE_UNIT)
-        {
-          params[i].param_type = GP_PARAM_TYPE_INT;
-
-          params[i].data.d_int = g_value_get_int (value);
-        }
-      else if (type == G_TYPE_UINT ||
-               type == GIMP_TYPE_INT8)
-        {
-          params[i].param_type = GP_PARAM_TYPE_INT;
-
-          params[i].data.d_int = g_value_get_uint (value);
-        }
-      else if (G_VALUE_HOLDS_ENUM (value))
-        {
-          params[i].param_type = GP_PARAM_TYPE_INT;
-
-          params[i].data.d_int = g_value_get_enum (value);
-        }
-      else if (G_VALUE_HOLDS_BOOLEAN (value))
-        {
-          params[i].param_type = GP_PARAM_TYPE_INT;
-
-          params[i].data.d_int = g_value_get_boolean (value);
-        }
-      else if (G_VALUE_HOLDS_DOUBLE (value))
-        {
-          params[i].param_type = GP_PARAM_TYPE_FLOAT;
-
-          params[i].data.d_float = g_value_get_double (value);
-        }
-      else if (G_VALUE_HOLDS_STRING (value))
-        {
-          params[i].param_type = GP_PARAM_TYPE_STRING;
-
-          if (full_copy)
-            params[i].data.d_string = g_value_dup_string (value);
-          else
-            params[i].data.d_string = (gchar *) g_value_get_string (value);
-        }
-      else if (GIMP_VALUE_HOLDS_RGB (value))
-        {
-          params[i].param_type = GP_PARAM_TYPE_COLOR;
-
-          gimp_value_get_rgb (value, &params[i].data.d_color);
-        }
-      else if (GIMP_VALUE_HOLDS_PARASITE (value))
-        {
-          GimpParasite *parasite = (full_copy ?
-                                    g_value_dup_boxed (value) :
-                                    g_value_get_boxed (value));
-
-          params[i].param_type = GP_PARAM_TYPE_PARASITE;
-
-          if (parasite)
-            {
-              params[i].data.d_parasite.name  = parasite->name;
-              params[i].data.d_parasite.flags = parasite->flags;
-              params[i].data.d_parasite.size  = parasite->size;
-              params[i].data.d_parasite.data  = parasite->data;
-
-              if (full_copy)
-                {
-                  parasite->name  = NULL;
-                  parasite->flags = 0;
-                  parasite->size  = 0;
-                  parasite->data  = NULL;
-
-                  gimp_parasite_free (parasite);
-                }
-            }
-          else
-            {
-              params[i].data.d_parasite.name  = NULL;
-              params[i].data.d_parasite.flags = 0;
-              params[i].data.d_parasite.size  = 0;
-              params[i].data.d_parasite.data  = NULL;
-            }
-        }
-      else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_INT16_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_INT8_ARRAY  (value) ||
-               GIMP_VALUE_HOLDS_FLOAT_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_RGB_ARRAY (value))
-        {
-          GimpArray *array = g_value_get_boxed (value);
-
-          params[i].param_type = GP_PARAM_TYPE_ARRAY;
-
-          params[i].data.d_array.size = array->length;
-
-          if (full_copy)
-            params[i].data.d_array.data = g_memdup (array->data,
-                                                    array->length);
-          else
-            params[i].data.d_array.data = array->data;
-        }
-      else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
-        {
-          GimpArray *array = g_value_get_boxed (value);
-
-          params[i].param_type = GP_PARAM_TYPE_STRING_ARRAY;
-
-          params[i].data.d_string_array.size = array->length;
-
-          if (full_copy)
-            params[i].data.d_string_array.data =
-              gimp_value_dup_string_array (value);
-          else
-            params[i].data.d_string_array.data =
-              (gchar **) gimp_value_get_string_array (value);
-        }
-      else if (GIMP_VALUE_HOLDS_DISPLAY_ID (value)    ||
-               GIMP_VALUE_HOLDS_IMAGE_ID (value)      ||
-               GIMP_VALUE_HOLDS_ITEM_ID (value)       ||
-               GIMP_VALUE_HOLDS_DRAWABLE_ID (value)   ||
-               GIMP_VALUE_HOLDS_LAYER_ID (value)      ||
-               GIMP_VALUE_HOLDS_CHANNEL_ID (value)    ||
-               GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) ||
-               GIMP_VALUE_HOLDS_SELECTION_ID (value)  ||
-               GIMP_VALUE_HOLDS_VECTORS_ID (value))
-        {
-          params[i].param_type = GP_PARAM_TYPE_INT;
-
-          params[i].data.d_int = g_value_get_int (value);
-        }
-
-      if (params[i].param_type == -1)
-        g_printerr ("%s: GValue contains unsupported type '%s'\n",
-                    G_STRFUNC, params[i].type_name);
+      _gimp_value_to_gp_param (value, &params[i], full_copy);
     }
 
   return params;

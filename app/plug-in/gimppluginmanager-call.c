@@ -30,6 +30,8 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#include "libgimp/gimpgpparams.h"
+
 #include "plug-in-types.h"
 
 #include "config/gimpguiconfig.h"
@@ -39,7 +41,6 @@
 
 #include "pdb/gimppdbcontext.h"
 
-#include "gimpgpparams.h"
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimpplugindef.h"

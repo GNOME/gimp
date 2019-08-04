@@ -1721,6 +1721,13 @@ _gp_params_read (GIOChannel  *channel,
           else
             (*params)[i].data.d_parasite.data = NULL;
           break;
+
+        case GP_PARAM_TYPE_PARAM_DEF:
+          if (! _gp_param_def_read (channel,
+                                    &(*params)[i].data.d_param_def,
+                                    user_data))
+            goto cleanup;
+          break;
         }
     }
 
@@ -1833,6 +1840,13 @@ _gp_params_write (GIOChannel *channel,
               }
           }
           break;
+
+        case GP_PARAM_TYPE_PARAM_DEF:
+          if (! _gp_param_def_write (channel,
+                                     &params[i].data.d_param_def,
+                                     user_data))
+            return;
+          break;
         }
     }
 }
@@ -1882,6 +1896,10 @@ _gp_params_destroy (GPParam *params,
             g_free (params[i].data.d_parasite.name);
           if (params[i].data.d_parasite.data)
             g_free (params[i].data.d_parasite.data);
+          break;
+
+        case GP_PARAM_TYPE_PARAM_DEF:
+          _gp_param_def_destroy (&params[i].data.d_param_def);
           break;
         }
     }

@@ -33,7 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
-#include "gimpgpparams.h"
+#include "libgimp/gimpgpparams.h"
 
 
 /*  public functions  */
@@ -49,7 +49,7 @@
 #include "../../libgimp/gimpgpparams-body.c"
 
 GParamSpec *
-_gimp_gp_param_def_to_param_spec (Gimp       *gimp,
+_gimp_gp_param_def_to_param_spec (gpointer    gimp,
                                   GPParamDef *param_def)
 {
   const gchar *name  = param_def->name;
