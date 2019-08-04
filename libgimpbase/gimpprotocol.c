@@ -26,7 +26,6 @@
 #include "gimpprotocol.h"
 #include "gimpwire.h"
 
-static GMutex readwrite_mutex;
 
 static void _gp_quit_read                (GIOChannel       *channel,
                                           GimpWireMessage  *msg,
@@ -1897,18 +1896,6 @@ gp_params_destroy (GPParam *params,
   g_free (params);
 }
 
-void
-gp_lock (void)
-{
-  g_mutex_lock (&readwrite_mutex);
-}
-
-void
-gp_unlock (void)
-{
-  g_mutex_unlock (&readwrite_mutex);
-}
-
 /* has_init */
 
 static void
@@ -1920,7 +1907,7 @@ _gp_has_init_read (GIOChannel      *channel,
 
 static void
 _gp_has_init_write (GIOChannel      *channel,
-                         GimpWireMessage *msg,
+                    GimpWireMessage *msg,
                     gpointer         user_data)
 {
 }
