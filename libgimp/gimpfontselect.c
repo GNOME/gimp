@@ -106,11 +106,11 @@ gimp_font_select_new (const gchar         *title,
   else
     {
       static const GimpParamDef args[] =
-        {
-         { GIMP_PDB_STRING, "str",           "String"                     },
-         { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
-                                             "[0 = No, 1 = Yes]"          }
-        };
+      {
+        { GIMP_PDB_STRING, "str",           "String"                     },
+        { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
+                                            "[0 = No, 1 = Yes]"          }
+      };
 
       gimp_install_temp_proc (font_callback,
                               "Temporary font popup callback procedure",
@@ -146,7 +146,9 @@ gimp_font_select_new (const gchar         *title,
                                        (GDestroyNotify) gimp_font_data_free);
             }
 
-          g_hash_table_insert (gimp_font_select_ht, font_callback, font_data);
+          g_hash_table_insert (gimp_font_select_ht,
+                               g_strdup (font_callback),
+                               font_data);
         }
 
       return font_callback;
@@ -208,7 +210,10 @@ gimp_font_data_free (GimpFontData *data)
   g_free (data->font_name);
 
   if (data->font_callback)
-    gimp_fonts_close_popup (data->font_callback);
+    {
+      gimp_fonts_close_popup (data->font_callback);
+      g_free (data->font_callback);
+    }
 
   if (data->data_destroy)
     data->data_destroy (data->data);
@@ -286,7 +291,8 @@ gimp_temp_font_run_idle (GimpFontData *font_data)
 
       font_data->font_callback = NULL;
       gimp_font_select_destroy (font_callback);
+      g_free (font_callback);
     }
 
-  return FALSE;
+  return G_SOURCE_REMOVE;
 }
