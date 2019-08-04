@@ -40,7 +40,8 @@ typedef void (* GimpRunPatternCallback)   (const gchar  *pattern_name,
 const gchar * gimp_pattern_select_new     (const gchar            *title,
                                            const gchar            *pattern_name,
                                            GimpRunPatternCallback  callback,
-                                           gpointer                data);
+                                           gpointer                data,
+                                           GDestroyNotify          data_destroy);
 void          gimp_pattern_select_destroy (const gchar            *pattern_callback);
 
 

@@ -468,7 +468,7 @@ gimp_pattern_select_button_clicked (GimpPatternSelectButton *button)
       select_button->temp_callback =
         gimp_pattern_select_new (priv->title, priv->pattern_name,
                                  gimp_pattern_select_button_callback,
-                                 button);
+                                 button, NULL);
     }
 }
 

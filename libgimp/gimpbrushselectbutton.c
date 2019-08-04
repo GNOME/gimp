@@ -618,7 +618,7 @@ gimp_brush_select_button_clicked (GimpBrushSelectButton *button)
         gimp_brush_select_new (priv->title, priv->brush_name,
                                priv->opacity, priv->spacing, priv->paint_mode,
                                gimp_brush_select_button_callback,
-                               button);
+                               button, NULL);
     }
 }
 

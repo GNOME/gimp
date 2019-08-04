@@ -39,7 +39,8 @@ const gchar * gimp_gradient_select_new     (const gchar             *title,
                                             const gchar             *gradient_name,
                                             gint                     sample_size,
                                             GimpRunGradientCallback  callback,
-                                            gpointer                 data);
+                                            gpointer                 data,
+                                            GDestroyNotify           data_destroy);
 void          gimp_gradient_select_destroy (const gchar             *gradient_callback);
 
 

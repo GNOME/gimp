@@ -45,7 +45,8 @@ const gchar * gimp_brush_select_new     (const gchar          *title,
                                          gint                  spacing,
                                          GimpLayerMode         paint_mode,
                                          GimpRunBrushCallback  callback,
-                                         gpointer              data);
+                                         gpointer              data,
+                                         GDestroyNotify        data_destroy);
 void          gimp_brush_select_destroy (const gchar          *brush_callback);
 
 

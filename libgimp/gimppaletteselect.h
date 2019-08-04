@@ -36,7 +36,8 @@ typedef void (* GimpRunPaletteCallback)   (const gchar *palette_name,
 const gchar * gimp_palette_select_new     (const gchar            *title,
                                            const gchar            *palette_name,
                                            GimpRunPaletteCallback  callback,
-                                           gpointer                data);
+                                           gpointer                data,
+                                           GDestroyNotify          data_destroy);
 void          gimp_palette_select_destroy (const gchar            *palette_callback);
 
 

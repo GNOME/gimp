@@ -367,7 +367,7 @@ gimp_font_select_button_clicked (GimpFontSelectButton *button)
       select_button->temp_callback =
         gimp_font_select_new (priv->title, priv->font_name,
                               gimp_font_select_button_callback,
-                              button);
+                              button, NULL);
     }
 }
 
