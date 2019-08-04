@@ -2984,7 +2984,7 @@ CODE
     );
 }
 
-sub plug_in_oilify2 {
+sub plug_in_oilify {
     $blurb = 'Smear colors to simulate an oil painting';
 
     $help = <<'HELP';
@@ -3035,7 +3035,7 @@ CODE
     );
 }
 
-sub plug_in_oilify_enhanced2 {
+sub plug_in_oilify_enhanced {
     $blurb = 'Smear colors to simulate an oil painting';
 
     $help = <<'HELP';
@@ -5426,8 +5426,8 @@ CODE
             plug_in_newsprint
             plug_in_normalize
             plug_in_nova
-            plug_in_oilify2
-            plug_in_oilify_enhanced2
+            plug_in_oilify
+            plug_in_oilify_enhanced
             plug_in_papertile
             plug_in_pixelize
             plug_in_pixelize2
