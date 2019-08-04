@@ -40,11 +40,14 @@ G_BEGIN_DECLS
 #define GIMP_PALETTE_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE_SELECT_BUTTON, GimpPaletteSelectButtonClass))
 
 
-typedef struct _GimpPaletteSelectButtonClass  GimpPaletteSelectButtonClass;
+typedef struct _GimpPaletteSelectButtonPrivate GimpPaletteSelectButtonPrivate;
+typedef struct _GimpPaletteSelectButtonClass   GimpPaletteSelectButtonClass;
 
 struct _GimpPaletteSelectButton
 {
-  GimpSelectButton  parent_instance;
+  GimpSelectButton                parent_instance;
+
+  GimpPaletteSelectButtonPrivate *priv;
 };
 
 struct _GimpPaletteSelectButtonClass
@@ -61,6 +64,10 @@ struct _GimpPaletteSelectButtonClass
   void (*_gimp_reserved2) (void);
   void (*_gimp_reserved3) (void);
   void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
 };
 
 
