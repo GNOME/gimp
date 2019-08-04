@@ -390,6 +390,7 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
     {
       GValue *value;
       GType   arg_type;
+      GType   value_type;
       gchar  *error_msg = NULL;
 
       arg_type = va_arg (va_args, GType);
@@ -399,10 +400,33 @@ gimp_pdb_execute_procedure_by_name (GimpPDB       *pdb,
 
       value = gimp_value_array_index (args, i);
 
-      if (arg_type != G_VALUE_TYPE (value))
+      value_type = G_VALUE_TYPE (value);
+
+      /* GIMP_TYPE_INT32 is widely abused for enums and booleans in
+       * old plug-ins, silently copy stuff into integers when enums
+       * and booleans are passed
+       */
+      if (arg_type != value_type
+
+          &&
+
+          (value_type == G_TYPE_INT ||
+           value_type == GIMP_TYPE_INT32)
+
+          &&
+
+          (arg_type == G_TYPE_INT      ||
+           arg_type == GIMP_TYPE_INT32 ||
+           arg_type == G_TYPE_BOOLEAN  ||
+           g_type_is_a (arg_type, G_TYPE_ENUM)))
+        {
+          arg_type = value_type;
+        }
+
+      if (arg_type != value_type)
         {
           GError      *pdb_error;
-          const gchar *expected = g_type_name (G_VALUE_TYPE (value));
+          const gchar *expected = g_type_name (value_type);
           const gchar *got      = g_type_name (arg_type);
 
           gimp_value_array_unref (args);
