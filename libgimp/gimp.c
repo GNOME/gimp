@@ -96,6 +96,7 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#include "gimp-debug.h"
 #include "gimp-private.h"
 #include "gimp-shm.h"
 #include "gimpgpcompat.h"
@@ -106,19 +107,6 @@
 #include "libgimp-intl.h"
 
 
-/* Maybe this should go in a public header if we add other things to it */
-typedef enum
-{
-  GIMP_DEBUG_PID            = 1 << 0,
-  GIMP_DEBUG_FATAL_WARNINGS = 1 << 1,
-  GIMP_DEBUG_QUERY          = 1 << 2,
-  GIMP_DEBUG_INIT           = 1 << 3,
-  GIMP_DEBUG_RUN            = 1 << 4,
-  GIMP_DEBUG_QUIT           = 1 << 5,
-
-  GIMP_DEBUG_DEFAULT        = (GIMP_DEBUG_RUN | GIMP_DEBUG_FATAL_WARNINGS)
-} GimpDebugFlag;
-
 #define WRITE_BUFFER_SIZE  1024
 
 
@@ -128,7 +116,6 @@ static gint       gimp_main_internal           (GType                 plug_in_ty
                                                 gchar                *argv[]);
 
 static void       gimp_close                   (void);
-static void       gimp_debug_stop              (void);
 static void       gimp_message_func            (const gchar    *log_domain,
                                                 GLogLevelFlags  log_level,
                                                 const gchar    *message,
@@ -186,20 +173,6 @@ static gchar          write_buffer[WRITE_BUFFER_SIZE];
 static gulong         write_buffer_index = 0;
 
 static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
-
-static guint          gimp_debug_flags   = 0;
-
-static const GDebugKey gimp_debug_keys[] =
-{
-  { "pid",            GIMP_DEBUG_PID            },
-  { "fatal-warnings", GIMP_DEBUG_FATAL_WARNINGS },
-  { "fw",             GIMP_DEBUG_FATAL_WARNINGS },
-  { "query",          GIMP_DEBUG_QUERY          },
-  { "init",           GIMP_DEBUG_INIT           },
-  { "run",            GIMP_DEBUG_RUN            },
-  { "quit",           GIMP_DEBUG_QUIT           },
-  { "on",             GIMP_DEBUG_DEFAULT        }
-};
 
 static GimpPlugIn     *PLUG_IN      = NULL;
 static GimpPlugInInfo  PLUG_IN_INFO = { 0, };
@@ -268,9 +241,8 @@ gimp_main_internal (GType                 plug_in_type,
     N_ARGS
   };
 
-  gchar       *basename;
-  const gchar *env_string;
-  gint         protocol_version;
+  gchar *basename;
+  gint   protocol_version;
 
 #ifdef G_OS_WIN32
   gint i, j, k;
@@ -456,47 +428,7 @@ gimp_main_internal (GType                 plug_in_type,
       return EXIT_FAILURE;
     }
 
-  env_string = g_getenv ("GIMP_PLUGIN_DEBUG");
-
-  if (env_string)
-    {
-      gchar       *debug_string;
-      const gchar *debug_messages;
-
-      debug_string = strchr (env_string, ',');
-
-      if (debug_string)
-        {
-          gint len = debug_string - env_string;
-
-          if ((strlen (basename) == len) &&
-              (strncmp (basename, env_string, len) == 0))
-            {
-              gimp_debug_flags =
-                g_parse_debug_string (debug_string + 1,
-                                      gimp_debug_keys,
-                                      G_N_ELEMENTS (gimp_debug_keys));
-            }
-        }
-      else if (strcmp (env_string, basename) == 0)
-        {
-          gimp_debug_flags = GIMP_DEBUG_DEFAULT;
-        }
-
-      /*  make debug output visible by setting G_MESSAGES_DEBUG  */
-      debug_messages = g_getenv ("G_MESSAGES_DEBUG");
-
-      if (debug_messages)
-        {
-          gchar *tmp = g_strconcat (debug_messages, ",LibGimp", NULL);
-          g_setenv ("G_MESSAGES_DEBUG", tmp, TRUE);
-          g_free (tmp);
-        }
-      else
-        {
-          g_setenv ("G_MESSAGES_DEBUG", "LibGimp", TRUE);
-        }
-    }
+  _gimp_debug_init (basename);
 
   g_free (basename);
 
@@ -647,7 +579,7 @@ gimp_main_internal (GType                 plug_in_type,
                        NULL);
   }
 
-  if (gimp_debug_flags & GIMP_DEBUG_FATAL_WARNINGS)
+  if (_gimp_debug_flags () & GIMP_DEBUG_FATAL_WARNINGS)
     {
       GLogLevelFlags fatal_mask;
 
@@ -693,8 +625,8 @@ gimp_main_internal (GType                 plug_in_type,
             gp_has_init_write (_gimp_writechannel, NULL);
         }
 
-      if (gimp_debug_flags & GIMP_DEBUG_QUERY)
-        gimp_debug_stop ();
+      if (_gimp_debug_flags () & GIMP_DEBUG_QUERY)
+        _gimp_debug_stop ();
 
       if (PLUG_IN)
         {
@@ -713,8 +645,8 @@ gimp_main_internal (GType                 plug_in_type,
 
   if (strcmp (argv[ARG_MODE], "-init") == 0)
     {
-      if (gimp_debug_flags & GIMP_DEBUG_INIT)
-        gimp_debug_stop ();
+      if (_gimp_debug_flags () & GIMP_DEBUG_INIT)
+        _gimp_debug_stop ();
 
       if (PLUG_IN)
         {
@@ -731,9 +663,9 @@ gimp_main_internal (GType                 plug_in_type,
       return EXIT_SUCCESS;
     }
 
-  if (gimp_debug_flags & GIMP_DEBUG_RUN)
-    gimp_debug_stop ();
-  else if (gimp_debug_flags & GIMP_DEBUG_PID)
+  if (_gimp_debug_flags () & GIMP_DEBUG_RUN)
+    _gimp_debug_stop ();
+  else if (_gimp_debug_flags () & GIMP_DEBUG_PID)
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
   g_io_add_watch (_gimp_readchannel,
@@ -1157,8 +1089,8 @@ gimp_get_progname (void)
 static void
 gimp_close (void)
 {
-  if (gimp_debug_flags & GIMP_DEBUG_QUIT)
-    gimp_debug_stop ();
+  if (_gimp_debug_flags () & GIMP_DEBUG_QUIT)
+    _gimp_debug_stop ();
 
   if (PLUG_IN)
     {
@@ -1173,58 +1105,6 @@ gimp_close (void)
   _gimp_shm_close ();
 
   gp_quit_write (_gimp_writechannel, NULL);
-}
-
-static void
-gimp_debug_stop (void)
-{
-#ifndef G_OS_WIN32
-
-  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Waiting for debugger...");
-  raise (SIGSTOP);
-
-#else
-
-  HANDLE        hThreadSnap = NULL;
-  THREADENTRY32 te32        = { 0 };
-  pid_t         opid        = getpid ();
-
-  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
-         "Debugging (restart externally): %ld",
-         (long int) opid);
-
-  hThreadSnap = CreateToolhelp32Snapshot (TH32CS_SNAPTHREAD, 0);
-  if (hThreadSnap == INVALID_HANDLE_VALUE)
-    {
-      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
-             "error getting threadsnap - debugging impossible");
-      return;
-    }
-
-  te32.dwSize = sizeof (THREADENTRY32);
-
-  if (Thread32First (hThreadSnap, &te32))
-    {
-      do
-        {
-          if (te32.th32OwnerProcessID == opid)
-            {
-              HANDLE hThread = OpenThread (THREAD_SUSPEND_RESUME, FALSE,
-                                           te32.th32ThreadID);
-              SuspendThread (hThread);
-              CloseHandle (hThread);
-            }
-        }
-      while (Thread32Next (hThreadSnap, &te32));
-    }
-  else
-    {
-      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "error getting threads");
-    }
-
-  CloseHandle (hThreadSnap);
-
-#endif
 }
 
 static void
