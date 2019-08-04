@@ -2911,12 +2911,12 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_oilify2_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
+plug_in_oilify_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -2955,12 +2955,12 @@ plug_in_oilify2_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_oilify_enhanced2_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
-                                  GError               **error)
+plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -7579,13 +7579,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-oilify2
+   * gimp-plug-in-oilify
    */
-  procedure = gimp_procedure_new (plug_in_oilify2_invoker);
+  procedure = gimp_procedure_new (plug_in_oilify_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-oilify2");
+                               "plug-in-oilify");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-oilify2",
+                                     "plug-in-oilify",
                                      "Smear colors to simulate an oil painting",
                                      "This function performs the well-known oil-paint effect on the specified drawable.",
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
@@ -7627,13 +7627,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-plug-in-oilify-enhanced2
+   * gimp-plug-in-oilify-enhanced
    */
-  procedure = gimp_procedure_new (plug_in_oilify_enhanced2_invoker);
+  procedure = gimp_procedure_new (plug_in_oilify_enhanced_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "plug-in-oilify-enhanced2");
+                               "plug-in-oilify-enhanced");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-oilify-enhanced2",
+                                     "plug-in-oilify-enhanced",
                                      "Smear colors to simulate an oil painting",
                                      "This function performs the well-known oil-paint effect on the specified drawable.",
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
