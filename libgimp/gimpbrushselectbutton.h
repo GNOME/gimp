@@ -77,13 +77,13 @@ struct _GimpBrushSelectButtonClass
 };
 
 
-GType          gimp_brush_select_button_get_type (void) G_GNUC_CONST;
+GType          gimp_brush_select_button_get_type  (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_brush_select_button_new      (const gchar            *title,
-                                                  const gchar            *brush_name,
-                                                  gdouble                 opacity,
-                                                  gint                    spacing,
-                                                  GimpLayerMode           paint_mode);
+GtkWidget    * gimp_brush_select_button_new       (const gchar           *title,
+                                                   const gchar           *brush_name,
+                                                   gdouble                opacity,
+                                                   gint                   spacing,
+                                                   GimpLayerMode          paint_mode);
 
 const  gchar * gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
                                                    gdouble               *opacity,

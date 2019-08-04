@@ -75,8 +75,6 @@ struct _GimpGradientSelectButtonPrivate
   GtkWidget *preview;
 };
 
-#define GET_PRIVATE(obj) (((GimpGradientSelectButton *) (obj))->priv)
-
 
 /*  local function prototypes  */
 
@@ -200,18 +198,14 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
 static void
 gimp_gradient_select_button_init (GimpGradientSelectButton *button)
 {
-  GimpGradientSelectButtonPrivate *priv;
-
   button->priv = gimp_gradient_select_button_get_instance_private (button);
 
-  priv = GET_PRIVATE (button);
+  button->priv->gradient_name = gimp_context_get_gradient ();
+  button->priv->sample_size = CELL_WIDTH;
+  button->priv->reverse = FALSE;
 
-  priv->gradient_name = gimp_context_get_gradient ();
-  priv->sample_size = CELL_WIDTH;
-  priv->reverse = FALSE;
-
-  priv->inside = gimp_gradient_select_button_create_inside (button);
-  gtk_container_add (GTK_CONTAINER (button), priv->inside);
+  button->priv->inside = gimp_gradient_select_button_create_inside (button);
+  gtk_container_add (GTK_CONTAINER (button), button->priv->inside);
 }
 
 /**
@@ -261,7 +255,7 @@ gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button)
 {
   g_return_val_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (button), NULL);
 
-  return GET_PRIVATE (button)->gradient_name;
+  return button->priv->gradient_name;
 }
 
 /**
@@ -277,12 +271,10 @@ void
 gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,
                                           const gchar              *gradient_name)
 {
-  GimpGradientSelectButtonPrivate *priv;
-  GimpSelectButton                *select_button;
+  GimpSelectButton *select_button;
 
   g_return_if_fail (GIMP_IS_GRADIENT_SELECT_BUTTON (button));
 
-  priv          = GET_PRIVATE (button);
   select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
@@ -301,8 +293,8 @@ gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,
         name = gimp_context_get_gradient ();
 
       if (gimp_gradient_get_uniform_samples (name,
-                                             priv->sample_size,
-                                             priv->reverse,
+                                             button->priv->sample_size,
+                                             button->priv->reverse,
                                              &n_samples,
                                              &samples))
         {
@@ -323,11 +315,11 @@ gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,
 static void
 gimp_gradient_select_button_finalize (GObject *object)
 {
-  GimpGradientSelectButtonPrivate *priv = GET_PRIVATE (object);
+  GimpGradientSelectButton *button = GIMP_GRADIENT_SELECT_BUTTON (object);
 
-  g_clear_pointer (&priv->gradient_name, g_free);
-  g_clear_pointer (&priv->gradient_data, g_free);
-  g_clear_pointer (&priv->title,         g_free);
+  g_clear_pointer (&button->priv->gradient_name, g_free);
+  g_clear_pointer (&button->priv->gradient_data, g_free);
+  g_clear_pointer (&button->priv->title,         g_free);
 
   G_OBJECT_CLASS (gimp_gradient_select_button_parent_class)->finalize (object);
 }
@@ -338,14 +330,14 @@ gimp_gradient_select_button_set_property (GObject      *object,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpGradientSelectButton        *button = GIMP_GRADIENT_SELECT_BUTTON (object);
-  GimpGradientSelectButtonPrivate *priv   = GET_PRIVATE (object);
+  GimpGradientSelectButton *button = GIMP_GRADIENT_SELECT_BUTTON (object);
 
   switch (property_id)
     {
     case PROP_TITLE:
-      priv->title = g_value_dup_string (value);
+      button->priv->title = g_value_dup_string (value);
       break;
+
     case PROP_GRADIENT_NAME:
       gimp_gradient_select_button_set_gradient (button,
                                                 g_value_get_string (value));
@@ -363,15 +355,16 @@ gimp_gradient_select_button_get_property (GObject    *object,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpGradientSelectButtonPrivate *priv = GET_PRIVATE (object);
+  GimpGradientSelectButton *button = GIMP_GRADIENT_SELECT_BUTTON (object);
 
   switch (property_id)
     {
     case PROP_TITLE:
-      g_value_set_string (value, priv->title);
+      g_value_set_string (value, button->priv->title);
       break;
+
     case PROP_GRADIENT_NAME:
-      g_value_set_string (value, priv->gradient_name);
+      g_value_set_string (value, button->priv->gradient_name);
       break;
 
     default:
@@ -387,18 +380,18 @@ gimp_gradient_select_button_callback (const gchar   *gradient_name,
                                       gboolean       dialog_closing,
                                       gpointer       user_data)
 {
-  GimpGradientSelectButton        *button        = user_data;
-  GimpGradientSelectButtonPrivate *priv          = GET_PRIVATE (button);
-  GimpSelectButton                *select_button = GIMP_SELECT_BUTTON (button);
+  GimpGradientSelectButton *button        = user_data;
+  GimpSelectButton         *select_button = GIMP_SELECT_BUTTON (button);
 
-  g_free (priv->gradient_name);
-  g_free (priv->gradient_data);
+  g_free (button->priv->gradient_name);
+  g_free (button->priv->gradient_data);
 
-  priv->gradient_name = g_strdup (gradient_name);
-  priv->n_samples     = n_samples;
-  priv->gradient_data = g_memdup (gradient_data, n_samples * sizeof (gdouble));
+  button->priv->gradient_name = g_strdup (gradient_name);
+  button->priv->n_samples     = n_samples;
+  button->priv->gradient_data = g_memdup (gradient_data,
+                                          n_samples * sizeof (gdouble));
 
-  gtk_widget_queue_draw (priv->preview);
+  gtk_widget_queue_draw (button->priv->preview);
 
   if (dialog_closing)
     select_button->temp_callback = NULL;
@@ -411,20 +404,20 @@ gimp_gradient_select_button_callback (const gchar   *gradient_name,
 static void
 gimp_gradient_select_button_clicked (GimpGradientSelectButton *button)
 {
-  GimpGradientSelectButtonPrivate *priv          = GET_PRIVATE (button);
-  GimpSelectButton                *select_button = GIMP_SELECT_BUTTON (button);
+  GimpSelectButton *select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
       /*  calling gimp_gradients_set_popup() raises the dialog  */
       gimp_gradients_set_popup (select_button->temp_callback,
-                                priv->gradient_name);
+                                button->priv->gradient_name);
     }
   else
     {
       select_button->temp_callback =
-        gimp_gradient_select_new (priv->title, priv->gradient_name,
-                                  priv->sample_size,
+        gimp_gradient_select_new (button->priv->title,
+                                  button->priv->gradient_name,
+                                  button->priv->sample_size,
                                   gimp_gradient_select_button_callback,
                                   button, NULL);
     }
@@ -435,21 +428,20 @@ gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
                                             GtkAllocation            *allocation,
                                             GimpGradientSelectButton *button)
 {
-  GimpGradientSelectButtonPrivate *priv = GET_PRIVATE (button);
-  gdouble                         *samples;
-  gint                             n_samples;
+  gdouble *samples;
+  gint     n_samples;
 
-  if (gimp_gradient_get_uniform_samples (priv->gradient_name,
+  if (gimp_gradient_get_uniform_samples (button->priv->gradient_name,
                                          allocation->width,
-                                         priv->reverse,
+                                         button->priv->reverse,
                                          &n_samples,
                                          &samples))
     {
-      g_free (priv->gradient_data);
+      g_free (button->priv->gradient_data);
 
-      priv->sample_size   = allocation->width;
-      priv->n_samples     = n_samples;
-      priv->gradient_data = samples;
+      button->priv->sample_size   = allocation->width;
+      button->priv->n_samples     = n_samples;
+      button->priv->gradient_data = samples;
     }
 }
 
@@ -458,16 +450,15 @@ gimp_gradient_select_preview_draw (GtkWidget                *widget,
                                    cairo_t                  *cr,
                                    GimpGradientSelectButton *button)
 {
-  GimpGradientSelectButtonPrivate *priv = GET_PRIVATE (button);
-  GtkAllocation                    allocation;
-  cairo_pattern_t                 *pattern;
-  cairo_surface_t                 *surface;
-  const gdouble                   *src;
-  guchar                          *dest;
-  gint                             width;
-  gint                             x;
+  GtkAllocation    allocation;
+  cairo_pattern_t *pattern;
+  cairo_surface_t *surface;
+  const gdouble   *src;
+  guchar          *dest;
+  gint             width;
+  gint             x;
 
-  src = priv->gradient_data;
+  src = button->priv->gradient_data;
   if (! src)
     return FALSE;
 
@@ -479,7 +470,7 @@ gimp_gradient_select_preview_draw (GtkWidget                *widget,
 
   cairo_paint (cr);
 
-  width = priv->n_samples / 4;
+  width = button->priv->n_samples / 4;
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, 1);
 
@@ -554,7 +545,7 @@ gimp_gradient_select_drag_data_received (GimpGradientSelectButton *button,
 static GtkWidget *
 gimp_gradient_select_button_create_inside (GimpGradientSelectButton *gradient_button)
 {
-  GimpGradientSelectButtonPrivate *priv = GET_PRIVATE (gradient_button);
+  GimpGradientSelectButtonPrivate *priv = gradient_button->priv;
   GtkWidget                       *button;
 
   button = gtk_button_new ();
