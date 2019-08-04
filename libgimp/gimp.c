@@ -68,27 +68,6 @@
 #include <sys/select.h>
 #endif
 
-#if defined(USE_SYSV_SHM)
-
-#ifdef HAVE_IPC_H
-#include <sys/ipc.h>
-#endif
-
-#ifdef HAVE_SHM_H
-#include <sys/shm.h>
-#endif
-
-#elif defined(USE_POSIX_SHM)
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <fcntl.h>
-#include <sys/mman.h>
-
-#endif /* USE_POSIX_SHM */
-
 #ifdef GDK_WINDOWING_QUARTZ
 #include <Cocoa/Cocoa.h>
 #endif
@@ -107,7 +86,6 @@
 #  include <windows.h>
 #  include <tlhelp32.h>
 #  undef RGB
-#  define USE_WIN32_SHM 1
 #endif
 
 #include <locale.h>
@@ -118,8 +96,8 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
-
 #include "gimp-private.h"
+#include "gimp-shm.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
@@ -127,10 +105,6 @@
 
 #include "libgimp-intl.h"
 
-
-#define TILE_MAP_SIZE (_tile_width * _tile_height * 32)
-
-#define ERRMSG_SHM_FAILED "Could not attach to gimp shared memory segment"
 
 /* Maybe this should go in a public header if we add other things to it */
 typedef enum
@@ -191,14 +165,8 @@ static gchar                         *plug_in_backtrace_path = NULL;
 GIOChannel                          *_gimp_readchannel       = NULL;
 GIOChannel                          *_gimp_writechannel      = NULL;
 
-#ifdef USE_WIN32_SHM
-static HANDLE shm_handle;
-#endif
-
 static gint           _tile_width        = -1;
 static gint           _tile_height       = -1;
-static gint           _shm_ID            = -1;
-static guchar        *_shm_addr          = NULL;
 static gboolean       _show_help_button  = TRUE;
 static gboolean       _export_profile    = FALSE;
 static gboolean       _export_exif       = FALSE;
@@ -955,38 +923,6 @@ gimp_tile_height (void)
 }
 
 /**
- * gimp_shm_ID:
- *
- * Returns the shared memory ID used for passing tile data between the
- * GIMP core and the plug-in.
- *
- * This is a constant value given at plug-in configuration time.
- *
- * Returns: the shared memory ID
- **/
-gint
-gimp_shm_ID (void)
-{
-  return _shm_ID;
-}
-
-/**
- * gimp_shm_addr:
- *
- * Returns the address of the shared memory segment used for passing
- * tile data between the GIMP core and the plug-in.
- *
- * This is a constant value given at plug-in configuration time.
- *
- * Returns: the shared memory address
- **/
-guchar *
-gimp_shm_addr (void)
-{
-  return _shm_addr;
-}
-
-/**
  * gimp_show_help_button:
  *
  * Returns whether or not GimpDialog should automatically add a help
@@ -1236,22 +1172,7 @@ gimp_close (void)
         PLUG_IN_INFO.quit_proc ();
     }
 
-#if defined(USE_SYSV_SHM)
-
-  if ((_shm_ID != -1) && _shm_addr)
-    shmdt ((char *) _shm_addr);
-
-#elif defined(USE_WIN32_SHM)
-
-  if (shm_handle)
-    CloseHandle (shm_handle);
-
-#elif defined(USE_POSIX_SHM)
-
-  if ((_shm_ID != -1) && (_shm_addr != MAP_FAILED))
-    munmap (_shm_addr, TILE_MAP_SIZE);
-
-#endif
+  _gimp_shm_close ();
 
   gp_quit_write (_gimp_writechannel, NULL);
 }
@@ -1573,10 +1494,11 @@ _gimp_config (GPConfig *config)
 {
   GFile *file;
   gchar *path;
+  gint   shm_ID;
 
   _tile_width       = config->tile_width;
   _tile_height      = config->tile_height;
-  _shm_ID           = config->shm_ID;
+  shm_ID            = config->shm_ID;
   _check_size       = config->check_size;
   _check_type       = config->check_type;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
@@ -1610,89 +1532,7 @@ _gimp_config (GPConfig *config)
   g_free (path);
   g_object_unref (file);
 
-  if (_shm_ID != -1)
-    {
-#if defined(USE_SYSV_SHM)
-
-      /* Use SysV shared memory mechanisms for transferring tile data. */
-
-      _shm_addr = (guchar *) shmat (_shm_ID, NULL, 0);
-
-      if (_shm_addr == (guchar *) -1)
-        {
-          g_error ("shmat() failed: %s\n" ERRMSG_SHM_FAILED,
-                   g_strerror (errno));
-        }
-
-#elif defined(USE_WIN32_SHM)
-
-      /* Use Win32 shared memory mechanisms for transferring tile data. */
-
-      gchar fileMapName[128];
-
-      /* From the id, derive the file map name */
-      g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);
-
-      /* Open the file mapping */
-      shm_handle = OpenFileMapping (FILE_MAP_ALL_ACCESS,
-                                    0, fileMapName);
-      if (shm_handle)
-        {
-          /* Map the shared memory into our address space for use */
-          _shm_addr = (guchar *) MapViewOfFile (shm_handle,
-                                                FILE_MAP_ALL_ACCESS,
-                                                0, 0, TILE_MAP_SIZE);
-
-          /* Verify that we mapped our view */
-          if (!_shm_addr)
-            {
-              g_error ("MapViewOfFile error: %lu... " ERRMSG_SHM_FAILED,
-                       GetLastError ());
-            }
-        }
-      else
-        {
-          g_error ("OpenFileMapping error: %lu... " ERRMSG_SHM_FAILED,
-                   GetLastError ());
-        }
-
-#elif defined(USE_POSIX_SHM)
-
-      /* Use POSIX shared memory mechanisms for transferring tile data. */
-
-      gchar map_file[32];
-      gint  shm_fd;
-
-      /* From the id, derive the file map name */
-      g_snprintf (map_file, sizeof (map_file), "/gimp-shm-%d", _shm_ID);
-
-      /* Open the file mapping */
-      shm_fd = shm_open (map_file, O_RDWR, 0600);
-
-      if (shm_fd != -1)
-        {
-          /* Map the shared memory into our address space for use */
-          _shm_addr = (guchar *) mmap (NULL, TILE_MAP_SIZE,
-                                       PROT_READ | PROT_WRITE, MAP_SHARED,
-                                       shm_fd, 0);
-
-          /* Verify that we mapped our view */
-          if (_shm_addr == MAP_FAILED)
-            {
-              g_error ("mmap() failed: %s\n" ERRMSG_SHM_FAILED,
-                       g_strerror (errno));
-            }
-
-          close (shm_fd);
-        }
-      else
-        {
-          g_error ("shm_open() failed: %s\n" ERRMSG_SHM_FAILED,
-                   g_strerror (errno));
-        }
-
-#endif
-    }
+  _gimp_shm_open (shm_ID);
 }
 
 static void

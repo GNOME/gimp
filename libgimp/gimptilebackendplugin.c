@@ -30,6 +30,7 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp-private.h"
+#include "gimp-shm.h"
 #include "gimpplugin-private.h"
 #include "gimptilebackendplugin.h"
 
@@ -372,7 +373,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
 
   if (tile_data->use_shm)
     {
-      tile->data = g_memdup (gimp_shm_addr (),
+      tile->data = g_memdup (_gimp_shm_addr (),
                              tile->ewidth * tile->eheight * priv->bpp);
     }
   else
@@ -425,7 +426,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
 
   if (tile_info->use_shm)
     {
-      memcpy (gimp_shm_addr (),
+      memcpy (_gimp_shm_addr (),
               tile->data,
               tile->ewidth * tile->eheight * priv->bpp);
     }
