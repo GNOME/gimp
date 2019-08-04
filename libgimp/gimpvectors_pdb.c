@@ -755,7 +755,7 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
  *
  * returns polygonal approximation of the stroke.
  *
- * Returns: (array length=coords) (element-type gdouble) (transfer full):
+ * Returns: (array length=num_coords) (element-type gdouble) (transfer full):
  *          List of the coords along the path (x0, y0, x1, y1, ...).
  *          The returned value must be freed with g_free().
  *
