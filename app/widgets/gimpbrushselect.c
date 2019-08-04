@@ -282,13 +282,13 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                         dialog->callback_name,
                                         G_TYPE_STRING,        gimp_object_get_name (object),
                                         G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,
-                                        GIMP_TYPE_INT32,      GIMP_BRUSH_SELECT (dialog)->spacing,
-                                        GIMP_TYPE_INT32,      gimp_context_get_paint_mode (dialog->context),
-                                        GIMP_TYPE_INT32,      gimp_brush_get_width  (brush),
-                                        GIMP_TYPE_INT32,      gimp_brush_get_height (brush),
+                                        G_TYPE_INT,           GIMP_BRUSH_SELECT (dialog)->spacing,
+                                        GIMP_TYPE_LAYER_MODE, gimp_context_get_paint_mode (dialog->context),
+                                        G_TYPE_INT,           gimp_brush_get_width  (brush),
+                                        G_TYPE_INT,           gimp_brush_get_height (brush),
                                         GIMP_TYPE_INT32,      array->length,
                                         GIMP_TYPE_INT8_ARRAY, array,
-                                        GIMP_TYPE_INT32,      closing,
+                                        G_TYPE_BOOLEAN,       closing,
                                         G_TYPE_NONE);
 
   gimp_array_free (array);

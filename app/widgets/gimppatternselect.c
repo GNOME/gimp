@@ -126,12 +126,12 @@ gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
                                         NULL, error,
                                         dialog->callback_name,
                                         G_TYPE_STRING,        gimp_object_get_name (object),
-                                        GIMP_TYPE_INT32,      gimp_temp_buf_get_width  (pattern->mask),
-                                        GIMP_TYPE_INT32,      gimp_temp_buf_get_height (pattern->mask),
-                                        GIMP_TYPE_INT32,      babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask)),
+                                        G_TYPE_INT,           gimp_temp_buf_get_width  (pattern->mask),
+                                        G_TYPE_INT,           gimp_temp_buf_get_height (pattern->mask),
+                                        G_TYPE_INT,           babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask)),
                                         GIMP_TYPE_INT32,      array->length,
                                         GIMP_TYPE_INT8_ARRAY, array,
-                                        GIMP_TYPE_INT32,      closing,
+                                        G_TYPE_BOOLEAN,       closing,
                                         G_TYPE_NONE);
 
   gimp_array_free (array);
