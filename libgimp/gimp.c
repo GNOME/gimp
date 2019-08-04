@@ -270,7 +270,6 @@ gimp_main_internal (GType                 plug_in_type,
 
   gchar       *basename;
   const gchar *env_string;
-  gchar       *debug_string;
   gint         protocol_version;
 
 #ifdef G_OS_WIN32
@@ -461,6 +460,7 @@ gimp_main_internal (GType                 plug_in_type,
 
   if (env_string)
     {
+      gchar       *debug_string;
       const gchar *debug_messages;
 
       debug_string = strchr (env_string, ',');

@@ -57,7 +57,7 @@ struct _GimpSelectButtonClass
 
   gchar       *default_title;
 
-  void (*select_destroy) (const gchar *callback);
+  void (* select_destroy) (const gchar *callback);
 
   /* Padding for future expansion */
   void (*_gimp_reserved1) (void);
