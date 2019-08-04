@@ -75,9 +75,9 @@ gimp_palettes_refresh (void)
  * Each name returned can be used as input to the command
  * gimp_context_set_palette().
  *
- * Returns: (array length=num_palettes) (element-type gchar*) (transfer
- * full): The list of palette names. The returned value must be freed
- * with g_strfreev().
+ * Returns: (array length=num_palettes) (element-type gchar*) (transfer full):
+ *          The list of palette names.
+ *          The returned value must be freed with g_strfreev().
  **/
 gchar **
 gimp_palettes_get_list (const gchar *filter,

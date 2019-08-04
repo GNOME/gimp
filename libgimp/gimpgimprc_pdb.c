@@ -50,8 +50,8 @@
  * string. Entries not corresponding to this format will cause warnings
  * to be issued on gimprc parsing and will not be queryable.
  *
- * Returns: (transfer full): The value associated with the queried
- * token.
+ * Returns: (transfer full): The value associated with the queried token.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 gimp_gimprc_query (const gchar *token)
@@ -124,6 +124,7 @@ gimp_gimprc_set (const gchar *token,
  * Returns a copy of the default image comment.
  *
  * Returns: (transfer full): Default image comment.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 gimp_get_default_comment (void)
@@ -231,6 +232,7 @@ gimp_get_monitor_resolution (gdouble *xres,
  * object representing the current color management configuration.
  *
  * Returns: (transfer full): Serialized color management configuration.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -263,6 +265,7 @@ _gimp_get_color_configuration (void)
  * Returns a copy of the list of modules which should not be loaded.
  *
  * Returns: (transfer full): The list of modules.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 gimp_get_module_load_inhibit (void)

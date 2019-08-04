@@ -33,7 +33,7 @@ HELP
 
     @outargs = (
         { name => 'profile_data', type => 'int8array', wrap => 1,
-          desc => "The image's serialized color profile. The returned value must be freed with g_free()",
+          desc => "The image's serialized color profile.",
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } }
     );
@@ -79,7 +79,7 @@ HELP
 
     @outargs = (
         { name => 'profile_data', type => 'int8array', wrap => 1,
-          desc => "The image's serialized color profile. The returned value must be freed with g_free()",
+          desc => "The image's serialized color profile.",
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } }
     );

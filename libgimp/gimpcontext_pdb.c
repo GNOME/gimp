@@ -189,6 +189,7 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
  * method.
  *
  * Returns: (transfer full): The name of the active paint method.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -1197,6 +1198,7 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
  * application of paint to the image.
  *
  * Returns: (transfer full): The name of the active brush.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -1763,6 +1765,7 @@ gimp_context_set_brush_force (gdouble force)
  * dynamics to control the application of paint to the image.
  *
  * Returns: (transfer full): The name of the active paint dynamics.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.8
  **/
@@ -1835,6 +1838,7 @@ gimp_context_set_dynamics (const gchar *name)
  * brush.
  *
  * Returns: (transfer full): The name of the active MyPaint brush.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.10
  **/
@@ -1908,6 +1912,7 @@ gimp_context_set_mypaint_brush (const gchar *name)
  * to control the application of paint to the image.
  *
  * Returns: (transfer full): The name of the active pattern.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -1979,6 +1984,7 @@ gimp_context_set_pattern (const gchar *name)
  * This procedure returns the name of the currently active gradient.
  *
  * Returns: (transfer full): The name of the active gradient.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -2384,6 +2390,7 @@ gimp_context_set_gradient_reverse (gboolean reverse)
  * This procedure returns the name of the the currently active palette.
  *
  * Returns: (transfer full): The name of the active palette.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -2455,6 +2462,7 @@ gimp_context_set_palette (const gchar *name)
  * This procedure returns the name of the currently active font.
  *
  * Returns: (transfer full): The name of the active font.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/

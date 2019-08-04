@@ -43,6 +43,7 @@
  * This procedure creates a new, uninitialized gradient
  *
  * Returns: (transfer full): The actual new gradient name.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -78,6 +79,7 @@ gimp_gradient_new (const gchar *name)
  * This procedure creates an identical gradient by a different name
  *
  * Returns: (transfer full): The name of the gradient's copy.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/
@@ -149,6 +151,7 @@ gimp_gradient_is_editable (const gchar *name)
  * This procedure renames a gradient
  *
  * Returns: (transfer full): The actual new name of the gradient.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.2
  **/

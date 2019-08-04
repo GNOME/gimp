@@ -99,6 +99,7 @@ gimp_text_layer_new (gint32       image_ID,
  * This procedure returns the text from a text layer as a string.
  *
  * Returns: (transfer full): The text from the specified text layer.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/
@@ -175,8 +176,9 @@ gimp_text_layer_set_text (gint32       layer_ID,
  * markup. Note: Setting the markup of a text layer using Pango's
  * markup is not supported for now.
  *
- * Returns: (transfer full): The markup which represents the style of
- * the specified text layer.
+ * Returns: (transfer full):
+ *          The markup which represents the style of the specified text layer.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.8
  **/
@@ -211,8 +213,9 @@ gimp_text_layer_get_markup (gint32 layer_ID)
  *
  * This procedure returns the name of the font from a text layer.
  *
- * Returns: (transfer full): The font which is used in the specified
- * text layer.
+ * Returns: (transfer full):
+ *          The font which is used in the specified text layer.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/
@@ -371,8 +374,7 @@ gimp_text_layer_set_font_size (gint32   layer_ID,
  * This procedure checks if antialiasing is enabled in the specified
  * text layer.
  *
- * Returns: A flag which is true if antialiasing is used for rendering
- * the font in the text layer.
+ * Returns: A flag which is true if antialiasing is used for rendering the font in the text layer.
  *
  * Since: 2.6
  **/
@@ -599,6 +601,7 @@ gimp_text_layer_set_kerning (gint32   layer_ID,
  * in the text layer.
  *
  * Returns: (transfer full): The language used in the text layer.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/

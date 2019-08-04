@@ -44,9 +44,9 @@
  * This procedure returns a complete listing of available named
  * buffers.
  *
- * Returns: (array length=num_buffers) (element-type gchar*) (transfer
- * full): The list of buffer names. The returned value must be freed
- * with g_strfreev().
+ * Returns: (array length=num_buffers) (element-type gchar*) (transfer full):
+ *          The list of buffer names.
+ *          The returned value must be freed with g_strfreev().
  *
  * Since: 2.4
  **/
@@ -89,6 +89,7 @@ gimp_buffers_get_list (const gchar *filter,
  * This procedure renames a named buffer.
  *
  * Returns: (transfer full): The real name given to the buffer.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/

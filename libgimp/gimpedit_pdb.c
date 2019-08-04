@@ -49,8 +49,7 @@
  * area lies completely outside the bounds of the current drawable and
  * there is nothing to copy from.
  *
- * Returns: TRUE if the cut was successful, FALSE if there was nothing
- * to copy from.
+ * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
 gimp_edit_cut (gint32 drawable_ID)
@@ -90,8 +89,7 @@ gimp_edit_cut (gint32 drawable_ID)
  * completely outside the bounds of the current drawable and there is
  * nothing to copy from.
  *
- * Returns: TRUE if the cut was successful, FALSE if there was nothing
- * to copy from.
+ * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
 gimp_edit_copy (gint32 drawable_ID)
@@ -254,8 +252,9 @@ gimp_edit_paste_as_new_image (void)
  * later pasting, regardless of any intermediate copy or cut
  * operations.
  *
- * Returns: (transfer full): The real name given to the buffer, or NULL
- * if the cut failed.
+ * Returns: (transfer full):
+ *          The real name given to the buffer, or NULL if the cut failed.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -297,8 +296,9 @@ gimp_edit_named_cut (gint32       drawable_ID,
  * later pasting, regardless of any intermediate copy or cut
  * operations.
  *
- * Returns: (transfer full): The real name given to the buffer, or NULL
- * if the copy failed.
+ * Returns: (transfer full):
+ *          The real name given to the buffer, or NULL if the copy failed.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -340,8 +340,9 @@ gimp_edit_named_copy (gint32       drawable_ID,
  * available for later pasting, regardless of any intermediate copy or
  * cut operations.
  *
- * Returns: (transfer full): The real name given to the buffer, or NULL
- * if the copy failed.
+ * Returns: (transfer full):
+ *          The real name given to the buffer, or NULL if the copy failed.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/

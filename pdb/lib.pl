@@ -88,7 +88,7 @@ sub generate {
 
 	my $funcname = "gimp_$name"; my $wrapped = "";
 	my %usednames;
-	my $retdesc = "Returns:";
+	my $retdesc = " * Returns:";
 
 	if ($proc->{deprecated}) {
 	    if ($proc->{deprecated} eq 'NONE') {
@@ -128,26 +128,45 @@ sub generate {
 	if ($retarg) {
 	    my ($type) = &arg_parse($retarg->{type});
 	    my $argtype = $arg_types{$type};
+	    my $annotate = "";
 	    $rettype = &libtype($retarg, 1);
 	    chop $rettype unless $rettype =~ /\*$/;
 
 	    $retarg->{retval} = 1;
 
 	    if (exists $argtype->{array}) {
-		$retdesc .= " (array length=@outargs[$retindex - 2]->{name})";
+		$annotate = " (array length=@outargs[$retindex - 2]->{name})";
 	    }
 
 	    if (exists $argtype->{out_annotate}) {
-		$retdesc .= " $argtype->{out_annotate}";
+		$annotate .= " $argtype->{out_annotate}";
 	    }
-	    if (exists $argtype->{array} || exists $argtype->{out_annotate}) {
-		$retdesc .= ":";
-            }
 
-	    $retdesc .= exists $retarg->{desc} ? " $retarg->{desc}" : "";
+	    if ($annotate eq "") {
+		$retdesc .= " $retarg->{desc}";
+	    }
+	    else {
+		if (exists $retarg->{desc}) {
+		    if ((length ($annotate) +
+			 length ($retarg->{desc})) > 65) {
+			$retdesc .= $annotate . ":\n *          " . $retarg->{desc};
+		    }
+		    else {
+			$retdesc .= $annotate . ": " . $retarg->{desc};
+		    }
+		}
+	    }
 
-	    if ($retarg->{type} eq 'stringarray') {
-		$retdesc .= ". The returned value must be freed with g_strfreev().";
+	    unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
+
+	    if ($retarg->{type} eq 'string') {
+		$retdesc .= "\n *          The returned value must be freed with g_free().";
+	    }
+	    elsif ($retarg->{type} eq 'stringarray') {
+		$retdesc .= "\n *          The returned value must be freed with g_strfreev().";
+	    }
+	    elsif (exists $argtype->{array}) {
+		$retdesc .= "\n *          The returned value must be freed with g_free().";
 	    }
 	}
 	else {
@@ -460,8 +479,6 @@ CODE
 	my $padding = ' ' x $padlen;
 	$clist =~ s/\t/$padding/eg;
 
-        unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
-
         if ($proc->{since}) {
 	    $sincedesc = "\n *\n * Since: $proc->{since}";
 	}
@@ -497,8 +514,6 @@ CODE
 	    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n" .
 			&desc_wrap($proc->{help});
 	}
-
-	$retdesc = &desc_wrap($retdesc);
 
 	$out->{code} .= <<CODE;
 
