@@ -298,8 +298,6 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
 
   priv->inside = gimp_brush_select_button_create_inside (button);
   gtk_container_add (GTK_CONTAINER (button), priv->inside);
-
-  priv->popup = NULL;
 }
 
 /**
