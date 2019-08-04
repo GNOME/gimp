@@ -48,17 +48,6 @@ enum
 
 typedef enum
 {
-  GP_PARAM_TYPE_INT,
-  GP_PARAM_TYPE_FLOAT,
-  GP_PARAM_TYPE_STRING,
-  GP_PARAM_TYPE_COLOR,
-  GP_PARAM_TYPE_PARASITE,
-  GP_PARAM_TYPE_ARRAY,
-  GP_PARAM_TYPE_STRING_ARRAY
-} GPParamType;
-
-typedef enum
-{
   GP_PARAM_DEF_TYPE_DEFAULT,
   GP_PARAM_DEF_TYPE_INT,
   GP_PARAM_DEF_TYPE_UNIT,
@@ -70,14 +59,22 @@ typedef enum
   GP_PARAM_DEF_TYPE_ID
 } GPParamDefType;
 
+typedef enum
+{
+  GP_PARAM_TYPE_INT,
+  GP_PARAM_TYPE_FLOAT,
+  GP_PARAM_TYPE_STRING,
+  GP_PARAM_TYPE_COLOR,
+  GP_PARAM_TYPE_PARASITE,
+  GP_PARAM_TYPE_ARRAY,
+  GP_PARAM_TYPE_STRING_ARRAY
+} GPParamType;
+
 
 typedef struct _GPConfig           GPConfig;
 typedef struct _GPTileReq          GPTileReq;
 typedef struct _GPTileAck          GPTileAck;
 typedef struct _GPTileData         GPTileData;
-typedef struct _GPParam            GPParam;
-typedef struct _GPParamArray       GPParamArray;
-typedef struct _GPParamStringArray GPParamStringArray;
 typedef struct _GPParamDef         GPParamDef;
 typedef struct _GPParamDefInt      GPParamDefInt;
 typedef struct _GPParamDefUnit     GPParamDefUnit;
@@ -87,6 +84,9 @@ typedef struct _GPParamDefFloat    GPParamDefFloat;
 typedef struct _GPParamDefString   GPParamDefString;
 typedef struct _GPParamDefColor    GPParamDefColor;
 typedef struct _GPParamDefID       GPParamDefID;
+typedef struct _GPParam            GPParam;
+typedef struct _GPParamArray       GPParamArray;
+typedef struct _GPParamStringArray GPParamStringArray;
 typedef struct _GPProcRun          GPProcRun;
 typedef struct _GPProcReturn       GPProcReturn;
 typedef struct _GPProcInstall      GPProcInstall;
@@ -136,35 +136,6 @@ struct _GPTileData
   guint32  height;
   guint32  use_shm;
   guchar  *data;
-};
-
-struct _GPParamArray
-{
-  guint32  size;
-  guint8  *data;
-};
-
-struct _GPParamStringArray
-{
-  guint32   size;
-  gchar   **data;
-};
-
-struct _GPParam
-{
-  GPParamType  param_type;
-  gchar       *type_name;
-
-  union
-  {
-    gint32              d_int;
-    gdouble             d_float;
-    gchar              *d_string;
-    GimpRGB             d_color;
-    GimpParasite        d_parasite;
-    GPParamArray        d_array;
-    GPParamStringArray  d_string_array;
-  } data;
 };
 
 struct _GPParamDefInt
@@ -237,6 +208,35 @@ struct _GPParamDef
     GPParamDefColor   m_color;
     GPParamDefID      m_id;
   } meta;
+};
+
+struct _GPParamArray
+{
+  guint32  size;
+  guint8  *data;
+};
+
+struct _GPParamStringArray
+{
+  guint32   size;
+  gchar   **data;
+};
+
+struct _GPParam
+{
+  GPParamType  param_type;
+  gchar       *type_name;
+
+  union
+  {
+    gint32              d_int;
+    gdouble             d_float;
+    gchar              *d_string;
+    GimpRGB             d_color;
+    GimpParasite        d_parasite;
+    GPParamArray        d_array;
+    GPParamStringArray  d_string_array;
+  } data;
 };
 
 struct _GPProcRun
