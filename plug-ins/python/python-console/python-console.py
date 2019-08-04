@@ -23,6 +23,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import Gio
+from gi.repository import GLib
 
 import sys
 import pyconsole
@@ -36,7 +37,7 @@ PROC_NAME = 'python-fu-console'
 
 RESPONSE_BROWSE, RESPONSE_CLEAR, RESPONSE_SAVE = range(3)
 
-def run(name, n_params, params):
+def run(procedure, args, data):
     Gimp.ui_init ("python-console.py", False)
 
     namespace = {'__builtins__': __builtins__,
