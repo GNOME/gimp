@@ -252,9 +252,22 @@ gimp_font_select_button_set_font (GimpFontSelectButton *button,
   select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
-    gimp_fonts_set_popup (select_button->temp_callback, font_name);
+    {
+      gimp_fonts_set_popup (select_button->temp_callback, font_name);
+    }
   else
-    gimp_font_select_button_callback (font_name, FALSE, button);
+    {
+      gchar *name;
+
+      if (font_name && *font_name)
+        name = g_strdup (font_name);
+      else
+        name = gimp_context_get_font ();
+
+      gimp_font_select_button_callback (name, FALSE, button);
+
+      g_free (name);
+    }
 }
 
 
