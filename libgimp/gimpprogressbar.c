@@ -90,7 +90,7 @@ gimp_progress_bar_init (GimpProgressBar *bar)
   vtable.pulse      = gimp_progress_bar_pulse;
   vtable.get_window = gimp_progress_bar_get_window;
 
-  bar->progress_callback = gimp_progress_install_vtable (&vtable, bar);
+  bar->progress_callback = gimp_progress_install_vtable (&vtable, bar, NULL);
 }
 
 static void

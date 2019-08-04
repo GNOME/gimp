@@ -447,7 +447,7 @@ server_progress_install (void)
   vtable.set_text  = server_progress_set_text;
   vtable.set_value = server_progress_set_value;
 
-  return gimp_progress_install_vtable (&vtable, NULL);
+  return gimp_progress_install_vtable (&vtable, NULL, NULL);
 }
 
 static void
