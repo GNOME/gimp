@@ -509,13 +509,51 @@ dialog (void)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_frame_new (_("Curl Location"));
+  frame = gimp_frame_new ("LibGimp Widget Testing Ground");
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
+
+  button = gimp_brush_select_button_new ("Brush Test", NULL,
+                                         1.0, 20, GIMP_LAYER_MODE_NORMAL);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            "Brush Select:", 0.0, 0.5,
+                            button, 1);
+
+  button = gimp_gradient_select_button_new ("Gradient Test", NULL);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            "Gradient Select:", 0.0, 0.5,
+                            button, 1);
+
+  button = gimp_palette_select_button_new ("Palette Test", NULL);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            "Palette Select:", 0.0, 0.5,
+                            button, 1);
+
+  button = gimp_font_select_button_new ("Font Test", NULL);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            "Font Select:", 0.0, 0.5,
+                            button, 1);
+
+  button = gimp_pattern_select_button_new ("Pattern Test", NULL);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            "Pattern Select:", 0.0, 0.5,
+                            button, 1);
+
+  frame = gimp_frame_new (_("Curl Location"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   curl_image = gtk_image_new ();
 
@@ -566,15 +604,14 @@ dialog (void)
       }
   }
 
-  gtk_widget_show (grid);
-  gtk_widget_show (frame);
-
   frame = gimp_frame_new (_("Curl Orientation"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
 
   {
     static const gchar *name[] =
@@ -611,9 +648,6 @@ dialog (void)
       }
   }
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (frame);
-
   button = gtk_check_button_new_with_mnemonic (_("_Shade under curl"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), curl.shade);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -649,8 +683,6 @@ dialog (void)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &curl.colors);
 
-  gtk_widget_show (dialog);
-
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
@@ -665,6 +697,8 @@ dialog (void)
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &curl.opacity);
+
+  gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
