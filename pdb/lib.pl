@@ -105,11 +105,9 @@ sub generate {
 	# Find the return argument (defaults to the first arg if not
 	# explicitly set
 	my $retarg  = undef;
-	my $retindex = 0;
 	$retvoid = 0;
 	foreach (@outargs) {
 	    $retarg = $_, last if exists $_->{retval};
-	    $retindex++;
 	}
 
 	unless ($retarg) {
@@ -135,7 +133,7 @@ sub generate {
 	    $retarg->{retval} = 1;
 
 	    if (exists $argtype->{array}) {
-		$annotate = " (array length=@outargs[$retindex - 2]->{name})";
+		$annotate = " (array length=$retarg->{array}->{name})";
 	    }
 
 	    if (exists $argtype->{out_annotate}) {
