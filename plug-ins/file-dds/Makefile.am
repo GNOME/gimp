@@ -10,6 +10,8 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
+else
+libm     = -lm
 endif
 
 if HAVE_WINDRES
@@ -58,6 +60,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
+	$(libm)			\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
