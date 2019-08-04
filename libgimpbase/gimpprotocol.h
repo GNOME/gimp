@@ -277,8 +277,6 @@ struct _GPProcUninstall
 
 
 void      gp_init                   (void);
-void      gp_lock                   (void);
-void      gp_unlock                 (void);
 
 gboolean  gp_quit_write             (GIOChannel      *channel,
                                      gpointer         user_data);

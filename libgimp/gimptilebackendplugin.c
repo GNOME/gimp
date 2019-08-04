@@ -334,7 +334,6 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
   tile_req.tile_num    = tile->tile_num;
   tile_req.shadow      = priv->shadow;
 
-  gp_lock ();
   if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
     gimp_quit ();
 
@@ -384,7 +383,6 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
 
   if (! gp_tile_ack_write (_gimp_writechannel, NULL))
     gimp_quit ();
-  gp_unlock ();
 
   gimp_wire_destroy (&msg);
 }
@@ -404,7 +402,6 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
   tile_req.tile_num    = 0;
   tile_req.shadow      = 0;
 
-  gp_lock ();
   if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
     gimp_quit ();
 
@@ -447,7 +444,6 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
     _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_ACK);
   else
     _gimp_read_expect_msg (&msg, GP_TILE_ACK);
-  gp_unlock ();
 
   gimp_wire_destroy (&msg);
 }

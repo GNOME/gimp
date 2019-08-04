@@ -279,7 +279,6 @@ EXPORTS
 	gp_extension_ack_write
 	gp_has_init_write
 	gp_init
-	gp_lock
 	gp_proc_install_write
 	gp_proc_return_write
 	gp_proc_run_write
@@ -290,4 +289,3 @@ EXPORTS
 	gp_tile_ack_write
 	gp_tile_data_write
 	gp_tile_req_write
-	gp_unlock

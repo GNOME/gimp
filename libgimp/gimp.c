@@ -806,7 +806,6 @@ gimp_run_procedure_with_array (const gchar    *name,
   proc_run.nparams = gimp_value_array_length (arguments);
   proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
 
-  gp_lock ();
   if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
     gimp_quit ();
 
@@ -814,7 +813,6 @@ gimp_run_procedure_with_array (const gchar    *name,
     _gimp_plug_in_read_expect_msg (PLUG_IN, &msg, GP_PROC_RETURN);
   else
     _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
-  gp_unlock ();
 
   proc_return = msg.data;
 
