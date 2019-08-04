@@ -44,8 +44,7 @@
  * Creates a new empty vectors object. The vectors object needs to be
  * added to the image using gimp_image_insert_vectors().
  *
- * Returns: the current vector object, 0 if no vector exists in the
- * image.
+ * Returns: the current vector object, 0 if no vector exists in the image.
  *
  * Since: 2.4
  **/
@@ -161,8 +160,9 @@ gimp_vectors_copy (gint32 vectors_ID)
  * Returns an Array with the stroke-IDs associated with the passed
  * path.
  *
- * Returns: (array length=num_strokes) (element-type gint32) (transfer
- * full): List of the strokes belonging to the path.
+ * Returns: (array length=num_strokes) (element-type gint32) (transfer full):
+ *          List of the strokes belonging to the path.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -645,8 +645,7 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
  * this is always a bezier stroke, where the coordinates are the
  * control points.
  *
- * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER
- * for now).
+ * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
  *
  * Since: 2.4
  **/
@@ -756,8 +755,9 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
  *
  * returns polygonal approximation of the stroke.
  *
- * Returns: (array length=coords) (element-type gdouble) (transfer
- * full): List of the coords along the path (x0, y0, x1, y1, ...).
+ * Returns: (array length=coords) (element-type gdouble) (transfer full):
+ *          List of the coords along the path (x0, y0, x1, y1, ...).
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
@@ -1242,8 +1242,9 @@ gimp_vectors_export_to_file (gint32       image_ID,
  * string that holds a complete XML document. If you pass 0 as the
  * 'vectors' argument, then all paths in the image will be exported.
  *
- * Returns: (transfer full): A string whose contents are a complete SVG
- * document.
+ * Returns: (transfer full):
+ *          A string whose contents are a complete SVG document.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.6
  **/

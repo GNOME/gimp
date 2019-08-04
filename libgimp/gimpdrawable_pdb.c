@@ -46,6 +46,7 @@
  * must be used.
  *
  * Returns: (transfer full): The drawable's Babl format.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.10
  **/
@@ -83,6 +84,7 @@ _gimp_drawable_get_format (gint32 drawable_ID)
  * and gimp_drawable_sub_thmbnail().
  *
  * Returns: (transfer full): The drawable's thumbnail Babl format.
+ *          The returned value must be freed with g_free().
  *
  * Since: 2.10.14
  **/
@@ -714,8 +716,9 @@ gimp_drawable_update (gint32 drawable_ID,
  * The 'num_channels' argument must always be equal to the
  * bytes-per-pixel value for the specified drawable.
  *
- * Returns: (array length=num_channels) (element-type guint8) (transfer
- * full): The pixel value.
+ * Returns: (array length=num_channels) (element-type guint8) (transfer full):
+ *          The pixel value.
+ *          The returned value must be freed with g_free().
  **/
 guint8 *
 gimp_drawable_get_pixel (gint32  drawable_ID,

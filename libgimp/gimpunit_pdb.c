@@ -239,6 +239,7 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
  * name. For user-defined units this should equal to the singular form.
  *
  * Returns: (transfer full): The unit's textual identifier.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 _gimp_unit_get_identifier (GimpUnit unit_id)
@@ -343,6 +344,7 @@ _gimp_unit_get_digits (GimpUnit unit_id)
  * This procedure returns the symbol of the unit (\"''\" for inches).
  *
  * Returns: (transfer full): The unit's symbol.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 _gimp_unit_get_symbol (GimpUnit unit_id)
@@ -377,6 +379,7 @@ _gimp_unit_get_symbol (GimpUnit unit_id)
  * inches).
  *
  * Returns: (transfer full): The unit's abbreviation.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 _gimp_unit_get_abbreviation (GimpUnit unit_id)
@@ -410,6 +413,7 @@ _gimp_unit_get_abbreviation (GimpUnit unit_id)
  * This procedure returns the singular form of the unit.
  *
  * Returns: (transfer full): The unit's singular form.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 _gimp_unit_get_singular (GimpUnit unit_id)
@@ -443,6 +447,7 @@ _gimp_unit_get_singular (GimpUnit unit_id)
  * This procedure returns the plural form of the unit.
  *
  * Returns: (transfer full): The unit's plural form.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 _gimp_unit_get_plural (GimpUnit unit_id)

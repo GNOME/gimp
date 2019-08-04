@@ -43,8 +43,8 @@
  * This procedure generates a temporary PDB entry name that is
  * guaranteed to be unique.
  *
- * Returns: (transfer full): A unique temporary name for a temporary
- * PDB entry.
+ * Returns: (transfer full): A unique temporary name for a temporary PDB entry.
+ *          The returned value must be freed with g_free().
  **/
 gchar *
 gimp_procedural_db_temp_name (void)

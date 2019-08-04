@@ -29,7 +29,7 @@ sub brush_new {
 
     @outargs = (
 	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new brush name. The returned value must be freed with g_free()' }
+	  desc => 'The actual new brush name.' }
     );
 
     %invoke = (
@@ -60,7 +60,7 @@ sub brush_duplicate {
 
     @outargs = (
 	{ name => 'copy_name', type => 'string',
-	  desc => "The name of the brush's copy. The returned value must be freed with g_free()" }
+	  desc => "The name of the brush's copy." }
     );
 
     %invoke = (
@@ -161,7 +161,7 @@ sub brush_rename {
 
     @outargs = (
 	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new name of the brush. The returned value must be freed with g_free()' }
+	  desc => 'The actual new name of the brush.' }
     );
 
     %invoke = (

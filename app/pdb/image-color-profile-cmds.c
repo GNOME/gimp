@@ -358,7 +358,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("profile-data",
                                                                "profile data",
-                                                               "The image's serialized color profile. The returned value must be freed with g_free()",
+                                                               "The image's serialized color profile.",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -392,7 +392,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("profile-data",
                                                                "profile data",
-                                                               "The image's serialized color profile. The returned value must be freed with g_free()",
+                                                               "The image's serialized color profile.",
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

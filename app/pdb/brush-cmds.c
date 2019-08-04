@@ -938,7 +938,7 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
-                                                           "The actual new brush name. The returned value must be freed with g_free()",
+                                                           "The actual new brush name.",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -969,7 +969,7 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("copy-name",
                                                            "copy name",
-                                                           "The name of the brush's copy. The returned value must be freed with g_free()",
+                                                           "The name of the brush's copy.",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
@@ -1037,7 +1037,7 @@ register_brush_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
-                                                           "The actual new name of the brush. The returned value must be freed with g_free()",
+                                                           "The actual new name of the brush.",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
