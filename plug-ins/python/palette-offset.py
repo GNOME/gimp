@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #    This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -48,10 +48,10 @@ def run(procedure, args, data):
         palette = Gimp.palette_duplicate (palette)
 
     tmp_entry_array = []
-    for i in xrange (num_colors):
+    for i in range (num_colors):
         tmp_entry_array.append  ((Gimp.palette_entry_get_name (palette, i)[1],
                                   Gimp.palette_entry_get_color (palette, i)[1]))
-    for i in xrange (num_colors):
+    for i in range (num_colors):
         target_index = i + amount
         if target_index >= num_colors:
             target_index -= num_colors
