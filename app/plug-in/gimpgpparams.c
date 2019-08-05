@@ -134,6 +134,12 @@ _gimp_gp_param_def_to_param_spec (gpointer    gimp,
                                   g_type_from_name (param_def->meta.m_enum.type_name),
                                   param_def->meta.m_enum.default_val,
                                   flags);
+
+      if (! strcmp (param_def->type_name, "GimpParamEnum"))
+        return gimp_param_spec_enum (name, nick, blurb,
+                                     g_type_from_name (param_def->meta.m_enum.type_name),
+                                     param_def->meta.m_enum.default_val,
+                                     flags);
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
@@ -224,6 +230,13 @@ _gimp_gp_param_def_to_param_spec (gpointer    gimp,
                                            gimp,
                                            param_def->meta.m_id.none_ok,
                                            flags);
+      break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      if (! strcmp (param_def->type_name, "GParamParam"))
+        return g_param_spec_param (name, nick, blurb,
+                                   g_type_from_name (param_def->meta.m_param_def.type_name),
+                                   flags);
       break;
     }
 

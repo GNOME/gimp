@@ -73,7 +73,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_unit.allow_percent = uspec->allow_percent;
       param_def->meta.m_unit.default_val   = ispec->default_value;
     }
-  else if (pspec_type == G_TYPE_PARAM_ENUM)
+  else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
       GParamSpecEnum *espec     = G_PARAM_SPEC_ENUM (pspec);
       GType           enum_type = pspec->value_type;
@@ -110,6 +110,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
       param_def->meta.m_string.null_ok        = ! gsspec->ensure_non_null;
       param_def->meta.m_string.default_val    = gsspec->default_value;
+
       if (pspec_type == GIMP_TYPE_PARAM_STRING)
         {
           GimpParamSpecString *sspec = GIMP_PARAM_SPEC_STRING (pspec);
@@ -156,6 +157,13 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
 
       param_def->meta.m_id.none_ok = ispec->none_ok;
+    }
+  else if (G_IS_PARAM_SPEC_PARAM (pspec))
+    {
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_PARAM_DEF;
+
+      param_def->meta.m_param_def.type_name =
+        (gchar *) g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec));
     }
 }
 
