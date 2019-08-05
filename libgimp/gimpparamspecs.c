@@ -1315,19 +1315,19 @@ gimp_param_display_id_values_cmp (GParamSpec   *pspec,
 }
 
 /**
- * gimp_param_spec_vectors_id:
+ * gimp_param_spec_display_id:
  * @name:    Canonical name of the property specified.
  * @nick:    Nick name of the property specified.
  * @blurb:   Description of the property specified.
  * @none_ok: Whether no ID is a valid value.
  * @flags:   Flags for the property specified.
  *
- * Creates a new #GimpParamSpecVectorsID specifying a
- * #GIMP_TYPE_VECTORS_ID property.
+ * Creates a new #GimpParamSpecDisplayID specifying a
+ * #GIMP_TYPE_DISPLAY_ID property.
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecVectorsID.
+ * Returns: (transfer full): The newly created #GimpParamSpecDisplayID.
  *
  * Since: 3.0
  **/

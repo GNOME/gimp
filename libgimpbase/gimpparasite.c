@@ -172,15 +172,20 @@ gimp_param_parasite_values_cmp (GParamSpec   *pspec,
 
 /**
  * gimp_param_spec_parasite:
- * @name: the #GParamSpec's name.
- * @nick: the #GParamSpec's nick.
- * @blurb: the #GParamSpec's blurb.
- * @flags: a combination of #GParamFlags
+ * @name:  Canonical name of the property specified.
+ * @nick:  Nick name of the property specified.
+ * @blurb: Description of the property specified.
+ * @flags: Flags for the property specified.
  *
- * Returns: (transfer full): a newly allocated #GimpParamSpecParasite.
+ * Creates a new #GimpParamSpecParasite specifying a
+ * #GIMP_TYPE_PARASITE property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecParasite.
  *
  * Since: 2.3.8
- */
+ **/
 GParamSpec *
 gimp_param_spec_parasite (const gchar *name,
                           const gchar *nick,
