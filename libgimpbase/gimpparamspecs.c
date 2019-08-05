@@ -100,7 +100,7 @@ gimp_param_int32_init (GParamSpec *pspec)
  *
  * Create a new int32 #GParamSpec with the given specifications.
  *
- * Returns: (transfer full) (type GObject.ParamSpec): a new #GParamSpec.
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
  */
 GParamSpec *
 gimp_param_spec_int32 (const gchar *name,
@@ -192,6 +192,20 @@ gimp_param_int16_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_int16:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @minimum: the minimum accepted value.
+ * @maximum: the maximum accepted value.
+ * @default_value: the default value.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new int16 #GParamSpec with the given specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_int16 (const gchar *name,
                        const gchar *nick,
@@ -282,6 +296,20 @@ gimp_param_int8_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_int8:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @minimum: the minimum accepted value.
+ * @maximum: the maximum accepted value.
+ * @default_value: the default value.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new int8 #GParamSpec with the given specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_int8 (const gchar *name,
                       const gchar *nick,
@@ -416,6 +444,27 @@ gimp_param_string_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_string:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @allow_non_utf8: whether non-UTF8 text is allowed.
+ * @null_ok: whether %NULL is an acceptable value.
+ * @non_empty: whether the empty string is an acceptable value.
+ * @default_value: the default value.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new string #GParamSpec with the given specifications.
+ *
+ * If @null_ok is %FALSE, %NULL strings will be replaced by an empty
+ * string.
+ * If @non_empty is %TRUE, empty strings will be replaced by `"none"`.
+ * If @allow_non_utf8 is %FALSE, non-valid UTF-8 strings will be
+ * replaced by question marks.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_string (const gchar *name,
                         const gchar *nick,
@@ -597,6 +646,18 @@ gimp_param_array_values_cmp (GParamSpec   *pspec,
   return 0;
 }
 
+/**
+ * gimp_param_spec_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray data with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_array (const gchar *name,
                        const gchar *nick,
@@ -727,6 +788,18 @@ gimp_param_int8_array_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_int8_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray of int8 with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_int8_array (const gchar *name,
                             const gchar *nick,
@@ -849,6 +922,18 @@ gimp_param_int16_array_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_int16_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray of int16 with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_int16_array (const gchar *name,
                              const gchar *nick,
@@ -974,6 +1059,18 @@ gimp_param_int32_array_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_int32_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray of int32 with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_int32_array (const gchar *name,
                              const gchar *nick,
@@ -1099,6 +1196,18 @@ gimp_param_float_array_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_float_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray of float with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_float_array (const gchar *name,
                              const gchar *nick,
@@ -1167,6 +1276,17 @@ gimp_value_take_float_array (GValue  *value,
  * GIMP_TYPE_STRING_ARRAY
  */
 
+/**
+ * gimp_string_array_new:
+ * @data: (array length=length): an array of strings.
+ * @length: the length of @data.
+ * @static_data: whether the strings in @data are static strings rather
+ *               than allocated.
+ *
+ * Creates a new #GimpArray containing string data, of size @length.
+ *
+ * Returns: (transfer full) (type GimpArray): a new #GimpArray.
+ */
 GimpArray *
 gimp_string_array_new (const gchar **data,
                        gsize         length,
@@ -1200,6 +1320,14 @@ gimp_string_array_new (const gchar **data,
   return array;
 }
 
+/**
+ * gimp_string_array_copy:
+ * @array: an original #GimpArray of strings.
+ *
+ * Creates a new #GimpArray containing a deep copy of @array.
+ *
+ * Returns: (transfer full) (type GimpArray): a new #GimpArray.
+ */
 GimpArray *
 gimp_string_array_copy (const GimpArray *array)
 {
@@ -1335,6 +1463,18 @@ gimp_param_string_array_values_cmp (GParamSpec   *pspec,
   return 0;
 }
 
+/**
+ * gimp_param_spec_string_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray of string with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_string_array (const gchar *name,
                               const gchar *nick,
@@ -1349,6 +1489,12 @@ gimp_param_spec_string_array (const gchar *name,
   return G_PARAM_SPEC (array_spec);
 }
 
+/**
+ * gimp_value_get_string_array:
+ * @value: a #GValue holding a string #GimpArray.
+ *
+ * Returns: (transfer none) (array zero-terminated=1): the internal array of strings.
+ */
 const gchar **
 gimp_value_get_string_array (const GValue *value)
 {
@@ -1364,6 +1510,12 @@ gimp_value_get_string_array (const GValue *value)
   return NULL;
 }
 
+/**
+ * gimp_value_dup_string_array:
+ * @value: a #GValue holding a string #GimpArray.
+ *
+ * Returns: (transfer none)  (array zero-terminated=1): a deep copy of the array of strings.
+ */
 gchar **
 gimp_value_dup_string_array (const GValue *value)
 {
@@ -1492,6 +1644,18 @@ gimp_param_rgb_array_init (GParamSpec *pspec)
 {
 }
 
+/**
+ * gimp_param_spec_rgb_array:
+ * @name: new parameter's name.
+ * @nick: nick name for the parameter.
+ * @blurb: longer description of the parameter.
+ * @flags: #GParamFlags for the new parameter.
+ *
+ * Create a new #GParamSpec for #GimpArray of rgb with the given
+ * specifications.
+ *
+ * Returns: (transfer full) (type GParamSpec): a new #GParamSpec.
+ */
 GParamSpec *
 gimp_param_spec_rgb_array (const gchar *name,
                            const gchar *nick,
