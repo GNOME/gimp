@@ -66,7 +66,8 @@ def run(procedure, args, data):
 
     class ConsoleDialog(Gimp.Dialog):
         def __init__(self):
-            Gimp.Dialog.__init__(self)
+            use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
+            Gimp.Dialog.__init__(self, use_header_bar=use_header_bar)
             self.set_property("help-id", PROC_NAME)
             Gtk.Window.set_title(self, _("Python Console"))
             Gtk.Window.set_role(self, PROC_NAME)
@@ -170,7 +171,8 @@ def run(procedure, args, data):
 
         def browse(self):
             if not self.browse_dlg:
-                dlg = Gimp.ProcBrowserDialog(use_header_bar=True)
+                use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
+                dlg = Gimp.ProcBrowserDialog(use_header_bar=use_header_bar)
                 Gtk.Window.set_title(dlg, _("Python Procedure Browser"))
                 Gtk.Window.set_role(dlg, PROC_NAME)
                 Gtk.Dialog.add_button(dlg, "Apply", Gtk.ResponseType.APPLY)
