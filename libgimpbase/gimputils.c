@@ -628,6 +628,46 @@ gimp_escape_uline (const gchar *str)
 }
 
 /**
+ * gimp_is_canonical_identifier:
+ * @identifier: The identifier string to check.
+ *
+ * Checks if @identifier is canonical and non-%NULL.
+ *
+ * Canonical identifiers are e.g. expected by the PDB for procedure
+ * and parameter names. Every character of the input string must be
+ * either '-', 'a-z', 'A-Z' or '0-9'.
+ *
+ * Returns: %TRUE if @identifier is canonical, %FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_is_canonical_identifier (const gchar *identifier)
+{
+  if (identifier)
+    {
+      const gchar *p;
+
+      for (p = identifier; *p != 0; p++)
+        {
+          const gchar c = *p;
+
+          if (! (c == '-' ||
+                 (c >= '0' && c <= '9') ||
+                 (c >= 'A' && c <= 'Z') ||
+                 (c >= 'a' && c <= 'z')))
+            {
+              return FALSE;
+            }
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
  * gimp_canonicalize_identifier:
  * @identifier: The identifier string to canonicalize.
  *
@@ -637,9 +677,9 @@ gimp_escape_uline (const gchar *str)
  * and parameter names. Every character of the input string that is
  * not either '-', 'a-z', 'A-Z' or '0-9' will be replaced by a '-'.
  *
- * Returns: The canonicalized identifier. This is a newly
- *               allocated string that should be freed with g_free()
- *               when no longer needed.
+ * Returns: The canonicalized identifier. This is a newly allocated
+ *          string that should be freed with g_free() when no longer
+ *          needed.
  *
  * Since: 2.4
  **/
@@ -662,7 +702,9 @@ gimp_canonicalize_identifier (const gchar *identifier)
               (c < '0' || c > '9') &&
               (c < 'A' || c > 'Z') &&
               (c < 'a' || c > 'z'))
-            *p = '-';
+            {
+              *p = '-';
+            }
         }
     }
 

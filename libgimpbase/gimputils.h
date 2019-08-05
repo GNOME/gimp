@@ -43,6 +43,7 @@ gboolean        gimp_file_show_in_file_manager (GFile        *file,
 gchar         * gimp_strip_uline               (const gchar  *str) G_GNUC_MALLOC;
 gchar         * gimp_escape_uline              (const gchar  *str) G_GNUC_MALLOC;
 
+gboolean        gimp_is_canonical_identifier   (const gchar  *identifier);
 gchar         * gimp_canonicalize_identifier   (const gchar  *identifier) G_GNUC_MALLOC;
 
 GimpEnumDesc  * gimp_enum_get_desc             (GEnumClass   *enum_class,
