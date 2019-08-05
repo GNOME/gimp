@@ -58,7 +58,7 @@ static const GimpActionEntry filters_menu_actions[] =
   { "filters-menu",                 NULL, NC_("filters-action",
                                               "Filte_rs")          },
   { "filters-recent-menu",          NULL, NC_("filters-action",
-                                              "Recently Used")     },
+                                              "Recently _Used")     },
   { "filters-blur-menu",            NULL, NC_("filters-action",
                                               "_Blur")             },
   { "filters-noise-menu",           NULL, NC_("filters-action",
@@ -285,22 +285,22 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_DESATURATE },
 
   { "filters-difference-of-gaussians", GIMP_ICON_GEGL,
-    NC_("filters-action", "Difference of Gaussians..."), NULL, NULL,
+    NC_("filters-action", "Difference of _Gaussians..."), NULL, NULL,
     "gegl:difference-of-gaussians",
     GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS },
 
   { "filters-diffraction-patterns", GIMP_ICON_GEGL,
-    NC_("filters-action", "Diffraction Patterns..."), NULL, NULL,
+    NC_("filters-action", "D_iffraction Patterns..."), NULL, NULL,
     "gegl:diffraction-patterns",
     GIMP_HELP_FILTER_DIFFRACTION_PATTERNS },
 
   { "filters-displace", GIMP_ICON_GEGL,
-    NC_("filters-action", "Displace..."), NULL, NULL,
+    NC_("filters-action", "_Displace..."), NULL, NULL,
     "gegl:displace",
     GIMP_HELP_FILTER_DISPLACE },
 
   { "filters-distance-map", GIMP_ICON_GEGL,
-    NC_("filters-action", "Distance Map..."), NULL, NULL,
+    NC_("filters-action", "Distance _Map..."), NULL, NULL,
     "gegl:distance-transform",
     GIMP_HELP_FILTER_DISTANCE_MAP },
 
@@ -405,12 +405,12 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_KALEIDOSCOPE },
 
   { "filters-lens-distortion", GIMP_ICON_GEGL,
-    NC_("filters-action", "Lens Distortion..."), NULL, NULL,
+    NC_("filters-action", "Le_ns Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
     GIMP_HELP_FILTER_LENS_DISTORTION },
 
   { "filters-lens-flare", GIMP_ICON_GEGL,
-    NC_("filters-action", "Lens Flare..."), NULL, NULL,
+    NC_("filters-action", "Lens _Flare..."), NULL, NULL,
     "gegl:lens-flare",
     GIMP_HELP_FILTER_LENS_FLARE },
 
@@ -490,12 +490,12 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_NEWSPRINT },
 
   { "filters-noise-cie-lch", GIMP_ICON_GEGL,
-    NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
+    NC_("filters-action", "_CIE lch Noise..."), NULL, NULL,
     "gegl:noise-cie-lch",
     GIMP_HELP_FILTER_NOISE_CIE_LCH },
 
   { "filters-noise-hsv", GIMP_ICON_GEGL,
-    NC_("filters-action", "HSV Noise..."), NULL, NULL,
+    NC_("filters-action", "HS_V Noise..."), NULL, NULL,
     "gegl:noise-hsv",
     GIMP_HELP_FILTER_NOISE_HSV },
 
@@ -505,7 +505,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_NOISE_HURL },
 
   { "filters-noise-perlin", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Perlin Noise..."), NULL, NULL,
+    NC_("filters-action", "Perlin _Noise..."), NULL, NULL,
     "gegl:perlin-noise",
     GIMP_HELP_FILTER_NOISE_PERLIN },
 

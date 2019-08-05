@@ -124,21 +124,21 @@ static const GimpActionEntry windows_actions[] =
 static const GimpToggleActionEntry windows_toggle_actions[] =
 {
   { "windows-hide-docks", NULL,
-    NC_("windows-action", "Hide Docks"), "Tab",
+    NC_("windows-action", "_Hide Docks"), "Tab",
     NC_("windows-action", "When enabled, docks and other dialogs are hidden, leaving only image windows."),
     windows_hide_docks_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_HIDE_DOCKS },
 
   { "windows-show-tabs", NULL,
-    NC_("windows-action", "Show Tabs"), NULL,
+    NC_("windows-action", "_Show Tabs"), NULL,
     NC_("windows-action", "When enabled, the image tabs bar is shown."),
     windows_show_tabs_cmd_callback,
     FALSE,
     GIMP_HELP_WINDOWS_SHOW_TABS },
 
   { "windows-use-single-window-mode", NULL,
-    NC_("windows-action", "Single-Window Mode"), NULL,
+    NC_("windows-action", "Single-Window _Mode"), NULL,
     NC_("windows-action", "When enabled, GIMP is in a single-window mode."),
     windows_use_single_window_mode_cmd_callback,
     FALSE,
