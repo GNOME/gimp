@@ -82,6 +82,8 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
 
       for (i = 0; i < *num_args; i++)
         {
+          GParamSpec *pspec;
+
           if (! gimp_procedural_db_proc_arg (procedure,
                                              i,
                                              &(*args)[i].type,
@@ -93,10 +95,21 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
 
               return FALSE;
             }
+
+          pspec = gimp_procedural_db_proc_argument (procedure, i);
+
+          if (pspec)
+            {
+              g_printerr ("Arg %i of %s: %s\n", i, procedure,
+                          G_PARAM_SPEC_TYPE_NAME (pspec));
+              g_param_spec_unref (pspec);
+            }
         }
 
       for (i = 0; i < *num_values; i++)
         {
+          GParamSpec *pspec;
+
           if (! gimp_procedural_db_proc_val (procedure,
                                              i,
                                              &(*return_vals)[i].type,
@@ -107,6 +120,15 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
               g_free (*return_vals);
 
               return FALSE;
+            }
+
+          pspec = gimp_procedural_db_proc_return_value (procedure, i);
+
+          if (pspec)
+            {
+              g_printerr ("Value %i of %s: %s\n", i, procedure,
+                          G_PARAM_SPEC_TYPE_NAME (pspec));
+              g_param_spec_unref (pspec);
             }
         }
      }
