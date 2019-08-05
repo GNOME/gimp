@@ -346,6 +346,7 @@ package Gimp::CodeGen::pdb;
 		     type            => 'GimpUnit ',
 		     const_type      => 'GimpUnit ',
 		     init_value      => '0',
+		     out_annotate    => '(transfer none)',
 		     get_value_func  => '$var = g_value_get_int ($value)',
 		     dup_value_func  => '$var = g_value_get_int ($value)',
 		     set_value_func  => 'g_value_set_int ($value, $var)',

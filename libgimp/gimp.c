@@ -693,7 +693,7 @@ gimp_main_internal (GType                 plug_in_type,
  * This function returns the plug-in's #GimpPlugIn instance, which can
  * exist exactly once per running plug-in program.
  *
- * Returns: The plug-in's #GimpPlugIn singleton, or %NULL.
+ * Returns: (transfer none): The plug-in's #GimpPlugIn singleton, or %NULL.
  *
  * Since: 3.0
  **/

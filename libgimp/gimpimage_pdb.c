@@ -2807,7 +2807,7 @@ gimp_image_set_resolution (gint32  image_ID,
  * gimp_unit_*() procedure definitions for the valid range of unit IDs
  * and a description of the unit system.
  *
- * Returns: The unit.
+ * Returns: (transfer none): The unit.
  **/
 GimpUnit
 gimp_image_get_unit (gint32 image_ID)

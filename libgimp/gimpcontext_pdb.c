@@ -747,7 +747,7 @@ gimp_context_set_line_width (gdouble line_width)
  *
  * This procedure returns the line width unit setting.
  *
- * Returns: The line width unit setting.
+ * Returns: (transfer none): The line width unit setting.
  *
  * Since: 2.10
  **/

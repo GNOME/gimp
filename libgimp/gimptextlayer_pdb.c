@@ -283,7 +283,7 @@ gimp_text_layer_set_font (gint32       layer_ID,
 /**
  * gimp_text_layer_get_font_size:
  * @layer_ID: The text layer.
- * @unit: (out): The unit used for the font size.
+ * @unit: (out) (transfer none): The unit used for the font size.
  *
  * Get the font size from a text layer.
  *

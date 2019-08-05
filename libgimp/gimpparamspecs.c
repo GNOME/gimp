@@ -148,6 +148,23 @@ gimp_param_image_id_values_cmp (GParamSpec   *pspec,
     return 0;
 }
 
+/**
+ * gimp_param_spec_image_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecImageID specifying a
+ * #GIMP_TYPE_IMAGE_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecImageID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_image_id (const gchar *name,
                           const gchar *nick,
@@ -303,6 +320,23 @@ gimp_param_item_id_values_cmp (GParamSpec   *pspec,
     return 0;
 }
 
+/**
+ * gimp_param_spec_item_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecItemID specifying a
+ * #GIMP_TYPE_ITEM_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecItemID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_item_id (const gchar *name,
                          const gchar *nick,
@@ -423,6 +457,23 @@ gimp_param_drawable_id_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_drawable_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecDrawableID specifying a
+ * #GIMP_TYPE_DRAWABLE_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecDrawableID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_drawable_id (const gchar *name,
                              const gchar *nick,
@@ -543,6 +594,23 @@ gimp_param_layer_id_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_layer_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecLayerID specifying a
+ * #GIMP_TYPE_LAYER_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecLayerID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_layer_id (const gchar *name,
                           const gchar *nick,
@@ -663,6 +731,23 @@ gimp_param_channel_id_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_channel_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecChannelID specifying a
+ * #GIMP_TYPE_CHANNEL_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecChannelID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_channel_id (const gchar *name,
                             const gchar *nick,
@@ -783,6 +868,23 @@ gimp_param_layer_mask_id_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_layer_mask_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecLayerMaskID specifying a
+ * #GIMP_TYPE_LAYER_MASK_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecLayerMaskID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_layer_mask_id (const gchar *name,
                                const gchar *nick,
@@ -903,6 +1005,23 @@ gimp_param_selection_id_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_selection_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecSelectionID specifying a
+ * #GIMP_TYPE_SELECTION_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecSelectionID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_selection_id (const gchar *name,
                               const gchar *nick,
@@ -1023,6 +1142,23 @@ gimp_param_vectors_id_validate (GParamSpec *pspec,
   return FALSE;
 }
 
+/**
+ * gimp_param_spec_vectors_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecVectorsID specifying a
+ * #GIMP_TYPE_VECTORS_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecVectorsID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_vectors_id (const gchar *name,
                             const gchar *nick,
@@ -1178,6 +1314,23 @@ gimp_param_display_id_values_cmp (GParamSpec   *pspec,
     return 0;
 }
 
+/**
+ * gimp_param_spec_vectors_id:
+ * @name:    Canonical name of the property specified.
+ * @nick:    Nick name of the property specified.
+ * @blurb:   Description of the property specified.
+ * @none_ok: Whether no ID is a valid value.
+ * @flags:   Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecVectorsID specifying a
+ * #GIMP_TYPE_VECTORS_ID property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecVectorsID.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_display_id (const gchar *name,
                             const gchar *nick,

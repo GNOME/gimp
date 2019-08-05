@@ -112,7 +112,7 @@ _gimp_unit_get_number_of_built_in_units (void)
  * will have to set it to FALSE with gimp_unit_set_deletion_flag() to
  * make it persistent.
  *
- * Returns: The new unit's ID.
+ * Returns: (transfer none): The new unit's ID.
  **/
 GimpUnit
 _gimp_unit_new (const gchar *identifier,

@@ -154,7 +154,7 @@ gimp_get_default_comment (void)
  *
  * Returns the default unit's integer ID.
  *
- * Returns: Default unit.
+ * Returns: (transfer none): Default unit.
  *
  * Since: 2.4
  **/
