@@ -117,9 +117,9 @@ header files installed.
      respectively decoding and encoding), otherwise the plug-in is
      mostly useless.
 
- 14. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
-     or newer) to be present. You will also need PyGTK and the
-     respective development headers.
+ 14. GObject Introspection requires the following dependencies to be
+     built and installed with introspection as well: cairo, GdkPixbuf,
+     GEGL, GIO, GLib, GObject and GTK+.
 
  15. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
