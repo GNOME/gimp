@@ -56,7 +56,8 @@ typedef enum
   GP_PARAM_DEF_TYPE_FLOAT,
   GP_PARAM_DEF_TYPE_STRING,
   GP_PARAM_DEF_TYPE_COLOR,
-  GP_PARAM_DEF_TYPE_ID
+  GP_PARAM_DEF_TYPE_ID,
+  GP_PARAM_DEF_TYPE_PARAM_DEF
 } GPParamDefType;
 
 typedef enum
@@ -85,6 +86,7 @@ typedef struct _GPParamDefFloat    GPParamDefFloat;
 typedef struct _GPParamDefString   GPParamDefString;
 typedef struct _GPParamDefColor    GPParamDefColor;
 typedef struct _GPParamDefID       GPParamDefID;
+typedef struct _GPParamDefParamDef GPParamDefParamDef;
 typedef struct _GPParam            GPParam;
 typedef struct _GPParamArray       GPParamArray;
 typedef struct _GPParamStringArray GPParamStringArray;
@@ -190,6 +192,11 @@ struct _GPParamDefID
   gint32 none_ok;
 };
 
+struct _GPParamDefParamDef
+{
+  gchar *type_name;
+};
+
 struct _GPParamDef
 {
   GPParamDefType  param_def_type;
@@ -200,14 +207,15 @@ struct _GPParamDef
 
   union
   {
-    GPParamDefInt     m_int;
-    GPParamDefUnit    m_unit;
-    GPParamDefEnum    m_enum;
-    GPParamDefBoolean m_boolean;
-    GPParamDefFloat   m_float;
-    GPParamDefString  m_string;
-    GPParamDefColor   m_color;
-    GPParamDefID      m_id;
+    GPParamDefInt      m_int;
+    GPParamDefUnit     m_unit;
+    GPParamDefEnum     m_enum;
+    GPParamDefBoolean  m_boolean;
+    GPParamDefFloat    m_float;
+    GPParamDefString   m_string;
+    GPParamDefColor    m_color;
+    GPParamDefID       m_id;
+    GPParamDefParamDef m_param_def;
   } meta;
 };
 

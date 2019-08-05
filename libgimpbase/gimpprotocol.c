@@ -1136,6 +1136,13 @@ _gp_param_def_read (GIOChannel *channel,
                                    user_data))
         return FALSE;
       break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      if (! _gimp_wire_read_string (channel,
+                                    &param_def->meta.m_param_def.type_name, 1,
+                                    user_data))
+        return FALSE;
+      break;
     }
 
   return TRUE;
@@ -1170,6 +1177,10 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
     case GP_PARAM_DEF_TYPE_COLOR:
     case GP_PARAM_DEF_TYPE_ID:
+      break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      g_free (param_def->meta.m_param_def.type_name);
       break;
     }
 }
@@ -1401,6 +1412,13 @@ _gp_param_def_write (GIOChannel *channel,
       if (! _gimp_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_id.none_ok, 1,
                                     user_data))
+        return FALSE;
+      break;
+
+    case GP_PARAM_DEF_TYPE_PARAM_DEF:
+      if (! _gimp_wire_write_string (channel,
+                                     &param_def->meta.m_param_def.type_name, 1,
+                                     user_data))
         return FALSE;
       break;
     }
