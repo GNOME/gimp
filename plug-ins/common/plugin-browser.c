@@ -102,8 +102,6 @@ static void        browser_list_selection_changed (GtkTreeSelection *selection,
                                                    PluginBrowser    *browser);
 static void        browser_tree_selection_changed (GtkTreeSelection *selection,
                                                    PluginBrowser    *browser);
-static void        browser_show_plugin            (PluginBrowser    *browser,
-                                                   PInfo            *pinfo);
 
 static gboolean    find_existing_mpath            (GtkTreeModel     *model,
                                                    const gchar      *mpath,
@@ -784,7 +782,9 @@ browser_list_selection_changed (GtkTreeSelection *selection,
 
   g_free (mpath);
 
-  browser_show_plugin (browser, pinfo);
+  gimp_browser_set_widget (GIMP_BROWSER (browser->browser),
+                           gimp_proc_view_new (pinfo->realname,
+                                               pinfo->menu));
 }
 
 static void
@@ -860,59 +860,7 @@ browser_tree_selection_changed (GtkTreeSelection *selection,
       g_warning ("Failed to find node in list");
     }
 
-  browser_show_plugin (browser, pinfo);
-}
-
-static void
-browser_show_plugin (PluginBrowser *browser,
-                     PInfo         *pinfo)
-{
-  gchar           *blurb         = NULL;
-  gchar           *help          = NULL;
-  gchar           *author        = NULL;
-  gchar           *copyright     = NULL;
-  gchar           *date          = NULL;
-  GimpPDBProcType  type          = 0;
-  gint             n_params      = 0;
-  gint             n_return_vals = 0;
-  GimpParamDef    *params        = NULL;
-  GimpParamDef    *return_vals   = NULL;
-
-  g_return_if_fail (browser != NULL);
-  g_return_if_fail (pinfo != NULL);
-
-  gimp_procedural_db_proc_info (pinfo->realname,
-                                &blurb,
-                                &help,
-                                &author,
-                                &copyright,
-                                &date,
-                                &type,
-                                &n_params,
-                                &n_return_vals,
-                                &params,
-                                &return_vals);
-
   gimp_browser_set_widget (GIMP_BROWSER (browser->browser),
                            gimp_proc_view_new (pinfo->realname,
-                                               pinfo->menu,
-                                               blurb,
-                                               help,
-                                               author,
-                                               copyright,
-                                               date,
-                                               type,
-                                               n_params,
-                                               n_return_vals,
-                                               params,
-                                               return_vals));
-
-  g_free (blurb);
-  g_free (help);
-  g_free (author);
-  g_free (copyright);
-  g_free (date);
-
-  gimp_destroy_paramdefs (params,      n_params);
-  gimp_destroy_paramdefs (return_vals, n_return_vals);
+                                               pinfo->menu));
 }

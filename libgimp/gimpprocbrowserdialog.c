@@ -93,8 +93,6 @@ static void       browser_row_activated     (GtkTreeView           *treeview,
                                              GtkTreePath           *path,
                                              GtkTreeViewColumn     *column,
                                              GimpProcBrowserDialog *dialog);
-static void       browser_show_procedure    (GimpProcBrowserDialog *dialog,
-                                             const gchar           *proc_name);
 static void       browser_search            (GimpBrowser           *browser,
                                              const gchar           *query_text,
                                              gint                   search_type,
@@ -329,7 +327,10 @@ browser_selection_changed (GtkTreeSelection      *sel,
       gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->store), &iter,
                           COLUMN_PROC_NAME, &proc_name,
                           -1);
-      browser_show_procedure (dialog, proc_name);
+
+      gimp_browser_set_widget (GIMP_BROWSER (dialog->priv->browser),
+                               gimp_proc_view_new (proc_name, NULL));
+
       g_free (proc_name);
     }
 
@@ -343,58 +344,6 @@ browser_row_activated (GtkTreeView           *treeview,
                        GimpProcBrowserDialog *dialog)
 {
   g_signal_emit (dialog, dialog_signals[ROW_ACTIVATED], 0);
-}
-
-static void
-browser_show_procedure (GimpProcBrowserDialog *dialog,
-                        const gchar           *proc_name)
-{
-  GimpProcBrowserDialogPrivate *priv = GET_PRIVATE (dialog);
-  gchar                        *proc_blurb;
-  gchar                        *proc_help;
-  gchar                        *proc_author;
-  gchar                        *proc_copyright;
-  gchar                        *proc_date;
-  GimpPDBProcType               proc_type;
-  gint                          n_params;
-  gint                          n_return_vals;
-  GimpParamDef                 *params;
-  GimpParamDef                 *return_vals;
-
-  gimp_procedural_db_proc_info (proc_name,
-                                &proc_blurb,
-                                &proc_help,
-                                &proc_author,
-                                &proc_copyright,
-                                &proc_date,
-                                &proc_type,
-                                &n_params,
-                                &n_return_vals,
-                                &params,
-                                &return_vals);
-
-  gimp_browser_set_widget (GIMP_BROWSER (priv->browser),
-                           gimp_proc_view_new (proc_name,
-                                               NULL,
-                                               proc_blurb,
-                                               proc_help,
-                                               proc_author,
-                                               proc_copyright,
-                                               proc_date,
-                                               proc_type,
-                                               n_params,
-                                               n_return_vals,
-                                               params,
-                                               return_vals));
-
-  g_free (proc_blurb);
-  g_free (proc_help);
-  g_free (proc_author);
-  g_free (proc_copyright);
-  g_free (proc_date);
-
-  gimp_destroy_paramdefs (params,      n_params);
-  gimp_destroy_paramdefs (return_vals, n_return_vals);
 }
 
 static void
