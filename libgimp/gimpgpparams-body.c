@@ -51,7 +51,8 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_int.max_val     = ispec->maximum;
       param_def->meta.m_int.default_val = ispec->default_value;
     }
-  else if (pspec_type == GIMP_TYPE_PARAM_INT8)
+  else if (pspec_type == G_TYPE_PARAM_UINT ||
+           pspec_type == GIMP_TYPE_PARAM_INT8)
     {
       GParamSpecUInt *uspec = G_PARAM_SPEC_UINT (pspec);
 
