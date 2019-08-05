@@ -65,6 +65,7 @@ libgimpmath_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimpmath_introspectable)
 
 libgimpmathinclude_HEADERS = \
+	$(top_srcdir)/libgimpmath/gimpmath.h	\
 	$(libgimpmath_introspectable_headers)
 
 libgimpmath_@GIMP_API_VERSION@_la_LDFLAGS = \
