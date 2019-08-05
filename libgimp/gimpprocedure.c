@@ -23,11 +23,6 @@
 #include <stdarg.h>
 #include <sys/types.h>
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gegl.h>
-
-#include "libgimpbase/gimpbase.h"
-
 #include "gimp.h"
 #include "gimpprocedure-private.h"
 
@@ -210,6 +205,8 @@ gimp_procedure_finalize (GObject *object)
  * @run_func is basically the lifetime of the plug-in.
  *
  * Returns: a new #GimpProcedure.
+ *
+ * Since: 3.0
  **/
 GimpProcedure  *
 gimp_procedure_new (GimpPlugIn      *plug_in,
@@ -654,6 +651,8 @@ gimp_procedure_get_icon (GimpProcedure  *procedure,
  * The arguments will be ordered according to the call order to
  * gimp_procedure_add_argument() and
  * gimp_procedure_add_argument_from_property().
+ *
+ * Since: 3.0
  **/
 void
 gimp_procedure_add_argument (GimpProcedure *procedure,
@@ -714,6 +713,8 @@ gimp_procedure_add_argument_from_property (GimpProcedure *procedure,
  * The returned values will be ordered according to the call order to
  * gimp_procedure_add_return_value() and
  * gimp_procedure_add_return_value_from_property().
+ *
+ * Since: 3.0
  **/
 void
 gimp_procedure_add_return_value (GimpProcedure *procedure,
@@ -847,6 +848,8 @@ gimp_procedure_new_arguments (GimpProcedure *procedure)
  *
  * Returns: the expected #GimpValueArray as could be returned by a
  *          #GimpRunFunc.
+ *
+ * Since: 3.0
  **/
 GimpValueArray *
 gimp_procedure_new_return_values (GimpProcedure     *procedure,
