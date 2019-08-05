@@ -468,7 +468,7 @@ gimp_param_string_validate (GParamSpec *pspec,
  * @allow_non_utf8: Whether non-UTF-8 strings are allowed.
  * @null_ok:        Whether %NULL is allowed.
  * @non_empty:      Whether a non-½NULL value must be set.
- * @default_:       The default value.
+ * @default_value:  The default value.
  * @flags:          Flags for the property specified.
  *
  * Creates a new #GimpParamSpecString specifying a
