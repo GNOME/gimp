@@ -97,7 +97,11 @@ goat_create_procedure (GimpPlugIn  *plug_in,
       procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
                                       goat_run, NULL, NULL);
 
+      gimp_procedure_set_image_types (procedure,
+                                      "RGB*, INDEXED*, GRAY*");
+
       gimp_procedure_set_menu_label (procedure, N_("Goat-e_xercise"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters");
 
       gimp_procedure_set_documentation (procedure,
                                         N_("Exercise a goat"),
@@ -109,10 +113,6 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                       "Øyvind Kolås <pippin@gimp.org>",
                                       "21march 2012");
 
-      gimp_procedure_set_image_types (procedure,
-                                      "RGB*, INDEXED*, GRAY*");
-
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters");
       gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME,
                                (const guint8 *) GIMP_ICON_GEGL);
 

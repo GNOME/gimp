@@ -86,9 +86,17 @@ GimpPlugIn     * gimp_procedure_get_plug_in        (GimpProcedure     *procedure
 const gchar    * gimp_procedure_get_name           (GimpProcedure     *procedure);
 GimpPDBProcType  gimp_procedure_get_proc_type      (GimpProcedure     *procedure);
 
+void             gimp_procedure_set_image_types    (GimpProcedure     *procedure,
+                                                    const gchar       *image_types);
+const gchar    * gimp_procedure_get_image_types    (GimpProcedure     *procedure);
+
 void             gimp_procedure_set_menu_label     (GimpProcedure     *procedure,
                                                     const gchar       *menu_label);
 const gchar    * gimp_procedure_get_menu_label     (GimpProcedure     *procedure);
+
+void             gimp_procedure_add_menu_path      (GimpProcedure     *procedure,
+                                                    const gchar       *menu_path);
+GList          * gimp_procedure_get_menu_paths     (GimpProcedure     *procedure);
 
 void             gimp_procedure_set_documentation  (GimpProcedure     *procedure,
                                                     const gchar       *blurb,
@@ -106,20 +114,12 @@ const gchar    * gimp_procedure_get_authors        (GimpProcedure     *procedure
 const gchar    * gimp_procedure_get_copyright      (GimpProcedure     *procedure);
 const gchar    * gimp_procedure_get_date           (GimpProcedure     *procedure);
 
-void             gimp_procedure_set_image_types    (GimpProcedure     *procedure,
-                                                    const gchar       *image_types);
-const gchar    * gimp_procedure_get_image_types    (GimpProcedure     *procedure);
-
 void             gimp_procedure_set_icon           (GimpProcedure     *procedure,
                                                     GimpIconType       icon_type,
                                                     const guint8      *icon_data);
 GimpIconType     gimp_procedure_get_icon           (GimpProcedure     *procedure,
                                                     const guint8     **icon_data,
                                                     gint              *icon_data_length);
-
-void             gimp_procedure_add_menu_path      (GimpProcedure     *procedure,
-                                                    const gchar       *menu_path);
-GList          * gimp_procedure_get_menu_paths     (GimpProcedure     *procedure);
 
 void             gimp_procedure_add_argument       (GimpProcedure     *procedure,
                                                     GParamSpec        *pspec);

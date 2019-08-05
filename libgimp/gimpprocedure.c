@@ -55,30 +55,33 @@ gimp_pdb_error_quark (void)
 
 struct _GimpProcedurePrivate
 {
-  GimpPlugIn       *plug_in;        /* the procedure's plug-in        */
-  GimpPDBProcType   proc_type;      /* procedure type                 */
+  GimpPlugIn       *plug_in;
 
-  gchar            *name;           /* procedure name                 */
-  gchar            *menu_label;
-  gchar            *blurb;          /* Short procedure description    */
-  gchar            *help;           /* Detailed help instructions     */
-  gchar            *help_id;
-  gchar            *authors;        /* Authors field                  */
-  gchar            *copyright;      /* Copyright field                */
-  gchar            *date;           /* Date field                     */
+  gchar            *name;
+  GimpPDBProcType   proc_type;
+
   gchar            *image_types;
+
+  gchar            *menu_label;
+  GList            *menu_paths;
+
+  gchar            *blurb;
+  gchar            *help;
+  gchar            *help_id;
+
+  gchar            *authors;
+  gchar            *copyright;
+  gchar            *date;
 
   GimpIconType      icon_type;
   guint8           *icon_data;
   gint              icon_data_length;
 
-  GList            *menu_paths;
+  gint32            n_args;
+  GParamSpec      **args;
 
-  gint32            n_args;         /* Number of procedure arguments  */
-  GParamSpec      **args;           /* Array of procedure arguments   */
-
-  gint32            n_values;       /* Number of return values        */
-  GParamSpec      **values;         /* Array of return values         */
+  gint32            n_values;
+  GParamSpec      **values;
 
   GimpRunFunc       run_func;
   gpointer          run_data;
@@ -127,6 +130,7 @@ gimp_procedure_finalize (GObject *object)
   g_clear_object  (&procedure->priv->plug_in);
 
   g_clear_pointer (&procedure->priv->name,        g_free);
+  g_clear_pointer (&procedure->priv->image_types, g_free);
   g_clear_pointer (&procedure->priv->menu_label,  g_free);
   g_clear_pointer (&procedure->priv->blurb,       g_free);
   g_clear_pointer (&procedure->priv->help,        g_free);
@@ -134,13 +138,12 @@ gimp_procedure_finalize (GObject *object)
   g_clear_pointer (&procedure->priv->authors,     g_free);
   g_clear_pointer (&procedure->priv->copyright,   g_free);
   g_clear_pointer (&procedure->priv->date,        g_free);
-  g_clear_pointer (&procedure->priv->image_types, g_free);
-
-  g_clear_pointer (&procedure->priv->icon_data, g_free);
-  procedure->priv->icon_data_length = 0;
 
   g_list_free_full (procedure->priv->menu_paths, g_free);
   procedure->priv->menu_paths = NULL;
+
+  g_clear_pointer (&procedure->priv->icon_data, g_free);
+  procedure->priv->icon_data_length = 0;
 
   if (procedure->priv->args)
     {
@@ -284,6 +287,48 @@ gimp_procedure_get_proc_type (GimpProcedure *procedure)
 }
 
 /**
+ * gimp_procedure_set_image_types:
+ * @image_types the image types this procedure can operate on.
+ *
+ * This is a comma separated list of image types, or actually drawable
+ * types, that this procedure can deal with. Wildcards are possible
+ * here, so you could say "RGB*" instead of "RGB, RGBA" or "*" for all
+ * image types.
+ *
+ * Supported types are "RGB", "GRAY", "INDEXED" and their variants
+ * with alpha.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_set_image_types (GimpProcedure *procedure,
+                                const gchar   *image_types)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  g_free (procedure->priv->image_types);
+  procedure->priv->image_types = g_strdup (image_types);
+}
+
+/**
+ * gimp_procedure_get_image_types:
+ *
+ * This procedure retrieves the list of image types the procedure can
+ * operate on. See gimp_procedure_set_image_types().
+ *
+ * Returns: The image types.
+ *
+ * Since: 3.0
+ **/
+const gchar *
+gimp_procedure_get_image_types (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return procedure->priv->image_types;
+}
+
+/**
  * gimp_procedure_set_menu_label:
  * @procedure:  A #GimpProcedure.
  * @menu_label: The @procedure's menu label.
@@ -324,6 +369,56 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   return procedure->priv->menu_label;
+}
+
+/**
+ * gimp_procedure_add_menu_path:
+ * @procedure: A #GimpProcedure.
+ * @menu_path: The @procedure's additional menu path.
+ *
+ * Adds a menu path to te procedure. Only procedures which have a menu
+ * label can add a menu path.
+ *
+ * Menu paths are untranslated paths to menus and submenus with the
+ * syntax:
+ *
+ * &lt;Prefix&gt;/Path/To/Submenu
+ *
+ * for instance:
+ *
+ * &lt;Image&gt;/Layer/Transform
+ *
+ * See also: gimp_plug_in_add_menu_branch().
+ *
+ * Since: 3.0
+ **/
+void
+gimp_procedure_add_menu_path (GimpProcedure *procedure,
+                              const gchar   *menu_path)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (menu_path != NULL);
+  g_return_if_fail (procedure->priv->menu_label != NULL);
+
+  procedure->priv->menu_paths = g_list_append (procedure->priv->menu_paths,
+                                               g_strdup (menu_path));
+}
+
+/**
+ * gimp_procedure_get_menu_paths:
+ * @procedure: A #GimpProcedure.
+ *
+ * Returns: (transfer none) (element-type gchar*): the @procedure's
+ *          menu paths as added with gimp_procedure_add_menu_path().
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_procedure_get_menu_paths (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  return procedure->priv->menu_paths;
 }
 
 /**
@@ -495,48 +590,6 @@ gimp_procedure_get_date (GimpProcedure *procedure)
   return procedure->priv->date;
 }
 
-/**
- * gimp_procedure_set_image_types:
- * @image_types the image types this procedure can operate on.
- *
- * This is a comma separated list of image types, or actually drawable
- * types, that this procedure can deal with. Wildcards are possible
- * here, so you could say "RGB*" instead of "RGB, RGBA" or "*" for all
- * image types.
- *
- * Supported types are "RGB", "GRAY", "INDEXED" and their variants
- * with alpha.
- *
- * Since: 3.0
- **/
-void
-gimp_procedure_set_image_types (GimpProcedure *procedure,
-                                const gchar   *image_types)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-
-  g_free (procedure->priv->image_types);
-  procedure->priv->image_types = g_strdup (image_types);
-}
-
-/**
- * gimp_procedure_get_image_types:
- *
- * This procedure retrieves the list of image types the procedure can
- * operate on. See gimp_procedure_set_image_types().
- *
- * Returns: The image types.
- *
- * Since: 3.0
- **/
-const gchar *
-gimp_procedure_get_image_types (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  return procedure->priv->image_types;
-}
-
 void
 gimp_procedure_set_icon (GimpProcedure *procedure,
                          GimpIconType   icon_type,
@@ -590,56 +643,6 @@ gimp_procedure_get_icon (GimpProcedure  *procedure,
   *icon_data_length = procedure->priv->icon_data_length;
 
   return procedure->priv->icon_type;
-}
-
-/**
- * gimp_procedure_add_menu_path:
- * @procedure: A #GimpProcedure.
- * @menu_path: The @procedure's additional menu path.
- *
- * Adds a menu path to te procedure. Only procedures which have a menu
- * label can add a menu path.
- *
- * Menu paths are untranslated paths to menus and submenus with the
- * syntax:
- *
- * &lt;Prefix&gt;/Path/To/Submenu
- *
- * for instance:
- *
- * &lt;Image&gt;/Layer/Transform
- *
- * See also: gimp_plug_in_add_menu_branch().
- *
- * Since: 3.0
- **/
-void
-gimp_procedure_add_menu_path (GimpProcedure *procedure,
-                              const gchar   *menu_path)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (menu_path != NULL);
-  g_return_if_fail (procedure->priv->menu_label != NULL);
-
-  procedure->priv->menu_paths = g_list_append (procedure->priv->menu_paths,
-                                               g_strdup (menu_path));
-}
-
-/**
- * gimp_procedure_get_menu_paths:
- * @procedure: A #GimpProcedure.
- *
- * Returns: (transfer none) (element-type gchar*): the @procedure's
- *          menu paths as added with gimp_procedure_add_menu_path().
- *
- * Since: 3.0
- **/
-GList *
-gimp_procedure_get_menu_paths (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  return procedure->priv->menu_paths;
 }
 
 /**
