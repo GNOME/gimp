@@ -1328,8 +1328,7 @@ gimp_value_take_float_array (GValue  *value,
  *
  * Creates a new #GimpArray containing string data, of size @length.
  *
- * If @static_data is %TRUE, @data is used as-is and should also be
- * NULL-terminated.
+ * If @static_data is %TRUE, @data is used as-is.
  *
  * If @static_data is %FALSE, the string and array will be re-allocated,
  * hence you are expected to free your input data after.
@@ -1345,8 +1344,6 @@ gimp_string_array_new (const gchar **data,
 
   g_return_val_if_fail ((data == NULL && length == 0) ||
                         (data != NULL && length  > 0), NULL);
-  g_return_val_if_fail (! static_data || ! data ||
-                        g_strv_length (data) == length, NULL);
 
   array = g_slice_new0 (GimpArray);
 
@@ -1569,7 +1566,7 @@ gimp_value_get_string_array (const GValue *value)
  * gimp_value_dup_string_array:
  * @value: a #GValue holding a string #GimpArray.
  *
- * Returns: (transfer full)  (array zero-terminated=1): a deep copy of the array of strings.
+ * Returns: (transfer full) (array zero-terminated=1): a deep copy of the array of strings.
  */
 gchar **
 gimp_value_dup_string_array (const GValue *value)
