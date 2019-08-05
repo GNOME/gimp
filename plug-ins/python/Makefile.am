@@ -11,7 +11,7 @@ source_scripts = \
 ##	foggify.py			\
 ##	gradients-save-as-css.py	\
 ##	histogram-export.py     	\
-##	palette-offset.py		\
+	palette-offset.py		\
 ##	palette-sort.py			\
 	palette-to-gradient.py
 ##	py-slice.py			\
@@ -30,7 +30,7 @@ scripts = \
 ##	foggify/foggify.py				\
 ##	gradients-save-as-css/gradients-save-as-css.py	\
 ##	histogram-export/histogram-export.py     	\
-##	palette-offset/palette-offset.py		\
+	palette-offset/palette-offset.py		\
 ##	palette-sort/palette-sort.py			\
 	palette-to-gradient/palette-to-gradient.py
 ##	py-slice/py-slice.py				\
