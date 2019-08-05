@@ -405,6 +405,89 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
 }
 
 /**
+ * gimp_procedural_db_proc_argument:
+ * @procedure_name: The procedure name.
+ * @arg_num: The argument number.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's argument.
+ *
+ * This procedure returns the #GParamSpec of procedure_name's argument.
+ *
+ * Returns: (transfer full): The GParamSpec of the argument.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_procedural_db_proc_argument (const gchar *procedure_name,
+                                  gint         arg_num)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GParamSpec *param_spec = NULL;
+
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
+  g_value_set_int (gimp_value_array_index (args, 1), arg_num);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-argument",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    param_spec = g_value_dup_param (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return param_spec;
+}
+
+/**
+ * gimp_procedural_db_proc_return_value:
+ * @procedure_name: The procedure name.
+ * @val_num: The return value number.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's return value.
+ *
+ * This procedure returns the #GParamSpec of procedure_name's return
+ * value.
+ *
+ * Returns: (transfer full): The GParamSpec of the return value.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
+GParamSpec *
+gimp_procedural_db_proc_return_value (const gchar *procedure_name,
+                                      gint         val_num)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GParamSpec *param_spec = NULL;
+
+  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+                                          GIMP_TYPE_INT32,
+                                          G_TYPE_NONE);
+  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
+  g_value_set_int (gimp_value_array_index (args, 1), val_num);
+
+  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-return-value",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    param_spec = g_value_dup_param (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return param_spec;
+}
+
+/**
  * _gimp_procedural_db_get_data:
  * @identifier: The identifier associated with data.
  * @bytes: (out): The number of bytes in the data.

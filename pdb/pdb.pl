@@ -277,6 +277,17 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_take_boxed ($value, $var)',
 		     headers         => [ qw("libgimpbase/gimpbase.h") ] },
 
+    param       => { name            => 'PARAM',
+		     gtype           => 'G_TYPE_PARAM_SPEC',
+		     type            => 'GParamSpec *',
+		     const_type      => 'GParamSpec *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer full)',
+		     get_value_func  => '$var = g_value_get_param ($value)',
+		     dup_value_func  => '$var = g_value_dup_param ($value)',
+		     set_value_func  => 'g_value_set_param ($value, $var)',
+		     take_value_func => 'g_value_take_param ($value, $var)' },
+
     # Special cases
     enum        => { name            => 'INT32',
 		     gtype           => 'G_TYPE_ENUM',

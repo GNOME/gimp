@@ -371,6 +371,116 @@ procedural_db_proc_val_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+procedural_db_proc_argument_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *procedure_name;
+  gint32 arg_num;
+  GParamSpec *param_spec = NULL;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  arg_num = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpProcedure *proc;
+      gchar         *canonical;
+
+      canonical = gimp_canonicalize_identifier (procedure_name);
+
+      proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
+
+      if (! proc)
+        {
+          const gchar *compat_name;
+
+          compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+
+          if (compat_name)
+            proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
+        }
+
+      g_free (canonical);
+
+      if (proc && (arg_num >= 0 && arg_num < proc->num_args))
+        {
+          param_spec = g_param_spec_ref (proc->args[arg_num]);
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_param (gimp_value_array_index (return_vals, 1), param_spec);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+procedural_db_proc_return_value_invoker (GimpProcedure         *procedure,
+                                         Gimp                  *gimp,
+                                         GimpContext           *context,
+                                         GimpProgress          *progress,
+                                         const GimpValueArray  *args,
+                                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *procedure_name;
+  gint32 val_num;
+  GParamSpec *param_spec = NULL;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  val_num = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpProcedure *proc;
+      gchar         *canonical;
+
+      canonical = gimp_canonicalize_identifier (procedure_name);
+
+      proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
+
+      if (! proc)
+        {
+          const gchar *compat_name;
+
+          compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+
+          if (compat_name)
+            proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
+        }
+
+      g_free (canonical);
+
+      if (proc && (val_num >= 0 && val_num < proc->num_values))
+        {
+          param_spec = g_param_spec_ref (proc->values[val_num]);
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_param (gimp_value_array_index (return_vals, 1), param_spec);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 procedural_db_get_data_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
@@ -821,6 +931,78 @@ register_procedural_db_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-procedural-db-proc-argument
+   */
+  procedure = gimp_procedure_new (procedural_db_proc_argument_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-proc-argument");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-procedural-db-proc-argument",
+                                     "Queries the procedural database for information on the specified procedure's argument.",
+                                     "This procedure returns the #GParamSpec of procedure_name's argument.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("arg-num",
+                                                      "arg num",
+                                                      "The argument number",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_param ("param-spec",
+                                                       "param spec",
+                                                       "The GParamSpec of the argument",
+                                                       G_TYPE_PARAM,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-procedural-db-proc-return-value
+   */
+  procedure = gimp_procedure_new (procedural_db_proc_return_value_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-proc-return-value");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-procedural-db-proc-return-value",
+                                     "Queries the procedural database for information on the specified procedure's return value.",
+                                     "This procedure returns the #GParamSpec of procedure_name's return value.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2019",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The procedure name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("val-num",
+                                                      "val num",
+                                                      "The return value number",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_param ("param-spec",
+                                                       "param spec",
+                                                       "The GParamSpec of the return value",
+                                                       G_TYPE_PARAM,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

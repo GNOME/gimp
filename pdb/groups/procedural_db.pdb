@@ -244,6 +244,124 @@ CODE
     );
 }
 
+sub procedural_db_proc_argument {
+    $blurb = <<BLURB;
+Queries the procedural database for information on the specified procedure's
+argument.
+BLURB
+
+    $help = <<HELP;
+This procedure returns the #GParamSpec of procedure_name's argument.
+HELP
+
+    &mitch_pdb_misc;
+    $date = '2019';
+    $since = '3.0';
+
+    @inargs = (
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc => 'The procedure name' },
+	{ name => 'arg_num', type => 'int32',
+	  desc => 'The argument number' }
+    );
+
+    @outargs = (
+	{ name => 'param_spec', type => 'param',
+	  desc => "The GParamSpec of the argument" }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  GimpProcedure *proc;
+  gchar         *canonical;
+
+  canonical = gimp_canonicalize_identifier (procedure_name);
+
+  proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
+
+  if (! proc)
+    {
+      const gchar *compat_name;
+
+      compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+
+      if (compat_name)
+        proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
+    }
+
+  g_free (canonical);
+
+  if (proc && (arg_num >= 0 && arg_num < proc->num_args))
+    {
+      param_spec = g_param_spec_ref (proc->args[arg_num]);
+    }
+  else
+    success = FALSE;
+}
+CODE
+   );
+}
+
+sub procedural_db_proc_return_value {
+    $blurb = <<BLURB;
+Queries the procedural database for information on the specified procedure's
+return value.
+BLURB
+
+    $help = <<HELP;
+This procedure returns the #GParamSpec of procedure_name's return value.
+HELP
+
+    &mitch_pdb_misc;
+    $date = '2019';
+    $since = '3.0';
+
+    @inargs = (
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc => 'The procedure name' },
+	{ name => 'val_num', type => 'int32',
+	  desc => 'The return value number' }
+    );
+
+    @outargs = (
+	{ name => 'param_spec', type => 'param',
+	  desc => "The GParamSpec of the return value" }
+    );
+
+   %invoke = (
+	code => <<CODE
+{
+  GimpProcedure *proc;
+  gchar         *canonical;
+
+  canonical = gimp_canonicalize_identifier (procedure_name);
+
+  proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
+
+  if (! proc)
+    {
+      const gchar *compat_name;
+
+      compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+
+      if (compat_name)
+        proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
+    }
+
+  g_free (canonical);
+
+  if (proc && (val_num >= 0 && val_num < proc->num_values))
+    {
+      param_spec = g_param_spec_ref (proc->values[val_num]);
+    }
+  else
+    success = FALSE;
+}
+CODE
+   );
+}
+
 sub procedural_db_proc_arg {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
@@ -507,7 +625,10 @@ CODE
             procedural_db_query
             procedural_db_proc_exists
             procedural_db_proc_info
-            procedural_db_proc_arg procedural_db_proc_val
+            procedural_db_proc_arg
+            procedural_db_proc_val
+            procedural_db_proc_argument
+            procedural_db_proc_return_value
 	    procedural_db_get_data procedural_db_get_data_size
 	    procedural_db_set_data);
 

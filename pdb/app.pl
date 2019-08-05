@@ -510,6 +510,15 @@ gimp_param_spec_parasite ("$name",
                           $flags)
 CODE
     }
+    elsif ($pdbtype eq 'param') {
+	$pspec = <<CODE;
+g_param_spec_param ("$name",
+                    "$nick",
+                    "$blurb",
+                    G_TYPE_PARAM,
+                    $flags)
+CODE
+    }
     elsif ($pdbtype eq 'int32array') {
 	$pspec = <<CODE;
 gimp_param_spec_int32_array ("$name",
