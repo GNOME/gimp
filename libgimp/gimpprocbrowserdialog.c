@@ -221,6 +221,10 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   parent = gtk_widget_get_parent (parent);
 
   gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
+
+  /* first search (all procedures) */
+  browser_search (GIMP_BROWSER (dialog->priv->browser),
+                  "", SEARCH_TYPE_ALL, dialog);
 }
 
 
@@ -268,10 +272,6 @@ gimp_proc_browser_dialog_new (const gchar  *title,
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
 
   va_end (args);
-
-  /* first search (all procedures) */
-  browser_search (GIMP_BROWSER (dialog->priv->browser),
-                  "", SEARCH_TYPE_ALL, dialog);
 
   return GTK_WIDGET (dialog);
 }
