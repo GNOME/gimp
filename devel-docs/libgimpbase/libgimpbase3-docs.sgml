@@ -64,5 +64,6 @@
     <title>Index of deprecated symbols</title>
     <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
   </index>
+  <xi:include href="xml/annotation-glossary.xml"><xi:fallback /></xi:include>
 
 </book>
