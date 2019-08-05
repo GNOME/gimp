@@ -66,7 +66,7 @@
 #include "gimp-shm.h"
 
 
-#define TILE_MAP_SIZE     (_tile_width * _tile_height * 32)
+#define TILE_MAP_SIZE     (gimp_tile_width () * gimp_tile_height () * 32)
 #define ERRMSG_SHM_FAILED "Could not attach to gimp shared memory segment"
 
 
@@ -113,12 +113,12 @@ _gimp_shm_open (gint shm_ID)
       g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);
 
       /* Open the file mapping */
-      shm_handle = OpenFileMapping (FILE_MAP_ALL_ACCESS,
-                                    0, fileMapName);
-      if (shm_handle)
+      _shm_handle = OpenFileMapping (FILE_MAP_ALL_ACCESS,
+                                     0, fileMapName);
+      if (_shm_handle)
         {
           /* Map the shared memory into our address space for use */
-          _shm_addr = (guchar *) MapViewOfFile (shm_handle,
+          _shm_addr = (guchar *) MapViewOfFile (_shm_handle,
                                                 FILE_MAP_ALL_ACCESS,
                                                 0, 0, TILE_MAP_SIZE);
 
@@ -184,8 +184,8 @@ _gimp_shm_close (void)
 
 #elif defined(USE_WIN32_SHM)
 
-  if (shm_handle)
-    CloseHandle (shm_handle);
+  if (_shm_handle)
+    CloseHandle (_shm_handle);
 
 #elif defined(USE_POSIX_SHM)
 
