@@ -170,7 +170,7 @@ def run(procedure, args, data):
 
         def browse(self):
             if not self.browse_dlg:
-                dlg = Gimp.ProcBrowserDialog()
+                dlg = Gimp.ProcBrowserDialog(use_header_bar=True)
                 Gtk.Window.set_title(dlg, _("Python Procedure Browser"))
                 Gtk.Window.set_role(dlg, PROC_NAME)
                 Gtk.Dialog.add_button(dlg, "Apply", Gtk.ResponseType.APPLY)
