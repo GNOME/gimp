@@ -49,8 +49,17 @@ def make_gradient(palette, num_segments, num_colors):
     return gradient
 
 def run(procedure, args, data):
-    palette = Gimp.context_get_palette()
-    (_, num_colors) = Gimp.palette_get_info(palette)
+    # Get the parameters
+    palette = None
+    if args.length() > 1:
+        palette = args.index(1)
+    if palette == '' or palette is None:
+        palette = Gimp.context_get_palette()
+    (exists, num_colors) = Gimp.palette_get_info(palette)
+    if not exists:
+        error = 'Unknown palette: {}'.format(palette)
+        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+                                           GLib.Error(error))
 
     if procedure.get_name() == 'python-fu-palette-to-gradient':
         num_segments = num_colors - 1
@@ -76,17 +85,29 @@ def run(procedure, args, data):
     return retval
 
 class PaletteToGradient (Gimp.PlugIn):
-    ## Properties: parameters ##
+    ## Parameter: run mode ##
     @GObject.Property(type=Gimp.RunMode,
                       default=Gimp.RunMode.NONINTERACTIVE,
                       nick="Run mode", blurb="The run mode")
     def run_mode(self):
-        """Read-write integer property."""
+        '''The run mode (unused)'''
         return self.runmode
 
     @run_mode.setter
     def run_mode(self, runmode):
         self.runmode = runmode
+
+    ## Parameter: palette ##
+    @GObject.Property(type=str,
+                      default=None,
+                      nick= _("Palette"))
+    def palette(self):
+        '''Palette name or empty string for the currently selected palette'''
+        return self.palette
+
+    @palette.setter
+    def palette(self, palette):
+        self.palette = palette
 
     ## Properties: return values ##
     @GObject.Property(type=str,
@@ -134,6 +155,7 @@ class PaletteToGradient (Gimp.PlugIn):
             # around is apparently broken in Python. Hence this trick.
             # See pygobject#227
             procedure.add_argument_from_property(self, "run-mode")
+            procedure.add_argument_from_property(self, "palette")
             procedure.add_return_value_from_property(self, "new-gradient")
 
             procedure.add_menu_path ('<Palettes>')
