@@ -178,8 +178,6 @@ run (const gchar      *name,
       GimpMetadataSaveFlags  metadata_flags;
       WebPSaveParams         params;
       GimpExportReturn       export = GIMP_EXPORT_CANCEL;
-      gint32                *layers = NULL;
-      gint32                 n_layers;
 
       if (run_mode == GIMP_RUN_INTERACTIVE ||
           run_mode == GIMP_RUN_WITH_LAST_VALS)
@@ -188,50 +186,45 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
+      /* Default settings */
+      params.preset        = WEBP_PRESET_DEFAULT;
+      params.lossless      = FALSE;
+      params.animation     = FALSE;
+      params.loop          = TRUE;
+      params.minimize_size = TRUE;
+      params.kf_distance   = 50;
+      params.quality       = 90.0f;
+      params.alpha_quality = 100.0f;
+      params.exif          = FALSE;
+      params.iptc          = FALSE;
+      params.xmp           = FALSE;
+      params.delay         = 200;
+      params.force_delay   = FALSE;
+
+      /* Override the defaults with preferences. */
+      metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                   "image/webp",
+                                                   &metadata_flags);
+      params.exif    = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+      params.xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+      params.iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+      params.profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+
       switch (run_mode)
         {
         case GIMP_RUN_WITH_LAST_VALS:
+          /*  Possibly override with session data  */
+          gimp_get_data (SAVE_PROC, &params);
+          break;
+
         case GIMP_RUN_INTERACTIVE:
-          /* Default settings */
-          params.preset        = WEBP_PRESET_DEFAULT;
-          params.lossless      = FALSE;
-          params.animation     = FALSE;
-          params.loop          = TRUE;
-          params.minimize_size = TRUE;
-          params.kf_distance   = 50;
-          params.quality       = 90.0f;
-          params.alpha_quality = 100.0f;
-          params.exif          = FALSE;
-          params.iptc          = FALSE;
-          params.xmp           = FALSE;
-          params.delay         = 200;
-          params.force_delay   = FALSE;
-
-          /* Override the defaults with preferences. */
-          metadata = gimp_image_metadata_save_prepare (image_ID,
-                                                       "image/webp",
-                                                       &metadata_flags);
-          params.exif    = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-          params.xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-          params.iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
-          params.profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
-
           /*  Possibly override with session data  */
           gimp_get_data (SAVE_PROC, &params);
 
-          export = gimp_export_image (&image_ID, &drawable_ID, "WebP",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                      GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION);
-
-          if (export == GIMP_EXPORT_CANCEL)
+          if (! save_dialog (&params, image_ID))
             {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
               status = GIMP_PDB_CANCEL;
             }
-
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
@@ -266,24 +259,31 @@ run (const gchar      *name,
           break;
         }
 
-
-      if (status == GIMP_PDB_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS && (run_mode == GIMP_RUN_INTERACTIVE ||
+                                         run_mode == GIMP_RUN_WITH_LAST_VALS))
         {
-          layers = gimp_image_get_layers (image_ID, &n_layers);
+          GimpExportCapabilities capabilities =
+            GIMP_EXPORT_CAN_HANDLE_RGB     |
+            GIMP_EXPORT_CAN_HANDLE_GRAY    |
+            GIMP_EXPORT_CAN_HANDLE_INDEXED |
+            GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
-          if (run_mode == GIMP_RUN_INTERACTIVE)
+          if (params.animation)
+            capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
+
+          export = gimp_export_image (&image_ID, &drawable_ID, "WebP",
+                                      capabilities);
+
+          if (export == GIMP_EXPORT_CANCEL)
             {
-              if (! save_dialog (&params, image_ID, n_layers))
-                {
-                  status = GIMP_PDB_CANCEL;
-                }
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              status = GIMP_PDB_CANCEL;
             }
         }
 
       if (status == GIMP_PDB_SUCCESS)
         {
           if (! save_image (param[3].data.d_string,
-                            n_layers, layers,
                             image_ID,
                             drawable_ID,
                             metadata, metadata_flags,
@@ -294,8 +294,6 @@ run (const gchar      *name,
             }
         }
 
-
-      g_free (layers);
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
