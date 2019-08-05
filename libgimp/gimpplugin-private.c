@@ -27,6 +27,7 @@
 #include "libgimpbase/gimpwire.h"
 
 #include "gimp-private.h"
+#include "gimp-shm.h"
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
 #include "gimpprocedure-private.h"
@@ -34,18 +35,21 @@
 
 /*  local function prototpes  */
 
-static void   gimp_plug_in_register          (GimpPlugIn      *plug_in,
-                                              GList           *procedures);
-static void   gimp_plug_in_loop              (GimpPlugIn      *plug_in);
-static void   gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
-                                              GimpWireMessage *msg);
-static void   gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
-                                              GPProcRun       *proc_run);
-static void   gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
-                                              GPProcRun       *proc_run);
-static void   gimp_plug_in_proc_run_internal (GPProcRun       *proc_run,
-                                              GimpProcedure   *procedure,
-                                              GPProcReturn    *proc_return);
+static void       gimp_plug_in_register          (GimpPlugIn      *plug_in,
+                                                  GList           *procedures);
+static void       gimp_plug_in_loop              (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
+                                                  GimpWireMessage *msg);
+static void       gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
+                                                  GPProcRun       *proc_run);
+static void       gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
+                                                  GPProcRun       *proc_run);
+static void       gimp_plug_in_proc_run_internal (GPProcRun       *proc_run,
+                                                  GimpProcedure   *procedure,
+                                                  GPProcReturn    *proc_return);
+static gboolean   gimp_plug_in_io_error_handler  (GIOChannel      *channel,
+                                                  GIOCondition     cond,
+                                                  gpointer         data);
 
 
 /*  public functions  */
@@ -54,6 +58,9 @@ void
 _gimp_plug_in_query (GimpPlugIn *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+    gp_has_init_write (_gimp_writechannel, NULL);
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
     {
@@ -83,6 +90,11 @@ _gimp_plug_in_run (GimpPlugIn *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
+  g_io_add_watch (_gimp_readchannel,
+                  G_IO_ERR | G_IO_HUP,
+                  gimp_plug_in_io_error_handler,
+                  NULL);
+
   gimp_plug_in_loop (plug_in);
 }
 
@@ -93,6 +105,10 @@ _gimp_plug_in_quit (GimpPlugIn *plug_in)
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->quit)
     GIMP_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
+
+  _gimp_shm_close ();
+
+  gp_quit_write (_gimp_writechannel, NULL);
 }
 
 void
@@ -361,4 +377,16 @@ gimp_plug_in_proc_run_internal (GPProcRun     *proc_run,
   proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
+}
+
+static gboolean
+gimp_plug_in_io_error_handler (GIOChannel   *channel,
+                               GIOCondition  cond,
+                               gpointer      data)
+{
+  g_printerr ("%s: fatal error: GIMP crashed\n", gimp_get_progname ());
+  gimp_quit ();
+
+  /* never reached */
+  return TRUE;
 }

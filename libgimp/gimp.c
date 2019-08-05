@@ -614,17 +614,6 @@ gimp_main_internal (GType                 plug_in_type,
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
     {
-      if (PLUG_IN)
-        {
-          if (GIMP_PLUG_IN_GET_CLASS (PLUG_IN)->init_procedures)
-            gp_has_init_write (_gimp_writechannel, NULL);
-        }
-      else
-        {
-          if (PLUG_IN_INFO.init_proc)
-            gp_has_init_write (_gimp_writechannel, NULL);
-        }
-
       if (_gimp_debug_flags () & GIMP_DEBUG_QUERY)
         _gimp_debug_stop ();
 
@@ -634,6 +623,9 @@ gimp_main_internal (GType                 plug_in_type,
         }
       else
         {
+          if (PLUG_IN_INFO.init_proc)
+            gp_has_init_write (_gimp_writechannel, NULL);
+
           if (PLUG_IN_INFO.query_proc)
             PLUG_IN_INFO.query_proc ();
         }
@@ -668,17 +660,17 @@ gimp_main_internal (GType                 plug_in_type,
   else if (_gimp_debug_flags () & GIMP_DEBUG_PID)
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
-  g_io_add_watch (_gimp_readchannel,
-                  G_IO_ERR | G_IO_HUP,
-                  gimp_plugin_io_error_handler,
-                  NULL);
-
   if (PLUG_IN)
     {
       _gimp_plug_in_run (PLUG_IN);
     }
   else
     {
+      g_io_add_watch (_gimp_readchannel,
+                      G_IO_ERR | G_IO_HUP,
+                      gimp_plugin_io_error_handler,
+                      NULL);
+
       _gimp_loop (PLUG_IN_INFO.run_proc);
     }
 
@@ -1101,11 +1093,11 @@ gimp_close (void)
     {
       if (PLUG_IN_INFO.quit_proc)
         PLUG_IN_INFO.quit_proc ();
+
+      _gimp_shm_close ();
+
+      gp_quit_write (_gimp_writechannel, NULL);
     }
-
-  _gimp_shm_close ();
-
-  gp_quit_write (_gimp_writechannel, NULL);
 }
 
 static void
@@ -1373,11 +1365,9 @@ _gimp_config (GPConfig *config)
 {
   GFile *file;
   gchar *path;
-  gint   shm_ID;
 
   _tile_width       = config->tile_width;
   _tile_height      = config->tile_height;
-  shm_ID            = config->shm_ID;
   _check_size       = config->check_size;
   _check_type       = config->check_type;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
@@ -1411,7 +1401,7 @@ _gimp_config (GPConfig *config)
   g_free (path);
   g_object_unref (file);
 
-  _gimp_shm_open (shm_ID);
+  _gimp_shm_open (config->shm_ID);
 }
 
 static void
