@@ -289,6 +289,12 @@ gimp_label_set_attributes (GtkLabel *label,
   pango_attr_list_unref (attrs);
 }
 
+/**
+ * gimp_widget_get_monitor:
+ * @widget: a #GtkWidget.
+ *
+ * Returns: (transfer none): the #GdkMonitor where @widget is current displayed on.
+ */
 GdkMonitor *
 gimp_widget_get_monitor (GtkWidget *widget)
 {
@@ -318,6 +324,11 @@ gimp_widget_get_monitor (GtkWidget *widget)
   return gdk_display_get_monitor_at_point (gdk_display_get_default (), x, y);
 }
 
+/**
+ * gimp_get_monitor_at_pointer:
+ *
+ * Returns: (transfer none): the #GdkMonitor where the pointer is.
+ */
 GdkMonitor *
 gimp_get_monitor_at_pointer (void)
 {
