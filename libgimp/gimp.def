@@ -587,13 +587,6 @@ EXPORTS
 	gimp_param_channel_id_get_type
 	gimp_param_display_id_get_type
 	gimp_param_drawable_id_get_type
-	gimp_param_from_int32
-	gimp_param_from_status
-	gimp_param_from_string
-	gimp_param_get_int32
-	gimp_param_get_status
-	gimp_param_get_string
-	gimp_param_get_type
 	gimp_param_image_id_get_type
 	gimp_param_item_id_get_type
 	gimp_param_layer_id_get_type
@@ -627,7 +620,6 @@ EXPORTS
 	gimp_plug_in_get_temp_procedure
 	gimp_plug_in_get_temp_procedures
 	gimp_plug_in_get_type
-	gimp_plug_in_info_set_callbacks
 	gimp_plug_in_remove_temp_procedure
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_translation_domain
@@ -642,15 +634,19 @@ EXPORTS
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
 	gimp_procedural_db_proc_arg
+	gimp_procedural_db_proc_argument
 	gimp_procedural_db_proc_exists
 	gimp_procedural_db_proc_info
+	gimp_procedural_db_proc_return_value
 	gimp_procedural_db_proc_val
 	gimp_procedural_db_query
 	gimp_procedural_db_set_data
 	gimp_procedural_db_temp_name
 	gimp_procedure_add_argument
+	gimp_procedure_add_argument_from_property
 	gimp_procedure_add_menu_path
 	gimp_procedure_add_return_value
+	gimp_procedure_add_return_value_from_property
 	gimp_procedure_extension_ready
 	gimp_procedure_get_arguments
 	gimp_procedure_get_authors

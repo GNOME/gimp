@@ -27,6 +27,7 @@ EXPORTS
 	gimp_vector2_add_val
 	gimp_vector2_cross_product
 	gimp_vector2_cross_product_val
+	gimp_vector2_get_type
 	gimp_vector2_inner_product
 	gimp_vector2_inner_product_val
 	gimp_vector2_length
@@ -49,6 +50,7 @@ EXPORTS
 	gimp_vector3_add_val
 	gimp_vector3_cross_product
 	gimp_vector3_cross_product_val
+	gimp_vector3_get_type
 	gimp_vector3_inner_product
 	gimp_vector3_inner_product_val
 	gimp_vector3_length
