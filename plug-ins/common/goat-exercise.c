@@ -64,7 +64,7 @@ query (void)
                           "Øyvind Kolås <pippin@gimp.org>",
                           "Øyvind Kolås <pippin@gimp.org>",
                           "21march 2012",
-                          N_("Goat-exercise"),
+                          N_("Goat-e_xercise"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
