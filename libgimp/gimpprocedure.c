@@ -222,7 +222,7 @@ gimp_procedure_new (GimpPlugIn      *plug_in,
   GimpProcedure *procedure;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
   g_return_val_if_fail (proc_type != GIMP_INTERNAL, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
