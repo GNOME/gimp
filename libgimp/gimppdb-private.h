@@ -43,7 +43,7 @@ GQuark _gimp_pdb_error_quark (void) G_GNUC_CONST;
 
 GimpPDB    * _gimp_pdb_new         (GimpPlugIn *plug_in);
 
-GimpPlugIn * _gimp_pdb_get_plug_in (GimpPDB *pdb);
+GimpPlugIn * _gimp_pdb_get_plug_in (GimpPDB    *pdb);
 
 
 G_END_DECLS

@@ -24,6 +24,7 @@
 #include <sys/types.h>
 
 #include "gimp.h"
+
 #include "gimppdb-private.h"
 #include "gimpprocedure-private.h"
 

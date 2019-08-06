@@ -101,6 +101,7 @@
 #include "gimp-shm.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
+#include "gimplegacy-private.h"
 #include "gimppdb-private.h"
 #include "gimpplugin-private.h"
 #include "gimpunitcache.h"
@@ -108,59 +109,58 @@
 #include "libgimp-intl.h"
 
 
-static gint       gimp_main_internal           (GType                 plug_in_type,
-                                                const GimpPlugInInfo *info,
-                                                gint                  argc,
-                                                gchar                *argv[]);
+static void   gimp_close        (void);
+static void   gimp_message_func (const gchar    *log_domain,
+                                 GLogLevelFlags  log_level,
+                                 const gchar    *message,
+                                 gpointer        data);
+static void   gimp_fatal_func   (const gchar    *log_domain,
+                                 GLogLevelFlags  flags,
+                                 const gchar    *message,
+                                 gpointer        data);
 
-static void       gimp_close                   (void);
-static void       gimp_message_func            (const gchar    *log_domain,
-                                                GLogLevelFlags  log_level,
-                                                const gchar    *message,
-                                                gpointer        data);
-static void       gimp_fatal_func              (const gchar    *log_domain,
-                                                GLogLevelFlags  flags,
-                                                const gchar    *message,
-                                                gpointer        data);
+
 #ifdef G_OS_WIN32
+
 #ifdef HAVE_EXCHNDL
 static LONG WINAPI gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
-#endif
-#else
-static void       gimp_plugin_sigfatal_handler (gint            sig_num);
-#endif
 
-
-#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
 static gchar                         *plug_in_backtrace_path = NULL;
 #endif
 
-static gint           _tile_width        = -1;
-static gint           _tile_height       = -1;
-static gboolean       _show_help_button  = TRUE;
-static gboolean       _export_profile    = FALSE;
-static gboolean       _export_exif       = FALSE;
-static gboolean       _export_xmp        = FALSE;
-static gboolean       _export_iptc       = FALSE;
-static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
-static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static gint           _gdisp_ID          = -1;
-static gchar         *_wm_class          = NULL;
-static gchar         *_display_name      = NULL;
-static gint           _monitor_number    = 0;
-static guint32        _timestamp         = 0;
-static gchar         *_icon_theme_dir    = NULL;
-static const gchar   *progname           = NULL;
+#else /* ! G_OS_WIN32 */
 
-static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
+static void        gimp_plugin_sigfatal_handler (gint sig_num);
 
-static GimpPlugIn     *PLUG_IN      = NULL;
-static GimpPDB        *PDB          = NULL;
-static GimpPlugInInfo  PLUG_IN_INFO = { 0, };
+#endif /* G_OS_WIN32 */
 
-static GimpPDBStatusType  pdb_error_status   = GIMP_PDB_SUCCESS;
-static gchar             *pdb_error_message  = NULL;
+
+static GimpPlugIn         *PLUG_IN           = NULL;
+static GimpPDB            *PDB               = NULL;
+
+static gint                _tile_width       = -1;
+static gint                _tile_height      = -1;
+static gboolean            _show_help_button = TRUE;
+static gboolean            _export_profile   = FALSE;
+static gboolean            _export_exif      = FALSE;
+static gboolean            _export_xmp       = FALSE;
+static gboolean            _export_iptc      = FALSE;
+static GimpCheckSize       _check_size       = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
+static GimpCheckType       _check_type       = GIMP_CHECK_TYPE_GRAY_CHECKS;
+static gint                _gdisp_ID         = -1;
+static gchar              *_wm_class         = NULL;
+static gchar              *_display_name     = NULL;
+static gint                _monitor_number   = 0;
+static guint32             _timestamp        = 0;
+static gchar              *_icon_theme_dir   = NULL;
+static const gchar        *progname          = NULL;
+
+static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
+
+
+static GimpPDBStatusType   pdb_error_status  = GIMP_PDB_SUCCESS;
+static gchar              *pdb_error_message = NULL;
 
 
 /**
@@ -181,34 +181,14 @@ gimp_main (GType  plug_in_type,
            gint   argc,
            gchar *argv[])
 {
-  return gimp_main_internal (plug_in_type, NULL, argc, argv);
+  return _gimp_main_internal (plug_in_type, NULL, argc, argv);
 }
 
-/**
- * gimp_main_legacy:
- * @info: the #GimpPlugInInfo structure
- * @argc: the number of arguments
- * @argv: (array length=argc): the arguments
- *
- * The main procedure that must be called with the #GimpPlugInInfo
- * structure and the 'argc' and 'argv' that are passed to "main".
- *
- * Returns: an exit status as defined by the C library,
- *          on success EXIT_SUCCESS.
- **/
 gint
-gimp_main_legacy (const GimpPlugInInfo *info,
-                  gint                  argc,
-                  gchar                *argv[])
-{
-  return gimp_main_internal (G_TYPE_NONE, info, argc, argv);
-}
-
-static gint
-gimp_main_internal (GType                 plug_in_type,
-                    const GimpPlugInInfo *info,
-                    gint                  argc,
-                    gchar                *argv[])
+_gimp_main_internal (GType                 plug_in_type,
+                     const GimpPlugInInfo *info,
+                     gint                  argc,
+                     gchar                *argv[])
 {
   enum
   {
@@ -229,6 +209,7 @@ gimp_main_internal (GType                 plug_in_type,
   gint        protocol_version;
 
 #ifdef G_OS_WIN32
+
   gint i, j, k;
 
   /* Reduce risks */
@@ -307,7 +288,7 @@ gimp_main_internal (GType                 plug_in_type,
     ExcHndlInit ();
     ExcHndlSetLogFileNameA (plug_in_backtrace_path);
   }
-#endif
+#endif /* HAVE_EXCHNDL */
 
 #ifndef _WIN64
   {
@@ -319,7 +300,7 @@ gimp_main_internal (GType                 plug_in_type,
     if (p_SetProcessDEPPolicy)
       (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
   }
-#endif
+#endif /* _WIN64 */
 
   /* Group all our windows together on the taskbar */
   {
@@ -371,7 +352,8 @@ gimp_main_internal (GType                 plug_in_type,
           }
        }
     }
-#endif
+
+#endif /* G_OS_WIN32 */
 
   g_assert ((plug_in_type != G_TYPE_NONE && info == NULL) ||
             (plug_in_type == G_TYPE_NONE && info != NULL));
@@ -421,6 +403,7 @@ gimp_main_internal (GType                 plug_in_type,
                                                  GIMP_STACK_TRACE_ALWAYS);
 
 #ifndef G_OS_WIN32
+
   /* No use catching these on Win32, the user won't get any meaningful
    * stack trace from glib anyhow. It's better to let Windows inform
    * about the program error, and offer debugging if the plug-in
@@ -441,7 +424,8 @@ gimp_main_internal (GType                 plug_in_type,
 
   /* Restart syscalls interrupted by SIGCHLD */
   gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
-#endif
+
+#endif /* ! G_OS_WIN32 */
 
 #ifdef G_OS_WIN32
   readc_hannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
@@ -591,10 +575,9 @@ gimp_main_internal (GType                 plug_in_type,
     }
   else
     {
-      PLUG_IN_INFO = *info;
-
-      _gimp_legacy_init (read_channel,
-                         write_channel);
+      _gimp_legacy_initialize (info,
+                               read_channel,
+                               write_channel);
     }
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
@@ -603,17 +586,9 @@ gimp_main_internal (GType                 plug_in_type,
         _gimp_debug_stop ();
 
       if (PLUG_IN)
-        {
-          _gimp_plug_in_query (PLUG_IN);
-        }
+        _gimp_plug_in_query (PLUG_IN);
       else
-        {
-          if (PLUG_IN_INFO.init_proc)
-            gp_has_init_write (write_channel, NULL);
-
-          if (PLUG_IN_INFO.query_proc)
-            PLUG_IN_INFO.query_proc ();
-        }
+        _gimp_legacy_query ();
 
       gimp_close ();
 
@@ -626,14 +601,9 @@ gimp_main_internal (GType                 plug_in_type,
         _gimp_debug_stop ();
 
       if (PLUG_IN)
-        {
-          _gimp_plug_in_init (PLUG_IN);
-        }
+        _gimp_plug_in_init (PLUG_IN);
       else
-        {
-          if (PLUG_IN_INFO.init_proc)
-            PLUG_IN_INFO.init_proc ();
-        }
+        _gimp_legacy_init ();
 
       gimp_close ();
 
@@ -646,13 +616,9 @@ gimp_main_internal (GType                 plug_in_type,
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
   if (PLUG_IN)
-    {
-      _gimp_plug_in_run (PLUG_IN);
-    }
+    _gimp_plug_in_run (PLUG_IN);
   else
-    {
-      _gimp_loop (PLUG_IN_INFO.run_proc);
-    }
+    _gimp_legacy_run ();
 
   gimp_close ();
 
@@ -1049,16 +1015,9 @@ gimp_close (void)
     _gimp_debug_stop ();
 
   if (PLUG_IN)
-    {
-      _gimp_plug_in_quit (PLUG_IN);
-    }
+    _gimp_plug_in_quit (PLUG_IN);
   else
-    {
-      if (PLUG_IN_INFO.quit_proc)
-        PLUG_IN_INFO.quit_proc ();
-
-      _gimp_legacy_quit ();
-    }
+    _gimp_legacy_quit ();
 }
 
 static void
@@ -1123,7 +1082,7 @@ gimp_fatal_func (const gchar    *log_domain,
         }
       break;
     }
-#endif
+#endif /* ! G_OS_WIN32 */
 
   /* Do not end with gimp_quit().
    * We want the plug-in to continue its normal crash course, otherwise
@@ -1169,9 +1128,10 @@ gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
   else
     return EXCEPTION_CONTINUE_SEARCH;
 }
-#endif
+#endif /* HAVE_EXCHNDL */
 
-#else
+#else /* ! G_OS_WIN32 */
+
 static void
 gimp_plugin_sigfatal_handler (gint sig_num)
 {
@@ -1225,7 +1185,8 @@ gimp_plugin_sigfatal_handler (gint sig_num)
    */
   exit (EXIT_FAILURE);
 }
-#endif
+
+#endif /* G_OS_WIN32 */
 
 void
 _gimp_config (GPConfig *config)

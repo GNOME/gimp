@@ -29,8 +29,8 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
-#include "gimp-private.h"
 #include "gimp-shm.h"
+#include "gimplegacy-private.h"
 #include "gimpplugin-private.h"
 #include "gimptilebackendplugin.h"
 
@@ -351,7 +351,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
       if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
         gimp_quit ();
 
-      _gimp_read_expect_msg (&msg, GP_TILE_DATA);
+      _gimp_legacy_read_expect_msg (&msg, GP_TILE_DATA);
     }
 
   tile_data = msg.data;
@@ -436,7 +436,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
       if (! gp_tile_req_write (_gimp_writechannel, &tile_req, NULL))
         gimp_quit ();
 
-      _gimp_read_expect_msg (&msg, GP_TILE_DATA);
+      _gimp_legacy_read_expect_msg (&msg, GP_TILE_DATA);
     }
 
   tile_info = msg.data;
@@ -481,7 +481,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
   if (plug_in)
     _gimp_plug_in_read_expect_msg (plug_in, &msg, GP_TILE_ACK);
   else
-    _gimp_read_expect_msg (&msg, GP_TILE_ACK);
+    _gimp_legacy_read_expect_msg (&msg, GP_TILE_ACK);
 
   gimp_wire_destroy (&msg);
 }

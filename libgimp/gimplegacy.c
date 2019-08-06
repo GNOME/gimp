@@ -31,6 +31,7 @@
 #include "gimp-private.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
+#include "gimplegacy-private.h"
 
 
 /**
@@ -57,6 +58,7 @@
     }
 
 
+static void       gimp_loop                    (GimpRunProc      run_proc);
 static void       gimp_process_message         (GimpWireMessage *msg);
 static void       gimp_single_message          (void);
 static gboolean   gimp_extension_read          (GIOChannel      *channel,
@@ -79,14 +81,36 @@ static gboolean   gimp_flush                   (GIOChannel      *channel,
                                                 gpointer         user_data);
 
 
-GIOChannel        *_gimp_readchannel  = NULL;
-GIOChannel        *_gimp_writechannel = NULL;
+GIOChannel            *_gimp_readchannel  = NULL;
+GIOChannel            *_gimp_writechannel = NULL;
 
-static gchar       write_buffer[WRITE_BUFFER_SIZE];
-static gulong      write_buffer_index = 0;
+static gchar           write_buffer[WRITE_BUFFER_SIZE];
+static gulong          write_buffer_index = 0;
 
-static GHashTable *gimp_temp_proc_ht  = NULL;
+static GimpPlugInInfo  PLUG_IN_INFO       = { 0, };
 
+static GHashTable     *gimp_temp_proc_ht  = NULL;
+
+
+/**
+ * gimp_main_legacy:
+ * @info: the #GimpPlugInInfo structure
+ * @argc: the number of arguments
+ * @argv: (array length=argc): the arguments
+ *
+ * The main procedure that must be called with the #GimpPlugInInfo
+ * structure and the 'argc' and 'argv' that are passed to "main".
+ *
+ * Returns: an exit status as defined by the C library,
+ *          on success EXIT_SUCCESS.
+ **/
+gint
+gimp_main_legacy (const GimpPlugInInfo *info,
+                  gint                  argc,
+                  gchar                *argv[])
+{
+  return _gimp_main_internal (G_TYPE_NONE, info, argc, argv);
+}
 
 /**
  * gimp_install_procedure:
@@ -482,8 +506,8 @@ gimp_extension_process (guint timeout)
 }
 
 void
-_gimp_read_expect_msg (GimpWireMessage *msg,
-                       gint             type)
+_gimp_legacy_read_expect_msg (GimpWireMessage *msg,
+                              gint             type)
 {
   ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
@@ -783,7 +807,7 @@ gimp_run_procedure_array (const gchar    *name,
   if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
     gimp_quit ();
 
-  _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+  _gimp_legacy_read_expect_msg (&msg, GP_PROC_RETURN);
 
   proc_return = msg.data;
 
@@ -912,9 +936,14 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
 }
 
 void
-_gimp_legacy_init (GIOChannel *read_channel,
-                   GIOChannel *write_channel)
+_gimp_legacy_initialize (const GimpPlugInInfo *info,
+                         GIOChannel           *read_channel,
+                         GIOChannel           *write_channel)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  PLUG_IN_INFO = *info;
+
   _gimp_readchannel  = read_channel;
   _gimp_writechannel = write_channel;
 
@@ -925,18 +954,29 @@ _gimp_legacy_init (GIOChannel *read_channel,
 }
 
 void
-_gimp_legacy_quit (void)
+_gimp_legacy_query (void)
 {
-  _gimp_shm_close ();
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
-  gp_quit_write (_gimp_writechannel, NULL);
+  if (PLUG_IN_INFO.init_proc)
+    gp_has_init_write (_gimp_writechannel, NULL);
+
+  if (PLUG_IN_INFO.query_proc)
+    PLUG_IN_INFO.query_proc ();
 }
 
 void
-_gimp_loop (GimpRunProc run_proc)
+_gimp_legacy_init (void)
 {
-  GimpWireMessage msg;
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
+  if (PLUG_IN_INFO.init_proc)
+    PLUG_IN_INFO.init_proc ();
+}
+
+void
+_gimp_legacy_run (void)
+{
   ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   gimp_temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
@@ -946,55 +986,20 @@ _gimp_loop (GimpRunProc run_proc)
                   gimp_plugin_io_error_handler,
                   NULL);
 
-  while (TRUE)
-    {
-      if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
-        return;
+  gimp_loop (PLUG_IN_INFO.run_proc);
+}
 
-      switch (msg.type)
-        {
-        case GP_QUIT:
-          gimp_wire_destroy (&msg);
-          return;
+void
+_gimp_legacy_quit (void)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
-        case GP_CONFIG:
-          _gimp_config (msg.data);
-          break;
+  if (PLUG_IN_INFO.quit_proc)
+    PLUG_IN_INFO.quit_proc ();
 
-        case GP_TILE_REQ:
-        case GP_TILE_ACK:
-        case GP_TILE_DATA:
-          g_warning ("unexpected tile message received (should not happen)");
-          break;
+  _gimp_shm_close ();
 
-        case GP_PROC_RUN:
-          gimp_proc_run (msg.data, run_proc);
-          gimp_wire_destroy (&msg);
-          return;
-
-        case GP_PROC_RETURN:
-          g_warning ("unexpected proc return message received (should not happen)");
-          break;
-
-        case GP_TEMP_PROC_RUN:
-          g_warning ("unexpected temp proc run message received (should not happen");
-          break;
-
-        case GP_TEMP_PROC_RETURN:
-          g_warning ("unexpected temp proc return message received (should not happen");
-          break;
-
-        case GP_PROC_INSTALL:
-          g_warning ("unexpected proc install message received (should not happen)");
-          break;
-
-        case GP_HAS_INIT:
-          g_warning ("unexpected has init message received (should not happen)");
-          break;
-        }
-
-      gimp_wire_destroy (&msg);
-    }
+  gp_quit_write (_gimp_writechannel, NULL);
 }
 
 /*  old gimp_plugin cruft  */
@@ -1150,6 +1155,62 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
 /*  private functions  */
 
 static void
+gimp_loop (GimpRunProc run_proc)
+{
+  GimpWireMessage msg;
+
+  while (TRUE)
+    {
+      if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
+        return;
+
+      switch (msg.type)
+        {
+        case GP_QUIT:
+          gimp_wire_destroy (&msg);
+          return;
+
+        case GP_CONFIG:
+          _gimp_config (msg.data);
+          break;
+
+        case GP_TILE_REQ:
+        case GP_TILE_ACK:
+        case GP_TILE_DATA:
+          g_warning ("unexpected tile message received (should not happen)");
+          break;
+
+        case GP_PROC_RUN:
+          gimp_proc_run (msg.data, run_proc);
+          gimp_wire_destroy (&msg);
+          return;
+
+        case GP_PROC_RETURN:
+          g_warning ("unexpected proc return message received (should not happen)");
+          break;
+
+        case GP_TEMP_PROC_RUN:
+          g_warning ("unexpected temp proc run message received (should not happen");
+          break;
+
+        case GP_TEMP_PROC_RETURN:
+          g_warning ("unexpected temp proc return message received (should not happen");
+          break;
+
+        case GP_PROC_INSTALL:
+          g_warning ("unexpected proc install message received (should not happen)");
+          break;
+
+        case GP_HAS_INIT:
+          g_warning ("unexpected has init message received (should not happen)");
+          break;
+        }
+
+      gimp_wire_destroy (&msg);
+    }
+}
+
+static void
 gimp_process_message (GimpWireMessage *msg)
 {
   switch (msg->type)
@@ -1207,7 +1268,7 @@ gimp_extension_read (GIOChannel  *channel,
 {
   gimp_single_message ();
 
-  return TRUE;
+  return G_SOURCE_CONTINUE;
 }
 
 static void

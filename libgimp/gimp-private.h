@@ -24,14 +24,12 @@
 G_BEGIN_DECLS
 
 
-void   _gimp_config          (GPConfig        *config);
-void   _gimp_legacy_init     (GIOChannel      *read_channel,
-                              GIOChannel      *write_channel);
-void   _gimp_legacy_quit     (void);
-void   _gimp_loop            (GimpRunProc      run_proc);
-void   _gimp_read_expect_msg (GimpWireMessage *msg,
-                              gint             type);
-void   _gimp_set_pdb_error   (GimpValueArray  *return_vals);
+gint   _gimp_main_internal (GType                 plug_in_type,
+                            const GimpPlugInInfo *info,
+                            gint                  argc,
+                            gchar                *argv[]);
+void   _gimp_config        (GPConfig             *config);
+void   _gimp_set_pdb_error (GimpValueArray       *return_vals);
 
 
 G_END_DECLS
