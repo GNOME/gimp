@@ -66,9 +66,14 @@ gimp_palette_select_new (const gchar            *title,
                          gpointer                data,
                          GDestroyNotify          data_destroy)
 {
-  GimpPlugIn      *plug_in          = gimp_get_plug_in ();
-  gchar           *palette_callback = gimp_pdb_temp_name ();
+  GimpPlugIn      *plug_in = gimp_get_plug_in ();
+  gchar           *palette_callback;
   GimpPaletteData *palette_data;
+
+  if (plug_in)
+    palette_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  else
+    palette_callback = gimp_pdb_temp_name ();
 
   palette_data = g_slice_new0 (GimpPaletteData);
 

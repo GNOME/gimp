@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar*                   gimp_pdb_temp_name         (void);
+G_GNUC_INTERNAL gchar*   _gimp_pdb_temp_name        (void);
 gboolean                 gimp_pdb_dump              (const gchar       *filename);
 gboolean                 gimp_pdb_query             (const gchar       *name,
                                                      const gchar       *blurb,

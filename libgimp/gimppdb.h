@@ -85,9 +85,12 @@ GimpValueArray * gimp_pdb_run_procedure_array  (GimpPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 const GimpValueArray *arguments);
 
+gchar          * gimp_pdb_temp_procedure_name  (GimpPDB              *pdb);
+
 
 /*  Cruft API  */
 
+gchar    * gimp_pdb_temp_name     (void);
 gboolean   gimp_pdb_proc_exists   (const gchar      *procedure_name);
 gboolean   gimp_pdb_proc_info     (const gchar      *procedure_name,
                                    gchar           **blurb,

@@ -630,6 +630,7 @@ EXPORTS
 	gimp_pdb_run_procedure_valist
 	gimp_pdb_set_data
 	gimp_pdb_temp_name
+	gimp_pdb_temp_procedure_name
 	gimp_pencil
 	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_temp_procedure

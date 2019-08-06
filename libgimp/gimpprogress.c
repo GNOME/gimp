@@ -88,7 +88,10 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
 
   plug_in = gimp_get_plug_in ();
 
-  progress_callback = gimp_pdb_temp_name ();
+  if (plug_in)
+    progress_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  else
+    progress_callback = gimp_pdb_temp_name ();
 
   progress_data = g_slice_new0 (GimpProgressData);
 

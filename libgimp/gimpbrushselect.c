@@ -74,9 +74,14 @@ gimp_brush_select_new (const gchar          *title,
                        gpointer              data,
                        GDestroyNotify        data_destroy)
 {
-  GimpPlugIn    *plug_in        = gimp_get_plug_in ();
-  gchar         *brush_callback = gimp_pdb_temp_name ();
+  GimpPlugIn    *plug_in = gimp_get_plug_in ();
+  gchar         *brush_callback;
   GimpBrushData *brush_data;
+
+  if (plug_in)
+    brush_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  else
+    brush_callback = gimp_pdb_temp_name ();
 
   brush_data = g_slice_new0 (GimpBrushData);
 

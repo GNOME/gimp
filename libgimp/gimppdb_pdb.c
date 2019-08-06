@@ -25,7 +25,7 @@
 #include "gimp.h"
 
 /**
- * gimp_pdb_temp_name:
+ * _gimp_pdb_temp_name:
  *
  * Generates a unique temporary PDB name.
  *
@@ -36,7 +36,7 @@
  *          The returned value must be freed with g_free().
  **/
 gchar *
-gimp_pdb_temp_name (void)
+_gimp_pdb_temp_name (void)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

@@ -27,7 +27,7 @@ HELP
     &andy_pdb_misc('1998');
 
     @outargs = (
-	{ name => 'temp_name', type => 'string',
+	{ name => 'temp_name', type => 'string', wrap => 1,
 	  desc => 'A unique temporary name for a temporary PDB entry' }
     );
 

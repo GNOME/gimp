@@ -68,9 +68,14 @@ gimp_gradient_select_new (const gchar             *title,
                           gpointer                 data,
                           GDestroyNotify           data_destroy)
 {
-  GimpPlugIn       *plug_in           = gimp_get_plug_in ();
-  gchar            *gradient_callback = gimp_pdb_temp_name ();
+  GimpPlugIn       *plug_in = gimp_get_plug_in ();
+  gchar            *gradient_callback;
   GimpGradientData *gradient_data;
+
+  if (plug_in)
+    gradient_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  else
+    gradient_callback = gimp_pdb_temp_name ();
 
   gradient_data = g_slice_new0 (GimpGradientData);
 

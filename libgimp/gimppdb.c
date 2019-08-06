@@ -284,6 +284,29 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
   return return_values;
 }
 
+/**
+ * gimp_pdb_temp_procedure_name:
+ * @pdb: the #GimpPDB object.
+ *
+ * Generates a unique temporary PDB name.
+ *
+ * This function generates a temporary PDB entry name that is
+ * guaranteed to be unique.
+ *
+ * Returns: (transfer full): A unique temporary name for a temporary
+ *          PDB entry. The returned value must be freed with
+ *          g_free().
+ *
+ * Since: 3.0
+ **/
+gchar *
+gimp_pdb_temp_procedure_name (GimpPDB *pdb)
+{
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+
+  return _gimp_pdb_temp_name ();
+}
+
 GQuark
 _gimp_pdb_error_quark (void)
 {
@@ -292,6 +315,23 @@ _gimp_pdb_error_quark (void)
 
 
 /*  Cruft API  */
+
+/**
+ * gimp_pdb_temp_name:
+ *
+ * Generates a unique temporary PDB name.
+ *
+ * This procedure generates a temporary PDB entry name that is
+ * guaranteed to be unique.
+ *
+ * Returns: (transfer full): A unique temporary name for a temporary PDB entry.
+ *          The returned value must be freed with g_free().
+ **/
+gchar *
+gimp_pdb_temp_name (void)
+{
+  return _gimp_pdb_temp_name ();
+}
 
 /**
  * gimp_pdb_proc_exists:

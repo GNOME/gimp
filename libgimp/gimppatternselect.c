@@ -69,9 +69,14 @@ gimp_pattern_select_new (const gchar            *title,
                          gpointer                data,
                          GDestroyNotify          data_destroy)
 {
-  GimpPlugIn      *plug_in          = gimp_get_plug_in ();
-  gchar           *pattern_callback = gimp_pdb_temp_name ();
+  GimpPlugIn      *plug_in = gimp_get_plug_in ();
+  gchar           *pattern_callback;
   GimpPatternData *pattern_data;
+
+  if (plug_in)
+    pattern_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  else
+    pattern_callback = gimp_pdb_temp_name ();
 
   pattern_data = g_slice_new0 (GimpPatternData);
 
