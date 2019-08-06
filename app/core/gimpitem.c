@@ -185,8 +185,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[VISIBILITY_CHANGED] =
@@ -194,8 +193,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, visibility_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[LINKED_CHANGED] =
@@ -203,8 +201,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, linked_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[COLOR_TAG_CHANGED] =
@@ -212,8 +209,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, color_tag_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[LOCK_CONTENT_CHANGED] =
@@ -221,8 +217,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, lock_content_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[LOCK_POSITION_CHANGED] =
@@ -230,8 +225,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, lock_position_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->constructed        = gimp_item_constructed;
