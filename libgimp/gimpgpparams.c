@@ -40,8 +40,8 @@
 #include "gimpgpparams-body.c"
 
 GParamSpec *
-_gimp_gp_param_def_to_param_spec (gpointer    gimp,
-                                  GPParamDef *param_def)
+_gimp_gp_param_def_to_param_spec (gpointer          gimp,
+                                  const GPParamDef *param_def)
 {
   const gchar *name  = param_def->name;
   const gchar *nick  = param_def->nick;

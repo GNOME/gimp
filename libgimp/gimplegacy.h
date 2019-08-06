@@ -268,8 +268,8 @@ GimpParam    * gimp_run_procedure2      (const gchar     *name,
 /* Run a procedure in the procedure database. The parameters are
  *  specified as a GimpValueArray, so are the return values.
  */
-GimpValueArray * gimp_run_procedure_array (const gchar    *name,
-                                           GimpValueArray *arguments);
+GimpValueArray * gimp_run_procedure_array (const gchar          *name,
+                                           const GimpValueArray *arguments);
 
 /* Destroy the an array of parameters. This is useful for
  *  destroying the return values returned by a call to

@@ -95,7 +95,7 @@ static GimpValueArray *
 static gboolean   gimp_procedure_validate_args (GimpProcedure        *procedure,
                                                 GParamSpec          **param_specs,
                                                 gint                  n_param_specs,
-                                                GimpValueArray       *args,
+                                                const GimpValueArray *args,
                                                 gboolean              return_vals,
                                                 GError              **error);
 
@@ -1042,8 +1042,8 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
  * Since: 3.0
  **/
 GimpValueArray *
-gimp_procedure_run (GimpProcedure  *procedure,
-                    GimpValueArray *args)
+gimp_procedure_run (GimpProcedure        *procedure,
+                    const GimpValueArray *args)
 {
   GimpValueArray *return_vals;
   GError         *error = NULL;
@@ -1066,19 +1066,43 @@ gimp_procedure_run (GimpProcedure  *procedure,
     }
 
   /*  add missing args with default values  */
-  for (i = gimp_value_array_length (args); i < procedure->priv->n_args; i++)
+  if (gimp_value_array_length (args) < procedure->priv->n_args)
     {
-      GParamSpec *pspec = procedure->priv->args[i];
-      GValue      value = G_VALUE_INIT;
+      GimpValueArray *complete = gimp_value_array_new (0);
 
-      g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
-      g_param_value_set_default (pspec, &value);
-      gimp_value_array_append (args, &value);
-      g_value_unset (&value);
+      for (i = 0; i < procedure->priv->n_args; i++)
+        {
+          GParamSpec *pspec = procedure->priv->args[i];
+          GValue      value = G_VALUE_INIT;
+
+          g_value_init (&value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+
+          if (i < gimp_value_array_length (args))
+            {
+              GValue *orig = gimp_value_array_index (args, i);
+
+              g_value_copy (orig, &value);
+            }
+          else
+            {
+              g_param_value_set_default (pspec, &value);
+            }
+
+          gimp_value_array_append (complete, &value);
+          g_value_unset (&value);
+        }
+
+      /*  call the procedure  */
+      return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->run (procedure,
+                                                               complete);
+      gimp_value_array_unref (complete);
     }
-
-  /*  call the procedure  */
-  return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->run (procedure, args);
+  else
+    {
+      /*  call the procedure  */
+      return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->run (procedure,
+                                                               args);
+    }
 
   if (! return_vals)
     {
@@ -1127,12 +1151,12 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
 /*  private functions  */
 
 static gboolean
-gimp_procedure_validate_args (GimpProcedure  *procedure,
-                              GParamSpec    **param_specs,
-                              gint            n_param_specs,
-                              GimpValueArray *args,
-                              gboolean        return_vals,
-                              GError        **error)
+gimp_procedure_validate_args (GimpProcedure         *procedure,
+                              GParamSpec           **param_specs,
+                              gint                   n_param_specs,
+                              const GimpValueArray  *args,
+                              gboolean               return_vals,
+                              GError               **error)
 {
   gint i;
 

@@ -246,9 +246,9 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
  * Returns: (transfer full): the returned values for the procedure call.
  */
 GimpValueArray *
-gimp_pdb_run_procedure_array (GimpPDB        *pdb,
-                              const gchar    *procedure_name,
-                              GimpValueArray *arguments)
+gimp_pdb_run_procedure_array (GimpPDB              *pdb,
+                              const gchar          *procedure_name,
+                              const GimpValueArray *arguments)
 {
   GPProcRun        proc_run;
   GPProcReturn    *proc_return;

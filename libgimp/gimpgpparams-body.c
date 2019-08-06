@@ -168,11 +168,11 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 }
 
 void
-_gimp_gp_param_to_value (gpointer  gimp,
-                         GPParam  *param,
-                         GType     type,
-                         GValue   *value,
-                         gboolean  full_copy)
+_gimp_gp_param_to_value (gpointer        gimp,
+                         const GPParam  *param,
+                         GType           type,
+                         GValue         *value,
+                         gboolean        full_copy)
 {
   g_return_if_fail (param != NULL);
   g_return_if_fail (value != NULL);
@@ -327,13 +327,13 @@ _gimp_gp_param_to_value (gpointer  gimp,
 }
 
 GimpValueArray *
-_gimp_gp_params_to_value_array (gpointer     gimp,
-                                GParamSpec **pspecs,
-                                gint         n_pspecs,
-                                GPParam     *params,
-                                gint         n_params,
-                                gboolean     return_values,
-                                gboolean     full_copy)
+_gimp_gp_params_to_value_array (gpointer        gimp,
+                                GParamSpec    **pspecs,
+                                gint            n_pspecs,
+                                const GPParam  *params,
+                                gint            n_params,
+                                gboolean        return_values,
+                                gboolean        full_copy)
 {
   GimpValueArray *args;
   gint            i;
@@ -570,8 +570,8 @@ _gimp_value_to_gp_param (const GValue *value,
 }
 
 GPParam *
-_gimp_value_array_to_gp_params (GimpValueArray  *args,
-                                gboolean         full_copy)
+_gimp_value_array_to_gp_params (const GimpValueArray  *args,
+                                gboolean               full_copy)
 {
   GPParam *params;
   gint     length;

@@ -787,8 +787,8 @@ gimp_run_procedure2 (const gchar     *name,
 }
 
 GimpValueArray *
-gimp_run_procedure_array (const gchar    *name,
-                          GimpValueArray *arguments)
+gimp_run_procedure_array (const gchar          *name,
+                          const GimpValueArray *arguments)
 {
   GPProcRun        proc_run;
   GPProcReturn    *proc_return;
