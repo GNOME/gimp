@@ -90,36 +90,12 @@ gchar          * gimp_pdb_temp_procedure_name  (GimpPDB              *pdb);
 
 /*  Cruft API  */
 
-gchar    * gimp_pdb_temp_name     (void);
-gboolean   gimp_pdb_proc_exists   (const gchar      *procedure_name);
-gboolean   gimp_pdb_proc_info     (const gchar      *procedure_name,
-                                   gchar           **blurb,
-                                   gchar           **help,
-                                   gchar           **author,
-                                   gchar           **copyright,
-                                   gchar           **date,
-                                   GimpPDBProcType  *proc_type,
-                                   gint             *num_args,
-                                   gint             *num_values,
-                                   GimpParamDef    **args,
-                                   GimpParamDef    **return_vals);
-gboolean   gimp_pdb_proc_arg      (const gchar      *procedure_name,
-                                   gint              arg_num,
-                                   GimpPDBArgType   *arg_type,
-                                   gchar           **arg_name,
-                                   gchar           **arg_desc);
-gboolean   gimp_pdb_proc_val      (const gchar      *procedure_name,
-                                   gint              val_num,
-                                   GimpPDBArgType   *val_type,
-                                   gchar           **val_name,
-                                   gchar           **val_desc);
 gboolean   gimp_pdb_get_data      (const gchar      *identifier,
                                    gpointer          data);
 gint       gimp_pdb_get_data_size (const gchar      *identifier);
 gboolean   gimp_pdb_set_data      (const gchar      *identifier,
                                    gconstpointer     data,
                                    guint32           bytes);
-
 
 
 G_END_DECLS

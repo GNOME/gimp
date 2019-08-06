@@ -305,6 +305,33 @@ gboolean   gimp_plugin_icon_register        (const gchar  *procedure_name,
                                              GimpIconType  icon_type,
                                              const guint8 *icon_data);
 
+/* pdb stuff that should now be done using GimpPDB
+ */
+
+gchar    * gimp_pdb_temp_name     (void);
+gboolean   gimp_pdb_proc_exists   (const gchar      *procedure_name);
+gboolean   gimp_pdb_proc_info     (const gchar      *procedure_name,
+                                   gchar           **blurb,
+                                   gchar           **help,
+                                   gchar           **author,
+                                   gchar           **copyright,
+                                   gchar           **date,
+                                   GimpPDBProcType  *proc_type,
+                                   gint             *num_args,
+                                   gint             *num_values,
+                                   GimpParamDef    **args,
+                                   GimpParamDef    **return_vals);
+gboolean   gimp_pdb_proc_arg      (const gchar      *procedure_name,
+                                   gint              arg_num,
+                                   GimpPDBArgType   *arg_type,
+                                   gchar           **arg_name,
+                                   gchar           **arg_desc);
+gboolean   gimp_pdb_proc_val      (const gchar      *procedure_name,
+                                   gint              val_num,
+                                   GimpPDBArgType   *val_type,
+                                   gchar           **val_name,
+                                   gchar           **val_desc);
+
 
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */
 

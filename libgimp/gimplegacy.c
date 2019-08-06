@@ -1002,7 +1002,8 @@ _gimp_legacy_quit (void)
   gp_quit_write (_gimp_writechannel, NULL);
 }
 
-/*  old gimp_plugin cruft  */
+
+/*  cruft from other places  */
 
 /**
  * gimp_plugin_domain_register:
@@ -1149,6 +1150,189 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
 
   return _gimp_plugin_icon_register (procedure_name,
                                      icon_type, icon_data_length, icon_data);
+}
+
+/**
+ * gimp_pdb_temp_name:
+ *
+ * Generates a unique temporary PDB name.
+ *
+ * This procedure generates a temporary PDB entry name that is
+ * guaranteed to be unique.
+ *
+ * Returns: (transfer full): A unique temporary name for a temporary PDB entry.
+ *          The returned value must be freed with g_free().
+ **/
+gchar *
+gimp_pdb_temp_name (void)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_pdb_temp_name ();
+}
+
+/**
+ * gimp_pdb_proc_exists:
+ * @procedure_name: The procedure name.
+ *
+ * Checks if the specified procedure exists in the procedural database
+ *
+ * This procedure checks if the specified procedure is registered in
+ * the procedural database.
+ *
+ * Returns: Whether a procedure of that name is registered.
+ *
+ * Since: 2.6
+ **/
+gboolean
+gimp_pdb_proc_exists (const gchar *procedure_name)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_pdb_proc_exists (procedure_name);
+}
+
+/**
+ * gimp_pdb_proc_info:
+ * @procedure: The procedure name.
+ * @blurb: A short blurb.
+ * @help: Detailed procedure help.
+ * @author: Author(s) of the procedure.
+ * @copyright: The copyright.
+ * @date: Copyright date.
+ * @proc_type: The procedure type.
+ * @num_args: The number of input arguments.
+ * @num_values: The number of return values.
+ * @args: The input arguments.
+ * @return_vals: The return values.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure.
+ *
+ * This procedure returns information on the specified procedure. A
+ * short blurb, detailed help, author(s), copyright information,
+ * procedure type, number of input, and number of return values are
+ * returned. Additionally this function returns specific information
+ * about each input argument and return value.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_pdb_proc_info (const gchar      *procedure_name,
+                    gchar           **blurb,
+                    gchar           **help,
+                    gchar           **author,
+                    gchar           **copyright,
+                    gchar           **date,
+                    GimpPDBProcType  *proc_type,
+                    gint             *num_args,
+                    gint             *num_values,
+                    GimpParamDef    **args,
+                    GimpParamDef    **return_vals)
+{
+  gint i;
+  gboolean success = TRUE;
+
+  success = _gimp_pdb_proc_info (procedure_name,
+                                 blurb,
+                                 help,
+                                 author,
+                                 copyright,
+                                 date,
+                                 proc_type,
+                                 num_args,
+                                 num_values);
+
+  if (success)
+    {
+      *args        = g_new (GimpParamDef, *num_args);
+      *return_vals = g_new (GimpParamDef, *num_values);
+
+      for (i = 0; i < *num_args; i++)
+        {
+          if (! gimp_pdb_proc_arg (procedure_name, i,
+                                   &(*args)[i].type,
+                                   &(*args)[i].name,
+                                   &(*args)[i].description))
+            {
+              g_free (*args);
+              g_free (*return_vals);
+
+              return FALSE;
+            }
+        }
+
+      for (i = 0; i < *num_values; i++)
+        {
+          if (! gimp_pdb_proc_val (procedure_name, i,
+                                   &(*return_vals)[i].type,
+                                   &(*return_vals)[i].name,
+                                   &(*return_vals)[i].description))
+            {
+              g_free (*args);
+              g_free (*return_vals);
+
+              return FALSE;
+            }
+        }
+    }
+
+  return success;
+}
+
+/**
+ * gimp_pdb_proc_arg:
+ * @procedure_name: The procedure name.
+ * @arg_num: The argument number.
+ * @arg_type: (out): The type of argument.
+ * @arg_name: (out) (transfer full): The name of the argument.
+ * @arg_desc: (out) (transfer full): A description of the argument.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's argument.
+ *
+ * This procedure returns information on the specified procedure's
+ * argument. The argument type, name, and a description are retrieved.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pdb_proc_arg (const gchar     *procedure_name,
+                   gint             arg_num,
+                   GimpPDBArgType  *arg_type,
+                   gchar          **arg_name,
+                   gchar          **arg_desc)
+{
+  return _gimp_pdb_proc_arg (procedure_name, arg_num,
+                             arg_type, arg_name, arg_desc);
+}
+
+/**
+ * gimp_pdb_proc_val:
+ * @procedure_name: The procedure name.
+ * @val_num: The return value number.
+ * @val_type: (out): The type of return value.
+ * @val_name: (out) (transfer full): The name of the return value.
+ * @val_desc: (out) (transfer full): A description of the return value.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's return value.
+ *
+ * This procedure returns information on the specified procedure's
+ * return value. The return value type, name, and a description are
+ * retrieved.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pdb_proc_val (const gchar     *procedure_name,
+                   gint             val_num,
+                   GimpPDBArgType  *val_type,
+                   gchar          **val_name,
+                   gchar          **val_desc)
+{
+  return _gimp_pdb_proc_val (procedure_name, val_num,
+                             val_type, val_name, val_desc);
 }
 
 
