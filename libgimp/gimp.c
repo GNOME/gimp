@@ -603,7 +603,10 @@ gimp_main_internal (GType                 plug_in_type,
 
   if (plug_in_type != G_TYPE_NONE)
     {
-      PLUG_IN = g_object_new (plug_in_type, NULL);
+      PLUG_IN = g_object_new (plug_in_type,
+                              "read-channel",  _gimp_readchannel,
+                              "write-channel", _gimp_writechannel,
+                              NULL);
 
       g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
     }
@@ -752,13 +755,21 @@ gimp_run_procedure_with_array (const gchar    *name,
   proc_run.nparams = gimp_value_array_length (arguments);
   proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
 
-  if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
-    gimp_quit ();
-
   if (PLUG_IN)
-    _gimp_plug_in_read_expect_msg (PLUG_IN, &msg, GP_PROC_RETURN);
+    {
+      if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (PLUG_IN),
+                               &proc_run, PLUG_IN))
+        gimp_quit ();
+
+      _gimp_plug_in_read_expect_msg (PLUG_IN, &msg, GP_PROC_RETURN);
+    }
   else
-    _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+    {
+      if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
+        gimp_quit ();
+
+      _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+    }
 
   proc_return = msg.data;
 

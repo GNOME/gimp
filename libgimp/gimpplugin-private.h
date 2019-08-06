@@ -35,32 +35,37 @@ struct _GimpPlugInMenuBranch
 
 struct _GimpPlugInPrivate
 {
-  gchar *translation_domain_name;
-  GFile *translation_domain_path;
+  GIOChannel *read_channel;
+  GIOChannel *write_channel;
+  guint       extension_source_id;
 
-  gchar *help_domain_name;
-  GFile *help_domain_uri;
+  gchar      *translation_domain_name;
+  GFile      *translation_domain_path;
 
-  GList *menu_branches;
+  gchar      *help_domain_name;
+  GFile      *help_domain_uri;
 
-  GList *temp_procedures;
+  GList      *menu_branches;
 
-  guint  extension_source_id;
+  GList      *temp_procedures;
 };
 
 
-void       _gimp_plug_in_query           (GimpPlugIn      *plug_in);
-void       _gimp_plug_in_init            (GimpPlugIn      *plug_in);
-void       _gimp_plug_in_run             (GimpPlugIn      *plug_in);
-void       _gimp_plug_in_quit            (GimpPlugIn      *plug_in);
+void         _gimp_plug_in_query             (GimpPlugIn      *plug_in);
+void         _gimp_plug_in_init              (GimpPlugIn      *plug_in);
+void         _gimp_plug_in_run               (GimpPlugIn      *plug_in);
+void         _gimp_plug_in_quit              (GimpPlugIn      *plug_in);
 
-void       _gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
-                                          GimpWireMessage *msg,
-                                          gint             type);
-gboolean   _gimp_plug_in_extension_read  (GIOChannel      *channel,
-                                          GIOCondition     condition,
-                                          gpointer         data);
-void       _gimp_plug_in_single_message  (GimpPlugIn      *plug_in);
+GIOChannel * _gimp_plug_in_get_read_channel  (GimpPlugIn      *plug_in);
+GIOChannel * _gimp_plug_in_get_write_channel (GimpPlugIn      *plug_in);
+
+void         _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
+                                              GimpWireMessage *msg,
+                                              gint             type);
+gboolean     _gimp_plug_in_extension_read    (GIOChannel      *channel,
+                                              GIOCondition     condition,
+                                              gpointer         data);
+void         _gimp_plug_in_single_message    (GimpPlugIn      *plug_in);
 
 
 G_END_DECLS

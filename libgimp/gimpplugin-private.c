@@ -60,7 +60,7 @@ _gimp_plug_in_query (GimpPlugIn *plug_in)
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
-    gp_has_init_write (_gimp_writechannel, NULL);
+    gp_has_init_write (plug_in->priv->write_channel, plug_in);
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
     {
@@ -90,7 +90,7 @@ _gimp_plug_in_run (GimpPlugIn *plug_in)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
 
-  g_io_add_watch (_gimp_readchannel,
+  g_io_add_watch (plug_in->priv->read_channel,
                   G_IO_ERR | G_IO_HUP,
                   gimp_plug_in_io_error_handler,
                   NULL);
@@ -108,7 +108,23 @@ _gimp_plug_in_quit (GimpPlugIn *plug_in)
 
   _gimp_shm_close ();
 
-  gp_quit_write (_gimp_writechannel, NULL);
+  gp_quit_write (plug_in->priv->write_channel, plug_in);
+}
+
+GIOChannel *
+_gimp_plug_in_get_read_channel (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  return plug_in->priv->read_channel;
+}
+
+GIOChannel *
+_gimp_plug_in_get_write_channel (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  return plug_in->priv->write_channel;
 }
 
 void
@@ -120,7 +136,7 @@ _gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
 
   while (TRUE)
     {
-      if (! gimp_wire_read_msg (_gimp_readchannel, msg, NULL))
+      if (! gimp_wire_read_msg (plug_in->priv->read_channel, msg, NULL))
         gimp_quit ();
 
       if (msg->type == type)
@@ -215,7 +231,7 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
     {
       GimpWireMessage msg;
 
-      if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
+      if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
         return;
 
       switch (msg.type)
@@ -270,7 +286,7 @@ _gimp_plug_in_single_message (GimpPlugIn *plug_in)
   GimpWireMessage msg;
 
   /* Run a temp function */
-  if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
+  if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
     gimp_quit ();
 
   gimp_plug_in_process_message (plug_in, &msg);
@@ -332,7 +348,8 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
       g_object_unref (procedure);
     }
 
-  if (! gp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
+  if (! gp_proc_return_write (plug_in->priv->write_channel,
+                              &proc_return, plug_in))
     gimp_quit ();
 }
 
@@ -351,7 +368,8 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
                                       &proc_return);
     }
 
-  if (! gp_temp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
+  if (! gp_temp_proc_return_write (plug_in->priv->write_channel,
+                                   &proc_return, plug_in))
     gimp_quit ();
 }
 

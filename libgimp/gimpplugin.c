@@ -46,12 +46,32 @@
  **/
 
 
-static void   gimp_plug_in_finalize (GObject *object);
+enum
+{
+  PROP_0,
+  PROP_READ_CHANNEL,
+  PROP_WRITE_CHANNEL,
+  N_PROPS
+};
+
+
+static void   gimp_plug_in_constructed   (GObject      *object);
+static void   gimp_plug_in_finalize      (GObject      *object);
+static void   gimp_plug_in_set_property  (GObject      *object,
+                                          guint         property_id,
+                                          const GValue *value,
+                                          GParamSpec   *pspec);
+static void   gimp_plug_in_get_property  (GObject      *object,
+                                          guint         property_id,
+                                          GValue       *value,
+                                          GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
 
 #define parent_class gimp_plug_in_parent_class
+
+static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
@@ -59,13 +79,43 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_plug_in_finalize;
+  object_class->constructed  = gimp_plug_in_constructed;
+  object_class->finalize     = gimp_plug_in_finalize;
+  object_class->set_property = gimp_plug_in_set_property;
+  object_class->get_property = gimp_plug_in_get_property;
+
+  props[PROP_READ_CHANNEL] =
+    g_param_spec_pointer ("read-channel",
+                          "Read channel",
+                          "The GIOChanel to read from GIMP",
+                          GIMP_PARAM_READWRITE |
+                          G_PARAM_CONSTRUCT_ONLY);
+
+  props[PROP_WRITE_CHANNEL] =
+    g_param_spec_pointer ("write-channel",
+                          "Write channel",
+                          "The GIOChanel to write to GIMP",
+                          GIMP_PARAM_READWRITE |
+                          G_PARAM_CONSTRUCT_ONLY);
+
+  g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
 gimp_plug_in_init (GimpPlugIn *plug_in)
 {
   plug_in->priv = gimp_plug_in_get_instance_private (plug_in);
+}
+
+static void
+gimp_plug_in_constructed (GObject *object)
+{
+  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (plug_in->priv->read_channel != NULL);
+  g_assert (plug_in->priv->write_channel != NULL);
 }
 
 static void
@@ -106,6 +156,53 @@ gimp_plug_in_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gimp_plug_in_set_property (GObject      *object,
+                           guint         property_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
+{
+  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+
+  switch (property_id)
+    {
+    case PROP_READ_CHANNEL:
+      plug_in->priv->read_channel = g_value_get_pointer (value);
+      break;
+
+    case PROP_WRITE_CHANNEL:
+      plug_in->priv->write_channel = g_value_get_pointer (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_plug_in_get_property (GObject    *object,
+                           guint       property_id,
+                           GValue     *value,
+                           GParamSpec *pspec)
+{
+  GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
+
+  switch (property_id)
+    {
+    case PROP_READ_CHANNEL:
+      g_value_set_pointer (value, plug_in->priv->read_channel);
+      break;
+
+    case PROP_WRITE_CHANNEL:
+      g_value_set_pointer (value, plug_in->priv->write_channel);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
 
 /*  public functions  */
 
@@ -402,7 +499,7 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
   if (! plug_in->priv->extension_source_id)
     {
       plug_in->priv->extension_source_id =
-        g_io_add_watch (_gimp_readchannel, G_IO_IN | G_IO_PRI,
+        g_io_add_watch (plug_in->priv->read_channel, G_IO_IN | G_IO_PRI,
                         _gimp_plug_in_extension_read,
                         plug_in);
     }
@@ -452,7 +549,8 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
         tvp = NULL;
 
       FD_ZERO (&readfds);
-      FD_SET (g_io_channel_unix_get_fd (_gimp_readchannel), &readfds);
+      FD_SET (g_io_channel_unix_get_fd (plug_in->priv->read_channel),
+              &readfds);
 
       if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
         {
@@ -479,7 +577,8 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
   if (timeout == 0)
     timeout = -1;
 
-  g_io_channel_win32_make_pollfd (_gimp_readchannel, G_IO_IN, &pollfd);
+  g_io_channel_win32_make_pollfd (plug_in->priv->read_channel, G_IO_IN,
+                                  &pollfd);
 
   if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
     {

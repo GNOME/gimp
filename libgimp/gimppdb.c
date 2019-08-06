@@ -263,7 +263,8 @@ gimp_pdb_run_procedure_array (GimpPDB        *pdb,
   proc_run.nparams = gimp_value_array_length (arguments);
   proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
 
-  if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
+  if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->priv->plug_in),
+                           &proc_run, pdb->priv->plug_in))
     gimp_quit ();
 
   _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);

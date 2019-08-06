@@ -28,6 +28,7 @@
 
 #include "gimp-private.h"
 #include "gimpgpparams.h"
+#include "gimpplugin-private.h"
 #include "gimpprocedure-private.h"
 
 
@@ -41,6 +42,7 @@ _gimp_procedure_register (GimpProcedure *procedure)
   gint           n_args;
   gint           n_return_vals;
   GList         *list;
+  GimpPlugIn    *plug_in;
   GPProcInstall  proc_install;
   GimpIconType   icon_type;
   const guint8  *icon_data;
@@ -78,7 +80,10 @@ _gimp_procedure_register (GimpProcedure *procedure)
                                         &proc_install.return_vals[i]);
     }
 
-  if (! gp_proc_install_write (_gimp_writechannel, &proc_install, NULL))
+  plug_in = gimp_procedure_get_plug_in (procedure);
+
+  if (! gp_proc_install_write (_gimp_plug_in_get_write_channel (plug_in),
+                               &proc_install, plug_in))
     gimp_quit ();
 
   icon_type = gimp_procedure_get_icon (procedure,
@@ -102,17 +107,30 @@ _gimp_procedure_register (GimpProcedure *procedure)
 void
 _gimp_procedure_unregister (GimpProcedure *procedure)
 {
-  GPProcUninstall proc_uninstall;
+  GimpPlugIn      *plug_in;
+  GPProcUninstall  proc_uninstall;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   proc_uninstall.name = (gchar *) gimp_procedure_get_name (procedure);
 
-  if (! gp_proc_uninstall_write (_gimp_writechannel, &proc_uninstall, NULL))
+  plug_in = gimp_procedure_get_plug_in (procedure);
+
+  if (! gp_proc_uninstall_write (_gimp_plug_in_get_write_channel (plug_in),
+                                 &proc_uninstall, plug_in))
     gimp_quit ();
 }
 
 void
 _gimp_procedure_extension_ready (GimpProcedure *procedure)
 {
-  if (! gp_extension_ack_write (_gimp_writechannel, NULL))
+  GimpPlugIn *plug_in;
+
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  plug_in = gimp_procedure_get_plug_in (procedure);
+
+  if (! gp_extension_ack_write (_gimp_plug_in_get_write_channel (plug_in),
+                                plug_in))
     gimp_quit ();
 }
