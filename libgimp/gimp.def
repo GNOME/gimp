@@ -611,6 +611,8 @@ EXPORTS
 	gimp_patterns_popup
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
+	gimp_pdb_get_type
+	gimp_pdb_lookup
 	gimp_pencil
 	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_temp_procedure

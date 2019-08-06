@@ -138,6 +138,8 @@ libgimp_introspectable = \
 	$(top_srcdir)/libgimp/gimpparamspecs.h		\
 	$(top_srcdir)/libgimp/gimppatternselect.c	\
 	$(top_srcdir)/libgimp/gimppatternselect.h	\
+	$(top_srcdir)/libgimp/gimppdb.c			\
+	$(top_srcdir)/libgimp/gimppdb.h			\
 	$(top_srcdir)/libgimp/gimppixbuf.c		\
 	$(top_srcdir)/libgimp/gimppixbuf.h		\
 	$(top_srcdir)/libgimp/gimpplugin.c		\

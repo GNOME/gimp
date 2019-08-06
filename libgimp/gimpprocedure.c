@@ -24,28 +24,20 @@
 #include <sys/types.h>
 
 #include "gimp.h"
+#include "gimppdb-private.h"
 #include "gimpprocedure-private.h"
 
 #include "libgimp-intl.h"
 
 
-typedef enum
+enum
 {
-  GIMP_PDB_ERROR_FAILED,  /* generic error condition */
-  GIMP_PDB_ERROR_CANCELLED,
-  GIMP_PDB_ERROR_PROCEDURE_NOT_FOUND,
-  GIMP_PDB_ERROR_INVALID_ARGUMENT,
-  GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
-  GIMP_PDB_ERROR_INTERNAL_ERROR
-} GimpPdbErrorCode;
-
-#define GIMP_PDB_ERROR (gimp_pdb_error_quark ())
-
-static GQuark
-gimp_pdb_error_quark (void)
-{
-  return g_quark_from_static_string ("gimp-pdb-error-quark");
-}
+  PROP_0,
+  PROP_PLUG_IN,
+  PROP_NAME,
+  PROP_PROCEDURE_TYPE,
+  N_PROPS
+};
 
 
 struct _GimpProcedurePrivate
@@ -84,19 +76,34 @@ struct _GimpProcedurePrivate
 };
 
 
-static void       gimp_procedure_finalize      (GObject         *object);
+static void       gimp_procedure_constructed   (GObject              *object);
+static void       gimp_procedure_finalize      (GObject              *object);
+static void       gimp_procedure_set_property  (GObject              *object,
+                                                guint                 property_id,
+                                                const GValue         *value,
+                                                GParamSpec           *pspec);
+static void       gimp_procedure_get_property  (GObject              *object,
+                                                guint                 property_id,
+                                                GValue               *value,
+                                                GParamSpec           *pspec);
 
-static gboolean   gimp_procedure_validate_args (GimpProcedure   *procedure,
-                                                GParamSpec     **param_specs,
-                                                gint             n_param_specs,
-                                                GimpValueArray  *args,
-                                                gboolean         return_vals,
-                                                GError         **error);
+static GimpValueArray *
+                  gimp_procedure_real_run      (GimpProcedure        *procedure,
+                                                const GimpValueArray *args);
+
+static gboolean   gimp_procedure_validate_args (GimpProcedure        *procedure,
+                                                GParamSpec          **param_specs,
+                                                gint                  n_param_specs,
+                                                GimpValueArray       *args,
+                                                gboolean              return_vals,
+                                                GError              **error);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedure, gimp_procedure, G_TYPE_OBJECT)
 
 #define parent_class gimp_procedure_parent_class
+
+static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
@@ -104,13 +111,56 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_procedure_finalize;
+  object_class->constructed  = gimp_procedure_constructed;
+  object_class->finalize     = gimp_procedure_finalize;
+  object_class->set_property = gimp_procedure_set_property;
+  object_class->get_property = gimp_procedure_get_property;
+
+  klass->run                 = gimp_procedure_real_run;
+
+  props[PROP_PLUG_IN] =
+    g_param_spec_object ("plug-in",
+                         "Plug-In",
+                         "The GimpPlugIn of this plug-in process",
+                         GIMP_TYPE_PLUG_IN,
+                         GIMP_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY);
+
+  props[PROP_NAME] =
+    g_param_spec_string ("name",
+                         "Name",
+                         "The procedure's name",
+                         NULL,
+                         GIMP_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY);
+
+  props[PROP_PROCEDURE_TYPE] =
+    g_param_spec_enum ("procedure-type",
+                       "Procedure type",
+                       "The procedure's type",
+                       GIMP_TYPE_PDB_PROC_TYPE,
+                       GIMP_PLUGIN,
+                       GIMP_PARAM_READWRITE |
+                       G_PARAM_CONSTRUCT_ONLY);
+
+  g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
 gimp_procedure_init (GimpProcedure *procedure)
 {
   procedure->priv = gimp_procedure_get_instance_private (procedure);
+}
+
+static void
+gimp_procedure_constructed (GObject *object)
+{
+  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_PLUG_IN (procedure->priv->plug_in));
+  g_assert (procedure->priv->name != NULL);
 }
 
 static void
@@ -157,6 +207,71 @@ gimp_procedure_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_procedure_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+
+  switch (property_id)
+    {
+    case PROP_PLUG_IN:
+      g_set_object (&procedure->priv->plug_in, g_value_get_object (value));
+      break;
+
+    case PROP_NAME:
+      g_free (procedure->priv->name);
+      procedure->priv->name = g_value_dup_string (value);
+      break;
+
+    case PROP_PROCEDURE_TYPE:
+      procedure->priv->proc_type = g_value_get_enum (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_procedure_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpProcedure *procedure = GIMP_PROCEDURE (object);
+
+  switch (property_id)
+    {
+    case PROP_PLUG_IN:
+      g_value_set_object (value, procedure->priv->plug_in);
+      break;
+
+    case PROP_NAME:
+      g_value_set_string (value, procedure->priv->name);
+      break;
+
+    case PROP_PROCEDURE_TYPE:
+      g_value_set_enum (value, procedure->priv->proc_type);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static GimpValueArray *
+gimp_procedure_real_run (GimpProcedure        *procedure,
+                         const GimpValueArray *args)
+{
+  return procedure->priv->run_func (procedure, args,
+                                    procedure->priv->run_data);
 }
 
 
@@ -223,14 +338,15 @@ gimp_procedure_new (GimpPlugIn      *plug_in,
   g_return_val_if_fail (proc_type != GIMP_INTERNAL, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
 
-  procedure = g_object_new (GIMP_TYPE_PROCEDURE, NULL);
+  procedure = g_object_new (GIMP_TYPE_PROCEDURE,
+                            "plug-in",        plug_in,
+                            "name",           name,
+                            "procedure-type", proc_type,
+                            NULL);
 
-  procedure->priv->plug_in           = g_object_ref (plug_in);
-  procedure->priv->proc_type         = proc_type;
-  procedure->priv->name              = g_strdup (name);
-  procedure->priv->run_func          = run_func;
-  procedure->priv->run_data          = run_data;
-  procedure->priv->run_data_destroy  = run_data_destroy;
+  procedure->priv->run_func         = run_func;
+  procedure->priv->run_data         = run_data;
+  procedure->priv->run_data_destroy = run_data_destroy;
 
   return procedure;
 }
@@ -959,8 +1075,7 @@ gimp_procedure_run (GimpProcedure  *procedure,
     }
 
   /*  call the procedure  */
-  return_vals = procedure->priv->run_func (procedure, args,
-                                           procedure->priv->run_data);
+  return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->run (procedure, args);
 
   if (! return_vals)
     {

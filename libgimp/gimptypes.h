@@ -28,6 +28,7 @@ G_BEGIN_DECLS
 /* For information look into the html documentation */
 
 
+typedef struct _GimpPDB         GimpPDB;
 typedef struct _GimpPlugIn      GimpPlugIn;
 typedef struct _GimpProcedure   GimpProcedure;
 
