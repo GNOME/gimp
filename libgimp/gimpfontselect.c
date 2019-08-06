@@ -66,7 +66,7 @@ gimp_font_select_new (const gchar         *title,
                       GDestroyNotify       data_destroy)
 {
   GimpPlugIn   *plug_in       = gimp_get_plug_in ();
-  gchar        *font_callback = gimp_procedural_db_temp_name ();
+  gchar        *font_callback = gimp_pdb_temp_name ();
   GimpFontData *font_data;
 
   font_data = g_slice_new0 (GimpFontData);

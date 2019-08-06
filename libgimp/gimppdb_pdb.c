@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpproceduraldb_pdb.c
+ * gimppdb_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,19 +24,8 @@
 
 #include "gimp.h"
 
-
 /**
- * SECTION: gimpproceduraldb
- * @title: gimpproceduraldb
- * @short_description: Functions for querying and changing procedural database (PDB) entries.
- *
- * Functions for querying and changing procedural database (PDB)
- * entries.
- **/
-
-
-/**
- * gimp_procedural_db_temp_name:
+ * gimp_pdb_temp_name:
  *
  * Generates a unique temporary PDB name.
  *
@@ -47,7 +36,7 @@
  *          The returned value must be freed with g_free().
  **/
 gchar *
-gimp_procedural_db_temp_name (void)
+gimp_pdb_temp_name (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -55,7 +44,7 @@ gimp_procedural_db_temp_name (void)
 
   args = gimp_value_array_new_from_types (G_TYPE_NONE);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-temp-name",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-temp-name",
                                                args);
   gimp_value_array_unref (args);
 
@@ -68,7 +57,7 @@ gimp_procedural_db_temp_name (void)
 }
 
 /**
- * gimp_procedural_db_dump:
+ * gimp_pdb_dump:
  * @filename: The dump filename.
  *
  * Dumps the current contents of the procedural database
@@ -80,7 +69,7 @@ gimp_procedural_db_temp_name (void)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_procedural_db_dump (const gchar *filename)
+gimp_pdb_dump (const gchar *filename)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -90,7 +79,7 @@ gimp_procedural_db_dump (const gchar *filename)
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), filename);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-dump",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-dump",
                                                args);
   gimp_value_array_unref (args);
 
@@ -102,7 +91,7 @@ gimp_procedural_db_dump (const gchar *filename)
 }
 
 /**
- * gimp_procedural_db_query:
+ * gimp_pdb_query:
  * @name: The regex for procedure name.
  * @blurb: The regex for procedure blurb.
  * @help: The regex for procedure help.
@@ -132,15 +121,15 @@ gimp_procedural_db_dump (const gchar *filename)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_procedural_db_query (const gchar   *name,
-                          const gchar   *blurb,
-                          const gchar   *help,
-                          const gchar   *author,
-                          const gchar   *copyright,
-                          const gchar   *date,
-                          const gchar   *proc_type,
-                          gint          *num_matches,
-                          gchar       ***procedure_names)
+gimp_pdb_query (const gchar   *name,
+                const gchar   *blurb,
+                const gchar   *help,
+                const gchar   *author,
+                const gchar   *copyright,
+                const gchar   *date,
+                const gchar   *proc_type,
+                gint          *num_matches,
+                gchar       ***procedure_names)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -162,7 +151,7 @@ gimp_procedural_db_query (const gchar   *name,
   g_value_set_string (gimp_value_array_index (args, 5), date);
   g_value_set_string (gimp_value_array_index (args, 6), proc_type);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-query",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-query",
                                                args);
   gimp_value_array_unref (args);
 
@@ -183,7 +172,7 @@ gimp_procedural_db_query (const gchar   *name,
 }
 
 /**
- * gimp_procedural_db_proc_exists:
+ * gimp_pdb_proc_exists:
  * @procedure_name: The procedure name.
  *
  * Checks if the specified procedure exists in the procedural database
@@ -196,7 +185,7 @@ gimp_procedural_db_query (const gchar   *name,
  * Since: 2.6
  **/
 gboolean
-gimp_procedural_db_proc_exists (const gchar *procedure_name)
+gimp_pdb_proc_exists (const gchar *procedure_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -206,7 +195,7 @@ gimp_procedural_db_proc_exists (const gchar *procedure_name)
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-exists",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-proc-exists",
                                                args);
   gimp_value_array_unref (args);
 
@@ -219,7 +208,7 @@ gimp_procedural_db_proc_exists (const gchar *procedure_name)
 }
 
 /**
- * _gimp_procedural_db_proc_info:
+ * _gimp_pdb_proc_info:
  * @procedure_name: The procedure name.
  * @blurb: (out) (transfer full): A short blurb.
  * @help: (out) (transfer full): Detailed procedure help.
@@ -243,15 +232,15 @@ gimp_procedural_db_proc_exists (const gchar *procedure_name)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_procedural_db_proc_info (const gchar      *procedure_name,
-                               gchar           **blurb,
-                               gchar           **help,
-                               gchar           **author,
-                               gchar           **copyright,
-                               gchar           **date,
-                               GimpPDBProcType  *proc_type,
-                               gint             *num_args,
-                               gint             *num_values)
+_gimp_pdb_proc_info (const gchar      *procedure_name,
+                     gchar           **blurb,
+                     gchar           **help,
+                     gchar           **author,
+                     gchar           **copyright,
+                     gchar           **date,
+                     GimpPDBProcType  *proc_type,
+                     gint             *num_args,
+                     gint             *num_values)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -261,7 +250,7 @@ _gimp_procedural_db_proc_info (const gchar      *procedure_name,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-info",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-proc-info",
                                                args);
   gimp_value_array_unref (args);
 
@@ -294,7 +283,7 @@ _gimp_procedural_db_proc_info (const gchar      *procedure_name,
 }
 
 /**
- * gimp_procedural_db_proc_arg:
+ * gimp_pdb_proc_arg:
  * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  * @arg_type: (out): The type of argument.
@@ -310,11 +299,11 @@ _gimp_procedural_db_proc_info (const gchar      *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_procedural_db_proc_arg (const gchar     *procedure_name,
-                             gint             arg_num,
-                             GimpPDBArgType  *arg_type,
-                             gchar          **arg_name,
-                             gchar          **arg_desc)
+gimp_pdb_proc_arg (const gchar     *procedure_name,
+                   gint             arg_num,
+                   GimpPDBArgType  *arg_type,
+                   gchar          **arg_name,
+                   gchar          **arg_desc)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -326,7 +315,7 @@ gimp_procedural_db_proc_arg (const gchar     *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
   g_value_set_int (gimp_value_array_index (args, 1), arg_num);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-arg",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-proc-arg",
                                                args);
   gimp_value_array_unref (args);
 
@@ -349,7 +338,7 @@ gimp_procedural_db_proc_arg (const gchar     *procedure_name,
 }
 
 /**
- * gimp_procedural_db_proc_val:
+ * gimp_pdb_proc_val:
  * @procedure_name: The procedure name.
  * @val_num: The return value number.
  * @val_type: (out): The type of return value.
@@ -366,11 +355,11 @@ gimp_procedural_db_proc_arg (const gchar     *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_procedural_db_proc_val (const gchar     *procedure_name,
-                             gint             val_num,
-                             GimpPDBArgType  *val_type,
-                             gchar          **val_name,
-                             gchar          **val_desc)
+gimp_pdb_proc_val (const gchar     *procedure_name,
+                   gint             val_num,
+                   GimpPDBArgType  *val_type,
+                   gchar          **val_name,
+                   gchar          **val_desc)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -382,7 +371,7 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
   g_value_set_int (gimp_value_array_index (args, 1), val_num);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-val",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-proc-val",
                                                args);
   gimp_value_array_unref (args);
 
@@ -405,7 +394,7 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
 }
 
 /**
- * gimp_procedural_db_proc_argument:
+ * gimp_pdb_proc_argument:
  * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  *
@@ -420,8 +409,8 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
  * Since: 3.0
  **/
 GParamSpec *
-gimp_procedural_db_proc_argument (const gchar *procedure_name,
-                                  gint         arg_num)
+gimp_pdb_proc_argument (const gchar *procedure_name,
+                        gint         arg_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -433,7 +422,7 @@ gimp_procedural_db_proc_argument (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
   g_value_set_int (gimp_value_array_index (args, 1), arg_num);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-argument",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-proc-argument",
                                                args);
   gimp_value_array_unref (args);
 
@@ -446,7 +435,7 @@ gimp_procedural_db_proc_argument (const gchar *procedure_name,
 }
 
 /**
- * gimp_procedural_db_proc_return_value:
+ * gimp_pdb_proc_return_value:
  * @procedure_name: The procedure name.
  * @val_num: The return value number.
  *
@@ -462,8 +451,8 @@ gimp_procedural_db_proc_argument (const gchar *procedure_name,
  * Since: 3.0
  **/
 GParamSpec *
-gimp_procedural_db_proc_return_value (const gchar *procedure_name,
-                                      gint         val_num)
+gimp_pdb_proc_return_value (const gchar *procedure_name,
+                            gint         val_num)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -475,7 +464,7 @@ gimp_procedural_db_proc_return_value (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
   g_value_set_int (gimp_value_array_index (args, 1), val_num);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-proc-return-value",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-proc-return-value",
                                                args);
   gimp_value_array_unref (args);
 
@@ -488,7 +477,7 @@ gimp_procedural_db_proc_return_value (const gchar *procedure_name,
 }
 
 /**
- * _gimp_procedural_db_get_data:
+ * _gimp_pdb_get_data:
  * @identifier: The identifier associated with data.
  * @bytes: (out): The number of bytes in the data.
  * @data: (out) (array length=bytes) (element-type guint8) (transfer full): A byte array containing data.
@@ -503,9 +492,9 @@ gimp_procedural_db_proc_return_value (const gchar *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_procedural_db_get_data (const gchar  *identifier,
-                              gint         *bytes,
-                              guint8      **data)
+_gimp_pdb_get_data (const gchar  *identifier,
+                    gint         *bytes,
+                    guint8      **data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -515,7 +504,7 @@ _gimp_procedural_db_get_data (const gchar  *identifier,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), identifier);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-get-data",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-get-data",
                                                args);
   gimp_value_array_unref (args);
 
@@ -536,7 +525,7 @@ _gimp_procedural_db_get_data (const gchar  *identifier,
 }
 
 /**
- * gimp_procedural_db_get_data_size:
+ * gimp_pdb_get_data_size:
  * @identifier: The identifier associated with data.
  *
  * Returns size of data associated with the specified identifier.
@@ -548,7 +537,7 @@ _gimp_procedural_db_get_data (const gchar  *identifier,
  * Returns: The number of bytes in the data.
  **/
 gint
-gimp_procedural_db_get_data_size (const gchar *identifier)
+gimp_pdb_get_data_size (const gchar *identifier)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -558,7 +547,7 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), identifier);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-get-data-size",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-get-data-size",
                                                args);
   gimp_value_array_unref (args);
 
@@ -571,7 +560,7 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
 }
 
 /**
- * _gimp_procedural_db_set_data:
+ * _gimp_pdb_set_data:
  * @identifier: The identifier associated with data.
  * @bytes: The number of bytes in the data.
  * @data: (array length=bytes) (element-type guint8): A byte array containing data.
@@ -585,9 +574,9 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_procedural_db_set_data (const gchar  *identifier,
-                              gint          bytes,
-                              const guint8 *data)
+_gimp_pdb_set_data (const gchar  *identifier,
+                    gint          bytes,
+                    const guint8 *data)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -601,7 +590,7 @@ _gimp_procedural_db_set_data (const gchar  *identifier,
   g_value_set_int (gimp_value_array_index (args, 1), bytes);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), data, bytes);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-procedural-db-set-data",
+  return_vals = gimp_run_procedure_with_array ("gimp-pdb-set-data",
                                                args);
   gimp_value_array_unref (args);
 

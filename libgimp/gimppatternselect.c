@@ -70,7 +70,7 @@ gimp_pattern_select_new (const gchar            *title,
                          GDestroyNotify          data_destroy)
 {
   GimpPlugIn      *plug_in          = gimp_get_plug_in ();
-  gchar           *pattern_callback = gimp_procedural_db_temp_name ();
+  gchar           *pattern_callback = gimp_pdb_temp_name ();
   GimpPatternData *pattern_data;
 
   pattern_data = g_slice_new0 (GimpPatternData);

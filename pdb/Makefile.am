@@ -45,9 +45,9 @@ pdb_groups = \
 	groups/pattern.pdb		\
 	groups/pattern_select.pdb	\
 	groups/patterns.pdb		\
+	groups/pdb.pdb			\
 	groups/plug_in.pdb		\
 	groups/plug_in_compat.pdb	\
-	groups/procedural_db.pdb	\
 	groups/progress.pdb		\
 	groups/selection.pdb		\
 	groups/text_layer.pdb		\

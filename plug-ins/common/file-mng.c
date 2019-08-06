@@ -1654,7 +1654,7 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE ||
           run_mode == GIMP_RUN_WITH_LAST_VALS)
         {
-          gimp_procedural_db_get_data (SAVE_PROC, &mng_data);
+          gimp_get_data (SAVE_PROC, &mng_data);
 
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
 

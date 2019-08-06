@@ -71,6 +71,27 @@ GimpProcedure * gimp_pdb_lookup   (GimpPDB     *pdb,
                                    const gchar *name);
 
 
+/*  Cruft API  */
+
+gboolean   gimp_pdb_proc_info (const gchar      *procedure,
+                               gchar           **blurb,
+                               gchar           **help,
+                               gchar           **author,
+                               gchar           **copyright,
+                               gchar           **date,
+                               GimpPDBProcType  *proc_type,
+                               gint             *num_args,
+                               gint             *num_values,
+                               GimpParamDef    **args,
+                               GimpParamDef    **return_vals);
+gboolean   gimp_pdb_get_data  (const gchar      *identifier,
+                               gpointer          data);
+gboolean   gimp_pdb_set_data  (const gchar      *identifier,
+                               gconstpointer     data,
+                               guint32           bytes);
+
+
+
 G_END_DECLS
 
 #endif  /*  __GIMP_PDB_H__  */

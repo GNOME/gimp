@@ -108,17 +108,17 @@ gimp_proc_view_new (const gchar *procedure_name,
 
   g_return_val_if_fail (procedure_name != NULL, NULL);
 
-  gimp_procedural_db_proc_info (procedure_name,
-                                &blurb,
-                                &help,
-                                &author,
-                                &copyright,
-                                &date,
-                                &type,
-                                &n_params,
-                                &n_return_vals,
-                                &params,
-                                &return_vals);
+  gimp_pdb_proc_info (procedure_name,
+                      &blurb,
+                      &help,
+                      &author,
+                      &copyright,
+                      &date,
+                      &type,
+                      &n_params,
+                      &n_return_vals,
+                      &params,
+                      &return_vals);
 
   if (blurb     && strlen (blurb) < 2)     g_clear_pointer (&blurb,     g_free);
   if (help      && strlen (help) < 2)      g_clear_pointer (&help,      g_free);
@@ -446,9 +446,9 @@ gimp_proc_view_create_args (const gchar  *procedure_name,
       GtkWidget  *label;
 
       if (return_values)
-        pspec = gimp_procedural_db_proc_return_value (procedure_name, i);
+        pspec = gimp_pdb_proc_return_value (procedure_name, i);
       else
-        pspec = gimp_procedural_db_proc_argument (procedure_name, i);
+        pspec = gimp_pdb_proc_argument (procedure_name, i);
 
       /* name */
       label = gtk_label_new (g_param_spec_get_name (pspec));

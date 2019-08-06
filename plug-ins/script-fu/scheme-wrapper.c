@@ -448,8 +448,8 @@ ts_init_procedures (scheme   *sc,
                                                       script_fu_marshal_procedure_call_permissive));
   sc->vptr->setimmutable (symbol);
 
-  gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
-                            &num_procs, &proc_list);
+  gimp_pdb_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
+                  &num_procs, &proc_list);
 
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
@@ -576,15 +576,15 @@ script_fu_marshal_procedure_call (scheme   *sc,
   script_fu_interface_report_cc (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
-  if (! gimp_procedural_db_proc_info (proc_name,
-                                      &proc_blurb,
-                                      &proc_help,
-                                      &proc_author,
-                                      &proc_copyright,
-                                      &proc_date,
-                                      &proc_type,
-                                      &nparams, &nreturn_vals,
-                                      &params, &return_vals))
+  if (! gimp_pdb_proc_info (proc_name,
+                            &proc_blurb,
+                            &proc_help,
+                            &proc_author,
+                            &proc_copyright,
+                            &proc_date,
+                            &proc_type,
+                            &nparams, &nreturn_vals,
+                            &params, &return_vals))
     {
 #ifdef DEBUG_MARSHALL
       g_printerr ("  Invalid procedure name\n");

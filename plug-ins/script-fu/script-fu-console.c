@@ -427,17 +427,17 @@ script_fu_browse_response (GtkWidget        *widget,
   if (proc_name == NULL)
     return;
 
-  gimp_procedural_db_proc_info (proc_name,
-                                &proc_blurb,
-                                &proc_help,
-                                &proc_author,
-                                &proc_copyright,
-                                &proc_date,
-                                &proc_type,
-                                &n_params,
-                                &n_return_vals,
-                                &params,
-                                &return_vals);
+  gimp_pdb_proc_info (proc_name,
+                      &proc_blurb,
+                      &proc_help,
+                      &proc_author,
+                      &proc_copyright,
+                      &proc_date,
+                      &proc_type,
+                      &n_params,
+                      &n_return_vals,
+                      &params,
+                      &return_vals);
 
   text = g_string_new ("(");
   text = g_string_append (text, proc_name);

@@ -84,15 +84,15 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  _gimp_procedural_db_proc_info (name,
-                                 &blurb,
-                                 &help,
-                                 &authors,
-                                 &copyright,
-                                 &date,
-                                 &type,
-                                 &n_params,
-                                 &n_return_vals);
+  _gimp_pdb_proc_info (name,
+                       &blurb,
+                       &help,
+                       &authors,
+                       &copyright,
+                       &date,
+                       &type,
+                       &n_params,
+                       &n_return_vals);
 
   procedure = g_object_new (GIMP_TYPE_PDB_PROCEDURE,
                             "plug-in",        _gimp_pdb_get_plug_in (pdb),
@@ -113,7 +113,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
 
   for (i = 0; i < n_params; i++)
     {
-      GParamSpec *pspec = gimp_procedural_db_proc_argument (name, i);
+      GParamSpec *pspec = gimp_pdb_proc_argument (name, i);
 
       gimp_procedure_add_argument (procedure, pspec);
       g_param_spec_unref (pspec);
@@ -121,7 +121,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
 
   for (i = 0; i < n_return_vals; i++)
     {
-      GParamSpec *pspec = gimp_procedural_db_proc_return_value (name, i);
+      GParamSpec *pspec = gimp_pdb_proc_return_value (name, i);
 
       gimp_procedure_add_return_value (procedure, pspec);
       g_param_spec_unref (pspec);

@@ -51,7 +51,6 @@
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimppixbuf.h>
 #include <libgimp/gimpplugin.h>
-#include <libgimp/gimpproceduraldb.h>
 #include <libgimp/gimpprocedure.h>
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpselection.h>
@@ -67,9 +66,9 @@
 G_BEGIN_DECLS
 
 
-#define gimp_get_data         gimp_procedural_db_get_data
-#define gimp_get_data_size    gimp_procedural_db_get_data_size
-#define gimp_set_data         gimp_procedural_db_set_data
+#define gimp_get_data      gimp_pdb_get_data
+#define gimp_get_data_size gimp_pdb_get_data_size
+#define gimp_set_data      gimp_pdb_set_data
 
 
 /**

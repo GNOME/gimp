@@ -612,7 +612,19 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pdb_get_type
+	gimp_pdb_dump
+	gimp_pdb_get_data
+	gimp_pdb_get_data_size
 	gimp_pdb_lookup
+	gimp_pdb_proc_arg
+	gimp_pdb_proc_argument
+	gimp_pdb_proc_exists
+	gimp_pdb_proc_info
+	gimp_pdb_proc_return_value
+	gimp_pdb_proc_val
+	gimp_pdb_query
+	gimp_pdb_set_data
+	gimp_pdb_temp_name
 	gimp_pencil
 	gimp_plug_in_add_menu_branch
 	gimp_plug_in_add_temp_procedure
@@ -632,18 +644,6 @@ EXPORTS
 	gimp_plugin_menu_branch_register
 	gimp_plugin_menu_register
 	gimp_plugin_set_pdb_error_handler
-	gimp_procedural_db_dump
-	gimp_procedural_db_get_data
-	gimp_procedural_db_get_data_size
-	gimp_procedural_db_proc_arg
-	gimp_procedural_db_proc_argument
-	gimp_procedural_db_proc_exists
-	gimp_procedural_db_proc_info
-	gimp_procedural_db_proc_return_value
-	gimp_procedural_db_proc_val
-	gimp_procedural_db_query
-	gimp_procedural_db_set_data
-	gimp_procedural_db_temp_name
 	gimp_procedure_add_argument
 	gimp_procedure_add_argument_from_property
 	gimp_procedure_add_menu_path

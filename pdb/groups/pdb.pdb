@@ -16,7 +16,7 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub procedural_db_temp_name {
+sub pdb_temp_name {
     $blurb = 'Generates a unique temporary PDB name.';
 
     $help = <<'HELP';
@@ -42,7 +42,7 @@ CODE
     );
 }
 
-sub procedural_db_dump {
+sub pdb_dump {
     $blurb = 'Dumps the current contents of the procedural database';
 
     $help = <<'HELP';
@@ -74,7 +74,7 @@ CODE
     );
 }
 
-sub procedural_db_query {
+sub pdb_query {
     $blurb = <<'BLURB';
 Queries the procedural database for its contents using regular expression
 matching.
@@ -134,7 +134,7 @@ CODE
     );
 }
 
-sub procedural_db_proc_exists {
+sub pdb_proc_exists {
     $blurb = <<'BLURB';
 Checks if the specified procedure exists in the procedural database
 BLURB
@@ -182,7 +182,7 @@ CODE
     );
 }
 
-sub procedural_db_proc_info {
+sub pdb_proc_info {
     $blurb = <<'BLURB';
 Queries the procedural database for information on the specified procedure.
 BLURB
@@ -244,7 +244,7 @@ CODE
     );
 }
 
-sub procedural_db_proc_argument {
+sub pdb_proc_argument {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
 argument.
@@ -303,7 +303,7 @@ CODE
    );
 }
 
-sub procedural_db_proc_return_value {
+sub pdb_proc_return_value {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
 return value.
@@ -362,7 +362,7 @@ CODE
    );
 }
 
-sub procedural_db_proc_arg {
+sub pdb_proc_arg {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
 argument.
@@ -430,7 +430,7 @@ CODE
    );
 }
 
-sub procedural_db_proc_val {
+sub pdb_proc_val {
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
 return value.
@@ -498,7 +498,7 @@ CODE
    );
 }
 
-sub procedural_db_get_data {
+sub pdb_get_data {
     $blurb = 'Returns data associated with the specified identifier.';
 
     $help = <<'HELP';
@@ -542,7 +542,7 @@ CODE
     );
 }
 
-sub procedural_db_get_data_size {
+sub pdb_get_data_size {
     $blurb = 'Returns size of data associated with the specified identifier.';
 
     $help = <<'HELP';
@@ -578,7 +578,7 @@ CODE
     );
 }
 
-sub procedural_db_set_data {
+sub pdb_set_data {
     $blurb = 'Associates the specified identifier with the supplied data.';
 
     $help = <<'HELP';
@@ -620,23 +620,21 @@ CODE
               "gimppdb-query.h"
               "gimp-pdb-compat.h");
 
-@procs = qw(procedural_db_temp_name
-            procedural_db_dump
-            procedural_db_query
-            procedural_db_proc_exists
-            procedural_db_proc_info
-            procedural_db_proc_arg
-            procedural_db_proc_val
-            procedural_db_proc_argument
-            procedural_db_proc_return_value
-	    procedural_db_get_data procedural_db_get_data_size
-	    procedural_db_set_data);
+@procs = qw(pdb_temp_name
+            pdb_dump
+            pdb_query
+            pdb_proc_exists
+            pdb_proc_info
+            pdb_proc_arg
+            pdb_proc_val
+            pdb_proc_argument
+            pdb_proc_return_value
+	    pdb_get_data
+            pdb_get_data_size
+	    pdb_set_data);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Procedural database';
-$doc_title = 'gimpproceduraldb';
-$doc_short_desc = 'Functions for querying and changing procedural database (PDB) entries.';
-$doc_long_desc = 'Functions for querying and changing procedural database (PDB) entries.';
 
 1;

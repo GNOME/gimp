@@ -44,8 +44,8 @@ PDB_WRAPPERS_C = \
 	$(top_srcdir)/libgimp/gimppattern_pdb.c			\
 	$(top_srcdir)/libgimp/gimppatterns_pdb.c		\
 	$(top_srcdir)/libgimp/gimppatternselect_pdb.c		\
+	$(top_srcdir)/libgimp/gimppdb_pdb.c			\
 	$(top_srcdir)/libgimp/gimpplugin_pdb.c			\
-	$(top_srcdir)/libgimp/gimpproceduraldb_pdb.c		\
 	$(top_srcdir)/libgimp/gimpprogress_pdb.c		\
 	$(top_srcdir)/libgimp/gimpselection_pdb.c		\
 	$(top_srcdir)/libgimp/gimptextlayer_pdb.c		\
@@ -98,8 +98,8 @@ PDB_WRAPPERS_H = \
 	$(top_srcdir)/libgimp/gimppattern_pdb.h			\
 	$(top_srcdir)/libgimp/gimppatterns_pdb.h		\
 	$(top_srcdir)/libgimp/gimppatternselect_pdb.h		\
+	$(top_srcdir)/libgimp/gimppdb_pdb.h			\
 	$(top_srcdir)/libgimp/gimpplugin_pdb.h			\
-	$(top_srcdir)/libgimp/gimpproceduraldb_pdb.h		\
 	$(top_srcdir)/libgimp/gimpprogress_pdb.h		\
 	$(top_srcdir)/libgimp/gimpselection_pdb.h		\
 	$(top_srcdir)/libgimp/gimptextlayer_pdb.h		\
@@ -144,8 +144,6 @@ libgimp_introspectable = \
 	$(top_srcdir)/libgimp/gimppixbuf.h		\
 	$(top_srcdir)/libgimp/gimpplugin.c		\
 	$(top_srcdir)/libgimp/gimpplugin.h		\
-	$(top_srcdir)/libgimp/gimpproceduraldb.c	\
-	$(top_srcdir)/libgimp/gimpproceduraldb.h	\
 	$(top_srcdir)/libgimp/gimpprocedure.c		\
 	$(top_srcdir)/libgimp/gimpprocedure.h		\
 	$(top_srcdir)/libgimp/gimpprogress.c		\

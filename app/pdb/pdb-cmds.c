@@ -42,12 +42,12 @@
 
 
 static GimpValueArray *
-procedural_db_temp_name_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
+pdb_temp_name_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
   GimpValueArray *return_vals;
   gchar *temp_name = NULL;
@@ -63,12 +63,12 @@ procedural_db_temp_name_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_dump_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
+pdb_dump_invoker (GimpProcedure         *procedure,
+                  Gimp                  *gimp,
+                  GimpContext           *context,
+                  GimpProgress          *progress,
+                  const GimpValueArray  *args,
+                  GError               **error)
 {
   gboolean success = TRUE;
   const gchar *filename;
@@ -89,12 +89,12 @@ procedural_db_dump_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_query_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
-                             GError               **error)
+pdb_query_invoker (GimpProcedure         *procedure,
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -138,12 +138,12 @@ procedural_db_query_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_exists_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
-                                   GError               **error)
+pdb_proc_exists_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -184,12 +184,12 @@ procedural_db_proc_exists_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_info_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
+pdb_proc_info_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -241,12 +241,12 @@ procedural_db_proc_info_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_arg_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+pdb_proc_arg_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -306,12 +306,12 @@ procedural_db_proc_arg_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_val_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+pdb_proc_val_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -371,12 +371,12 @@ procedural_db_proc_val_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_argument_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
+pdb_proc_argument_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -426,12 +426,12 @@ procedural_db_proc_argument_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_proc_return_value_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
-                                         GError               **error)
+pdb_proc_return_value_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -481,12 +481,12 @@ procedural_db_proc_return_value_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_get_data_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+pdb_get_data_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -525,12 +525,12 @@ procedural_db_get_data_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_get_data_size_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
+pdb_get_data_size_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -560,12 +560,12 @@ procedural_db_get_data_size_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-procedural_db_set_data_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
-                                GError               **error)
+pdb_set_data_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
 {
   gboolean success = TRUE;
   const gchar *identifier;
@@ -591,18 +591,18 @@ procedural_db_set_data_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_procedural_db_procs (GimpPDB *pdb)
+register_pdb_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 
   /*
-   * gimp-procedural-db-temp-name
+   * gimp-pdb-temp-name
    */
-  procedure = gimp_procedure_new (procedural_db_temp_name_invoker);
+  procedure = gimp_procedure_new (pdb_temp_name_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-temp-name");
+                               "gimp-pdb-temp-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-temp-name",
+                                     "gimp-pdb-temp-name",
                                      "Generates a unique temporary PDB name.",
                                      "This procedure generates a temporary PDB entry name that is guaranteed to be unique.",
                                      "Andy Thomas",
@@ -620,13 +620,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-dump
+   * gimp-pdb-dump
    */
-  procedure = gimp_procedure_new (procedural_db_dump_invoker);
+  procedure = gimp_procedure_new (pdb_dump_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-dump");
+                               "gimp-pdb-dump");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-dump",
+                                     "gimp-pdb-dump",
                                      "Dumps the current contents of the procedural database",
                                      "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure.",
                                      "Spencer Kimball & Josh MacDonald",
@@ -644,13 +644,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-query
+   * gimp-pdb-query
    */
-  procedure = gimp_procedure_new (procedural_db_query_invoker);
+  procedure = gimp_procedure_new (pdb_query_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-query");
+                               "gimp-pdb-query");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-query",
+                                     "gimp-pdb-query",
                                      "Queries the procedural database for its contents using regular expression matching.",
                                      "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, author, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
                                      "Spencer Kimball & Peter Mattis",
@@ -721,13 +721,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-proc-exists
+   * gimp-pdb-proc-exists
    */
-  procedure = gimp_procedure_new (procedural_db_proc_exists_invoker);
+  procedure = gimp_procedure_new (pdb_proc_exists_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-proc-exists");
+                               "gimp-pdb-proc-exists");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-proc-exists",
+                                     "gimp-pdb-proc-exists",
                                      "Checks if the specified procedure exists in the procedural database",
                                      "This procedure checks if the specified procedure is registered in the procedural database.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -751,13 +751,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-proc-info
+   * gimp-pdb-proc-info
    */
-  procedure = gimp_procedure_new (procedural_db_proc_info_invoker);
+  procedure = gimp_procedure_new (pdb_proc_info_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-proc-info");
+                               "gimp-pdb-proc-info");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-proc-info",
+                                     "gimp-pdb-proc-info",
                                      "Queries the procedural database for information on the specified procedure.",
                                      "This procedure returns information on the specified procedure. A short blurb, detailed help, author(s), copyright information, procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp-procedural-db-proc-arg' and 'gimp-procedural-db-proc-val' procedures.",
                                      "Spencer Kimball & Peter Mattis",
@@ -829,13 +829,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-proc-arg
+   * gimp-pdb-proc-arg
    */
-  procedure = gimp_procedure_new (procedural_db_proc_arg_invoker);
+  procedure = gimp_procedure_new (pdb_proc_arg_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-proc-arg");
+                               "gimp-pdb-proc-arg");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-proc-arg",
+                                     "gimp-pdb-proc-arg",
                                      "Queries the procedural database for information on the specified procedure's argument.",
                                      "This procedure returns information on the specified procedure's argument. The argument type, name, and a description are retrieved.",
                                      "Spencer Kimball & Peter Mattis",
@@ -882,13 +882,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-proc-val
+   * gimp-pdb-proc-val
    */
-  procedure = gimp_procedure_new (procedural_db_proc_val_invoker);
+  procedure = gimp_procedure_new (pdb_proc_val_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-proc-val");
+                               "gimp-pdb-proc-val");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-proc-val",
+                                     "gimp-pdb-proc-val",
                                      "Queries the procedural database for information on the specified procedure's return value.",
                                      "This procedure returns information on the specified procedure's return value. The return value type, name, and a description are retrieved.",
                                      "Spencer Kimball & Peter Mattis",
@@ -935,13 +935,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-proc-argument
+   * gimp-pdb-proc-argument
    */
-  procedure = gimp_procedure_new (procedural_db_proc_argument_invoker);
+  procedure = gimp_procedure_new (pdb_proc_argument_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-proc-argument");
+                               "gimp-pdb-proc-argument");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-proc-argument",
+                                     "gimp-pdb-proc-argument",
                                      "Queries the procedural database for information on the specified procedure's argument.",
                                      "This procedure returns the #GParamSpec of procedure_name's argument.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -971,13 +971,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-proc-return-value
+   * gimp-pdb-proc-return-value
    */
-  procedure = gimp_procedure_new (procedural_db_proc_return_value_invoker);
+  procedure = gimp_procedure_new (pdb_proc_return_value_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-proc-return-value");
+                               "gimp-pdb-proc-return-value");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-proc-return-value",
+                                     "gimp-pdb-proc-return-value",
                                      "Queries the procedural database for information on the specified procedure's return value.",
                                      "This procedure returns the #GParamSpec of procedure_name's return value.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1007,13 +1007,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-get-data
+   * gimp-pdb-get-data
    */
-  procedure = gimp_procedure_new (procedural_db_get_data_invoker);
+  procedure = gimp_procedure_new (pdb_get_data_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-get-data");
+                               "gimp-pdb-get-data");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-get-data",
+                                     "gimp-pdb-get-data",
                                      "Returns data associated with the specified identifier.",
                                      "This procedure returns any data which may have been associated with the specified identifier. The data is a variable length array of bytes. If no data has been associated with the identifier, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1042,13 +1042,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-get-data-size
+   * gimp-pdb-get-data-size
    */
-  procedure = gimp_procedure_new (procedural_db_get_data_size_invoker);
+  procedure = gimp_procedure_new (pdb_get_data_size_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-get-data-size");
+                               "gimp-pdb-get-data-size");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-get-data-size",
+                                     "gimp-pdb-get-data-size",
                                      "Returns size of data associated with the specified identifier.",
                                      "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
                                      "Nick Lamb",
@@ -1072,13 +1072,13 @@ register_procedural_db_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-procedural-db-set-data
+   * gimp-pdb-set-data
    */
-  procedure = gimp_procedure_new (procedural_db_set_data_invoker);
+  procedure = gimp_procedure_new (pdb_set_data_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-procedural-db-set-data");
+                               "gimp-pdb-set-data");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-procedural-db-set-data",
+                                     "gimp-pdb-set-data",
                                      "Associates the specified identifier with the supplied data.",
                                      "This procedure associates the supplied data with the provided identifier. The data may be subsequently retrieved by a call to 'procedural-db-get-data'.",
                                      "Spencer Kimball & Peter Mattis",

@@ -167,7 +167,6 @@ gimpinclude_HEADERS = \
 	gimpparamspecs.h		\
 	gimppatternselect.h		\
 	gimpplugin.h			\
-	gimpproceduraldb.h		\
 	gimpprogress.h			\
 	gimpselection.h			\
 	\
