@@ -84,15 +84,35 @@ typedef struct
 } PInfo;
 
 
-/* Declare some local functions.
- */
-static void        query (void);
-static void        run   (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+typedef struct _Browser      Browser;
+typedef struct _BrowserClass BrowserClass;
 
+struct _Browser
+{
+  GimpPlugIn parent_instance;
+};
+
+struct _BrowserClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+/* Declare local functions.
+ */
+
+#define BROWSER_TYPE  (browser_get_type ())
+#define BROWSER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BROWSER_TYPE, Browser))
+
+GType                   browser_get_type         (void) G_GNUC_CONST;
+
+static GList          * browser_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray * browser_run              (GimpProcedure        *procedure,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
 
 static GtkWidget * browser_dialog_new             (void);
 static void        browser_dialog_response        (GtkWidget        *widget,
@@ -108,74 +128,88 @@ static gboolean    find_existing_mpath            (GtkTreeModel     *model,
                                                    GtkTreeIter      *return_iter);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
 
-
-MAIN ()
+GIMP_MAIN (BROWSER_TYPE)
 
 
 static void
-query (void)
+browser_class_init (BrowserClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0) }" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Display information about plug-ins"),
-                          "Allows one to browse the plug-in menus system. You "
-                          "can search for plug-in names, sort by name or menu "
-                          "location and you can view a tree representation "
-                          "of the plug-in menus. Can also be of help to find "
-                          "where new plug-ins have installed themselves in "
-                          "the menus.",
-                          "Andy Thomas",
-                          "Andy Thomas",
-                          "1999",
-                          N_("_Plug-in Browser"),
-                          "",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Help/Programming");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_ICON_PLUGIN);
+  plug_in_class->query_procedures = browser_query_procedures;
+  plug_in_class->create_procedure = browser_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+browser_init (Browser *browser)
 {
-  static GimpParam  values[2];
+}
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+static GList *
+browser_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+static GimpProcedure *
+browser_create_procedure (GimpPlugIn  *plug_in,
+                          const gchar *procedure_name)
+{
+  GimpProcedure *procedure = NULL;
 
+  if (! strcmp (procedure_name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, procedure_name, GIMP_PLUGIN,
+                                      browser_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Plug-In Browser"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
+
+      gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME,
+                               (const guint8 *) GIMP_ICON_PLUGIN);
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Display information about plug-ins"),
+                                        "Allows one to browse the plug-in "
+                                        "menus system. You can search for "
+                                        "plug-in names, sort by name or menu "
+                                        "location and you can view a tree "
+                                        "representation of the plug-in menus. "
+                                        "Can also be of help to find where "
+                                        "new plug-ins have installed "
+                                        "themselves in the menus.",
+                                        PLUG_IN_PROC);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Andy Thomas",
+                                      "Andy Thomas",
+                                      "1999");
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_INTERACTIVE,
+                                                      G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+browser_run (GimpProcedure        *procedure,
+             const GimpValueArray *args,
+             gpointer              run_data)
+{
   INIT_I18N ();
 
-  if (strcmp (name, PLUG_IN_PROC) == 0)
-    {
-      *nreturn_vals = 1;
+  browser_dialog_new ();
+  gtk_main ();
 
-      values[0].data.d_status = GIMP_PDB_SUCCESS;
-
-      browser_dialog_new ();
-      gtk_main ();
-    }
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gboolean
@@ -350,25 +384,25 @@ browser_search (GimpBrowser   *gimp_browser,
                 gint           search_type,
                 PluginBrowser *browser)
 {
-  GimpParam    *return_vals;
-  gint          nreturn_vals;
-  gint          num_plugins;
-  gchar        *str;
-  GtkListStore *list_store;
-  GtkTreeStore *tree_store;
+  GimpValueArray *return_vals;
+  gint            num_plugins = 0;
+  gchar          *str;
+  GtkListStore   *list_store;
+  GtkTreeStore   *tree_store;
 
   gimp_browser_show_message (GIMP_BROWSER (browser->browser),
                              _("Searching by name"));
 
-  return_vals = gimp_run_procedure ("gimp-plugins-query",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, search_text,
-                                    GIMP_PDB_END);
+  return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
+                                        "gimp-plugins-query",
+                                        G_TYPE_STRING, search_text,
+                                        G_TYPE_NONE);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    num_plugins = return_vals[1].data.d_int32;
-  else
-    num_plugins = 0;
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
+      GIMP_PDB_SUCCESS)
+    {
+      num_plugins = g_value_get_int (gimp_value_array_index (return_vals, 1));
+    }
 
   if (! search_text || strlen (search_text) == 0)
     {
@@ -404,36 +438,37 @@ browser_search (GimpBrowser   *gimp_browser,
     {
       GtkTreeSelection  *sel;
       GtkTreeIter        iter;
-      gchar            **menu_strs;
-      gchar            **accel_strs;
-      gchar            **prog_strs;
-      gchar            **types_strs;
-      gchar            **realname_strs;
-      gint              *time_ints;
+      const gchar      **menu_strs;
+      const gchar      **accel_strs;
+      const gchar      **prog_strs;
+      const gchar      **types_strs;
+      const gchar      **realname_strs;
+      const gint        *time_ints;
       gint               i;
 
-      menu_strs     = return_vals[2].data.d_stringarray;
-      accel_strs    = return_vals[4].data.d_stringarray;
-      prog_strs     = return_vals[6].data.d_stringarray;
-      types_strs    = return_vals[8].data.d_stringarray;
-      time_ints     = return_vals[10].data.d_int32array;
-      realname_strs = return_vals[12].data.d_stringarray;
+      menu_strs     = gimp_value_get_string_array (gimp_value_array_index (return_vals, 2));
+      accel_strs    = gimp_value_get_string_array (gimp_value_array_index (return_vals, 4));
+      prog_strs     = gimp_value_get_string_array (gimp_value_array_index (return_vals, 6));
+      types_strs    = gimp_value_get_string_array (gimp_value_array_index (return_vals, 8));
+      time_ints     = gimp_value_get_int32_array (gimp_value_array_index (return_vals, 10));
+      realname_strs = gimp_value_get_string_array (gimp_value_array_index (return_vals, 12));
 
       for (i = 0; i < num_plugins; i++)
         {
-          PInfo     *pinfo;
-          gchar     *name;
-          gchar      xtimestr[50];
-          struct tm *x;
-          time_t     tx;
-          gint       ret;
+          PInfo      *pinfo;
+          gchar      *menu_str = g_strdup (menu_strs[i]);
+          gchar      *name;
+          gchar       xtimestr[50];
+          struct tm  *x;
+          time_t      tx;
+          gint        ret;
 
           /* Strip off trailing ellipsis */
-          name = strstr (menu_strs[i], "...");
-          if (name && name == (menu_strs[i] + strlen (menu_strs[i]) - 3))
+          name = strstr (menu_str, "...");
+          if (name && name == (menu_str + strlen (menu_str) - 3))
             *name = '\0';
 
-          name = strrchr (menu_strs[i], '/');
+          name = strrchr (menu_str, '/');
 
           if (name)
             {
@@ -442,7 +477,7 @@ browser_search (GimpBrowser   *gimp_browser,
             }
           else
             {
-              name = menu_strs[i];
+              name = menu_str;
             }
 
           tx = time_ints[i];
@@ -469,7 +504,7 @@ browser_search (GimpBrowser   *gimp_browser,
 
           pinfo = g_new0 (PInfo, 1);
 
-          pinfo->menu     = g_strdup (menu_strs[i]);
+          pinfo->menu     = g_strdup (menu_str);
           pinfo->accel    = g_strdup (accel_strs[i]);
           pinfo->prog     = g_strdup (prog_strs[i]);
           pinfo->types    = g_strdup (types_strs[i]);
@@ -481,7 +516,7 @@ browser_search (GimpBrowser   *gimp_browser,
                               LIST_COLUMN_NAME,        name,
                               LIST_COLUMN_DATE,        (gint64) tx,
                               LIST_COLUMN_DATE_STRING, xtimestr,
-                              LIST_COLUMN_PATH,        menu_strs[i],
+                              LIST_COLUMN_PATH,        menu_str,
                               LIST_COLUMN_IMAGE_TYPES, types_strs[i],
                               LIST_COLUMN_PINFO,       pinfo,
                               -1);
@@ -491,9 +526,11 @@ browser_search (GimpBrowser   *gimp_browser,
                                  name,
                                  (gint64) tx,
                                  xtimestr,
-                                 menu_strs[i],
+                                 menu_str,
                                  types_strs[i],
                                  pinfo);
+
+          g_free (menu_str);
         }
 
       gtk_tree_view_columns_autosize (GTK_TREE_VIEW (browser->list_view));
@@ -518,7 +555,7 @@ browser_search (GimpBrowser   *gimp_browser,
                                  _("No matches"));
     }
 
-  gimp_destroy_params (return_vals, nreturn_vals);
+  gimp_value_array_unref (return_vals);
 }
 
 static GtkWidget *
