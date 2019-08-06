@@ -53,64 +53,106 @@
 #define PLUG_IN_ROLE   "gimp-procedure-browser"
 
 
-static void   query (void);
-static void   run   (const gchar      *name,
-                     gint              nparams,
-                     const GimpParam  *param,
-                     gint             *nreturn_vals,
-                     GimpParam       **return_vals);
+typedef struct _Browser      Browser;
+typedef struct _BrowserClass BrowserClass;
 
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Browser
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn parent_instance;
+};
+
+struct _BrowserClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+/* Declare local functions.
+ */
+
+#define BROWSER_TYPE  (browser_get_type ())
+#define BROWSER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BROWSER_TYPE, Browser))
+
+GType                   browser_get_type         (void) G_GNUC_CONST;
+
+static GList          * browser_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray * browser_run              (GimpProcedure        *procedure,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
+
+
+G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (BROWSER_TYPE)
+
 
 static void
-query (void)
+browser_class_init (BrowserClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0) }" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("List available procedures in the PDB"),
-                          "",
-                          "Thomas Noel",
-                          "Thomas Noel",
-                          "23th june 1997",
-                          N_("Procedure _Browser"),
-                          "",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Help/Programming");
+  plug_in_class->query_procedures = browser_query_procedures;
+  plug_in_class->create_procedure = browser_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+browser_init (Browser *browser)
 {
-  static GimpParam values[1];
-  GimpRunMode      run_mode;
+}
 
-  run_mode = param[0].data.d_int32;
+static GList *
+browser_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+static GimpProcedure *
+browser_create_procedure (GimpPlugIn  *plug_in,
+                          const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      browser_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("Procedure _Browser"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("List available procedures in the PDB"),
+                                        NULL,
+                                        PLUG_IN_PROC);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Thomas Noel",
+                                      "Thomas Noel",
+                                      "23th june 1997");
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_INTERACTIVE,
+                                                      G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+browser_run (GimpProcedure        *procedure,
+             const GimpValueArray *args,
+             gpointer              run_data)
+{
+  GimpRunMode run_mode;
+
+  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
 
   INIT_I18N ();
 
@@ -137,11 +179,16 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
     case GIMP_RUN_NONINTERACTIVE:
-      g_warning (PLUG_IN_PROC " allows only interactive invocation");
-      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+      g_printerr (PLUG_IN_PROC " allows only interactive invocation");
+
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               NULL);
       break;
 
     default:
       break;
     }
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
