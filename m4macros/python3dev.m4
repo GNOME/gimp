@@ -5,7 +5,7 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# AM_PATH_PYTHON2([MINIMUM-VERSION], [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# AM_PATH_PYTHON3([MINIMUM-VERSION], [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
 # ---------------------------------------------------------------------------
 # Adds support for distributing Python modules and packages.  To
 # install modules, copy them to $(pythondir), using the python_PYTHON
@@ -23,7 +23,7 @@
 # environment variable, or create a .pth file (see the python
 # documentation for details).
 #
-# If the MINIMUM-VERSION argument is passed, AM_PATH_PYTHON2 will
+# If the MINIMUM-VERSION argument is passed, AM_PATH_PYTHON3 will
 # cause an error if the version of python installed on the system
 # doesn't meet the requirement.  MINIMUM-VERSION should consist of
 # numbers and dots only.
@@ -207,7 +207,7 @@ for v in minver: minverhex = (minverhex << 8) + v
 # sys.version_info.major only available since Python 2.7.
 # use sys.version_info[0] instead.
 # Double the square brackets for M4 syntax.
-# sys.exit(sys.version_info[[0]] != 3 or sys.hexversion < minverhex)"
+# sys.exit(sys.version_info[[0]] != 3 or sys.hexversion < minverhex)
 sys.exit(sys.version_info[[0]] != 3 or (sys.hexversion >> 8) < minverhex)"
   AS_IF([AM_RUN_LOG([$1 -c "$prog"])], [$3], [$4])])
 
