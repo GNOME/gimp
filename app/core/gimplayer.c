@@ -306,8 +306,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, opacity_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[MODE_CHANGED] =
@@ -315,8 +314,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, mode_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[BLEND_SPACE_CHANGED] =
@@ -324,8 +322,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, blend_space_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[COMPOSITE_SPACE_CHANGED] =
@@ -333,8 +330,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, composite_space_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[COMPOSITE_MODE_CHANGED] =
@@ -342,8 +338,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, composite_mode_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[EFFECTIVE_MODE_CHANGED] =
@@ -351,8 +346,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, effective_mode_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[EXCLUDES_BACKDROP_CHANGED] =
@@ -360,8 +354,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, excludes_backdrop_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[LOCK_ALPHA_CHANGED] =
@@ -369,8 +362,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, lock_alpha_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[MASK_CHANGED] =
@@ -378,8 +370,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, mask_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[APPLY_MASK_CHANGED] =
@@ -387,8 +378,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, apply_mask_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[EDIT_MASK_CHANGED] =
@@ -396,8 +386,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, edit_mask_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   layer_signals[SHOW_MASK_CHANGED] =
@@ -405,8 +394,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, show_mask_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   object_class->set_property          = gimp_layer_set_property;
