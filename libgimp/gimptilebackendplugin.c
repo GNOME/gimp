@@ -97,6 +97,9 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
 #define parent_class _gimp_tile_backend_plugin_parent_class
 
 
+extern GIOChannel *_gimp_readchannel;
+extern GIOChannel *_gimp_writechannel;
+
 static GMutex backend_plugin_mutex;
 
 

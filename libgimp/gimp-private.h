@@ -24,15 +24,14 @@
 G_BEGIN_DECLS
 
 
-extern GIOChannel *_gimp_readchannel;
-extern GIOChannel *_gimp_writechannel;
-
-
 void   _gimp_config          (GPConfig        *config);
+void   _gimp_legacy_init     (GIOChannel      *read_channel,
+                              GIOChannel      *write_channel);
+void   _gimp_legacy_quit     (void);
 void   _gimp_loop            (GimpRunProc      run_proc);
 void   _gimp_read_expect_msg (GimpWireMessage *msg,
                               gint             type);
-void    _gimp_set_pdb_error  (GimpValueArray  *return_vals);
+void   _gimp_set_pdb_error   (GimpValueArray  *return_vals);
 
 
 G_END_DECLS

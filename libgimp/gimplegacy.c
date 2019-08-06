@@ -27,6 +27,7 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#include "gimp-shm.h"
 #include "gimp-private.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
@@ -41,6 +42,9 @@
  *
  * Main functions needed for building a GIMP plug-in. Compat cruft.
  **/
+
+
+#define WRITE_BUFFER_SIZE 1024
 
 
 #define ASSERT_NO_PLUG_IN_EXISTS(strfunc)                               \
@@ -64,9 +68,24 @@ static void       gimp_temp_proc_run           (GPProcRun       *proc_run);
 static void       gimp_proc_run_internal       (GPProcRun       *proc_run,
                                                 GimpRunProc      run_proc,
                                                 GPProcReturn    *proc_return);
+static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
+                                                GIOCondition     cond,
+                                                gpointer         data);
+static gboolean   gimp_write                   (GIOChannel      *channel,
+                                                const guint8    *buf,
+                                                gulong           count,
+                                                gpointer         user_data);
+static gboolean   gimp_flush                   (GIOChannel      *channel,
+                                                gpointer         user_data);
 
 
-static GHashTable *gimp_temp_proc_ht = NULL;
+GIOChannel        *_gimp_readchannel  = NULL;
+GIOChannel        *_gimp_writechannel = NULL;
+
+static gchar       write_buffer[WRITE_BUFFER_SIZE];
+static gulong      write_buffer_index = 0;
+
+static GHashTable *gimp_temp_proc_ht  = NULL;
 
 
 /**
@@ -752,10 +771,10 @@ gimp_run_procedure_array (const gchar    *name,
   GimpWireMessage  msg;
   GimpValueArray  *return_values;
 
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (arguments != NULL, NULL);
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   proc_run.name    = (gchar *) name;
   proc_run.nparams = gimp_value_array_length (arguments);
@@ -893,6 +912,27 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
 }
 
 void
+_gimp_legacy_init (GIOChannel *read_channel,
+                   GIOChannel *write_channel)
+{
+  _gimp_readchannel  = read_channel;
+  _gimp_writechannel = write_channel;
+
+  gp_init ();
+
+  gimp_wire_set_writer (gimp_write);
+  gimp_wire_set_flusher (gimp_flush);
+}
+
+void
+_gimp_legacy_quit (void)
+{
+  _gimp_shm_close ();
+
+  gp_quit_write (_gimp_writechannel, NULL);
+}
+
+void
 _gimp_loop (GimpRunProc run_proc)
 {
   GimpWireMessage msg;
@@ -900,6 +940,11 @@ _gimp_loop (GimpRunProc run_proc)
   ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   gimp_temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
+
+  g_io_add_watch (_gimp_readchannel,
+                  G_IO_ERR | G_IO_HUP,
+                  gimp_plugin_io_error_handler,
+                  NULL);
 
   while (TRUE)
     {
@@ -976,6 +1021,8 @@ gboolean
 gimp_plugin_domain_register (const gchar *domain_name,
                              const gchar *domain_path)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   return _gimp_plugin_domain_register (domain_name, domain_path);
 }
 
@@ -998,6 +1045,8 @@ gboolean
 gimp_plugin_help_register (const gchar *domain_name,
                            const gchar *domain_uri)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   return _gimp_plugin_help_register (domain_name, domain_uri);
 }
 
@@ -1021,6 +1070,8 @@ gboolean
 gimp_plugin_menu_branch_register (const gchar *menu_path,
                                   const gchar *menu_name)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   return _gimp_plugin_menu_branch_register (menu_path, menu_name);
 }
 
@@ -1042,6 +1093,8 @@ gboolean
 gimp_plugin_menu_register (const gchar *procedure_name,
                            const gchar *menu_path)
 {
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
   return _gimp_plugin_menu_register (procedure_name, menu_path);
 }
 
@@ -1068,6 +1121,8 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
 
   g_return_val_if_fail (procedure_name != NULL, FALSE);
   g_return_val_if_fail (icon_data != NULL, FALSE);
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   switch (icon_type)
     {
@@ -1229,4 +1284,99 @@ gimp_proc_run_internal (GPProcRun     *proc_run,
   proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
+}
+
+static gboolean
+gimp_plugin_io_error_handler (GIOChannel   *channel,
+                              GIOCondition  cond,
+                              gpointer      data)
+{
+  g_printerr ("%s: fatal error: GIMP crashed\n",
+              gimp_get_progname ());
+  gimp_quit ();
+
+  /* never reached */
+  return TRUE;
+}
+
+static gboolean
+gimp_write (GIOChannel   *channel,
+            const guint8 *buf,
+            gulong        count,
+            gpointer      user_data)
+{
+  gulong bytes;
+
+  while (count > 0)
+    {
+      if ((write_buffer_index + count) >= WRITE_BUFFER_SIZE)
+        {
+          bytes = WRITE_BUFFER_SIZE - write_buffer_index;
+          memcpy (&write_buffer[write_buffer_index], buf, bytes);
+          write_buffer_index += bytes;
+          if (! gimp_wire_flush (channel, NULL))
+            return FALSE;
+        }
+      else
+        {
+          bytes = count;
+          memcpy (&write_buffer[write_buffer_index], buf, bytes);
+          write_buffer_index += bytes;
+        }
+
+      buf += bytes;
+      count -= bytes;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_flush (GIOChannel *channel,
+            gpointer    user_data)
+{
+  GIOStatus  status;
+  GError    *error = NULL;
+  gsize      count;
+  gsize      bytes;
+
+  if (write_buffer_index > 0)
+    {
+      count = 0;
+      while (count != write_buffer_index)
+        {
+          do
+            {
+              bytes = 0;
+              status = g_io_channel_write_chars (channel,
+                                                 &write_buffer[count],
+                                                 (write_buffer_index - count),
+                                                 &bytes,
+                                                 &error);
+            }
+          while (status == G_IO_STATUS_AGAIN);
+
+          if (status != G_IO_STATUS_NORMAL)
+            {
+              if (error)
+                {
+                  g_warning ("%s: gimp_flush(): error: %s",
+                             g_get_prgname (), error->message);
+                  g_error_free (error);
+                }
+              else
+                {
+                  g_warning ("%s: gimp_flush(): error", g_get_prgname ());
+                }
+
+              return FALSE;
+            }
+
+          count += bytes;
+        }
+
+      write_buffer_index = 0;
+    }
+
+  return TRUE;
 }

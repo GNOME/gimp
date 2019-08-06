@@ -25,6 +25,9 @@
 G_BEGIN_DECLS
 
 
+#define WRITE_BUFFER_SIZE 1024
+
+
 typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
 
 struct _GimpPlugInMenuBranch
@@ -37,6 +40,10 @@ struct _GimpPlugInPrivate
 {
   GIOChannel *read_channel;
   GIOChannel *write_channel;
+
+  gchar       write_buffer[WRITE_BUFFER_SIZE];
+  gulong      write_buffer_index;
+
   guint       extension_source_id;
 
   gchar      *translation_domain_name;

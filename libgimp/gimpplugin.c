@@ -55,16 +55,23 @@ enum
 };
 
 
-static void   gimp_plug_in_constructed   (GObject      *object);
-static void   gimp_plug_in_finalize      (GObject      *object);
-static void   gimp_plug_in_set_property  (GObject      *object,
-                                          guint         property_id,
-                                          const GValue *value,
-                                          GParamSpec   *pspec);
-static void   gimp_plug_in_get_property  (GObject      *object,
-                                          guint         property_id,
-                                          GValue       *value,
-                                          GParamSpec   *pspec);
+static void       gimp_plug_in_constructed   (GObject      *object);
+static void       gimp_plug_in_finalize      (GObject      *object);
+static void       gimp_plug_in_set_property  (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void       gimp_plug_in_get_property  (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
+
+static gboolean   gimp_plug_in_write         (GIOChannel      *channel,
+                                              const guint8    *buf,
+                                              gulong           count,
+                                              gpointer         user_data);
+static gboolean   gimp_plug_in_flush         (GIOChannel      *channel,
+                                              gpointer         user_data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
@@ -116,6 +123,11 @@ gimp_plug_in_constructed (GObject *object)
 
   g_assert (plug_in->priv->read_channel != NULL);
   g_assert (plug_in->priv->write_channel != NULL);
+
+  gp_init ();
+
+  gimp_wire_set_writer (gimp_plug_in_write);
+  gimp_wire_set_flusher (gimp_plug_in_flush);
 }
 
 static void
@@ -586,4 +598,95 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
     }
 
 #endif
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_plug_in_write (GIOChannel   *channel,
+                    const guint8 *buf,
+                    gulong        count,
+                    gpointer      user_data)
+{
+  GimpPlugIn *plug_in = user_data;
+  gulong      bytes;
+
+  while (count > 0)
+    {
+      if ((plug_in->priv->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
+        {
+          bytes = WRITE_BUFFER_SIZE - plug_in->priv->write_buffer_index;
+          memcpy (&plug_in->priv->write_buffer[plug_in->priv->write_buffer_index],
+                  buf, bytes);
+          plug_in->priv->write_buffer_index += bytes;
+
+          if (! gimp_wire_flush (channel, plug_in))
+            return FALSE;
+        }
+      else
+        {
+          bytes = count;
+          memcpy (&plug_in->priv->write_buffer[plug_in->priv->write_buffer_index],
+                  buf, bytes);
+          plug_in->priv->write_buffer_index += bytes;
+        }
+
+      buf   += bytes;
+      count -= bytes;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_plug_in_flush (GIOChannel *channel,
+                    gpointer    user_data)
+{
+  GimpPlugIn *plug_in = user_data;
+  GIOStatus   status;
+  GError     *error = NULL;
+  gsize       count;
+  gsize       bytes;
+
+  if (plug_in->priv->write_buffer_index > 0)
+    {
+      count = 0;
+
+      while (count != plug_in->priv->write_buffer_index)
+        {
+          do
+            {
+              bytes = 0;
+              status = g_io_channel_write_chars (channel,
+                                                 &plug_in->priv->write_buffer[count],
+                                                 (plug_in->priv->write_buffer_index - count),
+                                                 &bytes,
+                                                 &error);
+            }
+          while (status == G_IO_STATUS_AGAIN);
+
+          if (status != G_IO_STATUS_NORMAL)
+            {
+              if (error)
+                {
+                  g_warning ("%s: gimp_flush(): error: %s",
+                             g_get_prgname (), error->message);
+                  g_error_free (error);
+                }
+              else
+                {
+                  g_warning ("%s: gimp_flush(): error", g_get_prgname ());
+                }
+
+              return FALSE;
+            }
+
+          count += bytes;
+        }
+
+      plug_in->priv->write_buffer_index = 0;
+    }
+
+  return TRUE;
 }

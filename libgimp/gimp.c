@@ -108,9 +108,6 @@
 #include "libgimp-intl.h"
 
 
-#define WRITE_BUFFER_SIZE  1024
-
-
 static gint       gimp_main_internal           (GType                 plug_in_type,
                                                 const GimpPlugInInfo *info,
                                                 gint                  argc,
@@ -132,24 +129,12 @@ static LONG WINAPI gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionI
 #else
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
 #endif
-static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
-                                                GIOCondition     cond,
-                                                gpointer         data);
-static gboolean   gimp_write                   (GIOChannel      *channel,
-                                                const guint8    *buf,
-                                                gulong           count,
-                                                gpointer         user_data);
-static gboolean   gimp_flush                   (GIOChannel      *channel,
-                                                gpointer         user_data);
 
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
 static gchar                         *plug_in_backtrace_path = NULL;
 #endif
-
-GIOChannel                          *_gimp_readchannel       = NULL;
-GIOChannel                          *_gimp_writechannel      = NULL;
 
 static gint           _tile_width        = -1;
 static gint           _tile_height       = -1;
@@ -167,9 +152,6 @@ static gint           _monitor_number    = 0;
 static guint32        _timestamp         = 0;
 static gchar         *_icon_theme_dir    = NULL;
 static const gchar   *progname           = NULL;
-
-static gchar          write_buffer[WRITE_BUFFER_SIZE];
-static gulong         write_buffer_index = 0;
 
 static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 
@@ -241,8 +223,10 @@ gimp_main_internal (GType                 plug_in_type,
     N_ARGS
   };
 
-  gchar *basename;
-  gint   protocol_version;
+  GIOChannel *read_channel;
+  GIOChannel *write_channel;
+  gchar      *basename;
+  gint        protocol_version;
 
 #ifdef G_OS_WIN32
   gint i, j, k;
@@ -460,26 +444,21 @@ gimp_main_internal (GType                 plug_in_type,
 #endif
 
 #ifdef G_OS_WIN32
-  _gimp_readchannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
-  _gimp_writechannel = g_io_channel_win32_new_fd (atoi (argv[ARG_WRITE_FD]));
+  readc_hannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
+  write_channel = g_io_channel_win32_new_fd (atoi (argv[ARG_WRITE_FD]));
 #else
-  _gimp_readchannel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
-  _gimp_writechannel = g_io_channel_unix_new (atoi (argv[ARG_WRITE_FD]));
+  read_channel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
+  write_channel = g_io_channel_unix_new (atoi (argv[ARG_WRITE_FD]));
 #endif
 
-  g_io_channel_set_encoding (_gimp_readchannel, NULL, NULL);
-  g_io_channel_set_encoding (_gimp_writechannel, NULL, NULL);
+  g_io_channel_set_encoding (read_channel, NULL, NULL);
+  g_io_channel_set_encoding (write_channel, NULL, NULL);
 
-  g_io_channel_set_buffered (_gimp_readchannel, FALSE);
-  g_io_channel_set_buffered (_gimp_writechannel, FALSE);
+  g_io_channel_set_buffered (read_channel, FALSE);
+  g_io_channel_set_buffered (write_channel, FALSE);
 
-  g_io_channel_set_close_on_unref (_gimp_readchannel, TRUE);
-  g_io_channel_set_close_on_unref (_gimp_writechannel, TRUE);
-
-  gp_init ();
-
-  gimp_wire_set_writer (gimp_write);
-  gimp_wire_set_flusher (gimp_flush);
+  g_io_channel_set_close_on_unref (read_channel, TRUE);
+  g_io_channel_set_close_on_unref (write_channel, TRUE);
 
   /*  initialize GTypes, they need to be known to g_type_from_name()  */
   {
@@ -604,8 +583,8 @@ gimp_main_internal (GType                 plug_in_type,
   if (plug_in_type != G_TYPE_NONE)
     {
       PLUG_IN = g_object_new (plug_in_type,
-                              "read-channel",  _gimp_readchannel,
-                              "write-channel", _gimp_writechannel,
+                              "read-channel",  read_channel,
+                              "write-channel", write_channel,
                               NULL);
 
       g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
@@ -613,6 +592,9 @@ gimp_main_internal (GType                 plug_in_type,
   else
     {
       PLUG_IN_INFO = *info;
+
+      _gimp_legacy_init (read_channel,
+                         write_channel);
     }
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
@@ -627,7 +609,7 @@ gimp_main_internal (GType                 plug_in_type,
       else
         {
           if (PLUG_IN_INFO.init_proc)
-            gp_has_init_write (_gimp_writechannel, NULL);
+            gp_has_init_write (write_channel, NULL);
 
           if (PLUG_IN_INFO.query_proc)
             PLUG_IN_INFO.query_proc ();
@@ -669,11 +651,6 @@ gimp_main_internal (GType                 plug_in_type,
     }
   else
     {
-      g_io_add_watch (_gimp_readchannel,
-                      G_IO_ERR | G_IO_HUP,
-                      gimp_plugin_io_error_handler,
-                      NULL);
-
       _gimp_loop (PLUG_IN_INFO.run_proc);
     }
 
@@ -1080,9 +1057,7 @@ gimp_close (void)
       if (PLUG_IN_INFO.quit_proc)
         PLUG_IN_INFO.quit_proc ();
 
-      _gimp_shm_close ();
-
-      gp_quit_write (_gimp_writechannel, NULL);
+      _gimp_legacy_quit ();
     }
 }
 
@@ -1251,100 +1226,6 @@ gimp_plugin_sigfatal_handler (gint sig_num)
   exit (EXIT_FAILURE);
 }
 #endif
-
-static gboolean
-gimp_plugin_io_error_handler (GIOChannel   *channel,
-                              GIOCondition  cond,
-                              gpointer      data)
-{
-  g_printerr ("%s: fatal error: GIMP crashed\n", progname);
-  gimp_quit ();
-
-  /* never reached */
-  return TRUE;
-}
-
-static gboolean
-gimp_write (GIOChannel   *channel,
-            const guint8 *buf,
-            gulong        count,
-            gpointer      user_data)
-{
-  gulong bytes;
-
-  while (count > 0)
-    {
-      if ((write_buffer_index + count) >= WRITE_BUFFER_SIZE)
-        {
-          bytes = WRITE_BUFFER_SIZE - write_buffer_index;
-          memcpy (&write_buffer[write_buffer_index], buf, bytes);
-          write_buffer_index += bytes;
-          if (! gimp_wire_flush (channel, NULL))
-            return FALSE;
-        }
-      else
-        {
-          bytes = count;
-          memcpy (&write_buffer[write_buffer_index], buf, bytes);
-          write_buffer_index += bytes;
-        }
-
-      buf += bytes;
-      count -= bytes;
-    }
-
-  return TRUE;
-}
-
-static gboolean
-gimp_flush (GIOChannel *channel,
-            gpointer    user_data)
-{
-  GIOStatus  status;
-  GError    *error = NULL;
-  gsize      count;
-  gsize      bytes;
-
-  if (write_buffer_index > 0)
-    {
-      count = 0;
-      while (count != write_buffer_index)
-        {
-          do
-            {
-              bytes = 0;
-              status = g_io_channel_write_chars (channel,
-                                                 &write_buffer[count],
-                                                 (write_buffer_index - count),
-                                                 &bytes,
-                                                 &error);
-            }
-          while (status == G_IO_STATUS_AGAIN);
-
-          if (status != G_IO_STATUS_NORMAL)
-            {
-              if (error)
-                {
-                  g_warning ("%s: gimp_flush(): error: %s",
-                             g_get_prgname (), error->message);
-                  g_error_free (error);
-                }
-              else
-                {
-                  g_warning ("%s: gimp_flush(): error", g_get_prgname ());
-                }
-
-              return FALSE;
-            }
-
-          count += bytes;
-        }
-
-      write_buffer_index = 0;
-    }
-
-  return TRUE;
-}
 
 void
 _gimp_config (GPConfig *config)

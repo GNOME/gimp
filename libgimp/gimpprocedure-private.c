@@ -99,8 +99,8 @@ _gimp_procedure_register (GimpProcedure *procedure)
        list;
        list = g_list_next (list))
     {
-      gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
-                                 list->data);
+      _gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
+                                  list->data);
     }
 }
 
