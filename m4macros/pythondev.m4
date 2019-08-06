@@ -222,16 +222,16 @@ AC_MSG_CHECKING(for headers required to compile python extensions)
 dnl deduce PYTHON_INCLUDES
 py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
 py_exec_prefix=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
-PYTHON_INCLUDES="-I${py_prefix}/include${py_versiondir}"
+PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
 if test "$py_prefix" != "$py_exec_prefix"; then
-  py_versiondir="${py_exec_prefix}/include/python${PYTHON_VERSION}"
-  dnl Win32 doesn't always have a versioned directory for headers
+  PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_exec_prefix}/include/python${PYTHON_VERSION}"
   if test "$PYTHON_PLATFORM" = "win32"; then
-    if test -d "${py_versiondir}" ; then
-        py_versiondir=${py_exec_prefix}/include
-    fi
+    dnl Win32 doesn't always have a versioned directory for headers
+    PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_exec_prefix}/include"
   fi
-  PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_versiondir}"
+fi
+if test "$PYTHON_PLATFORM" = "win32"; then
+  PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_prefix}/include"
 fi
 AC_SUBST(PYTHON_INCLUDES)
 dnl check if the headers exist:
