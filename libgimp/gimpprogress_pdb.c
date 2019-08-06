@@ -66,8 +66,8 @@ _gimp_progress_init (const gchar *message,
                                                 "gimp-progress-init",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-init",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-init",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -105,8 +105,8 @@ _gimp_progress_update (gdouble percentage)
                                                 "gimp-progress-update",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-update",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-update",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -146,8 +146,8 @@ gimp_progress_pulse (void)
                                                 "gimp-progress-pulse",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-pulse",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-pulse",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -188,8 +188,8 @@ gimp_progress_set_text (const gchar *message)
                                                 "gimp-progress-set-text",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-set-text",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-set-text",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -227,8 +227,8 @@ gimp_progress_end (void)
                                                 "gimp-progress-end",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-end",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-end",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -266,8 +266,8 @@ gimp_progress_get_window_handle (void)
                                                 "gimp-progress-get-window-handle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-get-window-handle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-get-window-handle",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -310,8 +310,8 @@ _gimp_progress_install (const gchar *progress_callback)
                                                 "gimp-progress-install",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-install",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-install",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -351,8 +351,8 @@ _gimp_progress_uninstall (const gchar *progress_callback)
                                                 "gimp-progress-uninstall",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-uninstall",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-uninstall",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -391,8 +391,8 @@ gimp_progress_cancel (const gchar *progress_callback)
                                                 "gimp-progress-cancel",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-progress-cancel",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-progress-cancel",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

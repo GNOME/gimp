@@ -70,8 +70,8 @@ gimp_help (const gchar *help_domain,
                                                 "gimp-help",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-help",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-help",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -59,8 +59,8 @@ gimp_patterns_refresh (void)
                                                 "gimp-patterns-refresh",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-patterns-refresh",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-patterns-refresh",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -103,8 +103,8 @@ gimp_patterns_get_list (const gchar *filter,
                                                 "gimp-patterns-get-list",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-patterns-get-list",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-patterns-get-list",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_patterns = 0;

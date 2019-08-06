@@ -84,8 +84,8 @@ gimp_text_layer_new (gint32       image_ID,
                                                 "gimp-text-layer-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -126,8 +126,8 @@ gimp_text_layer_get_text (gint32 layer_ID)
                                                 "gimp-text-layer-get-text",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-text",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-text",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -171,8 +171,8 @@ gimp_text_layer_set_text (gint32       layer_ID,
                                                 "gimp-text-layer-set-text",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-text",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-text",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -217,8 +217,8 @@ gimp_text_layer_get_markup (gint32 layer_ID)
                                                 "gimp-text-layer-get-markup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-markup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-markup",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -260,8 +260,8 @@ gimp_text_layer_get_font (gint32 layer_ID)
                                                 "gimp-text-layer-get-font",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-font",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-font",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -305,8 +305,8 @@ gimp_text_layer_set_font (gint32       layer_ID,
                                                 "gimp-text-layer-set-font",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-font",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-font",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -349,8 +349,8 @@ gimp_text_layer_get_font_size (gint32    layer_ID,
                                                 "gimp-text-layer-get-font-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-font-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-font-size",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -402,8 +402,8 @@ gimp_text_layer_set_font_size (gint32   layer_ID,
                                                 "gimp-text-layer-set-font-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-font-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-font-size",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -443,8 +443,8 @@ gimp_text_layer_get_antialias (gint32 layer_ID)
                                                 "gimp-text-layer-get-antialias",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-antialias",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-antialias",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -489,8 +489,8 @@ gimp_text_layer_set_antialias (gint32   layer_ID,
                                                 "gimp-text-layer-set-antialias",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-antialias",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-antialias",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -531,8 +531,8 @@ gimp_text_layer_get_hint_style (gint32 layer_ID)
                                                 "gimp-text-layer-get-hint-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-hint-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-hint-style",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -578,8 +578,8 @@ gimp_text_layer_set_hint_style (gint32            layer_ID,
                                                 "gimp-text-layer-set-hint-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-hint-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-hint-style",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -619,8 +619,8 @@ gimp_text_layer_get_kerning (gint32 layer_ID)
                                                 "gimp-text-layer-get-kerning",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-kerning",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-kerning",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -664,8 +664,8 @@ gimp_text_layer_set_kerning (gint32   layer_ID,
                                                 "gimp-text-layer-set-kerning",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-kerning",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-kerning",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -706,8 +706,8 @@ gimp_text_layer_get_language (gint32 layer_ID)
                                                 "gimp-text-layer-get-language",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-language",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-language",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -752,8 +752,8 @@ gimp_text_layer_set_language (gint32       layer_ID,
                                                 "gimp-text-layer-set-language",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-language",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-language",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -793,8 +793,8 @@ gimp_text_layer_get_base_direction (gint32 layer_ID)
                                                 "gimp-text-layer-get-base-direction",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-base-direction",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-base-direction",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -839,8 +839,8 @@ gimp_text_layer_set_base_direction (gint32            layer_ID,
                                                 "gimp-text-layer-set-base-direction",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-base-direction",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-base-direction",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -880,8 +880,8 @@ gimp_text_layer_get_justification (gint32 layer_ID)
                                                 "gimp-text-layer-get-justification",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-justification",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-justification",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -926,8 +926,8 @@ gimp_text_layer_set_justification (gint32                layer_ID,
                                                 "gimp-text-layer-set-justification",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-justification",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-justification",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -968,8 +968,8 @@ gimp_text_layer_get_color (gint32   layer_ID,
                                                 "gimp-text-layer-get-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1015,8 +1015,8 @@ gimp_text_layer_set_color (gint32         layer_ID,
                                                 "gimp-text-layer-set-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1056,8 +1056,8 @@ gimp_text_layer_get_indent (gint32 layer_ID)
                                                 "gimp-text-layer-get-indent",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-indent",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-indent",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1102,8 +1102,8 @@ gimp_text_layer_set_indent (gint32  layer_ID,
                                                 "gimp-text-layer-set-indent",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-indent",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-indent",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1143,8 +1143,8 @@ gimp_text_layer_get_line_spacing (gint32 layer_ID)
                                                 "gimp-text-layer-get-line-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-line-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-line-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1189,8 +1189,8 @@ gimp_text_layer_set_line_spacing (gint32  layer_ID,
                                                 "gimp-text-layer-set-line-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-line-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-line-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1230,8 +1230,8 @@ gimp_text_layer_get_letter_spacing (gint32 layer_ID)
                                                 "gimp-text-layer-get-letter-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-get-letter-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-get-letter-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1276,8 +1276,8 @@ gimp_text_layer_set_letter_spacing (gint32  layer_ID,
                                                 "gimp-text-layer-set-letter-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-set-letter-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-set-letter-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1326,8 +1326,8 @@ gimp_text_layer_resize (gint32  layer_ID,
                                                 "gimp-text-layer-resize",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-layer-resize",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-resize",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

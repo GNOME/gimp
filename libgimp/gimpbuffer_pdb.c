@@ -68,8 +68,8 @@ gimp_buffers_get_list (const gchar *filter,
                                                 "gimp-buffers-get-list",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffers-get-list",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffers-get-list",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_buffers = 0;
@@ -119,8 +119,8 @@ gimp_buffer_rename (const gchar *buffer_name,
                                                 "gimp-buffer-rename",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffer-rename",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffer-rename",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -160,8 +160,8 @@ gimp_buffer_delete (const gchar *buffer_name)
                                                 "gimp-buffer-delete",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffer-delete",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffer-delete",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -200,8 +200,8 @@ gimp_buffer_get_width (const gchar *buffer_name)
                                                 "gimp-buffer-get-width",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-width",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffer-get-width",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -241,8 +241,8 @@ gimp_buffer_get_height (const gchar *buffer_name)
                                                 "gimp-buffer-get-height",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-height",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffer-get-height",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -282,8 +282,8 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
                                                 "gimp-buffer-get-bytes",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-bytes",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffer-get-bytes",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -323,8 +323,8 @@ gimp_buffer_get_image_type (const gchar *buffer_name)
                                                 "gimp-buffer-get-image-type",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-buffer-get-image-type",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-buffer-get-image-type",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

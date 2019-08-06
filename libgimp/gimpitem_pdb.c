@@ -64,8 +64,8 @@ gimp_item_is_valid (gint32 item_ID)
                                                 "gimp-item-is-valid",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-valid",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-valid",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -105,8 +105,8 @@ gimp_item_get_image (gint32 item_ID)
                                                 "gimp-item-get-image",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-image",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-image",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -150,8 +150,8 @@ gimp_item_delete (gint32 item_ID)
                                                 "gimp-item-delete",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-delete",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-delete",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -190,8 +190,8 @@ gimp_item_is_drawable (gint32 item_ID)
                                                 "gimp-item-is-drawable",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-drawable",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-drawable",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -231,8 +231,8 @@ gimp_item_is_layer (gint32 item_ID)
                                                 "gimp-item-is-layer",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-layer",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-layer",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -272,8 +272,8 @@ gimp_item_is_text_layer (gint32 item_ID)
                                                 "gimp-item-is-text-layer",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-text-layer",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-text-layer",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -313,8 +313,8 @@ gimp_item_is_channel (gint32 item_ID)
                                                 "gimp-item-is-channel",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-channel",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-channel",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -354,8 +354,8 @@ gimp_item_is_layer_mask (gint32 item_ID)
                                                 "gimp-item-is-layer-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-layer-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-layer-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -395,8 +395,8 @@ gimp_item_is_selection (gint32 item_ID)
                                                 "gimp-item-is-selection",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-selection",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-selection",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -436,8 +436,8 @@ gimp_item_is_vectors (gint32 item_ID)
                                                 "gimp-item-is-vectors",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-vectors",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-vectors",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -478,8 +478,8 @@ gimp_item_is_group (gint32 item_ID)
                                                 "gimp-item-is-group",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-is-group",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-is-group",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -519,8 +519,8 @@ gimp_item_get_parent (gint32 item_ID)
                                                 "gimp-item-get-parent",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-parent",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-parent",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -565,8 +565,8 @@ gimp_item_get_children (gint32  item_ID,
                                                 "gimp-item-get-children",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-children",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-children",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_children = 0;
@@ -611,8 +611,8 @@ gimp_item_get_expanded (gint32 item_ID)
                                                 "gimp-item-get-expanded",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-expanded",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-expanded",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -656,8 +656,8 @@ gimp_item_set_expanded (gint32   item_ID,
                                                 "gimp-item-set-expanded",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-expanded",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-expanded",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -697,8 +697,8 @@ gimp_item_get_name (gint32 item_ID)
                                                 "gimp-item-get-name",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-name",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-name",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -742,8 +742,8 @@ gimp_item_set_name (gint32       item_ID,
                                                 "gimp-item-set-name",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-name",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-name",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -782,8 +782,8 @@ gimp_item_get_visible (gint32 item_ID)
                                                 "gimp-item-get-visible",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-visible",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-visible",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -827,8 +827,8 @@ gimp_item_set_visible (gint32   item_ID,
                                                 "gimp-item-set-visible",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-visible",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-visible",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -867,8 +867,8 @@ gimp_item_get_linked (gint32 item_ID)
                                                 "gimp-item-get-linked",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-linked",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-linked",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -912,8 +912,8 @@ gimp_item_set_linked (gint32   item_ID,
                                                 "gimp-item-set-linked",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-linked",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-linked",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -952,8 +952,8 @@ gimp_item_get_lock_content (gint32 item_ID)
                                                 "gimp-item-get-lock-content",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-lock-content",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-lock-content",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -997,8 +997,8 @@ gimp_item_set_lock_content (gint32   item_ID,
                                                 "gimp-item-set-lock-content",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-lock-content",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-lock-content",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1037,8 +1037,8 @@ gimp_item_get_lock_position (gint32 item_ID)
                                                 "gimp-item-get-lock-position",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-lock-position",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-lock-position",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1082,8 +1082,8 @@ gimp_item_set_lock_position (gint32   item_ID,
                                                 "gimp-item-set-lock-position",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-lock-position",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-lock-position",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1122,8 +1122,8 @@ gimp_item_get_color_tag (gint32 item_ID)
                                                 "gimp-item-get-color-tag",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-color-tag",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-color-tag",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1167,8 +1167,8 @@ gimp_item_set_color_tag (gint32       item_ID,
                                                 "gimp-item-set-color-tag",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-color-tag",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-color-tag",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1209,8 +1209,8 @@ gimp_item_get_tattoo (gint32 item_ID)
                                                 "gimp-item-get-tattoo",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-tattoo",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-tattoo",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1256,8 +1256,8 @@ gimp_item_set_tattoo (gint32 item_ID,
                                                 "gimp-item-set-tattoo",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-set-tattoo",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-set-tattoo",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1301,8 +1301,8 @@ gimp_item_attach_parasite (gint32              item_ID,
                                                 "gimp-item-attach-parasite",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-attach-parasite",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-attach-parasite",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1346,8 +1346,8 @@ gimp_item_detach_parasite (gint32       item_ID,
                                                 "gimp-item-detach-parasite",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-detach-parasite",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-detach-parasite",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1390,8 +1390,8 @@ gimp_item_get_parasite (gint32       item_ID,
                                                 "gimp-item-get-parasite",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-parasite",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-parasite",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1435,8 +1435,8 @@ gimp_item_get_parasite_list (gint32  item_ID,
                                                 "gimp-item-get-parasite-list",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-item-get-parasite-list",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-item-get-parasite-list",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_parasites = 0;

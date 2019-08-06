@@ -69,8 +69,8 @@ gimp_fonts_popup (const gchar *font_callback,
                                                 "gimp-fonts-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-fonts-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-fonts-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -107,8 +107,8 @@ gimp_fonts_close_popup (const gchar *font_callback)
                                                 "gimp-fonts-close-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-fonts-close-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-fonts-close-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -149,8 +149,8 @@ gimp_fonts_set_popup (const gchar *font_callback,
                                                 "gimp-fonts-set-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-fonts-set-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-fonts-set-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

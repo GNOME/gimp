@@ -87,8 +87,8 @@ _gimp_channel_new (gint32         image_ID,
                                                 "gimp-channel-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -140,8 +140,8 @@ gimp_channel_new_from_component (gint32           image_ID,
                                                 "gimp-channel-new-from-component",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-new-from-component",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-new-from-component",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -181,8 +181,8 @@ gimp_channel_copy (gint32 channel_ID)
                                                 "gimp-channel-copy",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-copy",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-copy",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -237,8 +237,8 @@ gimp_channel_combine_masks (gint32         channel1_ID,
                                                 "gimp-channel-combine-masks",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-combine-masks",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-combine-masks",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -277,8 +277,8 @@ gimp_channel_get_show_masked (gint32 channel_ID)
                                                 "gimp-channel-get-show-masked",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-get-show-masked",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-get-show-masked",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -322,8 +322,8 @@ gimp_channel_set_show_masked (gint32   channel_ID,
                                                 "gimp-channel-set-show-masked",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-set-show-masked",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-set-show-masked",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -360,8 +360,8 @@ gimp_channel_get_opacity (gint32 channel_ID)
                                                 "gimp-channel-get-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-get-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-get-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -403,8 +403,8 @@ gimp_channel_set_opacity (gint32  channel_ID,
                                                 "gimp-channel-set-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-set-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-set-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -443,8 +443,8 @@ gimp_channel_get_color (gint32   channel_ID,
                                                 "gimp-channel-get-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-get-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-get-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -488,8 +488,8 @@ gimp_channel_set_color (gint32         channel_ID,
                                                 "gimp-channel-set-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-channel-set-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-channel-set-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

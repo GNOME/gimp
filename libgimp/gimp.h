@@ -157,14 +157,6 @@ GimpPDB           * gimp_get_pdb              (void);
  */
 void                gimp_quit                 (void) G_GNUC_NORETURN;
 
-/* Run a procedure in the procedure database. The parameters are
- *  specified as a GimpValueArray, so are the return values.
- *
- * FIXME this API is not final!
- */
-GimpValueArray    * gimp_run_procedure_with_array (const gchar    *name,
-                                                   GimpValueArray *arguments);
-
 /* Retrieve the error message and return status for the last procedure
  * call.
  */

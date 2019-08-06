@@ -70,8 +70,8 @@ gimp_gimprc_query (const gchar *token)
                                                 "gimp-gimprc-query",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gimprc-query",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gimprc-query",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -117,8 +117,8 @@ gimp_gimprc_set (const gchar *token,
                                                 "gimp-gimprc-set",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gimprc-set",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gimprc-set",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -153,8 +153,8 @@ gimp_get_default_comment (void)
                                                 "gimp-get-default-comment",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-get-default-comment",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-get-default-comment",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -191,8 +191,8 @@ gimp_get_default_unit (void)
                                                 "gimp-get-default-unit",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-get-default-unit",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-get-default-unit",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -233,8 +233,8 @@ gimp_get_monitor_resolution (gdouble *xres,
                                                 "gimp-get-monitor-resolution",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-get-monitor-resolution",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-get-monitor-resolution",
+                                            args);
   gimp_value_array_unref (args);
 
   *xres = 0.0;
@@ -281,8 +281,8 @@ _gimp_get_color_configuration (void)
                                                 "gimp-get-color-configuration",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-get-color-configuration",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-get-color-configuration",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -318,8 +318,8 @@ gimp_get_module_load_inhibit (void)
                                                 "gimp-get-module-load-inhibit",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-get-module-load-inhibit",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-get-module-load-inhibit",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

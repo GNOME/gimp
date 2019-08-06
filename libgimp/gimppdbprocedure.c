@@ -59,8 +59,11 @@ static GimpValueArray *
 gimp_pdb_procedure_run (GimpProcedure        *procedure,
                         const GimpValueArray *args)
 {
-  return gimp_run_procedure_with_array (gimp_procedure_get_name (procedure),
-                                        (GimpValueArray *) args);
+  GimpPDBProcedure *pdb_procedure = GIMP_PDB_PROCEDURE (procedure);
+
+  return gimp_pdb_run_procedure_array (pdb_procedure->priv->pdb,
+                                       gimp_procedure_get_name (procedure),
+                                       (GimpValueArray *) args);
 }
 
 

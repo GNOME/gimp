@@ -62,8 +62,8 @@ gimp_dynamics_refresh (void)
                                                 "gimp-dynamics-refresh",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-dynamics-refresh",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-dynamics-refresh",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -107,8 +107,8 @@ gimp_dynamics_get_list (const gchar *filter,
                                                 "gimp-dynamics-get-list",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-dynamics-get-list",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-dynamics-get-list",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_dynamics = 0;

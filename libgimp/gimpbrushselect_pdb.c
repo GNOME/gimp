@@ -81,8 +81,8 @@ gimp_brushes_popup (const gchar   *brush_callback,
                                                 "gimp-brushes-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brushes-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brushes-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -119,8 +119,8 @@ gimp_brushes_close_popup (const gchar *brush_callback)
                                                 "gimp-brushes-close-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brushes-close-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brushes-close-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -173,8 +173,8 @@ gimp_brushes_set_popup (const gchar   *brush_callback,
                                                 "gimp-brushes-set-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brushes-set-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brushes-set-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

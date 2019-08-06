@@ -91,8 +91,8 @@ gimp_image_select_color (gint32          image_ID,
                                                 "gimp-image-select-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -172,8 +172,8 @@ gimp_image_select_contiguous_color (gint32         image_ID,
                                                 "gimp-image-select-contiguous-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-contiguous-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-contiguous-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -237,8 +237,8 @@ gimp_image_select_rectangle (gint32         image_ID,
                                                 "gimp-image-select-rectangle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-rectangle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-rectangle",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -313,8 +313,8 @@ gimp_image_select_round_rectangle (gint32         image_ID,
                                                 "gimp-image-select-round-rectangle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-round-rectangle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-round-rectangle",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -379,8 +379,8 @@ gimp_image_select_ellipse (gint32         image_ID,
                                                 "gimp-image-select-ellipse",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-ellipse",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-ellipse",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -442,8 +442,8 @@ gimp_image_select_polygon (gint32          image_ID,
                                                 "gimp-image-select-polygon",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-polygon",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-polygon",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -497,8 +497,8 @@ gimp_image_select_item (gint32         image_ID,
                                                 "gimp-image-select-item",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-select-item",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-select-item",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

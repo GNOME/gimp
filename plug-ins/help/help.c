@@ -339,7 +339,6 @@ help_load_idle (gpointer data)
 
       if (uri)
         {
-          GimpValueArray *args;
           GimpValueArray *return_vals;
 
 #ifdef GIMP_HELP_DEBUG
@@ -347,13 +346,10 @@ help_load_idle (gpointer data)
                       idle_help->procedure, uri);
 #endif
 
-          args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                                  G_TYPE_NONE);
-          g_value_set_string (gimp_value_array_index (args, 0), uri);
-
-          return_vals = gimp_run_procedure_with_array (idle_help->procedure,
-                                                       args);
-          gimp_value_array_unref (args);
+          return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
+                                                idle_help->procedure,
+                                                G_TYPE_STRING, uri,
+                                                G_TYPE_NONE);
           gimp_value_array_unref (return_vals);
 
           g_free (uri);

@@ -731,7 +731,7 @@ gimp_run_procedure2 (const gchar     *name,
 
   arguments = _gimp_params_to_value_array (params, n_params, FALSE);
 
-  return_values = gimp_run_procedure_with_array (name, arguments);
+  return_values = gimp_run_procedure_array (name, arguments);
 
   gimp_value_array_unref (arguments);
 
@@ -741,6 +741,44 @@ gimp_run_procedure2 (const gchar     *name,
   gimp_value_array_unref (return_values);
 
   return return_vals;
+}
+
+GimpValueArray *
+gimp_run_procedure_array (const gchar    *name,
+                          GimpValueArray *arguments)
+{
+  GPProcRun        proc_run;
+  GPProcReturn    *proc_return;
+  GimpWireMessage  msg;
+  GimpValueArray  *return_values;
+
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (arguments != NULL, NULL);
+
+  proc_run.name    = (gchar *) name;
+  proc_run.nparams = gimp_value_array_length (arguments);
+  proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
+
+  if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
+    gimp_quit ();
+
+  _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+
+  proc_return = msg.data;
+
+  return_values = _gimp_gp_params_to_value_array (NULL,
+                                                  NULL, 0,
+                                                  proc_return->params,
+                                                  proc_return->nparams,
+                                                  TRUE, FALSE);
+
+  gimp_wire_destroy (&msg);
+
+  _gimp_set_pdb_error (return_values);
+
+  return return_values;
 }
 
 /**

@@ -66,8 +66,8 @@ gimp_debug_timer_start (void)
                                                 "gimp-debug-timer-start",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-debug-timer-start",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-debug-timer-start",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -108,8 +108,8 @@ gimp_debug_timer_end (void)
                                                 "gimp-debug-timer-end",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-debug-timer-end",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-debug-timer-end",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

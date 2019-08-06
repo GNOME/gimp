@@ -77,8 +77,8 @@ gimp_airbrush (gint32         drawable_ID,
                                                 "gimp-airbrush",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-airbrush",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-airbrush",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -127,8 +127,8 @@ gimp_airbrush_default (gint32         drawable_ID,
                                                 "gimp-airbrush-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-airbrush-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-airbrush-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -200,8 +200,8 @@ gimp_clone (gint32         drawable_ID,
                                                 "gimp-clone",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-clone",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-clone",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -251,8 +251,8 @@ gimp_clone_default (gint32         drawable_ID,
                                                 "gimp-clone-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-clone-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-clone-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -308,8 +308,8 @@ gimp_convolve (gint32            drawable_ID,
                                                 "gimp-convolve",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-convolve",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-convolve",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -358,8 +358,8 @@ gimp_convolve_default (gint32         drawable_ID,
                                                 "gimp-convolve-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-convolve-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-convolve-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -416,8 +416,8 @@ gimp_dodgeburn (gint32             drawable_ID,
                                                 "gimp-dodgeburn",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-dodgeburn",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-dodgeburn",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -465,8 +465,8 @@ gimp_dodgeburn_default (gint32         drawable_ID,
                                                 "gimp-dodgeburn-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-dodgeburn-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-dodgeburn-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -523,8 +523,8 @@ gimp_eraser (gint32                    drawable_ID,
                                                 "gimp-eraser",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-eraser",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-eraser",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -573,8 +573,8 @@ gimp_eraser_default (gint32         drawable_ID,
                                                 "gimp-eraser-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-eraser-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-eraser-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -638,8 +638,8 @@ gimp_heal (gint32         drawable_ID,
                                                 "gimp-heal",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-heal",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-heal",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -691,8 +691,8 @@ gimp_heal_default (gint32         drawable_ID,
                                                 "gimp-heal-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-heal-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-heal-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -758,8 +758,8 @@ gimp_paintbrush (gint32                    drawable_ID,
                                                 "gimp-paintbrush",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-paintbrush",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-paintbrush",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -817,8 +817,8 @@ gimp_paintbrush_default (gint32         drawable_ID,
                                                 "gimp-paintbrush-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-paintbrush-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-paintbrush-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -868,8 +868,8 @@ gimp_pencil (gint32         drawable_ID,
                                                 "gimp-pencil",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-pencil",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-pencil",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -920,8 +920,8 @@ gimp_smudge (gint32         drawable_ID,
                                                 "gimp-smudge",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-smudge",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-smudge",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -969,8 +969,8 @@ gimp_smudge_default (gint32         drawable_ID,
                                                 "gimp-smudge-default",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-smudge-default",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-smudge-default",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

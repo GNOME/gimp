@@ -78,8 +78,8 @@ gimp_selection_bounds (gint32    image_ID,
                                                 "gimp-selection-bounds",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-bounds",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-bounds",
+                                            args);
   gimp_value_array_unref (args);
 
   *non_empty = FALSE;
@@ -140,8 +140,8 @@ gimp_selection_value (gint32 image_ID,
                                                 "gimp-selection-value",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-value",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-value",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -180,8 +180,8 @@ gimp_selection_is_empty (gint32 image_ID)
                                                 "gimp-selection-is-empty",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-is-empty",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-is-empty",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -231,8 +231,8 @@ gimp_selection_translate (gint32 image_ID,
                                                 "gimp-selection-translate",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-translate",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-translate",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -282,8 +282,8 @@ _gimp_selection_float (gint32 drawable_ID,
                                                 "gimp-selection-float",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-float",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-float",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -322,8 +322,8 @@ gimp_selection_invert (gint32 image_ID)
                                                 "gimp-selection-invert",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-invert",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-invert",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -363,8 +363,8 @@ gimp_selection_sharpen (gint32 image_ID)
                                                 "gimp-selection-sharpen",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-sharpen",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-sharpen",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -402,8 +402,8 @@ gimp_selection_all (gint32 image_ID)
                                                 "gimp-selection-all",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-all",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-all",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -441,8 +441,8 @@ gimp_selection_none (gint32 image_ID)
                                                 "gimp-selection-none",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-none",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-none",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -484,8 +484,8 @@ gimp_selection_feather (gint32  image_ID,
                                                 "gimp-selection-feather",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-feather",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-feather",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -528,8 +528,8 @@ gimp_selection_border (gint32 image_ID,
                                                 "gimp-selection-border",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-border",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-border",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -571,8 +571,8 @@ gimp_selection_grow (gint32 image_ID,
                                                 "gimp-selection-grow",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-grow",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-grow",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -615,8 +615,8 @@ gimp_selection_shrink (gint32 image_ID,
                                                 "gimp-selection-shrink",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-shrink",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-shrink",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -658,8 +658,8 @@ gimp_selection_flood (gint32 image_ID)
                                                 "gimp-selection-flood",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-flood",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-flood",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -698,8 +698,8 @@ gimp_selection_save (gint32 image_ID)
                                                 "gimp-selection-save",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-selection-save",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-selection-save",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

@@ -48,8 +48,8 @@ _gimp_unit_get_number_of_units (void)
                                                 "gimp-unit-get-number-of-units",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-number-of-units",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-number-of-units",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -84,8 +84,8 @@ _gimp_unit_get_number_of_built_in_units (void)
                                                 "gimp-unit-get-number-of-built-in-units",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-number-of-built-in-units",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-number-of-built-in-units",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -150,8 +150,8 @@ _gimp_unit_new (const gchar *identifier,
                                                 "gimp-unit-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -191,8 +191,8 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
                                                 "gimp-unit-get-deletion-flag",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-deletion-flag",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-deletion-flag",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -236,8 +236,8 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
                                                 "gimp-unit-set-deletion-flag",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-set-deletion-flag",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-set-deletion-flag",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -277,8 +277,8 @@ _gimp_unit_get_identifier (GimpUnit unit_id)
                                                 "gimp-unit-get-identifier",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-identifier",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-identifier",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -318,8 +318,8 @@ _gimp_unit_get_factor (GimpUnit unit_id)
                                                 "gimp-unit-get-factor",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-factor",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-factor",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -360,8 +360,8 @@ _gimp_unit_get_digits (GimpUnit unit_id)
                                                 "gimp-unit-get-digits",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-digits",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-digits",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -400,8 +400,8 @@ _gimp_unit_get_symbol (GimpUnit unit_id)
                                                 "gimp-unit-get-symbol",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-symbol",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-symbol",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -441,8 +441,8 @@ _gimp_unit_get_abbreviation (GimpUnit unit_id)
                                                 "gimp-unit-get-abbreviation",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-abbreviation",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-abbreviation",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -481,8 +481,8 @@ _gimp_unit_get_singular (GimpUnit unit_id)
                                                 "gimp-unit-get-singular",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-singular",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-singular",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -521,8 +521,8 @@ _gimp_unit_get_plural (GimpUnit unit_id)
                                                 "gimp-unit-get-plural",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-unit-get-plural",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-unit-get-plural",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

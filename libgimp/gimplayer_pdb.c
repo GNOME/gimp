@@ -90,8 +90,8 @@ _gimp_layer_new (gint32         image_ID,
                                                 "gimp-layer-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -143,8 +143,8 @@ gimp_layer_new_from_visible (gint32       image_ID,
                                                 "gimp-layer-new-from-visible",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-new-from-visible",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-new-from-visible",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -190,8 +190,8 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
                                                 "gimp-layer-new-from-drawable",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-new-from-drawable",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-new-from-drawable",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -237,8 +237,8 @@ gimp_layer_group_new (gint32 image_ID)
                                                 "gimp-layer-group-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-group-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-group-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -285,8 +285,8 @@ _gimp_layer_copy (gint32   layer_ID,
                                                 "gimp-layer-copy",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-copy",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-copy",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -328,8 +328,8 @@ gimp_layer_add_alpha (gint32 layer_ID)
                                                 "gimp-layer-add-alpha",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-add-alpha",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-add-alpha",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -371,8 +371,8 @@ gimp_layer_flatten (gint32 layer_ID)
                                                 "gimp-layer-flatten",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-flatten",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-flatten",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -426,8 +426,8 @@ gimp_layer_scale (gint32   layer_ID,
                                                 "gimp-layer-scale",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-scale",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-scale",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -483,8 +483,8 @@ gimp_layer_resize (gint32 layer_ID,
                                                 "gimp-layer-resize",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-resize",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-resize",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -522,8 +522,8 @@ gimp_layer_resize_to_image_size (gint32 layer_ID)
                                                 "gimp-layer-resize-to-image-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-resize-to-image-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-resize-to-image-size",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -570,8 +570,8 @@ gimp_layer_set_offsets (gint32 layer_ID,
                                                 "gimp-layer-set-offsets",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-offsets",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-offsets",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -631,8 +631,8 @@ gimp_layer_create_mask (gint32          layer_ID,
                                                 "gimp-layer-create-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-create-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-create-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -671,8 +671,8 @@ gimp_layer_get_mask (gint32 layer_ID)
                                                 "gimp-layer-get-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -713,8 +713,8 @@ gimp_layer_from_mask (gint32 mask_ID)
                                                 "gimp-layer-from-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-from-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-from-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -762,8 +762,8 @@ gimp_layer_add_mask (gint32 layer_ID,
                                                 "gimp-layer-add-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-add-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-add-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -805,8 +805,8 @@ gimp_layer_remove_mask (gint32            layer_ID,
                                                 "gimp-layer-remove-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-remove-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-remove-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -845,8 +845,8 @@ gimp_layer_is_floating_sel (gint32 layer_ID)
                                                 "gimp-layer-is-floating-sel",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-is-floating-sel",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-is-floating-sel",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -885,8 +885,8 @@ gimp_layer_get_lock_alpha (gint32 layer_ID)
                                                 "gimp-layer-get-lock-alpha",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-lock-alpha",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-lock-alpha",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -929,8 +929,8 @@ gimp_layer_set_lock_alpha (gint32   layer_ID,
                                                 "gimp-layer-set-lock-alpha",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-lock-alpha",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-lock-alpha",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -969,8 +969,8 @@ gimp_layer_get_apply_mask (gint32 layer_ID)
                                                 "gimp-layer-get-apply-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-apply-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-apply-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1015,8 +1015,8 @@ gimp_layer_set_apply_mask (gint32   layer_ID,
                                                 "gimp-layer-set-apply-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-apply-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-apply-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1056,8 +1056,8 @@ gimp_layer_get_show_mask (gint32 layer_ID)
                                                 "gimp-layer-get-show-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-show-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-show-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1102,8 +1102,8 @@ gimp_layer_set_show_mask (gint32   layer_ID,
                                                 "gimp-layer-set-show-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-show-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-show-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1142,8 +1142,8 @@ gimp_layer_get_edit_mask (gint32 layer_ID)
                                                 "gimp-layer-get-edit-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-edit-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-edit-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1188,8 +1188,8 @@ gimp_layer_set_edit_mask (gint32   layer_ID,
                                                 "gimp-layer-set-edit-mask",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-edit-mask",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-edit-mask",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1226,8 +1226,8 @@ gimp_layer_get_opacity (gint32 layer_ID)
                                                 "gimp-layer-get-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1269,8 +1269,8 @@ gimp_layer_set_opacity (gint32  layer_ID,
                                                 "gimp-layer-set-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1307,8 +1307,8 @@ gimp_layer_get_mode (gint32 layer_ID)
                                                 "gimp-layer-get-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1350,8 +1350,8 @@ gimp_layer_set_mode (gint32        layer_ID,
                                                 "gimp-layer-set-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1390,8 +1390,8 @@ gimp_layer_get_blend_space (gint32 layer_ID)
                                                 "gimp-layer-get-blend-space",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-blend-space",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-blend-space",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1435,8 +1435,8 @@ gimp_layer_set_blend_space (gint32              layer_ID,
                                                 "gimp-layer-set-blend-space",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-blend-space",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-blend-space",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1475,8 +1475,8 @@ gimp_layer_get_composite_space (gint32 layer_ID)
                                                 "gimp-layer-get-composite-space",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-composite-space",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-composite-space",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1520,8 +1520,8 @@ gimp_layer_set_composite_space (gint32              layer_ID,
                                                 "gimp-layer-set-composite-space",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-composite-space",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-composite-space",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1560,8 +1560,8 @@ gimp_layer_get_composite_mode (gint32 layer_ID)
                                                 "gimp-layer-get-composite-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-get-composite-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-get-composite-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1605,8 +1605,8 @@ gimp_layer_set_composite_mode (gint32                 layer_ID,
                                                 "gimp-layer-set-composite-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-layer-set-composite-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-layer-set-composite-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

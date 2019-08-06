@@ -62,8 +62,8 @@ gimp_context_push (void)
                                                 "gimp-context-push",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-push",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-push",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -102,8 +102,8 @@ gimp_context_pop (void)
                                                 "gimp-context-pop",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-pop",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-pop",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -143,8 +143,8 @@ gimp_context_set_defaults (void)
                                                 "gimp-context-set-defaults",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-defaults",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-defaults",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -184,8 +184,8 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
                                                 "gimp-context-list-paint-methods",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-list-paint-methods",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-list-paint-methods",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_paint_methods = 0;
@@ -232,8 +232,8 @@ gimp_context_get_paint_method (void)
                                                 "gimp-context-get-paint-method",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-paint-method",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-paint-method",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -278,8 +278,8 @@ gimp_context_set_paint_method (const gchar *name)
                                                 "gimp-context-set-paint-method",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-paint-method",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-paint-method",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -315,8 +315,8 @@ gimp_context_get_stroke_method (void)
                                                 "gimp-context-get-stroke-method",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-stroke-method",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-stroke-method",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -358,8 +358,8 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
                                                 "gimp-context-set-stroke-method",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-stroke-method",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-stroke-method",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -398,8 +398,8 @@ gimp_context_get_foreground (GimpRGB *foreground)
                                                 "gimp-context-get-foreground",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-foreground",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-foreground",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -443,8 +443,8 @@ gimp_context_set_foreground (const GimpRGB *foreground)
                                                 "gimp-context-set-foreground",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-foreground",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-foreground",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -483,8 +483,8 @@ gimp_context_get_background (GimpRGB *background)
                                                 "gimp-context-get-background",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-background",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-background",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -529,8 +529,8 @@ gimp_context_set_background (const GimpRGB *background)
                                                 "gimp-context-set-background",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-background",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-background",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -568,8 +568,8 @@ gimp_context_set_default_colors (void)
                                                 "gimp-context-set-default-colors",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-default-colors",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-default-colors",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -607,8 +607,8 @@ gimp_context_swap_colors (void)
                                                 "gimp-context-swap-colors",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-swap-colors",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-swap-colors",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -645,8 +645,8 @@ gimp_context_get_opacity (void)
                                                 "gimp-context-get-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -687,8 +687,8 @@ gimp_context_set_opacity (gdouble opacity)
                                                 "gimp-context-set-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -726,8 +726,8 @@ gimp_context_get_paint_mode (void)
                                                 "gimp-context-get-paint-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-paint-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-paint-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -767,8 +767,8 @@ gimp_context_set_paint_mode (GimpLayerMode paint_mode)
                                                 "gimp-context-set-paint-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-paint-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-paint-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -804,8 +804,8 @@ gimp_context_get_line_width (void)
                                                 "gimp-context-get-line-width",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-width",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-width",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -849,8 +849,8 @@ gimp_context_set_line_width (gdouble line_width)
                                                 "gimp-context-set-line-width",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-width",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-width",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -886,8 +886,8 @@ gimp_context_get_line_width_unit (void)
                                                 "gimp-context-get-line-width-unit",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-width-unit",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-width-unit",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -932,8 +932,8 @@ gimp_context_set_line_width_unit (GimpUnit line_width_unit)
                                                 "gimp-context-set-line-width-unit",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-width-unit",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-width-unit",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -969,8 +969,8 @@ gimp_context_get_line_cap_style (void)
                                                 "gimp-context-get-line-cap-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-cap-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-cap-style",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1015,8 +1015,8 @@ gimp_context_set_line_cap_style (GimpCapStyle cap_style)
                                                 "gimp-context-set-line-cap-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-cap-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-cap-style",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1052,8 +1052,8 @@ gimp_context_get_line_join_style (void)
                                                 "gimp-context-get-line-join-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-join-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-join-style",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1098,8 +1098,8 @@ gimp_context_set_line_join_style (GimpJoinStyle join_style)
                                                 "gimp-context-set-line-join-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-join-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-join-style",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1135,8 +1135,8 @@ gimp_context_get_line_miter_limit (void)
                                                 "gimp-context-get-line-miter-limit",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-miter-limit",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-miter-limit",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1184,8 +1184,8 @@ gimp_context_set_line_miter_limit (gdouble miter_limit)
                                                 "gimp-context-set-line-miter-limit",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-miter-limit",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-miter-limit",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1221,8 +1221,8 @@ gimp_context_get_line_dash_offset (void)
                                                 "gimp-context-get-line-dash-offset",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-dash-offset",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-dash-offset",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1267,8 +1267,8 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
                                                 "gimp-context-set-line-dash-offset",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-dash-offset",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-dash-offset",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1307,8 +1307,8 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
                                                 "gimp-context-get-line-dash-pattern",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-line-dash-pattern",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-line-dash-pattern",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_dashes = 0;
@@ -1369,8 +1369,8 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
                                                 "gimp-context-set-line-dash-pattern",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-line-dash-pattern",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-line-dash-pattern",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1409,8 +1409,8 @@ gimp_context_get_brush (void)
                                                 "gimp-context-get-brush",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1454,8 +1454,8 @@ gimp_context_set_brush (const gchar *name)
                                                 "gimp-context-set-brush",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1491,8 +1491,8 @@ gimp_context_get_brush_size (void)
                                                 "gimp-context-get-brush-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush-size",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1532,8 +1532,8 @@ gimp_context_set_brush_size (gdouble size)
                                                 "gimp-context-set-brush-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-size",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1570,8 +1570,8 @@ gimp_context_set_brush_default_size (void)
                                                 "gimp-context-set-brush-default-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-default-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-default-size",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1607,8 +1607,8 @@ gimp_context_get_brush_aspect_ratio (void)
                                                 "gimp-context-get-brush-aspect-ratio",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush-aspect-ratio",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush-aspect-ratio",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1648,8 +1648,8 @@ gimp_context_set_brush_aspect_ratio (gdouble aspect)
                                                 "gimp-context-set-brush-aspect-ratio",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-aspect-ratio",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-aspect-ratio",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1685,8 +1685,8 @@ gimp_context_get_brush_angle (void)
                                                 "gimp-context-get-brush-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1726,8 +1726,8 @@ gimp_context_set_brush_angle (gdouble angle)
                                                 "gimp-context-set-brush-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1764,8 +1764,8 @@ gimp_context_get_brush_spacing (void)
                                                 "gimp-context-get-brush-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1806,8 +1806,8 @@ gimp_context_set_brush_spacing (gdouble spacing)
                                                 "gimp-context-set-brush-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1844,8 +1844,8 @@ gimp_context_set_brush_default_spacing (void)
                                                 "gimp-context-set-brush-default-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-default-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-default-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1881,8 +1881,8 @@ gimp_context_get_brush_hardness (void)
                                                 "gimp-context-get-brush-hardness",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush-hardness",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush-hardness",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1922,8 +1922,8 @@ gimp_context_set_brush_hardness (gdouble hardness)
                                                 "gimp-context-set-brush-hardness",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-hardness",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-hardness",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1960,8 +1960,8 @@ gimp_context_set_brush_default_hardness (void)
                                                 "gimp-context-set-brush-default-hardness",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-default-hardness",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-default-hardness",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1997,8 +1997,8 @@ gimp_context_get_brush_force (void)
                                                 "gimp-context-get-brush-force",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-brush-force",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-brush-force",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2038,8 +2038,8 @@ gimp_context_set_brush_force (gdouble force)
                                                 "gimp-context-set-brush-force",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-brush-force",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-brush-force",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2078,8 +2078,8 @@ gimp_context_get_dynamics (void)
                                                 "gimp-context-get-dynamics",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-dynamics",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-dynamics",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2124,8 +2124,8 @@ gimp_context_set_dynamics (const gchar *name)
                                                 "gimp-context-set-dynamics",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-dynamics",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-dynamics",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2163,8 +2163,8 @@ gimp_context_get_mypaint_brush (void)
                                                 "gimp-context-get-mypaint-brush",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-mypaint-brush",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-mypaint-brush",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2209,8 +2209,8 @@ gimp_context_set_mypaint_brush (const gchar *name)
                                                 "gimp-context-set-mypaint-brush",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-mypaint-brush",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-mypaint-brush",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2249,8 +2249,8 @@ gimp_context_get_pattern (void)
                                                 "gimp-context-get-pattern",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-pattern",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-pattern",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2295,8 +2295,8 @@ gimp_context_set_pattern (const gchar *name)
                                                 "gimp-context-set-pattern",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-pattern",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-pattern",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2333,8 +2333,8 @@ gimp_context_get_gradient (void)
                                                 "gimp-context-get-gradient",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-gradient",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-gradient",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2379,8 +2379,8 @@ gimp_context_set_gradient (const gchar *name)
                                                 "gimp-context-set-gradient",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2418,8 +2418,8 @@ gimp_context_set_gradient_fg_bg_rgb (void)
                                                 "gimp-context-set-gradient-fg-bg-rgb",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-fg-bg-rgb",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-fg-bg-rgb",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2457,8 +2457,8 @@ gimp_context_set_gradient_fg_bg_hsv_cw (void)
                                                 "gimp-context-set-gradient-fg-bg-hsv-cw",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-fg-bg-hsv-cw",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-fg-bg-hsv-cw",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2496,8 +2496,8 @@ gimp_context_set_gradient_fg_bg_hsv_ccw (void)
                                                 "gimp-context-set-gradient-fg-bg-hsv-ccw",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-fg-bg-hsv-ccw",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-fg-bg-hsv-ccw",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2535,8 +2535,8 @@ gimp_context_set_gradient_fg_transparent (void)
                                                 "gimp-context-set-gradient-fg-transparent",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-fg-transparent",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-fg-transparent",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2573,8 +2573,8 @@ gimp_context_get_gradient_blend_color_space (void)
                                                 "gimp-context-get-gradient-blend-color-space",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-gradient-blend-color-space",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-gradient-blend-color-space",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2615,8 +2615,8 @@ gimp_context_set_gradient_blend_color_space (GimpGradientBlendColorSpace blend_c
                                                 "gimp-context-set-gradient-blend-color-space",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-blend-color-space",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-blend-color-space",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2652,8 +2652,8 @@ gimp_context_get_gradient_repeat_mode (void)
                                                 "gimp-context-get-gradient-repeat-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-gradient-repeat-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-gradient-repeat-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2693,8 +2693,8 @@ gimp_context_set_gradient_repeat_mode (GimpRepeatMode repeat_mode)
                                                 "gimp-context-set-gradient-repeat-mode",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-repeat-mode",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-repeat-mode",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2731,8 +2731,8 @@ gimp_context_get_gradient_reverse (void)
                                                 "gimp-context-get-gradient-reverse",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-gradient-reverse",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-gradient-reverse",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2773,8 +2773,8 @@ gimp_context_set_gradient_reverse (gboolean reverse)
                                                 "gimp-context-set-gradient-reverse",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-gradient-reverse",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-gradient-reverse",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2811,8 +2811,8 @@ gimp_context_get_palette (void)
                                                 "gimp-context-get-palette",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-palette",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-palette",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2857,8 +2857,8 @@ gimp_context_set_palette (const gchar *name)
                                                 "gimp-context-set-palette",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-palette",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-palette",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2895,8 +2895,8 @@ gimp_context_get_font (void)
                                                 "gimp-context-get-font",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-font",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-font",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -2940,8 +2940,8 @@ gimp_context_set_font (const gchar *name)
                                                 "gimp-context-set-font",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-font",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-font",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -2977,8 +2977,8 @@ gimp_context_get_antialias (void)
                                                 "gimp-context-get-antialias",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-antialias",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-antialias",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3029,8 +3029,8 @@ gimp_context_set_antialias (gboolean antialias)
                                                 "gimp-context-set-antialias",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-antialias",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-antialias",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3066,8 +3066,8 @@ gimp_context_get_feather (void)
                                                 "gimp-context-get-feather",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-feather",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-feather",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3116,8 +3116,8 @@ gimp_context_set_feather (gboolean feather)
                                                 "gimp-context-set-feather",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-feather",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-feather",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3156,8 +3156,8 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
                                                 "gimp-context-get-feather-radius",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-feather-radius",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-feather-radius",
+                                            args);
   gimp_value_array_unref (args);
 
   *feather_radius_x = 0.0;
@@ -3212,8 +3212,8 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
                                                 "gimp-context-set-feather-radius",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-feather-radius",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-feather-radius",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3249,8 +3249,8 @@ gimp_context_get_sample_merged (void)
                                                 "gimp-context-get-sample-merged",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-sample-merged",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-sample-merged",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3300,8 +3300,8 @@ gimp_context_set_sample_merged (gboolean sample_merged)
                                                 "gimp-context-set-sample-merged",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-sample-merged",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-sample-merged",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3337,8 +3337,8 @@ gimp_context_get_sample_criterion (void)
                                                 "gimp-context-get-sample-criterion",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-sample-criterion",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-sample-criterion",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3386,8 +3386,8 @@ gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
                                                 "gimp-context-set-sample-criterion",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-sample-criterion",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-sample-criterion",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3423,8 +3423,8 @@ gimp_context_get_sample_threshold (void)
                                                 "gimp-context-get-sample-threshold",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-sample-threshold",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-sample-threshold",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3473,8 +3473,8 @@ gimp_context_set_sample_threshold (gdouble sample_threshold)
                                                 "gimp-context-set-sample-threshold",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-sample-threshold",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-sample-threshold",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3511,8 +3511,8 @@ gimp_context_get_sample_threshold_int (void)
                                                 "gimp-context-get-sample-threshold-int",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-sample-threshold-int",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-sample-threshold-int",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3553,8 +3553,8 @@ gimp_context_set_sample_threshold_int (gint sample_threshold)
                                                 "gimp-context-set-sample-threshold-int",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-sample-threshold-int",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-sample-threshold-int",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3590,8 +3590,8 @@ gimp_context_get_sample_transparent (void)
                                                 "gimp-context-get-sample-transparent",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-sample-transparent",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-sample-transparent",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3639,8 +3639,8 @@ gimp_context_set_sample_transparent (gboolean sample_transparent)
                                                 "gimp-context-set-sample-transparent",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-sample-transparent",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-sample-transparent",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3676,8 +3676,8 @@ gimp_context_get_diagonal_neighbors (void)
                                                 "gimp-context-get-diagonal-neighbors",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-diagonal-neighbors",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-diagonal-neighbors",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3726,8 +3726,8 @@ gimp_context_set_diagonal_neighbors (gboolean diagonal_neighbors)
                                                 "gimp-context-set-diagonal-neighbors",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-diagonal-neighbors",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-diagonal-neighbors",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3764,8 +3764,8 @@ gimp_context_get_distance_metric (void)
                                                 "gimp-context-get-distance-metric",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-distance-metric",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-distance-metric",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3811,8 +3811,8 @@ gimp_context_set_distance_metric (GeglDistanceMetric metric)
                                                 "gimp-context-set-distance-metric",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-distance-metric",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-distance-metric",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3852,8 +3852,8 @@ gimp_context_get_interpolation (void)
                                                 "gimp-context-get-interpolation",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-interpolation",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-interpolation",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3900,8 +3900,8 @@ gimp_context_set_interpolation (GimpInterpolationType interpolation)
                                                 "gimp-context-set-interpolation",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-interpolation",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-interpolation",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -3939,8 +3939,8 @@ gimp_context_get_transform_direction (void)
                                                 "gimp-context-get-transform-direction",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-transform-direction",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-transform-direction",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -3986,8 +3986,8 @@ gimp_context_set_transform_direction (GimpTransformDirection transform_direction
                                                 "gimp-context-set-transform-direction",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-transform-direction",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-transform-direction",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4025,8 +4025,8 @@ gimp_context_get_transform_resize (void)
                                                 "gimp-context-get-transform-resize",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-transform-resize",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-transform-resize",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4076,8 +4076,8 @@ gimp_context_set_transform_resize (GimpTransformResize transform_resize)
                                                 "gimp-context-set-transform-resize",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-transform-resize",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-transform-resize",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4113,8 +4113,8 @@ gimp_context_get_ink_size (void)
                                                 "gimp-context-get-ink-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-size",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4154,8 +4154,8 @@ gimp_context_set_ink_size (gdouble size)
                                                 "gimp-context-set-ink-size",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-size",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-size",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4191,8 +4191,8 @@ gimp_context_get_ink_angle (void)
                                                 "gimp-context-get-ink-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4232,8 +4232,8 @@ gimp_context_set_ink_angle (gdouble angle)
                                                 "gimp-context-set-ink-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4269,8 +4269,8 @@ gimp_context_get_ink_size_sensitivity (void)
                                                 "gimp-context-get-ink-size-sensitivity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-size-sensitivity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-size-sensitivity",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4310,8 +4310,8 @@ gimp_context_set_ink_size_sensitivity (gdouble size)
                                                 "gimp-context-set-ink-size-sensitivity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-size-sensitivity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-size-sensitivity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4347,8 +4347,8 @@ gimp_context_get_ink_tilt_sensitivity (void)
                                                 "gimp-context-get-ink-tilt-sensitivity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-tilt-sensitivity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-tilt-sensitivity",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4388,8 +4388,8 @@ gimp_context_set_ink_tilt_sensitivity (gdouble tilt)
                                                 "gimp-context-set-ink-tilt-sensitivity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-tilt-sensitivity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-tilt-sensitivity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4425,8 +4425,8 @@ gimp_context_get_ink_speed_sensitivity (void)
                                                 "gimp-context-get-ink-speed-sensitivity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-speed-sensitivity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-speed-sensitivity",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4466,8 +4466,8 @@ gimp_context_set_ink_speed_sensitivity (gdouble speed)
                                                 "gimp-context-set-ink-speed-sensitivity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-speed-sensitivity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-speed-sensitivity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4503,8 +4503,8 @@ gimp_context_get_ink_blob_type (void)
                                                 "gimp-context-get-ink-blob-type",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-blob-type",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-blob-type",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4544,8 +4544,8 @@ gimp_context_set_ink_blob_type (GimpInkBlobType type)
                                                 "gimp-context-set-ink-blob-type",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-blob-type",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-blob-type",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4581,8 +4581,8 @@ gimp_context_get_ink_blob_aspect_ratio (void)
                                                 "gimp-context-get-ink-blob-aspect-ratio",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-blob-aspect-ratio",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-blob-aspect-ratio",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4622,8 +4622,8 @@ gimp_context_set_ink_blob_aspect_ratio (gdouble aspect)
                                                 "gimp-context-set-ink-blob-aspect-ratio",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-blob-aspect-ratio",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-blob-aspect-ratio",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -4659,8 +4659,8 @@ gimp_context_get_ink_blob_angle (void)
                                                 "gimp-context-get-ink-blob-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-get-ink-blob-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-get-ink-blob-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -4700,8 +4700,8 @@ gimp_context_set_ink_blob_angle (gdouble angle)
                                                 "gimp-context-set-ink-blob-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-context-set-ink-blob-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-context-set-ink-blob-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

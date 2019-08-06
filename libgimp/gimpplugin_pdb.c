@@ -62,8 +62,8 @@ _gimp_plugin_domain_register (const gchar *domain_name,
                                                 "gimp-plugin-domain-register",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-domain-register",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-domain-register",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -108,8 +108,8 @@ _gimp_plugin_help_register (const gchar *domain_name,
                                                 "gimp-plugin-help-register",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-help-register",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-help-register",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -155,8 +155,8 @@ _gimp_plugin_menu_branch_register (const gchar *menu_path,
                                                 "gimp-plugin-menu-branch-register",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-menu-branch-register",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-menu-branch-register",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -200,8 +200,8 @@ _gimp_plugin_menu_register (const gchar *procedure_name,
                                                 "gimp-plugin-menu-register",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-menu-register",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-menu-register",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -252,8 +252,8 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
                                                 "gimp-plugin-icon-register",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-icon-register",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-icon-register",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -299,8 +299,8 @@ gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
                                                 "gimp-plugin-set-pdb-error-handler",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-set-pdb-error-handler",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-set-pdb-error-handler",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -338,8 +338,8 @@ gimp_plugin_get_pdb_error_handler (void)
                                                 "gimp-plugin-get-pdb-error-handler",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-plugin-get-pdb-error-handler",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-plugin-get-pdb-error-handler",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

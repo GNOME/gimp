@@ -62,8 +62,8 @@ gimp_message (const gchar *message)
                                                 "gimp-message",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-message",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-message",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -99,8 +99,8 @@ gimp_message_get_handler (void)
                                                 "gimp-message-get-handler",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-message-get-handler",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-message-get-handler",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -140,8 +140,8 @@ gimp_message_set_handler (GimpMessageHandlerType handler)
                                                 "gimp-message-set-handler",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-message-set-handler",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-message-set-handler",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -110,8 +110,8 @@ gimp_text_fontname (gint32        image_ID,
                                                 "gimp-text-fontname",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-fontname",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-fontname",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -175,8 +175,8 @@ gimp_text_get_extents_fontname (const gchar  *text,
                                                 "gimp-text-get-extents-fontname",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-text-get-extents-fontname",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-text-get-extents-fontname",
+                                            args);
   gimp_value_array_unref (args);
 
   *width = 0;

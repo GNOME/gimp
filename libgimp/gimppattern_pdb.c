@@ -70,8 +70,8 @@ gimp_pattern_get_info (const gchar *name,
                                                 "gimp-pattern-get-info",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-info",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-pattern-get-info",
+                                            args);
   gimp_value_array_unref (args);
 
   *width = 0;
@@ -133,8 +133,8 @@ gimp_pattern_get_pixels (const gchar  *name,
                                                 "gimp-pattern-get-pixels",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-pixels",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-pattern-get-pixels",
+                                            args);
   gimp_value_array_unref (args);
 
   *width = 0;

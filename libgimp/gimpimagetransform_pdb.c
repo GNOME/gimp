@@ -83,8 +83,8 @@ gimp_image_resize (gint32 image_ID,
                                                 "gimp-image-resize",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-resize",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-resize",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -126,8 +126,8 @@ gimp_image_resize_to_layers (gint32 image_ID)
                                                 "gimp-image-resize-to-layers",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-resize-to-layers",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-resize-to-layers",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -176,8 +176,8 @@ gimp_image_scale (gint32 image_ID,
                                                 "gimp-image-scale",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-scale",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-scale",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -235,8 +235,8 @@ gimp_image_crop (gint32 image_ID,
                                                 "gimp-image-crop",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-crop",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-crop",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -277,8 +277,8 @@ gimp_image_flip (gint32              image_ID,
                                                 "gimp-image-flip",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-flip",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-flip",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -319,8 +319,8 @@ gimp_image_rotate (gint32           image_ID,
                                                 "gimp-image-rotate",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-rotate",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-rotate",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

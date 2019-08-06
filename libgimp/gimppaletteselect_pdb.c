@@ -69,8 +69,8 @@ gimp_palettes_popup (const gchar *palette_callback,
                                                 "gimp-palettes-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-palettes-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-palettes-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -107,8 +107,8 @@ gimp_palettes_close_popup (const gchar *palette_callback)
                                                 "gimp-palettes-close-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-palettes-close-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-palettes-close-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -149,8 +149,8 @@ gimp_palettes_set_popup (const gchar *palette_callback,
                                                 "gimp-palettes-set-popup",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-palettes-set-popup",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-palettes-set-popup",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

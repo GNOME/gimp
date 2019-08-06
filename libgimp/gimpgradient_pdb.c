@@ -64,8 +64,8 @@ gimp_gradient_new (const gchar *name)
                                                 "gimp-gradient-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -106,8 +106,8 @@ gimp_gradient_duplicate (const gchar *name)
                                                 "gimp-gradient-duplicate",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-duplicate",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-duplicate",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -147,8 +147,8 @@ gimp_gradient_is_editable (const gchar *name)
                                                 "gimp-gradient-is-editable",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-is-editable",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-is-editable",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -193,8 +193,8 @@ gimp_gradient_rename (const gchar *name,
                                                 "gimp-gradient-rename",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-rename",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-rename",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -234,8 +234,8 @@ gimp_gradient_delete (const gchar *name)
                                                 "gimp-gradient-delete",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-delete",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-delete",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -275,8 +275,8 @@ gimp_gradient_get_number_of_segments (const gchar *name)
                                                 "gimp-gradient-get-number-of-segments",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-get-number-of-segments",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-get-number-of-segments",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -334,8 +334,8 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
                                                 "gimp-gradient-get-uniform-samples",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-get-uniform-samples",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-get-uniform-samples",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_color_samples = 0;
@@ -404,8 +404,8 @@ gimp_gradient_get_custom_samples (const gchar    *name,
                                                 "gimp-gradient-get-custom-samples",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-get-custom-samples",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-get-custom-samples",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_color_samples = 0;
@@ -462,8 +462,8 @@ gimp_gradient_segment_get_left_color (const gchar *name,
                                                 "gimp-gradient-segment-get-left-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-left-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-left-color",
+                                            args);
   gimp_value_array_unref (args);
 
   *opacity = 0.0;
@@ -523,8 +523,8 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
                                                 "gimp-gradient-segment-set-left-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-left-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-set-left-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -572,8 +572,8 @@ gimp_gradient_segment_get_right_color (const gchar *name,
                                                 "gimp-gradient-segment-get-right-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-right-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-right-color",
+                                            args);
   gimp_value_array_unref (args);
 
   *opacity = 0.0;
@@ -633,8 +633,8 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
                                                 "gimp-gradient-segment-set-right-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-right-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-set-right-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -680,8 +680,8 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
                                                 "gimp-gradient-segment-get-left-pos",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-left-pos",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-left-pos",
+                                            args);
   gimp_value_array_unref (args);
 
   *pos = 0.0;
@@ -739,8 +739,8 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
                                                 "gimp-gradient-segment-set-left-pos",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-left-pos",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-set-left-pos",
+                                            args);
   gimp_value_array_unref (args);
 
   *final_pos = 0.0;
@@ -791,8 +791,8 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
                                                 "gimp-gradient-segment-get-middle-pos",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-middle-pos",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-middle-pos",
+                                            args);
   gimp_value_array_unref (args);
 
   *pos = 0.0;
@@ -849,8 +849,8 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
                                                 "gimp-gradient-segment-set-middle-pos",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-middle-pos",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-set-middle-pos",
+                                            args);
   gimp_value_array_unref (args);
 
   *final_pos = 0.0;
@@ -901,8 +901,8 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
                                                 "gimp-gradient-segment-get-right-pos",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-right-pos",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-right-pos",
+                                            args);
   gimp_value_array_unref (args);
 
   *pos = 0.0;
@@ -960,8 +960,8 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
                                                 "gimp-gradient-segment-set-right-pos",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-set-right-pos",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-set-right-pos",
+                                            args);
   gimp_value_array_unref (args);
 
   *final_pos = 0.0;
@@ -1012,8 +1012,8 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
                                                 "gimp-gradient-segment-get-blending-function",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-blending-function",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-blending-function",
+                                            args);
   gimp_value_array_unref (args);
 
   *blend_func = 0;
@@ -1064,8 +1064,8 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
                                                 "gimp-gradient-segment-get-coloring-type",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-get-coloring-type",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-get-coloring-type",
+                                            args);
   gimp_value_array_unref (args);
 
   *coloring_type = 0;
@@ -1122,8 +1122,8 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
                                                 "gimp-gradient-segment-range-set-blending-function",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-set-blending-function",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-set-blending-function",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1175,8 +1175,8 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
                                                 "gimp-gradient-segment-range-set-coloring-type",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-set-coloring-type",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-set-coloring-type",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1223,8 +1223,8 @@ gimp_gradient_segment_range_flip (const gchar *name,
                                                 "gimp-gradient-segment-range-flip",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-flip",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-flip",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1277,8 +1277,8 @@ gimp_gradient_segment_range_replicate (const gchar *name,
                                                 "gimp-gradient-segment-range-replicate",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-replicate",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-replicate",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1326,8 +1326,8 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
                                                 "gimp-gradient-segment-range-split-midpoint",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-split-midpoint",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-split-midpoint",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1379,8 +1379,8 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
                                                 "gimp-gradient-segment-range-split-uniform",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-split-uniform",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-split-uniform",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1427,8 +1427,8 @@ gimp_gradient_segment_range_delete (const gchar *name,
                                                 "gimp-gradient-segment-range-delete",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-delete",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-delete",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1476,8 +1476,8 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
                                                 "gimp-gradient-segment-range-redistribute-handles",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-redistribute-handles",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-redistribute-handles",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1526,8 +1526,8 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
                                                 "gimp-gradient-segment-range-blend-colors",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-blend-colors",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-blend-colors",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1576,8 +1576,8 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
                                                 "gimp-gradient-segment-range-blend-opacity",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-blend-opacity",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-blend-opacity",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -1634,8 +1634,8 @@ gimp_gradient_segment_range_move (const gchar *name,
                                                 "gimp-gradient-segment-range-move",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-gradient-segment-range-move",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-gradient-segment-range-move",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

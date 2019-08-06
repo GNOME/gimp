@@ -68,8 +68,8 @@ gimp_image_grid_get_spacing (gint32   image_ID,
                                                 "gimp-image-grid-get-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-get-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   *xspacing = 0.0;
@@ -126,8 +126,8 @@ gimp_image_grid_set_spacing (gint32  image_ID,
                                                 "gimp-image-grid-set-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-set-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -171,8 +171,8 @@ gimp_image_grid_get_offset (gint32   image_ID,
                                                 "gimp-image-grid-get-offset",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-get-offset",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-offset",
+                                            args);
   gimp_value_array_unref (args);
 
   *xoffset = 0.0;
@@ -229,8 +229,8 @@ gimp_image_grid_set_offset (gint32  image_ID,
                                                 "gimp-image-grid-set-offset",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-set-offset",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-offset",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -271,8 +271,8 @@ gimp_image_grid_get_foreground_color (gint32   image_ID,
                                                 "gimp-image-grid-get-foreground-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-get-foreground-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-foreground-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -318,8 +318,8 @@ gimp_image_grid_set_foreground_color (gint32         image_ID,
                                                 "gimp-image-grid-set-foreground-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-set-foreground-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-foreground-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -360,8 +360,8 @@ gimp_image_grid_get_background_color (gint32   image_ID,
                                                 "gimp-image-grid-get-background-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-get-background-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-background-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -407,8 +407,8 @@ gimp_image_grid_set_background_color (gint32         image_ID,
                                                 "gimp-image-grid-set-background-color",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-set-background-color",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-background-color",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -447,8 +447,8 @@ gimp_image_grid_get_style (gint32 image_ID)
                                                 "gimp-image-grid-get-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-get-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-style",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -493,8 +493,8 @@ gimp_image_grid_set_style (gint32        image_ID,
                                                 "gimp-image-grid-set-style",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-grid-set-style",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-style",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -68,8 +68,8 @@ _gimp_image_get_color_profile (gint32  image_ID,
                                                 "gimp-image-get-color-profile",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-get-color-profile",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-get-color-profile",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_bytes = 0;
@@ -122,8 +122,8 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
                                                 "gimp-image-get-effective-color-profile",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-get-effective-color-profile",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-get-effective-color-profile",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_bytes = 0;
@@ -180,8 +180,8 @@ _gimp_image_set_color_profile (gint32        image_ID,
                                                 "gimp-image-set-color-profile",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-set-color-profile",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-set-color-profile",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -229,8 +229,8 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
                                                 "gimp-image-set-color-profile-from-file",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-set-color-profile-from-file",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-set-color-profile-from-file",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -288,8 +288,8 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
                                                 "gimp-image-convert-color-profile",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-convert-color-profile",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-convert-color-profile",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -343,8 +343,8 @@ gimp_image_convert_color_profile_from_file (gint32                    image_ID,
                                                 "gimp-image-convert-color-profile-from-file",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-image-convert-color-profile-from-file",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-image-convert-color-profile-from-file",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -60,8 +60,8 @@ gimp_fonts_refresh (void)
                                                 "gimp-fonts-refresh",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-fonts-refresh",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-fonts-refresh",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -103,8 +103,8 @@ gimp_fonts_get_list (const gchar *filter,
                                                 "gimp-fonts-get-list",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-fonts-get-list",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-fonts-get-list",
+                                            args);
   gimp_value_array_unref (args);
 
   *num_fonts = 0;

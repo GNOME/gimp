@@ -64,8 +64,8 @@ gimp_brush_new (const gchar *name)
                                                 "gimp-brush-new",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-new",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-new",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -106,8 +106,8 @@ gimp_brush_duplicate (const gchar *name)
                                                 "gimp-brush-duplicate",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-duplicate",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-duplicate",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -147,8 +147,8 @@ gimp_brush_is_generated (const gchar *name)
                                                 "gimp-brush-is-generated",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-is-generated",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-is-generated",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -193,8 +193,8 @@ gimp_brush_rename (const gchar *name,
                                                 "gimp-brush-rename",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-rename",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-rename",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -234,8 +234,8 @@ gimp_brush_delete (const gchar *name)
                                                 "gimp-brush-delete",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-delete",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-delete",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -274,8 +274,8 @@ gimp_brush_is_editable (const gchar *name)
                                                 "gimp-brush-is-editable",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-is-editable",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-is-editable",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -324,8 +324,8 @@ gimp_brush_get_info (const gchar *name,
                                                 "gimp-brush-get-info",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-info",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-info",
+                                            args);
   gimp_value_array_unref (args);
 
   *width = 0;
@@ -394,8 +394,8 @@ gimp_brush_get_pixels (const gchar  *name,
                                                 "gimp-brush-get-pixels",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-pixels",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-pixels",
+                                            args);
   gimp_value_array_unref (args);
 
   *width = 0;
@@ -459,8 +459,8 @@ gimp_brush_get_spacing (const gchar *name,
                                                 "gimp-brush-get-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   *spacing = 0;
@@ -509,8 +509,8 @@ gimp_brush_set_spacing (const gchar *name,
                                                 "gimp-brush-set-spacing",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-spacing",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-spacing",
+                                            args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -554,8 +554,8 @@ gimp_brush_get_shape (const gchar *name)
                                                 "gimp-brush-get-shape",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-shape",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-shape",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -604,8 +604,8 @@ gimp_brush_set_shape (const gchar             *name,
                                                 "gimp-brush-set-shape",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-shape",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-shape",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -646,8 +646,8 @@ gimp_brush_get_radius (const gchar *name)
                                                 "gimp-brush-get-radius",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-radius",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-radius",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -692,8 +692,8 @@ gimp_brush_set_radius (const gchar *name,
                                                 "gimp-brush-set-radius",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-radius",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-radius",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -734,8 +734,8 @@ gimp_brush_get_spikes (const gchar *name)
                                                 "gimp-brush-get-spikes",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-spikes",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-spikes",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -780,8 +780,8 @@ gimp_brush_set_spikes (const gchar *name,
                                                 "gimp-brush-set-spikes",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-spikes",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-spikes",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -824,8 +824,8 @@ gimp_brush_get_hardness (const gchar *name)
                                                 "gimp-brush-get-hardness",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-hardness",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-hardness",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -871,8 +871,8 @@ gimp_brush_set_hardness (const gchar *name,
                                                 "gimp-brush-set-hardness",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-hardness",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-hardness",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -914,8 +914,8 @@ gimp_brush_get_aspect_ratio (const gchar *name)
                                                 "gimp-brush-get-aspect-ratio",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-aspect-ratio",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-aspect-ratio",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -961,8 +961,8 @@ gimp_brush_set_aspect_ratio (const gchar *name,
                                                 "gimp-brush-set-aspect-ratio",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-aspect-ratio",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-aspect-ratio",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1003,8 +1003,8 @@ gimp_brush_get_angle (const gchar *name)
                                                 "gimp-brush-get-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-get-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-get-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -1049,8 +1049,8 @@ gimp_brush_set_angle (const gchar *name,
                                                 "gimp-brush-set-angle",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-brush-set-angle",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-brush-set-angle",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

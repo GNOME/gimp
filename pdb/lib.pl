@@ -539,8 +539,8 @@ $arg_array
                                                 "gimp-$proc->{canonical_name}",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-$proc->{canonical_name}",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-$proc->{canonical_name}",
+                                            args);
   gimp_value_array_unref (args);
 
   $return_marshal

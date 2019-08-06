@@ -739,53 +739,6 @@ gimp_quit (void)
   exit (EXIT_SUCCESS);
 }
 
-GimpValueArray *
-gimp_run_procedure_with_array (const gchar    *name,
-                               GimpValueArray *arguments)
-{
-  GPProcRun        proc_run;
-  GPProcReturn    *proc_return;
-  GimpWireMessage  msg;
-  GimpValueArray  *return_values;
-
-  g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (arguments != NULL, NULL);
-
-  proc_run.name    = (gchar *) name;
-  proc_run.nparams = gimp_value_array_length (arguments);
-  proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
-
-  if (PLUG_IN)
-    {
-      if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (PLUG_IN),
-                               &proc_run, PLUG_IN))
-        gimp_quit ();
-
-      _gimp_plug_in_read_expect_msg (PLUG_IN, &msg, GP_PROC_RETURN);
-    }
-  else
-    {
-      if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
-        gimp_quit ();
-
-      _gimp_read_expect_msg (&msg, GP_PROC_RETURN);
-    }
-
-  proc_return = msg.data;
-
-  return_values = _gimp_gp_params_to_value_array (NULL,
-                                                  NULL, 0,
-                                                  proc_return->params,
-                                                  proc_return->nparams,
-                                                  TRUE, FALSE);
-
-  gimp_wire_destroy (&msg);
-
-  _gimp_set_pdb_error (return_values);
-
-  return return_values;
-}
-
 /**
  * gimp_get_pdb_error:
  *

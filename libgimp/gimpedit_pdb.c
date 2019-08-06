@@ -68,8 +68,8 @@ gimp_edit_cut (gint32 drawable_ID)
                                                 "gimp-edit-cut",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-cut",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-cut",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -114,8 +114,8 @@ gimp_edit_copy (gint32 drawable_ID)
                                                 "gimp-edit-copy",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-copy",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-copy",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -160,8 +160,8 @@ gimp_edit_copy_visible (gint32 image_ID)
                                                 "gimp-edit-copy-visible",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-copy-visible",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-copy-visible",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -217,8 +217,8 @@ gimp_edit_paste (gint32   drawable_ID,
                                                 "gimp-edit-paste",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-paste",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-paste",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -258,8 +258,8 @@ gimp_edit_paste_as_new_image (void)
                                                 "gimp-edit-paste-as-new-image",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-paste-as-new-image",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-paste-as-new-image",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -308,8 +308,8 @@ gimp_edit_named_cut (gint32       drawable_ID,
                                                 "gimp-edit-named-cut",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-named-cut",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-cut",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -358,8 +358,8 @@ gimp_edit_named_copy (gint32       drawable_ID,
                                                 "gimp-edit-named-copy",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-named-copy",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-copy",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -408,8 +408,8 @@ gimp_edit_named_copy_visible (gint32       image_ID,
                                                 "gimp-edit-named-copy-visible",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-named-copy-visible",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-copy-visible",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -458,8 +458,8 @@ gimp_edit_named_paste (gint32       drawable_ID,
                                                 "gimp-edit-named-paste",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-named-paste",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-paste",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -500,8 +500,8 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
                                                 "gimp-edit-named-paste-as-new-image",
                                                 args);
   else
-    return_vals = gimp_run_procedure_with_array ("gimp-edit-named-paste-as-new-image",
-                                                 args);
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-paste-as-new-image",
+                                            args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
