@@ -14,7 +14,6 @@ libgimpmodule
 libgimpthumb
 libgimpwidgets
 modules
-plug-ins/color-rotate
 plug-ins/common
 plug-ins/file-bmp
 plug-ins/file-compressor
@@ -43,11 +42,11 @@ plug-ins/ifs-compose
 plug-ins/imagemap
 plug-ins/lighting
 plug-ins/map-object
-plug-ins/maze
 plug-ins/metadata
 plug-ins/pagecurl
 plug-ins/print
 plug-ins/pygimp
+plug-ins/python
 plug-ins/screenshot
 plug-ins/script-fu/scripts/contactsheet.scm
 plug-ins/selection-to-path
