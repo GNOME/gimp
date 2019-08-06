@@ -172,7 +172,7 @@ gimp_pdb_query (const gchar   *name,
 }
 
 /**
- * gimp_pdb_proc_exists:
+ * _gimp_pdb_proc_exists:
  * @procedure_name: The procedure name.
  *
  * Checks if the specified procedure exists in the procedural database
@@ -185,7 +185,7 @@ gimp_pdb_query (const gchar   *name,
  * Since: 2.6
  **/
 gboolean
-gimp_pdb_proc_exists (const gchar *procedure_name)
+_gimp_pdb_proc_exists (const gchar *procedure_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -283,7 +283,7 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
 }
 
 /**
- * gimp_pdb_proc_arg:
+ * _gimp_pdb_proc_arg:
  * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  * @arg_type: (out): The type of argument.
@@ -299,11 +299,11 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_pdb_proc_arg (const gchar     *procedure_name,
-                   gint             arg_num,
-                   GimpPDBArgType  *arg_type,
-                   gchar          **arg_name,
-                   gchar          **arg_desc)
+_gimp_pdb_proc_arg (const gchar     *procedure_name,
+                    gint             arg_num,
+                    GimpPDBArgType  *arg_type,
+                    gchar          **arg_name,
+                    gchar          **arg_desc)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -338,7 +338,7 @@ gimp_pdb_proc_arg (const gchar     *procedure_name,
 }
 
 /**
- * gimp_pdb_proc_val:
+ * _gimp_pdb_proc_val:
  * @procedure_name: The procedure name.
  * @val_num: The return value number.
  * @val_type: (out): The type of return value.
@@ -355,11 +355,11 @@ gimp_pdb_proc_arg (const gchar     *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_pdb_proc_val (const gchar     *procedure_name,
-                   gint             val_num,
-                   GimpPDBArgType  *val_type,
-                   gchar          **val_name,
-                   gchar          **val_desc)
+_gimp_pdb_proc_val (const gchar     *procedure_name,
+                    gint             val_num,
+                    GimpPDBArgType  *val_type,
+                    gchar          **val_name,
+                    gchar          **val_desc)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -525,7 +525,7 @@ _gimp_pdb_get_data (const gchar  *identifier,
 }
 
 /**
- * gimp_pdb_get_data_size:
+ * _gimp_pdb_get_data_size:
  * @identifier: The identifier associated with data.
  *
  * Returns size of data associated with the specified identifier.
@@ -537,7 +537,7 @@ _gimp_pdb_get_data (const gchar  *identifier,
  * Returns: The number of bytes in the data.
  **/
 gint
-gimp_pdb_get_data_size (const gchar *identifier)
+_gimp_pdb_get_data_size (const gchar *identifier)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

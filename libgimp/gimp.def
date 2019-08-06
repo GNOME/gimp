@@ -281,6 +281,7 @@ EXPORTS
 	gimp_get_monitor_resolution
 	gimp_get_parasite
 	gimp_get_parasite_list
+	gimp_get_pdb
 	gimp_get_pdb_error
 	gimp_get_pdb_status
 	gimp_get_plug_in
@@ -611,18 +612,20 @@ EXPORTS
 	gimp_patterns_popup
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
-	gimp_pdb_get_type
 	gimp_pdb_dump
 	gimp_pdb_get_data
 	gimp_pdb_get_data_size
-	gimp_pdb_lookup
+	gimp_pdb_get_type
+	gimp_pdb_lookup_procedure
 	gimp_pdb_proc_arg
 	gimp_pdb_proc_argument
 	gimp_pdb_proc_exists
 	gimp_pdb_proc_info
 	gimp_pdb_proc_return_value
 	gimp_pdb_proc_val
+	gimp_pdb_procedure_exists
 	gimp_pdb_query
+	gimp_pdb_run_procedure
 	gimp_pdb_set_data
 	gimp_pdb_temp_name
 	gimp_pencil

@@ -43,7 +43,7 @@ gboolean                 gimp_pdb_query             (const gchar       *name,
                                                      const gchar       *proc_type,
                                                      gint              *num_matches,
                                                      gchar           ***procedure_names);
-gboolean                 gimp_pdb_proc_exists       (const gchar       *procedure_name);
+G_GNUC_INTERNAL gboolean _gimp_pdb_proc_exists      (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean _gimp_pdb_proc_info        (const gchar       *procedure_name,
                                                      gchar            **blurb,
                                                      gchar            **help,
@@ -53,12 +53,12 @@ G_GNUC_INTERNAL gboolean _gimp_pdb_proc_info        (const gchar       *procedur
                                                      GimpPDBProcType   *proc_type,
                                                      gint              *num_args,
                                                      gint              *num_values);
-gboolean                 gimp_pdb_proc_arg          (const gchar       *procedure_name,
+G_GNUC_INTERNAL gboolean _gimp_pdb_proc_arg         (const gchar       *procedure_name,
                                                      gint               arg_num,
                                                      GimpPDBArgType    *arg_type,
                                                      gchar            **arg_name,
                                                      gchar            **arg_desc);
-gboolean                 gimp_pdb_proc_val          (const gchar       *procedure_name,
+G_GNUC_INTERNAL gboolean _gimp_pdb_proc_val         (const gchar       *procedure_name,
                                                      gint               val_num,
                                                      GimpPDBArgType    *val_type,
                                                      gchar            **val_name,
@@ -70,7 +70,7 @@ GParamSpec*              gimp_pdb_proc_return_value (const gchar       *procedur
 G_GNUC_INTERNAL gboolean _gimp_pdb_get_data         (const gchar       *identifier,
                                                      gint              *bytes,
                                                      guint8           **data);
-gint                     gimp_pdb_get_data_size     (const gchar       *identifier);
+G_GNUC_INTERNAL gint     _gimp_pdb_get_data_size    (const gchar       *identifier);
 G_GNUC_INTERNAL gboolean _gimp_pdb_set_data         (const gchar       *identifier,
                                                      gint               bytes,
                                                      const guint8      *data);

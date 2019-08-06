@@ -21,8 +21,15 @@
 #include "config.h"
 
 #include "gimp.h"
+
+#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
+
+#include "gimp-private.h"
+#include "gimpgpparams.h"
 #include "gimppdb-private.h"
 #include "gimppdbprocedure.h"
+#include "gimpplugin-private.h"
 
 
 /**
@@ -102,27 +109,87 @@ _gimp_pdb_get_plug_in (GimpPDB *pdb)
   return pdb->priv->plug_in;
 }
 
+/**
+ * gimp_pdb_procedure_exists:
+ * @pdb:            A #GimpPDB instance.
+ * @procedure_name: A procedure name
+ *
+ * This function checks if a procedure exists in the procedural
+ * database.
+ *
+ * Return: %TRUE if the procedure exists, %FALSE otherwise.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_pdb_procedure_exists (GimpPDB     *pdb,
+                           const gchar *procedure_name)
+{
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
+  g_return_val_if_fail (procedure_name != NULL, FALSE);
+
+  return _gimp_pdb_proc_exists (procedure_name);
+}
+
 GimpProcedure *
-gimp_pdb_lookup (GimpPDB     *pdb,
-                 const gchar *name)
+gimp_pdb_lookup_procedure (GimpPDB     *pdb,
+                           const gchar *procedure_name)
 {
   GimpProcedure *procedure;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
 
-  procedure = g_hash_table_lookup (pdb->priv->procedures, name);
+  procedure = g_hash_table_lookup (pdb->priv->procedures, procedure_name);
 
   if (! procedure)
     {
-      procedure = _gimp_pdb_procedure_new (pdb, name);
+      procedure = _gimp_pdb_procedure_new (pdb, procedure_name);
 
       if (procedure)
         g_hash_table_insert (pdb->priv->procedures,
-                             g_strdup (name), procedure);
+                             g_strdup (procedure_name), procedure);
     }
 
   return procedure;
+}
+
+GimpValueArray *
+gimp_pdb_run_procedure (GimpPDB        *pdb,
+                        const gchar    *procedure_name,
+                        GimpValueArray *arguments)
+{
+  GPProcRun        proc_run;
+  GPProcReturn    *proc_return;
+  GimpWireMessage  msg;
+  GimpValueArray  *return_values;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (arguments != NULL, NULL);
+
+  proc_run.name    = (gchar *) procedure_name;
+  proc_run.nparams = gimp_value_array_length (arguments);
+  proc_run.params  = _gimp_value_array_to_gp_params (arguments, FALSE);
+
+  if (! gp_proc_run_write (_gimp_writechannel, &proc_run, NULL))
+    gimp_quit ();
+
+  _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
+
+  proc_return = msg.data;
+
+  return_values = _gimp_gp_params_to_value_array (NULL,
+                                                  NULL, 0,
+                                                  proc_return->params,
+                                                  proc_return->nparams,
+                                                  TRUE, FALSE);
+
+  gimp_wire_destroy (&msg);
+
+  _gimp_set_pdb_error (return_values);
+
+  return return_values;
 }
 
 GQuark
@@ -133,6 +200,25 @@ _gimp_pdb_error_quark (void)
 
 
 /*  Cruft API  */
+
+/**
+ * gimp_pdb_proc_exists:
+ * @procedure_name: The procedure name.
+ *
+ * Checks if the specified procedure exists in the procedural database
+ *
+ * This procedure checks if the specified procedure is registered in
+ * the procedural database.
+ *
+ * Returns: Whether a procedure of that name is registered.
+ *
+ * Since: 2.6
+ **/
+gboolean
+gimp_pdb_proc_exists (const gchar *procedure_name)
+{
+  return _gimp_pdb_proc_exists (procedure_name);
+}
 
 /**
  * gimp_pdb_proc_info:
@@ -160,7 +246,7 @@ _gimp_pdb_error_quark (void)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_pdb_proc_info (const gchar      *procedure,
+gimp_pdb_proc_info (const gchar      *procedure_name,
                     gchar           **blurb,
                     gchar           **help,
                     gchar           **author,
@@ -175,7 +261,7 @@ gimp_pdb_proc_info (const gchar      *procedure,
   gint i;
   gboolean success = TRUE;
 
-  success = _gimp_pdb_proc_info (procedure,
+  success = _gimp_pdb_proc_info (procedure_name,
                                  blurb,
                                  help,
                                  author,
@@ -192,7 +278,7 @@ gimp_pdb_proc_info (const gchar      *procedure,
 
       for (i = 0; i < *num_args; i++)
         {
-          if (! gimp_pdb_proc_arg (procedure, i,
+          if (! gimp_pdb_proc_arg (procedure_name, i,
                                    &(*args)[i].type,
                                    &(*args)[i].name,
                                    &(*args)[i].description))
@@ -206,7 +292,7 @@ gimp_pdb_proc_info (const gchar      *procedure,
 
       for (i = 0; i < *num_values; i++)
         {
-          if (! gimp_pdb_proc_val (procedure, i,
+          if (! gimp_pdb_proc_val (procedure_name, i,
                                    &(*return_vals)[i].type,
                                    &(*return_vals)[i].name,
                                    &(*return_vals)[i].description))
@@ -217,9 +303,64 @@ gimp_pdb_proc_info (const gchar      *procedure,
               return FALSE;
             }
         }
-     }
+    }
 
   return success;
+}
+
+/**
+ * gimp_pdb_proc_arg:
+ * @procedure_name: The procedure name.
+ * @arg_num: The argument number.
+ * @arg_type: (out): The type of argument.
+ * @arg_name: (out) (transfer full): The name of the argument.
+ * @arg_desc: (out) (transfer full): A description of the argument.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's argument.
+ *
+ * This procedure returns information on the specified procedure's
+ * argument. The argument type, name, and a description are retrieved.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pdb_proc_arg (const gchar     *procedure_name,
+                   gint             arg_num,
+                   GimpPDBArgType  *arg_type,
+                   gchar          **arg_name,
+                   gchar          **arg_desc)
+{
+  return _gimp_pdb_proc_arg (procedure_name, arg_num,
+                             arg_type, arg_name, arg_desc);
+}
+
+/**
+ * gimp_pdb_proc_val:
+ * @procedure_name: The procedure name.
+ * @val_num: The return value number.
+ * @val_type: (out): The type of return value.
+ * @val_name: (out) (transfer full): The name of the return value.
+ * @val_desc: (out) (transfer full): A description of the return value.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's return value.
+ *
+ * This procedure returns information on the specified procedure's
+ * return value. The return value type, name, and a description are
+ * retrieved.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pdb_proc_val (const gchar     *procedure_name,
+                   gint             val_num,
+                   GimpPDBArgType  *val_type,
+                   gchar          **val_name,
+                   gchar          **val_desc)
+{
+  return _gimp_pdb_proc_val (procedure_name, val_num,
+                             val_type, val_name, val_desc);
 }
 
 /**
@@ -253,6 +394,24 @@ gimp_pdb_get_data (const gchar *identifier,
     }
 
   return success;
+}
+
+/**
+ * gimp_pdb_get_data_size:
+ * @identifier: The identifier associated with data.
+ *
+ * Returns size of data associated with the specified identifier.
+ *
+ * This procedure returns the size of any data which may have been
+ * associated with the specified identifier. If no data has been
+ * associated with the identifier, an error is returned.
+ *
+ * Returns: The number of bytes in the data.
+ **/
+gint
+gimp_pdb_get_data_size (const gchar *identifier)
+{
+  return _gimp_pdb_get_data_size (identifier);
 }
 
 /**

@@ -152,7 +152,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'exists', type => 'boolean',
+	{ name => 'exists', type => 'boolean', wrap => 1,
 	  desc => 'Whether a procedure of that name is registered' }
     );
 
@@ -377,7 +377,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1,
+	{ name => 'procedure_name', type  => 'string', non_empty => 1, wrap => 1,
 	  desc => 'The procedure name' },
 	{ name => 'arg_num', type => 'int32',
 	  desc => 'The argument number' }
@@ -445,7 +445,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1,
+	{ name => 'procedure_name', type  => 'string', non_empty => 1, wrap => 1,
 	  desc => 'The procedure name' },
 	{ name => 'val_num', type => 'int32',
 	  desc => 'The return value number' }
@@ -554,7 +554,7 @@ HELP
     &nick_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'identifier', type => 'string', non_empty => 1,
+	{ name => 'identifier', type => 'string', non_empty => 1, wrap => 1,
 	  desc => 'The identifier associated with data' }
     );
 

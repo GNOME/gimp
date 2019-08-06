@@ -101,6 +101,7 @@
 #include "gimp-shm.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
+#include "gimppdb-private.h"
 #include "gimpplugin-private.h"
 #include "gimpunitcache.h"
 
@@ -141,8 +142,6 @@ static gboolean   gimp_write                   (GIOChannel      *channel,
 static gboolean   gimp_flush                   (GIOChannel      *channel,
                                                 gpointer         user_data);
 
-static void       gimp_set_pdb_error           (GimpValueArray  *return_vals);
-
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
@@ -175,6 +174,7 @@ static gulong         write_buffer_index = 0;
 static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 
 static GimpPlugIn     *PLUG_IN      = NULL;
+static GimpPDB        *PDB          = NULL;
 static GimpPlugInInfo  PLUG_IN_INFO = { 0, };
 
 static GimpPDBStatusType  pdb_error_status   = GIMP_PDB_SUCCESS;
@@ -696,6 +696,28 @@ gimp_get_plug_in (void)
 }
 
 /**
+ * gimp_get_pdb:
+ *
+ * This function returns the plug-in's #GimpPDB instance, which can
+ * exist exactly once per running plug-in program.
+ *
+ * Returns: (transfer none): The plug-in's #GimpPDB singleton, or %NULL.
+ *
+ * Since: 3.0
+ **/
+GimpPDB *
+gimp_get_pdb (void)
+{
+  if (! PDB)
+    {
+      if (PLUG_IN)
+        PDB = _gimp_pdb_new (PLUG_IN);
+    }
+
+  return PDB;
+}
+
+/**
  * gimp_quit:
  *
  * Forcefully causes the GIMP library to exit and close down its
@@ -748,7 +770,7 @@ gimp_run_procedure_with_array (const gchar    *name,
 
   gimp_wire_destroy (&msg);
 
-  gimp_set_pdb_error (return_values);
+  _gimp_set_pdb_error (return_values);
 
   return return_values;
 }
@@ -1404,8 +1426,8 @@ _gimp_config (GPConfig *config)
   _gimp_shm_open (config->shm_ID);
 }
 
-static void
-gimp_set_pdb_error (GimpValueArray *return_values)
+void
+_gimp_set_pdb_error (GimpValueArray *return_values)
 {
   g_clear_pointer (&pdb_error_message, g_free);
   pdb_error_status = GIMP_PDB_SUCCESS;
