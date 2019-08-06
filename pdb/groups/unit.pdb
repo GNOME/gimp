@@ -359,18 +359,21 @@ CODE
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimpunit.h");
 
-@procs = qw(unit_get_number_of_units unit_get_number_of_built_in_units
-	    unit_new unit_get_deletion_flag unit_set_deletion_flag
-            unit_get_identifier unit_get_factor unit_get_digits
-            unit_get_symbol unit_get_abbreviation unit_get_singular
+@procs = qw(unit_get_number_of_units
+            unit_get_number_of_built_in_units
+	    unit_new
+            unit_get_deletion_flag
+            unit_set_deletion_flag
+            unit_get_identifier
+            unit_get_factor
+            unit_get_digits
+            unit_get_symbol
+            unit_get_abbreviation
+            unit_get_singular
             unit_get_plural);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Units';
-$doc_title = 'gimpunit';
-$doc_short_desc = 'Provides a collection of predefined units and functions for creating user-defined units.';
-$doc_long_desc = 'Provides a collection of predefined units and functions for creating user-defined units.';
-$doc_see_also = '#GimpUnitMenu, #GimpSizeEntry';
 
 1;
