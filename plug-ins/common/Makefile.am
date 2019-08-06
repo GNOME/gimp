@@ -99,7 +99,6 @@ file_xmc_libexecdir = $(gimpplugindir)/plug-ins/file-xmc
 file_xpm_libexecdir = $(gimpplugindir)/plug-ins/file-xpm
 file_xwd_libexecdir = $(gimpplugindir)/plug-ins/file-xwd
 film_libexecdir = $(gimpplugindir)/plug-ins/film
-goat_exercise_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise
 gradient_map_libexecdir = $(gimpplugindir)/plug-ins/gradient-map
 grid_libexecdir = $(gimpplugindir)/plug-ins/grid
 guillotine_libexecdir = $(gimpplugindir)/plug-ins/guillotine
@@ -177,7 +176,6 @@ file_xmc_libexec_PROGRAMS = $(FILE_XMC)
 file_xpm_libexec_PROGRAMS = $(FILE_XPM)
 file_xwd_libexec_PROGRAMS = file-xwd
 film_libexec_PROGRAMS = film
-goat_exercise_libexec_PROGRAMS = goat-exercise
 gradient_map_libexec_PROGRAMS = gradient-map
 grid_libexec_PROGRAMS = grid
 guillotine_libexec_PROGRAMS = guillotine
@@ -1200,22 +1198,6 @@ film_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(film_RC)
-
-goat_exercise_SOURCES = \
-	goat-exercise.c
-
-goat_exercise_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(GEGL_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(goat_exercise_RC)
 
 gradient_map_SOURCES = \
 	gradient-map.c

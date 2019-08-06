@@ -2878,6 +2878,7 @@ plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
 plug-ins/common/Makefile
+plug-ins/goat-exercises/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/app/Makefile
