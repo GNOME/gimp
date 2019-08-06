@@ -78,6 +78,7 @@ gimp_text_fontname (gint32        image_ID,
                     GimpSizeType  size_type,
                     const gchar  *fontname)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 text_layer_ID = -1;
@@ -104,8 +105,13 @@ gimp_text_fontname (gint32        image_ID,
   g_value_set_enum (gimp_value_array_index (args, 8), size_type);
   g_value_set_string (gimp_value_array_index (args, 9), fontname);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-text-fontname",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-text-fontname",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-text-fontname",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -149,6 +155,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
                                 gint         *ascent,
                                 gint         *descent)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -163,8 +170,13 @@ gimp_text_get_extents_fontname (const gchar  *text,
   g_value_set_enum (gimp_value_array_index (args, 2), size_type);
   g_value_set_string (gimp_value_array_index (args, 3), fontname);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-text-get-extents-fontname",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-text-get-extents-fontname",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-text-get-extents-fontname",
+                                                 args);
   gimp_value_array_unref (args);
 
   *width = 0;

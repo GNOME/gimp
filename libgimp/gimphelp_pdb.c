@@ -54,6 +54,7 @@ gboolean
 gimp_help (const gchar *help_domain,
            const gchar *help_id)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -64,8 +65,13 @@ gimp_help (const gchar *help_domain,
   g_value_set_string (gimp_value_array_index (args, 0), help_domain);
   g_value_set_string (gimp_value_array_index (args, 1), help_id);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-help",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-help",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-help",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -56,6 +56,7 @@ gimp_pattern_get_info (const gchar *name,
                        gint        *height,
                        gint        *bpp)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -64,8 +65,13 @@ gimp_pattern_get_info (const gchar *name,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-info",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-pattern-get-info",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-info",
+                                                 args);
   gimp_value_array_unref (args);
 
   *width = 0;
@@ -113,6 +119,7 @@ gimp_pattern_get_pixels (const gchar  *name,
                          gint         *num_color_bytes,
                          guint8      **color_bytes)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -121,8 +128,13 @@ gimp_pattern_get_pixels (const gchar  *name,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-pixels",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-pattern-get-pixels",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-pattern-get-pixels",
+                                                 args);
   gimp_value_array_unref (args);
 
   *width = 0;

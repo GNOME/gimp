@@ -61,6 +61,7 @@ gimp_item_transform_translate (gint32  item_ID,
                                gdouble off_x,
                                gdouble off_y)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -73,8 +74,13 @@ gimp_item_transform_translate (gint32  item_ID,
   g_value_set_double (gimp_value_array_index (args, 1), off_x);
   g_value_set_double (gimp_value_array_index (args, 2), off_y);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-translate",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-translate",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-translate",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -124,6 +130,7 @@ gimp_item_transform_flip_simple (gint32              item_ID,
                                  gboolean            auto_center,
                                  gdouble             axis)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -138,8 +145,13 @@ gimp_item_transform_flip_simple (gint32              item_ID,
   g_value_set_boolean (gimp_value_array_index (args, 2), auto_center);
   g_value_set_double (gimp_value_array_index (args, 3), axis);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-flip-simple",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-flip-simple",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-flip-simple",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -191,6 +203,7 @@ gimp_item_transform_flip (gint32  item_ID,
                           gdouble x1,
                           gdouble y1)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -207,8 +220,13 @@ gimp_item_transform_flip (gint32  item_ID,
   g_value_set_double (gimp_value_array_index (args, 3), x1);
   g_value_set_double (gimp_value_array_index (args, 4), y1);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-flip",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-flip",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-flip",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -277,6 +295,7 @@ gimp_item_transform_perspective (gint32  item_ID,
                                  gdouble x3,
                                  gdouble y3)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -301,8 +320,13 @@ gimp_item_transform_perspective (gint32  item_ID,
   g_value_set_double (gimp_value_array_index (args, 7), x3);
   g_value_set_double (gimp_value_array_index (args, 8), y3);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-perspective",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-perspective",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-perspective",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -357,6 +381,7 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
                                    gdouble          center_x,
                                    gdouble          center_y)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -373,8 +398,13 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
   g_value_set_double (gimp_value_array_index (args, 3), center_x);
   g_value_set_double (gimp_value_array_index (args, 4), center_y);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-rotate-simple",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-rotate-simple",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-rotate-simple",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -431,6 +461,7 @@ gimp_item_transform_rotate (gint32   item_ID,
                             gdouble  center_x,
                             gdouble  center_y)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -447,8 +478,13 @@ gimp_item_transform_rotate (gint32   item_ID,
   g_value_set_double (gimp_value_array_index (args, 3), center_x);
   g_value_set_double (gimp_value_array_index (args, 4), center_y);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-rotate",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-rotate",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-rotate",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -502,6 +538,7 @@ gimp_item_transform_scale (gint32  item_ID,
                            gdouble x1,
                            gdouble y1)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -518,8 +555,13 @@ gimp_item_transform_scale (gint32  item_ID,
   g_value_set_double (gimp_value_array_index (args, 3), x1);
   g_value_set_double (gimp_value_array_index (args, 4), y1);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-scale",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-scale",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-scale",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -571,6 +613,7 @@ gimp_item_transform_shear (gint32              item_ID,
                            GimpOrientationType shear_type,
                            gdouble             magnitude)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -583,8 +626,13 @@ gimp_item_transform_shear (gint32              item_ID,
   g_value_set_enum (gimp_value_array_index (args, 1), shear_type);
   g_value_set_double (gimp_value_array_index (args, 2), magnitude);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-shear",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-shear",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-shear",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -647,6 +695,7 @@ gimp_item_transform_2d (gint32  item_ID,
                         gdouble dest_x,
                         gdouble dest_y)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -669,8 +718,13 @@ gimp_item_transform_2d (gint32  item_ID,
   g_value_set_double (gimp_value_array_index (args, 6), dest_x);
   g_value_set_double (gimp_value_array_index (args, 7), dest_y);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-2d",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-2d",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-2d",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -735,6 +789,7 @@ gimp_item_transform_matrix (gint32  item_ID,
                             gdouble coeff_2_1,
                             gdouble coeff_2_2)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
@@ -761,8 +816,13 @@ gimp_item_transform_matrix (gint32  item_ID,
   g_value_set_double (gimp_value_array_index (args, 8), coeff_2_1);
   g_value_set_double (gimp_value_array_index (args, 9), coeff_2_2);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-item-transform-matrix",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-transform-matrix",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-item-transform-matrix",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

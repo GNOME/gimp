@@ -51,6 +51,7 @@ gint32
 gimp_image_add_hguide (gint32 image_ID,
                        gint   yposition)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 guide_ID = -1;
@@ -61,8 +62,13 @@ gimp_image_add_hguide (gint32 image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_int (gimp_value_array_index (args, 1), yposition);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-add-hguide",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-add-hguide",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-add-hguide",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -90,6 +96,7 @@ gint32
 gimp_image_add_vguide (gint32 image_ID,
                        gint   xposition)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 guide_ID = -1;
@@ -100,8 +107,13 @@ gimp_image_add_vguide (gint32 image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_int (gimp_value_array_index (args, 1), xposition);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-add-vguide",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-add-vguide",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-add-vguide",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -128,6 +140,7 @@ gboolean
 gimp_image_delete_guide (gint32 image_ID,
                          gint32 guide_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -138,8 +151,13 @@ gimp_image_delete_guide (gint32 image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-delete-guide",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-delete-guide",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-delete-guide",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -168,6 +186,7 @@ gint32
 gimp_image_find_next_guide (gint32 image_ID,
                             gint32 guide_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 next_guide_ID = -1;
@@ -178,8 +197,13 @@ gimp_image_find_next_guide (gint32 image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-find-next-guide",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-find-next-guide",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-find-next-guide",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -206,6 +230,7 @@ GimpOrientationType
 gimp_image_get_guide_orientation (gint32 image_ID,
                                   gint32 guide_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
@@ -216,8 +241,13 @@ gimp_image_get_guide_orientation (gint32 image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-get-guide-orientation",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-get-guide-orientation",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-get-guide-orientation",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -244,6 +274,7 @@ gint
 gimp_image_get_guide_position (gint32 image_ID,
                                gint32 guide_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
@@ -254,8 +285,13 @@ gimp_image_get_guide_position (gint32 image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-get-guide-position",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-get-guide-position",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-get-guide-position",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)

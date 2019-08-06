@@ -57,6 +57,7 @@ gimp_file_load (GimpRunMode  run_mode,
                 const gchar *filename,
                 const gchar *raw_filename)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 image_ID = -1;
@@ -69,8 +70,13 @@ gimp_file_load (GimpRunMode  run_mode,
   g_value_set_string (gimp_value_array_index (args, 1), filename);
   g_value_set_string (gimp_value_array_index (args, 2), raw_filename);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-file-load",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-file-load",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-file-load",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -103,6 +109,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
                       gint32       image_ID,
                       const gchar *filename)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint32 layer_ID = -1;
@@ -115,8 +122,13 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_value_set_image_id (gimp_value_array_index (args, 1), image_ID);
   g_value_set_string (gimp_value_array_index (args, 2), filename);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-file-load-layer",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-file-load-layer",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-file-load-layer",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -153,6 +165,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
                        const gchar *filename,
                        gint        *num_layers)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint *layer_ids = NULL;
@@ -165,8 +178,13 @@ gimp_file_load_layers (GimpRunMode  run_mode,
   gimp_value_set_image_id (gimp_value_array_index (args, 1), image_ID);
   g_value_set_string (gimp_value_array_index (args, 2), filename);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-file-load-layers",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-file-load-layers",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-file-load-layers",
+                                                 args);
   gimp_value_array_unref (args);
 
   *num_layers = 0;
@@ -209,6 +227,7 @@ gimp_file_save (GimpRunMode  run_mode,
                 const gchar *filename,
                 const gchar *raw_filename)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -225,8 +244,13 @@ gimp_file_save (GimpRunMode  run_mode,
   g_value_set_string (gimp_value_array_index (args, 3), filename);
   g_value_set_string (gimp_value_array_index (args, 4), raw_filename);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-file-save",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-file-save",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-file-save",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -256,6 +280,7 @@ gboolean
 gimp_file_save_thumbnail (gint32       image_ID,
                           const gchar *filename)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -266,8 +291,13 @@ gimp_file_save_thumbnail (gint32       image_ID,
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
   g_value_set_string (gimp_value_array_index (args, 1), filename);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-file-save-thumbnail",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-file-save-thumbnail",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-file-save-thumbnail",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -297,6 +327,7 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
                                   const gchar *prefixes,
                                   const gchar *magics)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -311,8 +342,13 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 2), prefixes);
   g_value_set_string (gimp_value_array_index (args, 3), magics);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-magic-load-handler",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-magic-load-handler",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-magic-load-handler",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -340,6 +376,7 @@ gimp_register_load_handler (const gchar *procedure_name,
                             const gchar *extensions,
                             const gchar *prefixes)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -352,8 +389,13 @@ gimp_register_load_handler (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 1), extensions);
   g_value_set_string (gimp_value_array_index (args, 2), prefixes);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-load-handler",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-load-handler",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-load-handler",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -381,6 +423,7 @@ gimp_register_save_handler (const gchar *procedure_name,
                             const gchar *extensions,
                             const gchar *prefixes)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -393,8 +436,13 @@ gimp_register_save_handler (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 1), extensions);
   g_value_set_string (gimp_value_array_index (args, 2), prefixes);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-save-handler",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-save-handler",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-save-handler",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -425,6 +473,7 @@ gboolean
 gimp_register_file_handler_priority (const gchar *procedure_name,
                                      gint         priority)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -435,8 +484,13 @@ gimp_register_file_handler_priority (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
   g_value_set_int (gimp_value_array_index (args, 1), priority);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-priority",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-file-handler-priority",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-priority",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -468,6 +522,7 @@ gboolean
 gimp_register_file_handler_mime (const gchar *procedure_name,
                                  const gchar *mime_types)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -478,8 +533,13 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
   g_value_set_string (gimp_value_array_index (args, 1), mime_types);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-mime",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-file-handler-mime",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-mime",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -507,6 +567,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
 gboolean
 gimp_register_file_handler_uri (const gchar *procedure_name)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -515,8 +576,13 @@ gimp_register_file_handler_uri (const gchar *procedure_name)
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-uri",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-file-handler-uri",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-uri",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -544,6 +610,7 @@ gimp_register_file_handler_uri (const gchar *procedure_name)
 gboolean
 gimp_register_file_handler_raw (const gchar *procedure_name)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -552,8 +619,13 @@ gimp_register_file_handler_raw (const gchar *procedure_name)
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-raw",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-file-handler-raw",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-file-handler-raw",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -585,6 +657,7 @@ gboolean
 gimp_register_thumbnail_loader (const gchar *load_proc,
                                 const gchar *thumb_proc)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -595,8 +668,13 @@ gimp_register_thumbnail_loader (const gchar *load_proc,
   g_value_set_string (gimp_value_array_index (args, 0), load_proc);
   g_value_set_string (gimp_value_array_index (args, 1), thumb_proc);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-register-thumbnail-loader",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-register-thumbnail-loader",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-register-thumbnail-loader",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

@@ -56,6 +56,7 @@ gimp_drawable_brightness_contrast (gint32  drawable_ID,
                                    gdouble brightness,
                                    gdouble contrast)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -68,8 +69,13 @@ gimp_drawable_brightness_contrast (gint32  drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 1), brightness);
   g_value_set_double (gimp_value_array_index (args, 2), contrast);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-brightness-contrast",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-brightness-contrast",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-brightness-contrast",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -111,6 +117,7 @@ gimp_drawable_color_balance (gint32           drawable_ID,
                              gdouble          magenta_green,
                              gdouble          yellow_blue)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -129,8 +136,13 @@ gimp_drawable_color_balance (gint32           drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 4), magenta_green);
   g_value_set_double (gimp_value_array_index (args, 5), yellow_blue);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-color-balance",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-color-balance",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-color-balance",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -164,6 +176,7 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
                             gdouble saturation,
                             gdouble lightness)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -178,8 +191,13 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 2), saturation);
   g_value_set_double (gimp_value_array_index (args, 3), lightness);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-colorize-hsl",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-colorize-hsl",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-colorize-hsl",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -215,6 +233,7 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
                                gint                  num_values,
                                const gdouble        *values)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -229,8 +248,13 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
   g_value_set_int (gimp_value_array_index (args, 2), num_values);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), values, num_values);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-curves-explicit",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-curves-explicit",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-curves-explicit",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -266,6 +290,7 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
                              gint                  num_points,
                              const gdouble        *points)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -280,8 +305,13 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
   g_value_set_int (gimp_value_array_index (args, 2), num_points);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), points, num_points);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-curves-spline",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-curves-spline",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-curves-spline",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -311,6 +341,7 @@ gboolean
 gimp_drawable_desaturate (gint32             drawable_ID,
                           GimpDesaturateMode desaturate_mode)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -321,8 +352,13 @@ gimp_drawable_desaturate (gint32             drawable_ID,
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), desaturate_mode);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-desaturate",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-desaturate",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-desaturate",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -355,6 +391,7 @@ gboolean
 gimp_drawable_equalize (gint32   drawable_ID,
                         gboolean mask_only)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -365,8 +402,13 @@ gimp_drawable_equalize (gint32   drawable_ID,
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_boolean (gimp_value_array_index (args, 1), mask_only);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-equalize",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-equalize",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-equalize",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -424,6 +466,7 @@ gimp_drawable_histogram (gint32                drawable_ID,
                          gdouble              *count,
                          gdouble              *percentile)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -438,8 +481,13 @@ gimp_drawable_histogram (gint32                drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 2), start_range);
   g_value_set_double (gimp_value_array_index (args, 3), end_range);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-histogram",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-histogram",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-histogram",
+                                                 args);
   gimp_value_array_unref (args);
 
   *mean = 0.0;
@@ -495,6 +543,7 @@ gimp_drawable_hue_saturation (gint32       drawable_ID,
                               gdouble      saturation,
                               gdouble      overlap)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -513,8 +562,13 @@ gimp_drawable_hue_saturation (gint32       drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 4), saturation);
   g_value_set_double (gimp_value_array_index (args, 5), overlap);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-hue-saturation",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-hue-saturation",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-hue-saturation",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -544,6 +598,7 @@ gboolean
 gimp_drawable_invert (gint32   drawable_ID,
                       gboolean linear)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -554,8 +609,13 @@ gimp_drawable_invert (gint32   drawable_ID,
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_boolean (gimp_value_array_index (args, 1), linear);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-invert",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-invert",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-invert",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -607,6 +667,7 @@ gimp_drawable_levels (gint32               drawable_ID,
                       gdouble              high_output,
                       gboolean             clamp_output)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -631,8 +692,13 @@ gimp_drawable_levels (gint32               drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 7), high_output);
   g_value_set_boolean (gimp_value_array_index (args, 8), clamp_output);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-levels",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-levels",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-levels",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -659,6 +725,7 @@ gimp_drawable_levels (gint32               drawable_ID,
 gboolean
 gimp_drawable_levels_stretch (gint32 drawable_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -667,8 +734,13 @@ gimp_drawable_levels_stretch (gint32 drawable_ID)
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-levels-stretch",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-levels-stretch",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-levels-stretch",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -696,6 +768,7 @@ gboolean
 gimp_drawable_posterize (gint32 drawable_ID,
                          gint   levels)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -706,8 +779,13 @@ gimp_drawable_posterize (gint32 drawable_ID,
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_int (gimp_value_array_index (args, 1), levels);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-posterize",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-posterize",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-posterize",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -741,6 +819,7 @@ gimp_drawable_threshold (gint32               drawable_ID,
                          gdouble              low_threshold,
                          gdouble              high_threshold)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -755,8 +834,13 @@ gimp_drawable_threshold (gint32               drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 2), low_threshold);
   g_value_set_double (gimp_value_array_index (args, 3), high_threshold);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-threshold",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-threshold",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-threshold",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

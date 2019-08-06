@@ -53,6 +53,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
                       const gchar *initial_gradient,
                       gint         sample_size)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -67,8 +68,13 @@ gimp_gradients_popup (const gchar *gradient_callback,
   g_value_set_string (gimp_value_array_index (args, 2), initial_gradient);
   g_value_set_int (gimp_value_array_index (args, 3), sample_size);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-gradients-popup",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-gradients-popup",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-gradients-popup",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -91,6 +97,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
 gboolean
 gimp_gradients_close_popup (const gchar *gradient_callback)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -99,8 +106,13 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), gradient_callback);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-gradients-close-popup",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-gradients-close-popup",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-gradients-close-popup",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -125,6 +137,7 @@ gboolean
 gimp_gradients_set_popup (const gchar *gradient_callback,
                           const gchar *gradient_name)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -135,8 +148,13 @@ gimp_gradients_set_popup (const gchar *gradient_callback,
   g_value_set_string (gimp_value_array_index (args, 0), gradient_callback);
   g_value_set_string (gimp_value_array_index (args, 1), gradient_name);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-gradients-set-popup",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-gradients-set-popup",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-gradients-set-popup",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

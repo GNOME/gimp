@@ -54,6 +54,7 @@
 gboolean
 gimp_drawable_edit_clear (gint32 drawable_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -62,8 +63,13 @@ gimp_drawable_edit_clear (gint32 drawable_ID)
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-clear",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-edit-clear",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-clear",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -96,6 +102,7 @@ gboolean
 gimp_drawable_edit_fill (gint32       drawable_ID,
                          GimpFillType fill_type)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -106,8 +113,13 @@ gimp_drawable_edit_fill (gint32       drawable_ID,
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   g_value_set_enum (gimp_value_array_index (args, 1), fill_type);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-fill",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-edit-fill",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-fill",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -150,6 +162,7 @@ gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
                                 gdouble      x,
                                 gdouble      y)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -164,8 +177,13 @@ gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 2), x);
   g_value_set_double (gimp_value_array_index (args, 3), y);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-bucket-fill",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-edit-bucket-fill",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-bucket-fill",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -221,6 +239,7 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
                                   gdouble          x2,
                                   gdouble          y2)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -249,8 +268,13 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
   g_value_set_double (gimp_value_array_index (args, 9), x2);
   g_value_set_double (gimp_value_array_index (args, 10), y2);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-gradient-fill",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-edit-gradient-fill",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-gradient-fill",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -284,6 +308,7 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
 gboolean
 gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -292,8 +317,13 @@ gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
                                           G_TYPE_NONE);
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-stroke-selection",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-edit-stroke-selection",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-stroke-selection",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -331,6 +361,7 @@ gboolean
 gimp_drawable_edit_stroke_item (gint32 drawable_ID,
                                 gint32 item_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -341,8 +372,13 @@ gimp_drawable_edit_stroke_item (gint32 drawable_ID,
   gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
   gimp_value_set_item_id (gimp_value_array_index (args, 1), item_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-stroke-item",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-drawable-edit-stroke-item",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-drawable-edit-stroke-item",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;

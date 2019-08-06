@@ -47,14 +47,20 @@
 gboolean
 gimp_palettes_refresh (void)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (G_TYPE_NONE);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-palettes-refresh",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-palettes-refresh",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-palettes-refresh",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -83,6 +89,7 @@ gchar **
 gimp_palettes_get_list (const gchar *filter,
                         gint        *num_palettes)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar **palette_list = NULL;
@@ -91,8 +98,13 @@ gimp_palettes_get_list (const gchar *filter,
                                           G_TYPE_NONE);
   g_value_set_string (gimp_value_array_index (args, 0), filter);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-palettes-get-list",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-palettes-get-list",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-palettes-get-list",
+                                                 args);
   gimp_value_array_unref (args);
 
   *num_palettes = 0;

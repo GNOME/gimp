@@ -50,6 +50,7 @@
 gboolean
 gimp_image_undo_group_start (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -58,8 +59,13 @@ gimp_image_undo_group_start (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-group-start",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-group-start",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-group-start",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -83,6 +89,7 @@ gimp_image_undo_group_start (gint32 image_ID)
 gboolean
 gimp_image_undo_group_end (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
@@ -91,8 +98,13 @@ gimp_image_undo_group_end (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-group-end",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-group-end",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-group-end",
+                                                 args);
   gimp_value_array_unref (args);
 
   success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
@@ -118,6 +130,7 @@ gimp_image_undo_group_end (gint32 image_ID)
 gboolean
 gimp_image_undo_is_enabled (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean enabled = FALSE;
@@ -126,8 +139,13 @@ gimp_image_undo_is_enabled (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-is-enabled",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-is-enabled",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-is-enabled",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -155,6 +173,7 @@ gimp_image_undo_is_enabled (gint32 image_ID)
 gboolean
 gimp_image_undo_disable (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean disabled = FALSE;
@@ -163,8 +182,13 @@ gimp_image_undo_disable (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-disable",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-disable",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-disable",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -191,6 +215,7 @@ gimp_image_undo_disable (gint32 image_ID)
 gboolean
 gimp_image_undo_enable (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean enabled = FALSE;
@@ -199,8 +224,13 @@ gimp_image_undo_enable (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-enable",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-enable",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-enable",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -234,6 +264,7 @@ gimp_image_undo_enable (gint32 image_ID)
 gboolean
 gimp_image_undo_freeze (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean frozen = FALSE;
@@ -242,8 +273,13 @@ gimp_image_undo_freeze (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-freeze",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-freeze",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-freeze",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
@@ -276,6 +312,7 @@ gimp_image_undo_freeze (gint32 image_ID)
 gboolean
 gimp_image_undo_thaw (gint32 image_ID)
 {
+  GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean thawed = FALSE;
@@ -284,8 +321,13 @@ gimp_image_undo_thaw (gint32 image_ID)
                                           G_TYPE_NONE);
   gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
-  return_vals = gimp_run_procedure_with_array ("gimp-image-undo-thaw",
-                                               args);
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-undo-thaw",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_with_array ("gimp-image-undo-thaw",
+                                                 args);
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
