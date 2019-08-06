@@ -65,17 +65,25 @@ struct _GimpPDBClass
 };
 
 
-GType            gimp_pdb_get_type         (void) G_GNUC_CONST;
+GType            gimp_pdb_get_type             (void) G_GNUC_CONST;
 
-gboolean         gimp_pdb_procedure_exists (GimpPDB        *pdb,
-                                            const gchar    *procedure_name);
+gboolean         gimp_pdb_procedure_exists     (GimpPDB        *pdb,
+                                                const gchar    *procedure_name);
 
-GimpProcedure  * gimp_pdb_lookup_procedure (GimpPDB        *pdb,
-                                            const gchar    *procedure_name);
+GimpProcedure  * gimp_pdb_lookup_procedure     (GimpPDB        *pdb,
+                                                const gchar    *procedure_name);
 
-GimpValueArray * gimp_pdb_run_procedure    (GimpPDB        *pdb,
-                                            const gchar    *procedure_name,
-                                            GimpValueArray *arguments);
+GimpValueArray * gimp_pdb_run_procedure        (GimpPDB        *pdb,
+                                                const gchar    *procedure_name,
+                                                GType           first_type,
+                                                ...);
+GimpValueArray * gimp_pdb_run_procedure_valist (GimpPDB        *pdb,
+                                                const gchar    *procedure_name,
+                                                GType           first_type,
+                                                va_list         args);
+GimpValueArray * gimp_pdb_run_procedure_array  (GimpPDB        *pdb,
+                                                const gchar    *procedure_name,
+                                                GimpValueArray *arguments);
 
 
 /*  Cruft API  */

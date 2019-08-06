@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <gobject/gvaluecollector.h>
+
 #include "gimp.h"
 
 #include "libgimpbase/gimpprotocol.h"
@@ -155,9 +157,88 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
 }
 
 GimpValueArray *
-gimp_pdb_run_procedure (GimpPDB        *pdb,
-                        const gchar    *procedure_name,
-                        GimpValueArray *arguments)
+gimp_pdb_run_procedure (GimpPDB     *pdb,
+                        const gchar *procedure_name,
+                        GType        first_type,
+                        ...)
+{
+  GimpValueArray *return_values;
+  va_list         args;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
+
+  va_start (args, first_type);
+
+  return_values = gimp_pdb_run_procedure_valist (pdb, procedure_name,
+                                                 first_type, args);
+
+  va_end (args);
+
+  return return_values;
+}
+
+GimpValueArray *
+gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
+                               const gchar *procedure_name,
+                               GType        first_type,
+                               va_list      args)
+{
+  GimpValueArray *arguments;
+  GimpValueArray *return_values;
+  GType           type;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
+
+  arguments = gimp_value_array_new (0);
+
+  type = first_type;
+
+  while (type != G_TYPE_NONE)
+    {
+      GValue  value     = G_VALUE_INIT;
+      gchar  *error_msg = NULL;
+
+      g_value_init (&value, type);
+
+      G_VALUE_COLLECT (&value, args, G_VALUE_NOCOPY_CONTENTS, &error_msg);
+
+      if (error_msg)
+        {
+          GError *error = g_error_new_literal (GIMP_PDB_ERROR,
+                                               GIMP_PDB_ERROR_INTERNAL_ERROR,
+                                               error_msg);
+          g_printerr ("%s: %s", G_STRFUNC, error_msg);
+          g_free (error_msg);
+
+          gimp_value_array_unref (arguments);
+
+          return_values = gimp_procedure_new_return_values (NULL,
+                                                            GIMP_PDB_CALLING_ERROR,
+                                                            error);
+          va_end (args);
+
+          return return_values;
+        }
+
+      gimp_value_array_append (arguments, &value);
+      g_value_unset (&value);
+
+      type = va_arg (args, GType);
+    }
+
+  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name,
+                                                arguments);
+  gimp_value_array_unref (arguments);
+
+  return return_values;
+}
+
+GimpValueArray *
+gimp_pdb_run_procedure_array (GimpPDB        *pdb,
+                              const gchar    *procedure_name,
+                              GimpValueArray *arguments)
 {
   GPProcRun        proc_run;
   GPProcReturn    *proc_return;

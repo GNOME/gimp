@@ -976,13 +976,14 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
   GValue          value = G_VALUE_INIT;
   gint            i;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (status != GIMP_PDB_PASS_THROUGH, NULL);
 
   switch (status)
     {
     case GIMP_PDB_SUCCESS:
     case GIMP_PDB_CANCEL:
+      g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
       args = gimp_value_array_new (procedure->priv->n_values + 1);
 
       g_value_init (&value, GIMP_TYPE_PDB_STATUS_TYPE);
@@ -1022,6 +1023,7 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
     default:
       g_return_val_if_reached (NULL);
     }
+
   g_clear_error (&error);
 
   return args;
