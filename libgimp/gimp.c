@@ -428,7 +428,7 @@ _gimp_main_internal (GType                 plug_in_type,
 #endif /* ! G_OS_WIN32 */
 
 #ifdef G_OS_WIN32
-  readc_hannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
+  read_channel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
   write_channel = g_io_channel_win32_new_fd (atoi (argv[ARG_WRITE_FD]));
 #else
   read_channel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
