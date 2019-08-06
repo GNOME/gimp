@@ -63,6 +63,7 @@ CLEANFILES = $(scripts) $(test_scripts)
 pyinterpdir = $(gimpplugindir)/interpreters
 pyinterpfile = $(pyinterpdir)/pygimp.interp
 
+if HAS_PYTHON_INTERP
 install-interp-file:
 	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
 	echo 'python=$(PYBIN_PATH)' > '$(DESTDIR)$(pyinterpfile)'
@@ -71,6 +72,7 @@ install-interp-file:
 	echo ":Python:E::py::`basename $(PYTHON)`:" >> '$(DESTDIR)$(pyinterpfile)'
 
 install-data-local: install-interp-file
+endif
 
 uninstall-local:
 	rm -f '$(DESTDIR)$(pyinterpfile)'

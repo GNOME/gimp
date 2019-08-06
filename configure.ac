@@ -80,8 +80,6 @@ m4_define([pangocairo_required_version], [1.42.0])
 m4_define([perl_required_version], [5.10.0])
 m4_define([poppler_required_version], [0.69.0])
 m4_define([poppler_data_required_version], [0.4.9])
-m4_define([pycairo_required_version], [1.0.2])
-m4_define([pygtk_required_version], [2.10.4])
 m4_define([python3_required_version], [3.6.0])
 m4_define([rsvg_required_version], [2.40.6])
 m4_define([webkitgtk_required_version], [2.20.3])
@@ -2243,66 +2241,66 @@ GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
 # Check for python
 ##################
 
-# Pygimp configure stuff ...
-AC_ARG_ENABLE(python,
-  AS_HELP_STRING([--disable-python],
-                 [do not build the python extension]))
+# By default, we want packagers to install Python plug-ins to get the
+# optimum experience. --with-python=yes will check for a Python 3
+# interpreter and fails without.
+# --with-python=force will install the plug-ins even though the Python
+# interpreter is not found at build time. It is up to the packager to
+# ensure one is available at run time. This can be useful in particular
+# when cross-compiling since anyway the interpreter is not useful at
+# build time.
+# --with-python=no won't install Python plug-ins. It is discouraged.
+AC_ARG_WITH(python,
+            [  --with-python=no|yes|force install Python 3 plug-ins (default=yes)], ,
+            [with_python=yes])
 
-m4_define([pycheck_error], [
-  required_deps="$required_deps
-  - $1
-      *** Please install $2, or skip building the python scripting extension by
-      *** passing --disable-python to configure (but then you will not be able
-      *** to use scripts for GIMP that are written in Python)."
-  enable_python="no"])
+if test "x$with_python" = xno; then
+  warning_python="
+WARNING: you disabled the installation of core Python plug-ins. This is
+         discouraged as it won't provide the full GIMP experience.
+         Note that you may install the Python plug-ins even if you have
+         no Python interpreter at build-time by passing the configure
+         option --with-python=force.
+         Just make sure that a Python python3_required_version or newer
+         interpreter is available at run-time."
+elif test "x$with_python" = xforce; then
+  AM_PATH_PYTHON3(python3_required_version,
+                  with_python="yes",
+                  with_python="yes (Warning: Python python3_required_version or newer not found)")
+  if test "x$with_python" != "xyes"; then
+    warning_python="
+WARNING: Python python3_required_version or newer was not found.
+         Python plug-ins will be installed anyway but you should make
+         sure that a compatible Python interpreter is available at
+         installation, otherwise installed plug-ins won't be usable."
+  fi
+else # with_python=yes
+  # Mandatory Python check.
+  m4_define([pycheck_error], [
+    required_deps="$required_deps
+    - $1
+        *** Please install $2.
+        *** Note that you may install the Python plug-ins even if you have
+        *** no Python interpreter at build-time by passing the configure
+        *** option --with-python=force.
+        *** Just make sure that a Python python3_required_version or newer
+        *** interpreter is available at run-time."
+    with_python="no"])
 
-if test "x$enable_python" != xno; then
-  enable_python="yes"
-  # check for Python
-  AM_PATH_PYTHON(python3_required_version,,
-                  [pycheck_error([Python 3 (python3_required_version or newer)], [it])])
-  AM_CHECK_PYTHON_HEADERS(, [pycheck_error([Python 3 headers], [them])])
+  AM_PATH_PYTHON3(python3_required_version,,
+                 [pycheck_error([Python 3 (python3_required_version or newer)], [it])])
+fi
 
-  # Win32 needs all symbols resolved for linking, even for DLLs
-  # Assume the link library is in $exec_prefix/libs
-  # This might be able to be figured out from distutils, but it's
-  # not documented so we won't rely on internal implementation
-  PYLINK_LIBS=
+if test "x$with_python" = "xyes"; then
   if test "x$platform_win32" = "xyes"; then
     PYBIN_PATH="$py_exec_prefix\pythonw.exe"
-    PYTHON_INCLUDES=`echo "$PYTHON_INCLUDES" | sed -e 's/\\\\/\\//g'`
-    py_exec_prefix=`echo "$py_exec_prefix" | sed -e 's/\\\\/\\//g'`
-    pylibversion=`echo $PYTHON_VERSION | sed -e 's/\\.//'`
-    PYLINK_LIBS="-L${py_exec_prefix}/libs -lpython${pylibversion}"
   else
     PYBIN_PATH="$PYTHON"
   fi
-  AC_SUBST(PYLINK_LIBS)
   AC_SUBST(PYBIN_PATH)
-
-  # # check for PyGTK
-  # PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
-  #                   [pycheck_error([PyGTK pygtk_required_version or newer], [it])])
-
-  # AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
-  # if test "x$PYGTK_CODEGEN" = xno; then
-  #    pycheck_error([pygtk-codegen-2.0 script], [it])
-  # fi
-
-  # AC_MSG_CHECKING(for pygtk defs)
-  # PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-  # AC_SUBST(PYGTK_DEFSDIR)
-  # AC_MSG_RESULT($PYGTK_DEFSDIR)
-
-  # XXX Check here for something related to Python gobject-introspection & GTK3
-
-  PKG_CHECK_MODULES(PYCAIRO, pycairo >= pycairo_required_version,,
-                    [pycheck_error([PyCairo pycairo_required_version or newer], [it])])
-
-  GIMP_DETECT_CFLAGS(PYGIMP_EXTRA_CFLAGS, '-fno-strict-aliasing')
-  AC_SUBST(PYGIMP_EXTRA_CFLAGS)
 fi
-AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
+AM_CONDITIONAL(HAS_PYTHON_INTERP, test "x$PYBIN_PATH" != "x")
+AM_CONDITIONAL(BUILD_PYTHON, test "x$with_python" != xno)
 
 
 ###########################################################
@@ -3035,7 +3033,7 @@ Optional Plug-Ins:
   Heif >= 1.4.0:             $have_libheif_1_4_0
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
-  Python 3:                  $enable_python
+  Python 3 plug-ins:         $with_python
   TWAIN (Win32):             $os_win32
   Webpage:                   $have_webkit
   WMF:                       $have_libwmf
@@ -3054,7 +3052,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
