@@ -34,6 +34,7 @@
 #include "gimp-intl.h"
 
 
+#define MAX_N_COLORS 256
 #define RGBA_EPSILON 1e-4
 
 enum
@@ -116,10 +117,13 @@ gimp_palette_mru_load (GimpPaletteMru *mru,
                   GimpRGB color;
 
                   if (! gimp_scanner_parse_color (scanner, &color))
-                    goto error;
+                    goto end;
 
                   gimp_palette_add_entry (palette, -1,
                                           _("History Color"), &color);
+
+                  if (gimp_palette_get_n_colors (palette) == MAX_N_COLORS)
+                    goto end;
                 }
             }
           token = G_TOKEN_RIGHT_PAREN;
@@ -134,7 +138,7 @@ gimp_palette_mru_load (GimpPaletteMru *mru,
         }
     }
 
- error:
+ end:
   gimp_scanner_destroy (scanner);
 }
 
@@ -213,6 +217,13 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
 
           return;
         }
+    }
+
+  if (gimp_palette_get_n_colors (palette) == MAX_N_COLORS)
+    {
+      gimp_palette_delete_entry (palette,
+                                 gimp_palette_get_entry (palette,
+                                                         MAX_N_COLORS - 1));
     }
 
   gimp_palette_add_entry (palette, 0, _("History Color"), color);
