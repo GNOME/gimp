@@ -139,7 +139,7 @@ gimp_unit_combo_box_new (void)
 
 /**
  * gimp_unit_combo_box_new_with_model:
- * @model: a GimpUnitStore
+ * @model: a #GimpUnitStore
  *
  * Returns: a new #GimpUnitComboBox.
  **/
@@ -151,6 +151,14 @@ gimp_unit_combo_box_new_with_model (GimpUnitStore *model)
                        NULL);
 }
 
+/**
+ * gimp_unit_combo_box_get_active:
+ * @combo: a #GimpUnitComboBox
+ *
+ * Returns the #GimpUnit currently selected in the combo box.
+ *
+ * Returns: (transfer none): The selected #GimpUnit.
+ **/
 GimpUnit
 gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
 {
@@ -168,6 +176,13 @@ gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
   return (GimpUnit) unit;
 }
 
+/**
+ * gimp_unit_combo_box_set_active:
+ * @combo: a #GimpUnitComboBox
+ * @unit:  a #GimpUnit
+ *
+ * Sets @unit as the currently selected #GimpUnit on @combo.
+ **/
 void
 gimp_unit_combo_box_set_active (GimpUnitComboBox *combo,
                                 GimpUnit          unit)
