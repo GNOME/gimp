@@ -60,6 +60,7 @@ EXPORTS
 	gimp_config_writer_comment_mode
 	gimp_config_writer_data
 	gimp_config_writer_finish
+	gimp_config_writer_get_type
 	gimp_config_writer_identifier
 	gimp_config_writer_linefeed
 	gimp_config_writer_new_fd
@@ -70,8 +71,10 @@ EXPORTS
 	gimp_config_writer_open
 	gimp_config_writer_print
 	gimp_config_writer_printf
+	gimp_config_writer_ref
 	gimp_config_writer_revert
 	gimp_config_writer_string
+	gimp_config_writer_unref
 	gimp_file_get_config_path
 	gimp_file_new_for_config_path
 	gimp_param_config_path_get_type
