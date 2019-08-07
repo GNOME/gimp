@@ -73,7 +73,7 @@ GType       gimp_button_get_type         (void) G_GNUC_CONST;
 GtkWidget * gimp_button_new              (void);
 
 void        gimp_button_extended_clicked (GimpButton      *button,
-                                          GdkModifierType  state);
+                                          GdkModifierType  modifier_state);
 
 
 G_END_DECLS

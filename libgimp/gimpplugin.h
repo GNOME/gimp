@@ -95,8 +95,8 @@ struct _GimpPlugInClass
 
   /**
    * GimpPlugInClass::create_procedure:
-   * @plug_in: a #GimpPlugIn.
-   * @name: procedure name.
+   * @plug_in:        a #GimpPlugIn.
+   * @procedure_name: procedure name.
    *
    * This method should be overridden by all plug-ins and return a newly
    * allocated #GimpProcedure named @name.
@@ -107,7 +107,7 @@ struct _GimpPlugInClass
    *          the procedure to be registered by @plug_in.
    */
   GimpProcedure  * (* create_procedure) (GimpPlugIn  *plug_in,
-                                         const gchar *name);
+                                         const gchar *procedure_name);
 
   /**
    * GimpPlugInClass::quit:

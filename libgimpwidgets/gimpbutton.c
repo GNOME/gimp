@@ -116,18 +116,19 @@ gimp_button_new (void)
 
 /**
  * gimp_button_extended_clicked:
- * @button: a #GimpButton.
- * @state:  a state as found in #GdkEventButton->state, e.g. #GDK_SHIFT_MASK.
+ * @button:         a #GimpButton.
+ * @modifier_state: a state as found in #GdkEventButton->state,
+ *                  e.g. #GDK_SHIFT_MASK.
  *
  * Emits the button's "extended_clicked" signal.
  **/
 void
 gimp_button_extended_clicked (GimpButton      *button,
-                              GdkModifierType  state)
+                              GdkModifierType  modifier_state)
 {
   g_return_if_fail (GIMP_IS_BUTTON (button));
 
-  g_signal_emit (button, button_signals[EXTENDED_CLICKED], 0, state);
+  g_signal_emit (button, button_signals[EXTENDED_CLICKED], 0, modifier_state);
 }
 
 static gboolean
