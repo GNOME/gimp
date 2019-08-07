@@ -242,7 +242,7 @@ gimp_color_wheel_init (GimpColorWheel *wheel)
 
   gimp_widget_track_monitor (GTK_WIDGET (wheel),
                              G_CALLBACK (gimp_color_wheel_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 }
 
 static void

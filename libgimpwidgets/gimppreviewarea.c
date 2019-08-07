@@ -162,7 +162,7 @@ gimp_preview_area_init (GimpPreviewArea *area)
 
   gimp_widget_track_monitor (GTK_WIDGET (area),
                              G_CALLBACK (gimp_preview_area_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 }
 
 static void

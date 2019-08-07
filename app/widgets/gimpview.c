@@ -190,7 +190,7 @@ gimp_view_init (GimpView *view)
 
   gimp_widget_track_monitor (GTK_WIDGET (view),
                              G_CALLBACK (gimp_view_monitor_changed),
-                             NULL);
+                             NULL, NULL);
 }
 
 static void

@@ -183,7 +183,7 @@ gimp_color_scale_init (GimpColorScale *scale)
 
   gimp_widget_track_monitor (GTK_WIDGET (scale),
                              G_CALLBACK (gimp_color_scale_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 
   css = gtk_css_provider_new ();
   gtk_css_provider_load_from_data (css,

@@ -195,7 +195,7 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
 
   gimp_widget_track_monitor (GTK_WIDGET (editor),
                              G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), 32, 24);
 }

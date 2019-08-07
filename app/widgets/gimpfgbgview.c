@@ -98,7 +98,7 @@ gimp_fg_bg_view_init (GimpFgBgView *view)
 
   gimp_widget_track_monitor (GTK_WIDGET (view),
                              G_CALLBACK (gimp_fg_bg_view_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 }
 
 static void

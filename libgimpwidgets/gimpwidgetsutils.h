@@ -47,7 +47,8 @@ GdkMonitor         * gimp_get_monitor_at_pointer     (void);
 
 void                 gimp_widget_track_monitor       (GtkWidget         *widget,
                                                       GCallback          monitor_changed_callback,
-                                                      gpointer           user_data);
+                                                      gpointer           user_data,
+                                                      GDestroyNotify     user_data_destroy);
 
 GimpColorProfile   * gimp_monitor_get_color_profile  (GdkMonitor        *monitor);
 GimpColorProfile   * gimp_widget_get_color_profile   (GtkWidget         *widget);

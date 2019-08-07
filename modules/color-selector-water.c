@@ -202,7 +202,7 @@ colorsel_water_init (ColorselWater *water)
 
   gimp_widget_track_monitor (GTK_WIDGET (water),
                              G_CALLBACK (colorsel_water_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 }
 
 static gdouble

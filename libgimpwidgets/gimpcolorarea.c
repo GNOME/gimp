@@ -258,7 +258,7 @@ gimp_color_area_init (GimpColorArea *area)
 
   gimp_widget_track_monitor (GTK_WIDGET (area),
                              G_CALLBACK (gimp_color_area_destroy_transform),
-                             NULL);
+                             NULL, NULL);
 }
 
 static void

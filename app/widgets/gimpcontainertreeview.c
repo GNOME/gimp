@@ -230,7 +230,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 
   gimp_widget_track_monitor (GTK_WIDGET (tree_view),
                              G_CALLBACK (gimp_container_tree_view_monitor_changed),
-                             NULL);
+                             NULL, NULL);
 }
 
 static void

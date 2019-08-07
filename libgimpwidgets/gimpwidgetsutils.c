@@ -434,9 +434,10 @@ track_monitor_hierarchy_changed (GtkWidget        *widget,
  * Since: 2.10
  **/
 void
-gimp_widget_track_monitor (GtkWidget *widget,
-                           GCallback  monitor_changed_callback,
-                           gpointer   user_data)
+gimp_widget_track_monitor (GtkWidget      *widget,
+                           GCallback       monitor_changed_callback,
+                           gpointer        user_data,
+                           GDestroyNotify  user_data_destroy)
 {
   TrackMonitorData *track_data;
   GtkWidget        *toplevel;
@@ -450,7 +451,12 @@ gimp_widget_track_monitor (GtkWidget *widget,
   track_data->callback  = (MonitorChangedCallback) monitor_changed_callback;
   track_data->user_data = user_data;
 
-  g_object_weak_ref (G_OBJECT (widget), (GWeakNotify) g_free, track_data);
+  g_object_weak_ref (G_OBJECT (widget), (GWeakNotify) g_free,
+                     track_data);
+
+  if (user_data_destroy)
+    g_object_weak_ref (G_OBJECT (widget), (GWeakNotify) user_data_destroy,
+                       user_data);
 
   g_signal_connect (widget, "hierarchy-changed",
                     G_CALLBACK (track_monitor_hierarchy_changed),
