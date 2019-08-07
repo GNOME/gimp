@@ -313,6 +313,16 @@ gboolean   gimp_plugin_icon_register        (const gchar  *procedure_name,
  */
 
 gchar    * gimp_pdb_temp_name     (void);
+gboolean   gimp_pdb_dump          (const gchar      *filename);
+gboolean   gimp_pdb_query         (const gchar      *name,
+                                   const gchar      *blurb,
+                                   const gchar      *help,
+                                   const gchar      *author,
+                                   const gchar      *copyright,
+                                   const gchar      *date,
+                                   const gchar      *proc_type,
+                                   gint             *num_matches,
+                                   gchar          ***procedure_names);
 gboolean   gimp_pdb_proc_exists   (const gchar      *procedure_name);
 gboolean   gimp_pdb_proc_info     (const gchar      *procedure_name,
                                    gchar           **blurb,

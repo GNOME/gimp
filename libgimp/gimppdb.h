@@ -87,6 +87,19 @@ GimpValueArray * gimp_pdb_run_procedure_array  (GimpPDB              *pdb,
 
 gchar          * gimp_pdb_temp_procedure_name  (GimpPDB              *pdb);
 
+gboolean         gimp_pdb_dump_to_file         (GimpPDB              *pdb,
+                                                GFile                *file);
+gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
+                                                const gchar          *name,
+                                                const gchar          *blurb,
+                                                const gchar          *help,
+                                                const gchar          *help_id,
+                                                const gchar          *authors,
+                                                const gchar          *copyright,
+                                                const gchar          *date,
+                                                const gchar          *proc_type,
+                                                gint                 *num_matches);
+
 
 /*  Cruft API  */
 

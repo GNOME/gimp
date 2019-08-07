@@ -57,6 +57,8 @@ HELP
     $author = 'Spencer Kimball & Josh MacDonald';
     $copyright = $author . ' & Peter Mattis';
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'filename', type => 'string', allow_non_utf8 => 1,
           non_empty => 1,
@@ -96,6 +98,8 @@ number of entries is 0.
 HELP
 
     &std_pdb_misc;
+
+    $lib_private = 1;
 
     @inargs = (
 	{ name => 'name', type => 'string', allow_non_utf8 => 1,

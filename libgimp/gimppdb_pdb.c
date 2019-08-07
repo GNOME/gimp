@@ -63,7 +63,7 @@ _gimp_pdb_temp_name (void)
 }
 
 /**
- * gimp_pdb_dump:
+ * _gimp_pdb_dump:
  * @filename: The dump filename.
  *
  * Dumps the current contents of the procedural database
@@ -75,7 +75,7 @@ _gimp_pdb_temp_name (void)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_pdb_dump (const gchar *filename)
+_gimp_pdb_dump (const gchar *filename)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -103,7 +103,7 @@ gimp_pdb_dump (const gchar *filename)
 }
 
 /**
- * gimp_pdb_query:
+ * _gimp_pdb_query:
  * @name: The regex for procedure name.
  * @blurb: The regex for procedure blurb.
  * @help: The regex for procedure help.
@@ -133,15 +133,15 @@ gimp_pdb_dump (const gchar *filename)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_pdb_query (const gchar   *name,
-                const gchar   *blurb,
-                const gchar   *help,
-                const gchar   *author,
-                const gchar   *copyright,
-                const gchar   *date,
-                const gchar   *proc_type,
-                gint          *num_matches,
-                gchar       ***procedure_names)
+_gimp_pdb_query (const gchar   *name,
+                 const gchar   *blurb,
+                 const gchar   *help,
+                 const gchar   *author,
+                 const gchar   *copyright,
+                 const gchar   *date,
+                 const gchar   *proc_type,
+                 gint          *num_matches,
+                 gchar       ***procedure_names)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

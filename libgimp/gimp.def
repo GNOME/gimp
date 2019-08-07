@@ -613,6 +613,7 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pdb_dump
+	gimp_pdb_dump_to_file
 	gimp_pdb_get_data
 	gimp_pdb_get_data_size
 	gimp_pdb_get_type
@@ -625,6 +626,7 @@ EXPORTS
 	gimp_pdb_proc_val
 	gimp_pdb_procedure_exists
 	gimp_pdb_query
+	gimp_pdb_query_procedures
 	gimp_pdb_run_procedure
 	gimp_pdb_run_procedure_array
 	gimp_pdb_run_procedure_valist

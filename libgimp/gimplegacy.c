@@ -1221,6 +1221,76 @@ gimp_pdb_temp_name (void)
 }
 
 /**
+ * gimp_pdb_dump:
+ * @filename: The dump filename.
+ *
+ * Dumps the current contents of the procedural database
+ *
+ * This procedure dumps the contents of the procedural database to the
+ * specified file. The file will contain all of the information
+ * provided for each registered procedure.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pdb_dump (const gchar *filename)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_pdb_dump (filename);
+}
+
+/**
+ * gimp_pdb_query:
+ * @name: The regex for procedure name.
+ * @blurb: The regex for procedure blurb.
+ * @help: The regex for procedure help.
+ * @author: The regex for procedure author.
+ * @copyright: The regex for procedure copyright.
+ * @date: The regex for procedure date.
+ * @proc_type: The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
+ * @num_matches: (out): The number of matching procedures.
+ * @procedure_names: (out) (array length=num_matches) (element-type gchar*) (transfer full): The list of procedure names.
+ *
+ * Queries the procedural database for its contents using regular
+ * expression matching.
+ *
+ * This procedure queries the contents of the procedural database. It
+ * is supplied with seven arguments matching procedures on { name,
+ * blurb, help, author, copyright, date, procedure type}. This is
+ * accomplished using regular expression matching. For instance, to
+ * find all procedures with \"jpeg\" listed in the blurb, all seven
+ * arguments can be supplied as \".*\", except for the second, which
+ * can be supplied as \".*jpeg.*\". There are two return arguments for
+ * this procedure. The first is the number of procedures matching the
+ * query. The second is a concatenated list of procedure names
+ * corresponding to those matching the query. If no matching entries
+ * are found, then the returned string is NULL and the number of
+ * entries is 0.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pdb_query (const gchar   *name,
+                const gchar   *blurb,
+                const gchar   *help,
+                const gchar   *author,
+                const gchar   *copyright,
+                const gchar   *date,
+                const gchar   *proc_type,
+                gint          *num_matches,
+                gchar       ***procedure_names)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_pdb_query (name,
+                          blurb, help,
+                          author, copyright, date,
+                          proc_type,
+                          num_matches, procedure_names);
+}
+
+/**
  * gimp_pdb_proc_exists:
  * @procedure_name: The procedure name.
  *
