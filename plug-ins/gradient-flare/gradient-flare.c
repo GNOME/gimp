@@ -3137,7 +3137,8 @@ dlg_selector_new_callback (GtkWidget *widget,
                                      _("Enter a name for the new GFlare"),
                                      _("Unnamed"),
                                      NULL, NULL,
-                                     dlg_selector_new_ok_callback, dlg);
+                                     dlg_selector_new_ok_callback,
+                                     dlg, NULL);
   gtk_widget_show (query_box);
 }
 
@@ -3216,7 +3217,8 @@ dlg_selector_copy_callback (GtkWidget *widget,
                                      _("Enter a name for the copied GFlare"),
                                      name,
                                      NULL, NULL,
-                                     dlg_selector_copy_ok_callback, dlg);
+                                     dlg_selector_copy_ok_callback,
+                                     dlg, NULL);
   g_free (name);
 
   gtk_widget_show (query_box);
@@ -3284,7 +3286,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
                                    _("_Delete"), _("_Cancel"),
                                    NULL, NULL,
                                    dlg_selector_do_delete_callback,
-                                   NULL);
+                                   NULL, NULL);
 
   g_free (str);
 

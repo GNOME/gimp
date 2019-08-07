@@ -589,7 +589,8 @@ gimp_settings_box_favorite_activate (GtkWidget       *widget,
                                   _("Enter a name for the preset"),
                                   _("Saved Settings"),
                                   G_OBJECT (toplevel), "hide",
-                                  gimp_settings_box_favorite_callback, box);
+                                  gimp_settings_box_favorite_callback,
+                                  box, NULL);
   gtk_widget_show (dialog);
 }
 

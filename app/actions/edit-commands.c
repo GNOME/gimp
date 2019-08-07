@@ -404,7 +404,8 @@ edit_named_cut_cmd_callback (GimpAction *action,
                                   _("Enter a name for this buffer"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
-                                  cut_named_buffer_callback, image);
+                                  cut_named_buffer_callback,
+                                  image, NULL);
   gtk_widget_show (dialog);
 }
 
@@ -425,7 +426,8 @@ edit_named_copy_cmd_callback (GimpAction *action,
                                   _("Enter a name for this buffer"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
-                                  copy_named_buffer_callback, image);
+                                  copy_named_buffer_callback,
+                                  image, NULL);
   gtk_widget_show (dialog);
 }
 
@@ -446,7 +448,8 @@ edit_named_copy_visible_cmd_callback (GimpAction *action,
                                   _("Enter a name for this buffer"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
-                                  copy_named_visible_buffer_callback, image);
+                                  copy_named_visible_buffer_callback,
+                                  image, NULL);
   gtk_widget_show (dialog);
 }
 

@@ -115,7 +115,8 @@ GtkWidget * gimp_query_string_box  (const gchar              *title,
                                     GObject                  *object,
                                     const gchar              *signal,
                                     GimpQueryStringCallback   callback,
-                                    gpointer                  data);
+                                    gpointer                  data,
+                                    GDestroyNotify            data_destroy);
 
 GtkWidget * gimp_query_int_box     (const gchar              *title,
                                     GtkWidget                *parent,
@@ -128,7 +129,8 @@ GtkWidget * gimp_query_int_box     (const gchar              *title,
                                     GObject                  *object,
                                     const gchar              *signal,
                                     GimpQueryIntCallback      callback,
-                                    gpointer                  data);
+                                    gpointer                  data,
+                                    GDestroyNotify            data_destroy);
 
 GtkWidget * gimp_query_double_box  (const gchar              *title,
                                     GtkWidget                *parent,
@@ -142,7 +144,8 @@ GtkWidget * gimp_query_double_box  (const gchar              *title,
                                     GObject                  *object,
                                     const gchar              *signal,
                                     GimpQueryDoubleCallback   callback,
-                                    gpointer                  data);
+                                    gpointer                  data,
+                                    GDestroyNotify            data_destroy);
 
 GtkWidget * gimp_query_size_box    (const gchar              *title,
                                     GtkWidget                *parent,
@@ -159,7 +162,8 @@ GtkWidget * gimp_query_size_box    (const gchar              *title,
                                     GObject                  *object,
                                     const gchar              *signal,
                                     GimpQuerySizeCallback     callback,
-                                    gpointer                  data);
+                                    gpointer                  data,
+                                    GDestroyNotify            data_destroy);
 
 GtkWidget * gimp_query_boolean_box (const gchar              *title,
                                     GtkWidget                *parent,
@@ -172,7 +176,8 @@ GtkWidget * gimp_query_boolean_box (const gchar              *title,
                                     GObject                  *object,
                                     const gchar              *signal,
                                     GimpQueryBooleanCallback  callback,
-                                    gpointer                  data);
+                                    gpointer                  data,
+                                    GDestroyNotify            data_destroy);
 
 
 G_END_DECLS

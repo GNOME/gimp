@@ -89,7 +89,8 @@ palettes_merge_cmd_callback (GimpAction *action,
                                       _("Enter a name for the merged palette"),
                                       NULL,
                                       G_OBJECT (editor), "destroy",
-                                      palettes_merge_callback, editor);
+                                      palettes_merge_callback,
+                                      editor, NULL);
 
       dialogs_attach_dialog (G_OBJECT (editor), MERGE_DIALOG_KEY, dialog);
     }

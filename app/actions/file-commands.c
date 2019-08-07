@@ -377,7 +377,8 @@ file_create_template_cmd_callback (GimpAction *action,
                                   _("Enter a name for this template"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
-                                  file_new_template_callback, image);
+                                  file_new_template_callback,
+                                  image, NULL);
   gtk_widget_show (dialog);
 }
 

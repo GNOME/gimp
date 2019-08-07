@@ -169,7 +169,8 @@ select_feather_cmd_callback (GimpAction *action,
                                     MIN (xres, yres),
                                     FALSE,
                                     G_OBJECT (image), "disconnect",
-                                    select_feather_callback, image);
+                                    select_feather_callback,
+                                    image, NULL);
 
       /* Edge lock button */
       button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
@@ -245,7 +246,8 @@ select_shrink_cmd_callback (GimpAction *action,
                                     MIN (xres, yres),
                                     FALSE,
                                     G_OBJECT (image), "disconnect",
-                                    select_shrink_callback, image);
+                                    select_shrink_callback,
+                                    image, NULL);
 
       /* Edge lock button */
       button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
@@ -308,7 +310,8 @@ select_grow_cmd_callback (GimpAction *action,
                                     MIN (xres, yres),
                                     FALSE,
                                     G_OBJECT (image), "disconnect",
-                                    select_grow_callback, image);
+                                    select_grow_callback,
+                                    image, NULL);
 
       dialogs_attach_dialog (G_OBJECT (image), GROW_DIALOG_KEY, dialog);
     }
@@ -360,7 +363,8 @@ select_border_cmd_callback (GimpAction *action,
                                     MIN (xres, yres),
                                     FALSE,
                                     G_OBJECT (image), "disconnect",
-                                    select_border_callback, image);
+                                    select_border_callback,
+                                    image, NULL);
 
       /* Border style combo */
       combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_BORDER_STYLE);

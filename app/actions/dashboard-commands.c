@@ -202,7 +202,7 @@ dashboard_log_add_marker_cmd_callback (GimpAction *action,
         NULL,
         G_OBJECT (dashboard), "destroy",
         (GimpQueryStringCallback) dashboard_log_add_marker_response,
-        dashboard);
+        dashboard, NULL);
 
       dialogs_attach_dialog (G_OBJECT (dashboard), LOG_ADD_MARKER_KEY, dialog);
 
