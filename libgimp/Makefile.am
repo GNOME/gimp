@@ -125,7 +125,12 @@ libgimp_private_sources = \
 	gimp-shm.c		\
 	gimp-shm.h		\
 	gimpprocedure-private.c	\
-	gimpprocedure-private.h
+	gimpprocedure-private.h	\
+	\
+	gimpunit_pdb.c		\
+	gimpunit_pdb.h		\
+	gimpplugin_pdb.c	\
+	gimpplugin_pdb.h
 
 libgimp_extra_sources = \
 	gimpenums.c.tail	\

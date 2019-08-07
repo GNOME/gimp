@@ -730,6 +730,10 @@ HEADER
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
 
+	if (exists $main::grp{$group}->{lib_private}) {
+	    print CFILE qq/#include "$hname"\n/;
+	}
+
 	if (exists $main::grp{$group}->{doc_title}) {
 	    $long_desc = &desc_wrap($main::grp{$group}->{doc_long_desc});
 	    print CFILE <<SECTION_DOCS;
@@ -775,7 +779,9 @@ HEADER
 		$hname = "gimp${hname}";
 	    }
 	    $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
-	    push @groups, $hname;
+	    if (! exists $main::grp{$group}->{lib_private}) {
+		push @groups, $hname;
+	    }
 	}
 	foreach $group (sort @groups) {
 	    print PFILE "#include <libgimp/$group>\n";

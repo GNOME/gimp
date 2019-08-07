@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "gimp.h"
+#include "gimpplugin_pdb.h"
 
 /**
  * _gimp_plugin_domain_register:

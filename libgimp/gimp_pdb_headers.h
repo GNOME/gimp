@@ -71,12 +71,10 @@
 #include <libgimp/gimppatterns_pdb.h>
 #include <libgimp/gimppatternselect_pdb.h>
 #include <libgimp/gimppdb_pdb.h>
-#include <libgimp/gimpplugin_pdb.h>
 #include <libgimp/gimpprogress_pdb.h>
 #include <libgimp/gimpselection_pdb.h>
 #include <libgimp/gimptextlayer_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
-#include <libgimp/gimpunit_pdb.h>
 #include <libgimp/gimpvectors_pdb.h>
 
 #endif /* __GIMP_PDB_HEADERS_H__ */

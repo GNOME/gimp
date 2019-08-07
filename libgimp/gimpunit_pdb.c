@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "gimp.h"
+#include "gimpunit_pdb.h"
 
 /**
  * _gimp_unit_get_number_of_units:

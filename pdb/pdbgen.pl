@@ -72,6 +72,7 @@ $evalcode = <<'CODE';
 
     # These are attached to the group structure
     my @groupvars = qw($desc $doc_title $doc_short_desc $doc_long_desc
+                       $lib_private
                        @headers %extra);
 
     # Hook some variables into the top-level namespace

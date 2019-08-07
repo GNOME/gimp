@@ -28,6 +28,7 @@
 
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
+#include "gimpplugin_pdb.h"
 #include "gimpprocedure-private.h"
 
 

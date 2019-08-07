@@ -31,6 +31,7 @@
 #include "gimp-private.h"
 #include "gimpgpcompat.h"
 #include "gimpgpparams.h"
+#include "gimpplugin_pdb.h"
 #include "gimplegacy-private.h"
 
 

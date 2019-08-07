@@ -45,12 +45,10 @@ PDB_WRAPPERS_C = \
 	$(top_srcdir)/libgimp/gimppatterns_pdb.c		\
 	$(top_srcdir)/libgimp/gimppatternselect_pdb.c		\
 	$(top_srcdir)/libgimp/gimppdb_pdb.c			\
-	$(top_srcdir)/libgimp/gimpplugin_pdb.c			\
 	$(top_srcdir)/libgimp/gimpprogress_pdb.c		\
 	$(top_srcdir)/libgimp/gimpselection_pdb.c		\
 	$(top_srcdir)/libgimp/gimptextlayer_pdb.c		\
 	$(top_srcdir)/libgimp/gimptexttool_pdb.c		\
-	$(top_srcdir)/libgimp/gimpunit_pdb.c			\
 	$(top_srcdir)/libgimp/gimpvectors_pdb.c
 
 PDB_WRAPPERS_H = \
@@ -99,12 +97,10 @@ PDB_WRAPPERS_H = \
 	$(top_srcdir)/libgimp/gimppatterns_pdb.h		\
 	$(top_srcdir)/libgimp/gimppatternselect_pdb.h		\
 	$(top_srcdir)/libgimp/gimppdb_pdb.h			\
-	$(top_srcdir)/libgimp/gimpplugin_pdb.h			\
 	$(top_srcdir)/libgimp/gimpprogress_pdb.h		\
 	$(top_srcdir)/libgimp/gimpselection_pdb.h		\
 	$(top_srcdir)/libgimp/gimptextlayer_pdb.h		\
 	$(top_srcdir)/libgimp/gimptexttool_pdb.h		\
-	$(top_srcdir)/libgimp/gimpunit_pdb.h			\
 	$(top_srcdir)/libgimp/gimpvectors_pdb.h
 
 libgimp_introspectable = \

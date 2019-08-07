@@ -377,4 +377,6 @@ CODE
 
 $desc = 'Plug-in';
 
+$lib_private = 1;
+
 1;
