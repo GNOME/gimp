@@ -56,7 +56,6 @@ plug-ins/common/file-xmc.c
 plug-ins/common/file-xpm.c
 plug-ins/common/file-xwd.c
 plug-ins/common/film.c
-plug-ins/common/goat-exercise.c
 plug-ins/common/gradient-map.c
 plug-ins/common/grid.c
 plug-ins/common/guillotine.c
@@ -142,6 +141,7 @@ plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
+plug-ins/goat-exercises/goat-exercise.c
 [type: gettext/glade]plug-ins/ui/plug-in-file-gif.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-png.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-raw.ui
