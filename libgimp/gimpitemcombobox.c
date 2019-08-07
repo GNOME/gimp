@@ -370,7 +370,8 @@ gimp_item_combo_box_new (GType                  type,
   private->constraint = constraint;
   private->data       = data;
 
-  g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy, data);
+  if (data_destroy)
+    g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy, data);
 
   gimp_item_combo_box_populate (combo_box);
 
