@@ -48,6 +48,7 @@
  * @callback:      a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
+ * @callback_data_destroy: Destroy function for @callback_data.
  * @first_button:  returns the first button in the created group.
  *
  * Creates a new group of #GtkRadioButtons representing the enum
@@ -60,10 +61,11 @@
  * Since: 2.4
  **/
 GtkWidget *
-gimp_enum_radio_box_new (GType       enum_type,
-                         GCallback   callback,
-                         gpointer    callback_data,
-                         GtkWidget **first_button)
+gimp_enum_radio_box_new (GType            enum_type,
+                         GCallback        callback,
+                         gpointer         callback_data,
+                         GDestroyNotify   callback_data_destroy,
+                         GtkWidget      **first_button)
 {
   GEnumClass *enum_class;
   GtkWidget  *vbox;
@@ -76,6 +78,7 @@ gimp_enum_radio_box_new (GType       enum_type,
                                              enum_class->minimum,
                                              enum_class->maximum,
                                              callback, callback_data,
+                                             callback_data_destroy,
                                              first_button);
 
   g_type_class_unref (enum_class);
@@ -91,6 +94,7 @@ gimp_enum_radio_box_new (GType       enum_type,
  * @callback:      a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
+ * @callback_data_destroy: Destroy function for @callback_data.
  * @first_button:  returns the first button in the created group.
  *
  * Just like gimp_enum_radio_box_new(), this function creates a group
@@ -102,12 +106,13 @@ gimp_enum_radio_box_new (GType       enum_type,
  * Since: 2.4
  **/
 GtkWidget *
-gimp_enum_radio_box_new_with_range (GType       enum_type,
-                                    gint        minimum,
-                                    gint        maximum,
-                                    GCallback   callback,
-                                    gpointer    callback_data,
-                                    GtkWidget **first_button)
+gimp_enum_radio_box_new_with_range (GType            enum_type,
+                                    gint             minimum,
+                                    gint             maximum,
+                                    GCallback        callback,
+                                    gpointer         callback_data,
+                                    GDestroyNotify   callback_data_destroy,
+                                    GtkWidget      **first_button)
 {
   GtkWidget  *vbox;
   GtkWidget  *button;
@@ -122,6 +127,10 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
   g_object_weak_ref (G_OBJECT (vbox),
                      (GWeakNotify) g_type_class_unref, enum_class);
+
+  if (callback_data_destroy)
+    g_object_weak_ref (G_OBJECT (vbox),
+                       (GWeakNotify) callback_data_destroy, callback_data);
 
   if (first_button)
     *first_button = NULL;
@@ -164,6 +173,7 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
  * @callback:      a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
+ * @callback_data_destroy: Destroy function for @callback_data.
  * @first_button:  returns the first button in the created group.
  *
  * Calls gimp_enum_radio_box_new() and puts the resulting vbox into a
@@ -174,11 +184,12 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
  * Since: 2.4
  **/
 GtkWidget *
-gimp_enum_radio_frame_new (GType       enum_type,
-                           GtkWidget  *label_widget,
-                           GCallback   callback,
-                           gpointer    callback_data,
-                           GtkWidget **first_button)
+gimp_enum_radio_frame_new (GType            enum_type,
+                           GtkWidget       *label_widget,
+                           GCallback        callback,
+                           gpointer         callback_data,
+                           GDestroyNotify   callback_data_destroy,
+                           GtkWidget      **first_button)
 {
   GtkWidget *frame;
   GtkWidget *radio_box;
@@ -197,6 +208,7 @@ gimp_enum_radio_frame_new (GType       enum_type,
 
   radio_box = gimp_enum_radio_box_new (enum_type,
                                        callback, callback_data,
+                                       callback_data_destroy,
                                        first_button);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
@@ -213,6 +225,7 @@ gimp_enum_radio_frame_new (GType       enum_type,
  * @callback:      a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
+ * @callback_data_destroy: Destroy function for @callback_data.
  * @first_button:  returns the first button in the created group.
  *
  * Calls gimp_enum_radio_box_new_with_range() and puts the resulting
@@ -223,13 +236,14 @@ gimp_enum_radio_frame_new (GType       enum_type,
  * Since: 2.4
  **/
 GtkWidget *
-gimp_enum_radio_frame_new_with_range (GType       enum_type,
-                                      gint        minimum,
-                                      gint        maximum,
-                                      GtkWidget  *label_widget,
-                                      GCallback   callback,
-                                      gpointer    callback_data,
-                                      GtkWidget **first_button)
+gimp_enum_radio_frame_new_with_range (GType            enum_type,
+                                      gint             minimum,
+                                      gint             maximum,
+                                      GtkWidget       *label_widget,
+                                      GCallback        callback,
+                                      gpointer         callback_data,
+                                      GDestroyNotify   callback_data_destroy,
+                                      GtkWidget      **first_button)
 {
   GtkWidget *frame;
   GtkWidget *radio_box;
@@ -250,6 +264,7 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
                                                   minimum,
                                                   maximum,
                                                   callback, callback_data,
+                                                  callback_data_destroy,
                                                   first_button);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
@@ -265,6 +280,7 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
  * @callback:      a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
+ * @callback_data_destroy: Destroy function for @callback_data.
  * @first_button:  returns the first button in the created group.
  *
  * Creates a horizontal box of radio buttons with named icons. The
@@ -276,12 +292,13 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
  * Since: 2.10
  **/
 GtkWidget *
-gimp_enum_icon_box_new (GType         enum_type,
-                        const gchar  *icon_prefix,
-                        GtkIconSize   icon_size,
-                        GCallback     callback,
-                        gpointer      callback_data,
-                        GtkWidget   **first_button)
+gimp_enum_icon_box_new (GType            enum_type,
+                        const gchar     *icon_prefix,
+                        GtkIconSize      icon_size,
+                        GCallback        callback,
+                        gpointer         callback_data,
+                        GDestroyNotify   callback_data_destroy,
+                        GtkWidget      **first_button)
 {
   GEnumClass *enum_class;
   GtkWidget  *box;
@@ -295,6 +312,7 @@ gimp_enum_icon_box_new (GType         enum_type,
                                            enum_class->maximum,
                                            icon_prefix, icon_size,
                                            callback, callback_data,
+                                           callback_data_destroy,
                                            first_button);
 
   g_type_class_unref (enum_class);
@@ -312,6 +330,7 @@ gimp_enum_icon_box_new (GType         enum_type,
  * @callback:      a callback to connect to the "toggled" signal of each
  *                 #GtkRadioButton that is created.
  * @callback_data: data to pass to the @callback.
+ * @callback_data_destroy: Destroy function for @callback_data.
  * @first_button:  returns the first button in the created group.
  *
  * Just like gimp_enum_icon_box_new(), this function creates a group
@@ -323,14 +342,15 @@ gimp_enum_icon_box_new (GType         enum_type,
  * Since: 2.10
  **/
 GtkWidget *
-gimp_enum_icon_box_new_with_range (GType         enum_type,
-                                   gint          minimum,
-                                   gint          maximum,
-                                   const gchar  *icon_prefix,
-                                   GtkIconSize   icon_size,
-                                   GCallback     callback,
-                                   gpointer      callback_data,
-                                   GtkWidget   **first_button)
+gimp_enum_icon_box_new_with_range (GType            enum_type,
+                                   gint             minimum,
+                                   gint             maximum,
+                                   const gchar     *icon_prefix,
+                                   GtkIconSize      icon_size,
+                                   GCallback        callback,
+                                   gpointer         callback_data,
+                                   GDestroyNotify   callback_data_destroy,
+                                   GtkWidget      **first_button)
 {
   GtkWidget  *hbox;
   GtkWidget  *button;
@@ -348,6 +368,10 @@ gimp_enum_icon_box_new_with_range (GType         enum_type,
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   g_object_weak_ref (G_OBJECT (hbox),
                      (GWeakNotify) g_type_class_unref, enum_class);
+
+  if (callback_data_destroy)
+    g_object_weak_ref (G_OBJECT (hbox),
+                       (GWeakNotify) callback_data_destroy, callback_data);
 
   if (first_button)
     *first_button = NULL;

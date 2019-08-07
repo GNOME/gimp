@@ -651,7 +651,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                                   "gimp-curve-point",
                                   GTK_ICON_SIZE_MENU,
                                   G_CALLBACK (curves_point_type_callback),
-                                  tool,
+                                  tool, NULL,
                                   &tool->point_type);
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);

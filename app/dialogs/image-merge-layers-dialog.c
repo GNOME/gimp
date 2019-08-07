@@ -128,7 +128,7 @@ image_merge_layers_dialog_new (GimpImage               *image,
                                           GIMP_CLIP_TO_BOTTOM_LAYER,
                                           gtk_label_new (_("Final, Merged Layer should be:")),
                                           G_CALLBACK (gimp_radio_button_update),
-                                          &private->merge_type,
+                                          &private->merge_type, NULL,
                                           &button);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    private->merge_type);

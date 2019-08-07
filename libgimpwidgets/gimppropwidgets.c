@@ -842,7 +842,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
                                                     minimum, maximum,
                                                     gtk_label_new (title),
                                                     G_CALLBACK (gimp_prop_radio_button_callback),
-                                                    config,
+                                                    config, NULL,
                                                     &button);
     }
   else
@@ -850,7 +850,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
       frame = gimp_enum_radio_frame_new (param_spec->value_type,
                                          gtk_label_new (title),
                                          G_CALLBACK (gimp_prop_radio_button_callback),
-                                         config,
+                                         config, NULL,
                                          &button);
     }
 
@@ -913,14 +913,14 @@ gimp_prop_enum_radio_box_new (GObject     *config,
       vbox = gimp_enum_radio_box_new_with_range (param_spec->value_type,
                                                  minimum, maximum,
                                                  G_CALLBACK (gimp_prop_radio_button_callback),
-                                                 config,
+                                                 config, NULL,
                                                  &button);
     }
   else
     {
       vbox = gimp_enum_radio_box_new (param_spec->value_type,
                                       G_CALLBACK (gimp_prop_radio_button_callback),
-                                      config,
+                                      config, NULL,
                                       &button);
     }
 
@@ -1116,7 +1116,7 @@ gimp_prop_enum_icon_box_new (GObject     *config,
                                                icon_prefix,
                                                GTK_ICON_SIZE_MENU,
                                                G_CALLBACK (gimp_prop_radio_button_callback),
-                                               config,
+                                               config, NULL,
                                                &button);
     }
   else
@@ -1125,7 +1125,7 @@ gimp_prop_enum_icon_box_new (GObject     *config,
                                     icon_prefix,
                                     GTK_ICON_SIZE_MENU,
                                     G_CALLBACK (gimp_prop_radio_button_callback),
-                                    config,
+                                    config, NULL,
                                     &button);
     }
 

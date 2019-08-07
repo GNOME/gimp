@@ -136,7 +136,7 @@ layer_add_mask_dialog_new (GimpLayer           *layer,
     gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
                                gtk_label_new (_("Initialize Layer Mask to:")),
                                G_CALLBACK (gimp_radio_button_update),
-                               &private->add_mask_type,
+                               &private->add_mask_type, NULL,
                                &button);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    private->add_mask_type);

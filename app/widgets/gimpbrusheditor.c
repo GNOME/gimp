@@ -145,7 +145,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                 "gimp-shape",
                                 GTK_ICON_SIZE_MENU,
                                 G_CALLBACK (gimp_brush_editor_update_shape),
-                                editor,
+                                editor, NULL,
                                 &editor->shape_group);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);

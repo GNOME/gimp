@@ -177,7 +177,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
                                            GIMP_CONVERT_PALETTE_MONO),
                                           gtk_label_new (_("Colormap")),
                                           G_CALLBACK (convert_dialog_type_update),
-                                          private,
+                                          private, NULL,
                                           &button);
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),

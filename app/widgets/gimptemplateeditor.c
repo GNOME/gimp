@@ -248,7 +248,7 @@ gimp_template_editor_constructed (GObject *object)
   aspect_box = gimp_enum_icon_box_new (GIMP_TYPE_ASPECT_TYPE,
                                        "gimp", GTK_ICON_SIZE_MENU,
                                        G_CALLBACK (gimp_template_editor_aspect_callback),
-                                       editor,
+                                       editor, NULL,
                                        &private->aspect_button);
   gtk_widget_hide (private->aspect_button); /* hide "square" */
 

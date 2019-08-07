@@ -194,7 +194,7 @@ item_options_dialog_new (GimpImage               *image,
 
       radio_box = gimp_enum_radio_box_new (GIMP_TYPE_COLOR_TAG,
                                            G_CALLBACK (gimp_radio_button_update),
-                                           &private->color_tag,
+                                           &private->color_tag, NULL,
                                            &radio);
       gtk_widget_set_name (radio_box, "gimp-color-tag-box");
       gtk_orientable_set_orientation (GTK_ORIENTABLE (radio_box),
