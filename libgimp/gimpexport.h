@@ -38,8 +38,8 @@ G_BEGIN_DECLS
  * @GIMP_EXPORT_CAN_HANDLE_INDEXED:             Handles indexed images
  * @GIMP_EXPORT_CAN_HANDLE_BITMAP:              Handles two-color indexed images
  * @GIMP_EXPORT_CAN_HANDLE_ALPHA:               Handles alpha channels
- * @GIMP_EXPORT_CAN_HANDLE_LAYERS:              Hanldes layers
- * @GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION: Handles aminations of layers
+ * @GIMP_EXPORT_CAN_HANDLE_LAYERS:              Handles layers
+ * @GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION: Handles animation of layers
  * @GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS:         Handles layer masks
  * @GIMP_EXPORT_NEEDS_ALPHA:                    Needs alpha channels
  *
