@@ -411,7 +411,7 @@ typedef enum
  * @GIMP_FOREGROUND_EXTRACT_SIOX:    Siox
  * @GIMP_FOREGROUND_EXTRACT_MATTING: Matting (Since 2.10)
  *
- * Foreground extraxt engines.
+ * Foreground extract engines.
  **/
 #define GIMP_TYPE_FOREGROUND_EXTRACT_MODE (gimp_foreground_extract_mode_get_type ())
 
