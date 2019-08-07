@@ -1173,7 +1173,7 @@ flame_dialog (void)
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    combo = gimp_drawable_combo_box_new (cmap_constrain, NULL);
+    combo = gimp_drawable_combo_box_new (cmap_constrain, NULL, NULL);
 
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 

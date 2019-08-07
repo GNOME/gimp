@@ -53,23 +53,24 @@ typedef gboolean (* GimpItemConstraintFunc) (gint32   image_id,
                                              gint32   item_id,
                                              gpointer data);
 
-typedef GimpItemConstraintFunc GimpVectorsConstraintFunc;
-typedef GimpItemConstraintFunc GimpDrawableConstraintFunc;
-
 
 GType       gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;
 GType       gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
 GType       gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
 GType       gimp_vectors_combo_box_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
-                                         gpointer                   data);
-GtkWidget * gimp_channel_combo_box_new  (GimpDrawableConstraintFunc constraint,
-                                         gpointer                   data);
-GtkWidget * gimp_layer_combo_box_new    (GimpDrawableConstraintFunc constraint,
-                                         gpointer                   data);
-GtkWidget * gimp_vectors_combo_box_new  (GimpVectorsConstraintFunc  constraint,
-                                         gpointer                   data);
+GtkWidget * gimp_drawable_combo_box_new (GimpItemConstraintFunc constraint,
+                                         gpointer               data,
+                                         GDestroyNotify         data_destroy);
+GtkWidget * gimp_channel_combo_box_new  (GimpItemConstraintFunc constraint,
+                                         gpointer               data,
+                                         GDestroyNotify         data_destroy);
+GtkWidget * gimp_layer_combo_box_new    (GimpItemConstraintFunc constraint,
+                                         gpointer               data,
+                                         GDestroyNotify         data_destroy);
+GtkWidget * gimp_vectors_combo_box_new  (GimpItemConstraintFunc constraint,
+                                         gpointer               data,
+                                         GDestroyNotify         data_destroy);
 
 
 G_END_DECLS

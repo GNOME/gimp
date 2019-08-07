@@ -56,6 +56,7 @@ struct _GimpImageComboBox
 
   GimpImageConstraintFunc  constraint;
   gpointer                 data;
+  GDestroyNotify           data_destroy;
 };
 
 struct _GimpImageComboBoxClass
@@ -63,6 +64,8 @@ struct _GimpImageComboBoxClass
   GimpIntComboBoxClass  parent_class;
 };
 
+
+static void  gimp_image_combo_box_finalize  (GObject                 *object);
 
 static void  gimp_image_combo_box_populate  (GimpImageComboBox       *combo_box);
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
@@ -85,13 +88,19 @@ static void  gimp_image_combo_box_changed   (GimpImageComboBox *combo_box);
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
 
 
-G_DEFINE_TYPE (GimpImageComboBox, gimp_image_combo_box, GIMP_TYPE_INT_COMBO_BOX)
+G_DEFINE_TYPE (GimpImageComboBox, gimp_image_combo_box,
+               GIMP_TYPE_INT_COMBO_BOX)
+
+#define parent_class gimp_image_combo_box_parent_class
 
 
 static void
 gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize           = gimp_image_combo_box_finalize;
 
   widget_class->drag_data_received = gimp_image_combo_box_drag_data_received;
 }
@@ -107,10 +116,22 @@ gimp_image_combo_box_init (GimpImageComboBox *combo_box)
                      GDK_ACTION_COPY);
 }
 
+static void
+gimp_image_combo_box_finalize (GObject *object)
+{
+  GimpImageComboBox *combo = GIMP_IMAGE_COMBO_BOX (object);
+
+  if (combo->data_destroy)
+    combo->data_destroy (combo->data);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 /**
  * gimp_image_combo_box_new:
- * @constraint: a #GimpImageConstraintFunc or %NULL
- * @data:       a pointer that is passed to @constraint
+ * @constraint:   a #GimpImageConstraintFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data.
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * images. If a @constraint function is specified, it is called for
@@ -128,7 +149,8 @@ gimp_image_combo_box_init (GimpImageComboBox *combo_box)
  **/
 GtkWidget *
 gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
-                          gpointer                data)
+                          gpointer                data,
+                          GDestroyNotify          data_destroy)
 {
   GimpImageComboBox *combo_box;
 
@@ -137,8 +159,9 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
                             "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
 
-  combo_box->constraint = constraint;
-  combo_box->data       = data;
+  combo_box->constraint   = constraint;
+  combo_box->data         = data;
+  combo_box->data_destroy = data_destroy;
 
   gimp_image_combo_box_populate (combo_box);
 

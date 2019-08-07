@@ -839,7 +839,7 @@ create_bump_page (void)
                           grid,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL);
+  combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &mapvals.bumpmap_id);
@@ -932,7 +932,7 @@ create_environment_page (void)
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  combo = gimp_drawable_combo_box_new (envmap_constrain, NULL);
+  combo = gimp_drawable_combo_box_new (envmap_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,
                               G_CALLBACK (envmap_combo_callback),
                               NULL);

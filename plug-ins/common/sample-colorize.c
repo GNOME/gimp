@@ -1356,7 +1356,7 @@ smp_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), label, 0, ty, 1, 1);
   gtk_widget_show (label);
 
-  combo = gimp_layer_combo_box_new (smp_constrain, NULL);
+  combo = gimp_layer_combo_box_new (smp_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), g_values.dst_id,
                               G_CALLBACK (smp_dest_combo_callback),
                               NULL);
@@ -1370,7 +1370,7 @@ smp_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), label, 3, ty, 1, 1);
   gtk_widget_show (label);
 
-  combo = gimp_layer_combo_box_new (smp_constrain, NULL);
+  combo = gimp_layer_combo_box_new (smp_constrain, NULL, NULL);
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
                               GIMP_INT_STORE_VALUE,     SMP_INV_GRADIENT,

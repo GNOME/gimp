@@ -972,7 +972,7 @@ gui_multi (void)
 
   h_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
 
-  img_combo = gimp_image_combo_box_new (NULL, NULL);
+  img_combo = gimp_image_combo_box_new (NULL, NULL, NULL);
   gtk_box_pack_start (GTK_BOX (h_box), img_combo, FALSE, FALSE, 0);
 
   add_image = gtk_button_new_with_label (_("Add this image"));

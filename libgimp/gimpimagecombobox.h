@@ -43,7 +43,8 @@ typedef gboolean (* GimpImageConstraintFunc) (gint32   image_id,
 GType       gimp_image_combo_box_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_combo_box_new (GimpImageConstraintFunc  constraint,
-                                      gpointer                 data);
+                                      gpointer                 data,
+                                      GDestroyNotify           data_destroy);
 
 
 G_END_DECLS

@@ -460,7 +460,8 @@ warp_dialog (gint32 drawable_id)
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       GINT_TO_POINTER (drawable_id));
+                                       GINT_TO_POINTER (drawable_id),
+                                       NULL);
   gtk_widget_set_margin_start (combo, 12);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.warp_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
@@ -608,7 +609,8 @@ warp_dialog (gint32 drawable_id)
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       GINT_TO_POINTER (drawable_id));
+                                       GINT_TO_POINTER (drawable_id),
+                                       NULL);
   gtk_widget_set_margin_start (combo, 12);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.mag_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
@@ -666,7 +668,8 @@ warp_dialog (gint32 drawable_id)
   /* ---------  Gradient map menu ----------------  */
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       GINT_TO_POINTER (drawable_id));
+                                       GINT_TO_POINTER (drawable_id),
+                                       NULL);
   gtk_widget_set_margin_start (combo, 12);
   gtk_grid_attach (GTK_GRID (grid), combo, 2, 0, 1, 1);
                     // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -711,7 +714,8 @@ warp_dialog (gint32 drawable_id)
 
   /* ---------  Vector map menu ----------------  */
   combo = gimp_drawable_combo_box_new (warp_map_constrain,
-                                       GINT_TO_POINTER (drawable_id));
+                                       GINT_TO_POINTER (drawable_id),
+                                       NULL);
   gtk_widget_set_margin_start (combo, 12);
   gtk_grid_attach (GTK_GRID (grid), combo, 2, 1, 1, 1);
                    // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);

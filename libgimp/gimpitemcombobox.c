@@ -110,7 +110,8 @@ struct _GimpVectorsComboBoxClass
 
 static GtkWidget * gimp_item_combo_box_new (GType                       type,
                                             GimpItemConstraintFunc      constraint,
-                                            gpointer                    data);
+                                            gpointer                    data,
+                                            GDestroyNotify              data_destroy);
 
 static void  gimp_item_combo_box_populate  (GimpIntComboBox            *combo_box);
 static void  gimp_item_combo_box_model_add (GimpIntComboBox            *combo_box,
@@ -167,8 +168,9 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
 
 /**
  * gimp_drawable_combo_box_new:
- * @constraint: a #GimpDrawableConstraintFunc or %NULL
- * @data:       a pointer that is passed to @constraint
+ * @constraint:   a #GimpItemConstraintFunc or %NULL
+ * @data  :       a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * drawables. If a @constraint function is specified, it is called for
@@ -185,11 +187,12 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
  * Since: 2.2
  **/
 GtkWidget *
-gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
-                             gpointer                   data)
+gimp_drawable_combo_box_new (GimpItemConstraintFunc constraint,
+                             gpointer               data,
+                             GDestroyNotify         data_destroy)
 {
   return gimp_item_combo_box_new (GIMP_TYPE_DRAWABLE_COMBO_BOX,
-                                  constraint, data);
+                                  constraint, data, data_destroy);
 }
 
 
@@ -221,8 +224,9 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
 
 /**
  * gimp_channel_combo_box_new:
- * @constraint: a #GimpDrawableConstraintFunc or %NULL
- * @data:       a pointer that is passed to @constraint
+ * @constraint:   a #GimpItemConstraintFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * channels. See gimp_drawable_combo_box_new() for more information.
@@ -232,11 +236,12 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
  * Since: 2.2
  **/
 GtkWidget *
-gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
-                            gpointer                   data)
+gimp_channel_combo_box_new (GimpItemConstraintFunc constraint,
+                            gpointer               data,
+                            GDestroyNotify         data_destroy)
 {
   return gimp_item_combo_box_new (GIMP_TYPE_CHANNEL_COMBO_BOX,
-                                  constraint, data);
+                                  constraint, data, data_destroy);
 }
 
 
@@ -268,8 +273,9 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
 
 /**
  * gimp_layer_combo_box_new:
- * @constraint: a #GimpDrawableConstraintFunc or %NULL
- * @data:       a pointer that is passed to @constraint
+ * @constraint:   a #GimpItemConstraintFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * layers. See gimp_drawable_combo_box_new() for more information.
@@ -279,11 +285,12 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
  * Since: 2.2
  **/
 GtkWidget *
-gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
-                          gpointer                   data)
+gimp_layer_combo_box_new (GimpItemConstraintFunc constraint,
+                          gpointer               data,
+                          GDestroyNotify         data_destroy)
 {
   return gimp_item_combo_box_new (GIMP_TYPE_LAYER_COMBO_BOX,
-                                  constraint, data);
+                                  constraint, data, data_destroy);
 }
 
 
@@ -316,8 +323,9 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
 
 /**
  * gimp_vectors_combo_box_new:
- * @constraint: a #GimpVectorsConstraintFunc or %NULL
- * @data:       a pointer that is passed to @constraint
+ * @constraint:   a #GimpItemConstraintFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
  * vectors objects. If a @constraint function is specified, it is called for
@@ -334,18 +342,20 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
  * Since: 2.4
  **/
 GtkWidget *
-gimp_vectors_combo_box_new (GimpVectorsConstraintFunc constraint,
-                            gpointer                  data)
+gimp_vectors_combo_box_new (GimpItemConstraintFunc constraint,
+                            gpointer               data,
+                            GDestroyNotify         data_destroy)
 {
   return gimp_item_combo_box_new (GIMP_TYPE_VECTORS_COMBO_BOX,
-                                  constraint, data);
+                                  constraint, data, data_destroy);
 }
 
 
 static GtkWidget *
 gimp_item_combo_box_new (GType                  type,
                          GimpItemConstraintFunc constraint,
-                         gpointer               data)
+                         gpointer               data,
+                         GDestroyNotify         data_destroy)
 {
   GimpIntComboBox         *combo_box;
   GimpItemComboBoxPrivate *private;
@@ -359,6 +369,8 @@ gimp_item_combo_box_new (GType                  type,
 
   private->constraint = constraint;
   private->data       = data;
+
+  g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy, data);
 
   gimp_item_combo_box_populate (combo_box);
 

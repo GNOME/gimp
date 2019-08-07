@@ -712,7 +712,7 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  combo = gimp_drawable_combo_box_new (effect_image_constrain, NULL);
+  combo = gimp_drawable_combo_box_new (effect_image_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               licvals.effect_image_id,
                               G_CALLBACK (gimp_int_combo_box_get_active),

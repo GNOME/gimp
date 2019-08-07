@@ -1094,7 +1094,7 @@ create_box_page (void)
     {
       GtkWidget *combo;
 
-      combo = gimp_drawable_combo_box_new (box_constrain, NULL);
+      combo = gimp_drawable_combo_box_new (box_constrain, NULL, NULL);
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   mapvals.boxmap_id[i],
                                   G_CALLBACK (gimp_int_combo_box_get_active),
@@ -1186,7 +1186,7 @@ create_cylinder_page (void)
       GtkWidget *combo;
       GtkWidget *label;
 
-      combo = gimp_drawable_combo_box_new (cylinder_constrain, NULL);
+      combo = gimp_drawable_combo_box_new (cylinder_constrain, NULL, NULL);
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   mapvals.cylindermap_id[i],
                                   G_CALLBACK (gimp_int_combo_box_get_active),

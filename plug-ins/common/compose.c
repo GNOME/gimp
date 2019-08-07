@@ -1191,7 +1191,7 @@ compose_dialog (const gchar *compose_type,
 
       composeint.selected[j].is_ID = TRUE;
 
-      combo = gimp_drawable_combo_box_new (check_gray, NULL);
+      combo = gimp_drawable_combo_box_new (check_gray, NULL, NULL);
       composeint.channel_menu[j] = combo;
 
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));

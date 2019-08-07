@@ -302,27 +302,27 @@ script_fu_interface (SFScript  *script,
           switch (arg->type)
             {
             case SF_IMAGE:
-              widget = gimp_image_combo_box_new (NULL, NULL);
+              widget = gimp_image_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_image;
               break;
 
             case SF_DRAWABLE:
-              widget = gimp_drawable_combo_box_new (NULL, NULL);
+              widget = gimp_drawable_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_drawable;
               break;
 
             case SF_LAYER:
-              widget = gimp_layer_combo_box_new (NULL, NULL);
+              widget = gimp_layer_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_layer;
               break;
 
             case SF_CHANNEL:
-              widget = gimp_channel_combo_box_new (NULL, NULL);
+              widget = gimp_channel_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_channel;
               break;
 
             case SF_VECTORS:
-              widget = gimp_vectors_combo_box_new (NULL, NULL);
+              widget = gimp_vectors_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_vectors;
               break;
 
