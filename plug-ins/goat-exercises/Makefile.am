@@ -52,6 +52,7 @@ goat_exercise_LDADD = \
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GEGL_LIBS)		\
+	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(goat_exercise_RC)
