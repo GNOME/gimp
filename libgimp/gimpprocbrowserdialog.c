@@ -234,7 +234,8 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
  * gimp_proc_browser_dialog_new:
  * @title:     The dialog's title.
  * @role:      The dialog's role, see gtk_window_set_role().
- * @help_func: The function which will be called if the user presses "F1".
+ * @help_func: (scope async): The function which will be called if
+ *             the user presses "F1".
  * @help_id:   The help_id which will be passed to @help_func.
  * @...:       A %NULL-terminated list destribing the action_area buttons.
  *
