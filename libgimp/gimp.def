@@ -637,11 +637,13 @@ EXPORTS
 	gimp_plug_in_create_procedure
 	gimp_plug_in_extension_enable
 	gimp_plug_in_extension_process
+	gimp_plug_in_get_pdb_error_handler
 	gimp_plug_in_get_temp_procedure
 	gimp_plug_in_get_temp_procedures
 	gimp_plug_in_get_type
 	gimp_plug_in_remove_temp_procedure
 	gimp_plug_in_set_help_domain
+	gimp_plug_in_set_pdb_error_handler
 	gimp_plug_in_set_translation_domain
 	gimp_plugin_domain_register
 	gimp_plugin_get_pdb_error_handler

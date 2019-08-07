@@ -602,6 +602,56 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 #endif
 }
 
+/**
+ * gimp_plugin_set_pdb_error_handler:
+ * @plug_in: A #GimpPlugIn
+ * @handler: Who is responsible for handling procedure call errors.
+ *
+ * Sets an error handler for procedure calls.
+ *
+ * This procedure changes the way that errors in procedure calls are
+ * handled. By default GIMP will raise an error dialog if a procedure
+ * call made by a plug-in fails. Using this procedure the plug-in can
+ * change this behavior. If the error handler is set to
+ * %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for
+ * calling gimp_get_pdb_error() and handling the error whenever one if
+ * its procedure calls fails. It can do this by displaying the error
+ * message or by forwarding it in its own return values.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_plug_in_set_pdb_error_handler (GimpPlugIn          *plug_in,
+                                    GimpPDBErrorHandler  handler)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  _gimp_plugin_set_pdb_error_handler (handler);
+}
+
+/**
+ * gimp_plugin_get_pdb_error_handler:
+ * @plug_in: A #GimpPlugIn
+ *
+ * Retrieves the active error handler for procedure calls.
+ *
+ * This procedure retrieves the currently active error handler for
+ * procedure calls made by the calling plug-in. See
+ * gimp_plugin_set_pdb_error_handler() for details.
+ *
+ * Returns: Who is responsible for handling procedure call errors.
+ *
+ * Since: 3.0
+ **/
+GimpPDBErrorHandler
+gimp_plug_in_get_pdb_error_handler (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
+                        GIMP_PDB_ERROR_HANDLER_INTERNAL);
+
+  return _gimp_plugin_get_pdb_error_handler ();
+}
+
 
 /*  private functions  */
 

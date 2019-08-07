@@ -159,6 +159,11 @@ void            gimp_plug_in_extension_enable       (GimpPlugIn    *plug_in);
 void            gimp_plug_in_extension_process      (GimpPlugIn    *plug_in,
                                                      guint          timeout);
 
+void            gimp_plug_in_set_pdb_error_handler  (GimpPlugIn    *plug_in,
+                                                     GimpPDBErrorHandler  handler);
+GimpPDBErrorHandler
+                gimp_plug_in_get_pdb_error_handler  (GimpPlugIn    *plug_in);
+
 
 G_END_DECLS
 

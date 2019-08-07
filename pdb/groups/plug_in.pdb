@@ -297,7 +297,7 @@ HELP
     &neo_pdb_misc('2008', '2.6');
 
     @inargs = (
-	{ name => 'handler', type => 'enum GimpPDBErrorHandler',
+	{ name => 'handler', type => 'enum GimpPDBErrorHandler', wrap => 1,
 	  desc => "Who is responsible for handling procedure call errors" }
     );
 
@@ -331,7 +331,7 @@ HELP
     &neo_pdb_misc('2008', '2.6');
 
     @outargs = (
-	{ name => 'handler', type => 'enum GimpPDBErrorHandler',
+	{ name => 'handler', type => 'enum GimpPDBErrorHandler', wrap => 1,
 	  desc => "Who is responsible for handling procedure call errors" }
     );
 

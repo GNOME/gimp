@@ -289,12 +289,16 @@ void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
 /* gimp_plugin API that should now be done by using GimpPlugIn
  */
 
-gboolean   gimp_plugin_domain_register      (const gchar  *domain_name,
-                                             const gchar  *domain_path);
-gboolean   gimp_plugin_help_register        (const gchar  *domain_name,
-                                             const gchar  *domain_uri);
-gboolean   gimp_plugin_menu_branch_register (const gchar  *menu_path,
-                                             const gchar  *menu_name);
+gboolean   gimp_plugin_domain_register       (const gchar         *domain_name,
+                                              const gchar         *domain_path);
+gboolean   gimp_plugin_help_register         (const gchar         *domain_name,
+                                              const gchar         *domain_uri);
+gboolean   gimp_plugin_menu_branch_register  (const gchar         *menu_path,
+                                              const gchar         *menu_name);
+gboolean   gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler  handler);
+GimpPDBErrorHandler
+           gimp_plugin_get_pdb_error_handler (void);
+
 
 /* gimp_plugin API that should now be done by using GimpProcedure
  */

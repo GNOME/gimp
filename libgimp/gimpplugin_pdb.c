@@ -264,7 +264,7 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
 }
 
 /**
- * gimp_plugin_set_pdb_error_handler:
+ * _gimp_plugin_set_pdb_error_handler:
  * @handler: Who is responsible for handling procedure call errors.
  *
  * Sets an error handler for procedure calls.
@@ -283,7 +283,7 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
  * Since: 2.6
  **/
 gboolean
-gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
+_gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -311,7 +311,7 @@ gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
 }
 
 /**
- * gimp_plugin_get_pdb_error_handler:
+ * _gimp_plugin_get_pdb_error_handler:
  *
  * Retrieves the active error handler for procedure calls.
  *
@@ -324,7 +324,7 @@ gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
  * Since: 2.6
  **/
 GimpPDBErrorHandler
-gimp_plugin_get_pdb_error_handler (void)
+_gimp_plugin_get_pdb_error_handler (void)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
