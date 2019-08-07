@@ -6,4 +6,5 @@
 /gimp.desktop
 /gimp-data-extras.metainfo.xml.in
 /gimp-data-extras.metainfo.xml
+/test-appdata.sh
 /.thumbnails
