@@ -625,6 +625,24 @@ gimp_param_value_array_values_cmp (GParamSpec   *pspec,
     }
 }
 
+/**
+ * gimp_param_spec_value_array:
+ * @name:         Canonical name of the property specified.
+ * @nick:         Nick name of the property specified.
+ * @blurb:        Description of the property specified.
+ * @element_spec: (nullable): #GParamSpec the contained array's elements
+ *                have comply to, or %NULL.
+ * @flags:        Flags for the property specified.
+ *
+ * Creates a new #GimpParamSpecValueArray specifying a
+ * #G_TYPE_VALUE_ARRAY property.
+ *
+ * See g_param_spec_internal() for details on property names.
+ *
+ * Returns: (transfer full): The newly created #GimpParamSpecValueArray.
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_param_spec_value_array (const gchar *name,
                              const gchar *nick,
