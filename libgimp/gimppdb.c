@@ -133,6 +133,21 @@ gimp_pdb_procedure_exists (GimpPDB     *pdb,
   return _gimp_pdb_proc_exists (procedure_name);
 }
 
+/**
+ * gimp_pdb_lookup_procedure:
+ * @pdb:            A #GimpPDB instance.
+ * @procedure_name: A procedure name
+ *
+ * This function returns the #GimpProcedure which is registered
+ * with @procedure_name if it exists, or returns %NULL otherwise.
+ *
+ * The returned #GimpProcedure is owned by @pdb and must not be
+ * modified.
+ *
+ * Return: (nullable) (transfer none): A #GimpProcedure, or %NULL.
+ *
+ * Since: 3.0
+ **/
 GimpProcedure *
 gimp_pdb_lookup_procedure (GimpPDB     *pdb,
                            const gchar *procedure_name)
@@ -156,6 +171,20 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
   return procedure;
 }
 
+/**
+ * gimp_pdb_run_procedure:
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the procedure registered name.
+ * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
+ * @...:            the call arguments.
+ *
+ * Runs the procedure named @procedure_name with arguments given as
+ * list of (#GType, value) pairs, terminated by #G_TYPE_NONE.
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
 GimpValueArray *
 gimp_pdb_run_procedure (GimpPDB     *pdb,
                         const gchar *procedure_name,
@@ -178,6 +207,20 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
   return return_values;
 }
 
+/**
+ * gimp_pdb_run_procedure_valist:
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the procedure registered name.
+ * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
+ * @args:           the call arguments.
+ *
+ * Runs the procedure named @procedure_name with @args given in the
+ * order as passed to gimp_pdb_run_procedure().
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
 GimpValueArray *
 gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
                                const gchar *procedure_name,
@@ -241,9 +284,11 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
  * @procedure_name: the procedure registered name.
  * @arguments:      the call arguments.
  *
- * Runs the procedure names @procedure_name with @arguments.
+ * Runs the procedure named @procedure_name with @arguments.
  *
- * Returns: (transfer full): the returned values for the procedure call.
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
  */
 GimpValueArray *
 gimp_pdb_run_procedure_array (GimpPDB              *pdb,
