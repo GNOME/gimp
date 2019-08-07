@@ -20,10 +20,9 @@
 
 #include "config.h"
 
-#define GIMP_DISABLE_DEPRECATION_WARNINGS
-
 #include "gimp.h"
 
+#include "gimppixbuf.h"
 #include "gimptilebackendplugin.h"
 
 
@@ -51,6 +50,48 @@ gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
   *height = ret_height;
 
   return image_data;
+}
+
+/**
+ * gimp_drawable_get_thumbnail:
+ * @drawable_ID: the drawable ID
+ * @width:       the requested thumbnail width  (<= 1024 pixels)
+ * @height:      the requested thumbnail height (<= 1024 pixels)
+ * @alpha:       how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the drawable identified by
+ * @drawable_ID. The thumbnail will be not larger than the requested
+ * size.
+ *
+ * Returns: (transfer full): a new #GdkPixbuf
+ *
+ * Since: 2.2
+ **/
+GdkPixbuf *
+gimp_drawable_get_thumbnail (gint32                  drawable_ID,
+                             gint                    width,
+                             gint                    height,
+                             GimpPixbufTransparency  alpha)
+{
+  gint    thumb_width  = width;
+  gint    thumb_height = height;
+  gint    thumb_bpp;
+  guchar *data;
+
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
+
+  data = gimp_drawable_get_thumbnail_data (drawable_ID,
+                                           &thumb_width,
+                                           &thumb_height,
+                                           &thumb_bpp);
+
+  if (data)
+    return _gimp_pixbuf_from_data (data,
+                                   thumb_width, thumb_height, thumb_bpp,
+                                   alpha);
+
+  return NULL;
 }
 
 guchar *
@@ -83,6 +124,62 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
   *dest_height = ret_height;
 
   return image_data;
+}
+
+/**
+ * gimp_drawable_get_sub_thumbnail:
+ * @drawable_ID: the drawable ID
+ * @src_x:       the x coordinate of the area
+ * @src_y:       the y coordinate of the area
+ * @src_width:   the width of the area
+ * @src_height:  the height of the area
+ * @dest_width:  the requested thumbnail width  (<= 1024 pixels)
+ * @dest_height: the requested thumbnail height (<= 1024 pixels)
+ * @alpha:       how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the drawable identified by
+ * @drawable_ID. The thumbnail will be not larger than the requested
+ * size.
+ *
+ * Returns: (transfer full): a new #GdkPixbuf
+ *
+ * Since: 2.2
+ **/
+GdkPixbuf *
+gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,
+                                 gint                    src_x,
+                                 gint                    src_y,
+                                 gint                    src_width,
+                                 gint                    src_height,
+                                 gint                    dest_width,
+                                 gint                    dest_height,
+                                 GimpPixbufTransparency  alpha)
+{
+  gint    thumb_width  = dest_width;
+  gint    thumb_height = dest_height;
+  gint    thumb_bpp;
+  guchar *data;
+
+  g_return_val_if_fail (src_x >= 0, NULL);
+  g_return_val_if_fail (src_y >= 0, NULL);
+  g_return_val_if_fail (src_width  > 0, NULL);
+  g_return_val_if_fail (src_height > 0, NULL);
+  g_return_val_if_fail (dest_width  > 0 && dest_width  <= 1024, NULL);
+  g_return_val_if_fail (dest_height > 0 && dest_height <= 1024, NULL);
+
+  data = gimp_drawable_get_sub_thumbnail_data (drawable_ID,
+                                               src_x, src_y,
+                                               src_width, src_height,
+                                               &thumb_width,
+                                               &thumb_height,
+                                               &thumb_bpp);
+
+  if (data)
+    return _gimp_pixbuf_from_data (data,
+                                   thumb_width, thumb_height, thumb_bpp,
+                                   alpha);
+
+  return NULL;
 }
 
 /**

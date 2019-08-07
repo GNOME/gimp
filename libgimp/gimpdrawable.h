@@ -30,24 +30,37 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GeglBuffer   * gimp_drawable_get_buffer             (gint32         drawable_ID);
-GeglBuffer   * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
+GeglBuffer * gimp_drawable_get_buffer             (gint32         drawable_ID);
+GeglBuffer * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
 
-const Babl   * gimp_drawable_get_format             (gint32         drawable_ID);
-const Babl   * gimp_drawable_get_thumbnail_format   (gint32         drawable_ID);
+const Babl * gimp_drawable_get_format             (gint32         drawable_ID);
+const Babl * gimp_drawable_get_thumbnail_format   (gint32         drawable_ID);
 
-guchar       * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
-                                                     gint          *width,
-                                                     gint          *height,
-                                                     gint          *bpp);
-guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
-                                                     gint           src_x,
-                                                     gint           src_y,
-                                                     gint           src_width,
-                                                     gint           src_height,
-                                                     gint          *dest_width,
-                                                     gint          *dest_height,
-                                                     gint          *bpp);
+guchar     * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
+                                                   gint          *width,
+                                                   gint          *height,
+                                                   gint          *bpp);
+GdkPixbuf  * gimp_drawable_get_thumbnail          (gint32         drawable_ID,
+                                                   gint           width,
+                                                   gint           height,
+                                                   GimpPixbufTransparency alpha);
+
+guchar     * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
+                                                   gint           src_x,
+                                                   gint           src_y,
+                                                   gint           src_width,
+                                                   gint           src_height,
+                                                   gint          *dest_width,
+                                                   gint          *dest_height,
+                                                   gint          *bpp);
+GdkPixbuf  * gimp_drawable_get_sub_thumbnail      (gint32         drawable_ID,
+                                                   gint           src_x,
+                                                   gint           src_y,
+                                                   gint           src_width,
+                                                   gint           src_height,
+                                                   gint           dest_width,
+                                                   gint           dest_height,
+                                                   GimpPixbufTransparency alpha);
 
 
 G_END_DECLS

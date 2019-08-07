@@ -21,7 +21,9 @@
 #include "config.h"
 
 #include "gimp.h"
-#include "gimpimage.h"
+
+#include "gimppixbuf.h"
+
 
 /**
  * gimp_image_get_colormap:
@@ -74,6 +76,22 @@ gimp_image_set_colormap (gint32        image_ID,
   return _gimp_image_set_colormap (image_ID, num_colors * 3, colormap);
 }
 
+/**
+ * gimp_image_get_thumbnail_data:
+ * @image_ID: The image.
+ * @width:    (inout): The requested thumbnail width.
+ * @height:   (inout): The requested thumbnail height.
+ * @bpp:      (out): The previews bpp.
+ *
+ * Get a thumbnail of an image.
+ *
+ * This function gets data from which a thumbnail of an image preview
+ * can be created. Maximum x or y dimension is 1024 pixels. The pixels
+ * are returned in RGB[A] or GRAY[A] format. The bpp return value
+ * gives the number of bytes per pixel in the image.
+ *
+ * Returns: (transfer full): the thumbnail data.
+ **/
 guchar *
 gimp_image_get_thumbnail_data (gint32  image_ID,
                                gint   *width,
@@ -98,6 +116,46 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
   *height = ret_height;
 
   return image_data;
+}
+
+/**
+ * gimp_image_get_thumbnail:
+ * @image_ID: the image ID
+ * @width:    the requested thumbnail width  (<= 1024 pixels)
+ * @height:   the requested thumbnail height (<= 1024 pixels)
+ * @alpha:    how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the image identified by @image_ID.
+ * The thumbnail will be not larger than the requested size.
+ *
+ * Returns: (transfer full): a new #GdkPixbuf
+ *
+ * Since: 2.2
+ **/
+GdkPixbuf *
+gimp_image_get_thumbnail (gint32                  image_ID,
+                          gint                    width,
+                          gint                    height,
+                          GimpPixbufTransparency  alpha)
+{
+  gint    thumb_width  = width;
+  gint    thumb_height = height;
+  gint    thumb_bpp;
+  guchar *data;
+
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
+
+  data = gimp_image_get_thumbnail_data (image_ID,
+                                        &thumb_width,
+                                        &thumb_height,
+                                        &thumb_bpp);
+  if (data)
+    return _gimp_pixbuf_from_data (data,
+                                   thumb_width, thumb_height, thumb_bpp,
+                                   alpha);
+  else
+    return NULL;
 }
 
 /**

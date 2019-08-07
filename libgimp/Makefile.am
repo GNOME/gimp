@@ -117,6 +117,8 @@ libgimp_private_sources = \
 	gimpdb-private.h	\
 	gimppdbprocedure.c	\
 	gimppdbprocedure.h	\
+	gimppixbuf.c		\
+	gimppixbuf.h		\
 	gimpplugin-private.c	\
 	gimpplugin-private.h	\
 	gimp-debug.c		\
@@ -189,7 +191,6 @@ gimpinclude_HEADERS = \
 	gimpitemcombobox.h		\
 	gimppaletteselectbutton.h	\
 	gimppatternselectbutton.h	\
-	gimppixbuf.h			\
 	gimpprocbrowserdialog.h		\
 	gimpprocview.h			\
 	gimpprogressbar.h		\

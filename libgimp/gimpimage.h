@@ -40,6 +40,10 @@ guchar       * gimp_image_get_thumbnail_data (gint32        image_ID,
                                               gint         *width,
                                               gint         *height,
                                               gint         *bpp);
+GdkPixbuf    * gimp_image_get_thumbnail      (gint32        image_ID,
+                                              gint          width,
+                                              gint          height,
+                                              GimpPixbufTransparency  alpha);
 
 GimpMetadata * gimp_image_get_metadata       (gint32        image_ID);
 gboolean       gimp_image_set_metadata       (gint32        image_ID,

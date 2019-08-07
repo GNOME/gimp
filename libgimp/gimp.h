@@ -49,7 +49,6 @@
 #include <libgimp/gimpparamspecs.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppdb.h>
-#include <libgimp/gimppixbuf.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpprocedure.h>
 #include <libgimp/gimpprogress.h>

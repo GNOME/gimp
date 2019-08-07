@@ -38,6 +38,25 @@ typedef union  _GimpParamData   GimpParamData;
 typedef struct _GimpParam       GimpParam;
 
 
+/* FIXME move somewhere else */
+
+/**
+ * GimpPixbufTransparency:
+ * @GIMP_PIXBUF_KEEP_ALPHA:   Create a pixbuf with alpha
+ * @GIMP_PIXBUF_SMALL_CHECKS: Show transparency as small checks
+ * @GIMP_PIXBUF_LARGE_CHECKS: Show transparency as large checks
+ *
+ * How to deal with transparency when creating thubnail pixbufs from
+ * images and drawables.
+ **/
+typedef enum
+{
+  GIMP_PIXBUF_KEEP_ALPHA,
+  GIMP_PIXBUF_SMALL_CHECKS,
+  GIMP_PIXBUF_LARGE_CHECKS
+} GimpPixbufTransparency;
+
+
 G_END_DECLS
 
 #endif /* __GIMP_TYPES_H__ */
