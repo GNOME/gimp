@@ -121,7 +121,7 @@ script_fu_query (void)
                           console_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-console",
-                             "<Image>/Filters/Languages/Script-Fu");
+                             "<Image>/Filters/Development/Script-Fu");
 
   gimp_install_procedure ("plug-in-script-fu-text-console",
                           "Provides a text console mode for script-fu "
@@ -155,7 +155,7 @@ script_fu_query (void)
                           server_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-server",
-                             "<Image>/Filters/Languages/Script-Fu");
+                             "<Image>/Filters/Development/Script-Fu");
 
   gimp_install_procedure ("plug-in-script-fu-eval",
                           "Evaluate scheme code",
@@ -306,9 +306,9 @@ script_fu_extension_init (void)
   gimp_plugin_menu_branch_register ("<Image>/Help", N_("_GIMP Online"));
   gimp_plugin_menu_branch_register ("<Image>/Help", N_("_User Manual"));
 
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Languages",
+  gimp_plugin_menu_branch_register ("<Image>/Filters/Development",
                                     N_("_Script-Fu"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Languages/Script-Fu",
+  gimp_plugin_menu_branch_register ("<Image>/Filters/Development/Script-Fu",
                                     N_("_Test"));
 
   gimp_plugin_menu_branch_register ("<Image>/File/Create",
@@ -344,7 +344,7 @@ script_fu_extension_init (void)
                           script_fu_refresh_proc);
 
   gimp_plugin_menu_register ("script-fu-refresh",
-                             "<Image>/Filters/Languages/Script-Fu");
+                             "<Image>/Filters/Development/Script-Fu");
 }
 
 static void

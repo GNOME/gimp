@@ -282,7 +282,7 @@ class PythonConsole (Gimp.PlugIn):
                                       "James Henstridge",
                                       "1997-1999")
             procedure.add_argument_from_property(self, "run-mode")
-            procedure.add_menu_path ("<Image>/Filters/Languages/Python-Fu")
+            procedure.add_menu_path ("<Image>/Filters/Development/Python-Fu")
 
             return procedure
         return None

@@ -827,7 +827,6 @@
       <separator />
       <placeholder name="Menus" />
       <separator />
-      <placeholder name="Languages" />
       <placeholder name="Extensions" />
       <separator />
     </menu>
