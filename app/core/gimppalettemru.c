@@ -187,9 +187,8 @@ void
 gimp_palette_mru_add (GimpPaletteMru *mru,
                       const GimpRGB  *color)
 {
-  GimpPalette      *palette;
-  GimpPaletteEntry *found = NULL;
-  GList            *list;
+  GimpPalette *palette;
+  GList       *list;
 
   g_return_if_fail (GIMP_IS_PALETTE_MRU (mru));
   g_return_if_fail (color != NULL);
@@ -205,50 +204,16 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
 
       if (gimp_rgba_distance (&entry->color, color) < RGBA_EPSILON)
         {
-          found = entry;
+          gimp_palette_move_entry (palette, entry, 0);
 
-          goto doit;
+          /*  Even though they are nearly the same color, let's make them
+           *  exactly equal.
+           */
+          gimp_palette_set_entry_color (palette, 0, color);
+
+          return;
         }
     }
 
-  /*  if not, are there two equal colors?  */
-  if (! found)
-    {
-      for (list = gimp_palette_get_colors (palette);
-           list;
-           list = g_list_next (list))
-        {
-          GimpPaletteEntry *entry = list->data;
-          GList            *list2;
-
-          for (list2 = g_list_next (list); list2; list2 = g_list_next (list2))
-            {
-              GimpPaletteEntry *entry2 = list2->data;
-
-              if (gimp_rgba_distance (&entry->color,
-                                      &entry2->color) < RGBA_EPSILON)
-                {
-                  found = entry2;
-
-                  goto doit;
-                }
-            }
-        }
-    }
-
- doit:
-
-  if (found)
-    {
-      gimp_palette_move_entry (palette, found, 0);
-      /* Even though they are nearly the same color, let's make them exactly
-      * equal. */
-      gimp_palette_set_entry_color (palette,
-                                    0,
-                                    color);
-    }
-  else
-    {
-      gimp_palette_add_entry (palette, 0, _("History Color"), color);
-    }
+  gimp_palette_add_entry (palette, 0, _("History Color"), color);
 }
