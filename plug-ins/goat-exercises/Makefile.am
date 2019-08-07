@@ -36,6 +36,7 @@ AM_CPPFLAGS = \
 goat_exercise_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise
 
 goat_exercise_libexec_PROGRAMS = goat-exercise
+goat_exercise_libexec_DATA = goat-exercise.c
 
 goat_exercise_SOURCES = \
 	goat-exercise.c
@@ -46,6 +47,8 @@ goat_exercise_LDADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(GEGL_LIBS)		\
