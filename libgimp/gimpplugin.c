@@ -91,18 +91,20 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
   object_class->get_property = gimp_plug_in_get_property;
 
   props[PROP_READ_CHANNEL] =
-    g_param_spec_pointer ("read-channel",
-                          "Read channel",
-                          "The GIOChanel to read from GIMP",
-                          GIMP_PARAM_READWRITE |
-                          G_PARAM_CONSTRUCT_ONLY);
+    g_param_spec_boxed ("read-channel",
+                        "Read channel",
+                        "The GIOChanel to read from GIMP",
+                        G_TYPE_IO_CHANNEL,
+                        GIMP_PARAM_READWRITE |
+                        G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_WRITE_CHANNEL] =
-    g_param_spec_pointer ("write-channel",
-                          "Write channel",
-                          "The GIOChanel to write to GIMP",
-                          GIMP_PARAM_READWRITE |
-                          G_PARAM_CONSTRUCT_ONLY);
+    g_param_spec_boxed ("write-channel",
+                        "Write channel",
+                        "The GIOChanel to write to GIMP",
+                        G_TYPE_IO_CHANNEL,
+                        GIMP_PARAM_READWRITE |
+                        G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
@@ -178,11 +180,11 @@ gimp_plug_in_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_READ_CHANNEL:
-      plug_in->priv->read_channel = g_value_get_pointer (value);
+      plug_in->priv->read_channel = g_value_get_boxed (value);
       break;
 
     case PROP_WRITE_CHANNEL:
-      plug_in->priv->write_channel = g_value_get_pointer (value);
+      plug_in->priv->write_channel = g_value_get_boxed (value);
       break;
 
     default:
@@ -202,11 +204,11 @@ gimp_plug_in_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_READ_CHANNEL:
-      g_value_set_pointer (value, plug_in->priv->read_channel);
+      g_value_set_boxed (value, plug_in->priv->read_channel);
       break;
 
     case PROP_WRITE_CHANNEL:
-      g_value_set_pointer (value, plug_in->priv->write_channel);
+      g_value_set_boxed (value, plug_in->priv->write_channel);
       break;
 
     default:
