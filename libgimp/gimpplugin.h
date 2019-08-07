@@ -144,16 +144,16 @@ void            gimp_plug_in_add_menu_branch        (GimpPlugIn    *plug_in,
                                                      const gchar   *menu_label);
 
 GimpProcedure * gimp_plug_in_create_procedure       (GimpPlugIn    *plug_in,
-                                                     const gchar   *name);
+                                                     const gchar   *procedure_name);
 
 void            gimp_plug_in_add_temp_procedure     (GimpPlugIn    *plug_in,
                                                      GimpProcedure *procedure);
 void            gimp_plug_in_remove_temp_procedure  (GimpPlugIn    *plug_in,
-                                                     const gchar   *name);
+                                                     const gchar   *procedure_name);
 
 GList         * gimp_plug_in_get_temp_procedures    (GimpPlugIn    *plug_in);
 GimpProcedure * gimp_plug_in_get_temp_procedure     (GimpPlugIn    *plug_in,
-                                                     const gchar   *name);
+                                                     const gchar   *procedure_name);
 
 void            gimp_plug_in_extension_enable       (GimpPlugIn    *plug_in);
 void            gimp_plug_in_extension_process      (GimpPlugIn    *plug_in,

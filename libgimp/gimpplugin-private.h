@@ -69,6 +69,7 @@ GIOChannel * _gimp_plug_in_get_write_channel (GimpPlugIn      *plug_in);
 void         _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
                                               GimpWireMessage *msg,
                                               gint             type);
+
 gboolean     _gimp_plug_in_extension_read    (GIOChannel      *channel,
                                               GIOCondition     condition,
                                               gpointer         data);

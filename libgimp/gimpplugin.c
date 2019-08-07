@@ -215,6 +215,7 @@ gimp_plug_in_get_property (GObject    *object,
     }
 }
 
+
 /*  public functions  */
 
 /**
@@ -326,8 +327,8 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
 
 /**
  * gimp_plug_in_create_procedure:
- * @plug_in: A #GimpPlugIn
- * @name:    A procedure name.
+ * @plug_in:        A #GimpPlugIn
+ * @procedure_name: A procedure name.
  *
  * This functiond creates a new procedure and is called when a plug-in
  * instance is started by GIMP when one of the %GIMP_PLUGIN or
@@ -341,14 +342,14 @@ gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
  **/
 GimpProcedure *
 gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
-                               const gchar *name)
+                               const gchar *procedure_name)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
     return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
-                                                               name);
+                                                               procedure_name);
 
   return NULL;
 }
@@ -385,39 +386,41 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
   g_return_if_fail (gimp_procedure_get_proc_type (procedure) ==
                     GIMP_TEMPORARY);
 
-  plug_in->priv->temp_procedures = g_list_prepend (plug_in->priv->temp_procedures,
-                                                   g_object_ref (procedure));
+  plug_in->priv->temp_procedures =
+    g_list_prepend (plug_in->priv->temp_procedures,
+                    g_object_ref (procedure));
 
   _gimp_procedure_register (procedure);
 }
 
 /**
  * gimp_plug_in_remove_temp_procedure:
- * @plug_in: A #GimpPlugIn
- * @name:    The name of a #GimpProcedure added to @plug_in.
+ * @plug_in:        A #GimpPlugIn
+ * @procedure_name: The name of a #GimpProcedure added to @plug_in.
  *
  * This function removes a temporary procedure from @plug_in by the
- * procedure's @name.
+ * procedure's @procedure_name.
  *
  * Since: 3.0
  **/
 void
 gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
-                                    const gchar *name)
+                                    const gchar *procedure_name)
 {
   GimpProcedure *procedure;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (name != NULL);
+  g_return_if_fail (procedure_name != NULL);
 
-  procedure = gimp_plug_in_get_temp_procedure (plug_in, name);
+  procedure = gimp_plug_in_get_temp_procedure (plug_in, procedure_name);
 
   if (procedure)
     {
       _gimp_procedure_unregister (procedure);
 
-      plug_in->priv->temp_procedures = g_list_remove (plug_in->priv->temp_procedures,
-                                                      procedure);
+      plug_in->priv->temp_procedures =
+        g_list_remove (plug_in->priv->temp_procedures,
+                       procedure);
       g_object_unref (procedure);
     }
 }
@@ -444,11 +447,11 @@ gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
 
 /**
  * gimp_plug_in_get_temp_procedure:
- * @plug_in: A #GimpPlugIn
- * @name:    The name of a #GimpProcedure added to @plug_in.
+ * @plug_in:        A #GimpPlugIn
+ * @procedure_name: The name of a #GimpProcedure added to @plug_in.
  *
  * This function retrieves a temporary procedure from @plug_in by the
- * procedure's @name.
+ * procedure's @procedure_name.
  *
  * Returns: (nullable) (transfer none): The procedure if registered, or %NULL.
  *
@@ -456,18 +459,18 @@ gimp_plug_in_get_temp_procedures (GimpPlugIn *plug_in)
  **/
 GimpProcedure *
 gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
-                                 const gchar *name)
+                                 const gchar *procedure_name)
 {
   GList *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (procedure_name != NULL, NULL);
 
   for (list = plug_in->priv->temp_procedures; list; list = g_list_next (list))
     {
       GimpProcedure *procedure = list->data;
 
-      if (! strcmp (name, gimp_procedure_get_name (procedure)))
+      if (! strcmp (procedure_name, gimp_procedure_get_name (procedure)))
         return procedure;
     }
 
@@ -609,10 +612,11 @@ gimp_plug_in_write (GIOChannel   *channel,
                     gpointer      user_data)
 {
   GimpPlugIn *plug_in = user_data;
-  gulong      bytes;
 
   while (count > 0)
     {
+      gulong bytes;
+
       if ((plug_in->priv->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
         {
           bytes = WRITE_BUFFER_SIZE - plug_in->priv->write_buffer_index;
@@ -643,17 +647,17 @@ gimp_plug_in_flush (GIOChannel *channel,
                     gpointer    user_data)
 {
   GimpPlugIn *plug_in = user_data;
-  GIOStatus   status;
-  GError     *error = NULL;
-  gsize       count;
-  gsize       bytes;
 
   if (plug_in->priv->write_buffer_index > 0)
     {
-      count = 0;
+      gsize count = 0;
 
       while (count != plug_in->priv->write_buffer_index)
         {
+          GIOStatus status;
+          gsize     bytes;
+          GError   *error = NULL;
+
           do
             {
               bytes = 0;
