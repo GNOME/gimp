@@ -2049,7 +2049,7 @@ gimp_number_of_transitions (GArray     *pixels,
  * gimp_line_art_allow_closure:
  * @mask: the current state of line art closure.
  * @pixels: the pixels of a candidate closure (spline or segment).
- * @fill_pixels: #GList of unsignificant pixels to bucket fill.
+ * @fill_pixels: #GList of insignificant pixels to bucket fill.
  * @significant_size: number of pixels for area to be considered
  *                    "significant".
  * @minimum_size: number of pixels for area to be allowed.
@@ -2059,7 +2059,7 @@ gimp_number_of_transitions (GArray     *pixels,
  * will be below @minimum_size. If it creates such small areas, the
  * function will refuse this candidate spline/segment, with the
  * exception of very small areas under @significant_size. These
- * micro-area are considered "unsignificant" and accepted (because they
+ * micro-area are considered "insignificant" and accepted (because they
  * can be created in some conditions, for instance when created curves
  * cross or start from a same endpoint), and one pixel for each
  * micro-area will be added to @fill_pixels to be later filled along
