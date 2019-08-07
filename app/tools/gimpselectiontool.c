@@ -66,7 +66,7 @@ static void       gimp_selection_tool_cursor_update (GimpTool           *tool,
 
 static void       gimp_selection_tool_commit        (GimpSelectionTool  *sel_tool);
 static void       gimp_selection_tool_halt          (GimpSelectionTool  *sel_tool,
-                                                     GimpDisplay        *dispaly);
+                                                     GimpDisplay        *display);
 
 static gboolean   gimp_selection_tool_check         (GimpSelectionTool  *sel_tool,
                                                      GimpDisplay        *display,
