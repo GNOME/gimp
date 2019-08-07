@@ -1167,7 +1167,7 @@ save_dialog (const gint32   image_ID,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (tmpwidget),
                               32,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &xmcvals.size);
+                              &xmcvals.size, NULL);
   gtk_widget_show (tmpwidget);
   /* tooltip */
   gimp_help_set_help_data (tmpwidget,

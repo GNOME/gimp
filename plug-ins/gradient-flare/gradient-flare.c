@@ -4036,7 +4036,7 @@ ed_mode_menu_new (GFlareMode *mode_var)
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), *mode_var,
                               G_CALLBACK (ed_mode_menu_callback),
-                              mode_var);
+                              mode_var, NULL);
 
   return combo;
 }

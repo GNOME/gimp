@@ -506,7 +506,7 @@ print_offset_frame (PrintData    *data,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               data->center,
                               G_CALLBACK (print_size_info_center_changed),
-                              NULL);
+                              NULL, NULL);
 
   info.center_combo = combo;
 

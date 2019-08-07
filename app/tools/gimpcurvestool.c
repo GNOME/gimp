@@ -672,7 +672,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                                        "gimp-curve");
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), 0,
                               G_CALLBACK (curves_curve_type_callback),
-                              tool);
+                              tool, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 

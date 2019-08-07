@@ -275,7 +275,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   priv->search_type,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &priv->search_type);
+                                  &priv->search_type, NULL);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gimp_browser_combo_changed),

@@ -1194,7 +1194,7 @@ save_dialog (void)
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   jsvals.subsmp,
                                   G_CALLBACK (subsampling_changed),
-                                  entry);
+                                  entry, NULL);
       g_signal_connect (pg.subsmp, "changed",
                         G_CALLBACK (subsampling_changed2),
                         pg.use_orig_quality);

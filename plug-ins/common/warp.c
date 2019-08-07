@@ -465,7 +465,7 @@ warp_dialog (gint32 drawable_id)
   gtk_widget_set_margin_start (combo, 12);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.warp_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dvals.warp_map);
+                              &dvals.warp_map, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 2, 1, 1, 1);
                     // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -614,7 +614,7 @@ warp_dialog (gint32 drawable_id)
   gtk_widget_set_margin_start (combo, 12);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.mag_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dvals.mag_map);
+                              &dvals.mag_map, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 2, 1, 1, 1);
                     // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -677,7 +677,7 @@ warp_dialog (gint32 drawable_id)
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.grad_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dvals.grad_map);
+                              &dvals.grad_map, NULL);
 
   gimp_help_set_help_data (combo, _("Gradient map selection menu"), NULL);
 
@@ -723,7 +723,7 @@ warp_dialog (gint32 drawable_id)
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.vector_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &dvals.vector_map);
+                              &dvals.vector_map, NULL);
 
   gimp_help_set_help_data (combo,
                            _("Fixed-direction-vector map selection menu"),

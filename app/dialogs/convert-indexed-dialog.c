@@ -261,7 +261,7 @@ convert_indexed_dialog_new (GimpImage                  *image,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->dither_type,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->dither_type);
+                              &private->dither_type, NULL);
 
   toggle =
     gtk_check_button_new_with_mnemonic (_("Enable dithering of _transparency"));

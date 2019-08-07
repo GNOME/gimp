@@ -572,10 +572,11 @@ gimp_int_combo_box_get_active_user_data (GimpIntComboBox *combo_box,
 
 /**
  * gimp_int_combo_box_connect:
- * @combo_box: a #GimpIntComboBox
- * @value:     the value to set
- * @callback:  a callback to connect to the @combo_box's "changed" signal
- * @data:      a pointer passed as data to g_signal_connect()
+ * @combo_box:    a #GimpIntComboBox
+ * @value:        the value to set
+ * @callback:     a callback to connect to the @combo_box's "changed" signal
+ * @data:         a pointer passed as data to g_signal_connect()
+ * @data_destroy: Destroy function for @data.
  *
  * A convenience function that sets the initial @value of a
  * #GimpIntComboBox and connects @callback to the "changed"
@@ -595,7 +596,8 @@ gulong
 gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
                             gint             value,
                             GCallback        callback,
-                            gpointer         data)
+                            gpointer         data,
+                            GDestroyNotify   data_destroy)
 {
   gulong handler = 0;
 
@@ -603,6 +605,10 @@ gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
 
   if (callback)
     handler = g_signal_connect (combo_box, "changed", callback, data);
+
+  if (data_destroy)
+    g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy,
+                       data);
 
   if (! gimp_int_combo_box_set_active (combo_box, value))
     g_signal_emit_by_name (combo_box, "changed", NULL);

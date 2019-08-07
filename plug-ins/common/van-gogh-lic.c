@@ -716,7 +716,7 @@ create_main_dialog (void)
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               licvals.effect_image_id,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &licvals.effect_image_id);
+                              &licvals.effect_image_id, NULL);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Effect image:"), 0.0, 0.5, combo, 2);

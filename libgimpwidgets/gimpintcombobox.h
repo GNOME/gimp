@@ -100,7 +100,8 @@ gboolean
 gulong        gimp_int_combo_box_connect         (GimpIntComboBox *combo_box,
                                                   gint             value,
                                                   GCallback        callback,
-                                                  gpointer         data);
+                                                  gpointer         data,
+                                                  GDestroyNotify   data_destroy);
 
 void          gimp_int_combo_box_set_label       (GimpIntComboBox *combo_box,
                                                   const gchar     *label);

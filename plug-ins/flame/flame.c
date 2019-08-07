@@ -1218,7 +1218,7 @@ flame_dialog (void)
     gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                 config.cmap_drawable,
                                 G_CALLBACK (cmap_callback),
-                                NULL);
+                                NULL, NULL);
 
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);

@@ -672,7 +672,7 @@ DepthMerge_dialog (DepthMerge *dm)
   combo = gimp_drawable_combo_box_new (dm_constraint, dm, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.source1,
                               G_CALLBACK (dialogSource1ChangedCallback),
-                              dm);
+                              dm, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 2, 1);
   gtk_widget_show (combo);
@@ -687,7 +687,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_set_margin_bottom (combo, 6);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap1,
                               G_CALLBACK (dialogDepthMap1ChangedCallback),
-                              dm);
+                              dm, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 1, 2, 1);
   gtk_widget_show (combo);
@@ -700,7 +700,7 @@ DepthMerge_dialog (DepthMerge *dm)
   combo = gimp_drawable_combo_box_new (dm_constraint, dm, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.source2,
                               G_CALLBACK (dialogSource2ChangedCallback),
-                              dm);
+                              dm, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 2, 2, 1);
   gtk_widget_show (combo);
@@ -715,7 +715,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_set_margin_bottom (combo, 6);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap2,
                               G_CALLBACK (dialogDepthMap2ChangedCallback),
-                              dm);
+                              dm, NULL);
 
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 3, 2, 1);
   gtk_widget_show (combo);

@@ -197,7 +197,7 @@ save_dialog (WebPSaveParams *params,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               params->preset,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &params->preset);
+                              &params->preset, NULL);
 
   if (animation_supported)
     {

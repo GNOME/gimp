@@ -239,7 +239,7 @@ convert_precision_dialog_new (GimpImage                    *image,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->layer_dither_method,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->layer_dither_method);
+                                  &private->layer_dither_method, NULL);
 
       /*  text layers  */
 
@@ -261,7 +261,7 @@ convert_precision_dialog_new (GimpImage                    *image,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->text_layer_dither_method,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->text_layer_dither_method);
+                                  &private->text_layer_dither_method, NULL);
 
       gimp_help_set_help_data (combo,
                                _("Dithering text layers will make them "
@@ -288,7 +288,7 @@ convert_precision_dialog_new (GimpImage                    *image,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->channel_dither_method,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->channel_dither_method);
+                                  &private->channel_dither_method, NULL);
 
       g_object_unref (size_group);
     }

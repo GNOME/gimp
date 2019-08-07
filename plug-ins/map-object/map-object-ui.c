@@ -1098,7 +1098,7 @@ create_box_page (void)
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   mapvals.boxmap_id[i],
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &mapvals.boxmap_id[i]);
+                                  &mapvals.boxmap_id[i], NULL);
 
       gimp_grid_attach_aligned (GTK_GRID (grid), 0, i,
                                 gettext (labels[i]), 0.0, 0.5,
@@ -1190,7 +1190,7 @@ create_cylinder_page (void)
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   mapvals.cylindermap_id[i],
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &mapvals.cylindermap_id[i]);
+                                  &mapvals.cylindermap_id[i], NULL);
 
       label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, i,
                                         gettext (labels[i]), 0.0, 0.5,

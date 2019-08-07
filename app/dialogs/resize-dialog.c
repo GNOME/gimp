@@ -335,7 +335,7 @@ resize_dialog_new (GimpViewable       *viewable,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->layer_set,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->layer_set);
+                                  &private->layer_set, NULL);
     }
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -350,7 +350,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->fill_type,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->fill_type);
+                              &private->fill_type, NULL);
 
   if (GIMP_IS_IMAGE (viewable))
     {

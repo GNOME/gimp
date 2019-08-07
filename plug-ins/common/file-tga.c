@@ -1452,7 +1452,7 @@ save_dialog (void)
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               tsvals.origin,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &tsvals.origin);
+                              &tsvals.origin, NULL);
 
   gtk_widget_show (dialog);
 

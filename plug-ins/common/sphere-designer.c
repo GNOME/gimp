@@ -2697,7 +2697,7 @@ makewindow (void)
                                      NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (typemenu), 0,
                               G_CALLBACK (selecttype),
-                              NULL);
+                              NULL, NULL);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Type:"), 0.0, 0.5,
@@ -2716,7 +2716,7 @@ makewindow (void)
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (texturemenu), 0,
                               G_CALLBACK (selecttexture),
-                              NULL);
+                              NULL, NULL);
 
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Texture:"), 0.0, 0.5,

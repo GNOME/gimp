@@ -298,7 +298,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->intent,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->intent);
+                                  &private->intent, NULL);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 

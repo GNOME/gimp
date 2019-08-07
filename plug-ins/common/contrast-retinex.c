@@ -322,7 +322,7 @@ retinex_dialog (gint32 drawable_ID)
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), rvals.scales_mode,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &rvals.scales_mode);
+                              &rvals.scales_mode, NULL);
   g_signal_connect_swapped (combo, "changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);

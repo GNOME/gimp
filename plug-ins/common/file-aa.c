@@ -399,7 +399,7 @@ aa_dialog (gint selected)
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), selected,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &selected);
+                              &selected, NULL);
 
   gtk_widget_show (dialog);
 

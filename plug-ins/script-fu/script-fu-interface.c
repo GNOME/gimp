@@ -332,7 +332,7 @@ script_fu_interface (SFScript  *script,
 
           gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (widget), *ID_ptr,
                                       G_CALLBACK (gimp_int_combo_box_get_active),
-                                      ID_ptr);
+                                      ID_ptr, NULL);
           break;
 
         case SF_COLOR:

@@ -1227,7 +1227,7 @@ compose_dialog (const gchar *compose_type,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   composeint.selected[j].comp.ID,
                                   G_CALLBACK (combo_callback),
-                                  GINT_TO_POINTER (j));
+                                  GINT_TO_POINTER (j), NULL);
     }
 
   g_free (layer_list);
@@ -1236,7 +1236,7 @@ compose_dialog (const gchar *compose_type,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               composeint.compose_idx,
                               G_CALLBACK (type_combo_callback),
-                              NULL);
+                              NULL, NULL);
 
   gtk_widget_show (dialog);
 

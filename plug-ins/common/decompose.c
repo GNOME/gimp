@@ -882,7 +882,7 @@ decompose_dialog (void)
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               extract_idx,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &extract_idx);
+                              &extract_idx, NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Decompose to layers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),

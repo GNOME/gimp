@@ -206,7 +206,7 @@ layer_options_dialog_new (GimpImage                *image,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->blend_space,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->blend_space);
+                              &private->blend_space, NULL);
 
   private->composite_space_combo = combo =
     gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (space_model));
@@ -216,7 +216,7 @@ layer_options_dialog_new (GimpImage                *image,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->composite_space,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->composite_space);
+                              &private->composite_space, NULL);
 
   g_object_unref (space_model);
 
@@ -228,7 +228,7 @@ layer_options_dialog_new (GimpImage                *image,
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               private->composite_mode,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->composite_mode);
+                              &private->composite_mode, NULL);
 
   /*  set the sensitivity of above 3 menus  */
   layer_options_dialog_update_mode_sensitivity (private);
@@ -379,7 +379,7 @@ layer_options_dialog_new (GimpImage                *image,
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->fill_type,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &private->fill_type);
+                                  &private->fill_type, NULL);
     }
 
   if (layer)

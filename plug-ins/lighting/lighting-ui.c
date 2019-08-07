@@ -842,7 +842,7 @@ create_bump_page (void)
   combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
                               G_CALLBACK (gimp_int_combo_box_get_active),
-                              &mapvals.bumpmap_id);
+                              &mapvals.bumpmap_id, NULL);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (mapmenu2_callback),
@@ -935,7 +935,7 @@ create_environment_page (void)
   combo = gimp_drawable_combo_box_new (envmap_constrain, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,
                               G_CALLBACK (envmap_combo_callback),
-                              NULL);
+                              NULL, NULL);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("En_vironment image:"), 0.0, 0.5,
                             combo, 1);

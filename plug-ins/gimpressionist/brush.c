@@ -600,7 +600,7 @@ create_brushpage (GtkNotebook *notebook)
   combo = gimp_drawable_combo_box_new (validdrawable, NULL, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), -1,
                               G_CALLBACK (brushdmenuselect),
-                              NULL);
+                              NULL, NULL);
 
   gtk_box_pack_start (GTK_BOX (box3), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
