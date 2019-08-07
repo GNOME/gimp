@@ -169,7 +169,7 @@ struct _GimpParam
             int   nCmdShow)                             \
    {                                                    \
      return gimp_main_legacy (&PLUG_IN_INFO,            \
-                              _argc, __argv);           \
+                              __argc, __argv);           \
    }                                                    \
                                                         \
    int                                                  \
