@@ -178,6 +178,8 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable from which to float selection' },
@@ -188,7 +190,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', wrap => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The floated layer' }
     );
 

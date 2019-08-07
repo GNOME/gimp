@@ -23,9 +23,11 @@ sub unit_get_number_of_units {
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
-	  desc => 'The number of units', wrap => 1 }
+	  desc => 'The number of units' }
     );
 
     %invoke = (
@@ -46,9 +48,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @outargs = (
 	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
-	  desc => 'The number of built-in units', wrap => 1 }
+	  desc => 'The number of built-in units' }
     );
 
     %invoke = (
@@ -71,8 +75,10 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'identifier', type => 'string', wrap => 1, non_empty => 1,
+	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => "The new unit's identifier" },
 	{ name => 'factor', type => 'float',
 	  desc => "The new unit's factor" },
@@ -91,7 +97,7 @@ HELP
     @outargs = (
 	{ name => 'unit_id', type => 'unit',
 	  desc => "The new unit's ID",
-	  wrap => 1, libdef => 'GIMP_UNIT_INCH' }
+	  libdef => 'GIMP_UNIT_INCH' }
     );
 
     %invoke = (
@@ -114,9 +120,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -144,9 +152,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 },
+	  desc => "The unit's integer ID" },
 	{ name => 'deletion_flag', type => 'boolean',
 	  desc => 'The new deletion flag of the unit' }
     );
@@ -171,9 +181,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -200,9 +212,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -230,9 +244,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -258,9 +274,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -286,9 +304,11 @@ HELP
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -311,9 +331,11 @@ sub unit_get_singular {
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (
@@ -336,9 +358,11 @@ sub unit_get_plural {
 
     &mitch_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'unit_id', type => 'unit',
-	  desc => "The unit's integer ID", wrap => 1 }
+	  desc => "The unit's integer ID" }
     );
 
     @outargs = (

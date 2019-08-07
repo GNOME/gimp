@@ -176,10 +176,11 @@ sub get_color_configuration {
 
     &neo_pdb_misc('2005', '2.4');
 
+    $lib_private = 1;
+
     @outargs = (
 	{  name => 'config', type => 'string',
-	   desc => 'Serialized color management configuration',
-	   wrap => 1 }
+	   desc => 'Serialized color management configuration' }
     );
 
     %invoke = (

@@ -86,9 +86,14 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
 	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
-	my $funcname = "gimp_$name"; my $wrapped = "";
+	my $funcname = "gimp_$name";
+	my $wrapped = "";
 	my %usednames;
 	my $retdesc = " * Returns:";
+
+	if ($proc->{lib_private}) {
+	    $wrapped = '_';
+	}
 
 	if ($proc->{deprecated}) {
 	    if ($proc->{deprecated} eq 'NONE') {
@@ -223,8 +228,6 @@ sub generate {
 	    # This is the list of g_value_set_foo
 	    $arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
 
-	    $wrapped = "_" if exists $_->{wrap};
-
 	    $usednames{$_->{name}}++;
 
 	    $arglist .= &libtype($_, 0);
@@ -278,8 +281,6 @@ sub generate {
 		my $var;
 
 		$return_marshal = "" unless $once++;
-
-		$wrapped = "_" if exists $_->{wrap};
 
 		$_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
 							      : $_->{name};

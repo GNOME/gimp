@@ -33,6 +33,8 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the channel' },
@@ -50,7 +52,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'channel', type => 'channel', wrap => 1,
+	{ name => 'channel', type => 'channel',
 	  desc => 'The newly created channel' }
     );
 

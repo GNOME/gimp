@@ -26,8 +26,10 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'message', type => 'string', null_ok => 1, wrap => 1,
+	{ name => 'message', type => 'string', null_ok => 1,
 	  desc => 'Message to use in the progress dialog' },
 	{ name => 'gdisplay', type => 'display', none_ok => 1,
 	  desc => 'GimpDisplay to update progressbar in, or -1 for a separate
@@ -61,8 +63,10 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'percentage', type => 'float', wrap => 1,
+	{ name => 'percentage', type => 'float',
 	  desc => 'Percentage of progress completed which must
                    be between 0.0 and 1.0' }
     );
@@ -217,10 +221,11 @@ HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'progress_callback', type => 'string', non_empty => 1,
-	  desc => 'The callback PDB proc to call',
-          wrap => 1 }
+	  desc => 'The callback PDB proc to call' }
     );
 
     %invoke = (
@@ -247,10 +252,11 @@ HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'progress_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this progress',
-          wrap => 1 }
+	  desc => 'The name of the callback registered for this progress' }
     );
 
     %invoke = (

@@ -26,8 +26,10 @@ HELP
 
     &andy_pdb_misc('1998');
 
+    $lib_private = 1;
+
     @outargs = (
-	{ name => 'temp_name', type => 'string', wrap => 1,
+	{ name => 'temp_name', type => 'string',
 	  desc => 'A unique temporary name for a temporary PDB entry' }
     );
 
@@ -146,13 +148,15 @@ HELP
 
     &neo_pdb_misc('2008', '2.6');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc  => 'The procedure name' }
     );
 
     @outargs = (
-	{ name => 'exists', type => 'boolean', wrap => 1,
+	{ name => 'exists', type => 'boolean',
 	  desc => 'Whether a procedure of that name is registered' }
     );
 
@@ -199,13 +203,15 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc  => 'The procedure name' }
     );
 
     @outargs = (
-	{ name => 'blurb', type => 'string', void_ret => 1, wrap => 1,
+	{ name => 'blurb', type => 'string', void_ret => 1,
 	  desc => 'A short blurb' },
 	{ name => 'help', type => 'string',
 	  desc => 'Detailed procedure help' },
@@ -376,8 +382,10 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1, wrap => 1,
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc => 'The procedure name' },
 	{ name => 'arg_num', type => 'int32',
 	  desc => 'The argument number' }
@@ -444,8 +452,10 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1, wrap => 1,
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc => 'The procedure name' },
 	{ name => 'val_num', type => 'int32',
 	  desc => 'The return value number' }
@@ -510,13 +520,15 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' }
     );
 
     @outargs = (
-	{ name  => 'data', type  => 'int8array', wrap => 1, void_ret => 1,
+	{ name  => 'data', type  => 'int8array', void_ret => 1,
 	  desc  => 'A byte array containing data',
 	  array => { name => 'bytes', type => '1 <= int32',
 		     desc => 'The number of bytes in the data' } }
@@ -553,8 +565,10 @@ HELP
 
     &nick_pdb_misc('1998');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'identifier', type => 'string', non_empty => 1, wrap => 1,
+	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' }
     );
 
@@ -589,11 +603,13 @@ HELP
     &std_pdb_misc;
     $date = '1997';
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' },
 	{ name  => 'data', type  => 'int8array',
-	  desc  => 'A byte array containing data', wrap => 1,
+	  desc  => 'A byte array containing data',
 	  array => { name => 'bytes', type => '1 <= int32',
 		     desc => 'The number of bytes in the data' } }
     );

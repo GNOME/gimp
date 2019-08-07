@@ -30,6 +30,8 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the layer' },
@@ -49,7 +51,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer', type => 'layer', wrap => 1,
+	{ name => 'layer', type => 'layer',
 	  desc => 'The newly created layer' }
     );
 
@@ -268,6 +270,8 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to copy' },
@@ -276,7 +280,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'layer_copy', type => 'layer', wrap => 1,
+	{ name => 'layer_copy', type => 'layer',
 	  desc => 'The newly copied layer' }
     );
 

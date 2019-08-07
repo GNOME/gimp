@@ -281,13 +281,15 @@ HELP
 
     &mitch_pdb_misc('2012', '2.10');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' }
     );
 
     @outargs = (
-	{ name => 'format', type => 'string', wrap => 1,
+	{ name => 'format', type => 'string',
 	  desc => "The drawable's Babl format" }
     );
 
@@ -316,13 +318,15 @@ HELP
 
     &mitch_pdb_misc('2019', '2.10.14');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' }
     );
 
     @outargs = (
-	{ name => 'format', type => 'string', wrap => 1,
+	{ name => 'format', type => 'string',
 	  desc => "The drawable's thumbnail Babl format" }
     );
 
@@ -737,6 +741,8 @@ HELP
 
     &andy_pdb_misc('1999');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -754,7 +760,7 @@ HELP
 	{ name => 'bpp', type => 'int32',
 	  desc => 'The previews bpp' },
         { name => 'thumbnail_data', type => 'int8array',
-	  desc => 'The thumbnail data', wrap => 1,
+	  desc => 'The thumbnail data',
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data' } }
     );
@@ -815,6 +821,8 @@ HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
@@ -840,7 +848,7 @@ HELP
 	{ name => 'bpp', type => 'int32',
 	  desc => 'The previews bpp' },
         { name => 'thumbnail_data', type => 'int8array',
-	  desc => 'The thumbnail data', wrap => 1,
+	  desc => 'The thumbnail data',
 	  array => { name => 'thumbnail_data_count',
 		     desc => 'The number of bytes in thumbnail data' } }
     );

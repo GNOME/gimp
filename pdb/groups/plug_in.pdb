@@ -22,13 +22,15 @@ sub plugins_query {
 
     &andy_pdb_misc('1998');
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name  => 'search_string', type => 'string', no_validate => 1,
 	  desc  => 'If not an empty string then use this as a search pattern' }
     );
 
     @outargs = (
-	{ name => 'menu_path', type => 'stringarray', wrap => 1,
+	{ name => 'menu_path', type => 'stringarray',
 	  desc => 'The menu path of the plug-in',
 	  array => { name => 'num_plugins',
 		     desc => 'The number of plug-ins' } },
@@ -87,8 +89,10 @@ HELP
 
     &neo_pdb_misc('2000');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'domain_name', type => 'string', wrap => 1,
+	{ name => 'domain_name', type => 'string',
 	  desc => 'The name of the textdomain (must be unique)' },
 	{ name => 'domain_path', type => 'string', no_validate => 1,
 	  desc => 'The absolute path to the compiled message catalog (may be
@@ -128,8 +132,10 @@ HELP
 
     &mitch_pdb_misc('2000');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'domain_name', type => 'string', wrap => 1,
+	{ name => 'domain_name', type => 'string',
 	  desc => "The XML namespace of the plug-in's help pages" },
 	{ name => 'domain_uri', type => 'string',
 	  desc => "The root URI of the plug-in's help pages" }
@@ -163,8 +169,10 @@ HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'procedure_name', type => 'string', wrap => 1, non_empty => 1,
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the menu path' },
 	{ name => 'menu_path', type => 'string',
 	  desc => "The procedure's additional menu path" }
@@ -201,8 +209,10 @@ HELP
 
     &mitch_pdb_misc('2005', '2.4');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'menu_path', type => 'string', wrap => 1,
+	{ name => 'menu_path', type => 'string',
 	  desc => "The sub-menu's menu path" },
 	{ name => 'menu_name', type => 'string',
 	  desc => 'The name of the sub-menu' }
@@ -236,8 +246,10 @@ HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'procedure_name', type => 'string', wrap => 1, non_empty => 1,
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the icon' },
         { name => 'icon_type', type => 'enum GimpIconType',
           desc => 'The type of the icon' },
@@ -296,8 +308,10 @@ HELP
 
     &neo_pdb_misc('2008', '2.6');
 
+    $lib_private = 1;
+
     @inargs = (
-	{ name => 'handler', type => 'enum GimpPDBErrorHandler', wrap => 1,
+	{ name => 'handler', type => 'enum GimpPDBErrorHandler',
 	  desc => "Who is responsible for handling procedure call errors" }
     );
 
@@ -330,8 +344,10 @@ HELP
 
     &neo_pdb_misc('2008', '2.6');
 
+    $lib_private = 1;
+
     @outargs = (
-	{ name => 'handler', type => 'enum GimpPDBErrorHandler', wrap => 1,
+	{ name => 'handler', type => 'enum GimpPDBErrorHandler',
 	  desc => "Who is responsible for handling procedure call errors" }
     );
 

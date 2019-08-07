@@ -26,13 +26,15 @@ HELP
 
     &mitch_pdb_misc('2015', '2.10');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' }
     );
 
     @outargs = (
-        { name => 'profile_data', type => 'int8array', wrap => 1,
+        { name => 'profile_data', type => 'int8array',
           desc => "The image's serialized color profile.",
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } }
@@ -72,13 +74,15 @@ HELP
 
     &mitch_pdb_misc('2015', '2.10');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' }
     );
 
     @outargs = (
-        { name => 'profile_data', type => 'int8array', wrap => 1,
+        { name => 'profile_data', type => 'int8array',
           desc => "The image's serialized color profile.",
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } }
@@ -119,10 +123,12 @@ HELP
 
     &mitch_pdb_misc('2015', '2.10');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'int8array', wrap => 1,
+        { name => 'color_profile', type => 'int8array',
           desc => 'The new serialized color profile',
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } }
@@ -222,10 +228,12 @@ HELP
 
     &mitch_pdb_misc('2015', '2.10');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'color_profile', type => 'int8array', wrap => 1,
+        { name => 'color_profile', type => 'int8array',
           desc => 'The serialized color profile',
           array => { name => 'num_bytes',
                      desc => 'Number of bytes in the color_profile array' } },
