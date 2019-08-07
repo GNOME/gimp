@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 
 /**
  * GimpWidgetsError:
- * @GIMP_WIDGETS_PARSE_ERROR: A parse error has occured
+ * @GIMP_WIDGETS_PARSE_ERROR: A parse error has occurred
  *
  * Types of errors returned by libgimpwidgets functions
  **/
