@@ -322,6 +322,7 @@ Gimp-@GIMP_API_VERSION@.gir: \
 # The various other GObject-Introspected libraries our API references
 # (i.e. types used in parameters or returned values).
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_INCLUDES = \
+	Babl-0.1	\
 	cairo-1.0	\
 	GdkPixbuf-2.0	\
 	Gegl-0.4	\
