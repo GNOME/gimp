@@ -393,7 +393,7 @@ gimp_pdb_dump_to_file (GimpPDB *pdb,
  * are found, then the returned string is NULL and the number of
  * entries is 0.
  *
- * Returns: (out) (array length=num_matches) (transfer full): The list
+ * Returns: (array length=num_matches) (transfer full): The list
  *          of procedure names. Free with g_strfreev().
  *
  * Since: 3.0
