@@ -112,7 +112,7 @@ G_BEGIN_DECLS
             int   nCmdShow)                             \
    {                                                    \
      return gimp_main (plug_in_type,                    \
-                       _argc, __argv);                  \
+                       __argc, __argv);                  \
    }                                                    \
                                                         \
    int                                                  \
