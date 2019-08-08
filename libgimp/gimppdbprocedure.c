@@ -25,34 +25,131 @@
 #include "gimppdbprocedure.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_PDB,
+  N_PROPS
+};
+
+
 struct _GimpPDBProcedurePrivate
 {
   GimpPDB *pdb;
 };
 
 
-static GimpValueArray * gimp_pdb_procedure_run (GimpProcedure        *procedure,
-                                                const GimpValueArray *args);
+static void       gimp_pdb_procedure_constructed   (GObject              *object);
+static void       gimp_pdb_procedure_finalize      (GObject              *object);
+static void       gimp_pdb_procedure_set_property  (GObject              *object,
+                                                    guint                 property_id,
+                                                    const GValue         *value,
+                                                    GParamSpec           *pspec);
+static void       gimp_pdb_procedure_get_property  (GObject              *object,
+                                                    guint                 property_id,
+                                                    GValue               *value,
+                                                    GParamSpec           *pspec);
+static GimpValueArray *
+                  gimp_pdb_procedure_run           (GimpProcedure        *procedure,
+                                                    const GimpValueArray *args);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPDBProcedure, _gimp_pdb_procedure,
                             GIMP_TYPE_PROCEDURE)
 
-#define parent_class gimp_pdb_procedure_parent_class
+#define parent_class _gimp_pdb_procedure_parent_class
+
+static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
 _gimp_pdb_procedure_class_init (GimpPDBProcedureClass *klass)
 {
+  GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
 
-  procedure_class->run = gimp_pdb_procedure_run;
+  object_class->constructed  = gimp_pdb_procedure_constructed;
+  object_class->finalize     = gimp_pdb_procedure_finalize;
+  object_class->set_property = gimp_pdb_procedure_set_property;
+  object_class->get_property = gimp_pdb_procedure_get_property;
+
+  procedure_class->run       = gimp_pdb_procedure_run;
+
+  props[PROP_PDB] =
+    g_param_spec_object ("pdb",
+                         "PDB",
+                         "The GimpPDB of this plug-in process",
+                         GIMP_TYPE_PDB,
+                         GIMP_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY);
+
+  g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
 _gimp_pdb_procedure_init (GimpPDBProcedure *procedure)
 {
   procedure->priv = _gimp_pdb_procedure_get_instance_private (procedure);
+}
+
+static void
+gimp_pdb_procedure_constructed (GObject *object)
+{
+  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_PDB (procedure->priv->pdb));
+}
+
+static void
+gimp_pdb_procedure_finalize (GObject *object)
+{
+  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+
+  g_clear_object (&procedure->priv->pdb);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_pdb_procedure_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+
+  switch (property_id)
+    {
+    case PROP_PDB:
+      g_set_object (&procedure->priv->pdb, g_value_get_object (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_pdb_procedure_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+
+  switch (property_id)
+    {
+    case PROP_PDB:
+      g_value_set_object (value, procedure->priv->pdb);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static GimpValueArray *
@@ -76,6 +173,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
   GimpProcedure   *procedure;
   gchar           *blurb;
   gchar           *help;
+  gchar           *help_id;
   gchar           *authors;
   gchar           *copyright;
   gchar           *date;
@@ -90,6 +188,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
   _gimp_pdb_proc_info (name,
                        &blurb,
                        &help,
+                       /* FIXME &help_id, */
                        &authors,
                        &copyright,
                        &date,
@@ -97,19 +196,21 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
                        &n_params,
                        &n_return_vals);
 
+  help_id = g_strdup (name); /* FIXME */
+
   procedure = g_object_new (GIMP_TYPE_PDB_PROCEDURE,
                             "plug-in",        _gimp_pdb_get_plug_in (pdb),
                             "name",           name,
                             "procedure-type", type,
+                            "pdb",            pdb,
                             NULL);
 
-  GIMP_PDB_PROCEDURE (procedure)->priv->pdb = pdb;
-
-  gimp_procedure_set_documentation (procedure, blurb, help, name);
+  gimp_procedure_set_documentation (procedure, blurb, help, help_id);
   gimp_procedure_set_attribution (procedure, authors, copyright, date);
 
   g_free (blurb);
   g_free (help);
+  g_free (help_id);
   g_free (authors);
   g_free (copyright);
   g_free (date);
