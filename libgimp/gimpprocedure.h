@@ -130,8 +130,20 @@ const gchar    * gimp_procedure_get_date           (GimpProcedure        *proced
 void             gimp_procedure_set_icon           (GimpProcedure        *procedure,
                                                     GimpIconType          icon_type,
                                                     const guint8         *icon_data);
+void             gimp_procedure_set_icon_name      (GimpProcedure        *procedure,
+                                                    const gchar          *icon_name);
+void             gimp_procedure_set_icon_file      (GimpProcedure        *procedure,
+                                                    const gchar          *icon_path);
+void             gimp_procedure_set_icon_inline    (GimpProcedure        *procedure,
+                                                    const guint8         *icon_data);
+
 GimpIconType     gimp_procedure_get_icon           (GimpProcedure        *procedure,
                                                     const guint8        **icon_data,
+                                                    gint                 *icon_data_length);
+GimpIconType     gimp_procedure_get_icon_type      (GimpProcedure        *procedure);
+const gchar    * gimp_procedure_get_icon_name      (GimpProcedure        *procedure);
+const gchar    * gimp_procedure_get_icon_file      (GimpProcedure        *procedure);
+const guint8   * gimp_procedure_get_icon_inline    (GimpProcedure        *procedure,
                                                     gint                 *icon_data_length);
 
 void             gimp_procedure_add_argument       (GimpProcedure        *procedure,
