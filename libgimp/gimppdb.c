@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <gobject/gvaluecollector.h>
-
 #include "gimp.h"
 
 #include "libgimpbase/gimpprotocol.h"
@@ -229,46 +227,26 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
 {
   GimpValueArray *arguments;
   GimpValueArray *return_values;
-  GType           type;
+  gchar          *error_msg = NULL;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
   g_return_val_if_fail (procedure_name != NULL, NULL);
 
-  arguments = gimp_value_array_new (0);
+  arguments = gimp_value_array_new_from_types_valist (&error_msg,
+                                                      first_type,
+                                                      args);
 
-  type = first_type;
-
-  while (type != G_TYPE_NONE)
+  if (! arguments)
     {
-      GValue  value     = G_VALUE_INIT;
-      gchar  *error_msg = NULL;
+      GError *error = g_error_new_literal (GIMP_PDB_ERROR,
+                                           GIMP_PDB_ERROR_INTERNAL_ERROR,
+                                           error_msg);
+      g_printerr ("%s: %s", G_STRFUNC, error_msg);
+      g_free (error_msg);
 
-      g_value_init (&value, type);
-
-      G_VALUE_COLLECT (&value, args, G_VALUE_NOCOPY_CONTENTS, &error_msg);
-
-      if (error_msg)
-        {
-          GError *error = g_error_new_literal (GIMP_PDB_ERROR,
-                                               GIMP_PDB_ERROR_INTERNAL_ERROR,
-                                               error_msg);
-          g_printerr ("%s: %s", G_STRFUNC, error_msg);
-          g_free (error_msg);
-
-          gimp_value_array_unref (arguments);
-
-          return_values = gimp_procedure_new_return_values (NULL,
-                                                            GIMP_PDB_CALLING_ERROR,
-                                                            error);
-          va_end (args);
-
-          return return_values;
-        }
-
-      gimp_value_array_append (arguments, &value);
-      g_value_unset (&value);
-
-      type = va_arg (args, GType);
+      return gimp_procedure_new_return_values (NULL,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               error);
     }
 
   return_values = gimp_pdb_run_procedure_array (pdb, procedure_name,
