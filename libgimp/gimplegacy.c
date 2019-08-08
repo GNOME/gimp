@@ -1159,7 +1159,7 @@ gimp_plugin_menu_register (const gchar *procedure_name,
  * gimp_plugin_icon_register:
  * @procedure_name: The procedure for which to install the icon.
  * @icon_type: The type of the icon.
- * @icon_data: (element-type guint8): The procedure's icon. The format depends on the 'icon_type' parameter.
+ * @icon_data: The procedure's icon. The format depends on @icon_type.
  *
  * Register an icon for a plug-in procedure.
  *
@@ -1170,11 +1170,13 @@ gimp_plugin_menu_register (const gchar *procedure_name,
  * Since: 2.2
  **/
 gboolean
-gimp_plugin_icon_register (const gchar  *procedure_name,
-                           GimpIconType  icon_type,
-                           const guint8 *icon_data)
+gimp_plugin_icon_register (const gchar   *procedure_name,
+                           GimpIconType   icon_type,
+                           gconstpointer  icon_data)
 {
-  gint icon_data_length;
+  guint8   *data;
+  gsize     data_length;
+  gboolean  success;
 
   g_return_val_if_fail (procedure_name != NULL, FALSE);
   g_return_val_if_fail (icon_data != NULL, FALSE);
@@ -1184,23 +1186,41 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
   switch (icon_type)
     {
     case GIMP_ICON_TYPE_ICON_NAME:
-    case GIMP_ICON_TYPE_IMAGE_FILE:
-      icon_data_length = strlen ((const gchar *) icon_data) + 1;
+      data        = (guint8 *) icon_data;
+      data_length = strlen (icon_data) + 1;
       break;
 
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
-      g_return_val_if_fail (g_ntohl (*((gint32 *) icon_data)) == 0x47646b50,
-                            FALSE);
+    case GIMP_ICON_TYPE_PIXBUF:
+      if (! gdk_pixbuf_save_to_buffer ((GdkPixbuf *) icon_data,
+                                       (gchar **) &data, &data_length,
+                                       "png", NULL, NULL))
+        return FALSE;
+      break;
 
-      icon_data_length = g_ntohl (*((gint32 *) (icon_data + 4)));
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      data        = (guint8 *) g_file_get_uri ((GFile *) icon_data);
+      data_length = strlen (icon_data) + 1;
       break;
 
     default:
       g_return_val_if_reached (FALSE);
     }
 
-  return _gimp_plugin_icon_register (procedure_name,
-                                     icon_type, icon_data_length, icon_data);
+  success = _gimp_plugin_icon_register (procedure_name,
+                                        icon_type, data_length, data);
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      g_free (data);
+      break;
+    }
+
+  return success;
 }
 
 /**

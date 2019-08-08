@@ -153,8 +153,9 @@ query (void)
                           args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Create/Acquire");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_INLINE_PIXBUF,
-                             screenshot_icon);
+  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_PIXBUF,
+                             gdk_pixbuf_new_from_inline (-1, screenshot_icon,
+                                                         FALSE, NULL));
 }
 
 static void

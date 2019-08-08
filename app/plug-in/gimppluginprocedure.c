@@ -200,7 +200,7 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
       memsize += gimp_string_get_memsize ((const gchar *) proc->icon_data);
       break;
 
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+    case GIMP_ICON_TYPE_PIXBUF:
       memsize += proc->icon_data_length;
       break;
     }
@@ -806,30 +806,11 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
                                  const guint8        *icon_data,
                                  gint                 icon_data_length)
 {
-  guint8 *data_copy = NULL;
-
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  switch (icon_type)
-    {
-    case GIMP_ICON_TYPE_ICON_NAME:
-      data_copy = (guint8 *) g_strdup ((gchar *) icon_data);
-      break;
-
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
-      data_copy = g_memdup (icon_data, icon_data_length);
-      break;
-
-    case GIMP_ICON_TYPE_IMAGE_FILE:
-      data_copy = (guint8 *) g_strdup ((gchar *) icon_data);
-      break;
-
-    default:
-      g_return_if_reached ();
-    }
-
   gimp_plug_in_procedure_take_icon (proc, icon_type,
-                                    data_copy, icon_data_length);
+                                    g_memdup (icon_data, icon_data_length),
+                                    icon_data_length);
 }
 
 void
@@ -855,6 +836,8 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
 
   switch (proc->icon_type)
     {
+      GdkPixbufLoader *loader;
+
     case GIMP_ICON_TYPE_ICON_NAME:
       proc->icon_data_length = -1;
       proc->icon_data        = icon_data;
@@ -862,12 +845,23 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
       icon_name = (const gchar *) proc->icon_data;
       break;
 
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+    case GIMP_ICON_TYPE_PIXBUF:
       proc->icon_data_length = icon_data_length;
       proc->icon_data        = icon_data;
 
-      icon_pixbuf = gdk_pixbuf_new_from_inline (proc->icon_data_length,
-                                                proc->icon_data, TRUE, &error);
+      loader = gdk_pixbuf_loader_new ();
+
+      gdk_pixbuf_loader_write (loader,
+                               proc->icon_data,
+                               proc->icon_data_length,
+                               NULL);
+      gdk_pixbuf_loader_close (loader, NULL);
+      icon_pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
+
+      if (icon_pixbuf)
+        g_object_ref (icon_pixbuf);
+
+      g_object_unref (loader);
       break;
 
     case GIMP_ICON_TYPE_IMAGE_FILE:
@@ -881,7 +875,7 @@ gimp_plug_in_procedure_take_icon (GimpPlugInProcedure *proc,
 
   if (! icon_pixbuf && error)
     {
-      g_printerr ("gimp_plug_in_procedure_take_icon: %s\n", error->message);
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
       g_clear_error (&error);
     }
 

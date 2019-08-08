@@ -303,11 +303,11 @@ GimpPDBErrorHandler
 /* gimp_plugin API that should now be done by using GimpProcedure
  */
 
-gboolean   gimp_plugin_menu_register        (const gchar  *procedure_name,
-                                             const gchar  *menu_path);
-gboolean   gimp_plugin_icon_register        (const gchar  *procedure_name,
-                                             GimpIconType  icon_type,
-                                             const guint8 *icon_data);
+gboolean   gimp_plugin_menu_register        (const gchar   *procedure_name,
+                                             const gchar   *menu_path);
+gboolean   gimp_plugin_icon_register        (const gchar   *procedure_name,
+                                             GimpIconType   icon_type,
+                                             gconstpointer  icon_data);
 
 /* pdb stuff that should now be done using GimpPDB
  */

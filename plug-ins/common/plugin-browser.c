@@ -167,8 +167,7 @@ browser_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, N_("_Plug-In Browser"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
 
-      gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME,
-                               (const guint8 *) GIMP_ICON_PLUGIN);
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_PLUGIN);
 
       gimp_procedure_set_documentation (procedure,
                                         N_("Display information about plug-ins"),

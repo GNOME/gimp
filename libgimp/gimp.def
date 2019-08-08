@@ -667,7 +667,10 @@ EXPORTS
 	gimp_procedure_get_date
 	gimp_procedure_get_help
 	gimp_procedure_get_help_id
-	gimp_procedure_get_icon
+	gimp_procedure_get_icon_file
+	gimp_procedure_get_icon_name
+	gimp_procedure_get_icon_pixbuf
+	gimp_procedure_get_icon_type
 	gimp_procedure_get_image_types
 	gimp_procedure_get_menu_label
 	gimp_procedure_get_menu_paths
@@ -682,7 +685,9 @@ EXPORTS
 	gimp_procedure_run
 	gimp_procedure_set_attribution
 	gimp_procedure_set_documentation
-	gimp_procedure_set_icon
+	gimp_procedure_set_icon_file
+	gimp_procedure_set_icon_name
+	gimp_procedure_set_icon_pixbuf
 	gimp_procedure_set_image_types
 	gimp_procedure_set_menu_label
 	gimp_progress_cancel

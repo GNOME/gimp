@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 7
+#define PLUG_IN_RC_FILE_VERSION 8
 
 
 /*
@@ -586,7 +586,7 @@ plug_in_icon_deserialize (GScanner            *scanner,
       icon_data = (guint8 *) icon_name;
       break;
 
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+    case GIMP_ICON_TYPE_PIXBUF:
       if (icon_data_length < 0)
         return G_TOKEN_STRING;
 
@@ -1204,7 +1204,7 @@ plug_in_rc_write (GSList  *plug_in_defs,
                   gimp_config_writer_string (writer, (gchar *) proc->icon_data);
                   break;
 
-                case GIMP_ICON_TYPE_INLINE_PIXBUF:
+                case GIMP_ICON_TYPE_PIXBUF:
                   gimp_config_writer_data (writer, proc->icon_data_length,
                                            proc->icon_data);
                   break;

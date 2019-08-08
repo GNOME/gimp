@@ -582,9 +582,9 @@ typedef enum
 
 /**
  * GimpIconType:
- * @GIMP_ICON_TYPE_ICON_NAME:     Icon name
- * @GIMP_ICON_TYPE_INLINE_PIXBUF: Inline pixbuf
- * @GIMP_ICON_TYPE_IMAGE_FILE:    Image file
+ * @GIMP_ICON_TYPE_ICON_NAME:  Icon name
+ * @GIMP_ICON_TYPE_PIXBUF:     Inline pixbuf
+ * @GIMP_ICON_TYPE_IMAGE_FILE: Image file
  *
  * Icon types for plug-ins to register.
  **/
@@ -594,9 +594,9 @@ GType gimp_icon_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ICON_TYPE_ICON_NAME,     /*< desc="Icon name"     >*/
-  GIMP_ICON_TYPE_INLINE_PIXBUF, /*< desc="Inline pixbuf" >*/
-  GIMP_ICON_TYPE_IMAGE_FILE     /*< desc="Image file"    >*/
+  GIMP_ICON_TYPE_ICON_NAME,  /*< desc="Icon name"  >*/
+  GIMP_ICON_TYPE_PIXBUF,     /*< desc="Pixbuf"     >*/
+  GIMP_ICON_TYPE_IMAGE_FILE  /*< desc="Image file" >*/
 } GimpIconType;
 
 

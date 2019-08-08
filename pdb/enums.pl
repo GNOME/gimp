@@ -284,11 +284,10 @@ package Gimp::CodeGen::enums;
     GimpIconType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_ICON_TYPE_ICON_NAME
-			  GIMP_ICON_TYPE_INLINE_PIXBUF
+	  symbols => [ qw(GIMP_ICON_TYPE_ICON_NAME GIMP_ICON_TYPE_PIXBUF
 			  GIMP_ICON_TYPE_IMAGE_FILE) ],
 	  mapping => { GIMP_ICON_TYPE_ICON_NAME => '0',
-		       GIMP_ICON_TYPE_INLINE_PIXBUF => '1',
+		       GIMP_ICON_TYPE_PIXBUF => '1',
 		       GIMP_ICON_TYPE_IMAGE_FILE => '2' }
 	},
     GimpImageBaseType =>

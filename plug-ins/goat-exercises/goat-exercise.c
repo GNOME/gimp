@@ -120,8 +120,7 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                       "Øyvind Kolås <pippin@gimp.org>",
                                       "21 march 2012");
 
-      gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME,
-                               (const guint8 *) GIMP_ICON_GEGL);
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
 
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_enum ("run-mode",

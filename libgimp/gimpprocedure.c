@@ -62,8 +62,7 @@ struct _GimpProcedurePrivate
   gchar            *date;
 
   GimpIconType      icon_type;
-  guint8           *icon_data;
-  gint              icon_data_length;
+  gpointer          icon_data;
 
   gint32            n_args;
   GParamSpec      **args;
@@ -98,6 +97,10 @@ static gboolean   gimp_procedure_validate_args (GimpProcedure        *procedure,
                                                 const GimpValueArray *args,
                                                 gboolean              return_vals,
                                                 GError              **error);
+
+static void       gimp_procedure_set_icon      (GimpProcedure        *procedure,
+                                                GimpIconType          icon_type,
+                                                gconstpointer         icon_data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedure, gimp_procedure, G_TYPE_OBJECT)
@@ -188,8 +191,7 @@ gimp_procedure_finalize (GObject *object)
   g_list_free_full (procedure->priv->menu_paths, g_free);
   procedure->priv->menu_paths = NULL;
 
-  g_clear_pointer (&procedure->priv->icon_data, g_free);
-  procedure->priv->icon_data_length = 0;
+  gimp_procedure_set_icon (procedure, GIMP_ICON_TYPE_ICON_NAME, NULL);
 
   if (procedure->priv->args)
     {
@@ -705,159 +707,78 @@ gimp_procedure_get_date (GimpProcedure *procedure)
 }
 
 /**
- * gimp_procedure_set_icon: (skip)
- * @procedure: a #GimpProcedure.
- * @icon_type: the #GimpIconType of @icon_data.
- * @icon_data: icon representation.
- *
- * Sets the icon for @procedure. @icon_data contents type depends on
- * @icon_type.
- *
- * This procedure is skipped from bindings, where you should use
- * specific gimp_procedure_set_icon_*() instead, such as
- * gimp_procedure_set_icon_name().
- */
-void
-gimp_procedure_set_icon (GimpProcedure *procedure,
-                         GimpIconType   icon_type,
-                         const guint8  *icon_data)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (icon_data != NULL);
-  g_return_if_fail (icon_data != procedure->priv->icon_data);
-
-  g_clear_pointer (&procedure->priv->icon_data, g_free);
-  procedure->priv->icon_data_length = 0;
-
-  procedure->priv->icon_type = icon_type;
-
-  switch (icon_type)
-    {
-    case GIMP_ICON_TYPE_ICON_NAME:
-    case GIMP_ICON_TYPE_IMAGE_FILE:
-      procedure->priv->icon_data =
-        (guint8 *) g_strdup ((const gchar *) icon_data);
-
-      procedure->priv->icon_data_length =
-        strlen ((const gchar *) icon_data);
-      break;
-
-    case GIMP_ICON_TYPE_INLINE_PIXBUF:
-      g_return_if_fail (g_ntohl (*((gint32 *) icon_data)) == 0x47646b50);
-
-      procedure->priv->icon_data_length =
-        g_ntohl (*((gint32 *) (icon_data + 4)));
-
-      procedure->priv->icon_data =
-        g_memdup (icon_data, procedure->priv->icon_data_length);
-      break;
-
-    default:
-      g_return_if_reached ();
-    }
-}
-
-/**
  * gimp_procedure_set_icon_name:
  * @procedure: a #GimpProcedure.
- * @icon_name: an icon name.
+ * @icon_name: (nullable): an icon name.
  *
- * Sets the icon for @procedure by its name.
+ * Sets the icon for @procedure to the icon referenced by @icon_name.
+ *
+ * Since: 3.0
  */
 void
 gimp_procedure_set_icon_name (GimpProcedure *procedure,
                               const gchar   *icon_name)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (icon_name != NULL);
 
   gimp_procedure_set_icon (procedure,
                            GIMP_ICON_TYPE_ICON_NAME,
-                           (const guint8*) icon_name);
+                           icon_name);
+}
+
+/**
+ * gimp_procedure_set_icon_pixbuf:
+ * @procedure: a #GimpProcedure.
+ * @pixbuf:    (nullable): a #GdkPixbuf.
+ *
+ * Sets the icon for @procedure to @pixbuf.
+ *
+ * Since: 3.0
+ */
+void
+gimp_procedure_set_icon_pixbuf (GimpProcedure *procedure,
+                                GdkPixbuf     *pixbuf)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
+
+  gimp_procedure_set_icon (procedure,
+                           GIMP_ICON_TYPE_PIXBUF,
+                           pixbuf);
 }
 
 /**
  * gimp_procedure_set_icon_file:
  * @procedure: a #GimpProcedure.
- * @icon_path: a file path for an image.
+ * @file:      (nullable): a #GFile pointing to an image file.
  *
- * Sets the icon for @procedure by specifying an image file path in a
- * format supported by GdkPixbuf. @icon_path must be in in the GLib file
- * name encoding.
+ * Sets the icon for @procedure to the contents of an image file.
+ *
+ * Since: 3.0
  */
 void
 gimp_procedure_set_icon_file (GimpProcedure *procedure,
-                              const gchar   *icon_path)
+                              GFile         *file)
 {
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (icon_path != NULL);
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
   gimp_procedure_set_icon (procedure,
                            GIMP_ICON_TYPE_IMAGE_FILE,
-                           (const guint8*) icon_path);
-}
-
-/**
- * gimp_procedure_set_icon_inline:
- * @procedure: a #GimpProcedure.
- * @icon_data: inline pixel data for the icon image.
- *
- * Sets the icon for @procedure by specifying inline pixel data. The
- * data must be serialized in the format supported by
- * gdk_pixbuf_new_from_inline(), e.g. as generated by the tool
- * [gdk-pixbuf-csource](https://developer.gnome.org/gdk-pixbuf/stable/gdk-pixbuf-csource.html).
- */
-void
-gimp_procedure_set_icon_inline (GimpProcedure *procedure,
-                                const guint8  *icon_data)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (icon_data != NULL);
-
-  gimp_procedure_set_icon (procedure,
-                           GIMP_ICON_TYPE_INLINE_PIXBUF,
-                           icon_data);
-}
-
-/**
- * gimp_procedure_get_icon: (skip)
- * @procedure:        a #GimpProcedure.
- * @icon_data:        icon representation.
- * @icon_data_length: length of @icon_data.
- *
- * Gets the icon for @procedure. @icon_data contents type depends on
- * the returned type.
- *
- * This procedure is skipped from bindings, where you should use
- * specific gimp_procedure_get_icon_type() instead, followed by the
- * relevant specific function, such as gimp_procedure_get_icon_name().
- *
- * Returns: the #GimpIconType of @icon_data.
- */
-GimpIconType
-gimp_procedure_get_icon (GimpProcedure  *procedure,
-                         const guint8  **icon_data,
-                         gint           *icon_data_length)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), -1);
-  g_return_val_if_fail (icon_data != NULL, -1);
-  g_return_val_if_fail (icon_data_length != NULL, -1);
-
-  *icon_data        = (guint8 *) procedure->priv->icon_data;
-  *icon_data_length = procedure->priv->icon_data_length;
-
-  return procedure->priv->icon_type;
+                           file);
 }
 
 /**
  * gimp_procedure_get_icon_type:
  * @procedure: a #GimpProcedure.
  *
- * Gets the type of data set as @procedure's icon.
- * Depending on the result, you can call the relevant specific function,
- * such as gimp_procedure_get_icon_name().
+ * Gets the type of data set as @procedure's icon. Depending on the
+ * result, you can call the relevant specific function, such as
+ * gimp_procedure_get_icon_name().
  *
- * Returns: the #GimpIconType of @icon_data.
+ * Returns: the #GimpIconType of @procedure's icon.
+ *
+ * Since: 3.0
  */
 GimpIconType
 gimp_procedure_get_icon_type (GimpProcedure *procedure)
@@ -874,6 +795,8 @@ gimp_procedure_get_icon_type (GimpProcedure *procedure)
  * Gets the name of the icon if one was set for @procedure.
  *
  * Returns: (nullable): the icon name or %NULL if no icon name was set.
+ *
+ * Since: 3.0
  */
 const gchar *
 gimp_procedure_get_icon_name (GimpProcedure *procedure)
@@ -882,58 +805,51 @@ gimp_procedure_get_icon_name (GimpProcedure *procedure)
 
   if (procedure->priv->icon_type == GIMP_ICON_TYPE_ICON_NAME)
     return (const gchar *) procedure->priv->icon_data;
-  else
-    return NULL;
+
+  return NULL;
 }
 
 /**
  * gimp_procedure_get_icon_file:
  * @procedure: a #GimpProcedure.
  *
- * Gets the file path of the icon if one was set for @procedure.
+ * Gets the file of the icon if one was set for @procedure.
  *
- * Returns: (nullable): the icon file path or %NULL if no file was set.
+ * Returns: (nullable): the icon #GFile or %NULL if no file was set.
+ *
+ * Since: 3.0
  */
-const gchar *
+GFile *
 gimp_procedure_get_icon_file (GimpProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   if (procedure->priv->icon_type == GIMP_ICON_TYPE_IMAGE_FILE)
-  return (const gchar *) procedure->priv->icon_data;
-  else
-    return NULL;
+    return (GFile *) procedure->priv->icon_data;
+
+  return NULL;
 }
 
 /**
- * gimp_procedure_get_icon_inline:
+ * gimp_procedure_get_icon_pixbuf:
  * @procedure: a #GimpProcedure.
- * @icon_data_length: length of @icon_data.
  *
- * Gets the pixel data of the icon if an icon was set this way for
- * @procedure. See gimp_procedure_set_icon_file() for information on the
- * format of returned data.
+ * Gets the #GdkPixbuf of the icon if an icon was set this way for
+ * @procedure.
  *
- * Returns: (nullable) (array length=icon_data_length):
-            the icon byte data or %NULL if no icon name was set.
+ * Returns: (nullable): the icon pixbuf or %NULL if no icon name was set.
+ *
+ * Since: 3.0
  */
-const guint8 *
-gimp_procedure_get_icon_inline (GimpProcedure *procedure,
-                                gint           *icon_data_length)
+GdkPixbuf *
+gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (icon_data_length != NULL, NULL);
 
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_INLINE_PIXBUF)
-    {
-      *icon_data_length = procedure->priv->icon_data_length;
+  if (procedure->priv->icon_type == GIMP_ICON_TYPE_PIXBUF)
+    return (GdkPixbuf *) procedure->priv->icon_data;
 
-      return (const guint8 *) procedure->priv->icon_data;
-    }
-  else
-    {
-      return NULL;
-    }
+  return NULL;
 }
 
 /**
@@ -1431,4 +1347,44 @@ gimp_procedure_validate_args (GimpProcedure         *procedure,
     }
 
   return TRUE;
+}
+
+static void
+gimp_procedure_set_icon (GimpProcedure *procedure,
+                         GimpIconType   icon_type,
+                         gconstpointer  icon_data)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  if (icon_data == procedure->priv->icon_data)
+    return;
+
+  switch (procedure->priv->icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      g_clear_pointer (&procedure->priv->icon_data, g_free);
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      g_clear_object (&procedure->priv->icon_data);
+      break;
+    }
+
+  procedure->priv->icon_type = icon_type;
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      procedure->priv->icon_data = g_strdup (icon_data);
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      g_set_object (&procedure->priv->icon_data, (GObject *) icon_data);
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
 }
