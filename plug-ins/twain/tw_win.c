@@ -298,10 +298,10 @@ WinMain(HINSTANCE hInstance,
 #endif /* _DEBUG */
 
   /*
-   * Now, call gimp_main... This is what the MAIN() macro
+   * Now, call gimp_main_legacy... This is what the MAIN() macro
    * would usually do.
    */
-  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
+  return gimp_main_legacy(&PLUG_IN_INFO, __argc, __argv);
 }
 
 /*
@@ -319,10 +319,10 @@ int main (int argc, char *argv[])
 #endif /* _DEBUG */
 
   /*
-   * Now, call gimp_main... This is what the MAIN() macro
+   * Now, call gimp_main_legacy... This is what the MAIN() macro
    * would usually do.
    */
-  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
+  return gimp_main_legacy(&PLUG_IN_INFO, __argc, __argv);
 }
 
 /*
