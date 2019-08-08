@@ -169,6 +169,8 @@ gimp_value_array_new_from_types (gchar **error_msg,
   GimpValueArray *value_array;
   va_list         va_args;
 
+  g_return_val_if_fail (error_msg == NULL || *error_msg == NULL, NULL);
+
   va_start (va_args, first_type);
 
   value_array = gimp_value_array_new_from_types_valist (error_msg,
@@ -182,6 +184,7 @@ gimp_value_array_new_from_types (gchar **error_msg,
 
 /**
  * gimp_value_array_new_from_types_valist:
+ * @error_msg:  return location for an error message.
  * @first_type: first type in the array, or #G_TYPE_NONE.
  * @va_args:    a va_list of GTypes and values, terminated by #G_TYPE_NONE
  *
@@ -199,10 +202,14 @@ gimp_value_array_new_from_types_valist (gchar   **error_msg,
                                         GType     first_type,
                                         va_list   va_args)
 {
-  GimpValueArray *value_array = gimp_value_array_new (0);
+  GimpValueArray *value_array;
   GType           type;
 
+  g_return_val_if_fail (error_msg == NULL || *error_msg == NULL, NULL);
+
   type = first_type;
+
+  value_array = gimp_value_array_new (type == G_TYPE_NONE ? 0 : 1);
 
   while (type != G_TYPE_NONE)
     {
