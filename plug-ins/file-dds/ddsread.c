@@ -1273,8 +1273,8 @@ load_dialog (void)
 
   dlg = gimp_dialog_new (_("Load DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
                          gimp_standard_help_func, LOAD_PROC,
-                         _("Cancel"), GTK_RESPONSE_CANCEL,
-                         _("OK"),     GTK_RESPONSE_OK,
+                         _("_Cancel"), GTK_RESPONSE_CANCEL,
+                         _("_OK"),     GTK_RESPONSE_OK,
                          NULL);
 
   g_signal_connect (dlg, "response",
@@ -1290,14 +1290,14 @@ load_dialog (void)
                       vbox, 1, 1, 0);
   gtk_widget_show (vbox);
 
-  check = gtk_check_button_new_with_label (_("Load mipmaps"));
+  check = gtk_check_button_new_with_mnemonic (_("_Load mipmaps"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_read_vals.mipmaps);
   g_signal_connect (check, "clicked",
                     G_CALLBACK (toggle_clicked), &dds_read_vals.mipmaps);
   gtk_box_pack_start (GTK_BOX (vbox), check, 1, 1, 0);
   gtk_widget_show (check);
 
-  check = gtk_check_button_new_with_label (_("Automatically decode YCoCg/AExp images when detected"));
+  check = gtk_check_button_new_with_mnemonic (_("_Automatically decode YCoCg/AExp images when detected"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), dds_read_vals.decode_images);
   g_signal_connect (check, "clicked",
                     G_CALLBACK (toggle_clicked), &dds_read_vals.decode_images);

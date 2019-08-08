@@ -820,17 +820,17 @@ gui_single (void)
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
-  ignore_hidden_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
+  ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
                                 optimize.ignore_hidden);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, TRUE, TRUE, 0);
 
-  vectorize_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
+  vectorize_c = gtk_check_button_new_with_mnemonic (_("Convert _bitmaps to vector graphics where possible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c),
                                 optimize.vectorize);
   gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, TRUE, TRUE, 0);
 
-  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving"));
+  apply_c = gtk_check_button_new_with_mnemonic (_("_Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c),
                                 optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
@@ -840,17 +840,17 @@ gui_single (void)
   frame = gtk_frame_new (NULL);
   gtk_box_pack_end (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
-  text = g_strdup_printf (_("Layers as pages (%s)"),
+  text = g_strdup_printf (_("_Layers as pages (%s)"),
                           optimize.reverse_order ?
                           _("top layers first") : _("bottom layers first"));
-  layers_as_pages_c = gtk_check_button_new_with_label (text);
+  layers_as_pages_c = gtk_check_button_new_with_mnemonic (text);
   g_free (text);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
                                 optimize.layers_as_pages);
   gtk_frame_set_label_widget (GTK_FRAME (frame), layers_as_pages_c);
   g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
 
-  reverse_order_c = gtk_check_button_new_with_label (_("Reverse the pages order"));
+  reverse_order_c = gtk_check_button_new_with_mnemonic (_("_Reverse the pages order"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order_c),
                                 optimize.reverse_order);
   gtk_container_add (GTK_CONTAINER (frame), reverse_order_c);
@@ -980,17 +980,17 @@ gui_multi (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), h_box, FALSE, FALSE, 0);
 
-  ignore_hidden_c = gtk_check_button_new_with_label (_("Omit hidden layers and layers with zero opacity"));
+  ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
                                 optimize.ignore_hidden);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, FALSE, FALSE, 0);
 
-  vectorize_c = gtk_check_button_new_with_label (_("Convert bitmaps to vector graphics where possible"));
+  vectorize_c = gtk_check_button_new_with_mnemonic (_("Convert _bitmaps to vector graphics where possible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c),
                                 optimize.vectorize);
   gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, FALSE, FALSE, 0);
 
-  apply_c = gtk_check_button_new_with_label (_("Apply layer masks before saving"));
+  apply_c = gtk_check_button_new_with_mnemonic (_("_Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c),
                                 optimize.apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);

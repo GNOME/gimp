@@ -564,7 +564,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Description:"), 0.0, 0.5,
+                             _("_Description:"), 0.0, 0.5,
                              entry, 1, FALSE);
 
   g_signal_connect (entry, "changed",
@@ -579,7 +579,7 @@ gih_save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Spacing (percent):"), 0.0, 0.5,
+                             _("_Spacing (percent):"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
 
   g_signal_connect (adjustment, "value-changed",
@@ -639,7 +639,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_show (label);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Cell size:"), 0.0, 0.5,
+                             _("Ce_ll size:"), 0.0, 0.5,
                              box, 1, FALSE);
 
   g_free (layer_ID);
@@ -652,7 +652,7 @@ gih_save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Number of cells:"), 0.0, 0.5,
+                             _("_Number of cells:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
 
   g_signal_connect (adjustment, "value-changed",
@@ -713,7 +713,7 @@ gih_save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-                             _("Dimension:"), 0.0, 0.5,
+                             _("Di_mension:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
 
   g_signal_connect (adjustment, "value-changed",
