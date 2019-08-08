@@ -77,8 +77,7 @@ var Goat = GObject.registerClass({
                                     "");
         procedure.add_menu_path ('<Image>/Filters/Development/Goat exercises/');
         procedure.set_attribution("Jehan", "Jehan", "2019");
-        /* TODO */
-        /*procedure.set_icon (Gimp.IconType.ICON_NAME, Gimp.ICON_GEGL);*/
+        procedure.set_icon_name(Gimp.ICON_GEGL);
 
 
         procedure.add_argument(GObject.param_spec_enum("run-mode",
