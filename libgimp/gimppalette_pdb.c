@@ -55,9 +55,9 @@ gimp_palette_new (const gchar *name)
   GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -97,9 +97,9 @@ gimp_palette_duplicate (const gchar *name)
   GimpValueArray *return_vals;
   gchar *copy_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -141,11 +141,10 @@ gimp_palette_rename (const gchar *name,
   GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_string (gimp_value_array_index (args, 1), new_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -184,9 +183,9 @@ gimp_palette_delete (const gchar *name)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -224,9 +223,9 @@ gimp_palette_is_editable (const gchar *name)
   GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -268,9 +267,9 @@ gimp_palette_get_info (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -317,9 +316,9 @@ gimp_palette_get_colors (const gchar *name,
   GimpValueArray *return_vals;
   GimpRGB *colors = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -364,9 +363,9 @@ gimp_palette_get_columns (const gchar *name)
   GimpValueArray *return_vals;
   gint num_columns = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -409,11 +408,10 @@ gimp_palette_set_columns (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, columns,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), columns);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -458,13 +456,11 @@ gimp_palette_add_entry (const gchar   *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          GIMP_TYPE_RGB,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_STRING, entry_name,
+                                          GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_string (gimp_value_array_index (args, 1), entry_name);
-  gimp_value_set_rgb (gimp_value_array_index (args, 2), color);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -510,11 +506,10 @@ gimp_palette_delete_entry (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, entry_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), entry_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -558,11 +553,10 @@ gimp_palette_entry_get_color (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, entry_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), entry_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -609,13 +603,11 @@ gimp_palette_entry_set_color (const gchar   *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_RGB,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, entry_num,
+                                          GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), entry_num);
-  gimp_value_set_rgb (gimp_value_array_index (args, 2), color);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -659,11 +651,10 @@ gimp_palette_entry_get_name (const gchar  *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, entry_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), entry_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -712,13 +703,11 @@ gimp_palette_entry_set_name (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, entry_num,
+                                          G_TYPE_STRING, entry_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), entry_num);
-  g_value_set_string (gimp_value_array_index (args, 2), entry_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

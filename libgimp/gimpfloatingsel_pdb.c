@@ -54,9 +54,9 @@ gimp_floating_sel_remove (gint32 floating_sel_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_LAYER_ID, floating_sel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_layer_id (gimp_value_array_index (args, 0), floating_sel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -95,9 +95,9 @@ gimp_floating_sel_anchor (gint32 floating_sel_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_LAYER_ID, floating_sel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_layer_id (gimp_value_array_index (args, 0), floating_sel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -140,9 +140,9 @@ gimp_floating_sel_to_layer (gint32 floating_sel_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_LAYER_ID, floating_sel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_layer_id (gimp_value_array_index (args, 0), floating_sel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -181,11 +181,10 @@ gimp_floating_sel_attach (gint32 layer_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_LAYER_ID,
-                                          GIMP_TYPE_DRAWABLE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_layer_id (gimp_value_array_index (args, 0), layer_ID);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 1), drawable_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

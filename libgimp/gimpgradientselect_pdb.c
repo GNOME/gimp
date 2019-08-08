@@ -58,15 +58,12 @@ gimp_gradients_popup (const gchar *gradient_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, gradient_callback,
+                                          G_TYPE_STRING, popup_title,
+                                          G_TYPE_STRING, initial_gradient,
+                                          GIMP_TYPE_INT32, sample_size,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), gradient_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), popup_title);
-  g_value_set_string (gimp_value_array_index (args, 2), initial_gradient);
-  g_value_set_int (gimp_value_array_index (args, 3), sample_size);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -102,9 +99,9 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, gradient_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), gradient_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -142,11 +139,10 @@ gimp_gradients_set_popup (const gchar *gradient_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, gradient_callback,
+                                          G_TYPE_STRING, gradient_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), gradient_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), gradient_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

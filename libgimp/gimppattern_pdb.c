@@ -61,9 +61,9 @@ gimp_pattern_get_info (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -124,9 +124,9 @@ gimp_pattern_get_pixels (const gchar  *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

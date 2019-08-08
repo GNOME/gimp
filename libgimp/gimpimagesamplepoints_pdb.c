@@ -60,13 +60,11 @@ gimp_image_add_sample_point (gint32 image_ID,
   GimpValueArray *return_vals;
   gint32 sample_point_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, position_x,
+                                          GIMP_TYPE_INT32, position_y,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), position_x);
-  g_value_set_int (gimp_value_array_index (args, 2), position_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -108,11 +106,10 @@ gimp_image_delete_sample_point (gint32 image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, sample_point_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), sample_point_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -157,11 +154,10 @@ gimp_image_find_next_sample_point (gint32 image_ID,
   GimpValueArray *return_vals;
   gint32 next_sample_point_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, sample_point_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), sample_point_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -206,11 +202,10 @@ gimp_image_get_sample_point_position (gint32  image_ID,
   GimpValueArray *return_vals;
   gint position_x = G_MININT;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, sample_point_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), sample_point_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

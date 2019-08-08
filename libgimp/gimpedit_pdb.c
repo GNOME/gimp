@@ -59,9 +59,9 @@ gimp_edit_cut (gint32 drawable_ID)
   GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -105,9 +105,9 @@ gimp_edit_copy (gint32 drawable_ID)
   GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -151,9 +151,9 @@ gimp_edit_copy_visible (gint32 image_ID)
   GimpValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -206,11 +206,10 @@ gimp_edit_paste (gint32   drawable_ID,
   GimpValueArray *return_vals;
   gint32 floating_sel_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_boolean (gimp_value_array_index (args, 1), paste_into);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -251,7 +250,8 @@ gimp_edit_paste_as_new_image (void)
   GimpValueArray *return_vals;
   gint32 image_ID = -1;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -297,11 +297,10 @@ gimp_edit_named_cut (gint32       drawable_ID,
   GimpValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), buffer_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -347,11 +346,10 @@ gimp_edit_named_copy (gint32       drawable_ID,
   GimpValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), buffer_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -397,11 +395,10 @@ gimp_edit_named_copy_visible (gint32       image_ID,
   GimpValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), buffer_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -445,13 +442,11 @@ gimp_edit_named_paste (gint32       drawable_ID,
   GimpValueArray *return_vals;
   gint32 floating_sel_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_STRING,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          G_TYPE_STRING, buffer_name,
+                                          G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), buffer_name);
-  g_value_set_boolean (gimp_value_array_index (args, 2), paste_into);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -491,9 +486,9 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   GimpValueArray *return_vals;
   gint32 image_ID = -1;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), buffer_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

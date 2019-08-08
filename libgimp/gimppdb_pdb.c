@@ -43,7 +43,8 @@ _gimp_pdb_temp_name (void)
   GimpValueArray *return_vals;
   gchar *temp_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -82,9 +83,9 @@ _gimp_pdb_dump (const gchar *filename)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), filename);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -148,21 +149,15 @@ _gimp_pdb_query (const gchar   *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_STRING, blurb,
+                                          G_TYPE_STRING, help,
+                                          G_TYPE_STRING, author,
+                                          G_TYPE_STRING, copyright,
+                                          G_TYPE_STRING, date,
+                                          G_TYPE_STRING, proc_type,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_string (gimp_value_array_index (args, 1), blurb);
-  g_value_set_string (gimp_value_array_index (args, 2), help);
-  g_value_set_string (gimp_value_array_index (args, 3), author);
-  g_value_set_string (gimp_value_array_index (args, 4), copyright);
-  g_value_set_string (gimp_value_array_index (args, 5), date);
-  g_value_set_string (gimp_value_array_index (args, 6), proc_type);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -210,9 +205,9 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
   GimpValueArray *return_vals;
   gboolean exists = FALSE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -271,9 +266,9 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -340,11 +335,10 @@ _gimp_pdb_proc_arg (const gchar     *procedure_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          GIMP_TYPE_INT32, arg_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_int (gimp_value_array_index (args, 1), arg_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -402,11 +396,10 @@ _gimp_pdb_proc_val (const gchar     *procedure_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          GIMP_TYPE_INT32, val_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_int (gimp_value_array_index (args, 1), val_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -459,11 +452,10 @@ gimp_pdb_proc_argument (const gchar *procedure_name,
   GimpValueArray *return_vals;
   GParamSpec *param_spec = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          GIMP_TYPE_INT32, arg_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_int (gimp_value_array_index (args, 1), arg_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -507,11 +499,10 @@ gimp_pdb_proc_return_value (const gchar *procedure_name,
   GimpValueArray *return_vals;
   GParamSpec *param_spec = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          GIMP_TYPE_INT32, val_num,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_int (gimp_value_array_index (args, 1), val_num);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -555,9 +546,9 @@ _gimp_pdb_get_data (const gchar  *identifier,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, identifier,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), identifier);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -604,9 +595,9 @@ _gimp_pdb_get_data_size (const gchar *identifier)
   GimpValueArray *return_vals;
   gint bytes = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, identifier,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), identifier);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -649,12 +640,11 @@ _gimp_pdb_set_data (const gchar  *identifier,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT8_ARRAY,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, identifier,
+                                          GIMP_TYPE_INT32, bytes,
+                                          GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), identifier);
-  g_value_set_int (gimp_value_array_index (args, 1), bytes);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), data, bytes);
 
   if (pdb)

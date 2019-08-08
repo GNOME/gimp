@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+#include <gobject/gvaluecollector.h>
 
 #include "gimpbasetypes.h"
 
@@ -147,18 +148,22 @@ gimp_value_array_new (gint n_prealloced)
 
 /**
  * gimp_value_array_new_from_types:
+ * @error_msg:  return location for an error message.
  * @first_type: first type in the array, or #G_TYPE_NONE.
  * @...:        the remaining types in the array, terminated by #G_TYPE_NONE
  *
  * Allocate and initialize a new #GimpValueArray, and fill it with
- * values that are initialized to the types passed.
+ * values that are given as a list of (#GType, value) pairs,
+ * terminated by #G_TYPE_NONE.
  *
- * Returns: a newly allocated #GimpValueArray
+ * Returns: (nullable): a newly allocated #GimpValueArray, or %NULL if
+ *          an error happened.
  *
  * Since: 3.0
  */
 GimpValueArray *
-gimp_value_array_new_from_types (GType first_type,
+gimp_value_array_new_from_types (gchar **error_msg,
+                                 GType   first_type,
                                  ...)
 {
   GimpValueArray *value_array;
@@ -166,7 +171,8 @@ gimp_value_array_new_from_types (GType first_type,
 
   va_start (va_args, first_type);
 
-  value_array = gimp_value_array_new_from_types_valist (first_type,
+  value_array = gimp_value_array_new_from_types_valist (error_msg,
+                                                        first_type,
                                                         va_args);
 
   va_end (va_args);
@@ -180,15 +186,18 @@ gimp_value_array_new_from_types (GType first_type,
  * @va_args:    a va_list of GTypes and values, terminated by #G_TYPE_NONE
  *
  * Allocate and initialize a new #GimpValueArray, and fill it with
- * values that are initialized to the types passed.
+ * @va_args given in the order as passed to
+ * gimp_value_array_new_from_types().
  *
- * Returns: a newly allocated #GimpValueArray
+ * Returns: (nullable): a newly allocated #GimpValueArray, or %NULL if
+ *          an error happened.
  *
  * Since: 3.0
  */
 GimpValueArray *
-gimp_value_array_new_from_types_valist (GType   first_type,
-                                        va_list va_args)
+gimp_value_array_new_from_types_valist (gchar   **error_msg,
+                                        GType     first_type,
+                                        va_list   va_args)
 {
   GimpValueArray *value_array = gimp_value_array_new (0);
   GType           type;
@@ -197,9 +206,32 @@ gimp_value_array_new_from_types_valist (GType   first_type,
 
   while (type != G_TYPE_NONE)
     {
-      GValue value = G_VALUE_INIT;
+      GValue value     = G_VALUE_INIT;
+      gchar  *my_error = NULL;
 
       g_value_init (&value, type);
+
+      G_VALUE_COLLECT (&value, va_args, G_VALUE_NOCOPY_CONTENTS, &my_error);
+
+      if (my_error)
+        {
+          if (error_msg)
+            {
+              *error_msg = my_error;
+            }
+          else
+            {
+              g_printerr ("%s: %s", G_STRFUNC, my_error);
+              g_free (my_error);
+            }
+
+          gimp_value_array_unref (value_array);
+
+          va_end (va_args);
+
+          return NULL;
+        }
+
       gimp_value_array_append (value_array, &value);
       g_value_unset (&value);
 

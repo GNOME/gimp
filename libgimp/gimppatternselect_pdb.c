@@ -56,13 +56,11 @@ gimp_patterns_popup (const gchar *pattern_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, pattern_callback,
+                                          G_TYPE_STRING, popup_title,
+                                          G_TYPE_STRING, initial_pattern,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), pattern_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), popup_title);
-  g_value_set_string (gimp_value_array_index (args, 2), initial_pattern);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -98,9 +96,9 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, pattern_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), pattern_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -138,11 +136,10 @@ gimp_patterns_set_popup (const gchar *pattern_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, pattern_callback,
+                                          G_TYPE_STRING, pattern_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), pattern_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), pattern_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

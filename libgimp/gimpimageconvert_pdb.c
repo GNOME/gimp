@@ -55,9 +55,9 @@ gimp_image_convert_rgb (gint32 image_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -94,9 +94,9 @@ gimp_image_convert_grayscale (gint32 image_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -156,21 +156,15 @@ gimp_image_convert_indexed (gint32                  image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CONVERT_DITHER_TYPE,
-                                          GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
+                                          GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
+                                          GIMP_TYPE_INT32, num_cols,
+                                          G_TYPE_BOOLEAN, alpha_dither,
+                                          G_TYPE_BOOLEAN, remove_unused,
+                                          G_TYPE_STRING, palette,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), dither_type);
-  g_value_set_enum (gimp_value_array_index (args, 2), palette_type);
-  g_value_set_int (gimp_value_array_index (args, 3), num_cols);
-  g_value_set_boolean (gimp_value_array_index (args, 4), alpha_dither);
-  g_value_set_boolean (gimp_value_array_index (args, 5), remove_unused);
-  g_value_set_string (gimp_value_array_index (args, 6), palette);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -215,14 +209,12 @@ gimp_image_convert_set_dither_matrix (gint          width,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT8_ARRAY,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_INT32, width,
+                                          GIMP_TYPE_INT32, height,
+                                          GIMP_TYPE_INT32, matrix_length,
+                                          GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  g_value_set_int (gimp_value_array_index (args, 0), width);
-  g_value_set_int (gimp_value_array_index (args, 1), height);
-  g_value_set_int (gimp_value_array_index (args, 2), matrix_length);
   gimp_value_set_int8_array (gimp_value_array_index (args, 3), matrix, matrix_length);
 
   if (pdb)
@@ -265,11 +257,10 @@ gimp_image_convert_precision (gint32        image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_PRECISION,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), precision);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

@@ -83,27 +83,18 @@ gimp_text_fontname (gint32        image_ID,
   GimpValueArray *return_vals;
   gint32 text_layer_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_DOUBLE,
-                                          GIMP_TYPE_SIZE_TYPE,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
+                                          G_TYPE_STRING, text,
+                                          GIMP_TYPE_INT32, border,
+                                          G_TYPE_BOOLEAN, antialias,
+                                          G_TYPE_DOUBLE, size,
+                                          GIMP_TYPE_SIZE_TYPE, size_type,
+                                          G_TYPE_STRING, fontname,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 1), drawable_ID);
-  g_value_set_double (gimp_value_array_index (args, 2), x);
-  g_value_set_double (gimp_value_array_index (args, 3), y);
-  g_value_set_string (gimp_value_array_index (args, 4), text);
-  g_value_set_int (gimp_value_array_index (args, 5), border);
-  g_value_set_boolean (gimp_value_array_index (args, 6), antialias);
-  g_value_set_double (gimp_value_array_index (args, 7), size);
-  g_value_set_enum (gimp_value_array_index (args, 8), size_type);
-  g_value_set_string (gimp_value_array_index (args, 9), fontname);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -160,15 +151,12 @@ gimp_text_get_extents_fontname (const gchar  *text,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
-                                          GIMP_TYPE_SIZE_TYPE,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, text,
+                                          G_TYPE_DOUBLE, size,
+                                          GIMP_TYPE_SIZE_TYPE, size_type,
+                                          G_TYPE_STRING, fontname,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), text);
-  g_value_set_double (gimp_value_array_index (args, 1), size);
-  g_value_set_enum (gimp_value_array_index (args, 2), size_type);
-  g_value_set_string (gimp_value_array_index (args, 3), fontname);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

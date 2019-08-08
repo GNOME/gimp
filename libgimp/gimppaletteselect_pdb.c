@@ -56,13 +56,11 @@ gimp_palettes_popup (const gchar *palette_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, palette_callback,
+                                          G_TYPE_STRING, popup_title,
+                                          G_TYPE_STRING, initial_palette,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), palette_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), popup_title);
-  g_value_set_string (gimp_value_array_index (args, 2), initial_palette);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -98,9 +96,9 @@ gimp_palettes_close_popup (const gchar *palette_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, palette_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), palette_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -138,11 +136,10 @@ gimp_palettes_set_popup (const gchar *palette_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, palette_callback,
+                                          G_TYPE_STRING, palette_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), palette_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), palette_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

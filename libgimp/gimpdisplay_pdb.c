@@ -55,9 +55,9 @@ gimp_display_is_valid (gint32 display_ID)
   GimpValueArray *return_vals;
   gboolean valid = FALSE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DISPLAY_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY_ID, display_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_display_id (gimp_value_array_index (args, 0), display_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -99,9 +99,9 @@ gimp_display_new (gint32 image_ID)
   GimpValueArray *return_vals;
   gint32 display_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -142,9 +142,9 @@ gimp_display_delete (gint32 display_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DISPLAY_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY_ID, display_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_display_id (gimp_value_array_index (args, 0), display_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -186,9 +186,9 @@ gimp_display_get_window_handle (gint32 display_ID)
   GimpValueArray *return_vals;
   gint window = 0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DISPLAY_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY_ID, display_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_display_id (gimp_value_array_index (args, 0), display_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -227,7 +227,8 @@ gimp_displays_flush (void)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -268,11 +269,10 @@ gimp_displays_reconnect (gint32 old_image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, old_image_ID,
+                                          GIMP_TYPE_IMAGE_ID, new_image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), old_image_ID);
-  gimp_value_set_image_id (gimp_value_array_index (args, 1), new_image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

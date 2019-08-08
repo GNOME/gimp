@@ -56,11 +56,10 @@ gimp_image_add_hguide (gint32 image_ID,
   GimpValueArray *return_vals;
   gint32 guide_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, yposition,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), yposition);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -101,11 +100,10 @@ gimp_image_add_vguide (gint32 image_ID,
   GimpValueArray *return_vals;
   gint32 guide_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, xposition,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), xposition);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -145,11 +143,10 @@ gimp_image_delete_guide (gint32 image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -191,11 +188,10 @@ gimp_image_find_next_guide (gint32 image_ID,
   GimpValueArray *return_vals;
   gint32 next_guide_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -235,11 +231,10 @@ gimp_image_get_guide_orientation (gint32 image_ID,
   GimpValueArray *return_vals;
   GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -279,11 +274,10 @@ gimp_image_get_guide_position (gint32 image_ID,
   GimpValueArray *return_vals;
   gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_uint (gimp_value_array_index (args, 1), guide_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

@@ -62,19 +62,14 @@ gimp_brushes_popup (const gchar   *brush_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_LAYER_MODE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, brush_callback,
+                                          G_TYPE_STRING, popup_title,
+                                          G_TYPE_STRING, initial_brush,
+                                          G_TYPE_DOUBLE, opacity,
+                                          GIMP_TYPE_INT32, spacing,
+                                          GIMP_TYPE_LAYER_MODE, paint_mode,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), brush_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), popup_title);
-  g_value_set_string (gimp_value_array_index (args, 2), initial_brush);
-  g_value_set_double (gimp_value_array_index (args, 3), opacity);
-  g_value_set_int (gimp_value_array_index (args, 4), spacing);
-  g_value_set_enum (gimp_value_array_index (args, 5), paint_mode);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -110,9 +105,9 @@ gimp_brushes_close_popup (const gchar *brush_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, brush_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), brush_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -156,17 +151,13 @@ gimp_brushes_set_popup (const gchar   *brush_callback,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_LAYER_MODE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, brush_callback,
+                                          G_TYPE_STRING, brush_name,
+                                          G_TYPE_DOUBLE, opacity,
+                                          GIMP_TYPE_INT32, spacing,
+                                          GIMP_TYPE_LAYER_MODE, paint_mode,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), brush_callback);
-  g_value_set_string (gimp_value_array_index (args, 1), brush_name);
-  g_value_set_double (gimp_value_array_index (args, 2), opacity);
-  g_value_set_int (gimp_value_array_index (args, 3), spacing);
-  g_value_set_enum (gimp_value_array_index (args, 4), paint_mode);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

@@ -68,19 +68,14 @@ _gimp_channel_new (gint32         image_ID,
   GimpValueArray *return_vals;
   gint32 channel_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
-                                          GIMP_TYPE_RGB,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, width,
+                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, opacity,
+                                          GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), width);
-  g_value_set_int (gimp_value_array_index (args, 2), height);
-  g_value_set_string (gimp_value_array_index (args, 3), name);
-  g_value_set_double (gimp_value_array_index (args, 4), opacity);
-  gimp_value_set_rgb (gimp_value_array_index (args, 5), color);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -127,13 +122,11 @@ gimp_channel_new_from_component (gint32           image_ID,
   GimpValueArray *return_vals;
   gint32 channel_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_TYPE,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_TYPE, component,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), component);
-  g_value_set_string (gimp_value_array_index (args, 2), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -172,9 +165,9 @@ gimp_channel_copy (gint32 channel_ID)
   GimpValueArray *return_vals;
   gint32 channel_copy_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -220,17 +213,13 @@ gimp_channel_combine_masks (gint32         channel1_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
-                                          GIMP_TYPE_CHANNEL_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel1_ID,
+                                          GIMP_TYPE_CHANNEL_ID, channel2_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          GIMP_TYPE_INT32, offx,
+                                          GIMP_TYPE_INT32, offy,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel1_ID);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 1), channel2_ID);
-  g_value_set_enum (gimp_value_array_index (args, 2), operation);
-  g_value_set_int (gimp_value_array_index (args, 3), offx);
-  g_value_set_int (gimp_value_array_index (args, 4), offy);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -268,9 +257,9 @@ gimp_channel_get_show_masked (gint32 channel_ID)
   GimpValueArray *return_vals;
   gboolean show_masked = FALSE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -311,11 +300,10 @@ gimp_channel_set_show_masked (gint32   channel_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          G_TYPE_BOOLEAN, show_masked,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
-  g_value_set_boolean (gimp_value_array_index (args, 1), show_masked);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -351,9 +339,9 @@ gimp_channel_get_opacity (gint32 channel_ID)
   GimpValueArray *return_vals;
   gdouble opacity = 0.0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -392,11 +380,10 @@ gimp_channel_set_opacity (gint32  channel_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), opacity);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -434,9 +421,9 @@ gimp_channel_get_color (gint32   channel_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -477,11 +464,10 @@ gimp_channel_set_color (gint32         channel_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_CHANNEL_ID,
-                                          GIMP_TYPE_RGB,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
-  gimp_value_set_channel_id (gimp_value_array_index (args, 0), channel_ID);
-  gimp_value_set_rgb (gimp_value_array_index (args, 1), color);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

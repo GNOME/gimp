@@ -61,9 +61,9 @@ gimp_gimprc_query (const gchar *token)
   GimpValueArray *return_vals;
   gchar *value = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, token,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), token);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -106,11 +106,10 @@ gimp_gimprc_set (const gchar *token,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, token,
+                                          G_TYPE_STRING, value,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), token);
-  g_value_set_string (gimp_value_array_index (args, 1), value);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -146,7 +145,8 @@ gimp_get_default_comment (void)
   GimpValueArray *return_vals;
   gchar *comment = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -184,7 +184,8 @@ gimp_get_default_unit (void)
   GimpValueArray *return_vals;
   GimpUnit unit_id = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -226,7 +227,8 @@ gimp_get_monitor_resolution (gdouble *xres,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -274,7 +276,8 @@ _gimp_get_color_configuration (void)
   GimpValueArray *return_vals;
   gchar *config = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -311,7 +314,8 @@ gimp_get_module_load_inhibit (void)
   GimpValueArray *return_vals;
   gchar *load_inhibit = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

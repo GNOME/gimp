@@ -57,7 +57,8 @@ gimp_version (void)
   GimpValueArray *return_vals;
   gchar *version = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -95,7 +96,8 @@ gimp_getpid (void)
   GimpValueArray *return_vals;
   gint pid = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -134,9 +136,9 @@ gimp_attach_parasite (const GimpParasite *parasite)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_PARASITE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_PARASITE, parasite,
                                           G_TYPE_NONE);
-  g_value_set_boxed (gimp_value_array_index (args, 0), parasite);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -175,9 +177,9 @@ gimp_detach_parasite (const gchar *name)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -215,9 +217,9 @@ gimp_get_parasite (const gchar *name)
   GimpValueArray *return_vals;
   GimpParasite *parasite = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -258,7 +260,8 @@ gimp_get_parasite_list (gint *num_parasites)
   GimpValueArray *return_vals;
   gchar **parasites = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -302,9 +305,9 @@ gimp_temp_name (const gchar *extension)
   GimpValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, extension,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), extension);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

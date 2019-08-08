@@ -76,15 +76,12 @@ gimp_image_select_color (gint32          image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          GIMP_TYPE_DRAWABLE_ID,
-                                          GIMP_TYPE_RGB,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 2), drawable_ID);
-  gimp_value_set_rgb (gimp_value_array_index (args, 3), color);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -155,17 +152,13 @@ gimp_image_select_contiguous_color (gint32         image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          GIMP_TYPE_DRAWABLE_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 2), drawable_ID);
-  g_value_set_double (gimp_value_array_index (args, 3), x);
-  g_value_set_double (gimp_value_array_index (args, 4), y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -218,19 +211,14 @@ gimp_image_select_rectangle (gint32         image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
+                                          G_TYPE_DOUBLE, width,
+                                          G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  g_value_set_double (gimp_value_array_index (args, 2), x);
-  g_value_set_double (gimp_value_array_index (args, 3), y);
-  g_value_set_double (gimp_value_array_index (args, 4), width);
-  g_value_set_double (gimp_value_array_index (args, 5), height);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -290,23 +278,16 @@ gimp_image_select_round_rectangle (gint32         image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
+                                          G_TYPE_DOUBLE, width,
+                                          G_TYPE_DOUBLE, height,
+                                          G_TYPE_DOUBLE, corner_radius_x,
+                                          G_TYPE_DOUBLE, corner_radius_y,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  g_value_set_double (gimp_value_array_index (args, 2), x);
-  g_value_set_double (gimp_value_array_index (args, 3), y);
-  g_value_set_double (gimp_value_array_index (args, 4), width);
-  g_value_set_double (gimp_value_array_index (args, 5), height);
-  g_value_set_double (gimp_value_array_index (args, 6), corner_radius_x);
-  g_value_set_double (gimp_value_array_index (args, 7), corner_radius_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -360,19 +341,14 @@ gimp_image_select_ellipse (gint32         image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
+                                          G_TYPE_DOUBLE, width,
+                                          G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  g_value_set_double (gimp_value_array_index (args, 2), x);
-  g_value_set_double (gimp_value_array_index (args, 3), y);
-  g_value_set_double (gimp_value_array_index (args, 4), width);
-  g_value_set_double (gimp_value_array_index (args, 5), height);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -427,14 +403,12 @@ gimp_image_select_polygon (gint32          image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_FLOAT_ARRAY,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          GIMP_TYPE_INT32, num_segs,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  g_value_set_int (gimp_value_array_index (args, 2), num_segs);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), segs, num_segs);
 
   if (pdb)
@@ -484,13 +458,11 @@ gimp_image_select_item (gint32         image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_CHANNEL_OPS,
-                                          GIMP_TYPE_ITEM_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_CHANNEL_OPS, operation,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), operation);
-  gimp_value_set_item_id (gimp_value_array_index (args, 2), item_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

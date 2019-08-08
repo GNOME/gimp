@@ -206,16 +206,25 @@ sub generate {
 		$enum_type =~ s/^GIMP/GIMP_TYPE/;
 		$enum_type =~ s/^GEGL/GEGL_TYPE/;
 
-		$value_array .= "$enum_type,\n" .  " " x 42;
+		$value_array .= "$enum_type, ";
 	    }
 	    else {
-		$value_array .= "$arg->{gtype},\n" . " " x 42;
+		$value_array .= "$arg->{gtype}, ";
 	    }
 
-	    $value = "gimp_value_array_index (args, $argc)";
+	    if (exists $_->{array}) {
+		$value_array .= "NULL";
+	    }
+	    else {
+		$value_array .= "$var";
+	    }
+
+	    $value_array .= ",\n" . " " x 42;
 
 	    if (exists $_->{array}) {
 		my $arrayarg = $_->{array};
+
+		$value = "gimp_value_array_index (args, $argc)";
 
 		if (exists $arrayarg->{name}) {
 		    $var_len = $arrayarg->{name};
@@ -223,10 +232,10 @@ sub generate {
 		else {
 		    $var_len = 'num_' . $_->{name};
 		}
-	    }
 
-	    # This is the list of g_value_set_foo
-	    $arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
+		# This is the list of g_value_set_foo_array
+		$arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
+	    }
 
 	    $usednames{$_->{name}}++;
 
@@ -533,7 +542,8 @@ $wrapped$funcname ($clist)
   GimpValueArray *args;
   GimpValueArray *return_vals;$return_args
 
-  args = gimp_value_array_new_from_types (${value_array}G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          ${value_array}G_TYPE_NONE);
 $arg_array
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

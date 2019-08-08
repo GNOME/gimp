@@ -52,11 +52,10 @@ _gimp_plugin_domain_register (const gchar *domain_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, domain_name,
+                                          G_TYPE_STRING, domain_path,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), domain_name);
-  g_value_set_string (gimp_value_array_index (args, 1), domain_path);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -98,11 +97,10 @@ _gimp_plugin_help_register (const gchar *domain_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, domain_name,
+                                          G_TYPE_STRING, domain_uri,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), domain_name);
-  g_value_set_string (gimp_value_array_index (args, 1), domain_uri);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -145,11 +143,10 @@ _gimp_plugin_menu_branch_register (const gchar *menu_path,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, menu_path,
+                                          G_TYPE_STRING, menu_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), menu_path);
-  g_value_set_string (gimp_value_array_index (args, 1), menu_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -190,11 +187,10 @@ _gimp_plugin_menu_register (const gchar *procedure_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, menu_path,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_string (gimp_value_array_index (args, 1), menu_path);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -238,14 +234,12 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_ICON_TYPE,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT8_ARRAY,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          GIMP_TYPE_ICON_TYPE, icon_type,
+                                          GIMP_TYPE_INT32, icon_data_length,
+                                          GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), procedure_name);
-  g_value_set_enum (gimp_value_array_index (args, 1), icon_type);
-  g_value_set_int (gimp_value_array_index (args, 2), icon_data_length);
   gimp_value_set_int8_array (gimp_value_array_index (args, 3), icon_data, icon_data_length);
 
   if (pdb)
@@ -291,9 +285,9 @@ _gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_PDB_ERROR_HANDLER,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_PDB_ERROR_HANDLER, handler,
                                           G_TYPE_NONE);
-  g_value_set_enum (gimp_value_array_index (args, 0), handler);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -332,7 +326,8 @@ _gimp_plugin_get_pdb_error_handler (void)
   GimpValueArray *return_vals;
   GimpPDBErrorHandler handler = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

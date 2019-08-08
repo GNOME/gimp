@@ -59,11 +59,10 @@ gimp_help (const gchar *help_domain,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, help_domain,
+                                          G_TYPE_STRING, help_id,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), help_domain);
-  g_value_set_string (gimp_value_array_index (args, 1), help_id);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

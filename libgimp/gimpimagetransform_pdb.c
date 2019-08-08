@@ -66,17 +66,13 @@ gimp_image_resize (gint32 image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, new_width,
+                                          GIMP_TYPE_INT32, new_height,
+                                          GIMP_TYPE_INT32, offx,
+                                          GIMP_TYPE_INT32, offy,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), new_width);
-  g_value_set_int (gimp_value_array_index (args, 2), new_height);
-  g_value_set_int (gimp_value_array_index (args, 3), offx);
-  g_value_set_int (gimp_value_array_index (args, 4), offy);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -117,9 +113,9 @@ gimp_image_resize_to_layers (gint32 image_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -163,13 +159,11 @@ gimp_image_scale (gint32 image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, new_width,
+                                          GIMP_TYPE_INT32, new_height,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), new_width);
-  g_value_set_int (gimp_value_array_index (args, 2), new_height);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -218,17 +212,13 @@ gimp_image_crop (gint32 image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, new_width,
+                                          GIMP_TYPE_INT32, new_height,
+                                          GIMP_TYPE_INT32, offx,
+                                          GIMP_TYPE_INT32, offy,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), new_width);
-  g_value_set_int (gimp_value_array_index (args, 2), new_height);
-  g_value_set_int (gimp_value_array_index (args, 3), offx);
-  g_value_set_int (gimp_value_array_index (args, 4), offy);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -266,11 +256,10 @@ gimp_image_flip (gint32              image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_ORIENTATION_TYPE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), flip_type);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -308,11 +297,10 @@ gimp_image_rotate (gint32           image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_ROTATION_TYPE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_ROTATION_TYPE, rotate_type,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), rotate_type);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

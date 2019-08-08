@@ -59,9 +59,9 @@ gimp_drawable_edit_clear (gint32 drawable_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -107,11 +107,10 @@ gimp_drawable_edit_fill (gint32       drawable_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          GIMP_TYPE_FILL_TYPE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), fill_type);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -167,15 +166,12 @@ gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          GIMP_TYPE_FILL_TYPE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_FILL_TYPE, fill_type,
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), fill_type);
-  g_value_set_double (gimp_value_array_index (args, 2), x);
-  g_value_set_double (gimp_value_array_index (args, 3), y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -244,29 +240,19 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          GIMP_TYPE_GRADIENT_TYPE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_BOOLEAN,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_GRADIENT_TYPE, gradient_type,
+                                          G_TYPE_DOUBLE, offset,
+                                          G_TYPE_BOOLEAN, supersample,
+                                          GIMP_TYPE_INT32, supersample_max_depth,
+                                          G_TYPE_DOUBLE, supersample_threshold,
+                                          G_TYPE_BOOLEAN, dither,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
+                                          G_TYPE_DOUBLE, x2,
+                                          G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), gradient_type);
-  g_value_set_double (gimp_value_array_index (args, 2), offset);
-  g_value_set_boolean (gimp_value_array_index (args, 3), supersample);
-  g_value_set_int (gimp_value_array_index (args, 4), supersample_max_depth);
-  g_value_set_double (gimp_value_array_index (args, 5), supersample_threshold);
-  g_value_set_boolean (gimp_value_array_index (args, 6), dither);
-  g_value_set_double (gimp_value_array_index (args, 7), x1);
-  g_value_set_double (gimp_value_array_index (args, 8), y1);
-  g_value_set_double (gimp_value_array_index (args, 9), x2);
-  g_value_set_double (gimp_value_array_index (args, 10), y2);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -313,9 +299,9 @@ gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -366,11 +352,10 @@ gimp_drawable_edit_stroke_item (gint32 drawable_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_DRAWABLE_ID,
-                                          GIMP_TYPE_ITEM_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_drawable_id (gimp_value_array_index (args, 0), drawable_ID);
-  gimp_value_set_item_id (gimp_value_array_index (args, 1), item_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

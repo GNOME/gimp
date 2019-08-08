@@ -53,9 +53,9 @@ gimp_message (const gchar *message)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, message,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), message);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -92,7 +92,8 @@ gimp_message_get_handler (void)
   GimpValueArray *return_vals;
   GimpMessageHandlerType handler = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -131,9 +132,9 @@ gimp_message_set_handler (GimpMessageHandlerType handler)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_MESSAGE_HANDLER_TYPE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_MESSAGE_HANDLER_TYPE, handler,
                                           G_TYPE_NONE);
-  g_value_set_enum (gimp_value_array_index (args, 0), handler);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

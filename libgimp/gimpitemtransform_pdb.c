@@ -66,13 +66,11 @@ gimp_item_transform_translate (gint32  item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, off_x,
+                                          G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), off_x);
-  g_value_set_double (gimp_value_array_index (args, 2), off_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -135,15 +133,12 @@ gimp_item_transform_flip_simple (gint32              item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          GIMP_TYPE_ORIENTATION_TYPE,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ORIENTATION_TYPE, flip_type,
+                                          G_TYPE_BOOLEAN, auto_center,
+                                          G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), flip_type);
-  g_value_set_boolean (gimp_value_array_index (args, 2), auto_center);
-  g_value_set_double (gimp_value_array_index (args, 3), axis);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -208,17 +203,13 @@ gimp_item_transform_flip (gint32  item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), x0);
-  g_value_set_double (gimp_value_array_index (args, 2), y0);
-  g_value_set_double (gimp_value_array_index (args, 3), x1);
-  g_value_set_double (gimp_value_array_index (args, 4), y1);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -300,25 +291,17 @@ gimp_item_transform_perspective (gint32  item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
+                                          G_TYPE_DOUBLE, x2,
+                                          G_TYPE_DOUBLE, y2,
+                                          G_TYPE_DOUBLE, x3,
+                                          G_TYPE_DOUBLE, y3,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), x0);
-  g_value_set_double (gimp_value_array_index (args, 2), y0);
-  g_value_set_double (gimp_value_array_index (args, 3), x1);
-  g_value_set_double (gimp_value_array_index (args, 4), y1);
-  g_value_set_double (gimp_value_array_index (args, 5), x2);
-  g_value_set_double (gimp_value_array_index (args, 6), y2);
-  g_value_set_double (gimp_value_array_index (args, 7), x3);
-  g_value_set_double (gimp_value_array_index (args, 8), y3);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -386,17 +369,13 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          GIMP_TYPE_ROTATION_TYPE,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ROTATION_TYPE, rotate_type,
+                                          G_TYPE_BOOLEAN, auto_center,
+                                          G_TYPE_DOUBLE, center_x,
+                                          G_TYPE_DOUBLE, center_y,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), rotate_type);
-  g_value_set_boolean (gimp_value_array_index (args, 2), auto_center);
-  g_value_set_double (gimp_value_array_index (args, 3), center_x);
-  g_value_set_double (gimp_value_array_index (args, 4), center_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -466,17 +445,13 @@ gimp_item_transform_rotate (gint32   item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, angle,
+                                          G_TYPE_BOOLEAN, auto_center,
+                                          G_TYPE_DOUBLE, center_x,
+                                          G_TYPE_DOUBLE, center_y,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), angle);
-  g_value_set_boolean (gimp_value_array_index (args, 2), auto_center);
-  g_value_set_double (gimp_value_array_index (args, 3), center_x);
-  g_value_set_double (gimp_value_array_index (args, 4), center_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -543,17 +518,13 @@ gimp_item_transform_scale (gint32  item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), x0);
-  g_value_set_double (gimp_value_array_index (args, 2), y0);
-  g_value_set_double (gimp_value_array_index (args, 3), x1);
-  g_value_set_double (gimp_value_array_index (args, 4), y1);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -618,13 +589,11 @@ gimp_item_transform_shear (gint32              item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          GIMP_TYPE_ORIENTATION_TYPE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ORIENTATION_TYPE, shear_type,
+                                          G_TYPE_DOUBLE, magnitude,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), shear_type);
-  g_value_set_double (gimp_value_array_index (args, 2), magnitude);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -700,23 +669,16 @@ gimp_item_transform_2d (gint32  item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, source_x,
+                                          G_TYPE_DOUBLE, source_y,
+                                          G_TYPE_DOUBLE, scale_x,
+                                          G_TYPE_DOUBLE, scale_y,
+                                          G_TYPE_DOUBLE, angle,
+                                          G_TYPE_DOUBLE, dest_x,
+                                          G_TYPE_DOUBLE, dest_y,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), source_x);
-  g_value_set_double (gimp_value_array_index (args, 2), source_y);
-  g_value_set_double (gimp_value_array_index (args, 3), scale_x);
-  g_value_set_double (gimp_value_array_index (args, 4), scale_y);
-  g_value_set_double (gimp_value_array_index (args, 5), angle);
-  g_value_set_double (gimp_value_array_index (args, 6), dest_x);
-  g_value_set_double (gimp_value_array_index (args, 7), dest_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -794,27 +756,18 @@ gimp_item_transform_matrix (gint32  item_ID,
   GimpValueArray *return_vals;
   gint32 ret_item_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_ITEM_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_DOUBLE, coeff_0_0,
+                                          G_TYPE_DOUBLE, coeff_0_1,
+                                          G_TYPE_DOUBLE, coeff_0_2,
+                                          G_TYPE_DOUBLE, coeff_1_0,
+                                          G_TYPE_DOUBLE, coeff_1_1,
+                                          G_TYPE_DOUBLE, coeff_1_2,
+                                          G_TYPE_DOUBLE, coeff_2_0,
+                                          G_TYPE_DOUBLE, coeff_2_1,
+                                          G_TYPE_DOUBLE, coeff_2_2,
                                           G_TYPE_NONE);
-  gimp_value_set_item_id (gimp_value_array_index (args, 0), item_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), coeff_0_0);
-  g_value_set_double (gimp_value_array_index (args, 2), coeff_0_1);
-  g_value_set_double (gimp_value_array_index (args, 3), coeff_0_2);
-  g_value_set_double (gimp_value_array_index (args, 4), coeff_1_0);
-  g_value_set_double (gimp_value_array_index (args, 5), coeff_1_1);
-  g_value_set_double (gimp_value_array_index (args, 6), coeff_1_2);
-  g_value_set_double (gimp_value_array_index (args, 7), coeff_2_0);
-  g_value_set_double (gimp_value_array_index (args, 8), coeff_2_1);
-  g_value_set_double (gimp_value_array_index (args, 9), coeff_2_2);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

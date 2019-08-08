@@ -55,11 +55,10 @@ _gimp_progress_init (const gchar *message,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_DISPLAY_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, message,
+                                          GIMP_TYPE_DISPLAY_ID, gdisplay_ID,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), message);
-  gimp_value_set_display_id (gimp_value_array_index (args, 1), gdisplay_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -96,9 +95,9 @@ _gimp_progress_update (gdouble percentage)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_DOUBLE, percentage,
                                           G_TYPE_NONE);
-  g_value_set_double (gimp_value_array_index (args, 0), percentage);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -139,7 +138,8 @@ gimp_progress_pulse (void)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -179,9 +179,9 @@ gimp_progress_set_text (const gchar *message)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, message,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), message);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -220,7 +220,8 @@ gimp_progress_end (void)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -259,7 +260,8 @@ gimp_progress_get_window_handle (void)
   GimpValueArray *return_vals;
   gint window = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_NONE);
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -301,9 +303,9 @@ _gimp_progress_install (const gchar *progress_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, progress_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), progress_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -342,9 +344,9 @@ _gimp_progress_uninstall (const gchar *progress_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, progress_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), progress_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -382,9 +384,9 @@ gimp_progress_cancel (const gchar *progress_callback)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, progress_callback,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), progress_callback);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

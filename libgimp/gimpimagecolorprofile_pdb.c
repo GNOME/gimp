@@ -59,9 +59,9 @@ _gimp_image_get_color_profile (gint32  image_ID,
   GimpValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -113,9 +113,9 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
   GimpValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -167,12 +167,11 @@ _gimp_image_set_color_profile (gint32        image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT8_ARRAY,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, num_bytes,
+                                          GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), num_bytes);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
   if (pdb)
@@ -218,11 +217,10 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, uri,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), uri);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -271,17 +269,14 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT8_ARRAY,
-                                          GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_INT32, num_bytes,
+                                          GIMP_TYPE_INT8_ARRAY, NULL,
+                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
+                                          G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), num_bytes);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
-  g_value_set_enum (gimp_value_array_index (args, 3), intent);
-  g_value_set_boolean (gimp_value_array_index (args, 4), bpc);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -328,15 +323,12 @@ gimp_image_convert_color_profile_from_file (gint32                    image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
-                                          GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, uri,
+                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
+                                          G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), uri);
-  g_value_set_enum (gimp_value_array_index (args, 2), intent);
-  g_value_set_boolean (gimp_value_array_index (args, 3), bpc);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

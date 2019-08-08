@@ -57,11 +57,10 @@ gimp_vectors_new (gint32       image_ID,
   GimpValueArray *return_vals;
   gint32 vectors_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -103,11 +102,10 @@ gimp_vectors_new_from_text_layer (gint32 image_ID,
   GimpValueArray *return_vals;
   gint32 vectors_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_LAYER_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_LAYER_ID, layer_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  gimp_value_set_layer_id (gimp_value_array_index (args, 1), layer_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -147,9 +145,9 @@ gimp_vectors_copy (gint32 vectors_ID)
   GimpValueArray *return_vals;
   gint32 vectors_copy_ID = -1;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -193,9 +191,9 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gint *stroke_ids = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -243,13 +241,11 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gdouble length = 0.0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), precision);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -307,15 +303,12 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, dist,
+                                          G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), dist);
-  g_value_set_double (gimp_value_array_index (args, 3), precision);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -368,11 +361,10 @@ gimp_vectors_remove_stroke (gint32 vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -412,11 +404,10 @@ gimp_vectors_stroke_close (gint32 vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -460,15 +451,12 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          GIMP_TYPE_INT32, off_x,
+                                          GIMP_TYPE_INT32, off_y,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_int (gimp_value_array_index (args, 2), off_x);
-  g_value_set_int (gimp_value_array_index (args, 3), off_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -512,15 +500,12 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, scale_x,
+                                          G_TYPE_DOUBLE, scale_y,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), scale_x);
-  g_value_set_double (gimp_value_array_index (args, 3), scale_y);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -566,17 +551,13 @@ gimp_vectors_stroke_rotate (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, center_x,
+                                          G_TYPE_DOUBLE, center_y,
+                                          G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), center_x);
-  g_value_set_double (gimp_value_array_index (args, 3), center_y);
-  g_value_set_double (gimp_value_array_index (args, 4), angle);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -620,15 +601,12 @@ gimp_vectors_stroke_flip (gint32              vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_ORIENTATION_TYPE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          GIMP_TYPE_ORIENTATION_TYPE, flip_type,
+                                          G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_enum (gimp_value_array_index (args, 2), flip_type);
-  g_value_set_double (gimp_value_array_index (args, 3), axis);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -678,19 +656,14 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
+                                          G_TYPE_DOUBLE, x2,
+                                          G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), x1);
-  g_value_set_double (gimp_value_array_index (args, 3), y1);
-  g_value_set_double (gimp_value_array_index (args, 4), x2);
-  g_value_set_double (gimp_value_array_index (args, 5), y2);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -739,11 +712,10 @@ gimp_vectors_stroke_get_points (gint32     vectors_ID,
   GimpValueArray *return_vals;
   GimpVectorsStrokeType type = 0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -804,17 +776,14 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
   GimpValueArray *return_vals;
   gint stroke_id = 0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_VECTORS_STROKE_TYPE,
-                                          GIMP_TYPE_INT32,
-                                          GIMP_TYPE_FLOAT_ARRAY,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS_STROKE_TYPE, type,
+                                          GIMP_TYPE_INT32, num_points,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_BOOLEAN, closed,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_enum (gimp_value_array_index (args, 1), type);
-  g_value_set_int (gimp_value_array_index (args, 2), num_points);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), controlpoints, num_points);
-  g_value_set_boolean (gimp_value_array_index (args, 4), closed);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -863,13 +832,11 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
   GimpValueArray *return_vals;
   gdouble *coords = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), precision);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -918,13 +885,11 @@ gimp_vectors_bezier_stroke_new_moveto (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gint stroke_id = 0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), x0);
-  g_value_set_double (gimp_value_array_index (args, 2), y0);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -969,15 +934,12 @@ gimp_vectors_bezier_stroke_lineto (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), x0);
-  g_value_set_double (gimp_value_array_index (args, 3), y0);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1027,19 +989,14 @@ gimp_vectors_bezier_stroke_conicto (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), x0);
-  g_value_set_double (gimp_value_array_index (args, 3), y0);
-  g_value_set_double (gimp_value_array_index (args, 4), x1);
-  g_value_set_double (gimp_value_array_index (args, 5), y1);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1091,23 +1048,16 @@ gimp_vectors_bezier_stroke_cubicto (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
+                                          G_TYPE_DOUBLE, x1,
+                                          G_TYPE_DOUBLE, y1,
+                                          G_TYPE_DOUBLE, x2,
+                                          G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_int (gimp_value_array_index (args, 1), stroke_id);
-  g_value_set_double (gimp_value_array_index (args, 2), x0);
-  g_value_set_double (gimp_value_array_index (args, 3), y0);
-  g_value_set_double (gimp_value_array_index (args, 4), x1);
-  g_value_set_double (gimp_value_array_index (args, 5), y1);
-  g_value_set_double (gimp_value_array_index (args, 6), x2);
-  g_value_set_double (gimp_value_array_index (args, 7), y2);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1155,19 +1105,14 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
   GimpValueArray *return_vals;
   gint stroke_id = 0;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_VECTORS_ID,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          G_TYPE_DOUBLE, x0,
+                                          G_TYPE_DOUBLE, y0,
+                                          G_TYPE_DOUBLE, radius_x,
+                                          G_TYPE_DOUBLE, radius_y,
+                                          G_TYPE_DOUBLE, angle,
                                           G_TYPE_NONE);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 0), vectors_ID);
-  g_value_set_double (gimp_value_array_index (args, 1), x0);
-  g_value_set_double (gimp_value_array_index (args, 2), y0);
-  g_value_set_double (gimp_value_array_index (args, 3), radius_x);
-  g_value_set_double (gimp_value_array_index (args, 4), radius_y);
-  g_value_set_double (gimp_value_array_index (args, 5), angle);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1217,15 +1162,12 @@ gimp_vectors_import_from_file (gint32        image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, filename,
+                                          G_TYPE_BOOLEAN, merge,
+                                          G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), filename);
-  g_value_set_boolean (gimp_value_array_index (args, 2), merge);
-  g_value_set_boolean (gimp_value_array_index (args, 3), scale);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1286,17 +1228,13 @@ gimp_vectors_import_from_string (gint32        image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_BOOLEAN,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, string,
+                                          GIMP_TYPE_INT32, length,
+                                          G_TYPE_BOOLEAN, merge,
+                                          G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), string);
-  g_value_set_int (gimp_value_array_index (args, 2), length);
-  g_value_set_boolean (gimp_value_array_index (args, 3), merge);
-  g_value_set_boolean (gimp_value_array_index (args, 4), scale);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1350,13 +1288,11 @@ gimp_vectors_export_to_file (gint32       image_ID,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          G_TYPE_STRING,
-                                          GIMP_TYPE_VECTORS_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, filename,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  g_value_set_string (gimp_value_array_index (args, 1), filename);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 2), vectors_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1401,11 +1337,10 @@ gimp_vectors_export_to_string (gint32 image_ID,
   GimpValueArray *return_vals;
   gchar *string = NULL;
 
-  args = gimp_value_array_new_from_types (GIMP_TYPE_IMAGE_ID,
-                                          GIMP_TYPE_VECTORS_ID,
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
-  gimp_value_set_image_id (gimp_value_array_index (args, 0), image_ID);
-  gimp_value_set_vectors_id (gimp_value_array_index (args, 1), vectors_ID);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

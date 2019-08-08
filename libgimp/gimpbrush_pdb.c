@@ -55,9 +55,9 @@ gimp_brush_new (const gchar *name)
   GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -97,9 +97,9 @@ gimp_brush_duplicate (const gchar *name)
   GimpValueArray *return_vals;
   gchar *copy_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -138,9 +138,9 @@ gimp_brush_is_generated (const gchar *name)
   GimpValueArray *return_vals;
   gboolean generated = FALSE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -182,11 +182,10 @@ gimp_brush_rename (const gchar *name,
   GimpValueArray *return_vals;
   gchar *actual_name = NULL;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_string (gimp_value_array_index (args, 1), new_name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -225,9 +224,9 @@ gimp_brush_delete (const gchar *name)
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -265,9 +264,9 @@ gimp_brush_is_editable (const gchar *name)
   GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -315,9 +314,9 @@ gimp_brush_get_info (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -385,9 +384,9 @@ gimp_brush_get_pixels (const gchar  *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -450,9 +449,9 @@ gimp_brush_get_spacing (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -498,11 +497,10 @@ gimp_brush_set_spacing (const gchar *name,
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, spacing,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), spacing);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -545,9 +543,9 @@ gimp_brush_get_shape (const gchar *name)
   GimpValueArray *return_vals;
   GimpBrushGeneratedShape shape = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -593,11 +591,10 @@ gimp_brush_set_shape (const gchar             *name,
   GimpValueArray *return_vals;
   GimpBrushGeneratedShape shape_out = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH_GENERATED_SHAPE, shape_in,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_enum (gimp_value_array_index (args, 1), shape_in);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -637,9 +634,9 @@ gimp_brush_get_radius (const gchar *name)
   GimpValueArray *return_vals;
   gdouble radius = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -681,11 +678,10 @@ gimp_brush_set_radius (const gchar *name,
   GimpValueArray *return_vals;
   gdouble radius_out = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, radius_in,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_double (gimp_value_array_index (args, 1), radius_in);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -725,9 +721,9 @@ gimp_brush_get_spikes (const gchar *name)
   GimpValueArray *return_vals;
   gint spikes = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -769,11 +765,10 @@ gimp_brush_set_spikes (const gchar *name,
   GimpValueArray *return_vals;
   gint spikes_out = 0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          GIMP_TYPE_INT32,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_INT32, spikes_in,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_int (gimp_value_array_index (args, 1), spikes_in);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -815,9 +810,9 @@ gimp_brush_get_hardness (const gchar *name)
   GimpValueArray *return_vals;
   gdouble hardness = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -860,11 +855,10 @@ gimp_brush_set_hardness (const gchar *name,
   GimpValueArray *return_vals;
   gdouble hardness_out = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, hardness_in,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_double (gimp_value_array_index (args, 1), hardness_in);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -905,9 +899,9 @@ gimp_brush_get_aspect_ratio (const gchar *name)
   GimpValueArray *return_vals;
   gdouble aspect_ratio = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -950,11 +944,10 @@ gimp_brush_set_aspect_ratio (const gchar *name,
   GimpValueArray *return_vals;
   gdouble aspect_ratio_out = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, aspect_ratio_in,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_double (gimp_value_array_index (args, 1), aspect_ratio_in);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -994,9 +987,9 @@ gimp_brush_get_angle (const gchar *name)
   GimpValueArray *return_vals;
   gdouble angle = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1038,11 +1031,10 @@ gimp_brush_set_angle (const gchar *name,
   GimpValueArray *return_vals;
   gdouble angle_out = 0.0;
 
-  args = gimp_value_array_new_from_types (G_TYPE_STRING,
-                                          G_TYPE_DOUBLE,
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, angle_in,
                                           G_TYPE_NONE);
-  g_value_set_string (gimp_value_array_index (args, 0), name);
-  g_value_set_double (gimp_value_array_index (args, 1), angle_in);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
