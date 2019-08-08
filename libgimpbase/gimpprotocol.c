@@ -1203,6 +1203,9 @@ _gp_proc_install_read (GIOChannel      *channel,
                                 &proc_install->help, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_string (channel,
+                                &proc_install->help_id, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_string (channel,
                                 &proc_install->authors, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_string (channel,
@@ -1255,6 +1258,7 @@ _gp_proc_install_read (GIOChannel      *channel,
   g_free (proc_install->name);
   g_free (proc_install->blurb);
   g_free (proc_install->help);
+  g_free (proc_install->help_id);
   g_free (proc_install->authors);
   g_free (proc_install->copyright);
   g_free (proc_install->date);
@@ -1444,6 +1448,9 @@ _gp_proc_install_write (GIOChannel      *channel,
                                  &proc_install->help, 1, user_data))
     return;
   if (! _gimp_wire_write_string (channel,
+                                 &proc_install->help_id, 1, user_data))
+    return;
+  if (! _gimp_wire_write_string (channel,
                                  &proc_install->authors, 1, user_data))
     return;
   if (! _gimp_wire_write_string (channel,
@@ -1498,6 +1505,7 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
       g_free (proc_install->name);
       g_free (proc_install->blurb);
       g_free (proc_install->help);
+      g_free (proc_install->help_id);
       g_free (proc_install->authors);
       g_free (proc_install->copyright);
       g_free (proc_install->date);

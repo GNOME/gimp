@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0106
+#define GIMP_PROTOCOL_VERSION  0x0107
 
 
 enum
@@ -268,6 +268,7 @@ struct _GPProcInstall
   gchar      *name;
   gchar      *blurb;
   gchar      *help;
+  gchar      *help_id;
   gchar      *authors;
   gchar      *copyright;
   gchar      *date;

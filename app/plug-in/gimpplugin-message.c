@@ -749,6 +749,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       VALIDATE         (canonical)                &&
       VALIDATE_OR_NULL (proc_install->blurb)      &&
       VALIDATE_OR_NULL (proc_install->help)       &&
+      VALIDATE_OR_NULL (proc_install->help_id)    &&
       VALIDATE_OR_NULL (proc_install->authors)    &&
       VALIDATE_OR_NULL (proc_install->copyright)  &&
       VALIDATE_OR_NULL (proc_install->date))
@@ -864,6 +865,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
     proc->menu_label = g_strdup (proc_install->menu_label);
 
   gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
+  gimp_plug_in_procedure_set_help_id (proc, proc_install->help_id);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

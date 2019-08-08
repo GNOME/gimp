@@ -157,6 +157,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
 
   g_free (proc->label);
   g_free (proc->help_id);
+  g_free (proc->help_id_with_domain);
 
   g_free (proc->icon_data);
   g_free (proc->image_types);
@@ -300,18 +301,24 @@ gimp_plug_in_procedure_get_help_id (GimpProcedure *procedure)
 {
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
   const gchar         *domain;
+  const gchar         *help_id;
 
-  if (proc->help_id)
-    return proc->help_id;
+  if (proc->help_id_with_domain)
+    return proc->help_id_with_domain;
 
   domain = gimp_plug_in_procedure_get_help_domain (proc);
 
-  if (domain)
-    proc->help_id = g_strconcat (domain, "?", gimp_object_get_name (proc), NULL);
+  if (proc->help_id)
+    help_id = proc->help_id;
   else
-    proc->help_id = g_strdup (gimp_object_get_name (proc));
+    help_id = gimp_object_get_name (procedure);
 
-  return proc->help_id;
+  if (domain)
+    proc->help_id_with_domain = g_strconcat (domain, "?", help_id, NULL);
+  else
+    proc->help_id_with_domain = g_strdup (help_id);
+
+  return proc->help_id_with_domain;
 }
 
 static gboolean
@@ -573,6 +580,18 @@ gimp_plug_in_procedure_set_help_domain (GimpPlugInProcedure *proc,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   proc->help_domain = help_domain ? g_quark_from_string (help_domain) : 0;
+}
+
+void
+gimp_plug_in_procedure_set_help_id (GimpPlugInProcedure *proc,
+                                    const gchar         *help_id)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  g_clear_pointer (&proc->help_id_with_domain, g_free);
+
+  g_free (proc->help_id);
+  proc->help_id = g_strdup (help_id);
 }
 
 const gchar *
