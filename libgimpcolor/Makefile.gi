@@ -1,32 +1,32 @@
 # Introspectable sources for libgimpcolor
 
 libgimpcolor_introspectable_headers = \
-	$(top_srcdir)/libgimpcolor/gimpcolortypes.h		\
-	$(top_srcdir)/libgimpcolor/gimpadaptivesupersample.h	\
-	$(top_srcdir)/libgimpcolor/gimpbilinear.h		\
-	$(top_srcdir)/libgimpcolor/gimpcairo.h			\
-	$(top_srcdir)/libgimpcolor/gimpcmyk.h			\
-	$(top_srcdir)/libgimpcolor/gimpcolormanaged.h		\
-	$(top_srcdir)/libgimpcolor/gimpcolorprofile.h		\
-	$(top_srcdir)/libgimpcolor/gimpcolorspace.h		\
-	$(top_srcdir)/libgimpcolor/gimpcolortransform.h		\
-	$(top_srcdir)/libgimpcolor/gimphsl.h			\
-	$(top_srcdir)/libgimpcolor/gimphsv.h			\
-	$(top_srcdir)/libgimpcolor/gimppixbuf.h			\
-	$(top_srcdir)/libgimpcolor/gimprgb.h
+	../libgimpcolor/gimpcolortypes.h		\
+	../libgimpcolor/gimpadaptivesupersample.h	\
+	../libgimpcolor/gimpbilinear.h		\
+	../libgimpcolor/gimpcairo.h			\
+	../libgimpcolor/gimpcmyk.h			\
+	../libgimpcolor/gimpcolormanaged.h		\
+	../libgimpcolor/gimpcolorprofile.h		\
+	../libgimpcolor/gimpcolorspace.h		\
+	../libgimpcolor/gimpcolortransform.h		\
+	../libgimpcolor/gimphsl.h			\
+	../libgimpcolor/gimphsv.h			\
+	../libgimpcolor/gimppixbuf.h			\
+	../libgimpcolor/gimprgb.h
 
 libgimpcolor_introspectable = \
-	$(top_srcdir)/libgimpcolor/gimpadaptivesupersample.c	\
-	$(top_srcdir)/libgimpcolor/gimpbilinear.c		\
-	$(top_srcdir)/libgimpcolor/gimpcairo.c			\
-	$(top_srcdir)/libgimpcolor/gimpcmyk.c			\
-	$(top_srcdir)/libgimpcolor/gimpcolormanaged.c		\
-	$(top_srcdir)/libgimpcolor/gimpcolorprofile.c		\
-	$(top_srcdir)/libgimpcolor/gimpcolorspace.c		\
-	$(top_srcdir)/libgimpcolor/gimpcolortransform.c		\
-	$(top_srcdir)/libgimpcolor/gimphsl.c			\
-	$(top_srcdir)/libgimpcolor/gimphsv.c			\
-	$(top_srcdir)/libgimpcolor/gimppixbuf.c			\
-	$(top_srcdir)/libgimpcolor/gimprgb.c			\
-	$(top_srcdir)/libgimpcolor/gimprgb-parse.c		\
+	../libgimpcolor/gimpadaptivesupersample.c	\
+	../libgimpcolor/gimpbilinear.c		\
+	../libgimpcolor/gimpcairo.c			\
+	../libgimpcolor/gimpcmyk.c			\
+	../libgimpcolor/gimpcolormanaged.c		\
+	../libgimpcolor/gimpcolorprofile.c		\
+	../libgimpcolor/gimpcolorspace.c		\
+	../libgimpcolor/gimpcolortransform.c		\
+	../libgimpcolor/gimphsl.c			\
+	../libgimpcolor/gimphsv.c			\
+	../libgimpcolor/gimppixbuf.c			\
+	../libgimpcolor/gimprgb.c			\
+	../libgimpcolor/gimprgb-parse.c		\
 	$(libgimpcolor_introspectable_headers)

@@ -1,35 +1,35 @@
 # Introspectable sources for libgimpbase
 
 libgimpbase_introspectable = \
-	$(top_srcdir)/libgimpbase/gimpbaseenums.h		\
-	$(top_srcdir)/libgimpbase/gimpbasetypes.h		\
-	$(top_srcdir)/libgimpbase/gimpbasetypes.c		\
-	$(top_srcdir)/libgimpbase/gimplimits.h			\
-	$(top_builddir)/libgimpbase/gimpversion.h		\
+	../libgimpbase/gimpbaseenums.h		\
+	../libgimpbase/gimpbasetypes.h		\
+	../libgimpbase/gimpbasetypes.c		\
+	../libgimpbase/gimplimits.h			\
+	../libgimpbase/gimpversion.h		\
 	\
-	$(top_srcdir)/libgimpbase/gimpchecks.c           	\
-	$(top_srcdir)/libgimpbase/gimpchecks.h           	\
-	$(top_srcdir)/libgimpbase/gimpcpuaccel.c		\
-	$(top_srcdir)/libgimpbase/gimpcpuaccel.h		\
-	$(top_srcdir)/libgimpbase/gimpenv.c			\
-	$(top_srcdir)/libgimpbase/gimpenv.h			\
-	$(top_srcdir)/libgimpbase/gimpmemsize.c			\
-	$(top_srcdir)/libgimpbase/gimpmemsize.h			\
-	$(top_srcdir)/libgimpbase/gimpmetadata.c		\
-	$(top_srcdir)/libgimpbase/gimpmetadata.h		\
-	$(top_srcdir)/libgimpbase/gimpparamspecs.c		\
-	$(top_srcdir)/libgimpbase/gimpparamspecs.h		\
-	$(top_srcdir)/libgimpbase/gimpparasite.c		\
-	$(top_srcdir)/libgimpbase/gimpparasite.h		\
-	$(top_srcdir)/libgimpbase/gimpparasiteio.c		\
-	$(top_srcdir)/libgimpbase/gimpparasiteio.h		\
-	$(top_srcdir)/libgimpbase/gimprectangle.c		\
-	$(top_srcdir)/libgimpbase/gimprectangle.h		\
-	$(top_srcdir)/libgimpbase/gimpsignal.c			\
-	$(top_srcdir)/libgimpbase/gimpsignal.h			\
-	$(top_srcdir)/libgimpbase/gimpunit.c			\
-	$(top_srcdir)/libgimpbase/gimpunit.h			\
-	$(top_srcdir)/libgimpbase/gimputils.c            	\
-	$(top_srcdir)/libgimpbase/gimputils.h            	\
-	$(top_srcdir)/libgimpbase/gimpvaluearray.c		\
-	$(top_srcdir)/libgimpbase/gimpvaluearray.h
+	../libgimpbase/gimpchecks.c           	\
+	../libgimpbase/gimpchecks.h           	\
+	../libgimpbase/gimpcpuaccel.c		\
+	../libgimpbase/gimpcpuaccel.h		\
+	../libgimpbase/gimpenv.c			\
+	../libgimpbase/gimpenv.h			\
+	../libgimpbase/gimpmemsize.c			\
+	../libgimpbase/gimpmemsize.h			\
+	../libgimpbase/gimpmetadata.c		\
+	../libgimpbase/gimpmetadata.h		\
+	../libgimpbase/gimpparamspecs.c		\
+	../libgimpbase/gimpparamspecs.h		\
+	../libgimpbase/gimpparasite.c		\
+	../libgimpbase/gimpparasite.h		\
+	../libgimpbase/gimpparasiteio.c		\
+	../libgimpbase/gimpparasiteio.h		\
+	../libgimpbase/gimprectangle.c		\
+	../libgimpbase/gimprectangle.h		\
+	../libgimpbase/gimpsignal.c			\
+	../libgimpbase/gimpsignal.h			\
+	../libgimpbase/gimpunit.c			\
+	../libgimpbase/gimpunit.h			\
+	../libgimpbase/gimputils.c            	\
+	../libgimpbase/gimputils.h            	\
+	../libgimpbase/gimpvaluearray.c		\
+	../libgimpbase/gimpvaluearray.h
