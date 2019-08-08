@@ -121,7 +121,7 @@ save_dialog (WebPSaveParams *params,
   gtk_widget_show (table);
 
   /* Create the lossless checkbox */
-  toggle = gtk_check_button_new_with_label (_("Lossless"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Lossless"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 params->lossless);
   gtk_table_attach (GTK_TABLE (table), toggle,
@@ -137,7 +137,7 @@ save_dialog (WebPSaveParams *params,
   /* Create the slider for image quality */
   quality_scale = gimp_scale_entry_new (GTK_TABLE (table),
                                         0, row++,
-                                        _("Image quality:"),
+                                        _("Image _quality:"),
                                         125,
                                         0,
                                         params->quality,
@@ -156,7 +156,7 @@ save_dialog (WebPSaveParams *params,
   /* Create the slider for alpha channel quality */
   alpha_quality_scale = gimp_scale_entry_new (GTK_TABLE (table),
                                               0, row++,
-                                              _("Alpha quality:"),
+                                              _("Alpha q_uality:"),
                                               125,
                                               0,
                                               params->alpha_quality,
@@ -189,7 +189,7 @@ save_dialog (WebPSaveParams *params,
                                   "Text",    WEBP_PRESET_TEXT,
                                   NULL);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                     _("Source type:"), 0.0, 0.5,
+                                     _("Source _type:"), 0.0, 0.5,
                                      combo, 2, FALSE);
   gimp_help_set_help_data (label,
                            _("WebP encoder \"preset\""),
@@ -253,7 +253,7 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (animation_box);
 
       /* loop animation checkbox */
-      toggle = gtk_check_button_new_with_label (_("Loop forever"));
+      toggle = gtk_check_button_new_with_mnemonic (_("Loop _forever"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->loop);
       gtk_box_pack_start (GTK_BOX (animation_box), toggle,
                           FALSE, FALSE, 0);
@@ -305,7 +305,7 @@ save_dialog (WebPSaveParams *params,
       show_maxkeyframe_hints (adj_kf, GTK_LABEL (label_kf));
 
       /* minimize-size checkbox */
-      toggle_minsize = gtk_check_button_new_with_label (_("Minimize output size (slower)"));
+      toggle_minsize = gtk_check_button_new_with_mnemonic (_("_Minimize output size (slower)"));
 
       gtk_box_pack_start (GTK_BOX (animation_box), toggle_minsize,
                           FALSE, FALSE, 0);
@@ -351,7 +351,7 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label);
 
       /* Create the force-delay checkbox */
-      toggle = gtk_check_button_new_with_label (_("Use delay entered above for all frames"));
+      toggle = gtk_check_button_new_with_mnemonic (_("Use _delay entered above for all frames"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     params->force_delay);
       gtk_box_pack_start (GTK_BOX (animation_box), toggle, FALSE, FALSE, 0);
@@ -363,7 +363,7 @@ save_dialog (WebPSaveParams *params,
   }
 
   /* Save EXIF data */
-  toggle = gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Save Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->exif);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

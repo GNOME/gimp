@@ -299,7 +299,7 @@ save_dialog (void)
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (entry), description);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Description:"), 1.0, 0.5,
+                             _("_Description:"), 1.0, 0.5,
                              entry, 1, FALSE);
   gtk_widget_show (entry);
 

@@ -971,7 +971,7 @@ save_dialog (gint channels)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_radio_button_new_with_label (group, "R5 G6 B5");
+  toggle = gtk_radio_button_new_with_mnemonic (group, "_R5 G6 B5");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -979,7 +979,7 @@ save_dialog (gint channels)
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_565));
 
-  toggle = gtk_radio_button_new_with_label (group, "A1 R5 G5 B5");
+  toggle = gtk_radio_button_new_with_mnemonic (group, "_A1 R5 G5 B5");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
@@ -991,7 +991,7 @@ save_dialog (gint channels)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBA_5551));
-  toggle = gtk_radio_button_new_with_label (group, "X1 R5 G5 B5");
+  toggle = gtk_radio_button_new_with_mnemonic (group, "_X1 R5 G5 B5");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -1003,7 +1003,7 @@ save_dialog (gint channels)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gtk_radio_button_new_with_label (group, "R8 G8 B8");
+  toggle = gtk_radio_button_new_with_mnemonic (group, "R_8 G8 B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(toggle));
   gtk_container_add (GTK_CONTAINER (frame), toggle);
   gtk_widget_show (toggle);
@@ -1024,7 +1024,7 @@ save_dialog (gint channels)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_radio_button_new_with_label (group, "A8 R8 G8 B8");
+  toggle = gtk_radio_button_new_with_mnemonic (group, "A8 R8 G8 _B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -1043,7 +1043,7 @@ save_dialog (gint channels)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
     }
 
-  toggle = gtk_radio_button_new_with_label (group, "X8 R8 G8 B8");
+  toggle = gtk_radio_button_new_with_mnemonic (group, "X8 R8 G8 _B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

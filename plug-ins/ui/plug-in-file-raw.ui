@@ -16,7 +16,7 @@
             <property name="spacing">2</property>
             <child>
               <object class="GtkRadioButton" id="image-type-standard">
-                <property name="label" translatable="yes">Standard (R,G,B)</property>
+                <property name="label" translatable="yes">_Standard (R,G,B)</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -26,7 +26,7 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="image-type-planar">
-                <property name="label" translatable="yes">Planar (RRR,GGG,BBB)</property>
+                <property name="label" translatable="yes">_Planar (RRR,GGG,BBB)</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -49,7 +49,7 @@
             <property name="spacing">2</property>
             <child>
               <object class="GtkRadioButton" id="palette-type-normal">
-                <property name="label" translatable="yes">R, G, B (normal)</property>
+                <property name="label" translatable="yes">_R, G, B (normal)</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -59,7 +59,7 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="palette-type-bmp">
-                <property name="label" translatable="yes">B, G, R, X (BMP style)</property>
+                <property name="label" translatable="yes">_B, G, R, X (BMP style)</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
