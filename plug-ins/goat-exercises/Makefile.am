@@ -33,6 +33,9 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
+
+# C version.
+
 goat_exercise_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise
 
 goat_exercise_libexec_PROGRAMS = goat-exercise
@@ -56,3 +59,8 @@ goat_exercise_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(goat_exercise_RC)
+
+# Javascript (GJS) version.
+
+goat_exercise_gjsdir = $(gimpplugindir)/plug-ins/goat-exercise-gjs
+goat_exercise_gjs_SCRIPTS = goat-exercise-gjs.js
