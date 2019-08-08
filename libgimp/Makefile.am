@@ -308,8 +308,8 @@ INTROSPECTION_COMPILER_ARGS = \
 INTROSPECTION_SCANNER_ENV = CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
 
 Gimp-@GIMP_API_VERSION@.gir: \
-	../libgimp/libgimp-@GIMP_API_VERSION@.la		\
-	../libgimp/libgimpui-@GIMP_API_VERSION@.la		\
+	libgimp-@GIMP_API_VERSION@.la				\
+	libgimpui-@GIMP_API_VERSION@.la				\
 	../libgimpbase/libgimpbase-@GIMP_API_VERSION@.la	\
 	../libgimpcolor/libgimpcolor-@GIMP_API_VERSION@.la	\
 	../libgimpconfig/libgimpconfig-@GIMP_API_VERSION@.la	\
