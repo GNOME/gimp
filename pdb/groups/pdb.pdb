@@ -268,6 +268,8 @@ HELP
     $date = '2019';
     $since = '3.0';
 
+    $lib_private = 1;
+
     @inargs = (
 	{ name => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc => 'The procedure name' },
@@ -326,6 +328,8 @@ HELP
     &mitch_pdb_misc;
     $date = '2019';
     $since = '3.0';
+
+    $lib_private = 1;
 
     @inargs = (
 	{ name => 'procedure_name', type  => 'string', non_empty => 1,
@@ -656,5 +660,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Procedural database';
+
+$lib_private = 1;
 
 1;

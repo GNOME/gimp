@@ -22,6 +22,7 @@
 
 #include "gimp.h"
 #include "gimppdb-private.h"
+#include "gimppdb_pdb.h"
 #include "gimppdbprocedure.h"
 
 

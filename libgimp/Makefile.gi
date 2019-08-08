@@ -2,49 +2,48 @@
 
 PDB_WRAPPERS_C = \
 	../libgimp/gimp_pdb.c			\
-	../libgimp/gimpbrush_pdb.c			\
-	../libgimp/gimpbrushes_pdb.c			\
-	../libgimp/gimpbrushselect_pdb.c		\
-	../libgimp/gimpbuffer_pdb.c			\
-	../libgimp/gimpchannel_pdb.c			\
-	../libgimp/gimpcontext_pdb.c			\
-	../libgimp/gimpdebug_pdb.c			\
-	../libgimp/gimpdisplay_pdb.c			\
+	../libgimp/gimpbrush_pdb.c		\
+	../libgimp/gimpbrushes_pdb.c		\
+	../libgimp/gimpbrushselect_pdb.c	\
+	../libgimp/gimpbuffer_pdb.c		\
+	../libgimp/gimpchannel_pdb.c		\
+	../libgimp/gimpcontext_pdb.c		\
+	../libgimp/gimpdebug_pdb.c		\
+	../libgimp/gimpdisplay_pdb.c		\
 	../libgimp/gimpdrawable_pdb.c		\
-	../libgimp/gimpdrawablecolor_pdb.c		\
-	../libgimp/gimpdrawableedit_pdb.c		\
+	../libgimp/gimpdrawablecolor_pdb.c	\
+	../libgimp/gimpdrawableedit_pdb.c	\
 	../libgimp/gimpdynamics_pdb.c		\
-	../libgimp/gimpedit_pdb.c			\
-	../libgimp/gimpfileops_pdb.c			\
-	../libgimp/gimpfloatingsel_pdb.c		\
-	../libgimp/gimpfonts_pdb.c			\
+	../libgimp/gimpedit_pdb.c		\
+	../libgimp/gimpfileops_pdb.c		\
+	../libgimp/gimpfloatingsel_pdb.c	\
+	../libgimp/gimpfonts_pdb.c		\
 	../libgimp/gimpfontselect_pdb.c		\
-	../libgimp/gimpgimprc_pdb.c			\
+	../libgimp/gimpgimprc_pdb.c		\
 	../libgimp/gimpgradient_pdb.c		\
 	../libgimp/gimpgradients_pdb.c		\
-	../libgimp/gimpgradientselect_pdb.c		\
-	../libgimp/gimphelp_pdb.c			\
-	../libgimp/gimpimage_pdb.c			\
+	../libgimp/gimpgradientselect_pdb.c	\
+	../libgimp/gimphelp_pdb.c		\
+	../libgimp/gimpimage_pdb.c		\
 	../libgimp/gimpimagecolorprofile_pdb.c	\
-	../libgimp/gimpimageconvert_pdb.c		\
+	../libgimp/gimpimageconvert_pdb.c	\
 	../libgimp/gimpimagegrid_pdb.c		\
-	../libgimp/gimpimageguides_pdb.c		\
+	../libgimp/gimpimageguides_pdb.c	\
 	../libgimp/gimpimagesamplepoints_pdb.c	\
-	../libgimp/gimpimageselect_pdb.c		\
-	../libgimp/gimpimagetransform_pdb.c		\
+	../libgimp/gimpimageselect_pdb.c	\
+	../libgimp/gimpimagetransform_pdb.c	\
 	../libgimp/gimpimageundo_pdb.c		\
-	../libgimp/gimpitem_pdb.c			\
-	../libgimp/gimpitemtransform_pdb.c		\
-	../libgimp/gimplayer_pdb.c			\
-	../libgimp/gimpmessage_pdb.c			\
+	../libgimp/gimpitem_pdb.c		\
+	../libgimp/gimpitemtransform_pdb.c	\
+	../libgimp/gimplayer_pdb.c		\
+	../libgimp/gimpmessage_pdb.c		\
 	../libgimp/gimppainttools_pdb.c		\
-	../libgimp/gimppalette_pdb.c			\
+	../libgimp/gimppalette_pdb.c		\
 	../libgimp/gimppalettes_pdb.c		\
-	../libgimp/gimppaletteselect_pdb.c		\
-	../libgimp/gimppattern_pdb.c			\
+	../libgimp/gimppaletteselect_pdb.c	\
+	../libgimp/gimppattern_pdb.c		\
 	../libgimp/gimppatterns_pdb.c		\
-	../libgimp/gimppatternselect_pdb.c		\
-	../libgimp/gimppdb_pdb.c			\
+	../libgimp/gimppatternselect_pdb.c	\
 	../libgimp/gimpprogress_pdb.c		\
 	../libgimp/gimpselection_pdb.c		\
 	../libgimp/gimptextlayer_pdb.c		\
@@ -54,49 +53,48 @@ PDB_WRAPPERS_C = \
 PDB_WRAPPERS_H = \
 	../libgimp/gimp_pdb_headers.h		\
 	../libgimp/gimp_pdb.h			\
-	../libgimp/gimpbrush_pdb.h			\
-	../libgimp/gimpbrushes_pdb.h			\
-	../libgimp/gimpbrushselect_pdb.h		\
-	../libgimp/gimpbuffer_pdb.h			\
-	../libgimp/gimpchannel_pdb.h			\
-	../libgimp/gimpcontext_pdb.h			\
-	../libgimp/gimpdebug_pdb.h			\
-	../libgimp/gimpdisplay_pdb.h			\
+	../libgimp/gimpbrush_pdb.h		\
+	../libgimp/gimpbrushes_pdb.h		\
+	../libgimp/gimpbrushselect_pdb.h	\
+	../libgimp/gimpbuffer_pdb.h		\
+	../libgimp/gimpchannel_pdb.h		\
+	../libgimp/gimpcontext_pdb.h		\
+	../libgimp/gimpdebug_pdb.h		\
+	../libgimp/gimpdisplay_pdb.h		\
 	../libgimp/gimpdrawable_pdb.h		\
-	../libgimp/gimpdrawablecolor_pdb.h		\
-	../libgimp/gimpdrawableedit_pdb.h		\
+	../libgimp/gimpdrawablecolor_pdb.h	\
+	../libgimp/gimpdrawableedit_pdb.h	\
 	../libgimp/gimpdynamics_pdb.h		\
-	../libgimp/gimpedit_pdb.h			\
-	../libgimp/gimpfileops_pdb.h			\
-	../libgimp/gimpfloatingsel_pdb.h		\
-	../libgimp/gimpfonts_pdb.h			\
+	../libgimp/gimpedit_pdb.h		\
+	../libgimp/gimpfileops_pdb.h		\
+	../libgimp/gimpfloatingsel_pdb.h	\
+	../libgimp/gimpfonts_pdb.h		\
 	../libgimp/gimpfontselect_pdb.h		\
-	../libgimp/gimpgimprc_pdb.h			\
+	../libgimp/gimpgimprc_pdb.h		\
 	../libgimp/gimpgradient_pdb.h		\
 	../libgimp/gimpgradients_pdb.h		\
-	../libgimp/gimpgradientselect_pdb.h		\
-	../libgimp/gimphelp_pdb.h			\
-	../libgimp/gimpimage_pdb.h			\
+	../libgimp/gimpgradientselect_pdb.h	\
+	../libgimp/gimphelp_pdb.h		\
+	../libgimp/gimpimage_pdb.h		\
 	../libgimp/gimpimagecolorprofile_pdb.h	\
-	../libgimp/gimpimageconvert_pdb.h		\
+	../libgimp/gimpimageconvert_pdb.h	\
 	../libgimp/gimpimagegrid_pdb.h		\
-	../libgimp/gimpimageguides_pdb.h		\
+	../libgimp/gimpimageguides_pdb.h	\
 	../libgimp/gimpimagesamplepoints_pdb.h	\
-	../libgimp/gimpimageselect_pdb.h		\
-	../libgimp/gimpimagetransform_pdb.h		\
+	../libgimp/gimpimageselect_pdb.h	\
+	../libgimp/gimpimagetransform_pdb.h	\
 	../libgimp/gimpimageundo_pdb.h		\
-	../libgimp/gimpitem_pdb.h			\
-	../libgimp/gimpitemtransform_pdb.h		\
-	../libgimp/gimplayer_pdb.h			\
-	../libgimp/gimpmessage_pdb.h			\
+	../libgimp/gimpitem_pdb.h		\
+	../libgimp/gimpitemtransform_pdb.h	\
+	../libgimp/gimplayer_pdb.h		\
+	../libgimp/gimpmessage_pdb.h		\
 	../libgimp/gimppainttools_pdb.h		\
-	../libgimp/gimppalette_pdb.h			\
+	../libgimp/gimppalette_pdb.h		\
 	../libgimp/gimppalettes_pdb.h		\
-	../libgimp/gimppaletteselect_pdb.h		\
-	../libgimp/gimppattern_pdb.h			\
+	../libgimp/gimppaletteselect_pdb.h	\
+	../libgimp/gimppattern_pdb.h		\
 	../libgimp/gimppatterns_pdb.h		\
-	../libgimp/gimppatternselect_pdb.h		\
-	../libgimp/gimppdb_pdb.h			\
+	../libgimp/gimppatternselect_pdb.h	\
 	../libgimp/gimpprogress_pdb.h		\
 	../libgimp/gimpselection_pdb.h		\
 	../libgimp/gimptextlayer_pdb.h		\
@@ -106,10 +104,10 @@ PDB_WRAPPERS_H = \
 libgimp_introspectable = \
 	../libgimp/gimp.c			\
 	../libgimp/gimp.h			\
-	../libgimp/gimptypes.h		\
-	../libgimp/gimpenums.h		\
-	${PDB_WRAPPERS_C}				\
-	${PDB_WRAPPERS_H}				\
+	../libgimp/gimptypes.h			\
+	../libgimp/gimpenums.h			\
+	${PDB_WRAPPERS_C}			\
+	${PDB_WRAPPERS_H}			\
 	../libgimp/gimpbrushselect.c		\
 	../libgimp/gimpbrushselect.h		\
 	../libgimp/gimpchannel.c		\
@@ -118,26 +116,26 @@ libgimp_introspectable = \
 	../libgimp/gimpdrawable.h		\
 	../libgimp/gimpfontselect.c		\
 	../libgimp/gimpfontselect.h		\
-	../libgimp/gimpgimprc.c		\
-	../libgimp/gimpgimprc.h		\
-	../libgimp/gimpgradientselect.c	\
-	../libgimp/gimpgradientselect.h	\
-	../libgimp/gimpimage.c		\
-	../libgimp/gimpimage.h		\
+	../libgimp/gimpgimprc.c			\
+	../libgimp/gimpgimprc.h			\
+	../libgimp/gimpgradientselect.c		\
+	../libgimp/gimpgradientselect.h		\
+	../libgimp/gimpimage.c			\
+	../libgimp/gimpimage.h			\
 	../libgimp/gimpimagecolorprofile.c	\
 	../libgimp/gimpimagecolorprofile.h	\
-	../libgimp/gimplayer.c		\
-	../libgimp/gimplayer.h		\
-	../libgimp/gimppaletteselect.c	\
-	../libgimp/gimppaletteselect.h	\
+	../libgimp/gimplayer.c			\
+	../libgimp/gimplayer.h			\
+	../libgimp/gimppaletteselect.c		\
+	../libgimp/gimppaletteselect.h		\
 	../libgimp/gimpparamspecs.c		\
 	../libgimp/gimpparamspecs.h		\
-	../libgimp/gimppatternselect.c	\
-	../libgimp/gimppatternselect.h	\
+	../libgimp/gimppatternselect.c		\
+	../libgimp/gimppatternselect.h		\
 	../libgimp/gimppdb.c			\
 	../libgimp/gimppdb.h			\
-	../libgimp/gimpplugin.c		\
-	../libgimp/gimpplugin.h		\
+	../libgimp/gimpplugin.c			\
+	../libgimp/gimpplugin.h			\
 	../libgimp/gimpprocedure.c		\
 	../libgimp/gimpprocedure.h		\
 	../libgimp/gimpprogress.c		\
@@ -145,7 +143,7 @@ libgimp_introspectable = \
 	../libgimp/gimpselection.c		\
 	../libgimp/gimpselection.h
 
-libgimpui_introspectable =				\
+libgimpui_introspectable = \
 	../libgimp/gimpui.c			\
 	../libgimp/gimpui.h			\
 	../libgimp/gimpuitypes.h		\
@@ -155,18 +153,18 @@ libgimpui_introspectable =				\
 	../libgimp/gimpbrushselectbutton.h	\
 	../libgimp/gimpdrawablepreview.c	\
 	../libgimp/gimpdrawablepreview.h	\
-	../libgimp/gimpexport.c		\
-	../libgimp/gimpexport.h		\
+	../libgimp/gimpexport.c			\
+	../libgimp/gimpexport.h			\
 	../libgimp/gimpfontselectbutton.c	\
 	../libgimp/gimpfontselectbutton.h	\
-	../libgimp/gimpgradientselectbutton.c\
-	../libgimp/gimpgradientselectbutton.h\
-	../libgimp/gimpimagecombobox.c	\
-	../libgimp/gimpimagecombobox.h	\
-	../libgimp/gimpimagemetadata.c	\
-	../libgimp/gimpimagemetadata.h	\
-	../libgimp/gimpitemcombobox.c	\
-	../libgimp/gimpitemcombobox.h	\
+	../libgimp/gimpgradientselectbutton.c	\
+	../libgimp/gimpgradientselectbutton.h	\
+	../libgimp/gimpimagecombobox.c		\
+	../libgimp/gimpimagecombobox.h		\
+	../libgimp/gimpimagemetadata.c		\
+	../libgimp/gimpimagemetadata.h		\
+	../libgimp/gimpitemcombobox.c		\
+	../libgimp/gimpitemcombobox.h		\
 	../libgimp/gimppaletteselectbutton.c	\
 	../libgimp/gimppaletteselectbutton.h	\
 	../libgimp/gimppatternselectbutton.c	\
@@ -177,7 +175,7 @@ libgimpui_introspectable =				\
 	../libgimp/gimpprocview.h		\
 	../libgimp/gimpprogressbar.c		\
 	../libgimp/gimpprogressbar.h		\
-	../libgimp/gimpselectbutton.c	\
-	../libgimp/gimpselectbutton.h	\
+	../libgimp/gimpselectbutton.c		\
+	../libgimp/gimpselectbutton.h		\
 	../libgimp/gimpzoompreview.c		\
 	../libgimp/gimpzoompreview.h

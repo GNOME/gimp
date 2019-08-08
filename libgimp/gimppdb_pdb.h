@@ -32,48 +32,48 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gchar*   _gimp_pdb_temp_name        (void);
-G_GNUC_INTERNAL gboolean _gimp_pdb_dump             (const gchar       *filename);
-G_GNUC_INTERNAL gboolean _gimp_pdb_query            (const gchar       *name,
-                                                     const gchar       *blurb,
-                                                     const gchar       *help,
-                                                     const gchar       *author,
-                                                     const gchar       *copyright,
-                                                     const gchar       *date,
-                                                     const gchar       *proc_type,
-                                                     gint              *num_matches,
-                                                     gchar           ***procedure_names);
-G_GNUC_INTERNAL gboolean _gimp_pdb_proc_exists      (const gchar       *procedure_name);
-G_GNUC_INTERNAL gboolean _gimp_pdb_proc_info        (const gchar       *procedure_name,
-                                                     gchar            **blurb,
-                                                     gchar            **help,
-                                                     gchar            **author,
-                                                     gchar            **copyright,
-                                                     gchar            **date,
-                                                     GimpPDBProcType   *proc_type,
-                                                     gint              *num_args,
-                                                     gint              *num_values);
-G_GNUC_INTERNAL gboolean _gimp_pdb_proc_arg         (const gchar       *procedure_name,
-                                                     gint               arg_num,
-                                                     GimpPDBArgType    *arg_type,
-                                                     gchar            **arg_name,
-                                                     gchar            **arg_desc);
-G_GNUC_INTERNAL gboolean _gimp_pdb_proc_val         (const gchar       *procedure_name,
-                                                     gint               val_num,
-                                                     GimpPDBArgType    *val_type,
-                                                     gchar            **val_name,
-                                                     gchar            **val_desc);
-GParamSpec*              gimp_pdb_proc_argument     (const gchar       *procedure_name,
-                                                     gint               arg_num);
-GParamSpec*              gimp_pdb_proc_return_value (const gchar       *procedure_name,
-                                                     gint               val_num);
-G_GNUC_INTERNAL gboolean _gimp_pdb_get_data         (const gchar       *identifier,
-                                                     gint              *bytes,
-                                                     guint8           **data);
-G_GNUC_INTERNAL gint     _gimp_pdb_get_data_size    (const gchar       *identifier);
-G_GNUC_INTERNAL gboolean _gimp_pdb_set_data         (const gchar       *identifier,
-                                                     gint               bytes,
-                                                     const guint8      *data);
+G_GNUC_INTERNAL gchar*      _gimp_pdb_temp_name         (void);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_dump              (const gchar       *filename);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_query             (const gchar       *name,
+                                                         const gchar       *blurb,
+                                                         const gchar       *help,
+                                                         const gchar       *author,
+                                                         const gchar       *copyright,
+                                                         const gchar       *date,
+                                                         const gchar       *proc_type,
+                                                         gint              *num_matches,
+                                                         gchar           ***procedure_names);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_exists       (const gchar       *procedure_name);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_info         (const gchar       *procedure_name,
+                                                         gchar            **blurb,
+                                                         gchar            **help,
+                                                         gchar            **author,
+                                                         gchar            **copyright,
+                                                         gchar            **date,
+                                                         GimpPDBProcType   *proc_type,
+                                                         gint              *num_args,
+                                                         gint              *num_values);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_arg          (const gchar       *procedure_name,
+                                                         gint               arg_num,
+                                                         GimpPDBArgType    *arg_type,
+                                                         gchar            **arg_name,
+                                                         gchar            **arg_desc);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_val          (const gchar       *procedure_name,
+                                                         gint               val_num,
+                                                         GimpPDBArgType    *val_type,
+                                                         gchar            **val_name,
+                                                         gchar            **val_desc);
+G_GNUC_INTERNAL GParamSpec* _gimp_pdb_proc_argument     (const gchar       *procedure_name,
+                                                         gint               arg_num);
+G_GNUC_INTERNAL GParamSpec* _gimp_pdb_proc_return_value (const gchar       *procedure_name,
+                                                         gint               val_num);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_get_data          (const gchar       *identifier,
+                                                         gint              *bytes,
+                                                         guint8           **data);
+G_GNUC_INTERNAL gint        _gimp_pdb_get_data_size     (const gchar       *identifier);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_data          (const gchar       *identifier,
+                                                         gint               bytes,
+                                                         const guint8      *data);
 
 
 G_END_DECLS

@@ -70,7 +70,6 @@
 #include <libgimp/gimppattern_pdb.h>
 #include <libgimp/gimppatterns_pdb.h>
 #include <libgimp/gimppatternselect_pdb.h>
-#include <libgimp/gimppdb_pdb.h>
 #include <libgimp/gimpprogress_pdb.h>
 #include <libgimp/gimpselection_pdb.h>
 #include <libgimp/gimptextlayer_pdb.h>

@@ -100,6 +100,12 @@ gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
                                                 const gchar          *proc_type,
                                                 gint                 *num_matches);
 
+/*  Temporary API, to go away before 3.0  */
+
+GParamSpec * gimp_pdb_proc_argument     (const gchar *procedure_name,
+                                         gint         arg_num);
+GParamSpec * gimp_pdb_proc_return_value (const gchar *procedure_name,
+                                         gint         val_num);
 
 /*  Cruft API  */
 

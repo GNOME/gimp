@@ -107,6 +107,11 @@ libgimp_built_sources = \
 	gimpenums.c
 
 libgimp_private_sources = \
+	gimp-debug.c		\
+	gimp-debug.h		\
+	gimp-private.h		\
+	gimp-shm.c		\
+	gimp-shm.h		\
 	gimpgpcompat.c		\
 	gimpgpcompat.h		\
 	gimpgpparams.c		\
@@ -121,16 +126,13 @@ libgimp_private_sources = \
 	gimppixbuf.h		\
 	gimpplugin-private.c	\
 	gimpplugin-private.h	\
-	gimp-debug.c		\
-	gimp-debug.h		\
-	gimp-private.h		\
-	gimp-shm.c		\
-	gimp-shm.h		\
 	gimpprocedure-private.c	\
 	gimpprocedure-private.h	\
 	\
 	gimpunit_pdb.c		\
 	gimpunit_pdb.h		\
+	gimppdb_pdb.c		\
+	gimppdb_pdb.h		\
 	gimpplugin_pdb.c	\
 	gimpplugin_pdb.h
 
@@ -285,8 +287,6 @@ gimpuimarshal.c: gimpuimarshal.h
 ### GObject introspection
 
 -include $(INTROSPECTION_MAKEFILE)
-AUTOMAKE_OPTIONS = subdir-objects
-include ../libgimp/Makefile.gi
 include ../libgimpbase/Makefile.gi
 include ../libgimpcolor/Makefile.gi
 include ../libgimpconfig/Makefile.gi

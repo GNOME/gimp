@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include "gimp.h"
+#include "gimppdb_pdb.h"
 
 /**
  * _gimp_pdb_temp_name:
@@ -429,7 +430,7 @@ _gimp_pdb_proc_val (const gchar     *procedure_name,
 }
 
 /**
- * gimp_pdb_proc_argument:
+ * _gimp_pdb_proc_argument:
  * @procedure_name: The procedure name.
  * @arg_num: The argument number.
  *
@@ -444,8 +445,8 @@ _gimp_pdb_proc_val (const gchar     *procedure_name,
  * Since: 3.0
  **/
 GParamSpec *
-gimp_pdb_proc_argument (const gchar *procedure_name,
-                        gint         arg_num)
+_gimp_pdb_proc_argument (const gchar *procedure_name,
+                         gint         arg_num)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -475,7 +476,7 @@ gimp_pdb_proc_argument (const gchar *procedure_name,
 }
 
 /**
- * gimp_pdb_proc_return_value:
+ * _gimp_pdb_proc_return_value:
  * @procedure_name: The procedure name.
  * @val_num: The return value number.
  *
@@ -491,8 +492,8 @@ gimp_pdb_proc_argument (const gchar *procedure_name,
  * Since: 3.0
  **/
 GParamSpec *
-gimp_pdb_proc_return_value (const gchar *procedure_name,
-                            gint         val_num)
+_gimp_pdb_proc_return_value (const gchar *procedure_name,
+                             gint         val_num)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

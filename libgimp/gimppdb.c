@@ -28,6 +28,7 @@
 #include "gimp-private.h"
 #include "gimpgpparams.h"
 #include "gimppdb-private.h"
+#include "gimppdb_pdb.h"
 #include "gimppdbprocedure.h"
 #include "gimpplugin-private.h"
 
@@ -430,6 +431,22 @@ _gimp_pdb_error_quark (void)
   return g_quark_from_static_string ("gimp-pdb-error-quark");
 }
 
+
+/*  Temporary API, to go away before 3.0  */
+
+GParamSpec *
+gimp_pdb_proc_argument (const gchar *procedure_name,
+                        gint         arg_num)
+{
+  return _gimp_pdb_proc_argument (procedure_name, arg_num);
+}
+
+GParamSpec *
+gimp_pdb_proc_return_value (const gchar *procedure_name,
+                            gint         val_num)
+{
+  return _gimp_pdb_proc_return_value (procedure_name, val_num);
+}
 
 /*  Cruft API  */
 
