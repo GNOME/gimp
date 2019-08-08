@@ -4,7 +4,7 @@ Note: bug reporters are expected to have verified the bug still exists
 either in the last stable version of GIMP or on updated development code
 (master branch).
 
-Operating System:
+Operating System: [Windows? macOS? Linux?]
 
 Package: [flatpak? Installer from gimp.org? If another installer, tell us where from]
 
