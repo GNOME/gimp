@@ -24,6 +24,7 @@ image: archlinux/base:latest
     - pacman -Syu --noconfirm --needed --cachedir `pwd`/_pacman_cache
         git
         base-devel
+        gobject-introspection
         meson
         lcms2
     - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/babl.git _babl
@@ -64,6 +65,7 @@ babl-git-meson:
         lcms2
         base-devel
         ffmpeg
+        gobject-introspection
         graphviz
         jasper
         json-glib
