@@ -1755,8 +1755,8 @@ save_dialog (void)
                                     G_CALLBACK (gimp_radio_button_update),
                                     &psvals.rle, psvals.rle,
 
-                                    _("RunLength Encoded"), TRUE,  NULL,
-                                    _("Standard"),          FALSE, NULL,
+                                    _("_RunLength Encoded"), TRUE,  NULL,
+                                    _("_Standard"),          FALSE, NULL,
 
                                     NULL);
 

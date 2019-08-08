@@ -1347,7 +1347,7 @@ mng_save_dialog (gint32 image_id)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Interlace"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Interlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
   g_signal_connect (toggle, "toggled",
@@ -1359,7 +1359,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save background color"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _background color"));
   gtk_widget_set_sensitive (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
@@ -1370,7 +1370,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save gamma"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _gamma"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -1391,7 +1391,7 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label (_("Save creation time"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Save creation _time"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -1444,7 +1444,7 @@ mng_save_dialog (gint32 image_id)
                     &mng_data.default_dispose);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Default frame disposal:"), 0.0, 0.5,
+                             _("Default _frame disposal:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   scale_adj = (GtkAdjustment *)
@@ -1456,7 +1456,7 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("PNG compression level:"), 0.0, 0.9,
+                             _("_PNG compression level:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
   g_signal_connect (scale_adj, "value-changed",
@@ -1511,7 +1511,7 @@ mng_save_dialog (gint32 image_id)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Loop"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Loop"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
