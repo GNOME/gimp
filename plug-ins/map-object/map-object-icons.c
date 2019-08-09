@@ -22,7 +22,6 @@
 #include "map-object-icons.h"
 
 #include "../lighting/images/lighting-icon-images.h"
-#include "../lighting/images/lighting-icon-images.c"
 
 
 void
