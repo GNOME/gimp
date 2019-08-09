@@ -398,7 +398,7 @@ gimp_dockable_set_tab_style (GimpDockable *dockable,
 
   child = gtk_bin_get_child (GTK_BIN (dockable));
 
-  if (child && ! GIMP_DOCKED_GET_INTERFACE (child)->get_preview)
+  if (child && ! GIMP_DOCKED_GET_IFACE (child)->get_preview)
     tab_style = gimp_preview_tab_style_to_icon (tab_style);
 
   dockable->p->tab_style = tab_style;

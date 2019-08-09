@@ -94,7 +94,7 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
 
   *len = 0;
 
-  iface = GIMP_COLOR_MANAGED_GET_INTERFACE (managed);
+  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_icc_profile)
     return iface->get_icc_profile (managed, len);
@@ -120,7 +120,7 @@ gimp_color_managed_get_color_profile (GimpColorManaged *managed)
 
   g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
 
-  iface = GIMP_COLOR_MANAGED_GET_INTERFACE (managed);
+  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_color_profile)
     return iface->get_color_profile (managed);

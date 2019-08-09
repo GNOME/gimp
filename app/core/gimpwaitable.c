@@ -51,7 +51,7 @@ gimp_waitable_wait (GimpWaitable *waitable)
 
   g_return_if_fail (GIMP_IS_WAITABLE (waitable));
 
-  iface = GIMP_WAITABLE_GET_INTERFACE (waitable);
+  iface = GIMP_WAITABLE_GET_IFACE (waitable);
 
   if (iface->wait)
     iface->wait (waitable);
@@ -64,7 +64,7 @@ gimp_waitable_try_wait (GimpWaitable *waitable)
 
   g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
 
-  iface = GIMP_WAITABLE_GET_INTERFACE (waitable);
+  iface = GIMP_WAITABLE_GET_IFACE (waitable);
 
   if (iface->try_wait)
     {
@@ -86,7 +86,7 @@ gimp_waitable_wait_until (GimpWaitable *waitable,
 
   g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
 
-  iface = GIMP_WAITABLE_GET_INTERFACE (waitable);
+  iface = GIMP_WAITABLE_GET_IFACE (waitable);
 
   if (iface->wait_until)
     {

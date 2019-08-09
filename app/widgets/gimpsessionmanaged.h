@@ -22,13 +22,9 @@
 #define __GIMP_SESSION_MANAGED_H__
 
 
-#define GIMP_TYPE_SESSION_MANAGED               (gimp_session_managed_get_type ())
-#define GIMP_SESSION_MANAGED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SESSION_MANAGED, GimpSessionManaged))
-#define GIMP_IS_SESSION_MANAGED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SESSION_MANAGED))
-#define GIMP_SESSION_MANAGED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_SESSION_MANAGED, GimpSessionManagedInterface))
+#define GIMP_TYPE_SESSION_MANAGED (gimp_session_managed_get_type ())
+G_DECLARE_INTERFACE (GimpSessionManaged, gimp_session_managed, GIMP, SESSION_MANAGED, GtkWidget)
 
-
-typedef struct _GimpSessionManagedInterface GimpSessionManagedInterface;
 
 struct _GimpSessionManagedInterface
 {
@@ -40,8 +36,6 @@ struct _GimpSessionManagedInterface
                             GList              *aux_info);
 };
 
-
-GType              gimp_session_managed_get_type     (void) G_GNUC_CONST;
 
 GList            * gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed);
 void               gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,

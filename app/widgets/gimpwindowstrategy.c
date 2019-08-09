@@ -53,7 +53,7 @@ gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
 
   g_return_val_if_fail (GIMP_IS_WINDOW_STRATEGY (strategy), NULL);
 
-  iface = GIMP_WINDOW_STRATEGY_GET_INTERFACE (strategy);
+  iface = GIMP_WINDOW_STRATEGY_GET_IFACE (strategy);
 
   if (iface->show_dockable_dialog)
     return iface->show_dockable_dialog (strategy,
