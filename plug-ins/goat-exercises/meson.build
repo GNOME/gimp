@@ -44,6 +44,28 @@ install_data(
   install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-c',
 )
 
+# Vala version
+
+if have_vala
+  goat_exercise_vala = executable('goat-exercise-vala',
+    'goat-exercise-vala.vala',
+    include_directories: [ rootInclude, ],
+    dependencies: [
+      libgimp_vapi, libgimpui_vapi, gtk3, gegl, math,
+    ],
+    c_args: [
+      '-DGETTEXT_PACKAGE="@0@"'.format(gettext_package),
+    ],
+    install: true,
+    install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-vala',
+  )
+
+  install_data(
+    'goat-exercise-vala.vala',
+    install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-vala',
+  )
+endif
+
 # Python 3 (pygobject) version.
 
 if have_python

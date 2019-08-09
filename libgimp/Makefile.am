@@ -343,3 +343,37 @@ typelibdir = $(libdir)/girepository-1.0
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
 CLEANFILES += $(gir_DATA) $(typelib_DATA)
+
+
+if ENABLE_VAPIGEN
+
+-include $(VAPIGEN_MAKEFILE)
+
+gimp-@GIMP_API_MAJOR_VERSION@.vapi: Gimp-@GIMP_API_VERSION@.gir gimp-@GIMP_API_MAJOR_VERSION@.deps
+
+VAPIGEN_VAPIS = gimp-@GIMP_API_MAJOR_VERSION@.vapi
+
+gimp_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
+	babl-@BABL_MAJOR_MINOR_VERSION@ \
+	cairo \
+	gdk-pixbuf-2.0 \
+	gegl-@GEGL_MAJOR_MINOR_VERSION@ \
+	glib-2.0 \
+	gio-2.0 \
+	gtk+-3.0
+gimp_@GIMP_API_MAJOR_VERSION@_vapi_METADATADIRS = $(srcdir)
+gimp_@GIMP_API_MAJOR_VERSION@_vapi_FILES = Gimp-@GIMP_API_VERSION@.gir
+
+gimp-$(GIMP_API_MAJOR_VERSION).deps: Makefile.am
+	$(AM_V_GEN) for pkg in $(gimp_@GIMP_API_MAJOR_VERSION@_vapi_DEPS); do \
+		echo $$pkg >> $@; \
+	done
+
+vapidir = $(datadir)/vala/vapi
+vapi_DATA = \
+	gimp-@GIMP_API_MAJOR_VERSION@.vapi \
+	gimp-@GIMP_API_MAJOR_VERSION@.deps
+
+CLEANFILES += $(vapi_DATA)
+
+endif # ENABLE_VAPIGEN

@@ -336,17 +336,20 @@ install_headers(
 
 ### GObject introspection
 
-introspectable_files = [
+libgimp_introspectable_files = [
   libgimp_introspectable,
-  libgimpui_introspectable,
   libgimpbase_introspectable,
   libgimpcolor_introspectable,
   libgimpconfig_introspectable,
   libgimpmath_introspectable,
   libgimpmodule_introspectable,
-  libgimpthumb_introspectable,
-  libgimpwidgets_introspectable,
+  # libgimpthumb_introspectable,
   'gimpparamspecs-body.c',
+]
+
+libgimpui_introspectable_files = [
+  libgimpui_introspectable,
+  libgimpwidgets_introspectable,
 ]
 
 if meson.is_cross_build()
@@ -360,53 +363,111 @@ if meson.is_cross_build()
   warning(gobject_introspection_warning)
   warnings += gobject_introspection_warning
 else
+  libgimp_gir_includes = [
+    'Babl-0.1',
+    'cairo-1.0',
+    'GdkPixbuf-2.0',
+    'Gegl-0.4',
+    'Gio-2.0',
+    'GLib-2.0',
+    'GObject-2.0',
+    'Gtk-3.0',
+  ]
+
+  gir_args = [
+    '-DGIMP_COMPILATION',
+    '-DGIMP_BASE_COMPILATION',
+    '-DGIMP_COLOR_COMPILATION',
+    '-DGIMP_CONFIG_COMPILATION',
+    '-DGIMP_MATH_COMPILATION',
+    '-DGIMP_MODULE_COMPILATION',
+    '-DGIMP_THUMB_COMPILATION',
+    '-DGIMP_WIDGETS_COMPILATION',
+    '-DGIMP_DISABLE_DEPRECATED',
+    '--quiet',
+  ]
+
   libgimp_gir = gnome.generate_gir(
     libgimp,
-    libgimpui,
     libgimpbase,
     libgimpcolor,
     libgimpconfig,
     libgimpmath,
     libgimpmodule,
-    libgimpthumb,
-    libgimpwidgets,
 
-    sources: introspectable_files,
+    sources: libgimp_introspectable_files,
     nsversion: gimp_api_version,
     namespace: 'Gimp',
     identifier_prefix: 'Gimp',
     # symbol_prefix: 'gimp',
     header: 'libgimp/gimp.h',
+    includes: libgimp_gir_includes,
+    extra_args: gir_args,
 
-    extra_args: [
-      '-DGIMP_COMPILATION',
-      '-DGIMP_BASE_COMPILATION',
-      '-DGIMP_COLOR_COMPILATION',
-      '-DGIMP_CONFIG_COMPILATION',
-      '-DGIMP_MATH_COMPILATION',
-      '-DGIMP_MODULE_COMPILATION',
-      '-DGIMP_THUMB_COMPILATION',
-      '-DGIMP_WIDGETS_COMPILATION',
-      '-DGIMP_DISABLE_DEPRECATED',
-      '--quiet',
-    ],
-
-    includes: [
-      'Babl-0.1',
-      'cairo-1.0',
-      'GdkPixbuf-2.0',
-      'Gegl-0.4',
-      'Gio-2.0',
-      'GLib-2.0',
-      'GObject-2.0',
-      'Gtk-3.0',
-    ],
-
-    link_with: [
-      libgimpthumb,
-    ],
+    # link_with: [
+    #   libgimpthumb,
+    # ],
 
     include_directories: rootInclude,
     install: true,
   )
+
+  libgimpui_gir = gnome.generate_gir(
+    libgimpui,
+    libgimpwidgets,
+
+    sources: libgimpui_introspectable_files,
+    nsversion: gimp_api_version,
+    namespace: 'GimpUi',
+    identifier_prefix: 'Gimp',
+    symbol_prefix: 'gimp',
+    header: 'gimp-3.0/libgimp/gimpui.h',
+    includes: [ libgimp_gir_includes, libgimp_gir[0] ],
+    extra_args: gir_args,
+
+    # link_with: [
+    #   libgimpthumb,
+    # ],
+
+    include_directories: rootInclude,
+    install: true,
+  )
+
+  if have_vala
+    libgimp_vapi = gnome.generate_vapi('gimp-' + gimp_api_version,
+      sources: libgimp_gir[0],
+
+      packages: [
+        'babl-0.1',
+        'cairo-1.0',
+        'gdk-pixbuf-2.0',
+        'gegl-0.4',
+        'gio-2.0',
+        'glib-2.0',
+        'gobject-2.0',
+        'gtk+-3.0',
+      ],
+
+      install: true,
+    )
+
+    libgimpui_vapi = gnome.generate_vapi('gimp-ui-' + gimp_api_version,
+      sources: libgimpui_gir[0],
+
+      packages: [
+        'babl-0.1',
+        'cairo-1.0',
+        'gdk-pixbuf-2.0',
+        'gegl-0.4',
+        'gio-2.0',
+        'glib-2.0',
+        'gobject-2.0',
+        'gtk+-3.0',
+        'gimp-' + gimp_api_version,
+      ],
+
+      vapi_dirs: [ meson.current_build_dir() ],
+      install: true,
+    )
+  endif
 endif
