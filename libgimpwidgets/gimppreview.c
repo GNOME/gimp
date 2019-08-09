@@ -941,6 +941,16 @@ gimp_preview_set_default_cursor (GimpPreview *preview,
   g_set_object (&priv->default_cursor, cursor);
 }
 
+/**
+ * gimp_preview_get_default_cursor:
+ * @preview: a #GimpPreview widget
+ *
+ * See gimp_preview_set_default_cursor():
+ *
+ * Returns: (transfer none): The @preview's default #GdkCursor.
+ *
+ * Since: 3.0
+ **/
 GdkCursor *
 gimp_preview_get_default_cursor (GimpPreview *preview)
 {
