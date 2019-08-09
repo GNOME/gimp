@@ -181,6 +181,20 @@ AC_DEFUN([AM_PATH_PYTHON3],
 ])
 
 
+# AM_PYTHON_CHECK_PYGOBJECT(PROG, VERSION, [ACTION-IF-TRUE], [ACTION-IF-FALSE])
+# ---------------------------------------------------------------------------
+# Run ACTION-IF-TRUE if PyGObject is present and at least VERSION.
+# Run ACTION-IF-FALSE otherwise.
+# This supports any version of Python.
+AC_DEFUN([AM_PYTHON_CHECK_PYGOBJECT],
+ [prog="import sys, gi
+version = '3.0'
+if '$2' != '':
+  version = '$2'
+sys.exit(gi.check_version(version))"
+  AS_IF([AM_RUN_LOG([$1 -c "$prog"])], [$3], [$4])])
+
+
 # AM_PYTHON3_CHECK_VERSION(PROG, VERSION, [ACTION-IF-TRUE], [ACTION-IF-FALSE])
 # ---------------------------------------------------------------------------
 # Run ACTION-IF-TRUE if the Python interpreter PROG has version >= VERSION

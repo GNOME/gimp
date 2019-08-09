@@ -2267,14 +2267,15 @@ elif test "x$with_python" = xforce; then
   with_python="yes"
   warning_python=
   AM_PATH_PYTHON3(python3_required_version, ,
-                  warning_python="Python python3_required_version or newer not found
-")
-  PKG_CHECK_MODULES(PYGOBJECT, pygobject-3.0, ,
-                    warning_python="PyGObject 3.0 not found
-$warning_python")
+                  warning_python="Python python3_required_version or newer not found")
+  if test "x$warning_python" = "x"; then
+    AM_PYTHON_CHECK_PYGOBJECT("$PYTHON", , ,
+                              warning_python="PyGObject 3.0 not found")
+  fi
   if test "x$warning_python" != "x"; then
     warning_python="
-WARNING: ${warning_python}         Python plug-ins will be installed anyway but you should make
+WARNING: ${warning_python}
+         Python plug-ins will be installed anyway but you should make
          sure that a compatible Python interpreter and PyGObject are
          available at installation, otherwise installed plug-ins won't
          be usable."
@@ -2284,14 +2285,15 @@ else
   with_python="yes"
   error_python=
   AM_PATH_PYTHON3(python3_required_version,,
-                  error_python="- Python python3_required_version or newer not found
-")
-  PKG_CHECK_MODULES(PYGOBJECT, pygobject-3.0, ,
-                    error_python="- PyGObject 3.0 not found
-$error_python")
+                  error_python="- Python python3_required_version or newer not found")
+  if test "x$error_python" = "x"; then
+    AM_PYTHON_CHECK_PYGOBJECT("$PYTHON", , ,
+                              error_python="PyGObject 3.0 not found")
+  fi
   if test "x$error_python" != "x"; then
     required_deps="$required_deps
-    $error_python        *** Please install Python 3 and PyGObject 3.
+    $error_python
+        *** Please install Python 3 and PyGObject 3.
         *** Note that you may install the Python plug-ins even if you have
         *** no Python interpreter at build-time by passing the configure
         *** option --with-python=force.
