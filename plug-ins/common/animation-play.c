@@ -769,7 +769,7 @@ build_dialog (gchar *imagename)
                     G_CALLBACK (popup_menu),
                     NULL);
 
-  gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL);
+  gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
   ui_manager = ui_manager_new (window);
 

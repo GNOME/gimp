@@ -103,21 +103,23 @@ gimp_standard_help_func (const gchar *help_id,
 
 /**
  * gimp_help_connect:
- * @widget: The widget you want to connect the help accelerator for. Will
- *          be a #GtkWindow in most cases.
- * @help_func: The function which will be called if the user presses "F1".
- * @help_id:   The @help_id which will be passed to @help_func.
- * @help_data: The @help_data pointer which will be passed to @help_func.
+ * @widget:            The widget you want to connect the help accelerator for.
+ *                     Will be a #GtkWindow in most cases.
+ * @help_func:         The function which will be called if the user presses "F1".
+ * @help_id:           The @help_id which will be passed to @help_func.
+ * @help_data:         The @help_data pointer which will be passed to @help_func.
+ * @help_data_destroy: Destroy function for @help_data.
  *
  * Note that this function is automatically called by all libgimp dialog
  * constructors. You only have to call it for windows/dialogs you created
  * "manually".
  **/
 void
-gimp_help_connect (GtkWidget    *widget,
-                   GimpHelpFunc  help_func,
-                   const gchar  *help_id,
-                   gpointer      help_data)
+gimp_help_connect (GtkWidget      *widget,
+                   GimpHelpFunc    help_func,
+                   const gchar    *help_id,
+                   gpointer        help_data,
+                   GDestroyNotify  help_data_destroy)
 {
   static gboolean initialized = FALSE;
 
@@ -147,7 +149,8 @@ gimp_help_connect (GtkWidget    *widget,
 
   gimp_help_set_help_data (widget, NULL, help_id);
 
-  g_object_set_data (G_OBJECT (widget), "gimp-help-data", help_data);
+  g_object_set_data_full (G_OBJECT (widget), "gimp-help-data",
+                          help_data, help_data_destroy);
 
   g_signal_connect (widget, "show-help",
                     G_CALLBACK (gimp_help_callback),

@@ -388,7 +388,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     shell);
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
-                     GIMP_HELP_IMAGE_WINDOW, NULL);
+                     GIMP_HELP_IMAGE_WINDOW, NULL, NULL);
 }
 
 static void

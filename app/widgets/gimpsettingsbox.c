@@ -766,7 +766,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                                private->last_file, NULL);
 
   gimp_help_connect (private->file_dialog, gimp_standard_help_func,
-                     private->help_id, NULL);
+                     private->help_id, NULL, NULL);
 
   /*  allow callbacks to add widgets to the dialog  */
   g_signal_emit (box, settings_box_signals[FILE_DIALOG_SETUP], 0,

@@ -624,7 +624,7 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
                                                            dockbook);
 
   gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
-                     GIMP_HELP_DOCK, dockbook);
+                     GIMP_HELP_DOCK, dockbook, NULL);
 
   return GTK_WIDGET (dockbook);
 }

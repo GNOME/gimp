@@ -129,7 +129,7 @@ error_console_save_cmd_callback (GimpAction *action,
                         NULL);
 
       gimp_help_connect (dialog, gimp_standard_help_func,
-                         GIMP_HELP_ERRORS_DIALOG, NULL);
+                         GIMP_HELP_ERRORS_DIALOG, NULL, NULL);
     }
 
   gtk_window_present (GTK_WINDOW (console->file_dialog));

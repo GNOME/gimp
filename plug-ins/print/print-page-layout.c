@@ -200,7 +200,7 @@ print_page_layout_gui (PrintData   *data,
                            G_CALLBACK (update_custom_widget),
                            main_hbox, 0);
 
-  gimp_help_connect (main_hbox, gimp_standard_help_func, help_id, NULL);
+  gimp_help_connect (main_hbox, gimp_standard_help_func, help_id, NULL, NULL);
 
   return main_hbox;
 }

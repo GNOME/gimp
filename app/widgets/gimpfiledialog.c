@@ -341,7 +341,8 @@ gimp_file_dialog_constructed (GObject *object)
   if (dialog->help_id)
     {
       gimp_help_connect (GTK_WIDGET (dialog),
-                         gimp_file_dialog_help_func, dialog->help_id, dialog);
+                         gimp_file_dialog_help_func, dialog->help_id,
+                         dialog, NULL);
 
       if (GIMP_GUI_CONFIG (dialog->gimp->config)->show_help_button)
         {

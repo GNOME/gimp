@@ -169,7 +169,7 @@ gimp_dialog_constructed (GObject *object)
   if (private->help_func)
     gimp_help_connect (GTK_WIDGET (object),
                        private->help_func, private->help_id,
-                       object);
+                       object, NULL);
 
   if (show_help_button && private->help_func && private->help_id)
     {

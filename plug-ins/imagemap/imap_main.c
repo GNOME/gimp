@@ -1224,7 +1224,7 @@ dialog(gint32 drawable_id)
    gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
 
    main_set_title(NULL);
-   gimp_help_connect (dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL);
+   gimp_help_connect (dlg, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
 
    gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 
