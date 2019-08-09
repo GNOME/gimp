@@ -27,9 +27,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_BINARY "goat-exercise"
+#define PLUG_IN_BINARY "goat-exercise-c"
 #define PLUG_IN_SOURCE PLUG_IN_BINARY ".c"
-#define PLUG_IN_PROC   "plug-in-goat-exercise"
+#define PLUG_IN_PROC   "plug-in-goat-exercise-c"
 #define PLUG_IN_ROLE   "goat-exercise-C"
 
 #define GOAT_URI       "https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise.c"
@@ -42,7 +42,7 @@ typedef struct _GoatClass GoatClass;
 
 struct _Goat
 {
-  GimpPlugIn parent_instance;
+  GimpPlugIn      parent_instance;
 };
 
 struct _GoatClass
@@ -203,11 +203,11 @@ goat_run (GimpProcedure        *procedure,
       gtk_widget_show (box);
 
       head_text = g_strdup_printf (_("This plug-in is an exercise in '%s' "
-                                "to demo plug-in creation.\n"
-                                "Check out the last version "
-                                "of the source code online by "
-                                "clicking the \"Source\" button."),
-                              "C");
+                                     "to demo plug-in creation.\n"
+                                     "Check out the last version "
+                                     "of the source code online by "
+                                     "clicking the \"Source\" button."),
+                                   "C");
       widget = gtk_label_new (head_text);
       g_free (head_text);
       gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
