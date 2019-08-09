@@ -125,6 +125,8 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           gint            off_x, off_y;
 
           gimp_item_get_offset (item, &off_x, &off_y);
@@ -134,9 +136,10 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
           gimp_transform_get_flip_axis (x, y, width, height,
                                         flip_type, auto_center, &axis);
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -208,6 +211,8 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -222,9 +227,10 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Flipping"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -314,6 +320,8 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -331,9 +339,10 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Perspective"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -415,6 +424,8 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           gint            off_x, off_y;
 
           gimp_item_get_offset (item, &off_x, &off_y);
@@ -424,9 +435,10 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
           gimp_transform_get_rotate_center (x, y, width, height,
                                             auto_center, &center_x, &center_y);
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -502,6 +514,8 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -521,9 +535,10 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Rotating"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -606,6 +621,8 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -622,9 +639,10 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Scaling"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -702,6 +720,8 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -718,9 +738,10 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Shearing"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -808,6 +829,8 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -825,9 +848,10 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("2D Transform"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 
@@ -919,6 +943,8 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
         {
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (item);
+          GimpChannel    *mask        = gimp_image_get_mask (image);
           GimpMatrix3     matrix;
           gint            off_x, off_y;
 
@@ -940,9 +966,10 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("2D Transforming"));
 
-          if (GIMP_IS_DRAWABLE (item) &&
+          if (GIMP_IS_DRAWABLE (item)                             &&
+              item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (item))))
+              ! gimp_channel_is_empty (mask))
             {
               GimpDrawable *drawable;
 

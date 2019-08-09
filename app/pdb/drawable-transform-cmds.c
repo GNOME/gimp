@@ -80,11 +80,15 @@ drawable_transform_flip_simple_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+
           gimp_transform_get_flip_axis (x, y, width, height,
                                         flip_type, auto_center, &axis);
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_flip (drawable, context,
                                                   flip_type, axis, clip_result))
@@ -151,8 +155,10 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -167,8 +173,9 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Flipping"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -239,9 +246,11 @@ drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -259,8 +268,9 @@ drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Flipping"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
@@ -342,8 +352,10 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -360,8 +372,9 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Perspective"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -440,9 +453,11 @@ drawable_transform_perspective_default_invoker (GimpProcedure         *procedure
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -462,8 +477,9 @@ drawable_transform_perspective_default_invoker (GimpProcedure         *procedure
           if (progress)
             gimp_progress_start (progress, FALSE, _("Perspective"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
@@ -532,14 +548,17 @@ drawable_transform_rotate_simple_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          gdouble cx = center_x;
-          gdouble cy = center_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          gdouble      cx    = center_x;
+          gdouble      cy    = center_y;
 
           gimp_transform_get_rotate_center (x, y, width, height,
                                             auto_center, &cx, &cy);
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_rotate (drawable, context,
                                                     rotate_type, cx, cy,
@@ -608,8 +627,10 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -628,8 +649,9 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Rotating"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -700,9 +722,11 @@ drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -724,8 +748,9 @@ drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Rotating"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
@@ -798,8 +823,10 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -815,8 +842,9 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Scaling"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -887,9 +915,11 @@ drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -908,8 +938,9 @@ drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Scaling"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
@@ -979,8 +1010,10 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -996,8 +1029,9 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Shearing"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -1064,9 +1098,11 @@ drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -1085,8 +1121,9 @@ drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("Shearing"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
@@ -1166,8 +1203,10 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -1184,8 +1223,9 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("2D Transform"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -1262,9 +1302,11 @@ drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -1284,8 +1326,9 @@ drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("2D Transforming"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
@@ -1369,8 +1412,10 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-          gint        off_x, off_y;
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
+          GimpMatrix3  matrix;
+          gint         off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -1391,8 +1436,9 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("2D Transforming"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
@@ -1473,9 +1519,11 @@ drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          GimpMatrix3           matrix;
-          GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
-          gint                  off_x, off_y;
+          GimpImage             *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel           *mask  = gimp_image_get_mask (image);
+          GimpMatrix3            matrix;
+          GimpInterpolationType  interpolation_type = GIMP_INTERPOLATION_NONE;
+          gint                   off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -1499,8 +1547,9 @@ drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
           if (progress)
             gimp_progress_start (progress, FALSE, _("2D Transforming"));
 
-          if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-              ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
+          if (drawable != GIMP_DRAWABLE (mask)                        &&
+              ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+              ! gimp_channel_is_empty (mask))
             {
               if (! gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
