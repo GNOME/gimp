@@ -447,11 +447,13 @@ void            gimp_value_take_float_array       (GValue        *value,
  * GIMP_TYPE_STRING_ARRAY
  */
 
-GimpArray * gimp_string_array_new  (const gchar     **data,
-                                    gsize             length,
-                                    gboolean          static_data);
-GimpArray * gimp_string_array_copy (const GimpArray  *array);
-void        gimp_string_array_free (GimpArray        *array);
+typedef struct _GimpArray GimpStringArray;
+
+GimpStringArray * gimp_string_array_new  (const gchar          **data,
+                                          gsize                  length,
+                                          gboolean               static_data);
+GimpStringArray * gimp_string_array_copy (const GimpStringArray  *array);
+void              gimp_string_array_free (GimpStringArray        *array);
 
 #define GIMP_TYPE_STRING_ARRAY               (gimp_string_array_get_type ())
 #define GIMP_VALUE_HOLDS_STRING_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_STRING_ARRAY))

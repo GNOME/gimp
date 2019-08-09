@@ -1326,26 +1326,26 @@ gimp_value_take_float_array (GValue  *value,
  * @static_data: whether the strings in @data are static strings rather
  *               than allocated.
  *
- * Creates a new #GimpArray containing string data, of size @length.
+ * Creates a new #GimpStringArray containing string data, of size @length.
  *
  * If @static_data is %TRUE, @data is used as-is.
  *
  * If @static_data is %FALSE, the string and array will be re-allocated,
  * hence you are expected to free your input data after.
  *
- * Returns: (transfer full) (type GimpArray): a new #GimpArray.
+ * Returns: (transfer full): a new #GimpStringArray.
  */
-GimpArray *
+GimpStringArray *
 gimp_string_array_new (const gchar **data,
                        gsize         length,
                        gboolean      static_data)
 {
-  GimpArray *array;
+  GimpStringArray *array;
 
   g_return_val_if_fail ((data == NULL && length == 0) ||
                         (data != NULL && length  > 0), NULL);
 
-  array = g_slice_new0 (GimpArray);
+  array = g_slice_new0 (GimpStringArray);
 
   if (! static_data && data)
     {
@@ -1370,14 +1370,14 @@ gimp_string_array_new (const gchar **data,
 
 /**
  * gimp_string_array_copy:
- * @array: an original #GimpArray of strings.
+ * @array: an original #GimpStringArray of strings.
  *
- * Creates a new #GimpArray containing a deep copy of @array.
+ * Creates a new #GimpStringArray containing a deep copy of @array.
  *
- * Returns: (transfer full) (type GimpArray): a new #GimpArray.
+ * Returns: (transfer full): a new #GimpStringArray.
  **/
-GimpArray *
-gimp_string_array_copy (const GimpArray *array)
+GimpStringArray *
+gimp_string_array_copy (const GimpStringArray *array)
 {
   if (array)
     return gimp_string_array_new ((const gchar **) array->data,
@@ -1387,7 +1387,7 @@ gimp_string_array_copy (const GimpArray *array)
 }
 
 void
-gimp_string_array_free (GimpArray *array)
+gimp_string_array_free (GimpStringArray *array)
 {
   if (array)
     {
@@ -1402,7 +1402,7 @@ gimp_string_array_free (GimpArray *array)
           g_free (array->data);
         }
 
-      g_slice_free (GimpArray, array);
+      g_slice_free (GimpStringArray, array);
     }
 }
 
@@ -1474,7 +1474,7 @@ static gboolean
 gimp_param_string_array_validate (GParamSpec *pspec,
                                   GValue     *value)
 {
-  GimpArray *array = value->data[0].v_pointer;
+  GimpStringArray *array = value->data[0].v_pointer;
 
   if (array)
     {
@@ -1494,8 +1494,8 @@ gimp_param_string_array_values_cmp (GParamSpec   *pspec,
                                     const GValue *value1,
                                     const GValue *value2)
 {
-  GimpArray *array1 = value1->data[0].v_pointer;
-  GimpArray *array2 = value2->data[0].v_pointer;
+  GimpStringArray *array1 = value1->data[0].v_pointer;
+  GimpStringArray *array2 = value2->data[0].v_pointer;
 
   /*  try to return at least *something*, it's useless anyway...  */
 
@@ -1543,14 +1543,15 @@ gimp_param_spec_string_array (const gchar *name,
 
 /**
  * gimp_value_get_string_array:
- * @value: a #GValue holding a string #GimpArray.
+ * @value: a #GValue holding a string #GimpStringArray.
  *
- * Returns: (transfer none) (array zero-terminated=1): the internal array of strings.
+ * Returns: (transfer none) (array zero-terminated=1): the internal
+ *          array of strings.
  */
 const gchar **
 gimp_value_get_string_array (const GValue *value)
 {
-  GimpArray *array;
+  GimpStringArray *array;
 
   g_return_val_if_fail (GIMP_VALUE_HOLDS_STRING_ARRAY (value), NULL);
 
@@ -1564,14 +1565,15 @@ gimp_value_get_string_array (const GValue *value)
 
 /**
  * gimp_value_dup_string_array:
- * @value: a #GValue holding a string #GimpArray.
+ * @value: a #GValue holding a string #GimpStringArray.
  *
- * Returns: (transfer full) (array zero-terminated=1): a deep copy of the array of strings.
+ * Returns: (transfer full) (array zero-terminated=1): a deep copy of
+ *          the array of strings.
  */
 gchar **
 gimp_value_dup_string_array (const GValue *value)
 {
-  GimpArray *array;
+  GimpStringArray *array;
 
   g_return_val_if_fail (GIMP_VALUE_HOLDS_STRING_ARRAY (value), NULL);
 
@@ -1596,7 +1598,7 @@ gimp_value_set_string_array (GValue       *value,
                              const gchar **data,
                              gsize         length)
 {
-  GimpArray *array;
+  GimpStringArray *array;
 
   g_return_if_fail (GIMP_VALUE_HOLDS_STRING_ARRAY (value));
 
@@ -1610,7 +1612,7 @@ gimp_value_set_static_string_array (GValue       *value,
                                     const gchar **data,
                                     gsize         length)
 {
-  GimpArray *array;
+  GimpStringArray *array;
 
   g_return_if_fail (GIMP_VALUE_HOLDS_STRING_ARRAY (value));
 
@@ -1624,7 +1626,7 @@ gimp_value_take_string_array (GValue  *value,
                               gchar  **data,
                               gsize    length)
 {
-  GimpArray *array;
+  GimpStringArray *array;
 
   g_return_if_fail (GIMP_VALUE_HOLDS_STRING_ARRAY (value));
 
