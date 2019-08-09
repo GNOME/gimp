@@ -1,14 +1,27 @@
 
-libgimpmath_sources = [
+libgimpmath_sources_introspectable = [
   'gimpmatrix.c',
   'gimpvector.c',
 ]
 
-libgimpmath_headers = [
-  'gimpmath.h',
+libgimpmath_sources = [
+  libgimpmath_sources_introspectable,
+]
+
+libgimpmath_headers_introspectable = [
   'gimpmathtypes.h',
   'gimpmatrix.h',
   'gimpvector.h',
+]
+
+libgimpmath_headers = [
+  libgimpmath_headers_introspectable,
+  'gimpmath.h',
+]
+
+libgimpmath_introspectable = [
+  libgimpmath_sources_introspectable,
+  libgimpmath_headers_introspectable,
 ]
 
 

@@ -29,20 +29,33 @@ gimpthumbenums = custom_target('gimpthumb-enums.c',
   capture: true,
 )
 
-libgimpthumb_sources = [
+libgimpthumb_sources_introspectable =	[
   'gimpthumb-error.c',
   'gimpthumb-utils.c',
   'gimpthumbnail.c',
+]
+
+libgimpthumb_sources = [
+  libgimpthumb_sources_introspectable,
   gimpthumbenums,
 ]
 
-libgimpthumb_headers = [
+libgimpthumb_headers_introspectable = [
   'gimpthumb-enums.h',
   'gimpthumb-error.h',
   'gimpthumb-types.h',
   'gimpthumb-utils.h',
-  'gimpthumb.h',
   'gimpthumbnail.h',
+]
+
+libgimpthumb_headers = [
+  libgimpthumb_headers_introspectable,
+  'gimpthumb.h',
+]
+
+libgimpthumb_introspectable = [
+  libgimpthumb_sources_introspectable,
+  libgimpthumb_headers_introspectable,
 ]
 
 libgimpthumb = library('gimpthumb-'+ gimp_api_version,
