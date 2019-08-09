@@ -70,7 +70,6 @@ libappdisplay_sources = [
   'gimpdisplayshell-transform.c',
   'gimpdisplayshell-utils.c',
   'gimpdisplayshell.c',
-  'gimpdisplayxfer.c',
   'gimpimagewindow.c',
   'gimpmotionbuffer.c',
   'gimpmultiwindowstrategy.c',

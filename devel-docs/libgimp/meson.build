@@ -1,4 +1,4 @@
-module_name = 'libgimp'
+module_name = 'libgimp3'
 
 version_data = configuration_data()
 version_data.set('GIMP_VERSION', gimp_version)
@@ -24,8 +24,8 @@ gimp_dep = declare_dependency(
 
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
-  gobject_typesfile: join_paths(meson.current_source_dir(), module_name + '.types'),
-  src_dir: join_paths(meson.source_root(), module_name),
+  gobject_typesfile: files(module_name + '.types'),
+  src_dir: meson.current_source_dir(),
 
   content_files: [
   ],
@@ -50,6 +50,11 @@ gnome.gtkdoc(module_name,
     '--name-space=gimp',
   ],
   fixxref_args:  [
+    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpbase'    / 'html',
+    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpcolor'   / 'html',
+    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpconfig'  / 'html',
+    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpmath'    / 'html',
+    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpwidgets' / 'html',
   ],
   html_assets: [
   ],
