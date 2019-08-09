@@ -434,6 +434,21 @@ _gimp_pdb_error_quark (void)
 
 /*  Temporary API, to go away before 3.0  */
 
+/**
+ * gimp_pdb_proc_argument:
+ * @procedure_name: The procedure name.
+ * @arg_num: The argument number.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's argument.
+ *
+ * This procedure returns the #GParamSpec of procedure_name's argument.
+ *
+ * Returns: (transfer full): The GParamSpec of the argument.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_pdb_proc_argument (const gchar *procedure_name,
                         gint         arg_num)
@@ -441,6 +456,22 @@ gimp_pdb_proc_argument (const gchar *procedure_name,
   return _gimp_pdb_proc_argument (procedure_name, arg_num);
 }
 
+/**
+ * gimp_pdb_proc_return_value:
+ * @procedure_name: The procedure name.
+ * @val_num: The return value number.
+ *
+ * Queries the procedural database for information on the specified
+ * procedure's return value.
+ *
+ * This procedure returns the #GParamSpec of procedure_name's return
+ * value.
+ *
+ * Returns: (transfer full): The GParamSpec of the return value.
+ *          The returned value must be freed with g_param_spec_unref().
+ *
+ * Since: 3.0
+ **/
 GParamSpec *
 gimp_pdb_proc_return_value (const gchar *procedure_name,
                             gint         val_num)

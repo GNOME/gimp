@@ -815,7 +815,8 @@ gimp_procedure_get_icon_name (GimpProcedure *procedure)
  *
  * Gets the file of the icon if one was set for @procedure.
  *
- * Returns: (nullable): the icon #GFile or %NULL if no file was set.
+ * Returns: (nullable) (transfer none): the icon #GFile or %NULL if no
+ *          file was set.
  *
  * Since: 3.0
  */
@@ -837,7 +838,8 @@ gimp_procedure_get_icon_file (GimpProcedure *procedure)
  * Gets the #GdkPixbuf of the icon if an icon was set this way for
  * @procedure.
  *
- * Returns: (nullable): the icon pixbuf or %NULL if no icon name was set.
+ * Returns: (nullable) (transfer none): the icon pixbuf or %NULL if no
+ *          icon name was set.
  *
  * Since: 3.0
  */
