@@ -1,14 +1,14 @@
 
-libgimpmodule_sources = [
+libgimpmodule_sources = files(
   'gimpmodule.c',
   'gimpmoduledb.c',
-]
+)
 
-libgimpmodule_headers = [
+libgimpmodule_headers = files(
   'gimpmodule.h',
   'gimpmoduledb.h',
   'gimpmoduletypes.h',
-]
+)
 
 libgimpmodule_introspectable = [
   libgimpmodule_sources,

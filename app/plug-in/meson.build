@@ -10,7 +10,6 @@ apppluginenums = custom_target('plug-in-enums.c',
 libappplugin_sources = [
   'gimpenvirontable.c',
   'gimpgpparams.c',
-  'gimpgpparamspecs.c',
   'gimpinterpreterdb.c',
   'gimpplugin-cleanup.c',
   'gimpplugin-context.c',

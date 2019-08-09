@@ -1,5 +1,5 @@
 
-libgimpcolor_sources = [
+libgimpcolor_sources = files(
   'gimpadaptivesupersample.c',
   'gimpbilinear.c',
   'gimpcairo.c',
@@ -13,9 +13,9 @@ libgimpcolor_sources = [
   'gimppixbuf.c',
   'gimprgb-parse.c',
   'gimprgb.c',
-]
+)
 
-libgimpcolor_headers_introspectable = [
+libgimpcolor_headers_introspectable = files(
   'gimpcolortypes.h',
   'gimpadaptivesupersample.h',
   'gimpbilinear.h',
@@ -29,7 +29,8 @@ libgimpcolor_headers_introspectable = [
   'gimphsv.h',
   'gimppixbuf.h',
   'gimprgb.h',
-]
+)
+
 libgimpcolor_headers = [
   libgimpcolor_headers_introspectable,
   'gimpcolor.h',

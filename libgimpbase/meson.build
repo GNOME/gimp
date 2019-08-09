@@ -36,7 +36,7 @@ gimpcompatenums = custom_target('gimpcompatenums.c',
   capture: true,
 )
 
-libgimpbase_sources_introspectable = [
+libgimpbase_sources_introspectable = files(
   'gimpbasetypes.c',
   'gimpchecks.c',
   'gimpcpuaccel.c',
@@ -51,7 +51,7 @@ libgimpbase_sources_introspectable = [
   'gimpunit.c',
   'gimputils.c',
   'gimpvaluearray.c',
-]
+)
 
 libgimpbase_sources = [
   libgimpbase_sources_introspectable,
@@ -63,7 +63,7 @@ libgimpbase_sources = [
   gimpcompatenums,
 ]
 
-libgimpbase_headers_introspectable = [
+libgimpbase_headers_introspectable = files(
   'gimpbaseenums.h',
   'gimpbasetypes.h',
   'gimpchecks.h',
@@ -80,6 +80,7 @@ libgimpbase_headers_introspectable = [
   'gimpunit.h',
   'gimputils.h',
   'gimpvaluearray.h',
+) + [
   gimpversion,
 ]
 
