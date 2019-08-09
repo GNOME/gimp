@@ -371,15 +371,8 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
   if (orig_buffer)
     {
       /*  this happens when transforming a selection cut out of a
-       *  normal drawable, or the selection
+       *  normal drawable
        */
-
-      /*  always clip the selection and unfloated channels
-       *  so they keep their size
-       */
-      if (GIMP_IS_CHANNEL (active_item) &&
-          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
-        clip_result = TRUE;
 
       ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (active_item),
                                                  context,
@@ -396,11 +389,6 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
     {
       /*  this happens for entire drawables, paths and layer groups  */
 
-      /*  always clip layer masks so they keep their size
-       */
-      if (GIMP_IS_CHANNEL (active_item))
-        clip_result = TRUE;
-
       if (gimp_item_get_linked (active_item))
         {
           gimp_item_linked_flip (active_item, context,
@@ -408,6 +396,8 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
         }
       else
         {
+          clip_result = gimp_item_get_clip (active_item, clip_result);
+
           gimp_item_flip (active_item, context,
                           flip_type, axis, clip_result);
         }

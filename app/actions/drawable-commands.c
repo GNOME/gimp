@@ -257,7 +257,8 @@ drawable_flip_cmd_callback (GimpAction *action,
     }
   else
     {
-      gimp_item_flip (item, context, orientation, axis, FALSE);
+      gimp_item_flip (item, context, orientation, axis,
+                      gimp_item_get_clip (item, FALSE));
     }
 
   gimp_image_flush (image);
@@ -274,7 +275,6 @@ drawable_rotate_cmd_callback (GimpAction *action,
   GimpItem         *item;
   gint              off_x, off_y;
   gdouble           center_x, center_y;
-  gboolean          clip_result = FALSE;
   GimpRotationType  rotation_type;
   return_if_no_drawable (image, drawable, data);
   return_if_no_context (context, data);
@@ -288,9 +288,6 @@ drawable_rotate_cmd_callback (GimpAction *action,
   center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
 
-  if (GIMP_IS_CHANNEL (item))
-    clip_result = TRUE;
-
   if (gimp_item_get_linked (item))
     {
       gimp_item_linked_rotate (item, context, rotation_type,
@@ -298,8 +295,9 @@ drawable_rotate_cmd_callback (GimpAction *action,
     }
   else
     {
-      gimp_item_rotate (item, context, rotation_type,
-                        center_x, center_y, clip_result);
+      gimp_item_rotate (item, context,
+                        rotation_type, center_x, center_y,
+                        gimp_item_get_clip (item, FALSE));
     }
 
   gimp_image_flush (image);

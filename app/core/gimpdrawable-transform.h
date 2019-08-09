@@ -19,10 +19,6 @@
 #define __GIMP_DRAWABLE_TRANSFORM_H__
 
 
-GimpTransformResize   gimp_drawable_transform_get_effective_clip (GimpDrawable            *drawable,
-                                                                  GeglBuffer              *orig_buffer,
-                                                                  GimpTransformResize      clip_result);
-
 GeglBuffer          * gimp_drawable_transform_buffer_affine      (GimpDrawable            *drawable,
                                                                   GimpContext             *context,
                                                                   GeglBuffer              *orig_buffer,

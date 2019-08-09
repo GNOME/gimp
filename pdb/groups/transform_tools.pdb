@@ -61,7 +61,8 @@ sub flip {
       else
         {
           gimp_item_flip (GIMP_ITEM (drawable), context,
-                          flip_type, axis, FALSE);
+                          flip_type, axis,
+                          gimp_item_get_clip (GIMP_ITEM (drawable), FALSE));
         }
     }
 }
@@ -159,7 +160,8 @@ sub perspective {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
                                interpolation,
-                               FALSE, progress);
+                               gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                               progress);
         }
 
       if (progress)
@@ -237,7 +239,8 @@ sub rotate {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
                                interpolation,
-                               FALSE, progress);
+                               gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                               progress);
         }
 
       if (progress)
@@ -326,7 +329,8 @@ sub scale {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
                                interpolation,
-                               FALSE, progress);
+                               gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                               progress);
         }
 
       if (progress)
@@ -407,7 +411,8 @@ sub shear {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
                                interpolation,
-                               FALSE, progress);
+                               gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                               progress);
         }
 
       if (progress)
@@ -491,7 +496,8 @@ sub transform_2d {
           gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                GIMP_TRANSFORM_FORWARD,
                                interpolation,
-                               FALSE, progress);
+                               gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                               progress);
         }
 
       if (progress)

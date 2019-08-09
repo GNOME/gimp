@@ -134,7 +134,6 @@ gimp_item_linked_rotate (GimpItem         *item,
 {
   GimpImage *image;
   GList     *items;
-  GList     *channels;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -144,30 +143,14 @@ gimp_item_linked_rotate (GimpItem         *item,
   image = gimp_item_get_image (item);
 
   items = gimp_image_item_list_get_list (image,
-                                         GIMP_ITEM_TYPE_LAYERS |
-                                         GIMP_ITEM_TYPE_VECTORS,
+                                         GIMP_ITEM_TYPE_ALL,
                                          GIMP_ITEM_SET_LINKED);
   items = gimp_image_item_list_filter (items);
 
-  channels = gimp_image_item_list_get_list (image,
-                                            GIMP_ITEM_TYPE_CHANNELS,
-                                            GIMP_ITEM_SET_LINKED);
-  channels = gimp_image_item_list_filter (channels);
-
-  if (items && channels)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                                 C_("undo-type", "Rotate Items"));
-
   gimp_image_item_list_rotate (image, items, context,
                                rotate_type, center_x, center_y, clip_result);
-  gimp_image_item_list_rotate (image, channels, context,
-                               rotate_type, center_x, center_y, TRUE);
-
-  if (items && channels)
-    gimp_image_undo_group_end (image);
 
   g_list_free (items);
-  g_list_free (channels);
 }
 
 void

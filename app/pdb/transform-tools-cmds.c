@@ -91,7 +91,8 @@ flip_invoker (GimpProcedure         *procedure,
           else
             {
               gimp_item_flip (GIMP_ITEM (drawable), context,
-                              flip_type, axis, FALSE);
+                              flip_type, axis,
+                              gimp_item_get_clip (GIMP_ITEM (drawable), FALSE));
             }
         }
     }
@@ -187,7 +188,8 @@ perspective_invoker (GimpProcedure         *procedure,
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation,
-                                   FALSE, progress);
+                                   gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                                   progress);
             }
 
           if (progress)
@@ -271,7 +273,8 @@ rotate_invoker (GimpProcedure         *procedure,
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation,
-                                   FALSE, progress);
+                                   gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                                   progress);
             }
 
           if (progress)
@@ -362,7 +365,8 @@ scale_invoker (GimpProcedure         *procedure,
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation,
-                                   FALSE, progress);
+                                   gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                                   progress);
             }
 
           if (progress)
@@ -448,7 +452,8 @@ shear_invoker (GimpProcedure         *procedure,
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation,
-                                   FALSE, progress);
+                                   gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                                   progress);
             }
 
           if (progress)
@@ -538,7 +543,8 @@ transform_2d_invoker (GimpProcedure         *procedure,
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation,
-                                   FALSE, progress);
+                                   gimp_item_get_clip (GIMP_ITEM (drawable), FALSE),
+                                   progress);
             }
 
           if (progress)

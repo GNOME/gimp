@@ -538,13 +538,9 @@ static void
 gimp_drawable_filter_sync_clip (GimpDrawableFilter *filter,
                                 gboolean            sync_region)
 {
-  gboolean clip = filter->clip;
+  gboolean clip;
 
-  if (! clip)
-    {
-      if (! GIMP_IS_LAYER (filter->drawable))
-        clip = TRUE;
-    }
+  clip = gimp_item_get_clip (GIMP_ITEM (filter->drawable), filter->clip);
 
   if (! clip)
     {

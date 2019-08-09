@@ -94,6 +94,8 @@ drawable_transform_flip_simple_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_flip (GIMP_ITEM (drawable), context,
                               flip_type, axis, clip_result);
             }
@@ -178,6 +180,8 @@ drawable_transform_flip_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -268,6 +272,8 @@ drawable_transform_flip_default_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
@@ -367,6 +373,8 @@ drawable_transform_perspective_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -467,6 +475,8 @@ drawable_transform_perspective_default_invoker (GimpProcedure         *procedure
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
@@ -540,6 +550,8 @@ drawable_transform_rotate_simple_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_rotate (GIMP_ITEM (drawable), context,
                                 rotate_type, cx, cy,
                                 clip_result);
@@ -629,6 +641,8 @@ drawable_transform_rotate_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -723,6 +737,8 @@ drawable_transform_rotate_default_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
@@ -812,6 +828,8 @@ drawable_transform_scale_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -903,6 +921,8 @@ drawable_transform_scale_default_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
@@ -989,6 +1009,8 @@ drawable_transform_shear_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -1076,6 +1098,8 @@ drawable_transform_shear_default_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
@@ -1173,6 +1197,8 @@ drawable_transform_2d_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -1271,6 +1297,8 @@ drawable_transform_2d_default_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
@@ -1376,6 +1404,8 @@ drawable_transform_matrix_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    transform_direction,
                                    interpolation,
@@ -1482,6 +1512,8 @@ drawable_transform_matrix_default_invoker (GimpProcedure         *procedure,
             }
           else
             {
+              clip_result = gimp_item_get_clip (GIMP_ITEM (drawable), clip_result);
+
               gimp_item_transform (GIMP_ITEM (drawable), context, &matrix,
                                    GIMP_TRANSFORM_FORWARD,
                                    interpolation_type,
