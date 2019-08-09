@@ -394,13 +394,9 @@ libgimp_gir = gnome.generate_gir(
   ],
 
   include_directories: rootInclude,
-  # install: true,
-  build_by_default: false,
+  install: true,
 )
 
-
-# INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
-#
 # girdir = $(datadir)/gir-1.0
 # gir_DATA = $(INTROSPECTION_GIRS)
 #
