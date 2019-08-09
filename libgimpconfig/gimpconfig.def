@@ -80,7 +80,7 @@ EXPORTS
 	gimp_param_config_path_get_type
 	gimp_param_spec_config_path
 	gimp_param_spec_config_path_type
-	gimp_scanner_destroy
+	gimp_scanner_get_type
 	gimp_scanner_new_file
 	gimp_scanner_new_gfile
 	gimp_scanner_new_stream
@@ -96,3 +96,5 @@ EXPORTS
 	gimp_scanner_parse_string
 	gimp_scanner_parse_string_no_validate
 	gimp_scanner_parse_token
+	gimp_scanner_ref
+	gimp_scanner_unref
