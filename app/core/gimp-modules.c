@@ -138,7 +138,7 @@ gimp_modules_load (Gimp *gimp)
           g_clear_error (&error);
         }
 
-      gimp_scanner_destroy (scanner);
+      gimp_scanner_unref (scanner);
     }
 
   if (module_load_inhibit)

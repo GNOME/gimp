@@ -200,7 +200,7 @@ gimp_action_history_init (Gimp *gimp)
     }
 
  done:
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 }
 
 void

@@ -139,7 +139,7 @@ gimp_palette_mru_load (GimpPaletteMru *mru,
     }
 
  end:
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 }
 
 void

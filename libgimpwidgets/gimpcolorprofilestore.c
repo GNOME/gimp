@@ -680,7 +680,7 @@ gimp_color_profile_store_load (GimpColorProfileStore  *store,
                              _("fatal parse error"), TRUE);
     }
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 
   return TRUE;
 }

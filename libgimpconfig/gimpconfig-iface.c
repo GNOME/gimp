@@ -497,7 +497,7 @@ gimp_config_deserialize_file (GimpConfig   *config,
 
   g_object_thaw_notify (G_OBJECT (config));
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 
   if (! success)
     g_assert (error == NULL || *error != NULL);
@@ -545,7 +545,7 @@ gimp_config_deserialize_gfile (GimpConfig  *config,
 
   g_object_thaw_notify (G_OBJECT (config));
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 
   if (! success)
     g_assert (error == NULL || *error != NULL);
@@ -593,7 +593,7 @@ gimp_config_deserialize_stream (GimpConfig    *config,
 
   g_object_thaw_notify (G_OBJECT (config));
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 
   if (! success)
     g_assert (error == NULL || *error != NULL);
@@ -640,7 +640,7 @@ gimp_config_deserialize_string (GimpConfig      *config,
 
   g_object_thaw_notify (G_OBJECT (config));
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 
   if (! success)
     g_assert (error == NULL || *error != NULL);

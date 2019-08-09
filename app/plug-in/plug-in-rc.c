@@ -257,7 +257,7 @@ plug_in_rc_parse (Gimp    *gimp,
 
   g_type_class_unref (enum_class);
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
 
   return g_slist_reverse (plug_in_defs);
 }

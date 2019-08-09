@@ -283,7 +283,7 @@ gimp_unitrc_load (Gimp *gimp)
       gimp_config_file_backup_on_error (file, "unitrc", NULL);
     }
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
   g_object_unref (file);
 }
 

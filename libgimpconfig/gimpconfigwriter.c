@@ -349,7 +349,7 @@ gimp_config_writer_ref (GimpConfigWriter *writer)
  * @writer: #GimpConfigWriter to unref
  *
  * Unref a #GimpConfigWriter. If the reference count drops to zero, the
- * array including its contents are freed.
+ * writer is freed.
  *
  * Note that at least one of the references has to be dropped using
  * gimp_config_writer_finish().

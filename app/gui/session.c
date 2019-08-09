@@ -317,7 +317,7 @@ session_init (Gimp *gimp)
       gimp_config_file_backup_on_error (file, "sessionrc", NULL);
     }
 
-  gimp_scanner_destroy (scanner);
+  gimp_scanner_unref (scanner);
   g_object_unref (file);
 
   dialogs_load_recent_docks (gimp);
