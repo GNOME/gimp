@@ -101,7 +101,11 @@ PDB_WRAPPERS_H = \
 	../libgimp/gimptexttool_pdb.h		\
 	../libgimp/gimpvectors_pdb.h
 
+libgimp_built_sources = \
+	gimpenums.c
+
 libgimp_introspectable = \
+	$(libgimp_built_sources)		\
 	../libgimp/gimp.c			\
 	../libgimp/gimp.h			\
 	../libgimp/gimptypes.h			\

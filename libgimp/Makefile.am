@@ -103,9 +103,6 @@ libgimp_sources = \
 	stdplugins-intl.h		\
 	libgimp-intl.h
 
-libgimp_built_sources = \
-	gimpenums.c
-
 libgimp_private_sources = \
 	gimp-debug.c		\
 	gimp-debug.h		\
@@ -141,7 +138,6 @@ libgimp_extra_sources = \
 	gimpgpparams-body.c
 
 libgimp_@GIMP_API_VERSION@_la_SOURCES = \
-	$(libgimp_built_sources)	\
 	$(libgimp_private_sources)	\
 	$(libgimp_sources)
 
@@ -363,7 +359,6 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimp_introspectable)					\
-	gimpenums.c							\
 	$(libgimpui_introspectable)					\
 	$(libgimpbase_introspectable)					\
 	$(libgimpcolor_introspectable)					\
