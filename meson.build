@@ -311,7 +311,7 @@ pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
 conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
-conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('>=1.43'))
+conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
 
 
 ################################################################################
