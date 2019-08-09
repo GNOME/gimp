@@ -1353,8 +1353,7 @@ if have_python
     input : [ ],
     output: [ 'check-defs', ],
     command: [
-      python2,
-      meson.source_root() / 'tools' / 'defcheck.py',
+      find_program(meson.source_root() / 'tools' / 'defcheck.py'),
       meson.source_root(),
     ],
     build_by_default: false,
