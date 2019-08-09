@@ -363,6 +363,7 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
 
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimp_introspectable)					\
+	gimpenums.c							\
 	$(libgimpui_introspectable)					\
 	$(libgimpbase_introspectable)					\
 	$(libgimpcolor_introspectable)					\
