@@ -116,6 +116,9 @@ static void       gimp_vectors_transform     (GimpItem          *item,
                                               GimpInterpolationType interp_type,
                                               GimpTransformResize   clip_result,
                                               GimpProgress      *progress);
+static GimpTransformResize
+                  gimp_vectors_get_clip      (GimpItem          *item,
+                                              GimpTransformResize clip_result);
 static gboolean   gimp_vectors_fill          (GimpItem          *item,
                                               GimpDrawable      *drawable,
                                               GimpFillOptions   *fill_options,
@@ -217,6 +220,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->flip                  = gimp_vectors_flip;
   item_class->rotate                = gimp_vectors_rotate;
   item_class->transform             = gimp_vectors_transform;
+  item_class->get_clip              = gimp_vectors_get_clip;
   item_class->fill                  = gimp_vectors_fill;
   item_class->stroke                = gimp_vectors_stroke;
   item_class->to_selection          = gimp_vectors_to_selection;
@@ -650,6 +654,13 @@ gimp_vectors_transform (GimpItem               *item,
   g_queue_clear (&strokes);
 
   gimp_vectors_thaw (vectors);
+}
+
+static GimpTransformResize
+gimp_vectors_get_clip (GimpItem            *item,
+                       GimpTransformResize  clip_result)
+{
+  return GIMP_TRANSFORM_RESIZE_ADJUST;
 }
 
 static gboolean
