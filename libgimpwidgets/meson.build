@@ -20,7 +20,7 @@ gimpwidgetsmarshal = gnome.genmarshal('gimpwidgetsmarshal',
   install_header: false,
 )
 
-libgimpwidgets_sources = [
+libgimpwidgets_sources_introspectable = [
   'gimpbrowser.c',
   'gimpbusybox.c',
   'gimpbutton.c',
@@ -38,14 +38,9 @@ libgimpwidgets_sources = [
   'gimpcolorprofilecombobox.c',
   'gimpcolorprofilestore.c',
   'gimpcolorprofileview.c',
-  'gimpcolorscale.c',
-  'gimpcolorscales.c',
-  'gimpcolorselect.c',
   'gimpcolorselection.c',
   'gimpcolorselector.c',
-  'gimpcontroller.c',
   'gimpdialog.c',
-  'gimpeevl.c',
   'gimpenumcombobox.c',
   'gimpenumlabel.c',
   'gimpenumstore.c',
@@ -76,10 +71,20 @@ libgimpwidgets_sources = [
   'gimpunitcombobox.c',
   'gimpunitstore.c',
   'gimpwidgets-error.c',
-  'gimpwidgets-private.c',
   'gimpwidgets.c',
   'gimpwidgetsutils.c',
   'gimpzoommodel.c',
+]
+
+libgimpwidgets_sources = [
+  libgimpwidgets_sources_introspectable,
+	'gimpcolorscale.c',
+	'gimpcolorscales.c',
+	'gimpcolorselect.c',
+	'gimpcontroller.c',
+	'gimpeevl.c',
+	'gimpwidgets-private.c',
+
   gimpwidgetsenums,
   gimpwidgetsmarshal,
   icons_imgs_sources,
@@ -87,30 +92,9 @@ libgimpwidgets_sources = [
   pickers_sources,
 ]
 
-libgimpwidgets_headers = [
-  'gimpbrowser.h',
-  'gimpbusybox.h',
-  'gimpbutton.h',
-  'gimpcairo-utils.h',
-  'gimpcellrenderercolor.h',
-  'gimpcellrenderertoggle.h',
-  'gimpchainbutton.h',
-  'gimpcolorarea.h',
-  'gimpcolorbutton.h',
-  'gimpcolordisplay.h',
-  'gimpcolordisplaystack.h',
-  'gimpcolorhexentry.h',
-  'gimpcolornotebook.h',
-  'gimpcolorprofilechooserdialog.h',
-  'gimpcolorprofilecombobox.h',
-  'gimpcolorprofilestore.h',
-  'gimpcolorprofileview.h',
-  'gimpcolorscale.h',
-  'gimpcolorscales.h',
-  'gimpcolorselect.h',
+libgimpwidgets_headers_introspectable = [
   'gimpcolorselection.h',
   'gimpcolorselector.h',
-  'gimpcontroller.h',
   'gimpdialog.h',
   'gimpenumcombobox.h',
   'gimpenumlabel.h',
@@ -149,6 +133,18 @@ libgimpwidgets_headers = [
   'gimpzoommodel.h',
 ]
 
+libgimpwidgets_headers = [
+  libgimpwidgets_headers_introspectable,
+  'gimpcolorscale.h',
+  'gimpcolorscales.h',
+  'gimpcolorselect.h',
+  'gimpcontroller.h',
+]
+
+libgimpwidgets_introspectable = [
+  libgimpwidgets_sources_introspectable,
+  libgimpwidgets_headers_introspectable,
+]
 
 if gtk3_macos.found()
   libgimpwidgets_sources += [

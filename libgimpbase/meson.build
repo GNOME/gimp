@@ -20,6 +20,7 @@ gimpbaseenums = custom_target('gimpbaseenums.c',
   ],
   capture: true,
 )
+
 gimpcompatenums = custom_target('gimpcompatenums.c',
   input : [ 'gimpcompatenums.h', ],
   output: [ 'gimpcompatenums.c', ],
@@ -36,60 +37,33 @@ gimpcompatenums = custom_target('gimpcompatenums.c',
 )
 
 libgimpbase_sources_introspectable = [
-  'gimpbase-private.c',
   'gimpbasetypes.c',
   'gimpchecks.c',
   'gimpcpuaccel.c',
   'gimpenv.c',
   'gimpmemsize.c',
   'gimpmetadata.c',
+  'gimpparamspecs.c',
   'gimpparasite.c',
   'gimpparasiteio.c',
-  'gimpprotocol.c',
   'gimprectangle.c',
-  'gimpreloc.c',
   'gimpsignal.c',
   'gimpunit.c',
   'gimputils.c',
   'gimpvaluearray.c',
-  'gimpwire.c',
 ]
 
 libgimpbase_sources = [
   libgimpbase_sources_introspectable,
+  'gimpbase-private.c',
+  'gimpprotocol.c',
+  'gimpreloc.c',
+  'gimpwire.c',
   gimpbaseenums,
   gimpcompatenums,
-  gimpversion,
 ]
 
 libgimpbase_headers_introspectable = [
-  'gimpbase-private.h',
-  'gimpbase.h',
-  'gimpbaseenums.h',
-  'gimpbasetypes.h',
-  'gimpchecks.h',
-  'gimpcompatenums.h',
-  'gimpcpuaccel.h',
-  'gimpenv.h',
-  'gimplimits.h',
-  'gimpmemsize.h',
-  'gimpmetadata.h',
-  'gimpparam.h',
-  'gimpparasite.h',
-  'gimpparasiteio.h',
-  'gimpprotocol.h',
-  'gimprectangle.h',
-  'gimpreloc.h',
-  'gimpsignal.h',
-  'gimpunit.h',
-  'gimputils.h',
-  'gimpvaluearray.h',
-  'gimpversion.h',
-  'gimpwire.h',
-]
-
-libgimpbase_headers_public = [
-  'gimpbase.h',
   'gimpbaseenums.h',
   'gimpbasetypes.h',
   'gimpchecks.h',
@@ -98,7 +72,6 @@ libgimpbase_headers_public = [
   'gimplimits.h',
   'gimpmemsize.h',
   'gimpmetadata.h',
-  'gimpparam.h',
   'gimpparamspecs.h',
   'gimpparasite.h',
   'gimpparasiteio.h',
@@ -108,6 +81,17 @@ libgimpbase_headers_public = [
   'gimputils.h',
   'gimpvaluearray.h',
   gimpversion,
+]
+
+libgimpbase_headers = [
+  libgimpbase_headers_introspectable,
+  'gimpbase.h',
+  gimpversion,
+]
+
+libgimpbase_introspectable = [
+  libgimpbase_sources_introspectable,
+  libgimpbase_headers_introspectable,
 ]
 
 
@@ -124,25 +108,9 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
 )
 
 install_headers(
-  libgimpbase_headers_public,
+  libgimpbase_headers,
   subdir: join_paths(gimp_api_name, 'libgimpbase'),
 )
-
-# libgimpbase_gir = gnome.generate_gir(libgimpbase,
-#   sources: [
-#     libgimpbase_sources_introspectable,
-#     libgimpbase_headers_introspectable,
-#   ],
-#   nsversion: api_version,
-#   namespace: 'Gimp',
-#   identifier_prefix: 'Gimp',
-#   includes: [
-#     'GLib-2.0',
-#     'GObject-2.0',
-#   ],
-#   include_directories: rootInclude,
-#   install: true,
-# )
 
 # Test program, not installed
 executable('test-cpu-accel',

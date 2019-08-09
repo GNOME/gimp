@@ -10,6 +10,10 @@ libgimpmodule_headers = [
   'gimpmoduletypes.h',
 ]
 
+libgimpmodule_introspectable = [
+  libgimpmodule_sources,
+  libgimpmodule_headers,
+]
 
 libgimpmodule = library('gimpmodule-' + gimp_api_version,
   libgimpmodule_sources,

@@ -14,8 +14,7 @@ gimpconfigenums = custom_target('gimpconfigenums.c',
   capture: true,
 )
 
-
-libgimpconfig_sources = [
+libgimpconfig_sources_introspectable = [
   'gimpcolorconfig.c',
   'gimpconfig-deserialize.c',
   'gimpconfig-error.c',
@@ -25,10 +24,14 @@ libgimpconfig_sources = [
   'gimpconfig-utils.c',
   'gimpconfigwriter.c',
   'gimpscanner.c',
-  gimpconfigenums
 ]
 
-libgimpconfig_headers = [
+libgimpconfig_sources = [
+  libgimpconfig_sources_introspectable,
+  gimpconfigenums,
+]
+
+libgimpconfig_headers_introspectable = [
   'gimpcolorconfig.h',
   'gimpconfig-deserialize.h',
   'gimpconfig-error.h',
@@ -37,11 +40,20 @@ libgimpconfig_headers = [
   'gimpconfig-path.h',
   'gimpconfig-serialize.h',
   'gimpconfig-utils.h',
-  'gimpconfig.h',
   'gimpconfigenums.h',
   'gimpconfigtypes.h',
   'gimpconfigwriter.h',
   'gimpscanner.h',
+]
+
+libgimpconfig_headers = [
+  libgimpconfig_headers_introspectable,
+  'gimpconfig.h',
+]
+
+libgimpconfig_introspectable = [
+  libgimpconfig_headers_introspectable,
+  libgimpconfig_sources_introspectable,
 ]
 
 libgimpconfig = library('gimpconfig-' + gimp_api_version,
