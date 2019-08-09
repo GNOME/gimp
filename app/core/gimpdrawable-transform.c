@@ -64,41 +64,6 @@
 
 /*  public functions  */
 
-GimpTransformResize
-gimp_drawable_transform_get_effective_clip (GimpDrawable        *drawable,
-                                            GeglBuffer          *orig_buffer,
-                                            GimpTransformResize  clip_result)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), clip_result);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)),
-                                               clip_result);
-  g_return_val_if_fail (orig_buffer == NULL || GEGL_IS_BUFFER (orig_buffer),
-                        clip_result);
-
-  /*  Always clip unfloated buffers since they must keep their size  */
-  if (GIMP_IS_CHANNEL (drawable))
-    {
-      if (orig_buffer)
-        {
-          if (! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
-            clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
-        }
-      else
-        {
-          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpChannel *mask  = gimp_image_get_mask (image);
-
-          if (GIMP_CHANNEL (drawable) == mask ||
-              gimp_channel_is_empty (mask))
-            {
-              clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
-            }
-        }
-    }
-
-  return clip_result;
-}
-
 GeglBuffer *
 gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
                                        GimpContext             *context,
@@ -145,17 +110,6 @@ gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
   v1 = orig_offset_y;
   u2 = u1 + gegl_buffer_get_width  (orig_buffer);
   v2 = v1 + gegl_buffer_get_height (orig_buffer);
-
-  /*  Don't modify the clipping mode of layer masks here, so that,
-   *  when transformed together with their layer, they match the
-   *  layer's clipping mode.
-   */
-  if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL)
-    {
-      clip_result = gimp_drawable_transform_get_effective_clip (drawable,
-                                                                orig_buffer,
-                                                                clip_result);
-    }
 
   /*  Find the bounding coordinates of target */
   gimp_transform_resize_boundary (&m, clip_result,
@@ -788,10 +742,6 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
       gint              new_offset_y;
       GimpColorProfile *profile;
 
-      clip_result = gimp_drawable_transform_get_effective_clip (drawable,
-                                                                orig_buffer,
-                                                                clip_result);
-
       /*  also transform the mask if we are transforming an entire layer  */
       if (GIMP_IS_LAYER (drawable) &&
           gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
@@ -876,11 +826,6 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
       gint              new_offset_y;
       GimpColorProfile *profile;
 
-      /*  always clip unfloated buffers so they keep their size  */
-      if (GIMP_IS_CHANNEL (drawable) &&
-          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
-        clip_result = TRUE;
-
       /*  also transform the mask if we are transforming an entire layer  */
       if (GIMP_IS_LAYER (drawable) &&
           gimp_layer_get_mask (GIMP_LAYER (drawable)) &&
@@ -960,11 +905,6 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
       gint              new_offset_x;
       gint              new_offset_y;
       GimpColorProfile *profile;
-
-      /*  always clip unfloated buffers so they keep their size  */
-      if (GIMP_IS_CHANNEL (drawable) &&
-          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
-        clip_result = TRUE;
 
       /*  also transform the mask if we are transforming an entire layer  */
       if (GIMP_IS_LAYER (drawable) &&

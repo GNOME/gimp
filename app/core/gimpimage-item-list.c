@@ -161,8 +161,13 @@ gimp_image_item_list_flip (GimpImage           *image,
         }
 
       for (l = list; l; l = g_list_next (l))
-        gimp_item_flip (GIMP_ITEM (l->data), context,
-                        flip_type, axis, clip_result);
+        {
+          GimpItem *item = l->data;
+
+          gimp_item_flip (item, context,
+                          flip_type, axis,
+                          gimp_item_get_clip (item, clip_result));
+        }
 
       if (list->next)
         {
@@ -200,8 +205,13 @@ gimp_image_item_list_rotate (GimpImage        *image,
         }
 
       for (l = list; l; l = g_list_next (l))
-        gimp_item_rotate (GIMP_ITEM (l->data), context,
-                          rotate_type, center_x, center_y, clip_result);
+        {
+          GimpItem *item = l->data;
+
+          gimp_item_rotate (item, context,
+                            rotate_type, center_x, center_y,
+                            gimp_item_get_clip (item, clip_result));
+        }
 
       if (list->next)
         {
@@ -251,13 +261,16 @@ gimp_image_item_list_transform (GimpImage              *image,
 
       for (l = list; l; l = g_list_next (l))
         {
+          GimpItem *item = l->data;
+
           if (queue)
             gimp_object_queue_pop (queue);
 
-          gimp_item_transform (GIMP_ITEM (l->data), context,
+          gimp_item_transform (item, context,
                                matrix, direction,
                                interpolation_type,
-                               clip_result, progress);
+                               gimp_item_get_clip (item, clip_result),
+                               progress);
         }
 
       if (list->next)

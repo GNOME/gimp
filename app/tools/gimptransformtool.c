@@ -149,15 +149,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   if (orig_buffer)
     {
       /*  this happens when transforming a selection cut out of a
-       *  normal drawable, or the selection
+       *  normal drawable
        */
-
-      /*  always clip the selection and unfloated channels
-       *  so they keep their size
-       */
-      if (GIMP_IS_CHANNEL (active_item) &&
-          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
-        clip = GIMP_TRANSFORM_RESIZE_CLIP;
 
       ret = gimp_drawable_transform_buffer_affine (GIMP_DRAWABLE (active_item),
                                                    context,
@@ -188,10 +181,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
         }
       else
         {
-          /*  always clip layer masks so they keep their size
-           */
-          if (GIMP_IS_CHANNEL (active_item))
-            clip = GIMP_TRANSFORM_RESIZE_CLIP;
+          clip = gimp_item_get_clip (active_item, clip);
 
           gimp_item_transform (active_item, context,
                                &tr_tool->transform,
@@ -271,14 +261,13 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
 
                   orig_bounds.width  = gimp_item_get_width  (item);
                   orig_bounds.height = gimp_item_get_height (item);
+
+                  clip = gimp_item_get_clip (item, clip);
                 }
               else
                 {
                   orig_bounds = selection_bounds;
                 }
-
-              clip = gimp_drawable_transform_get_effective_clip (
-                GIMP_DRAWABLE (item), NULL, clip);
             }
           else
             {
@@ -286,7 +275,7 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
                                 &orig_bounds.x,     &orig_bounds.y,
                                 &orig_bounds.width, &orig_bounds.height);
 
-              clip = GIMP_TRANSFORM_RESIZE_ADJUST;
+              clip = gimp_item_get_clip (item, clip);
             }
 
           gimp_transform_resize_boundary (&transform, clip,
@@ -692,9 +681,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      orig_buffer = g_object_ref (gimp_drawable_get_buffer (GIMP_DRAWABLE (active_item)));
-      break;
-
     case GIMP_TRANSFORM_TYPE_PATH:
       break;
     }
@@ -729,17 +715,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
         }
       break;
 
-     case GIMP_TRANSFORM_TYPE_SELECTION:
-      if (new_buffer)
-        {
-          gimp_channel_push_undo (GIMP_CHANNEL (active_item), NULL);
-
-          gimp_drawable_set_buffer (GIMP_DRAWABLE (active_item),
-                                    FALSE, NULL, new_buffer);
-          g_object_unref (new_buffer);
-        }
-      break;
-
+    case GIMP_TRANSFORM_TYPE_SELECTION:
     case GIMP_TRANSFORM_TYPE_PATH:
       /*  Nothing to be done  */
       break;

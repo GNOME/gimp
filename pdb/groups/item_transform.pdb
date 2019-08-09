@@ -92,7 +92,8 @@ $assemble_matrix
           gimp_item_transform (item, context, &matrix,
                                pdb_context->transform_direction,
                                pdb_context->interpolation,
-                               pdb_context->transform_resize,
+                               gimp_item_get_clip (
+                                 item, pdb_context->transform_resize),
                                progress);
         }
 
@@ -256,7 +257,8 @@ HELP
         {
           gimp_item_flip (item, context,
                           flip_type, axis,
-                          pdb_context->transform_resize);
+                          gimp_item_get_clip (
+                            item, pdb_context->transform_resize));
         }
     }
 }
@@ -507,7 +509,8 @@ HELP
           gimp_item_rotate (item, context,
                             rotate_type,
                             center_x, center_y,
-                            pdb_context->transform_resize);
+                            gimp_item_get_clip (
+                              item, pdb_context->transform_resize));
         }
     }
 }

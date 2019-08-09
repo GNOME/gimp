@@ -1147,7 +1147,7 @@ gimp_filter_tool_update_dialog (GimpFilterTool *filter_tool)
         {
           gtk_widget_set_visible (
             filter_tool->clip_combo,
-            GIMP_IS_LAYER (tool->drawable) &&
+            gimp_item_get_clip (GIMP_ITEM (tool->drawable), FALSE) == FALSE &&
             ! gimp_gegl_node_is_point_operation (filter_tool->operation));
 
           gtk_widget_hide (filter_tool->region_combo);

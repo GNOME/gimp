@@ -159,7 +159,8 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
             {
               gimp_item_flip (item, context,
                               flip_type, axis,
-                              pdb_context->transform_resize);
+                              gimp_item_get_clip (
+                                item, pdb_context->transform_resize));
             }
         }
     }
@@ -252,7 +253,8 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
@@ -360,7 +362,8 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
@@ -450,7 +453,8 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
               gimp_item_rotate (item, context,
                                 rotate_type,
                                 center_x, center_y,
-                                pdb_context->transform_resize);
+                                gimp_item_get_clip (
+                                  item, pdb_context->transform_resize));
             }
         }
     }
@@ -548,7 +552,8 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
@@ -648,7 +653,8 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
@@ -743,7 +749,8 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
@@ -849,7 +856,8 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
@@ -963,7 +971,8 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
               gimp_item_transform (item, context, &matrix,
                                    pdb_context->transform_direction,
                                    pdb_context->interpolation,
-                                   pdb_context->transform_resize,
+                                   gimp_item_get_clip (
+                                     item, pdb_context->transform_resize),
                                    progress);
             }
 
