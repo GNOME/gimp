@@ -8,6 +8,5 @@ if gtkdoc_scan.found()
   subdir('libgimpmodule')
   subdir('libgimpthumb')
   subdir('libgimpwidgets')
-  subdir('performance-logs')
   subdir('tools')
 endif
