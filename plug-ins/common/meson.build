@@ -246,11 +246,6 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'goat-exercise',
-    [ 'goat-exercise.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'gradient-map',
     [ 'gradient-map.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
