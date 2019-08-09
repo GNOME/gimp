@@ -27,7 +27,6 @@
 #include "imap_icons.h"
 
 #include "images/imagemap-icon-images.h"
-#include "images/imagemap-icon-images.c"
 
 void
 init_icons (void)
