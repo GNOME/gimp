@@ -41,7 +41,9 @@ lighting_SOURCES = \
 	lighting-shade.c	\
 	lighting-shade.h	\
 	lighting-ui.c		\
-	lighting-ui.h
+	lighting-ui.h		\
+	images/lighting-icon-images.h		\
+	images/lighting-icon-images.c
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
