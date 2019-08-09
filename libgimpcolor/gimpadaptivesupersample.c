@@ -238,6 +238,26 @@ gimp_render_sub_pixel (gint             max_depth,
   return num_samples;
 }
 
+/**
+ * gimp_adaptive_supersample_area:
+ * @x1:             left x coordinate of the area to process.
+ * @y1:             top y coordinate of the area to process.
+ * @x2:             right x coordinate of the area to process.
+ * @y2:             bottom y coordinate of the area to process.
+ * @max_depth:      maximum depth of supersampling.
+ * @threshold:      lower threshold of pixel difference that stops
+ *                  supersampling.
+ * @render_func:    (scope call): function calculate the color value at
+ *                  given  coordinates.
+ * @render_data:    user data passed to @render_func.
+ * @put_pixel_func: (scope call): function to a pixels to a color at
+ *                  given coordinates.
+ * @put_pixel_data: user data passed to @put_pixel_func.
+ * @progress_func:  (scope call): function to report progress.
+ * @progress_data:  user data passed to @progress_func.
+ *
+ * Returns: the number of pixels processed.
+ **/
 gulong
 gimp_adaptive_supersample_area (gint              x1,
                                 gint              y1,

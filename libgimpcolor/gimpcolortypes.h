@@ -107,20 +107,6 @@ struct _GimpCMYK
 };
 
 
-typedef void (* GimpRenderFunc)   (gdouble   x,
-                                   gdouble   y,
-                                   GimpRGB  *color,
-                                   gpointer  data);
-typedef void (* GimpPutPixelFunc) (gint      x,
-                                   gint      y,
-                                   GimpRGB  *color,
-                                   gpointer  data);
-typedef void (* GimpProgressFunc) (gint      min,
-                                   gint      max,
-                                   gint      current,
-                                   gpointer  data);
-
-
 G_END_DECLS
 
 #endif  /* __GIMP_COLOR_TYPES_H__ */
