@@ -62,12 +62,16 @@ goat_exercise_c_LDADD = \
 
 # Javascript (GJS) version.
 
+if BUILD_JAVASCRIPT
 goat_exercise_gjsdir = $(gimpplugindir)/plug-ins/goat-exercise-gjs
 goat_exercise_gjs_SCRIPTS = goat-exercise-gjs.js
+endif
 
 # Python 3 (pygobject) version.
 
 # Commented out for now until we figure out the GParamSpec issues.
 
+if BUILD_PYTHON
 #goat_exercise_py3dir = $(gimpplugindir)/plug-ins/goat-exercise-py3
 #goat_exercise_py3_SCRIPTS = goat-exercise-py3.py
+endif

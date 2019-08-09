@@ -2313,6 +2313,51 @@ fi
 AM_CONDITIONAL(HAS_PYTHON_INTERP, test "x$PYBIN_PATH" != "x")
 AM_CONDITIONAL(BUILD_PYTHON, test "x$with_python" != xno)
 
+###########################################
+# Check for JavaScript runtime dependencies
+###########################################
+
+AC_ARG_WITH(javascript,
+            [  --with-javascript=no|yes|force install JavaScript plug-ins (default=yes)], ,
+            [with_javascript=yes])
+
+if test "x$with_javascript" = xno; then
+  warning_javascript="
+WARNING: you disabled the installation of core JavaScript plug-ins. This
+         is discouraged as it won't provide the full GIMP experience.
+         Note that you may install the JavaScript plug-ins even if the
+         GJS interpreter is not installed at build-time by passing the
+         configure option --with-javascript=force.
+         Just make sure that GJS is available at run-time."
+elif test "x$with_javascript" = xforce; then
+  with_javascript="yes"
+  warning_javascript=
+  AC_CHECK_PROGS(GJS, gjs, no)
+  if test "x$GJS" = xno; then
+    warning_javascript="
+WARNING: GJS not found.
+         JavaScript plug-ins will be installed anyway but you should make
+         sure that the JavaScript interpreter GJS is available at
+         installation, otherwise installed plug-ins won't be usable."
+    with_javascript="yes (see warning below)"
+  fi
+else
+  with_javascript="yes"
+  AC_CHECK_PROGS(GJS, gjs, no)
+  if test "x$GJS" = xno; then
+    required_deps="$required_deps
+    - GJS not found.
+        *** Please install the JavaScript interpreter GJS.
+        *** Note that you may install the JavaScript plug-ins even if
+        *** GJS is not installed at build-time by passing the configure
+        *** option --with-javascript=force.
+        *** Just make sure that GJS is available at run-time."
+    with_javascript="no"
+  fi
+fi
+
+AM_CONDITIONAL(HAS_JAVASCRIPT_INTERP, test "x$GJS" != "xno")
+AM_CONDITIONAL(BUILD_JAVASCRIPT, test "x$with_javascript" != xno)
 
 ###########################################################
 # Some plug-ins don't build on Win32, others are Win32-only
@@ -3046,6 +3091,7 @@ Optional Plug-Ins:
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
   Python 3 plug-ins:         $with_python
+  JavaScript plug-ins:       $with_javascript
   TWAIN (Win32):             $os_win32
   Webpage:                   $have_webkit
   WMF:                       $have_libwmf
@@ -3064,7 +3110,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
