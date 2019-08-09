@@ -60,7 +60,9 @@ gfig_SOURCES = \
 	gfig-star.h		\
 	gfig-style.c		\
 	gfig-style.h    	\
-	gfig-types.h
+	gfig-types.h    	\
+	gfig-icon-images.c	\
+	gfig-icon-images.h
 
 EXTRA_DIST = README
 
