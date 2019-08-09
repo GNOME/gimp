@@ -104,82 +104,88 @@ PDB_WRAPPERS_H = \
 libgimp_built_sources = \
 	gimpenums.c
 
-libgimp_introspectable = \
-	$(libgimp_built_sources)		\
-	../libgimp/gimp.c			\
+libgimp_introspectable_headers = \
 	../libgimp/gimp.h			\
 	../libgimp/gimptypes.h			\
 	../libgimp/gimpenums.h			\
-	${PDB_WRAPPERS_C}			\
 	${PDB_WRAPPERS_H}			\
-	../libgimp/gimpbrushselect.c		\
 	../libgimp/gimpbrushselect.h		\
-	../libgimp/gimpchannel.c		\
 	../libgimp/gimpchannel.h		\
-	../libgimp/gimpdrawable.c		\
 	../libgimp/gimpdrawable.h		\
-	../libgimp/gimpfontselect.c		\
 	../libgimp/gimpfontselect.h		\
-	../libgimp/gimpgimprc.c			\
 	../libgimp/gimpgimprc.h			\
-	../libgimp/gimpgradientselect.c		\
 	../libgimp/gimpgradientselect.h		\
-	../libgimp/gimpimage.c			\
 	../libgimp/gimpimage.h			\
-	../libgimp/gimpimagecolorprofile.c	\
 	../libgimp/gimpimagecolorprofile.h	\
-	../libgimp/gimplayer.c			\
 	../libgimp/gimplayer.h			\
-	../libgimp/gimppaletteselect.c		\
 	../libgimp/gimppaletteselect.h		\
-	../libgimp/gimpparamspecs.c		\
 	../libgimp/gimpparamspecs.h		\
-	../libgimp/gimppatternselect.c		\
 	../libgimp/gimppatternselect.h		\
-	../libgimp/gimppdb.c			\
 	../libgimp/gimppdb.h			\
-	../libgimp/gimpplugin.c			\
 	../libgimp/gimpplugin.h			\
-	../libgimp/gimpprocedure.c		\
 	../libgimp/gimpprocedure.h		\
-	../libgimp/gimpprogress.c		\
 	../libgimp/gimpprogress.h		\
-	../libgimp/gimpselection.c		\
 	../libgimp/gimpselection.h
 
-libgimpui_introspectable = \
-	../libgimp/gimpui.c			\
+libgimp_introspectable = \
+	$(libgimp_introspectable_headers)	\
+	$(libgimp_built_sources)		\
+	../libgimp/gimp.c			\
+	${PDB_WRAPPERS_C}			\
+	../libgimp/gimpbrushselect.c		\
+	../libgimp/gimpchannel.c		\
+	../libgimp/gimpdrawable.c		\
+	../libgimp/gimpfontselect.c		\
+	../libgimp/gimpgimprc.c			\
+	../libgimp/gimpgradientselect.c		\
+	../libgimp/gimpimage.c			\
+	../libgimp/gimpimagecolorprofile.c	\
+	../libgimp/gimplayer.c			\
+	../libgimp/gimppaletteselect.c		\
+	../libgimp/gimpparamspecs.c		\
+	../libgimp/gimppatternselect.c		\
+	../libgimp/gimppdb.c			\
+	../libgimp/gimpplugin.c			\
+	../libgimp/gimpprocedure.c		\
+	../libgimp/gimpprogress.c		\
+	../libgimp/gimpselection.c
+
+libgimpui_introspectable_headers = \
 	../libgimp/gimpui.h			\
 	../libgimp/gimpuitypes.h		\
-	../libgimp/gimpaspectpreview.c     	\
-	../libgimp/gimpaspectpreview.h     	\
-	../libgimp/gimpbrushselectbutton.c	\
+	../libgimp/gimpaspectpreview.h		\
 	../libgimp/gimpbrushselectbutton.h	\
-	../libgimp/gimpdrawablepreview.c	\
-	../libgimp/gimpdrawablepreview.h	\
-	../libgimp/gimpexport.c			\
+	../libgimp/gimpdrawablepreview.h   	\
 	../libgimp/gimpexport.h			\
-	../libgimp/gimpfontselectbutton.c	\
 	../libgimp/gimpfontselectbutton.h	\
-	../libgimp/gimpgradientselectbutton.c	\
 	../libgimp/gimpgradientselectbutton.h	\
-	../libgimp/gimpimagecombobox.c		\
 	../libgimp/gimpimagecombobox.h		\
-	../libgimp/gimpimagemetadata.c		\
 	../libgimp/gimpimagemetadata.h		\
-	../libgimp/gimpitemcombobox.c		\
 	../libgimp/gimpitemcombobox.h		\
-	../libgimp/gimppaletteselectbutton.c	\
 	../libgimp/gimppaletteselectbutton.h	\
-	../libgimp/gimppatternselectbutton.c	\
 	../libgimp/gimppatternselectbutton.h	\
-	../libgimp/gimpprocbrowserdialog.c	\
 	../libgimp/gimpprocbrowserdialog.h	\
-	../libgimp/gimpprocview.c		\
 	../libgimp/gimpprocview.h		\
-	../libgimp/gimpprogressbar.c		\
 	../libgimp/gimpprogressbar.h		\
-	../libgimp/gimpselectbutton.c		\
 	../libgimp/gimpselectbutton.h		\
-	../libgimp/gimpzoompreview.c		\
 	../libgimp/gimpzoompreview.h
+
+libgimpui_introspectable = \
+	$(libgimpui_introspectable_headers)	\
+	../libgimp/gimpui.c			\
+	../libgimp/gimpaspectpreview.c     	\
+	../libgimp/gimpbrushselectbutton.c	\
+	../libgimp/gimpdrawablepreview.c	\
+	../libgimp/gimpexport.c			\
+	../libgimp/gimpfontselectbutton.c	\
+	../libgimp/gimpgradientselectbutton.c	\
+	../libgimp/gimpimagecombobox.c		\
+	../libgimp/gimpimagemetadata.c		\
+	../libgimp/gimpitemcombobox.c		\
+	../libgimp/gimppaletteselectbutton.c	\
+	../libgimp/gimppatternselectbutton.c	\
+	../libgimp/gimpprocbrowserdialog.c	\
+	../libgimp/gimpprocview.c		\
+	../libgimp/gimpprogressbar.c		\
+	../libgimp/gimpselectbutton.c		\
+	../libgimp/gimpzoompreview.c

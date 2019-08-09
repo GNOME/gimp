@@ -155,45 +155,9 @@ libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimpui_sources)
 
 gimpinclude_HEADERS = \
-	gimp.h				\
-	gimptypes.h			\
-	gimpenums.h			\
-	${PDB_WRAPPERS_H}		\
-	gimpbrushselect.h		\
-	gimpchannel.h			\
-	gimpdrawable.h			\
-	gimpfontselect.h		\
-	gimpgimprc.h			\
-	gimpgradientselect.h		\
-	gimpimage.h			\
-	gimpimagecolorprofile.h		\
-	gimplayer.h			\
-	gimplegacy.h			\
-	gimppaletteselect.h		\
-	gimpparamspecs.h		\
-	gimppatternselect.h		\
-	gimpplugin.h			\
-	gimpprogress.h			\
-	gimpselection.h			\
-	\
-	gimpui.h			\
-	gimpuitypes.h			\
-	gimpaspectpreview.h		\
-	gimpbrushselectbutton.h		\
-	gimpdrawablepreview.h   	\
-	gimpexport.h			\
-	gimpfontselectbutton.h		\
-	gimpgradientselectbutton.h	\
-	gimpimagecombobox.h		\
-	gimpimagemetadata.h		\
-	gimpitemcombobox.h		\
-	gimppaletteselectbutton.h	\
-	gimppatternselectbutton.h	\
-	gimpprocbrowserdialog.h		\
-	gimpprocview.h			\
-	gimpprogressbar.h		\
-	gimpselectbutton.h		\
-	gimpzoompreview.h
+	$(libgimp_introspectable_headers)	\
+	gimplegacy.h				\
+	$(libgimpui_introspectable_headers)
 
 libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
