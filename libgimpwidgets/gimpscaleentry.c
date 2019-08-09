@@ -325,7 +325,7 @@ gimp_color_scale_entry_new (GtkGrid     *grid,
  *               of the scale widget
  *
  * Sets whether the scale_entry's scale widget will behave in a linear
- * or logharithmic fashion. Useful when an entry has to attend large
+ * or logarithmic fashion. Useful when an entry has to attend large
  * ranges, but smaller selections on that range require a finer
  * adjustment.
  *
@@ -425,7 +425,7 @@ gimp_scale_entry_set_logarithmic (GtkAdjustment *adjustment,
  * @adjustment: a  #GtkAdjustment as returned by gimp_scale_entry_new()
  *
  * Returns: %TRUE if the the entry's scale widget will behave in
- *               logharithmic fashion, %FALSE for linear behaviour.
+ *          logarithmic fashion, %FALSE for linear behaviour.
  *
  * Since: 2.2
  **/
