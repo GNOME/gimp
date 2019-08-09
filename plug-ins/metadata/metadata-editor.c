@@ -545,7 +545,7 @@ metadata_editor_dialog (gint32        image_id,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
                             _("_Cancel"),        GTK_RESPONSE_NO,
-                            _("Write Metadata"), GTK_RESPONSE_YES,
+                            _("_Write Metadata"), GTK_RESPONSE_YES,
                             NULL);
 
   meta_args.dialog = dialog;

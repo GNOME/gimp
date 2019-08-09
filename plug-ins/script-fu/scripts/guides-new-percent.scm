@@ -32,9 +32,9 @@
   "*"
   SF-IMAGE      "Input Image"      0
   SF-DRAWABLE   "Input Drawable"   0
-  SF-OPTION     _"Direction"       '(_"Horizontal"
+  SF-OPTION     _"_Direction"       '(_"Horizontal"
                                      _"Vertical")
-  SF-ADJUSTMENT _"Position (in %)" '(50 0 100 1 10 2 1)
+  SF-ADJUSTMENT _"_Position (in %)" '(50 0 100 1 10 2 1)
 )
 
 (script-fu-menu-register "script-fu-guide-new-percent"

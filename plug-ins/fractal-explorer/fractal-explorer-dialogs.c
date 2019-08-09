@@ -634,7 +634,7 @@ explorer_dialog (void)
                                         GDK_ENTER_NOTIFY_MASK));
   gtk_widget_show (wint.preview);
 
-  toggle = gtk_check_button_new_with_label (_("Realtime preview"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Re_altime preview"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),

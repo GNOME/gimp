@@ -110,12 +110,12 @@
   "RGB*,GRAY*"
   SF-IMAGE       "The image"              0
   SF-DRAWABLE    "The layer"              0
-  SF-ADJUSTMENT _"Threshold (bigger 1<-->254 smaller)" '(127 1 254 1 10 0 0)
-  SF-ADJUSTMENT _"Spread"                 '(8 0 1000 1 10 0 1)
-  SF-ADJUSTMENT _"Granularity (1 is low)" '(4 1 25 1 10 0 1)
-  SF-ADJUSTMENT _"Smooth"                 '(2 1 150 1 10 0 1)
-  SF-TOGGLE     _"Smooth horizontally"    TRUE
-  SF-TOGGLE     _"Smooth vertically"      TRUE
+  SF-ADJUSTMENT _"_Threshold (bigger 1<-->254 smaller)" '(127 1 254 1 10 0 0)
+  SF-ADJUSTMENT _"_Spread"                 '(8 0 1000 1 10 0 1)
+  SF-ADJUSTMENT _"_Granularity (1 is low)" '(4 1 25 1 10 0 1)
+  SF-ADJUSTMENT _"S_mooth"                 '(2 1 150 1 10 0 1)
+  SF-TOGGLE     _"Smooth hor_izontally"    TRUE
+  SF-TOGGLE     _"Smooth _vertically"      TRUE
 )
 
 (script-fu-menu-register "script-fu-distress-selection"

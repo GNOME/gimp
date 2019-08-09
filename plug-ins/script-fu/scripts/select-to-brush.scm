@@ -138,7 +138,7 @@
   "RGB* GRAY*"
   SF-IMAGE       "Image"       0
   SF-DRAWABLE    "Drawable"    0
-  SF-STRING     _"Brush name"  "My Brush"
-  SF-STRING     _"File name"   "mybrush"
-  SF-ADJUSTMENT _"Spacing"     '(25 0 1000 1 1 1 0)
+  SF-STRING     _"_Brush name"  "My Brush"
+  SF-STRING     _"_File name"   "mybrush"
+  SF-ADJUSTMENT _"_Spacing"     '(25 0 1000 1 1 1 0)
 )

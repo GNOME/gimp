@@ -32,8 +32,8 @@
   "*"
   SF-IMAGE      "Image"      0
   SF-DRAWABLE   "Drawable"   0
-  SF-OPTION     _"Direction" '(_"Horizontal" _"Vertical")
-  SF-ADJUSTMENT _"Position"  (list 0 0 MAX-IMAGE-SIZE 1 10 0 1)
+  SF-OPTION     _"_Direction" '(_"Horizontal" _"Vertical")
+  SF-ADJUSTMENT _"_Position"  (list 0 0 MAX-IMAGE-SIZE 1 10 0 1)
 )
 
 (script-fu-menu-register "script-fu-guide-new"
