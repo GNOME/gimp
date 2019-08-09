@@ -14,7 +14,7 @@ gimpconfigenums = custom_target('gimpconfigenums.c',
   capture: true,
 )
 
-libgimpconfig_sources_introspectable = [
+libgimpconfig_sources_introspectable = files(
   'gimpcolorconfig.c',
   'gimpconfig-deserialize.c',
   'gimpconfig-error.c',
@@ -24,14 +24,14 @@ libgimpconfig_sources_introspectable = [
   'gimpconfig-utils.c',
   'gimpconfigwriter.c',
   'gimpscanner.c',
-]
+)
 
 libgimpconfig_sources = [
   libgimpconfig_sources_introspectable,
   gimpconfigenums,
 ]
 
-libgimpconfig_headers_introspectable = [
+libgimpconfig_headers_introspectable = files(
   'gimpcolorconfig.h',
   'gimpconfig-deserialize.h',
   'gimpconfig-error.h',
@@ -44,7 +44,7 @@ libgimpconfig_headers_introspectable = [
   'gimpconfigtypes.h',
   'gimpconfigwriter.h',
   'gimpscanner.h',
-]
+)
 
 libgimpconfig_headers = [
   libgimpconfig_headers_introspectable,

@@ -20,7 +20,7 @@ gimpwidgetsmarshal = gnome.genmarshal('gimpwidgetsmarshal',
   install_header: false,
 )
 
-libgimpwidgets_sources_introspectable = [
+libgimpwidgets_sources_introspectable = files(
   'gimpbrowser.c',
   'gimpbusybox.c',
   'gimpbutton.c',
@@ -74,7 +74,7 @@ libgimpwidgets_sources_introspectable = [
   'gimpwidgets.c',
   'gimpwidgetsutils.c',
   'gimpzoommodel.c',
-]
+)
 
 libgimpwidgets_sources = [
   libgimpwidgets_sources_introspectable,
@@ -92,7 +92,7 @@ libgimpwidgets_sources = [
   pickers_sources,
 ]
 
-libgimpwidgets_headers_introspectable = [
+libgimpwidgets_headers_introspectable = files(
   'gimpcolorselection.h',
   'gimpcolorselector.h',
   'gimpdialog.h',
@@ -131,7 +131,7 @@ libgimpwidgets_headers_introspectable = [
   'gimpwidgetstypes.h',
   'gimpwidgetsutils.h',
   'gimpzoommodel.h',
-]
+)
 
 libgimpwidgets_headers = [
   libgimpwidgets_headers_introspectable,

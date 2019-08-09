@@ -1,18 +1,18 @@
 
-libgimpmath_sources_introspectable = [
+libgimpmath_sources_introspectable = files(
   'gimpmatrix.c',
   'gimpvector.c',
-]
+)
 
 libgimpmath_sources = [
   libgimpmath_sources_introspectable,
 ]
 
-libgimpmath_headers_introspectable = [
+libgimpmath_headers_introspectable = files(
   'gimpmathtypes.h',
   'gimpmatrix.h',
   'gimpvector.h',
-]
+)
 
 libgimpmath_headers = [
   libgimpmath_headers_introspectable,
