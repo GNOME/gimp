@@ -1,4 +1,4 @@
-module_name = 'libgimpwidgets'
+module_name = 'libgimpwidgets3'
 
 version_data = configuration_data()
 version_data.set('GIMP_VERSION', gimp_version)
@@ -10,13 +10,15 @@ configure_file(
 
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
-  gobject_typesfile: join_paths(meson.current_source_dir(), module_name + '.types'),
-  src_dir: join_paths(meson.source_root(), module_name),
+  gobject_typesfile: files(module_name + '.types'),
+  src_dir: meson.current_source_dir(),
 
   content_files: [
     'visual-index.html'
   ],
   ignore_headers: [
+    'gimp-color-picker-cursors.h',
+    'gimp-icon-pixbufs.h',
     'gimpcolorprofilestore-private.h',
     'gimpeevl.h',
     'gimpwidgets-private.h',
@@ -35,11 +37,11 @@ gnome.gtkdoc(module_name,
     '--name-space=gimp',
   ],
   fixxref_args:  [
-    '--extra-dir='+ join_paths(meson.current_build_dir(), '..', 'libgimp',      'html'),
-    '--extra-dir='+ join_paths(meson.current_build_dir(), '..', 'libgimpbase',  'html'),
-    '--extra-dir='+ join_paths(meson.current_build_dir(), '..', 'libgimpcolor', 'html'),
-    '--extra-dir='+ join_paths(meson.current_build_dir(), '..', 'libgimpconfig','html'),
-    '--extra-dir='+ join_paths(meson.current_build_dir(), '..', 'libgimpmath',  'html'),
+    '--extra-dir='+ meson.current_build_dir() / '..' / 'libgimp'       / 'html',
+    '--extra-dir='+ meson.current_build_dir() / '..' / 'libgimpbase'   / 'html',
+    '--extra-dir='+ meson.current_build_dir() / '..' / 'libgimpcolor'  / 'html',
+    '--extra-dir='+ meson.current_build_dir() / '..' / 'libgimpconfig' / 'html',
+    '--extra-dir='+ meson.current_build_dir() / '..' / 'libgimpmath'   / 'html',
   ],
   html_assets: [
     # '$(top_srcdir)/icons/Color/12/gimp-*.png',
