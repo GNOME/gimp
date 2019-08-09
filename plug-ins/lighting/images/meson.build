@@ -1,30 +1,18 @@
 stock_icons = [
-  'stock-intensity-ambient-high',
-  'stock-intensity-ambient-low',
-  'stock-intensity-diffuse-high',
-  'stock-intensity-diffuse-low',
-  'stock-reflectivity-diffuse-high',
-  'stock-reflectivity-diffuse-low',
-  'stock-reflectivity-specular-high',
-  'stock-reflectivity-specular-low',
-  'stock-reflectivity-highlight-high',
-  'stock-reflectivity-highlight-low',
+  'lighting-intensity-ambient-high.png',
+  'lighting-intensity-ambient-low.png',
+  'lighting-intensity-diffuse-high.png',
+  'lighting-intensity-diffuse-low.png',
+  'lighting-reflectivity-diffuse-high.png',
+  'lighting-reflectivity-diffuse-low.png',
+  'lighting-reflectivity-highlight-high.png',
+  'lighting-reflectivity-highlight-low.png',
+  'lighting-reflectivity-specular-high.png',
+  'lighting-reflectivity-specular-low.png',
 ]
 
-stock_icons_list = []
-foreach name : stock_icons
-  stock_icons_list += name.underscorify()
-  stock_icons_list += join_paths(meson.current_source_dir(), name + '.png')
-endforeach
-
-lighting_stock_pixbufs_h = custom_target('stock-pixbufs.h',
-  input : [ ],
-  output: [ 'stock-pixbufs.h', ],
-  command: [
-    gdk_pixbuf_csource,
-    '--raw',
-    '--build-list',
-    stock_icons_list,
-  ],
-  capture: true,
+lighting_icon_sources = gnome.compile_resources(
+  'lighting-icon-images',
+  'lighting-icon-images.gresource.xml',
+  # source_dir: meson.current_source_directory(),
 )

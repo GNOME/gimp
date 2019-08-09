@@ -11,6 +11,7 @@ libapppropgui_sources = [
   'gimppropgui-motion-blur-circular.c',
   'gimppropgui-motion-blur-linear.c',
   'gimppropgui-motion-blur-zoom.c',
+  'gimppropgui-newsprint.c',
   'gimppropgui-panorama-projection.c',
   'gimppropgui-recursive-transform.c',
   'gimppropgui-shadows-highlights.c',
