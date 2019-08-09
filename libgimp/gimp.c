@@ -631,7 +631,7 @@ _gimp_main_internal (GType                 plug_in_type,
  * This function returns the plug-in's #GimpPlugIn instance, which can
  * exist exactly once per running plug-in program.
  *
- * Returns: (transfer none): The plug-in's #GimpPlugIn singleton, or %NULL.
+ * Returns: (transfer none) (nullable): The plug-in's #GimpPlugIn singleton, or %NULL.
  *
  * Since: 3.0
  **/
@@ -647,7 +647,7 @@ gimp_get_plug_in (void)
  * This function returns the plug-in's #GimpPDB instance, which can
  * exist exactly once per running plug-in program.
  *
- * Returns: (transfer none): The plug-in's #GimpPDB singleton, or %NULL.
+ * Returns: (transfer none) (nullable): The plug-in's #GimpPDB singleton, or %NULL.
  *
  * Since: 3.0
  **/
