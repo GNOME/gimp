@@ -1,30 +1,16 @@
 stock_images = [
-  'stock-circle',
-  'stock-coord',
-  'stock-dimension',
-  'stock-java',
-  'stock-polygon',
-  'stock-rectangle',
-  'stock-to-back',
-  'stock-to-front',
+  'imagemap-circle.png',
+  'imagemap-coord.png',
+  'imagemap-dimension.png',
+  'imagemap-java.png',
+  'imagemap-polygon.png',
+  'imagemap-rectangle.png',
+  'imagemap-to-back.png',
+  'imagemap-to-front.png',
 ]
 
-stock_icons_list = []
-foreach image_name : stock_images
-  stock_icons_list += [
-    image_name.underscorify(),
-    join_paths(meson.current_source_dir(), image_name + '.png'),
-  ]
-endforeach
-
-imap_stock_pixbuf_h = custom_target('imap-stock-pixbufs.h',
-  input : [],
-  output: [ 'imap-stock-pixbufs.h' ],
-  command: [
-    'gdk-pixbuf-csource',
-    '--raw',
-    '--build-list',
-    stock_icons_list,
-  ],
-  capture: true,
+imagemap_icon_sources = gnome.compile_resources(
+  'imagemap-icon-images',
+  'imagemap-icon-images.gresource.xml',
+  # source_dir: meson.current_source_directory(),
 )

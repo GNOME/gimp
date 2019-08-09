@@ -11,14 +11,14 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, cairo ],
   ],
   [
+    'animation-play',
+    [ 'animation-play.c', ],
+    [ gtk3, gegl, gdk_pixbuf ],
+  ],
+  [
     'blinds',
     [ 'blinds.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'blur',
-    [ 'blur.c', ],
-    [ gtk3, gegl, gdk_pixbuf, cairo, ],
   ],
   [
     'border-average',
@@ -41,16 +41,6 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'color-cube-analyze',
-    [ 'color-cube-analyze.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'colorify',
-    [ 'colorify.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'colormap-remap',
     [ 'colormap-remap.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
@@ -59,11 +49,6 @@ common_exes_list = [
     'compose',
     [ 'compose.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'contrast-normalize',
-    [ 'contrast-normalize.c', ],
-    [ gtk3, gegl, gdk_pixbuf, cairo, ],
   ],
   [
     'contrast-retinex',
@@ -98,21 +83,6 @@ common_exes_list = [
   [
     'destripe',
     [ 'destripe.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'edge-dog',
-    [ 'edge-dog.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'edge-neon',
-    [ 'edge-neon.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'emboss',
-    [ 'emboss.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
@@ -276,11 +246,6 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'filter-pack',
-    [ 'filter-pack.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'goat-exercise',
     [ 'goat-exercise.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
@@ -311,23 +276,8 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'max-rgb',
-    [ 'max-rgb.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'newsprint',
-    [ 'newsprint.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'nl-filter',
     [ 'nl-filter.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'oilify',
-    [ 'oilify.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
@@ -351,18 +301,8 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'sharpen',
-    [ 'sharpen.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
     'smooth-palette',
     [ 'smooth-palette.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
-  [
-    'softglow',
-    [ 'softglow.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [

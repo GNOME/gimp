@@ -16,14 +16,14 @@ rc_file = platform_win32 ? windows.compile_resources(
 
 executable(plugin_name,
   'lighting-apply.c',
+  'lighting-icons.c',
   'lighting-image.c',
   'lighting-main.c',
   'lighting-preview.c',
   'lighting-shade.c',
-  'lighting-stock.c',
   'lighting-ui.c',
   rc_file,
-  lighting_stock_pixbufs_h,
+  lighting_icon_sources,
 
   include_directories: [ rootInclude, include_directories('.'), ],
   dependencies: [

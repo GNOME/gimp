@@ -1,4 +1,4 @@
-module_name = 'libgimpbase'
+module_name = 'libgimpbase3'
 
 version_data = configuration_data()
 version_data.set('GIMP_VERSION', gimp_version)
@@ -10,8 +10,8 @@ configure_file(
 
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
-  gobject_typesfile: join_paths(meson.current_source_dir(), module_name + '.types'),
-  src_dir: join_paths(meson.source_root(), module_name),
+  gobject_typesfile: files(module_name + '.types'),
+  src_dir: meson.current_source_dir(),
 
   content_files: [
   ],

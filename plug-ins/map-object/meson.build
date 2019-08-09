@@ -15,14 +15,14 @@ rc_file = platform_win32 ? windows.compile_resources(
 executable(plugin_name,
   'arcball.c',
   'map-object-apply.c',
+  'map-object-icons.c',
   'map-object-image.c',
   'map-object-main.c',
   'map-object-preview.c',
   'map-object-shade.c',
-  'map-object-stock.c',
   'map-object-ui.c',
   rc_file,
-  lighting_stock_pixbufs_h,
+  lighting_icon_sources,
 
   include_directories: [ rootInclude, ],
   dependencies: [
