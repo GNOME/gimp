@@ -2237,18 +2237,18 @@ AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 
 GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
 
-##################
-# Check for python
-##################
+#######################################
+# Check for python runtime dependencies
+#######################################
 
 # By default, we want packagers to install Python plug-ins to get the
 # optimum experience. --with-python=yes will check for a Python 3
-# interpreter and fails without.
-# --with-python=force will install the plug-ins even though the Python
-# interpreter is not found at build time. It is up to the packager to
-# ensure one is available at run time. This can be useful in particular
-# when cross-compiling since anyway the interpreter is not useful at
-# build time.
+# interpreter and PyGObject, and fails without.
+# --with-python=force will install the plug-ins even though the
+# dependencies are not found at build time. It is up to the packager to
+# ensure they are available at run time. This can be useful in
+# particular when cross-compiling since anyway the interpreter is not
+# useful at build time.
 # --with-python=no won't install Python plug-ins. It is discouraged.
 AC_ARG_WITH(python,
             [  --with-python=no|yes|force install Python 3 plug-ins (default=yes)], ,
@@ -2264,31 +2264,40 @@ WARNING: you disabled the installation of core Python plug-ins. This is
          Just make sure that a Python python3_required_version or newer
          interpreter is available at run-time."
 elif test "x$with_python" = xforce; then
-  AM_PATH_PYTHON3(python3_required_version,
-                  with_python="yes",
-                  with_python="yes (Warning: Python python3_required_version or newer not found)")
-  if test "x$with_python" != "xyes"; then
+  with_python="yes"
+  warning_python=
+  AM_PATH_PYTHON3(python3_required_version, ,
+                  warning_python="Python python3_required_version or newer not found
+")
+  PKG_CHECK_MODULES(PYGOBJECT, pygobject-3.0, ,
+                    warning_python="PyGObject 3.0 not found
+$warning_python")
+  if test "x$warning_python" != "x"; then
     warning_python="
-WARNING: Python python3_required_version or newer was not found.
-         Python plug-ins will be installed anyway but you should make
-         sure that a compatible Python interpreter is available at
-         installation, otherwise installed plug-ins won't be usable."
+WARNING: ${warning_python}         Python plug-ins will be installed anyway but you should make
+         sure that a compatible Python interpreter and PyGObject are
+         available at installation, otherwise installed plug-ins won't
+         be usable."
+    with_python="yes (see warning below)"
   fi
-else # with_python=yes
-  # Mandatory Python check.
-  m4_define([pycheck_error], [
+else
+  with_python="yes"
+  error_python=
+  AM_PATH_PYTHON3(python3_required_version,,
+                  error_python="- Python python3_required_version or newer not found
+")
+  PKG_CHECK_MODULES(PYGOBJECT, pygobject-3.0, ,
+                    error_python="- PyGObject 3.0 not found
+$error_python")
+  if test "x$error_python" != "x"; then
     required_deps="$required_deps
-    - $1
-        *** Please install $2.
+    $error_python        *** Please install Python 3 and PyGObject 3.
         *** Note that you may install the Python plug-ins even if you have
         *** no Python interpreter at build-time by passing the configure
         *** option --with-python=force.
-        *** Just make sure that a Python python3_required_version or newer
-        *** interpreter is available at run-time."
-    with_python="no"])
-
-  AM_PATH_PYTHON3(python3_required_version,,
-                 [pycheck_error([Python 3 (python3_required_version or newer)], [it])])
+        *** Just make sure that the Python dependencies are available at run-time."
+    with_python="no"
+  fi
 fi
 
 if test "x$with_python" = "xyes"; then
