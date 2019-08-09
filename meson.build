@@ -88,7 +88,7 @@ so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
 pkgconfig = import('pkgconfig')
 i18n      = import('i18n')
 gnome     = import('gnome')
-pythonmod = import('python3')
+pythonmod = import('python')
 
 cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
@@ -252,7 +252,7 @@ dl                = cc.find_library('dl')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
-babl              = dependency('babl',               version: '>=0.1.68')
+babl              = dependency('babl',               version: '>=0.1.70')
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -266,7 +266,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.16')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.17')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -286,8 +286,6 @@ endif
 
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
-
-gobject_introsp   = dependency('gobject-introspection-1.0', version: '>=1.32.0')
 
 gtk3              = dependency('gtk+-3.0',           version: '>=3.16.10')
 
@@ -313,7 +311,7 @@ pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
 conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
-conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
+conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('>=1.43'))
 
 
 ################################################################################
@@ -717,16 +715,37 @@ conf.set('HAVE_ISO_CODES', isocodes.found())
 perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 
-# python
-have_python = get_option('python')
-if have_python
-  python2 = find_program('python2')
+# Python
 
-  libpython2= dependency('python2',       version: '>=2.5.0')
-  py2cairo  = dependency('pycairo',       version: '>=1.0.2')
+if get_option('python')
+  python = pythonmod.find_installation('python3', required: false)
+  python3_required_version = '>=3.6.0'
 
-  # pygobjectcodegen = find_program('pygobject-codegen-2.0')
-  # pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
+  have_python = (
+    python.found() and
+    python.language_version().version_compare(python3_required_version)
+  )
+
+  if not have_python
+    warning('''
+    Python @0@ was not found.
+    Python plug-ins will be installed anyway but you should make
+    sure that a compatible Python interpreter is available at
+    installation, otherwise installed plug-ins won't be usable.
+    '''.format(python3_required_version))
+  endif
+
+else
+  warning('''
+  You disabled the installation of core Python plug-ins. This is
+  discouraged as it won't provide the full GIMP experience.
+  Note that you may install the Python plug-ins even if you have
+  no Python interpreter at build-time by passing the configure
+  option -Dpython=true.
+  Just make sure that a Python @0@ interpreter is available at run-time.
+  '''.format(python3_required_version))
+
+  have_python = false
 endif
 
 
@@ -1507,7 +1526,7 @@ Optional Plug-Ins:
   Heif:                @0@'''.format(libheif.found()) +'''
   PDF (export):        @0@'''.format(cairopdf.found()) +'''
   Print:               @0@'''.format(have_print) +'''
-  Python 3:            @0@'''.format(have_python) +'''
+  Python 3 plug-ins:   @0@'''.format(have_python) +'''
   TWAIN (Win32):       @0@'''.format(platform_win32) +'''
   Webpage:             @0@'''.format(webkit.found()) +'''
   WMF:                 @0@'''.format(wmf.found()) +'''
