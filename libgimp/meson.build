@@ -289,6 +289,12 @@ libgimp_introspectable = [
   libgimp_headers_introspectable,
 ]
 
+libgimpui_introspectable = [
+  libgimpui_sources_introspectable,
+  libgimpui_headers_introspectable,
+]
+
+
 libgimp = library('gimp-'+ gimp_api_version,
   libgimp_sources,
   include_directories: rootInclude,
@@ -338,6 +344,7 @@ install_headers(
 
 introspectable_files = [
   libgimp_introspectable,
+  libgimpui_introspectable,
   libgimpbase_introspectable,
   libgimpcolor_introspectable,
   libgimpconfig_introspectable,
@@ -349,6 +356,7 @@ introspectable_files = [
 
 libgimp_gir = gnome.generate_gir(
   libgimp,
+  libgimpui,
   libgimpbase,
   libgimpcolor,
   libgimpconfig,
@@ -364,9 +372,9 @@ libgimp_gir = gnome.generate_gir(
   # symbol_prefix: 'gimp',
 
   extra_args: [
+    '-DGIMP_COMPILATION',
     '-DGIMP_BASE_COMPILATION',
     '-DGIMP_COLOR_COMPILATION',
-    '-DGIMP_COMPILATION',
     '-DGIMP_CONFIG_COMPILATION',
     '-DGIMP_MATH_COMPILATION',
     '-DGIMP_MODULE_COMPILATION',
