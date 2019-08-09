@@ -235,7 +235,7 @@ stroke_dialog_new (GimpItem           *item,
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    label = gtk_label_new (_("Paint tool:"));
+    label = gtk_label_new_with_mnemonic (_("P_aint tool:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 

@@ -233,7 +233,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
   gtk_widget_show (hbox);
 
   np->pattern_check = check =
-    gtk_check_button_new_with_label (_("Lock patterns"));
+    gtk_check_button_new_with_mnemonic (_("_Lock patterns"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
@@ -242,7 +242,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                     np);
 
   np->period_check = check =
-    gtk_check_button_new_with_label (_("Lock periods"));
+    gtk_check_button_new_with_mnemonic (_("Loc_k periods"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
@@ -251,7 +251,7 @@ _gimp_prop_gui_new_newsprint (GObject                  *config,
                     np);
 
   np->angle_check = check =
-    gtk_check_button_new_with_label (_("Lock angles"));
+    gtk_check_button_new_with_mnemonic (_("Lock a_ngles"));
   gtk_box_pack_start (GTK_BOX (hbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 

@@ -104,7 +104,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   gtk_widget_show (text_view);
 
   /* Button */
-  button = gtk_button_new_with_label (_("Use default comment"));
+  button = gtk_button_new_with_mnemonic (_("Use _default comment"));
   gimp_help_set_help_data (GTK_WIDGET (button),
                            _("Replace the current image comment with the "
                              "default comment set in "
