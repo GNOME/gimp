@@ -732,6 +732,22 @@ transform_cache_config_notify (GObject          *config,
     g_printerr ("deleted cache %p\n", cache);
 }
 
+/**
+ * gimp_widget_get_color_transform:
+ * @widget:      a #GtkWidget
+ * @config:      a #GimpColorConfig
+ * @src_profile: a #GimpColorProfile
+ * @src_format:  Babl format for the transform's source pixels
+ * @dest_format: Babl format for the transforms's destination pixels
+ *
+ * This function returns the #GimpColorTransform that transforms pixels
+ * from @src_profile to the profile of the #GdkMonitor the @widget is
+ * displayed on.
+ *
+ * Returns: (nullable) (transfer full): the #GimpColorTransform.
+ *
+ * Since: 2.10
+ **/
 GimpColorTransform *
 gimp_widget_get_color_transform (GtkWidget        *widget,
                                  GimpColorConfig  *config,

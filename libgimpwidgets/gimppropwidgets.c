@@ -2532,11 +2532,23 @@ static void   gimp_prop_path_editor_writable_notify   (GObject        *config,
                                                        GParamSpec     *param_spec,
                                                        GimpPathEditor *editor);
 
+/**
+ * gimp_prop_path_editor_new:
+ * @config:                 object to which property is attached.
+ * @path_property_name:     name of path property.
+ * @writable_property_name: name of writable path property.
+ * @filechooser_title:      window title of #GtkFileChooserDialog widget.
+ *
+ * Creates a #GimpPathEditor to edit the specified path and writable
+ * path properties.
+ *
+ * Returns: (transfer full): A new #GimpPathEditor.
+ **/
 GtkWidget *
 gimp_prop_path_editor_new (GObject     *config,
                            const gchar *path_property_name,
                            const gchar *writable_property_name,
-                           const gchar *filesel_title)
+                           const gchar *filechooser_title)
 {
   GParamSpec *path_param_spec;
   GParamSpec *writable_param_spec = NULL;
@@ -2568,7 +2580,7 @@ gimp_prop_path_editor_new (GObject     *config,
   filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
 
-  editor = gimp_path_editor_new (filesel_title, filename);
+  editor = gimp_path_editor_new (filechooser_title, filename);
   g_free (filename);
 
   if (writable_property_name)
