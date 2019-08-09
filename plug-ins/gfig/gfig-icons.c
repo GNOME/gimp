@@ -29,7 +29,6 @@
 #include "gfig-icons.h"
 
 #include "images/gfig-icon-images.h"
-#include "images/gfig-icon-images.c"
 
 
 void
