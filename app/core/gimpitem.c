@@ -163,6 +163,9 @@ static void       gimp_item_real_resize             (GimpItem       *item,
                                                      gint            new_height,
                                                      gint            offset_x,
                                                      gint            offset_y);
+static GimpTransformResize
+                  gimp_item_real_get_clip           (GimpItem       *item,
+                                                     GimpTransformResize clip_result);
 
 
 
@@ -265,6 +268,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->flip                      = NULL;
   klass->rotate                    = NULL;
   klass->transform                 = NULL;
+  klass->get_clip                  = gimp_item_real_get_clip;
   klass->fill                      = NULL;
   klass->stroke                    = NULL;
   klass->to_selection              = NULL;
@@ -679,6 +683,13 @@ gimp_item_real_resize (GimpItem     *item,
   gimp_item_set_offset (item,
                         private->offset_x - offset_x,
                         private->offset_y - offset_y);
+}
+
+static GimpTransformResize
+gimp_item_real_get_clip (GimpItem            *item,
+                         GimpTransformResize  clip_result)
+{
+  return clip_result;
 }
 
 
@@ -1721,6 +1732,15 @@ gimp_item_transform (GimpItem               *item,
 
   if (push_undo)
     gimp_image_undo_group_end (image);
+}
+
+GimpTransformResize
+gimp_item_get_clip (GimpItem            *item,
+                    GimpTransformResize  clip_result)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), GIMP_TRANSFORM_RESIZE_ADJUST);
+
+  return GIMP_ITEM_GET_CLASS (item)->get_clip (item, clip_result);
 }
 
 gboolean

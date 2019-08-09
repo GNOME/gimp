@@ -113,6 +113,8 @@ struct _GimpItemClass
                                           GimpInterpolationType   interpolation_type,
                                           GimpTransformResize     clip_result,
                                           GimpProgress           *progress);
+  GimpTransformResize (* get_clip)       (GimpItem               *item,
+                                          GimpTransformResize     clip_result);
   gboolean        (* fill)               (GimpItem               *item,
                                           GimpDrawable           *drawable,
                                           GimpFillOptions        *fill_options,
@@ -288,6 +290,8 @@ void            gimp_item_transform          (GimpItem           *item,
                                               GimpInterpolationType interpolation_type,
                                               GimpTransformResize clip_result,
                                               GimpProgress       *progress);
+GimpTransformResize   gimp_item_get_clip     (GimpItem           *item,
+                                              GimpTransformResize clip_result);
 
 gboolean        gimp_item_fill               (GimpItem           *item,
                                               GimpDrawable       *drawable,

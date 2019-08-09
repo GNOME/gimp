@@ -129,6 +129,9 @@ static void       gimp_channel_transform     (GimpItem          *item,
                                               GimpInterpolationType interpolation_type,
                                               GimpTransformResize clip_result,
                                               GimpProgress      *progress);
+static GimpTransformResize
+                  gimp_channel_get_clip      (GimpItem          *item,
+                                              GimpTransformResize clip_result);
 static gboolean   gimp_channel_fill          (GimpItem          *item,
                                               GimpDrawable      *drawable,
                                               GimpFillOptions   *fill_options,
@@ -267,6 +270,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->flip                 = gimp_channel_flip;
   item_class->rotate               = gimp_channel_rotate;
   item_class->transform            = gimp_channel_transform;
+  item_class->get_clip             = gimp_channel_get_clip;
   item_class->fill                 = gimp_channel_fill;
   item_class->stroke               = gimp_channel_stroke;
   item_class->to_selection         = gimp_channel_to_selection;
@@ -816,6 +820,13 @@ gimp_channel_transform (GimpItem               *item,
                                              interpolation_type,
                                              clip_result,
                                              progress);
+}
+
+static GimpTransformResize
+gimp_channel_get_clip (GimpItem            *item,
+                       GimpTransformResize  clip_result)
+{
+  return GIMP_TRANSFORM_RESIZE_CLIP;
 }
 
 static gboolean
