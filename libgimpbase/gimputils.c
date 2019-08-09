@@ -722,7 +722,7 @@ gimp_canonicalize_identifier (const gchar *identifier)
  *
  * Since: 2.2
  **/
-GimpEnumDesc *
+const GimpEnumDesc *
 gimp_enum_get_desc (GEnumClass *enum_class,
                     gint        value)
 {
@@ -738,7 +738,7 @@ gimp_enum_get_desc (GEnumClass *enum_class,
       while (value_desc->value_desc)
         {
           if (value_desc->value == value)
-            return (GimpEnumDesc *) value_desc;
+            return value_desc;
 
           value_desc++;
         }
@@ -774,9 +774,9 @@ gimp_enum_get_value (GType         enum_type,
                      const gchar **value_desc,
                      const gchar **value_help)
 {
-  GEnumClass *enum_class;
-  GEnumValue *enum_value;
-  gboolean    success = FALSE;
+  GEnumClass       *enum_class;
+  const GEnumValue *enum_value;
+  gboolean          success = FALSE;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), FALSE);
 
@@ -793,7 +793,7 @@ gimp_enum_get_value (GType         enum_type,
 
       if (value_desc || value_help)
         {
-          GimpEnumDesc *enum_desc;
+          const GimpEnumDesc *enum_desc;
 
           enum_desc = gimp_enum_get_desc (enum_class, value);
 
@@ -849,11 +849,11 @@ gimp_enum_get_value (GType         enum_type,
  * Since: 2.2
  **/
 const gchar *
-gimp_enum_value_get_desc (GEnumClass *enum_class,
-                          GEnumValue *enum_value)
+gimp_enum_value_get_desc (GEnumClass       *enum_class,
+                          const GEnumValue *enum_value)
 {
-  GType         type = G_TYPE_FROM_CLASS (enum_class);
-  GimpEnumDesc *enum_desc;
+  GType               type = G_TYPE_FROM_CLASS (enum_class);
+  const GimpEnumDesc *enum_desc;
 
   enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
 
@@ -888,11 +888,11 @@ gimp_enum_value_get_desc (GEnumClass *enum_class,
  * Since: 2.2
  **/
 const gchar *
-gimp_enum_value_get_help (GEnumClass *enum_class,
-                          GEnumValue *enum_value)
+gimp_enum_value_get_help (GEnumClass       *enum_class,
+                          const GEnumValue *enum_value)
 {
-  GType         type = G_TYPE_FROM_CLASS (enum_class);
-  GimpEnumDesc *enum_desc;
+  GType               type = G_TYPE_FROM_CLASS (enum_class);
+  const GimpEnumDesc *enum_desc;
 
   enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
 
@@ -915,11 +915,11 @@ gimp_enum_value_get_help (GEnumClass *enum_class,
  * Since: 2.10
  **/
 const gchar *
-gimp_enum_value_get_abbrev (GEnumClass *enum_class,
-                            GEnumValue *enum_value)
+gimp_enum_value_get_abbrev (GEnumClass       *enum_class,
+                            const GEnumValue *enum_value)
 {
-  GType         type = G_TYPE_FROM_CLASS (enum_class);
-  GimpEnumDesc *enum_desc;
+  GType               type = G_TYPE_FROM_CLASS (enum_class);
+  const GimpEnumDesc *enum_desc;
 
   enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
 
@@ -946,7 +946,7 @@ gimp_enum_value_get_abbrev (GEnumClass *enum_class,
  *
  * Since: 2.2
  **/
-GimpFlagsDesc *
+const GimpFlagsDesc *
 gimp_flags_get_first_desc (GFlagsClass *flags_class,
                            guint        value)
 {
@@ -962,7 +962,7 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
       while (value_desc->value_desc)
         {
           if ((value_desc->value & value) == value_desc->value)
-            return (GimpFlagsDesc *) value_desc;
+            return value_desc;
 
           value_desc++;
         }
@@ -998,8 +998,8 @@ gimp_flags_get_first_value (GType         flags_type,
                             const gchar **value_desc,
                             const gchar **value_help)
 {
-  GFlagsClass *flags_class;
-  GFlagsValue *flags_value;
+  GFlagsClass       *flags_class;
+  const GFlagsValue *flags_value;
 
   g_return_val_if_fail (G_TYPE_IS_FLAGS (flags_type), FALSE);
 
@@ -1016,7 +1016,7 @@ gimp_flags_get_first_value (GType         flags_type,
 
       if (value_desc || value_help)
         {
-          GimpFlagsDesc *flags_desc;
+          const GimpFlagsDesc *flags_desc;
 
           flags_desc = gimp_flags_get_first_desc (flags_class, value);
 
@@ -1051,11 +1051,11 @@ gimp_flags_get_first_value (GType         flags_type,
  * Since: 2.2
  **/
 const gchar *
-gimp_flags_value_get_desc (GFlagsClass *flags_class,
-                           GFlagsValue *flags_value)
+gimp_flags_value_get_desc (GFlagsClass       *flags_class,
+                           const GFlagsValue *flags_value)
 {
-  GType         type = G_TYPE_FROM_CLASS (flags_class);
-  GimpFlagsDesc *flags_desc;
+  GType                type = G_TYPE_FROM_CLASS (flags_class);
+  const GimpFlagsDesc *flags_desc;
 
   flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
 
@@ -1090,11 +1090,11 @@ gimp_flags_value_get_desc (GFlagsClass *flags_class,
  * Since: 2.2
  **/
 const gchar *
-gimp_flags_value_get_help (GFlagsClass *flags_class,
-                           GFlagsValue *flags_value)
+gimp_flags_value_get_help (GFlagsClass       *flags_class,
+                           const GFlagsValue *flags_value)
 {
-  GType         type = G_TYPE_FROM_CLASS (flags_class);
-  GimpFlagsDesc *flags_desc;
+  GType                type = G_TYPE_FROM_CLASS (flags_class);
+  const GimpFlagsDesc *flags_desc;
 
   flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
 
@@ -1117,11 +1117,11 @@ gimp_flags_value_get_help (GFlagsClass *flags_class,
  * Since: 2.10
  **/
 const gchar *
-gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
-                             GFlagsValue *flags_value)
+gimp_flags_value_get_abbrev (GFlagsClass       *flags_class,
+                             const GFlagsValue *flags_value)
 {
-  GType          type = G_TYPE_FROM_CLASS (flags_class);
-  GimpFlagsDesc *flags_desc;
+  GType                type = G_TYPE_FROM_CLASS (flags_class);
+  const GimpFlagsDesc *flags_desc;
 
   flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
 

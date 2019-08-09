@@ -342,13 +342,13 @@ gimp_pdb_query_entry (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
-  PDBQuery      *pdb_query = user_data;
-  GList         *list;
-  GimpProcedure *procedure;
-  const gchar   *proc_name;
-  PDBStrings     strings;
-  GEnumClass    *enum_class;
-  GimpEnumDesc  *type_desc;
+  PDBQuery           *pdb_query = user_data;
+  GList              *list;
+  GimpProcedure      *procedure;
+  const gchar        *proc_name;
+  PDBStrings          strings;
+  GEnumClass         *enum_class;
+  const GimpEnumDesc *type_desc;
 
   proc_name = key;
 
@@ -450,11 +450,11 @@ gimp_pdb_print_entry (gpointer key,
 
   for (; list; list = list->next)
     {
-      GimpProcedure *procedure = list->data;
-      PDBStrings     strings;
-      GEnumValue    *arg_value;
-      GimpEnumDesc  *type_desc;
-      gint           i;
+      GimpProcedure      *procedure = list->data;
+      PDBStrings          strings;
+      GEnumValue         *arg_value;
+      const GimpEnumDesc *type_desc;
+      gint                i;
 
       num++;
 

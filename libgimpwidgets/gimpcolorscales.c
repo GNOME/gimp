@@ -253,9 +253,9 @@ create_group (GimpColorScales           *scales,
 
   for (i = first_channel, row = 0; i <= last_channel; i++, row++)
     {
-      GimpEnumDesc *enum_desc;
-      gint          enum_value = i;
-      gboolean      is_u8      = FALSE;
+      const GimpEnumDesc *enum_desc;
+      gint                enum_value = i;
+      gboolean            is_u8      = FALSE;
 
       if (enum_value >= GIMP_COLOR_SELECTOR_RED_U8 &&
           enum_value <= GIMP_COLOR_SELECTOR_ALPHA_U8)

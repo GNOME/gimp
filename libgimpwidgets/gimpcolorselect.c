@@ -348,7 +348,7 @@ gimp_color_select_init (GimpColorSelect *select)
   GtkWidget              *vbox;
   GEnumClass             *model_class;
   GEnumClass             *channel_class;
-  GimpEnumDesc           *enum_desc;
+  const GimpEnumDesc     *enum_desc;
   GimpColorSelectorModel  model;
   GSList                 *group = NULL;
 
