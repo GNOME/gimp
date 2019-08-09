@@ -42,6 +42,7 @@ def run(procedure, args, data):
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,
+                 'Babl': gi.repository.Babl,
                  'cairo': gi.repository.cairo,
                  'Gdk': gi.repository.Gdk,
                  'Gegl': gi.repository.Gegl,
