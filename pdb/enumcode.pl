@@ -236,7 +236,7 @@ gimp_enums_init (void)
 
 /**
  * gimp_enums_get_type_names:
- * \@n_type_names: return location for the number of names
+ * \@n_type_names: (out): return location for the number of names
  *
  * This function gives access to the list of enums registered by libgimp.
  * The returned array is static and must not be modified.
