@@ -258,7 +258,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 gimp_get_default_context (image->gimp),
                                 GIMP_FILL_TRANSPARENT,
                                 rect.width, rect.height,
-                                rect.x, rect.y);
+                                -rect.x, -rect.y);
 
               gimp_image_undo_group_end (image);
             }
