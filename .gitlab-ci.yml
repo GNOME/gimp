@@ -1,4 +1,4 @@
-image: archlinux/base:latest
+image: salamandar/archlinux-gimp:latest
 
 stages:
   - babl
@@ -178,8 +178,31 @@ gegl-git:
     paths:
       - _build/app/tests/
 
+.gimp-meson:
+  extends: .gimp-base
+  script:
+      # Archlinux fix
+    - sed -i "s|'libmypaint'|'libmypaint-1.3'|g" meson.build
+    - meson _build
+      --prefix="${INSTALL_PREFIX}"
+    - ninja -C _build
+    # - ninja test
+  artifacts:
+    name: "app-tests-logs-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: on_failure
+    expire_in: 1 week
+    paths:
+      - _build/app/tests/
+
+
 build-git-autotools:
   extends: .gimp-autotools
+  dependencies:
+    - babl-git
+    - gegl-git
+
+build-git-meson:
+  extends: .gimp-meson
   dependencies:
     - babl-git
     - gegl-git
