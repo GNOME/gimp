@@ -35,23 +35,6 @@ const GLib = imports.gi.GLib;
 const GObject = imports.gi.GObject;
 const Gio = imports.gi.Gio;
 
-/* Trick coming from extensionUtils.js in gnome-shell.
- * See in particular implementation of getCurrentExtension().
- */
-function getCurrentPath() {
-    let stackLine = (new Error()).stack.split('\n')[1];
-
-    /* In GIMP case, I saw strings such as:
-     *    run@/home/jehan/.config/GIMP/2.99/plug-ins/hello-world/hello-world.js:150:24
-     * Let's make sure all cases are handled.
-     */
-    let match = new RegExp('@(.+\\.js)(:\\d+)+').exec(stackLine);
-    if (! match)
-        return null;
-
-    return match[1];
-}
-
 /* gjs's ARGV is not C-style. We must add the program name as first
  * value.
  */
@@ -139,14 +122,13 @@ var Goat = GObject.registerClass({
             box.pack_start(label, false, false, 1);
             label.show();
 
-            let path = getCurrentPath();
-            if (path) {
+            let contents = String(GLib.file_get_contents(System.programInvocationName)[1]);
+            if (contents) {
                 let scrolled = new Gtk.ScrolledWindow();
                 scrolled.set_vexpand (true);
                 box.pack_start(scrolled, true, true, 1);
                 scrolled.show();
 
-                let contents = String(GLib.file_get_contents(path)[1]);
                 let view = new Gtk.TextView();
                 view.set_wrap_mode(Gtk.WrapMode.WORD);
                 view.set_editable(false);
