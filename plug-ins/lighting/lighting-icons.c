@@ -22,7 +22,6 @@
 #include "lighting-icons.h"
 
 #include "images/lighting-icon-images.h"
-#include "images/lighting-icon-images.c"
 
 
 void

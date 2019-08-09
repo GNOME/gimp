@@ -129,7 +129,9 @@ imagemap_SOURCES = \
 	imap_ui_grid.c			\
 	imap_ui_grid.h			\
 	imap_taglist.c			\
-	imap_taglist.h
+	imap_taglist.h			\
+	images/imagemap-icon-images.h			\
+	images/imagemap-icon-images.c
 
 AM_CPPFLAGS = \
 	-DGIMP_DEPRECATED_REPLACE_NEW_API \
