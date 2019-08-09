@@ -252,7 +252,7 @@ dl                = cc.find_library('dl')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
-babl              = dependency('babl',               version: '>=0.1.66')
+babl              = dependency('babl',               version: '>=0.1.68')
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -266,7 +266,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.17')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.16')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -286,6 +286,8 @@ endif
 
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
+
+gobject_introsp   = dependency('gobject-introspection-1.0', version: '>=1.32.0')
 
 gtk3              = dependency('gtk+-3.0',           version: '>=3.16.10')
 
@@ -311,7 +313,7 @@ pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
 conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
-conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('>=1.43'))
+conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
 
 
 ################################################################################
@@ -1505,7 +1507,7 @@ Optional Plug-Ins:
   Heif:                @0@'''.format(libheif.found()) +'''
   PDF (export):        @0@'''.format(cairopdf.found()) +'''
   Print:               @0@'''.format(have_print) +'''
-  Python 2:            @0@'''.format(have_python) +'''
+  Python 3:            @0@'''.format(have_python) +'''
   TWAIN (Win32):       @0@'''.format(platform_win32) +'''
   Webpage:             @0@'''.format(webkit.found()) +'''
   WMF:                 @0@'''.format(wmf.found()) +'''
