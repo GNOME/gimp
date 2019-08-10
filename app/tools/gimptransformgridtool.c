@@ -34,6 +34,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
@@ -664,7 +665,7 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 
       tg_tool->preview =
         gimp_draw_tool_add_transform_preview (draw_tool,
-                                              tool->drawable,
+                                              GIMP_PICKABLE (tool->drawable),
                                               &matrix,
                                               tr_tool->x1,
                                               tr_tool->y1,

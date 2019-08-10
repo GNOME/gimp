@@ -26,8 +26,8 @@
 
 #include "tools-types.h"
 
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 
 #include "display/gimpcanvas.h"
 #include "display/gimpcanvasarc.h"
@@ -1187,7 +1187,7 @@ gimp_draw_tool_add_text_cursor (GimpDrawTool     *draw_tool,
 
 GimpCanvasItem *
 gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
-                                      GimpDrawable      *drawable,
+                                      GimpPickable      *pickable,
                                       const GimpMatrix3 *transform,
                                       gdouble            x1,
                                       gdouble            y1,
@@ -1197,11 +1197,11 @@ gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (transform != NULL, NULL);
 
   item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
-                                            drawable, transform,
+                                            pickable, transform,
                                             x1, y1, x2, y2);
 
   gimp_draw_tool_add_preview (draw_tool, item);

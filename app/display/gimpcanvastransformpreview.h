@@ -50,7 +50,7 @@ struct _GimpCanvasTransformPreviewClass
 GType            gimp_canvas_transform_preview_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_transform_preview_new      (GimpDisplayShell  *shell,
-                                                         GimpDrawable      *drawable,
+                                                         GimpPickable      *pickable,
                                                          const GimpMatrix3 *transform,
                                                          gdouble            x1,
                                                          gdouble            y1,
