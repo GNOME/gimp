@@ -25,8 +25,13 @@
 
 #include "gimp.h"
 
+#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpwire.h"
+
+#include "gimpgpparams.h"
 #include "gimppdb-private.h"
-#include "gimpprocedure-private.h"
+#include "gimpplugin-private.h"
+#include "gimpplugin_pdb.h"
 
 #include "libgimp-intl.h"
 
@@ -76,31 +81,33 @@ struct _GimpProcedurePrivate
 };
 
 
-static void       gimp_procedure_constructed   (GObject              *object);
-static void       gimp_procedure_finalize      (GObject              *object);
-static void       gimp_procedure_set_property  (GObject              *object,
-                                                guint                 property_id,
-                                                const GValue         *value,
-                                                GParamSpec           *pspec);
-static void       gimp_procedure_get_property  (GObject              *object,
-                                                guint                 property_id,
-                                                GValue               *value,
-                                                GParamSpec           *pspec);
+static void       gimp_procedure_constructed    (GObject              *object);
+static void       gimp_procedure_finalize       (GObject              *object);
+static void       gimp_procedure_set_property   (GObject              *object,
+                                                 guint                 property_id,
+                                                 const GValue         *value,
+                                                 GParamSpec           *pspec);
+static void       gimp_procedure_get_property   (GObject              *object,
+                                                 guint                 property_id,
+                                                 GValue               *value,
+                                                 GParamSpec           *pspec);
 
+static void       gimp_procedure_real_install   (GimpProcedure        *procedure);
+static void       gimp_procedure_real_uninstall (GimpProcedure        *procedure);
 static GimpValueArray *
-                  gimp_procedure_real_run      (GimpProcedure        *procedure,
-                                                const GimpValueArray *args);
+                  gimp_procedure_real_run       (GimpProcedure        *procedure,
+                                                 const GimpValueArray *args);
 
-static gboolean   gimp_procedure_validate_args (GimpProcedure        *procedure,
-                                                GParamSpec          **param_specs,
-                                                gint                  n_param_specs,
-                                                const GimpValueArray *args,
-                                                gboolean              return_vals,
-                                                GError              **error);
+static gboolean   gimp_procedure_validate_args  (GimpProcedure        *procedure,
+                                                 GParamSpec          **param_specs,
+                                                 gint                  n_param_specs,
+                                                 const GimpValueArray *args,
+                                                 gboolean              return_vals,
+                                                 GError              **error);
 
-static void       gimp_procedure_set_icon      (GimpProcedure        *procedure,
-                                                GimpIconType          icon_type,
-                                                gconstpointer         icon_data);
+static void       gimp_procedure_set_icon       (GimpProcedure        *procedure,
+                                                 GimpIconType          icon_type,
+                                                 gconstpointer         icon_data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedure, gimp_procedure, G_TYPE_OBJECT)
@@ -120,6 +127,8 @@ gimp_procedure_class_init (GimpProcedureClass *klass)
   object_class->set_property = gimp_procedure_set_property;
   object_class->get_property = gimp_procedure_get_property;
 
+  klass->install             = gimp_procedure_real_install;
+  klass->uninstall           = gimp_procedure_real_uninstall;
   klass->run                 = gimp_procedure_real_run;
 
   props[PROP_PLUG_IN] =
@@ -267,6 +276,135 @@ gimp_procedure_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_procedure_real_install (GimpProcedure *procedure)
+{
+  GParamSpec   **args;
+  GParamSpec   **return_vals;
+  gint           n_args;
+  gint           n_return_vals;
+  GList         *list;
+  GimpPlugIn    *plug_in;
+  GPProcInstall  proc_install;
+  GimpIconType   icon_type;
+  guint8        *icon_data        = NULL;
+  gsize          icon_data_length = 0;
+  gint           i;
+
+  args        = gimp_procedure_get_arguments (procedure, &n_args);
+  return_vals = gimp_procedure_get_return_values (procedure, &n_return_vals);
+
+  proc_install.name         = (gchar *) gimp_procedure_get_name (procedure);
+  proc_install.blurb        = (gchar *) gimp_procedure_get_blurb (procedure);
+  proc_install.help         = (gchar *) gimp_procedure_get_help (procedure);
+  proc_install.help_id      = (gchar *) gimp_procedure_get_help_id (procedure);
+  proc_install.authors      = (gchar *) gimp_procedure_get_authors (procedure);
+  proc_install.copyright    = (gchar *) gimp_procedure_get_copyright (procedure);
+  proc_install.date         = (gchar *) gimp_procedure_get_date (procedure);
+  proc_install.menu_label   = (gchar *) gimp_procedure_get_menu_label (procedure);
+  proc_install.image_types  = (gchar *) gimp_procedure_get_image_types (procedure);
+  proc_install.type         = gimp_procedure_get_proc_type (procedure);
+  proc_install.nparams      = n_args;
+  proc_install.nreturn_vals = n_return_vals;
+  proc_install.params       = g_new0 (GPParamDef, n_args);
+  proc_install.return_vals  = g_new0 (GPParamDef, n_return_vals);
+
+  for (i = 0; i < n_args; i++)
+    {
+      _gimp_param_spec_to_gp_param_def (args[i],
+                                        &proc_install.params[i]);
+    }
+
+  for (i = 0; i < n_return_vals; i++)
+    {
+      _gimp_param_spec_to_gp_param_def (return_vals[i],
+                                        &proc_install.return_vals[i]);
+    }
+
+  plug_in = gimp_procedure_get_plug_in (procedure);
+
+  if (! gp_proc_install_write (_gimp_plug_in_get_write_channel (plug_in),
+                               &proc_install, plug_in))
+    gimp_quit ();
+
+  icon_type = gimp_procedure_get_icon_type (procedure);
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      {
+        icon_data = (guint8 *) gimp_procedure_get_icon_name (procedure);
+        if (icon_data)
+          icon_data_length = strlen ((gchar *) icon_data) + 1;
+      }
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+      {
+        GdkPixbuf *pixbuf = gimp_procedure_get_icon_pixbuf (procedure);
+
+        if (pixbuf)
+          gdk_pixbuf_save_to_buffer (pixbuf,
+                                     (gchar **) &icon_data, &icon_data_length,
+                                     "png", NULL, NULL);
+      }
+      break;
+
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      {
+        GFile *file = gimp_procedure_get_icon_file (procedure);
+
+        if (file)
+          {
+            icon_data        = (guchar *) g_file_get_uri (file);
+            icon_data_length = strlen ((gchar *) icon_data) + 1;
+          }
+      }
+      break;
+    }
+
+  if (icon_data)
+    _gimp_plugin_icon_register (gimp_procedure_get_name (procedure),
+                                icon_type, icon_data_length, icon_data);
+
+  switch (icon_type)
+    {
+    case GIMP_ICON_TYPE_ICON_NAME:
+      break;
+
+    case GIMP_ICON_TYPE_PIXBUF:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      g_free (icon_data);
+      break;
+    }
+
+  g_free (proc_install.params);
+  g_free (proc_install.return_vals);
+
+  for (list = gimp_procedure_get_menu_paths (procedure);
+       list;
+       list = g_list_next (list))
+    {
+      _gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
+                                  list->data);
+    }
+}
+
+static void
+gimp_procedure_real_uninstall (GimpProcedure *procedure)
+{
+  GimpPlugIn      *plug_in;
+  GPProcUninstall  proc_uninstall;
+
+  proc_uninstall.name = (gchar *) gimp_procedure_get_name (procedure);
+
+  plug_in = gimp_procedure_get_plug_in (procedure);
+
+  if (! gp_proc_uninstall_write (_gimp_plug_in_get_write_channel (plug_in),
+                                 &proc_uninstall, plug_in))
+    gimp_quit ();
 }
 
 static GimpValueArray *
@@ -1239,10 +1377,16 @@ gimp_procedure_run (GimpProcedure        *procedure,
 void
 gimp_procedure_extension_ready (GimpProcedure *procedure)
 {
+  GimpPlugIn *plug_in;
+
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
   g_return_if_fail (procedure->priv->proc_type == GIMP_EXTENSION);
 
-  _gimp_procedure_extension_ready (procedure);
+  plug_in = gimp_procedure_get_plug_in (procedure);
+
+  if (! gp_extension_ack_write (_gimp_plug_in_get_write_channel (plug_in),
+                                plug_in))
+    gimp_quit ();
 }
 
 

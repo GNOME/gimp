@@ -112,12 +112,14 @@ libgimp_introspectable_headers = \
 	../libgimp/gimpbrushselect.h		\
 	../libgimp/gimpchannel.h		\
 	../libgimp/gimpdrawable.h		\
+	../libgimp/gimpfileprocedure.h		\
 	../libgimp/gimpfontselect.h		\
 	../libgimp/gimpgimprc.h			\
 	../libgimp/gimpgradientselect.h		\
 	../libgimp/gimpimage.h			\
 	../libgimp/gimpimagecolorprofile.h	\
 	../libgimp/gimplayer.h			\
+	../libgimp/gimploadprocedure.h		\
 	../libgimp/gimppaletteselect.h		\
 	../libgimp/gimpparamspecs.h		\
 	../libgimp/gimppatternselect.h		\
@@ -125,6 +127,7 @@ libgimp_introspectable_headers = \
 	../libgimp/gimpplugin.h			\
 	../libgimp/gimpprocedure.h		\
 	../libgimp/gimpprogress.h		\
+	../libgimp/gimpsaveprocedure.h		\
 	../libgimp/gimpselection.h
 
 libgimp_introspectable = \
@@ -135,12 +138,14 @@ libgimp_introspectable = \
 	../libgimp/gimpbrushselect.c		\
 	../libgimp/gimpchannel.c		\
 	../libgimp/gimpdrawable.c		\
+	../libgimp/gimpfileprocedure.c		\
 	../libgimp/gimpfontselect.c		\
 	../libgimp/gimpgimprc.c			\
 	../libgimp/gimpgradientselect.c		\
 	../libgimp/gimpimage.c			\
 	../libgimp/gimpimagecolorprofile.c	\
 	../libgimp/gimplayer.c			\
+	../libgimp/gimploadprocedure.c		\
 	../libgimp/gimppaletteselect.c		\
 	../libgimp/gimpparamspecs.c		\
 	../libgimp/gimppatternselect.c		\
@@ -148,6 +153,7 @@ libgimp_introspectable = \
 	../libgimp/gimpplugin.c			\
 	../libgimp/gimpprocedure.c		\
 	../libgimp/gimpprogress.c		\
+	../libgimp/gimpsaveprocedure.c		\
 	../libgimp/gimpselection.c
 
 libgimpui_introspectable_headers = \

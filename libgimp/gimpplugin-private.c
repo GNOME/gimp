@@ -31,7 +31,6 @@
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
-#include "gimpprocedure-private.h"
 
 
 /*  local function prototpes  */
@@ -185,7 +184,7 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
       procedure = gimp_plug_in_create_procedure (plug_in, name);
       if (procedure)
         {
-          _gimp_procedure_register (procedure);
+          GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
           g_object_unref (procedure);
         }
       else

@@ -71,8 +71,11 @@ struct _GimpProcedureClass
 {
   GObjectClass parent_class;
 
-  GimpValueArray * (* run) (GimpProcedure        *procedure,
-                            const GimpValueArray *args);
+  void             (* install)   (GimpProcedure        *procedure);
+  void             (* uninstall) (GimpProcedure        *procedure);
+
+  GimpValueArray * (* run)       (GimpProcedure        *procedure,
+                                  const GimpValueArray *args);
 
   /* Padding for future expansion */
   void (*_gimp_reserved1) (void);

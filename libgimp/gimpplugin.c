@@ -31,7 +31,6 @@
 
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
-#include "gimpprocedure-private.h"
 
 
 /**
@@ -393,7 +392,7 @@ gimp_plug_in_add_temp_procedure (GimpPlugIn    *plug_in,
     g_list_prepend (plug_in->priv->temp_procedures,
                     g_object_ref (procedure));
 
-  _gimp_procedure_register (procedure);
+  GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
 }
 
 /**
@@ -419,7 +418,7 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
 
   if (procedure)
     {
-      _gimp_procedure_unregister (procedure);
+      GIMP_PROCEDURE_GET_CLASS (procedure)->uninstall (procedure);
 
       plug_in->priv->temp_procedures =
         g_list_remove (plug_in->priv->temp_procedures,

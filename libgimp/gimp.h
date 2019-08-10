@@ -44,14 +44,15 @@
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimplayer.h>
+#include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimplegacy.h>
 #include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimpparamspecs.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimpplugin.h>
-#include <libgimp/gimpprocedure.h>
 #include <libgimp/gimpprogress.h>
+#include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
 
 #include <libgimp/gimp_pdb_headers.h>
