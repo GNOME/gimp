@@ -145,7 +145,7 @@ GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_too
                                                       gdouble           start_angle,
                                                       gdouble           slice_angle);
 GimpCanvasItem * gimp_draw_tool_add_transform_preview(GimpDrawTool     *draw_tool,
-                                                      GimpDrawable     *drawable,
+                                                      GimpPickable     *pickable,
                                                       const GimpMatrix3 *transform,
                                                       gdouble           x1,
                                                       gdouble           y1,
