@@ -326,7 +326,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
  *
  * Since: 3.0
  **/
-GimpProcedure  *
+GimpProcedure *
 gimp_procedure_new (GimpPlugIn      *plug_in,
                     const gchar     *name,
                     GimpPDBProcType  proc_type,
@@ -658,7 +658,7 @@ gimp_procedure_set_attribution (GimpProcedure *procedure,
 }
 
 /**
- * gimp_procedure_get_author:
+ * gimp_procedure_get_authors:
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's authors given in

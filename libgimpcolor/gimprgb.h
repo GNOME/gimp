@@ -50,6 +50,7 @@ void    gimp_value_set_rgb          (GValue        *value,
 #define GIMP_TYPE_PARAM_RGB           (gimp_param_rgb_get_type ())
 #define GIMP_IS_PARAM_SPEC_RGB(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RGB))
 
+typedef struct _GimpParamSpecRGB GimpParamSpecRGB;
 
 GType        gimp_param_rgb_get_type         (void) G_GNUC_CONST;
 

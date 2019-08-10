@@ -576,8 +576,6 @@ gimp_rgba_distance (const GimpRGB *rgba1,
 
 #define GIMP_PARAM_SPEC_RGB(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RGB, GimpParamSpecRGB))
 
-typedef struct _GimpParamSpecRGB GimpParamSpecRGB;
-
 struct _GimpParamSpecRGB
 {
   GParamSpecBoxed  parent_instance;

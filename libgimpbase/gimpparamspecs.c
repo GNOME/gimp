@@ -472,7 +472,7 @@ gimp_param_string_validate (GParamSpec *pspec,
  * @flags:          Flags for the property specified.
  *
  * Creates a new #GimpParamSpecString specifying a
- * #GIMP_TYPE_STRING property.
+ * #G_TYPE_STRING property.
  *
  * If @allow_non_utf8 is %FALSE, non-valid UTF-8 strings will be
  * replaced by question marks.
@@ -1647,7 +1647,7 @@ gimp_rgb_array_get_type (void)
   static GType type = 0;
 
   if (! type)
-    type = g_boxed_type_register_static ("GimpRgbArray",
+    type = g_boxed_type_register_static ("GimpRGBArray",
                                          (GBoxedCopyFunc) gimp_array_copy,
                                          (GBoxedFreeFunc) gimp_array_free);
 
@@ -1705,12 +1705,12 @@ gimp_param_rgb_array_init (GParamSpec *pspec)
  * @blurb: Description of the property specified.
  * @flags: Flags for the property specified.
  *
- * Creates a new #GimpParamSpecRgbArray specifying a
+ * Creates a new #GimpParamSpecRGBArray specifying a
  * #GIMP_TYPE_RGB_ARRAY property.
  *
  * See g_param_spec_internal() for details on property names.
  *
- * Returns: (transfer full): The newly created #GimpParamSpecRgbArray.
+ * Returns: (transfer full): The newly created #GimpParamSpecRGBArray.
  *
  * Since: 3.0
  **/
