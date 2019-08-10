@@ -607,8 +607,21 @@ gimp_transform_grid_options_show_preview (GimpTransformGridOptions *options)
 
   transform_options = GIMP_TRANSFORM_OPTIONS (options);
 
-  return (options->show_preview &&
-          transform_options->type == GIMP_TRANSFORM_TYPE_LAYER);
+  if (options->show_preview)
+    {
+      switch (transform_options->type)
+        {
+        case GIMP_TRANSFORM_TYPE_LAYER:
+        case GIMP_TRANSFORM_TYPE_IMAGE:
+          return TRUE;
+
+        case GIMP_TRANSFORM_TYPE_SELECTION:
+        case GIMP_TRANSFORM_TYPE_PATH:
+          return FALSE;
+        }
+    }
+
+  return FALSE;
 }
 
 

@@ -343,6 +343,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
           }
       }
       break;
+
+    case GIMP_TRANSFORM_TYPE_IMAGE:
+      g_return_if_reached ();
     }
 
   if (! active_item)

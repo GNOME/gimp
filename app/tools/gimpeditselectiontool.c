@@ -1167,6 +1167,9 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
             }
 
           break;
+
+        case GIMP_TRANSFORM_TYPE_IMAGE:
+          g_return_val_if_reached (FALSE);
         }
     }
 

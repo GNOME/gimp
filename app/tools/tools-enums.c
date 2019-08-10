@@ -112,6 +112,7 @@ gimp_transform_type_get_type (void)
     { GIMP_TRANSFORM_TYPE_LAYER, "GIMP_TRANSFORM_TYPE_LAYER", "layer" },
     { GIMP_TRANSFORM_TYPE_SELECTION, "GIMP_TRANSFORM_TYPE_SELECTION", "selection" },
     { GIMP_TRANSFORM_TYPE_PATH, "GIMP_TRANSFORM_TYPE_PATH", "path" },
+    { GIMP_TRANSFORM_TYPE_IMAGE, "GIMP_TRANSFORM_TYPE_IMAGE", "image" },
     { 0, NULL, NULL }
   };
 
@@ -120,6 +121,7 @@ gimp_transform_type_get_type (void)
     { GIMP_TRANSFORM_TYPE_LAYER, NC_("transform-type", "Layer"), NULL },
     { GIMP_TRANSFORM_TYPE_SELECTION, NC_("transform-type", "Selection"), NULL },
     { GIMP_TRANSFORM_TYPE_PATH, NC_("transform-type", "Path"), NULL },
+    { GIMP_TRANSFORM_TYPE_IMAGE, NC_("transform-type", "Image"), NULL },
     { 0, NULL, NULL }
   };
 

@@ -56,7 +56,7 @@ struct _GimpTransformGridTool
   GList             *redo_list;        /*  list of all undone states,
                                            NULL when nothing undone */
 
-  GimpItem          *hidden_item;      /*  the item that was hidden during
+  GimpObject        *hidden_object;    /*  the object that was hidden during
                                            the transform                         */
 
   GimpToolWidget    *widget;
@@ -87,7 +87,7 @@ struct _GimpTransformGridToolClass
   void             (* update_widget)  (GimpTransformGridTool  *tg_tool);
   void             (* widget_changed) (GimpTransformGridTool  *tg_tool);
   GeglBuffer     * (* transform)      (GimpTransformGridTool  *tg_tool,
-                                       GimpItem               *item,
+                                       GimpObject             *object,
                                        GeglBuffer             *orig_buffer,
                                        gint                    orig_offset_x,
                                        gint                    orig_offset_y,
