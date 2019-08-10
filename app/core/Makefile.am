@@ -325,6 +325,8 @@ libappcore_a_sources = \
 	gimpimage-snap.h			\
 	gimpimage-symmetry.c			\
 	gimpimage-symmetry.h			\
+	gimpimage-transform.c			\
+	gimpimage-transform.h			\
 	gimpimage-undo.c			\
 	gimpimage-undo.h			\
 	gimpimage-undo-push.c			\

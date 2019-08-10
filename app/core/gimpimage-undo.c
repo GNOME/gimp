@@ -614,6 +614,7 @@ gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
     case GIMP_UNDO_GROUP_IMAGE_RESIZE:
     case GIMP_UNDO_GROUP_IMAGE_FLIP:
     case GIMP_UNDO_GROUP_IMAGE_ROTATE:
+    case GIMP_UNDO_GROUP_IMAGE_TRANSFORM:
     case GIMP_UNDO_GROUP_IMAGE_CROP:
       return GIMP_DIRTY_IMAGE | GIMP_DIRTY_IMAGE_SIZE;
 
