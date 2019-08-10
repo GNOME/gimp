@@ -340,7 +340,7 @@ gimp_transform_grid_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       gimp_transform_grid_tool_halt (tg_tool);
-     break;
+      break;
 
     case GIMP_TOOL_ACTION_COMMIT:
       if (tool->display)
