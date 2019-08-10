@@ -779,12 +779,12 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
-      if (! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_int.min_val) ||
-          ! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_int.max_val) ||
-          ! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_int.default_val))
+      if (! gimp_scanner_parse_int64 (scanner,
+                                      &param_def.meta.m_int.min_val) ||
+          ! gimp_scanner_parse_int64 (scanner,
+                                      &param_def.meta.m_int.max_val) ||
+          ! gimp_scanner_parse_int64 (scanner,
+                                      &param_def.meta.m_int.default_val))
         {
           token = G_TOKEN_INT;
           goto error;
@@ -1029,7 +1029,10 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
-      gimp_config_writer_printf (writer, "%d %d %d",
+      gimp_config_writer_printf (writer,
+                                 "%" G_GINT64_FORMAT
+                                 " %" G_GINT64_FORMAT
+                                 " %" G_GINT64_FORMAT,
                                  param_def.meta.m_int.min_val,
                                  param_def.meta.m_int.max_val,
                                  param_def.meta.m_int.default_val);

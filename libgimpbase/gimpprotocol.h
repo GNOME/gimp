@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0107
+#define GIMP_PROTOCOL_VERSION  0x0108
 
 
 enum
@@ -143,9 +143,9 @@ struct _GPTileData
 
 struct _GPParamDefInt
 {
-  gint32 min_val;
-  gint32 max_val;
-  gint32 default_val;
+  gint64 min_val;
+  gint64 max_val;
+  gint64 default_val;
 };
 
 struct _GPParamDefUnit

@@ -1049,14 +1049,14 @@ _gp_param_def_read (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
-      if (! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_int.min_val, 1,
+      if (! _gimp_wire_read_int64 (channel,
+                                   (guint64 *) &param_def->meta.m_int.min_val, 1,
                                    user_data) ||
-          ! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_int.max_val, 1,
+          ! _gimp_wire_read_int64 (channel,
+                                   (guint64 *) &param_def->meta.m_int.max_val, 1,
                                    user_data) ||
-          ! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_int.default_val, 1,
+          ! _gimp_wire_read_int64 (channel,
+                                   (guint64 *) &param_def->meta.m_int.default_val, 1,
                                    user_data))
         return FALSE;
       break;
@@ -1331,14 +1331,14 @@ _gp_param_def_write (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
-      if (! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_int.min_val, 1,
+      if (! _gimp_wire_write_int64 (channel,
+                                    (guint64 *) &param_def->meta.m_int.min_val, 1,
                                     user_data) ||
-          ! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_int.max_val, 1,
+          ! _gimp_wire_write_int64 (channel,
+                                    (guint64 *) &param_def->meta.m_int.max_val, 1,
                                     user_data) ||
-          ! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_int.default_val, 1,
+          ! _gimp_wire_write_int64 (channel,
+                                    (guint64 *) &param_def->meta.m_int.default_val, 1,
                                     user_data))
         return FALSE;
       break;
