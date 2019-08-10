@@ -39,7 +39,7 @@
 #define GIMP_TYPE_SCANNER (gimp_scnner_get_type ())
 
 
-GType      gimp_scanner_get_type                 (void) G_GNUC_CONST;
+GType         gimp_scanner_get_type                 (void) G_GNUC_CONST;
 
 GimpScanner * gimp_scanner_new_file                 (const gchar   *filename,
                                                      GError       **error);
