@@ -509,17 +509,20 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
       gimp_display_shell_draw_checkerboard (shell, cr);
       cairo_restore (cr);
 
-      cairo_set_matrix (cr, &matrix);
-
-      for (i = 0; i < clip_rectangles->num_rectangles; i++)
+      if (shell->show_image)
         {
-          cairo_rectangle_t rect = clip_rectangles->rectangles[i];
+          cairo_set_matrix (cr, &matrix);
 
-          gimp_display_shell_draw_image (shell, cr,
-                                         floor (rect.x),
-                                         floor (rect.y),
-                                         ceil (rect.width),
-                                         ceil (rect.height));
+          for (i = 0; i < clip_rectangles->num_rectangles; i++)
+            {
+              cairo_rectangle_t rect = clip_rectangles->rectangles[i];
+
+              gimp_display_shell_draw_image (shell, cr,
+                                             floor (rect.x),
+                                             floor (rect.y),
+                                             ceil (rect.width),
+                                             ceil (rect.height));
+            }
         }
     }
 

@@ -90,6 +90,8 @@ struct _GimpDisplayShell
 
   gboolean           proximity;        /*  is a device in proximity           */
 
+  gboolean           show_image;       /*  whether to show the image          */
+
   Selection         *selection;        /*  Selection (marching ants)          */
 
   GList             *children;
@@ -301,6 +303,10 @@ gboolean          gimp_display_shell_mask_bounds   (GimpDisplayShell   *shell,
                                                     gint               *y,
                                                     gint               *width,
                                                     gint               *height);
+
+void              gimp_display_shell_set_show_image
+                                                   (GimpDisplayShell   *shell,
+                                                    gboolean            show_image);
 
 void              gimp_display_shell_flush         (GimpDisplayShell   *shell);
 
