@@ -470,6 +470,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_RESIZE,          /*< desc="Resize image"                   >*/
   GIMP_UNDO_GROUP_IMAGE_FLIP,            /*< desc="Flip image"                     >*/
   GIMP_UNDO_GROUP_IMAGE_ROTATE,          /*< desc="Rotate image"                   >*/
+  GIMP_UNDO_GROUP_IMAGE_TRANSFORM,       /*< desc="Transform image"                >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,            /*< desc="Crop image"                     >*/
   GIMP_UNDO_GROUP_IMAGE_CONVERT,         /*< desc="Convert image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,     /*< desc="Remove item"                    >*/
