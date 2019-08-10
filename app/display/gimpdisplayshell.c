@@ -326,6 +326,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->scale_x     = 1.0;
   shell->scale_y     = 1.0;
 
+  shell->show_image  = TRUE;
+
   gimp_display_shell_items_init (shell);
 
   shell->icon_size       = 128;
@@ -1782,6 +1784,20 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   *height = y2 - y1;
 
   return (*width > 0) && (*height > 0);
+}
+
+void
+gimp_display_shell_set_show_image (GimpDisplayShell *shell,
+                                   gboolean          show_image)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (show_image != shell->show_image)
+    {
+      shell->show_image = show_image;
+
+      gimp_display_shell_expose_full (shell);
+    }
 }
 
 void
