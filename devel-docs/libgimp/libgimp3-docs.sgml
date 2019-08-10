@@ -32,11 +32,12 @@
       <xi:include href="xml/gimphelp.xml" />
       <xi:include href="xml/gimpmessage.xml" />
       <xi:include href="xml/gimpplugin.xml" />
+      <xi:include href="xml/gimppdb.xml" />
       <xi:include href="xml/gimpprocedure.xml" />
       <xi:include href="xml/gimpparamspecs.xml" />
-      <xi:include href="xml/gimpproceduraldb.xml" />
       <xi:include href="xml/gimpprogress.xml" />
       <xi:include href="xml/gimpdebug.xml" />
+      <xi:include href="xml/gimplegacy.xml" />
     </chapter>
 
     <chapter id="libgimp-image">
@@ -160,6 +161,10 @@
   <index role="2.10.14" id="api-index-2-10-14">
     <title>Index of new symbols in GIMP 2.10.14</title>
     <xi:include href="xml/api-index-2.10.14.xml"><xi:fallback /></xi:include>
+  </index>
+  <index role="2.3.0" id="api-index-3-0">
+    <title>Index of new symbols in GIMP 3.0</title>
+    <xi:include href="xml/api-index-3.0.xml"><xi:fallback /></xi:include>
   </index>
   <index role="deprecated" id="api-index-deprecated">
     <title>Index of deprecated symbols</title>
