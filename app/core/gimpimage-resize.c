@@ -224,11 +224,11 @@ gimp_image_resize_with_layers (GimpImage    *image,
       gimp_sample_point_get_position (sample_point, &old_x, &old_y);
 
       new_y = old_y + offset_y;
-      if ((new_y < 0) || (new_y > new_height))
+      if ((new_y < 0) || (new_y >= new_height))
         remove_sample_point = TRUE;
 
       new_x = old_x + offset_x;
-      if ((new_x < 0) || (new_x > new_width))
+      if ((new_x < 0) || (new_x >= new_width))
         remove_sample_point = TRUE;
 
       if (remove_sample_point)
