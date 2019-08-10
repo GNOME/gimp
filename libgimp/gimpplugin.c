@@ -530,7 +530,7 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
  * Processes one message sent by GIMP and returns.
  *
  * Call this function in an endless loop after calling
- * gimp_plug_in_extension_ready() to process requests for running
+ * gimp_procedure_extension_ready() to process requests for running
  * temporary procedures.
  *
  * See gimp_plug_in_extension_enable() for an asynchronous way of
@@ -606,7 +606,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 }
 
 /**
- * gimp_plugin_set_pdb_error_handler:
+ * gimp_plug_in_set_pdb_error_handler:
  * @plug_in: A #GimpPlugIn
  * @handler: Who is responsible for handling procedure call errors.
  *
@@ -633,7 +633,7 @@ gimp_plug_in_set_pdb_error_handler (GimpPlugIn          *plug_in,
 }
 
 /**
- * gimp_plugin_get_pdb_error_handler:
+ * gimp_plug_in_get_pdb_error_handler:
  * @plug_in: A #GimpPlugIn
  *
  * Retrieves the active error handler for procedure calls.

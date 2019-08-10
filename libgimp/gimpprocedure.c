@@ -305,7 +305,7 @@ gimp_procedure_real_run (GimpProcedure        *procedure,
  * has done its initialization, installed its temporary procedures and
  * is ready to run.
  *
- * <emphasis>Not calling gimp_procedure_extension_reads() from a
+ * <emphasis>Not calling gimp_procedure_extension_ready() from a
  * %GIMP_EXTENSION procedure will cause the GIMP core to lock
  * up.</emphasis>
  *
@@ -404,7 +404,8 @@ gimp_procedure_get_proc_type (GimpProcedure *procedure)
 
 /**
  * gimp_procedure_set_image_types:
- * @image_types the image types this procedure can operate on.
+ * @procedure:   A #GimpProcedure.
+ * @image_types: The image types this procedure can operate on.
  *
  * This is a comma separated list of image types, or actually drawable
  * types, that this procedure can deal with. Wildcards are possible
@@ -428,8 +429,9 @@ gimp_procedure_set_image_types (GimpProcedure *procedure,
 
 /**
  * gimp_procedure_get_image_types:
+ * @procedure:  A #GimpProcedure.
  *
- * This procedure retrieves the list of image types the procedure can
+ * This function retrieves the list of image types the procedure can
  * operate on. See gimp_procedure_set_image_types().
  *
  * Returns: The image types.
@@ -1218,6 +1220,7 @@ gimp_procedure_run (GimpProcedure        *procedure,
 
 /**
  * gimp_procedure_extension_ready:
+ * @procedure: A #GimpProcedure
  *
  * Notify the main GIMP application that the extension has been
  * properly initialized and is ready to run.

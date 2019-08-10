@@ -26,8 +26,8 @@
 
 
 /**
- * SECTION: Gimp
- * @title: Gimp
+ * SECTION: gimp
+ * @title: gimp
  * @short_description: Main functions needed for building a GIMP plug-in.
  *
  * Main functions needed for building a GIMP plug-in.

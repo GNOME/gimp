@@ -1335,7 +1335,7 @@ gimp_pdb_proc_exists (const gchar *procedure_name)
 
 /**
  * gimp_pdb_proc_info:
- * @procedure: The procedure name.
+ * @procedure_name: The procedure name.
  * @blurb: A short blurb.
  * @help: Detailed procedure help.
  * @author: Author(s) of the procedure.
