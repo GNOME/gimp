@@ -31,11 +31,13 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-flip.h"
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimppickable.h"
+#include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -79,7 +81,7 @@ static void         gimp_flip_tool_draw          (GimpDrawTool         *draw_too
 
 static gchar      * gimp_flip_tool_get_undo_desc (GimpTransformTool    *tr_tool);
 static GeglBuffer * gimp_flip_tool_transform     (GimpTransformTool    *tr_tool,
-                                                  GimpItem             *item,
+                                                  GimpObject           *object,
                                                   GeglBuffer           *orig_buffer,
                                                   gint                  orig_offset_x,
                                                   gint                  orig_offset_y,
@@ -162,7 +164,11 @@ gimp_flip_tool_button_press (GimpTool            *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
+  tool->display = display;
+
   gimp_transform_tool_transform (tr_tool, display);
+
+  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 }
 
 static void
@@ -253,7 +259,7 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpFlipTool      *flip    = GIMP_FLIP_TOOL (tool);
 
-  if (! gimp_transform_tool_check_active_item (tr_tool, display, NULL))
+  if (! gimp_transform_tool_check_active_object (tr_tool, display, NULL))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -312,7 +318,7 @@ gimp_flip_tool_get_undo_desc (GimpTransformTool *tr_tool)
 
 static GeglBuffer *
 gimp_flip_tool_transform (GimpTransformTool *tr_tool,
-                          GimpItem          *active_item,
+                          GimpObject        *object,
                           GeglBuffer        *orig_buffer,
                           gint               orig_offset_x,
                           gint               orig_offset_y,
@@ -374,7 +380,9 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
        *  normal drawable
        */
 
-      ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (active_item),
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (object), NULL);
+
+      ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (object),
                                                  context,
                                                  orig_buffer,
                                                  orig_offset_x,
@@ -385,22 +393,42 @@ gimp_flip_tool_transform (GimpTransformTool *tr_tool,
                                                  new_offset_x,
                                                  new_offset_y);
     }
-  else
+  else if (GIMP_IS_ITEM (object))
     {
       /*  this happens for entire drawables, paths and layer groups  */
 
-      if (gimp_item_get_linked (active_item))
+      GimpItem *item = GIMP_ITEM (object);
+
+      if (gimp_item_get_linked (item))
         {
-          gimp_item_linked_flip (active_item, context,
+          gimp_item_linked_flip (item, context,
                                  flip_type, axis, clip_result);
         }
       else
         {
-          clip_result = gimp_item_get_clip (active_item, clip_result);
+          clip_result = gimp_item_get_clip (item, clip_result);
 
-          gimp_item_flip (active_item, context,
+          gimp_item_flip (item, context,
                           flip_type, axis, clip_result);
         }
+    }
+  else
+    {
+      /*  this happens for images  */
+      GimpTransformToolClass *tr_class = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool);
+      GimpProgress           *progress;
+
+      g_return_val_if_fail (GIMP_IS_IMAGE (object), NULL);
+
+      progress = gimp_progress_start (GIMP_PROGRESS (tr_tool), FALSE,
+                                      "%s", tr_class->progress_text);
+
+      gimp_image_flip_full (GIMP_IMAGE (object), context,
+                            flip_type, axis, clip_result,
+                            progress);
+
+      if (progress)
+        gimp_progress_end (progress);
     }
 
   return ret;

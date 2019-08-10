@@ -85,7 +85,8 @@ typedef enum
 {
   GIMP_TRANSFORM_TYPE_LAYER,     /*< desc="Layer"     >*/
   GIMP_TRANSFORM_TYPE_SELECTION, /*< desc="Selection" >*/
-  GIMP_TRANSFORM_TYPE_PATH       /*< desc="Path"      >*/
+  GIMP_TRANSFORM_TYPE_PATH,      /*< desc="Path"      >*/
+  GIMP_TRANSFORM_TYPE_IMAGE      /*< desc="Image"     >*/
 } GimpTransformType;
 
 
