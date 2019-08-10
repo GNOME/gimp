@@ -402,6 +402,7 @@
           <menuitem action="image-rotate-90" />
           <menuitem action="image-rotate-270" />
           <menuitem action="image-rotate-180" />
+          <menuitem action="tools-rotate-image-arbitrary" />
         </placeholder>
         <separator />
       </menu>
