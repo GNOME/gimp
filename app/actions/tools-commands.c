@@ -80,12 +80,20 @@ tools_select_cmd_callback (GimpAction *action,
 
   tool_name = g_variant_get_string (value, NULL);
 
-  /*  special case gimp-rotate-tool being called from the Layer menu  */
+  /*  special case gimp-rotate-tool being called from the Image or Layer
+   *  menus
+   */
   if (strcmp (tool_name, "gimp-rotate-layer") == 0)
     {
       tool_name          = "gimp-rotate-tool";
       set_transform_type = TRUE;
       transform_type     = GIMP_TRANSFORM_TYPE_LAYER;
+    }
+  else if (strcmp (tool_name, "gimp-rotate-image") == 0)
+    {
+      tool_name          = "gimp-rotate-tool";
+      set_transform_type = TRUE;
+      transform_type     = GIMP_TRANSFORM_TYPE_IMAGE;
     }
 
   tool_info = gimp_get_tool_info (gimp, tool_name);
