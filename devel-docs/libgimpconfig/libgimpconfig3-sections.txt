@@ -120,6 +120,8 @@ gimp_config_writer_new_gfile
 gimp_config_writer_new_stream
 gimp_config_writer_new_fd
 gimp_config_writer_new_string
+gimp_config_writer_ref
+gimp_config_writer_unref
 gimp_config_writer_open
 gimp_config_writer_comment_mode
 gimp_config_writer_print
@@ -132,6 +134,9 @@ gimp_config_writer_linefeed
 gimp_config_writer_revert
 gimp_config_writer_close
 gimp_config_writer_finish
+<SUBSECTION Standard>
+GIMP_TYPE_CONFIG_WRITER
+gimp_config_writer_get_type
 </SECTION>
 
 <SECTION>
@@ -141,7 +146,8 @@ gimp_scanner_new_file
 gimp_scanner_new_gfile
 gimp_scanner_new_stream
 gimp_scanner_new_string
-gimp_scanner_destroy
+gimp_scanner_ref
+gimp_scanner_unref
 gimp_scanner_parse_token
 gimp_scanner_parse_identifier
 gimp_scanner_parse_string
@@ -153,6 +159,10 @@ gimp_scanner_parse_float
 gimp_scanner_parse_boolean
 gimp_scanner_parse_color
 gimp_scanner_parse_matrix2
+<SUBSECTION Standard>
+GimpScanner
+GIMP_TYPE_SCANNER
+gimp_scanner_get_type
 </SECTION>
 
 <SECTION>
