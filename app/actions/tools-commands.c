@@ -48,6 +48,7 @@
 #include "tools/gimptool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/gimptransformoptions.h"
+#include "tools/gimptransformtool.h"
 #include "tools/gimpwarpoptions.h"
 #include "tools/tool_manager.h"
 
@@ -68,12 +69,13 @@ tools_select_cmd_callback (GimpAction *action,
                            GVariant   *value,
                            gpointer    data)
 {
-  Gimp         *gimp;
-  GimpToolInfo *tool_info;
-  GimpContext  *context;
-  GimpDisplay  *display;
-  const gchar  *tool_name;
-  gboolean      rotate_layer = FALSE;
+  Gimp              *gimp;
+  GimpToolInfo      *tool_info;
+  GimpContext       *context;
+  GimpDisplay       *display;
+  const gchar       *tool_name;
+  gboolean           set_transform_type = FALSE;
+  GimpTransformType  transform_type;
   return_if_no_gimp (gimp, data);
 
   tool_name = g_variant_get_string (value, NULL);
@@ -81,8 +83,9 @@ tools_select_cmd_callback (GimpAction *action,
   /*  special case gimp-rotate-tool being called from the Layer menu  */
   if (strcmp (tool_name, "gimp-rotate-layer") == 0)
     {
-      tool_name    = "gimp-rotate-tool";
-      rotate_layer = TRUE;
+      tool_name          = "gimp-rotate-tool";
+      set_transform_type = TRUE;
+      transform_type     = GIMP_TRANSFORM_TYPE_LAYER;
     }
 
   tool_info = gimp_get_tool_info (gimp, tool_name);
@@ -92,17 +95,16 @@ tools_select_cmd_callback (GimpAction *action,
   /*  always allocate a new tool when selected from the image menu
    */
   if (gimp_context_get_tool (context) != tool_info)
-    {
-      gimp_context_set_tool (context, tool_info);
-
-      if (rotate_layer)
-        g_object_set (tool_info->tool_options,
-                      "type", GIMP_TRANSFORM_TYPE_LAYER,
-                      NULL);
-    }
+    gimp_context_set_tool (context, tool_info);
   else
+    gimp_context_tool_changed (context);
+
+  if (set_transform_type)
     {
-      gimp_context_tool_changed (context);
+      GimpTool *tool = tool_manager_get_active (gimp);
+
+      gimp_transform_tool_set_type (GIMP_TRANSFORM_TOOL (tool),
+                                    transform_type);
     }
 
   display = gimp_context_get_display (context);
