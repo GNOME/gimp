@@ -462,6 +462,7 @@ GIMP_IS_PARAM_SPEC_PARASITE
 gimp_param_spec_parasite
 GIMP_VALUE_HOLDS_PARASITE
 <SUBSECTION Standard>
+GimpParamSpecParasite
 gimp_parasite_get_type
 gimp_param_parasite_get_type
 </SECTION>

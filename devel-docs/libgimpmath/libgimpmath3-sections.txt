@@ -104,4 +104,9 @@ gimp_vector3_rotate_val
 gimp_vector_2d_to_3d
 gimp_vector_2d_to_3d_val
 gimp_vector_3d_to_2d
+<SUBSECTION Standard>
+GIMP_TYPE_VECTOR2
+GIMP_TYPE_VECTOR3
+gimp_vector2_get_type
+gimp_vector3_get_type
 </SECTION>
