@@ -32,248 +32,265 @@
 #define PLUG_IN_ROLE   "gimp-file-pat"
 
 
-/*  local function prototypes  */
+typedef struct _Pat      Pat;
+typedef struct _PatClass PatClass;
 
-static void       query       (void);
-static void       run         (const gchar      *name,
-                               gint              nparams,
-                               const GimpParam  *param,
-                               gint             *nreturn_vals,
-                               GimpParam       **return_vals);
-
-static gboolean   save_dialog (void);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Pat
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
+};
+
+struct _PatClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-/*  private variables  */
+/* Declare local functions.
+ */
+
+#define PAT_TYPE  (pat_get_type ())
+#define PAT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAT_TYPE, Pat))
+
+GType                   pat_get_type         (void) G_GNUC_CONST;
+
+static GList          * pat_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * pat_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * pat_save             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              gint32                image_id,
+                                              gint32                drawable_id,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static gboolean         save_dialog          (void);
+
+
+G_DEFINE_TYPE (Pat, pat, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (PAT_TYPE)
 
 static gchar description[256] = "GIMP Pattern";
 
 
-MAIN ()
-
 static void
-query (void)
+pat_class_init (PatClass *klass)
 {
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",    "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
-    { GIMP_PDB_IMAGE,    "image",       "Input image"                      },
-    { GIMP_PDB_DRAWABLE, "drawable",    "Drawable to export"                 },
-    { GIMP_PDB_STRING,   "uri",         "The URI of the file to export the image in" },
-    { GIMP_PDB_STRING,   "raw-uri",     "The URI of the file to export the image in" },
-    { GIMP_PDB_STRING,   "description", "Short description of the pattern" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (SAVE_PROC,
-                          "Exports Gimp pattern file (.PAT)",
-                          "New Gimp patterns can be created by exporting them "
-                          "in the appropriate place with this plug-in.",
-                          "Tim Newsome",
-                          "Tim Newsome",
-                          "1997",
-                          N_("GIMP pattern"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_ICON_PATTERN);
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-gimp-pat");
-  gimp_register_file_handler_uri (SAVE_PROC);
-  gimp_register_save_handler (SAVE_PROC, "pat", "");
+  plug_in_class->query_procedures = pat_query_procedures;
+  plug_in_class->create_procedure = pat_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+pat_init (Pat *pat)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
+}
+
+static GList *
+pat_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (SAVE_PROC));
+}
+
+static GimpProcedure *
+pat_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           pat_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure,
+                                      "RGB*, INDEXED*, GRAY*");
+
+      gimp_procedure_set_menu_label (procedure, N_("GIMP pattern"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Exports Gimp pattern file (.PAT)",
+                                        "New Gimp patterns can be created "
+                                        "by exporting them in the "
+                                        "appropriate place with this plug-in.",
+                                        SAVE_PROC);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Tim Newsome",
+                                      "Tim Newsome",
+                                      "1997");
+
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-gimp-pat");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "pat");
+
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_string ("description",
+                                                           "Description",
+                                                           "Short description "
+                                                           "of the pattern",
+                                                           FALSE, TRUE, FALSE,
+                                                           "GIMP Pattern",
+                                                           GIMP_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+pat_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          gint32                image_id,
+          gint32                drawable_id,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
-  gint32             drawable_ID;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GimpParasite      *parasite;
+  gint32             orig_image_ID;
   GError            *error  = NULL;
 
   INIT_I18N ();
 
-  run_mode = param[0].data.d_int32;
+  orig_image_ID = image_id;
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (strcmp (name, SAVE_PROC) == 0)
+  switch (run_mode)
     {
-      GFile        *file;
-      GimpParasite *parasite;
-      gint32        orig_image_ID;
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
-      file        = g_file_new_for_uri (param[3].data.d_string);
+      export = gimp_export_image (&image_id, &drawable_id, "PAT",
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
-      orig_image_ID = image_ID;
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                 NULL);
 
-      switch (run_mode)
+      /*  Possibly retrieve data  */
+      gimp_get_data (SAVE_PROC, description);
+
+      parasite = gimp_image_get_parasite (orig_image_ID,
+                                          "gimp-pattern-name");
+      if (parasite)
         {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          strncpy (description,
+                   gimp_parasite_data (parasite),
+                   MIN (sizeof (description),
+                        gimp_parasite_data_size (parasite)));
+          description[sizeof (description) - 1] = '\0';
 
-          export = gimp_export_image (&image_ID, &drawable_ID, "PAT",
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-
-          /*  Possibly retrieve data  */
-          gimp_get_data (SAVE_PROC, description);
-
-          parasite = gimp_image_get_parasite (orig_image_ID,
-                                              "gimp-pattern-name");
-          if (parasite)
-            {
-              strncpy (description,
-                       gimp_parasite_data (parasite),
-                       MIN (sizeof (description),
-                            gimp_parasite_data_size (parasite)));
-              description[sizeof (description) - 1] = '\0';
-
-              gimp_parasite_free (parasite);
-            }
-          else
-            {
-              gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
-
-              if (g_str_has_suffix (name, ".pat"))
-                name[strlen (name) - 4] = '\0';
-
-              if (strlen (name))
-                {
-                  strncpy (description, name, sizeof (description));
-                  description[sizeof (description) - 1] = '\0';
-                }
-
-              g_free (name);
-            }
-          break;
-
-        default:
-          break;
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          if (! save_dialog ())
-            status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          if (nparams != 6)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          else
-            {
-              strncpy (description, param[5].data.d_string,
-                       sizeof (description));
-              description[sizeof (description) - 1] = '\0';
-            }
-          break;
-
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          GimpParam *save_retvals;
-          gint       n_save_retvals;
-
-          save_retvals =
-            gimp_run_procedure ("file-pat-save-internal",
-                                &n_save_retvals,
-                                GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
-                                GIMP_PDB_IMAGE,    image_ID,
-                                GIMP_PDB_DRAWABLE, drawable_ID,
-                                GIMP_PDB_STRING,   param[3].data.d_string,
-                                GIMP_PDB_STRING,   param[4].data.d_string,
-                                GIMP_PDB_STRING,   description,
-                                GIMP_PDB_END);
-
-
-          if (save_retvals[0].data.d_status == GIMP_PDB_SUCCESS)
-            {
-              gimp_set_data (SAVE_PROC, description, sizeof (description));
-            }
-          else
-            {
-              g_set_error (&error, 0, 0,
-                           "Running procedure 'file-pat-save-internal' "
-                           "failed: %s",
-                           gimp_get_pdb_error ());
-
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-
-          gimp_destroy_params (save_retvals, n_save_retvals);
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
-
-      if (strlen (description))
-        {
-          GimpParasite *parasite;
-
-          parasite = gimp_parasite_new ("gimp-pattern-name",
-                                        GIMP_PARASITE_PERSISTENT,
-                                        strlen (description) + 1,
-                                        description);
-          gimp_image_attach_parasite (orig_image_ID, parasite);
           gimp_parasite_free (parasite);
         }
       else
         {
-          gimp_image_detach_parasite (orig_image_ID, "gimp-pattern-name");
+          gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+          if (g_str_has_suffix (name, ".pat"))
+            name[strlen (name) - 4] = '\0';
+
+          if (strlen (name))
+            {
+              strncpy (description, name, sizeof (description));
+              description[sizeof (description) - 1] = '\0';
+            }
+
+          g_free (name);
         }
+      break;
+
+    default:
+      break;
+    }
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+      if (! save_dialog ())
+        status = GIMP_PDB_CANCEL;
+      break;
+
+    case GIMP_RUN_NONINTERACTIVE:
+      {
+        strncpy (description,
+                 g_value_get_string (gimp_value_array_index (args, 0)),
+                 sizeof (description));
+        description[sizeof (description) - 1] = '\0';
+      }
+      break;
+
+    default:
+      break;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      GimpValueArray *save_retvals;
+      gchar          *uri = g_file_get_uri (file);
+
+      save_retvals =
+        gimp_pdb_run_procedure (gimp_get_pdb (),
+                                "file-pat-save-internal",
+                                GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
+                                GIMP_TYPE_IMAGE_ID,    image_id,
+                                GIMP_TYPE_DRAWABLE_ID, drawable_id,
+                                G_TYPE_STRING,         uri,
+                                G_TYPE_STRING,         uri,
+                                G_TYPE_STRING,         description,
+                                G_TYPE_NONE);
+
+      g_free (uri);
+
+      if (g_value_get_enum (gimp_value_array_index (save_retvals, 0)) ==
+          GIMP_PDB_SUCCESS)
+        {
+          gimp_set_data (SAVE_PROC, description, sizeof (description));
+        }
+      else
+        {
+          g_set_error (&error, 0, 0,
+                       "Running procedure 'file-pat-save-internal' "
+                       "failed: %s",
+                       gimp_get_pdb_error ());
+
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+
+      gimp_value_array_unref (save_retvals);
+    }
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image_id);
+
+  if (strlen (description))
+    {
+      GimpParasite *parasite;
+
+      parasite = gimp_parasite_new ("gimp-pattern-name",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (description) + 1,
+                                    description);
+      gimp_image_attach_parasite (orig_image_ID, parasite);
+      gimp_parasite_free (parasite);
     }
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      gimp_image_detach_parasite (orig_image_ID, "gimp-pattern-name");
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
