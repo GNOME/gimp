@@ -74,8 +74,8 @@ static GeglBuffer             * gimp_transform_tool_real_transform     (GimpTran
                                                                         gint               *new_offset_x,
                                                                         gint               *new_offset_y);
 
-static gboolean     gimp_transform_tool_confirm        (GimpTransformTool  *tr_tool,
-                                                        GimpDisplay        *display);
+static gboolean                 gimp_transform_tool_confirm            (GimpTransformTool  *tr_tool,
+                                                                        GimpDisplay        *display);
 
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
