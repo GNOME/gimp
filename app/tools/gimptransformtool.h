@@ -45,15 +45,18 @@ typedef struct _GimpTransformToolClass GimpTransformToolClass;
 
 struct _GimpTransformTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool       parent_instance;
 
-  GimpObject   *object;
+  GimpObject        *object;
 
-  gint          x1, y1;             /*  upper left hand coordinate         */
-  gint          x2, y2;             /*  lower right hand coords            */
+  gint               x1, y1;             /*  upper left hand coordinate   */
+  gint               x2, y2;             /*  lower right hand coords      */
 
-  GimpMatrix3   transform;          /*  transformation matrix              */
-  gboolean      transform_valid;    /*  whether the matrix is valid        */
+  GimpMatrix3        transform;          /*  transformation matrix        */
+  gboolean           transform_valid;    /*  whether the matrix is valid  */
+
+  gboolean           restore_type;
+  GimpTransformType  saved_type;
 };
 
 struct _GimpTransformToolClass
@@ -93,6 +96,9 @@ void         gimp_transform_tool_recalc_matrix       (GimpTransformTool  *tr_too
 
 gboolean     gimp_transform_tool_transform           (GimpTransformTool  *tr_tool,
                                                       GimpDisplay        *display);
+
+void         gimp_transform_tool_set_type            (GimpTransformTool  *tr_tool,
+                                                      GimpTransformType   type);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

@@ -64,6 +64,10 @@
 
 /*  local function prototypes  */
 
+static void                     gimp_transform_tool_control            (GimpTool           *tool,
+                                                                        GimpToolAction      action,
+                                                                        GimpDisplay        *display);
+
 static gchar                  * gimp_transform_tool_real_get_undo_desc (GimpTransformTool  *tr_tool);
 static GimpTransformDirection   gimp_transform_tool_real_get_direction (GimpTransformTool  *tr_tool);
 static GeglBuffer             * gimp_transform_tool_real_transform     (GimpTransformTool  *tr_tool,
@@ -74,6 +78,8 @@ static GeglBuffer             * gimp_transform_tool_real_transform     (GimpTran
                                                                         GimpColorProfile  **buffer_profile,
                                                                         gint               *new_offset_x,
                                                                         gint               *new_offset_y);
+
+static void                     gimp_transform_tool_halt               (GimpTransformTool  *tr_tool);
 
 static gboolean                 gimp_transform_tool_confirm            (GimpTransformTool  *tr_tool,
                                                                         GimpDisplay        *display);
@@ -90,6 +96,10 @@ G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
 static void
 gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 {
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+
+  tool_class->control  = gimp_transform_tool_control;
+
   klass->recalc_matrix = NULL;
   klass->get_undo_desc = gimp_transform_tool_real_get_undo_desc;
   klass->get_direction = gimp_transform_tool_real_get_direction;
@@ -104,6 +114,34 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   tr_tool->transform_valid = TRUE;
+
+  tr_tool->restore_type = FALSE;
+}
+
+static void
+gimp_transform_tool_control (GimpTool       *tool,
+                             GimpToolAction  action,
+                             GimpDisplay    *display)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+      break;
+
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_transform_tool_halt (tr_tool);
+      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static gchar *
@@ -214,6 +252,21 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
     gimp_progress_end (progress);
 
   return ret;
+}
+
+static void
+gimp_transform_tool_halt (GimpTransformTool *tr_tool)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  if (tr_tool->restore_type)
+    {
+      g_object_set (options,
+                    "type", tr_tool->saved_type,
+                    NULL);
+
+      tr_tool->restore_type = FALSE;
+    }
 }
 
 static gboolean
@@ -829,4 +882,26 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   gimp_image_flush (image);
 
   return TRUE;
+}
+
+void
+gimp_transform_tool_set_type (GimpTransformTool *tr_tool,
+                              GimpTransformType  type)
+{
+  GimpTransformOptions *options;
+
+  g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
+
+  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  if (! tr_tool->restore_type)
+    tr_tool->saved_type = options->type;
+
+  tr_tool->restore_type = FALSE;
+
+  g_object_set (options,
+                "type", type,
+                NULL);
+
+  tr_tool->restore_type = TRUE;
 }
