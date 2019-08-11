@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpSaveFunc:
+ * GimpRunSaveFunc:
  * @procedure:   the #GimpProcedure that runs.
  * @run_mode:    the #GimpRunMode.
  * @image_id:    the image to save.
@@ -46,13 +46,13 @@ G_BEGIN_DECLS
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpSaveFunc) (GimpProcedure        *procedure,
-                                           GimpRunMode           run_mode,
-                                           gint32                image_id,
-                                           gint32                drawable_id,
-                                           GFile                *file,
-                                           const GimpValueArray *args,
-                                           gpointer              run_data);
+typedef GimpValueArray * (* GimpRunSaveFunc) (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              gint32                image_id,
+                                              gint32                drawable_id,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
 
 
 #define GIMP_TYPE_SAVE_PROCEDURE            (gimp_save_procedure_get_type ())
@@ -85,7 +85,7 @@ GType           gimp_save_procedure_get_type (void) G_GNUC_CONST;
 GimpProcedure * gimp_save_procedure_new      (GimpPlugIn      *plug_in,
                                               const gchar     *name,
                                               GimpPDBProcType  proc_type,
-                                              GimpSaveFunc     run_func,
+                                              GimpRunSaveFunc  run_func,
                                               gpointer         run_data,
                                               GDestroyNotify   run_data_destroy);
 

@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpLoadFunc:
+ * GimpRunLoadFunc:
  * @procedure:   the #GimpProcedure that runs.
  * @run_mode:    the #GimpRunMode.
  * @file:        the #GFile to load from.
@@ -44,11 +44,11 @@ G_BEGIN_DECLS
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpLoadFunc) (GimpProcedure        *procedure,
-                                           GimpRunMode           run_mode,
-                                           GFile                *file,
-                                           const GimpValueArray *args,
-                                           gpointer              run_data);
+typedef GimpValueArray * (* GimpRunLoadFunc) (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
 
 
 #define GIMP_TYPE_LOAD_PROCEDURE            (gimp_load_procedure_get_type ())
@@ -81,7 +81,7 @@ GType           gimp_load_procedure_get_type             (void) G_GNUC_CONST;
 GimpProcedure * gimp_load_procedure_new                  (GimpPlugIn        *plug_in,
                                                           const gchar       *name,
                                                           GimpPDBProcType    proc_type,
-                                                          GimpLoadFunc       run_func,
+                                                          GimpRunLoadFunc    run_func,
                                                           gpointer           run_data,
                                                           GDestroyNotify     run_data_destroy);
 

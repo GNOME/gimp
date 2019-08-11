@@ -29,12 +29,12 @@
 
 struct _GimpLoadProcedurePrivate
 {
-  GimpLoadFunc    run_func;
-  gpointer        run_data;
-  GDestroyNotify  run_data_destroy;
+  GimpRunLoadFunc  run_func;
+  gpointer         run_data;
+  GDestroyNotify   run_data_destroy;
 
-  gboolean        handles_raw;
-  gchar          *thumbnail_proc;
+  gboolean         handles_raw;
+  gchar           *thumbnail_proc;
 };
 
 
@@ -204,11 +204,44 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
 
 /*  public functions  */
 
+/**
+ * gimp_load_procedure_new:
+ * @plug_in:          a #GimpPlugIn.
+ * @name:             the new procedure's name.
+ * @proc_type:        the new procedure's #GimpPDBProcType.
+ * @run_func:         the run function for the new procedure.
+ * @run_data:         user data passed to @run_func.
+ * @run_data_destroy: (nullable): free function for @run_data, or %NULL.
+ *
+ * Creates a new load procedure named @name which will call @run_func
+ * when invoked.
+ *
+ * See gimp_procedure_new() for information about @proc_type.
+ *
+ * #GimpLoadProcedure is a #GimpProcedure subclass that makes it easier
+ * to write file load procedures.
+ *
+ * It automatically adds the standard
+ *
+ * (run-mode, uri, raw-uri)
+ *
+ * arguments of a load procedure. It is possible to add additional
+ * arguments.
+ *
+ * When invoked via gimp_procedure_run(), it unpacks these standard
+ * arguemnts and calls @run_func which is a #GimpRunLoadFunc. The
+ * "args" #GimpValueArray of #GimpRunLoadFunc only contains
+ * additionally added arguments.
+ *
+ * Returns: a new #GimpProcedure.
+ *
+ * Since: 3.0
+ **/
 GimpProcedure  *
 gimp_load_procedure_new (GimpPlugIn      *plug_in,
                          const gchar     *name,
                          GimpPDBProcType  proc_type,
-                         GimpLoadFunc     run_func,
+                         GimpRunLoadFunc  run_func,
                          gpointer         run_data,
                          GDestroyNotify   run_data_destroy)
 {
