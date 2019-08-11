@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-27 15:28+0200\n"
-"PO-Revision-Date: 2019-07-27 15:29+0200\n"
+"POT-Creation-Date: 2019-08-11 14:50+0200\n"
+"PO-Revision-Date: 2019-08-11 14:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5004,8 +5004,8 @@ msgid "Exercise a goat"
 msgstr "Ćwiczenie kozy"
 
 #: ../plug-ins/common/goat-exercise.c:67
-msgid "Goat-exercise"
-msgstr "Ćwiczenie kozy"
+msgid "Goat-e_xercise"
+msgstr "Ćwiczenie _kozy"
 
 #: ../plug-ins/common/gradient-map.c:77
 msgid "Recolor the image using colors from the active gradient"
@@ -11801,8 +11801,8 @@ msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Modyfikuje metadane (IPTC, Exif, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:416
-msgid "Edit Metadata"
-msgstr "Modyfikuj metadane"
+msgid "_Edit Metadata"
+msgstr "_Modyfikuj metadane"
 
 #: ../plug-ins/metadata/metadata-editor.c:539
 #, c-format
@@ -12043,8 +12043,8 @@ msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Wyświetla metadane (Exif, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
-msgid "View Metadata"
-msgstr "Wyświetl metadane"
+msgid "_View Metadata"
+msgstr "_Wyświetl metadane"
 
 #: ../plug-ins/metadata/metadata-viewer.c:220
 #, c-format
