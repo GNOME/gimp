@@ -36,134 +36,161 @@
 #define PLUG_IN_ROLE   "gimp-file-desktop-link"
 
 
-static void    query      (void);
-static void    run        (const gchar      *name,
-                           gint              nparams,
-                           const GimpParam  *param,
-                           gint             *nreturn_vals,
-                           GimpParam       **return_vals);
+typedef struct _Desktop      Desktop;
+typedef struct _DesktopClass DesktopClass;
 
-static gint32  load_image (const gchar      *filename,
-                           GimpRunMode       run_mode,
-                           GError          **error);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Desktop
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
 };
 
-MAIN ()
+struct _DesktopClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define DESKTOP_TYPE  (desktop_get_type ())
+#define DESKTOP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESKTOP_TYPE, Desktop))
+
+GType                   desktop_get_type         (void) G_GNUC_CONST;
+
+static GList          * desktop_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * desktop_create_procedure (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray * desktop_load             (GimpProcedure        *procedure,
+                                                  GimpRunMode           run_mode,
+                                                  GFile                *file,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
+
+static gint32           load_image               (GFile                *file,
+                                                  GimpRunMode           run_mode,
+                                                  GError              **error);
+
+
+G_DEFINE_TYPE (Desktop, desktop, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (DESKTOP_TYPE)
+
 
 static void
-query (void)
+desktop_class_init (DesktopClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image"                 }
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "Follows a link to an image in a .desktop file",
-                          "Opens a .desktop file and if it is a link, it "
-                          "asks GIMP to open the file the link points to.",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2006",
-                          N_("Desktop Link"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_load_handler (LOAD_PROC, "desktop", "");
+  plug_in_class->query_procedures = desktop_query_procedures;
+  plug_in_class->create_procedure = desktop_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+desktop_init (Desktop *desktop)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
-  GError            *error  = NULL;
-  gint32             image_ID;
+}
 
-  run_mode = param[0].data.d_int32;
+static GList *
+desktop_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (LOAD_PROC));
+}
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+static GimpProcedure *
+desktop_create_procedure (GimpPlugIn  *plug_in,
+                          const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-
-  if (strcmp (name, LOAD_PROC) == 0)
+  if (! strcmp (name, LOAD_PROC))
     {
-      image_ID = load_image (param[1].data.d_string, run_mode, &error);
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           desktop_load, NULL, NULL);
 
-      if (image_ID != -1)
-        {
-          status = GIMP_PDB_SUCCESS;
+      gimp_procedure_set_menu_label (procedure, N_("Desktop Link"));
 
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else if (error)
-        {
-          *nreturn_vals = 2;
-          values[1].type          = GIMP_PDB_STRING;
-          values[1].data.d_string = error->message;
-        }
+      gimp_procedure_set_documentation (procedure,
+                                        "Follows a link to an image in a "
+                                        ".desktop file",
+                                        "Opens a .desktop file and if it is "
+                                        "a link, it asks GIMP to open the "
+                                        "file the link points to.",
+                                        LOAD_PROC);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Sven Neumann",
+                                      "Sven Neumann",
+                                      "2006");
+
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "desktop");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+desktop_load (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GFile                *file,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
+  GimpValueArray *return_values;
+  gint32          image_ID;
+  GError         *error  = NULL;
+
+  image_ID = load_image (file, run_mode, &error);
+
+  if (image_ID != -1)
+    {
+      return_values = gimp_procedure_new_return_values (procedure,
+                                                        GIMP_PDB_SUCCESS,
+                                                        NULL);
+
+      gimp_value_set_image_id (gimp_value_array_index (return_values, 1),
+                               image_ID);
     }
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      return_values = gimp_procedure_new_return_values (procedure,
+                                                        GIMP_PDB_EXECUTION_ERROR,
+                                                        error);
     }
 
-  values[0].data.d_status = status;
+  return return_values;
 }
 
 static gint32
-load_image (const gchar  *filename,
+load_image (GFile        *file,
             GimpRunMode   run_mode,
             GError      **load_error)
 {
-  GKeyFile *file     = g_key_file_new ();
+  GKeyFile *key_file = g_key_file_new ();
+  gchar    *filename = NULL;
   gchar    *group    = NULL;
   gchar    *value    = NULL;
   gint32    image_ID = -1;
   GError   *error    = NULL;
 
-  if (! g_key_file_load_from_file (file, filename, G_KEY_FILE_NONE, &error))
+  filename = g_file_get_path (file);
+  if (! filename)
     goto out;
 
-  group = g_key_file_get_start_group (file);
+  if (! g_key_file_load_from_file (key_file, filename, G_KEY_FILE_NONE, &error))
+    goto out;
+
+  group = g_key_file_get_start_group (key_file);
   if (! group || strcmp (group, G_KEY_FILE_DESKTOP_GROUP) != 0)
     goto out;
 
-  value = g_key_file_get_value (file,
+  value = g_key_file_get_value (key_file,
                                 group, G_KEY_FILE_DESKTOP_KEY_TYPE, &error);
   if (! value || strcmp (value, G_KEY_FILE_DESKTOP_TYPE_LINK) != 0)
     goto out;
 
   g_free (value);
 
-  value = g_key_file_get_value (file,
+  value = g_key_file_get_value (key_file,
                                 group, G_KEY_FILE_DESKTOP_KEY_URL, &error);
   if (value)
     image_ID = gimp_file_load (run_mode, value, value);
@@ -179,7 +206,8 @@ load_image (const gchar  *filename,
 
   g_free (value);
   g_free (group);
-  g_key_file_free (file);
+  g_free (filename);
+  g_key_file_free (key_file);
 
   return image_ID;
 }

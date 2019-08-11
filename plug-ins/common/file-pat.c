@@ -46,9 +46,6 @@ struct _PatClass
 };
 
 
-/* Declare local functions.
- */
-
 #define PAT_TYPE  (pat_get_type ())
 #define PAT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAT_TYPE, Pat))
 

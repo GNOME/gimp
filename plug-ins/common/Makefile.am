@@ -613,6 +613,7 @@ file_desktop_link_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GIO_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_desktop_link_RC)
