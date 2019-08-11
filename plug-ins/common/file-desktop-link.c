@@ -173,8 +173,6 @@ load_image (GFile        *file,
   GError   *error    = NULL;
 
   filename = g_file_get_path (file);
-  if (! filename)
-    goto out;
 
   if (! g_key_file_load_from_file (key_file, filename, G_KEY_FILE_NONE, &error))
     goto out;

@@ -127,6 +127,8 @@ pat_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-gimp-pat");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pat");
+      gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
+                                           TRUE);
 
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_string ("description",

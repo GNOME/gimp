@@ -135,7 +135,8 @@ gimp_load_procedure_install (GimpProcedure *procedure)
                                   gimp_file_procedure_get_prefixes (file_proc));
     }
 
-  gimp_register_file_handler_uri (gimp_procedure_get_name (procedure));
+  if (gimp_file_procedure_get_handles_uri (file_proc))
+    gimp_register_file_handler_uri (gimp_procedure_get_name (procedure));
 
   mime_types = gimp_file_procedure_get_mime_types (file_proc);
   if (mime_types)

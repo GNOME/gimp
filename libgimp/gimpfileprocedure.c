@@ -26,11 +26,12 @@
 
 struct _GimpFileProcedurePrivate
 {
-  gchar *mime_types;
-  gchar *extensions;
-  gchar *prefixes;
-  gchar *magics;
-  gint   priority;
+  gchar    *mime_types;
+  gchar    *extensions;
+  gchar    *prefixes;
+  gchar    *magics;
+  gint      priority;
+  gboolean  handles_uri;
 };
 
 
@@ -279,4 +280,48 @@ gimp_file_procedure_get_priority (GimpFileProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), 0);
 
   return procedure->priv->priority;
+}
+
+/**
+ * gimp_file_procedure_set_handles_uri:
+ * @procedure:   A #GimpFileProcedure.
+ * @handles_uri: The procedure's handles uri flag.
+ *
+ * Registers a file procedure as capable of handling arbitrary URIs
+ * via GIO.
+ *
+ * When @handles_uri is set to %TRUE, the procedure will get a #GFile
+ * passed that can point to a remote file.
+ *
+ * When @handles_uri is set to %FALSE, the procedure will get a local
+ * #GFile passed and can use g_file_get_path() to get to a filename
+ * that can be used with whatever non-GIO means of dealing with the
+ * file.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_file_procedure_set_handles_uri (GimpFileProcedure *procedure,
+                                     gint               handles_uri)
+{
+  g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
+
+  procedure->priv->handles_uri = handles_uri;
+}
+
+/**
+ * gimp_file_procedure_get_handles_uri:
+ * @procedure: A #GimpFileProcedure.
+ *
+ * Returns: The procedure's handles uri flag as set with
+ *          gimp_file_procedure_set_handles_uri().
+ *
+ * Since: 3.0
+ **/
+gint
+gimp_file_procedure_get_handles_uri (GimpFileProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), 0);
+
+  return procedure->priv->handles_uri;
 }

@@ -54,27 +54,31 @@ struct _GimpFileProcedureClass
 };
 
 
-GType           gimp_file_procedure_get_type       (void) G_GNUC_CONST;
+GType           gimp_file_procedure_get_type        (void) G_GNUC_CONST;
 
-void            gimp_file_procedure_set_mime_types (GimpFileProcedure *procedure,
-                                                    const gchar       *mime_types);
-const gchar   * gimp_file_procedure_get_mime_types (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_mime_types  (GimpFileProcedure *procedure,
+                                                     const gchar       *mime_types);
+const gchar   * gimp_file_procedure_get_mime_types  (GimpFileProcedure *procedure);
 
-void            gimp_file_procedure_set_extensions (GimpFileProcedure *procedure,
-                                                    const gchar       *extensions);
-const gchar   * gimp_file_procedure_get_extensions (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_extensions  (GimpFileProcedure *procedure,
+                                                     const gchar       *extensions);
+const gchar   * gimp_file_procedure_get_extensions  (GimpFileProcedure *procedure);
 
-void            gimp_file_procedure_set_prefixes   (GimpFileProcedure *procedure,
-                                                    const gchar       *prefixes);
-const gchar   * gimp_file_procedure_get_prefixes   (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_prefixes    (GimpFileProcedure *procedure,
+                                                     const gchar       *prefixes);
+const gchar   * gimp_file_procedure_get_prefixes    (GimpFileProcedure *procedure);
 
-void            gimp_file_procedure_set_magics     (GimpFileProcedure *procedure,
-                                                    const gchar       *magics);
-const gchar   * gimp_file_procedure_get_magics     (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_magics      (GimpFileProcedure *procedure,
+                                                     const gchar       *magics);
+const gchar   * gimp_file_procedure_get_magics      (GimpFileProcedure *procedure);
 
-void            gimp_file_procedure_set_priority   (GimpFileProcedure *procedure,
-                                                    gint               priority);
-gint            gimp_file_procedure_get_priority   (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_priority    (GimpFileProcedure *procedure,
+                                                     gint               priority);
+gint            gimp_file_procedure_get_priority    (GimpFileProcedure *procedure);
+
+void            gimp_file_procedure_set_handles_uri (GimpFileProcedure *procedure,
+                                                     gboolean           handles_uri);
+gboolean        gimp_file_procedure_get_handles_uri (GimpFileProcedure *procedure);
 
 
 G_END_DECLS
