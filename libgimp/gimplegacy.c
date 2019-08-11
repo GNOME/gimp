@@ -1705,61 +1705,6 @@ gimp_pdb_proc_info (const gchar      *procedure_name,
   return success;
 }
 
-/**
- * gimp_pdb_proc_arg:
- * @procedure_name: The procedure name.
- * @arg_num: The argument number.
- * @arg_type: (out): The type of argument.
- * @arg_name: (out) (transfer full): The name of the argument.
- * @arg_desc: (out) (transfer full): A description of the argument.
- *
- * Queries the procedural database for information on the specified
- * procedure's argument.
- *
- * This procedure returns information on the specified procedure's
- * argument. The argument type, name, and a description are retrieved.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_pdb_proc_arg (const gchar     *procedure_name,
-                   gint             arg_num,
-                   GimpPDBArgType  *arg_type,
-                   gchar          **arg_name,
-                   gchar          **arg_desc)
-{
-  return _gimp_pdb_proc_arg (procedure_name, arg_num,
-                             arg_type, arg_name, arg_desc);
-}
-
-/**
- * gimp_pdb_proc_val:
- * @procedure_name: The procedure name.
- * @val_num: The return value number.
- * @val_type: (out): The type of return value.
- * @val_name: (out) (transfer full): The name of the return value.
- * @val_desc: (out) (transfer full): A description of the return value.
- *
- * Queries the procedural database for information on the specified
- * procedure's return value.
- *
- * This procedure returns information on the specified procedure's
- * return value. The return value type, name, and a description are
- * retrieved.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_pdb_proc_val (const gchar     *procedure_name,
-                   gint             val_num,
-                   GimpPDBArgType  *val_type,
-                   gchar          **val_name,
-                   gchar          **val_desc)
-{
-  return _gimp_pdb_proc_val (procedure_name, val_num,
-                             val_type, val_name, val_desc);
-}
-
 
 /*  private functions  */
 

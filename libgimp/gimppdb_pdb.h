@@ -53,16 +53,6 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_info         (const gchar       *proc
                                                          GimpPDBProcType   *proc_type,
                                                          gint              *num_args,
                                                          gint              *num_values);
-G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_arg          (const gchar       *procedure_name,
-                                                         gint               arg_num,
-                                                         GimpPDBArgType    *arg_type,
-                                                         gchar            **arg_name,
-                                                         gchar            **arg_desc);
-G_GNUC_INTERNAL gboolean    _gimp_pdb_proc_val          (const gchar       *procedure_name,
-                                                         gint               val_num,
-                                                         GimpPDBArgType    *val_type,
-                                                         gchar            **val_name,
-                                                         gchar            **val_desc);
 G_GNUC_INTERNAL GParamSpec* _gimp_pdb_proc_argument     (const gchar       *procedure_name,
                                                          gint               arg_num);
 G_GNUC_INTERNAL GParamSpec* _gimp_pdb_proc_return_value (const gchar       *procedure_name,

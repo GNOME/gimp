@@ -246,8 +246,8 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
  * short blurb, detailed help, authors, copyright information,
  * procedure type, number of input, and number of return values are
  * returned. For specific information on each input argument and return
- * value, use the gimp_procedural_db_proc_arg() and
- * gimp_procedural_db_proc_val() procedures.
+ * value, use the gimp_pdb_db_proc_argument() and
+ * gimp_pdb_db_proc_return_value() procedures.
  *
  * Returns: TRUE on success.
  **/
@@ -301,127 +301,6 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
       *proc_type = g_value_get_enum (gimp_value_array_index (return_vals, 6));
       *num_args = g_value_get_int (gimp_value_array_index (return_vals, 7));
       *num_values = g_value_get_int (gimp_value_array_index (return_vals, 8));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_pdb_proc_arg:
- * @procedure_name: The procedure name.
- * @arg_num: The argument number.
- * @arg_type: (out): The type of argument.
- * @arg_name: (out) (transfer full): The name of the argument.
- * @arg_desc: (out) (transfer full): A description of the argument.
- *
- * Queries the procedural database for information on the specified
- * procedure's argument.
- *
- * This procedure returns information on the specified procedure's
- * argument. The argument type, name, and a description are retrieved.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_pdb_proc_arg (const gchar     *procedure_name,
-                    gint             arg_num,
-                    GimpPDBArgType  *arg_type,
-                    gchar          **arg_name,
-                    gchar          **arg_desc)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, procedure_name,
-                                          GIMP_TYPE_INT32, arg_num,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-pdb-proc-arg",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-pdb-proc-arg",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *arg_type = 0;
-  *arg_name = NULL;
-  *arg_desc = NULL;
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      *arg_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-      *arg_name = g_value_dup_string (gimp_value_array_index (return_vals, 2));
-      *arg_desc = g_value_dup_string (gimp_value_array_index (return_vals, 3));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * _gimp_pdb_proc_val:
- * @procedure_name: The procedure name.
- * @val_num: The return value number.
- * @val_type: (out): The type of return value.
- * @val_name: (out) (transfer full): The name of the return value.
- * @val_desc: (out) (transfer full): A description of the return value.
- *
- * Queries the procedural database for information on the specified
- * procedure's return value.
- *
- * This procedure returns information on the specified procedure's
- * return value. The return value type, name, and a description are
- * retrieved.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_pdb_proc_val (const gchar     *procedure_name,
-                    gint             val_num,
-                    GimpPDBArgType  *val_type,
-                    gchar          **val_name,
-                    gchar          **val_desc)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, procedure_name,
-                                          GIMP_TYPE_INT32, val_num,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-pdb-proc-val",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-pdb-proc-val",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *val_type = 0;
-  *val_name = NULL;
-  *val_desc = NULL;
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      *val_type = g_value_get_enum (gimp_value_array_index (return_vals, 1));
-      *val_name = g_value_dup_string (gimp_value_array_index (return_vals, 2));
-      *val_desc = g_value_dup_string (gimp_value_array_index (return_vals, 3));
     }
 
   gimp_value_array_unref (return_vals);

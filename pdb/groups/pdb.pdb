@@ -200,7 +200,7 @@ This procedure returns information on the specified procedure. A short
 blurb, detailed help, authors, copyright information, procedure
 type, number of input, and number of return values are returned. For
 specific information on each input argument and return value, use the
-gimp_procedural_db_proc_arg() and gimp_procedural_db_proc_val()
+gimp_pdb_db_proc_argument() and gimp_pdb_db_proc_return_value()
 procedures.
 HELP
 
@@ -376,146 +376,6 @@ CODE
    );
 }
 
-sub pdb_proc_arg {
-    $blurb = <<BLURB;
-Queries the procedural database for information on the specified procedure's
-argument.
-BLURB
-
-    $help = <<HELP;
-This procedure returns information on the specified procedure's argument. The
-argument type, name, and a description are retrieved.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1,
-	  desc => 'The procedure name' },
-	{ name => 'arg_num', type => 'int32',
-	  desc => 'The argument number' }
-    );
-
-    @outargs = (
-	{ name => 'arg_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  void_ret => 1,
-	  desc => "The type of argument" },
-	{ name => 'arg_name', type => 'string',
-	  desc => 'The name of the argument' },
-	{ name => 'arg_desc', type => 'string',
-	  desc => 'A description of the argument' }
-    );
-
-   %invoke = (
-	code => <<CODE
-{
-  GimpProcedure *proc;
-  gchar         *canonical;
-
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
-
-  if (! proc)
-    {
-      const gchar *compat_name;
-
-      compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
-
-      if (compat_name)
-        proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
-    }
-
-  g_free (canonical);
-
-  if (proc && (arg_num >= 0 && arg_num < proc->num_args))
-    {
-      GParamSpec *pspec = proc->args[arg_num];
-
-      arg_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
-      arg_name = g_strdup (g_param_spec_get_name (pspec));
-      arg_desc = gimp_param_spec_get_desc (pspec);
-    }
-  else
-    success = FALSE;
-}
-CODE
-   );
-}
-
-sub pdb_proc_val {
-    $blurb = <<BLURB;
-Queries the procedural database for information on the specified procedure's
-return value.
-BLURB
-
-    $help = <<HELP;
-This procedure returns information on the specified procedure's return value.
-The return value type, name, and a description are retrieved.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'procedure_name', type  => 'string', non_empty => 1,
-	  desc => 'The procedure name' },
-	{ name => 'val_num', type => 'int32',
-	  desc => 'The return value number' }
-    );
-
-    @outargs = (
-	{ name => 'val_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  void_ret => 1,
-	  desc => "The type of return value" },
-	{ name => 'val_name', type => 'string',
-	  desc => 'The name of the return value' },
-	{ name => 'val_desc', type => 'string',
-	  desc => 'A description of the return value' }
-    );
-
-   %invoke = (
-	code => <<CODE
-{
-  GimpProcedure *proc;
-  gchar         *canonical;
-
-  canonical = gimp_canonicalize_identifier (procedure_name);
-
-  proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
-
-  if (! proc)
-    {
-      const gchar *compat_name;
-
-      compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
-
-      if (compat_name)
-        proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
-    }
-
-  g_free (canonical);
-
-  if (proc && (val_num >= 0 && val_num < proc->num_values))
-    {
-      GParamSpec *pspec = proc->values[val_num];
-
-      val_type = gimp_pdb_compat_arg_type_from_gtype (G_PARAM_SPEC_VALUE_TYPE (pspec));
-      val_name = g_strdup (g_param_spec_get_name (pspec));
-      val_desc = gimp_param_spec_get_desc (pspec);
-    }
-  else
-    success = FALSE;
-}
-CODE
-   );
-}
-
 sub pdb_get_data {
     $blurb = 'Returns data associated with the specified identifier.';
 
@@ -649,8 +509,6 @@ CODE
             pdb_query
             pdb_proc_exists
             pdb_proc_info
-            pdb_proc_arg
-            pdb_proc_val
             pdb_proc_argument
             pdb_proc_return_value
 	    pdb_get_data

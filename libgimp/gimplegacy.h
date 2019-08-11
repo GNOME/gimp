@@ -400,16 +400,6 @@ gboolean   gimp_pdb_proc_info     (const gchar      *procedure_name,
                                    gint             *num_values,
                                    GimpParamDef    **args,
                                    GimpParamDef    **return_vals);
-gboolean   gimp_pdb_proc_arg      (const gchar      *procedure_name,
-                                   gint              arg_num,
-                                   GimpPDBArgType   *arg_type,
-                                   gchar           **arg_name,
-                                   gchar           **arg_desc);
-gboolean   gimp_pdb_proc_val      (const gchar      *procedure_name,
-                                   gint              val_num,
-                                   GimpPDBArgType   *val_type,
-                                   gchar           **val_name,
-                                   gchar           **val_desc);
 
 
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */
