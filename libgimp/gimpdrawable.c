@@ -270,12 +270,12 @@ gimp_drawable_get_format (gint32 drawable_ID)
 
   if (format_str)
     {
-      gint32      image_ID = gimp_item_get_image (drawable_ID);
-      const Babl *space    = NULL;
+      const Babl *space = NULL;
+      GimpImage  *image = gimp_item_get_image (drawable_ID);
 
       if (gimp_item_is_layer (drawable_ID))
         {
-          GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
+          GimpColorProfile *profile = gimp_image_get_color_profile (image);
 
           if (profile)
             {
@@ -313,7 +313,7 @@ gimp_drawable_get_format (gint32 drawable_ID)
           else
             format = palette;
 
-          colormap = gimp_image_get_colormap (image_ID, &n_colors);
+          colormap = gimp_image_get_colormap (image, &n_colors);
 
           if (colormap)
             {
@@ -329,6 +329,7 @@ gimp_drawable_get_format (gint32 drawable_ID)
           format = babl_format_with_space (format_str, space);
         }
 
+      g_object_unref (image);
       g_free (format_str);
     }
 
