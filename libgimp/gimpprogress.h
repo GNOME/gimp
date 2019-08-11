@@ -30,6 +30,23 @@ G_BEGIN_DECLS
 
 typedef struct _GimpProgressVtable GimpProgressVtable;
 
+/**
+ * GimpProgressVtable:
+ * @start:      starts the progress.
+ * @end:        ends the progress.
+ * @set_text:   sets a new text on the progress.
+ * @set_value:  sets a new percentage on the progress.
+ * @pulse:      makes the progress pulse.
+ * @get_window: returns the ID of the window where the progress is displayed.
+ * @_gimp_reserved1: reserved pointer for future expansion.
+ * @_gimp_reserved2: reserved pointer for future expansion.
+ * @_gimp_reserved3: reserved pointer for future expansion.
+ * @_gimp_reserved4: reserved pointer for future expansion.
+ * @_gimp_reserved5: reserved pointer for future expansion.
+ * @_gimp_reserved6: reserved pointer for future expansion.
+ * @_gimp_reserved7: reserved pointer for future expansion.
+ * @_gimp_reserved8: reserved pointer for future expansion.
+ **/
 struct _GimpProgressVtable
 {
   void    (* start)        (const gchar *message,

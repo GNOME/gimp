@@ -225,7 +225,11 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
  *
  * (run-mode, uri, raw-uri)
  *
- * arguments of a load procedure. It is possible to add additional
+ * arguments and the standard
+ *
+ * (image-id)
+ *
+ * return value of a load procedure. It is possible to add additional
  * arguments.
  *
  * When invoked via gimp_procedure_run(), it unpacks these standard
@@ -332,7 +336,7 @@ gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *procedure,
  * @procedure: A #GimpLoadProcedure.
  *
  * Returns: The procedure's thumbnail loader procedure as set with
- *          gimp_load_procedure_set_thumbnail_procedure().
+ *          gimp_load_procedure_set_thumbnail_loader().
  *
  * Since: 3.0
  **/

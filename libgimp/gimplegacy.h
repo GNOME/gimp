@@ -88,6 +88,12 @@ struct _GimpPlugInInfo
   GimpRunProc   run_proc;
 };
 
+/**
+ * GimpParamDef:
+ * @type:        the parameter's type.
+ * @name:        the parameter's name.
+ * @description: the parameter's desctiption.
+ **/
 struct _GimpParamDef
 {
   GimpPDBArgType  type;
@@ -95,6 +101,34 @@ struct _GimpParamDef
   gchar          *description;
 };
 
+/**
+ * GimpParamData:
+ * @d_int32:       a 32-bit integer.
+ * @d_int16:       a 16-bit integer.
+ * @d_int8:        an 8-bit unsigned integer.
+ * @d_float:       a double.
+ * @d_string:      a string.
+ * @d_color:       a #GimpRGB.
+ * @d_int32array:  an array of int32.
+ * @d_int16array:  an array of int16.
+ * @d_int8array:   an array of int8.
+ * @d_floatarray:  an array of floats.
+ * @d_stringarray: an array of strings.
+ * @d_colorarray:  an array of colors.
+ * @d_display:     a display id.
+ * @d_image:       an image id.
+ * @d_item:        an item id.
+ * @d_drawable:    a drawable id.
+ * @d_layer:       a layer id.
+ * @d_channel:     a channel id.
+ * @d_layer_mask:  a layer mask id.
+ * @d_selection:   a selection id.
+ * @d_vectors:     a vectors id.
+ * @d_unit:        a GimpUnit.
+ * @d_parasite:    a GimpParasite.
+ * @d_tattoo:      a tattoo.
+ * @d_status:      a return status.
+ **/
 union _GimpParamData
 {
   gint32            d_int32;
@@ -102,22 +136,21 @@ union _GimpParamData
   guint8            d_int8;
   gdouble           d_float;
   gchar            *d_string;
+  GimpRGB           d_color;
   gint32           *d_int32array;
   gint16           *d_int16array;
   guint8           *d_int8array;
   gdouble          *d_floatarray;
   gchar           **d_stringarray;
   GimpRGB          *d_colorarray;
-  GimpRGB           d_color;
   gint32            d_display;
   gint32            d_image;
   gint32            d_item;
-  gint32            d_layer;
-  gint32            d_layer_mask;
-  gint32            d_channel;
   gint32            d_drawable;
+  gint32            d_layer;
+  gint32            d_channel;
+  gint32            d_layer_mask;
   gint32            d_selection;
-  gint32            d_boundary;
   gint32            d_vectors;
   gint32            d_unit;
   GimpParasite      d_parasite;
@@ -125,6 +158,11 @@ union _GimpParamData
   GimpPDBStatusType d_status;
 };
 
+/**
+ * GimpParam:
+ * @type: the parameter's type.
+ * @data: the parameter's data.
+ **/
 struct _GimpParam
 {
   GimpPDBArgType type;
