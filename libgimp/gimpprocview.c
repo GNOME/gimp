@@ -95,7 +95,7 @@ gimp_proc_view_new (const gchar *procedure_name,
   GtkSizeGroup    *desc_group;
   gchar           *blurb;
   gchar           *help;
-  gchar           *author;
+  gchar           *authors;
   gchar           *copyright;
   gchar           *date;
   GimpPDBProcType  type;
@@ -111,7 +111,7 @@ gimp_proc_view_new (const gchar *procedure_name,
   gimp_pdb_proc_info (procedure_name,
                       &blurb,
                       &help,
-                      &author,
+                      &authors,
                       &copyright,
                       &date,
                       &type,
@@ -122,7 +122,7 @@ gimp_proc_view_new (const gchar *procedure_name,
 
   if (blurb     && strlen (blurb) < 2)     g_clear_pointer (&blurb,     g_free);
   if (help      && strlen (help) < 2)      g_clear_pointer (&help,      g_free);
-  if (author    && strlen (author) < 2)    g_clear_pointer (&author,    g_free);
+  if (authors   && strlen (authors) < 2)   g_clear_pointer (&authors,   g_free);
   if (date      && strlen (date) < 2)      g_clear_pointer (&date,      g_free);
   if (copyright && strlen (copyright) < 2) g_clear_pointer (&copyright, g_free);
 
@@ -259,7 +259,7 @@ gimp_proc_view_new (const gchar *procedure_name,
   g_object_unref (type_group);
   g_object_unref (desc_group);
 
-  if (! help && ! author && ! date && ! copyright)
+  if (! help && ! authors && ! date && ! copyright)
     return main_vbox;
 
   frame = gimp_frame_new (_("Additional Information"));
@@ -281,9 +281,9 @@ gimp_proc_view_new (const gchar *procedure_name,
       gtk_widget_show (label);
     }
 
-  /* show the author & the copyright */
+  /* show the authors & the copyright */
 
-  if (! author && ! date && ! copyright)
+  if (! authors && ! date && ! copyright)
     goto out;
 
   grid = gtk_grid_new ();
@@ -294,16 +294,16 @@ gimp_proc_view_new (const gchar *procedure_name,
 
   row = 0;
 
-  if (author)
+  if (authors)
     {
-      label = gtk_label_new (author);
+      label = gtk_label_new (authors);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
       gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                                _("Author:"), 0.0, 0.0,
+                                _("Authors:"), 0.0, 0.0,
                                 label, 3);
     }
 
@@ -337,7 +337,7 @@ gimp_proc_view_new (const gchar *procedure_name,
 
   g_free (blurb);
   g_free (help);
-  g_free (author);
+  g_free (authors);
   g_free (copyright);
   g_free (date);
 

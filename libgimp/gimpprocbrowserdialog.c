@@ -63,7 +63,7 @@ typedef enum
   SEARCH_TYPE_NAME,
   SEARCH_TYPE_BLURB,
   SEARCH_TYPE_HELP,
-  SEARCH_TYPE_AUTHOR,
+  SEARCH_TYPE_AUTHORS,
   SEARCH_TYPE_COPYRIGHT,
   SEARCH_TYPE_DATE,
   SEARCH_TYPE_PROC_TYPE
@@ -164,7 +164,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                                  _("by name"),        SEARCH_TYPE_NAME,
                                  _("by description"), SEARCH_TYPE_BLURB,
                                  _("by help"),        SEARCH_TYPE_HELP,
-                                 _("by author"),      SEARCH_TYPE_AUTHOR,
+                                 _("by authors"),     SEARCH_TYPE_AUTHORS,
                                  _("by copyright"),   SEARCH_TYPE_COPYRIGHT,
                                  _("by date"),        SEARCH_TYPE_DATE,
                                  _("by type"),        SEARCH_TYPE_PROC_TYPE,
@@ -444,8 +444,8 @@ browser_search (GimpBrowser           *browser,
                         &num_procs, &proc_list);
       break;
 
-    case SEARCH_TYPE_AUTHOR:
-      gimp_browser_show_message (browser, _("Searching by author"));
+    case SEARCH_TYPE_AUTHORS:
+      gimp_browser_show_message (browser, _("Searching by authors"));
 
       if (gimp_get_plug_in ())
         proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),

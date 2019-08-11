@@ -101,7 +101,7 @@ pdb_query_invoker (GimpProcedure         *procedure,
   const gchar *name;
   const gchar *blurb;
   const gchar *help;
-  const gchar *author;
+  const gchar *authors;
   const gchar *copyright;
   const gchar *date;
   const gchar *proc_type;
@@ -111,7 +111,7 @@ pdb_query_invoker (GimpProcedure         *procedure,
   name = g_value_get_string (gimp_value_array_index (args, 0));
   blurb = g_value_get_string (gimp_value_array_index (args, 1));
   help = g_value_get_string (gimp_value_array_index (args, 2));
-  author = g_value_get_string (gimp_value_array_index (args, 3));
+  authors = g_value_get_string (gimp_value_array_index (args, 3));
   copyright = g_value_get_string (gimp_value_array_index (args, 4));
   date = g_value_get_string (gimp_value_array_index (args, 5));
   proc_type = g_value_get_string (gimp_value_array_index (args, 6));
@@ -119,7 +119,7 @@ pdb_query_invoker (GimpProcedure         *procedure,
   if (success)
     {
       success = gimp_pdb_query (gimp->pdb,
-                                name, blurb, help, author,
+                                name, blurb, help, authors,
                                 copyright, date, proc_type,
                                 &num_matches, &procedure_names,
                                 error);
@@ -196,7 +196,7 @@ pdb_proc_info_invoker (GimpProcedure         *procedure,
   const gchar *procedure_name;
   gchar *blurb = NULL;
   gchar *help = NULL;
-  gchar *author = NULL;
+  gchar *authors = NULL;
   gchar *copyright = NULL;
   gchar *date = NULL;
   gint32 proc_type = 0;
@@ -213,7 +213,7 @@ pdb_proc_info_invoker (GimpProcedure         *procedure,
       canonical = gimp_canonicalize_identifier (procedure_name);
 
       success = gimp_pdb_proc_info (gimp->pdb, canonical,
-                                    &blurb, &help, &author,
+                                    &blurb, &help, &authors,
                                     &copyright, &date, &ptype,
                                     &num_args, &num_values,
                                     error);
@@ -229,7 +229,7 @@ pdb_proc_info_invoker (GimpProcedure         *procedure,
     {
       g_value_take_string (gimp_value_array_index (return_vals, 1), blurb);
       g_value_take_string (gimp_value_array_index (return_vals, 2), help);
-      g_value_take_string (gimp_value_array_index (return_vals, 3), author);
+      g_value_take_string (gimp_value_array_index (return_vals, 3), authors);
       g_value_take_string (gimp_value_array_index (return_vals, 4), copyright);
       g_value_take_string (gimp_value_array_index (return_vals, 5), date);
       g_value_set_enum (gimp_value_array_index (return_vals, 6), proc_type);
@@ -652,7 +652,7 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-pdb-query",
                                      "Queries the procedural database for its contents using regular expression matching.",
-                                     "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, author, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
+                                     "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, authors, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -679,9 +679,9 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("author",
-                                                       "author",
-                                                       "The regex for procedure author",
+                               gimp_param_spec_string ("authors",
+                                                       "authors",
+                                                       "The regex for procedure authors",
                                                        TRUE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -759,7 +759,7 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-pdb-proc-info",
                                      "Queries the procedural database for information on the specified procedure.",
-                                     "This procedure returns information on the specified procedure. A short blurb, detailed help, author(s), copyright information, procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp-procedural-db-proc-arg' and 'gimp-procedural-db-proc-val' procedures.",
+                                     "This procedure returns information on the specified procedure. A short blurb, detailed help, authors, copyright information, procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp-procedural-db-proc-arg' and 'gimp-procedural-db-proc-val' procedures.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
@@ -786,9 +786,9 @@ register_pdb_procs (GimpPDB *pdb)
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("author",
-                                                           "author",
-                                                           "Author(s) of the procedure",
+                                   gimp_param_spec_string ("authors",
+                                                           "authors",
+                                                           "Authors of the procedure",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

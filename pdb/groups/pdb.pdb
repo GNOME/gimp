@@ -86,7 +86,7 @@ BLURB
 
     $help = <<'HELP';
 This procedure queries the contents of the procedural database. It is supplied
-with seven arguments matching procedures on { name, blurb, help, author,
+with seven arguments matching procedures on { name, blurb, help, authors,
 copyright, date, procedure type}. This is accomplished using regular expression
 matching. For instance, to find all procedures with "jpeg" listed in the blurb,
 all seven arguments can be supplied as ".*", except for the second, which can
@@ -108,8 +108,8 @@ HELP
 	  desc => 'The regex for procedure blurb' },
 	{ name => 'help', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure help' },
-	{ name => 'author', type => 'string', allow_non_utf8 => 1,
-	  desc => 'The regex for procedure author' },
+	{ name => 'authors', type => 'string', allow_non_utf8 => 1,
+	  desc => 'The regex for procedure authors' },
 	{ name => 'copyright', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure copyright' },
 	{ name => 'date', type => 'string', allow_non_utf8 => 1,
@@ -131,7 +131,7 @@ HELP
 	code => <<CODE
 {
   success = gimp_pdb_query (gimp->pdb,
-                            name, blurb, help, author,
+                            name, blurb, help, authors,
                             copyright, date, proc_type,
                             &num_matches, &procedure_names,
                             error);
@@ -197,7 +197,7 @@ BLURB
 
     $help = <<'HELP';
 This procedure returns information on the specified procedure. A short
-blurb, detailed help, author(s), copyright information, procedure
+blurb, detailed help, authors, copyright information, procedure
 type, number of input, and number of return values are returned. For
 specific information on each input argument and return value, use the
 gimp_procedural_db_proc_arg() and gimp_procedural_db_proc_val()
@@ -219,8 +219,8 @@ HELP
 	  desc => 'A short blurb' },
 	{ name => 'help', type => 'string',
 	  desc => 'Detailed procedure help' },
-	{ name => 'author', type => 'string',
-	  desc => 'Author(s) of the procedure' },
+	{ name => 'authors', type => 'string',
+	  desc => 'Authors of the procedure' },
 	{ name => 'copyright', type => 'string',
 	  desc => 'The copyright' },
 	{ name => 'date', type => 'string',
@@ -242,7 +242,7 @@ HELP
   canonical = gimp_canonicalize_identifier (procedure_name);
 
   success = gimp_pdb_proc_info (gimp->pdb, canonical,
-                                &blurb, &help, &author,
+                                &blurb, &help, &authors,
                                 &copyright, &date, &ptype,
                                 &num_args, &num_values,
                                 error);

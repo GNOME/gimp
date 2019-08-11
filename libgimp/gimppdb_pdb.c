@@ -109,7 +109,7 @@ _gimp_pdb_dump (const gchar *filename)
  * @name: The regex for procedure name.
  * @blurb: The regex for procedure blurb.
  * @help: The regex for procedure help.
- * @author: The regex for procedure author.
+ * @authors: The regex for procedure authors.
  * @copyright: The regex for procedure copyright.
  * @date: The regex for procedure date.
  * @proc_type: The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
@@ -121,7 +121,7 @@ _gimp_pdb_dump (const gchar *filename)
  *
  * This procedure queries the contents of the procedural database. It
  * is supplied with seven arguments matching procedures on { name,
- * blurb, help, author, copyright, date, procedure type}. This is
+ * blurb, help, authors, copyright, date, procedure type}. This is
  * accomplished using regular expression matching. For instance, to
  * find all procedures with \"jpeg\" listed in the blurb, all seven
  * arguments can be supplied as \".*\", except for the second, which
@@ -138,7 +138,7 @@ gboolean
 _gimp_pdb_query (const gchar   *name,
                  const gchar   *blurb,
                  const gchar   *help,
-                 const gchar   *author,
+                 const gchar   *authors,
                  const gchar   *copyright,
                  const gchar   *date,
                  const gchar   *proc_type,
@@ -154,7 +154,7 @@ _gimp_pdb_query (const gchar   *name,
                                           G_TYPE_STRING, name,
                                           G_TYPE_STRING, blurb,
                                           G_TYPE_STRING, help,
-                                          G_TYPE_STRING, author,
+                                          G_TYPE_STRING, authors,
                                           G_TYPE_STRING, copyright,
                                           G_TYPE_STRING, date,
                                           G_TYPE_STRING, proc_type,
@@ -232,7 +232,7 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
  * @procedure_name: The procedure name.
  * @blurb: (out) (transfer full): A short blurb.
  * @help: (out) (transfer full): Detailed procedure help.
- * @author: (out) (transfer full): Author(s) of the procedure.
+ * @authors: (out) (transfer full): Authors of the procedure.
  * @copyright: (out) (transfer full): The copyright.
  * @date: (out) (transfer full): Copyright date.
  * @proc_type: (out): The procedure type.
@@ -243,7 +243,7 @@ _gimp_pdb_proc_exists (const gchar *procedure_name)
  * procedure.
  *
  * This procedure returns information on the specified procedure. A
- * short blurb, detailed help, author(s), copyright information,
+ * short blurb, detailed help, authors, copyright information,
  * procedure type, number of input, and number of return values are
  * returned. For specific information on each input argument and return
  * value, use the gimp_procedural_db_proc_arg() and
@@ -255,7 +255,7 @@ gboolean
 _gimp_pdb_proc_info (const gchar      *procedure_name,
                      gchar           **blurb,
                      gchar           **help,
-                     gchar           **author,
+                     gchar           **authors,
                      gchar           **copyright,
                      gchar           **date,
                      GimpPDBProcType  *proc_type,
@@ -282,7 +282,7 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
 
   *blurb = NULL;
   *help = NULL;
-  *author = NULL;
+  *authors = NULL;
   *copyright = NULL;
   *date = NULL;
   *proc_type = 0;
@@ -295,7 +295,7 @@ _gimp_pdb_proc_info (const gchar      *procedure_name,
     {
       *blurb = g_value_dup_string (gimp_value_array_index (return_vals, 1));
       *help = g_value_dup_string (gimp_value_array_index (return_vals, 2));
-      *author = g_value_dup_string (gimp_value_array_index (return_vals, 3));
+      *authors = g_value_dup_string (gimp_value_array_index (return_vals, 3));
       *copyright = g_value_dup_string (gimp_value_array_index (return_vals, 4));
       *date = g_value_dup_string (gimp_value_array_index (return_vals, 5));
       *proc_type = g_value_get_enum (gimp_value_array_index (return_vals, 6));

@@ -126,7 +126,7 @@ gimp_main_legacy (const GimpPlugInInfo *info,
  * @blurb:                                     a short text describing what the procedure does.
  * @help:                                      the help text for the procedure (usually considerably
  *                                             longer than @blurb).
- * @author:                                    the procedure's author(s).
+ * @authors:                                   the procedure's authors.
  * @copyright:                                 the procedure's copyright.
  * @date:                                      the date the procedure was added.
  * @menu_label:                                the label to use for the procedure's menu entry,
@@ -147,7 +147,7 @@ gimp_main_legacy (const GimpPlugInInfo *info,
  * overwrite an already existing procedure (overwrite procedures only
  * if you know what you're doing).
  *
- * The @blurb, @help, @author, @copyright and @date parameters are
+ * The @blurb, @help, @authors, @copyright and @date parameters are
  * optional but then you shouldn't write procedures without proper
  * documentation, should you.
  *
@@ -190,7 +190,7 @@ void
 gimp_install_procedure (const gchar        *name,
                         const gchar        *blurb,
                         const gchar        *help,
-                        const gchar        *author,
+                        const gchar        *authors,
                         const gchar        *copyright,
                         const gchar        *date,
                         const gchar        *menu_label,
@@ -218,7 +218,7 @@ gimp_install_procedure (const gchar        *name,
   proc_install.blurb        = (gchar *) blurb;
   proc_install.help         = (gchar *) help;
   proc_install.help_id      = (gchar *) name;
-  proc_install.authors      = (gchar *) author;
+  proc_install.authors      = (gchar *) authors;
   proc_install.copyright    = (gchar *) copyright;
   proc_install.date         = (gchar *) date;
   proc_install.menu_label   = (gchar *) menu_label;
@@ -269,7 +269,7 @@ gimp_install_procedure (const gchar        *name,
  * @blurb:         a short text describing what the procedure does.
  * @help:          the help text for the procedure (usually considerably
  *                 longer than @blurb).
- * @author:        the procedure's author(s).
+ * @authors:       the procedure's authors.
  * @copyright:     the procedure's copyright.
  * @date:          the date the procedure was added.
  * @menu_label:    the procedure's menu label, or %NULL if the procedure has
@@ -309,7 +309,7 @@ void
 gimp_install_temp_proc (const gchar        *name,
                         const gchar        *blurb,
                         const gchar        *help,
-                        const gchar        *author,
+                        const gchar        *authors,
                         const gchar        *copyright,
                         const gchar        *date,
                         const gchar        *menu_label,
@@ -333,7 +333,7 @@ gimp_install_temp_proc (const gchar        *name,
 
   gimp_install_procedure (name,
                           blurb, help,
-                          author, copyright, date,
+                          authors, copyright, date,
                           menu_label,
                           image_types,
                           type,
@@ -1539,7 +1539,7 @@ gimp_pdb_dump (const gchar *filename)
  * @name: The regex for procedure name.
  * @blurb: The regex for procedure blurb.
  * @help: The regex for procedure help.
- * @author: The regex for procedure author.
+ * @authors: The regex for procedure authors.
  * @copyright: The regex for procedure copyright.
  * @date: The regex for procedure date.
  * @proc_type: The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
@@ -1551,7 +1551,7 @@ gimp_pdb_dump (const gchar *filename)
  *
  * This procedure queries the contents of the procedural database. It
  * is supplied with seven arguments matching procedures on { name,
- * blurb, help, author, copyright, date, procedure type}. This is
+ * blurb, help, authors, copyright, date, procedure type}. This is
  * accomplished using regular expression matching. For instance, to
  * find all procedures with \"jpeg\" listed in the blurb, all seven
  * arguments can be supplied as \".*\", except for the second, which
@@ -1568,7 +1568,7 @@ gboolean
 gimp_pdb_query (const gchar   *name,
                 const gchar   *blurb,
                 const gchar   *help,
-                const gchar   *author,
+                const gchar   *authors,
                 const gchar   *copyright,
                 const gchar   *date,
                 const gchar   *proc_type,
@@ -1579,7 +1579,7 @@ gimp_pdb_query (const gchar   *name,
 
   return _gimp_pdb_query (name,
                           blurb, help,
-                          author, copyright, date,
+                          authors, copyright, date,
                           proc_type,
                           num_matches, procedure_names);
 }
@@ -1610,7 +1610,7 @@ gimp_pdb_proc_exists (const gchar *procedure_name)
  * @procedure_name: The procedure name.
  * @blurb: A short blurb.
  * @help: Detailed procedure help.
- * @author: Author(s) of the procedure.
+ * @authors: Authors of the procedure.
  * @copyright: The copyright.
  * @date: Copyright date.
  * @proc_type: The procedure type.
@@ -1623,7 +1623,7 @@ gimp_pdb_proc_exists (const gchar *procedure_name)
  * procedure.
  *
  * This procedure returns information on the specified procedure. A
- * short blurb, detailed help, author(s), copyright information,
+ * short blurb, detailed help, authors, copyright information,
  * procedure type, number of input, and number of return values are
  * returned. Additionally this function returns specific information
  * about each input argument and return value.
@@ -1634,7 +1634,7 @@ gboolean
 gimp_pdb_proc_info (const gchar      *procedure_name,
                     gchar           **blurb,
                     gchar           **help,
-                    gchar           **author,
+                    gchar           **authors,
                     gchar           **copyright,
                     gchar           **date,
                     GimpPDBProcType  *proc_type,
@@ -1649,7 +1649,7 @@ gimp_pdb_proc_info (const gchar      *procedure_name,
   success = _gimp_pdb_proc_info (procedure_name,
                                  blurb,
                                  help,
-                                 author,
+                                 authors,
                                  copyright,
                                  date,
                                  proc_type,
