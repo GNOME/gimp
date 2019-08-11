@@ -712,6 +712,8 @@ HELP
 
     &neo_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'load_proc', type => 'string', non_empty => 1,
           desc => "The name of the procedure the thumbnail loader with." },

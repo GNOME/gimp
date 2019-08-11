@@ -328,6 +328,8 @@ gboolean   gimp_register_file_handler_mime     (const gchar *procedure_name,
                                                 const gchar *mime_types);
 gboolean   gimp_register_file_handler_uri      (const gchar *procedure_name);
 gboolean   gimp_register_file_handler_raw      (const gchar *procedure_name);
+gboolean   gimp_register_thumbnail_loader      (const gchar *load_proc,
+                                                const gchar *thumb_proc);
 
 /* pdb stuff that should now be done using GimpPDB
  */

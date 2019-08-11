@@ -616,7 +616,7 @@ _gimp_register_file_handler_raw (const gchar *procedure_name)
 }
 
 /**
- * gimp_register_thumbnail_loader:
+ * _gimp_register_thumbnail_loader:
  * @load_proc: The name of the procedure the thumbnail loader with.
  * @thumb_proc: The name of the thumbnail load procedure.
  *
@@ -634,8 +634,8 @@ _gimp_register_file_handler_raw (const gchar *procedure_name)
  * Since: 2.2
  **/
 gboolean
-gimp_register_thumbnail_loader (const gchar *load_proc,
-                                const gchar *thumb_proc)
+_gimp_register_thumbnail_loader (const gchar *load_proc,
+                                 const gchar *thumb_proc)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

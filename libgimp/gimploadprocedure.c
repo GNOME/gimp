@@ -34,6 +34,7 @@ struct _GimpLoadProcedurePrivate
   GDestroyNotify  run_data_destroy;
 
   gboolean        handles_raw;
+  gchar          *thumbnail_proc;
 };
 
 
@@ -111,6 +112,8 @@ gimp_load_procedure_finalize (GObject *object)
   if (procedure->priv->run_data_destroy)
     procedure->priv->run_data_destroy (procedure->priv->run_data);
 
+  g_clear_pointer (&procedure->priv->thumbnail_proc, g_free);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -153,6 +156,10 @@ gimp_load_procedure_install (GimpProcedure *procedure)
 
   if (load_proc->priv->handles_raw)
     _gimp_register_file_handler_raw (gimp_procedure_get_name (procedure));
+
+  if (load_proc->priv->thumbnail_proc)
+    _gimp_register_thumbnail_loader (gimp_procedure_get_name (procedure),
+                                     load_proc->priv->thumbnail_proc);
 }
 
 static GimpValueArray *
@@ -259,4 +266,47 @@ gimp_load_procedure_get_handles_raw (GimpLoadProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_LOAD_PROCEDURE (procedure), 0);
 
   return procedure->priv->handles_raw;
+}
+
+/**
+ * gimp_load_procedure_set_thumbnail_loader:
+ * @procedure:      A #GimpLoadProcedure.
+ * @thumbnail_proc: The name of the thumbnail load procedure.
+ *
+ * Associates a thumbnail loader with a file load procedure.
+ *
+ * Some file formats allow for embedded thumbnails, other file formats
+ * contain a scalable image or provide the image data in different
+ * resolutions. A file plug-in for such a format may register a
+ * special procedure that allows GIMP to load a thumbnail preview of
+ * the image. This procedure is then associated with the standard
+ * load procedure using this function.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *procedure,
+                                          const gchar       *thumbnail_proc)
+{
+  g_return_if_fail (GIMP_IS_LOAD_PROCEDURE (procedure));
+
+  g_free (procedure->priv->thumbnail_proc);
+  procedure->priv->thumbnail_proc = g_strdup (thumbnail_proc);
+}
+
+/**
+ * gimp_load_procedure_get_thumbnail_loader:
+ * @procedure: A #GimpLoadProcedure.
+ *
+ * Returns: The procedure's thumbnail loader procedure as set with
+ *          gimp_load_procedure_set_thumbnail_procedure().
+ *
+ * Since: 3.0
+ **/
+const gchar *
+gimp_load_procedure_get_thumbnail_loader (GimpLoadProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_LOAD_PROCEDURE (procedure), NULL);
+
+  return procedure->priv->thumbnail_proc;
 }

@@ -76,18 +76,22 @@ struct _GimpLoadProcedureClass
 };
 
 
-GType           gimp_load_procedure_get_type        (void) G_GNUC_CONST;
+GType           gimp_load_procedure_get_type             (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_load_procedure_new             (GimpPlugIn        *plug_in,
-                                                     const gchar       *name,
-                                                     GimpPDBProcType    proc_type,
-                                                     GimpLoadFunc       run_func,
-                                                     gpointer           run_data,
-                                                     GDestroyNotify     run_data_destroy);
+GimpProcedure * gimp_load_procedure_new                  (GimpPlugIn        *plug_in,
+                                                          const gchar       *name,
+                                                          GimpPDBProcType    proc_type,
+                                                          GimpLoadFunc       run_func,
+                                                          gpointer           run_data,
+                                                          GDestroyNotify     run_data_destroy);
 
-void            gimp_load_procedure_set_handles_raw (GimpLoadProcedure *procedure,
-                                                     gboolean           handles_raw);
-gboolean        gimp_load_procedure_get_handles_raw (GimpLoadProcedure *procedure);
+void            gimp_load_procedure_set_handles_raw      (GimpLoadProcedure *procedure,
+                                                          gboolean           handles_raw);
+gboolean        gimp_load_procedure_get_handles_raw      (GimpLoadProcedure *procedure);
+
+void            gimp_load_procedure_set_thumbnail_loader (GimpLoadProcedure *procedure,
+                                                          const gchar       *thumbnail_proc);
+const gchar   * gimp_load_procedure_get_thumbnail_loader (GimpLoadProcedure *procedure);
 
 
 G_END_DECLS

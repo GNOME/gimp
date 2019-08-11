@@ -569,9 +569,11 @@ EXPORTS
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
 	gimp_load_procedure_get_handles_raw
+	gimp_load_procedure_get_thumbnail_loader
 	gimp_load_procedure_get_type
 	gimp_load_procedure_new
 	gimp_load_procedure_set_handles_raw
+	gimp_load_procedure_set_thumbnail_loader
 	gimp_main
 	gimp_main_legacy
 	gimp_message
