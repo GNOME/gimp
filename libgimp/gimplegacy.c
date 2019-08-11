@@ -1224,6 +1224,179 @@ gimp_plugin_icon_register (const gchar   *procedure_name,
 }
 
 /**
+ * gimp_register_magic_load_handler:
+ * @procedure_name: The name of the procedure to be used for loading.
+ * @extensions: comma separated list of extensions this handler can load (i.e. "jpg,jpeg").
+ * @prefixes: comma separated list of prefixes this handler can load (i.e. "http:,ftp:").
+ * @magics: comma separated list of magic file information this handler can load (i.e. "0,string,GIF").
+ *
+ * Registers a file load handler procedure.
+ *
+ * Registers a procedural database procedure to be called to load files
+ * of a particular file format using magic file information.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_register_magic_load_handler (const gchar *procedure_name,
+                                  const gchar *extensions,
+                                  const gchar *prefixes,
+                                  const gchar *magics)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_magic_load_handler (procedure_name,
+                                            extensions, prefixes, magics);
+}
+
+/**
+ * gimp_register_load_handler:
+ * @procedure_name: The name of the procedure to be used for loading.
+ * @extensions: comma separated list of extensions this handler can load (i.e. "jpg,jpeg").
+ * @prefixes: comma separated list of prefixes this handler can load (i.e. "http:,ftp:").
+ *
+ * Registers a file load handler procedure.
+ *
+ * Registers a procedural database procedure to be called to load files
+ * of a particular file format.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_register_load_handler (const gchar *procedure_name,
+                            const gchar *extensions,
+                            const gchar *prefixes)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_load_handler (procedure_name,
+                                      extensions, prefixes);
+}
+
+/**
+ * gimp_register_save_handler:
+ * @procedure_name: The name of the procedure to be used for saving.
+ * @extensions: comma separated list of extensions this handler can save (i.e. "jpg,jpeg").
+ * @prefixes: comma separated list of prefixes this handler can save (i.e. "http:,ftp:").
+ *
+ * Registers a file save handler procedure.
+ *
+ * Registers a procedural database procedure to be called to save files
+ * in a particular file format.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_register_save_handler (const gchar *procedure_name,
+                            const gchar *extensions,
+                            const gchar *prefixes)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_save_handler (procedure_name,
+                                      extensions, prefixes);
+}
+
+/**
+ * gimp_register_file_handler_priority:
+ * @procedure_name: The name of the procedure to set the priority of.
+ * @priority: The procedure priority.
+ *
+ * Sets the priority of a file handler procedure.
+ *
+ * Sets the priority of a file handler procedure. When more than one
+ * procedure matches a given file, the procedure with the lowest
+ * priority is used; if more than one procedure has the lowest
+ * priority, it is unspecified which one of them is used. The default
+ * priority for file handler procedures is 0.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10.6
+ **/
+gboolean
+gimp_register_file_handler_priority (const gchar *procedure_name,
+                                     gint         priority)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_file_handler_priority (procedure_name, priority);
+}
+
+/**
+ * gimp_register_file_handler_mime:
+ * @procedure_name: The name of the procedure to associate a MIME type with.
+ * @mime_types: A comma-separated list of MIME types, such as \"image/jpeg\".
+ *
+ * Associates MIME types with a file handler procedure.
+ *
+ * Registers MIME types for a file handler procedure. This allows GIMP
+ * to determine the MIME type of the file opened or saved using this
+ * procedure. It is recommended that only one MIME type is registered
+ * per file procedure; when registering more than one MIME type, GIMP
+ * will associate the first one with files opened or saved with this
+ * procedure.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.2
+ **/
+gboolean
+gimp_register_file_handler_mime (const gchar *procedure_name,
+                                 const gchar *mime_types)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_file_handler_mime (procedure_name, mime_types);
+}
+
+/**
+ * gimp_register_file_handler_uri:
+ * @procedure_name: The name of the procedure to enable URIs for.
+ *
+ * Registers a file handler procedure as capable of handling URIs.
+ *
+ * Registers a file handler procedure as capable of handling URIs. This
+ * allows GIMP to call the procedure directly for all kinds of URIs,
+ * and the 'filename' traditionally passed to file procedures turns
+ * into an URI.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_register_file_handler_uri (const gchar *procedure_name)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_file_handler_uri (procedure_name);
+}
+
+/**
+ * gimp_register_file_handler_raw:
+ * @procedure_name: The name of the procedure to enable raw handling for.
+ *
+ * Registers a file handler procedure as capable of handling raw camera
+ * files.
+ *
+ * Registers a file handler procedure as capable of handling raw
+ * digital camera files. Use this procedure only to register raw load
+ * handlers, calling it on a save handler will generate an error.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_register_file_handler_raw (const gchar *procedure_name)
+{
+  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
+
+  return _gimp_register_file_handler_raw (procedure_name);
+}
+
+/**
  * gimp_pdb_temp_name:
  *
  * Generates a unique temporary PDB name.

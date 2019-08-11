@@ -453,6 +453,8 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for loading' },
@@ -492,6 +494,8 @@ HELP
 
     &std_pdb_misc;
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for loading' },
@@ -528,6 +532,8 @@ particular file format.
 HELP
 
     &std_pdb_misc;
+
+    $lib_private = 1;
 
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
@@ -568,6 +574,8 @@ HELP
 
     &ell_pdb_misc('2018', '2.10.6');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => "The name of the procedure to set the priority of." },
@@ -601,6 +609,8 @@ HELP
 
     &mitch_pdb_misc('2012', '2.10');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => "The name of the procedure to enable URIs for." }
@@ -633,6 +643,8 @@ HELP
 
     &neo_pdb_misc('2004', '2.2');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => "The name of the procedure to associate a MIME type with." },
@@ -664,6 +676,8 @@ calling it on a save handler will generate an error.
 HELP
 
     &mitch_pdb_misc('2017', '2.10');
+
+    $lib_private = 1;
 
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,

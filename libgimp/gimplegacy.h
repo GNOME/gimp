@@ -309,6 +309,26 @@ gboolean   gimp_plugin_icon_register        (const gchar   *procedure_name,
                                              GimpIconType   icon_type,
                                              gconstpointer  icon_data);
 
+/* gimp_fileops API that should now be done by using GimpFileProcedure
+ */
+
+gboolean   gimp_register_magic_load_handler    (const gchar *procedure_name,
+                                                const gchar *extensions,
+                                                const gchar *prefixes,
+                                                const gchar *magics);
+gboolean   gimp_register_load_handler          (const gchar *procedure_name,
+                                                const gchar *extensions,
+                                                const gchar *prefixes);
+gboolean   gimp_register_save_handler          (const gchar *procedure_name,
+                                                const gchar *extensions,
+                                                const gchar *prefixes);
+gboolean   gimp_register_file_handler_priority (const gchar *procedure_name,
+                                                gint         priority);
+gboolean   gimp_register_file_handler_mime     (const gchar *procedure_name,
+                                                const gchar *mime_types);
+gboolean   gimp_register_file_handler_uri      (const gchar *procedure_name);
+gboolean   gimp_register_file_handler_raw      (const gchar *procedure_name);
+
 /* pdb stuff that should now be done using GimpPDB
  */
 

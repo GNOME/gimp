@@ -297,7 +297,7 @@ gimp_file_save_thumbnail (gint32       image_ID,
 }
 
 /**
- * gimp_register_magic_load_handler:
+ * _gimp_register_magic_load_handler:
  * @procedure_name: The name of the procedure to be used for loading.
  * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").
  * @prefixes: comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\").
@@ -311,10 +311,10 @@ gimp_file_save_thumbnail (gint32       image_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_register_magic_load_handler (const gchar *procedure_name,
-                                  const gchar *extensions,
-                                  const gchar *prefixes,
-                                  const gchar *magics)
+_gimp_register_magic_load_handler (const gchar *procedure_name,
+                                   const gchar *extensions,
+                                   const gchar *prefixes,
+                                   const gchar *magics)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -345,7 +345,7 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
 }
 
 /**
- * gimp_register_load_handler:
+ * _gimp_register_load_handler:
  * @procedure_name: The name of the procedure to be used for loading.
  * @extensions: comma separated list of extensions this handler can load (i.e. \"jpg,jpeg\").
  * @prefixes: comma separated list of prefixes this handler can load (i.e. \"http:,ftp:\").
@@ -358,9 +358,9 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_register_load_handler (const gchar *procedure_name,
-                            const gchar *extensions,
-                            const gchar *prefixes)
+_gimp_register_load_handler (const gchar *procedure_name,
+                             const gchar *extensions,
+                             const gchar *prefixes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -390,7 +390,7 @@ gimp_register_load_handler (const gchar *procedure_name,
 }
 
 /**
- * gimp_register_save_handler:
+ * _gimp_register_save_handler:
  * @procedure_name: The name of the procedure to be used for saving.
  * @extensions: comma separated list of extensions this handler can save (i.e. \"jpg,jpeg\").
  * @prefixes: comma separated list of prefixes this handler can save (i.e. \"http:,ftp:\").
@@ -403,9 +403,9 @@ gimp_register_load_handler (const gchar *procedure_name,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_register_save_handler (const gchar *procedure_name,
-                            const gchar *extensions,
-                            const gchar *prefixes)
+_gimp_register_save_handler (const gchar *procedure_name,
+                             const gchar *extensions,
+                             const gchar *prefixes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -435,7 +435,7 @@ gimp_register_save_handler (const gchar *procedure_name,
 }
 
 /**
- * gimp_register_file_handler_priority:
+ * _gimp_register_file_handler_priority:
  * @procedure_name: The name of the procedure to set the priority of.
  * @priority: The procedure priority.
  *
@@ -452,8 +452,8 @@ gimp_register_save_handler (const gchar *procedure_name,
  * Since: 2.10.6
  **/
 gboolean
-gimp_register_file_handler_priority (const gchar *procedure_name,
-                                     gint         priority)
+_gimp_register_file_handler_priority (const gchar *procedure_name,
+                                      gint         priority)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -482,7 +482,7 @@ gimp_register_file_handler_priority (const gchar *procedure_name,
 }
 
 /**
- * gimp_register_file_handler_mime:
+ * _gimp_register_file_handler_mime:
  * @procedure_name: The name of the procedure to associate a MIME type with.
  * @mime_types: A comma-separated list of MIME types, such as \"image/jpeg\".
  *
@@ -500,8 +500,8 @@ gimp_register_file_handler_priority (const gchar *procedure_name,
  * Since: 2.2
  **/
 gboolean
-gimp_register_file_handler_mime (const gchar *procedure_name,
-                                 const gchar *mime_types)
+_gimp_register_file_handler_mime (const gchar *procedure_name,
+                                  const gchar *mime_types)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -530,7 +530,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
 }
 
 /**
- * gimp_register_file_handler_uri:
+ * _gimp_register_file_handler_uri:
  * @procedure_name: The name of the procedure to enable URIs for.
  *
  * Registers a file handler procedure as capable of handling URIs.
@@ -545,7 +545,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
  * Since: 2.10
  **/
 gboolean
-gimp_register_file_handler_uri (const gchar *procedure_name)
+_gimp_register_file_handler_uri (const gchar *procedure_name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -573,7 +573,7 @@ gimp_register_file_handler_uri (const gchar *procedure_name)
 }
 
 /**
- * gimp_register_file_handler_raw:
+ * _gimp_register_file_handler_raw:
  * @procedure_name: The name of the procedure to enable raw handling for.
  *
  * Registers a file handler procedure as capable of handling raw camera
@@ -588,7 +588,7 @@ gimp_register_file_handler_uri (const gchar *procedure_name)
  * Since: 2.10
  **/
 gboolean
-gimp_register_file_handler_raw (const gchar *procedure_name)
+_gimp_register_file_handler_raw (const gchar *procedure_name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

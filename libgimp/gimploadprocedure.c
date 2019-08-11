@@ -20,7 +20,10 @@
 
 #include "config.h"
 
+#define GIMP_DISABLE_COMPAT_CRUFT
+
 #include "gimp.h"
+
 #include "gimploadprocedure.h"
 
 
@@ -123,33 +126,33 @@ gimp_load_procedure_install (GimpProcedure *procedure)
 
   if (gimp_file_procedure_get_magics (file_proc))
     {
-      gimp_register_magic_load_handler (gimp_procedure_get_name (procedure),
-                                        gimp_file_procedure_get_extensions (file_proc),
-                                        gimp_file_procedure_get_prefixes (file_proc),
-                                        gimp_file_procedure_get_magics (file_proc));
+      _gimp_register_magic_load_handler (gimp_procedure_get_name (procedure),
+                                         gimp_file_procedure_get_extensions (file_proc),
+                                         gimp_file_procedure_get_prefixes (file_proc),
+                                         gimp_file_procedure_get_magics (file_proc));
     }
   else
     {
-      gimp_register_load_handler (gimp_procedure_get_name (procedure),
-                                  gimp_file_procedure_get_extensions (file_proc),
-                                  gimp_file_procedure_get_prefixes (file_proc));
+      _gimp_register_load_handler (gimp_procedure_get_name (procedure),
+                                   gimp_file_procedure_get_extensions (file_proc),
+                                   gimp_file_procedure_get_prefixes (file_proc));
     }
 
   if (gimp_file_procedure_get_handles_uri (file_proc))
-    gimp_register_file_handler_uri (gimp_procedure_get_name (procedure));
+    _gimp_register_file_handler_uri (gimp_procedure_get_name (procedure));
 
   mime_types = gimp_file_procedure_get_mime_types (file_proc);
   if (mime_types)
-    gimp_register_file_handler_mime (gimp_procedure_get_name (procedure),
-                                     mime_types);
+    _gimp_register_file_handler_mime (gimp_procedure_get_name (procedure),
+                                      mime_types);
 
   priority = gimp_file_procedure_get_priority (file_proc);
   if (priority != 0)
-    gimp_register_file_handler_priority (gimp_procedure_get_name (procedure),
-                                         priority);
+    _gimp_register_file_handler_priority (gimp_procedure_get_name (procedure),
+                                          priority);
 
   if (load_proc->priv->handles_raw)
-    gimp_register_file_handler_raw (gimp_procedure_get_name (procedure));
+    _gimp_register_file_handler_raw (gimp_procedure_get_name (procedure));
 }
 
 static GimpValueArray *
