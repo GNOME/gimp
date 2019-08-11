@@ -262,7 +262,7 @@ pat_save (GimpProcedure        *procedure,
           g_set_error (&error, 0, 0,
                        "Running procedure 'file-pat-save-internal' "
                        "failed: %s",
-                       gimp_get_pdb_error ());
+                       gimp_pdb_get_last_error (gimp_get_pdb ()));
 
           status = GIMP_PDB_EXECUTION_ERROR;
         }

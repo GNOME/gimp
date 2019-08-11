@@ -100,6 +100,9 @@ gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
                                                 const gchar          *proc_type,
                                                 gint                 *num_matches);
 
+const gchar       * gimp_pdb_get_last_error    (GimpPDB              *pdb);
+GimpPDBStatusType   gimp_pdb_get_last_status   (GimpPDB              *pdb);
+
 /*  Temporary API, to go away before 3.0  */
 
 GParamSpec * gimp_pdb_proc_argument     (const gchar *procedure_name,

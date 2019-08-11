@@ -157,12 +157,6 @@ GimpPDB           * gimp_get_pdb              (void);
  */
 void                gimp_quit                 (void) G_GNUC_NORETURN;
 
-/* Retrieve the error message and return status for the last procedure
- * call.
- */
-const gchar       * gimp_get_pdb_error        (void);
-GimpPDBStatusType   gimp_get_pdb_status       (void);
-
 /* Return various constants given by the GIMP core at plug-in config time.
  */
 guint               gimp_tile_width           (void) G_GNUC_CONST;

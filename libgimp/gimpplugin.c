@@ -618,9 +618,9 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
  * call made by a plug-in fails. Using this procedure the plug-in can
  * change this behavior. If the error handler is set to
  * %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for
- * calling gimp_get_pdb_error() and handling the error whenever one if
- * its procedure calls fails. It can do this by displaying the error
- * message or by forwarding it in its own return values.
+ * calling gimp_pdb_get_last_error() and handling the error whenever
+ * one if its procedure calls fails. It can do this by displaying the
+ * error message or by forwarding it in its own return values.
  *
  * Since: 3.0
  **/

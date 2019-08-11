@@ -323,6 +323,11 @@ void           gimp_destroy_params      (GimpParam       *params,
 void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
                                          gint             n_params);
 
+/* Retrieve the error message and return status for the last procedure
+ * call.
+ */
+const gchar       * gimp_get_pdb_error  (void);
+GimpPDBStatusType   gimp_get_pdb_status (void);
 
 /* gimp_plugin API that should now be done by using GimpPlugIn
  */

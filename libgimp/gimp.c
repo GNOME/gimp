@@ -161,10 +161,6 @@ static const gchar        *progname          = NULL;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
 
 
-static GimpPDBStatusType   pdb_error_status  = GIMP_PDB_SUCCESS;
-static gchar              *pdb_error_message = NULL;
-
-
 /**
  * gimp_main:
  * @plug_in_type: the type of the #GimpPlugIn subclass of the plug-in
@@ -685,68 +681,6 @@ gimp_quit (void)
 }
 
 /**
- * gimp_get_pdb_error:
- *
- * Retrieves the error message from the last procedure call.
- *
- * If a procedure call fails, then it might pass an error message with
- * the return values. Plug-ins that are using the libgimp C wrappers
- * don't access the procedure return values directly. Thus libgimp
- * stores the error message and makes it available with this
- * function. The next procedure call unsets the error message again.
- *
- * The returned string is owned by libgimp and must not be freed or
- * modified.
- *
- * Returns: the error message
- *
- * Since: 2.6
- **/
-const gchar *
-gimp_get_pdb_error (void)
-{
-  if (pdb_error_message && strlen (pdb_error_message))
-    return pdb_error_message;
-
-  switch (pdb_error_status)
-    {
-    case GIMP_PDB_SUCCESS:
-      /*  procedure executed successfully  */
-      return _("success");
-
-    case GIMP_PDB_EXECUTION_ERROR:
-      /*  procedure execution failed       */
-      return _("execution error");
-
-    case GIMP_PDB_CALLING_ERROR:
-      /*  procedure called incorrectly     */
-      return _("calling error");
-
-    case GIMP_PDB_CANCEL:
-      /*  procedure execution cancelled    */
-      return _("cancelled");
-
-    default:
-      return "invalid return status";
-    }
-}
-
-/**
- * gimp_get_pdb_status:
- *
- * Retrieves the status from the last procedure call.
- *
- * Returns: the #GimpPDBStatusType.
- *
- * Since: 2.10
- **/
-GimpPDBStatusType
-gimp_get_pdb_status (void)
-{
-  return pdb_error_status;
-}
-
-/**
  * gimp_tile_width:
  *
  * Returns the tile width GIMP is using.
@@ -1232,36 +1166,4 @@ _gimp_config (GPConfig *config)
   g_object_unref (file);
 
   _gimp_shm_open (config->shm_ID);
-}
-
-void
-_gimp_set_pdb_error (GimpValueArray *return_values)
-{
-  g_clear_pointer (&pdb_error_message, g_free);
-  pdb_error_status = GIMP_PDB_SUCCESS;
-
-  if (gimp_value_array_length (return_values) > 0)
-    {
-      pdb_error_status =
-        g_value_get_enum (gimp_value_array_index (return_values, 0));
-
-      switch (pdb_error_status)
-        {
-        case GIMP_PDB_SUCCESS:
-        case GIMP_PDB_PASS_THROUGH:
-          break;
-
-        case GIMP_PDB_EXECUTION_ERROR:
-        case GIMP_PDB_CALLING_ERROR:
-        case GIMP_PDB_CANCEL:
-          if (gimp_value_array_length (return_values) > 1)
-            {
-              GValue *value = gimp_value_array_index (return_values, 1);
-
-              if (G_VALUE_HOLDS_STRING (value))
-                pdb_error_message = g_value_dup_string (value);
-            }
-          break;
-        }
-    }
 }

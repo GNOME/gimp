@@ -34,6 +34,8 @@
 #include "gimppdbprocedure.h"
 #include "gimpplugin-private.h"
 
+#include "libgimp-intl.h"
+
 
 /**
  * SECTION: gimppdb
@@ -51,10 +53,16 @@ struct _GimpPDBPrivate
   GimpPlugIn *plug_in;
 
   GHashTable *procedures;
+
+  GimpPDBStatusType   error_status;
+  gchar              *error_message;
 };
 
 
-static void   gimp_pdb_finalize (GObject *object);
+static void   gimp_pdb_finalize  (GObject        *object);
+
+static void   gimp_pdb_set_error (GimpPDB        *pdb,
+                                  GimpValueArray *return_values);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPDB, gimp_pdb, G_TYPE_OBJECT)
@@ -77,6 +85,8 @@ gimp_pdb_init (GimpPDB *pdb)
 
   pdb->priv->procedures = g_hash_table_new_full (g_str_hash, g_str_equal,
                                                  g_free, g_object_unref);
+
+  pdb->priv->error_status = GIMP_PDB_SUCCESS;
 }
 
 static void
@@ -85,7 +95,8 @@ gimp_pdb_finalize (GObject *object)
   GimpPDB *pdb = GIMP_PDB (object);
 
   g_clear_object (&pdb->priv->plug_in);
-  g_clear_pointer (&pdb->priv->procedures, g_hash_table_unref);
+  g_clear_pointer (&pdb->priv->procedures,    g_hash_table_unref);
+  g_clear_pointer (&pdb->priv->error_message, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -305,7 +316,7 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
 
   gimp_wire_destroy (&msg);
 
-  _gimp_set_pdb_error (return_values);
+  gimp_pdb_set_error (pdb, return_values);
 
   return return_values;
 }
@@ -481,6 +492,74 @@ gimp_pdb_proc_return_value (const gchar *procedure_name,
   return _gimp_pdb_proc_return_value (procedure_name, val_num);
 }
 
+/**
+ * gimp_pdb_get_last_error:
+ * @pdb: a #GimpPDB.
+ *
+ * Retrieves the error message from the last procedure call.
+ *
+ * If a procedure call fails, then it might pass an error message with
+ * the return values. Plug-ins that are using the libgimp C wrappers
+ * don't access the procedure return values directly. Thus #GimpPDB
+ * stores the error message and makes it available with this
+ * function. The next procedure call unsets the error message again.
+ *
+ * The returned string is owned by @pdb and must not be freed or
+ * modified.
+ *
+ * Returns: the error message
+ *
+ * Since: 3.0
+ **/
+const gchar *
+gimp_pdb_get_last_error (GimpPDB *pdb)
+{
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+
+  if (pdb->priv->error_message && strlen (pdb->priv->error_message))
+    return pdb->priv->error_message;
+
+  switch (pdb->priv->error_status)
+    {
+    case GIMP_PDB_SUCCESS:
+      /*  procedure executed successfully  */
+      return _("success");
+
+    case GIMP_PDB_EXECUTION_ERROR:
+      /*  procedure execution failed       */
+      return _("execution error");
+
+    case GIMP_PDB_CALLING_ERROR:
+      /*  procedure called incorrectly     */
+      return _("calling error");
+
+    case GIMP_PDB_CANCEL:
+      /*  procedure execution cancelled    */
+      return _("cancelled");
+
+    default:
+      return "invalid return status";
+    }
+}
+
+/**
+ * gimp_pdb_get_last_status:
+ * @pdb: a #GimpPDB.
+ *
+ * Retrieves the status from the last procedure call.
+ *
+ * Returns: the #GimpPDBStatusType.
+ *
+ * Since: 3.0
+ **/
+GimpPDBStatusType
+gimp_pdb_get_last_status (GimpPDB *pdb)
+{
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), GIMP_PDB_SUCCESS);
+
+  return pdb->priv->error_status;
+}
+
 /*  Cruft API  */
 
 /**
@@ -554,4 +633,40 @@ gimp_pdb_set_data (const gchar   *identifier,
                    guint32        bytes)
 {
   return _gimp_pdb_set_data (identifier, bytes, data);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_pdb_set_error (GimpPDB        *pdb,
+                    GimpValueArray *return_values)
+{
+  g_clear_pointer (&pdb->priv->error_message, g_free);
+  pdb->priv->error_status = GIMP_PDB_SUCCESS;
+
+  if (gimp_value_array_length (return_values) > 0)
+    {
+      pdb->priv->error_status =
+        g_value_get_enum (gimp_value_array_index (return_values, 0));
+
+      switch (pdb->priv->error_status)
+        {
+        case GIMP_PDB_SUCCESS:
+        case GIMP_PDB_PASS_THROUGH:
+          break;
+
+        case GIMP_PDB_EXECUTION_ERROR:
+        case GIMP_PDB_CALLING_ERROR:
+        case GIMP_PDB_CANCEL:
+          if (gimp_value_array_length (return_values) > 1)
+            {
+              GValue *value = gimp_value_array_index (return_values, 1);
+
+              if (G_VALUE_HOLDS_STRING (value))
+                pdb->priv->error_message = g_value_dup_string (value);
+            }
+          break;
+        }
+    }
 }

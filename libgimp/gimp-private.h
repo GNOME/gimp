@@ -29,7 +29,6 @@ gint   _gimp_main_internal (GType                 plug_in_type,
                             gint                  argc,
                             gchar                *argv[]);
 void   _gimp_config        (GPConfig             *config);
-void   _gimp_set_pdb_error (GimpValueArray       *return_vals);
 
 
 G_END_DECLS
