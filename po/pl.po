@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-04 15:14+0200\n"
-"PO-Revision-Date: 2019-08-04 15:15+0200\n"
+"POT-Creation-Date: 2019-08-11 14:50+0200\n"
+"PO-Revision-Date: 2019-08-11 14:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1091,7 +1091,7 @@ msgid "Plug-ins"
 msgstr "Wtyczki"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:375
+#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:358
 #: ../app/dialogs/preferences-dialog.c:1751
 msgid "Quick Mask"
 msgstr "Szybka maska"
@@ -3119,8 +3119,8 @@ msgstr "240 sekund"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:339
 #: ../app/tools/gimpforegroundselecttool.c:320 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1108
-#: ../app/tools/gimptransformtool.c:334 ../app/widgets/gimpactionview.c:668
+#: ../app/tools/gimptransformgridtool.c:1119
+#: ../app/tools/gimptransformtool.c:430 ../app/widgets/gimpactionview.c:668
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimpcontrollerlist.c:564
@@ -3300,8 +3300,8 @@ msgstr "Otwiera okno historii działań"
 
 #: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
-msgid "Pointer"
-msgstr "Kursor"
+msgid "_Pointer"
+msgstr "_Kursor"
 
 #: ../app/actions/dialogs-actions.c:120
 msgctxt "dialogs-action"
@@ -3350,8 +3350,8 @@ msgstr "Otwiera edytor pędzli"
 
 #: ../app/actions/dialogs-actions.c:149
 msgctxt "dialogs-action"
-msgid "Paint Dynamics"
-msgstr "Dynamika pędzla"
+msgid "Paint D_ynamics"
+msgstr "_Dynamika pędzla"
 
 #: ../app/actions/dialogs-actions.c:150
 msgctxt "dialogs-action"
@@ -3584,18 +3584,16 @@ msgid "Search commands by keyword, and run them"
 msgstr "Wyszukuje polecenia według słów kluczowych, i je wykonuje"
 
 #: ../app/actions/dialogs-actions.c:357
-#: ../app/dialogs/preferences-dialog.c:2098
-#: ../app/dialogs/preferences-dialog.c:2099 ../app/widgets/gimptoolbox.c:525
-msgid "Toolbox"
-msgstr "Przybornik"
+msgid "Tool_box"
+msgstr "Przy_bornik"
 
 #: ../app/actions/dialogs-actions.c:358
 msgid "Raise the toolbox"
 msgstr "Podnosi przybornik"
 
 #: ../app/actions/dialogs-actions.c:362
-msgid "New Toolbox"
-msgstr "Nowy przybornik"
+msgid "New Tool_box"
+msgstr "Nowy przy_bornik"
 
 #: ../app/actions/dialogs-actions.c:363
 msgid "Create a new toolbox"
@@ -4256,8 +4254,8 @@ msgstr "Wkleja zawartość schowka"
 
 #: ../app/actions/edit-actions.c:175
 msgctxt "edit-action"
-msgid "Paste In Place"
-msgstr "Wklej w tym samym miejscu"
+msgid "Paste In P_lace"
+msgstr "Wkl_ej w tym samym miejscu"
 
 #: ../app/actions/edit-actions.c:177
 msgctxt "edit-action"
@@ -4276,8 +4274,8 @@ msgstr "Wkleja zawartość schowka do bieżącego zaznaczenia"
 
 #: ../app/actions/edit-actions.c:189
 msgctxt "edit-action"
-msgid "Paste Into Selection In Place"
-msgstr "Wklej do zaznaczenia w tym samym miejscu"
+msgid "Paste Int_o Selection In Place"
+msgstr "Wklej d_o zaznaczenia w tym samym miejscu"
 
 #: ../app/actions/edit-actions.c:191
 msgctxt "edit-action"
@@ -4589,8 +4587,8 @@ msgstr "Otwiera plik obrazu z określonego położenia"
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
-msgid "Create Template..."
-msgstr "Utwórz szablon…"
+msgid "Create _Template..."
+msgstr "Utwórz _szablon…"
 
 #: ../app/actions/file-actions.c:96
 msgctxt "file-action"
@@ -4609,8 +4607,8 @@ msgstr "Wczytuje ponownie plik obrazu z dysku"
 
 #: ../app/actions/file-actions.c:107
 msgctxt "file-action"
-msgid "Close all"
-msgstr "Zamknij wszystkie"
+msgid "C_lose All"
+msgstr "Za_mknij wszystkie"
 
 #: ../app/actions/file-actions.c:108
 msgctxt "file-action"
@@ -4693,8 +4691,8 @@ msgstr "Zapisuje ten obraz i zamyka jego okno"
 
 #: ../app/actions/file-actions.c:160 ../app/actions/file-actions.c:334
 msgctxt "file-action"
-msgid "Export..."
-msgstr "Wyeksportuj…"
+msgid "E_xport..."
+msgstr "Wy_eksportuj…"
 
 #: ../app/actions/file-actions.c:161
 msgctxt "file-action"
@@ -4714,8 +4712,8 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:172
 msgctxt "file-action"
-msgid "Export As..."
-msgstr "Wyeksportuj jako…"
+msgid "E_xport As..."
+msgstr "Wy_eksportuj jako…"
 
 #: ../app/actions/file-actions.c:173
 msgctxt "file-action"
@@ -4815,8 +4813,8 @@ msgstr "_Filtry"
 
 #: ../app/actions/filters-actions.c:61
 msgctxt "filters-action"
-msgid "Recently Used"
-msgstr "Ostatnio używane"
+msgid "Recently _Used"
+msgstr "Ostatnio _używane"
 
 #: ../app/actions/filters-actions.c:63
 msgctxt "filters-action"
@@ -5080,23 +5078,23 @@ msgstr "_Desaturacja…"
 
 #: ../app/actions/filters-actions.c:288
 msgctxt "filters-action"
-msgid "Difference of Gaussians..."
-msgstr "Różnicowe rozmycie Gaussa…"
+msgid "Difference of _Gaussians..."
+msgstr "Różnicowe rozmycie _Gaussa…"
 
 #: ../app/actions/filters-actions.c:293
 msgctxt "filters-action"
-msgid "Diffraction Patterns..."
-msgstr "Desenie dyfrakcyjne…"
+msgid "D_iffraction Patterns..."
+msgstr "De_senie dyfrakcyjne…"
 
 #: ../app/actions/filters-actions.c:298
 msgctxt "filters-action"
-msgid "Displace..."
-msgstr "Przemieść…"
+msgid "_Displace..."
+msgstr "_Przemieść…"
 
 #: ../app/actions/filters-actions.c:303
 msgctxt "filters-action"
-msgid "Distance Map..."
-msgstr "Mapa odległości…"
+msgid "Distance _Map..."
+msgstr "_Mapa odległości…"
 
 #: ../app/actions/filters-actions.c:308
 msgctxt "filters-action"
@@ -5200,13 +5198,13 @@ msgstr "_Kalejdoskop…"
 
 #: ../app/actions/filters-actions.c:408
 msgctxt "filters-action"
-msgid "Lens Distortion..."
-msgstr "Zniekształcenie soczewki…"
+msgid "Le_ns Distortion..."
+msgstr "Z_niekształcenie soczewki…"
 
 #: ../app/actions/filters-actions.c:413
 msgctxt "filters-action"
-msgid "Lens Flare..."
-msgstr "Błysk soczewki…"
+msgid "Lens _Flare..."
+msgstr "_Błysk soczewki…"
 
 #: ../app/actions/filters-actions.c:418
 msgctxt "filters-action"
@@ -5285,13 +5283,13 @@ msgstr "_Papier gazetowy…"
 
 #: ../app/actions/filters-actions.c:493
 msgctxt "filters-action"
-msgid "CIE lch Noise..."
-msgstr "Szum lch CIE…"
+msgid "_CIE lch Noise..."
+msgstr "Szum l_ch CIE…"
 
 #: ../app/actions/filters-actions.c:498
 msgctxt "filters-action"
-msgid "HSV Noise..."
-msgstr "Szum HSV…"
+msgid "HS_V Noise..."
+msgstr "Szum HS_V…"
 
 #: ../app/actions/filters-actions.c:503
 msgctxt "filters-action"
@@ -5300,7 +5298,7 @@ msgstr "_Wygnieć…"
 
 #: ../app/actions/filters-actions.c:508
 msgctxt "filters-action"
-msgid "_Perlin Noise..."
+msgid "Perlin _Noise..."
 msgstr "Szum _Perlina…"
 
 #: ../app/actions/filters-actions.c:513
@@ -6511,16 +6509,16 @@ msgstr "Zmienianie wymiarów"
 msgid "Set Image Print Resolution"
 msgstr "Ustawienie rozdzielczości drukowania"
 
-#: ../app/actions/image-commands.c:815 ../app/pdb/drawable-transform-cmds.c:166
-#: ../app/pdb/drawable-transform-cmds.c:256
-#: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:134
+#: ../app/actions/image-commands.c:815 ../app/pdb/drawable-transform-cmds.c:174
+#: ../app/pdb/drawable-transform-cmds.c:269
+#: ../app/pdb/item-transform-cmds.c:228 ../app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "Odbijanie"
 
-#: ../app/actions/image-commands.c:842 ../app/pdb/drawable-transform-cmds.c:617
-#: ../app/pdb/drawable-transform-cmds.c:711
-#: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
-#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:128
+#: ../app/actions/image-commands.c:842 ../app/pdb/drawable-transform-cmds.c:650
+#: ../app/pdb/drawable-transform-cmds.c:749
+#: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:536
+#: ../app/pdb/transform-tools-cmds.c:265 ../app/tools/gimprotatetool.c:128
 msgid "Rotating"
 msgstr "Obracanie"
 
@@ -6576,11 +6574,11 @@ msgstr "Skalowanie obrazu"
 #. Scaling
 #: ../app/actions/image-commands.c:1483 ../app/actions/layers-commands.c:1660
 #: ../app/dialogs/preferences-dialog.c:1673
-#: ../app/pdb/drawable-transform-cmds.c:800
-#: ../app/pdb/drawable-transform-cmds.c:891
+#: ../app/pdb/drawable-transform-cmds.c:843
+#: ../app/pdb/drawable-transform-cmds.c:939
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
-#: ../app/pdb/item-transform-cmds.c:618 ../app/pdb/layer-cmds.c:401
-#: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:346
+#: ../app/pdb/item-transform-cmds.c:640 ../app/pdb/layer-cmds.c:401
+#: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:360
 #: ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "Skalowanie"
@@ -7836,7 +7834,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:338 ../app/tools/gimptransformgridtool.c:1105
+#: ../app/tools/gimpfiltertool.c:338 ../app/tools/gimptransformgridtool.c:1116
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -8642,432 +8640,432 @@ msgctxt "tools-action"
 msgid "Select regions with similar colors"
 msgstr "Zaznacza obszary z podobnymi kolorami"
 
-#: ../app/actions/tools-actions.c:63
+#: ../app/actions/tools-actions.c:63 ../app/actions/tools-actions.c:69
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "_Dowolny obrót…"
 
-#: ../app/actions/tools-actions.c:64
+#: ../app/actions/tools-actions.c:64 ../app/actions/tools-actions.c:70
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
 msgstr "Obraca o dowolny kąt"
 
-#: ../app/actions/tools-actions.c:152
+#: ../app/actions/tools-actions.c:158
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
 msgstr "Tempo aerografu: ustaw"
 
-#: ../app/actions/tools-actions.c:156
+#: ../app/actions/tools-actions.c:162
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
 msgstr "Tempo aerografu: ustaw na minimalne"
 
-#: ../app/actions/tools-actions.c:160
+#: ../app/actions/tools-actions.c:166
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
 msgstr "Tempo aerografu: ustaw na maksymalne"
 
-#: ../app/actions/tools-actions.c:164
+#: ../app/actions/tools-actions.c:170
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
 msgstr "Tempo aerografu: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:168
+#: ../app/actions/tools-actions.c:174
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
 msgstr "Tempo aerografu: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:172
+#: ../app/actions/tools-actions.c:178
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
 msgstr "Tempo aerografu: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:176
+#: ../app/actions/tools-actions.c:182
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
 msgstr "Tempo aerografu: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:184
+#: ../app/actions/tools-actions.c:190
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
 msgstr "Strumień aerografu: ustaw"
 
-#: ../app/actions/tools-actions.c:188
+#: ../app/actions/tools-actions.c:194
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
 msgstr "Strumień aerografu: ustaw na minimalny"
 
-#: ../app/actions/tools-actions.c:192
+#: ../app/actions/tools-actions.c:198
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
 msgstr "Strumień aerografu: ustaw na maksymalny"
 
-#: ../app/actions/tools-actions.c:196
+#: ../app/actions/tools-actions.c:202
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
 msgstr "Tempo aerografu: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:200
+#: ../app/actions/tools-actions.c:206
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
 msgstr "Tempo aerografu: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:204
+#: ../app/actions/tools-actions.c:210
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
 msgstr "Tempo aerografu: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:208
+#: ../app/actions/tools-actions.c:214
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
 msgstr "Tempo aerografu: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:265
+#: ../app/actions/tools-actions.c:271
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
 msgstr "Krycie narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:269
+#: ../app/actions/tools-actions.c:275
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
 msgstr "Krycie narzędzia: ustaw na wartość domyślną"
 
-#: ../app/actions/tools-actions.c:273
+#: ../app/actions/tools-actions.c:279
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
 msgstr "Krycie narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:277
+#: ../app/actions/tools-actions.c:283
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
 msgstr "Krycie narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:281
+#: ../app/actions/tools-actions.c:287
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
 msgstr "Krycie narzędzia: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:285
+#: ../app/actions/tools-actions.c:291
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
 msgstr "Krycie narzędzia: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:289
+#: ../app/actions/tools-actions.c:295
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
 msgstr "Krycie narzędzia: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:293
+#: ../app/actions/tools-actions.c:299
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
 msgstr "Krycie narzędzia: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:297
+#: ../app/actions/tools-actions.c:303
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
 msgstr "Krycie narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:301
+#: ../app/actions/tools-actions.c:307
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
 msgstr "Krycie narzędzia: zwiększ względnie"
 
-#: ../app/actions/tools-actions.c:309
+#: ../app/actions/tools-actions.c:315
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
 msgstr "Rozmiar narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:313
+#: ../app/actions/tools-actions.c:319
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
 msgstr "Rozmiar narzędzia: ustaw na domyślną wartość"
 
-#: ../app/actions/tools-actions.c:317
+#: ../app/actions/tools-actions.c:323
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
 msgstr "Rozmiar narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:321
+#: ../app/actions/tools-actions.c:327
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
 msgstr "Rozmiar narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:325
+#: ../app/actions/tools-actions.c:331
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
 msgstr "Rozmiar narzędzia: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:329
+#: ../app/actions/tools-actions.c:335
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
 msgstr "Rozmiar narzędzia: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:333
+#: ../app/actions/tools-actions.c:339
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
 msgstr "Rozmiar narzędzia: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:337
+#: ../app/actions/tools-actions.c:343
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
 msgstr "Rozmiar narzędzia: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:341
+#: ../app/actions/tools-actions.c:347
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease Relative"
 msgstr "Rozmiar narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:345
+#: ../app/actions/tools-actions.c:351
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
 msgstr "Rozmiar narzędzia: zwiększ względnie"
 
-#: ../app/actions/tools-actions.c:353
+#: ../app/actions/tools-actions.c:359
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
 msgstr "Proporcje narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:357
+#: ../app/actions/tools-actions.c:363
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
 msgstr "Proporcje narzędzia: ustaw na wartość domyślną"
 
-#: ../app/actions/tools-actions.c:361
+#: ../app/actions/tools-actions.c:367
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
 msgstr "Proporcje narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:365
+#: ../app/actions/tools-actions.c:371
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
 msgstr "Proporcje narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:369
+#: ../app/actions/tools-actions.c:375
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
 msgstr "Proporcje narzędzia: zmniejsz o 0,1"
 
-#: ../app/actions/tools-actions.c:373
+#: ../app/actions/tools-actions.c:379
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
 msgstr "Proporcje narzędzia: zwiększ o 0,1"
 
-#: ../app/actions/tools-actions.c:377
+#: ../app/actions/tools-actions.c:383
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
 msgstr "Proporcje narzędzia: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:381
+#: ../app/actions/tools-actions.c:387
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
 msgstr "Proporcje narzędzia: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:385
+#: ../app/actions/tools-actions.c:391
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
 msgstr "Proporcje narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:389
+#: ../app/actions/tools-actions.c:395
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
 msgstr "Proporcje narzędzia: zwiększ względnie"
 
-#: ../app/actions/tools-actions.c:397
+#: ../app/actions/tools-actions.c:403
 msgctxt "tools-action"
 msgid "Tool's Angle: Set"
 msgstr "Kąt narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:401
+#: ../app/actions/tools-actions.c:407
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
 msgstr "Kąt narzędzia: ustaw na wartość domyślną"
 
-#: ../app/actions/tools-actions.c:405
+#: ../app/actions/tools-actions.c:411
 msgctxt "tools-action"
 msgid "Tool's Angle: Minimize"
 msgstr "Kąt narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:409
+#: ../app/actions/tools-actions.c:415
 msgctxt "tools-action"
 msgid "Tool's Angle: Maximize"
 msgstr "Kąt narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:413
+#: ../app/actions/tools-actions.c:419
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 1°"
 msgstr "Kąt narzędzia: zmniejsz o 1°"
 
-#: ../app/actions/tools-actions.c:417
+#: ../app/actions/tools-actions.c:423
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 1°"
 msgstr "Kąt narzędzia: zwiększ o 1°"
 
-#: ../app/actions/tools-actions.c:421
+#: ../app/actions/tools-actions.c:427
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 15°"
 msgstr "Kąt narzędzia: zmniejsz o 15°"
 
-#: ../app/actions/tools-actions.c:425
+#: ../app/actions/tools-actions.c:431
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 15°"
 msgstr "Kąt narzędzia: zwiększ o 15°"
 
-#: ../app/actions/tools-actions.c:429
+#: ../app/actions/tools-actions.c:435
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease Relative"
 msgstr "Kąt narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:433
+#: ../app/actions/tools-actions.c:439
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase Relative"
 msgstr "Kąt narzędzia: zwiększ względnie"
 
-#: ../app/actions/tools-actions.c:441
+#: ../app/actions/tools-actions.c:447
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set"
 msgstr "Odstępy narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:445
+#: ../app/actions/tools-actions.c:451
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
 msgstr "Odstępy narzędzia: ustaw na wartość domyślną"
 
-#: ../app/actions/tools-actions.c:449
+#: ../app/actions/tools-actions.c:455
 msgctxt "tools-action"
 msgid "Tool's Spacing: Minimize"
 msgstr "Odstępy narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:453
+#: ../app/actions/tools-actions.c:459
 msgctxt "tools-action"
 msgid "Tool's Spacing: Maximize"
 msgstr "Odstępy narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:457
+#: ../app/actions/tools-actions.c:463
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 1"
 msgstr "Odstępy narzędzia: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:461
+#: ../app/actions/tools-actions.c:467
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 1"
 msgstr "Odstępy narzędzia: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:465
+#: ../app/actions/tools-actions.c:471
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 10"
 msgstr "Odstępy narzędzia: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:469
+#: ../app/actions/tools-actions.c:475
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 10"
 msgstr "Odstępy narzędzia: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:473
+#: ../app/actions/tools-actions.c:479
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease Relative"
 msgstr "Odstępy narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:477
+#: ../app/actions/tools-actions.c:483
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase Relative"
 msgstr "Odstępy narzędzia: zwiększ względnie"
 
-#: ../app/actions/tools-actions.c:485
+#: ../app/actions/tools-actions.c:491
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
 msgstr "Twardość narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:489
+#: ../app/actions/tools-actions.c:495
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
 msgstr "Twardość narzędzia: ustaw na wartość domyślną"
 
-#: ../app/actions/tools-actions.c:493
+#: ../app/actions/tools-actions.c:499
 msgctxt "tools-action"
 msgid "Tool's Hardness: Minimize"
 msgstr "Twardość narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:497
+#: ../app/actions/tools-actions.c:503
 msgctxt "tools-action"
 msgid "Tool's Hardness: Maximize"
 msgstr "Twardość narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:501
+#: ../app/actions/tools-actions.c:507
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
 msgstr "Twardość narzędzia: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:505
+#: ../app/actions/tools-actions.c:511
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
 msgstr "Twardość narzędzia: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:509
+#: ../app/actions/tools-actions.c:515
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 10"
 msgstr "Twardość narzędzia: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:513
+#: ../app/actions/tools-actions.c:519
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
 msgstr "Twardość narzędzia: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:517
+#: ../app/actions/tools-actions.c:523
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease Relative"
 msgstr "Twardość narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:521
+#: ../app/actions/tools-actions.c:527
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
 msgstr "Twardość narzędzia: zwiększ względnie"
 
-#: ../app/actions/tools-actions.c:529
+#: ../app/actions/tools-actions.c:535
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
 msgstr "Siła narzędzia: ustaw"
 
-#: ../app/actions/tools-actions.c:533
+#: ../app/actions/tools-actions.c:539
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
 msgstr "Siła narzędzia: ustaw na wartość domyślną"
 
-#: ../app/actions/tools-actions.c:537
+#: ../app/actions/tools-actions.c:543
 msgctxt "tools-action"
 msgid "Tool's Force: Minimize"
 msgstr "Siła narzędzia: zminimalizuj"
 
-#: ../app/actions/tools-actions.c:541
+#: ../app/actions/tools-actions.c:547
 msgctxt "tools-action"
 msgid "Tool's Force: Maximize"
 msgstr "Siła narzędzia: zmaksymalizuj"
 
-#: ../app/actions/tools-actions.c:545
+#: ../app/actions/tools-actions.c:551
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 1"
 msgstr "Siła narzędzia: zmniejsz o 1"
 
-#: ../app/actions/tools-actions.c:549
+#: ../app/actions/tools-actions.c:555
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 1"
 msgstr "Siła narzędzia: zwiększ o 1"
 
-#: ../app/actions/tools-actions.c:553
+#: ../app/actions/tools-actions.c:559
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 10"
 msgstr "Siła narzędzia: zmniejsz o 10"
 
-#: ../app/actions/tools-actions.c:557
+#: ../app/actions/tools-actions.c:563
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 10"
 msgstr "Siła narzędzia: zwiększ o 10"
 
-#: ../app/actions/tools-actions.c:561
+#: ../app/actions/tools-actions.c:567
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease Relative"
 msgstr "Siła narzędzia: zmniejsz względnie"
 
-#: ../app/actions/tools-actions.c:565
+#: ../app/actions/tools-actions.c:571
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
 msgstr "Siła narzędzia: zwiększ względnie"
@@ -9189,8 +9187,8 @@ msgstr "Obniża ścieżkę na dół"
 
 #: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
-msgid "Fill Path..."
-msgstr "Wypełnij ścieżkę…"
+msgid "Fill Pat_h..."
+msgstr "_Wypełnij ścieżkę…"
 
 #: ../app/actions/vectors-actions.c:120
 msgctxt "vectors-action"
@@ -9561,8 +9559,8 @@ msgstr "Zamyka aktywny widok obrazu"
 
 #: ../app/actions/view-actions.c:101
 msgctxt "view-action"
-msgid "Center Image in Window"
-msgstr "Wyśrodkuj obraz w oknie"
+msgid "C_enter Image in Window"
+msgstr "Wyśro_dkuj obraz w oknie"
 
 #: ../app/actions/view-actions.c:102
 msgctxt "view-action"
@@ -9782,8 +9780,8 @@ msgstr "Wyświetla siatkę obrazu"
 
 #: ../app/actions/view-actions.c:248
 msgctxt "view-action"
-msgid "Show Sample Points"
-msgstr "Punkty wzorcowe"
+msgid "Sh_ow Sample Points"
+msgstr "_Punkty wzorcowe"
 
 #: ../app/actions/view-actions.c:249
 msgctxt "view-action"
@@ -10037,8 +10035,8 @@ msgstr "Ustawia dowolne powiększenie"
 
 #: ../app/actions/view-actions.c:466
 msgctxt "view-action"
-msgid "Flip Horizontally"
-msgstr "Odbij poziomo"
+msgid "Flip _Horizontally"
+msgstr "Odbij po_ziomo"
 
 #: ../app/actions/view-actions.c:467
 msgctxt "view-action"
@@ -10047,8 +10045,8 @@ msgstr "Odbija widok poziomo"
 
 #: ../app/actions/view-actions.c:473
 msgctxt "view-action"
-msgid "Flip Vertically"
-msgstr "Odbij pionowo"
+msgid "Flip _Vertically"
+msgstr "Odbij p_ionowo"
 
 #: ../app/actions/view-actions.c:474
 msgctxt "view-action"
@@ -10416,8 +10414,8 @@ msgstr "Położenie _kart"
 
 #: ../app/actions/windows-actions.c:127
 msgctxt "windows-action"
-msgid "Hide Docks"
-msgstr "Ukrycie doków"
+msgid "_Hide Docks"
+msgstr "_Ukrycie doków"
 
 #: ../app/actions/windows-actions.c:128
 msgctxt "windows-action"
@@ -10428,8 +10426,8 @@ msgstr ""
 
 #: ../app/actions/windows-actions.c:134
 msgctxt "windows-action"
-msgid "Show Tabs"
-msgstr "Karty"
+msgid "_Show Tabs"
+msgstr "_Karty"
 
 #: ../app/actions/windows-actions.c:135
 msgctxt "windows-action"
@@ -10438,8 +10436,8 @@ msgstr "Wyświetla pasek kart obrazów."
 
 #: ../app/actions/windows-actions.c:141
 msgctxt "windows-action"
-msgid "Single-Window Mode"
-msgstr "Tryb jednego okna"
+msgid "Single-Window _Mode"
+msgstr "_Tryb jednego okna"
 
 #: ../app/actions/windows-actions.c:142
 msgctxt "windows-action"
@@ -10726,7 +10724,7 @@ msgstr ""
 msgid "Layer"
 msgstr "Warstwa"
 
-#: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:271
+#: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:254
 #: ../app/operations/gimpcurvesconfig.c:110
 #: ../app/operations/gimplevelsconfig.c:115
 #: ../app/operations/gimpoperationthreshold.c:89
@@ -10734,7 +10732,7 @@ msgstr "Warstwa"
 msgid "Channel"
 msgstr "Kanał"
 
-#: ../app/config/gimpdialogconfig.c:422 ../app/vectors/gimpvectors.c:223
+#: ../app/config/gimpdialogconfig.c:422 ../app/vectors/gimpvectors.c:227
 #: ../app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "Ścieżka"
@@ -12153,443 +12151,448 @@ msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Duże (256×256)"
 
-#: ../app/core/core-enums.c:1130
+#: ../app/core/core-enums.c:1131
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "«nieprawidłowe»"
 
-#: ../app/core/core-enums.c:1131
+#: ../app/core/core-enums.c:1132
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Przeskalowanie obrazu"
 
-#: ../app/core/core-enums.c:1132
+#: ../app/core/core-enums.c:1133
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Zmiana wymiarów obrazu"
 
-#: ../app/core/core-enums.c:1133
+#: ../app/core/core-enums.c:1134
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Odbicie obrazu"
 
-#: ../app/core/core-enums.c:1134
+#: ../app/core/core-enums.c:1135
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Obrót obrazu"
 
-#: ../app/core/core-enums.c:1135
+#: ../app/core/core-enums.c:1136
+msgctxt "undo-type"
+msgid "Transform image"
+msgstr "Przekształcenie obrazu"
+
+#: ../app/core/core-enums.c:1137
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Kadrowanie obrazu"
 
-#: ../app/core/core-enums.c:1136
+#: ../app/core/core-enums.c:1138
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Konwersja obrazu"
 
-#: ../app/core/core-enums.c:1137
+#: ../app/core/core-enums.c:1139
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Usunięcie elementu"
 
-#: ../app/core/core-enums.c:1138 ../app/core/core-enums.c:1182
+#: ../app/core/core-enums.c:1140 ../app/core/core-enums.c:1184
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Zmiana kolejności elementu"
 
-#: ../app/core/core-enums.c:1139
+#: ../app/core/core-enums.c:1141
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Połączenie warstw"
 
-#: ../app/core/core-enums.c:1140
+#: ../app/core/core-enums.c:1142
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Połączenie ścieżek"
 
-#: ../app/core/core-enums.c:1141
+#: ../app/core/core-enums.c:1143
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/core/core-enums.c:1142 ../app/core/core-enums.c:1173
+#: ../app/core/core-enums.c:1144 ../app/core/core-enums.c:1175
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Siatka"
 
-#: ../app/core/core-enums.c:1143 ../app/core/core-enums.c:1177
+#: ../app/core/core-enums.c:1145 ../app/core/core-enums.c:1179
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Prowadnica"
 
-#: ../app/core/core-enums.c:1144 ../app/core/core-enums.c:1178
+#: ../app/core/core-enums.c:1146 ../app/core/core-enums.c:1180
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Punkt wzorcowy"
 
-#: ../app/core/core-enums.c:1145 ../app/core/core-enums.c:1179
+#: ../app/core/core-enums.c:1147 ../app/core/core-enums.c:1181
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Warstwa/kanał"
 
-#: ../app/core/core-enums.c:1146 ../app/core/core-enums.c:1180
+#: ../app/core/core-enums.c:1148 ../app/core/core-enums.c:1182
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Modyfikacja warstwy/kanału"
 
-#: ../app/core/core-enums.c:1147 ../app/core/core-enums.c:1181
+#: ../app/core/core-enums.c:1149 ../app/core/core-enums.c:1183
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Maska zaznaczenia"
 
-#: ../app/core/core-enums.c:1148 ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1150 ../app/core/core-enums.c:1187
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Widoczność elementu"
 
-#: ../app/core/core-enums.c:1149 ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1151 ../app/core/core-enums.c:1188
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Powiązanie/usunięcie dowiązania elementu"
 
-#: ../app/core/core-enums.c:1150
+#: ../app/core/core-enums.c:1152
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Właściwości elementu"
 
-#: ../app/core/core-enums.c:1151 ../app/core/core-enums.c:1184
+#: ../app/core/core-enums.c:1153 ../app/core/core-enums.c:1186
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Przesunięcie elementu"
 
-#: ../app/core/core-enums.c:1152
+#: ../app/core/core-enums.c:1154
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Przeskalowanie elementu"
 
-#: ../app/core/core-enums.c:1153
+#: ../app/core/core-enums.c:1155
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Zmiana wymiarów elementu"
 
-#: ../app/core/core-enums.c:1154
+#: ../app/core/core-enums.c:1156
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/core-enums.c:1155 ../app/core/core-enums.c:1205
+#: ../app/core/core-enums.c:1157 ../app/core/core-enums.c:1207
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/core-enums.c:1156 ../app/core/core-enums.c:1207
+#: ../app/core/core-enums.c:1158 ../app/core/core-enums.c:1209
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/core-enums.c:1157 ../app/core/core-enums.c:1215
+#: ../app/core/core-enums.c:1159 ../app/core/core-enums.c:1217
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1160
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/core-enums.c:1159
+#: ../app/core/core-enums.c:1161
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/core-enums.c:1160 ../app/core/gimp-edit.c:515
+#: ../app/core/core-enums.c:1162 ../app/core/gimp-edit.c:515
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Wklejenie"
 
-#: ../app/core/core-enums.c:1161 ../app/core/gimp-edit.c:733
+#: ../app/core/core-enums.c:1163 ../app/core/gimp-edit.c:733
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Wycięcie"
 
-#: ../app/core/core-enums.c:1162
+#: ../app/core/core-enums.c:1164
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:1163 ../app/core/gimpdrawable-transform.c:777
+#: ../app/core/core-enums.c:1165 ../app/core/gimpdrawable-transform.c:731
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
 
-#: ../app/core/core-enums.c:1164 ../app/core/core-enums.c:1217
+#: ../app/core/core-enums.c:1166 ../app/core/core-enums.c:1219
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Rysowanie"
 
-#: ../app/core/core-enums.c:1165 ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1167 ../app/core/core-enums.c:1222
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/core-enums.c:1166 ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1168 ../app/core/core-enums.c:1223
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Usunięcie danych pasożytniczych"
 
-#: ../app/core/core-enums.c:1167
+#: ../app/core/core-enums.c:1169
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Import ścieżek"
 
-#: ../app/core/core-enums.c:1168
+#: ../app/core/core-enums.c:1170
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Wtyczka"
 
-#: ../app/core/core-enums.c:1169
+#: ../app/core/core-enums.c:1171
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Typ obrazu"
 
-#: ../app/core/core-enums.c:1170
+#: ../app/core/core-enums.c:1172
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Dokładność obrazu"
 
-#: ../app/core/core-enums.c:1171
+#: ../app/core/core-enums.c:1173
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Wymiary obrazu"
 
-#: ../app/core/core-enums.c:1172
+#: ../app/core/core-enums.c:1174
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/core-enums.c:1174
+#: ../app/core/core-enums.c:1176
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Zmiana metadanych"
 
-#: ../app/core/core-enums.c:1175
+#: ../app/core/core-enums.c:1177
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Zmiana palety indeksowanej"
 
-#: ../app/core/core-enums.c:1176
+#: ../app/core/core-enums.c:1178
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Zmiana stanu zarządzania kolorami"
 
-#: ../app/core/core-enums.c:1183
+#: ../app/core/core-enums.c:1185
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Zmiana nazwy elementu"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1189
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Etykieta koloru elementu"
 
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1190
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Zablokowanie/odblokowanie zawartości"
 
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1191
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Zablokowanie/odblokowanie położenia"
 
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1192
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nowa warstwa"
 
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1193
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/core-enums.c:1192
+#: ../app/core/core-enums.c:1194
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Ustawienie trybu warstwy"
 
-#: ../app/core/core-enums.c:1193
+#: ../app/core/core-enums.c:1195
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Ustawienie krycia warstwy"
 
-#: ../app/core/core-enums.c:1194
+#: ../app/core/core-enums.c:1196
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Zablokowanie/odblokowanie kanału alfa"
 
-#: ../app/core/core-enums.c:1195
+#: ../app/core/core-enums.c:1197
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Wstrzymanie zmiany wymiarów grupy warstw"
 
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1198
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Wznowienie zmiany wymiarów grupy warstw"
 
-#: ../app/core/core-enums.c:1197
+#: ../app/core/core-enums.c:1199
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Wstrzymanie maski grupy warstw"
 
-#: ../app/core/core-enums.c:1198
+#: ../app/core/core-enums.c:1200
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Wznowienie maski grupy warstw"
 
-#: ../app/core/core-enums.c:1199
+#: ../app/core/core-enums.c:1201
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Rozpoczęcie przekształcania grupy warstw"
 
-#: ../app/core/core-enums.c:1200
+#: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Ukończenie przekształcania grupy warstw"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Konwertowanie grupy warstw"
 
-#: ../app/core/core-enums.c:1202
+#: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Warstwa tekstowa"
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1205
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Zmiana warstwy tekstowej"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1206
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Konwertowanie warstwy tekstowej"
 
-#: ../app/core/core-enums.c:1206
+#: ../app/core/core-enums.c:1208
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/core-enums.c:1208
+#: ../app/core/core-enums.c:1210
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/core-enums.c:1209
+#: ../app/core/core-enums.c:1211
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nowy kanał"
 
-#: ../app/core/core-enums.c:1210
+#: ../app/core/core-enums.c:1212
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/core-enums.c:1211
+#: ../app/core/core-enums.c:1213
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kolor kanału"
 
-#: ../app/core/core-enums.c:1212
+#: ../app/core/core-enums.c:1214
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nowa ścieżka"
 
-#: ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1215
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Usunięcie ścieżki"
 
-#: ../app/core/core-enums.c:1214
+#: ../app/core/core-enums.c:1216
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Modyfikacja ścieżki"
 
-#: ../app/core/core-enums.c:1216
+#: ../app/core/core-enums.c:1218
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Siatka przekształcenia"
 
-#: ../app/core/core-enums.c:1218
+#: ../app/core/core-enums.c:1220
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Stalówka"
 
-#: ../app/core/core-enums.c:1219
+#: ../app/core/core-enums.c:1221
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1224
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nie do cofnięcia"
 
-#: ../app/core/core-enums.c:1257
+#: ../app/core/core-enums.c:1259
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Drobny"
 
-#: ../app/core/core-enums.c:1258
+#: ../app/core/core-enums.c:1260
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Bardzo mały"
 
-#: ../app/core/core-enums.c:1259
+#: ../app/core/core-enums.c:1261
 msgctxt "view-size"
 msgid "Small"
 msgstr "Mały"
 
-#: ../app/core/core-enums.c:1260
+#: ../app/core/core-enums.c:1262
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Średni"
 
-#: ../app/core/core-enums.c:1261
+#: ../app/core/core-enums.c:1263
 msgctxt "view-size"
 msgid "Large"
 msgstr "Duży"
 
-#: ../app/core/core-enums.c:1262
+#: ../app/core/core-enums.c:1264
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Bardzo duży"
 
-#: ../app/core/core-enums.c:1263
+#: ../app/core/core-enums.c:1265
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Wielki"
 
-#: ../app/core/core-enums.c:1264
+#: ../app/core/core-enums.c:1266
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Ogromny"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1267
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantyczny"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1295
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Wyświetlaj jako listę"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1296
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Wyświetlaj jako siatkę"
@@ -13037,148 +13040,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Zaznaczenie według koloru indeksowanego"
 
-#: ../app/core/gimpchannel.c:272
+#: ../app/core/gimpchannel.c:255
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Zmiana nazwy kanału"
 
-#: ../app/core/gimpchannel.c:273
+#: ../app/core/gimpchannel.c:256
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Przesunięcie kanału"
 
-#: ../app/core/gimpchannel.c:274
+#: ../app/core/gimpchannel.c:257
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Przeskalowanie kanału"
 
-#: ../app/core/gimpchannel.c:275
+#: ../app/core/gimpchannel.c:258
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Zmiana wymiarów kanału"
 
-#: ../app/core/gimpchannel.c:276
+#: ../app/core/gimpchannel.c:259
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Odbicie kanału"
 
-#: ../app/core/gimpchannel.c:277
+#: ../app/core/gimpchannel.c:260
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1097
+#: ../app/core/gimpchannel.c:261 ../app/core/gimpdrawable-transform.c:1037
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
 
-#: ../app/core/gimpchannel.c:279 ../app/core/gimpchannel.c:310
+#: ../app/core/gimpchannel.c:262 ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Wypełnienie kanału"
 
-#: ../app/core/gimpchannel.c:280
+#: ../app/core/gimpchannel.c:263
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Rysowanie wzdłuż kanału"
 
-#: ../app/core/gimpchannel.c:281
+#: ../app/core/gimpchannel.c:264
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanał na zaznaczenie"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:265
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Zmiana pozycji kanału"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:266
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Podniesienie kanału"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:267
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Podniesienie kanału na górę"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:268
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Obniżenie kanału"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:269
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Obniżenie kanału na dół"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:270
 msgid "Channel cannot be raised higher."
 msgstr "Nie można wyżej podnieść kanału."
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:271
 msgid "Channel cannot be lowered more."
 msgstr "Nie można niżej obniżyć kanału."
 
-#: ../app/core/gimpchannel.c:307
+#: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Zmiękczenie kanału"
 
-#: ../app/core/gimpchannel.c:308
+#: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Wyostrzenie kanału"
 
-#: ../app/core/gimpchannel.c:309
+#: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Wyczyszczenie kanału"
 
-#: ../app/core/gimpchannel.c:311
+#: ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Odwrócenie kanału"
 
-#: ../app/core/gimpchannel.c:312
+#: ../app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Obramowanie kanału"
 
-#: ../app/core/gimpchannel.c:313
+#: ../app/core/gimpchannel.c:296
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Powiększenie kanału"
 
-#: ../app/core/gimpchannel.c:314
+#: ../app/core/gimpchannel.c:297
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Zmniejszenie kanału"
 
-#: ../app/core/gimpchannel.c:315
+#: ../app/core/gimpchannel.c:298
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:838
+#: ../app/core/gimpchannel.c:781
 msgid "Cannot fill empty channel."
 msgstr "Nie można wypełniać na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:874
+#: ../app/core/gimpchannel.c:817
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1703
+#: ../app/core/gimpchannel.c:1646
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1754
+#: ../app/core/gimpchannel.c:1697
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1843 ../app/core/gimpselection.c:170
+#: ../app/core/gimpchannel.c:1786 ../app/core/gimpselection.c:170
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -13260,11 +13263,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:423 ../app/core/gimpdatafactory.c:426
-#: ../app/core/gimpitem.c:542 ../app/core/gimpitem.c:545
+#: ../app/core/gimpitem.c:546 ../app/core/gimpitem.c:549
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:553
+#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:557
 #, c-format
 msgid "%s copy"
 msgstr "%s. kopia"
@@ -13357,7 +13360,7 @@ msgstr "Oderwane zaznaczenie"
 msgid "Computing alpha of unknown pixels"
 msgstr "Obliczanie alfy nieznanych pikseli"
 
-#: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:668
+#: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:679
 msgid "Not enough points to fill"
 msgstr "Niewystarczająca liczba punktów do wypełnienia"
 
@@ -13388,26 +13391,26 @@ msgid "Offset Drawable"
 msgstr "Przesunięcie obszaru rysowania"
 
 #: ../app/core/gimpdrawable-stroke.c:111
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:690
+#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:701
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:865 ../app/tools/gimpfliptool.c:133
+#: ../app/core/gimpdrawable-transform.c:815 ../app/tools/gimpfliptool.c:135
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:950 ../app/tools/gimprotatetool.c:127
+#: ../app/core/gimpdrawable-transform.c:895 ../app/tools/gimprotatetool.c:127
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:1095 ../app/core/gimplayer.c:448
+#: ../app/core/gimpdrawable-transform.c:1035 ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:1108
+#: ../app/core/gimpdrawable-transform.c:1048
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -13936,12 +13939,12 @@ msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Odbijanie obiektów"
 
-#: ../app/core/gimpimage-item-list.c:196 ../app/core/gimpitem-linked.c:159
+#: ../app/core/gimpimage-item-list.c:201
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "Obracanie obiektów"
 
-#: ../app/core/gimpimage-item-list.c:246
+#: ../app/core/gimpimage-item-list.c:256
 msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Przekształcanie obiektów"
@@ -14097,17 +14100,17 @@ msgstr[2] "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć miniatury „%s”: %s"
 
-#: ../app/core/gimpitem.c:2117
+#: ../app/core/gimpitem.c:2137
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:2127
+#: ../app/core/gimpitem.c:2147
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:2178 ../app/core/gimpitem.c:2185
+#: ../app/core/gimpitem.c:2198 ../app/core/gimpitem.c:2205
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
@@ -14422,7 +14425,7 @@ msgstr "Nie można odczytać nagłówka z pliku nagłówka „%s”: "
 msgid "Premature end of file."
 msgstr "Przedwczesny koniec pliku."
 
-#: ../app/core/gimppalettemru.c:122 ../app/core/gimppalettemru.c:252
+#: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
 msgid "History Color"
 msgstr "Kolor historii"
 
@@ -16436,6 +16439,11 @@ msgstr "Motyw ikon"
 msgid "Select an Icon Theme"
 msgstr "Wybór motywu ikon"
 
+#: ../app/dialogs/preferences-dialog.c:2098
+#: ../app/dialogs/preferences-dialog.c:2099 ../app/widgets/gimptoolbox.c:525
+msgid "Toolbox"
+msgstr "Przybornik"
+
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2107
 #: ../app/dialogs/preferences-dialog.c:2875 ../app/widgets/gimpgrideditor.c:134
@@ -17763,28 +17771,28 @@ msgstr "Wys."
 msgid "_Sample Merged"
 msgstr "Próbkowanie w_szystkich warstw"
 
-#: ../app/display/gimpdisplayshell.c:553
+#: ../app/display/gimpdisplayshell.c:555
 msgid "Access the image menu"
 msgstr "Dostęp do menu obrazu"
 
-#: ../app/display/gimpdisplayshell.c:671
+#: ../app/display/gimpdisplayshell.c:673
 msgid "Zoom image when window size changes"
 msgstr "Zmiana powiększenia przy zmianie wymiarów okna"
 
-#: ../app/display/gimpdisplayshell.c:700
+#: ../app/display/gimpdisplayshell.c:702
 msgid "Toggle Quick Mask"
 msgstr "Przełącz szybką maskę"
 
-#: ../app/display/gimpdisplayshell.c:723
+#: ../app/display/gimpdisplayshell.c:725
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:782 ../app/display/gimpdisplayshell.c:1447
+#: ../app/display/gimpdisplayshell.c:784 ../app/display/gimpdisplayshell.c:1449
 #: ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:555
+#: ../app/display/gimpdisplayshell-callbacks.c:558
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -17897,7 +17905,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1133
 #: ../app/tools/gimpfiltertool.c:291 ../app/tools/gimpgradienttool.c:261
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:289
-#: ../app/tools/gimpselectiontool.c:537 ../app/tools/gimptransformtool.c:540
+#: ../app/tools/gimpselectiontool.c:537 ../app/tools/gimptransformtool.c:665
 #: ../app/tools/gimpwarptool.c:683
 #, c-format
 msgid "The active layer's pixels are locked."
@@ -19871,31 +19879,31 @@ msgctxt "undo-type"
 msgid "Invert"
 msgstr "Odwrócenie"
 
-#: ../app/pdb/drawable-transform-cmds.c:355
-#: ../app/pdb/drawable-transform-cmds.c:455
-#: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
+#: ../app/pdb/drawable-transform-cmds.c:373
+#: ../app/pdb/drawable-transform-cmds.c:478
+#: ../app/pdb/item-transform-cmds.c:340 ../app/pdb/transform-tools-cmds.c:177
 #: ../app/tools/gimpperspectivetool.c:85
 #: ../app/tools/gimptransformgridoptions.c:529
 #: ../app/tools/gimptransformgridoptions.c:538
 msgid "Perspective"
 msgstr "Perspektywa"
 
-#: ../app/pdb/drawable-transform-cmds.c:977
-#: ../app/pdb/drawable-transform-cmds.c:1064
-#: ../app/pdb/item-transform-cmds.c:713 ../app/pdb/transform-tools-cmds.c:432
+#: ../app/pdb/drawable-transform-cmds.c:1030
+#: ../app/pdb/drawable-transform-cmds.c:1122
+#: ../app/pdb/item-transform-cmds.c:739 ../app/pdb/transform-tools-cmds.c:450
 #: ../app/tools/gimpsheartool.c:112
 msgid "Shearing"
 msgstr "Nachylanie"
 
-#: ../app/pdb/drawable-transform-cmds.c:1161
-#: ../app/pdb/item-transform-cmds.c:819 ../app/pdb/transform-tools-cmds.c:523
+#: ../app/pdb/drawable-transform-cmds.c:1224
+#: ../app/pdb/item-transform-cmds.c:849 ../app/pdb/transform-tools-cmds.c:545
 msgid "2D Transform"
 msgstr "Przekształcenia 2D"
 
-#: ../app/pdb/drawable-transform-cmds.c:1259
-#: ../app/pdb/drawable-transform-cmds.c:1364
-#: ../app/pdb/drawable-transform-cmds.c:1470
-#: ../app/pdb/item-transform-cmds.c:933
+#: ../app/pdb/drawable-transform-cmds.c:1327
+#: ../app/pdb/drawable-transform-cmds.c:1437
+#: ../app/pdb/drawable-transform-cmds.c:1548
+#: ../app/pdb/item-transform-cmds.c:967
 msgid "2D Transforming"
 msgstr "Przekształcanie 2D"
 
@@ -21615,7 +21623,7 @@ msgstr "Wypełnienie kubełkiem"
 #: ../app/tools/gimpfiltertool.c:301
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimpgradienttool.c:271 ../app/tools/gimppainttool.c:317
-#: ../app/tools/gimptransformtool.c:549 ../app/tools/gimpwarptool.c:697
+#: ../app/tools/gimptransformtool.c:674 ../app/tools/gimpwarptool.c:697
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -22024,7 +22032,7 @@ msgid "Move: "
 msgstr "Przesunięcie: "
 
 #: ../app/tools/gimpeditselectiontool.c:863
-#: ../app/tools/gimpeditselectiontool.c:1189
+#: ../app/tools/gimpeditselectiontool.c:1192
 msgid "Move Floating Selection"
 msgstr "Przesunięcie oderwanego zaznaczenia"
 
@@ -22033,7 +22041,7 @@ msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
 #: ../app/tools/gimpeditselectiontool.c:1110 ../app/tools/gimpmovetool.c:285
-#: ../app/tools/gimptransformtool.c:583
+#: ../app/tools/gimptransformtool.c:712
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
@@ -22197,25 +22205,25 @@ msgstr "Kierunek odbicia"
 msgid "Direction  (%s)"
 msgstr "Kierunek  (%s)"
 
-#: ../app/tools/gimpfliptool.c:107
+#: ../app/tools/gimpfliptool.c:109
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/tools/gimpfliptool.c:108
+#: ../app/tools/gimpfliptool.c:110
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "Odbicie: odwraca warstwę, zaznaczenie lub ścieżkę, pionowo lub poziomo"
 
-#: ../app/tools/gimpfliptool.c:110
+#: ../app/tools/gimpfliptool.c:112
 msgid "_Flip"
 msgstr "Od_bicie"
 
-#: ../app/tools/gimpfliptool.c:300
+#: ../app/tools/gimpfliptool.c:306
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Odbicie poziome"
 
-#: ../app/tools/gimpfliptool.c:303
+#: ../app/tools/gimpfliptool.c:309
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Odbicie pionowe"
@@ -22938,7 +22946,7 @@ msgstr "Odległość:"
 msgid "Move selection"
 msgstr "Przemieszczenie zaznaczenia"
 
-#: ../app/tools/gimpmoveoptions.c:146 ../app/tools/gimpmoveoptions.c:207
+#: ../app/tools/gimpmoveoptions.c:146 ../app/tools/gimpmoveoptions.c:209
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Przełącznik narzędzia  (%s)"
@@ -23915,26 +23923,26 @@ msgstr "Blokowanie"
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
-#: ../app/tools/gimptransformgridtool.c:228
-#: ../app/tools/gimptransformtool.c:335
+#: ../app/tools/gimptransformgridtool.c:230
+#: ../app/tools/gimptransformtool.c:431
 msgid "_Transform"
 msgstr "Prze_kształć"
 
-#: ../app/tools/gimptransformgridtool.c:500
-#: ../app/tools/gimptransformgridtool.c:512
+#: ../app/tools/gimptransformgridtool.c:502
+#: ../app/tools/gimptransformgridtool.c:514
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformgridtool.c:884
+#: ../app/tools/gimptransformgridtool.c:895
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (korekta)"
 
-#: ../app/tools/gimptransformgridtool.c:1107
+#: ../app/tools/gimptransformgridtool.c:1118
 msgid "Re_adjust"
 msgstr "_Dopasuj"
 
-#: ../app/tools/gimptransformgridtool.c:1354
+#: ../app/tools/gimptransformgridtool.c:1366
 msgid "Cannot readjust the transformation"
 msgstr "Nie można dopasować przekształcenia"
 
@@ -23950,23 +23958,23 @@ msgstr "Metoda interpolacji"
 msgid "Transform:"
 msgstr "Przekształcenie:"
 
-#: ../app/tools/gimptransformtool.c:97
+#: ../app/tools/gimptransformtool.c:108
 msgid "Transform"
 msgstr "Przekształcenie"
 
-#: ../app/tools/gimptransformtool.c:98
+#: ../app/tools/gimptransformtool.c:109
 msgid "Transforming"
 msgstr "Przekształcanie"
 
-#: ../app/tools/gimptransformtool.c:327
+#: ../app/tools/gimptransformtool.c:423
 msgid "Confirm Transformation"
 msgstr "Potwierdzenie przekształcenia"
 
-#: ../app/tools/gimptransformtool.c:345
+#: ../app/tools/gimptransformtool.c:443
 msgid "Transformation creates a very large item."
 msgstr "Przekształcenie tworzy bardzo duży element."
 
-#: ../app/tools/gimptransformtool.c:349
+#: ../app/tools/gimptransformtool.c:448
 #, c-format
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
@@ -23974,35 +23982,44 @@ msgid ""
 msgstr ""
 "Zastosowanie przekształcenia utworzy element ponad %g razy większy niż obraz."
 
-#: ../app/tools/gimptransformtool.c:535
+#: ../app/tools/gimptransformtool.c:456
+msgid "Transformation creates a very large image."
+msgstr "Przekształcenie tworzy bardzo duży obraz."
+
+#: ../app/tools/gimptransformtool.c:461
+#, c-format
+msgid "Applying the transformation will enlarge the image by a factor of %g."
+msgstr "Zastosowanie przekształcenia powiększy obraz %g-krotnie."
+
+#: ../app/tools/gimptransformtool.c:658
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:542
+#: ../app/tools/gimptransformtool.c:667
 msgid "The active layer's position and size are locked."
 msgstr "Położenie i wymiary aktywnej warstwy są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:556
+#: ../app/tools/gimptransformtool.c:681
 msgid "The selection does not intersect with the layer."
 msgstr "Zaznaczenie nie przecina się z warstwą."
 
-#: ../app/tools/gimptransformtool.c:563
+#: ../app/tools/gimptransformtool.c:688
 msgid "There is no selection to transform."
 msgstr "Brak zaznaczenia do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:576
+#: ../app/tools/gimptransformtool.c:703
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:581
+#: ../app/tools/gimptransformtool.c:710
 msgid "The active path's strokes are locked."
 msgstr "Krzywe aktywnej ścieżki są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:585
+#: ../app/tools/gimptransformtool.c:714
 msgid "The active path has no strokes."
 msgstr "Aktywna ścieżka nie ma krzywych."
 
-#: ../app/tools/gimptransformtool.c:654
+#: ../app/tools/gimptransformtool.c:788
 msgid "The current transform is invalid"
 msgstr "Bieżące przekształcenie jest nieprawidłowe"
 
@@ -24260,177 +24277,182 @@ msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "Stałe proporcje"
 
-#: ../app/tools/tools-enums.c:120
+#: ../app/tools/tools-enums.c:121
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Warstwa"
 
-#: ../app/tools/tools-enums.c:121
+#: ../app/tools/tools-enums.c:122
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../app/tools/tools-enums.c:122
+#: ../app/tools/tools-enums.c:123
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Ścieżka"
 
-#: ../app/tools/tools-enums.c:215
+#: ../app/tools/tools-enums.c:124
+msgctxt "transform-type"
+msgid "Image"
+msgstr "Obraz"
+
+#: ../app/tools/tools-enums.c:217
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
 msgstr "Rysowanie pierwszego planu"
 
-#: ../app/tools/tools-enums.c:216
+#: ../app/tools/tools-enums.c:218
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "Rysowanie tła"
 
-#: ../app/tools/tools-enums.c:217
+#: ../app/tools/tools-enums.c:219
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
 msgstr "Rysowanie nieznanego"
 
-#: ../app/tools/tools-enums.c:245
+#: ../app/tools/tools-enums.c:247
 msgctxt "matting-preview-mode"
 msgid "Color"
 msgstr "Kolor"
 
-#: ../app/tools/tools-enums.c:246
+#: ../app/tools/tools-enums.c:248
 msgctxt "matting-preview-mode"
 msgid "Grayscale"
 msgstr "Odcienie szarości"
 
-#: ../app/tools/tools-enums.c:279
+#: ../app/tools/tools-enums.c:281
 msgctxt "warp-behavior"
 msgid "Move pixels"
 msgstr "Przenoszenie pikseli"
 
-#: ../app/tools/tools-enums.c:280
+#: ../app/tools/tools-enums.c:282
 msgctxt "warp-behavior"
 msgid "Grow area"
 msgstr "Powiększanie obszaru"
 
-#: ../app/tools/tools-enums.c:281
+#: ../app/tools/tools-enums.c:283
 msgctxt "warp-behavior"
 msgid "Shrink area"
 msgstr "Zmniejszanie obszaru"
 
-#: ../app/tools/tools-enums.c:282
+#: ../app/tools/tools-enums.c:284
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
 msgstr "Wirowanie prawoskrętnie"
 
-#: ../app/tools/tools-enums.c:283
+#: ../app/tools/tools-enums.c:285
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
 msgstr "Wirowanie lewoskrętnie"
 
-#: ../app/tools/tools-enums.c:284
+#: ../app/tools/tools-enums.c:286
 msgctxt "warp-behavior"
 msgid "Erase warping"
 msgstr "Odkształcanie gumki"
 
-#: ../app/tools/tools-enums.c:285
+#: ../app/tools/tools-enums.c:287
 msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Gładkie odkształcanie"
 
-#: ../app/vectors/gimpvectors.c:224
+#: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Zmiana nazwy ścieżki"
 
-#: ../app/vectors/gimpvectors.c:225
+#: ../app/vectors/gimpvectors.c:229
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Przesunięcie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:226
+#: ../app/vectors/gimpvectors.c:230
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Przeskalowanie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:227
+#: ../app/vectors/gimpvectors.c:231
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Zmiana rozmiaru ścieżki"
 
-#: ../app/vectors/gimpvectors.c:228
+#: ../app/vectors/gimpvectors.c:232
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Odbicie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:229
+#: ../app/vectors/gimpvectors.c:233
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Obracanie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:230
+#: ../app/vectors/gimpvectors.c:234
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Przekształcenie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:231
+#: ../app/vectors/gimpvectors.c:235
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Wypełnienie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:232
+#: ../app/vectors/gimpvectors.c:236
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Rysowanie wzdłuż ścieżki"
 
-#: ../app/vectors/gimpvectors.c:233
+#: ../app/vectors/gimpvectors.c:237
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Utworzenie zaznaczenia ze ścieżki"
 
-#: ../app/vectors/gimpvectors.c:234
+#: ../app/vectors/gimpvectors.c:238
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Zmiana pozycji ścieżki"
 
-#: ../app/vectors/gimpvectors.c:235
+#: ../app/vectors/gimpvectors.c:239
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Podniesienie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:236
+#: ../app/vectors/gimpvectors.c:240
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Podniesienie ścieżki na górę"
 
-#: ../app/vectors/gimpvectors.c:237
+#: ../app/vectors/gimpvectors.c:241
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Obniżenie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:238
+#: ../app/vectors/gimpvectors.c:242
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Obniżenie ścieżki na dół"
 
-#: ../app/vectors/gimpvectors.c:239
+#: ../app/vectors/gimpvectors.c:243
 msgid "Path cannot be raised higher."
 msgstr "Nie można wyżej podnieść ścieżki."
 
-#: ../app/vectors/gimpvectors.c:240
+#: ../app/vectors/gimpvectors.c:244
 msgid "Path cannot be lowered more."
 msgstr "Nie można niżej obniżyć ścieżki."
 
-#: ../app/vectors/gimpvectors.c:455
+#: ../app/vectors/gimpvectors.c:459
 msgid "Move Path"
 msgstr "Przesunięcie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:555
+#: ../app/vectors/gimpvectors.c:559
 msgid "Flip Path"
 msgstr "Odbicie ścieżki"
 
-#: ../app/vectors/gimpvectors.c:586
+#: ../app/vectors/gimpvectors.c:590
 msgid "Rotate Path"
 msgstr "Obrót ścieżki"
 
-#: ../app/vectors/gimpvectors.c:616
+#: ../app/vectors/gimpvectors.c:620
 msgid "Transform Path"
 msgstr "Przekształcenie ścieżki"
 
