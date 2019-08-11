@@ -1658,35 +1658,47 @@ gimp_pdb_proc_info (const gchar      *procedure_name,
 
   if (success)
     {
-      *args        = g_new (GimpParamDef, *num_args);
-      *return_vals = g_new (GimpParamDef, *num_values);
+      *args        = g_new0 (GimpParamDef, *num_args);
+      *return_vals = g_new0 (GimpParamDef, *num_values);
 
       for (i = 0; i < *num_args; i++)
         {
-          if (! gimp_pdb_proc_arg (procedure_name, i,
-                                   &(*args)[i].type,
-                                   &(*args)[i].name,
-                                   &(*args)[i].description))
+          GParamSpec   *pspec = gimp_pdb_proc_argument (procedure_name, i);
+          GimpParamDef *arg   = &(*args)[i];
+
+          if (! pspec)
             {
               g_free (*args);
               g_free (*return_vals);
 
               return FALSE;
             }
+
+          arg->type        = _gimp_pdb_gtype_to_arg_type (pspec->value_type);
+          arg->name        = g_strdup (g_param_spec_get_name (pspec));
+          arg->description = g_strdup (g_param_spec_get_blurb (pspec));
+
+          g_param_spec_unref (pspec);
         }
 
       for (i = 0; i < *num_values; i++)
         {
-          if (! gimp_pdb_proc_val (procedure_name, i,
-                                   &(*return_vals)[i].type,
-                                   &(*return_vals)[i].name,
-                                   &(*return_vals)[i].description))
+          GParamSpec   *pspec = gimp_pdb_proc_return_value (procedure_name, i);
+          GimpParamDef *val   = &(*return_vals)[i];
+
+          if (! pspec)
             {
               g_free (*args);
               g_free (*return_vals);
 
               return FALSE;
             }
+
+          val->type        = _gimp_pdb_gtype_to_arg_type (pspec->value_type);
+          val->name        = g_strdup (g_param_spec_get_name (pspec));
+          val->description = g_strdup (g_param_spec_get_blurb (pspec));
+
+          g_param_spec_unref (pspec);
         }
     }
 
