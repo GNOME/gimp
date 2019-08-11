@@ -37,6 +37,8 @@ typedef struct _GimpParamDef    GimpParamDef;
 typedef union  _GimpParamData   GimpParamData;
 typedef struct _GimpParam       GimpParam;
 
+typedef struct _GimpImage       GimpImage;
+
 
 /* FIXME move somewhere else */
 

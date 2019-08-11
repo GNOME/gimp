@@ -32,22 +32,22 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_image_select_color            (gint32          image_ID,
+gboolean gimp_image_select_color            (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gint32          drawable_ID,
                                              const GimpRGB  *color);
-gboolean gimp_image_select_contiguous_color (gint32          image_ID,
+gboolean gimp_image_select_contiguous_color (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gint32          drawable_ID,
                                              gdouble         x,
                                              gdouble         y);
-gboolean gimp_image_select_rectangle        (gint32          image_ID,
+gboolean gimp_image_select_rectangle        (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gdouble         x,
                                              gdouble         y,
                                              gdouble         width,
                                              gdouble         height);
-gboolean gimp_image_select_round_rectangle  (gint32          image_ID,
+gboolean gimp_image_select_round_rectangle  (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gdouble         x,
                                              gdouble         y,
@@ -55,17 +55,17 @@ gboolean gimp_image_select_round_rectangle  (gint32          image_ID,
                                              gdouble         height,
                                              gdouble         corner_radius_x,
                                              gdouble         corner_radius_y);
-gboolean gimp_image_select_ellipse          (gint32          image_ID,
+gboolean gimp_image_select_ellipse          (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gdouble         x,
                                              gdouble         y,
                                              gdouble         width,
                                              gdouble         height);
-gboolean gimp_image_select_polygon          (gint32          image_ID,
+gboolean gimp_image_select_polygon          (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gint            num_segs,
                                              const gdouble  *segs);
-gboolean gimp_image_select_item             (gint32          image_ID,
+gboolean gimp_image_select_item             (GimpImage      *image,
                                              GimpChannelOps  operation,
                                              gint32          item_ID);
 

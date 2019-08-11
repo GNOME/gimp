@@ -20,7 +20,7 @@ sub image_is_valid {
     $blurb = 'Returns TRUE if the image is valid.';
 
     $help = <<'HELP';
-This procedure checks if the given image ID is valid and refers to an
+This procedure checks if the given image is valid and refers to an
 existing image.
 HELP
 
@@ -33,7 +33,7 @@ HELP
 
     @outargs = (
         { name => 'valid', type => 'boolean',
-          desc => 'Whether the image ID is valid' }
+          desc => 'Whether the image is valid' }
     );
 
     %invoke = (
@@ -112,7 +112,7 @@ HELP
 
     @outargs = (
         { name => 'image', type => 'image',
-          desc => 'The ID of the newly created image' }
+          desc => 'The newly created image' }
     );
 
     %invoke = (
@@ -153,7 +153,7 @@ HELP
 
     @outargs = (
         { name => 'image', type => 'image',
-          desc => 'The ID of the newly created image' }
+          desc => 'The newly created image' }
     );
 
     %invoke = (

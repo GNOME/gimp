@@ -32,9 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32                gimp_vectors_new                       (gint32                  image_ID,
+gint32                gimp_vectors_new                       (GimpImage              *image,
                                                               const gchar            *name);
-gint32                gimp_vectors_new_from_text_layer       (gint32                  image_ID,
+gint32                gimp_vectors_new_from_text_layer       (GimpImage              *image,
                                                               gint32                  layer_ID);
 gint32                gimp_vectors_copy                      (gint32                  vectors_ID);
 gint*                 gimp_vectors_get_strokes               (gint32                  vectors_ID,
@@ -119,23 +119,23 @@ gint                  gimp_vectors_bezier_stroke_new_ellipse (gint32            
                                                               gdouble                 radius_x,
                                                               gdouble                 radius_y,
                                                               gdouble                 angle);
-gboolean              gimp_vectors_import_from_file          (gint32                  image_ID,
+gboolean              gimp_vectors_import_from_file          (GimpImage              *image,
                                                               const gchar            *filename,
                                                               gboolean                merge,
                                                               gboolean                scale,
                                                               gint                   *num_vectors,
                                                               gint                  **vectors_ids);
-gboolean              gimp_vectors_import_from_string        (gint32                  image_ID,
+gboolean              gimp_vectors_import_from_string        (GimpImage              *image,
                                                               const gchar            *string,
                                                               gint                    length,
                                                               gboolean                merge,
                                                               gboolean                scale,
                                                               gint                   *num_vectors,
                                                               gint                  **vectors_ids);
-gboolean              gimp_vectors_export_to_file            (gint32                  image_ID,
+gboolean              gimp_vectors_export_to_file            (GimpImage              *image,
                                                               const gchar            *filename,
                                                               gint32                  vectors_ID);
-gchar*                gimp_vectors_export_to_string          (gint32                  image_ID,
+gchar*                gimp_vectors_export_to_string          (GimpImage              *image,
                                                               gint32                  vectors_ID);
 
 
