@@ -136,7 +136,7 @@ gimp_image_get_id (GimpImage *image)
 
 /**
  * gimp_image_get_colormap:
- * @image_ID:   The image.
+ * @image:      The image.
  * @num_colors: Returns the number of colors in the colormap array.
  *
  * Returns the image's colormap
@@ -148,13 +148,13 @@ gimp_image_get_id (GimpImage *image)
  * Returns: The image's colormap.
  */
 guchar *
-gimp_image_get_colormap (gint32  image_ID,
-                         gint   *num_colors)
+gimp_image_get_colormap (GimpImage *image,
+                         gint      *num_colors)
 {
   gint    num_bytes;
   guchar *cmap;
 
-  cmap = _gimp_image_get_colormap (image_ID, &num_bytes);
+  cmap = _gimp_image_get_colormap (image, &num_bytes);
 
   if (num_colors)
     *num_colors = num_bytes / 3;
@@ -164,7 +164,7 @@ gimp_image_get_colormap (gint32  image_ID,
 
 /**
  * gimp_image_set_colormap:
- * @image_ID:   The image.
+ * @image:      The image.
  * @colormap:   The new colormap values.
  * @num_colors: Number of colors in the colormap array.
  *
@@ -178,19 +178,19 @@ gimp_image_get_colormap (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_image_set_colormap (gint32        image_ID,
+gimp_image_set_colormap (GimpImage    *image,
                          const guchar *colormap,
                          gint          num_colors)
 {
-  return _gimp_image_set_colormap (image_ID, num_colors * 3, colormap);
+  return _gimp_image_set_colormap (image, num_colors * 3, colormap);
 }
 
 /**
  * gimp_image_get_thumbnail_data:
- * @image_ID: The image.
- * @width:    (inout): The requested thumbnail width.
- * @height:   (inout): The requested thumbnail height.
- * @bpp:      (out): The previews bpp.
+ * @image:  The image.
+ * @width:  (inout): The requested thumbnail width.
+ * @height: (inout): The requested thumbnail height.
+ * @bpp:    (out): The previews bpp.
  *
  * Get a thumbnail of an image.
  *
@@ -202,17 +202,17 @@ gimp_image_set_colormap (gint32        image_ID,
  * Returns: (transfer full): the thumbnail data.
  **/
 guchar *
-gimp_image_get_thumbnail_data (gint32  image_ID,
-                               gint   *width,
-                               gint   *height,
-                               gint   *bpp)
+gimp_image_get_thumbnail_data (GimpImage *image,
+                               gint      *width,
+                               gint      *height,
+                               gint      *bpp)
 {
   gint    ret_width;
   gint    ret_height;
   guchar *image_data;
   gint    data_size;
 
-  _gimp_image_thumbnail (image_ID,
+  _gimp_image_thumbnail (image,
                          *width,
                          *height,
                          &ret_width,
@@ -229,12 +229,12 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 
 /**
  * gimp_image_get_thumbnail:
- * @image_ID: the image ID
- * @width:    the requested thumbnail width  (<= 1024 pixels)
- * @height:   the requested thumbnail height (<= 1024 pixels)
- * @alpha:    how to handle an alpha channel
+ * @image:  the image ID
+ * @width:  the requested thumbnail width  (<= 1024 pixels)
+ * @height: the requested thumbnail height (<= 1024 pixels)
+ * @alpha:  how to handle an alpha channel
  *
- * Retrieves a thumbnail pixbuf for the image identified by @image_ID.
+ * Retrieves a thumbnail pixbuf for the image identified by @image->priv->id.
  * The thumbnail will be not larger than the requested size.
  *
  * Returns: (transfer full): a new #GdkPixbuf
@@ -242,7 +242,7 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  * Since: 2.2
  **/
 GdkPixbuf *
-gimp_image_get_thumbnail (gint32                  image_ID,
+gimp_image_get_thumbnail (GimpImage              *image,
                           gint                    width,
                           gint                    height,
                           GimpPixbufTransparency  alpha)
@@ -255,7 +255,7 @@ gimp_image_get_thumbnail (gint32                  image_ID,
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
-  data = gimp_image_get_thumbnail_data (image_ID,
+  data = gimp_image_get_thumbnail_data (image,
                                         &thumb_width,
                                         &thumb_height,
                                         &thumb_bpp);
@@ -269,7 +269,7 @@ gimp_image_get_thumbnail (gint32                  image_ID,
 
 /**
  * gimp_image_get_metadata:
- * @image_ID: The image.
+ * @image: The image.
  *
  * Returns the image's metadata.
  *
@@ -281,12 +281,12 @@ gimp_image_get_thumbnail (gint32                  image_ID,
  * Since: 2.10
  **/
 GimpMetadata *
-gimp_image_get_metadata (gint32 image_ID)
+gimp_image_get_metadata (GimpImage *image)
 {
   GimpMetadata *metadata = NULL;
   gchar        *metadata_string;
 
-  metadata_string = _gimp_image_get_metadata (image_ID);
+  metadata_string = _gimp_image_get_metadata (image);
   if (metadata_string)
     {
       metadata = gimp_metadata_deserialize (metadata_string);
@@ -298,7 +298,7 @@ gimp_image_get_metadata (gint32 image_ID)
 
 /**
  * gimp_image_set_metadata:
- * @image_ID: The image.
+ * @image:    The image.
  * @metadata: The exif/ptc/xmp metadata.
  *
  * Set the image's metadata.
@@ -311,7 +311,7 @@ gimp_image_get_metadata (gint32 image_ID)
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_metadata (gint32        image_ID,
+gimp_image_set_metadata (GimpImage    *image,
                          GimpMetadata *metadata)
 {
   gchar    *metadata_string = NULL;
@@ -320,7 +320,7 @@ gimp_image_set_metadata (gint32        image_ID,
   if (metadata)
     metadata_string = gimp_metadata_serialize (metadata);
 
-  success = _gimp_image_set_metadata (image_ID, metadata_string);
+  success = _gimp_image_set_metadata (image, metadata_string);
 
   if (metadata_string)
     g_free (metadata_string);

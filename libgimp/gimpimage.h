@@ -67,23 +67,23 @@ GType          gimp_image_get_type           (void) G_GNUC_CONST;
 
 gint32         gimp_image_get_id             (GimpImage    *image);
 
-guchar       * gimp_image_get_colormap       (gint32        image_ID,
+guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
-gboolean       gimp_image_set_colormap       (gint32        image_ID,
+gboolean       gimp_image_set_colormap       (GimpImage    *image,
                                               const guchar *colormap,
                                               gint          num_colors);
 
-guchar       * gimp_image_get_thumbnail_data (gint32        image_ID,
+guchar       * gimp_image_get_thumbnail_data (GimpImage    *image,
                                               gint         *width,
                                               gint         *height,
                                               gint         *bpp);
-GdkPixbuf    * gimp_image_get_thumbnail      (gint32        image_ID,
+GdkPixbuf    * gimp_image_get_thumbnail      (GimpImage    *image,
                                               gint          width,
                                               gint          height,
                                               GimpPixbufTransparency  alpha);
 
-GimpMetadata * gimp_image_get_metadata       (gint32        image_ID);
-gboolean       gimp_image_set_metadata       (gint32        image_ID,
+GimpMetadata * gimp_image_get_metadata       (GimpImage    *image);
+gboolean       gimp_image_set_metadata       (GimpImage    *image,
                                               GimpMetadata *metadata);
 
 

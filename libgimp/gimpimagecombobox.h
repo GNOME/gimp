@@ -36,8 +36,8 @@ G_BEGIN_DECLS
 #define GIMP_IS_IMAGE_COMBO_BOX(obj)    (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_COMBO_BOX)
 
 
-typedef gboolean (* GimpImageConstraintFunc) (gint32   image_id,
-                                              gpointer data);
+typedef gboolean (* GimpImageConstraintFunc) (GimpImage *image,
+                                              gpointer   data);
 
 
 GType       gimp_image_combo_box_get_type (void) G_GNUC_CONST;

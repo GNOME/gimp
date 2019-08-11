@@ -25,12 +25,12 @@
 
 /**
  * gimp_channel_new:
- * @image_ID: The image to which to add the channel.
- * @name: The channel name.
- * @width: The channel width.
- * @height: The channel height.
+ * @image:   The image to which to add the channel.
+ * @name:    The channel name.
+ * @width:   The channel width.
+ * @height:  The channel height.
  * @opacity: The channel opacity.
- * @color: The channel compositing color.
+ * @color:   The channel compositing color.
  *
  * Create a new channel.
  *
@@ -45,14 +45,14 @@
  * Returns: The newly created channel.
  */
 gint32
-gimp_channel_new (gint32         image_ID,
+gimp_channel_new (GimpImage     *image,
                   const gchar   *name,
                   guint          width,
                   guint          height,
                   gdouble        opacity,
                   const GimpRGB *color)
 {
-  return _gimp_channel_new (image_ID,
+  return _gimp_channel_new (image,
                             width,
                             height,
                             name,
