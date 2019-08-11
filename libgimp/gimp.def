@@ -261,6 +261,19 @@ EXPORTS
 	gimp_file_load
 	gimp_file_load_layer
 	gimp_file_load_layers
+	gimp_file_procedure_get_extensions
+	gimp_file_procedure_get_handles_uri
+	gimp_file_procedure_get_magics
+	gimp_file_procedure_get_mime_types
+	gimp_file_procedure_get_prefixes
+	gimp_file_procedure_get_priority
+	gimp_file_procedure_get_type
+	gimp_file_procedure_set_extensions
+	gimp_file_procedure_set_handles_uri
+	gimp_file_procedure_set_magics
+	gimp_file_procedure_set_mime_types
+	gimp_file_procedure_set_prefixes
+	gimp_file_procedure_set_priority
 	gimp_file_save
 	gimp_file_save_thumbnail
 	gimp_floating_sel_anchor
@@ -555,6 +568,10 @@ EXPORTS
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
+	gimp_load_procedure_get_handles_raw
+	gimp_load_procedure_get_type
+	gimp_load_procedure_new
+	gimp_load_procedure_set_handles_raw
 	gimp_main
 	gimp_main_legacy
 	gimp_message
@@ -713,6 +730,8 @@ EXPORTS
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_run_procedure_array
+	gimp_save_procedure_get_type
+	gimp_save_procedure_new
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
