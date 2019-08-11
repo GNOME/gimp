@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-05-10 15:40+0000\n"
-"PO-Revision-Date: 2019-05-11 01:30+0300\n"
+"POT-Creation-Date: 2019-08-05 20:16+0000\n"
+"PO-Revision-Date: 2019-08-06 14:57+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -416,61 +416,61 @@ msgstr "GIF İçin Hazırla"
 msgid "Speed (pixels/frame)"
 msgstr "Hız (piksel/kare)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+#: ../plug-ins/script-fu/scripts/carve-it.scm:176
 msgid "Carved Surface"
 msgstr "Oyulmuş Yüzey"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#: ../plug-ins/script-fu/scripts/carve-it.scm:177
 msgid "Bevel Shadow"
 msgstr "Eğim Gölge"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#: ../plug-ins/script-fu/scripts/carve-it.scm:178
 msgid "Bevel Highlight"
 msgstr "Eğim Vurgula"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#: ../plug-ins/script-fu/scripts/carve-it.scm:179
 msgid "Cast Shadow"
 msgstr "Gölge Oluştur"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#: ../plug-ins/script-fu/scripts/carve-it.scm:180
 msgid "Inset"
 msgstr "İçe doğru"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+#: ../plug-ins/script-fu/scripts/carve-it.scm:192
 msgid "Stencil C_arve..."
 msgstr "Kalıp O_yma..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+#: ../plug-ins/script-fu/scripts/carve-it.scm:193
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
 "Belirtilen görüntüden kesmek için şablon olarak belirtilen çizgileri kullan"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+#: ../plug-ins/script-fu/scripts/carve-it.scm:200
 msgid "Image to carve"
 msgstr "Oyulacak görüntü"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+#: ../plug-ins/script-fu/scripts/carve-it.scm:201
 msgid "Carve white areas"
 msgstr "Ak alanları oy"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
 msgid "Background"
 msgstr "Artalan"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
 msgid "Layer 1"
 msgstr "Katman 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Layer 2"
 msgstr "Katman 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
 msgid "Layer 3"
 msgstr "Katman 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
 msgid "Drop Shadow"
 msgstr "Gölge"
 
@@ -483,11 +483,11 @@ msgstr "Krom"
 msgid "Highlight"
 msgstr "Vurgu"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
 msgid "Stencil C_hrome..."
 msgstr "Kalıp K_rom..."
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:231
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -495,31 +495,31 @@ msgstr ""
 "Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya alfaya) krom "
 "etkisi uygula"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:238
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
 msgid "Chrome saturation"
 msgstr "Krom doygunluğu"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:239
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
 msgid "Chrome lightness"
 msgstr "Krom açıklığı"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Chrome factor"
 msgstr "Krom katsayısı"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid "Environment map"
 msgstr "Ortam eşlemi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:244
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
 msgid "Highlight balance"
 msgstr "Vurgu dengesi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:245
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
 msgid "Chrome balance"
 msgstr "Krom dengesi"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
 msgid "Chrome white areas"
 msgstr "Krom beyaz alanlar"
 
@@ -610,8 +610,8 @@ msgid "Darken only"
 msgstr "Yalnızca koyulaştır"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "Difference Clouds..."
-msgstr "Farklı Bulutlar..."
+msgid "_Difference Clouds..."
+msgstr "_Farklı Bulutlar..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -1275,8 +1275,8 @@ msgid "Pixel amount"
 msgstr "Piksel miktarı"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-msgid "Reverse Layer Order"
-msgstr "Katmanların Sırasını Tersine Çevir"
+msgid "Reverse Layer _Order"
+msgstr "Katmanların Sırasını _Tersine Çevir"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
