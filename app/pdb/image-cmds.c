@@ -2771,7 +2771,7 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-is-valid");
   gimp_procedure_set_static_strings (procedure,
                                      "Returns TRUE if the image is valid.",
-                                     "This procedure checks if the given image ID is valid and refers to an existing image.",
+                                     "This procedure checks if the given image is valid and refers to an existing image.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2007",
@@ -2785,7 +2785,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("valid",
                                                          "valid",
-                                                         "Whether the image ID is valid",
+                                                         "Whether the image is valid",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2855,7 +2855,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image_id ("image",
                                                              "image",
-                                                             "The ID of the newly created image",
+                                                             "The newly created image",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2903,7 +2903,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_image_id ("image",
                                                              "image",
-                                                             "The ID of the newly created image",
+                                                             "The newly created image",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

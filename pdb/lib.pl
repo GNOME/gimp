@@ -215,6 +215,9 @@ sub generate {
 	    if (exists $_->{array}) {
 		$value_array .= "NULL";
 	    }
+	    elsif (exists $arg->{convert_func}) {
+		$value_array .= eval qq/"$arg->{convert_func}"/;
+            }
 	    else {
 		$value_array .= "$var";
 	    }

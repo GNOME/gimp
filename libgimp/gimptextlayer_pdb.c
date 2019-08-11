@@ -36,7 +36,7 @@
 
 /**
  * gimp_text_layer_new:
- * @image_ID: The image.
+ * @image: The image.
  * @text: The text to generate (in UTF-8 encoding).
  * @fontname: The name of the font.
  * @size: The size of text in either pixels or points.
@@ -56,7 +56,7 @@
  * Since: 2.6
  **/
 gint32
-gimp_text_layer_new (gint32       image_ID,
+gimp_text_layer_new (GimpImage   *image,
                      const gchar *text,
                      const gchar *fontname,
                      gdouble      size,
@@ -68,7 +68,7 @@ gimp_text_layer_new (gint32       image_ID,
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, text,
                                           G_TYPE_STRING, fontname,
                                           G_TYPE_DOUBLE, size,

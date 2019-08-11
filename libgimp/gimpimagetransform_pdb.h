@@ -32,24 +32,24 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_image_resize           (gint32              image_ID,
-                                      gint                new_width,
-                                      gint                new_height,
-                                      gint                offx,
-                                      gint                offy);
-gboolean gimp_image_resize_to_layers (gint32              image_ID);
-gboolean gimp_image_scale            (gint32              image_ID,
-                                      gint                new_width,
-                                      gint                new_height);
-gboolean gimp_image_crop             (gint32              image_ID,
-                                      gint                new_width,
-                                      gint                new_height,
-                                      gint                offx,
-                                      gint                offy);
-gboolean gimp_image_flip             (gint32              image_ID,
-                                      GimpOrientationType flip_type);
-gboolean gimp_image_rotate           (gint32              image_ID,
-                                      GimpRotationType    rotate_type);
+gboolean gimp_image_resize           (GimpImage           *image,
+                                      gint                 new_width,
+                                      gint                 new_height,
+                                      gint                 offx,
+                                      gint                 offy);
+gboolean gimp_image_resize_to_layers (GimpImage           *image);
+gboolean gimp_image_scale            (GimpImage           *image,
+                                      gint                 new_width,
+                                      gint                 new_height);
+gboolean gimp_image_crop             (GimpImage           *image,
+                                      gint                 new_width,
+                                      gint                 new_height,
+                                      gint                 offx,
+                                      gint                 offy);
+gboolean gimp_image_flip             (GimpImage           *image,
+                                      GimpOrientationType  flip_type);
+gboolean gimp_image_rotate           (GimpImage           *image,
+                                      GimpRotationType     rotate_type);
 
 
 G_END_DECLS

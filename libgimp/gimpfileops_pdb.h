@@ -32,22 +32,22 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32                   gimp_file_load                       (GimpRunMode  run_mode,
+GimpImage*               gimp_file_load                       (GimpRunMode  run_mode,
                                                                const gchar *filename,
                                                                const gchar *raw_filename);
 gint32                   gimp_file_load_layer                 (GimpRunMode  run_mode,
-                                                               gint32       image_ID,
+                                                               GimpImage   *image,
                                                                const gchar *filename);
 gint*                    gimp_file_load_layers                (GimpRunMode  run_mode,
-                                                               gint32       image_ID,
+                                                               GimpImage   *image,
                                                                const gchar *filename,
                                                                gint        *num_layers);
 gboolean                 gimp_file_save                       (GimpRunMode  run_mode,
-                                                               gint32       image_ID,
+                                                               GimpImage   *image,
                                                                gint32       drawable_ID,
                                                                const gchar *filename,
                                                                const gchar *raw_filename);
-gboolean                 gimp_file_save_thumbnail             (gint32       image_ID,
+gboolean                 gimp_file_save_thumbnail             (GimpImage   *image,
                                                                const gchar *filename);
 G_GNUC_INTERNAL gboolean _gimp_register_magic_load_handler    (const gchar *procedure_name,
                                                                const gchar *extensions,
