@@ -116,7 +116,7 @@ static GtkWidget * gimp_item_combo_box_new (GType                       type,
 static void  gimp_item_combo_box_populate  (GimpIntComboBox            *combo_box);
 static void  gimp_item_combo_box_model_add (GimpIntComboBox            *combo_box,
                                             GtkListStore               *store,
-                                            gint32                      image,
+                                            GimpImage                  *image,
                                             gint                        num_items,
                                             gint32                     *items,
                                             gint                        tree_level);
@@ -397,37 +397,39 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 
   for (i = 0; i < num_images; i++)
     {
-      gint32 *items;
-      gint    num_items;
+      GimpImage *image;
+      gint32    *items;
+      gint       num_items;
+
+      image = g_object_new (GIMP_TYPE_IMAGE, "id", images[i], NULL);
 
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_LAYER_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_layers (images[i], &num_items);
+          items = gimp_image_get_layers (image, &num_items);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
-                                         images[i],
-                                         num_items, items, 0);
+                                         image, num_items, items, 0);
           g_free (items);
         }
 
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_CHANNEL_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_channels (images[i], &num_items);
+          items = gimp_image_get_channels (image, &num_items);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
-                                         images[i],
-                                         num_items, items, 0);
+                                         image, num_items, items, 0);
           g_free (items);
         }
 
       if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_vectors (images[i], &num_items);
+          items = gimp_image_get_vectors (image, &num_items);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
-                                         images[i],
-                                         num_items, items, 0);
+                                         image, num_items, items, 0);
           g_free (items);
         }
+
+      g_object_unref (image);
     }
 
   g_free (images);
@@ -439,7 +441,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 static void
 gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
                                GtkListStore    *store,
-                               gint32           image,
+                               GimpImage       *image,
                                gint             num_items,
                                gint32          *items,
                                gint             tree_level)
@@ -472,7 +474,8 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           GdkPixbuf *thumb;
 
           label = g_strdup_printf ("%s%s-%d / %s-%d",
-                                   indent, image_name, image,
+                                   indent, image_name,
+                                   gimp_image_get_id (image),
                                    item_name, items[i]);
 
           g_free (item_name);
