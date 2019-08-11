@@ -36,7 +36,7 @@
 
 /**
  * gimp_image_select_color:
- * @image_ID: The affected image.
+ * @image: The affected image.
  * @operation: The selection operation.
  * @drawable_ID: The affected drawable.
  * @color: The color to select.
@@ -66,7 +66,7 @@
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_color (gint32          image_ID,
+gimp_image_select_color (GimpImage      *image,
                          GimpChannelOps  operation,
                          gint32          drawable_ID,
                          const GimpRGB  *color)
@@ -77,7 +77,7 @@ gimp_image_select_color (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           GIMP_TYPE_RGB, color,
@@ -101,7 +101,7 @@ gimp_image_select_color (gint32          image_ID,
 
 /**
  * gimp_image_select_contiguous_color:
- * @image_ID: The affected image.
+ * @image: The affected image.
  * @operation: The selection operation.
  * @drawable_ID: The affected drawable.
  * @x: x coordinate of initial seed fill point: (image coordinates).
@@ -141,11 +141,11 @@ gimp_image_select_color (gint32          image_ID,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_contiguous_color (gint32         image_ID,
-                                    GimpChannelOps operation,
-                                    gint32         drawable_ID,
-                                    gdouble        x,
-                                    gdouble        y)
+gimp_image_select_contiguous_color (GimpImage      *image,
+                                    GimpChannelOps  operation,
+                                    gint32          drawable_ID,
+                                    gdouble         x,
+                                    gdouble         y)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -153,7 +153,7 @@ gimp_image_select_contiguous_color (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_DOUBLE, x,
@@ -178,7 +178,7 @@ gimp_image_select_contiguous_color (gint32         image_ID,
 
 /**
  * gimp_image_select_rectangle:
- * @image_ID: The image.
+ * @image: The image.
  * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
@@ -199,12 +199,12 @@ gimp_image_select_contiguous_color (gint32         image_ID,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_rectangle (gint32         image_ID,
-                             GimpChannelOps operation,
-                             gdouble        x,
-                             gdouble        y,
-                             gdouble        width,
-                             gdouble        height)
+gimp_image_select_rectangle (GimpImage      *image,
+                             GimpChannelOps  operation,
+                             gdouble         x,
+                             gdouble         y,
+                             gdouble         width,
+                             gdouble         height)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -212,7 +212,7 @@ gimp_image_select_rectangle (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -238,7 +238,7 @@ gimp_image_select_rectangle (gint32         image_ID,
 
 /**
  * gimp_image_select_round_rectangle:
- * @image_ID: The image.
+ * @image: The image.
  * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
@@ -264,14 +264,14 @@ gimp_image_select_rectangle (gint32         image_ID,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_round_rectangle (gint32         image_ID,
-                                   GimpChannelOps operation,
-                                   gdouble        x,
-                                   gdouble        y,
-                                   gdouble        width,
-                                   gdouble        height,
-                                   gdouble        corner_radius_x,
-                                   gdouble        corner_radius_y)
+gimp_image_select_round_rectangle (GimpImage      *image,
+                                   GimpChannelOps  operation,
+                                   gdouble         x,
+                                   gdouble         y,
+                                   gdouble         width,
+                                   gdouble         height,
+                                   gdouble         corner_radius_x,
+                                   gdouble         corner_radius_y)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -279,7 +279,7 @@ gimp_image_select_round_rectangle (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -307,7 +307,7 @@ gimp_image_select_round_rectangle (gint32         image_ID,
 
 /**
  * gimp_image_select_ellipse:
- * @image_ID: The image.
+ * @image: The image.
  * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of ellipse bounding box.
  * @y: y coordinate of upper-left corner of ellipse bounding box.
@@ -329,12 +329,12 @@ gimp_image_select_round_rectangle (gint32         image_ID,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_ellipse (gint32         image_ID,
-                           GimpChannelOps operation,
-                           gdouble        x,
-                           gdouble        y,
-                           gdouble        width,
-                           gdouble        height)
+gimp_image_select_ellipse (GimpImage      *image,
+                           GimpChannelOps  operation,
+                           gdouble         x,
+                           gdouble         y,
+                           gdouble         width,
+                           gdouble         height)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -342,7 +342,7 @@ gimp_image_select_ellipse (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
@@ -368,7 +368,7 @@ gimp_image_select_ellipse (gint32         image_ID,
 
 /**
  * gimp_image_select_polygon:
- * @image_ID: The image.
+ * @image: The image.
  * @operation: The selection operation.
  * @num_segs: Number of points (count 1 coordinate as two points).
  * @segs: (array length=num_segs) (element-type gdouble): Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
@@ -393,7 +393,7 @@ gimp_image_select_ellipse (gint32         image_ID,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_polygon (gint32          image_ID,
+gimp_image_select_polygon (GimpImage      *image,
                            GimpChannelOps  operation,
                            gint            num_segs,
                            const gdouble  *segs)
@@ -404,7 +404,7 @@ gimp_image_select_polygon (gint32          image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, num_segs,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
@@ -429,7 +429,7 @@ gimp_image_select_polygon (gint32          image_ID,
 
 /**
  * gimp_image_select_item:
- * @image_ID: The image.
+ * @image: The image.
  * @operation: The desired operation with current selection.
  * @item_ID: The item to render to the selection.
  *
@@ -449,9 +449,9 @@ gimp_image_select_polygon (gint32          image_ID,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_item (gint32         image_ID,
-                        GimpChannelOps operation,
-                        gint32         item_ID)
+gimp_image_select_item (GimpImage      *image,
+                        GimpChannelOps  operation,
+                        gint32          item_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -459,7 +459,7 @@ gimp_image_select_item (gint32         image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_OPS, operation,
                                           GIMP_TYPE_ITEM_ID, item_ID,
                                           G_TYPE_NONE);

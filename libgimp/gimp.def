@@ -383,6 +383,7 @@ EXPORTS
 	gimp_image_get_floating_sel
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
+	gimp_image_get_id
 	gimp_image_get_imported_uri
 	gimp_image_get_item_position
 	gimp_image_get_layer_by_name
@@ -399,6 +400,7 @@ EXPORTS
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail
 	gimp_image_get_thumbnail_data
+	gimp_image_get_type
 	gimp_image_get_unit
 	gimp_image_get_uri
 	gimp_image_get_vectors
