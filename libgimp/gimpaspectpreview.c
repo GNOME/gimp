@@ -291,15 +291,15 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
 {
   GimpAspectPreviewPrivate *priv = GET_PRIVATE (preview);
   GtkWidget                *area = gimp_preview_get_area (preview);
+  GimpImage                *image;
   gint                      width;
   gint                      height;
-  gint32                    image_ID;
 
   gimp_preview_get_size (preview, &width, &height);
 
-  image_ID = gimp_item_get_image (priv->drawable_ID);
+  image = gimp_item_get_image (priv->drawable_ID);
 
-  if (gimp_selection_is_empty (image_ID))
+  if (gimp_selection_is_empty (image))
     {
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
                               0, 0,
@@ -316,7 +316,7 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
       gint    w, h;
       gint    bpp;
 
-      selection_ID = gimp_image_get_selection (image_ID);
+      selection_ID = gimp_image_get_selection (image);
 
       w = width;
       h = height;
@@ -336,6 +336,7 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
       g_free (sel);
       g_free (src);
     }
+  g_object_unref (image);
 }
 
 static void

@@ -207,9 +207,12 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
 
   for (i = 0; i < num_images; i++)
     {
-      if (! constraint || (* constraint) (images[i], data))
+      GimpImage *image;
+
+      image = g_object_new (GIMP_TYPE_IMAGE, "id", images[i], NULL);
+      if (! constraint || (* constraint) (image, data))
         {
-          gchar     *image_name = gimp_image_get_name (images[i]);
+          gchar     *image_name = gimp_image_get_name (image);
           gchar     *label;
           GdkPixbuf *thumb;
 
@@ -217,7 +220,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
 
           g_free (image_name);
 
-          thumb = gimp_image_get_thumbnail (images[i],
+          thumb = gimp_image_get_thumbnail (image,
                                             THUMBNAIL_SIZE, THUMBNAIL_SIZE,
                                             GIMP_PIXBUF_SMALL_CHECKS);
 
@@ -233,6 +236,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
 
           g_free (label);
         }
+      g_object_unref (image);
     }
 }
 
@@ -280,7 +284,10 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
                                      &image_ID))
     {
-      if (! gimp_image_is_valid (image_ID))
+      GimpImage *image;
+
+      image = g_object_new (GIMP_TYPE_IMAGE, "id", image_ID, NULL);
+      if (! gimp_image_is_valid (image))
         {
           GtkTreeModel *model;
 
@@ -291,5 +298,6 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
           gtk_list_store_clear (GTK_LIST_STORE (model));
           gimp_image_combo_box_populate (combo_box);
         }
+      g_object_unref (image);
     }
 }
