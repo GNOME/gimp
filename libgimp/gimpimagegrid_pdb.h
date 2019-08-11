@@ -32,28 +32,28 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean      gimp_image_grid_get_spacing          (gint32         image_ID,
+gboolean      gimp_image_grid_get_spacing          (GimpImage     *image,
                                                     gdouble       *xspacing,
                                                     gdouble       *yspacing);
-gboolean      gimp_image_grid_set_spacing          (gint32         image_ID,
+gboolean      gimp_image_grid_set_spacing          (GimpImage     *image,
                                                     gdouble        xspacing,
                                                     gdouble        yspacing);
-gboolean      gimp_image_grid_get_offset           (gint32         image_ID,
+gboolean      gimp_image_grid_get_offset           (GimpImage     *image,
                                                     gdouble       *xoffset,
                                                     gdouble       *yoffset);
-gboolean      gimp_image_grid_set_offset           (gint32         image_ID,
+gboolean      gimp_image_grid_set_offset           (GimpImage     *image,
                                                     gdouble        xoffset,
                                                     gdouble        yoffset);
-gboolean      gimp_image_grid_get_foreground_color (gint32         image_ID,
+gboolean      gimp_image_grid_get_foreground_color (GimpImage     *image,
                                                     GimpRGB       *fgcolor);
-gboolean      gimp_image_grid_set_foreground_color (gint32         image_ID,
+gboolean      gimp_image_grid_set_foreground_color (GimpImage     *image,
                                                     const GimpRGB *fgcolor);
-gboolean      gimp_image_grid_get_background_color (gint32         image_ID,
+gboolean      gimp_image_grid_get_background_color (GimpImage     *image,
                                                     GimpRGB       *bgcolor);
-gboolean      gimp_image_grid_set_background_color (gint32         image_ID,
+gboolean      gimp_image_grid_set_background_color (GimpImage     *image,
                                                     const GimpRGB *bgcolor);
-GimpGridStyle gimp_image_grid_get_style            (gint32         image_ID);
-gboolean      gimp_image_grid_set_style            (gint32         image_ID,
+GimpGridStyle gimp_image_grid_get_style            (GimpImage     *image);
+gboolean      gimp_image_grid_set_style            (GimpImage     *image,
                                                     GimpGridStyle  style);
 
 

@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_text_fontname             (gint32        image_ID,
+gint32   gimp_text_fontname             (GimpImage    *image,
                                          gint32        drawable_ID,
                                          gdouble       x,
                                          gdouble       y,
