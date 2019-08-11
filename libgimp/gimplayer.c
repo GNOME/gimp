@@ -27,13 +27,13 @@
 
 /**
  * gimp_layer_new:
- * @image_ID: The image to which to add the layer.
- * @name: The layer name.
- * @width: The layer width.
- * @height: The layer height.
- * @type: The layer type.
+ * @image:   The image to which to add the layer.
+ * @name:    The layer name.
+ * @width:   The layer width.
+ * @height:  The layer height.
+ * @type:    The layer type.
  * @opacity: The layer opacity.
- * @mode: The layer combination mode.
+ * @mode:    The layer combination mode.
  *
  * Create a new layer.
  *
@@ -47,7 +47,7 @@
  * Returns: The newly created layer.
  */
 gint32
-gimp_layer_new (gint32         image_ID,
+gimp_layer_new (GimpImage     *image,
                 const gchar   *name,
                 gint           width,
                 gint           height,
@@ -55,7 +55,7 @@ gimp_layer_new (gint32         image_ID,
                 gdouble        opacity,
                 GimpLayerMode  mode)
 {
-  return _gimp_layer_new (image_ID,
+  return _gimp_layer_new (image,
                           width,
                           height,
                           type,
@@ -84,7 +84,7 @@ gimp_layer_copy (gint32  layer_ID)
 
 /**
  * gimp_layer_new_from_pixbuf:
- * @image_ID:       The RGB image to which to add the layer.
+ * @image:          The RGB image to which to add the layer.
  * @name:           The layer name.
  * @pixbuf:         A GdkPixbuf.
  * @opacity:        The layer opacity.
@@ -107,7 +107,7 @@ gimp_layer_copy (gint32  layer_ID)
  * Since: 2.4
  */
 gint32
-gimp_layer_new_from_pixbuf (gint32         image_ID,
+gimp_layer_new_from_pixbuf (GimpImage     *image,
                             const gchar   *name,
                             GdkPixbuf     *pixbuf,
                             gdouble        opacity,
@@ -124,7 +124,7 @@ gimp_layer_new_from_pixbuf (gint32         image_ID,
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), -1);
 
-  if (gimp_image_base_type (image_ID) != GIMP_RGB)
+  if (gimp_image_base_type (image) != GIMP_RGB)
     {
       g_warning ("gimp_layer_new_from_pixbuf() needs an RGB image");
       return -1;
@@ -140,7 +140,7 @@ gimp_layer_new_from_pixbuf (gint32         image_ID,
   height = gdk_pixbuf_get_height (pixbuf);
   bpp    = gdk_pixbuf_get_n_channels (pixbuf);
 
-  layer = gimp_layer_new (image_ID, name, width, height,
+  layer = gimp_layer_new (image, name, width, height,
                           bpp == 3 ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
                           opacity, mode);
 
@@ -164,7 +164,7 @@ gimp_layer_new_from_pixbuf (gint32         image_ID,
 
 /**
  * gimp_layer_new_from_surface:
- * @image_ID:        The RGB image to which to add the layer.
+ * @image:           The RGB image to which to add the layer.
  * @name:            The layer name.
  * @surface:         A Cairo image surface.
  * @progress_start:  start of progress
@@ -185,7 +185,7 @@ gimp_layer_new_from_pixbuf (gint32         image_ID,
  * Since: 2.8
  */
 gint32
-gimp_layer_new_from_surface (gint32                image_ID,
+gimp_layer_new_from_surface (GimpImage            *image,
                              const gchar          *name,
                              cairo_surface_t      *surface,
                              gdouble               progress_start,
@@ -203,7 +203,7 @@ gimp_layer_new_from_surface (gint32                image_ID,
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
                         CAIRO_SURFACE_TYPE_IMAGE, -1);
 
-  if (gimp_image_base_type (image_ID) != GIMP_RGB)
+  if (gimp_image_base_type (image) != GIMP_RGB)
     {
       g_warning ("gimp_layer_new_from_surface() needs an RGB image");
       return -1;
@@ -220,11 +220,11 @@ gimp_layer_new_from_surface (gint32                image_ID,
       return -1;
     }
 
-  layer = gimp_layer_new (image_ID, name, width, height,
+  layer = gimp_layer_new (image, name, width, height,
                           format == CAIRO_FORMAT_RGB24 ?
                           GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
                           100.0,
-                          gimp_image_get_default_new_layer_mode (image_ID));
+                          gimp_image_get_default_new_layer_mode (image));
 
   if (layer == -1)
     return -1;

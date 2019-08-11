@@ -40,15 +40,15 @@ typedef struct
 } XmpStructs;
 
 
-static void        gimp_image_metadata_rotate        (gint32             image_ID,
+static void        gimp_image_metadata_rotate        (GimpImage         *image,
                                                       GExiv2Orientation  orientation);
 static GdkPixbuf * gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
                                                       GExiv2Orientation  orientation);
-static void        gimp_image_metadata_rotate_query  (gint32             image_ID,
+static void        gimp_image_metadata_rotate_query  (GimpImage         *image,
                                                       const gchar       *mime_type,
                                                       GimpMetadata      *metadata,
                                                       gboolean           interactive);
-static gboolean    gimp_image_metadata_rotate_dialog (gint32             image_ID,
+static gboolean    gimp_image_metadata_rotate_dialog (GimpImage         *image,
                                                       GExiv2Orientation  orientation,
                                                       const gchar       *parasite_name);
 
@@ -57,7 +57,7 @@ static gboolean    gimp_image_metadata_rotate_dialog (gint32             image_I
 
 /**
  * gimp_image_metadata_load_prepare:
- * @image_ID:  The image
+ * @image:     The image
  * @mime_type: The loaded file's mime-type
  * @file:      The file to load the metadata from
  * @error:     Return location for error
@@ -70,14 +70,14 @@ static gboolean    gimp_image_metadata_rotate_dialog (gint32             image_I
  * Since: 2.10
  */
 GimpMetadata *
-gimp_image_metadata_load_prepare (gint32        image_ID,
+gimp_image_metadata_load_prepare (GimpImage    *image,
                                   const gchar  *mime_type,
                                   GFile        *file,
                                   GError      **error)
 {
   GimpMetadata *metadata;
 
-  g_return_val_if_fail (image_ID > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -94,7 +94,7 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
 
 /**
  * gimp_image_metadata_load_finish:
- * @image_ID:    The image
+ * @image:       The image
  * @mime_type:   The loaded file's mime-type
  * @metadata:    The metadata to set on the image
  * @flags:       Flags to specify what of the metadata to apply to the image
@@ -107,13 +107,13 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
  * Since: 2.10
  */
 void
-gimp_image_metadata_load_finish (gint32                 image_ID,
+gimp_image_metadata_load_finish (GimpImage             *image,
                                  const gchar           *mime_type,
                                  GimpMetadata          *metadata,
                                  GimpMetadataLoadFlags  flags,
                                  gboolean               interactive)
 {
-  g_return_if_fail (image_ID > 0);
+  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (mime_type != NULL);
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
 
@@ -137,7 +137,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
                                         comment);
           g_free (comment);
 
-          gimp_image_attach_parasite (image_ID, parasite);
+          gimp_image_attach_parasite (image, parasite);
           gimp_parasite_free (parasite);
         }
     }
@@ -150,20 +150,20 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
       if (gimp_metadata_get_resolution (metadata, &xres, &yres, &unit))
         {
-          gimp_image_set_resolution (image_ID, xres, yres);
-          gimp_image_set_unit (image_ID, unit);
+          gimp_image_set_resolution (image, xres, yres);
+          gimp_image_set_unit (image, unit);
         }
     }
 
   if (flags & GIMP_METADATA_LOAD_ORIENTATION)
     {
-      gimp_image_metadata_rotate_query (image_ID, mime_type,
+      gimp_image_metadata_rotate_query (image, mime_type,
                                         metadata, interactive);
     }
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
     {
-      GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
+      GimpColorProfile *profile = gimp_image_get_color_profile (image);
 
       /* only look for colorspace information from metadata if the
        * image didn't contain an embedded color profile
@@ -188,19 +188,19 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
             }
 
           if (profile)
-            gimp_image_set_color_profile (image_ID, profile);
+            gimp_image_set_color_profile (image, profile);
         }
 
       if (profile)
         g_object_unref (profile);
     }
 
-  gimp_image_set_metadata (image_ID, metadata);
+  gimp_image_set_metadata (image, metadata);
 }
 
 /**
  * gimp_image_metadata_save_prepare:
- * @image_ID:        The image
+ * @image:           The image
  * @mime_type:       The saved file's mime-type
  * @suggested_flags: Suggested default values for the @flags passed to
  *                   gimp_image_metadata_save_finish()
@@ -225,19 +225,19 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  * Since: 2.10
  */
 GimpMetadata *
-gimp_image_metadata_save_prepare (gint32                 image_ID,
+gimp_image_metadata_save_prepare (GimpImage             *image,
                                   const gchar           *mime_type,
                                   GimpMetadataSaveFlags *suggested_flags)
 {
   GimpMetadata *metadata;
 
-  g_return_val_if_fail (image_ID > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (suggested_flags != NULL, NULL);
 
   *suggested_flags = GIMP_METADATA_SAVE_ALL;
 
-  metadata = gimp_image_get_metadata (image_ID);
+  metadata = gimp_image_get_metadata (image);
 
   if (metadata)
     {
@@ -251,12 +251,12 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
       gchar               buffer[32];
       GExiv2Metadata     *g2metadata = GEXIV2_METADATA (metadata);
 
-      image_width  = gimp_image_width  (image_ID);
-      image_height = gimp_image_height (image_ID);
+      image_width  = gimp_image_width  (image);
+      image_height = gimp_image_height (image);
 
       datetime = g_date_time_new_now_local ();
 
-      comment_parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
+      comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
       if (comment_parasite)
         comment = gimp_parasite_data (comment_parasite);
 
@@ -295,9 +295,9 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
       gimp_metadata_set_pixel_size (metadata,
                                     image_width, image_height);
 
-      gimp_image_get_resolution (image_ID, &xres, &yres);
+      gimp_image_get_resolution (image, &xres, &yres);
       gimp_metadata_set_resolution (metadata, xres, yres,
-                                    gimp_image_get_unit (image_ID));
+                                    gimp_image_get_unit (image));
 
       /* XMP */
 
@@ -406,7 +406,7 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
 
 /**
  * gimp_image_metadata_save_finish:
- * @image_ID:  The image
+ * @image:     The image
  * @mime_type: The saved file's mime-type
  * @metadata:  The metadata to set on the image
  * @flags:     Flags to specify what of the metadata to save
@@ -422,7 +422,7 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
  * Since: 2.10
  */
 gboolean
-gimp_image_metadata_save_finish (gint32                  image_ID,
+gimp_image_metadata_save_finish (GimpImage              *image,
                                  const gchar            *mime_type,
                                  GimpMetadata           *metadata,
                                  GimpMetadataSaveFlags   flags,
@@ -437,7 +437,7 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   gboolean        success = FALSE;
   gint            i;
 
-  g_return_val_if_fail (image_ID > 0, FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (mime_type != NULL, FALSE);
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
@@ -590,8 +590,8 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
 #define EXIF_THUMBNAIL_SIZE 256
 
-      image_width  = gimp_image_width  (image_ID);
-      image_height = gimp_image_height (image_ID);
+      image_width  = gimp_image_width  (image);
+      image_height = gimp_image_height (image);
 
       if (image_width > image_height)
         {
@@ -604,7 +604,7 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           thumbw = EXIF_THUMBNAIL_SIZE * image_width / image_height;
         }
 
-      thumb_pixbuf = gimp_image_get_thumbnail (image_ID, thumbw, thumbh,
+      thumb_pixbuf = gimp_image_get_thumbnail (image, thumbw, thumbh,
                                                GIMP_PIXBUF_KEEP_ALPHA);
 
       if (gdk_pixbuf_save_to_buffer (thumb_pixbuf, &thumb_buffer, &count,
@@ -659,7 +659,16 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   return success;
 }
 
-gint32
+/**
+ * gimp_image_metadata_load_thumbnail:
+ * @file:  A #GFile image
+ * @error: Return location for error message
+ *
+ * Retrieves a thumbnail from metadata if present.
+ *
+ * Returns: (transfer full) (nullable): a #GimpImage of the @file thumbnail.
+ */
+GimpImage *
 gimp_image_metadata_load_thumbnail (GFile   *file,
                                     GError **error)
 {
@@ -668,21 +677,21 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
   GdkPixbuf    *pixbuf;
   guint8       *thumbnail_buffer;
   gint          thumbnail_size;
-  gint32        image_ID = -1;
+  GimpImage    *image = NULL;
 
-  g_return_val_if_fail (G_IS_FILE (file), -1);
-  g_return_val_if_fail (error == NULL || *error == NULL, -1);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   metadata = gimp_metadata_load_from_file (file, error);
   if (! metadata)
-    return -1;
+    return NULL;
 
   if (! gexiv2_metadata_get_exif_thumbnail (GEXIV2_METADATA (metadata),
                                             &thumbnail_buffer,
                                             &thumbnail_size))
     {
       g_object_unref (metadata);
-      return -1;
+      return NULL;
     }
 
   input_stream = g_memory_input_stream_new_from_data (thumbnail_buffer,
@@ -695,34 +704,34 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
     {
       gint32 layer_ID;
 
-      image_ID = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
+      image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
                                  gdk_pixbuf_get_height (pixbuf),
                                  GIMP_RGB);
-      gimp_image_undo_disable (image_ID);
+      gimp_image_undo_disable (image);
 
-      layer_ID = gimp_layer_new_from_pixbuf (image_ID, _("Background"),
+      layer_ID = gimp_layer_new_from_pixbuf (image, _("Background"),
                                              pixbuf,
                                              100.0,
-                                             gimp_image_get_default_new_layer_mode (image_ID),
+                                             gimp_image_get_default_new_layer_mode (image),
                                              0.0, 0.0);
       g_object_unref (pixbuf);
 
-      gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+      gimp_image_insert_layer (image, layer_ID, -1, 0);
 
-      gimp_image_metadata_rotate (image_ID,
+      gimp_image_metadata_rotate (image,
                                   gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)));
     }
 
   g_object_unref (metadata);
 
-  return image_ID;
+  return image;
 }
 
 
 /*  private functions  */
 
 static void
-gimp_image_metadata_rotate (gint32             image_ID,
+gimp_image_metadata_rotate (GimpImage         *image,
                             GExiv2Orientation  orientation)
 {
   switch (orientation)
@@ -732,33 +741,33 @@ gimp_image_metadata_rotate (gint32             image_ID,
       break;
 
     case GEXIV2_ORIENTATION_HFLIP:
-      gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
+      gimp_image_flip (image, GIMP_ORIENTATION_HORIZONTAL);
       break;
 
     case GEXIV2_ORIENTATION_ROT_180:
-      gimp_image_rotate (image_ID, GIMP_ROTATE_180);
+      gimp_image_rotate (image, GIMP_ROTATE_180);
       break;
 
     case GEXIV2_ORIENTATION_VFLIP:
-      gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
+      gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90_HFLIP:  /* flipped diagonally around '\' */
-      gimp_image_rotate (image_ID, GIMP_ROTATE_90);
-      gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
+      gimp_image_rotate (image, GIMP_ROTATE_90);
+      gimp_image_flip (image, GIMP_ORIENTATION_HORIZONTAL);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90:  /* 90 CW */
-      gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+      gimp_image_rotate (image, GIMP_ROTATE_90);
       break;
 
     case GEXIV2_ORIENTATION_ROT_90_VFLIP:  /* flipped diagonally around '/' */
-      gimp_image_rotate (image_ID, GIMP_ROTATE_90);
-      gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
+      gimp_image_rotate (image, GIMP_ROTATE_90);
+      gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
       break;
 
     case GEXIV2_ORIENTATION_ROT_270:  /* 90 CCW */
-      gimp_image_rotate (image_ID, GIMP_ROTATE_270);
+      gimp_image_rotate (image, GIMP_ROTATE_270);
       break;
 
     default: /* shouldn't happen */
@@ -820,7 +829,7 @@ gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
 }
 
 static void
-gimp_image_metadata_rotate_query (gint32        image_ID,
+gimp_image_metadata_rotate_query (GimpImage    *image,
                                   const gchar  *mime_type,
                                   GimpMetadata *metadata,
                                   gboolean      interactive)
@@ -858,7 +867,7 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
       gimp_parasite_free (parasite);
     }
 
-  if (query && ! gimp_image_metadata_rotate_dialog (image_ID,
+  if (query && ! gimp_image_metadata_rotate_dialog (image,
                                                     orientation,
                                                     parasite_name))
     {
@@ -868,13 +877,13 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
 
   g_free (parasite_name);
 
-  gimp_image_metadata_rotate (image_ID, orientation);
+  gimp_image_metadata_rotate (image, orientation);
   gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
                                    GEXIV2_ORIENTATION_NORMAL);
 }
 
 static gboolean
-gimp_image_metadata_rotate_dialog (gint32             image_ID,
+gimp_image_metadata_rotate_dialog (GimpImage         *image,
                                    GExiv2Orientation  orientation,
                                    const gchar       *parasite_name)
 {
@@ -888,7 +897,7 @@ gimp_image_metadata_rotate_dialog (gint32             image_ID,
   gchar     *title;
   gint       response;
 
-  name = gimp_image_get_name (image_ID);
+  name = gimp_image_get_name (image);
   title = g_strdup_printf (_("Rotate %s?"), name);
   g_free (name);
 
@@ -918,7 +927,7 @@ gimp_image_metadata_rotate_dialog (gint32             image_ID,
 
 #define THUMBNAIL_SIZE 128
 
-  pixbuf = gimp_image_get_thumbnail (image_ID,
+  pixbuf = gimp_image_get_thumbnail (image,
                                      THUMBNAIL_SIZE, THUMBNAIL_SIZE,
                                      GIMP_PIXBUF_SMALL_CHECKS);
 

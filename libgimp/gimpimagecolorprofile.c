@@ -25,7 +25,7 @@
 
 /**
  * gimp_image_get_color_profile:
- * @image_ID: The image.
+ * @image: The image.
  *
  * Returns the image's color profile
  *
@@ -38,12 +38,12 @@
  * Since: 2.10
  **/
 GimpColorProfile *
-gimp_image_get_color_profile (gint32 image_ID)
+gimp_image_get_color_profile (GimpImage *image)
 {
   guint8 *data;
   gint    length;
 
-  data = _gimp_image_get_color_profile (image_ID, &length);
+  data = _gimp_image_get_color_profile (image, &length);
 
   if (data)
     {
@@ -60,8 +60,8 @@ gimp_image_get_color_profile (gint32 image_ID)
 
 /**
  * gimp_image_set_color_profile:
- * @image_ID: The image.
- * @profile:  A #GimpColorProfile, or %NULL.
+ * @image:   The image.
+ * @profile: A #GimpColorProfile, or %NULL.
  *
  * Sets the image's color profile
  *
@@ -72,7 +72,7 @@ gimp_image_get_color_profile (gint32 image_ID)
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_color_profile (gint32            image_ID,
+gimp_image_set_color_profile (GimpImage        *image,
                               GimpColorProfile *profile)
 {
   const guint8 *data   = NULL;
@@ -89,12 +89,12 @@ gimp_image_set_color_profile (gint32            image_ID,
       length = l;
     }
 
-  return _gimp_image_set_color_profile (image_ID, length, data);
+  return _gimp_image_set_color_profile (image, length, data);
 }
 
 /**
  * gimp_image_get_effective_color_profile:
- * @image_ID: The image.
+ * @image: The image.
  *
  * Returns the color profile that is used for the image.
  *
@@ -111,12 +111,12 @@ gimp_image_set_color_profile (gint32            image_ID,
  * Since: 2.10
  **/
 GimpColorProfile *
-gimp_image_get_effective_color_profile (gint32 image_ID)
+gimp_image_get_effective_color_profile (GimpImage *image)
 {
   guint8 *data;
   gint    length;
 
-  data = _gimp_image_get_effective_color_profile (image_ID, &length);
+  data = _gimp_image_get_effective_color_profile (image, &length);
 
   if (data)
     {
@@ -133,10 +133,10 @@ gimp_image_get_effective_color_profile (gint32 image_ID)
 
 /**
  * gimp_image_convert_color_profile:
- * @image_ID: The image.
- * @profile:  The color profile to convert to.
- * @intent:   Rendering intent.
- * @bpc:      Black point compensation.
+ * @image:   The image.
+ * @profile: The color profile to convert to.
+ * @intent:  Rendering intent.
+ * @bpc:     Black point compensation.
  *
  * Convert the image's layers to a color profile
  *
@@ -149,7 +149,7 @@ gimp_image_get_effective_color_profile (gint32 image_ID)
  * Since: 2.10
  **/
 gboolean
-gimp_image_convert_color_profile (gint32                     image_ID,
+gimp_image_convert_color_profile (GimpImage                 *image,
                                   GimpColorProfile          *profile,
                                   GimpColorRenderingIntent   intent,
                                   gboolean                   bpc)
@@ -168,6 +168,6 @@ gimp_image_convert_color_profile (gint32                     image_ID,
       length = l;
     }
 
-  return _gimp_image_convert_color_profile (image_ID, length, data,
+  return _gimp_image_convert_color_profile (image, length, data,
                                             intent, bpc);
 }
