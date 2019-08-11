@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-05-10 15:39+0000\n"
-"PO-Revision-Date: 2019-05-11 01:29+0300\n"
+"POT-Creation-Date: 2019-08-05 20:15+0000\n"
+"PO-Revision-Date: 2019-08-06 14:35+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -30,22 +30,22 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1267
+#: ../libgimp/gimp.c:1265
 msgid "success"
 msgstr "başarılı"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1271
+#: ../libgimp/gimp.c:1269
 msgid "execution error"
 msgstr "uygulama hatası"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1275
+#: ../libgimp/gimp.c:1273
 msgid "calling error"
 msgstr "çağırma hatası"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1279
+#: ../libgimp/gimp.c:1277
 msgid "cancelled"
 msgstr "iptal edildi"
 
@@ -53,82 +53,87 @@ msgstr "iptal edildi"
 msgid "Brush Selection"
 msgstr "Fırça Seçimi"
 
-#: ../libgimp/gimpbrushselectbutton.c:925
-#: ../libgimp/gimppatternselectbutton.c:723
+#: ../libgimp/gimpbrushselectbutton.c:920
+#: ../libgimp/gimppatternselectbutton.c:718
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s eklentisi katmanları kullanamaz"
 
-#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:307
 msgid "Merge Visible Layers"
 msgstr "Görünür Katmanları Birleştir"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s eklentisi katmanın konumlarını, boyutunu ya da matlığını kullanamaz"
 
-#: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:297
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:298
 msgid "Save as Animation"
 msgstr "Canlandırma olarak kaydet"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:298 ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:325
 msgid "Flatten Image"
 msgstr "Görüntüyü Düzleştir"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s eklentisi saydamlığı kullanamaz"
 
-#: ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:324
+#, c-format
+msgid "%s plug-in can't handle transparent layers"
+msgstr "%s eklentisi saydam katmanları kullanamaz"
+
+#: ../libgimp/gimpexport.c:333
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s eklentisi katman maskelerini kullanamaz"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:334
 msgid "Apply Layer Masks"
 msgstr "Katman Maskelerini Uygula"
 
-#: ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:342
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s eklentisi yalnızca RGB görüntülerini kullanabilir"
 
-#: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:343 ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:390
 msgid "Convert to RGB"
 msgstr "RGB'ye çevir"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:351
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s eklentisi yalnızca gri tonlamalı görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:352 ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:402
 msgid "Convert to Grayscale"
 msgstr "Gri Tonlamaya çevir"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:360
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s eklentisi yalnızca indekslenmiş görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
-#: ../libgimp/gimpexport.c:372
+#: ../libgimp/gimpexport.c:361 ../libgimp/gimpexport.c:390
+#: ../libgimp/gimpexport.c:400
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -136,13 +141,13 @@ msgstr ""
 "Varsayılan ayarları kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:370
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s eklentisi yalnızca bit eşlem (iki renk) indeksli görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:343
+#: ../libgimp/gimpexport.c:371
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -150,63 +155,63 @@ msgstr ""
 "Bit eşlem varsayılan ayarlarını kullanarak indeksliye dönüştür\n"
 "(Sonucu ayarlamak için bunu kendiniz yapın)"
 
-#: ../libgimp/gimpexport.c:352
+#: ../libgimp/gimpexport.c:380
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s eklentisi yalnızca RGB ya da gri tonlamalı görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:361
+#: ../libgimp/gimpexport.c:389
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "%s eklentisi yalnızca RGB ya da indeksli görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:399
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s eklentisi yalnızca gri tonlamalı ya da indeksli görüntüleri kullanabilir"
 
-#: ../libgimp/gimpexport.c:382
+#: ../libgimp/gimpexport.c:410
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s eklentisi bir alfa kanalına gereksiniyor"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libgimp/gimpexport.c:411
 msgid "Add Alpha Channel"
 msgstr "Alfa Kanalı Ekle"
 
-#: ../libgimp/gimpexport.c:442
+#: ../libgimp/gimpexport.c:470
 msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
-#: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1022 ../libgimpwidgets/gimpcolorbutton.c:572
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#: ../libgimp/gimpexport.c:475 ../libgimp/gimpexport.c:557
+#: ../libgimp/gimpexport.c:1055 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: ../libgimp/gimpexport.c:448
+#: ../libgimp/gimpexport.c:476
 msgid "C_onfirm"
 msgstr "_Onayla"
 
-#: ../libgimp/gimpexport.c:524
+#: ../libgimp/gimpexport.c:552
 msgid "Export File"
 msgstr "Dosyayı Dışarı Aktar"
 
-#: ../libgimp/gimpexport.c:528
+#: ../libgimp/gimpexport.c:556
 msgid "_Ignore"
 msgstr "_Yoksay"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1023
+#: ../libgimp/gimpexport.c:558 ../libgimp/gimpexport.c:1056
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
 #. the headline
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:588
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -216,11 +221,11 @@ msgstr ""
 "aktarılmalıdır:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:634
+#: ../libgimp/gimpexport.c:662
 msgid "The export conversion won't modify your original image."
 msgstr "Dışarı aktarma işlemi orjinal özgün görüntüde değişiklik yapmaz."
 
-#: ../libgimp/gimpexport.c:741
+#: ../libgimp/gimpexport.c:766
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -229,7 +234,7 @@ msgstr ""
 "Bir katman maskesini %s olarak imlemek üzeresiniz.\n"
 "Bu işlem görünür katmanları kaydetmeyecektir."
 
-#: ../libgimp/gimpexport.c:747
+#: ../libgimp/gimpexport.c:772
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -239,7 +244,7 @@ msgstr ""
 "Bu işlem görünür katmanları kaydetmeyecektir."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1016
+#: ../libgimp/gimpexport.c:1049
 #, c-format
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
@@ -1127,332 +1132,332 @@ msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Düzleştir"
 
-#: ../libgimpbase/gimpbaseenums.c:1222
+#: ../libgimpbase/gimpbaseenums.c:1224
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Yatay"
 
-#: ../libgimpbase/gimpbaseenums.c:1223
+#: ../libgimpbase/gimpbaseenums.c:1225
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Dikey"
 
-#: ../libgimpbase/gimpbaseenums.c:1224
+#: ../libgimpbase/gimpbaseenums.c:1226
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: ../libgimpbase/gimpbaseenums.c:1253
+#: ../libgimpbase/gimpbaseenums.c:1255
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Sabit"
 
-#: ../libgimpbase/gimpbaseenums.c:1254
+#: ../libgimpbase/gimpbaseenums.c:1256
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Artan"
 
-#: ../libgimpbase/gimpbaseenums.c:1387
+#: ../libgimpbase/gimpbaseenums.c:1389
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Dahili GIMP yordamı"
 
-#: ../libgimpbase/gimpbaseenums.c:1388
+#: ../libgimpbase/gimpbaseenums.c:1390
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "GIMP Eklentisi"
 
-#: ../libgimpbase/gimpbaseenums.c:1389
+#: ../libgimpbase/gimpbaseenums.c:1391
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP Uzantısı"
 
-#: ../libgimpbase/gimpbaseenums.c:1390
+#: ../libgimpbase/gimpbaseenums.c:1392
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Geçici Yordam"
 
-#: ../libgimpbase/gimpbaseenums.c:1465
+#: ../libgimpbase/gimpbaseenums.c:1467
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8-bit doğrusal tam sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1466
+#: ../libgimpbase/gimpbaseenums.c:1468
 msgctxt "precision"
 msgid "8-bit gamma integer"
 msgstr "8-bit gama tam sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1467
+#: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16-bit doğrusal tam sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1468
+#: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "precision"
 msgid "16-bit gamma integer"
 msgstr "16-bit gama tam sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32-bit doğrusal tam sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "precision"
 msgid "32-bit gamma integer"
 msgstr "32-bit gama tam sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16-bit doğrusal kayan noktalı sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: ../libgimpbase/gimpbaseenums.c:1474
 msgctxt "precision"
 msgid "16-bit gamma floating point"
 msgstr "16-bit gama kayan noktalı sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1473
+#: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32-bit doğrusal kayan noktalı sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1474
+#: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "precision"
 msgid "32-bit gamma floating point"
 msgstr "32-bit gama kayan noktalı sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1475
+#: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64-bit doğrusal kayan noktalı sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1476
+#: ../libgimpbase/gimpbaseenums.c:1478
 msgctxt "precision"
 msgid "64-bit gamma floating point"
 msgstr "64-bit gama kayan noktalı sayı değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1545
+#: ../libgimpbase/gimpbaseenums.c:1547
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Hiçbiri (büyüt)"
 
-#: ../libgimpbase/gimpbaseenums.c:1546
+#: ../libgimpbase/gimpbaseenums.c:1548
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Testere dişi dalga"
 
-#: ../libgimpbase/gimpbaseenums.c:1547
+#: ../libgimpbase/gimpbaseenums.c:1549
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Üçgensel dalga"
 
-#: ../libgimpbase/gimpbaseenums.c:1548
+#: ../libgimpbase/gimpbaseenums.c:1550
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Kırp"
 
-#: ../libgimpbase/gimpbaseenums.c:1610
+#: ../libgimpbase/gimpbaseenums.c:1612
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Etkileşimli çalıştır"
 
-#: ../libgimpbase/gimpbaseenums.c:1611
+#: ../libgimpbase/gimpbaseenums.c:1613
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Etkileşimsiz çalıştır"
 
-#: ../libgimpbase/gimpbaseenums.c:1612
+#: ../libgimpbase/gimpbaseenums.c:1614
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Kullanılmış son değerlerle çalıştır"
 
-#: ../libgimpbase/gimpbaseenums.c:1650
+#: ../libgimpbase/gimpbaseenums.c:1652
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Bileşik"
 
-#: ../libgimpbase/gimpbaseenums.c:1651
+#: ../libgimpbase/gimpbaseenums.c:1653
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Kırmızı"
 
-#: ../libgimpbase/gimpbaseenums.c:1652
+#: ../libgimpbase/gimpbaseenums.c:1654
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Yeşil"
 
-#: ../libgimpbase/gimpbaseenums.c:1653
+#: ../libgimpbase/gimpbaseenums.c:1655
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Mavi"
 
-#: ../libgimpbase/gimpbaseenums.c:1654
+#: ../libgimpbase/gimpbaseenums.c:1656
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "HSV Renk Tonu"
 
-#: ../libgimpbase/gimpbaseenums.c:1655
+#: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "HSV Doygunluğu"
 
-#: ../libgimpbase/gimpbaseenums.c:1656
+#: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "HSV Değeri"
 
-#: ../libgimpbase/gimpbaseenums.c:1657
+#: ../libgimpbase/gimpbaseenums.c:1659
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1658
+#: ../libgimpbase/gimpbaseenums.c:1660
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "LCh Açıklık"
 
-#: ../libgimpbase/gimpbaseenums.c:1659
+#: ../libgimpbase/gimpbaseenums.c:1661
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCh Renk Saflığı"
 
-#: ../libgimpbase/gimpbaseenums.c:1660
+#: ../libgimpbase/gimpbaseenums.c:1662
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCh Renk Tonu"
 
-#: ../libgimpbase/gimpbaseenums.c:1689
+#: ../libgimpbase/gimpbaseenums.c:1691
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Piksel"
 
-#: ../libgimpbase/gimpbaseenums.c:1690
+#: ../libgimpbase/gimpbaseenums.c:1692
 msgctxt "size-type"
 msgid "Points"
 msgstr "Nokta"
 
-#: ../libgimpbase/gimpbaseenums.c:1751
+#: ../libgimpbase/gimpbaseenums.c:1753
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Darbe çizgisi"
 
-#: ../libgimpbase/gimpbaseenums.c:1752
+#: ../libgimpbase/gimpbaseenums.c:1754
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Bir boya aracıyla darbele"
 
-#: ../libgimpbase/gimpbaseenums.c:1785
+#: ../libgimpbase/gimpbaseenums.c:1787
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Soldan sağa"
 
-#: ../libgimpbase/gimpbaseenums.c:1786
+#: ../libgimpbase/gimpbaseenums.c:1788
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Sağdan sola"
 
-#: ../libgimpbase/gimpbaseenums.c:1787
+#: ../libgimpbase/gimpbaseenums.c:1789
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Dikey, sağdan sola (karışık yönelim)"
 
-#: ../libgimpbase/gimpbaseenums.c:1788
+#: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Dikey, sağdan sola (dik yönelim)"
 
-#: ../libgimpbase/gimpbaseenums.c:1789
+#: ../libgimpbase/gimpbaseenums.c:1791
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Dikey, sağdan sola (karışık yönelim)"
 
-#: ../libgimpbase/gimpbaseenums.c:1790
+#: ../libgimpbase/gimpbaseenums.c:1792
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Dikey, soldan sağa (dik yönelim)"
 
-#: ../libgimpbase/gimpbaseenums.c:1821
+#: ../libgimpbase/gimpbaseenums.c:1823
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: ../libgimpbase/gimpbaseenums.c:1822
+#: ../libgimpbase/gimpbaseenums.c:1824
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Düşük"
 
-#: ../libgimpbase/gimpbaseenums.c:1823
+#: ../libgimpbase/gimpbaseenums.c:1825
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Orta"
 
-#: ../libgimpbase/gimpbaseenums.c:1824
+#: ../libgimpbase/gimpbaseenums.c:1826
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Tam"
 
-#: ../libgimpbase/gimpbaseenums.c:1855
+#: ../libgimpbase/gimpbaseenums.c:1857
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Sola hizalı"
 
-#: ../libgimpbase/gimpbaseenums.c:1856
+#: ../libgimpbase/gimpbaseenums.c:1858
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Sağa hizalı"
 
-#: ../libgimpbase/gimpbaseenums.c:1857
+#: ../libgimpbase/gimpbaseenums.c:1859
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Ortalanmış"
 
-#: ../libgimpbase/gimpbaseenums.c:1858
+#: ../libgimpbase/gimpbaseenums.c:1860
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Doldurulmuş"
 
-#: ../libgimpbase/gimpbaseenums.c:1888
+#: ../libgimpbase/gimpbaseenums.c:1890
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Gölgeler"
 
-#: ../libgimpbase/gimpbaseenums.c:1889
+#: ../libgimpbase/gimpbaseenums.c:1891
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Orta tonlar"
 
-#: ../libgimpbase/gimpbaseenums.c:1890
+#: ../libgimpbase/gimpbaseenums.c:1892
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Vurgular"
 
-#: ../libgimpbase/gimpbaseenums.c:1919
+#: ../libgimpbase/gimpbaseenums.c:1921
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (İleri)"
 
-#: ../libgimpbase/gimpbaseenums.c:1920
+#: ../libgimpbase/gimpbaseenums.c:1922
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Düzeltici (Geri)"
 
-#: ../libgimpbase/gimpbaseenums.c:1951
+#: ../libgimpbase/gimpbaseenums.c:1953
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ayarla"
 
-#: ../libgimpbase/gimpbaseenums.c:1952
+#: ../libgimpbase/gimpbaseenums.c:1954
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Kırp"
 
-#: ../libgimpbase/gimpbaseenums.c:1953
+#: ../libgimpbase/gimpbaseenums.c:1955
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Sonuca kırp"
 
-#: ../libgimpbase/gimpbaseenums.c:1954
+#: ../libgimpbase/gimpbaseenums.c:1956
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "En boy oranı ile kırp"
@@ -1786,30 +1791,30 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s için alınan değer geçerli bir UTF-8 dizgisi değil"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:466
+#: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "%s boolean anahtarı için beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:568
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "geçersiz değer '%s' (anahtar %s)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:583
+#: ../libgimpconfig/gimpconfig-deserialize.c:599
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "geçersiz değer '%ld' (anahtar %s)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:652
+#: ../libgimpconfig/gimpconfig-deserialize.c:668
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "'%s' belirteci ayrıştırılırken: '%s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:682
-#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:743
-#: ../libgimpconfig/gimpscanner.c:825
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:756
+#: ../libgimpconfig/gimpscanner.c:838
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "ölümcül ayrıştırma hatası"
@@ -1850,36 +1855,36 @@ msgid "invalid UTF-8 string"
 msgstr "geçersiz UTF-8 dizgisi"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:618
+#: ../libgimpconfig/gimpscanner.c:631
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "beklenen değer 'yes' ya da 'no', alınan değer '%s'"
 
-#: ../libgimpconfig/gimpscanner.c:852
+#: ../libgimpconfig/gimpscanner.c:865
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "'%s' ayrıştırılırken %d satırı içinde hata: %s"
 
-#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
-#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
-#: ../libgimpmodule/gimpmodule.c:442
+#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
+#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
+#: ../libgimpmodule/gimpmodule.c:428
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "'%s' modülü yükleme hatası: %s"
 
-#: ../libgimpmodule/gimpmodule.c:384
+#: ../libgimpmodule/gimpmodule.c:370
 msgid "Module error"
 msgstr "Modül hatası"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:371
 msgid "Loaded"
 msgstr "Yüklendi"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:372
 msgid "Load failed"
 msgstr "Yükleme başarısız"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:373
 msgid "Not loaded"
 msgstr "Yüklenmedi"
 
@@ -1899,12 +1904,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "'%s' küçük resim klasörü oluşturmada hata."
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libgimpthumb/gimpthumbnail.c:479
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Küçük resim içeriğinde Thumb::URI etiketi yok"
 
-#: ../libgimpthumb/gimpthumbnail.c:905
+#: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "%s için küçük resim oluşturulamadı: %s"
@@ -1913,27 +1918,27 @@ msgstr "%s için küçük resim oluşturulamadı: %s"
 msgid "_Search:"
 msgstr "_Ara:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:152
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_Foreground Color"
 msgstr "Ö_nalan Rengi"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:156
+#: ../libgimpwidgets/gimpcolorbutton.c:151
 msgid "_Background Color"
 msgstr "_Artalan Rengi"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:160
+#: ../libgimpwidgets/gimpcolorbutton.c:155
 msgid "Blac_k"
 msgstr "Siya_h"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:164
+#: ../libgimpwidgets/gimpcolorbutton.c:159
 msgid "_White"
 msgstr "_Beyaz"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:571 ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpcolorbutton.c:548 ../libgimpwidgets/gimpicons.c:68
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:573
+#: ../libgimpwidgets/gimpcolorbutton.c:550
 #: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
 #: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
 #: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
@@ -1948,29 +1953,29 @@ msgstr ""
 "HTML ve CSS içinde kullanılıan onaltılı renk gösterimi. Bu giriş ayrıca CSS "
 "renk adlarını da kabul eder."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:98
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
 msgstr "Tüm dosyalar (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:103
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC renk profili (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:164
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
 msgstr "_Kaydet"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Aç"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:336
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:345
 #: ../libgimpwidgets/gimppatheditor.c:270
 msgid "Folder"
 msgstr "Klasör"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:341
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:350
 msgid "Not a regular file."
 msgstr "Düzenli bir dosya değil."
 
@@ -1983,11 +1988,11 @@ msgctxt "profile"
 msgid "None"
 msgstr "Hiçbiri"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:159
+#: ../libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Üretici: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:171
+#: ../libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Telif Hakkı: "
 
@@ -2412,22 +2417,22 @@ msgstr "HSV"
 msgid "HSV color model"
 msgstr "HSV renk modeli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:199
+#: ../libgimpwidgets/gimpwidgetsenums.c:231
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Katmanlar"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:200
+#: ../libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Görüntüler"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:261
+#: ../libgimpwidgets/gimpwidgetsenums.c:293
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Yakınlaştır"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:262
+#: ../libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Uzaklaştır"
