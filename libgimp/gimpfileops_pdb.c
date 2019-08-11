@@ -50,9 +50,9 @@
  * https://www.gimp.org/foo.png he wants to fetch a URL, and the full
  * pathname will not look like a URL.
  *
- * Returns: The output image.
+ * Returns: (transfer full): The output image.
  **/
-gint32
+GimpImage *
 gimp_file_load (GimpRunMode  run_mode,
                 const gchar *filename,
                 const gchar *raw_filename)
@@ -60,7 +60,7 @@ gimp_file_load (GimpRunMode  run_mode,
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 image_ID = -1;
+  GimpImage *image = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
@@ -78,17 +78,17 @@ gimp_file_load (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
 
   gimp_value_array_unref (return_vals);
 
-  return image_ID;
+  return image;
 }
 
 /**
  * gimp_file_load_layer:
  * @run_mode: The run mode.
- * @image_ID: Destination image.
+ * @image: Destination image.
  * @filename: The name of the file to load.
  *
  * Loads an image file as a layer for an existing image.
@@ -104,7 +104,7 @@ gimp_file_load (GimpRunMode  run_mode,
  **/
 gint32
 gimp_file_load_layer (GimpRunMode  run_mode,
-                      gint32       image_ID,
+                      GimpImage   *image,
                       const gchar *filename)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -114,7 +114,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -138,7 +138,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
 /**
  * gimp_file_load_layers:
  * @run_mode: The run mode.
- * @image_ID: Destination image.
+ * @image: Destination image.
  * @filename: The name of the file to load.
  * @num_layers: (out): The number of loaded layers.
  *
@@ -157,7 +157,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  **/
 gint *
 gimp_file_load_layers (GimpRunMode  run_mode,
-                       gint32       image_ID,
+                       GimpImage   *image,
                        const gchar *filename,
                        gint        *num_layers)
 {
@@ -168,7 +168,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 
@@ -197,7 +197,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
 /**
  * gimp_file_save:
  * @run_mode: The run mode.
- * @image_ID: Input image.
+ * @image: Input image.
  * @drawable_ID: Drawable to save.
  * @filename: The name of the file to save the image in.
  * @raw_filename: The name as entered by the user.
@@ -216,7 +216,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  **/
 gboolean
 gimp_file_save (GimpRunMode  run_mode,
-                gint32       image_ID,
+                GimpImage   *image,
                 gint32       drawable_ID,
                 const gchar *filename,
                 const gchar *raw_filename)
@@ -228,7 +228,7 @@ gimp_file_save (GimpRunMode  run_mode,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_STRING, filename,
                                           G_TYPE_STRING, raw_filename,
@@ -252,7 +252,7 @@ gimp_file_save (GimpRunMode  run_mode,
 
 /**
  * gimp_file_save_thumbnail:
- * @image_ID: The image.
+ * @image: The image.
  * @filename: The name of the file the thumbnail belongs to.
  *
  * Saves a thumbnail for the given image
@@ -267,7 +267,7 @@ gimp_file_save (GimpRunMode  run_mode,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save_thumbnail (gint32       image_ID,
+gimp_file_save_thumbnail (GimpImage   *image,
                           const gchar *filename)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -276,7 +276,7 @@ gimp_file_save_thumbnail (gint32       image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_NONE);
 

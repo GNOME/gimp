@@ -36,7 +36,7 @@
 
 /**
  * _gimp_channel_new:
- * @image_ID: The image to which to add the channel.
+ * @image: The image to which to add the channel.
  * @width: The channel width.
  * @height: The channel height.
  * @name: The channel name.
@@ -56,7 +56,7 @@
  * Returns: The newly created channel.
  **/
 gint32
-_gimp_channel_new (gint32         image_ID,
+_gimp_channel_new (GimpImage     *image,
                    gint           width,
                    gint           height,
                    const gchar   *name,
@@ -69,7 +69,7 @@ _gimp_channel_new (gint32         image_ID,
   gint32 channel_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, width,
                                           GIMP_TYPE_INT32, height,
                                           G_TYPE_STRING, name,
@@ -96,7 +96,7 @@ _gimp_channel_new (gint32         image_ID,
 
 /**
  * gimp_channel_new_from_component:
- * @image_ID: The image to which to add the channel.
+ * @image: The image to which to add the channel.
  * @component: The image component.
  * @name: The channel name.
  *
@@ -113,7 +113,7 @@ _gimp_channel_new (gint32         image_ID,
  * Since: 2.4
  **/
 gint32
-gimp_channel_new_from_component (gint32           image_ID,
+gimp_channel_new_from_component (GimpImage       *image,
                                  GimpChannelType  component,
                                  const gchar     *name)
 {
@@ -123,7 +123,7 @@ gimp_channel_new_from_component (gint32           image_ID,
   gint32 channel_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);

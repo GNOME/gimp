@@ -36,7 +36,7 @@
 
 /**
  * gimp_image_add_hguide:
- * @image_ID: The image.
+ * @image: The image.
  * @yposition: The guide's y-offset from top of image.
  *
  * Add a horizontal guide to an image.
@@ -48,8 +48,8 @@
  * Returns: The new guide.
  **/
 gint32
-gimp_image_add_hguide (gint32 image_ID,
-                       gint   yposition)
+gimp_image_add_hguide (GimpImage *image,
+                       gint       yposition)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -57,7 +57,7 @@ gimp_image_add_hguide (gint32 image_ID,
   gint32 guide_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, yposition,
                                           G_TYPE_NONE);
 
@@ -80,7 +80,7 @@ gimp_image_add_hguide (gint32 image_ID,
 
 /**
  * gimp_image_add_vguide:
- * @image_ID: The image.
+ * @image: The image.
  * @xposition: The guide's x-offset from left of image.
  *
  * Add a vertical guide to an image.
@@ -92,8 +92,8 @@ gimp_image_add_hguide (gint32 image_ID,
  * Returns: The new guide.
  **/
 gint32
-gimp_image_add_vguide (gint32 image_ID,
-                       gint   xposition)
+gimp_image_add_vguide (GimpImage *image,
+                       gint       xposition)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -101,7 +101,7 @@ gimp_image_add_vguide (gint32 image_ID,
   gint32 guide_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, xposition,
                                           G_TYPE_NONE);
 
@@ -124,7 +124,7 @@ gimp_image_add_vguide (gint32 image_ID,
 
 /**
  * gimp_image_delete_guide:
- * @image_ID: The image.
+ * @image: The image.
  * @guide_ID: The ID of the guide to be removed.
  *
  * Deletes a guide from an image.
@@ -135,8 +135,8 @@ gimp_image_add_vguide (gint32 image_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_delete_guide (gint32 image_ID,
-                         gint32 guide_ID)
+gimp_image_delete_guide (GimpImage *image,
+                         gint32     guide_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -144,7 +144,7 @@ gimp_image_delete_guide (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
 
@@ -166,7 +166,7 @@ gimp_image_delete_guide (gint32 image_ID,
 
 /**
  * gimp_image_find_next_guide:
- * @image_ID: The image.
+ * @image: The image.
  * @guide_ID: The ID of the current guide (0 if first invocation).
  *
  * Find next guide on an image.
@@ -180,8 +180,8 @@ gimp_image_delete_guide (gint32 image_ID,
  * Returns: The next guide's ID.
  **/
 gint32
-gimp_image_find_next_guide (gint32 image_ID,
-                            gint32 guide_ID)
+gimp_image_find_next_guide (GimpImage *image,
+                            gint32     guide_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -189,7 +189,7 @@ gimp_image_find_next_guide (gint32 image_ID,
   gint32 next_guide_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
 
@@ -212,7 +212,7 @@ gimp_image_find_next_guide (gint32 image_ID,
 
 /**
  * gimp_image_get_guide_orientation:
- * @image_ID: The image.
+ * @image: The image.
  * @guide_ID: The guide.
  *
  * Get orientation of a guide on an image.
@@ -223,8 +223,8 @@ gimp_image_find_next_guide (gint32 image_ID,
  * Returns: The guide's orientation.
  **/
 GimpOrientationType
-gimp_image_get_guide_orientation (gint32 image_ID,
-                                  gint32 guide_ID)
+gimp_image_get_guide_orientation (GimpImage *image,
+                                  gint32     guide_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -232,7 +232,7 @@ gimp_image_get_guide_orientation (gint32 image_ID,
   GimpOrientationType orientation = GIMP_ORIENTATION_UNKNOWN;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
 
@@ -255,7 +255,7 @@ gimp_image_get_guide_orientation (gint32 image_ID,
 
 /**
  * gimp_image_get_guide_position:
- * @image_ID: The image.
+ * @image: The image.
  * @guide_ID: The guide.
  *
  * Get position of a guide on an image.
@@ -266,8 +266,8 @@ gimp_image_get_guide_orientation (gint32 image_ID,
  * Returns: The guide's position relative to top or left of image.
  **/
 gint
-gimp_image_get_guide_position (gint32 image_ID,
-                               gint32 guide_ID)
+gimp_image_get_guide_position (GimpImage *image,
+                               gint32     guide_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -275,7 +275,7 @@ gimp_image_get_guide_position (gint32 image_ID,
   gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, guide_ID,
                                           G_TYPE_NONE);
 

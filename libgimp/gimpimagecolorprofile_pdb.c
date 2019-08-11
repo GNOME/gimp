@@ -36,7 +36,7 @@
 
 /**
  * _gimp_image_get_color_profile:
- * @image_ID: The image.
+ * @image: The image.
  * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the image's color profile
@@ -51,8 +51,8 @@
  * Since: 2.10
  **/
 guint8 *
-_gimp_image_get_color_profile (gint32  image_ID,
-                               gint   *num_bytes)
+_gimp_image_get_color_profile (GimpImage *image,
+                               gint      *num_bytes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -60,7 +60,7 @@ _gimp_image_get_color_profile (gint32  image_ID,
   guint8 *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -87,7 +87,7 @@ _gimp_image_get_color_profile (gint32  image_ID,
 
 /**
  * _gimp_image_get_effective_color_profile:
- * @image_ID: The image.
+ * @image: The image.
  * @num_bytes: (out): Number of bytes in the color_profile array.
  *
  * Returns the color profile that is used for the image
@@ -105,8 +105,8 @@ _gimp_image_get_color_profile (gint32  image_ID,
  * Since: 2.10
  **/
 guint8 *
-_gimp_image_get_effective_color_profile (gint32  image_ID,
-                                         gint   *num_bytes)
+_gimp_image_get_effective_color_profile (GimpImage *image,
+                                         gint      *num_bytes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -114,7 +114,7 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
   guint8 *profile_data = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -141,7 +141,7 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
 
 /**
  * _gimp_image_set_color_profile:
- * @image_ID: The image.
+ * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.
  * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized color profile.
  *
@@ -158,7 +158,7 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
  * Since: 2.10
  **/
 gboolean
-_gimp_image_set_color_profile (gint32        image_ID,
+_gimp_image_set_color_profile (GimpImage    *image,
                                gint          num_bytes,
                                const guint8 *color_profile)
 {
@@ -168,7 +168,7 @@ _gimp_image_set_color_profile (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, num_bytes,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -192,7 +192,7 @@ _gimp_image_set_color_profile (gint32        image_ID,
 
 /**
  * gimp_image_set_color_profile_from_file:
- * @image_ID: The image.
+ * @image: The image.
  * @uri: The URI of the file containing the new color profile.
  *
  * Sets the image's color profile from an ICC file
@@ -209,7 +209,7 @@ _gimp_image_set_color_profile (gint32        image_ID,
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_color_profile_from_file (gint32       image_ID,
+gimp_image_set_color_profile_from_file (GimpImage   *image,
                                         const gchar *uri)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -218,7 +218,7 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, uri,
                                           G_TYPE_NONE);
 
@@ -240,7 +240,7 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
 
 /**
  * _gimp_image_convert_color_profile:
- * @image_ID: The image.
+ * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.
  * @color_profile: (array length=num_bytes) (element-type guint8): The serialized color profile.
  * @intent: Rendering intent.
@@ -258,7 +258,7 @@ gimp_image_set_color_profile_from_file (gint32       image_ID,
  * Since: 2.10
  **/
 gboolean
-_gimp_image_convert_color_profile (gint32                    image_ID,
+_gimp_image_convert_color_profile (GimpImage                *image,
                                    gint                      num_bytes,
                                    const guint8             *color_profile,
                                    GimpColorRenderingIntent  intent,
@@ -270,7 +270,7 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, num_bytes,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
@@ -296,7 +296,7 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
 
 /**
  * gimp_image_convert_color_profile_from_file:
- * @image_ID: The image.
+ * @image: The image.
  * @uri: The URI of the file containing the new color profile.
  * @intent: Rendering intent.
  * @bpc: Black point compensation.
@@ -313,7 +313,7 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
  * Since: 2.10
  **/
 gboolean
-gimp_image_convert_color_profile_from_file (gint32                    image_ID,
+gimp_image_convert_color_profile_from_file (GimpImage                *image,
                                             const gchar              *uri,
                                             GimpColorRenderingIntent  intent,
                                             gboolean                  bpc)
@@ -324,7 +324,7 @@ gimp_image_convert_color_profile_from_file (gint32                    image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, uri,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,

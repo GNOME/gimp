@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 
 
 gboolean      gimp_item_is_valid          (gint32              item_ID);
-gint32        gimp_item_get_image         (gint32              item_ID);
+GimpImage*    gimp_item_get_image         (gint32              item_ID);
 gboolean      gimp_item_delete            (gint32              item_ID);
 gboolean      gimp_item_is_drawable       (gint32              item_ID);
 gboolean      gimp_item_is_layer          (gint32              item_ID);

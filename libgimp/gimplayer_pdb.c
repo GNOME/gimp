@@ -36,7 +36,7 @@
 
 /**
  * _gimp_layer_new:
- * @image_ID: The image to which to add the layer.
+ * @image: The image to which to add the layer.
  * @width: The layer width.
  * @height: The layer height.
  * @type: The layer type.
@@ -56,7 +56,7 @@
  * Returns: The newly created layer.
  **/
 gint32
-_gimp_layer_new (gint32         image_ID,
+_gimp_layer_new (GimpImage     *image,
                  gint           width,
                  gint           height,
                  GimpImageType  type,
@@ -70,7 +70,7 @@ _gimp_layer_new (gint32         image_ID,
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, width,
                                           GIMP_TYPE_INT32, height,
                                           GIMP_TYPE_IMAGE_TYPE, type,
@@ -98,8 +98,8 @@ _gimp_layer_new (gint32         image_ID,
 
 /**
  * gimp_layer_new_from_visible:
- * @image_ID: The source image from where the content is copied.
- * @dest_image_ID: The destination image to which to add the layer.
+ * @image: The source image from where the content is copied.
+ * @dest_image: The destination image to which to add the layer.
  * @name: The layer name.
  *
  * Create a new layer from what is visible in an image.
@@ -115,8 +115,8 @@ _gimp_layer_new (gint32         image_ID,
  * Since: 2.6
  **/
 gint32
-gimp_layer_new_from_visible (gint32       image_ID,
-                             gint32       dest_image_ID,
+gimp_layer_new_from_visible (GimpImage   *image,
+                             GimpImage   *dest_image,
                              const gchar *name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -125,8 +125,8 @@ gimp_layer_new_from_visible (gint32       image_ID,
   gint32 layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_IMAGE_ID, dest_image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (dest_image),
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -150,7 +150,7 @@ gimp_layer_new_from_visible (gint32       image_ID,
 /**
  * gimp_layer_new_from_drawable:
  * @drawable_ID: The source drawable from where the new layer is copied.
- * @dest_image_ID: The destination image to which to add the layer.
+ * @dest_image: The destination image to which to add the layer.
  *
  * Create a new layer by copying an existing drawable.
  *
@@ -163,8 +163,8 @@ gimp_layer_new_from_visible (gint32       image_ID,
  * Returns: The newly copied layer.
  **/
 gint32
-gimp_layer_new_from_drawable (gint32 drawable_ID,
-                              gint32 dest_image_ID)
+gimp_layer_new_from_drawable (gint32     drawable_ID,
+                              GimpImage *dest_image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -173,7 +173,7 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_IMAGE_ID, dest_image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (dest_image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -195,7 +195,7 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
 
 /**
  * gimp_layer_group_new:
- * @image_ID: The image to which to add the layer group.
+ * @image: The image to which to add the layer group.
  *
  * Create a new layer group.
  *
@@ -212,7 +212,7 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
  * Since: 2.8
  **/
 gint32
-gimp_layer_group_new (gint32 image_ID)
+gimp_layer_group_new (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -220,7 +220,7 @@ gimp_layer_group_new (gint32 image_ID)
   gint32 layer_group_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)

@@ -32,13 +32,13 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gint32 _gimp_channel_new               (gint32           image_ID,
+G_GNUC_INTERNAL gint32 _gimp_channel_new               (GimpImage       *image,
                                                         gint             width,
                                                         gint             height,
                                                         const gchar     *name,
                                                         gdouble          opacity,
                                                         const GimpRGB   *color);
-gint32                 gimp_channel_new_from_component (gint32           image_ID,
+gint32                 gimp_channel_new_from_component (GimpImage       *image,
                                                         GimpChannelType  component,
                                                         const gchar     *name);
 gint32                 gimp_channel_copy               (gint32           channel_ID);

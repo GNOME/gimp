@@ -36,7 +36,7 @@
 
 /**
  * gimp_image_add_sample_point:
- * @image_ID: The image.
+ * @image: The image.
  * @position_x: The guide'sample points x-offset from left of image.
  * @position_y: The guide'sample points y-offset from top of image.
  *
@@ -51,9 +51,9 @@
  * Since: 2.10
  **/
 gint32
-gimp_image_add_sample_point (gint32 image_ID,
-                             gint   position_x,
-                             gint   position_y)
+gimp_image_add_sample_point (GimpImage *image,
+                             gint       position_x,
+                             gint       position_y)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -61,7 +61,7 @@ gimp_image_add_sample_point (gint32 image_ID,
   gint32 sample_point_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, position_x,
                                           GIMP_TYPE_INT32, position_y,
                                           G_TYPE_NONE);
@@ -85,7 +85,7 @@ gimp_image_add_sample_point (gint32 image_ID,
 
 /**
  * gimp_image_delete_sample_point:
- * @image_ID: The image.
+ * @image: The image.
  * @sample_point_ID: The ID of the sample point to be removed.
  *
  * Deletes a sample point from an image.
@@ -98,8 +98,8 @@ gimp_image_add_sample_point (gint32 image_ID,
  * Since: 2.10
  **/
 gboolean
-gimp_image_delete_sample_point (gint32 image_ID,
-                                gint32 sample_point_ID)
+gimp_image_delete_sample_point (GimpImage *image,
+                                gint32     sample_point_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -107,7 +107,7 @@ gimp_image_delete_sample_point (gint32 image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, sample_point_ID,
                                           G_TYPE_NONE);
 
@@ -129,7 +129,7 @@ gimp_image_delete_sample_point (gint32 image_ID,
 
 /**
  * gimp_image_find_next_sample_point:
- * @image_ID: The image.
+ * @image: The image.
  * @sample_point_ID: The ID of the current sample point (0 if first invocation).
  *
  * Find next sample point on an image.
@@ -146,8 +146,8 @@ gimp_image_delete_sample_point (gint32 image_ID,
  * Since: 2.10
  **/
 gint32
-gimp_image_find_next_sample_point (gint32 image_ID,
-                                   gint32 sample_point_ID)
+gimp_image_find_next_sample_point (GimpImage *image,
+                                   gint32     sample_point_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -155,7 +155,7 @@ gimp_image_find_next_sample_point (gint32 image_ID,
   gint32 next_sample_point_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, sample_point_ID,
                                           G_TYPE_NONE);
 
@@ -178,7 +178,7 @@ gimp_image_find_next_sample_point (gint32 image_ID,
 
 /**
  * gimp_image_get_sample_point_position:
- * @image_ID: The image.
+ * @image: The image.
  * @sample_point_ID: The guide.
  * @position_y: (out): The sample points's position relative to top of image.
  *
@@ -193,9 +193,9 @@ gimp_image_find_next_sample_point (gint32 image_ID,
  * Since: 2.10
  **/
 gint
-gimp_image_get_sample_point_position (gint32  image_ID,
-                                      gint32  sample_point_ID,
-                                      gint   *position_y)
+gimp_image_get_sample_point_position (GimpImage *image,
+                                      gint32     sample_point_ID,
+                                      gint      *position_y)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -203,7 +203,7 @@ gimp_image_get_sample_point_position (gint32  image_ID,
   gint position_x = G_MININT;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_INT32, sample_point_ID,
                                           G_TYPE_NONE);
 

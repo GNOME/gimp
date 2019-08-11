@@ -36,7 +36,7 @@
 
 /**
  * gimp_image_convert_rgb:
- * @image_ID: The image.
+ * @image: The image.
  *
  * Convert specified image to RGB color
  *
@@ -48,7 +48,7 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_convert_rgb (gint32 image_ID)
+gimp_image_convert_rgb (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -56,7 +56,7 @@ gimp_image_convert_rgb (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -77,7 +77,7 @@ gimp_image_convert_rgb (gint32 image_ID)
 
 /**
  * gimp_image_convert_grayscale:
- * @image_ID: The image.
+ * @image: The image.
  *
  * Convert specified image to grayscale
  *
@@ -87,7 +87,7 @@ gimp_image_convert_rgb (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_convert_grayscale (gint32 image_ID)
+gimp_image_convert_grayscale (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -95,7 +95,7 @@ gimp_image_convert_grayscale (gint32 image_ID)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -116,7 +116,7 @@ gimp_image_convert_grayscale (gint32 image_ID)
 
 /**
  * gimp_image_convert_indexed:
- * @image_ID: The image.
+ * @image: The image.
  * @dither_type: The dither type to use.
  * @palette_type: The type of palette to use.
  * @num_cols: The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
@@ -143,7 +143,7 @@ gimp_image_convert_grayscale (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_convert_indexed (gint32                  image_ID,
+gimp_image_convert_indexed (GimpImage              *image,
                             GimpConvertDitherType   dither_type,
                             GimpConvertPaletteType  palette_type,
                             gint                    num_cols,
@@ -157,7 +157,7 @@ gimp_image_convert_indexed (gint32                  image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
                                           GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
                                           GIMP_TYPE_INT32, num_cols,
@@ -235,7 +235,7 @@ gimp_image_convert_set_dither_matrix (gint          width,
 
 /**
  * gimp_image_convert_precision:
- * @image_ID: The image.
+ * @image: The image.
  * @precision: The new precision.
  *
  * Convert the image to the specified precision
@@ -249,8 +249,8 @@ gimp_image_convert_set_dither_matrix (gint          width,
  * Since: 2.10
  **/
 gboolean
-gimp_image_convert_precision (gint32        image_ID,
-                              GimpPrecision precision)
+gimp_image_convert_precision (GimpImage     *image,
+                              GimpPrecision  precision)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -258,7 +258,7 @@ gimp_image_convert_precision (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 
