@@ -78,7 +78,7 @@ gimp_display_is_valid (gint32 display_ID)
 
 /**
  * gimp_display_new:
- * @image_ID: The image.
+ * @image: The image.
  *
  * Create a new display for the specified image.
  *
@@ -92,7 +92,7 @@ gimp_display_is_valid (gint32 display_ID)
  * Returns: The new display.
  **/
 gint32
-gimp_display_new (gint32 image_ID)
+gimp_display_new (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -100,7 +100,7 @@ gimp_display_new (gint32 image_ID)
   gint32 display_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -248,8 +248,8 @@ gimp_displays_flush (void)
 
 /**
  * gimp_displays_reconnect:
- * @old_image_ID: The old image (must have at least one display).
- * @new_image_ID: The new image (must not have a display).
+ * @old_image: The old image (must have at least one display).
+ * @new_image: The new image (must not have a display).
  *
  * Reconnect displays from one image to another image.
  *
@@ -261,8 +261,8 @@ gimp_displays_flush (void)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_displays_reconnect (gint32 old_image_ID,
-                         gint32 new_image_ID)
+gimp_displays_reconnect (GimpImage *old_image,
+                         GimpImage *new_image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -270,8 +270,8 @@ gimp_displays_reconnect (gint32 old_image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, old_image_ID,
-                                          GIMP_TYPE_IMAGE_ID, new_image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (old_image),
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (new_image),
                                           G_TYPE_NONE);
 
   if (pdb)

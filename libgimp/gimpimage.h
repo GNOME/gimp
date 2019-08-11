@@ -29,6 +29,43 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+#define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
+#define GIMP_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE, GimpImage))
+#define GIMP_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE, GimpImageClass))
+#define GIMP_IS_IMAGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE))
+#define GIMP_IS_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE))
+#define GIMP_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE, GimpImageClass))
+
+
+typedef struct _GimpImageClass   GimpImageClass;
+typedef struct _GimpImagePrivate GimpImagePrivate;
+
+struct _GimpImage
+{
+  GObject           parent_instance;
+
+  GimpImagePrivate *priv;
+};
+
+struct _GimpImageClass
+{
+  GObjectClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
+};
+
+GType          gimp_image_get_type           (void) G_GNUC_CONST;
+
+gint32         gimp_image_get_id             (GimpImage    *image);
 
 guchar       * gimp_image_get_colormap       (gint32        image_ID,
                                               gint         *num_colors);
