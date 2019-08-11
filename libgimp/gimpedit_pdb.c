@@ -128,7 +128,7 @@ gimp_edit_copy (gint32 drawable_ID)
 
 /**
  * gimp_edit_copy_visible:
- * @image_ID: The image to copy from.
+ * @image: The image to copy from.
  *
  * Copy from the projection.
  *
@@ -144,7 +144,7 @@ gimp_edit_copy (gint32 drawable_ID)
  * Since: 2.2
  **/
 gboolean
-gimp_edit_copy_visible (gint32 image_ID)
+gimp_edit_copy_visible (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -152,7 +152,7 @@ gimp_edit_copy_visible (gint32 image_ID)
   gboolean non_empty = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -238,17 +238,17 @@ gimp_edit_paste (gint32   drawable_ID,
  * previously made to either gimp_edit_cut() or gimp_edit_copy(). This
  * procedure returns the new image or -1 if the edit buffer was empty.
  *
- * Returns: The new image.
+ * Returns: (transfer full): The new image.
  *
  * Since: 2.10
  **/
-gint32
+GimpImage *
 gimp_edit_paste_as_new_image (void)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 image_ID = -1;
+  GimpImage *image = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -263,11 +263,11 @@ gimp_edit_paste_as_new_image (void)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
 
   gimp_value_array_unref (return_vals);
 
-  return image_ID;
+  return image;
 }
 
 /**
@@ -370,7 +370,7 @@ gimp_edit_named_copy (gint32       drawable_ID,
 
 /**
  * gimp_edit_named_copy_visible:
- * @image_ID: The image to copy from.
+ * @image: The image to copy from.
  * @buffer_name: The name of the buffer to create.
  *
  * Copy from the projection into a named buffer.
@@ -387,7 +387,7 @@ gimp_edit_named_copy (gint32       drawable_ID,
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_copy_visible (gint32       image_ID,
+gimp_edit_named_copy_visible (GimpImage   *image,
                               const gchar *buffer_name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -396,7 +396,7 @@ gimp_edit_named_copy_visible (gint32       image_ID,
   gchar *real_name = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
@@ -474,17 +474,17 @@ gimp_edit_named_paste (gint32       drawable_ID,
  * This procedure works like gimp_edit_paste_as_new_image() but pastes
  * a named buffer instead of the global buffer.
  *
- * Returns: The new image.
+ * Returns: (transfer full): The new image.
  *
  * Since: 2.10
  **/
-gint32
+GimpImage *
 gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 image_ID = -1;
+  GimpImage *image = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
@@ -500,9 +500,9 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
 
   gimp_value_array_unref (return_vals);
 
-  return image_ID;
+  return image;
 }

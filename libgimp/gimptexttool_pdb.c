@@ -36,7 +36,7 @@
 
 /**
  * gimp_text_fontname:
- * @image_ID: The image.
+ * @image: The image.
  * @drawable_ID: The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
@@ -67,7 +67,7 @@
  * Returns: The new text layer or -1 if no layer was created.
  **/
 gint32
-gimp_text_fontname (gint32        image_ID,
+gimp_text_fontname (GimpImage    *image,
                     gint32        drawable_ID,
                     gdouble       x,
                     gdouble       y,
@@ -84,7 +84,7 @@ gimp_text_fontname (gint32        image_ID,
   gint32 text_layer_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
