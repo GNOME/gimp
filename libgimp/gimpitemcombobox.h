@@ -49,9 +49,9 @@ G_BEGIN_DECLS
 #define GIMP_IS_VECTORS_COMBO_BOX(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTORS_COMBO_BOX))
 
 
-typedef gboolean (* GimpItemConstraintFunc) (gint32   image_id,
-                                             gint32   item_id,
-                                             gpointer data);
+typedef gboolean (* GimpItemConstraintFunc) (GimpImage *image,
+                                             gint32     item_id,
+                                             gpointer   data);
 
 
 GType       gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;

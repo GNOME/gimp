@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_layer_new                (gint32           image_ID,
+gint32   gimp_layer_new                (GimpImage       *image,
                                         const gchar     *name,
                                         gint             width,
                                         gint             height,
@@ -39,14 +39,14 @@ gint32   gimp_layer_new                (gint32           image_ID,
                                         GimpLayerMode    mode);
 gint32   gimp_layer_copy               (gint32           layer_ID);
 
-gint32   gimp_layer_new_from_pixbuf    (gint32           image_ID,
+gint32   gimp_layer_new_from_pixbuf    (GimpImage       *image,
                                         const gchar     *name,
                                         GdkPixbuf       *pixbuf,
                                         gdouble          opacity,
                                         GimpLayerMode    mode,
                                         gdouble          progress_start,
                                         gdouble          progress_end);
-gint32   gimp_layer_new_from_surface   (gint32           image_ID,
+gint32   gimp_layer_new_from_surface   (GimpImage       *image,
                                         const gchar     *name,
                                         cairo_surface_t *surface,
                                         gdouble          progress_start,
