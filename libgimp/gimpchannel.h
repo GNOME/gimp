@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32  gimp_channel_new (gint32         image_ID,
+gint32  gimp_channel_new (GimpImage     *image,
                           const gchar   *name,
                           guint          width,
                           guint          height,

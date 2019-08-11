@@ -406,16 +406,16 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
   GimpDrawablePreviewPrivate *priv         = GET_PRIVATE (preview);
   GimpPreview                *gimp_preview = GIMP_PREVIEW (preview);
   GtkWidget                  *area         = gimp_preview_get_area (gimp_preview);
+  GimpImage                  *image;
   gint                        xmin, ymin;
   gint                        xoff, yoff;
-  gint32                      image_ID;
 
   gimp_preview_get_bounds (gimp_preview, &xmin, &ymin, NULL, NULL);
   gimp_preview_get_offsets (gimp_preview, &xoff, &yoff);
 
-  image_ID = gimp_item_get_image (priv->drawable_ID);
+  image = gimp_item_get_image (priv->drawable_ID);
 
-  if (gimp_selection_is_empty (image_ID))
+  if (gimp_selection_is_empty (image))
     {
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
                               x - xoff - xmin,
@@ -457,7 +457,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
           s_w = draw_width;
           s_h = draw_height;
 
-          selection_ID = gimp_image_get_selection (image_ID);
+          selection_ID = gimp_image_get_selection (image);
 
           src = gimp_drawable_get_sub_thumbnail_data (priv->drawable_ID,
                                                       draw_x, draw_y,
@@ -481,6 +481,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
             default:
               g_free (sel);
               g_free (src);
+              g_object_unref (image);
               return;
             }
 
@@ -501,6 +502,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
           g_free (src);
         }
     }
+  g_object_unref (image);
 }
 
 static void
@@ -538,14 +540,15 @@ gimp_drawable_preview_set_drawable_id (GimpDrawablePreview *drawable_preview,
 
   if (gimp_drawable_is_indexed (drawable_ID))
     {
-      guint32    image_ID = gimp_item_get_image (drawable_ID);
-      GtkWidget *area     = gimp_preview_get_area (preview);
+      GimpImage *image = gimp_item_get_image (drawable_ID);
+      GtkWidget *area  = gimp_preview_get_area (preview);
       guchar    *cmap;
       gint       num_colors;
 
-      cmap = gimp_image_get_colormap (image_ID, &num_colors);
+      cmap = gimp_image_get_colormap (image, &num_colors);
       gimp_preview_area_set_colormap (GIMP_PREVIEW_AREA (area),
                                       cmap, num_colors);
+      g_object_unref (image);
       g_free (cmap);
     }
 }
