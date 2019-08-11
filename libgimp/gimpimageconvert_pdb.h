@@ -32,9 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_image_convert_rgb               (gint32                  image_ID);
-gboolean gimp_image_convert_grayscale         (gint32                  image_ID);
-gboolean gimp_image_convert_indexed           (gint32                  image_ID,
+gboolean gimp_image_convert_rgb               (GimpImage              *image);
+gboolean gimp_image_convert_grayscale         (GimpImage              *image);
+gboolean gimp_image_convert_indexed           (GimpImage              *image,
                                                GimpConvertDitherType   dither_type,
                                                GimpConvertPaletteType  palette_type,
                                                gint                    num_cols,
@@ -45,7 +45,7 @@ gboolean gimp_image_convert_set_dither_matrix (gint                    width,
                                                gint                    height,
                                                gint                    matrix_length,
                                                const guint8           *matrix);
-gboolean gimp_image_convert_precision         (gint32                  image_ID,
+gboolean gimp_image_convert_precision         (GimpImage              *image,
                                                GimpPrecision           precision);
 
 

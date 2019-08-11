@@ -36,7 +36,7 @@
 
 /**
  * gimp_vectors_new:
- * @image_ID: The image.
+ * @image: The image.
  * @name: the name of the new vector object.
  *
  * Creates a new empty vectors object.
@@ -49,7 +49,7 @@
  * Since: 2.4
  **/
 gint32
-gimp_vectors_new (gint32       image_ID,
+gimp_vectors_new (GimpImage   *image,
                   const gchar *name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -58,7 +58,7 @@ gimp_vectors_new (gint32       image_ID,
   gint32 vectors_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -81,7 +81,7 @@ gimp_vectors_new (gint32       image_ID,
 
 /**
  * gimp_vectors_new_from_text_layer:
- * @image_ID: The image.
+ * @image: The image.
  * @layer_ID: The text layer.
  *
  * Creates a new vectors object from a text layer.
@@ -94,8 +94,8 @@ gimp_vectors_new (gint32       image_ID,
  * Since: 2.6
  **/
 gint32
-gimp_vectors_new_from_text_layer (gint32 image_ID,
-                                  gint32 layer_ID)
+gimp_vectors_new_from_text_layer (GimpImage *image,
+                                  gint32     layer_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -103,7 +103,7 @@ gimp_vectors_new_from_text_layer (gint32 image_ID,
   gint32 vectors_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_LAYER_ID, layer_ID,
                                           G_TYPE_NONE);
 
@@ -1133,7 +1133,7 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
 
 /**
  * gimp_vectors_import_from_file:
- * @image_ID: The image.
+ * @image: The image.
  * @filename: The name of the SVG file to import.
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
@@ -1150,7 +1150,7 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_file (gint32        image_ID,
+gimp_vectors_import_from_file (GimpImage    *image,
                                const gchar  *filename,
                                gboolean      merge,
                                gboolean      scale,
@@ -1163,7 +1163,7 @@ gimp_vectors_import_from_file (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
@@ -1196,7 +1196,7 @@ gimp_vectors_import_from_file (gint32        image_ID,
 
 /**
  * gimp_vectors_import_from_string:
- * @image_ID: The image.
+ * @image: The image.
  * @string: A string that must be a complete and valid SVG document.
  * @length: Number of bytes in string or -1 if the string is NULL terminated.
  * @merge: Merge paths into a single vectors object.
@@ -1215,7 +1215,7 @@ gimp_vectors_import_from_file (gint32        image_ID,
  * Since: 2.4
  **/
 gboolean
-gimp_vectors_import_from_string (gint32        image_ID,
+gimp_vectors_import_from_string (GimpImage    *image,
                                  const gchar  *string,
                                  gint          length,
                                  gboolean      merge,
@@ -1229,7 +1229,7 @@ gimp_vectors_import_from_string (gint32        image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, string,
                                           G_TYPE_INT, length,
                                           G_TYPE_BOOLEAN, merge,
@@ -1263,7 +1263,7 @@ gimp_vectors_import_from_string (gint32        image_ID,
 
 /**
  * gimp_vectors_export_to_file:
- * @image_ID: The image.
+ * @image: The image.
  * @filename: The name of the SVG file to create.
  * @vectors_ID: The vectors object to be saved, or 0 for all in the image.
  *
@@ -1279,7 +1279,7 @@ gimp_vectors_import_from_string (gint32        image_ID,
  * Since: 2.6
  **/
 gboolean
-gimp_vectors_export_to_file (gint32       image_ID,
+gimp_vectors_export_to_file (GimpImage   *image,
                              const gchar *filename,
                              gint32       vectors_ID)
 {
@@ -1289,7 +1289,7 @@ gimp_vectors_export_to_file (gint32       image_ID,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           G_TYPE_STRING, filename,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
@@ -1312,7 +1312,7 @@ gimp_vectors_export_to_file (gint32       image_ID,
 
 /**
  * gimp_vectors_export_to_string:
- * @image_ID: The image.
+ * @image: The image.
  * @vectors_ID: The vectors object to save, or 0 for all in the image.
  *
  * Save a path as an SVG string.
@@ -1329,8 +1329,8 @@ gimp_vectors_export_to_file (gint32       image_ID,
  * Since: 2.6
  **/
 gchar *
-gimp_vectors_export_to_string (gint32 image_ID,
-                               gint32 vectors_ID)
+gimp_vectors_export_to_string (GimpImage *image,
+                               gint32     vectors_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1338,7 +1338,7 @@ gimp_vectors_export_to_string (gint32 image_ID,
   gchar *string = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
 

@@ -32,19 +32,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gint32 _gimp_layer_new                 (gint32                  image_ID,
+G_GNUC_INTERNAL gint32 _gimp_layer_new                 (GimpImage              *image,
                                                         gint                    width,
                                                         gint                    height,
                                                         GimpImageType           type,
                                                         const gchar            *name,
                                                         gdouble                 opacity,
                                                         GimpLayerMode           mode);
-gint32                 gimp_layer_new_from_visible     (gint32                  image_ID,
-                                                        gint32                  dest_image_ID,
+gint32                 gimp_layer_new_from_visible     (GimpImage              *image,
+                                                        GimpImage              *dest_image,
                                                         const gchar            *name);
 gint32                 gimp_layer_new_from_drawable    (gint32                  drawable_ID,
-                                                        gint32                  dest_image_ID);
-gint32                 gimp_layer_group_new            (gint32                  image_ID);
+                                                        GimpImage              *dest_image);
+gint32                 gimp_layer_group_new            (GimpImage              *image);
 G_GNUC_INTERNAL gint32 _gimp_layer_copy                (gint32                  layer_ID,
                                                         gboolean                add_alpha);
 gboolean               gimp_layer_add_alpha            (gint32                  layer_ID);
