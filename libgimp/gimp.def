@@ -631,7 +631,6 @@ EXPORTS
 	gimp_patterns_popup
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
-	gimp_pdb_dump
 	gimp_pdb_dump_to_file
 	gimp_pdb_get_data
 	gimp_pdb_get_data_size
@@ -640,7 +639,6 @@ EXPORTS
 	gimp_pdb_get_type
 	gimp_pdb_lookup_procedure
 	gimp_pdb_proc_argument
-	gimp_pdb_proc_exists
 	gimp_pdb_proc_info
 	gimp_pdb_proc_return_value
 	gimp_pdb_procedure_exists

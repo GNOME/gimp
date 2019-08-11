@@ -1515,26 +1515,6 @@ gimp_pdb_temp_name (void)
 }
 
 /**
- * gimp_pdb_dump:
- * @filename: The dump filename.
- *
- * Dumps the current contents of the procedural database
- *
- * This procedure dumps the contents of the procedural database to the
- * specified file. The file will contain all of the information
- * provided for each registered procedure.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_pdb_dump (const gchar *filename)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_pdb_dump (filename);
-}
-
-/**
  * gimp_pdb_query:
  * @name: The regex for procedure name.
  * @blurb: The regex for procedure blurb.
@@ -1582,27 +1562,6 @@ gimp_pdb_query (const gchar   *name,
                           authors, copyright, date,
                           proc_type,
                           num_matches, procedure_names);
-}
-
-/**
- * gimp_pdb_proc_exists:
- * @procedure_name: The procedure name.
- *
- * Checks if the specified procedure exists in the procedural database
- *
- * This procedure checks if the specified procedure is registered in
- * the procedural database.
- *
- * Returns: Whether a procedure of that name is registered.
- *
- * Since: 2.6
- **/
-gboolean
-gimp_pdb_proc_exists (const gchar *procedure_name)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_pdb_proc_exists (procedure_name);
 }
 
 /**
