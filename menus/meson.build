@@ -1,4 +1,4 @@
-menus_dir = join_paths(prefix, gimpdatadir, 'menus')
+menus_dir = prefix / gimpdatadir / 'menus'
 
 menus_files = [
   'brush-editor-menu.xml',

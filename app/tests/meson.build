@@ -80,7 +80,7 @@ foreach test_name : app_tests
     env: [
       'GIMP_TESTING_ABS_TOP_SRCDIR='  + meson.build_root(),
       'GIMP_TESTING_ABS_TOP_BUILDDIR='+ meson.build_root(),
-      'GIMP_TESTING_PLUGINDIRS=' + join_paths(meson.build_root(), 'plug-ins', 'common'),
+      'GIMP_TESTING_PLUGINDIRS=' +      meson.build_root()/'plug-ins'/'common',
       'GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES=mkgen.pl',
     ],
     suite: 'app',

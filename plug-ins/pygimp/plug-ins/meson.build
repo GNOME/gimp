@@ -24,11 +24,11 @@ endif
 
 
 install_subdir(plugins_subdirs,
-  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
+  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
 install_data([
     'pyconsole.py',
     'python-console.py',
   ],
-  install_dir: join_paths(gimpplugindir, 'plug-ins', 'python-console'),
+  install_dir: gimpplugindir / 'plug-ins', 'python-console',
 )

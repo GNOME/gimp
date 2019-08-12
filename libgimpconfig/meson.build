@@ -75,5 +75,5 @@ libgimpconfig = library('gimpconfig-' + gimp_api_version,
 
 install_headers(
   libgimpconfig_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpconfig'),
+  subdir: gimp_api_name / 'libgimpconfig',
 )
