@@ -225,6 +225,8 @@ install-%: %
 	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(gimpplugindir)/plug-ins/$$p/$$f || exit 1; \
 	else :; fi
 
+align_layers_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 align_layers_SOURCES = \
 	align-layers.c
 
@@ -242,6 +244,8 @@ align_layers_LDADD = \
 	$(INTLLIBS)		\
 	$(align_layers_RC)
 
+animation_optimize_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 animation_optimize_SOURCES = \
 	animation-optimize.c
 
@@ -257,6 +261,8 @@ animation_optimize_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_optimize_RC)
+
+animation_play_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 animation_play_SOURCES = \
 	animation-play.c
@@ -276,6 +282,8 @@ animation_play_LDADD = \
 	$(INTLLIBS)		\
 	$(animation_play_RC)
 
+blinds_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 blinds_SOURCES = \
 	blinds.c
 
@@ -293,6 +301,8 @@ blinds_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blinds_RC)
+
+border_average_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 border_average_SOURCES = \
 	border-average.c
@@ -312,6 +322,8 @@ border_average_LDADD = \
 	$(INTLLIBS)		\
 	$(border_average_RC)
 
+busy_dialog_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 busy_dialog_SOURCES = \
 	busy-dialog.c
 
@@ -329,6 +341,8 @@ busy_dialog_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(busy_dialog_RC)
+
+checkerboard_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 checkerboard_SOURCES = \
 	checkerboard.c
@@ -348,6 +362,8 @@ checkerboard_LDADD = \
 	$(INTLLIBS)		\
 	$(checkerboard_RC)
 
+cml_explorer_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 cml_explorer_SOURCES = \
 	cml-explorer.c
 
@@ -365,6 +381,8 @@ cml_explorer_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(cml_explorer_RC)
+
+colormap_remap_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 colormap_remap_SOURCES = \
 	colormap-remap.c
@@ -384,6 +402,8 @@ colormap_remap_LDADD = \
 	$(INTLLIBS)		\
 	$(colormap_remap_RC)
 
+compose_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 compose_SOURCES = \
 	compose.c
 
@@ -401,6 +421,8 @@ compose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(compose_RC)
+
+contrast_retinex_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 contrast_retinex_SOURCES = \
 	contrast-retinex.c
@@ -420,6 +442,8 @@ contrast_retinex_LDADD = \
 	$(INTLLIBS)		\
 	$(contrast_retinex_RC)
 
+crop_zealous_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 crop_zealous_SOURCES = \
 	crop-zealous.c
 
@@ -435,6 +459,8 @@ crop_zealous_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
+
+curve_bend_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 curve_bend_SOURCES = \
 	curve-bend.c
@@ -454,6 +480,8 @@ curve_bend_LDADD = \
 	$(INTLLIBS)		\
 	$(curve_bend_RC)
 
+decompose_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 decompose_SOURCES = \
 	decompose.c
 
@@ -471,6 +499,8 @@ decompose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(decompose_RC)
+
+depth_merge_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 depth_merge_SOURCES = \
 	depth-merge.c
@@ -490,6 +520,8 @@ depth_merge_LDADD = \
 	$(INTLLIBS)		\
 	$(depth_merge_RC)
 
+despeckle_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 despeckle_SOURCES = \
 	despeckle.c
 
@@ -507,6 +539,8 @@ despeckle_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(despeckle_RC)
+
+destripe_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 destripe_SOURCES = \
 	destripe.c
@@ -526,6 +560,8 @@ destripe_LDADD = \
 	$(INTLLIBS)		\
 	$(destripe_RC)
 
+file_aa_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_aa_SOURCES = \
 	file-aa.c
 
@@ -544,6 +580,8 @@ file_aa_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_aa_RC)
+
+file_cel_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_cel_SOURCES = \
 	file-cel.c
@@ -565,6 +603,8 @@ file_cel_LDADD = \
 
 file_compressor_CFLAGS = $(LZMA_CFLAGS)
 
+file_compressor_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_compressor_SOURCES = \
 	file-compressor.c
 
@@ -584,6 +624,8 @@ file_compressor_LDADD = \
 	$(INTLLIBS)		\
 	$(file_compressor_RC)
 
+file_csource_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_csource_SOURCES = \
 	file-csource.c
 
@@ -601,6 +643,8 @@ file_csource_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_csource_RC)
+
+file_desktop_link_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_desktop_link_SOURCES = \
 	file-desktop-link.c
@@ -620,6 +664,8 @@ file_desktop_link_LDADD = \
 
 file_dicom_CFLAGS = -fno-strict-aliasing
 
+file_dicom_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_dicom_SOURCES = \
 	file-dicom.c
 
@@ -637,6 +683,8 @@ file_dicom_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_dicom_RC)
+
+file_gbr_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_gbr_SOURCES = \
 	file-gbr.c
@@ -656,6 +704,8 @@ file_gbr_LDADD = \
 	$(INTLLIBS)		\
 	$(file_gbr_RC)
 
+file_gegl_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_gegl_SOURCES = \
 	file-gegl.c
 
@@ -674,6 +724,8 @@ file_gegl_LDADD = \
 	$(INTLLIBS)		\
 	$(file_gegl_RC)
 
+file_gif_load_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_gif_load_SOURCES = \
 	file-gif-load.c
 
@@ -689,6 +741,8 @@ file_gif_load_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_gif_load_RC)
+
+file_gif_save_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_gif_save_SOURCES = \
 	file-gif-save.c
@@ -707,6 +761,8 @@ file_gif_save_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_gif_save_RC)
+
+file_gih_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_gih_SOURCES = \
 	file-gih.c
@@ -741,6 +797,8 @@ file_glob_LDADD = \
 	$(INTLLIBS)		\
 	$(file_glob_RC)
 
+file_header_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_header_SOURCES = \
 	file-header.c
 
@@ -761,6 +819,8 @@ file_header_LDADD = \
 
 file_heif_CFLAGS = $(LIBHEIF_CFLAGS)
 
+file_heif_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_heif_SOURCES = \
 	file-heif.c
 
@@ -779,6 +839,8 @@ file_heif_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_heif_RC)
+
+file_html_table_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_html_table_SOURCES = \
 	file-html-table.c
@@ -799,6 +861,8 @@ file_html_table_LDADD = \
 	$(file_html_table_RC)
 
 file_jp2_load_CFLAGS = $(OPENJPEG_CFLAGS)
+
+file_jp2_load_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_jp2_load_SOURCES = \
 	file-jp2-load.c
@@ -821,6 +885,8 @@ file_jp2_load_LDADD = \
 
 file_mng_CFLAGS = $(MNG_CFLAGS)
 
+file_mng_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_mng_SOURCES = \
 	file-mng.c
 
@@ -840,6 +906,8 @@ file_mng_LDADD = \
 	$(INTLLIBS)		\
 	$(file_mng_RC)
 
+file_pat_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_pat_SOURCES = \
 	file-pat.c
 
@@ -857,6 +925,8 @@ file_pat_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_pat_RC)
+
+file_pcx_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_pcx_SOURCES = \
 	file-pcx.c
@@ -877,6 +947,8 @@ file_pcx_LDADD = \
 	$(file_pcx_RC)
 
 file_pdf_load_CFLAGS = $(POPPLER_CFLAGS)
+
+file_pdf_load_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_pdf_load_SOURCES = \
 	file-pdf-load.c
@@ -899,6 +971,8 @@ file_pdf_load_LDADD = \
 
 file_pdf_save_CFLAGS = $(CAIRO_PDF_CFLAGS)
 
+file_pdf_save_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_pdf_save_SOURCES = \
 	file-pdf-save.c
 
@@ -917,6 +991,8 @@ file_pdf_save_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_pdf_save_RC)
+
+file_pix_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_pix_SOURCES = \
 	file-pix.c
@@ -938,6 +1014,8 @@ file_pix_LDADD = \
 
 file_png_CFLAGS = $(PNG_CFLAGS)
 
+file_png_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_png_SOURCES = \
 	file-png.c
 
@@ -957,6 +1035,8 @@ file_png_LDADD = \
 	$(INTLLIBS)		\
 	$(file_png_RC)
 
+file_pnm_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_pnm_SOURCES = \
 	file-pnm.c
 
@@ -974,6 +1054,8 @@ file_pnm_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_pnm_RC)
+
+file_ps_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_ps_SOURCES = \
 	file-ps.c
@@ -994,6 +1076,8 @@ file_ps_LDADD = \
 	$(INTLLIBS)		\
 	$(file_ps_RC)
 
+file_psp_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_psp_SOURCES = \
 	file-psp.c
 
@@ -1013,6 +1097,8 @@ file_psp_LDADD = \
 	$(INTLLIBS)		\
 	$(file_psp_RC)
 
+file_raw_data_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_raw_data_SOURCES = \
 	file-raw-data.c
 
@@ -1030,6 +1116,8 @@ file_raw_data_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_raw_data_RC)
+
+file_sunras_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_sunras_SOURCES = \
 	file-sunras.c
@@ -1051,6 +1139,8 @@ file_sunras_LDADD = \
 
 file_svg_CFLAGS = $(SVG_CFLAGS)
 
+file_svg_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_svg_SOURCES = \
 	file-svg.c
 
@@ -1069,6 +1159,8 @@ file_svg_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_svg_RC)
+
+file_tga_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_tga_SOURCES = \
 	file-tga.c
@@ -1090,6 +1182,8 @@ file_tga_LDADD = \
 
 file_wmf_CFLAGS = $(WMF_CFLAGS)
 
+file_wmf_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_wmf_SOURCES = \
 	file-wmf.c
 
@@ -1109,6 +1203,8 @@ file_wmf_LDADD = \
 	$(INTLLIBS)		\
 	$(file_wmf_RC)
 
+file_xbm_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_xbm_SOURCES = \
 	file-xbm.c
 
@@ -1126,6 +1222,8 @@ file_xbm_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_xbm_RC)
+
+file_xmc_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 file_xmc_SOURCES = \
 	file-xmc.c
@@ -1146,6 +1244,8 @@ file_xmc_LDADD = \
 	$(INTLLIBS)		\
 	$(file_xmc_RC)
 
+file_xpm_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_xpm_SOURCES = \
 	file-xpm.c
 
@@ -1165,6 +1265,8 @@ file_xpm_LDADD = \
 	$(INTLLIBS)		\
 	$(file_xpm_RC)
 
+file_xwd_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 file_xwd_SOURCES = \
 	file-xwd.c
 
@@ -1182,6 +1284,8 @@ file_xwd_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_xwd_RC)
+
+film_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 film_SOURCES = \
 	film.c
@@ -1201,6 +1305,8 @@ film_LDADD = \
 	$(INTLLIBS)		\
 	$(film_RC)
 
+gradient_map_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 gradient_map_SOURCES = \
 	gradient-map.c
 
@@ -1216,6 +1322,8 @@ gradient_map_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(gradient_map_RC)
+
+grid_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 grid_SOURCES = \
 	grid.c
@@ -1235,6 +1343,8 @@ grid_LDADD = \
 	$(INTLLIBS)		\
 	$(grid_RC)
 
+guillotine_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 guillotine_SOURCES = \
 	guillotine.c
 
@@ -1249,6 +1359,8 @@ guillotine_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(guillotine_RC)
+
+hot_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 hot_SOURCES = \
 	hot.c
@@ -1268,6 +1380,8 @@ hot_LDADD = \
 	$(INTLLIBS)		\
 	$(hot_RC)
 
+jigsaw_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 jigsaw_SOURCES = \
 	jigsaw.c
 
@@ -1286,6 +1400,8 @@ jigsaw_LDADD = \
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
 
+mail_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 mail_SOURCES = \
 	mail.c
 
@@ -1302,6 +1418,8 @@ mail_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(mail_RC)
+
+nl_filter_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 nl_filter_SOURCES = \
 	nl-filter.c
@@ -1321,6 +1439,8 @@ nl_filter_LDADD = \
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
 
+plugin_browser_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 plugin_browser_SOURCES = \
 	plugin-browser.c
 
@@ -1338,6 +1458,8 @@ plugin_browser_LDADD = \
 	$(INTLLIBS)		\
 	$(plugin_browser_RC)
 
+procedure_browser_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 procedure_browser_SOURCES = \
 	procedure-browser.c
 
@@ -1354,6 +1476,8 @@ procedure_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(procedure_browser_RC)
+
+qbist_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 qbist_SOURCES = \
 	qbist.c
@@ -1373,6 +1497,8 @@ qbist_LDADD = \
 	$(INTLLIBS)		\
 	$(qbist_RC)
 
+sample_colorize_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 sample_colorize_SOURCES = \
 	sample-colorize.c
 
@@ -1390,6 +1516,8 @@ sample_colorize_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sample_colorize_RC)
+
+smooth_palette_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 smooth_palette_SOURCES = \
 	smooth-palette.c
@@ -1409,6 +1537,8 @@ smooth_palette_LDADD = \
 	$(INTLLIBS)		\
 	$(smooth_palette_RC)
 
+sparkle_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 sparkle_SOURCES = \
 	sparkle.c
 
@@ -1426,6 +1556,8 @@ sparkle_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sparkle_RC)
+
+sphere_designer_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 sphere_designer_SOURCES = \
 	sphere-designer.c
@@ -1445,6 +1577,8 @@ sphere_designer_LDADD = \
 	$(INTLLIBS)		\
 	$(sphere_designer_RC)
 
+tile_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 tile_SOURCES = \
 	tile.c
 
@@ -1462,6 +1596,8 @@ tile_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(tile_RC)
+
+tile_small_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 tile_small_SOURCES = \
 	tile-small.c
@@ -1481,6 +1617,8 @@ tile_small_LDADD = \
 	$(INTLLIBS)		\
 	$(tile_small_RC)
 
+unit_editor_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 unit_editor_SOURCES = \
 	unit-editor.c
 
@@ -1497,6 +1635,8 @@ unit_editor_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(unit_editor_RC)
+
+van_gogh_lic_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 van_gogh_lic_SOURCES = \
 	van-gogh-lic.c
@@ -1516,6 +1656,8 @@ van_gogh_lic_LDADD = \
 	$(INTLLIBS)		\
 	$(van_gogh_lic_RC)
 
+warp_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
+
 warp_SOURCES = \
 	warp.c
 
@@ -1533,6 +1675,8 @@ warp_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(warp_RC)
+
+wavelet_decompose_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 wavelet_decompose_SOURCES = \
 	wavelet-decompose.c
@@ -1554,7 +1698,7 @@ wavelet_decompose_LDADD = \
 
 web_browser_LDFLAGS = $(framework_cocoa)
 
-web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c)
+web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 web_browser_SOURCES = \
 	web-browser.c
@@ -1574,6 +1718,8 @@ web_browser_LDADD = \
 	$(web_browser_RC)
 
 web_page_CFLAGS = $(WEBKIT_CFLAGS)
+
+web_page_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 web_page_SOURCES = \
 	web-page.c
