@@ -32,165 +32,404 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean                 gimp_image_is_valid                   (GimpImage           *image);
-gint*                    gimp_image_list                       (gint                *num_images);
-GimpImage*               gimp_image_new                        (gint                 width,
-                                                                gint                 height,
-                                                                GimpImageBaseType    type);
-GimpImage*               gimp_image_new_with_precision         (gint                 width,
-                                                                gint                 height,
-                                                                GimpImageBaseType    type,
-                                                                GimpPrecision        precision);
-GimpImage*               gimp_image_duplicate                  (GimpImage           *image);
-gboolean                 gimp_image_delete                     (GimpImage           *image);
-GimpImageBaseType        gimp_image_base_type                  (GimpImage           *image);
-GimpPrecision            gimp_image_get_precision              (GimpImage           *image);
-GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage           *image);
-gint                     gimp_image_width                      (GimpImage           *image);
-gint                     gimp_image_height                     (GimpImage           *image);
-gint*                    gimp_image_get_layers                 (GimpImage           *image,
-                                                                gint                *num_layers);
-gint*                    gimp_image_get_channels               (GimpImage           *image,
-                                                                gint                *num_channels);
-gint*                    gimp_image_get_vectors                (GimpImage           *image,
-                                                                gint                *num_vectors);
-gint32                   gimp_image_get_active_drawable        (GimpImage           *image);
-gboolean                 gimp_image_unset_active_channel       (GimpImage           *image);
-gint32                   gimp_image_get_floating_sel           (GimpImage           *image);
-gint32                   gimp_image_floating_sel_attached_to   (GimpImage           *image);
-gboolean                 gimp_image_pick_color                 (GimpImage           *image,
-                                                                gint32               drawable_ID,
-                                                                gdouble              x,
-                                                                gdouble              y,
-                                                                gboolean             sample_merged,
-                                                                gboolean             sample_average,
-                                                                gdouble              average_radius,
-                                                                GimpRGB             *color);
-gint32                   gimp_image_pick_correlate_layer       (GimpImage           *image,
-                                                                gint                 x,
-                                                                gint                 y);
-gboolean                 gimp_image_insert_layer               (GimpImage           *image,
-                                                                gint32               layer_ID,
-                                                                gint32               parent_ID,
-                                                                gint                 position);
-gboolean                 gimp_image_remove_layer               (GimpImage           *image,
-                                                                gint32               layer_ID);
-gboolean                 gimp_image_freeze_layers              (GimpImage           *image);
-gboolean                 gimp_image_thaw_layers                (GimpImage           *image);
-gboolean                 gimp_image_insert_channel             (GimpImage           *image,
-                                                                gint32               channel_ID,
-                                                                gint32               parent_ID,
-                                                                gint                 position);
-gboolean                 gimp_image_remove_channel             (GimpImage           *image,
-                                                                gint32               channel_ID);
-gboolean                 gimp_image_freeze_channels            (GimpImage           *image);
-gboolean                 gimp_image_thaw_channels              (GimpImage           *image);
-gboolean                 gimp_image_insert_vectors             (GimpImage           *image,
-                                                                gint32               vectors_ID,
-                                                                gint32               parent_ID,
-                                                                gint                 position);
-gboolean                 gimp_image_remove_vectors             (GimpImage           *image,
-                                                                gint32               vectors_ID);
-gboolean                 gimp_image_freeze_vectors             (GimpImage           *image);
-gboolean                 gimp_image_thaw_vectors               (GimpImage           *image);
-gint                     gimp_image_get_item_position          (GimpImage           *image,
-                                                                gint32               item_ID);
-gboolean                 gimp_image_raise_item                 (GimpImage           *image,
-                                                                gint32               item_ID);
-gboolean                 gimp_image_lower_item                 (GimpImage           *image,
-                                                                gint32               item_ID);
-gboolean                 gimp_image_raise_item_to_top          (GimpImage           *image,
-                                                                gint32               item_ID);
-gboolean                 gimp_image_lower_item_to_bottom       (GimpImage           *image,
-                                                                gint32               item_ID);
-gboolean                 gimp_image_reorder_item               (GimpImage           *image,
-                                                                gint32               item_ID,
-                                                                gint32               parent_ID,
-                                                                gint                 position);
-gint32                   gimp_image_flatten                    (GimpImage           *image);
-gint32                   gimp_image_merge_visible_layers       (GimpImage           *image,
-                                                                GimpMergeType        merge_type);
-gint32                   gimp_image_merge_down                 (GimpImage           *image,
-                                                                gint32               merge_layer_ID,
-                                                                GimpMergeType        merge_type);
-G_GNUC_INTERNAL guint8*  _gimp_image_get_colormap              (GimpImage           *image,
-                                                                gint                *num_bytes);
-G_GNUC_INTERNAL gboolean _gimp_image_set_colormap              (GimpImage           *image,
-                                                                gint                 num_bytes,
-                                                                const guint8        *colormap);
-G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata              (GimpImage           *image);
-G_GNUC_INTERNAL gboolean _gimp_image_set_metadata              (GimpImage           *image,
-                                                                const gchar         *metadata_string);
-gboolean                 gimp_image_clean_all                  (GimpImage           *image);
-gboolean                 gimp_image_is_dirty                   (GimpImage           *image);
-G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage           *image,
-                                                                gint                 width,
-                                                                gint                 height,
-                                                                gint                *actual_width,
-                                                                gint                *actual_height,
-                                                                gint                *bpp,
-                                                                gint                *thumbnail_data_count,
-                                                                guint8             **thumbnail_data);
-gint32                   gimp_image_get_active_layer           (GimpImage           *image);
-gboolean                 gimp_image_set_active_layer           (GimpImage           *image,
-                                                                gint32               active_layer_ID);
-gint32                   gimp_image_get_active_channel         (GimpImage           *image);
-gboolean                 gimp_image_set_active_channel         (GimpImage           *image,
-                                                                gint32               active_channel_ID);
-gint32                   gimp_image_get_active_vectors         (GimpImage           *image);
-gboolean                 gimp_image_set_active_vectors         (GimpImage           *image,
-                                                                gint32               active_vectors_ID);
-gint32                   gimp_image_get_selection              (GimpImage           *image);
-gboolean                 gimp_image_get_component_active       (GimpImage           *image,
-                                                                GimpChannelType      component);
-gboolean                 gimp_image_set_component_active       (GimpImage           *image,
-                                                                GimpChannelType      component,
-                                                                gboolean             active);
-gboolean                 gimp_image_get_component_visible      (GimpImage           *image,
-                                                                GimpChannelType      component);
-gboolean                 gimp_image_set_component_visible      (GimpImage           *image,
-                                                                GimpChannelType      component,
-                                                                gboolean             visible);
-gchar*                   gimp_image_get_filename               (GimpImage           *image);
-gboolean                 gimp_image_set_filename               (GimpImage           *image,
-                                                                const gchar         *filename);
-gchar*                   gimp_image_get_uri                    (GimpImage           *image);
-gchar*                   gimp_image_get_xcf_uri                (GimpImage           *image);
-gchar*                   gimp_image_get_imported_uri           (GimpImage           *image);
-gchar*                   gimp_image_get_exported_uri           (GimpImage           *image);
-gchar*                   gimp_image_get_name                   (GimpImage           *image);
-gboolean                 gimp_image_get_resolution             (GimpImage           *image,
-                                                                gdouble             *xresolution,
-                                                                gdouble             *yresolution);
-gboolean                 gimp_image_set_resolution             (GimpImage           *image,
-                                                                gdouble              xresolution,
-                                                                gdouble              yresolution);
-GimpUnit                 gimp_image_get_unit                   (GimpImage           *image);
-gboolean                 gimp_image_set_unit                   (GimpImage           *image,
-                                                                GimpUnit             unit);
-gint                     gimp_image_get_tattoo_state           (GimpImage           *image);
-gboolean                 gimp_image_set_tattoo_state           (GimpImage           *image,
-                                                                gint                 tattoo_state);
-gint32                   gimp_image_get_layer_by_tattoo        (GimpImage           *image,
-                                                                gint                 tattoo);
-gint32                   gimp_image_get_channel_by_tattoo      (GimpImage           *image,
-                                                                gint                 tattoo);
-gint32                   gimp_image_get_vectors_by_tattoo      (GimpImage           *image,
-                                                                gint                 tattoo);
-gint32                   gimp_image_get_layer_by_name          (GimpImage           *image,
-                                                                const gchar         *name);
-gint32                   gimp_image_get_channel_by_name        (GimpImage           *image,
-                                                                const gchar         *name);
-gint32                   gimp_image_get_vectors_by_name        (GimpImage           *image,
-                                                                const gchar         *name);
-gboolean                 gimp_image_attach_parasite            (GimpImage           *image,
-                                                                const GimpParasite  *parasite);
-gboolean                 gimp_image_detach_parasite            (GimpImage           *image,
-                                                                const gchar         *name);
-GimpParasite*            gimp_image_get_parasite               (GimpImage           *image,
-                                                                const gchar         *name);
-gchar**                  gimp_image_get_parasite_list          (GimpImage           *image,
-                                                                gint                *num_parasites);
+gboolean                          gimp_image_is_valid                    (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_is_valid)
+G_GNUC_INTERNAL gboolean          _gimp_image_is_valid                   (gint32               image_ID);
+gint*                             gimp_image_list                        (gint                *num_images);
+GimpImage*                        gimp_image_new                         (gint                 width,
+                                                                          gint                 height,
+                                                                          GimpImageBaseType    type);
+GIMP_DEPRECATED_FOR(gimp_image_new)
+G_GNUC_INTERNAL gint32            _gimp_image_new                        (gint                 width,
+                                                                          gint                 height,
+                                                                          GimpImageBaseType    type);
+GimpImage*                        gimp_image_new_with_precision          (gint                 width,
+                                                                          gint                 height,
+                                                                          GimpImageBaseType    type,
+                                                                          GimpPrecision        precision);
+GIMP_DEPRECATED_FOR(gimp_image_new_with_precision)
+G_GNUC_INTERNAL gint32            _gimp_image_new_with_precision         (gint                 width,
+                                                                          gint                 height,
+                                                                          GimpImageBaseType    type,
+                                                                          GimpPrecision        precision);
+GimpImage*                        gimp_image_duplicate                   (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_duplicate)
+G_GNUC_INTERNAL gint32            _gimp_image_duplicate                  (gint32               image_ID);
+gboolean                          gimp_image_delete                      (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_delete)
+G_GNUC_INTERNAL gboolean          _gimp_image_delete                     (gint32               image_ID);
+GimpImageBaseType                 gimp_image_base_type                   (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_base_type)
+G_GNUC_INTERNAL GimpImageBaseType _gimp_image_base_type                  (gint32               image_ID);
+GimpPrecision                     gimp_image_get_precision               (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_precision)
+G_GNUC_INTERNAL GimpPrecision     _gimp_image_get_precision              (gint32               image_ID);
+GimpLayerMode                     gimp_image_get_default_new_layer_mode  (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_default_new_layer_mode)
+G_GNUC_INTERNAL GimpLayerMode     _gimp_image_get_default_new_layer_mode (gint32               image_ID);
+gint                              gimp_image_width                       (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_width)
+G_GNUC_INTERNAL gint              _gimp_image_width                      (gint32               image_ID);
+gint                              gimp_image_height                      (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_height)
+G_GNUC_INTERNAL gint              _gimp_image_height                     (gint32               image_ID);
+gint*                             gimp_image_get_layers                  (GimpImage           *image,
+                                                                          gint                *num_layers);
+GIMP_DEPRECATED_FOR(gimp_image_get_layers)
+G_GNUC_INTERNAL gint*             _gimp_image_get_layers                 (gint32               image_ID,
+                                                                          gint                *num_layers);
+gint*                             gimp_image_get_channels                (GimpImage           *image,
+                                                                          gint                *num_channels);
+GIMP_DEPRECATED_FOR(gimp_image_get_channels)
+G_GNUC_INTERNAL gint*             _gimp_image_get_channels               (gint32               image_ID,
+                                                                          gint                *num_channels);
+gint*                             gimp_image_get_vectors                 (GimpImage           *image,
+                                                                          gint                *num_vectors);
+GIMP_DEPRECATED_FOR(gimp_image_get_vectors)
+G_GNUC_INTERNAL gint*             _gimp_image_get_vectors                (gint32               image_ID,
+                                                                          gint                *num_vectors);
+gint32                            gimp_image_get_active_drawable         (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_active_drawable)
+G_GNUC_INTERNAL gint32            _gimp_image_get_active_drawable        (gint32               image_ID);
+gboolean                          gimp_image_unset_active_channel        (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_unset_active_channel)
+G_GNUC_INTERNAL gboolean          _gimp_image_unset_active_channel       (gint32               image_ID);
+gint32                            gimp_image_get_floating_sel            (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_floating_sel)
+G_GNUC_INTERNAL gint32            _gimp_image_get_floating_sel           (gint32               image_ID);
+gint32                            gimp_image_floating_sel_attached_to    (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_floating_sel_attached_to)
+G_GNUC_INTERNAL gint32            _gimp_image_floating_sel_attached_to   (gint32               image_ID);
+gboolean                          gimp_image_pick_color                  (GimpImage           *image,
+                                                                          gint32               drawable_ID,
+                                                                          gdouble              x,
+                                                                          gdouble              y,
+                                                                          gboolean             sample_merged,
+                                                                          gboolean             sample_average,
+                                                                          gdouble              average_radius,
+                                                                          GimpRGB             *color);
+GIMP_DEPRECATED_FOR(gimp_image_pick_color)
+G_GNUC_INTERNAL gboolean          _gimp_image_pick_color                 (gint32               image_ID,
+                                                                          gint32               drawable_ID,
+                                                                          gdouble              x,
+                                                                          gdouble              y,
+                                                                          gboolean             sample_merged,
+                                                                          gboolean             sample_average,
+                                                                          gdouble              average_radius,
+                                                                          GimpRGB             *color);
+gint32                            gimp_image_pick_correlate_layer        (GimpImage           *image,
+                                                                          gint                 x,
+                                                                          gint                 y);
+GIMP_DEPRECATED_FOR(gimp_image_pick_correlate_layer)
+G_GNUC_INTERNAL gint32            _gimp_image_pick_correlate_layer       (gint32               image_ID,
+                                                                          gint                 x,
+                                                                          gint                 y);
+gboolean                          gimp_image_insert_layer                (GimpImage           *image,
+                                                                          gint32               layer_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+GIMP_DEPRECATED_FOR(gimp_image_insert_layer)
+G_GNUC_INTERNAL gboolean          _gimp_image_insert_layer               (gint32               image_ID,
+                                                                          gint32               layer_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+gboolean                          gimp_image_remove_layer                (GimpImage           *image,
+                                                                          gint32               layer_ID);
+GIMP_DEPRECATED_FOR(gimp_image_remove_layer)
+G_GNUC_INTERNAL gboolean          _gimp_image_remove_layer               (gint32               image_ID,
+                                                                          gint32               layer_ID);
+gboolean                          gimp_image_freeze_layers               (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_freeze_layers)
+G_GNUC_INTERNAL gboolean          _gimp_image_freeze_layers              (gint32               image_ID);
+gboolean                          gimp_image_thaw_layers                 (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_thaw_layers)
+G_GNUC_INTERNAL gboolean          _gimp_image_thaw_layers                (gint32               image_ID);
+gboolean                          gimp_image_insert_channel              (GimpImage           *image,
+                                                                          gint32               channel_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+GIMP_DEPRECATED_FOR(gimp_image_insert_channel)
+G_GNUC_INTERNAL gboolean          _gimp_image_insert_channel             (gint32               image_ID,
+                                                                          gint32               channel_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+gboolean                          gimp_image_remove_channel              (GimpImage           *image,
+                                                                          gint32               channel_ID);
+GIMP_DEPRECATED_FOR(gimp_image_remove_channel)
+G_GNUC_INTERNAL gboolean          _gimp_image_remove_channel             (gint32               image_ID,
+                                                                          gint32               channel_ID);
+gboolean                          gimp_image_freeze_channels             (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_freeze_channels)
+G_GNUC_INTERNAL gboolean          _gimp_image_freeze_channels            (gint32               image_ID);
+gboolean                          gimp_image_thaw_channels               (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_thaw_channels)
+G_GNUC_INTERNAL gboolean          _gimp_image_thaw_channels              (gint32               image_ID);
+gboolean                          gimp_image_insert_vectors              (GimpImage           *image,
+                                                                          gint32               vectors_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+GIMP_DEPRECATED_FOR(gimp_image_insert_vectors)
+G_GNUC_INTERNAL gboolean          _gimp_image_insert_vectors             (gint32               image_ID,
+                                                                          gint32               vectors_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+gboolean                          gimp_image_remove_vectors              (GimpImage           *image,
+                                                                          gint32               vectors_ID);
+GIMP_DEPRECATED_FOR(gimp_image_remove_vectors)
+G_GNUC_INTERNAL gboolean          _gimp_image_remove_vectors             (gint32               image_ID,
+                                                                          gint32               vectors_ID);
+gboolean                          gimp_image_freeze_vectors              (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_freeze_vectors)
+G_GNUC_INTERNAL gboolean          _gimp_image_freeze_vectors             (gint32               image_ID);
+gboolean                          gimp_image_thaw_vectors                (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_thaw_vectors)
+G_GNUC_INTERNAL gboolean          _gimp_image_thaw_vectors               (gint32               image_ID);
+gint                              gimp_image_get_item_position           (GimpImage           *image,
+                                                                          gint32               item_ID);
+GIMP_DEPRECATED_FOR(gimp_image_get_item_position)
+G_GNUC_INTERNAL gint              _gimp_image_get_item_position          (gint32               image_ID,
+                                                                          gint32               item_ID);
+gboolean                          gimp_image_raise_item                  (GimpImage           *image,
+                                                                          gint32               item_ID);
+GIMP_DEPRECATED_FOR(gimp_image_raise_item)
+G_GNUC_INTERNAL gboolean          _gimp_image_raise_item                 (gint32               image_ID,
+                                                                          gint32               item_ID);
+gboolean                          gimp_image_lower_item                  (GimpImage           *image,
+                                                                          gint32               item_ID);
+GIMP_DEPRECATED_FOR(gimp_image_lower_item)
+G_GNUC_INTERNAL gboolean          _gimp_image_lower_item                 (gint32               image_ID,
+                                                                          gint32               item_ID);
+gboolean                          gimp_image_raise_item_to_top           (GimpImage           *image,
+                                                                          gint32               item_ID);
+GIMP_DEPRECATED_FOR(gimp_image_raise_item_to_top)
+G_GNUC_INTERNAL gboolean          _gimp_image_raise_item_to_top          (gint32               image_ID,
+                                                                          gint32               item_ID);
+gboolean                          gimp_image_lower_item_to_bottom        (GimpImage           *image,
+                                                                          gint32               item_ID);
+GIMP_DEPRECATED_FOR(gimp_image_lower_item_to_bottom)
+G_GNUC_INTERNAL gboolean          _gimp_image_lower_item_to_bottom       (gint32               image_ID,
+                                                                          gint32               item_ID);
+gboolean                          gimp_image_reorder_item                (GimpImage           *image,
+                                                                          gint32               item_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+GIMP_DEPRECATED_FOR(gimp_image_reorder_item)
+G_GNUC_INTERNAL gboolean          _gimp_image_reorder_item               (gint32               image_ID,
+                                                                          gint32               item_ID,
+                                                                          gint32               parent_ID,
+                                                                          gint                 position);
+gint32                            gimp_image_flatten                     (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_flatten)
+G_GNUC_INTERNAL gint32            _gimp_image_flatten                    (gint32               image_ID);
+gint32                            gimp_image_merge_visible_layers        (GimpImage           *image,
+                                                                          GimpMergeType        merge_type);
+GIMP_DEPRECATED_FOR(gimp_image_merge_visible_layers)
+G_GNUC_INTERNAL gint32            _gimp_image_merge_visible_layers       (gint32               image_ID,
+                                                                          GimpMergeType        merge_type);
+gint32                            gimp_image_merge_down                  (GimpImage           *image,
+                                                                          gint32               merge_layer_ID,
+                                                                          GimpMergeType        merge_type);
+GIMP_DEPRECATED_FOR(gimp_image_merge_down)
+G_GNUC_INTERNAL gint32            _gimp_image_merge_down                 (gint32               image_ID,
+                                                                          gint32               merge_layer_ID,
+                                                                          GimpMergeType        merge_type);
+G_GNUC_INTERNAL guint8*           _gimp_image_get_colormap               (GimpImage           *image,
+                                                                          gint                *num_bytes);
+GIMP_DEPRECATED_FOR(_gimp_image_get_colormap)
+G_GNUC_INTERNAL guint8*           __gimp_image_get_colormap              (gint32               image_ID,
+                                                                          gint                *num_bytes);
+G_GNUC_INTERNAL gboolean          _gimp_image_set_colormap               (GimpImage           *image,
+                                                                          gint                 num_bytes,
+                                                                          const guint8        *colormap);
+GIMP_DEPRECATED_FOR(_gimp_image_set_colormap)
+G_GNUC_INTERNAL gboolean          __gimp_image_set_colormap              (gint32               image_ID,
+                                                                          gint                 num_bytes,
+                                                                          const guint8        *colormap);
+G_GNUC_INTERNAL gchar*            _gimp_image_get_metadata               (GimpImage           *image);
+GIMP_DEPRECATED_FOR(_gimp_image_get_metadata)
+G_GNUC_INTERNAL gchar*            __gimp_image_get_metadata              (gint32               image_ID);
+G_GNUC_INTERNAL gboolean          _gimp_image_set_metadata               (GimpImage           *image,
+                                                                          const gchar         *metadata_string);
+GIMP_DEPRECATED_FOR(_gimp_image_set_metadata)
+G_GNUC_INTERNAL gboolean          __gimp_image_set_metadata              (gint32               image_ID,
+                                                                          const gchar         *metadata_string);
+gboolean                          gimp_image_clean_all                   (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_clean_all)
+G_GNUC_INTERNAL gboolean          _gimp_image_clean_all                  (gint32               image_ID);
+gboolean                          gimp_image_is_dirty                    (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_is_dirty)
+G_GNUC_INTERNAL gboolean          _gimp_image_is_dirty                   (gint32               image_ID);
+G_GNUC_INTERNAL gboolean          _gimp_image_thumbnail                  (GimpImage           *image,
+                                                                          gint                 width,
+                                                                          gint                 height,
+                                                                          gint                *actual_width,
+                                                                          gint                *actual_height,
+                                                                          gint                *bpp,
+                                                                          gint                *thumbnail_data_count,
+                                                                          guint8             **thumbnail_data);
+GIMP_DEPRECATED_FOR(_gimp_image_thumbnail)
+G_GNUC_INTERNAL gboolean          __gimp_image_thumbnail                 (gint32               image_ID,
+                                                                          gint                 width,
+                                                                          gint                 height,
+                                                                          gint                *actual_width,
+                                                                          gint                *actual_height,
+                                                                          gint                *bpp,
+                                                                          gint                *thumbnail_data_count,
+                                                                          guint8             **thumbnail_data);
+gint32                            gimp_image_get_active_layer            (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_active_layer)
+G_GNUC_INTERNAL gint32            _gimp_image_get_active_layer           (gint32               image_ID);
+gboolean                          gimp_image_set_active_layer            (GimpImage           *image,
+                                                                          gint32               active_layer_ID);
+GIMP_DEPRECATED_FOR(gimp_image_set_active_layer)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_active_layer           (gint32               image_ID,
+                                                                          gint32               active_layer_ID);
+gint32                            gimp_image_get_active_channel          (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_active_channel)
+G_GNUC_INTERNAL gint32            _gimp_image_get_active_channel         (gint32               image_ID);
+gboolean                          gimp_image_set_active_channel          (GimpImage           *image,
+                                                                          gint32               active_channel_ID);
+GIMP_DEPRECATED_FOR(gimp_image_set_active_channel)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_active_channel         (gint32               image_ID,
+                                                                          gint32               active_channel_ID);
+gint32                            gimp_image_get_active_vectors          (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_active_vectors)
+G_GNUC_INTERNAL gint32            _gimp_image_get_active_vectors         (gint32               image_ID);
+gboolean                          gimp_image_set_active_vectors          (GimpImage           *image,
+                                                                          gint32               active_vectors_ID);
+GIMP_DEPRECATED_FOR(gimp_image_set_active_vectors)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_active_vectors         (gint32               image_ID,
+                                                                          gint32               active_vectors_ID);
+gint32                            gimp_image_get_selection               (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_selection)
+G_GNUC_INTERNAL gint32            _gimp_image_get_selection              (gint32               image_ID);
+gboolean                          gimp_image_get_component_active        (GimpImage           *image,
+                                                                          GimpChannelType      component);
+GIMP_DEPRECATED_FOR(gimp_image_get_component_active)
+G_GNUC_INTERNAL gboolean          _gimp_image_get_component_active       (gint32               image_ID,
+                                                                          GimpChannelType      component);
+gboolean                          gimp_image_set_component_active        (GimpImage           *image,
+                                                                          GimpChannelType      component,
+                                                                          gboolean             active);
+GIMP_DEPRECATED_FOR(gimp_image_set_component_active)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_component_active       (gint32               image_ID,
+                                                                          GimpChannelType      component,
+                                                                          gboolean             active);
+gboolean                          gimp_image_get_component_visible       (GimpImage           *image,
+                                                                          GimpChannelType      component);
+GIMP_DEPRECATED_FOR(gimp_image_get_component_visible)
+G_GNUC_INTERNAL gboolean          _gimp_image_get_component_visible      (gint32               image_ID,
+                                                                          GimpChannelType      component);
+gboolean                          gimp_image_set_component_visible       (GimpImage           *image,
+                                                                          GimpChannelType      component,
+                                                                          gboolean             visible);
+GIMP_DEPRECATED_FOR(gimp_image_set_component_visible)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_component_visible      (gint32               image_ID,
+                                                                          GimpChannelType      component,
+                                                                          gboolean             visible);
+gchar*                            gimp_image_get_filename                (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_filename)
+G_GNUC_INTERNAL gchar*            _gimp_image_get_filename               (gint32               image_ID);
+gboolean                          gimp_image_set_filename                (GimpImage           *image,
+                                                                          const gchar         *filename);
+GIMP_DEPRECATED_FOR(gimp_image_set_filename)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_filename               (gint32               image_ID,
+                                                                          const gchar         *filename);
+gchar*                            gimp_image_get_uri                     (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_uri)
+G_GNUC_INTERNAL gchar*            _gimp_image_get_uri                    (gint32               image_ID);
+gchar*                            gimp_image_get_xcf_uri                 (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_xcf_uri)
+G_GNUC_INTERNAL gchar*            _gimp_image_get_xcf_uri                (gint32               image_ID);
+gchar*                            gimp_image_get_imported_uri            (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_imported_uri)
+G_GNUC_INTERNAL gchar*            _gimp_image_get_imported_uri           (gint32               image_ID);
+gchar*                            gimp_image_get_exported_uri            (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_exported_uri)
+G_GNUC_INTERNAL gchar*            _gimp_image_get_exported_uri           (gint32               image_ID);
+gchar*                            gimp_image_get_name                    (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_name)
+G_GNUC_INTERNAL gchar*            _gimp_image_get_name                   (gint32               image_ID);
+gboolean                          gimp_image_get_resolution              (GimpImage           *image,
+                                                                          gdouble             *xresolution,
+                                                                          gdouble             *yresolution);
+GIMP_DEPRECATED_FOR(gimp_image_get_resolution)
+G_GNUC_INTERNAL gboolean          _gimp_image_get_resolution             (gint32               image_ID,
+                                                                          gdouble             *xresolution,
+                                                                          gdouble             *yresolution);
+gboolean                          gimp_image_set_resolution              (GimpImage           *image,
+                                                                          gdouble              xresolution,
+                                                                          gdouble              yresolution);
+GIMP_DEPRECATED_FOR(gimp_image_set_resolution)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_resolution             (gint32               image_ID,
+                                                                          gdouble              xresolution,
+                                                                          gdouble              yresolution);
+GimpUnit                          gimp_image_get_unit                    (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_unit)
+G_GNUC_INTERNAL GimpUnit          _gimp_image_get_unit                   (gint32               image_ID);
+gboolean                          gimp_image_set_unit                    (GimpImage           *image,
+                                                                          GimpUnit             unit);
+GIMP_DEPRECATED_FOR(gimp_image_set_unit)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_unit                   (gint32               image_ID,
+                                                                          GimpUnit             unit);
+gint                              gimp_image_get_tattoo_state            (GimpImage           *image);
+GIMP_DEPRECATED_FOR(gimp_image_get_tattoo_state)
+G_GNUC_INTERNAL gint              _gimp_image_get_tattoo_state           (gint32               image_ID);
+gboolean                          gimp_image_set_tattoo_state            (GimpImage           *image,
+                                                                          gint                 tattoo_state);
+GIMP_DEPRECATED_FOR(gimp_image_set_tattoo_state)
+G_GNUC_INTERNAL gboolean          _gimp_image_set_tattoo_state           (gint32               image_ID,
+                                                                          gint                 tattoo_state);
+gint32                            gimp_image_get_layer_by_tattoo         (GimpImage           *image,
+                                                                          gint                 tattoo);
+GIMP_DEPRECATED_FOR(gimp_image_get_layer_by_tattoo)
+G_GNUC_INTERNAL gint32            _gimp_image_get_layer_by_tattoo        (gint32               image_ID,
+                                                                          gint                 tattoo);
+gint32                            gimp_image_get_channel_by_tattoo       (GimpImage           *image,
+                                                                          gint                 tattoo);
+GIMP_DEPRECATED_FOR(gimp_image_get_channel_by_tattoo)
+G_GNUC_INTERNAL gint32            _gimp_image_get_channel_by_tattoo      (gint32               image_ID,
+                                                                          gint                 tattoo);
+gint32                            gimp_image_get_vectors_by_tattoo       (GimpImage           *image,
+                                                                          gint                 tattoo);
+GIMP_DEPRECATED_FOR(gimp_image_get_vectors_by_tattoo)
+G_GNUC_INTERNAL gint32            _gimp_image_get_vectors_by_tattoo      (gint32               image_ID,
+                                                                          gint                 tattoo);
+gint32                            gimp_image_get_layer_by_name           (GimpImage           *image,
+                                                                          const gchar         *name);
+GIMP_DEPRECATED_FOR(gimp_image_get_layer_by_name)
+G_GNUC_INTERNAL gint32            _gimp_image_get_layer_by_name          (gint32               image_ID,
+                                                                          const gchar         *name);
+gint32                            gimp_image_get_channel_by_name         (GimpImage           *image,
+                                                                          const gchar         *name);
+GIMP_DEPRECATED_FOR(gimp_image_get_channel_by_name)
+G_GNUC_INTERNAL gint32            _gimp_image_get_channel_by_name        (gint32               image_ID,
+                                                                          const gchar         *name);
+gint32                            gimp_image_get_vectors_by_name         (GimpImage           *image,
+                                                                          const gchar         *name);
+GIMP_DEPRECATED_FOR(gimp_image_get_vectors_by_name)
+G_GNUC_INTERNAL gint32            _gimp_image_get_vectors_by_name        (gint32               image_ID,
+                                                                          const gchar         *name);
+gboolean                          gimp_image_attach_parasite             (GimpImage           *image,
+                                                                          const GimpParasite  *parasite);
+GIMP_DEPRECATED_FOR(gimp_image_attach_parasite)
+G_GNUC_INTERNAL gboolean          _gimp_image_attach_parasite            (gint32               image_ID,
+                                                                          const GimpParasite  *parasite);
+gboolean                          gimp_image_detach_parasite             (GimpImage           *image,
+                                                                          const gchar         *name);
+GIMP_DEPRECATED_FOR(gimp_image_detach_parasite)
+G_GNUC_INTERNAL gboolean          _gimp_image_detach_parasite            (gint32               image_ID,
+                                                                          const gchar         *name);
+GimpParasite*                     gimp_image_get_parasite                (GimpImage           *image,
+                                                                          const gchar         *name);
+GIMP_DEPRECATED_FOR(gimp_image_get_parasite)
+G_GNUC_INTERNAL GimpParasite*     _gimp_image_get_parasite               (gint32               image_ID,
+                                                                          const gchar         *name);
+gchar**                           gimp_image_get_parasite_list           (GimpImage           *image,
+                                                                          gint                *num_parasites);
+GIMP_DEPRECATED_FOR(gimp_image_get_parasite_list)
+G_GNUC_INTERNAL gchar**           _gimp_image_get_parasite_list          (gint32               image_ID,
+                                                                          gint                *num_parasites);
 
 
 G_END_DECLS

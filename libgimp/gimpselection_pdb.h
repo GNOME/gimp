@@ -32,36 +32,77 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean               gimp_selection_bounds    (GimpImage *image,
-                                                 gboolean  *non_empty,
-                                                 gint      *x1,
-                                                 gint      *y1,
-                                                 gint      *x2,
-                                                 gint      *y2);
-gint                   gimp_selection_value     (GimpImage *image,
-                                                 gint       x,
-                                                 gint       y);
-gboolean               gimp_selection_is_empty  (GimpImage *image);
-gboolean               gimp_selection_translate (GimpImage *image,
-                                                 gint       offx,
-                                                 gint       offy);
-G_GNUC_INTERNAL gint32 _gimp_selection_float    (gint32     drawable_ID,
-                                                 gint       offx,
-                                                 gint       offy);
-gboolean               gimp_selection_invert    (GimpImage *image);
-gboolean               gimp_selection_sharpen   (GimpImage *image);
-gboolean               gimp_selection_all       (GimpImage *image);
-gboolean               gimp_selection_none      (GimpImage *image);
-gboolean               gimp_selection_feather   (GimpImage *image,
-                                                 gdouble    radius);
-gboolean               gimp_selection_border    (GimpImage *image,
-                                                 gint       radius);
-gboolean               gimp_selection_grow      (GimpImage *image,
-                                                 gint       steps);
-gboolean               gimp_selection_shrink    (GimpImage *image,
-                                                 gint       steps);
-gboolean               gimp_selection_flood     (GimpImage *image);
-gint32                 gimp_selection_save      (GimpImage *image);
+gboolean                 gimp_selection_bounds     (GimpImage *image,
+                                                    gboolean  *non_empty,
+                                                    gint      *x1,
+                                                    gint      *y1,
+                                                    gint      *x2,
+                                                    gint      *y2);
+GIMP_DEPRECATED_FOR(gimp_selection_bounds)
+G_GNUC_INTERNAL gboolean _gimp_selection_bounds    (gint32     image_ID,
+                                                    gboolean  *non_empty,
+                                                    gint      *x1,
+                                                    gint      *y1,
+                                                    gint      *x2,
+                                                    gint      *y2);
+gint                     gimp_selection_value      (GimpImage *image,
+                                                    gint       x,
+                                                    gint       y);
+GIMP_DEPRECATED_FOR(gimp_selection_value)
+G_GNUC_INTERNAL gint     _gimp_selection_value     (gint32     image_ID,
+                                                    gint       x,
+                                                    gint       y);
+gboolean                 gimp_selection_is_empty   (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_is_empty)
+G_GNUC_INTERNAL gboolean _gimp_selection_is_empty  (gint32     image_ID);
+gboolean                 gimp_selection_translate  (GimpImage *image,
+                                                    gint       offx,
+                                                    gint       offy);
+GIMP_DEPRECATED_FOR(gimp_selection_translate)
+G_GNUC_INTERNAL gboolean _gimp_selection_translate (gint32     image_ID,
+                                                    gint       offx,
+                                                    gint       offy);
+G_GNUC_INTERNAL gint32   _gimp_selection_float     (gint32     drawable_ID,
+                                                    gint       offx,
+                                                    gint       offy);
+gboolean                 gimp_selection_invert     (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_invert)
+G_GNUC_INTERNAL gboolean _gimp_selection_invert    (gint32     image_ID);
+gboolean                 gimp_selection_sharpen    (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_sharpen)
+G_GNUC_INTERNAL gboolean _gimp_selection_sharpen   (gint32     image_ID);
+gboolean                 gimp_selection_all        (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_all)
+G_GNUC_INTERNAL gboolean _gimp_selection_all       (gint32     image_ID);
+gboolean                 gimp_selection_none       (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_none)
+G_GNUC_INTERNAL gboolean _gimp_selection_none      (gint32     image_ID);
+gboolean                 gimp_selection_feather    (GimpImage *image,
+                                                    gdouble    radius);
+GIMP_DEPRECATED_FOR(gimp_selection_feather)
+G_GNUC_INTERNAL gboolean _gimp_selection_feather   (gint32     image_ID,
+                                                    gdouble    radius);
+gboolean                 gimp_selection_border     (GimpImage *image,
+                                                    gint       radius);
+GIMP_DEPRECATED_FOR(gimp_selection_border)
+G_GNUC_INTERNAL gboolean _gimp_selection_border    (gint32     image_ID,
+                                                    gint       radius);
+gboolean                 gimp_selection_grow       (GimpImage *image,
+                                                    gint       steps);
+GIMP_DEPRECATED_FOR(gimp_selection_grow)
+G_GNUC_INTERNAL gboolean _gimp_selection_grow      (gint32     image_ID,
+                                                    gint       steps);
+gboolean                 gimp_selection_shrink     (GimpImage *image,
+                                                    gint       steps);
+GIMP_DEPRECATED_FOR(gimp_selection_shrink)
+G_GNUC_INTERNAL gboolean _gimp_selection_shrink    (gint32     image_ID,
+                                                    gint       steps);
+gboolean                 gimp_selection_flood      (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_flood)
+G_GNUC_INTERNAL gboolean _gimp_selection_flood     (gint32     image_ID);
+gint32                   gimp_selection_save       (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_selection_save)
+G_GNUC_INTERNAL gint32   _gimp_selection_save      (gint32     image_ID);
 
 
 G_END_DECLS

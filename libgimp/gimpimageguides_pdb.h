@@ -32,18 +32,36 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32              gimp_image_add_hguide            (GimpImage *image,
-                                                      gint       yposition);
-gint32              gimp_image_add_vguide            (GimpImage *image,
-                                                      gint       xposition);
-gboolean            gimp_image_delete_guide          (GimpImage *image,
-                                                      gint32     guide_ID);
-gint32              gimp_image_find_next_guide       (GimpImage *image,
-                                                      gint32     guide_ID);
-GimpOrientationType gimp_image_get_guide_orientation (GimpImage *image,
-                                                      gint32     guide_ID);
-gint                gimp_image_get_guide_position    (GimpImage *image,
-                                                      gint32     guide_ID);
+gint32                              gimp_image_add_hguide             (GimpImage *image,
+                                                                       gint       yposition);
+GIMP_DEPRECATED_FOR(gimp_image_add_hguide)
+G_GNUC_INTERNAL gint32              _gimp_image_add_hguide            (gint32     image_ID,
+                                                                       gint       yposition);
+gint32                              gimp_image_add_vguide             (GimpImage *image,
+                                                                       gint       xposition);
+GIMP_DEPRECATED_FOR(gimp_image_add_vguide)
+G_GNUC_INTERNAL gint32              _gimp_image_add_vguide            (gint32     image_ID,
+                                                                       gint       xposition);
+gboolean                            gimp_image_delete_guide           (GimpImage *image,
+                                                                       gint32     guide_ID);
+GIMP_DEPRECATED_FOR(gimp_image_delete_guide)
+G_GNUC_INTERNAL gboolean            _gimp_image_delete_guide          (gint32     image_ID,
+                                                                       gint32     guide_ID);
+gint32                              gimp_image_find_next_guide        (GimpImage *image,
+                                                                       gint32     guide_ID);
+GIMP_DEPRECATED_FOR(gimp_image_find_next_guide)
+G_GNUC_INTERNAL gint32              _gimp_image_find_next_guide       (gint32     image_ID,
+                                                                       gint32     guide_ID);
+GimpOrientationType                 gimp_image_get_guide_orientation  (GimpImage *image,
+                                                                       gint32     guide_ID);
+GIMP_DEPRECATED_FOR(gimp_image_get_guide_orientation)
+G_GNUC_INTERNAL GimpOrientationType _gimp_image_get_guide_orientation (gint32     image_ID,
+                                                                       gint32     guide_ID);
+gint                                gimp_image_get_guide_position     (GimpImage *image,
+                                                                       gint32     guide_ID);
+GIMP_DEPRECATED_FOR(gimp_image_get_guide_position)
+G_GNUC_INTERNAL gint                _gimp_image_get_guide_position    (gint32     image_ID,
+                                                                       gint32     guide_ID);
 
 
 G_END_DECLS
