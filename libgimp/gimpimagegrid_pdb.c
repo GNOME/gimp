@@ -89,6 +89,60 @@ gimp_image_grid_get_spacing (GimpImage *image,
 }
 
 /**
+ * _gimp_image_grid_get_spacing: (skip)
+ * @image_ID: The image.
+ * @xspacing: (out): The image's grid horizontal spacing.
+ * @yspacing: (out): The image's grid vertical spacing.
+ *
+ * Gets the spacing of an image's grid.
+ *
+ * This procedure retrieves the horizontal and vertical spacing of an
+ * image's grid. It takes the image as parameter.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_get_spacing (gint32   image_ID,
+                              gdouble *xspacing,
+                              gdouble *yspacing)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-get-spacing",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-spacing",
+                                            args);
+  gimp_value_array_unref (args);
+
+  *xspacing = 0.0;
+  *yspacing = 0.0;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *xspacing = g_value_get_double (gimp_value_array_index (return_vals, 1));
+      *yspacing = g_value_get_double (gimp_value_array_index (return_vals, 2));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_grid_set_spacing:
  * @image: The image.
  * @xspacing: The image's grid horizontal spacing.
@@ -115,6 +169,53 @@ gimp_image_grid_set_spacing (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_DOUBLE, xspacing,
+                                          G_TYPE_DOUBLE, yspacing,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-set-spacing",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-spacing",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_image_grid_set_spacing: (skip)
+ * @image_ID: The image.
+ * @xspacing: The image's grid horizontal spacing.
+ * @yspacing: The image's grid vertical spacing.
+ *
+ * Sets the spacing of an image's grid.
+ *
+ * This procedure sets the horizontal and vertical spacing of an
+ * image's grid.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_set_spacing (gint32  image_ID,
+                              gdouble xspacing,
+                              gdouble yspacing)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_DOUBLE, xspacing,
                                           G_TYPE_DOUBLE, yspacing,
                                           G_TYPE_NONE);
@@ -190,6 +291,60 @@ gimp_image_grid_get_offset (GimpImage *image,
 }
 
 /**
+ * _gimp_image_grid_get_offset: (skip)
+ * @image_ID: The image.
+ * @xoffset: (out): The image's grid horizontal offset.
+ * @yoffset: (out): The image's grid vertical offset.
+ *
+ * Gets the offset of an image's grid.
+ *
+ * This procedure retrieves the horizontal and vertical offset of an
+ * image's grid. It takes the image as parameter.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_get_offset (gint32   image_ID,
+                             gdouble *xoffset,
+                             gdouble *yoffset)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-get-offset",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-offset",
+                                            args);
+  gimp_value_array_unref (args);
+
+  *xoffset = 0.0;
+  *yoffset = 0.0;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *xoffset = g_value_get_double (gimp_value_array_index (return_vals, 1));
+      *yoffset = g_value_get_double (gimp_value_array_index (return_vals, 2));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_grid_set_offset:
  * @image: The image.
  * @xoffset: The image's grid horizontal offset.
@@ -216,6 +371,53 @@ gimp_image_grid_set_offset (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_DOUBLE, xoffset,
+                                          G_TYPE_DOUBLE, yoffset,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-set-offset",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-offset",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_image_grid_set_offset: (skip)
+ * @image_ID: The image.
+ * @xoffset: The image's grid horizontal offset.
+ * @yoffset: The image's grid vertical offset.
+ *
+ * Sets the offset of an image's grid.
+ *
+ * This procedure sets the horizontal and vertical offset of an image's
+ * grid.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_set_offset (gint32  image_ID,
+                             gdouble xoffset,
+                             gdouble yoffset)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_DOUBLE, xoffset,
                                           G_TYPE_DOUBLE, yoffset,
                                           G_TYPE_NONE);
@@ -282,6 +484,51 @@ gimp_image_grid_get_foreground_color (GimpImage *image,
 }
 
 /**
+ * _gimp_image_grid_get_foreground_color: (skip)
+ * @image_ID: The image.
+ * @fgcolor: (out caller-allocates): The image's grid foreground color.
+ *
+ * Sets the foreground color of an image's grid.
+ *
+ * This procedure gets the foreground color of an image's grid.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_get_foreground_color (gint32   image_ID,
+                                       GimpRGB *fgcolor)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-get-foreground-color",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-foreground-color",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*fgcolor);
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_grid_set_foreground_color:
  * @image: The image.
  * @fgcolor: The new foreground color.
@@ -305,6 +552,49 @@ gimp_image_grid_set_foreground_color (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_RGB, fgcolor,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-set-foreground-color",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-foreground-color",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_image_grid_set_foreground_color: (skip)
+ * @image_ID: The image.
+ * @fgcolor: The new foreground color.
+ *
+ * Gets the foreground color of an image's grid.
+ *
+ * This procedure sets the foreground color of an image's grid.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_set_foreground_color (gint32         image_ID,
+                                       const GimpRGB *fgcolor)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_RGB, fgcolor,
                                           G_TYPE_NONE);
 
@@ -370,6 +660,51 @@ gimp_image_grid_get_background_color (GimpImage *image,
 }
 
 /**
+ * _gimp_image_grid_get_background_color: (skip)
+ * @image_ID: The image.
+ * @bgcolor: (out caller-allocates): The image's grid background color.
+ *
+ * Sets the background color of an image's grid.
+ *
+ * This procedure gets the background color of an image's grid.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_get_background_color (gint32   image_ID,
+                                       GimpRGB *bgcolor)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-get-background-color",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-background-color",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    gimp_value_get_rgb (gimp_value_array_index (return_vals, 1), &*bgcolor);
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_grid_set_background_color:
  * @image: The image.
  * @bgcolor: The new background color.
@@ -393,6 +728,49 @@ gimp_image_grid_set_background_color (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_RGB, bgcolor,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-set-background-color",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-background-color",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_image_grid_set_background_color: (skip)
+ * @image_ID: The image.
+ * @bgcolor: The new background color.
+ *
+ * Gets the background color of an image's grid.
+ *
+ * This procedure sets the background color of an image's grid.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_set_background_color (gint32         image_ID,
+                                       const GimpRGB *bgcolor)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_RGB, bgcolor,
                                           G_TYPE_NONE);
 
@@ -454,6 +832,47 @@ gimp_image_grid_get_style (GimpImage *image)
 }
 
 /**
+ * _gimp_image_grid_get_style: (skip)
+ * @image_ID: The image.
+ *
+ * Gets the style of an image's grid.
+ *
+ * This procedure retrieves the style of an image's grid.
+ *
+ * Returns: The image's grid style.
+ *
+ * Since: 2.4
+ **/
+GimpGridStyle
+_gimp_image_grid_get_style (gint32 image_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpGridStyle style = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-get-style",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-get-style",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    style = g_value_get_enum (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return style;
+}
+
+/**
  * gimp_image_grid_set_style:
  * @image: The image.
  * @style: The image's grid style.
@@ -478,6 +897,50 @@ gimp_image_grid_set_style (GimpImage     *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_GRID_STYLE, style,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-image-grid-set-style",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-image-grid-set-style",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_image_grid_set_style: (skip)
+ * @image_ID: The image.
+ * @style: The image's grid style.
+ *
+ * Sets the style unit of an image's grid.
+ *
+ * This procedure sets the style of an image's grid. It takes the image
+ * and the new style as parameters.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_image_grid_set_style (gint32        image_ID,
+                            GimpGridStyle style)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_GRID_STYLE, style,
                                           G_TYPE_NONE);
 
