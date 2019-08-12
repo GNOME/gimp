@@ -1,5 +1,5 @@
 install_data(
   'default.env',
   'python.env',
-  install_dir: join_paths(gimpplugindir, 'environ')
+  install_dir: gimpplugindir / 'environ',
 )
