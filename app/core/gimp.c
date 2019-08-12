@@ -23,6 +23,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpbase-private.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -73,6 +74,14 @@
 #include "gimptoolinfo.h"
 
 #include "gimp-intl.h"
+
+
+/*  we need to register all enum types so they are known to the type
+ *  system by name, re-use the files the pdb generated for libgimp
+ */
+void           gimp_enums_init           (void);
+const gchar ** gimp_enums_get_type_names (gint *n_type_names);
+#include "libgimp/gimpenums.c.tail"
 
 
 enum
@@ -226,6 +235,8 @@ gimp_init (Gimp *gimp)
   gimp_gui_init (gimp);
 
   gimp->parasites = gimp_parasite_list_new ();
+
+  gimp_enums_init ();
 
   gimp_units_init (gimp);
 
