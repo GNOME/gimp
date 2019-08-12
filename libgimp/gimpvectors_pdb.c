@@ -80,6 +80,51 @@ gimp_vectors_new (GimpImage   *image,
 }
 
 /**
+ * _gimp_vectors_new: (skip)
+ * @image_ID: The image.
+ * @name: the name of the new vector object.
+ *
+ * Creates a new empty vectors object.
+ *
+ * Creates a new empty vectors object. The vectors object needs to be
+ * added to the image using gimp_image_insert_vectors().
+ *
+ * Returns: the current vector object, 0 if no vector exists in the image.
+ *
+ * Since: 2.4
+ **/
+gint32
+_gimp_vectors_new (gint32       image_ID,
+                   const gchar *name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 vectors_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-vectors-new",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-vectors-new",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return vectors_ID;
+}
+
+/**
  * gimp_vectors_new_from_text_layer:
  * @image: The image.
  * @layer_ID: The text layer.
@@ -104,6 +149,51 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-vectors-new-from-text-layer",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-vectors-new-from-text-layer",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return vectors_ID;
+}
+
+/**
+ * _gimp_vectors_new_from_text_layer: (skip)
+ * @image_ID: The image.
+ * @layer_ID: The text layer.
+ *
+ * Creates a new vectors object from a text layer.
+ *
+ * Creates a new vectors object from a text layer. The vectors object
+ * needs to be added to the image using gimp_image_insert_vectors().
+ *
+ * Returns: The vectors of the text layer.
+ *
+ * Since: 2.6
+ **/
+gint32
+_gimp_vectors_new_from_text_layer (gint32 image_ID,
+                                   gint32 layer_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 vectors_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_LAYER_ID, layer_ID,
                                           G_TYPE_NONE);
 
@@ -1195,6 +1285,69 @@ gimp_vectors_import_from_file (GimpImage    *image,
 }
 
 /**
+ * _gimp_vectors_import_from_file: (skip)
+ * @image_ID: The image.
+ * @filename: The name of the SVG file to import.
+ * @merge: Merge paths into a single vectors object.
+ * @scale: Scale the SVG to image dimensions.
+ * @num_vectors: (out): The number of newly created vectors.
+ * @vectors_ids: (out) (array length=num_vectors): The list of newly created vectors.
+ *
+ * Import paths from an SVG file.
+ *
+ * This procedure imports paths from an SVG file. SVG elements other
+ * than paths and basic shapes are ignored.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_vectors_import_from_file (gint32        image_ID,
+                                const gchar  *filename,
+                                gboolean      merge,
+                                gboolean      scale,
+                                gint         *num_vectors,
+                                gint        **vectors_ids)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, filename,
+                                          G_TYPE_BOOLEAN, merge,
+                                          G_TYPE_BOOLEAN, scale,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-vectors-import-from-file",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-vectors-import-from-file",
+                                            args);
+  gimp_value_array_unref (args);
+
+  *num_vectors = 0;
+  *vectors_ids = NULL;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_vectors = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *vectors_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_vectors_import_from_string:
  * @image: The image.
  * @string: A string that must be a complete and valid SVG document.
@@ -1230,6 +1383,73 @@ gimp_vectors_import_from_string (GimpImage    *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_STRING, string,
+                                          G_TYPE_INT, length,
+                                          G_TYPE_BOOLEAN, merge,
+                                          G_TYPE_BOOLEAN, scale,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-vectors-import-from-string",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-vectors-import-from-string",
+                                            args);
+  gimp_value_array_unref (args);
+
+  *num_vectors = 0;
+  *vectors_ids = NULL;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_vectors = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      *vectors_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_vectors_import_from_string: (skip)
+ * @image_ID: The image.
+ * @string: A string that must be a complete and valid SVG document.
+ * @length: Number of bytes in string or -1 if the string is NULL terminated.
+ * @merge: Merge paths into a single vectors object.
+ * @scale: Scale the SVG to image dimensions.
+ * @num_vectors: (out): The number of newly created vectors.
+ * @vectors_ids: (out) (array length=num_vectors): The list of newly created vectors.
+ *
+ * Import paths from an SVG string.
+ *
+ * This procedure works like gimp_vectors_import_from_file() but takes
+ * a string rather than reading the SVG from a file. This allows you to
+ * write scripts that generate SVG and feed it to GIMP.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+_gimp_vectors_import_from_string (gint32        image_ID,
+                                  const gchar  *string,
+                                  gint          length,
+                                  gboolean      merge,
+                                  gboolean      scale,
+                                  gint         *num_vectors,
+                                  gint        **vectors_ids)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_STRING, string,
                                           G_TYPE_INT, length,
                                           G_TYPE_BOOLEAN, merge,
@@ -1311,6 +1531,55 @@ gimp_vectors_export_to_file (GimpImage   *image,
 }
 
 /**
+ * _gimp_vectors_export_to_file: (skip)
+ * @image_ID: The image.
+ * @filename: The name of the SVG file to create.
+ * @vectors_ID: The vectors object to be saved, or 0 for all in the image.
+ *
+ * save a path as an SVG file.
+ *
+ * This procedure creates an SVG file to save a Vectors object, that
+ * is, a path. The resulting file can be edited using a vector graphics
+ * application, or later reloaded into GIMP. If you pass 0 as the
+ * 'vectors' argument, then all paths in the image will be exported.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.6
+ **/
+gboolean
+_gimp_vectors_export_to_file (gint32       image_ID,
+                              const gchar *filename,
+                              gint32       vectors_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, filename,
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-vectors-export-to-file",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-vectors-export-to-file",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_vectors_export_to_string:
  * @image: The image.
  * @vectors_ID: The vectors object to save, or 0 for all in the image.
@@ -1339,6 +1608,54 @@ gimp_vectors_export_to_string (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-vectors-export-to-string",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-vectors-export-to-string",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    string = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return string;
+}
+
+/**
+ * _gimp_vectors_export_to_string: (skip)
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to save, or 0 for all in the image.
+ *
+ * Save a path as an SVG string.
+ *
+ * This procedure works like gimp_vectors_export_to_file() but creates
+ * a string rather than a file. The contents are a NUL-terminated
+ * string that holds a complete XML document. If you pass 0 as the
+ * 'vectors' argument, then all paths in the image will be exported.
+ *
+ * Returns: A string whose contents are a complete SVG document.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.6
+ **/
+gchar *
+_gimp_vectors_export_to_string (gint32 image_ID,
+                                gint32 vectors_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *string = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           G_TYPE_NONE);
 
