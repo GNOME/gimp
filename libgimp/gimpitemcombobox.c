@@ -60,6 +60,8 @@ struct _GimpItemComboBoxPrivate
 {
   GimpItemConstraintFunc  constraint;
   gpointer                data;
+
+  GimpItemConstraintDeprecatedFunc  constraint_d;
 };
 
 typedef struct _GimpDrawableComboBoxClass GimpDrawableComboBoxClass;
@@ -465,8 +467,9 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
 
   for (i = 0; i < num_items; i++)
     {
-      if (! private->constraint ||
-          (* private->constraint) (image, items[i], private->data))
+      if ((! private->constraint && ! private->constraint_d)                                ||
+          (private->constraint && (* private->constraint) (image, items[i], private->data)) ||
+          (private->constraint_d && (* private->constraint_d) (gimp_image_get_id (image), items[i], private->data)))
         {
           gchar     *image_name = gimp_image_get_name (image);
           gchar     *item_name  = gimp_item_get_name (items[i]);
@@ -602,4 +605,146 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
           gimp_item_combo_box_populate (combo_box);
         }
     }
+}
+
+
+/* Deprecated API. */
+
+
+static GtkWidget * gimp_item_combo_box_new_deprecated (GType                            type,
+                                                       GimpItemConstraintDeprecatedFunc constraint,
+                                                       gpointer                         data,
+                                                       GDestroyNotify                   data_destroy);
+
+/**
+ * gimp_drawable_combo_box_new_deprecated: (skip)
+ * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
+ * @data  :       a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * drawables. If a @constraint function is specified, it is called for
+ * each drawable and only if the function returns %TRUE, the drawable
+ * is added to the combobox.
+ *
+ * You should use gimp_int_combo_box_connect() to initialize and connect
+ * the combo.  Use gimp_int_combo_box_set_active() to get the active
+ * drawable ID and gimp_int_combo_box_get_active() to retrieve the ID
+ * of the selected drawable.
+ *
+ * Returns: a new #GimpIntComboBox.
+ *
+ * Since: 2.2
+ **/
+GtkWidget *
+gimp_drawable_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
+                                        gpointer                         data,
+                                        GDestroyNotify                   data_destroy)
+{
+  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_DRAWABLE_COMBO_BOX,
+                                             constraint, data, data_destroy);
+}
+
+/**
+ * gimp_channel_combo_box_new_deprecated: (skip)
+ * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * channels. See gimp_drawable_combo_box_new() for more information.
+ *
+ * Returns: a new #GimpIntComboBox.
+ *
+ * Since: 2.2
+ **/
+GtkWidget *
+gimp_channel_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
+                                       gpointer                         data,
+                                       GDestroyNotify                   data_destroy)
+{
+  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_CHANNEL_COMBO_BOX,
+                                             constraint, data, data_destroy);
+}
+
+/**
+ * gimp_layer_combo_box_new_deprecated: (skip)
+ * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * layers. See gimp_drawable_combo_box_new() for more information.
+ *
+ * Returns: a new #GimpIntComboBox.
+ *
+ * Since: 2.2
+ **/
+GtkWidget *
+gimp_layer_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
+                                     gpointer                         data,
+                                     GDestroyNotify                   data_destroy)
+{
+  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_LAYER_COMBO_BOX,
+                                             constraint, data, data_destroy);
+}
+
+/**
+ * gimp_vectors_combo_box_new_deprecated: (skip)
+ * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
+ * @data:         a pointer that is passed to @constraint
+ * @data_destroy: Destroy function for @data
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * vectors objects. If a @constraint function is specified, it is called for
+ * each vectors object and only if the function returns %TRUE, the vectors
+ * object is added to the combobox.
+ *
+ * You should use gimp_int_combo_box_connect() to initialize and connect
+ * the combo.  Use gimp_int_combo_box_set_active() to set the active
+ * vectors ID and gimp_int_combo_box_get_active() to retrieve the ID
+ * of the selected vectors object.
+ *
+ * Returns: a new #GimpIntComboBox.
+ *
+ * Since: 2.4
+ **/
+GtkWidget *
+gimp_vectors_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
+                                       gpointer                         data,
+                                       GDestroyNotify                   data_destroy)
+{
+  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_VECTORS_COMBO_BOX,
+                                             constraint, data, data_destroy);
+}
+
+static GtkWidget *
+gimp_item_combo_box_new_deprecated (GType                            type,
+                                    GimpItemConstraintDeprecatedFunc constraint,
+                                    gpointer                         data,
+                                    GDestroyNotify                   data_destroy)
+{
+  GimpIntComboBox         *combo_box;
+  GimpItemComboBoxPrivate *private;
+
+  combo_box = g_object_new (type,
+                            "width-request", WIDTH_REQUEST,
+                            "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
+                            NULL);
+
+  private = GET_PRIVATE (combo_box);
+
+  private->constraint_d = constraint;
+  private->data         = data;
+
+  if (data_destroy)
+    g_object_weak_ref (G_OBJECT (combo_box), (GWeakNotify) data_destroy, data);
+
+  gimp_item_combo_box_populate (combo_box);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_item_combo_box_changed),
+                    NULL);
+
+  return GTK_WIDGET (combo_box);
 }
