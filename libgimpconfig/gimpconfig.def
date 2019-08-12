@@ -63,11 +63,11 @@ EXPORTS
 	gimp_config_writer_get_type
 	gimp_config_writer_identifier
 	gimp_config_writer_linefeed
-	gimp_config_writer_new_fd
-	gimp_config_writer_new_file
-	gimp_config_writer_new_gfile
-	gimp_config_writer_new_stream
-	gimp_config_writer_new_string
+	gimp_config_writer_new_from_fd
+	gimp_config_writer_new_from_file
+	gimp_config_writer_new_from_gfile
+	gimp_config_writer_new_from_stream
+	gimp_config_writer_new_from_string
 	gimp_config_writer_open
 	gimp_config_writer_print
 	gimp_config_writer_printf

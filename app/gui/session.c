@@ -368,18 +368,18 @@ session_save (Gimp     *gimp,
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_gfile (file,
-                                  TRUE,
-                                  "GIMP sessionrc\n\n"
-                                  "This file takes session-specific info "
-                                  "(that is info, you want to keep between "
-                                  "two GIMP sessions).  You are not supposed "
-                                  "to edit it manually, but of course you "
-                                  "can do.  The sessionrc will be entirely "
-                                  "rewritten every time you quit GIMP.  "
-                                  "If this file isn't found, defaults are "
-                                  "used.",
-                                  NULL);
+    gimp_config_writer_new_from_gfile (file,
+                                       TRUE,
+                                       "GIMP sessionrc\n\n"
+                                       "This file takes session-specific info "
+                                       "(that is info, you want to keep between "
+                                       "two GIMP sessions).  You are not supposed "
+                                       "to edit it manually, but of course you "
+                                       "can do.  The sessionrc will be entirely "
+                                       "rewritten every time you quit GIMP.  "
+                                       "If this file isn't found, defaults are "
+                                       "used.",
+                                       NULL);
   g_object_unref (file);
 
   if (!writer)
