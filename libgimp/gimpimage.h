@@ -66,6 +66,7 @@ struct _GimpImageClass
 GType          gimp_image_get_type           (void) G_GNUC_CONST;
 
 gint32         gimp_image_get_id             (GimpImage    *image);
+GimpImage    * gimp_image_new_by_id          (gint32        image_id);
 
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
