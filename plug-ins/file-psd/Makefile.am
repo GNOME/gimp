@@ -45,6 +45,7 @@ EXTRA_DIST = \
 	new-resource-ids.txt
 
 AM_CPPFLAGS = \
+	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-DG_LOG_DOMAIN=\"file-psd\"	\
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
