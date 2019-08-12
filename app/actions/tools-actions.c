@@ -61,13 +61,13 @@ static const GimpStringActionEntry tools_alternative_actions[] =
 
   { "tools-rotate-arbitrary", GIMP_ICON_TOOL_ROTATE,
     NC_("tools-action", "_Arbitrary Rotation..."), "",
-    NC_("tools-action", "Rotate by an arbitrary angle"),
+    NC_("tools-action", "Rotate drawable by an arbitrary angle"),
     "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE },
 
   { "tools-rotate-image-arbitrary", GIMP_ICON_TOOL_ROTATE,
     NC_("tools-action", "_Arbitrary Rotation..."), "",
-    NC_("tools-action", "Rotate by an arbitrary angle"),
+    NC_("tools-action", "Rotate image by an arbitrary angle"),
     "gimp-rotate-image",
     GIMP_HELP_TOOL_ROTATE }
 };
