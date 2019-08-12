@@ -5218,13 +5218,10 @@ bump_map (GimpDrawable *drawable,
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GeglNode *gegl;
       GeglNode *node;
       GeglNode *src_node;
 
-      gegl = gegl_node_new ();
-
-      node = gegl_node_new_child (gegl,
+      node = gegl_node_new_child (NULL,
                                   "operation", "gegl:bump-map",
                                   "tiled",      tiled,
                                   "type",       type,
@@ -5239,14 +5236,14 @@ bump_map (GimpDrawable *drawable,
                                   "ambient",    ambient,
                                   NULL);
 
-      src_node = create_buffer_source_node (gegl, bump_map);
+      src_node = create_buffer_source_node (node, bump_map);
 
       gegl_node_connect_to (src_node, "output", node, "aux");
 
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Bump Map"),
                                      node);
-      g_object_unref (gegl);
+      g_object_unref (node);
 
       return TRUE;
     }
@@ -5273,7 +5270,6 @@ displace (GimpDrawable  *drawable,
     {
       if (do_x || do_y)
         {
-          GeglNode *gegl;
           GeglNode *node;
           GeglAbyssPolicy abyss_policy = GEGL_ABYSS_NONE;
 
@@ -5290,9 +5286,7 @@ displace (GimpDrawable  *drawable,
                 break;
             }
 
-          gegl = gegl_node_new ();
-
-          node = gegl_node_new_child (gegl,
+          node = gegl_node_new_child (NULL,
                                       "operation",     "gegl:displace",
                                       "displace_mode", displace_mode,
                                       "sampler_type",  GEGL_SAMPLER_CUBIC,
@@ -5304,21 +5298,21 @@ displace (GimpDrawable  *drawable,
           if (do_x)
             {
               GeglNode *src_node;
-              src_node = create_buffer_source_node (gegl, displace_map_x);
+              src_node = create_buffer_source_node (node, displace_map_x);
               gegl_node_connect_to (src_node, "output", node, "aux");
             }
 
           if (do_y)
             {
               GeglNode *src_node;
-              src_node = create_buffer_source_node (gegl, displace_map_y);
+              src_node = create_buffer_source_node (node, displace_map_y);
               gegl_node_connect_to (src_node, "output", node, "aux2");
             }
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Displace"),
                                          node);
-          g_object_unref (gegl);
+          g_object_unref (node);
         }
 
       return TRUE;
