@@ -97,6 +97,68 @@ _gimp_layer_new (GimpImage     *image,
 }
 
 /**
+ * __gimp_layer_new: (skip)
+ * @image_ID: The image to which to add the layer.
+ * @width: The layer width.
+ * @height: The layer height.
+ * @type: The layer type.
+ * @name: The layer name.
+ * @opacity: The layer opacity.
+ * @mode: The layer combination mode.
+ *
+ * Create a new layer.
+ *
+ * This procedure creates a new layer with the specified width, height,
+ * and type. Name, opacity, and mode are also supplied parameters. The
+ * new layer still needs to be added to the image, as this is not
+ * automatic. Add the new layer with the gimp_image_insert_layer()
+ * command. Other attributes such as layer mask modes, and offsets
+ * should be set with explicit procedure calls.
+ *
+ * Returns: The newly created layer.
+ **/
+gint32
+__gimp_layer_new (gint32         image_ID,
+                  gint           width,
+                  gint           height,
+                  GimpImageType  type,
+                  const gchar   *name,
+                  gdouble        opacity,
+                  GimpLayerMode  mode)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 layer_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
+                                          GIMP_TYPE_IMAGE_TYPE, type,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, opacity,
+                                          GIMP_TYPE_LAYER_MODE, mode,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-layer-new",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-layer-new",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return layer_ID;
+}
+
+/**
  * gimp_layer_new_from_visible:
  * @image: The source image from where the content is copied.
  * @dest_image: The destination image to which to add the layer.
@@ -127,6 +189,57 @@ gimp_layer_new_from_visible (GimpImage   *image,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (dest_image),
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-layer-new-from-visible",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-layer-new-from-visible",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return layer_ID;
+}
+
+/**
+ * _gimp_layer_new_from_visible: (skip)
+ * @image_ID: The source image from where the content is copied.
+ * @dest_image_ID: The destination image to which to add the layer.
+ * @name: The layer name.
+ *
+ * Create a new layer from what is visible in an image.
+ *
+ * This procedure creates a new layer from what is visible in the given
+ * image. The new layer still needs to be added to the destination
+ * image, as this is not automatic. Add the new layer with the
+ * gimp_image_insert_layer() command. Other attributes such as layer
+ * mask modes, and offsets should be set with explicit procedure calls.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: 2.6
+ **/
+gint32
+_gimp_layer_new_from_visible (gint32       image_ID,
+                              gint32       dest_image_ID,
+                              const gchar *name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 layer_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          GIMP_TYPE_IMAGE_ID, dest_image_ID,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
@@ -194,6 +307,52 @@ gimp_layer_new_from_drawable (gint32     drawable_ID,
 }
 
 /**
+ * _gimp_layer_new_from_drawable: (skip)
+ * @drawable_ID: The source drawable from where the new layer is copied.
+ * @dest_image_ID: The destination image to which to add the layer.
+ *
+ * Create a new layer by copying an existing drawable.
+ *
+ * This procedure creates a new layer as a copy of the specified
+ * drawable. The new layer still needs to be added to the image, as
+ * this is not automatic. Add the new layer with the
+ * gimp_image_insert_layer() command. Other attributes such as layer
+ * mask modes, and offsets should be set with explicit procedure calls.
+ *
+ * Returns: The newly copied layer.
+ **/
+gint32
+_gimp_layer_new_from_drawable (gint32 drawable_ID,
+                               gint32 dest_image_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 layer_copy_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_IMAGE_ID, dest_image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-layer-new-from-drawable",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-layer-new-from-drawable",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    layer_copy_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return layer_copy_ID;
+}
+
+/**
  * gimp_layer_group_new:
  * @image: The image to which to add the layer group.
  *
@@ -221,6 +380,53 @@ gimp_layer_group_new (GimpImage *image)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-layer-group-new",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-layer-group-new",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    layer_group_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return layer_group_ID;
+}
+
+/**
+ * _gimp_layer_group_new: (skip)
+ * @image_ID: The image to which to add the layer group.
+ *
+ * Create a new layer group.
+ *
+ * This procedure creates a new layer group. Attributes such as layer
+ * mode and opacity should be set with explicit procedure calls. Add
+ * the new layer group (which is a kind of layer) with the
+ * gimp_image_insert_layer() command.
+ * Other procedures useful with layer groups:
+ * gimp_image_reorder_item(), gimp_item_get_parent(),
+ * gimp_item_get_children(), gimp_item_is_group().
+ *
+ * Returns: The newly created layer group.
+ *
+ * Since: 2.8
+ **/
+gint32
+_gimp_layer_group_new (gint32 image_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 layer_group_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
