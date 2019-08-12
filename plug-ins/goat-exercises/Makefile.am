@@ -28,6 +28,7 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 AM_LDFLAGS = $(mwindows)
 
 AM_CPPFLAGS = \
+	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)	\

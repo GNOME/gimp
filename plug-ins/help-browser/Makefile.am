@@ -26,6 +26,7 @@ libexecdir = $(gimpplugindir)/plug-ins/help-browser
 libexec_PROGRAMS = help-browser
 
 AM_CPPFLAGS = \
+	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)		\
 	$(WEBKIT_CFLAGS)	\
 	$(GEGL_CFLAGS) \
