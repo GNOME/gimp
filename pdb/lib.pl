@@ -46,7 +46,7 @@ sub desc_wrap {
 }
 
 sub generate_fun {
-    my ($proc, $out, $api_deprecated) = @_;
+    my ($proc, $out, $api_deprecated, $has_image_arg) = @_;
     my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
     my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
@@ -87,6 +87,7 @@ sub generate_fun {
 
     my $funcname = "gimp_$name";
     my $wrapped = "";
+    my $new_funcname = $funcname;
     my %usednames;
     my $retdesc = " * Returns:";
     my $func_annotations = "";
@@ -96,7 +97,8 @@ sub generate_fun {
     }
 
     if ($api_deprecated) {
-        push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($wrapped$funcname)\n";
+        $new_funcname = "$wrapped$funcname";
+        #push @{$out->{protos_deprecated}}, "GIMP_DEPRECATED_FOR($new_funcname)\n";
         $func_annotations .= " (skip)";
     }
     elsif ($proc->{deprecated}) {
@@ -514,7 +516,17 @@ CODE
     my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
     $proto =~ s/ +/ /g;
 
-    push @{$out->{protos}}, $proto;
+    if ($api_deprecated) {
+        my $define_dep = "#define $new_funcname $wrapped$funcname";
+        push @{$out->{protos_deprecated}}, $proto;
+        push @{$out->{defines_deprecated}}, $define_dep;
+    }
+    elsif (! $has_image_arg){
+        push @{$out->{protos_no_alt}}, $proto;
+    }
+    else {
+        push @{$out->{protos}}, $proto;
+    }
 
     my $clist = $arglist;
     my $padlen = length($wrapped) + length($funcname) + 2;
@@ -589,6 +601,113 @@ $arg_array
 CODE
 }
 
+sub generate_hbody {
+    my ($out, $extra, $protoname) = @_;
+
+    if (exists $extra->{${protoname}}) {
+        my $proto = "";
+        foreach (split(/\n/, $extra->{${protoname}})) {
+            next if /^\s*$/;
+
+            if (/^\t/ && length($proto)) {
+                s/\s+/ /g; s/ $//; s/^ /\t/;
+                $proto .= $_ . "\n";
+            }
+            else {
+                push @{$out->{${protoname}}}, $proto if length($proto);
+
+                s/\s+/ /g; s/^ //; s/ $//;
+                $proto = $_ . "\n";
+            }
+        }
+    }
+
+    my @longest = (0, 0, 0); my @arglist = (); my $seen = 0;
+    foreach (@{$out->{${protoname}}}) {
+        my $arglist;
+
+        if (!/^GIMP_DEPRECATED/) {
+            my $len;
+
+            $arglist = [ split(' ', $_, 3) ];
+
+            if ($arglist->[1] =~ /^_/ && $protoname ne 'protos_deprecated') {
+                $arglist->[0] = "G_GNUC_INTERNAL ".$arglist->[0];
+            }
+
+            for (0..1) {
+                $len = length($arglist->[$_]);
+                $longest[$_] = $len if $longest[$_] < $len;
+            }
+
+            foreach (split(/,/, $arglist->[2])) {
+                next unless /(const \w+) \S+/ || /(\w+) \S+/;
+                $len = length($1) + 1;
+                my $num = scalar @{[ /\*/g ]};
+                $seen = $num if $seen < $num;
+                $longest[2] = $len if $longest[2] < $len;
+            }
+        }
+        else {
+            $arglist = $_;
+        }
+
+        push @arglist, $arglist;
+    }
+
+    $longest[2] += $seen;
+
+    @{$out->{${protoname}}} = ();
+    foreach (@arglist) {
+        my $arg;
+
+        if (ref) {
+            my ($type, $func, $arglist) = @$_;
+
+            my @args = split(/,/, $arglist); $arglist = "";
+
+            foreach (@args) {
+                $space = rindex($_, ' ');
+                if ($space > 0 && substr($_, $space - 1, 1) eq ')') {
+                    $space = rindex($_, ' ', $space - 1)
+                }
+                my $len = $longest[2] - $space + 1;
+
+                $len -= scalar @{[ /\*/g ]};
+                $len++ if /\t/;
+
+                if ($space != -1 && $len > 1) {
+                    substr($_, $space, 1) = ' ' x $len;
+                }
+
+                $arglist .= $_;
+                $arglist .= "," if !/;\n$/;
+            }
+
+            $arg = $type;
+            $arg .= ' ' x ($longest[0] - length($type) + 1) . $func;
+            $arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
+            $arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
+        }
+        else {
+            $arg = $_;
+        }
+
+        push @{$out->{${protoname}}}, $arg;
+    }
+
+    my $body = '';
+    $body = $extra->{decls} if exists $extra->{decls};
+    foreach (@{$out->{${protoname}}}) { $body .= $_ }
+    if ($out->{deprecated}) {
+        $body .= "#endif /* GIMP_DISABLE_DEPRECATED */\n";
+    }
+    chomp $body;
+
+    return $body;
+}
+
+
 sub generate {
     my @procs = @{(shift)};
     my %out;
@@ -620,9 +739,9 @@ sub generate {
                 }
             }
         }
-        $out->{code} .= generate_fun($proc, $out, 0);
+        $out->{code} .= generate_fun($proc, $out, 0, $has_image_arg);
         if ($has_image_arg) {
-            $out->{code} .= generate_fun($proc, $out, 1);
+            $out->{code} .= generate_fun($proc, $out, 1, $has_image_arg);
         }
     }
 
@@ -666,111 +785,22 @@ LGPL
         $cname =~ s/_//g; $cname =~ s/pdb\./_pdb./;
 	my $hfile = "$builddir/$hname$FILE_EXT";
 	my $cfile = "$builddir/$cname$FILE_EXT";
+        my $body;
+        my $body_deprecated;
+        my $body_no_alt;
+        my $defines_deprecated = '';
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{lib}) {
 	    $extra = $main::grp{$group}->{extra}->{lib}
 	}
 
-	if (exists $extra->{protos}) {
-	    my $proto = "";
-	    foreach (split(/\n/, $extra->{protos})) {
-		next if /^\s*$/;
-
-		if (/^\t/ && length($proto)) {
-		    s/\s+/ /g; s/ $//; s/^ /\t/;
-		    $proto .= $_ . "\n";
-		}
-		else {
-		    push @{$out->{protos}}, $proto if length($proto);
-
-		    s/\s+/ /g; s/^ //; s/ $//;
-		    $proto = $_ . "\n";
-		}
-	    }
-	}
-
-	my @longest = (0, 0, 0); my @arglist = (); my $seen = 0;
-	foreach (@{$out->{protos}}) {
-	    my $arglist;
-
-	    if (!/^GIMP_DEPRECATED/) {
-		my $len;
-
-		$arglist = [ split(' ', $_, 3) ];
-
-		if ($arglist->[1] =~ /^_/) {
-		    $arglist->[0] = "G_GNUC_INTERNAL ".$arglist->[0];
-		}
-
-		for (0..1) {
-		    $len = length($arglist->[$_]);
-		    $longest[$_] = $len if $longest[$_] < $len;
-		}
-
-		foreach (split(/,/, $arglist->[2])) {
-		    next unless /(const \w+) \S+/ || /(\w+) \S+/;
-		    $len = length($1) + 1;
-		    my $num = scalar @{[ /\*/g ]};
-		    $seen = $num if $seen < $num;
-		    $longest[2] = $len if $longest[2] < $len;
-		}
-	    }
-	    else {
-		$arglist = $_;
-	    }
-
-	    push @arglist, $arglist;
-	}
-
-	$longest[2] += $seen;
-
-	@{$out->{protos}} = ();
-	foreach (@arglist) {
-	    my $arg;
-
-	    if (ref) {
-		my ($type, $func, $arglist) = @$_;
-
-		my @args = split(/,/, $arglist); $arglist = "";
-
-		foreach (@args) {
-		    $space = rindex($_, ' ');
-                    if ($space > 0 && substr($_, $space - 1, 1) eq ')') {
-                        $space = rindex($_, ' ', $space - 1)
-                    }
-		    my $len = $longest[2] - $space + 1;
-
-		    $len -= scalar @{[ /\*/g ]};
-		    $len++ if /\t/;
-
-		    if ($space != -1 && $len > 1) {
-			substr($_, $space, 1) = ' ' x $len;
-		    }
-
-		    $arglist .= $_;
-		    $arglist .= "," if !/;\n$/;
-		}
-
-		$arg = $type;
-		$arg .= ' ' x ($longest[0] - length($type) + 1) . $func;
-		$arg .= ' ' x ($longest[1] - length($func) + 1) . $arglist;
-		$arg =~ s/\t/' ' x ($longest[0] + $longest[1] + 3)/eg;
-	    }
-	    else {
-		$arg = $_;
-	    }
-
-	    push @{$out->{protos}}, $arg;
-	}
-
-	my $body;
-	$body = $extra->{decls} if exists $extra->{decls};
-	foreach (@{$out->{protos}}) { $body .= $_ }
-        if ($out->{deprecated}) {
-	    $body .= "#endif /* GIMP_DISABLE_DEPRECATED */\n";
-	}
-	chomp $body;
+        $body = generate_hbody($out, $extra, "protos");
+        $body_deprecated = generate_hbody($out, $extra, "protos_deprecated");
+        $body_no_alt = generate_hbody($out, $extra, "protos_no_alt");
+        foreach (@{$out->{defines_deprecated}}) {
+            $defines_deprecated .= "$_" . "\n";
+        }
 
 	open HFILE, "> $hfile" or die "Can't open $hfile: $!\n";
         print HFILE $lgpl_top;
@@ -790,7 +820,23 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+$body_no_alt
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
 $body
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+$defines_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+/* Below API are deprecated and should not be used by new plug-ins.
+ * They are not marked internal as a trick to keep the old API alive for now.
+ */
+
+$body_deprecated
 
 
 G_END_DECLS

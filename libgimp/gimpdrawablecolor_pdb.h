@@ -92,6 +92,22 @@ gboolean gimp_drawable_threshold           (gint32                drawable_ID,
                                             gdouble               low_threshold,
                                             gdouble               high_threshold);
 
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+/* Below API are deprecated and should not be used by new plug-ins.
+ * They are not marked internal as a trick to keep the old API alive for now.
+ */
+
+
+
 
 G_END_DECLS
 
