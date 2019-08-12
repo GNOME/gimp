@@ -303,16 +303,16 @@ gimp_unitrc_save (Gimp *gimp)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_gfile (file,
-                                  TRUE,
-                                  "GIMP units\n\n"
-                                  "This file contains the user unit database. "
-                                  "You can edit this list with the unit "
-                                  "editor. You are not supposed to edit it "
-                                  "manually, but of course you can do.\n"
-                                  "This file will be entirely rewritten each "
-                                  "time you exit.",
-                                  NULL);
+    gimp_config_writer_new_from_gfile (file,
+                                       TRUE,
+                                       "GIMP units\n\n"
+                                       "This file contains the user unit database. "
+                                       "You can edit this list with the unit "
+                                       "editor. You are not supposed to edit it "
+                                       "manually, but of course you can do.\n"
+                                       "This file will be entirely rewritten each "
+                                       "time you exit.",
+                                       NULL);
 
   g_object_unref (file);
 

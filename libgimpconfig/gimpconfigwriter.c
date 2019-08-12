@@ -117,7 +117,7 @@ gimp_config_writer_newline (GimpConfigWriter *writer)
 }
 
 /**
- * gimp_config_writer_new_file:
+ * gimp_config_writer_new_from_file:
  * @filename: a filename
  * @atomic: if %TRUE the file is written atomically
  * @header: text to include as comment at the top of the file
@@ -133,10 +133,10 @@ gimp_config_writer_newline (GimpConfigWriter *writer)
  * Since: 2.4
  **/
 GimpConfigWriter *
-gimp_config_writer_new_file (const gchar  *filename,
-                             gboolean      atomic,
-                             const gchar  *header,
-                             GError      **error)
+gimp_config_writer_new_from_file (const gchar  *filename,
+                                  gboolean      atomic,
+                                  const gchar  *header,
+                                  GError      **error)
 {
   GimpConfigWriter *writer;
   GFile            *file;
@@ -146,7 +146,7 @@ gimp_config_writer_new_file (const gchar  *filename,
 
   file = g_file_new_for_path (filename);
 
-  writer = gimp_config_writer_new_gfile (file, atomic, header, error);
+  writer = gimp_config_writer_new_from_gfile (file, atomic, header, error);
 
   g_object_unref (file);
 
@@ -154,7 +154,7 @@ gimp_config_writer_new_file (const gchar  *filename,
 }
 
 /**
- * gimp_config_writer_new_gfile:
+ * gimp_config_writer_new_from_gfile:
  * @file: a #GFile
  * @atomic: if %TRUE the file is written atomically
  * @header: text to include as comment at the top of the file
@@ -170,10 +170,10 @@ gimp_config_writer_new_file (const gchar  *filename,
  * Since: 2.10
  **/
 GimpConfigWriter *
-gimp_config_writer_new_gfile (GFile        *file,
-                              gboolean      atomic,
-                              const gchar  *header,
-                              GError      **error)
+gimp_config_writer_new_from_gfile (GFile        *file,
+                                   gboolean      atomic,
+                                   const gchar  *header,
+                                   GError      **error)
 {
   GimpConfigWriter *writer;
   GOutputStream    *output;
@@ -234,7 +234,7 @@ gimp_config_writer_new_gfile (GFile        *file,
 }
 
 /**
- * gimp_config_writer_new_stream:
+ * gimp_config_writer_new_from_stream:
  * @output: a #GOutputStream
  * @header: text to include as comment at the top of the file
  * @error: return location for errors
@@ -247,9 +247,9 @@ gimp_config_writer_new_gfile (GFile        *file,
  * Since: 2.10
  **/
 GimpConfigWriter *
-gimp_config_writer_new_stream (GOutputStream  *output,
-                               const gchar    *header,
-                               GError        **error)
+gimp_config_writer_new_from_stream (GOutputStream  *output,
+                                    const gchar    *header,
+                                    GError        **error)
 {
   GimpConfigWriter *writer;
 
@@ -272,7 +272,7 @@ gimp_config_writer_new_stream (GOutputStream  *output,
 }
 
 /**
- * gimp_config_writer_new_fd:
+ * gimp_config_writer_new_from_fd:
  * @fd:
  *
  * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
@@ -280,7 +280,7 @@ gimp_config_writer_new_stream (GOutputStream  *output,
  * Since: 2.4
  **/
 GimpConfigWriter *
-gimp_config_writer_new_fd (gint fd)
+gimp_config_writer_new_from_fd (gint fd)
 {
   GimpConfigWriter *writer;
 
@@ -302,7 +302,7 @@ gimp_config_writer_new_fd (gint fd)
 }
 
 /**
- * gimp_config_writer_new_string:
+ * gimp_config_writer_new_from_string:
  * @string:
  *
  * Returns: (nullable): a new #GimpConfigWriter or %NULL in case of an error
@@ -310,7 +310,7 @@ gimp_config_writer_new_fd (gint fd)
  * Since: 2.4
  **/
 GimpConfigWriter *
-gimp_config_writer_new_string (GString *string)
+gimp_config_writer_new_from_string (GString *string)
 {
   GimpConfigWriter *writer;
 

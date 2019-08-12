@@ -306,7 +306,7 @@ gimp_config_serialize_to_file (GimpConfig   *config,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  writer = gimp_config_writer_new_file (filename, TRUE, header, error);
+  writer = gimp_config_writer_new_from_file (filename, TRUE, header, error);
   if (!writer)
     return FALSE;
 
@@ -347,7 +347,7 @@ gimp_config_serialize_to_gfile (GimpConfig   *config,
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  writer = gimp_config_writer_new_gfile (file, TRUE, header, error);
+  writer = gimp_config_writer_new_from_gfile (file, TRUE, header, error);
   if (!writer)
     return FALSE;
 
@@ -386,7 +386,7 @@ gimp_config_serialize_to_stream (GimpConfig     *config,
   g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  writer = gimp_config_writer_new_stream (output, header, error);
+  writer = gimp_config_writer_new_from_stream (output, header, error);
   if (!writer)
     return FALSE;
 
@@ -418,7 +418,7 @@ gimp_config_serialize_to_fd (GimpConfig *config,
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
   g_return_val_if_fail (fd > 0, FALSE);
 
-  writer = gimp_config_writer_new_fd (fd);
+  writer = gimp_config_writer_new_from_fd (fd);
   if (!writer)
     return FALSE;
 
@@ -448,7 +448,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
 
   str = g_string_new (NULL);
-  writer = gimp_config_writer_new_string (str);
+  writer = gimp_config_writer_new_from_string (str);
 
   GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
 
