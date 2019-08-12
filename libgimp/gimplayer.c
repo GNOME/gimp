@@ -243,3 +243,132 @@ gimp_layer_new_from_surface (GimpImage            *image,
 
   return layer;
 }
+
+
+/* Deprecate API. */
+
+
+/**
+ * gimp_layer_new_deprecated: (skip)
+ * @image_id: The image to which to add the layer.
+ * @name:     The layer name.
+ * @width:    The layer width.
+ * @height:   The layer height.
+ * @type:     The layer type.
+ * @opacity:  The layer opacity.
+ * @mode:     The layer combination mode.
+ *
+ * Create a new layer.
+ *
+ * This procedure creates a new layer with the specified width, height,
+ * and type. Name, opacity, and mode are also supplied parameters. The
+ * new layer still needs to be added to the image, as this is not
+ * automatic. Add the new layer with the gimp_image_insert_layer()
+ * command. Other attributes such as layer mask modes, and offsets
+ * should be set with explicit procedure calls.
+ *
+ * Returns: The newly created layer.
+ */
+gint32
+gimp_layer_new_deprecated (gint32         image_id,
+                           const gchar   *name,
+                           gint           width,
+                           gint           height,
+                           GimpImageType  type,
+                           gdouble        opacity,
+                           GimpLayerMode  mode)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  gint32     layer_id;
+
+  layer_id = gimp_layer_new (image, name, width, height,
+                             type, opacity, mode);
+
+  g_object_unref (image);
+
+  return layer_id;
+}
+
+/**
+ * gimp_layer_new_from_pixbuf_deprecated: (skip)
+ * @image_id:       The RGB image to which to add the layer.
+ * @name:           The layer name.
+ * @pixbuf:         A GdkPixbuf.
+ * @opacity:        The layer opacity.
+ * @mode:           The layer combination mode.
+ * @progress_start: start of progress
+ * @progress_end:   end of progress
+ *
+ * Create a new layer from a %GdkPixbuf.
+ *
+ * This procedure creates a new layer from the given %GdkPixbuf.  The
+ * image has to be an RGB image and just like with gimp_layer_new()
+ * you will still need to add the layer to it.
+ *
+ * If you pass @progress_end > @progress_start to this function,
+ * gimp_progress_update() will be called for. You have to call
+ * gimp_progress_init() beforehand then.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: 2.4
+ */
+gint32
+gimp_layer_new_from_pixbuf_deprecated (gint32         image_id,
+                                       const gchar   *name,
+                                       GdkPixbuf     *pixbuf,
+                                       gdouble        opacity,
+                                       GimpLayerMode  mode,
+                                       gdouble        progress_start,
+                                       gdouble        progress_end)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  gint32     layer_id;
+
+  layer_id = gimp_layer_new_from_pixbuf (image, name, pixbuf, opacity, mode,
+                                          progress_start, progress_end);
+
+  g_object_unref (image);
+
+  return layer_id;
+}
+
+/**
+ * gimp_layer_new_from_surface_deprecated: (skip)
+ * @image_id:        The RGB image to which to add the layer.
+ * @name:            The layer name.
+ * @surface:         A Cairo image surface.
+ * @progress_start:  start of progress
+ * @progress_end:    end of progress
+ *
+ * Create a new layer from a #cairo_surface_t.
+ *
+ * This procedure creates a new layer from the given
+ * #cairo_surface_t. The image has to be an RGB image and just like
+ * with gimp_layer_new() you will still need to add the layer to it.
+ *
+ * If you pass @progress_end > @progress_start to this function,
+ * gimp_progress_update() will be called for. You have to call
+ * gimp_progress_init() beforehand then.
+ *
+ * Returns: The newly created layer.
+ *
+ * Since: 2.8
+ */
+gint32
+gimp_layer_new_from_surface_deprecated (gint32                image_id,
+                                        const gchar          *name,
+                                        cairo_surface_t      *surface,
+                                        gdouble               progress_start,
+                                        gdouble               progress_end)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  gint32     layer_id;
+
+  layer_id = gimp_layer_new_from_surface (image, name, surface,
+                                          progress_start, progress_end);
+
+  g_object_unref (image);
+
+  return layer_id;
+}
