@@ -39,12 +39,29 @@ G_GNUC_INTERNAL gint32 _gimp_layer_new                 (GimpImage              *
                                                         const gchar            *name,
                                                         gdouble                 opacity,
                                                         GimpLayerMode           mode);
+GIMP_DEPRECATED_FOR(_gimp_layer_new)
+G_GNUC_INTERNAL gint32 __gimp_layer_new                (gint32                  image_ID,
+                                                        gint                    width,
+                                                        gint                    height,
+                                                        GimpImageType           type,
+                                                        const gchar            *name,
+                                                        gdouble                 opacity,
+                                                        GimpLayerMode           mode);
 gint32                 gimp_layer_new_from_visible     (GimpImage              *image,
                                                         GimpImage              *dest_image,
                                                         const gchar            *name);
+GIMP_DEPRECATED_FOR(gimp_layer_new_from_visible)
+G_GNUC_INTERNAL gint32 _gimp_layer_new_from_visible    (gint32                  image_ID,
+                                                        gint32                  dest_image_ID,
+                                                        const gchar            *name);
 gint32                 gimp_layer_new_from_drawable    (gint32                  drawable_ID,
                                                         GimpImage              *dest_image);
+GIMP_DEPRECATED_FOR(gimp_layer_new_from_drawable)
+G_GNUC_INTERNAL gint32 _gimp_layer_new_from_drawable   (gint32                  drawable_ID,
+                                                        gint32                  dest_image_ID);
 gint32                 gimp_layer_group_new            (GimpImage              *image);
+GIMP_DEPRECATED_FOR(gimp_layer_group_new)
+G_GNUC_INTERNAL gint32 _gimp_layer_group_new           (gint32                  image_ID);
 G_GNUC_INTERNAL gint32 _gimp_layer_copy                (gint32                  layer_ID,
                                                         gboolean                add_alpha);
 gboolean               gimp_layer_add_alpha            (gint32                  layer_ID);

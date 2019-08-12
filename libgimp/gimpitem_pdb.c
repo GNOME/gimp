@@ -110,11 +110,52 @@ gimp_item_get_image (gint32 item_ID)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
   return image;
+}
+
+/**
+ * _gimp_item_get_image: (skip)
+ * @item_ID: The item.
+ *
+ * Returns the item's image.
+ *
+ * This procedure returns the item's image.
+ *
+ * Returns: The item's image.
+ *
+ * Since: 2.8
+ **/
+gint32
+_gimp_item_get_image (gint32 item_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 image_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-item-get-image",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-item-get-image",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return image_ID;
 }
 
 /**

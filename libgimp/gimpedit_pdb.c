@@ -173,6 +173,52 @@ gimp_edit_copy_visible (GimpImage *image)
 }
 
 /**
+ * _gimp_edit_copy_visible: (skip)
+ * @image_ID: The image to copy from.
+ *
+ * Copy from the projection.
+ *
+ * If there is a selection in the image, then the area specified by the
+ * selection is copied from the projection and placed in an internal
+ * GIMP edit buffer. It can subsequently be retrieved using the
+ * gimp_edit_paste() command. If there is no selection, then the
+ * projection's contents will be stored in the internal GIMP edit
+ * buffer.
+ *
+ * Returns: TRUE if the copy was successful.
+ *
+ * Since: 2.2
+ **/
+gboolean
+_gimp_edit_copy_visible (gint32 image_ID)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean non_empty = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-copy-visible",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-copy-visible",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return non_empty;
+}
+
+/**
  * gimp_edit_paste:
  * @drawable_ID: The drawable to paste to.
  * @paste_into: Clear selection, or paste behind it?
@@ -263,11 +309,53 @@ gimp_edit_paste_as_new_image (void)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
   return image;
+}
+
+/**
+ * _gimp_edit_paste_as_new_image: (skip)
+ *
+ * Paste buffer to a new image.
+ *
+ * This procedure pastes a copy of the internal GIMP edit buffer to a
+ * new image. The GIMP edit buffer will be empty unless a call was
+ * previously made to either gimp_edit_cut() or gimp_edit_copy(). This
+ * procedure returns the new image or -1 if the edit buffer was empty.
+ *
+ * Returns: The new image.
+ *
+ * Since: 2.10
+ **/
+gint32
+_gimp_edit_paste_as_new_image (void)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 image_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-paste-as-new-image",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-paste-as-new-image",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return image_ID;
 }
 
 /**
@@ -418,6 +506,54 @@ gimp_edit_named_copy_visible (GimpImage   *image,
 }
 
 /**
+ * _gimp_edit_named_copy_visible: (skip)
+ * @image_ID: The image to copy from.
+ * @buffer_name: The name of the buffer to create.
+ *
+ * Copy from the projection into a named buffer.
+ *
+ * This procedure works like gimp_edit_copy_visible(), but additionally
+ * stores the copied buffer into a named buffer that will stay
+ * available for later pasting, regardless of any intermediate copy or
+ * cut operations.
+ *
+ * Returns: The real name given to the buffer, or NULL if the copy failed.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.4
+ **/
+gchar *
+_gimp_edit_named_copy_visible (gint32       image_ID,
+                               const gchar *buffer_name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *real_name = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, buffer_name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-named-copy-visible",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-copy-visible",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    real_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return real_name;
+}
+
+/**
  * gimp_edit_named_paste:
  * @drawable_ID: The drawable to paste to.
  * @buffer_name: The name of the buffer to paste.
@@ -500,9 +636,51 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
   return image;
+}
+
+/**
+ * _gimp_edit_named_paste_as_new_image: (skip)
+ * @buffer_name: The name of the buffer to paste.
+ *
+ * Paste named buffer to a new image.
+ *
+ * This procedure works like gimp_edit_paste_as_new_image() but pastes
+ * a named buffer instead of the global buffer.
+ *
+ * Returns: The new image.
+ *
+ * Since: 2.10
+ **/
+gint32
+_gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 image_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, buffer_name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-named-paste-as-new-image",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-paste-as-new-image",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    image_ID = gimp_value_get_image_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return image_ID;
 }

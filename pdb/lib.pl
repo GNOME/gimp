@@ -45,17 +45,23 @@ sub desc_wrap {
     return $wrapped;
 }
 
-sub generate {
-    my @procs = @{(shift)};
-    my %out;
+sub generate_fun {
+    my ($proc, $out, $api_deprecated) = @_;
+    my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
+    my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
     sub libtype {
 	my $arg = shift;
 	my $outarg = shift;
+	my $api_deprecated = shift;
 	my ($type, $name) = &arg_parse($arg->{type});
 	my $argtype = $arg_types{$type};
 	my $rettype = '';
-	
+
+        if ($api_deprecated && $argtype->{name} eq 'IMAGE') {
+            return 'gint32 ';
+        }
+
 	if (exists $argtype->{id}) {
 	    return 'gint32 ';
 	}
@@ -73,371 +79,393 @@ sub generate {
 	    }
 	    $rettype .= $argtype->{const_type};
 	}
-	
+
 	$rettype =~ s/int32/int/ unless exists $arg->{keep_size};
 	$rettype .= '*' if exists $argtype->{struct};
 	return $rettype;
     }
 
-    foreach $name (@procs) {
-	my $proc = $main::pdb{$name};
-	my $out = \%{$out{$proc->{group}}};
+    my $funcname = "gimp_$name";
+    my $wrapped = "";
+    my %usednames;
+    my $retdesc = " * Returns:";
+    my $func_annotations = "";
 
-	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
-	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
+    if ($proc->{lib_private}) {
+        $wrapped = '_';
+    }
 
-	my $funcname = "gimp_$name";
-	my $wrapped = "";
-	my %usednames;
-	my $retdesc = " * Returns:";
+    if ($api_deprecated) {
+        push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($wrapped$funcname)\n";
+        $func_annotations .= " (skip)";
+    }
+    elsif ($proc->{deprecated}) {
+        if ($proc->{deprecated} eq 'NONE') {
+            push @{$out->{protos}}, "GIMP_DEPRECATED\n";
+        }
+        else {
+            my $underscores = $proc->{deprecated};
+            $underscores =~ s/-/_/g;
 
-	if ($proc->{lib_private}) {
-	    $wrapped = '_';
-	}
+            push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($underscores)\n";
+        }
+    }
 
-	if ($proc->{deprecated}) {
-	    if ($proc->{deprecated} eq 'NONE') {
-		push @{$out->{protos}}, "GIMP_DEPRECATED\n";
-	    }
-	    else {
-		my $underscores = $proc->{deprecated};
-		$underscores =~ s/-/_/g;
+    # Add an underscore for deprecated API. If the original was already
+    # private, this will be 2 underscores.
+    if ($api_deprecated) {
+        $wrapped .= '_';
+    }
 
-		push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($underscores)\n";
-	    }
-	}
+    # Find the return argument (defaults to the first arg if not
+    # explicitly set
+    my $retarg  = undef;
+    $retvoid = 0;
+    foreach (@outargs) {
+        $retarg = $_, last if exists $_->{retval};
+    }
 
-	# Find the return argument (defaults to the first arg if not
-	# explicitly set
-	my $retarg  = undef;
-	$retvoid = 0;
-	foreach (@outargs) {
-	    $retarg = $_, last if exists $_->{retval};
-	}
-
-	unless ($retarg) {
-	    if (scalar @outargs) {
-		if (exists $outargs[0]->{void_ret}) {
-		    $retvoid = 1;
-		}
-		else {
-		    $retarg = exists $outargs[0]->{num} ? $outargs[1]
-							: $outargs[0];
-		}
-	    }
-	}
-
-	my $rettype;
-	if ($retarg) {
-	    my ($type) = &arg_parse($retarg->{type});
-	    my $argtype = $arg_types{$type};
-	    my $annotate = "";
-	    $rettype = &libtype($retarg, 1);
-	    chop $rettype unless $rettype =~ /\*$/;
-
-	    $retarg->{retval} = 1;
-
-	    if (exists $argtype->{array}) {
-		$annotate = " (array length=$retarg->{array}->{name})";
-	    }
-
-	    if (exists $argtype->{out_annotate}) {
-		$annotate .= " $argtype->{out_annotate}";
-	    }
-
-	    if ($annotate eq "") {
-		$retdesc .= " $retarg->{desc}";
-	    }
-	    else {
-		if (exists $retarg->{desc}) {
-		    if ((length ($annotate) +
-			 length ($retarg->{desc})) > 65) {
-			$retdesc .= $annotate . ":\n *          " . $retarg->{desc};
-		    }
-		    else {
-			$retdesc .= $annotate . ": " . $retarg->{desc};
-		    }
-		}
-	    }
-
-	    unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
-
-	    if ($retarg->{type} eq 'string') {
-		$retdesc .= "\n *          The returned value must be freed with g_free().";
-	    }
-	    elsif ($retarg->{type} eq 'stringarray') {
-		$retdesc .= "\n *          The returned value must be freed with g_strfreev().";
-	    }
-	    elsif ($retarg->{type} eq 'param') {
-		$retdesc .= "\n *          The returned value must be freed with g_param_spec_unref().";
-	    }
-	    elsif (exists $argtype->{array}) {
-		$retdesc .= "\n *          The returned value must be freed with g_free().";
-	    }
-	}
-	else {
-	    # No return values
-	    $rettype = 'void';
-	}
-
-	# The parameters to the function
-	my $arglist = "";
-	my $argdesc = "";
-	my $sincedesc = "";
-	my $value_array = "";
-	my $arg_array = "";
-	my $argc = 0;
-	foreach (@inargs) {
-	    my ($type, @typeinfo) = &arg_parse($_->{type});
-	    my $arg = $arg_types{$type};
-	    my $var = $_->{name};
-	    my $desc = exists $_->{desc} ? $_->{desc} : "";
-	    my $var_len;
-	    my $value;
-
-	    $var .= '_ID' if $arg->{id};
-
-	    # This gets passed to gimp_value_array_new_with_types()
-	    if ($type eq 'enum') {
-		$enum_type = $typeinfo[0];
-		$enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
-		$enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
-		$enum_type =~ tr/[a-z]/[A-Z]/;
-		$enum_type =~ s/^GIMP/GIMP_TYPE/;
-		$enum_type =~ s/^GEGL/GEGL_TYPE/;
-
-		$value_array .= "$enum_type, ";
-	    }
-	    else {
-		$value_array .= "$arg->{gtype}, ";
-	    }
-
-	    if (exists $_->{array}) {
-		$value_array .= "NULL";
-	    }
-	    elsif (exists $arg->{convert_func}) {
-		$value_array .= eval qq/"$arg->{convert_func}"/;
+    unless ($retarg) {
+        if (scalar @outargs) {
+            if (exists $outargs[0]->{void_ret}) {
+                $retvoid = 1;
             }
-	    else {
-		$value_array .= "$var";
-	    }
+            else {
+                $retarg = exists $outargs[0]->{num} ? $outargs[1]
+                                                    : $outargs[0];
+            }
+        }
+    }
 
-	    $value_array .= ",\n" . " " x 42;
+    my $rettype;
+    if ($retarg) {
+        my ($type) = &arg_parse($retarg->{type});
+        my $argtype = $arg_types{$type};
+        my $annotate = "";
+        $rettype = &libtype($retarg, 1, $api_deprecated);
+        chop $rettype unless $rettype =~ /\*$/;
 
-	    if (exists $_->{array}) {
-		my $arrayarg = $_->{array};
+        $retarg->{retval} = 1;
 
-		$value = "gimp_value_array_index (args, $argc)";
+        if (exists $argtype->{array}) {
+            $annotate = " (array length=$retarg->{array}->{name})";
+        }
 
-		if (exists $arrayarg->{name}) {
-		    $var_len = $arrayarg->{name};
-		}
-		else {
-		    $var_len = 'num_' . $_->{name};
-		}
+        if ($api_deprecated) {
+            if (exists $argtype->{out_annotate_d}) {
+                $annotate .= " $argtype->{out_annotate_d}";
+            }
+        }
+        elsif (exists $argtype->{out_annotate}) {
+            $annotate .= " $argtype->{out_annotate}";
+        }
 
-		# This is the list of g_value_set_foo_array
-		$arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
-	    }
+        if ($annotate eq "") {
+            $retdesc .= " $retarg->{desc}";
+        }
+        else {
+            if (exists $retarg->{desc}) {
+                if ((length ($annotate) +
+                     length ($retarg->{desc})) > 65) {
+                    $retdesc .= $annotate . ":\n *          " . $retarg->{desc};
+                }
+                else {
+                    $retdesc .= $annotate . ": " . $retarg->{desc};
+                }
+            }
+        }
 
-	    $usednames{$_->{name}}++;
+        unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
 
-	    $arglist .= &libtype($_, 0);
-	    $arglist .= $_->{name};
-	    $arglist .= '_ID' if $arg->{id};
-	    $arglist .= ', ';
+        if ($retarg->{type} eq 'string') {
+            $retdesc .= "\n *          The returned value must be freed with g_free().";
+        }
+        elsif ($retarg->{type} eq 'stringarray') {
+            $retdesc .= "\n *          The returned value must be freed with g_strfreev().";
+        }
+        elsif ($retarg->{type} eq 'param') {
+            $retdesc .= "\n *          The returned value must be freed with g_param_spec_unref().";
+        }
+        elsif (exists $argtype->{array}) {
+            $retdesc .= "\n *          The returned value must be freed with g_free().";
+        }
+    }
+    else {
+        # No return values
+        $rettype = 'void';
+    }
 
-	    $argdesc .= " * \@$_->{name}";
-	    $argdesc .= '_ID' if $arg->{id};
-	    $argdesc .= ":";
+    # The parameters to the function
+    my $arglist = "";
+    my $argdesc = "";
+    my $sincedesc = "";
+    my $value_array = "";
+    my $arg_array = "";
+    my $argc = 0;
+    foreach (@inargs) {
+        my ($type, @typeinfo) = &arg_parse($_->{type});
+        my $arg = $arg_types{$type};
+        my $var = $_->{name};
+        my $desc = exists $_->{desc} ? $_->{desc} : "";
+        my $var_len;
+        my $value;
+        my $is_id = ($arg->{id} || ($api_deprecated && $arg->{name} eq 'IMAGE'));
 
-	    if (exists $arg->{array}) {
-		$argdesc .= " (array length=@inargs[$argc - 1]->{name})";
-	    }
+        $var .= '_ID' if $is_id;
 
-	    if (exists $arg->{in_annotate}) {
-		$argdesc .= " $arg->{in_annotate}";
-	    }
+        # This gets passed to gimp_value_array_new_with_types()
+        if ($type eq 'enum') {
+            $enum_type = $typeinfo[0];
+            $enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
+            $enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
+            $enum_type =~ tr/[a-z]/[A-Z]/;
+            $enum_type =~ s/^GIMP/GIMP_TYPE/;
+            $enum_type =~ s/^GEGL/GEGL_TYPE/;
 
-	    if (exists $arg->{array} || exists $arg->{in_annotate}) {
-		$argdesc .= ":";
+            $value_array .= "$enum_type, ";
+        }
+        else {
+            $value_array .= "$arg->{gtype}, ";
+        }
+
+        if (exists $_->{array}) {
+            $value_array .= "NULL";
+        }
+        elsif (exists $arg->{convert_func} && ! $api_deprecated) {
+            $value_array .= eval qq/"$arg->{convert_func}"/;
+        }
+        else {
+            $value_array .= "$var";
+        }
+
+        $value_array .= ",\n" . " " x 42;
+
+        if (exists $_->{array}) {
+            my $arrayarg = $_->{array};
+
+            $value = "gimp_value_array_index (args, $argc)";
+
+            if (exists $arrayarg->{name}) {
+                $var_len = $arrayarg->{name};
+            }
+            else {
+                $var_len = 'num_' . $_->{name};
             }
 
-	    $argdesc .= " $desc";
+            # This is the list of g_value_set_foo_array
+            $arg_array .= eval qq/"  $arg->{set_value_func};\n"/;
+        }
 
-            unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
-            $argdesc .= "\n";
+        $usednames{$_->{name}}++;
 
-	    $argc++;
-	}
+        $arglist .= &libtype($_, 0, $api_deprecated);
+        $arglist .= $_->{name};
+        $arglist .= '_ID' if $is_id;
+        $arglist .= ', ';
 
-	# This marshals the return value(s)
-	my $return_args = "";
-	my $return_marshal = "gimp_value_array_unref (return_vals);";
+        $argdesc .= " * \@$_->{name}";
+        $argdesc .= '_ID' if $is_id;
+        $argdesc .= ":";
 
-	# return success/failure boolean if we don't have anything else
-	if ($rettype eq 'void') {
-	    $return_args .= "\n" . ' ' x 2 . "gboolean success = TRUE;";
-	    $retdesc .= " TRUE on success.";
-	}
+        if (exists $arg->{array}) {
+            $argdesc .= " (array length=@inargs[$argc - 1]->{name})";
+        }
 
-	# We only need to bother with this if we have to return a value
-	if ($rettype ne 'void' || $retvoid) {
-	    my $once = 0;
-	    my $firstvar;
-	    my @initnums;
+        if (exists $arg->{in_annotate}) {
+            $argdesc .= " $arg->{in_annotate}";
+        }
 
-	    foreach (@outargs) {
-		my ($type) = &arg_parse($_->{type});
-		my $arg = $arg_types{$type};
-		my $var;
+        if (exists $arg->{array} || exists $arg->{in_annotate}) {
+            $argdesc .= ":";
+        }
 
-		$return_marshal = "" unless $once++;
+        $argdesc .= " $desc";
 
-		$_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
-							      : $_->{name};
+        unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
+        $argdesc .= "\n";
 
-	        if (exists $_->{num}) {
-		    if (!exists $_->{no_lib}) {
-			push @initnums, $_;
-		    }
-		}
-		elsif (exists $_->{retval}) {
-		    $return_args .= "\n" . ' ' x 2;
-		    $return_args .= &libtype($_, 1);
+        $argc++;
+    }
 
-		    # The return value variable
-		    $var = $_->{libname};
-		    $var .= '_ID' if $arg->{id};
-		    $return_args .= $var;
+    # This marshals the return value(s)
+    my $return_args = "";
+    my $return_marshal = "gimp_value_array_unref (return_vals);";
 
-		    # Save the first var to "return" it
-		    $firstvar = $var unless defined $firstvar;
+    # return success/failure boolean if we don't have anything else
+    if ($rettype eq 'void') {
+        $return_args .= "\n" . ' ' x 2 . "gboolean success = TRUE;";
+        $retdesc .= " TRUE on success.";
+    }
 
-		    if ($arg->{id}) {
-			# Initialize all IDs to -1
-			$return_args .= " = -1";
-		    }
-		    elsif ($_->{libdef}) {
-			$return_args .= " = $_->{libdef}";
-		    }
-		    else {
-			$return_args .= " = $arg->{init_value}";
-		    }
+    # We only need to bother with this if we have to return a value
+    if ($rettype ne 'void' || $retvoid) {
+        my $once = 0;
+        my $firstvar;
+        my @initnums;
 
-		    $return_args .= ";";
+        foreach (@outargs) {
+            my ($type) = &arg_parse($_->{type});
+            my $arg = $arg_types{$type};
+            my $var;
+            my $is_id = ($arg->{id} || ($api_deprecated && $arg->{name} eq 'IMAGE'));
 
-		    if (exists $_->{array} && exists $_->{array}->{no_lib}) {
-			$return_args .= "\n" . ' ' x 2 . "gint num_$var;";
-		    }
-		}
-		elsif ($retvoid) {
-		    push @initnums, $_ unless exists $arg->{struct};
-		}
-	    }
+            $return_marshal = "" unless $once++;
 
-	    if (scalar(@initnums)) {
-		foreach (@initnums) {
-		    $return_marshal .= "\*$_->{libname} = ";
-		    my ($type) = &arg_parse($_->{type});
-		    for ($arg_types{$type}->{type}) {
-			/\*$/     && do { $return_marshal .= "NULL";  last };
-			/boolean/ && do { $return_marshal .= "FALSE"; last };
-			/double/  && do { $return_marshal .= "0.0";   last };
-					  $return_marshal .= "0";
-		    }
-		    $return_marshal .= ";\n  ";
-		}
-		$return_marshal =~ s/\n  $/\n\n  /s;
-	    }
+            $_->{libname} = exists $usednames{$_->{name}} ? "ret_$_->{name}"
+                                                          : $_->{name};
 
-	    if ($rettype eq 'void') {
-		$return_marshal .= <<CODE;
+            if (exists $_->{num}) {
+                if (!exists $_->{no_lib}) {
+                    push @initnums, $_;
+                }
+            }
+            elsif (exists $_->{retval}) {
+                $return_args .= "\n" . ' ' x 2;
+                $return_args .= &libtype($_, 1, $api_deprecated);
+
+                # The return value variable
+                $var = $_->{libname};
+                $var .= '_ID' if $is_id;
+                $return_args .= $var;
+
+                # Save the first var to "return" it
+                $firstvar = $var unless defined $firstvar;
+
+                if ($is_id) {
+                    # Initialize all IDs to -1
+                    $return_args .= " = -1";
+                }
+                elsif ($_->{libdef}) {
+                    $return_args .= " = $_->{libdef}";
+                }
+                else {
+                    $return_args .= " = $arg->{init_value}";
+                }
+
+                $return_args .= ";";
+
+                if (exists $_->{array} && exists $_->{array}->{no_lib}) {
+                    $return_args .= "\n" . ' ' x 2 . "gint num_$var;";
+                }
+            }
+            elsif ($retvoid) {
+                push @initnums, $_ unless exists $arg->{struct};
+            }
+        }
+
+        if (scalar(@initnums)) {
+            foreach (@initnums) {
+                $return_marshal .= "\*$_->{libname} = ";
+                my ($type) = &arg_parse($_->{type});
+                for ($arg_types{$type}->{type}) {
+                    /\*$/     && do { $return_marshal .= "NULL";  last };
+                    /boolean/ && do { $return_marshal .= "FALSE"; last };
+                    /double/  && do { $return_marshal .= "0.0";   last };
+                                      $return_marshal .= "0";
+                }
+                $return_marshal .= ";\n  ";
+            }
+            $return_marshal =~ s/\n  $/\n\n  /s;
+        }
+
+        if ($rettype eq 'void') {
+            $return_marshal .= <<CODE;
 success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   if (success)
 CODE
-	    }
-	    else {
-		$return_marshal .= <<CODE;
+        }
+        else {
+            $return_marshal .= <<CODE;
 if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
 CODE
-	    }
+        }
 
-	    $return_marshal .= ' ' x 4 . "{\n" if $#outargs;
+        $return_marshal .= ' ' x 4 . "{\n" if $#outargs;
 
-	    my $argc = 1; my ($numpos, $numtype);
-	    foreach (@outargs) {
-		my ($type) = &arg_parse($_->{type});
-                my $desc = exists $_->{desc} ? $_->{desc} : "";
-		my $arg = $arg_types{$type};
-		my $var;
+        my $argc = 1; my ($numpos, $numtype);
+        foreach (@outargs) {
+            my ($type) = &arg_parse($_->{type});
+            my $desc = exists $_->{desc} ? $_->{desc} : "";
+            my $arg = $arg_types{$type};
+            my $is_id = ($arg->{id} || ($api_deprecated && $arg->{name} eq 'IMAGE'));
+            my $var;
 
-		# The return value variable
-		$var = "";
+            # The return value variable
+            $var = "";
 
-		unless (exists $_->{retval}) {
-		    $var .= '*';
-		    $arglist .= &libtype($_, 1);
-		    $arglist .= '*' unless exists $arg->{struct};
-		    $arglist .= "$_->{libname}";
-		    $arglist .= '_ID' if $arg->{id};
-		    $arglist .= ', ';
+            unless (exists $_->{retval}) {
+                $var .= '*';
+                $arglist .= &libtype($_, 1);
+                $arglist .= '*' unless exists $arg->{struct};
+                $arglist .= "$_->{libname}";
+                $arglist .= '_ID' if $is_id;
+                $arglist .= ', ';
 
-		    $argdesc .= " * \@$_->{libname}";
-		    $argdesc .= '_ID' if $arg->{id};
+                $argdesc .= " * \@$_->{libname}";
+                $argdesc .= '_ID' if $is_id;
 
-		    if ($arg->{name} eq 'COLOR') {
-			$argdesc .= ": (out caller-allocates)";
-		    }
-		    else {
-			$argdesc .= ": (out)";
-		    }
+                if ($arg->{name} eq 'COLOR') {
+                    $argdesc .= ": (out caller-allocates)";
+                }
+                else {
+                    $argdesc .= ": (out)";
+                }
 
-		    if (exists $arg->{array}) {
-			$argdesc .= " (array length=@outargs[$argc - 2]->{name})";
-		    }
+                if (exists $arg->{array}) {
+                    $argdesc .= " (array length=@outargs[$argc - 2]->{name})";
+                }
 
-		    if (exists $arg->{out_annotate}) {
-			$argdesc .= " $arg->{out_annotate}";
-		    }
+                if ($api_deprecated) {
+                    if (exists $arg->{out_annotate_d}) {
+                        $argdesc .= " $arg->{out_annotate_d}";
+                    }
+                }
+                elsif (exists $arg->{out_annotate}) {
+                    $argdesc .= " $arg->{out_annotate}";
+                }
 
-		    $argdesc .= ": $desc";
-		}
+                $argdesc .= ": $desc";
+            }
 
-		$var = exists $_->{retval} ? "" : '*';
-		$var .= $_->{libname};
-		$var .= '_ID' if $arg->{id};
+            $var = exists $_->{retval} ? "" : '*';
+            $var .= $_->{libname};
+            $var .= '_ID' if $is_id;
 
-		$value = "gimp_value_array_index (return_vals, $argc)";
+            $value = "gimp_value_array_index (return_vals, $argc)";
 
-		$return_marshal .= ' ' x 2 if $#outargs;
-		$return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
+            $return_marshal .= ' ' x 2 if $#outargs;
+            if ($api_deprecated && $arg->{dup_value_func_d}) {
+                $return_marshal .= eval qq/"    $arg->{dup_value_func_d};\n"/;
+            }
+            else {
+                $return_marshal .= eval qq/"    $arg->{dup_value_func};\n"/;
+            }
 
-                if ($argdesc) {
-                    unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
-                    unless ($argdesc =~ /\n$/)       { $argdesc .= "\n" }
-		}
+            if ($argdesc) {
+                unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
+                unless ($argdesc =~ /\n$/)       { $argdesc .= "\n" }
+            }
 
-		$argc++;
-	    }
+            $argc++;
+        }
 
-	    $return_marshal .= ' ' x 4 . "}\n" if $#outargs;
+        $return_marshal .= ' ' x 4 . "}\n" if $#outargs;
 
-	    $return_marshal .= <<'CODE';
+        $return_marshal .= <<'CODE';
 
   gimp_value_array_unref (return_vals);
 
 CODE
-	    unless ($retvoid) {
-		$return_marshal .= ' ' x 2 . "return $firstvar;";
-	    }
-	    else {
-		$return_marshal .= ' ' x 2 . "return success;";
-	    }
-	}
-	else {
-	    $return_marshal = <<CODE;
+        unless ($retvoid) {
+            $return_marshal .= ' ' x 2 . "return $firstvar;";
+        }
+        else {
+            $return_marshal .= ' ' x 2 . "return success;";
+        }
+    }
+    else {
+        $return_marshal = <<CODE;
 success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
 
   $return_marshal
@@ -445,94 +473,93 @@ success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB
   return success;
 CODE
 
-	    chop $return_marshal;
-	}
+        chop $return_marshal;
+    }
 
-	if ($arglist) {
-	    my @arglist = split(/, /, $arglist);
-	    my $longest = 0; my $seen = 0;
-	    foreach (@arglist) {
-		/(const \w+) \S+/ || /(\w+) \S+/;
-		my $len = length($1);
-		my $num = scalar @{[ /\*/g ]};
-		$seen = $num if $seen < $num;
-		$longest = $len if $longest < $len;
-	    }
+    if ($arglist) {
+        my @arglist = split(/, /, $arglist);
+        my $longest = 0; my $seen = 0;
+        foreach (@arglist) {
+            /(const \w+) \S+/ || /(\w+) \S+/;
+            my $len = length($1);
+            my $num = scalar @{[ /\*/g ]};
+            $seen = $num if $seen < $num;
+            $longest = $len if $longest < $len;
+        }
 
-	    $longest += $seen;
+        $longest += $seen;
 
-	    my $once = 0; $arglist = "";
-	    foreach (@arglist) {
-		my $space = rindex($_, ' ');
-		my $len = $longest - $space + 1;
-		$len -= scalar @{[ /\*/g ]};
-		substr($_, $space, 1) = ' ' x $len if $space != -1 && $len > 1;
-		$arglist .= "\t" if $once;
-                $arglist .= $_;
-                $arglist .= ",\n";
-		$once++;
-	    }
-	    $arglist =~ s/,\n$//;
-	}
-	else {
-	    $arglist = "void";
-	}
-	
-	$rettype = 'gboolean' if $rettype eq 'void';
+        my $once = 0; $arglist = "";
+        foreach (@arglist) {
+            my $space = rindex($_, ' ');
+            my $len = $longest - $space + 1;
+            $len -= scalar @{[ /\*/g ]};
+            substr($_, $space, 1) = ' ' x $len if $space != -1 && $len > 1;
+            $arglist .= "\t" if $once;
+            $arglist .= $_;
+            $arglist .= ",\n";
+            $once++;
+        }
+        $arglist =~ s/,\n$//;
+    }
+    else {
+        $arglist = "void";
+    }
 
-	# Our function prototype for the headers
-	(my $hrettype = $rettype) =~ s/ //g;
+    $rettype = 'gboolean' if $rettype eq 'void';
 
-	my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
-	$proto =~ s/ +/ /g;
+    # Our function prototype for the headers
+    (my $hrettype = $rettype) =~ s/ //g;
 
-        push @{$out->{protos}}, $proto;
+    my $proto = "$hrettype $wrapped$funcname ($arglist);\n";
+    $proto =~ s/ +/ /g;
 
-	my $clist = $arglist;
-	my $padlen = length($wrapped) + length($funcname) + 2;
-	my $padding = ' ' x $padlen;
-	$clist =~ s/\t/$padding/eg;
+    push @{$out->{protos}}, $proto;
 
-        if ($proc->{since}) {
-	    $sincedesc = "\n *\n * Since: $proc->{since}";
-	}
+    my $clist = $arglist;
+    my $padlen = length($wrapped) + length($funcname) + 2;
+    my $padding = ' ' x $padlen;
+    $clist =~ s/\t/$padding/eg;
 
-	my $procdesc = '';
+    if ($proc->{since}) {
+        $sincedesc = "\n *\n * Since: $proc->{since}";
+    }
 
-	if ($proc->{deprecated}) {
-            if ($proc->{deprecated} eq 'NONE') {
-		if ($proc->{blurb}) {
-		    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
-		}
-		if ($proc->{help}) {
-		    $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
-		}
-		$procdesc .= &desc_wrap("Deprecated: There is no replacement " .
-					"for this procedure.");
-	    }
-	    else {
-		my $underscores = $proc->{deprecated};
-		$underscores =~ s/-/_/g;
+    my $procdesc = '';
 
-		if ($proc->{blurb}) {
-		    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
-		}
-		if ($proc->{help}) {
-		    $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
-		}
-		$procdesc .= &desc_wrap("Deprecated: " .
-					"Use $underscores() instead.");
-	    }
-	}
-	else {
-	    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n" .
-			&desc_wrap($proc->{help});
-	}
+    if ($proc->{deprecated}) {
+        if ($proc->{deprecated} eq 'NONE') {
+            if ($proc->{blurb}) {
+                $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
+            }
+            if ($proc->{help}) {
+                $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
+            }
+            $procdesc .= &desc_wrap("Deprecated: There is no replacement " .
+                                    "for this procedure.");
+        }
+        else {
+            my $underscores = $proc->{deprecated};
+            $underscores =~ s/-/_/g;
 
-	$out->{code} .= <<CODE;
+            if ($proc->{blurb}) {
+                $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
+            }
+            if ($proc->{help}) {
+                $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
+            }
+            $procdesc .= &desc_wrap("Deprecated: " .
+                                    "Use $underscores() instead.");
+        }
+    }
+    else {
+        $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n" .
+                    &desc_wrap($proc->{help});
+    }
+    return <<CODE;
 
 /**
- * $wrapped$funcname:
+ * $wrapped$funcname:$func_annotations
 $argdesc *
 $procdesc
  *
@@ -560,6 +587,43 @@ $arg_array
   $return_marshal
 }
 CODE
+}
+
+sub generate {
+    my @procs = @{(shift)};
+    my %out;
+
+    foreach $name (@procs) {
+	my $proc = $main::pdb{$name};
+	my $out = \%{$out{$proc->{group}}};
+
+	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
+	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
+
+        # Check if any of the argument or returned value is an image.
+        $has_image_arg = 0;
+	foreach (@outargs) {
+	    my ($type, @typeinfo) = &arg_parse($_->{type});
+	    my $arg = $arg_types{$type};
+	    if ($arg->{name} eq 'IMAGE') {
+                $has_image_arg = 1;
+                last;
+            }
+	}
+        unless ($has_image_arg) {
+            foreach (@inargs) {
+                my ($type, @typeinfo) = &arg_parse($_->{type});
+                my $arg = $arg_types{$type};
+                if ($arg->{name} eq 'IMAGE') {
+                    $has_image_arg = 1;
+                    last;
+                }
+            }
+        }
+        $out->{code} .= generate_fun($proc, $out, 0);
+        if ($has_image_arg) {
+            $out->{code} .= generate_fun($proc, $out, 1);
+        }
     }
 
     my $lgpl_top = <<'LGPL';

@@ -32,13 +32,27 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_image_undo_group_start (GimpImage *image);
-gboolean gimp_image_undo_group_end   (GimpImage *image);
-gboolean gimp_image_undo_is_enabled  (GimpImage *image);
-gboolean gimp_image_undo_disable     (GimpImage *image);
-gboolean gimp_image_undo_enable      (GimpImage *image);
-gboolean gimp_image_undo_freeze      (GimpImage *image);
-gboolean gimp_image_undo_thaw        (GimpImage *image);
+gboolean                 gimp_image_undo_group_start  (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_group_start)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_group_start (gint32     image_ID);
+gboolean                 gimp_image_undo_group_end    (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_group_end)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_group_end   (gint32     image_ID);
+gboolean                 gimp_image_undo_is_enabled   (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_is_enabled)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_is_enabled  (gint32     image_ID);
+gboolean                 gimp_image_undo_disable      (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_disable)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_disable     (gint32     image_ID);
+gboolean                 gimp_image_undo_enable       (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_enable)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_enable      (gint32     image_ID);
+gboolean                 gimp_image_undo_freeze       (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_freeze)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_freeze      (gint32     image_ID);
+gboolean                 gimp_image_undo_thaw         (GimpImage *image);
+GIMP_DEPRECATED_FOR(gimp_image_undo_thaw)
+G_GNUC_INTERNAL gboolean _gimp_image_undo_thaw        (gint32     image_ID);
 
 
 G_END_DECLS
