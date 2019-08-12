@@ -166,7 +166,7 @@ package Gimp::CodeGen::pdb;
 		     init_value      => 'NULL',
 		     out_annotate    => '(transfer full)',
 		     get_value_func  => '$var = gimp_value_get_image ($value, gimp)',
-		     dup_value_func  => '$var = g_object_new (GIMP_TYPE_IMAGE, \"id\", $value, NULL)',
+		     dup_value_func  => '$var = gimp_image_new_by_id (g_value_get_int ($value))',
 		     set_value_func  => 'gimp_value_set_image_id ($value, gimp_image_get_id ($var))',
 		     take_value_func => 'gimp_value_set_image ($value, $var)',
 		     convert_func    => 'gimp_image_get_id ($var)',
