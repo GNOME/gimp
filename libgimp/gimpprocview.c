@@ -54,17 +54,11 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * gimp_proc_view_create_params (const GimpParamDef *params,
-                                                 gint                n_params,
-                                                 GtkSizeGroup       *name_group,
-                                                 GtkSizeGroup       *type_group,
-                                                 GtkSizeGroup       *desc_group);
-static GtkWidget * gimp_proc_view_create_args   (const gchar        *procedure_name,
-                                                 gint                n_args,
-                                                 gboolean            return_values,
-                                                 GtkSizeGroup       *name_group,
-                                                 GtkSizeGroup       *type_group,
-                                                 GtkSizeGroup       *desc_group);
+static GtkWidget * gimp_proc_view_create_args (GimpProcedure *procedure,
+                                               gboolean       return_values,
+                                               GtkSizeGroup  *name_group,
+                                               GtkSizeGroup  *type_group,
+                                               GtkSizeGroup  *desc_group);
 
 
 /*  public functions  */
@@ -84,50 +78,47 @@ GtkWidget *
 gimp_proc_view_new (const gchar *procedure_name,
                     const gchar *menu_path)
 {
+  GimpProcedure   *procedure;
   GtkWidget       *main_vbox;
   GtkWidget       *frame;
   GtkWidget       *vbox;
   GtkWidget       *grid;
   GtkWidget       *label;
-  GtkWidget       *notebook;
   GtkSizeGroup    *name_group;
   GtkSizeGroup    *type_group;
   GtkSizeGroup    *desc_group;
-  gchar           *blurb;
-  gchar           *help;
-  gchar           *authors;
-  gchar           *copyright;
-  gchar           *date;
+  const gchar     *blurb;
+  const gchar     *help;
+  const gchar     *help_id;
+  const gchar     *authors;
+  const gchar     *copyright;
+  const gchar     *date;
   GimpPDBProcType  type;
-  gint             n_params;
-  gint             n_return_vals;
-  GimpParamDef    *params;
-  GimpParamDef    *return_vals;
   const gchar     *type_str;
   gint             row;
 
   g_return_val_if_fail (procedure_name != NULL, NULL);
 
-  gimp_pdb_proc_info (procedure_name,
-                      &blurb,
-                      &help,
-                      &authors,
-                      &copyright,
-                      &date,
-                      &type,
-                      &n_params,
-                      &n_return_vals,
-                      &params,
-                      &return_vals);
+  procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                         procedure_name);
 
-  if (blurb     && strlen (blurb) < 2)     g_clear_pointer (&blurb,     g_free);
-  if (help      && strlen (help) < 2)      g_clear_pointer (&help,      g_free);
-  if (authors   && strlen (authors) < 2)   g_clear_pointer (&authors,   g_free);
-  if (date      && strlen (date) < 2)      g_clear_pointer (&date,      g_free);
-  if (copyright && strlen (copyright) < 2) g_clear_pointer (&copyright, g_free);
+  type      = gimp_procedure_get_proc_type (procedure);
+  blurb     = gimp_procedure_get_blurb     (procedure);
+  help      = gimp_procedure_get_help      (procedure);
+  help_id   = gimp_procedure_get_help_id   (procedure);
+  authors   = gimp_procedure_get_authors   (procedure);
+  copyright = gimp_procedure_get_copyright (procedure);
+  date      = gimp_procedure_get_date      (procedure);
+
+  if (blurb     && strlen (blurb) < 2)     blurb     = NULL;
+  if (help      && strlen (help) < 2)      help      = NULL;
+  if (help_id   && strlen (help_id) < 2)   help_id   = NULL;
+  if (authors   && strlen (authors) < 2)   authors   = NULL;
+  if (copyright && strlen (copyright) < 2) copyright = NULL;
+  if (date      && strlen (date) < 2)      date      = NULL;
 
   if (blurb && help && ! strcmp (blurb, help))
-    g_clear_pointer (&help, g_free);
+    help = NULL;
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
 
@@ -175,82 +166,34 @@ gimp_proc_view_new (const gchar *procedure_name,
       gtk_widget_show (label);
     }
 
-  notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
-  gtk_widget_show (notebook);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                            gtk_label_new (_("GValue-based API")));
-  gtk_widget_show (vbox);
-
   name_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   type_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   desc_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* in parameters */
-  if (n_params)
+  grid = gimp_proc_view_create_args (procedure, FALSE,
+                                     name_group, type_group, desc_group);
+
+  if (grid)
     {
       frame = gimp_frame_new (_("Parameters"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      grid = gimp_proc_view_create_args (procedure_name, n_params, FALSE,
-                                         name_group, type_group, desc_group);
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
     }
 
   /* out parameters */
-  if (n_return_vals)
+  grid = gimp_proc_view_create_args (procedure, TRUE,
+                                     name_group, type_group, desc_group);
+
+  if (grid)
     {
       frame = gimp_frame_new (_("Return Values"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      grid = gimp_proc_view_create_args (procedure_name, n_return_vals, TRUE,
-                                         name_group, type_group, desc_group);
-      gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
-    }
-
-  g_object_unref (name_group);
-  g_object_unref (type_group);
-  g_object_unref (desc_group);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-                            gtk_label_new (_("Legacy API")));
-  gtk_widget_show (vbox);
-
-  name_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  type_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  desc_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  /* in parameters */
-  if (n_params)
-    {
-      frame = gimp_frame_new (_("Parameters"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      grid = gimp_proc_view_create_params (params, n_params,
-                                           name_group, type_group, desc_group);
-      gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
-    }
-
-  /* out parameters */
-  if (n_return_vals)
-    {
-      frame = gimp_frame_new (_("Return Values"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      grid = gimp_proc_view_create_params (return_vals, n_return_vals,
-                                           name_group, type_group, desc_group);
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
     }
@@ -284,7 +227,7 @@ gimp_proc_view_new (const gchar *procedure_name,
   /* show the authors & the copyright */
 
   if (! authors && ! date && ! copyright)
-    goto out;
+    return main_vbox;
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
@@ -333,30 +276,6 @@ gimp_proc_view_new (const gchar *procedure_name,
                                 label, 3);
     }
 
- out:
-
-  g_free (blurb);
-  g_free (help);
-  g_free (authors);
-  g_free (copyright);
-  g_free (date);
-
-  while (n_params--)
-    {
-      g_free (params[n_params].name);
-      g_free (params[n_params].description);
-    }
-
-  g_free (params);
-
-  while (n_return_vals--)
-    {
-      g_free (return_vals[n_return_vals].name);
-      g_free (return_vals[n_return_vals].description);
-    }
-
-  g_free (return_vals);
-
   return main_vbox;
 }
 
@@ -364,91 +283,33 @@ gimp_proc_view_new (const gchar *procedure_name,
 /*  private functions  */
 
 static GtkWidget *
-gimp_proc_view_create_params (const GimpParamDef *params,
-                              gint                n_params,
-                              GtkSizeGroup       *name_group,
-                              GtkSizeGroup       *type_group,
-                              GtkSizeGroup       *desc_group)
+gimp_proc_view_create_args (GimpProcedure *procedure,
+                            gboolean       return_values,
+                            GtkSizeGroup  *name_group,
+                            GtkSizeGroup  *type_group,
+                            GtkSizeGroup  *desc_group)
 {
-  GtkWidget *grid;
-  gint       i;
+  GtkWidget   *grid;
+  GParamSpec **pspecs;
+  gint         n_pspecs;
+  gint         i;
+
+  if (return_values)
+    pspecs = gimp_procedure_get_return_values (procedure, &n_pspecs);
+  else
+    pspecs = gimp_procedure_get_arguments (procedure, &n_pspecs);
+
+  if (! pspecs)
+    return NULL;
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
 
-  for (i = 0; i < n_params; i++)
+  for (i = 0; i < n_pspecs; i++)
     {
-      GtkWidget   *label;
-      const gchar *type;
-      gchar       *upper;
-
-      /* name */
-      label = gtk_label_new (params[i].name);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_size_group_add_widget (name_group, label);
-      gtk_grid_attach (GTK_GRID (grid), label, 0, i, 1, 1);
-      gtk_widget_show (label);
-
-      /* type */
-      if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, params[i].type,
-                                 NULL, &type, NULL, NULL))
-        upper = g_strdup ("UNKNOWN");
-      else
-        upper = g_ascii_strup (type, -1);
-
-      label = gtk_label_new (upper);
-      g_free (upper);
-
-      gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_FAMILY, "monospace",
-                                 PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
-                                 -1);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_size_group_add_widget (type_group, label);
-      gtk_grid_attach (GTK_GRID (grid), label, 1, i, 1, 1);
-      gtk_widget_show (label);
-
-      /* description */
-      label = gtk_label_new (params[i].description);
-      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_size_group_add_widget (desc_group, label);
-      gtk_grid_attach (GTK_GRID (grid), label, 2, i, 1, 1);
-      gtk_widget_show (label);
-    }
-
-  return grid;
-}
-
-static GtkWidget *
-gimp_proc_view_create_args (const gchar  *procedure_name,
-                            gint          n_args,
-                            gboolean      return_values,
-                            GtkSizeGroup *name_group,
-                            GtkSizeGroup *type_group,
-                            GtkSizeGroup *desc_group)
-{
-  GtkWidget *grid;
-  gint       i;
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
-
-  for (i = 0; i < n_args; i++)
-    {
-      GParamSpec *pspec;
+      GParamSpec *pspec = pspecs[i];
       GtkWidget  *label;
-
-      if (return_values)
-        pspec = gimp_pdb_proc_return_value (procedure_name, i);
-      else
-        pspec = gimp_pdb_proc_argument (procedure_name, i);
 
       /* name */
       label = gtk_label_new (g_param_spec_get_name (pspec));
@@ -479,8 +340,6 @@ gimp_proc_view_create_args (const gchar  *procedure_name,
       gtk_size_group_add_widget (desc_group, label);
       gtk_grid_attach (GTK_GRID (grid), label, 2, i, 1, 1);
       gtk_widget_show (label);
-
-      g_param_spec_unref (pspec);
     }
 
   return grid;

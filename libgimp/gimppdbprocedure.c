@@ -221,14 +221,14 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
 
   for (i = 0; i < n_params; i++)
     {
-      GParamSpec *pspec = gimp_pdb_proc_argument (name, i);
+      GParamSpec *pspec = _gimp_pdb_proc_argument (name, i);
 
       gimp_procedure_add_argument (procedure, pspec);
     }
 
   for (i = 0; i < n_return_vals; i++)
     {
-      GParamSpec *pspec = gimp_pdb_proc_return_value (name, i);
+      GParamSpec *pspec = _gimp_pdb_proc_return_value (name, i);
 
       gimp_procedure_add_return_value (procedure, pspec);
     }

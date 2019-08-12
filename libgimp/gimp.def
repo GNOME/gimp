@@ -638,11 +638,7 @@ EXPORTS
 	gimp_pdb_get_last_status
 	gimp_pdb_get_type
 	gimp_pdb_lookup_procedure
-	gimp_pdb_proc_argument
-	gimp_pdb_proc_info
-	gimp_pdb_proc_return_value
 	gimp_pdb_procedure_exists
-	gimp_pdb_query
 	gimp_pdb_query_procedures
 	gimp_pdb_run_procedure
 	gimp_pdb_run_procedure_array

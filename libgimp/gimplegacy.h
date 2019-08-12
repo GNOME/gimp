@@ -377,27 +377,7 @@ gboolean   gimp_register_thumbnail_loader      (const gchar *load_proc,
 /* pdb stuff that should now be done using GimpPDB
  */
 
-gchar    * gimp_pdb_temp_name     (void);
-gboolean   gimp_pdb_query         (const gchar      *name,
-                                   const gchar      *blurb,
-                                   const gchar      *help,
-                                   const gchar      *authors,
-                                   const gchar      *copyright,
-                                   const gchar      *date,
-                                   const gchar      *proc_type,
-                                   gint             *num_matches,
-                                   gchar          ***procedure_names);
-gboolean   gimp_pdb_proc_info     (const gchar      *procedure_name,
-                                   gchar           **blurb,
-                                   gchar           **help,
-                                   gchar           **authors,
-                                   gchar           **copyright,
-                                   gchar           **date,
-                                   GimpPDBProcType  *proc_type,
-                                   gint             *num_args,
-                                   gint             *num_values,
-                                   GimpParamDef    **args,
-                                   GimpParamDef    **return_vals);
+gchar    * gimp_pdb_temp_name (void);
 
 
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */

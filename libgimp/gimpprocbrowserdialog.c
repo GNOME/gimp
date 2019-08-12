@@ -353,8 +353,9 @@ browser_search (GimpBrowser           *browser,
                 gint                   search_type,
                 GimpProcBrowserDialog *dialog)
 {
-  GimpProcBrowserDialogPrivate  *priv = GET_PRIVATE (dialog);
-  gchar                        **proc_list;
+  GimpProcBrowserDialogPrivate  *priv      = GET_PRIVATE (dialog);
+  GimpPDB                       *pdb       = gimp_get_pdb ();
+  gchar                        **proc_list = NULL;
   gint                           num_procs;
   gchar                         *str;
   GRegex                        *regex;
@@ -381,13 +382,9 @@ browser_search (GimpBrowser           *browser,
     case SEARCH_TYPE_ALL:
       gimp_browser_show_message (browser, _("Searching"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", ".*", ".*", ".*", ".*",
-                                               ".*", ".*", ".*", &num_procs);
-      else
-        gimp_pdb_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", ".*", ".*", ".*", ".*",
+                                             ".*", ".*", ".*", &num_procs);
       break;
 
     case SEARCH_TYPE_NAME:
@@ -407,14 +404,9 @@ browser_search (GimpBrowser           *browser,
             q++;
           }
 
-        if (gimp_get_plug_in ())
-          proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                                 query->str, ".*", ".*", ".*", ".*",
-                                                 ".*", ".*", ".*", &num_procs);
-        else
-          gimp_pdb_query (query->str,
-                          ".*", ".*", ".*", ".*", ".*", ".*",
-                          &num_procs, &proc_list);
+        proc_list = gimp_pdb_query_procedures (pdb,
+                                               query->str, ".*", ".*", ".*", ".*",
+                                               ".*", ".*", ".*", &num_procs);
 
         g_string_free (query, TRUE);
       }
@@ -423,73 +415,49 @@ browser_search (GimpBrowser           *browser,
     case SEARCH_TYPE_BLURB:
       gimp_browser_show_message (browser, _("Searching by description"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", query_text, ".*", ".*", ".*",
-                                               ".*", ".*", ".*", &num_procs);
-      else
-        gimp_pdb_query (".*", query_text, ".*", ".*", ".*", ".*", ".*",
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", query_text, ".*", ".*", ".*",
+                                             ".*", ".*", ".*", &num_procs);
       break;
 
     case SEARCH_TYPE_HELP:
       gimp_browser_show_message (browser, _("Searching by help"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", ".*", query_text, ".*", ".*",
-                                               ".*", ".*", ".*", &num_procs);
-      else
-        gimp_pdb_query (".*", ".*", query_text, ".*", ".*", ".*", ".*",
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", ".*", query_text, ".*", ".*",
+                                             ".*", ".*", ".*", &num_procs);
       break;
 
     case SEARCH_TYPE_AUTHORS:
       gimp_browser_show_message (browser, _("Searching by authors"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", ".*", ".*", ".*", query_text,
-                                               ".*", ".*", ".*", &num_procs);
-      else
-        gimp_pdb_query (".*", ".*", ".*", query_text, ".*", ".*", ".*",
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", ".*", ".*", ".*", query_text,
+                                             ".*", ".*", ".*", &num_procs);
       break;
 
     case SEARCH_TYPE_COPYRIGHT:
       gimp_browser_show_message (browser, _("Searching by copyright"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", ".*", ".*", ".*", ".*",
-                                               query_text, ".*", ".*", &num_procs);
-      else
-        gimp_pdb_query (".*", ".*", ".*", ".*", query_text, ".*", ".*",
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", ".*", ".*", ".*", ".*",
+                                             query_text, ".*", ".*", &num_procs);
       break;
 
     case SEARCH_TYPE_DATE:
       gimp_browser_show_message (browser, _("Searching by date"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", ".*", ".*", ".*", ".*",
-                                               ".*", query_text, ".*", &num_procs);
-      else
-        gimp_pdb_query (".*", ".*", ".*", ".*", ".*", query_text, ".*",
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", ".*", ".*", ".*", ".*",
+                                             ".*", query_text, ".*", &num_procs);
       break;
 
     case SEARCH_TYPE_PROC_TYPE:
       gimp_browser_show_message (browser, _("Searching by type"));
 
-      if (gimp_get_plug_in ())
-        proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
-                                               ".*", ".*", ".*", ".*", ".*",
-                                               ".*", ".*", query_text, &num_procs);
-      else
-        gimp_pdb_query (".*", ".*", ".*", ".*", ".*", ".*", query_text,
-                        &num_procs, &proc_list);
+      proc_list = gimp_pdb_query_procedures (pdb,
+                                             ".*", ".*", ".*", ".*", ".*",
+                                             ".*", ".*", query_text, &num_procs);
       break;
     }
 
