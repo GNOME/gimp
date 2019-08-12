@@ -22,6 +22,7 @@ AM_LDFLAGS = $(mwindows)
 libexecdir = $(gimpplugindir)/plug-ins/file-exr
 
 AM_CPPFLAGS = \
+	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)	  \
 	$(GTK_CFLAGS)	  \
 	$(GEGL_CFLAGS)    \
