@@ -226,7 +226,7 @@ gimp_plug_in_get_property (GObject    *object,
  * gimp_plug_in_set_translation_domain:
  * @plug_in:     A #GimpPlugIn.
  * @domain_name: The name of the textdomain (must be unique).
- * @domain_path: The absolute path to the compiled message catalog
+ * @domain_path: (nullable): A #GFile pointing to the compiled message catalog
  *               (may be %NULL).
  *
  * Sets a textdomain for localisation for the @plug_in.
@@ -250,7 +250,7 @@ gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
 {
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (domain_name != NULL);
-  g_return_if_fail (G_IS_FILE (domain_path));
+  g_return_if_fail (domain_path == NULL || G_IS_FILE (domain_path));
 
   g_free (plug_in->priv->translation_domain_name);
   plug_in->priv->translation_domain_name = g_strdup (domain_name);

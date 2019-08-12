@@ -199,7 +199,10 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
 
   if (plug_in->priv->translation_domain_name)
     {
-      gchar *path = g_file_get_path (plug_in->priv->translation_domain_path);
+      gchar *path = NULL;
+
+      if (plug_in->priv->translation_domain_path)
+        path = g_file_get_path (plug_in->priv->translation_domain_path);
 
       _gimp_plugin_domain_register (plug_in->priv->translation_domain_name,
                                     path);
