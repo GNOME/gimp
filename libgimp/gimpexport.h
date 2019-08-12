@@ -75,15 +75,30 @@ typedef enum
 } GimpExportReturn;
 
 
+GtkWidget        * gimp_export_dialog_new              (const gchar            *format_name,
+                                                        const gchar            *role,
+                                                        const gchar            *help_id);
+GtkWidget        * gimp_export_dialog_get_content_area (GtkWidget              *dialog);
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
 GimpExportReturn   gimp_export_image                   (GimpImage             **image,
                                                         gint32                 *drawable_ID,
                                                         const gchar            *format_name,
                                                         GimpExportCapabilities  capabilities);
 
-GtkWidget        * gimp_export_dialog_new              (const gchar            *format_name,
-                                                        const gchar            *role,
-                                                        const gchar            *help_id);
-GtkWidget        * gimp_export_dialog_get_content_area (GtkWidget              *dialog);
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_export_image gimp_export_image_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+GimpExportReturn   gimp_export_image_deprecated        (gint32                 *image_id,
+                                                        gint32                 *drawable_ID,
+                                                        const gchar            *format_name,
+                                                        GimpExportCapabilities  capabilities);
 
 
 G_END_DECLS
