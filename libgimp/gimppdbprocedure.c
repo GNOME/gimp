@@ -224,7 +224,6 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
       GParamSpec *pspec = gimp_pdb_proc_argument (name, i);
 
       gimp_procedure_add_argument (procedure, pspec);
-      g_param_spec_unref (pspec);
     }
 
   for (i = 0; i < n_return_vals; i++)
@@ -232,7 +231,6 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
       GParamSpec *pspec = gimp_pdb_proc_return_value (name, i);
 
       gimp_procedure_add_return_value (procedure, pspec);
-      g_param_spec_unref (pspec);
     }
 
   return procedure;
