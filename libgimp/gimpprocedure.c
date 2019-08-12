@@ -80,6 +80,8 @@ struct _GimpProcedurePrivate
   GimpRunFunc       run_func;
   gpointer          run_data;
   GDestroyNotify    run_data_destroy;
+
+  gboolean          installed;
 };
 
 
@@ -295,6 +297,8 @@ gimp_procedure_real_install (GimpProcedure *procedure)
   gsize          icon_data_length = 0;
   gint           i;
 
+  g_return_if_fail (procedure->priv->installed == FALSE);
+
   args        = gimp_procedure_get_arguments (procedure, &n_args);
   return_vals = gimp_procedure_get_return_values (procedure, &n_return_vals);
 
@@ -392,6 +396,8 @@ gimp_procedure_real_install (GimpProcedure *procedure)
       _gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
                                   list->data);
     }
+
+  procedure->priv->installed = TRUE;
 }
 
 static void
@@ -400,6 +406,8 @@ gimp_procedure_real_uninstall (GimpProcedure *procedure)
   GimpPlugIn      *plug_in;
   GPProcUninstall  proc_uninstall;
 
+  g_return_if_fail (procedure->priv->installed == TRUE);
+
   proc_uninstall.name = (gchar *) gimp_procedure_get_name (procedure);
 
   plug_in = gimp_procedure_get_plug_in (procedure);
@@ -407,6 +415,8 @@ gimp_procedure_real_uninstall (GimpProcedure *procedure)
   if (! gp_proc_uninstall_write (_gimp_plug_in_get_write_channel (plug_in),
                                  &proc_uninstall, plug_in))
     gimp_quit ();
+
+  procedure->priv->installed = FALSE;
 }
 
 static GimpValueArray *
@@ -660,6 +670,10 @@ gimp_procedure_add_menu_path (GimpProcedure *procedure,
 
   procedure->priv->menu_paths = g_list_append (procedure->priv->menu_paths,
                                                g_strdup (menu_path));
+
+  if (procedure->priv->installed)
+    _gimp_plugin_menu_register (gimp_procedure_get_name (procedure),
+                                menu_path);
 }
 
 /**
