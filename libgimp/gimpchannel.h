@@ -30,12 +30,28 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
 gint32  gimp_channel_new (GimpImage     *image,
                           const gchar   *name,
                           guint          width,
                           guint          height,
                           gdouble        opacity,
                           const GimpRGB *color);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_channel_new gimp_channel_new_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+gint32  gimp_channel_new_deprecated (gint32         image_ID,
+                                     const gchar   *name,
+                                     guint          width,
+                                     guint          height,
+                                     gdouble        opacity,
+                                     const GimpRGB *color);
 
 
 G_END_DECLS
