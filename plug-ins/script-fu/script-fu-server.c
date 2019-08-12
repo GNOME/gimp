@@ -219,18 +219,20 @@ script_fu_server_get_mode (void)
   return server_mode;
 }
 
-void
-script_fu_server_run (const gchar      *name,
-                      gint              nparams,
-                      const GimpParam  *params,
-                      gint             *nreturn_vals,
-                      GimpParam       **return_vals)
+GimpValueArray *
+script_fu_server_run (GimpProcedure        *procedure,
+                      const GimpValueArray *args)
 {
-  static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
+  const gchar       *ip;
+  gint               port;
+  const gchar       *logfile;
 
-  run_mode = params[0].data.d_int32;
+  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
+  ip       = g_value_get_string (gimp_value_array_index (args, 1));
+  port     = g_value_get_int    (gimp_value_array_index (args, 2));
+  logfile  = g_value_get_string (gimp_value_array_index (args, 3));
 
   ts_set_run_mode (run_mode);
   ts_set_print_flag (1);
@@ -252,26 +254,19 @@ script_fu_server_run (const gchar      *name,
       server_mode = TRUE;
 
       /*  Start the server  */
-      server_start ((params[1].data.d_string &&
-                     strlen (params[1].data.d_string)) ?
-                    params[1].data.d_string : "127.0.0.1",
-                    params[2].data.d_int32,
-                    params[3].data.d_string);
+      server_start (ip ? ip : "127.0.0.1", port, logfile);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       status = GIMP_PDB_CALLING_ERROR;
-      g_warning ("Script-Fu server does not handle \"GIMP_RUN_WITH_LAST_VALS\"");
+      g_printerr ("Script-Fu server does not handle "
+                  "\"GIMP_RUN_WITH_LAST_VALS\"\n");
 
     default:
       break;
     }
 
-  *nreturn_vals = 1;
-  *return_vals = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, NULL);
 }
 
 static void

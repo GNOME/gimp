@@ -880,7 +880,8 @@ script_fu_ok (SFScript *script)
   output = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, output);
 
-  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
+                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
   if (ts_interpret_string (command))
     {
@@ -891,7 +892,8 @@ script_fu_ok (SFScript *script)
       g_free (message);
     }
 
-  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_INTERNAL);
+  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
+                                      GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
   g_string_free (output, TRUE);
 

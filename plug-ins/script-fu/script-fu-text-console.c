@@ -31,30 +31,23 @@
 
 #include "script-fu-intl.h"
 
-void
-script_fu_text_console_run (const gchar      *name,
-                            gint              nparams,
-                            const GimpParam  *params,
-                            gint             *nreturn_vals,
-                            GimpParam       **return_vals)
+GimpValueArray *
+script_fu_text_console_run (GimpProcedure        *procedure,
+                            const GimpValueArray *args)
 {
-  static GimpParam  values[1];
-
   /*  Enable Script-Fu output  */
   ts_register_output_func (ts_stdout_output_func, NULL);
 
   ts_print_welcome ();
 
-  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
+                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
   /*  Run the interface  */
   ts_interpret_stdin ();
 
-  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_INTERNAL);
+  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
+                                      GIMP_PDB_ERROR_HANDLER_INTERNAL);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

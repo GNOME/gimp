@@ -54,28 +54,26 @@ typedef struct
  *  Local Functions
  */
 
-static gboolean  script_fu_run_command    (const gchar      *command,
-                                           GError          **error);
-static void      script_fu_load_directory (GFile            *directory);
-static void      script_fu_load_script    (GFile            *file);
-static gboolean  script_fu_install_script (gpointer          foo,
-                                           GList            *scripts,
-                                           gpointer          bar);
-static void      script_fu_install_menu   (SFMenu           *menu);
-static gboolean  script_fu_remove_script  (gpointer          foo,
-                                           GList            *scripts,
-                                           gpointer          bar);
-static void      script_fu_script_proc    (const gchar      *name,
-                                           gint              nparams,
-                                           const GimpParam  *params,
-                                           gint             *nreturn_vals,
-                                           GimpParam       **return_vals);
+static gboolean         script_fu_run_command    (const gchar          *command,
+                                                  GError              **error);
+static void             script_fu_load_directory (GFile                *directory);
+static void             script_fu_load_script    (GFile                *file);
+static gboolean         script_fu_install_script (gpointer              foo,
+                                                  GList                *scripts,
+                                                  gpointer              data);
+static void             script_fu_install_menu   (SFMenu               *menu);
+static gboolean         script_fu_remove_script  (gpointer              foo,
+                                                  GList                *scripts,
+                                                  gpointer              data);
+static GimpValueArray * script_fu_script_proc    (GimpProcedure        *procedure,
+                                                  const GimpValueArray *args,
+                                                  gpointer              data);
 
-static SFScript *script_fu_find_script    (const gchar      *name);
+static SFScript       * script_fu_find_script    (const gchar          *name);
 
-static gchar *   script_fu_menu_map       (const gchar      *menu_path);
-static gint      script_fu_menu_compare   (gconstpointer     a,
-                                           gconstpointer     b);
+static gchar          * script_fu_menu_map       (const gchar          *menu_path);
+static gint             script_fu_menu_compare   (gconstpointer         a,
+                                                  gconstpointer         b);
 
 
 /*
@@ -91,7 +89,8 @@ static GList *script_menu_list = NULL;
  */
 
 void
-script_fu_find_scripts (GList *path)
+script_fu_find_scripts (GimpPlugIn *plug_in,
+                        GList      *path)
 {
   GList *list;
 
@@ -100,7 +99,7 @@ script_fu_find_scripts (GList *path)
     {
       g_tree_foreach (script_tree,
                       (GTraverseFunc) script_fu_remove_script,
-                      NULL);
+                      plug_in);
       g_tree_destroy (script_tree);
     }
 
@@ -117,7 +116,7 @@ script_fu_find_scripts (GList *path)
   /*  Now that all scripts are read in and sorted, tell gimp about them  */
   g_tree_foreach (script_tree,
                   (GTraverseFunc) script_fu_install_script,
-                  NULL);
+                  plug_in);
 
   script_menu_list = g_list_sort (script_menu_list,
                                   (GCompareFunc) script_fu_menu_compare);
@@ -672,15 +671,17 @@ script_fu_load_script (GFile *file)
 static gboolean
 script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
                           GList    *scripts,
-                          gpointer  bar G_GNUC_UNUSED)
+                          gpointer  data)
 {
-  GList *list;
+  GimpPlugIn *plug_in = data;
+  GList      *list;
 
   for (list = scripts; list; list = g_list_next (list))
     {
       SFScript *script = list->data;
 
-      script_fu_script_install_proc (script, script_fu_script_proc);
+      script_fu_script_install_proc (plug_in, script,
+                                     script_fu_script_proc);
     }
 
   return FALSE;
@@ -689,7 +690,13 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
 static void
 script_fu_install_menu (SFMenu *menu)
 {
-  gimp_plugin_menu_register (menu->script->name, menu->menu_path);
+  GimpPlugIn    *plug_in = gimp_get_plug_in ();
+  GimpProcedure *procedure;
+
+  procedure = gimp_plug_in_get_temp_procedure (plug_in,
+                                               menu->script->name);
+
+  gimp_procedure_add_menu_path (procedure, menu->menu_path);
 
   g_free (menu->menu_path);
   g_slice_free (SFMenu, menu);
@@ -701,15 +708,16 @@ script_fu_install_menu (SFMenu *menu)
 static gboolean
 script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
                          GList    *scripts,
-                         gpointer  bar G_GNUC_UNUSED)
+                         gpointer  data)
 {
-  GList *list;
+  GimpPlugIn *plug_in = data;
+  GList      *list;
 
   for (list = scripts; list; list = g_list_next (list))
     {
       SFScript *script = list->data;
 
-      script_fu_script_uninstall_proc (script);
+      script_fu_script_uninstall_proc (plug_in, script);
       script_fu_script_free (script);
     }
 
@@ -718,120 +726,96 @@ script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
   return FALSE;
 }
 
-static void
-script_fu_script_proc (const gchar      *name,
-                       gint              nparams,
-                       const GimpParam  *params,
-                       gint             *nreturn_vals,
-                       GimpParam       **return_vals)
+static GimpValueArray *
+script_fu_script_proc (GimpProcedure        *procedure,
+                       const GimpValueArray *args,
+                       gpointer              data)
 {
-  static GimpParam   values[2] = { { 0, }, { 0, } };
-  GimpPDBStatusType  status    = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   SFScript          *script;
-  GError            *error     = NULL;
+  GimpRunMode        run_mode;
+  GError            *error = NULL;
 
-  if (values[1].type == GIMP_PDB_STRING && values[1].data.d_string)
-    {
-      g_free (values[1].data.d_string);
-      values[1].data.d_string = NULL;
-    }
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-
-  script = script_fu_find_script (name);
+  script = script_fu_find_script (gimp_procedure_get_name (procedure));
 
   if (! script)
-    status = GIMP_PDB_CALLING_ERROR;
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CALLING_ERROR,
+                                             NULL);
 
-  if (status == GIMP_PDB_SUCCESS)
+  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  ts_set_run_mode (run_mode);
+
+  switch (run_mode)
     {
-      GimpRunMode run_mode = params[0].data.d_int32;
+    case GIMP_RUN_INTERACTIVE:
+      {
+        gint min_args = 0;
 
-      ts_set_run_mode (run_mode);
+        /*  First, try to collect the standard script arguments...  */
+        min_args = script_fu_script_collect_standard_args (script, args);
 
-      switch (run_mode)
+        /*  ...then acquire the rest of arguments (if any) with a dialog  */
+        if (script->n_args > min_args)
+          {
+            status = script_fu_interface (script, min_args);
+            break;
+          }
+        /*  otherwise (if the script takes no more arguments), skip
+         *  this part and run the script directly (fallthrough)
+         */
+      }
+
+    case GIMP_RUN_NONINTERACTIVE:
+      /*  Make sure all the arguments are there  */
+      if (gimp_value_array_length (args) != (script->n_args + 1))
+        status = GIMP_PDB_CALLING_ERROR;
+
+      if (status == GIMP_PDB_SUCCESS)
         {
-        case GIMP_RUN_INTERACTIVE:
-          {
-            gint min_args = 0;
+          gchar *command;
 
-            /*  First, try to collect the standard script arguments...  */
-            min_args = script_fu_script_collect_standard_args (script,
-                                                               nparams, params);
+          command = script_fu_script_get_command_from_params (script, args);
 
-            /*  ...then acquire the rest of arguments (if any) with a dialog  */
-            if (script->n_args > min_args)
-              {
-                status = script_fu_interface (script, min_args);
-                break;
-              }
-            /*  otherwise (if the script takes no more arguments), skip
-             *  this part and run the script directly (fallthrough)
-             */
-          }
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there  */
-          if (nparams != (script->n_args + 1))
-            status = GIMP_PDB_CALLING_ERROR;
-
-          if (status == GIMP_PDB_SUCCESS)
+          /*  run the command through the interpreter  */
+          if (! script_fu_run_command (command, &error))
             {
-              gchar *command;
-
-              command = script_fu_script_get_command_from_params (script,
-                                                                  params);
-
-              /*  run the command through the interpreter  */
-              if (! script_fu_run_command (command, &error))
-                {
-                  status                  = GIMP_PDB_EXECUTION_ERROR;
-                  *nreturn_vals           = 2;
-                  values[1].type          = GIMP_PDB_STRING;
-                  values[1].data.d_string = error->message;
-
-                  error->message = NULL;
-                  g_error_free (error);
-                }
-
-              g_free (command);
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_EXECUTION_ERROR,
+                                                       error);
             }
-          break;
 
-        case GIMP_RUN_WITH_LAST_VALS:
-          {
-            gchar *command;
-
-            /*  First, try to collect the standard script arguments  */
-            script_fu_script_collect_standard_args (script, nparams, params);
-
-            command = script_fu_script_get_command (script);
-
-            /*  run the command through the interpreter  */
-            if (! script_fu_run_command (command, &error))
-              {
-                status                  = GIMP_PDB_EXECUTION_ERROR;
-                *nreturn_vals           = 2;
-                values[1].type          = GIMP_PDB_STRING;
-                values[1].data.d_string = error->message;
-
-                error->message = NULL;
-                g_error_free (error);
-              }
-
-            g_free (command);
-          }
-          break;
-
-        default:
-          break;
+          g_free (command);
         }
+      break;
+
+    case GIMP_RUN_WITH_LAST_VALS:
+      {
+        gchar *command;
+
+        /*  First, try to collect the standard script arguments  */
+        script_fu_script_collect_standard_args (script, args);
+
+        command = script_fu_script_get_command (script);
+
+        /*  run the command through the interpreter  */
+        if (! script_fu_run_command (command, &error))
+          {
+            return gimp_procedure_new_return_values (procedure,
+                                                     GIMP_PDB_EXECUTION_ERROR,
+                                                     error);
+          }
+
+        g_free (command);
+      }
+      break;
+
+    default:
+      break;
     }
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, NULL);
 }
 
 /* this is a GTraverseFunction */

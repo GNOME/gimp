@@ -19,11 +19,8 @@
 #define __SCRIPT_FU_TEXT_CONSOLE_H__
 
 
-void  script_fu_text_console_run (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *params,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
+GimpValueArray * script_fu_text_console_run (GimpProcedure        *procedure,
+                                             const GimpValueArray *args);
 
 
 #endif /*  __SCRIPT_FU_TEXT_CONSOLE_H__  */

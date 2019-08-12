@@ -25,24 +25,17 @@
 #include "script-fu-intl.h"
 
 
-void
-script_fu_eval_run (const gchar      *name,
-                    gint              nparams,
-                    const GimpParam  *params,
-                    gint             *nreturn_vals,
-                    GimpParam       **return_vals)
+GimpValueArray *
+script_fu_eval_run (GimpProcedure        *procedure,
+                    const GimpValueArray *args)
 {
-  static GimpParam   values[2];
   GString           *output = g_string_new (NULL);
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
+  const gchar       *code;
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type = GIMP_PDB_STATUS;
-
-  run_mode = params[0].data.d_int32;
+  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
+  code     = g_value_get_string (gimp_value_array_index (args, 1));
 
   ts_set_run_mode (run_mode);
   ts_register_output_func (ts_gstring_output_func, output);
@@ -50,7 +43,7 @@ script_fu_eval_run (const gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      if (ts_interpret_string (params[1].data.d_string) != 0)
+      if (ts_interpret_string (code) != 0)
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
@@ -65,16 +58,15 @@ script_fu_eval_run (const gchar      *name,
       break;
     }
 
-  values[0].data.d_status = status;
-
   if (status != GIMP_PDB_SUCCESS && output->len > 0)
     {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = g_string_free (output, FALSE);
+      GError *error = g_error_new_literal (0, 0,
+                                           g_string_free (output, FALSE));
+
+      return gimp_procedure_new_return_values (procedure, status, error);
     }
-  else
-    {
-      g_string_free (output, TRUE);
-    }
+
+  g_string_free (output, TRUE);
+
+  return gimp_procedure_new_return_values (procedure, status, NULL);
 }
