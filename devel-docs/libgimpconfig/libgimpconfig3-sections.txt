@@ -115,11 +115,11 @@ gimp_config_string_append_escaped
 <FILE>gimpconfigwriter</FILE>
 <TITLE>GimpConfigWriter</TITLE>
 GimpConfigWriter
-gimp_config_writer_new_file
-gimp_config_writer_new_gfile
-gimp_config_writer_new_stream
-gimp_config_writer_new_fd
-gimp_config_writer_new_string
+gimp_config_writer_new_from_file
+gimp_config_writer_new_from_gfile
+gimp_config_writer_new_from_stream
+gimp_config_writer_new_from_fd
+gimp_config_writer_new_from_string
 gimp_config_writer_ref
 gimp_config_writer_unref
 gimp_config_writer_open

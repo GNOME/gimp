@@ -190,8 +190,10 @@ gimp_modules_unload (Gimp *gimp)
       if (gimp->be_verbose)
         g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-      writer = gimp_config_writer_new_gfile (file, TRUE,
-                                             "GIMP modulerc", &error);
+      writer = gimp_config_writer_new_from_gfile (file,
+                                                  TRUE,
+                                                  "GIMP modulerc",
+                                                  &error);
       g_object_unref (file);
 
       if (writer)

@@ -75,7 +75,7 @@ gimp_config_dump (GObject              *gimp,
   output = g_unix_output_stream_new (1, FALSE);
 #endif
 
-  writer = gimp_config_writer_new_stream (output, NULL, NULL);
+  writer = gimp_config_writer_new_from_stream (output, NULL, NULL);
 
   switch (format)
     {
