@@ -32,22 +32,31 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean   gimp_edit_cut                      (gint32       drawable_ID);
-gboolean   gimp_edit_copy                     (gint32       drawable_ID);
-gboolean   gimp_edit_copy_visible             (GimpImage   *image);
-gint32     gimp_edit_paste                    (gint32       drawable_ID,
-                                               gboolean     paste_into);
-GimpImage* gimp_edit_paste_as_new_image       (void);
-gchar*     gimp_edit_named_cut                (gint32       drawable_ID,
-                                               const gchar *buffer_name);
-gchar*     gimp_edit_named_copy               (gint32       drawable_ID,
-                                               const gchar *buffer_name);
-gchar*     gimp_edit_named_copy_visible       (GimpImage   *image,
-                                               const gchar *buffer_name);
-gint32     gimp_edit_named_paste              (gint32       drawable_ID,
-                                               const gchar *buffer_name,
-                                               gboolean     paste_into);
-GimpImage* gimp_edit_named_paste_as_new_image (const gchar *buffer_name);
+gboolean                 gimp_edit_cut                       (gint32       drawable_ID);
+gboolean                 gimp_edit_copy                      (gint32       drawable_ID);
+gboolean                 gimp_edit_copy_visible              (GimpImage   *image);
+GIMP_DEPRECATED_FOR(gimp_edit_copy_visible)
+G_GNUC_INTERNAL gboolean _gimp_edit_copy_visible             (gint32       image_ID);
+gint32                   gimp_edit_paste                     (gint32       drawable_ID,
+                                                              gboolean     paste_into);
+GimpImage*               gimp_edit_paste_as_new_image        (void);
+GIMP_DEPRECATED_FOR(gimp_edit_paste_as_new_image)
+G_GNUC_INTERNAL gint32   _gimp_edit_paste_as_new_image       (void);
+gchar*                   gimp_edit_named_cut                 (gint32       drawable_ID,
+                                                              const gchar *buffer_name);
+gchar*                   gimp_edit_named_copy                (gint32       drawable_ID,
+                                                              const gchar *buffer_name);
+gchar*                   gimp_edit_named_copy_visible        (GimpImage   *image,
+                                                              const gchar *buffer_name);
+GIMP_DEPRECATED_FOR(gimp_edit_named_copy_visible)
+G_GNUC_INTERNAL gchar*   _gimp_edit_named_copy_visible       (gint32       image_ID,
+                                                              const gchar *buffer_name);
+gint32                   gimp_edit_named_paste               (gint32       drawable_ID,
+                                                              const gchar *buffer_name,
+                                                              gboolean     paste_into);
+GimpImage*               gimp_edit_named_paste_as_new_image  (const gchar *buffer_name);
+GIMP_DEPRECATED_FOR(gimp_edit_named_paste_as_new_image)
+G_GNUC_INTERNAL gint32   _gimp_edit_named_paste_as_new_image (const gchar *buffer_name);
 
 
 G_END_DECLS

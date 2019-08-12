@@ -32,24 +32,35 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_text_fontname             (GimpImage    *image,
-                                         gint32        drawable_ID,
-                                         gdouble       x,
-                                         gdouble       y,
-                                         const gchar  *text,
-                                         gint          border,
-                                         gboolean      antialias,
-                                         gdouble       size,
-                                         GimpSizeType  size_type,
-                                         const gchar  *fontname);
-gboolean gimp_text_get_extents_fontname (const gchar  *text,
-                                         gdouble       size,
-                                         GimpSizeType  size_type,
-                                         const gchar  *fontname,
-                                         gint         *width,
-                                         gint         *height,
-                                         gint         *ascent,
-                                         gint         *descent);
+gint32                 gimp_text_fontname             (GimpImage    *image,
+                                                       gint32        drawable_ID,
+                                                       gdouble       x,
+                                                       gdouble       y,
+                                                       const gchar  *text,
+                                                       gint          border,
+                                                       gboolean      antialias,
+                                                       gdouble       size,
+                                                       GimpSizeType  size_type,
+                                                       const gchar  *fontname);
+GIMP_DEPRECATED_FOR(gimp_text_fontname)
+G_GNUC_INTERNAL gint32 _gimp_text_fontname            (gint32        image_ID,
+                                                       gint32        drawable_ID,
+                                                       gdouble       x,
+                                                       gdouble       y,
+                                                       const gchar  *text,
+                                                       gint          border,
+                                                       gboolean      antialias,
+                                                       gdouble       size,
+                                                       GimpSizeType  size_type,
+                                                       const gchar  *fontname);
+gboolean               gimp_text_get_extents_fontname (const gchar  *text,
+                                                       gdouble       size,
+                                                       GimpSizeType  size_type,
+                                                       const gchar  *fontname,
+                                                       gint         *width,
+                                                       gint         *height,
+                                                       gint         *ascent,
+                                                       gint         *descent);
 
 
 G_END_DECLS
