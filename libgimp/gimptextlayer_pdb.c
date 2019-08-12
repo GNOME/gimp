@@ -93,6 +93,64 @@ gimp_text_layer_new (GimpImage   *image,
 }
 
 /**
+ * _gimp_text_layer_new: (skip)
+ * @image_ID: The image.
+ * @text: The text to generate (in UTF-8 encoding).
+ * @fontname: The name of the font.
+ * @size: The size of text in either pixels or points.
+ * @unit: The units of specified size.
+ *
+ * Creates a new text layer.
+ *
+ * This procedure creates a new text layer. The arguments are kept as
+ * simple as necessary for the normal case. All text attributes,
+ * however, can be modified with the appropriate
+ * gimp_text_layer_set_*() procedures. The new layer still needs to be
+ * added to the image, as this is not automatic. Add the new layer
+ * using gimp_image_insert_layer().
+ *
+ * Returns: The new text layer.
+ *
+ * Since: 2.6
+ **/
+gint32
+_gimp_text_layer_new (gint32       image_ID,
+                      const gchar *text,
+                      const gchar *fontname,
+                      gdouble      size,
+                      GimpUnit     unit)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 layer_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_STRING, text,
+                                          G_TYPE_STRING, fontname,
+                                          G_TYPE_DOUBLE, size,
+                                          GIMP_TYPE_UNIT, unit,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-text-layer-new",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-text-layer-new",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return layer_ID;
+}
+
+/**
  * gimp_text_layer_get_text:
  * @layer_ID: The text layer.
  *
