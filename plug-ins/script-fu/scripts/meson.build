@@ -64,5 +64,5 @@ endif
 
 install_data(
   scripts,
-  install_dir: join_paths(gimpdatadir, 'scripts'),
+  install_dir: gimpdatadir / 'scripts',
 )

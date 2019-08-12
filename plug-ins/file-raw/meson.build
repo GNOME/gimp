@@ -39,7 +39,7 @@ foreach plugin_name : file_raw_exes
       libgimpwidgets,
     ],
     install: true,
-    install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
+    install_dir: gimpplugindir / 'plug-ins' / plugin_name,
   )
 endforeach
 
@@ -47,5 +47,5 @@ install_data([
     'file-darktable-export-on-exit.lua',
     'file-darktable-get-size.lua',
   ],
-  install_dir: join_paths(prefix, gimpdatadir, 'file-raw'),
+  install_dir: prefix / gimpdatadir / 'file-raw',
 )

@@ -296,9 +296,8 @@ libmypaint        = dependency('libmypaint',         version: '>=1.3.0')
 
 if relocatable_bundle
   libmypaint_brushes = no_dep
-  libmypaint_brushes_dir = join_paths(
-    '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
-  )
+  libmypaint_brushes_dir = \
+    '${gimp_installation_dir}' / 'share' / 'mypaint-data' / '1.0' / 'brushes'
 else
   libmypaint_brushes= dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
   libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
@@ -995,7 +994,7 @@ gimp_mkenums_custom_target_commonargs = [
 conf.set('ENABLE_NLS',   true)
 conf.set('HAVE_GETTEXT', true)
 
-# localedir = join_paths(get_option('prefix'), get_option('localedir'))
+# localedir = get_option('prefix') / get_option('localedir')
 
 
 

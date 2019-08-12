@@ -33,5 +33,5 @@ libgimpmodule = library('gimpmodule-' + gimp_api_version,
 
 install_headers(
   libgimpmodule_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpmodule'),
+  subdir: gimp_api_name / 'libgimpmodule',
 )
