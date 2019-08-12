@@ -62,5 +62,5 @@ brushes = [
 
 install_data(
   brushes,
-  install_dir: join_paths(gimpdatadir, 'gimpressionist', 'Brushes')
+  install_dir: gimpdatadir / 'gimpressionist' / 'Brushes',
 )

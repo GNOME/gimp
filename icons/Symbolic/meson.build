@@ -25,14 +25,14 @@ endif
 
 
 install_data('index.theme',
-  install_dir: join_paths(gimpiconsdir, theme)
+  install_dir: gimpiconsdir / theme,
 )
 
 foreach icon_info : all_icons
   icons_dir = icon_info[0]
   icons_list= icon_info[1]
   install_data(icons_list,
-    install_dir: join_paths(gimpiconsdir, theme, icons_dir, 'apps')
+    install_dir: gimpiconsdir / theme / icons_dir / 'apps',
   )
 endforeach
 
