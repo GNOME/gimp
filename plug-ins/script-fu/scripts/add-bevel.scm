@@ -117,7 +117,9 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-fill bump-layer FILL-BACKGROUND)
 
-    (while (< index thickness)
+    (while (and (< index thickness)
+                (= (car (gimp-selection-is-empty image)) FALSE)
+           )
            (set! greyness (/ (* index 255) thickness))
            (gimp-context-set-background (list greyness greyness greyness))
            ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
@@ -126,8 +128,12 @@
            (set! index (+ index 1))
     )
     ; Now the white interior
-    (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-edit-fill bump-layer FILL-BACKGROUND)
+    (if (= (car (gimp-selection-is-empty image)) FALSE)
+        (begin
+          (gimp-context-set-background '(255 255 255))
+          (gimp-drawable-edit-fill bump-layer FILL-BACKGROUND)
+        )
+    )
 
     ;------------------------------------------------------------
     ;
