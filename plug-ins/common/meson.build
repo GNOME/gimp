@@ -430,6 +430,6 @@ foreach exe : common_exes_list
     ],
     dependencies: [ exe_deps, math ],
     install: true,
-    install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
+    install_dir: gimpplugindir / 'plug-ins' / plugin_name,
   )
 endforeach

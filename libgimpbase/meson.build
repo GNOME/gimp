@@ -110,7 +110,7 @@ libgimpbase = library('gimpbase-' + gimp_api_version,
 
 install_headers(
   libgimpbase_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpbase'),
+  subdir: gimp_api_name / 'libgimpbase',
 )
 
 # Test program, not installed

@@ -176,7 +176,7 @@ libgimpwidgets = library('gimpwidgets-'+ gimp_api_version,
 
 install_headers(
   libgimpwidgets_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpwidgets'),
+  subdir: gimp_api_name / 'libgimpwidgets',
 )
 
 

@@ -75,7 +75,7 @@ libgimpthumb = library('gimpthumb-'+ gimp_api_version,
 
 install_headers(
   libgimpthumb_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpthumb'),
+  subdir: gimp_api_name / 'libgimpthumb',
 )
 
 

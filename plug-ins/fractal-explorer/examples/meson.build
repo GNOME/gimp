@@ -33,5 +33,5 @@ install_data([
     'Wood',
     'Zooming_Circle',
   ],
-  install_dir: join_paths(gimpdatadir, 'fractalexplorer'),
+  install_dir: gimpdatadir / 'fractalexplorer',
 )

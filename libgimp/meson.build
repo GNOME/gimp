@@ -309,7 +309,7 @@ libgimpui = library('gimpui-'+ gimp_api_version,
 
 install_headers(
   libgimp_headers,
-  subdir: join_paths(gimp_api_name, 'libgimp'),
+  subdir: gimp_api_name / 'libgimp',
 )
 
 

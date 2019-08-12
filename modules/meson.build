@@ -97,6 +97,6 @@ foreach module : modules
     dependencies: modules_deps + deps,
     link_with: link,
     install: true,
-    install_dir: join_paths(gimpplugindir, 'modules'),
+    install_dir: gimpplugindir / 'modules',
   )
 endforeach

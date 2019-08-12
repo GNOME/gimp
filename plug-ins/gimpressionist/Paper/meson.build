@@ -12,5 +12,5 @@ papers = [
 
 install_data(
   papers,
-  install_dir: join_paths(gimpdatadir, 'gimpressionist', 'Paper')
+  install_dir: gimpdatadir / 'gimpressionist' / 'Paper',
 )

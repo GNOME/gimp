@@ -36,5 +36,5 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
+  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
