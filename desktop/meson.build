@@ -10,10 +10,8 @@ sizes = [
 
 foreach size : sizes
   sizedir = size+'x'+size
-  install_data(join_paths(sizedir, 'gimp.png'),
-    install_dir: join_paths(
-      get_option('datadir'), 'icons', 'hicolor', sizedir, 'apps'
-    )
+  install_data(sizedir / 'gimp.png',
+    install_dir: get_option('datadir') / 'icons' / 'hicolor' / sizedir / 'apps'
   )
 endforeach
 
@@ -42,10 +40,10 @@ desktopfile = custom_target(desktopfilename,
     '@OUTPUT@',
     '--desktop-style',
     '--utf8',
-    '--cache='+join_paths('@OUTDIR@', 'intltool-merge-cache'),
+    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
   ],
   install: true,
-  install_dir: join_paths(get_option('datadir'), 'applications'),
+  install_dir: get_option('datadir') / 'applications',
 )
 
 appdatafilename = 'org.gimp.GIMP.appdata.xml'
@@ -64,10 +62,10 @@ appdatafile = custom_target(appdatafilename,
     '@OUTPUT@',
     '--xml-style',
     '--utf8',
-    '--cache='+join_paths('@OUTDIR@', 'intltool-merge-cache'),
+    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
   ],
   install: true,
-  install_dir: join_paths(get_option('datadir'), 'metainfo'),
+  install_dir: get_option('datadir') / 'metainfo',
 )
 
 metainfofilename = 'gimp-data-extras.metainfo.xml'
@@ -86,10 +84,10 @@ metainfofile = custom_target(metainfofilename,
     '@OUTPUT@',
     '--xml-style',
     '--utf8',
-    '--cache='+join_paths('@OUTDIR@', 'intltool-merge-cache'),
+    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
   ],
   install: true,
-  install_dir: join_paths(get_option('datadir'), 'appdata'),
+  install_dir: get_option('datadir') / 'appdata',
 )
 
 custom_target('validate-desktop',

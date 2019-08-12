@@ -42,5 +42,5 @@ libgimpmath = library('gimpmath-' + gimp_api_version,
 
 install_headers(
   libgimpmath_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpmath'),
+  subdir: gimp_api_name / 'libgimpmath',
 )

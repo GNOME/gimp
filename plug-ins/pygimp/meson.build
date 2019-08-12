@@ -6,12 +6,12 @@ subdir('plug-ins')
 # pwd = meson.current_source_dir()
 # pygtk_generator = generator(pygobjectcodegen,
 #   arguments: [
-#       '--override', join_paths(pwd, '@BASENAME@.override'),
-#       '--register', join_paths(pygtk_defsdir, 'gdk-types.defs'),
-#       '--register', join_paths(pygtk_defsdir, 'gtk-types.defs'),
-#       '--register', join_paths(pwd, 'gimp-types.defs'),
-#       '--register', join_paths(pwd, 'gimpcolor-types.defs'),
-#       '--register', join_paths(pwd, 'gimpenums-types.defs'),
+#       '--override', pwd / '@BASENAME@.override',
+#       '--register', pygtk_defsdir / 'gdk-types.defs',
+#       '--register', pygtk_defsdir / 'gtk-types.defs',
+#       '--register', pwd / 'gimp-types.defs',
+#       '--register', pwd / 'gimpcolor-types.defs',
+#       '--register', pwd / 'gimpenums-types.defs',
 #       '--prefix', '@BASENAME@',
 #       '@INPUT@',
 #   ],
@@ -111,7 +111,7 @@ foreach pylib : python_so_libs
     link_with: pylib[3],
     name_prefix: '',
     install: true,
-    install_dir: join_paths(gimpplugindir, 'python'),
+    install_dir: gimpplugindir / 'python',
   )
 endforeach
 
@@ -125,7 +125,7 @@ install_data([
     'gimpui.py',
     'pygimp-logo.png',
   ],
-  install_dir: join_paths(gimpplugindir, 'python'),
+  install_dir: gimpplugindir / 'python',
 )
 
 path_separator = platform_win32 ? ';' : ':'
@@ -138,7 +138,7 @@ custom_target('pygimp.env',
   ],
   capture: true,
   install: true,
-  install_dir: join_paths(gimpplugindir, 'environ'),
+  install_dir: gimpplugindir / 'environ',
 )
 custom_target('pygimp.interp',
   input : [],
@@ -151,7 +151,7 @@ custom_target('pygimp.interp',
   ],
   capture: true,
   install: true,
-  install_dir: join_paths(gimpplugindir, 'interpreters'),
+  install_dir: gimpplugindir / 'interpreters',
 )
 
 endif

@@ -57,7 +57,7 @@ libgimpcolor = library('gimpcolor-' + gimp_api_version,
 
 install_headers(
   libgimpcolor_headers,
-  subdir: join_paths(gimp_api_name, 'libgimpcolor'),
+  subdir: gimp_api_name / 'libgimpcolor',
 )
 
 
