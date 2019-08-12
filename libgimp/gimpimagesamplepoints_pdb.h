@@ -32,30 +32,45 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32                   gimp_image_add_sample_point           (GimpImage *image,
-                                                                gint       position_x,
-                                                                gint       position_y);
-GIMP_DEPRECATED_FOR(gimp_image_add_sample_point)
-G_GNUC_INTERNAL gint32   _gimp_image_add_sample_point          (gint32     image_ID,
-                                                                gint       position_x,
-                                                                gint       position_y);
-gboolean                 gimp_image_delete_sample_point        (GimpImage *image,
-                                                                gint32     sample_point_ID);
-GIMP_DEPRECATED_FOR(gimp_image_delete_sample_point)
-G_GNUC_INTERNAL gboolean _gimp_image_delete_sample_point       (gint32     image_ID,
-                                                                gint32     sample_point_ID);
-gint32                   gimp_image_find_next_sample_point     (GimpImage *image,
-                                                                gint32     sample_point_ID);
-GIMP_DEPRECATED_FOR(gimp_image_find_next_sample_point)
-G_GNUC_INTERNAL gint32   _gimp_image_find_next_sample_point    (gint32     image_ID,
-                                                                gint32     sample_point_ID);
-gint                     gimp_image_get_sample_point_position  (GimpImage *image,
-                                                                gint32     sample_point_ID,
-                                                                gint      *position_y);
-GIMP_DEPRECATED_FOR(gimp_image_get_sample_point_position)
-G_GNUC_INTERNAL gint     _gimp_image_get_sample_point_position (gint32     image_ID,
-                                                                gint32     sample_point_ID,
-                                                                gint      *position_y);
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+gint32   gimp_image_add_sample_point          (GimpImage *image,
+                                               gint       position_x,
+                                               gint       position_y);
+gboolean gimp_image_delete_sample_point       (GimpImage *image,
+                                               gint32     sample_point_ID);
+gint32   gimp_image_find_next_sample_point    (GimpImage *image,
+                                               gint32     sample_point_ID);
+gint     gimp_image_get_sample_point_position (GimpImage *image,
+                                               gint32     sample_point_ID,
+                                               gint      *position_y);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_image_add_sample_point _gimp_image_add_sample_point
+#define gimp_image_delete_sample_point _gimp_image_delete_sample_point
+#define gimp_image_find_next_sample_point _gimp_image_find_next_sample_point
+#define gimp_image_get_sample_point_position _gimp_image_get_sample_point_position
+
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+/* Below API are deprecated and should not be used by new plug-ins.
+ * They are not marked internal as a trick to keep the old API alive for now.
+ */
+
+gint32   _gimp_image_add_sample_point          (gint32  image_ID,
+                                                gint    position_x,
+                                                gint    position_y);
+gboolean _gimp_image_delete_sample_point       (gint32  image_ID,
+                                                gint32  sample_point_ID);
+gint32   _gimp_image_find_next_sample_point    (gint32  image_ID,
+                                                gint32  sample_point_ID);
+gint     _gimp_image_get_sample_point_position (gint32  image_ID,
+                                                gint32  sample_point_ID,
+                                                gint   *position_y);
 
 
 G_END_DECLS
