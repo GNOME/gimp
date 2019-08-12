@@ -210,7 +210,7 @@
     (gimp-drawable-edit-fill film-mask FILL-BACKGROUND)
     (gimp-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image film-mask hole-radius TRUE TRUE)
-    (gimp-threshold film-mask 127 255)
+    (gimp-drawable-threshold film-mask HISTOGRAM-VALUE 0.5 1.0)
 
     (gimp-layer-remove-mask film-layer MASK-APPLY)
   )
