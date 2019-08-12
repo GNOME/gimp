@@ -13,13 +13,7 @@ project_url_issues = project_url + '/issues/new'
 conf = configuration_data()
 
 ################################################################################
-######
-#     # #####   ####       # ######  ####  #####      # #    # ######  ####
-#     # #    # #    #      # #      #    #   #        # ##   # #      #    #
-######  #    # #    #      # #####  #        #        # # #  # #####  #    #
-#       #####  #    #      # #      #        #        # #  # # #      #    #
-#       #   #  #    # #    # #      #    #   #        # #   ## #      #    #
-#       #    #  ####   ####  ######  ####    #        # #    # #       ####
+# Project info
 
 prettyname = 'GIMP'
 full_name  = 'GNU Image Manipulation Program'
@@ -95,18 +89,11 @@ cxx       = meson.get_compiler('cpp')
 prefix    = get_option('prefix')
 buildtype = get_option('buildtype')
 
+compiler_args = []
+linker_args = []
 
 ################################################################################
 # Host system detection
-
- #####
-#     # #   #  ####  ##### ###### #    #
-#        # #  #        #   #      ##  ##
- #####    #    ####    #   #####  # ## #
-      #   #        #   #   #      #    #
-#     #   #   #    #   #   #      #    #
- #####    #    ####    #   ###### #    #
-
 
 cpu = host_machine.cpu().to_lower()
 
@@ -150,16 +137,11 @@ if platform_win32
   windows = import('windows')
   # AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
   # AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
-  # add_project_link_arguments(
-  #   '-Wl,--large-address-aware',
-  #   language: [ 'c', 'cpp' ]
-  # )
+  # compiler_args += '-Wl,--large-address-aware'
 endif
-# dirs_separator = platform_win32 ? '\\' : '/'
-# path_separator = platform_win32 ? ';'  : ':'
 
 
-if cc.version() == '7.2.0'
+if cc.get_id() == 'gcc' and cc.version() == '7.2.0'
   warning('''
     GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
     against using this version of the compiler (previous and
@@ -173,33 +155,25 @@ endif
 ################################################################################
 # Compiler CPU extensions for optimizations
 
- #####  ######  #     #    #######
-#     # #     # #     #    #     # #####  ##### # #    #  ####
-#       #     # #     #    #     # #    #   #   # ##  ## #
-#       ######  #     #    #     # #    #   #   # # ## #  ####
-#       #       #     #    #     # #####    #   # #    #      #
-#     # #       #     #    #     # #        #   # #    # #    #
- #####  #        #####     ####### #        #   # #    #  ####
-
-
 if (get_option('buildtype') == 'release' or
     get_option('buildtype') == 'debugoptimized')
 
   # Check for compiler CPU extensions
-  cpuext_args = [
+  existing_cpu_exts = [
     '-mfpmath=sse',
     '-mmmx',
     '-msse',
     '-msse2',
     '-msse4.1',
   ]
-  add_project_arguments(cc .get_supported_arguments(cpuext_args), language: 'c')
-  add_project_arguments(cxx.get_supported_arguments(cpuext_args), language: 'cpp')
+  supported_cpu_exts = cc.get_supported_arguments(existing_cpu_exts)
 
-  conf.set10('USE_MMX',                   cc.has_argument('-mmmx'))
-  conf.set10('USE_SSE',                   cc.has_argument('-msse'))
-  conf.set10('COMPILE_SSE2_INTRINISICS',  cc.has_argument('-msse2'))
-  conf.set10('COMPILE_SSE4_1_INTRINISICS',cc.has_argument('-msse4.1'))
+  compiler_args += supported_cpu_exts
+
+  conf.set  ('USE_MMX',                   '-mmmx'    in supported_cpu_exts)
+  conf.set  ('USE_SSE',                   '-msse'    in supported_cpu_exts)
+  conf.set10('COMPILE_SSE2_INTRINISICS',  '-msse2'   in supported_cpu_exts)
+  conf.set10('COMPILE_SSE4_1_INTRINISICS','-msse4.1' in supported_cpu_exts)
 
 
   have_altivec        = false
@@ -212,8 +186,8 @@ if (get_option('buildtype') == 'release' or
     ])
 
     if altivec_args != []
-      add_project_arguments     (altivec_args, language: [ 'c', 'cpp'])
-      add_project_link_arguments(altivec_args, language: [ 'c', 'cpp'])
+      compiler_args += altivec_args
+      linker_args   += altivec_args
 
       if host_os.contains('darwin')
         have_altivec = true
@@ -230,14 +204,80 @@ if (get_option('buildtype') == 'release' or
 
 endif
 
-######
-#     # ###### #####  ###### #    # #####  ###### #    #  ####  # ######  ####
-#     # #      #    # #      ##   # #    # #      ##   # #    # # #      #
-#     # #####  #    # #####  # #  # #    # #####  # #  # #      # #####   ####
-#     # #      #####  #      #  # # #    # #      #  # # #      # #           #
-#     # #      #      #      #   ## #    # #      #   ## #    # # #      #    #
-######  ###### #      ###### #    # #####  ###### #    #  ####  # ######  ####
 
+################################################################################
+# CFlags
+
+
+if get_option('profiling') and cc.get_id() == 'gcc'
+  compiler_args += '-pg'
+  linker_args   += '-pg'
+endif
+
+if get_option('ansi')
+  compiler_args += [ '-ansi', '-pedantic']
+endif
+
+warning_cflags_common = [
+  '-fdiagnostics-show-option',
+  '-fno-common',
+
+  '-Wformat-security',
+  '-Winit-self',
+  '-Wlogical-op',
+  '-Wmissing-declarations',
+  '-Wmissing-format-attribute',
+  '-Wpointer-arith',
+  '-Wreturn-type',
+  '-Wtype-limits',
+
+  # You can uncomment this to debug with less warning outputs
+  '-Wno-deprecated-declarations',
+
+  '-Werror=implicit-function-declaration',
+]
+warning_cflags_c = [
+  '-Wdeclaration-after-statement',
+  '-Wold-style-definition',
+  '-Wno-strict-prototypes',
+]
+warning_cflags_cpp = [
+]
+
+compiler_args += cc.get_supported_arguments(warning_cflags_common)
+add_project_arguments(cc .get_supported_arguments(warning_cflags_c),   language: 'c')
+add_project_arguments(cxx.get_supported_arguments(warning_cflags_cpp), language: 'cpp')
+
+
+# Ensure MSVC-compatible struct packing convention is used when
+# compiling for Win32 with gcc.
+if platform_win32 and cc.get_id() == 'gcc'
+  msvc_compat_args = cc.first_supported_argument([
+    '-fnative-struct',
+    '-mms-bitfielads',
+  ])
+  if msvc_compat_args == []
+    error('''
+      GCC does not support '-fnative-struct' nor '-mms-bitfields'.
+      Build will be incompatible with GTK+ DLLs.
+    ''')
+  endif
+  compiler_args += msvc_compat_args
+endif
+
+
+conf.set('HAVE__NL_MEASUREMENT_MEASUREMENT',
+  cc.compiles('''
+    #include<langinfo.h>
+    int main() {
+      char c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));
+    }
+  ''')
+)
+
+
+################################################################################
+# Dependencies
 no_dep = dependency('', required: false)
 
 ################################################################################
@@ -274,15 +314,9 @@ gio               = dependency('gio-2.0')
 gio_specific_name = platform_win32 ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
-glib              = dependency('glib-2.0',           version: '>=2.54.2')
-# glib 2.56.0 and 2.56.1 have a bad bug on Win32, breaking the file
-# chooser dialogs. This has been fixed, but no release made yet. When
-# 2.56.2 is released, the additional test for these broken versions can
-# be removed and we can bump the requirement to glib 2.56.2.
-if platform_win32 and (glib.version().version_compare('==2.56.0')
-                    or glib.version().version_compare('==2.56.1'))
-  error('GLib2 2.56.0 and 2.56.1 are broken on Windows (bug 795855).')
-endif
+glib_version = platform_win32 ? '>=2.56.2' : '>=2.54.2'
+glib              = dependency('glib-2.0',           version: glib_version)
+conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
 
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
@@ -294,22 +328,20 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 
 libmypaint        = dependency('libmypaint',         version: '>=1.3.0')
 
-if relocatable_bundle
-  libmypaint_brushes = no_dep
-  libmypaint_brushes_dir = \
-    '${gimp_installation_dir}' / 'share' / 'mypaint-data' / '1.0' / 'brushes'
-else
-  libmypaint_brushes= dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
-  libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
-endif
-conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
+libmypaint_brushes= relocatable_bundle ? no_dep : \
+  dependency('mypaint-brushes-1.0', version: '>=1.3.0', required: false)
 
+libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable(
+  'brushesdir',
+  default: '${gimp_installation_dir}'/'share'/'mypaint-data'/'1.0'/'brushes',
+)
+
+conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
 
 pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
-conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
 conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'))
 
 
@@ -439,11 +471,11 @@ detailed_backtraces = (
 
 x11_target = gtk3.get_pkgconfig_variable('targets').contains('x11')
 
-x11   = x11_target ? dependency('x11')    : dependency('', required: false)
-xmu   = x11_target ? dependency('xmu')    : dependency('', required: false)
-xt    = x11_target ? dependency('xt')     : dependency('', required: false)
-xext  = x11_target ? dependency('xext')   : dependency('', required: false)
-xfixes= x11_target ? dependency('xfixes') : dependency('', required: false)
+x11   = x11_target ? dependency('x11')    : no_dep
+xmu   = x11_target ? dependency('xmu')    : no_dep
+xext  = x11_target ? dependency('xext')   : no_dep
+xfixes= x11_target ? dependency('xfixes') : no_dep
+x11_deps = [ x11, xmu, xext, xfixes ]
 conf.set('HAVE_XFIXES', xfixes.found())
 
 if x11_target
@@ -477,8 +509,9 @@ endif
 
 
 ################################################################################
-# The list of MIME types that are supported by plug-ins
+# Plugins (optional dependencies)
 
+# The list of MIME types that are supported by plug-ins
 MIMEtypes = [
   'image/bmp',
   'image/g3fax',
@@ -554,11 +587,16 @@ if openexr.found()
   MIMEtypes += 'image/x-exr'
 endif
 
+webp_libs = [
+  dependency('libwebp',     version: '>=0.6.0', required: get_option('webp')),
+  dependency('libwebpmux',  version: '>=0.6.0', required: get_option('webp')),
+  dependency('libwebpdemux',version: '>=0.6.0', required: get_option('webp')),
+]
+webp_found = true
+foreach lib : webp_libs
+  webp_found = webp_found and  lib.found()
+endforeach
 
-libwebp      = dependency('libwebp',     version: '>=0.6.0', required: get_option('webp'))
-libwebpmux   = dependency('libwebpmux',  version: '>=0.6.0', required: get_option('webp'))
-libwebpdemux = dependency('libwebpdemux',version: '>=0.6.0', required: get_option('webp'))
-webp_found = libwebp.found() and libwebpmux.found() and libwebpdemux.found()
 if webp_found
   MIMEtypes += 'image/x-webp'
 endif
@@ -579,14 +617,12 @@ conf.set('HAVE_WEBKIT', webkit.found())
 
 
 if get_option('poppler')
-  # All modern distributions have at least this version and CJK/Cyrillic
-  # support should not be considered as "second-zone citizen".
   poppler = [
     dependency('poppler-glib', version: '>=0.69.0'),
     dependency('poppler-data', version: '>=0.4.9'),
   ]
 else
-  poppler = dependency('', required: false)
+  poppler = no_dep
 endif
 
 
@@ -597,7 +633,7 @@ MIMEtypes += 'application/pdf'
 
 wmf = dependency('libwmf', version: '>=0.2.8', required: get_option('wmf'))
 if wmf.found()
-  MIMEtypes += [ 'image/x-wmf', ]
+  MIMEtypes += 'image/x-wmf'
 endif
 
 
@@ -609,7 +645,7 @@ endif
 
 xmc = dependency('xcursor', required: get_option('xcursor'))
 if xmc.found()
-  MIMEtypes += [ 'image/x-xcursor', ]
+  MIMEtypes += 'image/x-xcursor'
 endif
 
 
@@ -623,31 +659,24 @@ if have_linuxinput and not cc.has_header('linux/input.h')
 endif
 
 # DirectX DirectInput
+directx = no_dep
 directx_sdk_path = get_option('directx-sdk-dir')
 if directx_sdk_path != '' and platform_win32
-  if directx_sdk_path.contains(' ')
-    warning('''
-    The DirectX SDK should be accessible through a path without spaces.
-    Use MSYS mounts.
-    Ignoring your with-directx-sdk switch.
-    ''')
-  elif directx_sdk_path.contains('\\')
-    warning('''
-    Use plain (forward) slashes only for the DirectX SDK path.
-    Ignoring your with-directx-sdk switch.
-    ''')
-  else
-    directx = declare_dependency(
-      link_with: cc.find_library('dxguid',
-                    dirs:  directx_sdk_path / 'Lib' / 'x86'),
-      include_directories: directx_sdk_path / 'Include',
-    )
+  if directx_sdk_path.contains(' ') or directx_sdk_path.contains('\\')
+    error('\n'.join([
+      'The DirectX SDK path should be given :',
+      '* without spaces (use MSys mounts)',
+      '* with plain (forward) slashes only,'
+    ]))
   endif
-else
-  directx = dependency('', required: false)
+
+  directx = declare_dependency(
+    link_with: cc.find_library('dxguid',
+                  dirs:  directx_sdk_path / 'Lib' / 'x86'),
+    include_directories: directx_sdk_path / 'Include',
+  )
 endif
 conf.set('HAVE_DX_DINPUT', directx.found())
-
 
 gudev = dependency('gudev-1.0', version: '>=167', required: get_option('gudev'))
 conf.set('HAVE_LIBGUDEV', gudev.found())
@@ -659,16 +688,19 @@ email_message = false
 
 sendmail_choice = get_option('with-sendmail')
 if not [ '', 'false', 'no', ].contains(sendmail_choice)
-  sendmail_path = (
-    [ 'true', 'yes' ].contains(sendmail_choice) ? 'sendmail' : sendmail_choice
-  )
+  if [ 'true', 'yes' ].contains(sendmail_choice)
+    sendmail_path = 'sendmail'
+  else
+    sendmail_path = sendmail_choice
+  endif
+
   sendmail = find_program(sendmail_path, required: false)
   if sendmail.found()
     sendmail_path = sendmail.path()
   else
-    warning('''
-      Sendmail specified but not found. It should be installed at runtime!
-    ''')
+    warning(
+      'Sendmail specified but not found. It should be installed at runtime!'
+    )
   endif
 
   email_message = '@0@ (@1@)'.format(true, sendmail_path)
@@ -679,9 +711,9 @@ else
   if xdg_email.found()
     xdg_email_path = xdg_email.path()
   else
-    warning('''
-      Sendmail specified but not found. It should be installed at runtime!
-    ''')
+    warning(
+      'Xdg-email not found, but required at runtime for email sending.'
+    )
   endif
 
   email_message = '@0@ (@1@)'.format(true, xdg_email_path)
@@ -700,16 +732,6 @@ conf.set('HAVE_ISO_CODES', isocodes.found())
 
 ################################################################################
 # Program tools
-
-#######
-   #     ####   ####  #       ####
-   #    #    # #    # #      #
-   #    #    # #    # #       ####
-   #    #    # #    # #           #
-   #    #    # #    # #      #    #
-   #     ####   ####  ######  ####
-
-
 
 perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
@@ -842,14 +864,9 @@ endif
 
 # Check for GTK Mac Integration
 if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('xquartz'))
-  gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=2.0.0',
-    required: false
-  )
-  if not gtk3_macos.found()
-    gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
-  endif
+  gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
 else
-  gtk3_macos = dependency('', required: false)
+  gtk3_macos = no_dep
 endif
 
 # Check for XML tools
@@ -857,7 +874,6 @@ xmllint             = find_program('xmllint', required: false)
 xsltproc            = find_program('xsltproc',required: false)
 intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate')
-gdk_pixbuf_csource  = find_program('gdk-pixbuf-csource')
 
 appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 
@@ -879,8 +895,6 @@ if have_vector_icons
   endif
 endif
 
-gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg', required: true)
-
 xvfb_run = find_program('xvfb-run', required: get_option('xvfb-run'))
 conf.set('HAVE_XVFB_RUN', xvfb_run.found())
 
@@ -894,7 +908,7 @@ if bug_report_url == ''
   message('''
     NOTE: if you plan on packaging GIMP for distribution, it is recommended
     to override the bug report URL with option:
-      --with-bug-report-url=https://example.com/
+      -Dbug-report-url=https://example.com/
     so that you can filter packaging bugs from core bugs before reporting upstream.
   ''')
 
@@ -997,94 +1011,6 @@ conf.set('HAVE_GETTEXT', true)
 # localedir = get_option('prefix') / get_option('localedir')
 
 
-
-
-################################################################################
-# CFlags
-
- #####  #######
-#     # #       #        ##    ####   ####
-#       #       #       #  #  #    # #
-#       #####   #      #    # #       ####
-#       #       #      ###### #  ###      #
-#     # #       #      #    # #    # #    #
- #####  #       ###### #    #  ####   ####
-
-
-
-if get_option('profiling') and cc.get_id() == 'gcc'
-  add_project_arguments     ('-pg', language: [ 'c', 'cpp', ])
-  add_project_link_arguments('-pg', language: [ 'c', 'cpp', ])
-endif
-
-if get_option('ansi')
-  add_project_arguments('-ansi', '-pedantic', language: [ 'c', 'cpp', ])
-endif
-
-warning_cflags_common = [
-  '-fdiagnostics-show-option',
-  '-fno-common',
-
-  '-Wformat-security',
-  '-Winit-self',
-  '-Wlogical-op',
-  '-Wmissing-declarations',
-  '-Wmissing-format-attribute',
-  '-Wpointer-arith',
-  '-Wreturn-type',
-  '-Wtype-limits',
-
-  # You can uncomment this to debug with less warning outputs
-  '-Wno-deprecated-declarations',
-
-  '-Werror=implicit-function-declaration',
-]
-warning_cflags_c = [
-  '-Wdeclaration-after-statement',
-  '-Wold-style-definition',
-  '-Wno-strict-prototypes',
-]
-warning_cflags_cpp = [
-]
-
-add_project_arguments(
-  cc .get_supported_arguments(warning_cflags_common + warning_cflags_c),
-  language: 'c'
-)
-add_project_arguments(
-  cxx.get_supported_arguments(warning_cflags_common + warning_cflags_cpp),
-  language: 'cpp'
-)
-
-
-# Ensure MSVC-compatible struct packing convention is used when
-# compiling for Win32 with gcc.
-if platform_win32 and cc.get_id() == 'gcc'
-  msvc_compat_args = cc.first_supported_argument([
-    '-fnative-struct',
-    '-mms-bitfielads',
-  ])
-  if msvc_compat_args == []
-    warning('''
-      GCC does not support '-fnative-struct' nor '-mms-bitfields'.
-      Build will be incompatible with GTK+ DLLs.
-    ''')
-  endif
-  add_project_arguments(msvc_compat_args, language: [ 'c', 'cpp' ])
-endif
-
-
-conf.set('HAVE__NL_MEASUREMENT_MEASUREMENT',
-  cc.compiles('''
-    #include<langinfo.h>
-    int main() {
-      char c = *((unsigned char *)  nl_langinfo(_NL_MEASUREMENT_MEASUREMENT));
-    }
-  ''')
-)
-
-
-
 ################################################################################
 # Miscelaneous configuration
 
@@ -1103,65 +1029,59 @@ conf.set10('ENABLE_MP', get_option('enable-multiproc'))
 
 # Check for available functions
 foreach fn : [
-    'alloca',
-    'backtrace',
-    'bind_textdomain_codeset',
-    'dcgettext',
-    'difftime',
-    'finite',
-    'finite',
-    'fsync',
-    'getaddrinfo',
-    'getnameinfo',
-    'gettext',
-    'isfinite',
-    'mmap',
-    'rint',
-    'thr_self',
-    'vfork',
-    'vprintf',
+    { 'm': 'HAVE_ALLOCA',                   'v': 'alloca', },
+    { 'm': 'HAVE_BACKTRACE',                'v': 'backtrace', },
+    { 'm': 'HAVE_BIND_TEXTDOMAIN_CODESET',  'v': 'bind_textdomain_codeset', },
+    { 'm': 'HAVE_DCGETTEXT',                'v': 'dcgettext', },
+    { 'm': 'HAVE_DIFFTIME',                 'v': 'difftime', },
+    { 'm': 'HAVE_FINITE',                   'v': 'finite', },
+    { 'm': 'HAVE_FINITE',                   'v': 'finite', },
+    { 'm': 'HAVE_FSYNC',                    'v': 'fsync', },
+    { 'm': 'HAVE_GETADDRINFO',              'v': 'getaddrinfo', },
+    { 'm': 'HAVE_GETNAMEINFO',              'v': 'getnameinfo', },
+    { 'm': 'HAVE_GETTEXT',                  'v': 'gettext', },
+    { 'm': 'HAVE_ISFINITE',                 'v': 'isfinite', },
+    { 'm': 'HAVE_MMAP',                     'v': 'mmap', },
+    { 'm': 'HAVE_RINT',                     'v': 'rint', },
+    { 'm': 'HAVE_THR_SELF',                 'v': 'thr_self', },
+    { 'm': 'HAVE_VFORK',                    'v': 'vfork', },
+    { 'm': 'HAVE_VPRINTF',                  'v': 'vprintf', },
   ]
-  macro_name = 'HAVE_' + fn.to_upper().underscorify()
-  conf.set(macro_name, cc.has_function(fn) ? 1 : false)
+  conf.set(fn['m'], cc.has_function(fn['v']) ? 1 : false)
 endforeach
 
 
 # Check for available headers
 foreach header : [
-    'alloca.h',
-    'dlfcn.h',
-    'execinfo.h',
-    'fcntl.h',
-    'ieeefp.h',
-    'inttypes.h',
-    'locale.h',
-    'math.h',
-    'memory.h',
-    # 'sys/mman.h',
-    # 'sys/ipc.h',
-    # 'sys/shm.h',
-    'stdint.h',
-    'stdlib.h',
-    'string.h',
-    'strings.h',
-    'sys/param.h',
-    # 'sys/prctl.h',
-    'sys/select.h',
-    'sys/stat.h',
-    'sys/thr.h',
-    'sys/time.h',
-    'sys/times.h',
-    'sys/types.h',
-    'sys/wait.h',
-    'unistd.h',
+    { 'm': 'HAVE_ALLOCA.H',       'v': 'alloca.h' },
+    { 'm': 'HAVE_DLFCN.H',        'v': 'dlfcn.h' },
+    { 'm': 'HAVE_EXECINFO.H',     'v': 'execinfo.h' },
+    { 'm': 'HAVE_FCNTL.H',        'v': 'fcntl.h' },
+    { 'm': 'HAVE_IEEEFP.H',       'v': 'ieeefp.h' },
+    { 'm': 'HAVE_INTTYPES.H',     'v': 'inttypes.h' },
+    { 'm': 'HAVE_LOCALE.H',       'v': 'locale.h' },
+    { 'm': 'HAVE_MATH.H',         'v': 'math.h' },
+    { 'm': 'HAVE_MEMORY.H',       'v': 'memory.h' },
+    { 'm': 'HAVE_STDINT.H',       'v': 'stdint.h' },
+    { 'm': 'HAVE_STDLIB.H',       'v': 'stdlib.h' },
+    { 'm': 'HAVE_STRING.H',       'v': 'string.h' },
+    { 'm': 'HAVE_STRINGS.H',      'v': 'strings.h' },
+    { 'm': 'HAVE_SYS_PARAM.H',    'v': 'sys/param.h' },
+    { 'm': 'HAVE_SYS_SELECT.H',   'v': 'sys/select.h' },
+    { 'm': 'HAVE_SYS_STAT.H',     'v': 'sys/stat.h' },
+    { 'm': 'HAVE_SYS_THR.H',      'v': 'sys/thr.h' },
+    { 'm': 'HAVE_SYS_TIME.H',     'v': 'sys/time.h' },
+    { 'm': 'HAVE_SYS_TIMES.H',    'v': 'sys/times.h' },
+    { 'm': 'HAVE_SYS_TYPES.H',    'v': 'sys/types.h' },
+    { 'm': 'HAVE_SYS_WAIT.H',     'v': 'sys/wait.h' },
+    { 'm': 'HAVE_UNISTD.H',       'v': 'unistd.h' },
+    { 'm': 'HAVE_MMAN_H',         'v': 'sys/mman.h' },
+    { 'm': 'HAVE_IPC_H',          'v': 'sys/ipc.h' },
+    { 'm': 'HAVE_SHM_H',          'v': 'sys/shm.h' },
   ]
-  macro_name = 'HAVE_' + header.to_upper().underscorify()
-  conf.set(macro_name, cc.has_header(header) ? 1 : false)
+  conf.set(header['m'], cc.has_header(header['v']) ? 1 : false)
 endforeach
 
-conf.set('HAVE_MMAN_H', cc.has_header('sys/mman.h'))
-conf.set('HAVE_IPC_H',  cc.has_header('sys/ipc.h'))
-conf.set('HAVE_SHM_H',  cc.has_header('sys/shm.h'))
 
 
 ################################################################################
@@ -1215,8 +1135,6 @@ conf.set('NO_FD_SET',
     int main() { fd_set readMask, writeMask; return 0; }
   ''')
 )
-
-
 
 # GCC attributes
 conf.set('HAVE_FUNC_ATTRIBUTE_DESTRUCTOR',
@@ -1286,21 +1204,10 @@ conf.set_quoted('ISO_CODES_LOCATION',    isocodes_location)
 conf.set_quoted('ISO_CODES_LOCALEDIR',   isocodes_localedir)
 
 
-# Global arguments
-add_project_arguments([
-    '-DHAVE_CONFIG_H',
-  ],
-  language: [ 'c', 'cpp', ],
-)
-
 if platform_osx
   # libgimp_cflags += '-xobjective-c'
   # libgimp_lflags += ['-framework', 'Cocoa']
 endif
-
-
-rootInclude = include_directories('.')
-appInclude  = include_directories('app')
 
 
 ################################################################################
@@ -1370,7 +1277,7 @@ install_conf.set('POPPLER_REQUIRED_VERSION',      poppler[0]  .version())
 install_conf.set('PYTHON3_REQUIRED_VERSION',      '3.6.0')
 install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
 install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit      .version())
-install_conf.set('WEBP_REQUIRED_VERSION',         libwebp     .version())
+install_conf.set('WEBP_REQUIRED_VERSION',         webp_libs[0].version())
 install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
 install_conf.set('XGETTEXT_REQUIRED_VERSION', '0.19')
 
@@ -1385,7 +1292,10 @@ configure_file(
   output: 'config.h',
   configuration: conf
 )
+compiler_args +='-DHAVE_CONFIG_H'
 
+
+add_project_arguments(compiler_args, language: [ 'c', 'cpp' ])
 
 ################################################################################
 # Miscelaneous targets
@@ -1466,13 +1376,9 @@ custom_target('Changelog',
 ################################################################################
 # Subdirs
 
-  #####
- #     # #    # #####  #####  # #####   ####
- #       #    # #    # #    # # #    # #
-  #####  #    # #####  #    # # #    #  ####
-       # #    # #    # #    # # #####       #
- #     # #    # #    # #    # # #   #  #    #
-  #####   ####  #####  #####  # #    #  ####
+
+rootInclude = include_directories('.')
+appInclude  = include_directories('app')
 
 if platform_win32
   subdir('build/windows')
