@@ -351,3 +351,180 @@ gimp_image_set_metadata (GimpImage    *image,
 
   return success;
 }
+
+
+/* Deprecated API. */
+
+
+/**
+ * gimp_image_get_colormap_deprecated: (skip)
+ * @image_id:   The image.
+ * @num_colors: Returns the number of colors in the colormap array.
+ *
+ * Returns the image's colormap
+ *
+ * This procedure returns an actual pointer to the image's colormap, as
+ * well as the number of colors contained in the colormap. If the image
+ * is not of base type INDEXED, this pointer will be NULL.
+ *
+ * Returns: The image's colormap.
+ */
+guchar *
+gimp_image_get_colormap_deprecated (gint32  image_id,
+                                    gint   *num_colors)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  guchar    *colormap;
+
+  colormap = gimp_image_get_colormap (image, num_colors);
+
+  g_object_unref (image);
+
+  return colormap;
+}
+
+/**
+ * gimp_image_set_colormap_deprecated: (skip)
+ * @image_id:   The image.
+ * @colormap:   The new colormap values.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * Sets the entries in the image's colormap.
+ *
+ * This procedure sets the entries in the specified image's colormap.
+ * The number of colors is specified by the \"num_colors\" parameter
+ * and corresponds to the number of INT8 triples that must be contained
+ * in the \"cmap\" array.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_set_colormap_deprecated (gint32        image_id,
+                                    const guchar *colormap,
+                                    gint          num_colors)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  gboolean   success;
+
+  success = gimp_image_set_colormap (image, colormap, num_colors);
+
+  g_object_unref (image);
+
+  return success;
+}
+
+/**
+ * gimp_image_get_thumbnail_data_deprecated: (skip)
+ * @image_id: The image.
+ * @width:   (inout): The requested thumbnail width.
+ * @height:  (inout): The requested thumbnail height.
+ * @bpp:     (out): The previews bpp.
+ *
+ * Get a thumbnail of an image.
+ *
+ * This function gets data from which a thumbnail of an image preview
+ * can be created. Maximum x or y dimension is 1024 pixels. The pixels
+ * are returned in RGB[A] or GRAY[A] format. The bpp return value
+ * gives the number of bytes per pixel in the image.
+ *
+ * Returns: (transfer full): the thumbnail data.
+ **/
+guchar *
+gimp_image_get_thumbnail_data_deprecated (gint32  image_id,
+                                          gint   *width,
+                                          gint   *height,
+                                          gint   *bpp)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  guchar    *thumbdata;
+
+  thumbdata = gimp_image_get_thumbnail_data (image, width, height, bpp);
+
+  g_object_unref (image);
+
+  return thumbdata;
+}
+
+/**
+ * gimp_image_get_thumbnail_deprecated: (skip)
+ * @image_id: the image ID
+ * @width:    the requested thumbnail width  (<= 1024 pixels)
+ * @height:   the requested thumbnail height (<= 1024 pixels)
+ * @alpha:    how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the image identified by @image->priv->id.
+ * The thumbnail will be not larger than the requested size.
+ *
+ * Returns: (transfer full): a new #GdkPixbuf
+ *
+ * Since: 2.2
+ **/
+GdkPixbuf *
+gimp_image_get_thumbnail_deprecated (gint32                 image_id,
+                                     gint                   width,
+                                     gint                   height,
+                                     GimpPixbufTransparency alpha)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  GdkPixbuf *thumbnail;
+
+  thumbnail = gimp_image_get_thumbnail (image, width, height, alpha);
+
+  g_object_unref (image);
+
+  return thumbnail;
+}
+
+/**
+ * gimp_image_get_metadata_deprecated: (skip)
+ * @image_id: The image.
+ *
+ * Returns the image's metadata.
+ *
+ * Returns exif/iptc/xmp metadata from the image.
+ *
+ * Returns: (nullable) (transfer full): The exif/ptc/xmp metadata,
+ *          or %NULL if there is none.
+ *
+ * Since: 2.10
+ **/
+GimpMetadata *
+gimp_image_get_metadata_deprecated (gint32 image_id)
+{
+  GimpImage    *image = gimp_image_new_by_id (image_id);
+  GimpMetadata *metadata;
+
+  metadata = gimp_image_get_metadata (image);
+
+  g_object_unref (image);
+
+  return metadata;
+}
+
+/**
+ * gimp_image_set_metadata_deprecated: (skip)
+ * @image_id: The image.
+ * @metadata: The exif/ptc/xmp metadata.
+ *
+ * Set the image's metadata.
+ *
+ * Sets exif/iptc/xmp metadata on the image, or deletes it if
+ * @metadata is %NULL.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_image_set_metadata_deprecated (gint32        image_id,
+                                    GimpMetadata *metadata)
+{
+  GimpImage *image = gimp_image_new_by_id (image_id);
+  gboolean   success;
+
+  success = gimp_image_set_metadata (image, metadata);
+
+  g_object_unref (image);
+
+  return success;
+}

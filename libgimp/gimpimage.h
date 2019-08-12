@@ -68,6 +68,9 @@ GType          gimp_image_get_type           (void) G_GNUC_CONST;
 gint32         gimp_image_get_id             (GimpImage    *image);
 GimpImage    * gimp_image_new_by_id          (gint32        image_id);
 
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
 gboolean       gimp_image_set_colormap       (GimpImage    *image,
@@ -86,6 +89,37 @@ GdkPixbuf    * gimp_image_get_thumbnail      (GimpImage    *image,
 GimpMetadata * gimp_image_get_metadata       (GimpImage    *image);
 gboolean       gimp_image_set_metadata       (GimpImage    *image,
                                               GimpMetadata *metadata);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_image_get_colormap       gimp_image_get_colormap_deprecated
+#define gimp_image_set_colormap       gimp_image_set_colormap_deprecated
+#define gimp_image_get_thumbnail_data gimp_image_get_thumbnail_data_deprecated
+#define gimp_image_get_thumbnail      gimp_image_get_thumbnail_deprecated
+#define gimp_image_get_metadata       gimp_image_get_metadata_deprecated
+#define gimp_image_set_metadata       gimp_image_set_metadata_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+guchar       * gimp_image_get_colormap_deprecated       (gint32        image_id,
+                                                         gint         *num_colors);
+gboolean       gimp_image_set_colormap_deprecated       (gint32        image_id,
+                                                         const guchar *colormap,
+                                                         gint          num_colors);
+
+guchar       * gimp_image_get_thumbnail_data_deprecated (gint32        image_id,
+                                                         gint         *width,
+                                                         gint         *height,
+                                                         gint         *bpp);
+GdkPixbuf    * gimp_image_get_thumbnail_deprecated      (gint32        image_id,
+                                                         gint          width,
+                                                         gint          height,
+                                                         GimpPixbufTransparency  alpha);
+
+GimpMetadata * gimp_image_get_metadata_deprecated       (gint32        image_id);
+gboolean       gimp_image_set_metadata_deprecated       (gint32        image_id,
+                                                         GimpMetadata *metadata);
 
 
 G_END_DECLS
