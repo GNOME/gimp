@@ -122,7 +122,7 @@ gimp_param_image_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (image_id == 0 || image_id == -1))
     return FALSE;
 
-  image = g_object_new (GIMP_TYPE_IMAGE, "id", image_id, NULL);
+  image = gimp_image_new_by_id (image_id);
   if (! gimp_image_is_valid (image))
     {
       value->data[0].v_int = -1;
