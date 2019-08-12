@@ -1383,8 +1383,8 @@ gimp_procedure_run (GimpProcedure        *procedure,
  * procedure's #GimpRunFunc that was created as #GIMP_EXTENSION.
  *
  * Subsequently, extensions can process temporary procedure run
- * requests using either gimp_extension_enable() or
- * gimp_extension_process().
+ * requests using either gimp_plug_in_extension_enable() or
+ * gimp_plug_in_extension_process().
  *
  * See also: gimp_procedure_new().
  *
