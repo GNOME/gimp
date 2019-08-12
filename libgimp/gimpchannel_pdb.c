@@ -95,6 +95,66 @@ _gimp_channel_new (GimpImage     *image,
 }
 
 /**
+ * __gimp_channel_new: (skip)
+ * @image_ID: The image to which to add the channel.
+ * @width: The channel width.
+ * @height: The channel height.
+ * @name: The channel name.
+ * @opacity: The channel opacity.
+ * @color: The channel compositing color.
+ *
+ * Create a new channel.
+ *
+ * This procedure creates a new channel with the specified width,
+ * height, name, opacity and color.
+ * The new channel still needs to be added to the image, as this is not
+ * automatic. Add the new channel with gimp_image_insert_channel().
+ * Other attributes, such as channel visibility, should be set with
+ * explicit procedure calls.
+ * The channel's contents are undefined initially.
+ *
+ * Returns: The newly created channel.
+ **/
+gint32
+__gimp_channel_new (gint32         image_ID,
+                    gint           width,
+                    gint           height,
+                    const gchar   *name,
+                    gdouble        opacity,
+                    const GimpRGB *color)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 channel_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_DOUBLE, opacity,
+                                          GIMP_TYPE_RGB, color,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-channel-new",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-channel-new",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return channel_ID;
+}
+
+/**
  * gimp_channel_new_from_component:
  * @image: The image to which to add the channel.
  * @component: The image component.
@@ -124,6 +184,57 @@ gimp_channel_new_from_component (GimpImage       *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_CHANNEL_TYPE, component,
+                                          G_TYPE_STRING, name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-channel-new-from-component",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-channel-new-from-component",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return channel_ID;
+}
+
+/**
+ * _gimp_channel_new_from_component: (skip)
+ * @image_ID: The image to which to add the channel.
+ * @component: The image component.
+ * @name: The channel name.
+ *
+ * Create a new channel from a color component
+ *
+ * This procedure creates a new channel from a color component.
+ * The new channel still needs to be added to the image, as this is not
+ * automatic. Add the new channel with gimp_image_insert_channel().
+ * Other attributes, such as channel visibility, should be set with
+ * explicit procedure calls.
+ *
+ * Returns: The newly created channel.
+ *
+ * Since: 2.4
+ **/
+gint32
+_gimp_channel_new_from_component (gint32           image_ID,
+                                  GimpChannelType  component,
+                                  const gchar     *name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint32 channel_ID = -1;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
