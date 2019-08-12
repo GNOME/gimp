@@ -401,7 +401,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
       gint32    *items;
       gint       num_items;
 
-      image = g_object_new (GIMP_TYPE_IMAGE, "id", images[i], NULL);
+      image = gimp_image_new_by_id (images[i]);
 
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_LAYER_COMBO_BOX (combo_box))

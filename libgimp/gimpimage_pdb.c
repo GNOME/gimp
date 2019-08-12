@@ -169,7 +169,7 @@ gimp_image_new (gint              width,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
+    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -223,7 +223,7 @@ gimp_image_new_with_precision (gint              width,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
+    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -263,7 +263,7 @@ gimp_image_duplicate (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    new_image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
+    new_image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
