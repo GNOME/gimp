@@ -52,10 +52,11 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   c_args: [
-    '-DDEFAULTPATH="' + join_paths('~/',  gimpdir,    'gimpressionist')
-                + ':' + join_paths(prefix,gimpdatadir,'gimpressionist')
-                + '"',
+    '-DDEFAULTPATH="@0@:@1@"'.format(
+      '~/'   / gimpdir      / 'gimpressionist',
+      prefix / gimpdatadir  / 'gimpressionist'
+    )
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
+  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )

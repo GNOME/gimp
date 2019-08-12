@@ -1596,7 +1596,7 @@ bitmap_256 = [
   '256/gimp-wilber.png',
 ]
 
-gimpiconsdir = join_paths(gimpdatadir, 'icons')
+gimpiconsdir = gimpdatadir / 'icons'
 
 themes = [
   'Color',
@@ -1609,5 +1609,5 @@ foreach theme : themes
 endforeach
 
 install_data('index.theme',
-  install_dir: join_paths(gimpiconsdir, 'hicolor')
+  install_dir: gimpiconsdir / 'hicolor',
 )

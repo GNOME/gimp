@@ -48,7 +48,7 @@ libappdialogs_sources = [
 # Auto-generated sources
 libappdialogs_sources += [
   custom_target('authors.h',
-    input : [ 'authors.xsl', join_paths(meson.source_root(), 'authors.xml') ],
+    input : [ 'authors.xsl', meson.source_root() / 'authors.xml' ],
     output: [ 'authors.h' ],
     command: [ xsltproc, '-o', '@OUTPUT@', '@INPUT0@', '@INPUT1@' ],
   )

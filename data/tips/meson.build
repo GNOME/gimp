@@ -12,10 +12,10 @@ gimp_tips = custom_target(xmlfilename,
     '@OUTPUT@',
     '--xml-style',
     '--utf8',
-    '--cache='+join_paths('@OUTDIR@', 'intltool-merge-cache'),
+    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
   ],
   install: true,
-  install_dir: join_paths(gimpdatadir, 'tips'),
+  install_dir: gimpdatadir / 'tips',
 )
 
 
