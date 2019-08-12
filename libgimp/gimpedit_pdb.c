@@ -263,7 +263,7 @@ gimp_edit_paste_as_new_image (void)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
+    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -500,7 +500,7 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = g_object_new (GIMP_TYPE_IMAGE, "id", gimp_value_array_index (return_vals, 1), NULL);
+    image = gimp_image_new_by_id (g_value_get_int (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

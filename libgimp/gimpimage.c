@@ -135,6 +135,30 @@ gimp_image_get_id (GimpImage *image)
 }
 
 /**
+ * gimp_image_new_by_id:
+ * @image_id: The image id.
+ *
+ * Returns: (nullable) (transfer full): a #GimpImage for @image_id or
+ *          %NULL if @image_id does not represent a valid image.
+ *
+ * Since: 3.0
+ **/
+GimpImage *
+gimp_image_new_by_id (gint32 image_id)
+{
+  GimpImage *image;
+
+  image = g_object_new (GIMP_TYPE_IMAGE,
+                        "id", image_id,
+                        NULL);
+
+  if (! gimp_image_is_valid (image))
+    g_clear_object (&image);
+
+  return image;
+}
+
+/**
  * gimp_image_get_colormap:
  * @image:      The image.
  * @num_colors: Returns the number of colors in the colormap array.

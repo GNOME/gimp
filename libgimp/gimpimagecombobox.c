@@ -209,7 +209,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
     {
       GimpImage *image;
 
-      image = g_object_new (GIMP_TYPE_IMAGE, "id", images[i], NULL);
+      image = gimp_image_new_by_id (images[i]);
       if (! constraint || (* constraint) (image, data))
         {
           gchar     *image_name = gimp_image_get_name (image);
@@ -286,7 +286,7 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
     {
       GimpImage *image;
 
-      image = g_object_new (GIMP_TYPE_IMAGE, "id", image_ID, NULL);
+      image = gimp_image_new_by_id (image_ID);
       if (! gimp_image_is_valid (image))
         {
           GtkTreeModel *model;
