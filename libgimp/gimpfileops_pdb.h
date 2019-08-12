@@ -32,45 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpImage*               gimp_file_load                       (GimpRunMode  run_mode,
-                                                               const gchar *filename,
-                                                               const gchar *raw_filename);
-GIMP_DEPRECATED_FOR(gimp_file_load)
-G_GNUC_INTERNAL gint32   _gimp_file_load                      (GimpRunMode  run_mode,
-                                                               const gchar *filename,
-                                                               const gchar *raw_filename);
-gint32                   gimp_file_load_layer                 (GimpRunMode  run_mode,
-                                                               GimpImage   *image,
-                                                               const gchar *filename);
-GIMP_DEPRECATED_FOR(gimp_file_load_layer)
-G_GNUC_INTERNAL gint32   _gimp_file_load_layer                (GimpRunMode  run_mode,
-                                                               gint32       image_ID,
-                                                               const gchar *filename);
-gint*                    gimp_file_load_layers                (GimpRunMode  run_mode,
-                                                               GimpImage   *image,
-                                                               const gchar *filename,
-                                                               gint        *num_layers);
-GIMP_DEPRECATED_FOR(gimp_file_load_layers)
-G_GNUC_INTERNAL gint*    _gimp_file_load_layers               (GimpRunMode  run_mode,
-                                                               gint32       image_ID,
-                                                               const gchar *filename,
-                                                               gint        *num_layers);
-gboolean                 gimp_file_save                       (GimpRunMode  run_mode,
-                                                               GimpImage   *image,
-                                                               gint32       drawable_ID,
-                                                               const gchar *filename,
-                                                               const gchar *raw_filename);
-GIMP_DEPRECATED_FOR(gimp_file_save)
-G_GNUC_INTERNAL gboolean _gimp_file_save                      (GimpRunMode  run_mode,
-                                                               gint32       image_ID,
-                                                               gint32       drawable_ID,
-                                                               const gchar *filename,
-                                                               const gchar *raw_filename);
-gboolean                 gimp_file_save_thumbnail             (GimpImage   *image,
-                                                               const gchar *filename);
-GIMP_DEPRECATED_FOR(gimp_file_save_thumbnail)
-G_GNUC_INTERNAL gboolean _gimp_file_save_thumbnail            (gint32       image_ID,
-                                                               const gchar *filename);
 G_GNUC_INTERNAL gboolean _gimp_register_magic_load_handler    (const gchar *procedure_name,
                                                                const gchar *extensions,
                                                                const gchar *prefixes,
@@ -89,6 +50,59 @@ G_GNUC_INTERNAL gboolean _gimp_register_file_handler_remote   (const gchar *proc
 G_GNUC_INTERNAL gboolean _gimp_register_file_handler_raw      (const gchar *procedure_name);
 G_GNUC_INTERNAL gboolean _gimp_register_thumbnail_loader      (const gchar *load_proc,
                                                                const gchar *thumb_proc);
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GimpImage* gimp_file_load           (GimpRunMode  run_mode,
+                                     const gchar *filename,
+                                     const gchar *raw_filename);
+gint32     gimp_file_load_layer     (GimpRunMode  run_mode,
+                                     GimpImage   *image,
+                                     const gchar *filename);
+gint*      gimp_file_load_layers    (GimpRunMode  run_mode,
+                                     GimpImage   *image,
+                                     const gchar *filename,
+                                     gint        *num_layers);
+gboolean   gimp_file_save           (GimpRunMode  run_mode,
+                                     GimpImage   *image,
+                                     gint32       drawable_ID,
+                                     const gchar *filename,
+                                     const gchar *raw_filename);
+gboolean   gimp_file_save_thumbnail (GimpImage   *image,
+                                     const gchar *filename);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_file_load _gimp_file_load
+#define gimp_file_load_layer _gimp_file_load_layer
+#define gimp_file_load_layers _gimp_file_load_layers
+#define gimp_file_save _gimp_file_save
+#define gimp_file_save_thumbnail _gimp_file_save_thumbnail
+
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+/* Below API are deprecated and should not be used by new plug-ins.
+ * They are not marked internal as a trick to keep the old API alive for now.
+ */
+
+gint32   _gimp_file_load           (GimpRunMode  run_mode,
+                                    const gchar *filename,
+                                    const gchar *raw_filename);
+gint32   _gimp_file_load_layer     (GimpRunMode  run_mode,
+                                    gint32       image_ID,
+                                    const gchar *filename);
+gint*    _gimp_file_load_layers    (GimpRunMode  run_mode,
+                                    gint32       image_ID,
+                                    const gchar *filename,
+                                    gint        *num_layers);
+gboolean _gimp_file_save           (GimpRunMode  run_mode,
+                                    gint32       image_ID,
+                                    gint32       drawable_ID,
+                                    const gchar *filename,
+                                    const gchar *raw_filename);
+gboolean _gimp_file_save_thumbnail (gint32       image_ID,
+                                    const gchar *filename);
 
 
 G_END_DECLS
