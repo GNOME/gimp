@@ -30,10 +30,24 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_selection_float (gint32 image_ID,
-                               gint32 drawable_ID,
-                               gint   offx,
-                               gint   offy);
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GimpLayer * gimp_selection_float (GimpImage    *image,
+                                  GimpDrawable *drawable,
+                                  gint          offx,
+                                  gint          offy);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_selection_float gimp_selection_float_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+gint32   gimp_selection_float_deprecated (gint32 image_ID,
+                                          gint32 drawable_ID,
+                                          gint   offx,
+                                          gint   offy);
 
 
 G_END_DECLS

@@ -702,21 +702,22 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
 
   if (pixbuf)
     {
-      gint32 layer_ID;
+      GimpLayer *layer;
 
       image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
                                  gdk_pixbuf_get_height (pixbuf),
                                  GIMP_RGB);
       gimp_image_undo_disable (image);
 
-      layer_ID = gimp_layer_new_from_pixbuf (image, _("Background"),
-                                             pixbuf,
-                                             100.0,
-                                             gimp_image_get_default_new_layer_mode (image),
-                                             0.0, 0.0);
+      layer = gimp_layer_new_from_pixbuf (image, _("Background"),
+                                          pixbuf,
+                                          100.0,
+                                          gimp_image_get_default_new_layer_mode (image),
+                                          0.0, 0.0);
       g_object_unref (pixbuf);
 
-      gimp_image_insert_layer (image, layer_ID, -1, 0);
+      gimp_image_insert_layer (image, layer, NULL, 0);
+      g_object_unref (layer);
 
       gimp_image_metadata_rotate (image,
                                   gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)));

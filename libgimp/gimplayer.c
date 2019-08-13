@@ -65,7 +65,7 @@ gimp_layer_init (GimpLayer *layer)
  *
  * Returns: The newly created layer.
  */
-gint32
+GimpLayer *
 gimp_layer_new (GimpImage     *image,
                 const gchar   *name,
                 gint           width,
@@ -85,7 +85,7 @@ gimp_layer_new (GimpImage     *image,
 
 /**
  * gimp_layer_copy:
- * @layer_ID: The layer to copy.
+ * @layer: The layer to copy.
  *
  * Copy a layer.
  *
@@ -93,12 +93,12 @@ gimp_layer_new (GimpImage     *image,
  * newly copied layer is for use within the original layer's image. It
  * should not be subsequently added to any other image.
  *
- * Returns: The newly copied layer.
+ * Returns: (transfer full): The newly copied layer.
  */
-gint32
-gimp_layer_copy (gint32  layer_ID)
+GimpLayer *
+gimp_layer_copy (GimpLayer *layer)
 {
-  return _gimp_layer_copy (layer_ID, FALSE);
+  return _gimp_layer_copy (layer, FALSE);
 }
 
 /**
@@ -125,7 +125,7 @@ gimp_layer_copy (gint32  layer_ID)
  *
  * Since: 2.4
  */
-gint32
+GimpLayer *
 gimp_layer_new_from_pixbuf (GimpImage     *image,
                             const gchar   *name,
                             GdkPixbuf     *pixbuf,
@@ -135,24 +135,24 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
                             gdouble        progress_end)
 {
   GeglBuffer *dest_buffer;
-  gint32      layer;
+  GimpLayer  *layer;
   gint        width;
   gint        height;
   gint        bpp;
   gdouble     range = progress_end - progress_start;
 
-  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), -1);
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
   if (gimp_image_base_type (image) != GIMP_RGB)
     {
       g_warning ("gimp_layer_new_from_pixbuf() needs an RGB image");
-      return -1;
+      return NULL;
     }
 
   if (gdk_pixbuf_get_colorspace (pixbuf) != GDK_COLORSPACE_RGB)
     {
       g_warning ("gimp_layer_new_from_pixbuf() assumes that GdkPixbuf is RGB");
-      return -1;
+      return NULL;
     }
 
   width  = gdk_pixbuf_get_width (pixbuf);
@@ -163,10 +163,10 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
                           bpp == 3 ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
                           opacity, mode);
 
-  if (layer == -1)
-    return -1;
+  if (! layer)
+    return NULL;
 
-  dest_buffer = gimp_drawable_get_buffer (layer);
+  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    gimp_pixbuf_get_format (pixbuf),
@@ -203,7 +203,7 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  *
  * Since: 2.8
  */
-gint32
+GimpLayer *
 gimp_layer_new_from_surface (GimpImage            *image,
                              const gchar          *name,
                              cairo_surface_t      *surface,
@@ -212,20 +212,20 @@ gimp_layer_new_from_surface (GimpImage            *image,
 {
   GeglBuffer    *src_buffer;
   GeglBuffer    *dest_buffer;
-  gint32         layer;
+  GimpLayer     *layer;
   gint           width;
   gint           height;
   cairo_format_t format;
   gdouble        range = progress_end - progress_start;
 
-  g_return_val_if_fail (surface != NULL, -1);
+  g_return_val_if_fail (surface != NULL, NULL);
   g_return_val_if_fail (cairo_surface_get_type (surface) ==
-                        CAIRO_SURFACE_TYPE_IMAGE, -1);
+                        CAIRO_SURFACE_TYPE_IMAGE, NULL);
 
   if (gimp_image_base_type (image) != GIMP_RGB)
     {
       g_warning ("gimp_layer_new_from_surface() needs an RGB image");
-      return -1;
+      return NULL;
     }
 
   width  = cairo_image_surface_get_width (surface);
@@ -236,7 +236,7 @@ gimp_layer_new_from_surface (GimpImage            *image,
       format != CAIRO_FORMAT_RGB24)
     {
       g_warning ("gimp_layer_new_from_surface() assumes that surface is RGB");
-      return -1;
+      return NULL;
     }
 
   layer = gimp_layer_new (image, name, width, height,
@@ -245,11 +245,11 @@ gimp_layer_new_from_surface (GimpImage            *image,
                           100.0,
                           gimp_image_get_default_new_layer_mode (image));
 
-  if (layer == -1)
-    return -1;
+  if (layer == NULL)
+    return NULL;
 
   src_buffer = gimp_cairo_surface_create_buffer (surface);
-  dest_buffer = gimp_drawable_get_buffer (layer);
+  dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
                     dest_buffer, NULL);
@@ -298,12 +298,15 @@ gimp_layer_new_deprecated (gint32         image_id,
                            GimpLayerMode  mode)
 {
   GimpImage *image = gimp_image_new_by_id (image_id);
+  GimpLayer *layer;
   gint32     layer_id;
 
-  layer_id = gimp_layer_new (image, name, width, height,
-                             type, opacity, mode);
+  layer = gimp_layer_new (image, name, width, height,
+                          type, opacity, mode);
+  layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
   g_object_unref (image);
+  g_object_unref (layer);
 
   return layer_id;
 }
@@ -342,12 +345,15 @@ gimp_layer_new_from_pixbuf_deprecated (gint32         image_id,
                                        gdouble        progress_end)
 {
   GimpImage *image = gimp_image_new_by_id (image_id);
+  GimpLayer *layer;
   gint32     layer_id;
 
-  layer_id = gimp_layer_new_from_pixbuf (image, name, pixbuf, opacity, mode,
-                                          progress_start, progress_end);
+  layer = gimp_layer_new_from_pixbuf (image, name, pixbuf, opacity, mode,
+                                      progress_start, progress_end);
+  layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
   g_object_unref (image);
+  g_object_unref (layer);
 
   return layer_id;
 }
@@ -382,12 +388,48 @@ gimp_layer_new_from_surface_deprecated (gint32                image_id,
                                         gdouble               progress_end)
 {
   GimpImage *image = gimp_image_new_by_id (image_id);
+  GimpLayer *layer;
   gint32     layer_id;
 
-  layer_id = gimp_layer_new_from_surface (image, name, surface,
-                                          progress_start, progress_end);
+  layer = gimp_layer_new_from_surface (image, name, surface,
+                                       progress_start, progress_end);
+  layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
   g_object_unref (image);
+  g_object_unref (layer);
 
   return layer_id;
+}
+
+/**
+ * gimp_layer_copy_deprecated: (skip)
+ * @layer_ID: The layer to copy.
+ *
+ * Copy a layer.
+ *
+ * This procedure copies the specified layer and returns the copy. The
+ * newly copied layer is for use within the original layer's image. It
+ * should not be subsequently added to any other image.
+ *
+ * Returns: The newly copied layer.
+ */
+gint32
+gimp_layer_copy_deprecated (gint32 layer_ID)
+{
+  GimpLayer *layer;
+  GimpLayer *copy;
+  gint32     copy_id;
+
+  layer = GIMP_LAYER (gimp_item_new_by_id (layer_ID));
+  g_return_val_if_fail (layer, -1);
+
+  copy = gimp_layer_copy (layer);
+  g_return_val_if_fail (copy, -1);
+
+  copy_id = gimp_item_get_id (GIMP_ITEM (copy));
+
+  g_object_unref (copy);
+  g_object_unref (layer);
+
+  return copy_id;
 }
