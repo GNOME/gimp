@@ -517,21 +517,19 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
     }
   else
     {
-      guchar       *sel;
-      guchar       *src;
-      GimpDrawable *selection;
-      gint          selection_ID;
-      gint          w, h;
-      gint          bpp;
-      gint          src_x;
-      gint          src_y;
-      gint          src_width;
-      gint          src_height;
-      gint          offsx = 0;
-      gint          offsy = 0;
+      guchar        *sel;
+      guchar        *src;
+      GimpSelection *selection;
+      gint           w, h;
+      gint           bpp;
+      gint           src_x;
+      gint           src_y;
+      gint           src_width;
+      gint           src_height;
+      gint           offsx = 0;
+      gint           offsy = 0;
 
-      selection_ID = gimp_image_get_selection (image);
-      selection = GIMP_DRAWABLE (gimp_item_new_by_id (selection_ID));
+      selection = gimp_image_get_selection (image);
 
       w = width;
       h = height;
@@ -545,7 +543,7 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
                                                   src_width, src_height,
                                                   &w, &h, &bpp);
       gimp_drawable_offsets (priv->drawable, &offsx, &offsy);
-      sel = gimp_drawable_get_sub_thumbnail_data (selection,
+      sel = gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (selection),
                                                   src_x + offsx, src_y + offsy,
                                                   src_width, src_height,
                                                   &width, &height, &bpp);

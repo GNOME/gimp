@@ -67,12 +67,12 @@ GType    gimp_channel_get_type           (void) G_GNUC_CONST;
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gint32  gimp_channel_new (GimpImage     *image,
-                          const gchar   *name,
-                          guint          width,
-                          guint          height,
-                          gdouble        opacity,
-                          const GimpRGB *color);
+GimpChannel *  gimp_channel_new (GimpImage     *image,
+                                 const gchar   *name,
+                                 guint          width,
+                                 guint          height,
+                                 gdouble        opacity,
+                                 const GimpRGB *color);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
