@@ -1118,16 +1118,16 @@ _gimp_layer_set_offsets (gint32 layer_ID,
  * 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with
  * 'ADD-SELECTION-MASK' when there is no selection on the image.
  *
- * Returns: The newly created mask.
+ * Returns: (transfer full): The newly created mask.
  **/
-gint32
+GimpLayerMask *
 gimp_layer_create_mask (GimpLayer       *layer,
                         GimpAddMaskType  mask_type)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 mask_ID = -1;
+  GimpLayerMask *mask = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
@@ -1144,11 +1144,11 @@ gimp_layer_create_mask (GimpLayer       *layer,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask_ID = gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1));
+    mask = GIMP_LAYER_MASK (gimp_item_new_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return mask_ID;
+  return mask;
 }
 
 /**
@@ -1221,15 +1221,15 @@ _gimp_layer_create_mask (gint32          layer_ID,
  * This procedure returns the specified layer's mask, or -1 if none
  * exists.
  *
- * Returns: The layer mask.
+ * Returns: (transfer full): The layer mask.
  **/
-gint32
+GimpLayerMask *
 gimp_layer_get_mask (GimpLayer *layer)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 mask_ID = -1;
+  GimpLayerMask *mask = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
@@ -1245,11 +1245,11 @@ gimp_layer_get_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask_ID = gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1));
+    mask = GIMP_LAYER_MASK (gimp_item_new_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return mask_ID;
+  return mask;
 }
 
 /**
@@ -1294,7 +1294,7 @@ _gimp_layer_get_mask (gint32 layer_ID)
 
 /**
  * gimp_layer_from_mask:
- * @mask_ID: Mask for which to return the layer.
+ * @mask: Mask for which to return the layer.
  *
  * Get the specified mask's layer.
  *
@@ -1306,7 +1306,7 @@ _gimp_layer_get_mask (gint32 layer_ID)
  * Since: 2.2
  **/
 GimpLayer *
-gimp_layer_from_mask (gint32 mask_ID)
+gimp_layer_from_mask (GimpLayerMask *mask)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1314,7 +1314,7 @@ gimp_layer_from_mask (gint32 mask_ID)
   GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_MASK_ID, mask_ID,
+                                          GIMP_TYPE_LAYER_MASK_ID, gimp_item_get_id (GIMP_ITEM (mask)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1379,7 +1379,7 @@ _gimp_layer_from_mask (gint32 mask_ID)
 /**
  * gimp_layer_add_mask:
  * @layer: The layer to receive the mask.
- * @mask_ID: The mask to add to the layer.
+ * @mask: The mask to add to the layer.
  *
  * Add a layer mask to the specified layer.
  *
@@ -1394,8 +1394,8 @@ _gimp_layer_from_mask (gint32 mask_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_add_mask (GimpLayer *layer,
-                     gint32     mask_ID)
+gimp_layer_add_mask (GimpLayer     *layer,
+                     GimpLayerMask *mask)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1404,7 +1404,7 @@ gimp_layer_add_mask (GimpLayer *layer,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
-                                          GIMP_TYPE_LAYER_MASK_ID, mask_ID,
+                                          GIMP_TYPE_LAYER_MASK_ID, gimp_item_get_id (GIMP_ITEM (mask)),
                                           G_TYPE_NONE);
 
   if (pdb)
