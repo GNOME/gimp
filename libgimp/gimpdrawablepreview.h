@@ -67,15 +67,15 @@ struct _GimpDrawablePreviewClass
 
 GType          gimp_drawable_preview_get_type             (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_drawable_preview_new_from_drawable_id (gint32               drawable_ID);
-gint32         gimp_drawable_preview_get_drawable_id      (GimpDrawablePreview *preview);
+GtkWidget    * gimp_drawable_preview_new_from_drawable (GimpDrawable        *drawable);
+GimpDrawable * gimp_drawable_preview_get_drawable      (GimpDrawablePreview *preview);
 
 /*  for internal use only  */
 G_GNUC_INTERNAL void      _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
-                                                                  gint32           drawable_ID,
+                                                                  GimpDrawable    *drawable,
                                                                   gint             width,
                                                                   gint             height);
-G_GNUC_INTERNAL gboolean  _gimp_drawable_preview_get_bounds      (gint32           drawable_ID,
+G_GNUC_INTERNAL gboolean  _gimp_drawable_preview_get_bounds      (GimpDrawable    *drawable,
                                                                   gint            *xmin,
                                                                   gint            *ymin,
                                                                   gint            *xmax,
