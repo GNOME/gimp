@@ -66,12 +66,12 @@ gboolean                   gimp_layer_resize_to_image_size (GimpLayer           
 gboolean                   gimp_layer_set_offsets          (GimpLayer              *layer,
                                                             gint                    offx,
                                                             gint                    offy);
-gint32                     gimp_layer_create_mask          (GimpLayer              *layer,
+GimpLayerMask*             gimp_layer_create_mask          (GimpLayer              *layer,
                                                             GimpAddMaskType         mask_type);
-gint32                     gimp_layer_get_mask             (GimpLayer              *layer);
-GimpLayer*                 gimp_layer_from_mask            (gint32                  mask_ID);
+GimpLayerMask*             gimp_layer_get_mask             (GimpLayer              *layer);
+GimpLayer*                 gimp_layer_from_mask            (GimpLayerMask          *mask);
 gboolean                   gimp_layer_add_mask             (GimpLayer              *layer,
-                                                            gint32                  mask_ID);
+                                                            GimpLayerMask          *mask);
 gboolean                   gimp_layer_remove_mask          (GimpLayer              *layer,
                                                             GimpMaskApplyMode       mode);
 gboolean                   gimp_layer_is_floating_sel      (GimpLayer              *layer);

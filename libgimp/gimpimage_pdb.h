@@ -81,19 +81,19 @@ gboolean                 gimp_image_remove_layer               (GimpImage       
 gboolean                 gimp_image_freeze_layers              (GimpImage           *image);
 gboolean                 gimp_image_thaw_layers                (GimpImage           *image);
 gboolean                 gimp_image_insert_channel             (GimpImage           *image,
-                                                                gint32               channel_ID,
-                                                                gint32               parent_ID,
+                                                                GimpChannel         *channel,
+                                                                GimpChannel         *parent,
                                                                 gint                 position);
 gboolean                 gimp_image_remove_channel             (GimpImage           *image,
-                                                                gint32               channel_ID);
+                                                                GimpChannel         *channel);
 gboolean                 gimp_image_freeze_channels            (GimpImage           *image);
 gboolean                 gimp_image_thaw_channels              (GimpImage           *image);
 gboolean                 gimp_image_insert_vectors             (GimpImage           *image,
-                                                                gint32               vectors_ID,
-                                                                gint32               parent_ID,
+                                                                GimpVectors         *vectors,
+                                                                GimpVectors         *parent,
                                                                 gint                 position);
 gboolean                 gimp_image_remove_vectors             (GimpImage           *image,
-                                                                gint32               vectors_ID);
+                                                                GimpVectors         *vectors);
 gboolean                 gimp_image_freeze_vectors             (GimpImage           *image);
 gboolean                 gimp_image_thaw_vectors               (GimpImage           *image);
 gint                     gimp_image_get_item_position          (GimpImage           *image,
@@ -137,13 +137,13 @@ G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage       
 GimpLayer*               gimp_image_get_active_layer           (GimpImage           *image);
 gboolean                 gimp_image_set_active_layer           (GimpImage           *image,
                                                                 GimpLayer           *active_layer);
-gint32                   gimp_image_get_active_channel         (GimpImage           *image);
+GimpChannel*             gimp_image_get_active_channel         (GimpImage           *image);
 gboolean                 gimp_image_set_active_channel         (GimpImage           *image,
-                                                                gint32               active_channel_ID);
-gint32                   gimp_image_get_active_vectors         (GimpImage           *image);
+                                                                GimpChannel         *active_channel);
+GimpVectors*             gimp_image_get_active_vectors         (GimpImage           *image);
 gboolean                 gimp_image_set_active_vectors         (GimpImage           *image,
-                                                                gint32               active_vectors_ID);
-gint32                   gimp_image_get_selection              (GimpImage           *image);
+                                                                GimpVectors         *active_vectors);
+GimpSelection*           gimp_image_get_selection              (GimpImage           *image);
 gboolean                 gimp_image_get_component_active       (GimpImage           *image,
                                                                 GimpChannelType      component);
 gboolean                 gimp_image_set_component_active       (GimpImage           *image,
@@ -176,15 +176,15 @@ gboolean                 gimp_image_set_tattoo_state           (GimpImage       
                                                                 guint                tattoo_state);
 GimpLayer*               gimp_image_get_layer_by_tattoo        (GimpImage           *image,
                                                                 guint                tattoo);
-gint32                   gimp_image_get_channel_by_tattoo      (GimpImage           *image,
+GimpChannel*             gimp_image_get_channel_by_tattoo      (GimpImage           *image,
                                                                 guint                tattoo);
-gint32                   gimp_image_get_vectors_by_tattoo      (GimpImage           *image,
+GimpVectors*             gimp_image_get_vectors_by_tattoo      (GimpImage           *image,
                                                                 guint                tattoo);
 GimpLayer*               gimp_image_get_layer_by_name          (GimpImage           *image,
                                                                 const gchar         *name);
-gint32                   gimp_image_get_channel_by_name        (GimpImage           *image,
+GimpChannel*             gimp_image_get_channel_by_name        (GimpImage           *image,
                                                                 const gchar         *name);
-gint32                   gimp_image_get_vectors_by_name        (GimpImage           *image,
+GimpVectors*             gimp_image_get_vectors_by_name        (GimpImage           *image,
                                                                 const gchar         *name);
 gboolean                 gimp_image_attach_parasite            (GimpImage           *image,
                                                                 const GimpParasite  *parasite);

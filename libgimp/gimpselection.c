@@ -22,6 +22,20 @@
 
 #include "gimp.h"
 
+
+G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
+
+#define parent_class gimp_selection_parent_class
+
+static void
+gimp_selection_class_init (GimpSelectionClass *klass)
+{
+}
+
+static void
+gimp_selection_init (GimpSelection *selection)
+{
+}
 /**
  * gimp_selection_float:
  * @image: ignored
