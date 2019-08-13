@@ -69,16 +69,16 @@ var Goat = GObject.registerClass({
                                                        Gimp.RunMode.$gtype,
                                                        Gimp.RunMode.NONINTERACTIVE,
                                                        GObject.ParamFlags.READWRITE));
-        procedure.add_argument(Gimp.param_spec_image_id ("image",
-                                                         "Image",
-                                                         "The input image",
-                                                         false,
-                                                         GObject.ParamFlags.READWRITE));
-        procedure.add_argument(Gimp.param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "The input drawable",
-                                                            false,
-                                                            GObject.ParamFlags.READWRITE));
+        procedure.add_argument(GObject.param_spec_object ("image",
+                                                          "Image",
+                                                          "The input image",
+                                                          Gimp.Image.$gtype,
+                                                          GObject.ParamFlags.READWRITE));
+        procedure.add_argument(GObject.param_spec_object ("drawable",
+                                                          "Drawable",
+                                                          "The input drawable",
+                                                          Gimp.Drawable.$gtype,
+                                                          GObject.ParamFlags.READWRITE));
 
         return procedure;
     }
@@ -156,13 +156,13 @@ var Goat = GObject.registerClass({
             }
         }
 
-        let drawable_id = args.index(2);
-        let [ success, x, y, width, height ] = Gimp.drawable_mask_intersect (drawable_id);
+        let drawable = args.index(2);
+        let [ success, x, y, width, height ] = drawable.mask_intersect();
         if (success) {
             Gegl.init(null);
 
-            let buffer = Gimp.drawable_get_buffer (drawable_id);
-            let shadow_buffer = Gimp.drawable_get_shadow_buffer (drawable_id);
+            let buffer = drawable.get_buffer();
+            let shadow_buffer = drawable.get_shadow_buffer();
 
             let graph = new Gegl.Node();
             let input = graph.create_child("gegl:buffer-source");
@@ -181,8 +181,8 @@ var Goat = GObject.registerClass({
              */
             shadow_buffer.flush();
 
-            Gimp.drawable_merge_shadow(drawable_id, true);
-            Gimp.drawable_update(drawable_id, x, y, width, height);
+            drawable.merge_shadow(true);
+            drawable.update(x, y, width, height);
             Gimp.displays_flush();
         }
         else {
