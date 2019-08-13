@@ -45,15 +45,6 @@ sub desc_wrap {
     return $wrapped;
 }
 
-sub is_id_arg {
-    my ($arg) = @_;
-
-    return ($arg->{name} eq 'IMAGE'    ||
-            $arg->{name} eq 'ITEM'     ||
-            $arg->{name} eq 'DRAWABLE' ||
-            $arg->{name} eq 'LAYER');
-}
-
 sub generate_fun {
     my ($proc, $out, $api_deprecated, $has_id_arg) = @_;
     my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
@@ -67,11 +58,7 @@ sub generate_fun {
 	my $argtype = $arg_types{$type};
 	my $rettype = '';
 
-        if ($api_deprecated && is_id_arg($argtype)) {
-            return 'gint32 ';
-        }
-
-	if (exists $argtype->{id}) {
+	if ($api_deprecated && exists $argtype->{id}) {
 	    return 'gint32 ';
 	}
 
@@ -220,7 +207,7 @@ sub generate_fun {
         my $desc = exists $_->{desc} ? $_->{desc} : "";
         my $var_len;
         my $value;
-        my $is_id = ($arg->{id} || ($api_deprecated && is_id_arg($arg)));
+        my $is_id = $arg->{id} && $api_deprecated;
 
         $var .= '_ID' if $is_id;
 
@@ -318,7 +305,7 @@ sub generate_fun {
             my ($type) = &arg_parse($_->{type});
             my $arg = $arg_types{$type};
             my $var;
-            my $is_id = ($arg->{id} || ($api_deprecated && is_id_arg($arg)));
+            my $is_id = $arg->{id} && $api_deprecated;
 
             $return_marshal = "" unless $once++;
 
@@ -399,7 +386,7 @@ CODE
             my ($type) = &arg_parse($_->{type});
             my $desc = exists $_->{desc} ? $_->{desc} : "";
             my $arg = $arg_types{$type};
-            my $is_id = ($arg->{id} || ($api_deprecated && is_id_arg($arg)));
+            my $is_id = $arg->{id} && $api_deprecated;
             my $var;
 
             # The return value variable
@@ -733,7 +720,7 @@ sub generate {
 	foreach (@outargs) {
 	    my ($type, @typeinfo) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
-            if (is_id_arg($arg)) {
+            if (exists $arg->{id}) {
                 $has_id_arg = 1;
                 last;
             }
@@ -742,7 +729,7 @@ sub generate {
             foreach (@inargs) {
                 my ($type, @typeinfo) = &arg_parse($_->{type});
                 my $arg = $arg_types{$type};
-                if (is_id_arg($arg)) {
+                if (exists $arg->{id}) {
                     $has_id_arg = 1;
                     last;
                 }

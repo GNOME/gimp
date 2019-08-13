@@ -36,18 +36,18 @@ G_BEGIN_DECLS
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gint32              gimp_image_add_hguide            (GimpImage *image,
+guint               gimp_image_add_hguide            (GimpImage *image,
                                                       gint       yposition);
-gint32              gimp_image_add_vguide            (GimpImage *image,
+guint               gimp_image_add_vguide            (GimpImage *image,
                                                       gint       xposition);
 gboolean            gimp_image_delete_guide          (GimpImage *image,
-                                                      gint32     guide_ID);
-gint32              gimp_image_find_next_guide       (GimpImage *image,
-                                                      gint32     guide_ID);
+                                                      guint      guide);
+guint               gimp_image_find_next_guide       (GimpImage *image,
+                                                      guint      guide);
 GimpOrientationType gimp_image_get_guide_orientation (GimpImage *image,
-                                                      gint32     guide_ID);
+                                                      guint      guide);
 gint                gimp_image_get_guide_position    (GimpImage *image,
-                                                      gint32     guide_ID);
+                                                      guint      guide);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 

@@ -23,6 +23,24 @@
 #include "gimp.h"
 
 
+G_DEFINE_TYPE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE)
+
+#define parent_class gimp_drawable_parent_class
+
+static void
+gimp_channel_class_init (GimpChannelClass *klass)
+{
+}
+
+static void
+gimp_channel_init (GimpChannel *channel)
+{
+}
+
+
+/* Public API. */
+
+
 /**
  * gimp_channel_new:
  * @image:   The image to which to add the channel.

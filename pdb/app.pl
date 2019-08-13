@@ -82,10 +82,20 @@ sub declare_args {
 
 	    unless (exists $_->{no_declare} || exists $_->{dead}) {
 		if ($outargs) {
-		    $result .= "  $arg->{type}$_->{name} = $arg->{init_value}";
+                    if (exists $arg->{app_type}) {
+                        $result .= "  $arg->{app_type}$_->{name} = $arg->{init_value}";
+                    }
+                    else {
+                        $result .= "  $arg->{type}$_->{name} = $arg->{init_value}";
+                    }
 		}
 		else {
-		    $result .= "  $arg->{const_type}$_->{name}";
+                    if (exists $arg->{app_const_type}) {
+                        $result .= "  $arg->{app_const_type}$_->{name}";
+                    }
+                    else {
+                        $result .= "  $arg->{const_type}$_->{name}";
+                    }
 		}
 		$result .= ";\n";
 
