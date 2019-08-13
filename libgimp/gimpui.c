@@ -195,7 +195,7 @@ gimp_ui_get_foreign_window (guint32 window)
 
 /**
  * gimp_ui_get_display_window:
- * @gdisp_ID: a GimpDisplay ID.
+ * @display: a #GimpDisplay.
  *
  * Returns the #GdkWindow of a display window. The purpose is to allow
  * to make plug-in dialogs transient to the image display as explained
@@ -211,13 +211,13 @@ gimp_ui_get_foreign_window (guint32 window)
  * Since: 2.4
  */
 GdkWindow *
-gimp_ui_get_display_window (guint32 gdisp_ID)
+gimp_ui_get_display_window (GimpDisplay *display)
 {
   guint32 window;
 
   g_return_val_if_fail (gimp_ui_initialized, NULL);
 
-  window = gimp_display_get_window_handle (gdisp_ID);
+  window = gimp_display_get_window_handle (display);
   if (window)
     return gimp_ui_get_foreign_window (window);
 
@@ -267,12 +267,12 @@ gimp_window_transient_show (GtkWidget *window)
 
 /**
  * gimp_window_set_transient_for_display:
- * @window:   the #GtkWindow that should become transient
- * @gdisp_ID: display ID of the image window that should become the parent
+ * @window:  the #GtkWindow that should become transient
+ * @display: display of the image window that should become the parent
  *
  * Indicates to the window manager that @window is a transient dialog
  * associated with the GIMP image window that is identified by it's
- * display ID.  See gdk_window_set_transient_for () for more information.
+ * display ID. See gdk_window_set_transient_for () for more information.
  *
  * Most of the time you will want to use the convenience function
  * gimp_window_set_transient().
@@ -280,14 +280,14 @@ gimp_window_transient_show (GtkWidget *window)
  * Since: 2.4
  */
 void
-gimp_window_set_transient_for_display (GtkWindow *window,
-                                       guint32    gdisp_ID)
+gimp_window_set_transient_for_display (GtkWindow   *window,
+                                       GimpDisplay *display)
 {
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
 
   if (! gimp_window_set_transient_for (window,
-                                       gimp_ui_get_display_window (gdisp_ID)))
+                                       gimp_ui_get_display_window (display)))
     {
       /*  if setting the window transient failed, at least set
        *  WIN_POS_CENTER, which will center the window on the screen
@@ -448,3 +448,60 @@ gimp_osx_focus_window (void)
   [NSApp activateIgnoringOtherApps:YES];
 }
 #endif
+
+
+/* Deprecated API. */
+
+
+/**
+ * gimp_ui_get_display_window_deprecated: (skip)
+ * @gdisp_ID: a GimpDisplay ID.
+ *
+ * Returns the #GdkWindow of a display window. The purpose is to allow
+ * to make plug-in dialogs transient to the image display as explained
+ * with gdk_window_set_transient_for().
+ *
+ * You shouldn't have to call this function directly. Use
+ * gimp_window_set_transient_for_display() instead.
+ *
+ * Returns: (nullable) (transfer full): A reference to a #GdkWindow or %NULL.
+ *               You should unref the window using g_object_unref() as
+ *               soon as you don't need it any longer.
+ *
+ * Since: 2.4
+ */
+GdkWindow *
+gimp_ui_get_display_window_deprecated (guint32 gdisp_ID)
+{
+  GimpDisplay *display = gimp_display_new_by_id (gdisp_ID);
+  GdkWindow   *window;
+
+  window = gimp_ui_get_display_window (display);
+  g_object_unref (display);
+
+  return window;
+}
+
+/**
+ * gimp_window_set_transient_for_display_deprecated: (skip)
+ * @window:   the #GtkWindow that should become transient
+ * @gdisp_ID: display ID of the image window that should become the parent
+ *
+ * Indicates to the window manager that @window is a transient dialog
+ * associated with the GIMP image window that is identified by it's
+ * display ID.  See gdk_window_set_transient_for () for more information.
+ *
+ * Most of the time you will want to use the convenience function
+ * gimp_window_set_transient().
+ *
+ * Since: 2.4
+ */
+void
+gimp_window_set_transient_for_display_deprecated (GtkWindow *window,
+                                                  guint32    gdisp_ID)
+{
+  GimpDisplay *display = gimp_display_new_by_id (gdisp_ID);
+
+  gimp_window_set_transient_for_display (window, display);
+  g_object_unref (display);
+}

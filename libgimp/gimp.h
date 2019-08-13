@@ -173,7 +173,7 @@ gboolean            gimp_export_xmp           (void) G_GNUC_CONST;
 gboolean            gimp_export_iptc          (void) G_GNUC_CONST;
 GimpCheckSize       gimp_check_size           (void) G_GNUC_CONST;
 GimpCheckType       gimp_check_type           (void) G_GNUC_CONST;
-gint32              gimp_default_display      (void) G_GNUC_CONST;
+GimpDisplay       * gimp_default_display      (void) G_GNUC_CONST;
 const gchar       * gimp_wm_class             (void) G_GNUC_CONST;
 const gchar       * gimp_display_name         (void) G_GNUC_CONST;
 gint                gimp_monitor_number       (void) G_GNUC_CONST;

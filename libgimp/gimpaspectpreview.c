@@ -312,22 +312,20 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
     }
   else
     {
-      guchar       *sel;
-      guchar       *src;
-      GimpDrawable *selection;
-      gint          selection_ID;
-      gint          w, h;
-      gint          bpp;
+      guchar        *sel;
+      guchar        *src;
+      GimpSelection *selection;
+      gint           w, h;
+      gint           bpp;
 
-      selection_ID = gimp_image_get_selection (image);
-      selection = GIMP_DRAWABLE (gimp_item_new_by_id (selection_ID));
+      selection = gimp_image_get_selection (image);
 
       w = width;
       h = height;
 
       src = gimp_drawable_get_thumbnail_data (priv->drawable,
                                               &w, &h, &bpp);
-      sel = gimp_drawable_get_thumbnail_data (selection,
+      sel = gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (selection),
                                               &w, &h, &bpp);
       g_object_unref (selection);
 

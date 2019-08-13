@@ -183,9 +183,15 @@ gimp_progress_uninstall (const gchar *progress_callback)
 gboolean
 gimp_progress_init (const gchar  *message)
 {
+  GimpDisplay *display = gimp_default_display ();
+  gboolean     success;
+
   gimp_progress_current = 0.0;
 
-  return _gimp_progress_init (message, gimp_default_display ());
+  success = _gimp_progress_init (message, display);
+  g_clear_object (&display);
+
+  return success;
 }
 
 /**
