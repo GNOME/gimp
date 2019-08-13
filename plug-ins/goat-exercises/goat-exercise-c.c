@@ -63,8 +63,8 @@ static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray * goat_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
-                                               gint32                image_id,
-                                               gint32                drawable_id,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -128,8 +128,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 goat_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           const GimpValueArray *args,
           gpointer              run_data)
 {
@@ -240,23 +240,23 @@ goat_run (GimpProcedure        *procedure,
         }
     }
 
-  if (gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
+  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
       GeglBuffer *buffer;
       GeglBuffer *shadow_buffer;
 
       gegl_init (NULL, NULL);
 
-      buffer        = gimp_drawable_get_buffer (drawable_id);
-      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+      buffer        = gimp_drawable_get_buffer (drawable);
+      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gegl_render_op (buffer, shadow_buffer, "gegl:invert", NULL);
 
       g_object_unref (shadow_buffer); /* flushes the shadow tiles */
       g_object_unref (buffer);
 
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
-      gimp_drawable_update (drawable_id, x, y, width, height);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable, x, y, width, height);
       gimp_displays_flush ();
 
       gegl_exit ();
