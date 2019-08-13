@@ -149,11 +149,11 @@ _gimp_file_load (GimpRunMode  run_mode,
  * needs to be added to the existing image with
  * gimp_image_insert_layer().
  *
- * Returns: The layer created when loading the image file.
+ * Returns: (transfer full): The layer created when loading the image file.
  *
  * Since: 2.4
  **/
-gint32
+GimpLayer *
 gimp_file_load_layer (GimpRunMode  run_mode,
                       GimpImage   *image,
                       const gchar *filename)
@@ -161,7 +161,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
@@ -179,11 +179,11 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
@@ -357,7 +357,7 @@ _gimp_file_load_layers (GimpRunMode  run_mode,
  * gimp_file_save:
  * @run_mode: The run mode.
  * @image: Input image.
- * @drawable_ID: Drawable to save.
+ * @drawable: Drawable to save.
  * @filename: The name of the file to save the image in.
  * @raw_filename: The name as entered by the user.
  *
@@ -374,11 +374,11 @@ _gimp_file_load_layers (GimpRunMode  run_mode,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_file_save (GimpRunMode  run_mode,
-                GimpImage   *image,
-                gint32       drawable_ID,
-                const gchar *filename,
-                const gchar *raw_filename)
+gimp_file_save (GimpRunMode   run_mode,
+                GimpImage    *image,
+                GimpDrawable *drawable,
+                const gchar  *filename,
+                const gchar  *raw_filename)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -388,7 +388,7 @@ gimp_file_save (GimpRunMode  run_mode,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_RUN_MODE, run_mode,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
                                           G_TYPE_STRING, filename,
                                           G_TYPE_STRING, raw_filename,
                                           G_TYPE_NONE);

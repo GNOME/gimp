@@ -45,8 +45,17 @@ sub desc_wrap {
     return $wrapped;
 }
 
+sub is_id_arg {
+    my ($arg) = @_;
+
+    return ($arg->{name} eq 'IMAGE'    ||
+            $arg->{name} eq 'ITEM'     ||
+            $arg->{name} eq 'DRAWABLE' ||
+            $arg->{name} eq 'LAYER');
+}
+
 sub generate_fun {
-    my ($proc, $out, $api_deprecated, $has_image_arg) = @_;
+    my ($proc, $out, $api_deprecated, $has_id_arg) = @_;
     my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
     my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
@@ -58,7 +67,7 @@ sub generate_fun {
 	my $argtype = $arg_types{$type};
 	my $rettype = '';
 
-        if ($api_deprecated && $argtype->{name} eq 'IMAGE') {
+        if ($api_deprecated && is_id_arg($argtype)) {
             return 'gint32 ';
         }
 
@@ -211,7 +220,7 @@ sub generate_fun {
         my $desc = exists $_->{desc} ? $_->{desc} : "";
         my $var_len;
         my $value;
-        my $is_id = ($arg->{id} || ($api_deprecated && $arg->{name} eq 'IMAGE'));
+        my $is_id = ($arg->{id} || ($api_deprecated && is_id_arg($arg)));
 
         $var .= '_ID' if $is_id;
 
@@ -309,7 +318,7 @@ sub generate_fun {
             my ($type) = &arg_parse($_->{type});
             my $arg = $arg_types{$type};
             my $var;
-            my $is_id = ($arg->{id} || ($api_deprecated && $arg->{name} eq 'IMAGE'));
+            my $is_id = ($arg->{id} || ($api_deprecated && is_id_arg($arg)));
 
             $return_marshal = "" unless $once++;
 
@@ -390,7 +399,7 @@ CODE
             my ($type) = &arg_parse($_->{type});
             my $desc = exists $_->{desc} ? $_->{desc} : "";
             my $arg = $arg_types{$type};
-            my $is_id = ($arg->{id} || ($api_deprecated && $arg->{name} eq 'IMAGE'));
+            my $is_id = ($arg->{id} || ($api_deprecated && is_id_arg($arg)));
             my $var;
 
             # The return value variable
@@ -521,7 +530,7 @@ CODE
         push @{$out->{protos_deprecated}}, $proto;
         push @{$out->{defines_deprecated}}, $define_dep;
     }
-    elsif (! $has_image_arg){
+    elsif (! $has_id_arg){
         push @{$out->{protos_no_alt}}, $proto;
     }
     else {
@@ -720,28 +729,28 @@ sub generate {
 	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
         # Check if any of the argument or returned value is an image.
-        $has_image_arg = 0;
+        $has_id_arg = 0;
 	foreach (@outargs) {
 	    my ($type, @typeinfo) = &arg_parse($_->{type});
 	    my $arg = $arg_types{$type};
-	    if ($arg->{name} eq 'IMAGE') {
-                $has_image_arg = 1;
+            if (is_id_arg($arg)) {
+                $has_id_arg = 1;
                 last;
             }
 	}
-        unless ($has_image_arg) {
+        unless ($has_id_arg) {
             foreach (@inargs) {
                 my ($type, @typeinfo) = &arg_parse($_->{type});
                 my $arg = $arg_types{$type};
-                if ($arg->{name} eq 'IMAGE') {
-                    $has_image_arg = 1;
+                if (is_id_arg($arg)) {
+                    $has_id_arg = 1;
                     last;
                 }
             }
         }
-        $out->{code} .= generate_fun($proc, $out, 0, $has_image_arg);
-        if ($has_image_arg) {
-            $out->{code} .= generate_fun($proc, $out, 1, $has_image_arg);
+        $out->{code} .= generate_fun($proc, $out, 0, $has_id_arg);
+        if ($has_id_arg) {
+            $out->{code} .= generate_fun($proc, $out, 1, $has_id_arg);
         }
     }
 

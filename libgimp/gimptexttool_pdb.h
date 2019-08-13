@@ -43,16 +43,16 @@ gboolean gimp_text_get_extents_fontname (const gchar  *text,
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gint32 gimp_text_fontname (GimpImage    *image,
-                           gint32        drawable_ID,
-                           gdouble       x,
-                           gdouble       y,
-                           const gchar  *text,
-                           gint          border,
-                           gboolean      antialias,
-                           gdouble       size,
-                           GimpSizeType  size_type,
-                           const gchar  *fontname);
+GimpLayer* gimp_text_fontname (GimpImage    *image,
+                               GimpDrawable *drawable,
+                               gdouble       x,
+                               gdouble       y,
+                               const gchar  *text,
+                               gint          border,
+                               gboolean      antialias,
+                               gdouble       size,
+                               GimpSizeType  size_type,
+                               const gchar  *fontname);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 

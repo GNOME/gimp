@@ -1267,15 +1267,15 @@ _gimp_image_get_vectors (gint32  image_ID,
  * layer mask and the layer mask is in edit mode, then the layer mask
  * is the active drawable.
  *
- * Returns: The active drawable.
+ * Returns: (transfer full): The active drawable.
  **/
-gint32
+GimpDrawable *
 gimp_image_get_active_drawable (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 drawable_ID = -1;
+  GimpDrawable *drawable = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -1291,11 +1291,11 @@ gimp_image_get_active_drawable (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    drawable_ID = gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1));
+    drawable = GIMP_DRAWABLE (gimp_item_new_by_id (gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return drawable_ID;
+  return drawable;
 }
 
 /**
@@ -1433,15 +1433,15 @@ _gimp_image_unset_active_channel (gint32 image_ID)
  * This procedure returns the image's floating selection, if it exists.
  * If it doesn't exist, -1 is returned as the layer ID.
  *
- * Returns: The image's floating selection.
+ * Returns: (transfer full): The image's floating selection.
  **/
-gint32
+GimpLayer *
 gimp_image_get_floating_sel (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 floating_sel_ID = -1;
+  GimpLayer *floating_sel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -1457,11 +1457,11 @@ gimp_image_get_floating_sel (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    floating_sel = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return floating_sel_ID;
+  return floating_sel;
 }
 
 /**
@@ -1514,15 +1514,16 @@ _gimp_image_get_floating_sel (gint32 image_ID)
  * is attached to, if it exists. If it doesn't exist, -1 is returned as
  * the drawable ID.
  *
- * Returns: The drawable the floating selection is attached to.
+ * Returns: (transfer full):
+ *          The drawable the floating selection is attached to.
  **/
-gint32
+GimpDrawable *
 gimp_image_floating_sel_attached_to (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 drawable_ID = -1;
+  GimpDrawable *drawable = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -1538,11 +1539,11 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    drawable_ID = gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1));
+    drawable = GIMP_DRAWABLE (gimp_item_new_by_id (gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return drawable_ID;
+  return drawable;
 }
 
 /**
@@ -1589,7 +1590,7 @@ _gimp_image_floating_sel_attached_to (gint32 image_ID)
 /**
  * gimp_image_pick_color:
  * @image: The image.
- * @drawable_ID: The drawable to pick from.
+ * @drawable: The drawable to pick from.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @sample_merged: Use the composite image, not the drawable.
@@ -1614,14 +1615,14 @@ _gimp_image_floating_sel_attached_to (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_pick_color (GimpImage *image,
-                       gint32     drawable_ID,
-                       gdouble    x,
-                       gdouble    y,
-                       gboolean   sample_merged,
-                       gboolean   sample_average,
-                       gdouble    average_radius,
-                       GimpRGB   *color)
+gimp_image_pick_color (GimpImage    *image,
+                       GimpDrawable *drawable,
+                       gdouble       x,
+                       gdouble       y,
+                       gboolean      sample_merged,
+                       gboolean      sample_average,
+                       gdouble       average_radius,
+                       GimpRGB      *color)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1630,7 +1631,7 @@ gimp_image_pick_color (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_BOOLEAN, sample_merged,
@@ -1742,9 +1743,9 @@ _gimp_image_pick_color (gint32    image_ID,
  * at the specified coordinates. This procedure will return -1 if no
  * layer is found.
  *
- * Returns: The layer found at the specified coordinates.
+ * Returns: (transfer full): The layer found at the specified coordinates.
  **/
-gint32
+GimpLayer *
 gimp_image_pick_correlate_layer (GimpImage *image,
                                  gint       x,
                                  gint       y)
@@ -1752,7 +1753,7 @@ gimp_image_pick_correlate_layer (GimpImage *image,
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -1770,11 +1771,11 @@ gimp_image_pick_correlate_layer (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
@@ -1829,8 +1830,8 @@ _gimp_image_pick_correlate_layer (gint32 image_ID,
 /**
  * gimp_image_insert_layer:
  * @image: The image.
- * @layer_ID: The layer.
- * @parent_ID: The parent layer.
+ * @layer: The layer.
+ * @parent: The parent layer.
  * @position: The layer position.
  *
  * Add the specified layer to the image.
@@ -1851,8 +1852,8 @@ _gimp_image_pick_correlate_layer (gint32 image_ID,
  **/
 gboolean
 gimp_image_insert_layer (GimpImage *image,
-                         gint32     layer_ID,
-                         gint32     parent_ID,
+                         GimpLayer *layer,
+                         GimpLayer *parent,
                          gint       position)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -1862,8 +1863,8 @@ gimp_image_insert_layer (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
-                                          GIMP_TYPE_LAYER_ID, parent_ID,
+                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
+                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (parent)),
                                           GIMP_TYPE_INT32, position,
                                           G_TYPE_NONE);
 
@@ -1943,7 +1944,7 @@ _gimp_image_insert_layer (gint32 image_ID,
 /**
  * gimp_image_remove_layer:
  * @image: The image.
- * @layer_ID: The layer.
+ * @layer: The layer.
  *
  * Remove the specified layer from the image.
  *
@@ -1957,7 +1958,7 @@ _gimp_image_insert_layer (gint32 image_ID,
  **/
 gboolean
 gimp_image_remove_layer (GimpImage *image,
-                         gint32     layer_ID)
+                         GimpLayer *layer)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1966,7 +1967,7 @@ gimp_image_remove_layer (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2957,7 +2958,7 @@ _gimp_image_thaw_vectors (gint32 image_ID)
 /**
  * gimp_image_get_item_position:
  * @image: The image.
- * @item_ID: The item.
+ * @item: The item.
  *
  * Returns the position of the item in its level of its item tree.
  *
@@ -2972,7 +2973,7 @@ _gimp_image_thaw_vectors (gint32 image_ID)
  **/
 gint
 gimp_image_get_item_position (GimpImage *image,
-                              gint32     item_ID)
+                              GimpItem  *item)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -2981,7 +2982,7 @@ gimp_image_get_item_position (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3051,7 +3052,7 @@ _gimp_image_get_item_position (gint32 image_ID,
 /**
  * gimp_image_raise_item:
  * @image: The image.
- * @item_ID: The item to raise.
+ * @item: The item to raise.
  *
  * Raise the specified item in its level in its item tree
  *
@@ -3064,7 +3065,7 @@ _gimp_image_get_item_position (gint32 image_ID,
  **/
 gboolean
 gimp_image_raise_item (GimpImage *image,
-                       gint32     item_ID)
+                       GimpItem  *item)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3073,7 +3074,7 @@ gimp_image_raise_item (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3139,7 +3140,7 @@ _gimp_image_raise_item (gint32 image_ID,
 /**
  * gimp_image_lower_item:
  * @image: The image.
- * @item_ID: The item to lower.
+ * @item: The item to lower.
  *
  * Lower the specified item in its level in its item tree
  *
@@ -3152,7 +3153,7 @@ _gimp_image_raise_item (gint32 image_ID,
  **/
 gboolean
 gimp_image_lower_item (GimpImage *image,
-                       gint32     item_ID)
+                       GimpItem  *item)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3161,7 +3162,7 @@ gimp_image_lower_item (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3227,7 +3228,7 @@ _gimp_image_lower_item (gint32 image_ID,
 /**
  * gimp_image_raise_item_to_top:
  * @image: The image.
- * @item_ID: The item to raise to top.
+ * @item: The item to raise to top.
  *
  * Raise the specified item to the top of its level in its item tree
  *
@@ -3240,7 +3241,7 @@ _gimp_image_lower_item (gint32 image_ID,
  **/
 gboolean
 gimp_image_raise_item_to_top (GimpImage *image,
-                              gint32     item_ID)
+                              GimpItem  *item)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3249,7 +3250,7 @@ gimp_image_raise_item_to_top (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3315,7 +3316,7 @@ _gimp_image_raise_item_to_top (gint32 image_ID,
 /**
  * gimp_image_lower_item_to_bottom:
  * @image: The image.
- * @item_ID: The item to lower to bottom.
+ * @item: The item to lower to bottom.
  *
  * Lower the specified item to the bottom of its level in its item tree
  *
@@ -3329,7 +3330,7 @@ _gimp_image_raise_item_to_top (gint32 image_ID,
  **/
 gboolean
 gimp_image_lower_item_to_bottom (GimpImage *image,
-                                 gint32     item_ID)
+                                 GimpItem  *item)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3338,7 +3339,7 @@ gimp_image_lower_item_to_bottom (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_ITEM_ID, item_ID,
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3405,8 +3406,8 @@ _gimp_image_lower_item_to_bottom (gint32 image_ID,
 /**
  * gimp_image_reorder_item:
  * @image: The image.
- * @item_ID: The item to reorder.
- * @parent_ID: The new parent item.
+ * @item: The item to reorder.
+ * @parent: The new parent item.
  * @position: The new position of the item.
  *
  * Reorder the specified item within its item tree
@@ -3419,8 +3420,8 @@ _gimp_image_lower_item_to_bottom (gint32 image_ID,
  **/
 gboolean
 gimp_image_reorder_item (GimpImage *image,
-                         gint32     item_ID,
-                         gint32     parent_ID,
+                         GimpItem  *item,
+                         GimpItem  *parent,
                          gint       position)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
@@ -3430,8 +3431,8 @@ gimp_image_reorder_item (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_ITEM_ID, item_ID,
-                                          GIMP_TYPE_ITEM_ID, parent_ID,
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
+                                          GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (parent)),
                                           GIMP_TYPE_INT32, position,
                                           G_TYPE_NONE);
 
@@ -3511,15 +3512,15 @@ _gimp_image_reorder_item (gint32 image_ID,
  * merging with the CLIP_TO_IMAGE merge type. Non-visible layers are
  * discarded, and the resulting image is stripped of its alpha channel.
  *
- * Returns: The resulting layer.
+ * Returns: (transfer full): The resulting layer.
  **/
-gint32
+GimpLayer *
 gimp_image_flatten (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -3535,11 +3536,11 @@ gimp_image_flatten (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
@@ -3598,16 +3599,16 @@ _gimp_image_flatten (gint32 image_ID)
  * extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the
  * final layer to the size of the bottommost layer.
  *
- * Returns: The resulting layer.
+ * Returns: (transfer full): The resulting layer.
  **/
-gint32
+GimpLayer *
 gimp_image_merge_visible_layers (GimpImage     *image,
                                  GimpMergeType  merge_type)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -3624,11 +3625,11 @@ gimp_image_merge_visible_layers (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
@@ -3681,7 +3682,7 @@ _gimp_image_merge_visible_layers (gint32        image_ID,
 /**
  * gimp_image_merge_down:
  * @image: The image.
- * @merge_layer_ID: The layer to merge down from.
+ * @merge_layer: The layer to merge down from.
  * @merge_type: The type of merge.
  *
  * Merge the layer passed and the first visible layer below.
@@ -3694,21 +3695,21 @@ _gimp_image_merge_visible_layers (gint32        image_ID,
  * CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the
  * bottommost layer.
  *
- * Returns: The resulting layer.
+ * Returns: (transfer full): The resulting layer.
  **/
-gint32
+GimpLayer *
 gimp_image_merge_down (GimpImage     *image,
-                       gint32         merge_layer_ID,
+                       GimpLayer     *merge_layer,
                        GimpMergeType  merge_type)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_LAYER_ID, merge_layer_ID,
+                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (merge_layer)),
                                           GIMP_TYPE_MERGE_TYPE, merge_type,
                                           G_TYPE_NONE);
 
@@ -3722,11 +3723,11 @@ gimp_image_merge_down (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
@@ -4467,15 +4468,15 @@ __gimp_image_thumbnail (gint32   image_ID,
  * If a channel is currently active, then no layer will be. If a layer
  * mask is active, then this will return the associated layer.
  *
- * Returns: The active layer.
+ * Returns: (transfer full): The active layer.
  **/
-gint32
+GimpLayer *
 gimp_image_get_active_layer (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 active_layer_ID = -1;
+  GimpLayer *active_layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -4491,11 +4492,11 @@ gimp_image_get_active_layer (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    active_layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    active_layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return active_layer_ID;
+  return active_layer;
 }
 
 /**
@@ -4542,7 +4543,7 @@ _gimp_image_get_active_layer (gint32 image_ID)
 /**
  * gimp_image_set_active_layer:
  * @image: The image.
- * @active_layer_ID: The new image active layer.
+ * @active_layer: The new image active layer.
  *
  * Sets the specified image's active layer.
  *
@@ -4555,7 +4556,7 @@ _gimp_image_get_active_layer (gint32 image_ID)
  **/
 gboolean
 gimp_image_set_active_layer (GimpImage *image,
-                             gint32     active_layer_ID)
+                             GimpLayer *active_layer)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -4564,7 +4565,7 @@ gimp_image_set_active_layer (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_LAYER_ID, active_layer_ID,
+                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (active_layer)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -6595,16 +6596,16 @@ _gimp_image_set_tattoo_state (gint32 image_ID,
  * This procedure returns the layer with the given tattoo in the
  * specified image.
  *
- * Returns: The layer with the specified tattoo.
+ * Returns: (transfer full): The layer with the specified tattoo.
  **/
-gint32
+GimpLayer *
 gimp_image_get_layer_by_tattoo (GimpImage *image,
                                 gint       tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -6621,11 +6622,11 @@ gimp_image_get_layer_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
@@ -6857,18 +6858,18 @@ _gimp_image_get_vectors_by_tattoo (gint32 image_ID,
  * This procedure returns the layer with the given name in the
  * specified image.
  *
- * Returns: The layer with the specified name.
+ * Returns: (transfer full): The layer with the specified name.
  *
  * Since: 2.8
  **/
-gint32
+GimpLayer *
 gimp_image_get_layer_by_name (GimpImage   *image,
                               const gchar *name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -6885,11 +6886,11 @@ gimp_image_get_layer_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**

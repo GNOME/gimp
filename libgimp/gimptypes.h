@@ -38,6 +38,9 @@ typedef union  _GimpParamData   GimpParamData;
 typedef struct _GimpParam       GimpParam;
 
 typedef struct _GimpImage       GimpImage;
+typedef struct _GimpItem        GimpItem;
+typedef struct _GimpDrawable    GimpDrawable;
+typedef struct _GimpLayer       GimpLayer;
 
 
 /* FIXME move somewhere else */

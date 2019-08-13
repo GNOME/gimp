@@ -32,59 +32,92 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean      gimp_item_is_valid          (gint32              item_ID);
-gboolean      gimp_item_delete            (gint32              item_ID);
-gboolean      gimp_item_is_drawable       (gint32              item_ID);
-gboolean      gimp_item_is_layer          (gint32              item_ID);
-gboolean      gimp_item_is_text_layer     (gint32              item_ID);
-gboolean      gimp_item_is_channel        (gint32              item_ID);
-gboolean      gimp_item_is_layer_mask     (gint32              item_ID);
-gboolean      gimp_item_is_selection      (gint32              item_ID);
-gboolean      gimp_item_is_vectors        (gint32              item_ID);
-gboolean      gimp_item_is_group          (gint32              item_ID);
-gint32        gimp_item_get_parent        (gint32              item_ID);
-gint*         gimp_item_get_children      (gint32              item_ID,
-                                           gint               *num_children);
-gboolean      gimp_item_get_expanded      (gint32              item_ID);
-gboolean      gimp_item_set_expanded      (gint32              item_ID,
-                                           gboolean            expanded);
-gchar*        gimp_item_get_name          (gint32              item_ID);
-gboolean      gimp_item_set_name          (gint32              item_ID,
-                                           const gchar        *name);
-gboolean      gimp_item_get_visible       (gint32              item_ID);
-gboolean      gimp_item_set_visible       (gint32              item_ID,
-                                           gboolean            visible);
-gboolean      gimp_item_get_linked        (gint32              item_ID);
-gboolean      gimp_item_set_linked        (gint32              item_ID,
-                                           gboolean            linked);
-gboolean      gimp_item_get_lock_content  (gint32              item_ID);
-gboolean      gimp_item_set_lock_content  (gint32              item_ID,
-                                           gboolean            lock_content);
-gboolean      gimp_item_get_lock_position (gint32              item_ID);
-gboolean      gimp_item_set_lock_position (gint32              item_ID,
-                                           gboolean            lock_position);
-GimpColorTag  gimp_item_get_color_tag     (gint32              item_ID);
-gboolean      gimp_item_set_color_tag     (gint32              item_ID,
-                                           GimpColorTag        color_tag);
-gint          gimp_item_get_tattoo        (gint32              item_ID);
-gboolean      gimp_item_set_tattoo        (gint32              item_ID,
-                                           gint                tattoo);
-gboolean      gimp_item_attach_parasite   (gint32              item_ID,
-                                           const GimpParasite *parasite);
-gboolean      gimp_item_detach_parasite   (gint32              item_ID,
-                                           const gchar        *name);
-GimpParasite* gimp_item_get_parasite      (gint32              item_ID,
-                                           const gchar        *name);
-gchar**       gimp_item_get_parasite_list (gint32              item_ID,
-                                           gint               *num_parasites);
+
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-GimpImage* gimp_item_get_image (gint32 item_ID);
+gboolean      gimp_item_is_valid          (GimpItem           *item);
+GimpImage*    gimp_item_get_image         (GimpItem           *item);
+gboolean      gimp_item_delete            (GimpItem           *item);
+gboolean      gimp_item_is_drawable       (GimpItem           *item);
+gboolean      gimp_item_is_layer          (GimpItem           *item);
+gboolean      gimp_item_is_text_layer     (GimpItem           *item);
+gboolean      gimp_item_is_channel        (GimpItem           *item);
+gboolean      gimp_item_is_layer_mask     (GimpItem           *item);
+gboolean      gimp_item_is_selection      (GimpItem           *item);
+gboolean      gimp_item_is_vectors        (GimpItem           *item);
+gboolean      gimp_item_is_group          (GimpItem           *item);
+GimpItem*     gimp_item_get_parent        (GimpItem           *item);
+gint*         gimp_item_get_children      (GimpItem           *item,
+                                           gint               *num_children);
+gboolean      gimp_item_get_expanded      (GimpItem           *item);
+gboolean      gimp_item_set_expanded      (GimpItem           *item,
+                                           gboolean            expanded);
+gchar*        gimp_item_get_name          (GimpItem           *item);
+gboolean      gimp_item_set_name          (GimpItem           *item,
+                                           const gchar        *name);
+gboolean      gimp_item_get_visible       (GimpItem           *item);
+gboolean      gimp_item_set_visible       (GimpItem           *item,
+                                           gboolean            visible);
+gboolean      gimp_item_get_linked        (GimpItem           *item);
+gboolean      gimp_item_set_linked        (GimpItem           *item,
+                                           gboolean            linked);
+gboolean      gimp_item_get_lock_content  (GimpItem           *item);
+gboolean      gimp_item_set_lock_content  (GimpItem           *item,
+                                           gboolean            lock_content);
+gboolean      gimp_item_get_lock_position (GimpItem           *item);
+gboolean      gimp_item_set_lock_position (GimpItem           *item,
+                                           gboolean            lock_position);
+GimpColorTag  gimp_item_get_color_tag     (GimpItem           *item);
+gboolean      gimp_item_set_color_tag     (GimpItem           *item,
+                                           GimpColorTag        color_tag);
+gint          gimp_item_get_tattoo        (GimpItem           *item);
+gboolean      gimp_item_set_tattoo        (GimpItem           *item,
+                                           gint                tattoo);
+gboolean      gimp_item_attach_parasite   (GimpItem           *item,
+                                           const GimpParasite *parasite);
+gboolean      gimp_item_detach_parasite   (GimpItem           *item,
+                                           const gchar        *name);
+GimpParasite* gimp_item_get_parasite      (GimpItem           *item,
+                                           const gchar        *name);
+gchar**       gimp_item_get_parasite_list (GimpItem           *item,
+                                           gint               *num_parasites);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
+#define gimp_item_is_valid _gimp_item_is_valid
 #define gimp_item_get_image _gimp_item_get_image
+#define gimp_item_delete _gimp_item_delete
+#define gimp_item_is_drawable _gimp_item_is_drawable
+#define gimp_item_is_layer _gimp_item_is_layer
+#define gimp_item_is_text_layer _gimp_item_is_text_layer
+#define gimp_item_is_channel _gimp_item_is_channel
+#define gimp_item_is_layer_mask _gimp_item_is_layer_mask
+#define gimp_item_is_selection _gimp_item_is_selection
+#define gimp_item_is_vectors _gimp_item_is_vectors
+#define gimp_item_is_group _gimp_item_is_group
+#define gimp_item_get_parent _gimp_item_get_parent
+#define gimp_item_get_children _gimp_item_get_children
+#define gimp_item_get_expanded _gimp_item_get_expanded
+#define gimp_item_set_expanded _gimp_item_set_expanded
+#define gimp_item_get_name _gimp_item_get_name
+#define gimp_item_set_name _gimp_item_set_name
+#define gimp_item_get_visible _gimp_item_get_visible
+#define gimp_item_set_visible _gimp_item_set_visible
+#define gimp_item_get_linked _gimp_item_get_linked
+#define gimp_item_set_linked _gimp_item_set_linked
+#define gimp_item_get_lock_content _gimp_item_get_lock_content
+#define gimp_item_set_lock_content _gimp_item_set_lock_content
+#define gimp_item_get_lock_position _gimp_item_get_lock_position
+#define gimp_item_set_lock_position _gimp_item_set_lock_position
+#define gimp_item_get_color_tag _gimp_item_get_color_tag
+#define gimp_item_set_color_tag _gimp_item_set_color_tag
+#define gimp_item_get_tattoo _gimp_item_get_tattoo
+#define gimp_item_set_tattoo _gimp_item_set_tattoo
+#define gimp_item_attach_parasite _gimp_item_attach_parasite
+#define gimp_item_detach_parasite _gimp_item_detach_parasite
+#define gimp_item_get_parasite _gimp_item_get_parasite
+#define gimp_item_get_parasite_list _gimp_item_get_parasite_list
 
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
@@ -93,7 +126,52 @@ GimpImage* gimp_item_get_image (gint32 item_ID);
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gint32 _gimp_item_get_image (gint32 item_ID);
+gboolean      _gimp_item_is_valid          (gint32              item_ID);
+gint32        _gimp_item_get_image         (gint32              item_ID);
+gboolean      _gimp_item_delete            (gint32              item_ID);
+gboolean      _gimp_item_is_drawable       (gint32              item_ID);
+gboolean      _gimp_item_is_layer          (gint32              item_ID);
+gboolean      _gimp_item_is_text_layer     (gint32              item_ID);
+gboolean      _gimp_item_is_channel        (gint32              item_ID);
+gboolean      _gimp_item_is_layer_mask     (gint32              item_ID);
+gboolean      _gimp_item_is_selection      (gint32              item_ID);
+gboolean      _gimp_item_is_vectors        (gint32              item_ID);
+gboolean      _gimp_item_is_group          (gint32              item_ID);
+gint32        _gimp_item_get_parent        (gint32              item_ID);
+gint*         _gimp_item_get_children      (gint32              item_ID,
+                                            gint               *num_children);
+gboolean      _gimp_item_get_expanded      (gint32              item_ID);
+gboolean      _gimp_item_set_expanded      (gint32              item_ID,
+                                            gboolean            expanded);
+gchar*        _gimp_item_get_name          (gint32              item_ID);
+gboolean      _gimp_item_set_name          (gint32              item_ID,
+                                            const gchar        *name);
+gboolean      _gimp_item_get_visible       (gint32              item_ID);
+gboolean      _gimp_item_set_visible       (gint32              item_ID,
+                                            gboolean            visible);
+gboolean      _gimp_item_get_linked        (gint32              item_ID);
+gboolean      _gimp_item_set_linked        (gint32              item_ID,
+                                            gboolean            linked);
+gboolean      _gimp_item_get_lock_content  (gint32              item_ID);
+gboolean      _gimp_item_set_lock_content  (gint32              item_ID,
+                                            gboolean            lock_content);
+gboolean      _gimp_item_get_lock_position (gint32              item_ID);
+gboolean      _gimp_item_set_lock_position (gint32              item_ID,
+                                            gboolean            lock_position);
+GimpColorTag  _gimp_item_get_color_tag     (gint32              item_ID);
+gboolean      _gimp_item_set_color_tag     (gint32              item_ID,
+                                            GimpColorTag        color_tag);
+gint          _gimp_item_get_tattoo        (gint32              item_ID);
+gboolean      _gimp_item_set_tattoo        (gint32              item_ID,
+                                            gint                tattoo);
+gboolean      _gimp_item_attach_parasite   (gint32              item_ID,
+                                            const GimpParasite *parasite);
+gboolean      _gimp_item_detach_parasite   (gint32              item_ID,
+                                            const gchar        *name);
+GimpParasite* _gimp_item_get_parasite      (gint32              item_ID,
+                                            const gchar        *name);
+gchar**       _gimp_item_get_parasite_list (gint32              item_ID,
+                                            gint               *num_parasites);
 
 
 G_END_DECLS
