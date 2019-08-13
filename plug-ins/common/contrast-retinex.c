@@ -81,10 +81,10 @@ static void     run                         (const gchar      *name,
                                              GimpParam       **return_vals);
 
 /* Gimp */
-static gboolean retinex_dialog              (gint32        drawable_ID);
-static void     retinex                     (gint32        drawable_ID,
+static gboolean retinex_dialog              (GimpDrawable *drawable);
+static void     retinex                     (GimpDrawable *drawable,
                                              GimpPreview  *preview);
-static void     retinex_preview             (gpointer      drawable_ID,
+static void     retinex_preview             (GimpDrawable *drawable,
                                              GimpPreview  *preview);
 
 static void     retinex_scales_distribution (gfloat       *scales,
@@ -183,6 +183,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
   gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, width, height;
@@ -198,14 +199,16 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
+  drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
 
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x, &y, &width, &height) ||
       width  < MIN_GAUSSIAN_SCALE ||
       height < MIN_GAUSSIAN_SCALE)
     {
       status = GIMP_PDB_EXECUTION_ERROR;
       values[0].data.d_status = status;
+      g_object_unref (drawable);
       return;
     }
 
@@ -216,8 +219,11 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &rvals);
 
       /*  First acquire information with a dialog  */
-      if (! retinex_dialog (drawable_ID))
-        return;
+      if (! retinex_dialog (drawable))
+        {
+          g_object_unref (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -244,11 +250,11 @@ run (const gchar      *name,
     }
 
   if (status == GIMP_PDB_SUCCESS &&
-      (gimp_drawable_is_rgb (drawable_ID)))
+      (gimp_drawable_is_rgb (drawable)))
     {
       gimp_progress_init (_("Retinex"));
 
-      retinex (drawable_ID, NULL);
+      retinex (drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -262,12 +268,13 @@ run (const gchar      *name,
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
+  g_object_unref (drawable);
   values[0].data.d_status = status;
 }
 
 
 static gboolean
-retinex_dialog (gint32 drawable_ID)
+retinex_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -301,13 +308,13 @@ retinex_dialog (gint32 drawable_ID)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_zoom_preview_new_from_drawable_id (drawable_ID);
+  preview = gimp_zoom_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (retinex_preview),
-                            GINT_TO_POINTER (drawable_ID));
+                            drawable);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -383,7 +390,7 @@ retinex_dialog (gint32 drawable_ID)
  * Applies the algorithm
  */
 static void
-retinex (gint32       drawable_ID,
+retinex (GimpDrawable *drawable,
          GimpPreview *preview)
 {
   GeglBuffer *src_buffer;
@@ -404,11 +411,11 @@ retinex (gint32       drawable_ID,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable_ID,
+      if (! gimp_drawable_mask_intersect (drawable,
                                           &x, &y, &width, &height))
         return;
 
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
@@ -428,7 +435,7 @@ retinex (gint32       drawable_ID,
       memset (src, 0, sizeof (guchar) * size);
 
       /* Fill allocated memory with pixel data */
-      src_buffer = gimp_drawable_get_buffer (drawable_ID);
+      src_buffer = gimp_drawable_get_buffer (drawable);
 
       gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x, y, width, height), 1.0,
                        format, src,
@@ -447,7 +454,7 @@ retinex (gint32       drawable_ID,
     }
   else
     {
-      dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+      dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, y, width, height), 0,
                        format, psrc,
@@ -458,18 +465,18 @@ retinex (gint32       drawable_ID,
 
       gimp_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable_ID, TRUE);
-      gimp_drawable_update (drawable_ID, x, y, width, height);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable, x, y, width, height);
     }
 
   g_free (src);
 }
 
 static void
-retinex_preview (gpointer     drawable_ID,
-                 GimpPreview *preview)
+retinex_preview (GimpDrawable *drawable,
+                 GimpPreview  *preview)
 {
-  retinex (GPOINTER_TO_INT (drawable_ID), preview);
+  retinex (drawable, preview);
 }
 
 /*
