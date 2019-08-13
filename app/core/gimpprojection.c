@@ -1042,32 +1042,37 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
   gimp_projection_chunk_render_stop (proj, TRUE);
 
-  old_validate_handler = proj->priv->validate_handler;
-
-  proj->priv->buffer           = NULL;
-  proj->priv->validate_handler = NULL;
-
-  gimp_projection_allocate_buffer (proj);
-
-  gimp_tile_handler_validate_buffer_copy (old_buffer,
-                                          GEGL_RECTANGLE (int_bounds.x - old_x,
-                                                          int_bounds.y - old_y,
-                                                          int_bounds.width,
-                                                          int_bounds.height),
-                                          proj->priv->buffer,
-                                          GEGL_RECTANGLE (int_bounds.x - x,
-                                                          int_bounds.y - y,
-                                                          int_bounds.width,
-                                                          int_bounds.height));
-
-  if (old_validate_handler)
+  if (dx == 0 && dy == 0)
     {
-      gimp_tile_handler_validate_unassign (old_validate_handler, old_buffer);
+      gimp_tile_handler_validate_buffer_set_extent (old_buffer, &bounding_box);
+    }
+  else
+    {
+      old_validate_handler = proj->priv->validate_handler;
+
+      proj->priv->buffer           = NULL;
+      proj->priv->validate_handler = NULL;
+
+      gimp_projection_allocate_buffer (proj);
+
+      gimp_tile_handler_validate_buffer_copy (
+        old_buffer,
+        GEGL_RECTANGLE (int_bounds.x - old_x,
+                        int_bounds.y - old_y,
+                        int_bounds.width,
+                        int_bounds.height),
+        proj->priv->buffer,
+        GEGL_RECTANGLE (int_bounds.x - x,
+                        int_bounds.y - y,
+                        int_bounds.width,
+                        int_bounds.height));
+
+      gimp_tile_handler_validate_unassign (old_validate_handler,
+                                           old_buffer);
 
       g_object_unref (old_validate_handler);
+      g_object_unref (old_buffer);
     }
-
-  g_object_unref (old_buffer);
 
   if (proj->priv->update_region)
     {
