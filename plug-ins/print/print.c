@@ -40,20 +40,42 @@
 #define PRINT_TEMP_PROC_NAME "file-print-gtk-page-setup-notify-temp"
 #endif
 
+
 G_DEFINE_QUARK (gimp-plugin-print-error-quark, gimp_plugin_print_error)
 
-static void        query (void);
-static void        run   (const gchar       *name,
-                          gint               nparams,
-                          const GimpParam   *param,
-                          gint              *nreturn_vals,
-                          GimpParam        **return_vals);
 
-static GimpPDBStatusType  print_image       (gint32             image_ID,
-                                             gboolean           interactive,
-                                             GError           **error);
+typedef struct _Print      Print;
+typedef struct _PrintClass PrintClass;
+
+struct _Print
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _PrintClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define PRINT_TYPE  (print_get_type ())
+#define PRINT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PRINT_TYPE, Print))
+
+GType                     print_get_type         (void) G_GNUC_CONST;
+
+static GList            * print_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure    * print_create_procedure (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray   * print_run              (GimpProcedure        *procedure,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
+
+static GimpPDBStatusType  print_image            (gint32             image_ID,
+                                                  gboolean           interactive,
+                                                  GError           **error);
 #ifndef EMBED_PAGE_SETUP
-static GimpPDBStatusType  page_setup        (gint32             image_ID);
+static GimpPDBStatusType  page_setup             (gint32             image_ID);
 #endif
 
 static void        print_show_error         (const gchar       *message);
@@ -85,88 +107,133 @@ static GtkPrintOperation *print_operation = NULL;
 #endif
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Print, print, GIMP_TYPE_PLUG_IN)
 
-MAIN ()
+GIMP_MAIN (PRINT_TYPE)
+
 
 static void
-query (void)
+print_class_init (PrintClass *klass)
 {
-  static const GimpParamDef print_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Image to print"                       }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PRINT_PROC_NAME,
-                          N_("Print the image"),
-                          "Print the image using the GTK+ Print API.",
-                          "Bill Skaggs, Sven Neumann, Stefan Röllin",
-                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                          "2006 - 2008",
-                          N_("_Print..."),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (print_args), 0,
-                          print_args, NULL);
-
-  gimp_plugin_menu_register (PRINT_PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_ICON_DOCUMENT_PRINT);
-
-#ifndef EMBED_PAGE_SETUP
-  gimp_install_procedure (PAGE_SETUP_PROC_NAME,
-                          N_("Adjust page size and orientation for printing"),
-                          "Adjust page size and orientation for printing the "
-                          "image using the GTK+ Print API.",
-                          "Bill Skaggs, Sven Neumann, Stefan Röllin",
-                          "Sven Neumann <sven@gimp.org>",
-                          "2008",
-                          N_("Page Set_up"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (print_args), 0,
-                          print_args, NULL);
-
-  gimp_plugin_menu_register (PAGE_SETUP_PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_ICON_DOCUMENT_PAGE_SETUP);
-#endif
+  plug_in_class->query_procedures = print_query_procedures;
+  plug_in_class->create_procedure = print_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+print_init (Print *print)
 {
-  static GimpParam   values[2];
+}
+
+static GList *
+print_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (PRINT_PROC_NAME));
+
+#ifndef EMBED_PAGE_SETUP
+  list = g_list_append (list, g_strdup (PAGE_SETUP_PROC_NAME));
+#endif
+
+  return list;
+}
+
+static GimpProcedure *
+print_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PRINT_PROC_NAME))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      print_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Print..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
+
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PRINT);
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Print the image"),
+                                        "Print the image using the "
+                                        "GTK+ Print API.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Bill Skaggs, Sven Neumann, Stefan Röllin",
+                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                      "2006 - 2008");
+
+    }
+#ifndef EMBED_PAGE_SETUP
+  else if (! strcmp (name, PAGE_SETUP_PROC_NAME))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      print_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("Page Set_up"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
+
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PAGE_SETUP);
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Adjust page size and orientation "
+                                           "for printing"),
+                                        "Adjust page size and orientation "
+                                        "for printing the image using the "
+                                        "GTK+ Print API.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Bill Skaggs, Sven Neumann, Stefan Röllin",
+                                      "Sven Neumann <sven@gimp.org>",
+                                      "2008");
+    }
+#endif
+
+  if (procedure)
+    {
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_INTERACTIVE,
+                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_image_id ("image",
+                                                             "Image",
+                                                             "The image to save",
+                                                             FALSE,
+                                                             G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+print_run (GimpProcedure        *procedure,
+           const GimpValueArray *args,
+           gpointer              run_data)
+{
   GimpRunMode        run_mode;
-  GimpPDBStatusType  status;
   gint32             image_ID;
+  GimpPDBStatusType  status;
   GError            *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
+  image_ID    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  image_ID = param[1].data.d_int32;
-
-  if (strcmp (name, PRINT_PROC_NAME) == 0)
+  if (strcmp (gimp_procedure_get_name (procedure),
+              PRINT_PROC_NAME) == 0)
     {
       status = print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE, &error);
 
@@ -176,7 +243,8 @@ run (const gchar      *name,
         }
     }
 #ifndef EMBED_PAGE_SETUP
-  else if (strcmp (name, PAGE_SETUP_PROC_NAME) == 0)
+  else if (strcmp (gimp_procedure_get_name (procedure),
+                   PAGE_SETUP_PROC_NAME) == 0)
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -193,14 +261,7 @@ run (const gchar      *name,
       status = GIMP_PDB_CALLING_ERROR;
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpPDBStatusType
@@ -257,7 +318,7 @@ print_image (gint32     image_ID,
 #ifndef EMBED_PAGE_SETUP
   print_operation = operation;
   temp_proc = print_temp_proc_install (image_ID);
-  gimp_extension_enable ();
+  gimp_plug_in_extension_enable (gimp_get_plug_in ());
 #endif
 
   if (interactive)
@@ -296,7 +357,7 @@ print_image (gint32     image_ID,
     }
 
 #ifndef EMBED_PAGE_SETUP
-  gimp_uninstall_temp_proc (temp_proc);
+  gimp_plug_in_remove_temp_procedure (gimp_get_plug_in (), temp_proc);
   g_free (temp_proc);
   print_operation = NULL;
 #endif
@@ -327,9 +388,8 @@ static GimpPDBStatusType
 page_setup (gint32 image_ID)
 {
   GtkPrintOperation  *operation;
-  GimpParam          *return_vals;
+  GimpValueArray     *return_vals;
   gchar              *name;
-  gint                n_return_vals;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -347,13 +407,14 @@ page_setup (gint32 image_ID)
   /* we don't want the core to show an error message if the
    * temporary procedure does not exist
    */
-  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
+                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  return_vals = gimp_run_procedure (name,
-                                    &n_return_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
-  gimp_destroy_params (return_vals, n_return_vals);
+  return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
+                                        name,
+                                        GIMP_TYPE_IMAGE_ID, image_ID,
+                                        G_TYPE_NONE);
+  gimp_value_array_unref (return_vals);
 
   g_free (name);
 
@@ -450,23 +511,17 @@ create_custom_widget (GtkPrintOperation *operation,
 }
 
 #ifndef EMBED_PAGE_SETUP
-static void
-print_temp_proc_run (const gchar      *name,
-                     gint              nparams,
-                     const GimpParam  *param,
-                     gint             *nreturn_vals,
-                     GimpParam       **return_vals)
+static GimpValueArray *
+print_temp_proc_run (GimpProcedure        *procedure,
+                     const GimpValueArray *args,
+                     gpointer              run_data)
 {
-  static GimpParam  values[1];
+  gint32 image_ID = gimp_value_get_image_id (gimp_value_array_index (args, 0));
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
+  if (print_operation)
+    print_page_setup_load (print_operation, image_ID);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  if (print_operation && nparams == 1)
-    print_page_setup_load (print_operation, param[0].data.d_int32);
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gchar *
@@ -478,25 +533,33 @@ print_temp_proc_name (gint32 image_ID)
 static gchar *
 print_temp_proc_install (gint32  image_ID)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Image to print" }
-  };
+  GimpPlugIn    *plug_in = gimp_get_plug_in ();
+  gchar         *name    = print_temp_proc_name (image_ID);
+  GimpProcedure *procedure;
 
-  gchar *name = print_temp_proc_name (image_ID);
+  procedure = gimp_procedure_new (plug_in, name, GIMP_TEMPORARY,
+                                  print_temp_proc_run, NULL, NULL);
 
-  gimp_install_temp_proc (name,
-                          "DON'T USE THIS ONE",
-                          "Temporary procedure to notify the Print plug-in "
-                          "about changes to the Page Setup.",
-                         "Sven Neumann",
-                         "Sven Neumann",
-                         "2008",
-                          NULL,
-                          "",
-                          GIMP_TEMPORARY,
-                          G_N_ELEMENTS (args), 0, args, NULL,
-                          print_temp_proc_run);
+  gimp_procedure_set_documentation (procedure,
+                                    "DON'T USE THIS ONE",
+                                    "Temporary procedure to notify the "
+                                    "Print plug-in about changes to the "
+                                    "Page Setup.",
+                                    NULL);
+  gimp_procedure_set_attribution (procedure,
+                                  "Sven Neumann",
+                                  "Sven Neumann",
+                                  "2008");
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "Image",
+                                                         "The image to save",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  g_object_unref (procedure);
 
   return name;
 }
