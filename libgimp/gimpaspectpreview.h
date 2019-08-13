@@ -67,7 +67,7 @@ struct _GimpAspectPreviewClass
 
 GType       gimp_aspect_preview_get_type             (void) G_GNUC_CONST;
 
-GtkWidget * gimp_aspect_preview_new_from_drawable_id (gint32 drawable_ID);
+GtkWidget * gimp_aspect_preview_new_from_drawable (GimpDrawable *drawable);
 
 
 G_END_DECLS

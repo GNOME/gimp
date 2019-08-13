@@ -175,14 +175,14 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
 /*  public functions  */
 
 GeglTileBackend *
-_gimp_tile_backend_plugin_new (gint32 drawable_id,
-                               gint   shadow)
+_gimp_tile_backend_plugin_new (GimpDrawable *drawable,
+                               gint          shadow)
 {
   GeglTileBackend       *backend;
   GimpTileBackendPlugin *backend_plugin;
-  const Babl            *format = gimp_drawable_get_format (drawable_id);
-  gint                   width  = gimp_drawable_width  (drawable_id);
-  gint                   height = gimp_drawable_height (drawable_id);
+  const Babl            *format = gimp_drawable_get_format (drawable);
+  gint                   width  = gimp_drawable_width  (drawable);
+  gint                   height = gimp_drawable_height (drawable);
 
   backend = g_object_new (GIMP_TYPE_TILE_BACKEND_PLUGIN,
                           "tile-width",  TILE_WIDTH,
@@ -192,11 +192,11 @@ _gimp_tile_backend_plugin_new (gint32 drawable_id,
 
   backend_plugin = GIMP_TILE_BACKEND_PLUGIN (backend);
 
-  backend_plugin->priv->drawable_id = drawable_id;
+  backend_plugin->priv->drawable_id = gimp_item_get_id (GIMP_ITEM (drawable));
   backend_plugin->priv->shadow      = shadow;
   backend_plugin->priv->width       = width;
   backend_plugin->priv->height      = height;
-  backend_plugin->priv->bpp         = gimp_drawable_bpp (drawable_id);
+  backend_plugin->priv->bpp         = gimp_drawable_bpp (drawable);
   backend_plugin->priv->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
   backend_plugin->priv->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
 
