@@ -69,12 +69,12 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static void     jigsaw             (guint32       drawable_id,
+static void     jigsaw             (GimpDrawable *drawable,
                                     GimpPreview  *preview);
-static void     jigsaw_preview     (gpointer      drawable_id,
+static void     jigsaw_preview     (GimpDrawable *drawable,
                                     GimpPreview  *preview);
 
-static gboolean jigsaw_dialog      (guint32       drawable_id);
+static gboolean jigsaw_dialog      (GimpDrawable *drawable);
 
 static void     draw_jigsaw        (guchar    *buffer,
                                     gint       bufsize,
@@ -378,6 +378,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
   guint32            drawable_id;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
@@ -386,6 +387,7 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
+  drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_id));
 
   switch (run_mode)
     {
@@ -398,7 +400,7 @@ run (const gchar      *name,
           config.blend_lines = param[6].data.d_int32;
           config.blend_amount = param[7].data.d_float;
 
-          jigsaw (drawable_id, NULL);
+          jigsaw (drawable, NULL);
         }
       else
         {
@@ -408,23 +410,25 @@ run (const gchar      *name,
 
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &config);
-      if (! jigsaw_dialog (drawable_id))
+      if (! jigsaw_dialog (drawable))
         {
           status = GIMP_PDB_CANCEL;
           break;
         }
       gimp_progress_init (_("Assembling jigsaw"));
 
-      jigsaw (drawable_id, NULL);
+      jigsaw (drawable, NULL);
       gimp_set_data (PLUG_IN_PROC, &config, sizeof(config_t));
       gimp_displays_flush ();
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_PROC, &config);
-      jigsaw (drawable_id, NULL);
+      jigsaw (drawable, NULL);
       gimp_displays_flush ();
     }  /* switch */
+
+  g_object_unref (drawable);
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -433,7 +437,7 @@ run (const gchar      *name,
 }
 
 static void
-jigsaw (guint32       drawable_id,
+jigsaw (GimpDrawable *drawable,
         GimpPreview  *preview)
 {
   GeglBuffer *gegl_buffer = NULL;
@@ -447,18 +451,18 @@ jigsaw (guint32       drawable_id,
   if (preview)
     {
       gimp_preview_get_size (preview, &width, &height);
-      buffer = gimp_drawable_get_thumbnail_data (drawable_id,
+      buffer = gimp_drawable_get_thumbnail_data (drawable,
                                                  &width, &height, &bytes);
       buffer_size = bytes * width * height;
     }
   else
     {
-      gegl_buffer = gimp_drawable_get_buffer (drawable_id);
+      gegl_buffer = gimp_drawable_get_buffer (drawable);
 
-      width  = gimp_drawable_width  (drawable_id);
-      height = gimp_drawable_height (drawable_id);
+      width  = gimp_drawable_width  (drawable);
+      height = gimp_drawable_height (drawable);
 
-      if (gimp_drawable_has_alpha (drawable_id))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
@@ -491,25 +495,25 @@ jigsaw (guint32       drawable_id,
     }
   else
     {
-      gegl_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+      gegl_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gegl_buffer_set (gegl_buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        format, buffer,
                        GEGL_AUTO_ROWSTRIDE);
       g_object_unref (gegl_buffer);
 
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
-      gimp_drawable_update (drawable_id, 0, 0, width, height);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable, 0, 0, width, height);
     }
 
   g_free (buffer);
 }
 
 static void
-jigsaw_preview (gpointer     drawable_id,
-                GimpPreview *preview)
+jigsaw_preview (GimpDrawable *drawable,
+                GimpPreview  *preview)
 {
-  jigsaw (GPOINTER_TO_INT (drawable_id), preview);
+  jigsaw (drawable, preview);
 }
 
 static void
@@ -2393,7 +2397,7 @@ check_config (gint width,
 ********************************************************/
 
 static gboolean
-jigsaw_dialog (guint32 drawable_id)
+jigsaw_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -2430,13 +2434,13 @@ jigsaw_dialog (guint32 drawable_id)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new_from_drawable_id (drawable_id);
+  preview = gimp_aspect_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (jigsaw_preview),
-                            GINT_TO_POINTER (drawable_id));
+                            drawable);
 
   frame = gimp_frame_new (_("Number of Tiles"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
