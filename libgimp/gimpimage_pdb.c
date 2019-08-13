@@ -2214,8 +2214,8 @@ _gimp_image_thaw_layers (gint32 image_ID)
 /**
  * gimp_image_insert_channel:
  * @image: The image.
- * @channel_ID: The channel.
- * @parent_ID: The parent channel.
+ * @channel: The channel.
+ * @parent: The parent channel.
  * @position: The channel position.
  *
  * Add the specified channel to the image.
@@ -2230,10 +2230,10 @@ _gimp_image_thaw_layers (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_insert_channel (GimpImage *image,
-                           gint32     channel_ID,
-                           gint32     parent_ID,
-                           gint       position)
+gimp_image_insert_channel (GimpImage   *image,
+                           GimpChannel *channel,
+                           GimpChannel *parent,
+                           gint         position)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -2242,8 +2242,8 @@ gimp_image_insert_channel (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
-                                          GIMP_TYPE_CHANNEL_ID, parent_ID,
+                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
+                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (parent)),
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
@@ -2318,7 +2318,7 @@ _gimp_image_insert_channel (gint32 image_ID,
 /**
  * gimp_image_remove_channel:
  * @image: The image.
- * @channel_ID: The channel.
+ * @channel: The channel.
  *
  * Remove the specified channel from the image.
  *
@@ -2328,8 +2328,8 @@ _gimp_image_insert_channel (gint32 image_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_remove_channel (GimpImage *image,
-                           gint32     channel_ID)
+gimp_image_remove_channel (GimpImage   *image,
+                           GimpChannel *channel)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -2338,7 +2338,7 @@ gimp_image_remove_channel (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_CHANNEL_ID, channel_ID,
+                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (channel)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2584,8 +2584,8 @@ _gimp_image_thaw_channels (gint32 image_ID)
 /**
  * gimp_image_insert_vectors:
  * @image: The image.
- * @vectors_ID: The vectors.
- * @parent_ID: The parent vectors.
+ * @vectors: The vectors.
+ * @parent: The parent vectors.
  * @position: The vectors position.
  *
  * Add the specified vectors to the image.
@@ -2600,10 +2600,10 @@ _gimp_image_thaw_channels (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_insert_vectors (GimpImage *image,
-                           gint32     vectors_ID,
-                           gint32     parent_ID,
-                           gint       position)
+gimp_image_insert_vectors (GimpImage   *image,
+                           GimpVectors *vectors,
+                           GimpVectors *parent,
+                           gint         position)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -2612,8 +2612,8 @@ gimp_image_insert_vectors (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_VECTORS_ID, parent_ID,
+                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
+                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (parent)),
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
@@ -2688,7 +2688,7 @@ _gimp_image_insert_vectors (gint32 image_ID,
 /**
  * gimp_image_remove_vectors:
  * @image: The image.
- * @vectors_ID: The vectors object.
+ * @vectors: The vectors object.
  *
  * Remove the specified path from the image.
  *
@@ -2700,8 +2700,8 @@ _gimp_image_insert_vectors (gint32 image_ID,
  * Since: 2.4
  **/
 gboolean
-gimp_image_remove_vectors (GimpImage *image,
-                           gint32     vectors_ID)
+gimp_image_remove_vectors (GimpImage   *image,
+                           GimpVectors *vectors)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -2710,7 +2710,7 @@ gimp_image_remove_vectors (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_VECTORS_ID, vectors_ID,
+                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (vectors)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -4637,15 +4637,15 @@ _gimp_image_set_active_layer (gint32 image_ID,
  * If there is an active channel, this will return the channel ID,
  * otherwise, -1.
  *
- * Returns: The active channel.
+ * Returns: (transfer full): The active channel.
  **/
-gint32
+GimpChannel *
 gimp_image_get_active_channel (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 active_channel_ID = -1;
+  GimpChannel *active_channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -4661,11 +4661,11 @@ gimp_image_get_active_channel (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    active_channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    active_channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return active_channel_ID;
+  return active_channel;
 }
 
 /**
@@ -4711,7 +4711,7 @@ _gimp_image_get_active_channel (gint32 image_ID)
 /**
  * gimp_image_set_active_channel:
  * @image: The image.
- * @active_channel_ID: The new image active channel.
+ * @active_channel: The new image active channel.
  *
  * Sets the specified image's active channel.
  *
@@ -4723,8 +4723,8 @@ _gimp_image_get_active_channel (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_active_channel (GimpImage *image,
-                               gint32     active_channel_ID)
+gimp_image_set_active_channel (GimpImage   *image,
+                               GimpChannel *active_channel)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -4733,7 +4733,7 @@ gimp_image_set_active_channel (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_CHANNEL_ID, active_channel_ID,
+                                          GIMP_TYPE_CHANNEL_ID, gimp_item_get_id (GIMP_ITEM (active_channel)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -4804,15 +4804,15 @@ _gimp_image_set_active_channel (gint32 image_ID,
  *
  * If there is an active path, its ID will be returned, otherwise, -1.
  *
- * Returns: The active vectors.
+ * Returns: (transfer full): The active vectors.
  **/
-gint32
+GimpVectors *
 gimp_image_get_active_vectors (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 active_vectors_ID = -1;
+  GimpVectors *active_vectors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -4828,11 +4828,11 @@ gimp_image_get_active_vectors (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    active_vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+    active_vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return active_vectors_ID;
+  return active_vectors;
 }
 
 /**
@@ -4877,7 +4877,7 @@ _gimp_image_get_active_vectors (gint32 image_ID)
 /**
  * gimp_image_set_active_vectors:
  * @image: The image.
- * @active_vectors_ID: The new image active vectors.
+ * @active_vectors: The new image active vectors.
  *
  * Sets the specified image's active vectors.
  *
@@ -4886,8 +4886,8 @@ _gimp_image_get_active_vectors (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_active_vectors (GimpImage *image,
-                               gint32     active_vectors_ID)
+gimp_image_set_active_vectors (GimpImage   *image,
+                               GimpVectors *active_vectors)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -4896,7 +4896,7 @@ gimp_image_set_active_vectors (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_VECTORS_ID, active_vectors_ID,
+                                          GIMP_TYPE_VECTORS_ID, gimp_item_get_id (GIMP_ITEM (active_vectors)),
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -4965,15 +4965,15 @@ _gimp_image_set_active_vectors (gint32 image_ID,
  * This will always return a valid ID for a selection -- which is
  * represented as a channel internally.
  *
- * Returns: The selection channel.
+ * Returns: (transfer full): The selection channel.
  **/
-gint32
+GimpSelection *
 gimp_image_get_selection (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 selection_ID = -1;
+  GimpSelection *selection = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -4989,11 +4989,11 @@ gimp_image_get_selection (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    selection_ID = gimp_value_get_selection_id (gimp_value_array_index (return_vals, 1));
+    selection = GIMP_SELECTION (gimp_item_new_by_id (gimp_value_get_selection_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return selection_ID;
+  return selection;
 }
 
 /**
@@ -6682,16 +6682,16 @@ _gimp_image_get_layer_by_tattoo (gint32 image_ID,
  * This procedure returns the channel with the given tattoo in the
  * specified image.
  *
- * Returns: The channel with the specified tattoo.
+ * Returns: (transfer full): The channel with the specified tattoo.
  **/
-gint32
+GimpChannel *
 gimp_image_get_channel_by_tattoo (GimpImage *image,
                                   guint      tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 channel_ID = -1;
+  GimpChannel *channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -6708,11 +6708,11 @@ gimp_image_get_channel_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return channel_ID;
+  return channel;
 }
 
 /**
@@ -6768,18 +6768,18 @@ _gimp_image_get_channel_by_tattoo (gint32 image_ID,
  * This procedure returns the vectors with the given tattoo in the
  * specified image.
  *
- * Returns: The vectors with the specified tattoo.
+ * Returns: (transfer full): The vectors with the specified tattoo.
  *
  * Since: 2.6
  **/
-gint32
+GimpVectors *
 gimp_image_get_vectors_by_tattoo (GimpImage *image,
                                   guint      tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 vectors_ID = -1;
+  GimpVectors *vectors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -6796,11 +6796,11 @@ gimp_image_get_vectors_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+    vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return vectors_ID;
+  return vectors;
 }
 
 /**
@@ -6948,18 +6948,18 @@ _gimp_image_get_layer_by_name (gint32       image_ID,
  * This procedure returns the channel with the given name in the
  * specified image.
  *
- * Returns: The channel with the specified name.
+ * Returns: (transfer full): The channel with the specified name.
  *
  * Since: 2.8
  **/
-gint32
+GimpChannel *
 gimp_image_get_channel_by_name (GimpImage   *image,
                                 const gchar *name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 channel_ID = -1;
+  GimpChannel *channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -6976,11 +6976,11 @@ gimp_image_get_channel_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return channel_ID;
+  return channel;
 }
 
 /**
@@ -7038,18 +7038,18 @@ _gimp_image_get_channel_by_name (gint32       image_ID,
  * This procedure returns the vectors with the given name in the
  * specified image.
  *
- * Returns: The vectors with the specified name.
+ * Returns: (transfer full): The vectors with the specified name.
  *
  * Since: 2.8
  **/
-gint32
+GimpVectors *
 gimp_image_get_vectors_by_name (GimpImage   *image,
                                 const gchar *name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 vectors_ID = -1;
+  GimpVectors *vectors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -7066,11 +7066,11 @@ gimp_image_get_vectors_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_ID = gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1));
+    vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return vectors_ID;
+  return vectors;
 }
 
 /**
