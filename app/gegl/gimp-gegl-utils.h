@@ -49,5 +49,8 @@ gboolean     gimp_gegl_param_spec_has_key            (GParamSpec          *pspec
 
 GeglBuffer * gimp_gegl_buffer_dup                    (GeglBuffer          *buffer);
 
+gboolean     gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
+                                                      const GeglRectangle *extent);
+
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
