@@ -36,6 +36,48 @@
 
 /**
  * gimp_display_is_valid:
+ * @display: The display to check.
+ *
+ * Returns TRUE if the display is valid.
+ *
+ * This procedure checks if the given display ID is valid and refers to
+ * an existing display.
+ *
+ * Returns: Whether the display ID is valid.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_display_is_valid (GimpDisplay *display)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean valid = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY_ID, gimp_display_get_id (display),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-display-is-valid",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-display-is-valid",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    valid = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return valid;
+}
+
+/**
+ * _gimp_display_is_valid: (skip)
  * @display_ID: The display to check.
  *
  * Returns TRUE if the display is valid.
@@ -48,7 +90,7 @@
  * Since: 2.4
  **/
 gboolean
-gimp_display_is_valid (gint32 display_ID)
+_gimp_display_is_valid (gint32 display_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -89,15 +131,15 @@ gimp_display_is_valid (gint32 display_ID)
  * procedure only makes sense for use with the GIMP UI, and will result
  * in an execution error if called when GIMP has no UI.
  *
- * Returns: The new display.
+ * Returns: (transfer full): The new display.
  **/
-gint32
+GimpDisplay *
 gimp_display_new (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 display_ID = -1;
+  GimpDisplay *display = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -113,11 +155,11 @@ gimp_display_new (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    display_ID = gimp_value_get_display_id (gimp_value_array_index (return_vals, 1));
+    display = gimp_display_new_by_id (gimp_value_get_display_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
-  return display_ID;
+  return display;
 }
 
 /**
@@ -166,6 +208,48 @@ _gimp_display_new (gint32 image_ID)
 
 /**
  * gimp_display_delete:
+ * @display: The display to delete.
+ *
+ * Delete the specified display.
+ *
+ * This procedure removes the specified display. If this is the last
+ * remaining display for the underlying image, then the image is
+ * deleted also. Note that the display is closed no matter if the image
+ * is dirty or not. Better save the image before calling this
+ * procedure.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_display_delete (GimpDisplay *display)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY_ID, gimp_display_get_id (display),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-display-delete",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-display-delete",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_display_delete: (skip)
  * @display_ID: The display to delete.
  *
  * Delete the specified display.
@@ -179,7 +263,7 @@ _gimp_display_new (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_display_delete (gint32 display_ID)
+_gimp_display_delete (gint32 display_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -208,6 +292,51 @@ gimp_display_delete (gint32 display_ID)
 
 /**
  * gimp_display_get_window_handle:
+ * @display: The display to get the window handle from.
+ *
+ * Get a handle to the native window for an image display.
+ *
+ * This procedure returns a handle to the native window for a given
+ * image display. For example in the X backend of GDK, a native window
+ * handle is an Xlib XID. A value of 0 is returned for an invalid
+ * display or if this function is unimplemented for the windowing
+ * system that is being used.
+ *
+ * Returns: The native window handle or 0.
+ *
+ * Since: 2.4
+ **/
+gint
+gimp_display_get_window_handle (GimpDisplay *display)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint window = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DISPLAY_ID, gimp_display_get_id (display),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-display-get-window-handle",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-display-get-window-handle",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    window = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return window;
+}
+
+/**
+ * _gimp_display_get_window_handle: (skip)
  * @display_ID: The display to get the window handle from.
  *
  * Get a handle to the native window for an image display.
@@ -223,7 +352,7 @@ gimp_display_delete (gint32 display_ID)
  * Since: 2.4
  **/
 gint
-gimp_display_get_window_handle (gint32 display_ID)
+_gimp_display_get_window_handle (gint32 display_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

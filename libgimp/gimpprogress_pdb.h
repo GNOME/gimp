@@ -32,8 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gboolean _gimp_progress_init             (const gchar *message,
-                                                          gint32       gdisplay_ID);
 G_GNUC_INTERNAL gboolean _gimp_progress_update           (gdouble      percentage);
 gboolean                 gimp_progress_pulse             (void);
 gboolean                 gimp_progress_set_text          (const gchar *message);
@@ -45,10 +43,12 @@ gboolean                 gimp_progress_cancel            (const gchar *progress_
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-
+G_GNUC_INTERNAL gboolean _gimp_progress_init (const gchar *message,
+                                              GimpDisplay *gdisplay);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
+#define _gimp_progress_init __gimp_progress_init
 
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
@@ -57,7 +57,8 @@ gboolean                 gimp_progress_cancel            (const gchar *progress_
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-
+gboolean __gimp_progress_init (const gchar *message,
+                               gint32       gdisplay_ID);
 
 
 G_END_DECLS

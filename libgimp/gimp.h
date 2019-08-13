@@ -37,6 +37,7 @@
 
 #include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
+#include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfontselect.h>
 #include <libgimp/gimpgimprc.h>
@@ -46,6 +47,7 @@
 #include <libgimp/gimpimageprocedure.h>
 #include <libgimp/gimpitem.h>
 #include <libgimp/gimplayer.h>
+#include <libgimp/gimplayermask.h>
 #include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimplegacy.h>
 #include <libgimp/gimppaletteselect.h>
@@ -56,6 +58,7 @@
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
+#include <libgimp/gimpvectors.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 

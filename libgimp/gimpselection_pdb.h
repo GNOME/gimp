@@ -65,7 +65,7 @@ gboolean                   gimp_selection_grow      (GimpImage    *image,
 gboolean                   gimp_selection_shrink    (GimpImage    *image,
                                                      gint          steps);
 gboolean                   gimp_selection_flood     (GimpImage    *image);
-gint32                     gimp_selection_save      (GimpImage    *image);
+GimpChannel*               gimp_selection_save      (GimpImage    *image);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
