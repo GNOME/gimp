@@ -282,8 +282,6 @@ animation_play_LDADD = \
 	$(INTLLIBS)		\
 	$(animation_play_RC)
 
-blinds_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 blinds_SOURCES = \
 	blinds.c
 
@@ -341,8 +339,6 @@ busy_dialog_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(busy_dialog_RC)
-
-checkerboard_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 checkerboard_SOURCES = \
 	checkerboard.c
@@ -421,8 +417,6 @@ compose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(compose_RC)
-
-contrast_retinex_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 contrast_retinex_SOURCES = \
 	contrast-retinex.c
@@ -520,8 +514,6 @@ depth_merge_LDADD = \
 	$(INTLLIBS)		\
 	$(depth_merge_RC)
 
-despeckle_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 despeckle_SOURCES = \
 	despeckle.c
 
@@ -539,8 +531,6 @@ despeckle_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(despeckle_RC)
-
-destripe_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 destripe_SOURCES = \
 	destripe.c
@@ -1323,8 +1313,6 @@ gradient_map_LDADD = \
 	$(INTLLIBS)		\
 	$(gradient_map_RC)
 
-grid_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 grid_SOURCES = \
 	grid.c
 
@@ -1380,8 +1368,6 @@ hot_LDADD = \
 	$(INTLLIBS)		\
 	$(hot_RC)
 
-jigsaw_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 jigsaw_SOURCES = \
 	jigsaw.c
 
@@ -1418,8 +1404,6 @@ mail_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(mail_RC)
-
-nl_filter_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 nl_filter_SOURCES = \
 	nl-filter.c
@@ -1536,8 +1520,6 @@ smooth_palette_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(smooth_palette_RC)
-
-sparkle_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 sparkle_SOURCES = \
 	sparkle.c
