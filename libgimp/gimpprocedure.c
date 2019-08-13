@@ -105,7 +105,7 @@ static GimpValueArray *
 static gboolean   gimp_procedure_validate_args  (GimpProcedure        *procedure,
                                                  GParamSpec          **param_specs,
                                                  gint                  n_param_specs,
-                                                 const GimpValueArray *args,
+                                                 GimpValueArray       *args,
                                                  gboolean              return_vals,
                                                  GError              **error);
 
@@ -1293,8 +1293,8 @@ gimp_procedure_new_return_values (GimpProcedure     *procedure,
  * Since: 3.0
  **/
 GimpValueArray *
-gimp_procedure_run (GimpProcedure        *procedure,
-                    const GimpValueArray *args)
+gimp_procedure_run (GimpProcedure  *procedure,
+                    GimpValueArray *args)
 {
   GimpValueArray *return_vals;
   GError         *error = NULL;
@@ -1409,12 +1409,12 @@ gimp_procedure_extension_ready (GimpProcedure *procedure)
 /*  private functions  */
 
 static gboolean
-gimp_procedure_validate_args (GimpProcedure         *procedure,
-                              GParamSpec           **param_specs,
-                              gint                   n_param_specs,
-                              const GimpValueArray  *args,
-                              gboolean               return_vals,
-                              GError               **error)
+gimp_procedure_validate_args (GimpProcedure   *procedure,
+                              GParamSpec     **param_specs,
+                              gint             n_param_specs,
+                              GimpValueArray  *args,
+                              gboolean         return_vals,
+                              GError         **error)
 {
   gint i;
 
@@ -1425,7 +1425,22 @@ gimp_procedure_validate_args (GimpProcedure         *procedure,
       GType       arg_type  = G_VALUE_TYPE (arg);
       GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
-      if (arg_type != spec_type)
+      /* As a special case, validation can transform IDs into their
+       * respective object.
+       */
+      if (arg_type == GIMP_TYPE_IMAGE_ID &&
+          spec_type == GIMP_TYPE_IMAGE)
+        {
+          GValue     value = G_VALUE_INIT;
+          GimpImage *image = gimp_image_new_by_id (g_value_get_int (arg));
+
+          g_value_init (&value, GIMP_TYPE_IMAGE);
+          g_value_take_object (&value, image);
+          gimp_value_array_remove (args, i);
+          gimp_value_array_insert (args, i, &value);
+          g_value_unset (&value);
+        }
+      else if (arg_type != spec_type)
         {
           if (return_vals)
             {
