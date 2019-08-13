@@ -84,7 +84,7 @@ GtkWidget        * gimp_export_dialog_get_content_area (GtkWidget              *
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
 GimpExportReturn   gimp_export_image                   (GimpImage             **image,
-                                                        gint32                 *drawable_ID,
+                                                        GimpDrawable          **drawable,
                                                         const gchar            *format_name,
                                                         GimpExportCapabilities  capabilities);
 
