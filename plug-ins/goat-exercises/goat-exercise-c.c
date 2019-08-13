@@ -130,17 +130,17 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                                       GIMP_RUN_NONINTERACTIVE,
                                                       G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
+                                   g_param_spec_object ("image",
+                                                        "Image",
+                                                        "The input image",
+                                                        GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
+                                   g_param_spec_object ("drawable",
+                                                        "Drawable",
+                                                        "The input drawable",
+                                                        GIMP_TYPE_DRAWABLE,
+                                                        GIMP_PARAM_READWRITE));
     }
 
   return procedure;
@@ -153,13 +153,8 @@ goat_run (GimpProcedure        *procedure,
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpRunMode       run_mode;
-  gint32            drawable_id;
+  GimpDrawable     *drawable;
   gint              x, y, width, height;
-
-  g_printerr ("goat run %d %d %d\n",
-              g_value_get_enum           (gimp_value_array_index (args, 0)),
-              gimp_value_get_image_id    (gimp_value_array_index (args, 1)),
-              gimp_value_get_drawable_id (gimp_value_array_index (args, 2)));
 
   INIT_I18N();
 
@@ -259,25 +254,25 @@ goat_run (GimpProcedure        *procedure,
         }
     }
 
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
-  if (gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
+  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
       GeglBuffer *buffer;
       GeglBuffer *shadow_buffer;
 
       gegl_init (NULL, NULL);
 
-      buffer        = gimp_drawable_get_buffer (drawable_id);
-      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+      buffer        = gimp_drawable_get_buffer (drawable);
+      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
       gegl_render_op (buffer, shadow_buffer, "gegl:invert", NULL);
 
       g_object_unref (shadow_buffer); /* flushes the shadow tiles */
       g_object_unref (buffer);
 
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
-      gimp_drawable_update (drawable_id, x, y, width, height);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable, x, y, width, height);
       gimp_displays_flush ();
 
       gegl_exit ();
