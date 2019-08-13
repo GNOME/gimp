@@ -80,16 +80,16 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  sparkle_dialog        (gint32        drawable_ID);
+static gboolean  sparkle_dialog        (GimpDrawable *drawable);
 
 static gint      compute_luminosity    (const guchar *pixel,
                                         gboolean      gray,
                                         gboolean      has_alpha);
-static gint      compute_lum_threshold (gint32        drawable_ID,
+static gint      compute_lum_threshold (GimpDrawable *drawable,
                                         gdouble       percentile);
-static void      sparkle               (gint32        drawable_ID,
+static void      sparkle               (GimpDrawable *drawable,
                                         GimpPreview  *preview);
-static void      sparkle_preview       (gpointer      drawable_ID,
+static void      sparkle_preview       (GimpDrawable *drawable,
                                         GimpPreview  *preview);
 static void      fspike                (GeglBuffer   *src_buffer,
                                         GeglBuffer   *dest_buffer,
@@ -200,6 +200,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
   gint32             drawable_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, w, h;
@@ -215,10 +216,12 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
+  drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
 
-  if (! gimp_drawable_mask_intersect (drawable_ID, &x, &y, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     {
       g_message (_("Region selected for filter is empty"));
+      g_object_unref (drawable);
       return;
     }
 
@@ -229,8 +232,11 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &svals);
 
       /*  First acquire information with a dialog  */
-      if (! sparkle_dialog (drawable_ID))
-        return;
+      if (! sparkle_dialog (drawable))
+        {
+          g_object_unref (drawable);
+          return;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -289,12 +295,12 @@ run (const gchar      *name,
     }
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable_ID) ||
-      gimp_drawable_is_gray (drawable_ID))
+  if (gimp_drawable_is_rgb (drawable) ||
+      gimp_drawable_is_gray (drawable))
     {
       gimp_progress_init (_("Sparkling"));
 
-      sparkle (drawable_ID, NULL);
+      sparkle (drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -309,11 +315,12 @@ run (const gchar      *name,
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
+  g_object_unref (drawable);
   values[0].data.d_status = status;
 }
 
 static gboolean
-sparkle_dialog (gint32 drawable_ID)
+sparkle_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -350,12 +357,12 @@ sparkle_dialog (gint32 drawable_ID)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (sparkle_preview),
-                            GINT_TO_POINTER (drawable_ID));
+                            drawable);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
@@ -616,7 +623,7 @@ compute_luminosity (const guchar *pixel,
 }
 
 static gint
-compute_lum_threshold (gint32  drawable_ID,
+compute_lum_threshold (GimpDrawable *drawable,
                        gdouble percentile)
 {
   GeglBuffer         *src_buffer;
@@ -634,12 +641,12 @@ compute_lum_threshold (gint32  drawable_ID,
   /*  zero out the luminosity values array  */
   memset (values, 0, sizeof (gint) * 256);
 
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x1, &y1, &width, &height))
     return 0;
 
-  gray = gimp_drawable_is_gray (drawable_ID);
-  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  gray = gimp_drawable_is_gray (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (gray)
     {
@@ -658,7 +665,7 @@ compute_lum_threshold (gint32  drawable_ID,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
-  src_buffer = gimp_drawable_get_buffer (drawable_ID);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    GEGL_RECTANGLE (x1, y1, width, height), 0,
@@ -696,8 +703,8 @@ compute_lum_threshold (gint32  drawable_ID,
 }
 
 static void
-sparkle (gint32       drawable_ID,
-         GimpPreview *preview)
+sparkle (GimpDrawable *drawable,
+         GimpPreview  *preview)
 {
   GeglBuffer         *src_buffer;
   GeglBuffer         *dest_buffer;
@@ -716,8 +723,8 @@ sparkle (gint32       drawable_ID,
   GRand              *gr;
   guchar             *dest_buf = NULL;
 
-  gray = gimp_drawable_is_gray (drawable_ID);
-  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  gray = gimp_drawable_is_gray (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (gray)
     {
@@ -749,7 +756,7 @@ sparkle (gint32       drawable_ID,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable_ID,
+      if (! gimp_drawable_mask_intersect (drawable,
                                           &x1, &y1, &width, &height))
         return;
 
@@ -760,8 +767,8 @@ sparkle (gint32       drawable_ID,
   if (width < 1 || height < 1)
     return;
 
-  d_width  = gimp_drawable_width  (drawable_ID);
-  d_height = gimp_drawable_height (drawable_ID);
+  d_width  = gimp_drawable_width  (drawable);
+  d_height = gimp_drawable_height (drawable);
 
   gr = g_rand_new ();
 
@@ -773,7 +780,7 @@ sparkle (gint32       drawable_ID,
   else
     {
       /*  compute the luminosity which exceeds the luminosity threshold  */
-      threshold = compute_lum_threshold (drawable_ID, svals.lum_threshold);
+      threshold = compute_lum_threshold (drawable, svals.lum_threshold);
     }
 
   /* initialize the progress dialog */
@@ -781,8 +788,8 @@ sparkle (gint32       drawable_ID,
   max_progress = num_sparkles;
 
   /* copy what is already there */
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    GEGL_RECTANGLE (x1, y1, width, height), 0,
@@ -944,18 +951,18 @@ sparkle (gint32       drawable_ID,
     {
       gimp_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable_ID, TRUE);
-      gimp_drawable_update (drawable_ID, x1, y1, width, height);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable, x1, y1, width, height);
     }
 
   g_rand_free (gr);
 }
 
 static void
-sparkle_preview (gpointer     drawable_ID,
-                 GimpPreview *preview)
+sparkle_preview (GimpDrawable *drawable,
+                 GimpPreview  *preview)
 {
-  sparkle (GPOINTER_TO_INT (drawable_ID), preview);
+  sparkle (drawable, preview);
 }
 
 static inline void
