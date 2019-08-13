@@ -41,8 +41,7 @@ class Goat (Gimp.PlugIn):
         self._run_mode = run_mode
 
     ## Parameter: image ##
-    #@GObject.Property(type=Gimp.ImageID.__gtype__,
-    @GObject.Property(type=int,
+    @GObject.Property(type=Gimp.Image,
                       default=0,
                       nick= _("Image"),
                       blurb= _("The input image"))
@@ -54,8 +53,7 @@ class Goat (Gimp.PlugIn):
         self._image = image
 
     ## Parameter: drawable ##
-    #@GObject.Property(type=Gimp.DrawableID.__gtype__,
-    @GObject.Property(type=int,
+    @GObject.Property(type=Gimp.Drawable,
                       default=0,
                       nick= _("Drawable"),
                       blurb= _("The input drawable"))
@@ -166,21 +164,14 @@ class Goat (Gimp.PlugIn):
                     return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                        GLib.Error())
 
-        # Parameters are not working fine yet because properties should
-        # be Gimp.ImageID/Gimp.DrawableID but we can't make these with
-        # pygobject. Until I figure out how to make it work, you could
-        # uncomment the following lines instead of using the args value.
-        #images = Gimp.image_list()
-        #image_id = images[0]
-        #drawable_id = Gimp.image_get_active_drawable(image_id)
-        drawable_id = args.index(2)
+        drawable = args.index(2)
 
-        success, x, y, width, height = Gimp.drawable_mask_intersect(drawable_id);
+        success, x, y, width, height = drawable.mask_intersect();
         if success:
             Gegl.init(None);
 
-            buffer = Gimp.drawable_get_buffer(drawable_id)
-            shadow_buffer = Gimp.drawable_get_shadow_buffer(drawable_id)
+            buffer = drawable.get_buffer()
+            shadow_buffer = drawable.get_shadow_buffer()
 
             graph = Gegl.Node()
             input = graph.create_child("gegl:buffer-source")
@@ -198,8 +189,8 @@ class Goat (Gimp.PlugIn):
             # during an unref().
             shadow_buffer.flush()
 
-            Gimp.drawable_merge_shadow(drawable_id, True)
-            Gimp.drawable_update(drawable_id, x, y, width, height)
+            drawable.merge_shadow(True)
+            drawable.update(x, y, width, height)
             Gimp.displays_flush()
         else:
             retval = procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
