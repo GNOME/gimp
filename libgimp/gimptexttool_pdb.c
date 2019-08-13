@@ -37,7 +37,7 @@
 /**
  * gimp_text_fontname:
  * @image: The image.
- * @drawable_ID: The affected drawable: (-1 for a new text layer).
+ * @drawable: The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
  * @text: The text to generate (in UTF-8 encoding).
@@ -64,11 +64,11 @@
  * divide the size in points by 72.0 and multiply it by the image's
  * vertical resolution.
  *
- * Returns: The new text layer or -1 if no layer was created.
+ * Returns: (transfer full): The new text layer or -1 if no layer was created.
  **/
-gint32
+GimpLayer *
 gimp_text_fontname (GimpImage    *image,
-                    gint32        drawable_ID,
+                    GimpDrawable *drawable,
                     gdouble       x,
                     gdouble       y,
                     const gchar  *text,
@@ -81,11 +81,11 @@ gimp_text_fontname (GimpImage    *image,
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 text_layer_ID = -1;
+  GimpLayer *text_layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_STRING, text,
@@ -106,11 +106,11 @@ gimp_text_fontname (GimpImage    *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    text_layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    text_layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return text_layer_ID;
+  return text_layer;
 }
 
 /**
