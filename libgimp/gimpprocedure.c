@@ -1425,7 +1425,7 @@ gimp_procedure_validate_args (GimpProcedure   *procedure,
       GType       arg_type  = G_VALUE_TYPE (arg);
       GType       spec_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
 
-      /* As a special case, validation can transform IDs into their
+      /* As special cases, validation can transform IDs into their
        * respective object.
        */
       if (arg_type == GIMP_TYPE_IMAGE_ID &&
@@ -1436,6 +1436,22 @@ gimp_procedure_validate_args (GimpProcedure   *procedure,
 
           g_value_init (&value, GIMP_TYPE_IMAGE);
           g_value_take_object (&value, image);
+          gimp_value_array_remove (args, i);
+          gimp_value_array_insert (args, i, &value);
+          g_value_unset (&value);
+        }
+      else if ((arg_type == GIMP_TYPE_ITEM_ID &&
+                spec_type == GIMP_TYPE_ITEM)     ||
+               (arg_type == GIMP_TYPE_DRAWABLE_ID &&
+                spec_type == GIMP_TYPE_DRAWABLE) ||
+               (arg_type == GIMP_TYPE_LAYER_ID &&
+                spec_type == GIMP_TYPE_LAYER))
+        {
+          GValue    value = G_VALUE_INIT;
+          GimpItem *item = gimp_item_new_by_id (g_value_get_int (arg));
+
+          g_value_init (&value, spec_type);
+          g_value_take_object (&value, item);
           gimp_value_array_remove (args, i);
           gimp_value_array_insert (args, i, &value);
           g_value_unset (&value);
