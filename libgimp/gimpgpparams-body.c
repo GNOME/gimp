@@ -517,30 +517,44 @@ _gimp_value_to_gp_param (const GValue *value,
     {
       GimpArray *array = g_value_get_boxed (value);
 
-      param->param_type = GP_PARAM_TYPE_ARRAY;
+      if (array)
+        {
+          param->param_type = GP_PARAM_TYPE_ARRAY;
 
-      param->data.d_array.size = array->length;
+          param->data.d_array.size = array->length;
 
-      if (full_copy)
-        param->data.d_array.data = g_memdup (array->data,
-                                             array->length);
+          if (full_copy)
+            param->data.d_array.data = g_memdup (array->data,
+                                                 array->length);
+          else
+            param->data.d_array.data = array->data;
+        }
       else
-        param->data.d_array.data = array->data;
+        {
+          param->data.d_array.data = NULL;
+        }
     }
   else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
     {
       GimpArray *array = g_value_get_boxed (value);
 
-      param->param_type = GP_PARAM_TYPE_STRING_ARRAY;
+      if (array)
+        {
+          param->param_type = GP_PARAM_TYPE_STRING_ARRAY;
 
-      param->data.d_string_array.size = array->length;
+          param->data.d_string_array.size = array->length;
 
-      if (full_copy)
-        param->data.d_string_array.data =
-          gimp_value_dup_string_array (value);
+          if (full_copy)
+            param->data.d_string_array.data =
+              gimp_value_dup_string_array (value);
+          else
+            param->data.d_string_array.data =
+              (gchar **) gimp_value_get_string_array (value);
+        }
       else
-        param->data.d_string_array.data =
-          (gchar **) gimp_value_get_string_array (value);
+        {
+          param->data.d_string_array.data = NULL;
+        }
     }
   else if (GIMP_VALUE_HOLDS_DISPLAY_ID (value)    ||
            GIMP_VALUE_HOLDS_IMAGE_ID (value)      ||
