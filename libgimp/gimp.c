@@ -837,12 +837,12 @@ gimp_check_type (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
- * Returns: the default display ID
+ * Returns: (transfer full): the default display ID
  **/
-gint32
+GimpDisplay *
 gimp_default_display (void)
 {
-  return _gdisp_ID;
+  return gimp_display_new_by_id (_gdisp_ID);
 }
 
 /**
