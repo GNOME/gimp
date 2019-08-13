@@ -166,7 +166,7 @@ GimpValueArray * gimp_procedure_new_return_values  (GimpProcedure        *proced
                                                     GError               *error);
 
 GimpValueArray * gimp_procedure_run                (GimpProcedure        *procedure,
-                                                    const GimpValueArray *args);
+                                                    GimpValueArray       *args);
 
 void             gimp_procedure_extension_ready    (GimpProcedure        *procedure);
 
