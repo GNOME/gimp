@@ -68,10 +68,9 @@ struct _GimpZoomPreviewClass
 
 GType           gimp_zoom_preview_get_type       (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_zoom_preview_new_from_drawable_id
-                                                 (gint32           drawable_ID);
-GtkWidget     * gimp_zoom_preview_new_with_model_from_drawable_id
-                                                 (gint32           drawable_ID,
+GtkWidget     * gimp_zoom_preview_new_from_drawable (GimpDrawable *drawable);
+GtkWidget     * gimp_zoom_preview_new_with_model_from_drawable
+                                                 (GimpDrawable    *drawable,
                                                   GimpZoomModel   *model);
 
 guchar        * gimp_zoom_preview_get_source     (GimpZoomPreview *preview,
@@ -79,7 +78,7 @@ guchar        * gimp_zoom_preview_get_source     (GimpZoomPreview *preview,
                                                   gint            *height,
                                                   gint            *bpp);
 
-gint32          gimp_zoom_preview_get_drawable_id(GimpZoomPreview *preview);
+GimpDrawable  * gimp_zoom_preview_get_drawable   (GimpZoomPreview *preview);
 GimpZoomModel * gimp_zoom_preview_get_model      (GimpZoomPreview *preview);
 gdouble         gimp_zoom_preview_get_factor     (GimpZoomPreview *preview);
 

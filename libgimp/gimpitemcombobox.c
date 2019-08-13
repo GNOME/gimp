@@ -467,12 +467,14 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
 
   for (i = 0; i < num_items; i++)
     {
+      GimpItem *item = gimp_item_new_by_id (items[i]);
+
       if ((! private->constraint && ! private->constraint_d)                                ||
           (private->constraint && (* private->constraint) (image, items[i], private->data)) ||
           (private->constraint_d && (* private->constraint_d) (gimp_image_get_id (image), items[i], private->data)))
         {
           gchar     *image_name = gimp_image_get_name (image);
-          gchar     *item_name  = gimp_item_get_name (items[i]);
+          gchar     *item_name  = gimp_item_get_name (item);
           gchar     *label;
           GdkPixbuf *thumb;
 
@@ -487,7 +489,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
             thumb = NULL;
           else
-            thumb = gimp_drawable_get_thumbnail (items[i],
+            thumb = gimp_drawable_get_thumbnail (GIMP_DRAWABLE (item),
                                                  THUMBNAIL_SIZE, THUMBNAIL_SIZE,
                                                  GIMP_PIXBUF_SMALL_CHECKS);
 
@@ -504,18 +506,20 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           g_free (label);
         }
 
-      if (gimp_item_is_group (items[i]))
+      if (gimp_item_is_group (item))
         {
           gint32 *children;
           gint    n_children;
 
-          children = gimp_item_get_children (items[i], &n_children);
+          children = gimp_item_get_children (item, &n_children);
           gimp_item_combo_box_model_add (combo_box, store,
                                          image,
                                          n_children, children,
                                          tree_level + 1);
           g_free (children);
         }
+
+      g_object_unref (item);
     }
 
   g_free (indent);
@@ -583,7 +587,7 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
 
   if (gimp_int_combo_box_get_active (combo_box, &item_ID))
     {
-      if (item_ID > 0 && ! gimp_item_is_valid (item_ID))
+      if (item_ID > 0 && ! _gimp_item_is_valid (item_ID))
         {
           GtkTreeModel *model;
           GList        *remove = NULL;
