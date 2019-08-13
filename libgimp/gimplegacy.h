@@ -305,14 +305,6 @@ void           gimp_destroy_params      (GimpParam       *params,
 const gchar       * gimp_get_pdb_error  (void);
 GimpPDBStatusType   gimp_get_pdb_status (void);
 
-/* gimp_plugin API that should now be done by using GimpPlugIn
- */
-
-gboolean   gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler  handler);
-GimpPDBErrorHandler
-           gimp_plugin_get_pdb_error_handler (void);
-
-
 /* gimp_plugin API that should now be done by using GimpProcedure
  */
 
