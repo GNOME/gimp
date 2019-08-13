@@ -51,8 +51,8 @@
  **/
 
 
-typedef void (* ExportFunc) (GimpImage *image,
-                             gint32    *drawable_ID);
+typedef void (* ExportFunc) (GimpImage     *image,
+                             GimpDrawable **drawable);
 
 
 /* the export action structure */
@@ -69,25 +69,29 @@ typedef struct
 /* the functions that do the actual export */
 
 static void
-export_merge (GimpImage *image,
-              gint32    *drawable_ID)
+export_merge (GimpImage     *image,
+              GimpDrawable **drawable)
 {
   gint32  nlayers;
   gint32  nvisible = 0;
   gint32  i;
   gint32 *layers;
-  gint32  merged;
-  gint32  transp;
 
   layers = gimp_image_get_layers (image, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
-      if (gimp_item_get_visible (layers[i]))
+      GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+
+      if (gimp_item_get_visible (GIMP_ITEM (layer)))
         nvisible++;
+
+      g_object_unref (layer);
     }
 
   if (nvisible <= 1)
     {
+      GimpLayer *transp;
+
       /* if there is only one (or zero) visible layer, add a new
        * transparent layer that has the same size as the canvas.  The
        * merge that follows will ensure that the offset, opacity and
@@ -96,33 +100,42 @@ export_merge (GimpImage *image,
       transp = gimp_layer_new (image, "-",
                                gimp_image_width (image),
                                gimp_image_height (image),
-                               gimp_drawable_type (*drawable_ID) | 1,
+                               gimp_drawable_type (*drawable) | 1,
                                100.0, GIMP_LAYER_MODE_NORMAL);
-      gimp_image_insert_layer (image, transp, -1, 1);
+      gimp_image_insert_layer (image, transp, NULL, 1);
       gimp_selection_none (image);
-      gimp_drawable_edit_clear (transp);
+      gimp_drawable_edit_clear (GIMP_DRAWABLE (transp));
       nvisible++;
+
+      g_object_unref (transp);
     }
 
   if (nvisible > 1)
     {
+      GimpLayer *merged;
+
       g_free (layers);
       merged = gimp_image_merge_visible_layers (image, GIMP_CLIP_TO_IMAGE);
 
-      if (merged != -1)
-        *drawable_ID = merged;
+      if (merged != NULL)
+        {
+          g_clear_object (drawable);
+          *drawable = GIMP_DRAWABLE (merged);
+        }
       else
-        return;  /* shouldn't happen */
+        {
+          return;  /* shouldn't happen */
+        }
 
       layers = gimp_image_get_layers (image, &nlayers);
 
       /*  make sure that the merged drawable matches the image size  */
-      if (gimp_drawable_width  (merged) != gimp_image_width  (image) ||
-          gimp_drawable_height (merged) != gimp_image_height (image))
+      if (gimp_drawable_width  (GIMP_DRAWABLE (merged)) != gimp_image_width  (image) ||
+          gimp_drawable_height (GIMP_DRAWABLE (merged)) != gimp_image_height (image))
         {
           gint off_x, off_y;
 
-          gimp_drawable_offsets (merged, &off_x, &off_y);
+          gimp_drawable_offsets (GIMP_DRAWABLE (merged), &off_x, &off_y);
           gimp_layer_resize (merged,
                              gimp_image_width (image),
                              gimp_image_height (image),
@@ -133,27 +146,33 @@ export_merge (GimpImage *image,
   /* remove any remaining (invisible) layers */
   for (i = 0; i < nlayers; i++)
     {
-      if (layers[i] != *drawable_ID)
-        gimp_image_remove_layer (image, layers[i]);
+      if (layers[i] != gimp_item_get_id (GIMP_ITEM (*drawable)))
+        {
+          GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+
+          gimp_image_remove_layer (image, layer);
+
+          g_object_unref (layer);
+        }
     }
   g_free (layers);
 }
 
 static void
-export_flatten (GimpImage *image,
-                gint32    *drawable_ID)
+export_flatten (GimpImage     *image,
+                GimpDrawable **drawable)
 {
-  gint32 flattened;
+  GimpLayer *flattened;
 
   flattened = gimp_image_flatten (image);
 
-  if (flattened != -1)
-    *drawable_ID = flattened;
+  if (flattened != NULL)
+    *drawable = GIMP_DRAWABLE (flattened);
 }
 
 static void
-export_remove_alpha (GimpImage *image,
-                     gint32    *drawable_ID)
+export_remove_alpha (GimpImage     *image,
+                     GimpDrawable **drawable)
 {
   gint32  n_layers;
   gint32 *layers;
@@ -163,16 +182,21 @@ export_remove_alpha (GimpImage *image,
 
   for (i = 0; i < n_layers; i++)
     {
-      if (gimp_drawable_has_alpha (layers[i]))
-        gimp_layer_flatten (layers[i]);
+      GimpLayer *layer;
+
+      layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+        gimp_layer_flatten (layer);
+
+      g_object_unref (layer);
     }
 
   g_free (layers);
 }
 
 static void
-export_apply_masks (GimpImage *image,
-                    gint      *drawable_ID)
+export_apply_masks (GimpImage     *image,
+                    GimpDrawable **drawable)
 {
   gint32  n_layers;
   gint32 *layers;
@@ -182,36 +206,41 @@ export_apply_masks (GimpImage *image,
 
   for (i = 0; i < n_layers; i++)
     {
-      if (gimp_layer_get_mask (layers[i]) != -1)
-        gimp_layer_remove_mask (layers[i], GIMP_MASK_APPLY);
+      GimpLayer *layer;
+
+      layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+      if (gimp_layer_get_mask (layer) != -1)
+        gimp_layer_remove_mask (layer, GIMP_MASK_APPLY);
+
+      g_object_unref (layer);
     }
 
   g_free (layers);
 }
 
 static void
-export_convert_rgb (GimpImage *image,
-                    gint32    *drawable_ID)
+export_convert_rgb (GimpImage     *image,
+                    GimpDrawable **drawable)
 {
   gimp_image_convert_rgb (image);
 }
 
 static void
-export_convert_grayscale (GimpImage *image,
-                          gint32    *drawable_ID)
+export_convert_grayscale (GimpImage     *image,
+                          GimpDrawable **drawable)
 {
   gimp_image_convert_grayscale (image);
 }
 
 static void
-export_convert_indexed (GimpImage *image,
-                        gint32    *drawable_ID)
+export_convert_indexed (GimpImage     *image,
+                        GimpDrawable **drawable)
 {
   gint32 nlayers;
 
   /* check alpha */
   g_free (gimp_image_get_layers (image, &nlayers));
-  if (nlayers > 1 || gimp_drawable_has_alpha (*drawable_ID))
+  if (nlayers > 1 || gimp_drawable_has_alpha (*drawable))
     gimp_image_convert_indexed (image,
                                 GIMP_CONVERT_DITHER_NONE,
                                 GIMP_CONVERT_PALETTE_GENERATE,
@@ -224,8 +253,8 @@ export_convert_indexed (GimpImage *image,
 }
 
 static void
-export_convert_bitmap (GimpImage *image,
-                       gint32    *drawable_ID)
+export_convert_bitmap (GimpImage     *image,
+                       GimpDrawable **drawable)
 {
   if (gimp_image_base_type (image) == GIMP_INDEXED)
     gimp_image_convert_rgb (image);
@@ -237,8 +266,8 @@ export_convert_bitmap (GimpImage *image,
 }
 
 static void
-export_add_alpha (GimpImage *image,
-                  gint32    *drawable_ID)
+export_add_alpha (GimpImage     *image,
+                  GimpDrawable **drawable)
 {
   gint32  nlayers;
   gint32  i;
@@ -247,15 +276,20 @@ export_add_alpha (GimpImage *image,
   layers = gimp_image_get_layers (image, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
-      if (!gimp_drawable_has_alpha (layers[i]))
-        gimp_layer_add_alpha (layers[i]);
+      GimpLayer *layer;
+
+      layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+      if (!gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+        gimp_layer_add_alpha (GIMP_LAYER (layer));
+
+      g_object_unref (layer);
     }
   g_free (layers);
 }
 
 static void
-export_void (GimpImage *image,
-             gint32    *drawable_ID)
+export_void (GimpImage     *image,
+             GimpDrawable **drawable)
 {
   /* do nothing */
 }
@@ -432,9 +466,9 @@ export_action_get_func (const ExportAction *action)
 static void
 export_action_perform (const ExportAction *action,
                        GimpImage          *image,
-                       gint32             *drawable_ID)
+                       GimpDrawable      **drawable)
 {
-  export_action_get_func (action) (image, drawable_ID);
+  export_action_get_func (action) (image, drawable);
 }
 
 
@@ -695,7 +729,7 @@ export_dialog (GSList      *actions,
 /**
  * gimp_export_image:
  * @image:        Pointer to the image.
- * @drawable_ID:  Pointer to the drawable_ID.
+ * @drawable:     Pointer to the drawable.
  * @format_name:  The (short) name of the image_format (e.g. JPEG or GIF).
  * @capabilities: What can the image_format do?
  *
@@ -725,7 +759,7 @@ export_dialog (GSList      *actions,
  **/
 GimpExportReturn
 gimp_export_image (GimpImage             **image,
-                   gint32                 *drawable_ID,
+                   GimpDrawable          **drawable,
                    const gchar            *format_name,
                    GimpExportCapabilities  capabilities)
 {
@@ -740,7 +774,8 @@ gimp_export_image (GimpImage             **image,
   gboolean           background_has_alpha = TRUE;
   GimpExportReturn   retval               = GIMP_EXPORT_CANCEL;
 
-  g_return_val_if_fail (gimp_image_is_valid (*image) && *drawable_ID > -1, FALSE);
+  g_return_val_if_fail (gimp_image_is_valid (*image) &&
+                        gimp_item_is_valid (GIMP_ITEM (*drawable)), FALSE);
 
   /* do some sanity checks */
   if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -757,16 +792,16 @@ gimp_export_image (GimpImage             **image,
 
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
   if (interactive &&
-      ! gimp_item_is_layer (*drawable_ID) &&
+      ! gimp_item_is_layer (GIMP_ITEM (*drawable)) &&
       ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
-      if (gimp_item_is_layer_mask (*drawable_ID))
+      if (gimp_item_is_layer_mask (GIMP_ITEM (*drawable)))
         {
           retval = confirm_save_dialog
             (_("You are about to save a layer mask as %s.\n"
                "This will not save the visible layers."), format_name);
         }
-      else if (gimp_item_is_channel (*drawable_ID))
+      else if (gimp_item_is_channel (GIMP_ITEM (*drawable)))
         {
           retval = confirm_save_dialog
             (_("You are about to save a channel (saved selection) as %s.\n"
@@ -789,7 +824,9 @@ gimp_export_image (GimpImage             **image,
 
   for (i = 0; i < n_layers; i++)
     {
-      if (gimp_drawable_has_alpha (layers[i]))
+      GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         {
           if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA))
             {
@@ -811,7 +848,7 @@ gimp_export_image (GimpImage             **image,
           /*  If this is the last layer, it's visible and has no alpha
            *  channel, then the image has a "flat" background
            */
-          if (i == n_layers - 1 && gimp_item_get_visible (layers[i]))
+          if (i == n_layers - 1 && gimp_item_get_visible (GIMP_ITEM (layer)))
             background_has_alpha = FALSE;
 
           if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -820,40 +857,47 @@ gimp_export_image (GimpImage             **image,
               break;
             }
         }
+      g_object_unref (layer);
     }
 
   if (! added_flatten)
     {
       for (i = 0; i < n_layers; i++)
         {
-          if (gimp_layer_get_mask (layers[i]) != -1)
+          GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+
+          if (gimp_layer_get_mask (layer) != -1)
             has_layer_masks = TRUE;
+
+          g_object_unref (layer);
         }
     }
 
   if (! added_flatten)
     {
-      gint32  n_children;
-      gint32 *children;
+      GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[0]));
+      gint32    *children;
+      gint32     n_children;
 
-      children = gimp_item_get_children (layers[0], &n_children);
+      children = gimp_item_get_children (GIMP_ITEM (layer), &n_children);
+      g_object_unref (layer);
 
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
       if (n_layers == 1                     &&
           ! children                        &&
-          gimp_item_is_layer (*drawable_ID) &&
+          gimp_item_is_layer (GIMP_ITEM (*drawable)) &&
           ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
         {
           gint offset_x;
           gint offset_y;
 
-          gimp_drawable_offsets (*drawable_ID, &offset_x, &offset_y);
+          gimp_drawable_offsets (*drawable, &offset_x, &offset_y);
 
-          if ((gimp_layer_get_opacity (*drawable_ID) < 100.0) ||
+          if ((gimp_layer_get_opacity (GIMP_LAYER (*drawable)) < 100.0) ||
               (gimp_image_width (*image) !=
-               gimp_drawable_width (*drawable_ID))            ||
+               gimp_drawable_width (*drawable))            ||
               (gimp_image_height (*image) !=
-               gimp_drawable_height (*drawable_ID))           ||
+               gimp_drawable_height (*drawable))           ||
               offset_x || offset_y)
             {
               if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)
@@ -1003,13 +1047,13 @@ gimp_export_image (GimpImage             **image,
       GSList *list;
 
       *image = gimp_image_duplicate (*image);
-      *drawable_ID = gimp_image_get_active_layer (*image);
+      *drawable = GIMP_DRAWABLE (gimp_image_get_active_layer (*image));
 
       gimp_image_undo_disable (*image);
 
       for (list = actions; list; list = list->next)
         {
-          export_action_perform (list->data, *image, drawable_ID);
+          export_action_perform (list->data, *image, drawable);
         }
     }
 
@@ -1127,18 +1171,30 @@ gimp_export_image_deprecated (gint32                 *image_ID,
                               const gchar            *format_name,
                               GimpExportCapabilities  capabilities)
 {
-  GimpImage        *image     = gimp_image_new_by_id (*image_ID);
-  GimpImage        *new_image = image;
+  GimpImage        *image;
+  GimpImage        *new_image;
+  GimpDrawable     *drawable;
+  GimpDrawable     *new_drawable;
   GimpExportReturn  retval;
 
-  retval = gimp_export_image (&new_image, drawable_ID,
+  image        = gimp_image_new_by_id (*image_ID);
+  new_image    = image;
+  drawable     = GIMP_DRAWABLE (gimp_item_new_by_id (*drawable_ID));
+  new_drawable = drawable;
+
+  retval = gimp_export_image (&new_image, &new_drawable,
                               format_name, capabilities);
 
-  *image_ID = gimp_image_get_id (new_image);
+  *image_ID    = gimp_image_get_id (new_image);
+  *drawable_ID = gimp_item_get_id (GIMP_ITEM (new_drawable));
   if (retval == GIMP_EXPORT_EXPORT)
-    g_object_unref (new_image);
+    {
+      g_object_unref (new_image);
+      g_object_unref (new_drawable);
+    }
 
   g_object_unref (image);
+  g_object_unref (drawable);
 
   return retval;
 }
