@@ -378,30 +378,6 @@ gimp_uninstall_temp_proc (const gchar *name)
 }
 
 /**
- * gimp_extension_ack:
- *
- * Notify the main GIMP application that the extension has been properly
- * initialized and is ready to run.
- *
- * This function <emphasis>must</emphasis> be called from every
- * procedure that was registered as #GIMP_EXTENSION.
- *
- * Subsequently, extensions can process temporary procedure run
- * requests using either gimp_extension_enable() or
- * gimp_extension_process().
- *
- * See also: gimp_install_procedure(), gimp_install_temp_proc()
- **/
-void
-gimp_extension_ack (void)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  if (! gp_extension_ack_write (_gimp_writechannel, NULL))
-    gimp_quit ();
-}
-
-/**
  * gimp_extension_enable:
  *
  * Enables asynchronous processing of messages from the main GIMP
@@ -441,77 +417,6 @@ gimp_extension_enable (void)
 
       callback_added = TRUE;
     }
-}
-
-/**
- * gimp_extension_process:
- * @timeout: The timeout (in ms) to use for the select() call.
- *
- * Processes one message sent by GIMP and returns.
- *
- * Call this function in an endless loop after calling
- * gimp_extension_ack() to process requests for running temporary
- * procedures.
- *
- * See gimp_extension_enable() for an asynchronous way of doing the
- * same if running an endless loop is not an option.
- *
- * See also: gimp_install_procedure(), gimp_install_temp_proc()
- **/
-void
-gimp_extension_process (guint timeout)
-{
-#ifndef G_OS_WIN32
-  gint select_val;
-
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  do
-    {
-      fd_set readfds;
-      struct timeval  tv;
-      struct timeval *tvp;
-
-      if (timeout)
-        {
-          tv.tv_sec  = timeout / 1000;
-          tv.tv_usec = (timeout % 1000) * 1000;
-          tvp = &tv;
-        }
-      else
-        tvp = NULL;
-
-      FD_ZERO (&readfds);
-      FD_SET (g_io_channel_unix_get_fd (_gimp_readchannel), &readfds);
-
-      if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
-        {
-          gimp_single_message ();
-        }
-      else if (select_val == -1 && errno != EINTR)
-        {
-          perror ("gimp_extension_process");
-          gimp_quit ();
-        }
-    }
-  while (select_val == -1 && errno == EINTR);
-#else
-  /* Zero means infinite wait for us, but g_poll and
-   * g_io_channel_win32_poll use -1 to indicate
-   * infinite wait.
-   */
-  GPollFD pollfd;
-
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  if (timeout == 0)
-    timeout = -1;
-
-  g_io_channel_win32_make_pollfd (_gimp_readchannel, G_IO_IN, &pollfd);
-
-  if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
-    gimp_single_message ();
-#endif
 }
 
 void
@@ -565,6 +470,8 @@ gimp_run_procedure (const gchar *name,
                     gint        *n_return_vals,
                     ...)
 {
+  GimpValueArray *arguments;
+  GimpValueArray *return_values;
   GimpPDBArgType  param_type;
   GimpParam      *return_vals;
   GimpParam      *params   = NULL;
@@ -739,53 +646,12 @@ gimp_run_procedure (const gchar *name,
 
   va_end (args);
 
-  return_vals = gimp_run_procedure2 (name, n_return_vals, n_params, params);
-
-  g_free (params);
-
-  return return_vals;
-}
-
-/**
- * gimp_run_procedure2: (rename-to gimp_run_procedure)
- * @name:          the name of the procedure to run
- * @n_return_vals: return location for the number of return values
- * @n_params:      the number of parameters the procedure takes.
- * @params:        the procedure's parameters array.
- *
- * This function calls a GIMP procedure and returns its return values.
- * To get more information about the available procedures and the
- * parameters they expect, please have a look at the Procedure Browser
- * as found in the Xtns menu in GIMP's toolbox.
- *
- * As soon as you don't need the return values any longer, you should
- * free them using gimp_destroy_params().
- *
- * Returns: the procedure's return values unless there was an error,
- * in which case the zero-th return value will be the error status, and
- * if there are two values returned, the other return value will be a
- * string detailing the error.
- **/
-GimpParam *
-gimp_run_procedure2 (const gchar     *name,
-                     gint            *n_return_vals,
-                     gint             n_params,
-                     const GimpParam *params)
-{
-  GimpValueArray *arguments;
-  GimpValueArray *return_values;
-  GimpParam      *return_vals;
-
-  g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (n_return_vals != NULL, NULL);
-
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
   arguments = _gimp_params_to_value_array (params, n_params, FALSE);
 
   return_values = gimp_run_procedure_array (name, arguments);
 
   gimp_value_array_unref (arguments);
+  g_free (params);
 
   *n_return_vals = gimp_value_array_length (return_values);
   return_vals    = _gimp_value_array_to_params (return_values, TRUE);
@@ -919,29 +785,6 @@ gimp_destroy_params (GimpParam *params,
     }
 
   g_free (params);
-}
-
-/**
- * gimp_destroy_paramdefs:
- * @paramdefs: the #GimpParamDef array to destroy
- * @n_params:  the number of elements in the array
- *
- * Destroys a #GimpParamDef array as returned by
- * gimp_procedural_db_proc_info().
- **/
-void
-gimp_destroy_paramdefs (GimpParamDef *paramdefs,
-                        gint          n_params)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  while (n_params--)
-    {
-      g_free (paramdefs[n_params].name);
-      g_free (paramdefs[n_params].description);
-    }
-
-  g_free (paramdefs);
 }
 
 /**
@@ -1079,82 +922,6 @@ _gimp_legacy_quit (void)
 
 
 /*  cruft from other places  */
-
-/**
- * gimp_plugin_domain_register:
- * @domain_name: The name of the textdomain (must be unique).
- * @domain_path: The absolute path to the compiled message catalog (may be NULL).
- *
- * Registers a textdomain for localisation.
- *
- * This procedure adds a textdomain to the list of domains Gimp
- * searches for strings when translating its menu entries. There is no
- * need to call this function for plug-ins that have their strings
- * included in the 'gimp-std-plugins' domain as that is used by
- * default. If the compiled message catalog is not in the standard
- * location, you may specify an absolute path to another location. This
- * procedure can only be called in the query function of a plug-in and
- * it has to be called before any procedure is installed.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_plugin_domain_register (const gchar *domain_name,
-                             const gchar *domain_path)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_plugin_domain_register (domain_name, domain_path);
-}
-
-/**
- * gimp_plugin_help_register:
- * @domain_name: The XML namespace of the plug-in's help pages.
- * @domain_uri: The root URI of the plug-in's help pages.
- *
- * Register a help path for a plug-in.
- *
- * This procedure registers user documentation for the calling plug-in
- * with the GIMP help system. The domain_uri parameter points to the
- * root directory where the plug-in help is installed. For each
- * supported language there should be a file called 'gimp-help.xml'
- * that maps the help IDs to the actual help files.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_plugin_help_register (const gchar *domain_name,
-                           const gchar *domain_uri)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_plugin_help_register (domain_name, domain_uri);
-}
-
-/**
- * gimp_plugin_menu_branch_register:
- * @menu_path: The sub-menu's menu path.
- * @menu_name: The name of the sub-menu.
- *
- * Register a sub-menu.
- *
- * This procedure installs a sub-menu which does not belong to any
- * procedure. The menu-name should be the untranslated menu label. GIMP
- * will look up the translation in the textdomain registered for the
- * plug-in.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.4
- **/
-gboolean
-gimp_plugin_menu_branch_register (const gchar *menu_path,
-                                  const gchar *menu_name)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_plugin_menu_branch_register (menu_path, menu_name);
-}
 
 /**
  * gimp_plugin_set_pdb_error_handler:

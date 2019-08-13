@@ -274,17 +274,9 @@ void           gimp_install_temp_proc   (const gchar        *name,
  */
 void           gimp_uninstall_temp_proc (const gchar        *name);
 
-/* Notify the main GIMP application that the extension is ready to run
- */
-void           gimp_extension_ack       (void);
-
 /* Enable asynchronous processing of temp_procs
  */
 void           gimp_extension_enable    (void);
-
-/* Process one temp_proc and return
- */
-void           gimp_extension_process   (guint            timeout);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
@@ -293,15 +285,6 @@ void           gimp_extension_process   (guint            timeout);
 GimpParam    * gimp_run_procedure       (const gchar     *name,
                                          gint            *n_return_vals,
                                          ...);
-
-/* Run a procedure in the procedure database. The parameters are
- *  specified as an array of GimpParam.  The return
- *  values are returned in the 'GimpParam*' array.
- */
-GimpParam    * gimp_run_procedure2      (const gchar     *name,
-                                         gint            *n_return_vals,
-                                         gint             n_params,
-                                         const GimpParam *params);
 
 /* Run a procedure in the procedure database. The parameters are
  *  specified as a GimpValueArray, so are the return values.
@@ -316,13 +299,6 @@ GimpValueArray * gimp_run_procedure_array (const gchar          *name,
 void           gimp_destroy_params      (GimpParam       *params,
                                          gint             n_params);
 
-/* Destroy the an array of GimpParamDef's. This is useful for
- *  destroying the return values returned by a call to
- *  'gimp_procedural_db_proc_info'.
- */
-void           gimp_destroy_paramdefs   (GimpParamDef    *paramdefs,
-                                         gint             n_params);
-
 /* Retrieve the error message and return status for the last procedure
  * call.
  */
@@ -332,12 +308,6 @@ GimpPDBStatusType   gimp_get_pdb_status (void);
 /* gimp_plugin API that should now be done by using GimpPlugIn
  */
 
-gboolean   gimp_plugin_domain_register       (const gchar         *domain_name,
-                                              const gchar         *domain_path);
-gboolean   gimp_plugin_help_register         (const gchar         *domain_name,
-                                              const gchar         *domain_uri);
-gboolean   gimp_plugin_menu_branch_register  (const gchar         *menu_path,
-                                              const gchar         *menu_name);
 gboolean   gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler  handler);
 GimpPDBErrorHandler
            gimp_plugin_get_pdb_error_handler (void);
