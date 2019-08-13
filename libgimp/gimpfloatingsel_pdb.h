@@ -32,18 +32,22 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_floating_sel_remove   (gint32 floating_sel_ID);
-gboolean gimp_floating_sel_anchor   (gint32 floating_sel_ID);
-gboolean gimp_floating_sel_to_layer (gint32 floating_sel_ID);
-gboolean gimp_floating_sel_attach   (gint32 layer_ID,
-                                     gint32 drawable_ID);
+
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-
+gboolean gimp_floating_sel_remove   (GimpLayer    *floating_sel);
+gboolean gimp_floating_sel_anchor   (GimpLayer    *floating_sel);
+gboolean gimp_floating_sel_to_layer (GimpLayer    *floating_sel);
+gboolean gimp_floating_sel_attach   (GimpLayer    *layer,
+                                     GimpDrawable *drawable);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
+#define gimp_floating_sel_remove _gimp_floating_sel_remove
+#define gimp_floating_sel_anchor _gimp_floating_sel_anchor
+#define gimp_floating_sel_to_layer _gimp_floating_sel_to_layer
+#define gimp_floating_sel_attach _gimp_floating_sel_attach
 
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
@@ -52,7 +56,11 @@ gboolean gimp_floating_sel_attach   (gint32 layer_ID,
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-
+gboolean _gimp_floating_sel_remove   (gint32 floating_sel_ID);
+gboolean _gimp_floating_sel_anchor   (gint32 floating_sel_ID);
+gboolean _gimp_floating_sel_to_layer (gint32 floating_sel_ID);
+gboolean _gimp_floating_sel_attach   (gint32 layer_ID,
+                                      gint32 drawable_ID);
 
 
 G_END_DECLS

@@ -121,7 +121,7 @@ gint                  gimp_vectors_bezier_stroke_new_ellipse (gint32            
 gint32   gimp_vectors_new                 (GimpImage    *image,
                                            const gchar  *name);
 gint32   gimp_vectors_new_from_text_layer (GimpImage    *image,
-                                           gint32        layer_ID);
+                                           GimpLayer    *layer);
 gboolean gimp_vectors_import_from_file    (GimpImage    *image,
                                            const gchar  *filename,
                                            gboolean      merge,
