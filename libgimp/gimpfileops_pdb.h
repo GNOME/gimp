@@ -53,23 +53,23 @@ G_GNUC_INTERNAL gboolean _gimp_register_thumbnail_loader      (const gchar *load
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-GimpImage* gimp_file_load           (GimpRunMode  run_mode,
-                                     const gchar *filename,
-                                     const gchar *raw_filename);
-gint32     gimp_file_load_layer     (GimpRunMode  run_mode,
-                                     GimpImage   *image,
-                                     const gchar *filename);
-gint*      gimp_file_load_layers    (GimpRunMode  run_mode,
-                                     GimpImage   *image,
-                                     const gchar *filename,
-                                     gint        *num_layers);
-gboolean   gimp_file_save           (GimpRunMode  run_mode,
-                                     GimpImage   *image,
-                                     gint32       drawable_ID,
-                                     const gchar *filename,
-                                     const gchar *raw_filename);
-gboolean   gimp_file_save_thumbnail (GimpImage   *image,
-                                     const gchar *filename);
+GimpImage* gimp_file_load           (GimpRunMode   run_mode,
+                                     const gchar  *filename,
+                                     const gchar  *raw_filename);
+GimpLayer* gimp_file_load_layer     (GimpRunMode   run_mode,
+                                     GimpImage    *image,
+                                     const gchar  *filename);
+gint*      gimp_file_load_layers    (GimpRunMode   run_mode,
+                                     GimpImage    *image,
+                                     const gchar  *filename,
+                                     gint         *num_layers);
+gboolean   gimp_file_save           (GimpRunMode   run_mode,
+                                     GimpImage    *image,
+                                     GimpDrawable *drawable,
+                                     const gchar  *filename,
+                                     const gchar  *raw_filename);
+gboolean   gimp_file_save_thumbnail (GimpImage    *image,
+                                     const gchar  *filename);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 

@@ -38,11 +38,11 @@ G_BEGIN_DECLS
 
 gboolean gimp_image_select_color            (GimpImage      *image,
                                              GimpChannelOps  operation,
-                                             gint32          drawable_ID,
+                                             GimpDrawable   *drawable,
                                              const GimpRGB  *color);
 gboolean gimp_image_select_contiguous_color (GimpImage      *image,
                                              GimpChannelOps  operation,
-                                             gint32          drawable_ID,
+                                             GimpDrawable   *drawable,
                                              gdouble         x,
                                              gdouble         y);
 gboolean gimp_image_select_rectangle        (GimpImage      *image,
@@ -71,7 +71,7 @@ gboolean gimp_image_select_polygon          (GimpImage      *image,
                                              const gdouble  *segs);
 gboolean gimp_image_select_item             (GimpImage      *image,
                                              GimpChannelOps  operation,
-                                             gint32          item_ID);
+                                             GimpItem       *item);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
