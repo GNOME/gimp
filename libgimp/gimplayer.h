@@ -63,37 +63,38 @@ struct _GimpLayerClass
 
 GType    gimp_layer_get_type           (void) G_GNUC_CONST;
 
-gint32   gimp_layer_copy               (gint32           layer_ID);
-
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gint32   gimp_layer_new                (GimpImage       *image,
-                                        const gchar     *name,
-                                        gint             width,
-                                        gint             height,
-                                        GimpImageType    type,
-                                        gdouble          opacity,
-                                        GimpLayerMode    mode);
+GimpLayer * gimp_layer_new                (GimpImage       *image,
+                                           const gchar     *name,
+                                           gint             width,
+                                           gint             height,
+                                           GimpImageType    type,
+                                           gdouble          opacity,
+                                           GimpLayerMode    mode);
 
-gint32   gimp_layer_new_from_pixbuf    (GimpImage       *image,
-                                        const gchar     *name,
-                                        GdkPixbuf       *pixbuf,
-                                        gdouble          opacity,
-                                        GimpLayerMode    mode,
-                                        gdouble          progress_start,
-                                        gdouble          progress_end);
-gint32   gimp_layer_new_from_surface   (GimpImage       *image,
-                                        const gchar     *name,
-                                        cairo_surface_t *surface,
-                                        gdouble          progress_start,
-                                        gdouble          progress_end);
+GimpLayer * gimp_layer_new_from_pixbuf    (GimpImage       *image,
+                                           const gchar     *name,
+                                           GdkPixbuf       *pixbuf,
+                                           gdouble          opacity,
+                                           GimpLayerMode    mode,
+                                           gdouble          progress_start,
+                                           gdouble          progress_end);
+GimpLayer * gimp_layer_new_from_surface   (GimpImage       *image,
+                                           const gchar     *name,
+                                           cairo_surface_t *surface,
+                                           gdouble          progress_start,
+                                           gdouble          progress_end);
+
+GimpLayer * gimp_layer_copy               (GimpLayer       *layer);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
 #define gimp_layer_new              gimp_layer_new_deprecated
 #define gimp_layer_new_from_pixbuf  gimp_layer_new_from_pixbuf_deprecated
 #define gimp_layer_new_from_surface gimp_layer_new_from_surface_deprecated
+#define gimp_layer_copy             gimp_layer_copy_deprecated
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
@@ -119,6 +120,7 @@ gint32   gimp_layer_new_from_surface_deprecated (gint32           image_id,
                                                  gdouble          progress_start,
                                                  gdouble          progress_end);
 
+gint32   gimp_layer_copy_deprecated             (gint32           layer_ID);
 
 G_END_DECLS
 
