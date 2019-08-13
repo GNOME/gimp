@@ -36,6 +36,52 @@
 
 /**
  * gimp_edit_cut:
+ * @drawable: The drawable to cut from.
+ *
+ * Cut from the specified drawable.
+ *
+ * If there is a selection in the image, then the area specified by the
+ * selection is cut from the specified drawable and placed in an
+ * internal GIMP edit buffer. It can subsequently be retrieved using
+ * the gimp_edit_paste() command. If there is no selection, then the
+ * specified drawable will be removed and its contents stored in the
+ * internal GIMP edit buffer. This procedure will fail if the selected
+ * area lies completely outside the bounds of the current drawable and
+ * there is nothing to copy from.
+ *
+ * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
+ **/
+gboolean
+gimp_edit_cut (GimpDrawable *drawable)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean non_empty = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-cut",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-cut",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return non_empty;
+}
+
+/**
+ * _gimp_edit_cut: (skip)
  * @drawable_ID: The drawable to cut from.
  *
  * Cut from the specified drawable.
@@ -52,7 +98,7 @@
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_cut (gint32 drawable_ID)
+_gimp_edit_cut (gint32 drawable_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -82,6 +128,52 @@ gimp_edit_cut (gint32 drawable_ID)
 
 /**
  * gimp_edit_copy:
+ * @drawable: The drawable to copy from.
+ *
+ * Copy from the specified drawable.
+ *
+ * If there is a selection in the image, then the area specified by the
+ * selection is copied from the specified drawable and placed in an
+ * internal GIMP edit buffer. It can subsequently be retrieved using
+ * the gimp_edit_paste() command. If there is no selection, then the
+ * specified drawable's contents will be stored in the internal GIMP
+ * edit buffer. This procedure will fail if the selected area lies
+ * completely outside the bounds of the current drawable and there is
+ * nothing to copy from.
+ *
+ * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
+ **/
+gboolean
+gimp_edit_copy (GimpDrawable *drawable)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean non_empty = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-copy",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-copy",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return non_empty;
+}
+
+/**
+ * _gimp_edit_copy: (skip)
  * @drawable_ID: The drawable to copy from.
  *
  * Copy from the specified drawable.
@@ -98,7 +190,7 @@ gimp_edit_cut (gint32 drawable_ID)
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_copy (gint32 drawable_ID)
+_gimp_edit_copy (gint32 drawable_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -220,6 +312,62 @@ _gimp_edit_copy_visible (gint32 image_ID)
 
 /**
  * gimp_edit_paste:
+ * @drawable: The drawable to paste to.
+ * @paste_into: Clear selection, or paste behind it?
+ *
+ * Paste buffer to the specified drawable.
+ *
+ * This procedure pastes a copy of the internal GIMP edit buffer to the
+ * specified drawable. The GIMP edit buffer will be empty unless a call
+ * was previously made to either gimp_edit_cut() or gimp_edit_copy().
+ * The \"paste_into\" option specifies whether to clear the current
+ * image selection, or to paste the buffer \"behind\" the selection.
+ * This allows the selection to act as a mask for the pasted buffer.
+ * Anywhere that the selection mask is non-zero, the pasted buffer will
+ * show through. The pasted buffer will be a new layer in the image
+ * which is designated as the image floating selection. If the image
+ * has a floating selection at the time of pasting, the old floating
+ * selection will be anchored to its drawable before the new floating
+ * selection is added. This procedure returns the new floating layer.
+ * The resulting floating selection will already be attached to the
+ * specified drawable, and a subsequent call to floating_sel_attach is
+ * not needed.
+ *
+ * Returns: (transfer full): The new floating selection.
+ **/
+GimpLayer *
+gimp_edit_paste (GimpDrawable *drawable,
+                 gboolean      paste_into)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpLayer *floating_sel = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_BOOLEAN, paste_into,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-paste",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-paste",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    floating_sel = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+
+  gimp_value_array_unref (return_vals);
+
+  return floating_sel;
+}
+
+/**
+ * _gimp_edit_paste: (skip)
  * @drawable_ID: The drawable to paste to.
  * @paste_into: Clear selection, or paste behind it?
  *
@@ -244,8 +392,8 @@ _gimp_edit_copy_visible (gint32 image_ID)
  * Returns: The new floating selection.
  **/
 gint32
-gimp_edit_paste (gint32   drawable_ID,
-                 gboolean paste_into)
+_gimp_edit_paste (gint32   drawable_ID,
+                  gboolean paste_into)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -360,7 +508,7 @@ _gimp_edit_paste_as_new_image (void)
 
 /**
  * gimp_edit_named_cut:
- * @drawable_ID: The drawable to cut from.
+ * @drawable: The drawable to cut from.
  * @buffer_name: The name of the buffer to create.
  *
  * Cut into a named buffer.
@@ -377,8 +525,56 @@ _gimp_edit_paste_as_new_image (void)
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_cut (gint32       drawable_ID,
-                     const gchar *buffer_name)
+gimp_edit_named_cut (GimpDrawable *drawable,
+                     const gchar  *buffer_name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *real_name = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_STRING, buffer_name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-named-cut",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-cut",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    real_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return real_name;
+}
+
+/**
+ * _gimp_edit_named_cut: (skip)
+ * @drawable_ID: The drawable to cut from.
+ * @buffer_name: The name of the buffer to create.
+ *
+ * Cut into a named buffer.
+ *
+ * This procedure works like gimp_edit_cut(), but additionally stores
+ * the cut buffer into a named buffer that will stay available for
+ * later pasting, regardless of any intermediate copy or cut
+ * operations.
+ *
+ * Returns: The real name given to the buffer, or NULL if the cut failed.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.4
+ **/
+gchar *
+_gimp_edit_named_cut (gint32       drawable_ID,
+                      const gchar *buffer_name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -409,7 +605,7 @@ gimp_edit_named_cut (gint32       drawable_ID,
 
 /**
  * gimp_edit_named_copy:
- * @drawable_ID: The drawable to copy from.
+ * @drawable: The drawable to copy from.
  * @buffer_name: The name of the buffer to create.
  *
  * Copy into a named buffer.
@@ -426,8 +622,56 @@ gimp_edit_named_cut (gint32       drawable_ID,
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_copy (gint32       drawable_ID,
-                      const gchar *buffer_name)
+gimp_edit_named_copy (GimpDrawable *drawable,
+                      const gchar  *buffer_name)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gchar *real_name = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_STRING, buffer_name,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-named-copy",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-copy",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    real_name = g_value_dup_string (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return real_name;
+}
+
+/**
+ * _gimp_edit_named_copy: (skip)
+ * @drawable_ID: The drawable to copy from.
+ * @buffer_name: The name of the buffer to create.
+ *
+ * Copy into a named buffer.
+ *
+ * This procedure works like gimp_edit_copy(), but additionally stores
+ * the copied buffer into a named buffer that will stay available for
+ * later pasting, regardless of any intermediate copy or cut
+ * operations.
+ *
+ * Returns: The real name given to the buffer, or NULL if the copy failed.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.4
+ **/
+gchar *
+_gimp_edit_named_copy (gint32       drawable_ID,
+                       const gchar *buffer_name)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -555,6 +799,54 @@ _gimp_edit_named_copy_visible (gint32       image_ID,
 
 /**
  * gimp_edit_named_paste:
+ * @drawable: The drawable to paste to.
+ * @buffer_name: The name of the buffer to paste.
+ * @paste_into: Clear selection, or paste behind it?
+ *
+ * Paste named buffer to the specified drawable.
+ *
+ * This procedure works like gimp_edit_paste() but pastes a named
+ * buffer instead of the global buffer.
+ *
+ * Returns: (transfer full): The new floating selection.
+ *
+ * Since: 2.4
+ **/
+GimpLayer *
+gimp_edit_named_paste (GimpDrawable *drawable,
+                       const gchar  *buffer_name,
+                       gboolean      paste_into)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpLayer *floating_sel = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_STRING, buffer_name,
+                                          G_TYPE_BOOLEAN, paste_into,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-edit-named-paste",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-edit-named-paste",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    floating_sel = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+
+  gimp_value_array_unref (return_vals);
+
+  return floating_sel;
+}
+
+/**
+ * _gimp_edit_named_paste: (skip)
  * @drawable_ID: The drawable to paste to.
  * @buffer_name: The name of the buffer to paste.
  * @paste_into: Clear selection, or paste behind it?
@@ -569,9 +861,9 @@ _gimp_edit_named_copy_visible (gint32       image_ID,
  * Since: 2.4
  **/
 gint32
-gimp_edit_named_paste (gint32       drawable_ID,
-                       const gchar *buffer_name,
-                       gboolean     paste_into)
+_gimp_edit_named_paste (gint32       drawable_ID,
+                        const gchar *buffer_name,
+                        gboolean     paste_into)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

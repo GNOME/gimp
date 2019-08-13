@@ -26,6 +26,24 @@
 #include "gimptilebackendplugin.h"
 
 
+G_DEFINE_ABSTRACT_TYPE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM)
+
+#define parent_class gimp_drawable_parent_class
+
+static void
+gimp_drawable_class_init (GimpDrawableClass *klass)
+{
+}
+
+static void
+gimp_drawable_init (GimpDrawable *drawable)
+{
+}
+
+
+/* Public API. */
+
+
 guchar *
 gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
                                   gint   *width,

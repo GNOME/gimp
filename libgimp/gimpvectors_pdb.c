@@ -127,7 +127,7 @@ _gimp_vectors_new (gint32       image_ID,
 /**
  * gimp_vectors_new_from_text_layer:
  * @image: The image.
- * @layer_ID: The text layer.
+ * @layer: The text layer.
  *
  * Creates a new vectors object from a text layer.
  *
@@ -140,7 +140,7 @@ _gimp_vectors_new (gint32       image_ID,
  **/
 gint32
 gimp_vectors_new_from_text_layer (GimpImage *image,
-                                  gint32     layer_ID)
+                                  GimpLayer *layer)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -149,7 +149,7 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
+                                          GIMP_TYPE_LAYER_ID, gimp_item_get_id (GIMP_ITEM (layer)),
                                           G_TYPE_NONE);
 
   if (pdb)
