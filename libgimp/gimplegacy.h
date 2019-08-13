@@ -279,25 +279,10 @@ void           gimp_uninstall_temp_proc (const gchar        *name);
 void           gimp_extension_enable    (void);
 
 /* Run a procedure in the procedure database. The parameters are
- *  specified via the variable length argument list. The return
- *  values are returned in the 'GimpParam*' array.
- */
-GimpParam    * gimp_run_procedure       (const gchar     *name,
-                                         gint            *n_return_vals,
-                                         ...);
-
-/* Run a procedure in the procedure database. The parameters are
  *  specified as a GimpValueArray, so are the return values.
  */
 GimpValueArray * gimp_run_procedure_array (const gchar          *name,
                                            const GimpValueArray *arguments);
-
-/* Destroy the an array of parameters. This is useful for
- *  destroying the return values returned by a call to
- *  'gimp_run_procedure'.
- */
-void           gimp_destroy_params      (GimpParam       *params,
-                                         gint             n_params);
 
 /* Retrieve the error message and return status for the last procedure
  * call.
