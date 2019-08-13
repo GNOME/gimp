@@ -165,7 +165,10 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   uri         = g_value_get_string         (gimp_value_array_index (args, 3));
   /* raw_uri  = g_value_get_string         (gimp_value_array_index (args, 4)); */
 
-  file = g_file_new_for_uri (uri);
+  if (gimp_file_procedure_get_handles_uri (GIMP_FILE_PROCEDURE (procedure)))
+    file = g_file_new_for_uri (uri);
+  else
+    file = g_file_new_for_path (uri);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - 5);
 
