@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 8
+#define PLUG_IN_RC_FILE_VERSION 9
 
 
 /*
@@ -1023,7 +1023,7 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
 
   switch (param_def.param_def_type)
     {
-      gchar double_string[G_ASCII_DTOSTR_BUF_SIZE];
+      gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
     case GP_PARAM_DEF_TYPE_DEFAULT:
       break;
@@ -1058,16 +1058,14 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_FLOAT:
+      g_ascii_dtostr (buf[0], sizeof (buf[0]),
+                      param_def.meta.m_float.min_val);
+      g_ascii_dtostr (buf[1], sizeof (buf[1]),
+                      param_def.meta.m_float.max_val),
+      g_ascii_dtostr (buf[2], sizeof (buf[2]),
+                      param_def.meta.m_float.default_val);
       gimp_config_writer_printf (writer, "%s %s %s",
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_float.min_val),
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_float.max_val),
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_float.default_val));
+                                 buf[0], buf[1], buf[2]);
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
@@ -1080,20 +1078,17 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
+      g_ascii_dtostr (buf[0], sizeof (buf[0]),
+                      param_def.meta.m_color.default_val.r);
+      g_ascii_dtostr (buf[1], sizeof (buf[1]),
+                      param_def.meta.m_color.default_val.g),
+      g_ascii_dtostr (buf[2], sizeof (buf[2]),
+                      param_def.meta.m_color.default_val.b);
+      g_ascii_dtostr (buf[3], sizeof (buf[3]),
+                      param_def.meta.m_color.default_val.a);
       gimp_config_writer_printf (writer, "%d %s %s %s %s",
                                  param_def.meta.m_color.has_alpha,
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_color.default_val.r),
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_color.default_val.g),
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_color.default_val.b),
-                                 g_ascii_dtostr (double_string,
-                                                 sizeof (double_string),
-                                                 param_def.meta.m_color.default_val.a));
+                                 buf[0], buf[1], buf[2], buf[3]);
       break;
 
     case GP_PARAM_DEF_TYPE_ID:
