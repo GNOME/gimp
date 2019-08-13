@@ -703,17 +703,18 @@ ico_image_get_reduced_buf (guint32   layer,
         }
       else if (bpp == 24)
         {
-          GimpParam    *return_vals;
-          gint          n_return_vals;
+          GimpValueArray *return_vals;
 
           return_vals =
-            gimp_run_procedure ("plug-in-threshold-alpha", &n_return_vals,
-                                GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
-                                GIMP_PDB_IMAGE, tmp_image,
-                                GIMP_PDB_DRAWABLE, tmp_layer,
-                                GIMP_PDB_INT32, ICO_ALPHA_THRESHOLD,
-                                GIMP_PDB_END);
-          gimp_destroy_params (return_vals, n_return_vals);
+            gimp_pdb_run_procedure (gimp_get_pdb (),
+                                    "plug-in-threshold-alpha",
+                                    GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
+                                    GIMP_TYPE_IMAGE_ID,    tmp_image,
+                                    GIMP_TYPE_DRAWABLE_ID, tmp_layer,
+                                    G_TYPE_INT,            ICO_ALPHA_THRESHOLD,
+                                    G_TYPE_NONE);
+
+          gimp_value_array_unref (return_vals);
         }
 
       gimp_layer_add_alpha (tmp_layer);

@@ -38,250 +38,287 @@
 #define SAVE_PROC        "file-ico-save"
 
 
-static void   query (void);
-static void   run   (const gchar      *name,
-                     gint              nparams,
-                     const GimpParam  *param,
-                     gint             *nreturn_vals,
-                     GimpParam       **return_vals);
+typedef struct _Ico      Ico;
+typedef struct _IcoClass IcoClass;
 
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Ico
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
+};
+
+struct _IcoClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define ICO_TYPE  (ico_get_type ())
+#define ICO (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICO_TYPE, Ico))
+
+GType                   ico_get_type         (void) G_GNUC_CONST;
+
+static GList          * ico_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * ico_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * ico_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+static GimpValueArray * ico_load_thumb       (GimpProcedure        *procedure,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+static GimpValueArray * ico_save             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              gint32                image_id,
+                                              gint32                drawable_id,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+
+G_DEFINE_TYPE (Ico, ico, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (ICO_TYPE)
 
 
 static void
-query (void)
+ico_class_init (IcoClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" },
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef thumb_args[] =
-  {
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
-  };
-  static const GimpParamDef thumb_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
-    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"     },
-    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
-  };
-
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "Loads files of Windows ICO file format",
-                          "Loads files of Windows ICO file format",
-                          "Christian Kreibich <christian@whoop.org>",
-                          "Christian Kreibich <christian@whoop.org>",
-                          "2002",
-                          N_("Microsoft Windows icon"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-ico");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "ico",
-                                    "",
-                                    "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
-
-  gimp_install_procedure (LOAD_THUMB_PROC,
-                          "Loads a preview from an Windows ICO file",
-                          "",
-                          "Dom Lachowicz, Sven Neumann",
-                          "Sven Neumann <sven@gimp.org>",
-                          "2005",
-                          NULL,
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (thumb_args),
-                          G_N_ELEMENTS (thumb_return_vals),
-                          thumb_args, thumb_return_vals);
-
-  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
-
-  gimp_install_procedure (SAVE_PROC,
-                          "Saves files in Windows ICO file format",
-                          "Saves files in Windows ICO file format",
-                          "Christian Kreibich <christian@whoop.org>",
-                          "Christian Kreibich <christian@whoop.org>",
-                          "2002",
-                          N_("Microsoft Windows icon"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-ico");
-  gimp_register_save_handler (SAVE_PROC, "ico", "");
+  plug_in_class->query_procedures = ico_query_procedures;
+  plug_in_class->create_procedure = ico_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+ico_init (Ico *ico)
 {
-  static GimpParam   values[4];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error  = NULL;
+}
+
+static GList *
+ico_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
+  list = g_list_append (list, g_strdup (SAVE_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+ico_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           ico_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("Microsoft Windows icon"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files of Windows ICO file format",
+                                        "Loads files of Windows ICO file format",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Christian Kreibich <christian@whoop.org>",
+                                      "Christian Kreibich <christian@whoop.org>",
+                                      "2002");
+
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-ico");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "ico");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
+    }
+  else if (! strcmp (name, LOAD_THUMB_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      ico_load_thumb, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads a preview from an Windows ICO file",
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dom Lachowicz, Sven Neumann",
+                                      "Sven Neumann <sven@gimp.org>",
+                                      "2005");
+
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_string ("filename",
+                                                           "Filename",
+                                                           "Name of the file "
+                                                           "to load",
+                                                           FALSE, TRUE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("thumb-size",
+                                                     "Thumb Size",
+                                                     "Preferred thumbnail size",
+                                                     16, 2014, 256,
+                                                     GIMP_PARAM_READWRITE));
+
+      gimp_procedure_add_return_value (procedure,
+                                       gimp_param_spec_image_id ("image",
+                                                                 "Image",
+                                                                 "Thumbnail image",
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
+      gimp_procedure_add_return_value (procedure,
+                                       g_param_spec_int ("image-width",
+                                                         "Image width",
+                                                         "Width of the "
+                                                         "full-sized image",
+                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                         GIMP_PARAM_READWRITE));
+      gimp_procedure_add_return_value (procedure,
+                                       g_param_spec_int ("image-height",
+                                                         "Image height",
+                                                         "Height of the "
+                                                         "full-sized image",
+                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                         GIMP_PARAM_READWRITE));
+    }
+  else if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           ico_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("Microsoft Windows icon"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Saves files in Windows ICO file format",
+                                        "Saves files in Windows ICO file format",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Christian Kreibich <christian@whoop.org>",
+                                      "Christian Kreibich <christian@whoop.org>",
+                                      "2002");
+
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-ico");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "ico");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+ico_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  gchar          *filename;
+  gint32          image_id;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  filename = g_file_get_path (file);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  image_id = ico_load_image (filename, &error);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  g_free (filename);
 
-  if (strcmp (name, LOAD_PROC) == 0)
-    {
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          break;
+  if (image_id < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-        case GIMP_RUN_NONINTERACTIVE:
-          if (nparams != 3)
-            status = GIMP_PDB_CALLING_ERROR;
-          break;
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-        default:
-          break;
-        }
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                           image_id);
 
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          gint32 image_ID;
-
-          image_ID = ico_load_image (param[1].data.d_string, &error);
-          if (image_ID != -1)
-            {
-              *nreturn_vals = 2;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-        }
-    }
-  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
-    {
-      if (nparams < 2)
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-      else
-        {
-          const gchar *filename = param[0].data.d_string;
-          gint         width    = param[1].data.d_int32;
-          gint         height   = param[1].data.d_int32;
-          gint32       image_ID;
-
-          image_ID = ico_load_thumbnail_image (filename,
-                                               &width, &height, &error);
-
-          if (image_ID != -1)
-            {
-              *nreturn_vals = 4;
-
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-              values[2].type         = GIMP_PDB_INT32;
-              values[2].data.d_int32 = width;
-              values[3].type         = GIMP_PDB_INT32;
-              values[3].data.d_int32 = height;
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-        }
-    }
-  else if (strcmp (name, SAVE_PROC) == 0)
-    {
-      gchar *file_name;
-      gint32 image_ID;
-
-      image_ID    = param[1].data.d_int32;
-      file_name   = param[3].data.d_string;
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (nparams < 5)
-            status = GIMP_PDB_CALLING_ERROR;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          break;
-
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          status = ico_save_image (file_name, image_ID, run_mode, &error);
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
+  return return_vals;
 }
 
+static GimpValueArray *
+ico_load_thumb (GimpProcedure        *procedure,
+                const GimpValueArray *args,
+                gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  const gchar    *filename;
+  gint            width;
+  gint            height;
+  gint32          image_id;
+  GError         *error = NULL;
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  filename = g_value_get_string (gimp_value_array_index (args, 0));
+  width    = g_value_get_int    (gimp_value_array_index (args, 1));
+  height   = width;
+
+  image_id = ico_load_thumbnail_image (filename,
+                                       &width, &height, &error);
+
+  if (image_id < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+  g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
+  g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+ico_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          gint32                image_id,
+          gint32                drawable_id,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpPDBStatusType  status;
+  gchar             *filename;
+  GError            *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  filename = g_file_get_path (file);
+
+  status = ico_save_image (filename, image_id, run_mode, &error);
+
+  g_free (filename);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
 
 gint
 ico_rowstride (gint width,

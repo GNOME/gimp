@@ -362,13 +362,12 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
     }
   else if (bpp == 24)
     {
-      GeglBuffer *buffer;
-      GeglBuffer *tmp;
-      gint32      image;
-      gint32      tmp_image;
-      gint32      tmp_layer;
-      GimpParam  *return_vals;
-      gint        n_return_vals;
+      GeglBuffer     *buffer;
+      GeglBuffer     *tmp;
+      gint32          image;
+      gint32          tmp_image;
+      gint32          tmp_layer;
+      GimpValueArray *return_vals;
 
       image = gimp_item_get_image (layer);
 
@@ -403,13 +402,15 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
         gimp_image_convert_rgb (tmp_image);
 
       return_vals =
-        gimp_run_procedure ("plug-in-threshold-alpha", &n_return_vals,
-                            GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
-                            GIMP_PDB_IMAGE, tmp_image,
-                            GIMP_PDB_DRAWABLE, tmp_layer,
-                            GIMP_PDB_INT32, ICO_ALPHA_THRESHOLD,
-                            GIMP_PDB_END);
-      gimp_destroy_params (return_vals, n_return_vals);
+        gimp_pdb_run_procedure (gimp_get_pdb (),
+                                "plug-in-threshold-alpha",
+                                GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
+                                GIMP_TYPE_IMAGE_ID,    tmp_image,
+                                GIMP_TYPE_DRAWABLE_ID, tmp_layer,
+                                G_TYPE_INT,            ICO_ALPHA_THRESHOLD,
+                                G_TYPE_NONE);
+
+      gimp_value_array_unref (return_vals);
 
       pixbuf = gimp_drawable_get_thumbnail (tmp_layer,
                                             MIN (w, 128), MIN (h, 128),
