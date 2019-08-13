@@ -1294,15 +1294,15 @@ _gimp_selection_flood (gint32 image_ID)
  * new channel. The new channel is automatically inserted into the
  * image's list of channels.
  *
- * Returns: The new channel.
+ * Returns: (transfer full): The new channel.
  **/
-gint32
+GimpChannel *
 gimp_selection_save (GimpImage *image)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 channel_ID = -1;
+  GimpChannel *channel = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -1318,11 +1318,11 @@ gimp_selection_save (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_ID = gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1));
+    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return channel_ID;
+  return channel;
 }
 
 /**

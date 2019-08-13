@@ -36,15 +36,15 @@ G_BEGIN_DECLS
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-gint32   gimp_image_add_sample_point          (GimpImage *image,
+gint     gimp_image_add_sample_point          (GimpImage *image,
                                                gint       position_x,
                                                gint       position_y);
 gboolean gimp_image_delete_sample_point       (GimpImage *image,
-                                               gint32     sample_point_ID);
-gint32   gimp_image_find_next_sample_point    (GimpImage *image,
-                                               gint32     sample_point_ID);
+                                               gint       sample_point);
+gint     gimp_image_find_next_sample_point    (GimpImage *image,
+                                               gint       sample_point);
 gint     gimp_image_get_sample_point_position (GimpImage *image,
-                                               gint32     sample_point_ID,
+                                               gint       sample_point,
                                                gint      *position_y);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */

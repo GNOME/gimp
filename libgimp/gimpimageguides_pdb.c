@@ -47,14 +47,14 @@
  *
  * Returns: The new guide.
  **/
-gint32
+gint
 gimp_image_add_hguide (GimpImage *image,
                        gint       yposition)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 guide_ID = -1;
+  gint guide = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -71,11 +71,11 @@ gimp_image_add_hguide (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    guide_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    guide = g_value_get_uint (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return guide_ID;
+  return guide;
 }
 
 /**
@@ -135,14 +135,14 @@ _gimp_image_add_hguide (gint32 image_ID,
  *
  * Returns: The new guide.
  **/
-gint32
+gint
 gimp_image_add_vguide (GimpImage *image,
                        gint       xposition)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 guide_ID = -1;
+  gint guide = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
@@ -159,11 +159,11 @@ gimp_image_add_vguide (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    guide_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    guide = g_value_get_uint (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return guide_ID;
+  return guide;
 }
 
 /**
@@ -213,7 +213,7 @@ _gimp_image_add_vguide (gint32 image_ID,
 /**
  * gimp_image_delete_guide:
  * @image: The image.
- * @guide_ID: The ID of the guide to be removed.
+ * @guide: The ID of the guide to be removed.
  *
  * Deletes a guide from an image.
  *
@@ -224,7 +224,7 @@ _gimp_image_add_vguide (gint32 image_ID,
  **/
 gboolean
 gimp_image_delete_guide (GimpImage *image,
-                         gint32     guide_ID)
+                         gint       guide)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -233,7 +233,7 @@ gimp_image_delete_guide (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_INT32, guide_ID,
+                                          GIMP_TYPE_INT32, guide,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -297,7 +297,7 @@ _gimp_image_delete_guide (gint32 image_ID,
 /**
  * gimp_image_find_next_guide:
  * @image: The image.
- * @guide_ID: The ID of the current guide (0 if first invocation).
+ * @guide: The ID of the current guide (0 if first invocation).
  *
  * Find next guide on an image.
  *
@@ -309,18 +309,18 @@ _gimp_image_delete_guide (gint32 image_ID,
  *
  * Returns: The next guide's ID.
  **/
-gint32
+gint
 gimp_image_find_next_guide (GimpImage *image,
-                            gint32     guide_ID)
+                            gint       guide)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 next_guide_ID = -1;
+  gint next_guide = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_INT32, guide_ID,
+                                          GIMP_TYPE_INT32, guide,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -333,11 +333,11 @@ gimp_image_find_next_guide (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    next_guide_ID = g_value_get_uint (gimp_value_array_index (return_vals, 1));
+    next_guide = g_value_get_uint (gimp_value_array_index (return_vals, 1));
 
   gimp_value_array_unref (return_vals);
 
-  return next_guide_ID;
+  return next_guide;
 }
 
 /**
@@ -389,7 +389,7 @@ _gimp_image_find_next_guide (gint32 image_ID,
 /**
  * gimp_image_get_guide_orientation:
  * @image: The image.
- * @guide_ID: The guide.
+ * @guide: The guide.
  *
  * Get orientation of a guide on an image.
  *
@@ -400,7 +400,7 @@ _gimp_image_find_next_guide (gint32 image_ID,
  **/
 GimpOrientationType
 gimp_image_get_guide_orientation (GimpImage *image,
-                                  gint32     guide_ID)
+                                  gint       guide)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -409,7 +409,7 @@ gimp_image_get_guide_orientation (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_INT32, guide_ID,
+                                          GIMP_TYPE_INT32, guide,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -475,7 +475,7 @@ _gimp_image_get_guide_orientation (gint32 image_ID,
 /**
  * gimp_image_get_guide_position:
  * @image: The image.
- * @guide_ID: The guide.
+ * @guide: The guide.
  *
  * Get position of a guide on an image.
  *
@@ -486,7 +486,7 @@ _gimp_image_get_guide_orientation (gint32 image_ID,
  **/
 gint
 gimp_image_get_guide_position (GimpImage *image,
-                               gint32     guide_ID)
+                               gint       guide)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -495,7 +495,7 @@ gimp_image_get_guide_position (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          GIMP_TYPE_INT32, guide_ID,
+                                          GIMP_TYPE_INT32, guide,
                                           G_TYPE_NONE);
 
   if (pdb)
