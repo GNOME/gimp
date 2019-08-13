@@ -297,7 +297,7 @@ gimp_param_item_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_valid (item_id))
+  if (! _gimp_item_is_valid (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
@@ -452,7 +452,7 @@ gimp_param_drawable_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_drawable (item_id))
+  if (! _gimp_item_is_drawable (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
@@ -589,7 +589,7 @@ gimp_param_layer_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_layer (item_id))
+  if (! _gimp_item_is_layer (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
@@ -726,7 +726,7 @@ gimp_param_channel_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_channel (item_id))
+  if (! _gimp_item_is_channel (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
@@ -863,7 +863,7 @@ gimp_param_layer_mask_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_layer_mask (item_id))
+  if (! _gimp_item_is_layer_mask (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
@@ -1000,7 +1000,7 @@ gimp_param_selection_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_selection (item_id))
+  if (! _gimp_item_is_selection (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
@@ -1137,7 +1137,7 @@ gimp_param_vectors_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  if (! gimp_item_is_vectors (item_id))
+  if (! _gimp_item_is_vectors (item_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
