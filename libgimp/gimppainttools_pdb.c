@@ -36,6 +36,58 @@
 
 /**
  * gimp_airbrush:
+ * @drawable: The affected drawable.
+ * @pressure: The pressure of the airbrush strokes.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush with varying pressure. Paint application
+ * is time-dependent.
+ *
+ * This tool simulates the use of an airbrush. Paint pressure
+ * represents the relative intensity of the paint application. High
+ * pressure results in a thicker layer of paint while low pressure
+ * results in a thinner layer.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_airbrush (GimpDrawable  *drawable,
+               gdouble        pressure,
+               gint           num_strokes,
+               const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_DOUBLE, pressure,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-airbrush",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-airbrush",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_airbrush: (skip)
  * @drawable_ID: The affected drawable.
  * @pressure: The pressure of the airbrush strokes.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
@@ -52,10 +104,10 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_airbrush (gint32         drawable_ID,
-               gdouble        pressure,
-               gint           num_strokes,
-               const gdouble *strokes)
+_gimp_airbrush (gint32         drawable_ID,
+                gdouble        pressure,
+                gint           num_strokes,
+                const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -88,6 +140,55 @@ gimp_airbrush (gint32         drawable_ID,
 
 /**
  * gimp_airbrush_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush with varying pressure. Paint application
+ * is time-dependent.
+ *
+ * This tool simulates the use of an airbrush. It is similar to
+ * gimp_airbrush() except that the pressure is derived from the
+ * airbrush tools options box. It the option has not been set the
+ * default for the option will be used.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_airbrush_default (GimpDrawable  *drawable,
+                       gint           num_strokes,
+                       const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-airbrush-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-airbrush-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_airbrush_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -103,9 +204,9 @@ gimp_airbrush (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_airbrush_default (gint32         drawable_ID,
-                       gint           num_strokes,
-                       const gdouble *strokes)
+_gimp_airbrush_default (gint32         drawable_ID,
+                        gint           num_strokes,
+                        const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -137,6 +238,74 @@ gimp_airbrush_default (gint32         drawable_ID,
 
 /**
  * gimp_clone:
+ * @drawable: The affected drawable.
+ * @src_drawable: The source drawable.
+ * @clone_type: The type of clone.
+ * @src_x: The x coordinate in the source image.
+ * @src_y: The y coordinate in the source image.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Clone from the source to the dest drawable using the current brush
+ *
+ * This tool clones (copies) from the source drawable starting at the
+ * specified source coordinates to the dest drawable. If the
+ * \"clone_type\" argument is set to PATTERN-CLONE, then the current
+ * pattern is used as the source and the \"src_drawable\" argument is
+ * ignored. Pattern cloning assumes a tileable pattern and mods the sum
+ * of the src coordinates and subsequent stroke offsets with the width
+ * and height of the pattern. For image cloning, if the sum of the src
+ * coordinates and subsequent stroke offsets exceeds the extents of the
+ * src drawable, then no paint is transferred. The clone tool is
+ * capable of transforming between any image types including
+ * RGB-&gt;Indexed--although converting from any type to indexed is
+ * significantly slower.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_clone (GimpDrawable  *drawable,
+            GimpDrawable  *src_drawable,
+            GimpCloneType  clone_type,
+            gdouble        src_x,
+            gdouble        src_y,
+            gint           num_strokes,
+            const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (src_drawable)),
+                                          GIMP_TYPE_CLONE_TYPE, clone_type,
+                                          G_TYPE_DOUBLE, src_x,
+                                          G_TYPE_DOUBLE, src_y,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 6), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-clone",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-clone",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_clone: (skip)
  * @drawable_ID: The affected drawable.
  * @src_drawable_ID: The source drawable.
  * @clone_type: The type of clone.
@@ -163,13 +332,13 @@ gimp_airbrush_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_clone (gint32         drawable_ID,
-            gint32         src_drawable_ID,
-            GimpCloneType  clone_type,
-            gdouble        src_x,
-            gdouble        src_y,
-            gint           num_strokes,
-            const gdouble *strokes)
+_gimp_clone (gint32         drawable_ID,
+             gint32         src_drawable_ID,
+             GimpCloneType  clone_type,
+             gdouble        src_x,
+             gdouble        src_y,
+             gint           num_strokes,
+             const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -205,6 +374,56 @@ gimp_clone (gint32         drawable_ID,
 
 /**
  * gimp_clone_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Clone from the source to the dest drawable using the current brush
+ *
+ * This tool clones (copies) from the source drawable starting at the
+ * specified source coordinates to the dest drawable. This function
+ * performs exactly the same as the gimp_clone() function except that
+ * the tools arguments are obtained from the clones option dialog. It
+ * this dialog has not been activated then the dialogs default values
+ * will be used.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_clone_default (GimpDrawable  *drawable,
+                    gint           num_strokes,
+                    const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-clone-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-clone-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_clone_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -221,9 +440,9 @@ gimp_clone (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_clone_default (gint32         drawable_ID,
-                    gint           num_strokes,
-                    const gdouble *strokes)
+_gimp_clone_default (gint32         drawable_ID,
+                     gint           num_strokes,
+                     const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -255,6 +474,60 @@ gimp_clone_default (gint32         drawable_ID,
 
 /**
  * gimp_convolve:
+ * @drawable: The affected drawable.
+ * @pressure: The pressure.
+ * @convolve_type: Convolve type.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Convolve (Blur, Sharpen) using the current brush.
+ *
+ * This tool convolves the specified drawable with either a sharpening
+ * or blurring kernel. The pressure parameter controls the magnitude of
+ * the operation. Like the paintbrush, this tool linearly interpolates
+ * between the specified stroke coordinates.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_convolve (GimpDrawable     *drawable,
+               gdouble           pressure,
+               GimpConvolveType  convolve_type,
+               gint              num_strokes,
+               const gdouble    *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_DOUBLE, pressure,
+                                          GIMP_TYPE_CONVOLVE_TYPE, convolve_type,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 4), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-convolve",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-convolve",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_convolve: (skip)
  * @drawable_ID: The affected drawable.
  * @pressure: The pressure.
  * @convolve_type: Convolve type.
@@ -271,11 +544,11 @@ gimp_clone_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_convolve (gint32            drawable_ID,
-               gdouble           pressure,
-               GimpConvolveType  convolve_type,
-               gint              num_strokes,
-               const gdouble    *strokes)
+_gimp_convolve (gint32            drawable_ID,
+                gdouble           pressure,
+                GimpConvolveType  convolve_type,
+                gint              num_strokes,
+                const gdouble    *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -309,6 +582,55 @@ gimp_convolve (gint32            drawable_ID,
 
 /**
  * gimp_convolve_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Convolve (Blur, Sharpen) using the current brush.
+ *
+ * This tool convolves the specified drawable with either a sharpening
+ * or blurring kernel. This function performs exactly the same as the
+ * gimp_convolve() function except that the tools arguments are
+ * obtained from the convolve option dialog. It this dialog has not
+ * been activated then the dialogs default values will be used.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_convolve_default (GimpDrawable  *drawable,
+                       gint           num_strokes,
+                       const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-convolve-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-convolve-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_convolve_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -324,9 +646,9 @@ gimp_convolve (gint32            drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_convolve_default (gint32         drawable_ID,
-                       gint           num_strokes,
-                       const gdouble *strokes)
+_gimp_convolve_default (gint32         drawable_ID,
+                        gint           num_strokes,
+                        const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -358,6 +680,60 @@ gimp_convolve_default (gint32         drawable_ID,
 
 /**
  * gimp_dodgeburn:
+ * @drawable: The affected drawable.
+ * @exposure: The exposure of the strokes.
+ * @dodgeburn_type: The type either dodge or burn.
+ * @dodgeburn_mode: The mode.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Dodgeburn image with varying exposure.
+ *
+ * Dodgeburn. More details here later.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_dodgeburn (GimpDrawable      *drawable,
+                gdouble            exposure,
+                GimpDodgeBurnType  dodgeburn_type,
+                GimpTransferMode   dodgeburn_mode,
+                gint               num_strokes,
+                const gdouble     *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_DOUBLE, exposure,
+                                          GIMP_TYPE_DODGE_BURN_TYPE, dodgeburn_type,
+                                          GIMP_TYPE_TRANSFER_MODE, dodgeburn_mode,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-dodgeburn",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-dodgeburn",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_dodgeburn: (skip)
  * @drawable_ID: The affected drawable.
  * @exposure: The exposure of the strokes.
  * @dodgeburn_type: The type either dodge or burn.
@@ -372,12 +748,12 @@ gimp_convolve_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_dodgeburn (gint32             drawable_ID,
-                gdouble            exposure,
-                GimpDodgeBurnType  dodgeburn_type,
-                GimpTransferMode   dodgeburn_mode,
-                gint               num_strokes,
-                const gdouble     *strokes)
+_gimp_dodgeburn (gint32             drawable_ID,
+                 gdouble            exposure,
+                 GimpDodgeBurnType  dodgeburn_type,
+                 GimpTransferMode   dodgeburn_mode,
+                 gint               num_strokes,
+                 const gdouble     *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -412,6 +788,54 @@ gimp_dodgeburn (gint32             drawable_ID,
 
 /**
  * gimp_dodgeburn_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Dodgeburn image with varying exposure. This is the same as the
+ * gimp_dodgeburn() function except that the exposure, type and mode
+ * are taken from the tools option dialog. If the dialog has not been
+ * activated then the defaults as used by the dialog will be used.
+ *
+ * Dodgeburn. More details here later.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_dodgeburn_default (GimpDrawable  *drawable,
+                        gint           num_strokes,
+                        const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-dodgeburn-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-dodgeburn-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_dodgeburn_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -426,9 +850,9 @@ gimp_dodgeburn (gint32             drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_dodgeburn_default (gint32         drawable_ID,
-                        gint           num_strokes,
-                        const gdouble *strokes)
+_gimp_dodgeburn_default (gint32         drawable_ID,
+                         gint           num_strokes,
+                         const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -460,6 +884,61 @@ gimp_dodgeburn_default (gint32         drawable_ID,
 
 /**
  * gimp_eraser:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @hardness: How to apply the brush.
+ * @method: The paint method to use.
+ *
+ * Erase using the current brush.
+ *
+ * This tool erases using the current brush mask. If the specified
+ * drawable contains an alpha channel, then the erased pixels will
+ * become transparent. Otherwise, the eraser tool replaces the contents
+ * of the drawable with the background color. Like paintbrush, this
+ * tool linearly interpolates between the specified stroke coordinates.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_eraser (GimpDrawable             *drawable,
+             gint                      num_strokes,
+             const gdouble            *strokes,
+             GimpBrushApplicationMode  hardness,
+             GimpPaintApplicationMode  method)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          GIMP_TYPE_BRUSH_APPLICATION_MODE, hardness,
+                                          GIMP_TYPE_PAINT_APPLICATION_MODE, method,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-eraser",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-eraser",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_eraser: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -477,11 +956,11 @@ gimp_dodgeburn_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_eraser (gint32                    drawable_ID,
-             gint                      num_strokes,
-             const gdouble            *strokes,
-             GimpBrushApplicationMode  hardness,
-             GimpPaintApplicationMode  method)
+_gimp_eraser (gint32                    drawable_ID,
+              gint                      num_strokes,
+              const gdouble            *strokes,
+              GimpBrushApplicationMode  hardness,
+              GimpPaintApplicationMode  method)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -515,6 +994,55 @@ gimp_eraser (gint32                    drawable_ID,
 
 /**
  * gimp_eraser_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Erase using the current brush.
+ *
+ * This tool erases using the current brush mask. This function
+ * performs exactly the same as the gimp_eraser() function except that
+ * the tools arguments are obtained from the eraser option dialog. It
+ * this dialog has not been activated then the dialogs default values
+ * will be used.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_eraser_default (GimpDrawable  *drawable,
+                     gint           num_strokes,
+                     const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-eraser-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-eraser-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_eraser_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -530,9 +1058,9 @@ gimp_eraser (gint32                    drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_eraser_default (gint32         drawable_ID,
-                     gint           num_strokes,
-                     const gdouble *strokes)
+_gimp_eraser_default (gint32         drawable_ID,
+                      gint           num_strokes,
+                      const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -564,6 +1092,67 @@ gimp_eraser_default (gint32         drawable_ID,
 
 /**
  * gimp_heal:
+ * @drawable: The affected drawable.
+ * @src_drawable: The source drawable.
+ * @src_x: The x coordinate in the source image.
+ * @src_y: The y coordinate in the source image.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Heal from the source to the dest drawable using the current brush
+ *
+ * This tool heals the source drawable starting at the specified source
+ * coordinates to the dest drawable. For image healing, if the sum of
+ * the src coordinates and subsequent stroke offsets exceeds the
+ * extents of the src drawable, then no paint is transferred. The
+ * healing tool is capable of transforming between any image types
+ * except RGB-&gt;Indexed.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_heal (GimpDrawable  *drawable,
+           GimpDrawable  *src_drawable,
+           gdouble        src_x,
+           gdouble        src_y,
+           gint           num_strokes,
+           const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (src_drawable)),
+                                          G_TYPE_DOUBLE, src_x,
+                                          G_TYPE_DOUBLE, src_y,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-heal",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-heal",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_heal: (skip)
  * @drawable_ID: The affected drawable.
  * @src_drawable_ID: The source drawable.
  * @src_x: The x coordinate in the source image.
@@ -585,12 +1174,12 @@ gimp_eraser_default (gint32         drawable_ID,
  * Since: 2.4
  **/
 gboolean
-gimp_heal (gint32         drawable_ID,
-           gint32         src_drawable_ID,
-           gdouble        src_x,
-           gdouble        src_y,
-           gint           num_strokes,
-           const gdouble *strokes)
+_gimp_heal (gint32         drawable_ID,
+            gint32         src_drawable_ID,
+            gdouble        src_x,
+            gdouble        src_y,
+            gint           num_strokes,
+            const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -625,6 +1214,58 @@ gimp_heal (gint32         drawable_ID,
 
 /**
  * gimp_heal_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Heal from the source to the dest drawable using the current brush
+ *
+ * This tool heals from the source drawable starting at the specified
+ * source coordinates to the dest drawable. This function performs
+ * exactly the same as the gimp_heal() function except that the tools
+ * arguments are obtained from the healing option dialog. It this
+ * dialog has not been activated then the dialogs default values will
+ * be used.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.4
+ **/
+gboolean
+gimp_heal_default (GimpDrawable  *drawable,
+                   gint           num_strokes,
+                   const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-heal-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-heal-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_heal_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -643,9 +1284,9 @@ gimp_heal (gint32         drawable_ID,
  * Since: 2.4
  **/
 gboolean
-gimp_heal_default (gint32         drawable_ID,
-                   gint           num_strokes,
-                   const gdouble *strokes)
+_gimp_heal_default (gint32         drawable_ID,
+                    gint           num_strokes,
+                    const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -677,6 +1318,69 @@ gimp_heal_default (gint32         drawable_ID,
 
 /**
  * gimp_paintbrush:
+ * @drawable: The affected drawable.
+ * @fade_out: Fade out parameter.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @method: The paint method to use.
+ * @gradient_length: Length of gradient to draw.
+ *
+ * Paint in the current brush with optional fade out parameter and pull
+ * colors from a gradient.
+ *
+ * This tool is the standard paintbrush. It draws linearly interpolated
+ * lines through the specified stroke coordinates. It operates on the
+ * specified drawable in the foreground color with the active brush.
+ * The 'fade-out' parameter is measured in pixels and allows the brush
+ * stroke to linearly fall off. The pressure is set to the maximum at
+ * the beginning of the stroke. As the distance of the stroke nears the
+ * fade-out value, the pressure will approach zero. The gradient-length
+ * is the distance to spread the gradient over. It is measured in
+ * pixels. If the gradient-length is 0, no gradient is used.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_paintbrush (GimpDrawable             *drawable,
+                 gdouble                   fade_out,
+                 gint                      num_strokes,
+                 const gdouble            *strokes,
+                 GimpPaintApplicationMode  method,
+                 gdouble                   gradient_length)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_DOUBLE, fade_out,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          GIMP_TYPE_PAINT_APPLICATION_MODE, method,
+                                          G_TYPE_DOUBLE, gradient_length,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-paintbrush",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-paintbrush",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_paintbrush: (skip)
  * @drawable_ID: The affected drawable.
  * @fade_out: Fade out parameter.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
@@ -700,12 +1404,12 @@ gimp_heal_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_paintbrush (gint32                    drawable_ID,
-                 gdouble                   fade_out,
-                 gint                      num_strokes,
-                 const gdouble            *strokes,
-                 GimpPaintApplicationMode  method,
-                 gdouble                   gradient_length)
+_gimp_paintbrush (gint32                    drawable_ID,
+                  gdouble                   fade_out,
+                  gint                      num_strokes,
+                  const gdouble            *strokes,
+                  GimpPaintApplicationMode  method,
+                  gdouble                   gradient_length)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -740,6 +1444,64 @@ gimp_paintbrush (gint32                    drawable_ID,
 
 /**
  * gimp_paintbrush_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush. The fade out parameter and pull colors
+ * from a gradient parameter are set from the paintbrush options
+ * dialog. If this dialog has not been activated then the dialog
+ * defaults will be used.
+ *
+ * This tool is similar to the standard paintbrush. It draws linearly
+ * interpolated lines through the specified stroke coordinates. It
+ * operates on the specified drawable in the foreground color with the
+ * active brush. The 'fade-out' parameter is measured in pixels and
+ * allows the brush stroke to linearly fall off (value obtained from
+ * the option dialog). The pressure is set to the maximum at the
+ * beginning of the stroke. As the distance of the stroke nears the
+ * fade-out value, the pressure will approach zero. The gradient-length
+ * (value obtained from the option dialog) is the distance to spread
+ * the gradient over. It is measured in pixels. If the gradient-length
+ * is 0, no gradient is used.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_paintbrush_default (GimpDrawable  *drawable,
+                         gint           num_strokes,
+                         const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-paintbrush-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-paintbrush-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_paintbrush_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -764,9 +1526,9 @@ gimp_paintbrush (gint32                    drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_paintbrush_default (gint32         drawable_ID,
-                         gint           num_strokes,
-                         const gdouble *strokes)
+_gimp_paintbrush_default (gint32         drawable_ID,
+                          gint           num_strokes,
+                          const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -798,6 +1560,56 @@ gimp_paintbrush_default (gint32         drawable_ID,
 
 /**
  * gimp_pencil:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush without sub-pixel sampling.
+ *
+ * This tool is the standard pencil. It draws linearly interpolated
+ * lines through the specified stroke coordinates. It operates on the
+ * specified drawable in the foreground color with the active brush.
+ * The brush mask is treated as though it contains only black and white
+ * values. Any value below half is treated as black; any above half, as
+ * white.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_pencil (GimpDrawable  *drawable,
+             gint           num_strokes,
+             const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-pencil",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-pencil",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_pencil: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -814,9 +1626,9 @@ gimp_paintbrush_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_pencil (gint32         drawable_ID,
-             gint           num_strokes,
-             const gdouble *strokes)
+_gimp_pencil (gint32         drawable_ID,
+              gint           num_strokes,
+              const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -848,6 +1660,56 @@ gimp_pencil (gint32         drawable_ID,
 
 /**
  * gimp_smudge:
+ * @drawable: The affected drawable.
+ * @pressure: The pressure of the smudge strokes.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Smudge image with varying pressure.
+ *
+ * This tool simulates a smudge using the current brush. High pressure
+ * results in a greater smudge of paint while low pressure results in a
+ * lesser smudge.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_smudge (GimpDrawable  *drawable,
+             gdouble        pressure,
+             gint           num_strokes,
+             const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_DOUBLE, pressure,
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-smudge",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-smudge",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_smudge: (skip)
  * @drawable_ID: The affected drawable.
  * @pressure: The pressure of the smudge strokes.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
@@ -862,10 +1724,10 @@ gimp_pencil (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_smudge (gint32         drawable_ID,
-             gdouble        pressure,
-             gint           num_strokes,
-             const gdouble *strokes)
+_gimp_smudge (gint32         drawable_ID,
+              gdouble        pressure,
+              gint           num_strokes,
+              const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -898,6 +1760,54 @@ gimp_smudge (gint32         drawable_ID,
 
 /**
  * gimp_smudge_default:
+ * @drawable: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Smudge image with varying pressure.
+ *
+ * This tool simulates a smudge using the current brush. It behaves
+ * exactly the same as gimp_smudge() except that the pressure value is
+ * taken from the smudge tool options or the options default if the
+ * tools option dialog has not been activated.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_smudge_default (GimpDrawable  *drawable,
+                     gint           num_strokes,
+                     const gdouble *strokes)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_INT, num_strokes,
+                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-smudge-default",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-smudge-default",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_smudge_default: (skip)
  * @drawable_ID: The affected drawable.
  * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
  * @strokes: (array length=num_strokes) (element-type gdouble): Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
@@ -912,9 +1822,9 @@ gimp_smudge (gint32         drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_smudge_default (gint32         drawable_ID,
-                     gint           num_strokes,
-                     const gdouble *strokes)
+_gimp_smudge_default (gint32         drawable_ID,
+                      gint           num_strokes,
+                      const gdouble *strokes)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
