@@ -1454,7 +1454,7 @@ gimp_procedure_validate_args (GimpProcedure         *procedure,
 
           return FALSE;
         }
-      else /* if (! (pspec->flags & GIMP_PARAM_NO_VALIDATE)) */
+      else if (! (pspec->flags & GIMP_PARAM_NO_VALIDATE))
         {
           GValue string_value = G_VALUE_INIT;
 
