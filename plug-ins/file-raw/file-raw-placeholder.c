@@ -29,42 +29,81 @@
 #include "file-raw-formats.h"
 
 
-static void   query (void);
-static void   run   (const gchar      *name,
-                     gint              nparams,
-                     const GimpParam  *param,
-                     gint             *nreturn_vals,
-                     GimpParam       **return_vals);
+typedef struct _Placeholder      Placeholder;
+typedef struct _PlaceholderClass PlaceholderClass;
 
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Placeholder
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
-  query, /* query proc */
-  run,   /* run_proc */
+  GimpPlugIn      parent_instance;
+};
+
+struct _PlaceholderClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define PLACEHOLDER_TYPE  (placeholder_get_type ())
+#define PLACEHOLDER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLACEHOLDER_TYPE, Placeholder))
+
+GType                   placeholder_get_type         (void) G_GNUC_CONST;
+
+static GList          * placeholder_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * placeholder_create_procedure (GimpPlugIn           *plug_in,
+                                                      const gchar          *name);
+
+static GimpValueArray * placeholder_load             (GimpProcedure        *procedure,
+                                                      GimpRunMode           run_mode,
+                                                      GFile                *file,
+                                                      const GimpValueArray *args,
+                                                      gpointer              run_data);
+
+
+G_DEFINE_TYPE (Placeholder, placeholder, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (PLACEHOLDER_TYPE)
 
 
 static void
-query (void)
+placeholder_class_init (PlaceholderClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered" },
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image" }
-  };
+  plug_in_class->query_procedures = placeholder_query_procedures;
+  plug_in_class->create_procedure = placeholder_create_procedure;
+}
 
-  gint i;
+static void
+placeholder_init (Placeholder *placeholder)
+{
+}
+
+static GList *
+placeholder_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+  gint   i;
+
+  for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
+    {
+      const FileFormat *format = &file_formats[i];
+      gchar            *load_proc;
+
+      load_proc = g_strdup_printf (format->load_proc_format,
+                                   "raw-placeholder");
+
+      list = g_list_append (list, load_proc);
+    }
+
+  return list;
+}
+
+static GimpProcedure *
+placeholder_create_procedure (GimpPlugIn  *plug_in,
+                              const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+  gint           i;
 
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
@@ -73,91 +112,73 @@ query (void)
       gchar            *load_blurb;
       gchar            *load_help;
 
-      load_proc  = g_strdup_printf (format->load_proc_format,  "raw-placeholder");
-      load_blurb = g_strdup_printf (format->load_blurb_format, "raw-placeholder");
-      load_help  = g_strdup_printf (format->load_help_format,  "raw-placeholder");
+      load_proc = g_strdup_printf (format->load_proc_format,
+                                   "raw-placeholder");
 
-      gimp_install_procedure (load_proc,
-                              load_blurb,
-                              load_help,
-                              "Tobias Ellinghaus",
-                              "Tobias Ellinghaus",
-                              "2016",
-                              format->file_type,
-                              NULL,
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (load_args),
-                              G_N_ELEMENTS (load_return_vals),
-                              load_args, load_return_vals);
+      if (strcmp (name, load_proc))
+        {
+          g_free (load_proc);
+          continue;
+        }
 
-      gimp_register_file_handler_mime (load_proc,
-                                       format->mime_type);
-      gimp_register_file_handler_raw (load_proc);
-      gimp_register_magic_load_handler (load_proc,
-                                        format->extensions,
-                                        "",
-                                        format->magic);
+      load_blurb = g_strdup_printf (format->load_blurb_format, "placeholder");
+      load_help  = g_strdup_printf (format->load_help_format,  "placeholder");
+
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           placeholder_load,
+                                           (gpointer) format, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        load_blurb, load_help, name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Tobias Ellinghaus",
+                                      "Tobias Ellinghaus",
+                                      "2016");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          format->mime_type);
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          format->extensions);
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      format->magic);
+
+      gimp_load_procedure_set_handles_raw (GIMP_LOAD_PROCEDURE (procedure),
+                                           TRUE);
 
       g_free (load_proc);
       g_free (load_blurb);
       g_free (load_help);
+
+      break;
     }
+
+  return procedure;
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpValueArray *
+placeholder_load (GimpProcedure        *procedure,
+                  GimpRunMode           run_mode,
+                  GFile                *file,
+                  const GimpValueArray *args,
+                  gpointer              run_data)
 {
-  static GimpParam   values[6];
-  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
-  GError            *error  = NULL;
-  gint               i;
+  const FileFormat *format = run_data;
+  GError           *error = NULL;
 
   INIT_I18N ();
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+               _("There is no RAW loader installed to open '%s' files.\n"
+                 "\n"
+                 "GIMP currently supports these RAW loaders:\n"
+                 "- placeholder (http://www.placeholder.org/), at least 1.7\n"
+                 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+                 "\n"
+                 "Please install one of them in order to "
+                 "load RAW files."),
+               gettext (format->file_type));
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  /* check if the format passed is actually supported & load */
-  for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
-    {
-      const FileFormat *format    = &file_formats[i];
-      gchar            *load_proc = NULL;
-
-      if (format->load_proc_format)
-        load_proc = g_strdup_printf (format->load_proc_format, "raw-placeholder");
-
-      if (load_proc && ! strcmp (name, load_proc))
-        {
-          g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("There is no RAW loader installed to open '%s' files.\n"
-                         "\n"
-                         "GIMP currently supports these RAW loaders:\n"
-                         "- darktable (http://www.darktable.org/), at least 1.7\n"
-                         "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-                         "\n"
-                         "Please install one of them in order to "
-                         "load RAW files."),
-                       gettext (format->file_type));
-          break;
-        }
-    }
-
-  if (i == G_N_ELEMENTS (file_formats))
-    status = GIMP_PDB_CALLING_ERROR;
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type           = GIMP_PDB_STRING;
-      values[1].data.d_string  = error->message;
-    }
-
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure,
+                                           GIMP_PDB_EXECUTION_ERROR,
+                                           error);
 }

@@ -36,58 +36,68 @@
 #define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\rawtherapee"
 
 
-static void     init                 (void);
-static void     query                (void);
-static void     run                  (const gchar      *name,
-                                      gint              nparams,
-                                      const GimpParam  *param,
-                                      gint             *nreturn_vals,
-                                      GimpParam       **return_vals);
-static gint32   load_image           (const gchar      *filename,
-                                      GimpRunMode       run_mode,
-                                      GError          **error);
+typedef struct _Rawtherapee      Rawtherapee;
+typedef struct _RawtherapeeClass RawtherapeeClass;
 
-static gint32   load_thumbnail_image (const gchar      *filename,
-                                      gint             thumb_size,
-                                      GError          **error);
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Rawtherapee
 {
-  init,  /* init_proc */
-  NULL,  /* quit_proc */
-  query, /* query proc */
-  run,   /* run_proc */
+  GimpPlugIn      parent_instance;
 };
 
-MAIN ()
+struct _RawtherapeeClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define RAWTHERAPEE_TYPE  (rawtherapee_get_type ())
+#define RAWTHERAPEE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RAWTHERAPEE_TYPE, Rawtherapee))
+
+GType                   rawtherapee_get_type         (void) G_GNUC_CONST;
+
+static GList          * rawtherapee_init_procedures  (GimpPlugIn           *plug_in);
+static GimpProcedure  * rawtherapee_create_procedure (GimpPlugIn           *plug_in,
+                                                      const gchar          *name);
+
+static GimpValueArray * rawtherapee_load             (GimpProcedure        *procedure,
+                                                      GimpRunMode           run_mode,
+                                                      GFile                *file,
+                                                      const GimpValueArray *args,
+                                                      gpointer              run_data);
+static GimpValueArray * rawtherapee_load_thumb       (GimpProcedure        *procedure,
+                                                      const GimpValueArray *args,
+                                                      gpointer              run_data);
+
+static gint32           load_image                   (const gchar          *filename,
+                                                      GimpRunMode           run_mode,
+                                                      GError              **error);
+static gint32           load_thumbnail_image         (const gchar          *filename,
+                                                      gint                  thumb_size,
+                                                      GError              **error);
+
+
+G_DEFINE_TYPE (Rawtherapee, rawtherapee, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (RAWTHERAPEE_TYPE)
 
 
 static void
-init (void)
+rawtherapee_class_init (RawtherapeeClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered" },
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image" }
-  };
+  plug_in_class->init_procedures  = rawtherapee_init_procedures;
+  plug_in_class->create_procedure = rawtherapee_create_procedure;
+}
 
-  static const GimpParamDef thumb_args[] =
-  {
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
-  };
+static void
+rawtherapee_init (Rawtherapee *rawtherapee)
+{
+}
 
-  static const GimpParamDef thumb_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               }
-  };
-
+static GList *
+rawtherapee_init_procedures (GimpPlugIn *plug_in)
+{
   /* check if rawtherapee is installed
    * TODO: allow setting the location of the executable in preferences
    */
@@ -135,159 +145,205 @@ init (void)
 
   g_free (exec_path);
 
-  if (! have_rawtherapee)
-    return;
-
-  gimp_install_procedure (LOAD_THUMB_PROC,
-                          "Load thumbnail from a raw image via rawtherapee",
-                          "This plug-in loads a thumbnail from a raw image by calling rawtherapee-cli.",
-                          "Alberto Griggio",
-                          "Alberto Griggio",
-                          "2017",
-                          NULL,
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (thumb_args),
-                          G_N_ELEMENTS (thumb_return_vals),
-                          thumb_args, thumb_return_vals);
-
-  for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
+  if (have_rawtherapee)
     {
-      const FileFormat *format = &file_formats[i];
-      gchar            *load_proc;
-      gchar            *load_blurb;
-      gchar            *load_help;
+      GList *list = NULL;
 
-      load_proc  = g_strdup_printf (format->load_proc_format,  "rawtherapee");
-      load_blurb = g_strdup_printf (format->load_blurb_format, "rawtherapee");
-      load_help  = g_strdup_printf (format->load_help_format,  "rawtherapee");
+      list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
 
-      gimp_install_procedure (load_proc,
-                              load_blurb,
-                              load_help,
-                              "Alberto Griggio",
-                              "Alberto Griggio",
-                              "2017",
-                              format->file_type,
-                              NULL,
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (load_args),
-                              G_N_ELEMENTS (load_return_vals),
-                              load_args, load_return_vals);
+      for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
+        {
+          const FileFormat *format = &file_formats[i];
+          gchar            *load_proc;
 
-      gimp_register_file_handler_mime (load_proc,
-                                       format->mime_type);
-      gimp_register_file_handler_raw (load_proc);
-      gimp_register_magic_load_handler (load_proc,
-                                        format->extensions,
-                                        "",
-                                        format->magic);
+          load_proc = g_strdup_printf (format->load_proc_format, "rawtherapee");
 
-      gimp_register_thumbnail_loader (load_proc, LOAD_THUMB_PROC);
+          list = g_list_append (list, load_proc);
+        }
 
-      g_free (load_proc);
-      g_free (load_blurb);
-      g_free (load_help);
+      return list;
     }
+
+  return NULL;
 }
 
-static void
-query (void)
+static GimpProcedure *
+rawtherapee_create_procedure (GimpPlugIn  *plug_in,
+                            const gchar *name)
 {
-  /* query() is run only the first time for efficiency. Yet this plugin
-   * is dependent on the presence of rawtherapee which may be installed
-   * or uninstalled between GIMP startups. Therefore we should move the
-   * usual gimp_install_procedure() to init() so that the check is done
-   * at every startup instead.
-   */
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_THUMB_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      rawtherapee_load_thumb, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Load thumbnail from a raw image "
+                                        "via rawtherapee",
+                                        "This plug-in loads a thumbnail "
+                                        "from a raw image by calling "
+                                        "rawtherapee-cli.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alberto Griggio",
+                                      "Alberto Griggio",
+                                      "2017");
+
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_string ("filename",
+                                                           "Filename",
+                                                           "Name of the file "
+                                                           "to load",
+                                                           FALSE, TRUE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("thumb-size",
+                                                     "Thumb Size",
+                                                     "Preferred thumbnail size",
+                                                     16, 2014, 256,
+                                                     GIMP_PARAM_READWRITE));
+
+      gimp_procedure_add_return_value (procedure,
+                                       gimp_param_spec_image_id ("image",
+                                                                 "Image",
+                                                                 "Thumbnail image",
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
+    }
+  else
+    {
+      gint i;
+
+      for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
+        {
+          const FileFormat *format = &file_formats[i];
+          gchar            *load_proc;
+          gchar            *load_blurb;
+          gchar            *load_help;
+
+          load_proc = g_strdup_printf (format->load_proc_format, "rawtherapee");
+
+          if (strcmp (name, load_proc))
+            {
+              g_free (load_proc);
+              continue;
+            }
+
+          load_blurb = g_strdup_printf (format->load_blurb_format, "rawtherapee");
+          load_help  = g_strdup_printf (format->load_help_format,  "rawtherapee");
+
+          procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                               rawtherapee_load,
+                                               (gpointer) format, NULL);
+
+          gimp_procedure_set_documentation (procedure,
+                                            load_blurb, load_help, name);
+          gimp_procedure_set_attribution (procedure,
+                                          "Alberto Griggio",
+                                          "Alberto Griggio",
+                                          "2017");
+
+          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                              format->mime_type);
+          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                              format->extensions);
+          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                          format->magic);
+
+          gimp_load_procedure_set_handles_raw (GIMP_LOAD_PROCEDURE (procedure),
+                                               TRUE);
+          gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                    LOAD_THUMB_PROC);
+
+          g_free (load_proc);
+          g_free (load_blurb);
+          g_free (load_help);
+
+          break;
+        }
+    }
+
+  return procedure;
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpValueArray *
+rawtherapee_load (GimpProcedure        *procedure,
+                  GimpRunMode           run_mode,
+                  GFile                *file,
+                  const GimpValueArray *args,
+                  gpointer              run_data)
 {
-  static GimpParam   values[6];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
-  gint               image_ID;
-  GError            *error = NULL;
-  gint               i;
+  GimpValueArray *return_vals;
+  gchar          *filename;
+  gint32          image_id;
+  GError         *error = NULL;
 
   INIT_I18N ();
 
-  run_mode = param[0].data.d_int32;
+  filename = g_file_get_path (file);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  image_id = load_image (filename, run_mode, &error);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  g_free (filename);
 
-  /* check if the format passed is actually supported & load */
-  for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
-    {
-      const FileFormat *format    = &file_formats[i];
-      gchar            *load_proc = NULL;
+  if (image_id < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-      if (format->load_proc_format)
-        load_proc = g_strdup_printf (format->load_proc_format, "rawtherapee");
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-      if (load_proc && ! strcmp (name, load_proc))
-        {
-          image_ID = load_image (param[1].data.d_string, run_mode, &error);
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                           image_id);
 
-          if (image_ID != -1)
-            {
-              *nreturn_vals = 2;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
+  return return_vals;
+}
 
-          break;
-        }
-      else if (! strcmp (name, LOAD_THUMB_PROC))
-        {
-          image_ID = load_thumbnail_image (param[0].data.d_string,
-                                           param[1].data.d_int32,
-                                           &error);
+static GimpValueArray *
+rawtherapee_load_thumb (GimpProcedure        *procedure,
+                        const GimpValueArray *args,
+                        gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  const gchar    *filename;
+  gint            size;
+  gint32          image_id;
+  GValue          value = G_VALUE_INIT;
+  GError         *error = NULL;
 
-          if (image_ID != -1)
-            {
-              *nreturn_vals = 4;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-              values[4].type         = GIMP_PDB_INT32;
-              values[4].data.d_int32 = GIMP_RGB_IMAGE;
-              values[5].type         = GIMP_PDB_INT32;
-              values[5].data.d_int32 = 1; /* num_layers */
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
+  INIT_I18N ();
 
-          break;
-        }
-    }
+  filename = g_value_get_string (gimp_value_array_index (args, 0));
+  size     = g_value_get_int    (gimp_value_array_index (args, 1));
 
-  if (i == G_N_ELEMENTS (file_formats))
-    status = GIMP_PDB_CALLING_ERROR;
+  image_id = load_thumbnail_image (filename, size, &error);
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type           = GIMP_PDB_STRING;
-      values[1].data.d_string  = error->message;
-    }
+  if (image_id < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  values[0].data.d_status = status;
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+
+  g_value_init (&value, GIMP_TYPE_IMAGE_TYPE);
+  g_value_set_enum (&value, GIMP_RGB_IMAGE);
+  gimp_value_array_append (return_vals, &value);
+  g_value_unset (&value);
+
+  g_value_init (&value, G_TYPE_INT);
+  g_value_set_int (&value, 1);
+  gimp_value_array_append (return_vals, &value);
+  g_value_unset (&value);
+
+  return return_vals;
 }
 
 static gint32
