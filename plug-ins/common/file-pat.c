@@ -155,12 +155,12 @@ pat_save (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GimpParasite      *parasite;
-  gint32             orig_image_ID;
+  gint32             orig_image_id;
   GError            *error  = NULL;
 
   INIT_I18N ();
 
-  orig_image_ID = image_id;
+  orig_image_id = image_id;
 
   switch (run_mode)
     {
@@ -181,7 +181,7 @@ pat_save (GimpProcedure        *procedure,
       /*  Possibly retrieve data  */
       gimp_get_data (SAVE_PROC, description);
 
-      parasite = gimp_image_get_parasite (orig_image_ID,
+      parasite = gimp_image_get_parasite (orig_image_id,
                                           "gimp-pattern-name");
       if (parasite)
         {
@@ -218,16 +218,17 @@ pat_save (GimpProcedure        *procedure,
     {
     case GIMP_RUN_INTERACTIVE:
       if (! save_dialog ())
-        status = GIMP_PDB_CANCEL;
+        {
+          status = GIMP_PDB_CANCEL;
+          goto out;
+        }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      {
-        strncpy (description,
-                 g_value_get_string (gimp_value_array_index (args, 0)),
-                 sizeof (description));
-        description[sizeof (description) - 1] = '\0';
-      }
+      strncpy (description,
+               g_value_get_string (gimp_value_array_index (args, 0)),
+               sizeof (description));
+      description[sizeof (description) - 1] = '\0';
       break;
 
     default:
@@ -270,9 +271,6 @@ pat_save (GimpProcedure        *procedure,
       gimp_value_array_unref (save_retvals);
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_id);
-
   if (strlen (description))
     {
       GimpParasite *parasite;
@@ -281,13 +279,17 @@ pat_save (GimpProcedure        *procedure,
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (description) + 1,
                                     description);
-      gimp_image_attach_parasite (orig_image_ID, parasite);
+      gimp_image_attach_parasite (orig_image_id, parasite);
       gimp_parasite_free (parasite);
     }
   else
     {
-      gimp_image_detach_parasite (orig_image_ID, "gimp-pattern-name");
+      gimp_image_detach_parasite (orig_image_id, "gimp-pattern-name");
     }
+
+ out:
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image_id);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
