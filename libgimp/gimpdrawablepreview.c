@@ -447,13 +447,12 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                     &draw_x, &draw_y,
                                     &draw_width, &draw_height))
         {
-          GimpImageType  type;
-          GimpDrawable  *selection;
-          gint32         selection_ID;
-          guchar        *src;
-          guchar        *sel;
-          gint           d_w, d_h, d_bpp;
-          gint           s_w, s_h, s_bpp;
+          GimpImageType   type;
+          GimpSelection  *selection;
+          guchar         *src;
+          guchar         *sel;
+          gint            d_w, d_h, d_bpp;
+          gint            s_w, s_h, s_bpp;
 
           d_w = draw_width;
           d_h = draw_height;
@@ -461,8 +460,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
           s_w = draw_width;
           s_h = draw_height;
 
-          selection_ID = gimp_image_get_selection (image);
-          selection = GIMP_DRAWABLE (gimp_item_new_by_id (selection_ID));
+          selection = gimp_image_get_selection (image);
 
           src = gimp_drawable_get_sub_thumbnail_data (priv->drawable,
                                                       draw_x, draw_y,
@@ -470,7 +468,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                                       &d_w, &d_h,
                                                       &d_bpp);
 
-          sel = gimp_drawable_get_sub_thumbnail_data (selection,
+          sel = gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (selection),
                                                       draw_x + offset_x,
                                                       draw_y + offset_y,
                                                       draw_width, draw_height,
