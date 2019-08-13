@@ -219,7 +219,7 @@ dxtblock_init (dxtblock_t          *dxtb,
   dxtb->alphamask = 0;
 
   if(flags & DXT_PERCEPTUAL)
-    /* ITU-R BT.709 luma coefficents */
+    /* ITU-R BT.709 luma coefficients */
     dxtb->metric = vec4_set(0.2126f, 0.7152f, 0.0722f, 0.0f);
   else
     dxtb->metric = vec4_set(1.0f, 1.0f, 1.0f, 0.0f);

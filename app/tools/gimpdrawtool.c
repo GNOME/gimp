@@ -866,7 +866,7 @@ gimp_draw_tool_pop_group (GimpDrawTool *draw_tool)
  *
  * This function takes image space coordinates and transforms them to
  * screen window coordinates, then draws a line between the resulting
- * coordindates.
+ * coordinates.
  **/
 GimpCanvasItem *
 gimp_draw_tool_add_line (GimpDrawTool *draw_tool,
