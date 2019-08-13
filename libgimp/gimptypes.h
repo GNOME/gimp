@@ -41,6 +41,12 @@ typedef struct _GimpImage       GimpImage;
 typedef struct _GimpItem        GimpItem;
 typedef struct _GimpDrawable    GimpDrawable;
 typedef struct _GimpLayer       GimpLayer;
+typedef struct _GimpChannel     GimpChannel;
+typedef struct _GimpLayerMask   GimpLayerMask;
+typedef struct _GimpSelection   GimpSelection;
+typedef struct _GimpVectors     GimpVectors;
+
+typedef struct _GimpDisplay     GimpDisplay;
 
 
 /* FIXME move somewhere else */
