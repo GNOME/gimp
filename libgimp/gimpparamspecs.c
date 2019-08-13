@@ -1291,7 +1291,7 @@ gimp_param_display_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (display_id == 0 || display_id == -1))
     return FALSE;
 
-  if (! gimp_display_is_valid (display_id))
+  if (! _gimp_display_is_valid (display_id))
     {
       value->data[0].v_int = -1;
       return TRUE;
