@@ -107,9 +107,9 @@ typedef gboolean (*LoadFn) (const char *infile,
 typedef gboolean (*SaveFn) (const char *infile,
                             const char *outfile);
 
-typedef struct _Compressor Compressor;
+typedef struct _CompressorEntry CompressorEntry;
 
-struct _Compressor
+struct _CompressorEntry
 {
   const gchar *file_type;
   const gchar *mime_type;
@@ -130,47 +130,81 @@ struct _Compressor
 };
 
 
-static void                query          (void);
-static void                run            (const gchar        *name,
-                                           gint                nparams,
-                                           const GimpParam    *param,
-                                           gint               *nreturn_vals,
-                                           GimpParam         **return_vals);
+typedef struct _Compressor      Compressor;
+typedef struct _CompressorClass CompressorClass;
 
-static GimpPDBStatusType   save_image     (const Compressor   *compressor,
-                                           const gchar        *filename,
-                                           gint32              image_ID,
-                                           gint32              drawable_ID,
-                                           gint32              run_mode,
-                                           GError            **error);
-static gint32              load_image     (const Compressor   *compressor,
-                                           const gchar        *filename,
-                                           gint32              run_mode,
-                                           GimpPDBStatusType  *status,
-                                           GError            **error);
+struct _Compressor
+{
+  GimpPlugIn      parent_instance;
+};
 
-static gboolean            valid_file     (const gchar        *filename);
-static const gchar       * find_extension (const Compressor   *compressor,
-                                           const gchar        *filename);
-
-static gboolean            gzip_load      (const char         *infile,
-                                           const char         *outfile);
-static gboolean            gzip_save      (const char         *infile,
-                                           const char         *outfile);
-
-static gboolean            bzip2_load     (const char         *infile,
-                                           const char         *outfile);
-static gboolean            bzip2_save     (const char         *infile,
-                                           const char         *outfile);
-
-static gboolean            xz_load        (const char         *infile,
-                                           const char         *outfile);
-static gboolean            xz_save        (const char         *infile,
-                                           const char         *outfile);
-static goffset             get_file_info  (const gchar        *filename);
+struct _CompressorClass
+{
+  GimpPlugInClass parent_class;
+};
 
 
-static const Compressor compressors[] =
+#define COMPRESSOR_TYPE  (compressor_get_type ())
+#define COMPRESSOR (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COMPRESSOR_TYPE, Compressor))
+
+GType                   compressor_get_type         (void) G_GNUC_CONST;
+
+static GList          * compressor_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * compressor_create_procedure (GimpPlugIn           *plug_in,
+                                                     const gchar          *name);
+
+static GimpValueArray * compressor_save             (GimpProcedure        *procedure,
+                                                     GimpRunMode           run_mode,
+                                                     gint32                image_id,
+                                                     gint32                drawable_id,
+                                                     GFile                *file,
+                                                     const GimpValueArray *args,
+                                                     gpointer              run_data);
+static GimpValueArray * compressor_load             (GimpProcedure        *procedure,
+                                                     GimpRunMode           run_mode,
+                                                     GFile                *file,
+                                                     const GimpValueArray *args,
+                                                     gpointer              run_data);
+
+static gint32              load_image     (const CompressorEntry *compressor,
+                                           const gchar           *filename,
+                                           gint32                 run_mode,
+                                           GimpPDBStatusType     *status,
+                                           GError               **error);
+static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
+                                           const gchar           *filename,
+                                           gint32                 image_ID,
+                                           gint32                 drawable_ID,
+                                           gint32                 run_mode,
+                                           GError               **error);
+
+static gboolean            valid_file     (const gchar           *filename);
+static const gchar       * find_extension (const CompressorEntry *compressor,
+                                           const gchar           *filename);
+
+static gboolean            gzip_load      (const char            *infile,
+                                           const char            *outfile);
+static gboolean            gzip_save      (const char            *infile,
+                                           const char            *outfile);
+
+static gboolean            bzip2_load     (const char            *infile,
+                                           const char            *outfile);
+static gboolean            bzip2_save     (const char            *infile,
+                                           const char            *outfile);
+
+static gboolean            xz_load        (const char            *infile,
+                                           const char            *outfile);
+static gboolean            xz_save        (const char            *infile,
+                                           const char            *outfile);
+static goffset             get_file_info  (const gchar           *filename);
+
+
+G_DEFINE_TYPE (Compressor, compressor, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (COMPRESSOR_TYPE)
+
+
+static const CompressorEntry compressors[] =
 {
   {
     N_("gzip archive"),
@@ -230,186 +264,172 @@ static const Compressor compressors[] =
   }
 };
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-
-MAIN ()
-
 
 static void
-query (void)
+compressor_class_init (CompressorClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" },
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"             },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to "
-                                         "save the image in"            },
-    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             },
-  };
-
-  gint i;
-
-  for (i = 0; i < G_N_ELEMENTS (compressors); i++)
-    {
-      const Compressor *compressor = &compressors[i];
-
-      gimp_install_procedure (compressor->load_proc,
-                              compressor->load_blurb,
-                              compressor->load_help,
-                              "Daniel Risacher",
-                              "Daniel Risacher, Spencer Kimball and Peter Mattis",
-                              "1995-1997",
-                              compressor->file_type,
-                              NULL,
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (load_args),
-                              G_N_ELEMENTS (load_return_vals),
-                              load_args, load_return_vals);
-
-      gimp_register_file_handler_mime (compressor->load_proc,
-                                       compressor->mime_type);
-      gimp_register_magic_load_handler (compressor->load_proc,
-                                        compressor->extensions,
-                                        "",
-                                        compressor->magic);
-
-      gimp_install_procedure (compressor->save_proc,
-                              compressor->save_blurb,
-                              compressor->save_help,
-                              "Daniel Risacher",
-                              "Daniel Risacher, Spencer Kimball and Peter Mattis",
-                              "1995-1997",
-                              compressor->file_type,
-                              "RGB*, GRAY*, INDEXED*",
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (save_args), 0,
-                              save_args, NULL);
-
-      gimp_register_file_handler_mime (compressor->save_proc,
-                                       compressor->mime_type);
-      gimp_register_save_handler (compressor->save_proc,
-                                  compressor->extensions, "");
-    }
+  plug_in_class->query_procedures = compressor_query_procedures;
+  plug_in_class->create_procedure = compressor_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+compressor_init (Compressor *compressor)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GError            *error  = NULL;
-  gint32             image_ID;
-  gint               i;
+}
 
-  run_mode = param[0].data.d_int32;
+static GList *
+compressor_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+  gint   i;
 
-  INIT_I18N();
+  for (i = 0; i < G_N_ELEMENTS (compressors); i++)
+    {
+      const CompressorEntry *compressor = &compressors[i];
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+      list = g_list_append (list, g_strdup (compressor->load_proc));
+      list = g_list_append (list, g_strdup (compressor->save_proc));
+    }
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  return list;
+}
+
+static GimpProcedure *
+compressor_create_procedure (GimpPlugIn  *plug_in,
+                             const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+  gint           i;
+
+  for (i = 0; i < G_N_ELEMENTS (compressors); i++)
+    {
+      const CompressorEntry *compressor = &compressors[i];
+
+      if (! strcmp (name, compressor->load_proc))
+        {
+          procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                               compressor_load,
+                                               (gpointer) compressor, NULL);
+
+          gimp_procedure_set_documentation (procedure,
+                                            compressor->load_blurb,
+                                            compressor->load_help,
+                                            name);
+
+          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                          compressor->magic);
+        }
+      else if (! strcmp (name, compressor->save_proc))
+        {
+          procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                               compressor_save,
+                                               (gpointer) compressor, NULL);
+
+          gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
+
+          gimp_procedure_set_documentation (procedure,
+                                            compressor->save_blurb,
+                                            compressor->save_help,
+                                            name);
+        }
+
+      if (procedure)
+        {
+          gimp_procedure_set_menu_label (procedure, compressor->file_type);
+
+          gimp_procedure_set_attribution (procedure,
+                                          "Daniel Risacher",
+                                          "Daniel Risacher, Spencer Kimball "
+                                          "and Peter Mattis",
+                                          "1995-1997");
+
+          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                              compressor->mime_type);
+          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                              compressor->extensions);
+
+          return procedure;
+        }
+    }
+
+  return NULL;
+}
+
+static GimpValueArray *
+compressor_load (GimpProcedure        *procedure,
+                 GimpRunMode           run_mode,
+                 GFile                *file,
+                 const GimpValueArray *args,
+                 gpointer              run_data)
+{
+  const CompressorEntry *compressor = run_data;
+  GimpValueArray        *return_vals;
+  GimpPDBStatusType      status;
+  gchar                 *filename;
+  gint32                 image_ID;
+  GError                *error = NULL;
 
   /*  We handle PDB errors by forwarding them to the caller in
    *  our return values.
    */
-  gimp_plugin_set_pdb_error_handler (GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
+                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  for (i = 0; i < G_N_ELEMENTS (compressors); i++)
-    {
-      const Compressor *compressor = &compressors[i];
+  filename = g_file_get_path (file);
 
-      if (! strcmp (name, compressor->load_proc))
-        {
-          image_ID = load_image (compressor,
-                                 param[1].data.d_string,
-                                 param[0].data.d_int32,
-                                 &status, &error);
+  image_ID = load_image (compressor, filename, run_mode,
+                         &status, &error);
 
-          if (image_ID != -1 && status == GIMP_PDB_SUCCESS)
-            {
-              *nreturn_vals = 2;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-            }
+  g_free (filename);
 
-          break;
-        }
-      else if (! strcmp (name, compressor->save_proc))
-        {
-          switch (run_mode)
-            {
-            case GIMP_RUN_INTERACTIVE:
-              break;
-            case GIMP_RUN_NONINTERACTIVE:
-              /*  Make sure all the arguments are there!  */
-              if (nparams != 5)
-                status = GIMP_PDB_CALLING_ERROR;
-              break;
-            case GIMP_RUN_WITH_LAST_VALS:
-              break;
+  return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
-            default:
-              break;
-            }
+  if (image_ID != -1 && status == GIMP_PDB_SUCCESS)
+    gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                             image_ID);
 
-          if (status == GIMP_PDB_SUCCESS)
-            status = save_image (compressor,
-                                 param[3].data.d_string,
-                                 param[1].data.d_int32,
-                                 param[2].data.d_int32,
-                                 param[0].data.d_int32,
-                                 &error);
+  return return_vals;
+}
 
-          break;
-        }
-    }
+static GimpValueArray *
+compressor_save (GimpProcedure        *procedure,
+                 GimpRunMode           run_mode,
+                 gint32                image_id,
+                 gint32                drawable_id,
+                 GFile                *file,
+                 const GimpValueArray *args,
+                 gpointer              run_data)
+{
+  const CompressorEntry *compressor = run_data;
+  GimpPDBStatusType      status;
+  gchar                 *filename;
+  GError                *error = NULL;
 
-  if (i == G_N_ELEMENTS (compressors))
-    status = GIMP_PDB_CALLING_ERROR;
+  /*  We handle PDB errors by forwarding them to the caller in
+   *  our return values.
+   */
+  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
+                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
+  filename = g_file_get_path (file);
 
-  values[0].data.d_status = status;
+  status = save_image (compressor, filename, image_id, drawable_id, run_mode,
+                       &error);
+
+  g_free (filename);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpPDBStatusType
-save_image (const Compressor  *compressor,
-            const gchar       *filename,
-            gint32             image_ID,
-            gint32             drawable_ID,
-            gint32             run_mode,
-            GError           **error)
+save_image (const CompressorEntry  *compressor,
+            const gchar            *filename,
+            gint32                  image_ID,
+            gint32                  drawable_ID,
+            gint32                  run_mode,
+            GError                **error)
 {
   const gchar *ext;
   gchar       *tmpname;
@@ -436,7 +456,7 @@ save_image (const Compressor  *compressor,
       g_free (tmpname);
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "%s", gimp_get_pdb_error ());
+                   "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
 
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -464,11 +484,11 @@ save_image (const Compressor  *compressor,
 }
 
 static gint32
-load_image (const Compressor   *compressor,
-            const gchar        *filename,
-            gint32              run_mode,
-            GimpPDBStatusType  *status,
-            GError            **error)
+load_image (const CompressorEntry  *compressor,
+            const gchar            *filename,
+            gint32                  run_mode,
+            GimpPDBStatusType      *status,
+            GError                **error)
 {
   gint32       image_ID;
   const gchar *ext;
@@ -511,10 +531,10 @@ load_image (const Compressor   *compressor,
       /* Forward the return status of the underlining plug-in for the
        * given format.
        */
-      *status = gimp_get_pdb_status ();
+      *status = gimp_pdb_get_last_status (gimp_get_pdb ());
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "%s", gimp_get_pdb_error ());
+                   "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
     }
 
   return image_ID;
@@ -529,8 +549,8 @@ valid_file (const gchar *filename)
 }
 
 static const gchar *
-find_extension (const Compressor *compressor,
-                const gchar      *filename)
+find_extension (const CompressorEntry *compressor,
+                const gchar           *filename)
 {
   gchar *filename_copy;
   gchar *ext;
