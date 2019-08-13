@@ -206,13 +206,16 @@ export_apply_masks (GimpImage     *image,
 
   for (i = 0; i < n_layers; i++)
     {
-      GimpLayer *layer;
+      GimpLayer     *layer;
+      GimpLayerMask *mask;
 
       layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
-      if (gimp_layer_get_mask (layer) != -1)
+      mask = gimp_layer_get_mask (layer);
+      if (mask)
         gimp_layer_remove_mask (layer, GIMP_MASK_APPLY);
 
       g_object_unref (layer);
+      g_clear_object (&mask);
     }
 
   g_free (layers);
@@ -864,12 +867,15 @@ gimp_export_image (GimpImage             **image,
     {
       for (i = 0; i < n_layers; i++)
         {
-          GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+          GimpLayer     *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+          GimpLayerMask *mask;
 
-          if (gimp_layer_get_mask (layer) != -1)
+          mask = gimp_layer_get_mask (layer);
+          if (mask)
             has_layer_masks = TRUE;
 
           g_object_unref (layer);
+          g_clear_object (&mask);
         }
     }
 

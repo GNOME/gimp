@@ -54,12 +54,29 @@ G_BEGIN_DECLS
 void        gimp_ui_init                          (const gchar *prog_name,
                                                    gboolean     preview);
 
-GdkWindow * gimp_ui_get_display_window            (guint32      gdisp_ID);
 GdkWindow * gimp_ui_get_progress_window           (void);
 
-void        gimp_window_set_transient_for_display (GtkWindow   *window,
-                                                   guint32      gdisp_ID);
 void        gimp_window_set_transient             (GtkWindow   *window);
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GdkWindow * gimp_ui_get_display_window            (GimpDisplay *display);
+void        gimp_window_set_transient_for_display (GtkWindow   *window,
+                                                   GimpDisplay *display);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_ui_get_display_window            gimp_ui_get_display_window_deprecated
+#define gimp_window_set_transient_for_display gimp_window_set_transient_for_display_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+GdkWindow * gimp_ui_get_display_window_deprecated            (guint32      gdisp_ID);
+void        gimp_window_set_transient_for_display_deprecated (GtkWindow   *window,
+                                                              guint32      gdisp_ID);
+
 
 G_END_DECLS
 
