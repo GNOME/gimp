@@ -181,6 +181,24 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
           param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
           param_def->meta.m_id.none_ok = TRUE;
         }
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpItem") == 0)
+        {
+          param_def->type_name = "GimpParamItemID";
+          param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+          param_def->meta.m_id.none_ok = TRUE;
+        }
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpDrawable") == 0)
+        {
+          param_def->type_name = "GimpParamDrawableID";
+          param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+          param_def->meta.m_id.none_ok = TRUE;
+        }
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpLayer") == 0)
+        {
+          param_def->type_name = "GimpParamLayerID";
+          param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+          param_def->meta.m_id.none_ok = TRUE;
+        }
     }
 }
 
