@@ -377,56 +377,6 @@ static int gb_debug = FALSE;
 /* Functions */
 /* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX PDB_STUFF XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */
 
-#ifdef ROTATE_OPTIMIZE
-
-/* ============================================================================
- * p_pdb_procedure_available
- *   if requested procedure is available in the PDB return the number of args
- *      (0 upto n) that are needed to call the procedure.
- *   if not available return -1
- * ============================================================================
- */
-
-static gint
-p_pdb_procedure_available (const gchar *proc_name)
-{
-  gint             nparams;
-  gint             nreturn_vals;
-  GimpPDBProcType  proc_type;
-  gchar           *proc_blurb;
-  gchar           *proc_help;
-  gchar           *proc_author;
-  gchar           *proc_copyright;
-  gchar           *proc_date;
-  GimpParamDef    *params;
-  GimpParamDef    *return_vals;
-  gint             rc;
-
-  rc = 0;
-
-  /* Query the gimp application's procedural database
-   *  regarding a particular procedure.
-   */
-  if (gimp_procedural_db_proc_info (proc_name,
-                                    &proc_blurb,
-                                    &proc_help,
-                                    &proc_author,
-                                    &proc_copyright,
-                                    &proc_date,
-                                    &proc_type,
-                                    &nparams, &nreturn_vals,
-                                    &params, &return_vals))
-    {
-      /* procedure found in PDB */
-      return nparams;
-    }
-
-  g_printerr ("Warning: Procedure %s not found.\n", proc_name);
-  return -1;
-}
-
-#endif /* ROTATE_OPTIMIZE */
-
 static gint
 p_gimp_rotate (gint32  image_id,
                gint32  drawable_id,
@@ -435,41 +385,6 @@ p_gimp_rotate (gint32  image_id,
 {
   gdouble       angle_rad;
   gint          rc;
-
-#ifdef ROTATE_OPTIMIZE
-  static gchar *rotate_proc = "plug-in-rotate";
-  GimpParam    *return_vals;
-  gint          nreturn_vals;
-  gint32        angle_step;
-  gint          nparams;
-
-  if     (angle_deg == 90.0)  { angle_step = 1; }
-  else if(angle_deg == 180.0) { angle_step = 2; }
-  else if(angle_deg == 270.0) { angle_step = 3; }
-  else                        { angle_step = 0; }
-
-  if (angle_step != 0)
-    {
-      nparams = p_pdb_procedure_available (rotate_proc);
-      if (nparams == 5)
-        {
-          /* use faster rotate plugin on multiples of 90 degrees */
-          return_vals = gimp_run_procedure (rotate_proc,
-                                            &nreturn_vals,
-                                            GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
-                                            GIMP_PDB_IMAGE, image_id,
-                                            GIMP_PDB_DRAWABLE, drawable_id,
-                                            GIMP_PDB_INT32, angle_step,
-                                            GIMP_PDB_INT32, FALSE,         /* don't rotate the whole image */
-                                            GIMP_PDB_END);
-
-          if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-            {
-              return 0;
-            }
-        }
-    }
-#endif /* ROTATE_OPTIMIZE */
 
   angle_rad = (angle_deg * G_PI) / 180.0;
 
