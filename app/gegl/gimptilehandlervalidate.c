@@ -26,6 +26,7 @@
 #include "gimp-gegl-types.h"
 
 #include "gimp-gegl-loops.h"
+#include "gimp-gegl-utils.h"
 #include "gimptilehandlervalidate.h"
 
 
@@ -558,6 +559,30 @@ gimp_tile_handler_validate_validate (GimpTileHandlerValidate *validate,
             validate->dirty_region,
             (const cairo_rectangle_int_t *) rect);
     }
+}
+
+gboolean
+gimp_tile_handler_validate_buffer_set_extent (GeglBuffer          *buffer,
+                                              const GeglRectangle *extent)
+{
+  GimpTileHandlerValidate *validate;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (extent != NULL, FALSE);
+
+  validate = gimp_tile_handler_validate_get_assigned (buffer);
+
+  g_return_val_if_fail (validate != NULL, FALSE);
+
+  if (gimp_gegl_buffer_set_extent (buffer, extent))
+    {
+      cairo_region_intersect_rectangle (validate->dirty_region,
+                                        (const cairo_rectangle_int_t *) extent);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 void
