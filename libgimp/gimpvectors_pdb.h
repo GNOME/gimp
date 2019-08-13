@@ -32,13 +32,21 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32                gimp_vectors_copy                      (gint32                  vectors_ID);
-gint*                 gimp_vectors_get_strokes               (gint32                  vectors_ID,
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GimpVectors*          gimp_vectors_new                       (GimpImage              *image,
+                                                              const gchar            *name);
+GimpVectors*          gimp_vectors_new_from_text_layer       (GimpImage              *image,
+                                                              GimpLayer              *layer);
+GimpVectors*          gimp_vectors_copy                      (GimpVectors            *vectors);
+gint*                 gimp_vectors_get_strokes               (GimpVectors            *vectors,
                                                               gint                   *num_strokes);
-gdouble               gimp_vectors_stroke_get_length         (gint32                  vectors_ID,
+gdouble               gimp_vectors_stroke_get_length         (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 precision);
-gboolean              gimp_vectors_stroke_get_point_at_dist  (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_get_point_at_dist  (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 dist,
                                                               gdouble                 precision,
@@ -46,62 +54,62 @@ gboolean              gimp_vectors_stroke_get_point_at_dist  (gint32            
                                                               gdouble                *y_point,
                                                               gdouble                *slope,
                                                               gboolean               *valid);
-gboolean              gimp_vectors_remove_stroke             (gint32                  vectors_ID,
+gboolean              gimp_vectors_remove_stroke             (GimpVectors            *vectors,
                                                               gint                    stroke_id);
-gboolean              gimp_vectors_stroke_close              (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_close              (GimpVectors            *vectors,
                                                               gint                    stroke_id);
-gboolean              gimp_vectors_stroke_translate          (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_translate          (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gint                    off_x,
                                                               gint                    off_y);
-gboolean              gimp_vectors_stroke_scale              (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_scale              (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 scale_x,
                                                               gdouble                 scale_y);
-gboolean              gimp_vectors_stroke_rotate             (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_rotate             (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 center_x,
                                                               gdouble                 center_y,
                                                               gdouble                 angle);
-gboolean              gimp_vectors_stroke_flip               (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_flip               (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               GimpOrientationType     flip_type,
                                                               gdouble                 axis);
-gboolean              gimp_vectors_stroke_flip_free          (gint32                  vectors_ID,
+gboolean              gimp_vectors_stroke_flip_free          (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 x1,
                                                               gdouble                 y1,
                                                               gdouble                 x2,
                                                               gdouble                 y2);
-GimpVectorsStrokeType gimp_vectors_stroke_get_points         (gint32                  vectors_ID,
+GimpVectorsStrokeType gimp_vectors_stroke_get_points         (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gint                   *num_points,
                                                               gdouble               **controlpoints,
                                                               gboolean               *closed);
-gint                  gimp_vectors_stroke_new_from_points    (gint32                  vectors_ID,
+gint                  gimp_vectors_stroke_new_from_points    (GimpVectors            *vectors,
                                                               GimpVectorsStrokeType   type,
                                                               gint                    num_points,
                                                               const gdouble          *controlpoints,
                                                               gboolean                closed);
-gdouble*              gimp_vectors_stroke_interpolate        (gint32                  vectors_ID,
+gdouble*              gimp_vectors_stroke_interpolate        (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 precision,
                                                               gint                   *num_coords,
                                                               gboolean               *closed);
-gint                  gimp_vectors_bezier_stroke_new_moveto  (gint32                  vectors_ID,
+gint                  gimp_vectors_bezier_stroke_new_moveto  (GimpVectors            *vectors,
                                                               gdouble                 x0,
                                                               gdouble                 y0);
-gboolean              gimp_vectors_bezier_stroke_lineto      (gint32                  vectors_ID,
+gboolean              gimp_vectors_bezier_stroke_lineto      (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 x0,
                                                               gdouble                 y0);
-gboolean              gimp_vectors_bezier_stroke_conicto     (gint32                  vectors_ID,
+gboolean              gimp_vectors_bezier_stroke_conicto     (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 x0,
                                                               gdouble                 y0,
                                                               gdouble                 x1,
                                                               gdouble                 y1);
-gboolean              gimp_vectors_bezier_stroke_cubicto     (gint32                  vectors_ID,
+gboolean              gimp_vectors_bezier_stroke_cubicto     (GimpVectors            *vectors,
                                                               gint                    stroke_id,
                                                               gdouble                 x0,
                                                               gdouble                 y0,
@@ -109,42 +117,54 @@ gboolean              gimp_vectors_bezier_stroke_cubicto     (gint32            
                                                               gdouble                 y1,
                                                               gdouble                 x2,
                                                               gdouble                 y2);
-gint                  gimp_vectors_bezier_stroke_new_ellipse (gint32                  vectors_ID,
+gint                  gimp_vectors_bezier_stroke_new_ellipse (GimpVectors            *vectors,
                                                               gdouble                 x0,
                                                               gdouble                 y0,
                                                               gdouble                 radius_x,
                                                               gdouble                 radius_y,
                                                               gdouble                 angle);
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-gint32   gimp_vectors_new                 (GimpImage    *image,
-                                           const gchar  *name);
-gint32   gimp_vectors_new_from_text_layer (GimpImage    *image,
-                                           GimpLayer    *layer);
-gboolean gimp_vectors_import_from_file    (GimpImage    *image,
-                                           const gchar  *filename,
-                                           gboolean      merge,
-                                           gboolean      scale,
-                                           gint         *num_vectors,
-                                           gint        **vectors_ids);
-gboolean gimp_vectors_import_from_string  (GimpImage    *image,
-                                           const gchar  *string,
-                                           gint          length,
-                                           gboolean      merge,
-                                           gboolean      scale,
-                                           gint         *num_vectors,
-                                           gint        **vectors_ids);
-gboolean gimp_vectors_export_to_file      (GimpImage    *image,
-                                           const gchar  *filename,
-                                           gint32        vectors_ID);
-gchar*   gimp_vectors_export_to_string    (GimpImage    *image,
-                                           gint32        vectors_ID);
+gboolean              gimp_vectors_import_from_file          (GimpImage              *image,
+                                                              const gchar            *filename,
+                                                              gboolean                merge,
+                                                              gboolean                scale,
+                                                              gint                   *num_vectors,
+                                                              gint                  **vectors_ids);
+gboolean              gimp_vectors_import_from_string        (GimpImage              *image,
+                                                              const gchar            *string,
+                                                              gint                    length,
+                                                              gboolean                merge,
+                                                              gboolean                scale,
+                                                              gint                   *num_vectors,
+                                                              gint                  **vectors_ids);
+gboolean              gimp_vectors_export_to_file            (GimpImage              *image,
+                                                              const gchar            *filename,
+                                                              GimpVectors            *vectors);
+gchar*                gimp_vectors_export_to_string          (GimpImage              *image,
+                                                              GimpVectors            *vectors);
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
 #define gimp_vectors_new _gimp_vectors_new
 #define gimp_vectors_new_from_text_layer _gimp_vectors_new_from_text_layer
+#define gimp_vectors_copy _gimp_vectors_copy
+#define gimp_vectors_get_strokes _gimp_vectors_get_strokes
+#define gimp_vectors_stroke_get_length _gimp_vectors_stroke_get_length
+#define gimp_vectors_stroke_get_point_at_dist _gimp_vectors_stroke_get_point_at_dist
+#define gimp_vectors_remove_stroke _gimp_vectors_remove_stroke
+#define gimp_vectors_stroke_close _gimp_vectors_stroke_close
+#define gimp_vectors_stroke_translate _gimp_vectors_stroke_translate
+#define gimp_vectors_stroke_scale _gimp_vectors_stroke_scale
+#define gimp_vectors_stroke_rotate _gimp_vectors_stroke_rotate
+#define gimp_vectors_stroke_flip _gimp_vectors_stroke_flip
+#define gimp_vectors_stroke_flip_free _gimp_vectors_stroke_flip_free
+#define gimp_vectors_stroke_get_points _gimp_vectors_stroke_get_points
+#define gimp_vectors_stroke_new_from_points _gimp_vectors_stroke_new_from_points
+#define gimp_vectors_stroke_interpolate _gimp_vectors_stroke_interpolate
+#define gimp_vectors_bezier_stroke_new_moveto _gimp_vectors_bezier_stroke_new_moveto
+#define gimp_vectors_bezier_stroke_lineto _gimp_vectors_bezier_stroke_lineto
+#define gimp_vectors_bezier_stroke_conicto _gimp_vectors_bezier_stroke_conicto
+#define gimp_vectors_bezier_stroke_cubicto _gimp_vectors_bezier_stroke_cubicto
+#define gimp_vectors_bezier_stroke_new_ellipse _gimp_vectors_bezier_stroke_new_ellipse
 #define gimp_vectors_import_from_file _gimp_vectors_import_from_file
 #define gimp_vectors_import_from_string _gimp_vectors_import_from_string
 #define gimp_vectors_export_to_file _gimp_vectors_export_to_file
@@ -157,28 +177,111 @@ gchar*   gimp_vectors_export_to_string    (GimpImage    *image,
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gint32   _gimp_vectors_new                 (gint32        image_ID,
-                                            const gchar  *name);
-gint32   _gimp_vectors_new_from_text_layer (gint32        image_ID,
-                                            gint32        layer_ID);
-gboolean _gimp_vectors_import_from_file    (gint32        image_ID,
-                                            const gchar  *filename,
-                                            gboolean      merge,
-                                            gboolean      scale,
-                                            gint         *num_vectors,
-                                            gint        **vectors_ids);
-gboolean _gimp_vectors_import_from_string  (gint32        image_ID,
-                                            const gchar  *string,
-                                            gint          length,
-                                            gboolean      merge,
-                                            gboolean      scale,
-                                            gint         *num_vectors,
-                                            gint        **vectors_ids);
-gboolean _gimp_vectors_export_to_file      (gint32        image_ID,
-                                            const gchar  *filename,
-                                            gint32        vectors_ID);
-gchar*   _gimp_vectors_export_to_string    (gint32        image_ID,
-                                            gint32        vectors_ID);
+gint32                _gimp_vectors_new                       (gint32                  image_ID,
+                                                               const gchar            *name);
+gint32                _gimp_vectors_new_from_text_layer       (gint32                  image_ID,
+                                                               gint32                  layer_ID);
+gint32                _gimp_vectors_copy                      (gint32                  vectors_ID);
+gint*                 _gimp_vectors_get_strokes               (gint32                  vectors_ID,
+                                                               gint                   *num_strokes);
+gdouble               _gimp_vectors_stroke_get_length         (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 precision);
+gboolean              _gimp_vectors_stroke_get_point_at_dist  (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 dist,
+                                                               gdouble                 precision,
+                                                               gdouble                *x_point,
+                                                               gdouble                *y_point,
+                                                               gdouble                *slope,
+                                                               gboolean               *valid);
+gboolean              _gimp_vectors_remove_stroke             (gint32                  vectors_ID,
+                                                               gint                    stroke_id);
+gboolean              _gimp_vectors_stroke_close              (gint32                  vectors_ID,
+                                                               gint                    stroke_id);
+gboolean              _gimp_vectors_stroke_translate          (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gint                    off_x,
+                                                               gint                    off_y);
+gboolean              _gimp_vectors_stroke_scale              (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 scale_x,
+                                                               gdouble                 scale_y);
+gboolean              _gimp_vectors_stroke_rotate             (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 center_x,
+                                                               gdouble                 center_y,
+                                                               gdouble                 angle);
+gboolean              _gimp_vectors_stroke_flip               (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               GimpOrientationType     flip_type,
+                                                               gdouble                 axis);
+gboolean              _gimp_vectors_stroke_flip_free          (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 x1,
+                                                               gdouble                 y1,
+                                                               gdouble                 x2,
+                                                               gdouble                 y2);
+GimpVectorsStrokeType _gimp_vectors_stroke_get_points         (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gint                   *num_points,
+                                                               gdouble               **controlpoints,
+                                                               gboolean               *closed);
+gint                  _gimp_vectors_stroke_new_from_points    (gint32                  vectors_ID,
+                                                               GimpVectorsStrokeType   type,
+                                                               gint                    num_points,
+                                                               const gdouble          *controlpoints,
+                                                               gboolean                closed);
+gdouble*              _gimp_vectors_stroke_interpolate        (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 precision,
+                                                               gint                   *num_coords,
+                                                               gboolean               *closed);
+gint                  _gimp_vectors_bezier_stroke_new_moveto  (gint32                  vectors_ID,
+                                                               gdouble                 x0,
+                                                               gdouble                 y0);
+gboolean              _gimp_vectors_bezier_stroke_lineto      (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 x0,
+                                                               gdouble                 y0);
+gboolean              _gimp_vectors_bezier_stroke_conicto     (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 x0,
+                                                               gdouble                 y0,
+                                                               gdouble                 x1,
+                                                               gdouble                 y1);
+gboolean              _gimp_vectors_bezier_stroke_cubicto     (gint32                  vectors_ID,
+                                                               gint                    stroke_id,
+                                                               gdouble                 x0,
+                                                               gdouble                 y0,
+                                                               gdouble                 x1,
+                                                               gdouble                 y1,
+                                                               gdouble                 x2,
+                                                               gdouble                 y2);
+gint                  _gimp_vectors_bezier_stroke_new_ellipse (gint32                  vectors_ID,
+                                                               gdouble                 x0,
+                                                               gdouble                 y0,
+                                                               gdouble                 radius_x,
+                                                               gdouble                 radius_y,
+                                                               gdouble                 angle);
+gboolean              _gimp_vectors_import_from_file          (gint32                  image_ID,
+                                                               const gchar            *filename,
+                                                               gboolean                merge,
+                                                               gboolean                scale,
+                                                               gint                   *num_vectors,
+                                                               gint                  **vectors_ids);
+gboolean              _gimp_vectors_import_from_string        (gint32                  image_ID,
+                                                               const gchar            *string,
+                                                               gint                    length,
+                                                               gboolean                merge,
+                                                               gboolean                scale,
+                                                               gint                   *num_vectors,
+                                                               gint                  **vectors_ids);
+gboolean              _gimp_vectors_export_to_file            (gint32                  image_ID,
+                                                               const gchar            *filename,
+                                                               gint32                  vectors_ID);
+gchar*                _gimp_vectors_export_to_string          (gint32                  image_ID,
+                                                               gint32                  vectors_ID);
 
 
 G_END_DECLS
