@@ -880,7 +880,7 @@ run (const gchar      *name,
           plvals.resolution = size / 4;
           plvals.width      = size;
           plvals.height     = size;
-          strncpy (plvals.pages, "1", sizeof (plvals.pages) - 1);
+          g_strlcpy (plvals.pages, "1", sizeof (plvals.pages));
 
           check_load_vals ();
           image_ID = load_image (param[0].data.d_string, &error);
@@ -1009,8 +1009,8 @@ run (const gchar      *name,
           plvals.height     = param[2].data.d_int32;
           plvals.use_bbox   = param[3].data.d_int32;
           if (param[4].data.d_string != NULL)
-            strncpy (plvals.pages, param[4].data.d_string,
-                     sizeof (plvals.pages));
+            g_strlcpy (plvals.pages, param[4].data.d_string,
+                       sizeof (plvals.pages));
           else
             plvals.pages[0] = '\0';
           plvals.pages[sizeof (plvals.pages) - 1] = '\0';
@@ -1316,7 +1316,7 @@ check_load_vals (void)
     plvals.height = 2;
   plvals.use_bbox = (plvals.use_bbox != 0);
   if (plvals.pages[0] == '\0')
-    strncpy (plvals.pages, "1-99", sizeof (plvals.pages) - 1);
+    g_strlcpy (plvals.pages, "1-99", sizeof (plvals.pages));
   if ((plvals.pnm_type < 4) || (plvals.pnm_type > 7))
     plvals.pnm_type = 6;
   if (   (plvals.textalpha != 1) && (plvals.textalpha != 2)
@@ -1359,8 +1359,7 @@ page_in_list (gchar *list,
   if ((list == NULL) || (*list == '\0'))
     return 1;
 
-  strncpy (tmplist, list, STR_LENGTH);
-  tmplist[STR_LENGTH-1] = '\0';
+  g_strlcpy (tmplist, list, STR_LENGTH);
 
   c0 = c1 = tmplist;
   while (*c1)    /* Remove all whitespace and break on unsupported characters */
@@ -3587,8 +3586,7 @@ load_dialog (const gchar *filename)
           range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
         }
 
-      strncpy (plvals.pages, range, sizeof (plvals.pages) - 1);
-      plvals.pages[strlen (range)] = '\0';
+      g_strlcpy (plvals.pages, range, sizeof (plvals.pages));
 
       ps_pagemode = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
     }
@@ -3598,7 +3596,7 @@ load_dialog (const gchar *filename)
     }
   else
     {
-      strncpy (plvals.pages, "1", sizeof (plvals.pages) - 1);
+      g_strlcpy (plvals.pages, "1", sizeof (plvals.pages));
       ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
     }
 
@@ -3611,10 +3609,8 @@ static void
 load_pages_entry_callback (GtkWidget *widget,
                            gpointer   data)
 {
-  gsize nelem = sizeof (plvals.pages);
-
-  strncpy (plvals.pages, gtk_entry_get_text (GTK_ENTRY (widget)), nelem);
-  plvals.pages[nelem-1] = '\0';
+  g_strlcpy (plvals.pages, gtk_entry_get_text (GTK_ENTRY (widget)),
+             sizeof (plvals.pages));
 }
 
 

@@ -378,8 +378,7 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  strncpy (version, (gchar *) buf + 3, 3);
-  version[3] = '\0';
+  g_strlcpy (version, (gchar *) buf + 3, 3);
 
   if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
     {

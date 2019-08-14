@@ -70,7 +70,7 @@ _br_find_exe (GimpBinrelocInitError *error)
       return NULL;
     }
 
-  strncpy (path2, "/proc/self/exe", buf_size - 1);
+  g_strlcpy (path2, "/proc/self/exe", buf_size);
 
   while (1)
     {
@@ -106,7 +106,7 @@ _br_find_exe (GimpBinrelocInitError *error)
         }
 
       /* path is a symlink. Continue loop and resolve this. */
-      strncpy (path, path2, buf_size - 1);
+      g_strlcpy (path, path2, buf_size);
     }
 
 

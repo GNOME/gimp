@@ -312,11 +312,10 @@ gih_save (GimpProcedure        *procedure,
                                           "gimp-brush-pipe-name");
       if (parasite)
         {
-          strncpy (info.description,
-                   gimp_parasite_data (parasite),
-                   MIN (sizeof (info.description),
-                        gimp_parasite_data_size (parasite)));
-          info.description[sizeof (info.description) - 1] = '\0';
+          g_strlcpy (info.description,
+                     gimp_parasite_data (parasite),
+                     MIN (sizeof (info.description),
+                          gimp_parasite_data_size (parasite)));
 
           gimp_parasite_free (parasite);
         }
@@ -328,10 +327,7 @@ gih_save (GimpProcedure        *procedure,
             name[strlen (name) - 4] = '\0';
 
           if (strlen (name))
-            {
-              strncpy (info.description, name, sizeof (info.description));
-              info.description[sizeof (info.description) - 1] = '\0';
-            }
+            g_strlcpy (info.description, name, sizeof (info.description));
 
           g_free (name);
         }
@@ -385,10 +381,9 @@ gih_save (GimpProcedure        *procedure,
 
     case GIMP_RUN_NONINTERACTIVE:
       info.spacing = g_value_get_int (gimp_value_array_index (args, 0));
-      strncpy (info.description,
-               g_value_get_string (gimp_value_array_index (args, 1)),
-               sizeof (info.description));
-      info.description[sizeof (info.description) - 1] = '\0';
+      g_strlcpy (info.description,
+                 g_value_get_string (gimp_value_array_index (args, 1)),
+                 sizeof (info.description));
 
       gihparams.cellwidth  = g_value_get_int (gimp_value_array_index (args, 2));
       gihparams.cellheight = g_value_get_int (gimp_value_array_index (args, 3));
@@ -567,11 +562,8 @@ entry_callback (GtkWidget *widget,
                 gpointer   data)
 {
   if (data == info.description)
-    {
-      strncpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)),
+    g_strlcpy (info.description, gtk_entry_get_text (GTK_ENTRY (widget)),
                sizeof (info.description));
-      info.description[sizeof (info.description) - 1]  = 0;
-    }
 }
 
 static void

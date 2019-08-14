@@ -228,7 +228,7 @@ init_prefix (const gchar *filename)
       else
         len = MAX_PREFIX;
 
-      strncpy (xsvals.prefix, prefix, len);
+      g_strlcpy (xsvals.prefix, prefix, len);
       g_free (prefix);
     }
 
@@ -255,7 +255,7 @@ run (const gchar      *name,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  strncpy (xsvals.comment, "Created with GIMP", MAX_COMMENT);
+  g_strlcpy (xsvals.comment, "Created with GIMP", MAX_COMMENT);
 
   run_mode = param[0].data.d_int32;
 
@@ -333,11 +333,8 @@ run (const gchar      *name,
               gint i = 5;
 
               if (nparams > i)
-                {
-                  memset (xsvals.comment, 0, sizeof (xsvals.comment));
-                  strncpy (xsvals.comment, param[i].data.d_string,
+                g_strlcpy (xsvals.comment, param[i].data.d_string,
                            MAX_COMMENT);
-                }
 
               i ++;
               if (nparams > i)
@@ -356,19 +353,15 @@ run (const gchar      *name,
 
               i ++;
               if (nparams > i)
-                {
-                  memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
-                  strncpy (xsvals.prefix, param[i].data.d_string,
+                g_strlcpy (xsvals.prefix, param[i].data.d_string,
                            MAX_PREFIX);
-                }
 
               i += 2;
               if (nparams > i)
                 {
                   xsvals.write_mask = param[i - 1].data.d_int32;
-                  memset (xsvals.mask_ext, 0, sizeof (xsvals.mask_ext));
-                  strncpy (xsvals.mask_ext, param[i].data.d_string,
-                           MAX_MASK_EXT);
+                  g_strlcpy (xsvals.mask_ext, param[i].data.d_string,
+                             MAX_MASK_EXT);
                 }
 
               i ++;
@@ -391,9 +384,9 @@ run (const gchar      *name,
             {
               gint size = gimp_parasite_data_size (parasite);
 
-              strncpy (xsvals.comment,
-                       gimp_parasite_data (parasite), MIN (size, MAX_COMMENT));
-              xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
+              g_strlcpy (xsvals.comment,
+                         gimp_parasite_data (parasite),
+                         MIN (size, MAX_COMMENT));
 
               gimp_parasite_free (parasite);
             }
@@ -1418,9 +1411,8 @@ static void
 comment_entry_callback (GtkWidget *widget,
                         gpointer   data)
 {
-  memset (xsvals.comment, 0, sizeof (xsvals.comment));
-  strncpy (xsvals.comment,
-           gtk_entry_get_text (GTK_ENTRY (widget)), MAX_COMMENT);
+  g_strlcpy (xsvals.comment,
+             gtk_entry_get_text (GTK_ENTRY (widget)), MAX_COMMENT);
 }
 #endif
 
@@ -1428,16 +1420,14 @@ static void
 prefix_entry_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  memset (xsvals.prefix, 0, sizeof (xsvals.prefix));
-  strncpy (xsvals.prefix,
-           gtk_entry_get_text (GTK_ENTRY (widget)), MAX_PREFIX);
+  g_strlcpy (xsvals.prefix,
+             gtk_entry_get_text (GTK_ENTRY (widget)), MAX_PREFIX);
 }
 
 static void
 mask_ext_entry_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  memset (xsvals.mask_ext, 0, sizeof (xsvals.mask_ext));
-  strncpy (xsvals.mask_ext,
-           gtk_entry_get_text (GTK_ENTRY (widget)), MAX_MASK_EXT);
+  g_strlcpy (xsvals.mask_ext,
+             gtk_entry_get_text (GTK_ENTRY (widget)), MAX_MASK_EXT);
 }

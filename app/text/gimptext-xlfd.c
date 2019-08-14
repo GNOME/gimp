@@ -263,8 +263,7 @@ gimp_text_get_xlfd_field (const gchar *fontname,
       if (*t1 == '*')
         return NULL;
 
-      strncpy (buffer, t1, len);
-      buffer[len] = 0;
+      g_strlcpy (buffer, t1, len);
 
       /* Convert to lower case. */
       for (p = buffer; *p; p++)

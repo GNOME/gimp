@@ -185,11 +185,10 @@ pat_save (GimpProcedure        *procedure,
                                           "gimp-pattern-name");
       if (parasite)
         {
-          strncpy (description,
-                   gimp_parasite_data (parasite),
-                   MIN (sizeof (description),
-                        gimp_parasite_data_size (parasite)));
-          description[sizeof (description) - 1] = '\0';
+          g_strlcpy (description,
+                     gimp_parasite_data (parasite),
+                     MIN (sizeof (description),
+                          gimp_parasite_data_size (parasite)));
 
           gimp_parasite_free (parasite);
         }
@@ -201,10 +200,7 @@ pat_save (GimpProcedure        *procedure,
             name[strlen (name) - 4] = '\0';
 
           if (strlen (name))
-            {
-              strncpy (description, name, sizeof (description));
-              description[sizeof (description) - 1] = '\0';
-            }
+            g_strlcpy (description, name, sizeof (description));
 
           g_free (name);
         }
@@ -225,10 +221,9 @@ pat_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      strncpy (description,
-               g_value_get_string (gimp_value_array_index (args, 0)),
-               sizeof (description));
-      description[sizeof (description) - 1] = '\0';
+      g_strlcpy (description,
+                 g_value_get_string (gimp_value_array_index (args, 0)),
+                 sizeof (description));
       break;
 
     default:
@@ -326,11 +321,8 @@ save_dialog (void)
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
-    {
-      strncpy (description, gtk_entry_get_text (GTK_ENTRY (entry)),
+    g_strlcpy (description, gtk_entry_get_text (GTK_ENTRY (entry)),
                sizeof (description));
-      description[sizeof (description) - 1] = '\0';
-    }
 
   gtk_widget_destroy (dialog);
 

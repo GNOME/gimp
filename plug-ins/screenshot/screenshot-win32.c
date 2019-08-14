@@ -386,7 +386,7 @@ formatWindowsError (char *buffer,
     (LPTSTR) &lpMsgBuf, 0, NULL );
 
   /* Copy to the buffer */
-  strncpy(buffer, lpMsgBuf, buf_size - 1);
+  g_strlcpy (buffer, lpMsgBuf, buf_size);
 
   LocalFree(lpMsgBuf);
 }

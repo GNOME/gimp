@@ -359,9 +359,8 @@ run (const gchar      *name,
         }
       else
         {
-          strncpy (decovals.extract_type, param[3].data.d_string,
-                   sizeof (decovals.extract_type));
-          decovals.extract_type[sizeof (decovals.extract_type) - 1] = '\0';
+          g_strlcpy (decovals.extract_type, param[3].data.d_string,
+                     sizeof (decovals.extract_type));
 
           decovals.as_layers = nparams > 4 ? param[4].data.d_int32 : FALSE;
           decovals.use_registration = (strcmp (name, PLUG_IN_PROC_REG) == 0);
@@ -917,8 +916,8 @@ decompose_dialog (void)
   gtk_widget_destroy (dialog);
 
   if (run)
-    strncpy (decovals.extract_type, extract[extract_idx].type,
-             sizeof decovals.extract_type - 1);
+    g_strlcpy (decovals.extract_type, extract[extract_idx].type,
+               sizeof decovals.extract_type);
 
   return run;
 }

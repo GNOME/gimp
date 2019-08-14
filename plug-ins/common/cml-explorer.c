@@ -2158,8 +2158,8 @@ CML_save_to_file_response (GtkWidget *dialog,
   g_message (_("Parameters were saved to '%s'"),
              gimp_filename_to_utf8 (filename));
 
-  strncpy (VALS.last_file_name, filename,
-           sizeof (VALS.last_file_name) - 1);
+  g_strlcpy (VALS.last_file_name, filename,
+             sizeof (VALS.last_file_name));
 
   g_free (filename);
 
@@ -2391,8 +2391,8 @@ CML_load_parameter_file (const gchar *filename,
                   sizeof (CML_PARAM));
         }
 
-      strncpy (VALS.last_file_name, filename,
-               sizeof (VALS.last_file_name) - 1);
+      g_strlcpy (VALS.last_file_name, filename,
+                 sizeof (VALS.last_file_name));
     }
   return flag;
 }

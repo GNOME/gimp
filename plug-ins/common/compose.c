@@ -574,9 +574,8 @@ run (const gchar      *name,
               composevals.inputs[2].comp.ID = param[4].data.d_int32;
               composevals.inputs[3].comp.ID = param[5].data.d_int32;
 
-              strncpy (composevals.compose_type, param[6].data.d_string,
-                       sizeof (composevals.compose_type));
-              composevals.compose_type[sizeof (composevals.compose_type)-1] = '\0';
+              g_strlcpy (composevals.compose_type, param[6].data.d_string,
+                         sizeof (composevals.compose_type));
 
               for (i = 0; i < MAX_COMPOSE_IMAGES; i++)
                 {

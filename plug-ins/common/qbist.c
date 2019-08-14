@@ -734,7 +734,7 @@ dialog_load (GtkWidget *widget,
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      strncpy (qbist_info.path, name, PATH_MAX - 1);
+      g_strlcpy (qbist_info.path, name, PATH_MAX);
       load_data (qbist_info.path);
 
       g_free (name);
@@ -779,7 +779,7 @@ dialog_save (GtkWidget *widget,
     {
       gchar *name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      strncpy (qbist_info.path, name, PATH_MAX - 1);
+      g_strlcpy (qbist_info.path, name, PATH_MAX);
       save_data (qbist_info.path);
 
       g_free (name);

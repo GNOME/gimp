@@ -185,8 +185,7 @@ run (const gchar      *name,
 
           if (strlen (webpagevals.url) < MAX_URL_LEN)
             {
-              strncpy (save.url, webpagevals.url, MAX_URL_LEN);
-              save.url[MAX_URL_LEN - 1] = 0;
+              g_strlcpy (save.url, webpagevals.url, MAX_URL_LEN);
             }
           else
             {

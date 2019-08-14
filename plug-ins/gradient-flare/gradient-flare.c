@@ -1576,8 +1576,7 @@ static void
 gflare_name_copy (gchar       *dest,
                   const gchar *src)
 {
-  strncpy (dest, src, GFLARE_NAME_MAX - 1);
-  dest[GFLARE_NAME_MAX - 1] = '\0';
+  g_strlcpy (dest, src, GFLARE_NAME_MAX);
 }
 
 /*************************************************************************/
@@ -4708,8 +4707,7 @@ static void
 gradient_name_copy (gchar       *dest,
                     const gchar *src)
 {
-  strncpy (dest, src, GRADIENT_NAME_MAX - 1);
-  dest[GRADIENT_NAME_MAX - 1] = '\0';
+  g_strlcpy (dest, src, GRADIENT_NAME_MAX);
 }
 
 /*
@@ -5063,8 +5061,7 @@ gradient_cache_lookup (const gchar *name,
       while (gradient_cache_count >= GRADIENT_CACHE_SIZE)
         gradient_cache_zorch();
       ci = g_new (GradientCacheItem, 1);
-      strncpy (ci->name, name, GRADIENT_NAME_MAX - 1);
-      ci->name[GRADIENT_NAME_MAX - 1] = '\0';
+      g_strlcpy (ci->name, name, GRADIENT_NAME_MAX);
       ci->next = gradient_cache_head;
       ci->prev = NULL;
       if (gradient_cache_head)

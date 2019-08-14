@@ -742,5 +742,5 @@ static void
 entry_changed_callback (GtkEntry *entry,
                         gchar    *string)
 {
-  strncpy (string, gtk_entry_get_text (entry), 255);
+  g_strlcpy (string, gtk_entry_get_text (entry), 256);
 }

@@ -584,8 +584,7 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
           return;
         }
 
-      strncpy (parse_data->name, name, sizeof (parse_data->name));
-      parse_data->name[sizeof (parse_data->name) - 1] = 0;
+      g_strlcpy (parse_data->name, name, sizeof (parse_data->name));
 
       parse_data->base64 = (encoding && ! strcmp (encoding, "base64"));
     }

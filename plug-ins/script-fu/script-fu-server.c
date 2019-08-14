@@ -370,7 +370,7 @@ script_fu_server_listen (gint timeout)
       /*  Associate the client address with the socket  */
 
       /* If all else fails ... */
-      strncpy (clientname, "(error during host address lookup)", NI_MAXHOST-1);
+      g_strlcpy (clientname, "(error during host address lookup)", NI_MAXHOST);
 
       /* Lookup address */
       (void) getnameinfo (&(client.sa), size, clientname, sizeof (clientname),

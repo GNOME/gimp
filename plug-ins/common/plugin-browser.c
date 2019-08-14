@@ -491,8 +491,7 @@ browser_search (GimpBrowser   *gimp_browser,
 
               if ((utf8 = g_locale_to_utf8 (xtimestr, -1, NULL, NULL, NULL)))
                 {
-                  strncpy (xtimestr, utf8, sizeof (xtimestr));
-                  xtimestr[sizeof (xtimestr) - 1] = 0;
+                  g_strlcpy (xtimestr, utf8, sizeof (xtimestr));
                   g_free (utf8);
                 }
             }
