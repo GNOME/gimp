@@ -77,18 +77,18 @@ gimp_save_procedure_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "The image to save",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
+                               g_param_spec_object ("image",
+                                                    "Image",
+                                                    "The image to save",
+                                                    GIMP_TYPE_IMAGE,
+                                                    G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "The drawable "
-                                                            "to save",
-                                                            FALSE,
-                                                            G_PARAM_READWRITE));
+                               g_param_spec_object ("drawable",
+                                                    "Drawable",
+                                                    "The drawable "
+                                                    "to save",
+                                                    GIMP_TYPE_DRAWABLE,
+                                                    G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",
@@ -153,17 +153,17 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   GimpValueArray    *remaining;
   GimpValueArray    *return_values;
   GimpRunMode        run_mode;
-  gint32             image_id;
-  gint32             drawable_id;
+  GimpImage         *image;
+  GimpDrawable      *drawable;
   const gchar       *uri;
   GFile             *file;
   gint               i;
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_id    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
-  uri         = g_value_get_string         (gimp_value_array_index (args, 3));
-  /* raw_uri  = g_value_get_string         (gimp_value_array_index (args, 4)); */
+  run_mode   = g_value_get_enum   (gimp_value_array_index (args, 0));
+  image      = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable   = g_value_get_object (gimp_value_array_index (args, 2));
+  uri        = g_value_get_string (gimp_value_array_index (args, 3));
+  /* raw_uri = g_value_get_string (gimp_value_array_index (args, 4)); */
 
   if (gimp_file_procedure_get_handles_uri (GIMP_FILE_PROCEDURE (procedure)))
     file = g_file_new_for_uri (uri);
@@ -181,7 +181,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
 
   return_values = save_proc->priv->run_func (procedure,
                                              run_mode,
-                                             image_id, drawable_id,
+                                             image, drawable,
                                              file,
                                              remaining,
                                              save_proc->priv->run_data);
