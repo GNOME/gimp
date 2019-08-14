@@ -593,8 +593,6 @@ file_cel_LDADD = \
 
 file_compressor_CFLAGS = $(LZMA_CFLAGS)
 
-file_compressor_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_compressor_SOURCES = \
 	file-compressor.c
 
