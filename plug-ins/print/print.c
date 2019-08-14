@@ -536,7 +536,6 @@ print_temp_proc_install (gint32  image_ID)
   GIMP_PROC_ARG_IMAGE (procedure, "image",
                        "Image",
                        "The image to notify about",
-                       FALSE,
                        G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
