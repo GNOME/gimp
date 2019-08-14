@@ -73,7 +73,6 @@ GimpChannel*               gimp_selection_save      (GimpImage    *image);
 #define gimp_selection_value _gimp_selection_value
 #define gimp_selection_is_empty _gimp_selection_is_empty
 #define gimp_selection_translate _gimp_selection_translate
-#define _gimp_selection_float __gimp_selection_float
 #define gimp_selection_invert _gimp_selection_invert
 #define gimp_selection_sharpen _gimp_selection_sharpen
 #define gimp_selection_all _gimp_selection_all
@@ -103,9 +102,6 @@ gint     _gimp_selection_value     (gint32    image_ID,
                                     gint      y);
 gboolean _gimp_selection_is_empty  (gint32    image_ID);
 gboolean _gimp_selection_translate (gint32    image_ID,
-                                    gint      offx,
-                                    gint      offy);
-gint32   __gimp_selection_float    (gint32    drawable_ID,
                                     gint      offx,
                                     gint      offy);
 gboolean _gimp_selection_invert    (gint32    image_ID);
