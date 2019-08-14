@@ -65,7 +65,7 @@ static GimpValueArray * desktop_load             (GimpProcedure        *procedur
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
-static gint32           load_image               (GFile                *file,
+static GimpImage      * load_image               (GFile                *file,
                                                   GimpRunMode           run_mode,
                                                   GError              **error);
 
@@ -136,19 +136,19 @@ desktop_load (GimpProcedure        *procedure,
               gpointer              run_data)
 {
   GimpValueArray *return_values;
-  gint32          image_ID;
+  GimpImage      *image;
   GError         *error  = NULL;
 
-  image_ID = load_image (file, run_mode, &error);
+  image = load_image (file, run_mode, &error);
 
-  if (image_ID != -1)
+  if (image)
     {
       return_values = gimp_procedure_new_return_values (procedure,
                                                         GIMP_PDB_SUCCESS,
                                                         NULL);
 
-      gimp_value_set_image_id (gimp_value_array_index (return_values, 1),
-                               image_ID);
+      g_value_set_object (gimp_value_array_index (return_values, 1),
+                          image);
     }
   else
     {
@@ -160,17 +160,17 @@ desktop_load (GimpProcedure        *procedure,
   return return_values;
 }
 
-static gint32
+static GimpImage *
 load_image (GFile        *file,
             GimpRunMode   run_mode,
             GError      **load_error)
 {
-  GKeyFile *key_file = g_key_file_new ();
-  gchar    *filename = NULL;
-  gchar    *group    = NULL;
-  gchar    *value    = NULL;
-  gint32    image_ID = -1;
-  GError   *error    = NULL;
+  GKeyFile  *key_file = g_key_file_new ();
+  GimpImage *image    = NULL;
+  gchar     *filename = NULL;
+  gchar     *group    = NULL;
+  gchar     *value    = NULL;
+  GError    *error    = NULL;
 
   filename = g_file_get_path (file);
 
@@ -191,7 +191,7 @@ load_image (GFile        *file,
   value = g_key_file_get_value (key_file,
                                 group, G_KEY_FILE_DESKTOP_KEY_URL, &error);
   if (value)
-    image_ID = gimp_file_load (run_mode, value, value);
+    image = gimp_file_load (run_mode, value, value);
 
  out:
   if (error)
@@ -207,5 +207,5 @@ load_image (GFile        *file,
   g_free (filename);
   g_key_file_free (key_file);
 
-  return image_ID;
+  return image;
 }
