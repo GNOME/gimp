@@ -634,8 +634,6 @@ file_csource_LDADD = \
 	$(INTLLIBS)		\
 	$(file_csource_RC)
 
-file_desktop_link_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_desktop_link_SOURCES = \
 	file-desktop-link.c
 
