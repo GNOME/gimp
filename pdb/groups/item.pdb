@@ -375,6 +375,7 @@ item. The order is topmost to bottommost.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
+    $lib_private = 1;
 
     @inargs = (
 	{ name => 'item', type => 'item',
