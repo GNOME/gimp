@@ -750,8 +750,6 @@ file_gif_save_LDADD = \
 	$(INTLLIBS)		\
 	$(file_gif_save_RC)
 
-file_gih_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_gih_SOURCES = \
 	file-gih.c
 
