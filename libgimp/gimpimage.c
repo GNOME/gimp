@@ -159,6 +159,161 @@ gimp_image_new_by_id (gint32 image_id)
 }
 
 /**
+ * gimp_image_list:
+ *
+ * Returns the list of images currently open.
+ *
+ * This procedure returns the list of images currently open in GIMP.
+ *
+ * Returns: (element-type GimpImage) (transfer full):
+ *          The list of images currently open.
+ *          The returned value must be freed with:
+ *          g_list_free_full(list, g_object_unref);
+ **/
+GList *
+gimp_image_list (void)
+{
+  GList *images = NULL;
+  gint  *ids;
+  gint   num_images;
+  gint   i;
+
+  ids = _gimp_image_list (&num_images);
+  for (i = 0; i < num_images; i++)
+    {
+      GimpImage *image;
+
+      image = gimp_image_new_by_id (ids[i]);
+
+      images = g_list_prepend (images, image);
+    }
+  images = g_list_reverse (images);
+  g_free (ids);
+
+  return images;
+}
+
+/**
+ * gimp_image_get_layers:
+ * @image: The image.
+ *
+ * Returns the list of layers contained in the specified image.
+ *
+ * This procedure returns the list of layers contained in the specified
+ * image. The order of layers is from topmost to bottommost.
+ *
+ * Returns: (element-type GimpImage) (transfer full):
+ *          The list of layers contained in the image.
+ *          The returned value must be freed with:
+ *          g_list_free_full(list, g_object_unref);
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_get_layers (GimpImage *image)
+{
+  GList *layers = NULL;
+  gint  *ids;
+  gint   num_layers;
+  gint   i;
+
+  ids = _gimp_image_get_layers (image, &num_layers);
+  for (i = 0; i < num_layers; i++)
+    {
+      GimpLayer *layer;
+
+      layer = GIMP_LAYER (gimp_item_new_by_id (ids[i]));
+
+      layers = g_list_prepend (layers, layer);
+    }
+  layers = g_list_reverse (layers);
+  g_free (ids);
+
+  return layers;
+}
+
+/**
+ * gimp_image_get_channels:
+ * @image: The image.
+ *
+ * Returns the list of channels contained in the specified image.
+ *
+ * This procedure returns the list of channels contained in the
+ * specified image. This does not include the selection mask, or layer
+ * masks. The order is from topmost to bottommost. Note that
+ * \"channels\" are custom channels and do not include the image's
+ * color components.
+ *
+ * Returns: (element-type GimpChannel) (transfer full):
+ *          The list of channels contained in the image.
+ *          The returned value must be freed with:
+ *          g_list_free_full(list, g_object_unref);
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_get_channels (GimpImage *image)
+{
+  GList *channels = NULL;
+  gint  *ids;
+  gint   num_channels;
+  gint   i;
+
+  ids = _gimp_image_get_channels (image, &num_channels);
+  for (i = 0; i < num_channels; i++)
+    {
+      GimpChannel *channel;
+
+      channel = GIMP_CHANNEL (gimp_item_new_by_id (ids[i]));
+
+      channels = g_list_prepend (channels, channel);
+    }
+  channels = g_list_reverse (channels);
+  g_free (ids);
+
+  return channels;
+}
+
+/**
+ * gimp_image_get_vectors:
+ * @image: The image.
+ *
+ * Returns the list of vectors contained in the specified image.
+ *
+ * This procedure returns the list of vectors contained in the
+ * specified image.
+ *
+ * Returns: (element-type GimpVectors) (transfer full):
+ *          The list of vectors contained in the image.
+ *          The returned value must be freed with:
+ *          g_list_free_full(list, g_object_unref);
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_get_vectors (GimpImage *image)
+{
+  GList *vectors = NULL;
+  gint  *ids;
+  gint   num_vectors;
+  gint   i;
+
+  ids = _gimp_image_get_vectors (image, &num_vectors);
+  for (i = 0; i < num_vectors; i++)
+    {
+      GimpVectors *path;
+
+      path = GIMP_VECTORS (gimp_item_new_by_id (ids[i]));
+
+      vectors = g_list_prepend (vectors, path);
+    }
+  vectors = g_list_reverse (vectors);
+  g_free (ids);
+
+  return vectors;
+}
+
+/**
  * gimp_image_get_colormap:
  * @image:      The image.
  * @num_colors: Returns the number of colors in the colormap array.
@@ -355,6 +510,113 @@ gimp_image_set_metadata (GimpImage    *image,
 
 /* Deprecated API. */
 
+
+/**
+ * gimp_image_list_deprecated: (skip)
+ * @num_images: (out): The number of images currently open.
+ *
+ * Returns the list of images currently open.
+ *
+ * This procedure returns the list of images currently open in GIMP.
+ *
+ * Returns: (array length=num_images) (element-type gint32) (transfer full):
+ *          The list of images currently open.
+ *          The returned value must be freed with g_free().
+ **/
+gint *
+gimp_image_list_deprecated (gint *num_images)
+{
+  return _gimp_image_list (num_images);
+}
+
+/**
+ * gimp_image_get_layers_deprecated: (skip)
+ * @image_id: The image id.
+ * @num_layers: (out): The number of layers contained in the image.
+ *
+ * Returns the list of layers contained in the specified image.
+ *
+ * This procedure returns the list of layers contained in the specified
+ * image. The order of layers is from topmost to bottommost.
+ *
+ * Returns: (array length=num_layers) (element-type gint32) (transfer full):
+ *          The list of layers contained in the image.
+ *          The returned value must be freed with g_free().
+ **/
+gint *
+gimp_image_get_layers_deprecated (gint32  image_id,
+                                  gint   *num_layers)
+{
+  GimpImage *image;
+  gint      *layers;
+
+  image  = gimp_image_new_by_id (image_id);
+  layers = _gimp_image_get_layers (image, num_layers);
+  g_object_unref (image);
+
+  return layers;
+}
+
+/**
+ * gimp_image_get_channels_deprecated: (skip)
+ * @image_id: The image.
+ * @num_channels: (out): The number of channels contained in the image.
+ *
+ * Returns the list of channels contained in the specified image.
+ *
+ * This procedure returns the list of channels contained in the
+ * specified image. This does not include the selection mask, or layer
+ * masks. The order is from topmost to bottommost. Note that
+ * \"channels\" are custom channels and do not include the image's
+ * color components.
+ *
+ * Returns: (array length=num_channels):
+ *          The list of channels contained in the image.
+ *          The returned value must be freed with g_free().
+ **/
+gint *
+gimp_image_get_channels_deprecated (gint32  image_id,
+                                    gint   *num_channels)
+{
+  GimpImage *image;
+  gint      *channels;
+
+  image    = gimp_image_new_by_id (image_id);
+  channels = _gimp_image_get_layers (image, num_channels);
+  g_object_unref (image);
+
+  return channels;
+}
+
+/**
+ * gimp_image_get_vectors_deprecated: (skip)
+ * @image_id: The image.
+ * @num_vectors: (out): The number of vectors contained in the image.
+ *
+ * Returns the list of vectors contained in the specified image.
+ *
+ * This procedure returns the list of vectors contained in the
+ * specified image.
+ *
+ * Returns: (array length=num_vectors) (element-type gint32) (transfer full):
+ *          The list of vectors contained in the image.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 2.4
+ **/
+gint *
+gimp_image_get_vectors_deprecated (gint32  image_id,
+                                   gint   *num_vectors)
+{
+  GimpImage *image;
+  gint      *vectors;
+
+  image   = gimp_image_new_by_id (image_id);
+  vectors = _gimp_image_get_vectors (image, num_vectors);
+  g_object_unref (image);
+
+  return vectors;
+}
 
 /**
  * gimp_image_get_colormap_deprecated: (skip)
