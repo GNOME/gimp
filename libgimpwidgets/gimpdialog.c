@@ -696,7 +696,7 @@ gimp_dialog_set_alternative_button_order_from_array (GimpDialog *dialog,
    * just hide the warnings for now...
    */
   G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
-  gtk_dialog_set_alternative_button_order_from_array (dialog, n_buttons, order);
+  gtk_dialog_set_alternative_button_order_from_array (GTK_DIALOG (dialog), n_buttons, order);
   G_GNUC_END_IGNORE_DEPRECATIONS;
 }
 
