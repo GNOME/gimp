@@ -89,6 +89,10 @@ sub generate_fun {
     my $func_annotations = "";
 
     if ($proc->{lib_private}) {
+        if ($api_deprecated) {
+            # No need to create deprecated versions of private libs.
+            return '';
+        }
         $wrapped = '_';
     }
 
