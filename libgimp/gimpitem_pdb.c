@@ -1029,7 +1029,7 @@ _gimp_item_get_parent (gint32 item_ID)
 }
 
 /**
- * gimp_item_get_children:
+ * _gimp_item_get_children:
  * @item: The item.
  * @num_children: (out): The item's number of children.
  *
@@ -1045,8 +1045,8 @@ _gimp_item_get_parent (gint32 item_ID)
  * Since: 2.8
  **/
 gint *
-gimp_item_get_children (GimpItem *item,
-                        gint     *num_children)
+_gimp_item_get_children (GimpItem *item,
+                         gint     *num_children)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1055,56 +1055,6 @@ gimp_item_get_children (GimpItem *item,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_ITEM_ID, gimp_item_get_id (GIMP_ITEM (item)),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-item-get-children",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-item-get-children",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *num_children = 0;
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      *num_children = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      child_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return child_ids;
-}
-
-/**
- * _gimp_item_get_children: (skip)
- * @item_ID: The item.
- * @num_children: (out): The item's number of children.
- *
- * Returns the item's list of children.
- *
- * This procedure returns the list of items which are children of the
- * specified item. The order is topmost to bottommost.
- *
- * Returns: (array length=num_children): The item's list of children.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.8
- **/
-gint *
-_gimp_item_get_children (gint32  item_ID,
-                         gint   *num_children)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint *child_ids = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM_ID, item_ID,
                                           G_TYPE_NONE);
 
   if (pdb)

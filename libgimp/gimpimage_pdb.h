@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint* gimp_image_list (gint *num_images);
+G_GNUC_INTERNAL gint* _gimp_image_list (gint *num_images);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
@@ -51,11 +51,11 @@ GimpPrecision            gimp_image_get_precision              (GimpImage       
 GimpLayerMode            gimp_image_get_default_new_layer_mode (GimpImage           *image);
 gint                     gimp_image_width                      (GimpImage           *image);
 gint                     gimp_image_height                     (GimpImage           *image);
-gint*                    gimp_image_get_layers                 (GimpImage           *image,
+G_GNUC_INTERNAL gint*    _gimp_image_get_layers                (GimpImage           *image,
                                                                 gint                *num_layers);
-gint*                    gimp_image_get_channels               (GimpImage           *image,
+G_GNUC_INTERNAL gint*    _gimp_image_get_channels              (GimpImage           *image,
                                                                 gint                *num_channels);
-gint*                    gimp_image_get_vectors                (GimpImage           *image,
+G_GNUC_INTERNAL gint*    _gimp_image_get_vectors               (GimpImage           *image,
                                                                 gint                *num_vectors);
 GimpDrawable*            gimp_image_get_active_drawable        (GimpImage           *image);
 gboolean                 gimp_image_unset_active_channel       (GimpImage           *image);
@@ -207,9 +207,6 @@ gchar**                  gimp_image_get_parasite_list          (GimpImage       
 #define gimp_image_get_default_new_layer_mode _gimp_image_get_default_new_layer_mode
 #define gimp_image_width _gimp_image_width
 #define gimp_image_height _gimp_image_height
-#define gimp_image_get_layers _gimp_image_get_layers
-#define gimp_image_get_channels _gimp_image_get_channels
-#define gimp_image_get_vectors _gimp_image_get_vectors
 #define gimp_image_get_active_drawable _gimp_image_get_active_drawable
 #define gimp_image_unset_active_channel _gimp_image_unset_active_channel
 #define gimp_image_get_floating_sel _gimp_image_get_floating_sel
@@ -296,12 +293,6 @@ GimpPrecision     _gimp_image_get_precision              (gint32              im
 GimpLayerMode     _gimp_image_get_default_new_layer_mode (gint32              image_ID);
 gint              _gimp_image_width                      (gint32              image_ID);
 gint              _gimp_image_height                     (gint32              image_ID);
-gint*             _gimp_image_get_layers                 (gint32              image_ID,
-                                                          gint               *num_layers);
-gint*             _gimp_image_get_channels               (gint32              image_ID,
-                                                          gint               *num_channels);
-gint*             _gimp_image_get_vectors                (gint32              image_ID,
-                                                          gint               *num_vectors);
 gint32            _gimp_image_get_active_drawable        (gint32              image_ID);
 gboolean          _gimp_image_unset_active_channel       (gint32              image_ID);
 gint32            _gimp_image_get_floating_sel           (gint32              image_ID);

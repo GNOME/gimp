@@ -120,7 +120,7 @@ _gimp_image_is_valid (gint32 image_ID)
 }
 
 /**
- * gimp_image_list:
+ * _gimp_image_list:
  * @num_images: (out): The number of images currently open.
  *
  * Returns the list of images currently open.
@@ -132,7 +132,7 @@ _gimp_image_is_valid (gint32 image_ID)
  *          The returned value must be freed with g_free().
  **/
 gint *
-gimp_image_list (gint *num_images)
+_gimp_image_list (gint *num_images)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -951,7 +951,7 @@ _gimp_image_height (gint32 image_ID)
 }
 
 /**
- * gimp_image_get_layers:
+ * _gimp_image_get_layers:
  * @image: The image.
  * @num_layers: (out): The number of layers contained in the image.
  *
@@ -965,8 +965,8 @@ _gimp_image_height (gint32 image_ID)
  *          The returned value must be freed with g_free().
  **/
 gint *
-gimp_image_get_layers (GimpImage *image,
-                       gint      *num_layers)
+_gimp_image_get_layers (GimpImage *image,
+                        gint      *num_layers)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1000,56 +1000,7 @@ gimp_image_get_layers (GimpImage *image,
 }
 
 /**
- * _gimp_image_get_layers: (skip)
- * @image_ID: The image.
- * @num_layers: (out): The number of layers contained in the image.
- *
- * Returns the list of layers contained in the specified image.
- *
- * This procedure returns the list of layers contained in the specified
- * image. The order of layers is from topmost to bottommost.
- *
- * Returns: (array length=num_layers):
- *          The list of layers contained in the image.
- *          The returned value must be freed with g_free().
- **/
-gint *
-_gimp_image_get_layers (gint32  image_ID,
-                        gint   *num_layers)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint *layer_ids = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-get-layers",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-get-layers",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *num_layers = 0;
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      *num_layers = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      layer_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_ids;
-}
-
-/**
- * gimp_image_get_channels:
+ * _gimp_image_get_channels:
  * @image: The image.
  * @num_channels: (out): The number of channels contained in the image.
  *
@@ -1066,8 +1017,8 @@ _gimp_image_get_layers (gint32  image_ID,
  *          The returned value must be freed with g_free().
  **/
 gint *
-gimp_image_get_channels (GimpImage *image,
-                         gint      *num_channels)
+_gimp_image_get_channels (GimpImage *image,
+                          gint      *num_channels)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1101,59 +1052,7 @@ gimp_image_get_channels (GimpImage *image,
 }
 
 /**
- * _gimp_image_get_channels: (skip)
- * @image_ID: The image.
- * @num_channels: (out): The number of channels contained in the image.
- *
- * Returns the list of channels contained in the specified image.
- *
- * This procedure returns the list of channels contained in the
- * specified image. This does not include the selection mask, or layer
- * masks. The order is from topmost to bottommost. Note that
- * \"channels\" are custom channels and do not include the image's
- * color components.
- *
- * Returns: (array length=num_channels):
- *          The list of channels contained in the image.
- *          The returned value must be freed with g_free().
- **/
-gint *
-_gimp_image_get_channels (gint32  image_ID,
-                          gint   *num_channels)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint *channel_ids = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-get-channels",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-get-channels",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *num_channels = 0;
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      *num_channels = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      channel_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return channel_ids;
-}
-
-/**
- * gimp_image_get_vectors:
+ * _gimp_image_get_vectors:
  * @image: The image.
  * @num_vectors: (out): The number of vectors contained in the image.
  *
@@ -1169,8 +1068,8 @@ _gimp_image_get_channels (gint32  image_ID,
  * Since: 2.4
  **/
 gint *
-gimp_image_get_vectors (GimpImage *image,
-                        gint      *num_vectors)
+_gimp_image_get_vectors (GimpImage *image,
+                         gint      *num_vectors)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1179,57 +1078,6 @@ gimp_image_get_vectors (GimpImage *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-get-vectors",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-get-vectors",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *num_vectors = 0;
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      *num_vectors = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      vector_ids = gimp_value_dup_int32_array (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return vector_ids;
-}
-
-/**
- * _gimp_image_get_vectors: (skip)
- * @image_ID: The image.
- * @num_vectors: (out): The number of vectors contained in the image.
- *
- * Returns the list of vectors contained in the specified image.
- *
- * This procedure returns the list of vectors contained in the
- * specified image.
- *
- * Returns: (array length=num_vectors):
- *          The list of vectors contained in the image.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.4
- **/
-gint *
-_gimp_image_get_vectors (gint32  image_ID,
-                         gint   *num_vectors)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint *vector_ids = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_NONE);
 
   if (pdb)

@@ -58,7 +58,7 @@ GType       gimp_vectors_combo_box_get_type  (void) G_GNUC_CONST;
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
 typedef gboolean (* GimpItemConstraintFunc) (GimpImage *image,
-                                             gint32     item_id,
+                                             GimpItem  *item,
                                              gpointer   data);
 
 GtkWidget * gimp_drawable_combo_box_new (GimpItemConstraintFunc constraint,
