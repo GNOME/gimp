@@ -64,7 +64,6 @@ gboolean                     gimp_channel_set_color          (GimpChannel     *c
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
-#define _gimp_channel_new __gimp_channel_new
 #define gimp_channel_new_from_component _gimp_channel_new_from_component
 #define gimp_channel_copy _gimp_channel_copy
 #define gimp_channel_combine_masks _gimp_channel_combine_masks
@@ -82,12 +81,6 @@ gboolean                     gimp_channel_set_color          (GimpChannel     *c
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gint32   __gimp_channel_new               (gint32           image_ID,
-                                           gint             width,
-                                           gint             height,
-                                           const gchar     *name,
-                                           gdouble          opacity,
-                                           const GimpRGB   *color);
 gint32   _gimp_channel_new_from_component (gint32           image_ID,
                                            GimpChannelType  component,
                                            const gchar     *name);
