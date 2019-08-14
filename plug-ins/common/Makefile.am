@@ -896,8 +896,6 @@ file_mng_LDADD = \
 	$(INTLLIBS)		\
 	$(file_mng_RC)
 
-file_pat_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_pat_SOURCES = \
 	file-pat.c
 
