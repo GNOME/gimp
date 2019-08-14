@@ -89,7 +89,7 @@ typedef struct _IcoSaveInfo
     gint        *depths;
     gint        *default_depths;
     gboolean    *compress;
-    gint        *layers;
+    GList       *layers;
     gint         num_icons;
 } IcoSaveInfo;
 
