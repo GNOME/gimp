@@ -48,7 +48,6 @@ G_GNUC_INTERNAL gboolean _gimp_progress_init (const gchar *message,
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
-#define _gimp_progress_init __gimp_progress_init
 
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
@@ -57,8 +56,7 @@ G_GNUC_INTERNAL gboolean _gimp_progress_init (const gchar *message,
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gboolean __gimp_progress_init (const gchar *message,
-                               gint32       gdisplay_ID);
+
 
 
 G_END_DECLS
