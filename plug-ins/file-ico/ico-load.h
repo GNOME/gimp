@@ -22,22 +22,22 @@
 #define __ICO_LOAD_H__
 
 
-gint32 ico_load_image           (const gchar   *filename,
-                                 GError       **error);
-gint32 ico_load_thumbnail_image (const gchar   *filename,
-                                 gint          *width,
-                                 gint          *height,
-                                 GError       **error);
+GimpImage * ico_load_image           (const gchar   *filename,
+                                      GError       **error);
+GimpImage * ico_load_thumbnail_image (const gchar   *filename,
+                                      gint          *width,
+                                      gint          *height,
+                                      GError       **error);
 
-gint   ico_get_bit_from_data    (const guint8  *data,
-                                 gint           line_width,
-                                 gint           bit);
-gint   ico_get_nibble_from_data (const guint8  *data,
-                                 gint           line_width,
-                                 gint           nibble);
-gint   ico_get_byte_from_data   (const guint8  *data,
-                                 gint           line_width,
-                                 gint           byte);
+gint        ico_get_bit_from_data    (const guint8  *data,
+                                      gint           line_width,
+                                      gint           bit);
+gint        ico_get_nibble_from_data (const guint8  *data,
+                                      gint           line_width,
+                                      gint           nibble);
+gint        ico_get_byte_from_data   (const guint8  *data,
+                                      gint           line_width,
+                                      gint           byte);
 
 
 #endif /* __ICO_LOAD_H__ */
