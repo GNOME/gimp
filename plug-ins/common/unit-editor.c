@@ -58,12 +58,32 @@ typedef struct
 } UnitColumn;
 
 
-static void     query                  (void);
-static void     run                    (const gchar           *name,
-                                        gint                   n_params,
-                                        const GimpParam       *param,
-                                        gint                  *n_return_vals,
-                                        GimpParam            **return_vals);
+typedef struct _Editor      Editor;
+typedef struct _EditorClass EditorClass;
+
+struct _Editor
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _EditorClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define EDITOR_TYPE  (editor_get_type ())
+#define EDITOR (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EDITOR_TYPE, Editor))
+
+GType                   editor_get_type         (void) G_GNUC_CONST;
+
+static GList          * editor_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * editor_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * editor_run              (GimpProcedure        *procedure,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
 
 static GimpUnit new_unit_dialog        (GtkWidget             *main_dialog,
                                         GimpUnit               template);
@@ -81,13 +101,10 @@ static void     saved_toggled_callback (GtkCellRendererToggle *celltoggle,
 static void     unit_list_init         (GtkTreeView           *tv);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Editor, editor, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (EDITOR_TYPE)
+
 
 static const UnitColumn columns[] =
 {
@@ -130,57 +147,74 @@ static GtkActionEntry actions[] =
 };
 
 
-MAIN ()
-
-
 static void
-query (void)
+editor_class_init (EditorClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0) }" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create or alter units used in GIMP"),
-                          "The GIMP unit editor",
-                          "Michael Natterer <mitch@gimp.org>",
-                          "Michael Natterer <mitch@gimp.org>",
-                          "2000",
-                          N_("U_nits"),
-                          "",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Edit/Preferences");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_ICON_TOOL_MEASURE);
+  plug_in_class->query_procedures = editor_query_procedures;
+  plug_in_class->create_procedure = editor_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+editor_init (Editor *editor)
 {
-  static GimpParam values[2];
+}
 
+static GList *
+editor_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+editor_create_procedure (GimpPlugIn  *plug_in,
+                         const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      editor_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("U_nits"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Edit/Preferences");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create or alter units used in GIMP"),
+                                        "The GIMP unit editor",
+                                        name);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Michael Natterer <mitch@gimp.org>",
+                                      "Michael Natterer <mitch@gimp.org>",
+                                      "2000");
+
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_TOOL_MEASURE);
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_INTERACTIVE,
+                                                      G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+editor_run (GimpProcedure        *procedure,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
   INIT_I18N ();
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  unit_editor_dialog ();
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-
-  if (strcmp (name, PLUG_IN_PROC) == 0)
-    {
-      values[0].data.d_status = GIMP_PDB_SUCCESS;
-
-      unit_editor_dialog ();
-    }
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static GimpUnit
