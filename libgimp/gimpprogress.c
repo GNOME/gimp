@@ -40,22 +40,15 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void   gimp_progress_data_free     (GimpProgressData     *data);
+static void             gimp_progress_data_free (GimpProgressData     *data);
 
-static void   gimp_temp_progress_run      (const gchar          *name,
-                                           gint                  nparams,
-                                           const GimpParam      *param,
-                                           gint                 *nreturn_vals,
-                                           GimpParam           **return_vals);
-static GimpValueArray *
-              gimp_temp_progress_run_func (GimpProcedure        *procedure,
-                                           const GimpValueArray *args,
-                                           gpointer              run_data);
+static GimpValueArray * gimp_temp_progress_run  (GimpProcedure        *procedure,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
 
 
 /*  private variables  */
 
-static GHashTable    * gimp_progress_ht      = NULL;
 static gdouble         gimp_progress_current = 0.0;
 static const gdouble   gimp_progress_step    = (1.0 / 256.0);
 
@@ -79,6 +72,7 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
                               GDestroyNotify            user_data_destroy)
 {
   GimpPlugIn       *plug_in;
+  GimpProcedure    *procedure;
   gchar            *progress_callback;
   GimpProgressData *progress_data;
 
@@ -90,10 +84,7 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
 
   plug_in = gimp_get_plug_in ();
 
-  if (plug_in)
-    progress_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
-  else
-    progress_callback = gimp_pdb_temp_name ();
+  progress_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
 
   progress_data = g_slice_new0 (GimpProgressData);
 
@@ -107,111 +98,53 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
   progress_data->data              = user_data;
   progress_data->data_destroy      = user_data_destroy;
 
-  if (plug_in)
-    {
-      GimpProcedure *procedure = gimp_procedure_new (plug_in,
-                                                     progress_callback,
-                                                     GIMP_TEMPORARY,
-                                                     gimp_temp_progress_run_func,
-                                                     progress_data,
-                                                     (GDestroyNotify)
-                                                     gimp_progress_data_free);
+  procedure = gimp_procedure_new (plug_in,
+                                  progress_callback,
+                                  GIMP_TEMPORARY,
+                                  gimp_temp_progress_run,
+                                  progress_data,
+                                  (GDestroyNotify)
+                                  gimp_progress_data_free);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("command",
-                                                      "Command",
-                                                      "The progress command",
-                                                      GIMP_TYPE_PROGRESS_COMMAND,
-                                                      GIMP_PROGRESS_COMMAND_START,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("text",
-                                                        "Text",
-                                                        "The progress text",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("command",
+                                                  "Command",
+                                                  "The progress command",
+                                                  GIMP_TYPE_PROGRESS_COMMAND,
+                                                  GIMP_PROGRESS_COMMAND_START,
+                                                  G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_string ("text",
+                                                    "Text",
+                                                    "The progress text",
+                                                    NULL,
+                                                    G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("value",
+                                                    "Vakue",
+                                                    "The progress value",
+                                                    0.0, 1.0, 0.0,
+                                                    G_PARAM_READWRITE));
+
+  gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("value",
                                                         "Vakue",
                                                         "The progress value",
                                                         0.0, 1.0, 0.0,
                                                         G_PARAM_READWRITE));
 
-      gimp_procedure_add_return_value (procedure,
-                                       g_param_spec_double ("value",
-                                                            "Vakue",
-                                                            "The progress value",
-                                                            0.0, 1.0, 0.0,
-                                                            G_PARAM_READWRITE));
-
-      gimp_plug_in_add_temp_procedure (plug_in, procedure);
-      g_object_unref (procedure);
-    }
-  else
-    {
-      static const GimpParamDef args[] =
-      {
-        { GIMP_PDB_INT32,  "command", "" },
-        { GIMP_PDB_STRING, "text",    "" },
-        { GIMP_PDB_FLOAT,  "value",   "" }
-      };
-
-      static const GimpParamDef values[] =
-      {
-        { GIMP_PDB_FLOAT,  "value",   "" }
-      };
-
-      gimp_install_temp_proc (progress_callback,
-                              "Temporary progress callback procedure",
-                              "",
-                              "",
-                              "",
-                              "",
-                              NULL,
-                              "",
-                              GIMP_TEMPORARY,
-                              G_N_ELEMENTS (args), G_N_ELEMENTS (values),
-                              args, values,
-                              gimp_temp_progress_run);
-    }
+  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  g_object_unref (procedure);
 
   if (_gimp_progress_install (progress_callback))
     {
       /* Allow callbacks to be watched */
-      if (plug_in)
-        {
-          gimp_plug_in_extension_enable (plug_in);
-        }
-      else
-        {
-          gimp_extension_enable ();
-
-          /* Now add to hash table so we can find it again */
-          if (! gimp_progress_ht)
-            {
-              gimp_progress_ht =
-                g_hash_table_new_full (g_str_hash, g_str_equal,
-                                       g_free,
-                                       (GDestroyNotify) gimp_progress_data_free);
-            }
-
-          g_hash_table_insert (gimp_progress_ht,
-                               g_strdup (progress_callback),
-                               progress_data);
-        }
+      gimp_plug_in_extension_enable (plug_in);
 
       return progress_callback;
     }
 
-  if (plug_in)
-    {
-      gimp_plug_in_remove_temp_procedure (plug_in, progress_callback);
-    }
-  else
-    {
-      gimp_uninstall_temp_proc (progress_callback);
-      gimp_progress_data_free (progress_data);
-    }
+  gimp_plug_in_remove_temp_procedure (plug_in, progress_callback);
 
   return NULL;
 }
@@ -232,28 +165,7 @@ gimp_progress_uninstall (const gchar *progress_callback)
 
   g_return_if_fail (progress_callback != NULL);
 
-  if (plug_in)
-    {
-      gimp_plug_in_remove_temp_procedure (plug_in, progress_callback);
-    }
-  else
-    {
-      GimpProgressData *progress_data;
-
-      g_return_if_fail (gimp_progress_ht != NULL);
-
-      progress_data = g_hash_table_lookup (gimp_progress_ht, progress_callback);
-
-      if (! progress_data)
-        {
-          g_warning ("Can't find internal progress data");
-          return;
-        }
-
-      gimp_uninstall_temp_proc (progress_callback);
-
-      g_hash_table_remove (gimp_progress_ht, progress_callback);
-    }
+  gimp_plug_in_remove_temp_procedure (plug_in, progress_callback);
 }
 
 
@@ -418,85 +330,10 @@ gimp_progress_data_free (GimpProgressData *data)
   g_slice_free (GimpProgressData, data);
 }
 
-static void
-gimp_temp_progress_run (const gchar      *name,
-                        gint              nparams,
-                        const GimpParam  *param,
-                        gint             *nreturn_vals,
-                        GimpParam       **return_vals)
-{
-  static GimpParam  values[2];
-  GimpProgressData *progress_data;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
-
-  progress_data = g_hash_table_lookup (gimp_progress_ht, name);
-
-  if (! progress_data)
-    {
-      g_warning ("Can't find internal progress data");
-
-      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-    }
-  else
-    {
-      GimpProgressCommand command = param[0].data.d_int32;
-
-      switch (command)
-        {
-        case GIMP_PROGRESS_COMMAND_START:
-          progress_data->vtable.start (param[1].data.d_string,
-                                       param[2].data.d_float != 0.0,
-                                       progress_data->data);
-          break;
-
-        case GIMP_PROGRESS_COMMAND_END:
-          progress_data->vtable.end (progress_data->data);
-          break;
-
-        case GIMP_PROGRESS_COMMAND_SET_TEXT:
-          progress_data->vtable.set_text (param[1].data.d_string,
-                                          progress_data->data);
-          break;
-
-        case GIMP_PROGRESS_COMMAND_SET_VALUE:
-          progress_data->vtable.set_value (param[2].data.d_float,
-                                           progress_data->data);
-          break;
-
-        case GIMP_PROGRESS_COMMAND_PULSE:
-          if (progress_data->vtable.pulse)
-            progress_data->vtable.pulse (progress_data->data);
-          else
-            progress_data->vtable.set_value (-1, progress_data->data);
-          break;
-
-        case GIMP_PROGRESS_COMMAND_GET_WINDOW:
-          *nreturn_vals  = 2;
-          values[1].type = GIMP_PDB_FLOAT;
-
-          if (progress_data->vtable.get_window)
-            values[1].data.d_float =
-              (gdouble) progress_data->vtable.get_window (progress_data->data);
-          else
-            values[1].data.d_float = 0;
-          break;
-
-        default:
-          values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-          break;
-        }
-    }
-}
-
 static GimpValueArray *
-gimp_temp_progress_run_func (GimpProcedure        *procedure,
-                             const GimpValueArray *args,
-                             gpointer              run_data)
+gimp_temp_progress_run (GimpProcedure        *procedure,
+                        const GimpValueArray *args,
+                        gpointer              run_data)
 {
   GimpProgressData    *progress_data = run_data;
   GimpProgressCommand  command;

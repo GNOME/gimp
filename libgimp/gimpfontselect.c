@@ -37,23 +37,12 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void      gimp_font_data_free     (GimpFontData         *data);
+static void             gimp_font_data_free (GimpFontData         *data);
 
-static void      gimp_temp_font_run      (const gchar          *name,
-                                          gint                  nparams,
-                                          const GimpParam      *param,
-                                          gint                 *nreturn_vals,
-                                          GimpParam           **return_vals);
-static GimpValueArray *
-                 gimp_temp_font_run_func (GimpProcedure        *procedure,
-                                          const GimpValueArray *args,
-                                          gpointer              run_data);
-static gboolean  gimp_temp_font_run_idle (GimpFontData         *font_data);
-
-
-/*  private variables  */
-
-static GHashTable *gimp_font_select_ht = NULL;
+static GimpValueArray * gimp_temp_font_run  (GimpProcedure        *procedure,
+                                             const GimpValueArray *args,
+                                             gpointer              run_data);
+static gboolean         gimp_temp_font_idle (GimpFontData         *data);
 
 
 /*  public functions  */
@@ -65,14 +54,12 @@ gimp_font_select_new (const gchar         *title,
                       gpointer             data,
                       GDestroyNotify       data_destroy)
 {
-  GimpPlugIn   *plug_in = gimp_get_plug_in ();
-  gchar        *font_callback;
-  GimpFontData *font_data;
+  GimpPlugIn    *plug_in = gimp_get_plug_in ();
+  GimpProcedure *procedure;
+  gchar         *font_callback;
+  GimpFontData  *font_data;
 
-  if (plug_in)
-    font_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
-  else
-    font_callback = gimp_pdb_temp_name ();
+  font_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
 
   font_data = g_slice_new0 (GimpFontData);
 
@@ -81,93 +68,40 @@ gimp_font_select_new (const gchar         *title,
   font_data->data          = data;
   font_data->data_destroy  = data_destroy;
 
-  if (plug_in)
-    {
-      GimpProcedure *procedure = gimp_procedure_new (plug_in,
-                                                     font_callback,
-                                                     GIMP_TEMPORARY,
-                                                     gimp_temp_font_run_func,
-                                                     font_data,
-                                                     (GDestroyNotify)
-                                                     gimp_font_data_free);
+  procedure = gimp_procedure_new (plug_in,
+                                  font_callback,
+                                  GIMP_TEMPORARY,
+                                  gimp_temp_font_run,
+                                  font_data,
+                                  (GDestroyNotify)
+                                  gimp_font_data_free);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("font-name",
-                                                        "Font name",
-                                                        "The font name",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("closing",
-                                                         "Closing",
-                                                         "If the dialog was "
-                                                         "closing",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_string ("font-name",
+                                                    "Font name",
+                                                    "The font name",
+                                                    NULL,
+                                                    G_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("closing",
+                                                     "Closing",
+                                                     "If the dialog was "
+                                                     "closing",
+                                                     FALSE,
+                                                     G_PARAM_READWRITE));
 
-      gimp_plug_in_add_temp_procedure (plug_in, procedure);
-      g_object_unref (procedure);
-    }
-  else
-    {
-      static const GimpParamDef args[] =
-      {
-        { GIMP_PDB_STRING, "str",           "String"                     },
-        { GIMP_PDB_INT32,  "dialog status", "If the dialog was closing "
-                                            "[0 = No, 1 = Yes]"          }
-      };
-
-      gimp_install_temp_proc (font_callback,
-                              "Temporary font popup callback procedure",
-                              "",
-                              "",
-                              "",
-                              "",
-                              NULL,
-                              "",
-                              GIMP_TEMPORARY,
-                              G_N_ELEMENTS (args), 0,
-                              args, NULL,
-                              gimp_temp_font_run);
-    }
+  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  g_object_unref (procedure);
 
   if (gimp_fonts_popup (font_callback, title, font_name))
     {
       /* Allow callbacks to be watched */
-      if (plug_in)
-        {
-          gimp_plug_in_extension_enable (plug_in);
-        }
-      else
-        {
-          gimp_extension_enable ();
-
-          /* Now add to hash table so we can find it again */
-          if (! gimp_font_select_ht)
-            {
-              gimp_font_select_ht =
-                g_hash_table_new_full (g_str_hash, g_str_equal,
-                                       g_free,
-                                       (GDestroyNotify) gimp_font_data_free);
-            }
-
-          g_hash_table_insert (gimp_font_select_ht,
-                               g_strdup (font_callback),
-                               font_data);
-        }
+      gimp_plug_in_extension_enable (plug_in);
 
       return font_callback;
     }
 
-  if (plug_in)
-    {
-      gimp_plug_in_remove_temp_procedure (plug_in, font_callback);
-    }
-  else
-    {
-      gimp_uninstall_temp_proc (font_callback);
-      gimp_font_data_free (font_data);
-    }
+  gimp_plug_in_remove_temp_procedure (plug_in, font_callback);
 
   return NULL;
 }
@@ -179,28 +113,7 @@ gimp_font_select_destroy (const gchar *font_callback)
 
   g_return_if_fail (font_callback != NULL);
 
-  if (plug_in)
-    {
-      gimp_plug_in_remove_temp_procedure (plug_in, font_callback);
-    }
-  else
-    {
-      GimpFontData *font_data;
-
-      g_return_if_fail (gimp_font_select_ht != NULL);
-
-      font_data = g_hash_table_lookup (gimp_font_select_ht, font_callback);
-
-      if (! font_data)
-        {
-          g_warning ("Can't find internal font data");
-          return;
-        }
-
-      gimp_uninstall_temp_proc (font_callback);
-
-      g_hash_table_remove (gimp_font_select_ht, font_callback);
-    }
+  gimp_plug_in_remove_temp_procedure (plug_in, font_callback);
 }
 
 
@@ -226,45 +139,10 @@ gimp_font_data_free (GimpFontData *data)
   g_slice_free (GimpFontData, data);
 }
 
-static void
-gimp_temp_font_run (const gchar      *name,
-                    gint              nparams,
-                    const GimpParam  *param,
-                    gint             *nreturn_vals,
-                    GimpParam       **return_vals)
-{
-  static GimpParam  values[1];
-  GimpFontData     *font_data;
-
-  font_data = g_hash_table_lookup (gimp_font_select_ht, name);
-
-  if (! font_data)
-    {
-      g_warning ("Can't find internal font data");
-    }
-  else
-    {
-      g_free (font_data->font_name);
-
-      font_data->font_name = g_strdup (param[0].data.d_string);
-      font_data->closing   = param[1].data.d_int32;
-
-      if (! font_data->idle_id)
-        font_data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_font_run_idle,
-                                         font_data);
-    }
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
-}
-
 static GimpValueArray *
-gimp_temp_font_run_func (GimpProcedure        *procedure,
-                         const GimpValueArray *args,
-                         gpointer              run_data)
+gimp_temp_font_run (GimpProcedure        *procedure,
+                    const GimpValueArray *args,
+                    gpointer              run_data)
 {
   GimpFontData *data = run_data;
 
@@ -274,27 +152,27 @@ gimp_temp_font_run_func (GimpProcedure        *procedure,
   data->closing   = g_value_get_boolean (gimp_value_array_index (args, 1));
 
   if (! data->idle_id)
-    data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_font_run_idle,
+    data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_font_idle,
                                 data);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-gimp_temp_font_run_idle (GimpFontData *font_data)
+gimp_temp_font_idle (GimpFontData *data)
 {
-  font_data->idle_id = 0;
+  data->idle_id = 0;
 
-  if (font_data->callback)
-    font_data->callback (font_data->font_name,
-                         font_data->closing,
-                         font_data->data);
+  if (data->callback)
+    data->callback (data->font_name,
+                    data->closing,
+                    data->data);
 
-  if (font_data->closing)
+  if (data->closing)
     {
-      gchar *font_callback = font_data->font_callback;
+      gchar *font_callback = data->font_callback;
 
-      font_data->font_callback = NULL;
+      data->font_callback = NULL;
       gimp_font_select_destroy (font_callback);
       g_free (font_callback);
     }
