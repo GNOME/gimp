@@ -292,7 +292,6 @@ EXPORTS
 	gimp_get_parasite_list
 	gimp_get_pdb
 	gimp_get_pdb_error
-	gimp_get_pdb_status
 	gimp_get_plug_in
 	gimp_get_progname
 	gimp_getpid
@@ -708,7 +707,6 @@ EXPORTS
 	gimp_quit
 	gimp_register_file_handler_mime
 	gimp_register_file_handler_priority
-	gimp_register_file_handler_raw
 	gimp_register_file_handler_uri
 	gimp_register_load_handler
 	gimp_register_magic_load_handler

@@ -287,8 +287,7 @@ GimpValueArray * gimp_run_procedure_array (const gchar          *name,
 /* Retrieve the error message and return status for the last procedure
  * call.
  */
-const gchar       * gimp_get_pdb_error  (void);
-GimpPDBStatusType   gimp_get_pdb_status (void);
+const gchar    * gimp_get_pdb_error  (void);
 
 /* gimp_plugin API that should now be done by using GimpProcedure
  */
@@ -317,7 +316,6 @@ gboolean   gimp_register_file_handler_priority (const gchar *procedure_name,
 gboolean   gimp_register_file_handler_mime     (const gchar *procedure_name,
                                                 const gchar *mime_types);
 gboolean   gimp_register_file_handler_uri      (const gchar *procedure_name);
-gboolean   gimp_register_file_handler_raw      (const gchar *procedure_name);
 gboolean   gimp_register_thumbnail_loader      (const gchar *load_proc,
                                                 const gchar *thumb_proc);
 

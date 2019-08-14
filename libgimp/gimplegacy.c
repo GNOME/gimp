@@ -533,23 +533,6 @@ gimp_get_pdb_error (void)
     }
 }
 
-/**
- * gimp_get_pdb_status:
- *
- * Retrieves the status from the last procedure call.
- *
- * Returns: the #GimpPDBStatusType.
- *
- * Since: 2.10
- **/
-GimpPDBStatusType
-gimp_get_pdb_status (void)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return pdb_error_status;
-}
-
 void
 _gimp_legacy_initialize (const GimpPlugInInfo *info,
                          GIOChannel           *read_channel,
@@ -859,29 +842,6 @@ gimp_register_file_handler_uri (const gchar *procedure_name)
   ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
 
   return _gimp_register_file_handler_uri (procedure_name);
-}
-
-/**
- * gimp_register_file_handler_raw:
- * @procedure_name: The name of the procedure to enable raw handling for.
- *
- * Registers a file handler procedure as capable of handling raw camera
- * files.
- *
- * Registers a file handler procedure as capable of handling raw
- * digital camera files. Use this procedure only to register raw load
- * handlers, calling it on a save handler will generate an error.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-gimp_register_file_handler_raw (const gchar *procedure_name)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_register_file_handler_raw (procedure_name);
 }
 
 /**
