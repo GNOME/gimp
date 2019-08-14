@@ -69,10 +69,10 @@ static GimpValueArray * darktable_load_thumb       (GimpProcedure        *proced
                                                     const GimpValueArray *args,
                                                     gpointer              run_data);
 
-static gint32           load_image                 (const gchar          *filename,
+static GimpImage      * load_image                 (const gchar          *filename,
                                                     GimpRunMode           run_mode,
                                                     GError              **error);
-static gint32           load_thumbnail_image       (const gchar          *filename,
+static GimpImage      * load_thumbnail_image       (const gchar          *filename,
                                                     gint                  thumb_size,
                                                     gint                 *width,
                                                     gint                 *height,
@@ -306,18 +306,18 @@ darktable_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   gchar          *filename;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
 
   filename = g_file_get_path (file);
 
-  image_id = load_image (filename, run_mode, &error);
+  image = load_image (filename, run_mode, &error);
 
   g_free (filename);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -326,8 +326,8 @@ darktable_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  g_value_set_object (gimp_value_array_index (return_vals, 1),
+                      image);
 
   return return_vals;
 }
@@ -342,7 +342,7 @@ darktable_load_thumb (GimpProcedure        *procedure,
   GimpValueArray *return_vals;
   gint            width;
   gint            height;
-  gint32          image_id;
+  GimpImage      *image = NULL;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -350,10 +350,10 @@ darktable_load_thumb (GimpProcedure        *procedure,
   width  = size;
   height = size;
 
-  image_id = load_thumbnail_image (g_file_get_path (file),
-                                   width, &width, &height, &error);
+  image = load_thumbnail_image (g_file_get_path (file),
+                                width, &width, &height, &error);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -362,7 +362,7 @@ darktable_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+  g_value_set_object (gimp_value_array_index (return_vals, 1), image);
   g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
   g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
   g_value_set_enum        (gimp_value_array_index (return_vals, 4), GIMP_RGB_IMAGE);
@@ -373,22 +373,22 @@ darktable_load_thumb (GimpProcedure        *procedure,
   return return_vals;
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  gint32  image_ID           = -1;
-  GFile  *lua_file           = gimp_data_directory_file ("file-raw",
-                                                         "file-darktable-export-on-exit.lua",
-                                                         NULL);
-  gchar  *lua_script         = g_file_get_path (lua_file);
-  gchar  *lua_script_escaped = g_strescape (lua_script, "");
-  gchar  *lua_quoted         = g_shell_quote (lua_script_escaped);
-  gchar  *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
-  gchar  *filename_out       = gimp_temp_name ("exr");
-  gchar  *export_filename    = g_strdup_printf ("lua/export_on_exit/export_filename=%s",
-                                                filename_out);
+  GimpImage *image              = NULL;
+  GFile     *lua_file           = gimp_data_directory_file ("file-raw",
+                                                            "file-darktable-export-on-exit.lua",
+                                                            NULL);
+  gchar     *lua_script         = g_file_get_path (lua_file);
+  gchar     *lua_script_escaped = g_strescape (lua_script, "");
+  gchar     *lua_quoted         = g_shell_quote (lua_script_escaped);
+  gchar     *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
+  gchar     *filename_out       = gimp_temp_name ("exr");
+  gchar     *export_filename    = g_strdup_printf ("lua/export_on_exit/export_filename=%s",
+                                                   filename_out);
 
   gchar *darktable_stdout    = NULL;
   gchar *darktable_stderr    = NULL;
@@ -443,9 +443,9 @@ load_image (const gchar  *filename,
                     NULL,
                     error))
     {
-      image_ID = gimp_file_load (run_mode, filename_out, filename_out);
-      if (image_ID != -1)
-        gimp_image_set_filename (image_ID, filename);
+      image = gimp_file_load (run_mode, filename_out, filename_out);
+      if (image)
+        gimp_image_set_filename (image, filename);
     }
 
   if (debug_prints)
@@ -468,17 +468,18 @@ load_image (const gchar  *filename,
 
   gimp_progress_update (1.0);
 
-  return image_ID;
+  return image;
 }
 
-static gint32
+static GimpImage *
 load_thumbnail_image (const gchar   *filename,
                       gint           thumb_size,
                       gint          *width,
                       gint          *height,
                       GError       **error)
 {
-  gint32  image_ID           = -1;
+  GimpImage *image           = NULL;
+
   gchar  *filename_out       = gimp_temp_name ("jpg");
   gchar  *size               = g_strdup_printf ("%d", thumb_size);
   GFile  *lua_file           = gimp_data_directory_file ("file-raw",
@@ -533,10 +534,10 @@ load_thumbnail_image (const gchar   *filename,
     {
       gimp_progress_update (0.5);
 
-      image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                                 filename_out,
-                                 filename_out);
-      if (image_ID != -1)
+      image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                              filename_out,
+                              filename_out);
+      if (image)
         {
           /* the size reported by raw files isn't precise,
            * but it should be close enough to get an idea.
@@ -548,7 +549,7 @@ load_thumbnail_image (const gchar   *filename,
             sscanf (start_of_size, "[dt4gimp] %d %d", width, height);
 
           /* is this needed for thumbnails? */
-          gimp_image_set_filename (image_ID, filename);
+          gimp_image_set_filename (image, filename);
         }
     }
 
@@ -561,5 +562,5 @@ load_thumbnail_image (const gchar   *filename,
   g_free (darktable_stdout);
   g_free (exec_path);
 
-  return image_ID;
+  return image;
 }
