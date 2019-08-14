@@ -73,68 +73,82 @@ typedef struct
 } FilmInterface;
 
 
-/* Declare local functions
- */
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+typedef struct _Film      Film;
+typedef struct _FilmClass FilmClass;
 
-
-static gint32    create_new_image   (const gchar    *filename,
-                                     guint           width,
-                                     guint           height,
-                                     GimpImageType   gdtype,
-                                     gint32         *layer_ID);
-
-static gchar   * compose_image_name (gint32          image_ID);
-
-static gint32    film               (void);
-
-static gboolean  check_filmvals     (void);
-
-static void      set_pixels         (gint            numpix,
-                                     guchar         *dst,
-                                     GimpRGB        *color);
-
-static guchar  * create_hole_rgb    (gint            width,
-                                     gint            height);
-
-static void      draw_number        (gint32          layer_ID,
-                                     gint            num,
-                                     gint            x,
-                                     gint            y,
-                                     gint            height);
-
-
-static void        add_list_item_callback (GtkWidget        *widget,
-                                           GtkTreeSelection *sel);
-static void        del_list_item_callback (GtkWidget        *widget,
-                                           GtkTreeSelection *sel);
-
-static GtkTreeModel * add_image_list      (gboolean        add_box_flag,
-                                           gint            n,
-                                           gint32         *image_id,
-                                           GtkWidget      *hbox);
-
-static gboolean    film_dialog               (gint32                image_ID);
-static void        film_reset_callback       (GtkWidget            *widget,
-                                              gpointer              data);
-static void        film_font_select_callback (GimpFontSelectButton *button,
-                                              const gchar          *name,
-                                              gboolean              closing,
-                                              gpointer              data);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Film
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn parent_instance;
 };
+
+struct _FilmClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define FILM_TYPE  (film_get_type ())
+#define FILM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FILM_TYPE, Film))
+
+GType                   film_get_type         (void) G_GNUC_CONST;
+
+static GList          * film_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * film_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * film_run              (GimpProcedure        *procedure,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static gint32           create_new_image      (const gchar          *filename,
+                                               guint                 width,
+                                               guint                 height,
+                                               GimpImageType         gdtype,
+                                               gint32               *layer_ID);
+
+static gchar          * compose_image_name    (gint32                image_ID);
+
+static gint32           film                  (void);
+
+static gboolean         check_filmvals        (void);
+
+static void             set_pixels            (gint                  numpix,
+                                               guchar               *dst,
+                                               GimpRGB              *color);
+
+static guchar         * create_hole_rgb       (gint                  width,
+                                               gint                  height);
+
+static void             draw_number           (gint32                layer_ID,
+                                               gint                  num,
+                                               gint                  x,
+                                               gint                  y,
+                                               gint                  height);
+
+
+static void            add_list_item_callback (GtkWidget            *widget,
+                                               GtkTreeSelection     *sel);
+static void            del_list_item_callback (GtkWidget            *widget,
+                                               GtkTreeSelection     *sel);
+
+static GtkTreeModel  * add_image_list         (gboolean              add_box_flag,
+                                               gint                  n,
+                                               gint32               *image_id,
+                                               GtkWidget            *hbox);
+
+static gboolean        film_dialog            (gint32                image_ID);
+static void            film_reset_callback    (GtkWidget            *widget,
+                                               gpointer              data);
+static void         film_font_select_callback (GimpFontSelectButton *button,
+                                               const gchar          *name,
+                                               gboolean              closing,
+                                               gpointer              data);
+
+
+G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (FILM_TYPE)
+
 
 static gdouble advanced_defaults[] =
 {
@@ -167,83 +181,162 @@ static FilmVals filmvals =
   { 0 }            /* Input image list */
 };
 
-
 static FilmInterface filmint =
 {
   { NULL },   /* advanced adjustments */
   NULL, NULL  /* image list widgets */
 };
 
-
 static GimpRunMode run_mode;
 
 
-MAIN ()
-
 static void
-query (void)
+film_class_init (FilmClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,      "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,      "image",        "Input image (only used as default image in interactive mode)" },
-    { GIMP_PDB_DRAWABLE,   "drawable",     "Input drawable (not used)" },
-    { GIMP_PDB_INT32,      "film-height",  "Height of film (0: fit to images)" },
-    { GIMP_PDB_COLOR,      "film-color",   "Color of the film" },
-    { GIMP_PDB_INT32,      "number-start", "Start index for numbering" },
-    { GIMP_PDB_STRING,     "number-font",  "Font for drawing numbers" },
-    { GIMP_PDB_COLOR,      "number-color", "Color for numbers" },
-    { GIMP_PDB_INT32,      "at-top",       "Flag for drawing numbers at top of film" },
-    { GIMP_PDB_INT32,      "at-bottom",    "Flag for drawing numbers at bottom of film" },
-    { GIMP_PDB_INT32,      "num-images",   "Number of images to be used for film" },
-    { GIMP_PDB_INT32ARRAY, "image-ids",    "num-images image IDs to be used for film" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "new-image", "Output image" }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Combine several images on a film strip"),
-                          "Compose several images to a roll film",
-                          "Peter Kirchgessner",
-                          "Peter Kirchgessner (peter@kirchgessner.net)",
-                          "1997",
-                          N_("_Filmstrip..."),
-                          "INDEXED*, GRAY*, RGB*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_vals),
-                          args, return_vals);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Combine");
+  plug_in_class->query_procedures = film_query_procedures;
+  plug_in_class->create_procedure = film_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+film_init (Film *film)
 {
-  static GimpParam  values[2];
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint              k;
+}
+
+static GList *
+film_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+film_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      film_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Filmstrip..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Combine");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Combine several images on a "
+                                           "film strip"),
+                                        "Compose several images to a roll film",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Peter Kirchgessner",
+                                      "Peter Kirchgessner (peter@kirchgessner.net)",
+                                      "1997");
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_NONINTERACTIVE,
+                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_image_id ("image",
+                                                             "Image",
+                                                             "The input image",
+                                                             FALSE,
+                                                             G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "Drawable",
+                                                                "The input drawable",
+                                                                FALSE,
+                                                                G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("film-height",
+                                                     "Film height",
+                                                     "Height of film (0: fit "
+                                                     "to images)",
+                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_rgb ("film-color",
+                                                        "Film color",
+                                                        "Color of the film",
+                                                        TRUE, NULL,
+                                                        G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("number-start",
+                                                     "Number start",
+                                                     "Start index for numbering",
+                                                     G_MININT, G_MAXINT, 1,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_string ("number-font",
+                                                        "Number font",
+                                                        "Font for drawing numbers",
+                                                        NULL,
+                                                        G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_rgb ("number-color",
+                                                        "Number color",
+                                                        "Color for numbers",
+                                                        TRUE, NULL,
+                                                        G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_boolean ("at-top",
+                                                         "At top",
+                                                         "Draw numbers at top",
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_boolean ("at-bottom",
+                                                         "At bottom",
+                                                         "Draw numbers at bottom",
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_int32 ("num-images",
+                                                          "Num images",
+                                                          "Number of images to "
+                                                          "be used for film",
+                                                          1, MAX_FILM_PICTURES, 1,
+                                                          G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_int32_array ("image-ids",
+                                                                "Image IDs",
+                                                                "num-images "
+                                                                "image IDs to "
+                                                                "be used for "
+                                                                "film",
+                                                                G_PARAM_READWRITE));
+
+      gimp_procedure_add_return_value (procedure,
+                                       gimp_param_spec_image_id ("new-image",
+                                                                 "New image",
+                                                                 "Outout image",
+                                                                 FALSE,
+                                                                 G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+film_run (GimpProcedure        *procedure,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray    *return_vals = NULL;
+  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 2;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-  values[1].type          = GIMP_PDB_IMAGE;
-  values[1].data.d_int32  = -1;
+  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
 
   switch (run_mode)
     {
@@ -252,34 +345,36 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &filmvals);
 
       /*  First acquire information with a dialog  */
-      if (! film_dialog (param[1].data.d_int32))
-        return;
+      if (! film_dialog (gimp_value_get_image_id (gimp_value_array_index (args, 1))))
+        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Make sure all the arguments are there!  */
-      /* Also we want to have some images to compose */
-      if ((nparams != 12) || (param[10].data.d_int32 < 1))
+      filmvals.film_height = g_value_get_int (gimp_value_array_index (args, 3));
+      if (filmvals.film_height <= 0)
         {
-          status = GIMP_PDB_CALLING_ERROR;
+          filmvals.keep_height = TRUE;
+          filmvals.film_height = 128; /* arbitrary */
         }
       else
         {
-          filmvals.keep_height       = (param[3].data.d_int32 <= 0);
-          filmvals.film_height       = (filmvals.keep_height ?
-                                        128 : param[3].data.d_int32);
-          filmvals.film_color        = param[4].data.d_color;
-          filmvals.number_start      = param[5].data.d_int32;
-          g_strlcpy (filmvals.number_font, param[6].data.d_string, FONT_LEN);
-          filmvals.number_color      = param[7].data.d_color;
-          filmvals.number_pos[0]     = param[8].data.d_int32;
-          filmvals.number_pos[1]     = param[9].data.d_int32;
-          filmvals.num_images        = param[10].data.d_int32;
-          if (filmvals.num_images > MAX_FILM_PICTURES)
-            filmvals.num_images = MAX_FILM_PICTURES;
-          for (k = 0; k < filmvals.num_images; k++)
-            filmvals.image[k] = param[11].data.d_int32array[k];
+          filmvals.keep_height = FALSE;
         }
+      gimp_value_get_rgb (gimp_value_array_index (args, 4),
+                          &filmvals.film_color);
+      filmvals.number_start = g_value_get_int (gimp_value_array_index (args, 5));
+      g_strlcpy (filmvals.number_font,
+                 g_value_get_string (gimp_value_array_index (args, 6)),
+                 FONT_LEN);
+      gimp_value_get_rgb (gimp_value_array_index (args, 7),
+                          &filmvals.number_color);
+      filmvals.number_pos[0] = g_value_get_int (gimp_value_array_index (args, 8));
+      filmvals.number_pos[1] = g_value_get_int (gimp_value_array_index (args, 9));
+      filmvals.num_images    = g_value_get_int (gimp_value_array_index (args, 10));
+      memcpy (filmvals.image,
+              gimp_value_get_int32_array (gimp_value_array_index (args, 11)),
+              filmvals.num_images * sizeof (gint32));
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -296,21 +391,29 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      gint32 image_id;
+
       gimp_progress_init (_("Composing images"));
 
-      image_ID = film ();
+      image_id = film ();
 
-      if (image_ID < 0)
+      if (image_id < 1)
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
       else
         {
-          values[1].data.d_int32 = image_ID;
-          gimp_image_undo_enable (image_ID);
-          gimp_image_clean_all (image_ID);
+          return_vals = gimp_procedure_new_return_values (procedure, status,
+                                                          NULL);
+
+          gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                                   image_id);
+
+          gimp_image_undo_enable (image_id);
+          gimp_image_clean_all (image_id);
+
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_display_new (image_ID);
+            gimp_display_new (image_id);
         }
 
       /*  Store data  */
@@ -318,7 +421,10 @@ run (const gchar      *name,
         gimp_set_data (PLUG_IN_PROC, &filmvals, sizeof (FilmVals));
     }
 
-  values[0].data.d_status = status;
+  if (! return_vals)
+    return_vals = gimp_procedure_new_return_values (procedure, status, NULL);
+
+  return return_vals;
 }
 
 /* Compose a roll film image from several images */
