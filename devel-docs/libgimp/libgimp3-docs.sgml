@@ -40,7 +40,6 @@
       <xi:include href="xml/gimpparamspecs.xml" />
       <xi:include href="xml/gimpprogress.xml" />
       <xi:include href="xml/gimpdebug.xml" />
-      <xi:include href="xml/gimplegacy.xml" />
     </chapter>
 
     <chapter id="libgimp-image">

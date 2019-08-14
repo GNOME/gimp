@@ -38,17 +38,6 @@
 #include "libgimp-intl.h"
 
 
-/**
- * SECTION: gimplegacy
- * @title: GimpLegacy
- * @short_description: Main functions needed for building a GIMP plug-in.
- *                     This is the old legacy API, please use GimpPlugIn
- *                     and GimpProcedure for all new plug-ins.
- *
- * Main functions needed for building a GIMP plug-in. Compat cruft.
- **/
-
-
 #define WRITE_BUFFER_SIZE 1024
 
 

@@ -39,6 +39,7 @@ IGNORE_HFILES = \
 	gimppdbprocedure.h	\
 	gimpgpcompat.h		\
 	gimpgpparams.h		\
+	gimplegacy.h		\
 	gimplegacy-private.h	\
 	gimppixbuf.h		\
 	gimpplugin-private.h	\
