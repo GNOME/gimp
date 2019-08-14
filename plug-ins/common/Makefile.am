@@ -674,8 +674,6 @@ file_dicom_LDADD = \
 	$(INTLLIBS)		\
 	$(file_dicom_RC)
 
-file_gbr_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_gbr_SOURCES = \
 	file-gbr.c
 

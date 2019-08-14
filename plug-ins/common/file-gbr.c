@@ -77,8 +77,8 @@ static GimpProcedure  * gbr_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray * gbr_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
-                                              gint32                image_id,
-                                              gint32                drawable_id,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -180,8 +180,8 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 gbr_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -189,12 +189,12 @@ gbr_save (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GimpParasite      *parasite;
-  gint32             orig_image_id;
+  GimpImage         *orig_image;
   GError            *error  = NULL;
 
   INIT_I18N ();
 
-  orig_image_id = image_id;
+  orig_image = image;
 
   switch (run_mode)
     {
@@ -202,7 +202,7 @@ gbr_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_id, &drawable_id, "GBR",
+      export = gimp_export_image (&image, &drawable, "GBR",
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -216,7 +216,7 @@ gbr_save (GimpProcedure        *procedure,
       /*  Possibly retrieve data  */
       gimp_get_data (SAVE_PROC, &info);
 
-      parasite = gimp_image_get_parasite (orig_image_id,
+      parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-name");
       if (parasite)
         {
@@ -280,8 +280,8 @@ gbr_save (GimpProcedure        *procedure,
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-gbr-save-internal",
                                 GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE_ID,    image_id,
-                                GIMP_TYPE_DRAWABLE_ID, drawable_id,
+                                GIMP_TYPE_IMAGE_ID,    gimp_image_get_id (image),
+                                GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
                                 G_TYPE_STRING,         uri,
                                 G_TYPE_STRING,         uri,
                                 G_TYPE_INT,            info.spacing,
@@ -316,17 +316,17 @@ gbr_save (GimpProcedure        *procedure,
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (info.description) + 1,
                                     info.description);
-      gimp_image_attach_parasite (orig_image_id, parasite);
+      gimp_image_attach_parasite (orig_image, parasite);
       gimp_parasite_free (parasite);
     }
   else
     {
-      gimp_image_detach_parasite (orig_image_id, "gimp-brush-name");
+      gimp_image_detach_parasite (orig_image, "gimp-brush-name");
     }
 
  out:
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_id);
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
