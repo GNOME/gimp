@@ -155,8 +155,8 @@ static GimpProcedure  * compressor_create_procedure (GimpPlugIn           *plug_
 
 static GimpValueArray * compressor_save             (GimpProcedure        *procedure,
                                                      GimpRunMode           run_mode,
-                                                     gint32                image_id,
-                                                     gint32                drawable_id,
+                                                     GimpImage             *image,
+                                                     GimpDrawable          *drawable,
                                                      GFile                *file,
                                                      const GimpValueArray *args,
                                                      gpointer              run_data);
@@ -166,15 +166,15 @@ static GimpValueArray * compressor_load             (GimpProcedure        *proce
                                                      const GimpValueArray *args,
                                                      gpointer              run_data);
 
-static gint32              load_image     (const CompressorEntry *compressor,
-                                           const gchar           *filename,
-                                           gint32                 run_mode,
-                                           GimpPDBStatusType     *status,
-                                           GError               **error);
+static GimpImage      * load_image     (const CompressorEntry *compressor,
+                                        const gchar           *filename,
+                                        gint32                 run_mode,
+                                        GimpPDBStatusType     *status,
+                                        GError               **error);
 static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
                                            const gchar           *filename,
-                                           gint32                 image_ID,
-                                           gint32                 drawable_ID,
+                                           GimpImage             *image,
+                                           GimpDrawable          *drawable,
                                            gint32                 run_mode,
                                            GError               **error);
 
@@ -368,7 +368,7 @@ compressor_load (GimpProcedure        *procedure,
   GimpValueArray        *return_vals;
   GimpPDBStatusType      status;
   gchar                 *filename;
-  gint32                 image_ID;
+  GimpImage             *image;
   GError                *error = NULL;
 
   /*  We handle PDB errors by forwarding them to the caller in
@@ -379,15 +379,15 @@ compressor_load (GimpProcedure        *procedure,
 
   filename = g_file_get_path (file);
 
-  image_ID = load_image (compressor, filename, run_mode,
-                         &status, &error);
+  image = load_image (compressor, filename, run_mode,
+                      &status, &error);
 
   g_free (filename);
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
-  if (image_ID != -1 && status == GIMP_PDB_SUCCESS)
-    GIMP_VALUES_SET_IMAGE (return_vals, 1, image_ID);
+  if (image && status == GIMP_PDB_SUCCESS)
+    GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -395,8 +395,8 @@ compressor_load (GimpProcedure        *procedure,
 static GimpValueArray *
 compressor_save (GimpProcedure        *procedure,
                  GimpRunMode           run_mode,
-                 gint32                image_id,
-                 gint32                drawable_id,
+                 GimpImage            *image,
+                 GimpDrawable         *drawable,
                  GFile                *file,
                  const GimpValueArray *args,
                  gpointer              run_data)
@@ -414,7 +414,7 @@ compressor_save (GimpProcedure        *procedure,
 
   filename = g_file_get_path (file);
 
-  status = save_image (compressor, filename, image_id, drawable_id, run_mode,
+  status = save_image (compressor, filename, image, drawable, run_mode,
                        &error);
 
   g_free (filename);
@@ -425,8 +425,8 @@ compressor_save (GimpProcedure        *procedure,
 static GimpPDBStatusType
 save_image (const CompressorEntry  *compressor,
             const gchar            *filename,
-            gint32                  image_ID,
-            gint32                  drawable_ID,
+            GimpImage              *image,
+            GimpDrawable           *drawable,
             gint32                  run_mode,
             GError                **error)
 {
@@ -446,8 +446,8 @@ save_image (const CompressorEntry  *compressor,
   tmpname = gimp_temp_name (ext + 1);
 
   if (! (gimp_file_save (run_mode,
-                         image_ID,
-                         drawable_ID,
+                         image,
+                         drawable,
                          tmpname,
                          tmpname) && valid_file (tmpname)))
     {
@@ -477,19 +477,19 @@ save_image (const CompressorEntry  *compressor,
 
   /* ask the core to save a thumbnail for compressed XCF files */
   if (strcmp (ext, ".xcf") == 0)
-    gimp_file_save_thumbnail (image_ID, filename);
+    gimp_file_save_thumbnail (image, filename);
 
   return GIMP_PDB_SUCCESS;
 }
 
-static gint32
+static GimpImage *
 load_image (const CompressorEntry  *compressor,
             const gchar            *filename,
             gint32                  run_mode,
             GimpPDBStatusType      *status,
             GError                **error)
 {
-  gint32       image_ID;
+  GimpImage   *image;
   const gchar *ext;
   gchar       *tmpname;
 
@@ -509,21 +509,21 @@ load_image (const CompressorEntry  *compressor,
     {
       g_free (tmpname);
       *status = GIMP_PDB_EXECUTION_ERROR;
-      return -1;
+      return NULL;
     }
 
   /* now that we uncompressed it, load the temp file */
 
-  image_ID = gimp_file_load (run_mode, tmpname, tmpname);
+  image = gimp_file_load (run_mode, tmpname, tmpname);
 
   g_unlink (tmpname);
   g_free (tmpname);
 
-  if (image_ID != -1)
+  if (image)
     {
       *status = GIMP_PDB_SUCCESS;
 
-      gimp_image_set_filename (image_ID, filename);
+      gimp_image_set_filename (image, filename);
     }
   else
     {
@@ -536,7 +536,7 @@ load_image (const CompressorEntry  *compressor,
                    "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
     }
 
-  return image_ID;
+  return image;
 }
 
 static gboolean
