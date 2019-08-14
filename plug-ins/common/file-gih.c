@@ -65,8 +65,8 @@ typedef struct
 typedef struct
 {
   GimpOrientationType  orientation;
-  gint32               image;
-  gint32               toplayer;
+  GimpImage           *image;
+  GimpLayer           *toplayer;
   gint                 nguides;
   gint32              *guides;
   gint                *value;
@@ -106,13 +106,13 @@ static GimpProcedure  * gih_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray * gih_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
-                                              gint32                image_id,
-                                              gint32                drawable_id,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         gih_save_dialog      (gint32                image_id);
+static gboolean         gih_save_dialog      (GimpImage            *image);
 
 
 G_DEFINE_TYPE (Gih, gih, GIMP_TYPE_PLUG_IN)
@@ -271,8 +271,8 @@ gih_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 gih_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -280,13 +280,14 @@ gih_save (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GimpParasite      *parasite;
-  gint32             orig_image_ID;
+  GList             *layers;
+  GimpImage         *orig_image;
   GError            *error  = NULL;
   gint               i;
 
   INIT_I18N();
 
-  orig_image_ID = image_id;
+  orig_image = image;
 
   switch (run_mode)
     {
@@ -294,7 +295,7 @@ gih_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_id, &drawable_id, "GIH",
+      export = gimp_export_image (&image, &drawable, "GIH",
                                   GIMP_EXPORT_CAN_HANDLE_RGB   |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY  |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA |
@@ -308,7 +309,7 @@ gih_save (GimpProcedure        *procedure,
       /*  Possibly retrieve data  */
       gimp_get_data (SAVE_PROC, &info);
 
-      parasite = gimp_image_get_parasite (orig_image_ID,
+      parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-name");
       if (parasite)
         {
@@ -332,7 +333,7 @@ gih_save (GimpProcedure        *procedure,
           g_free (name);
         }
 
-      parasite = gimp_image_get_parasite (orig_image_ID,
+      parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-spacing");
       if (parasite)
         {
@@ -345,7 +346,9 @@ gih_save (GimpProcedure        *procedure,
       break;
     }
 
-  g_free (gimp_image_get_layers (image_id, &num_layers));
+  layers = gimp_image_get_layers (image);
+  num_layers = g_list_length (layers);
+  g_list_free_full (layers, g_object_unref);
 
   gimp_pixpipe_params_init (&gihparams);
 
@@ -354,10 +357,10 @@ gih_save (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       gihparams.ncells = (num_layers * gihparams.rows * gihparams.cols);
 
-      gihparams.cellwidth  = gimp_image_width (image_id)  / gihparams.cols;
-      gihparams.cellheight = gimp_image_height (image_id) / gihparams.rows;
+      gihparams.cellwidth  = gimp_image_width (image)  / gihparams.cols;
+      gihparams.cellheight = gimp_image_height (image) / gihparams.rows;
 
-      parasite = gimp_image_get_parasite (orig_image_ID,
+      parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-parameters");
       if (parasite)
         {
@@ -372,7 +375,7 @@ gih_save (GimpProcedure        *procedure,
       if (gihparams.dim == 1)
         gihparams.rank[0] = gihparams.ncells;
 
-      if (! gih_save_dialog (image_id))
+      if (! gih_save_dialog (image))
         {
           status = GIMP_PDB_CANCEL;
           goto out;
@@ -414,7 +417,7 @@ gih_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      parasite = gimp_image_get_parasite (orig_image_ID,
+      parasite = gimp_image_get_parasite (orig_image,
                                           "gimp-brush-pipe-parameters");
       if (parasite)
         {
@@ -438,8 +441,8 @@ gih_save (GimpProcedure        *procedure,
         gimp_pdb_run_procedure (gimp_get_pdb (),
                                 "file-gih-save-internal",
                                 GIMP_TYPE_RUN_MODE,    GIMP_RUN_NONINTERACTIVE,
-                                GIMP_TYPE_IMAGE_ID,    image_id,
-                                GIMP_TYPE_DRAWABLE_ID, drawable_id,
+                                GIMP_TYPE_IMAGE_ID,    gimp_image_get_id (image),
+                                GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
                                 G_TYPE_STRING,         uri,
                                 G_TYPE_STRING,         uri,
                                 G_TYPE_INT,            info.spacing,
@@ -458,7 +461,7 @@ gih_save (GimpProcedure        *procedure,
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (info.description) + 1,
                                         info.description);
-          gimp_image_attach_parasite (orig_image_ID, parasite);
+          gimp_image_attach_parasite (orig_image, parasite);
           gimp_parasite_free (parasite);
 
           g_snprintf (spacing, sizeof (spacing), "%d",
@@ -467,14 +470,14 @@ gih_save (GimpProcedure        *procedure,
           parasite = gimp_parasite_new ("gimp-brush-pipe-spacing",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (spacing) + 1, spacing);
-          gimp_image_attach_parasite (orig_image_ID, parasite);
+          gimp_image_attach_parasite (orig_image, parasite);
           gimp_parasite_free (parasite);
 
           parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (paramstring) + 1,
                                         paramstring);
-          gimp_image_attach_parasite (orig_image_ID, parasite);
+          gimp_image_attach_parasite (orig_image, parasite);
           gimp_parasite_free (parasite);
         }
       else
@@ -494,7 +497,7 @@ gih_save (GimpProcedure        *procedure,
 
  out:
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_id);
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -593,7 +596,7 @@ dim_callback (GtkAdjustment      *adjustment,
 }
 
 static gboolean
-gih_save_dialog (gint32 image_ID)
+gih_save_dialog (GimpImage *image)
 {
   GtkWidget          *dialog;
   GtkWidget          *grid;
@@ -608,8 +611,7 @@ gih_save_dialog (gint32 image_ID)
   gchar               buffer[100];
   SizeAdjustmentData  cellw_adjust;
   SizeAdjustmentData  cellh_adjust;
-  gint32             *layer_ID;
-  gint32              nlayers;
+  GList              *layers;
   gboolean            run;
 
   dialog = gimp_export_dialog_new (_("Brush Pipe"), PLUG_IN_BINARY, SAVE_PROC);
@@ -657,16 +659,16 @@ gih_save_dialog (gint32 image_ID)
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
   adjustment = gtk_adjustment_new (gihparams.cellwidth,
-                                   2, gimp_image_width (image_ID), 1, 10, 0);
+                                   2, gimp_image_width (image), 1, 10, 0);
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  layer_ID = gimp_image_get_layers (image_ID, &nlayers);
+  layers = gimp_image_get_layers (image);
   cellw_adjust.orientation = GIMP_ORIENTATION_VERTICAL;
-  cellw_adjust.image       = image_ID;
-  cellw_adjust.toplayer    = layer_ID[nlayers-1];
+  cellw_adjust.image       = image;
+  cellw_adjust.toplayer    = g_object_ref (g_list_last (layers)->data);
   cellw_adjust.nguides     = 0;
   cellw_adjust.guides      = NULL;
   cellw_adjust.value       = &gihparams.cellwidth;
@@ -680,15 +682,15 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_show (label);
 
   adjustment = gtk_adjustment_new (gihparams.cellheight,
-                                   2, gimp_image_height (image_ID), 1, 10, 0);
+                                   2, gimp_image_height (image), 1, 10, 0);
   spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   cellh_adjust.orientation = GIMP_ORIENTATION_HORIZONTAL;
-  cellh_adjust.image       = image_ID;
-  cellh_adjust.toplayer    = layer_ID[nlayers-1];
+  cellh_adjust.image       = image;
+  cellh_adjust.toplayer    = g_object_ref (g_list_last (layers)->data);
   cellh_adjust.nguides     = 0;
   cellh_adjust.guides      = NULL;
   cellh_adjust.value       = &gihparams.cellheight;
@@ -705,7 +707,7 @@ gih_save_dialog (gint32 image_ID)
                             _("Cell size:"), 0.0, 0.5,
                             box, 1);
 
-  g_free (layer_ID);
+  g_list_free_full (layers, g_object_unref);
 
   /*
    * Number of cells: ___
@@ -870,9 +872,9 @@ gih_save_dialog (gint32 image_ID)
   gtk_widget_destroy (dialog);
 
   for (i = 0; i < cellw_adjust.nguides; i++)
-    gimp_image_delete_guide (image_ID, cellw_adjust.guides[i]);
+    gimp_image_delete_guide (image, cellw_adjust.guides[i]);
   for (i = 0; i < cellh_adjust.nguides; i++)
-    gimp_image_delete_guide (image_ID, cellh_adjust.guides[i]);
+    gimp_image_delete_guide (image, cellh_adjust.guides[i]);
 
   return run;
 }
