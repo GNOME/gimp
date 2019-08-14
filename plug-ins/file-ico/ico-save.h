@@ -23,7 +23,7 @@
 
 
 GimpPDBStatusType ico_save_image          (const gchar   *file_name,
-                                           gint32         image_ID,
+                                           GimpImage     *image,
                                            gint32         run_mode,
                                            GError       **error);
 
