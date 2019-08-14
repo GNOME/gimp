@@ -703,25 +703,6 @@ gimp_register_thumbnail_loader (const gchar *load_proc,
   return _gimp_register_thumbnail_loader (load_proc, thumb_proc);
 }
 
-/**
- * gimp_pdb_temp_name:
- *
- * Generates a unique temporary PDB name.
- *
- * This procedure generates a temporary PDB entry name that is
- * guaranteed to be unique.
- *
- * Returns: (transfer full): A unique temporary name for a temporary PDB entry.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-gimp_pdb_temp_name (void)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_pdb_temp_name ();
-}
-
 
 /*  private functions  */
 

@@ -294,11 +294,6 @@ gboolean   gimp_register_file_handler_uri      (const gchar *procedure_name);
 gboolean   gimp_register_thumbnail_loader      (const gchar *load_proc,
                                                 const gchar *thumb_proc);
 
-/* pdb stuff that should now be done using GimpPDB
- */
-
-gchar    * gimp_pdb_temp_name (void);
-
 
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */
 
