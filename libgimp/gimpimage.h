@@ -68,8 +68,13 @@ GType          gimp_image_get_type           (void) G_GNUC_CONST;
 gint32         gimp_image_get_id             (GimpImage    *image);
 GimpImage    * gimp_image_new_by_id          (gint32        image_id);
 
+GList        * gimp_image_list               (void);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GList        * gimp_image_get_layers         (GimpImage    *image);
+GList        * gimp_image_get_channels       (GimpImage    *image);
+GList        * gimp_image_get_vectors        (GimpImage    *image);
 
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
@@ -92,6 +97,10 @@ gboolean       gimp_image_set_metadata       (GimpImage    *image,
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
+#define gimp_image_list               gimp_image_list_deprecated
+#define gimp_image_get_layers         gimp_image_get_layers_deprecated
+#define gimp_image_get_channel        gimp_image_get_channels_deprecated
+#define gimp_image_get_vectors        gimp_image_get_vectors_deprecated
 #define gimp_image_get_colormap       gimp_image_get_colormap_deprecated
 #define gimp_image_set_colormap       gimp_image_set_colormap_deprecated
 #define gimp_image_get_thumbnail_data gimp_image_get_thumbnail_data_deprecated
@@ -102,6 +111,14 @@ gboolean       gimp_image_set_metadata       (GimpImage    *image,
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
 
+gint         * gimp_image_list_deprecated               (gint          *num_images);
+
+gint         * gimp_image_get_layers_deprecated         (gint32         image_id,
+                                                         gint          *num_layers);
+gint         * gimp_image_get_channels_deprecated       (gint32         image_id,
+                                                         gint          *num_channels);
+gint         * gimp_image_get_vectors_deprecated        (gint32         image_id,
+                                                         gint          *num_vectors);
 guchar       * gimp_image_get_colormap_deprecated       (gint32        image_id,
                                                          gint         *num_colors);
 gboolean       gimp_image_set_colormap_deprecated       (gint32        image_id,
