@@ -3834,57 +3834,6 @@ _gimp_image_get_colormap (GimpImage *image,
 }
 
 /**
- * __gimp_image_get_colormap: (skip)
- * @image_ID: The image.
- * @num_bytes: (out): Number of bytes in the colormap array.
- *
- * Returns the image's colormap
- *
- * This procedure returns an actual pointer to the image's colormap, as
- * well as the number of bytes contained in the colormap. The actual
- * number of colors in the transmitted colormap will be 'num-bytes' /
- * 3. If the image is not in Indexed color mode, no colormap is
- * returned.
- *
- * Returns: (array length=num_bytes): The image's colormap.
- *          The returned value must be freed with g_free().
- **/
-guint8 *
-__gimp_image_get_colormap (gint32  image_ID,
-                           gint   *num_bytes)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  guint8 *colormap = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-get-colormap",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-get-colormap",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *num_bytes = 0;
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    {
-      *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      colormap = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return colormap;
-}
-
-/**
  * _gimp_image_set_colormap:
  * @image: The image.
  * @num_bytes: Number of bytes in the colormap array.
@@ -3912,55 +3861,6 @@ _gimp_image_set_colormap (GimpImage    *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
-                                          G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), colormap, num_bytes);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-set-colormap",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-set-colormap",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * __gimp_image_set_colormap: (skip)
- * @image_ID: The image.
- * @num_bytes: Number of bytes in the colormap array.
- * @colormap: (array length=num_bytes) (element-type guint8): The new colormap values.
- *
- * Sets the entries in the image's colormap.
- *
- * This procedure sets the entries in the specified image's colormap.
- * The number of entries is specified by the 'num-bytes' parameter and
- * corresponds to the number of INT8 triples that must be contained in
- * the 'colormap' array. The actual number of colors in the transmitted
- * colormap is 'num-bytes' / 3.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-__gimp_image_set_colormap (gint32        image_ID,
-                           gint          num_bytes,
-                           const guint8 *colormap)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_INT, num_bytes,
                                           GIMP_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
@@ -4023,46 +3923,6 @@ _gimp_image_get_metadata (GimpImage *image)
 }
 
 /**
- * __gimp_image_get_metadata: (skip)
- * @image_ID: The image.
- *
- * Returns the image's metadata.
- *
- * Returns exif/iptc/xmp metadata from the image.
- *
- * Returns: The exif/ptc/xmp metadata as a string.
- *          The returned value must be freed with g_free().
- **/
-gchar *
-__gimp_image_get_metadata (gint32 image_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *metadata_string = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-get-metadata",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-get-metadata",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    metadata_string = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return metadata_string;
-}
-
-/**
  * _gimp_image_set_metadata:
  * @image: The image.
  * @metadata_string: The exif/ptc/xmp metadata as a string.
@@ -4084,47 +3944,6 @@ _gimp_image_set_metadata (GimpImage   *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          G_TYPE_STRING, metadata_string,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-set-metadata",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-set-metadata",
-                                            args);
-  gimp_value_array_unref (args);
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * __gimp_image_set_metadata: (skip)
- * @image_ID: The image.
- * @metadata_string: The exif/ptc/xmp metadata as a string.
- *
- * Set the image's metadata.
- *
- * Sets exif/iptc/xmp metadata on the image.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-__gimp_image_set_metadata (gint32       image_ID,
-                           const gchar *metadata_string)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_STRING, metadata_string,
                                           G_TYPE_NONE);
 
@@ -4351,78 +4170,6 @@ _gimp_image_thumbnail (GimpImage  *image,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
-                                          G_TYPE_INT, width,
-                                          G_TYPE_INT, height,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-image-thumbnail",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-image-thumbnail",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *actual_width = 0;
-  *actual_height = 0;
-  *bpp = 0;
-  *thumbnail_data_count = 0;
-  *thumbnail_data = NULL;
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      *actual_width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *actual_height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * __gimp_image_thumbnail: (skip)
- * @image_ID: The image.
- * @width: The requested thumbnail width.
- * @height: The requested thumbnail height.
- * @actual_width: (out): The previews width.
- * @actual_height: (out): The previews height.
- * @bpp: (out): The previews bpp.
- * @thumbnail_data_count: (out): The number of bytes in thumbnail data.
- * @thumbnail_data: (out) (array length=thumbnail_data_count): The thumbnail data.
- *
- * Get a thumbnail of an image.
- *
- * This function gets data from which a thumbnail of an image preview
- * can be created. Maximum x or y dimension is 1024 pixels. The pixels
- * are returned in RGB[A] or GRAY[A] format. The bpp return value gives
- * the number of bits per pixel in the image.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-__gimp_image_thumbnail (gint32   image_ID,
-                        gint     width,
-                        gint     height,
-                        gint    *actual_width,
-                        gint    *actual_height,
-                        gint    *bpp,
-                        gint    *thumbnail_data_count,
-                        guint8 **thumbnail_data)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_NONE);
