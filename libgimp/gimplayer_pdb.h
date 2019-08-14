@@ -105,11 +105,9 @@ gboolean                   gimp_layer_set_composite_mode   (GimpLayer           
 
 #else /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
-#define _gimp_layer_new __gimp_layer_new
 #define gimp_layer_new_from_visible _gimp_layer_new_from_visible
 #define gimp_layer_new_from_drawable _gimp_layer_new_from_drawable
 #define gimp_layer_group_new _gimp_layer_group_new
-#define _gimp_layer_copy __gimp_layer_copy
 #define gimp_layer_add_alpha _gimp_layer_add_alpha
 #define gimp_layer_flatten _gimp_layer_flatten
 #define gimp_layer_scale _gimp_layer_scale
@@ -148,21 +146,12 @@ gboolean                   gimp_layer_set_composite_mode   (GimpLayer           
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gint32                 __gimp_layer_new                 (gint32                  image_ID,
-                                                         gint                    width,
-                                                         gint                    height,
-                                                         GimpImageType           type,
-                                                         const gchar            *name,
-                                                         gdouble                 opacity,
-                                                         GimpLayerMode           mode);
 gint32                 _gimp_layer_new_from_visible     (gint32                  image_ID,
                                                          gint32                  dest_image_ID,
                                                          const gchar            *name);
 gint32                 _gimp_layer_new_from_drawable    (gint32                  drawable_ID,
                                                          gint32                  dest_image_ID);
 gint32                 _gimp_layer_group_new            (gint32                  image_ID);
-gint32                 __gimp_layer_copy                (gint32                  layer_ID,
-                                                         gboolean                add_alpha);
 gboolean               _gimp_layer_add_alpha            (gint32                  layer_ID);
 gboolean               _gimp_layer_flatten              (gint32                  layer_ID);
 gboolean               _gimp_layer_scale                (gint32                  layer_ID,

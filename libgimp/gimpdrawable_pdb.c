@@ -80,51 +80,6 @@ _gimp_drawable_get_format (GimpDrawable *drawable)
 }
 
 /**
- * __gimp_drawable_get_format: (skip)
- * @drawable_ID: The drawable.
- *
- * Returns the drawable's Babl format
- *
- * This procedure returns the drawable's Babl format.
- * Note that the actual PDB procedure only transfers the format's
- * encoding. In order to get to the real format, the libbgimp C wrapper
- * must be used.
- *
- * Returns: The drawable's Babl format.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.10
- **/
-gchar *
-__gimp_drawable_get_format (gint32 drawable_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *format = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-get-format",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-get-format",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    format = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return format;
-}
-
-/**
  * _gimp_drawable_get_thumbnail_format:
  * @drawable: The drawable.
  *
@@ -149,50 +104,6 @@ _gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-get-thumbnail-format",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-get-thumbnail-format",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    format = g_value_dup_string (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return format;
-}
-
-/**
- * __gimp_drawable_get_thumbnail_format: (skip)
- * @drawable_ID: The drawable.
- *
- * Returns the drawable's thumbnail Babl format
- *
- * This procedure returns the drawable's thumbnail Babl format.
- * Thumbnails are always 8-bit images, see gimp_drawable_thumbnail()
- * and gimp_drawable_sub_thmbnail().
- *
- * Returns: The drawable's thumbnail Babl format.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.10.14
- **/
-gchar *
-__gimp_drawable_get_thumbnail_format (gint32 drawable_ID)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gchar *format = NULL;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2074,78 +1985,6 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
 }
 
 /**
- * __gimp_drawable_thumbnail: (skip)
- * @drawable_ID: The drawable.
- * @width: The requested thumbnail width.
- * @height: The requested thumbnail height.
- * @actual_width: (out): The previews width.
- * @actual_height: (out): The previews height.
- * @bpp: (out): The previews bpp.
- * @thumbnail_data_count: (out): The number of bytes in thumbnail data.
- * @thumbnail_data: (out) (array length=thumbnail_data_count): The thumbnail data.
- *
- * Get a thumbnail of a drawable.
- *
- * This function gets data from which a thumbnail of a drawable preview
- * can be created. Maximum x or y dimension is 1024 pixels. The pixels
- * are returned in RGB[A] or GRAY[A] format. The bpp return value gives
- * the number of bytes in the image.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-__gimp_drawable_thumbnail (gint32   drawable_ID,
-                           gint     width,
-                           gint     height,
-                           gint    *actual_width,
-                           gint    *actual_height,
-                           gint    *bpp,
-                           gint    *thumbnail_data_count,
-                           guint8 **thumbnail_data)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-thumbnail",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-thumbnail",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *actual_width = 0;
-  *actual_height = 0;
-  *bpp = 0;
-  *thumbnail_data_count = 0;
-  *thumbnail_data = NULL;
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      *actual_width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *actual_height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * _gimp_drawable_sub_thumbnail:
  * @drawable: The drawable.
  * @src_x: The x coordinate of the area.
@@ -2192,92 +2031,6 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
-                                          GIMP_TYPE_INT32, src_x,
-                                          GIMP_TYPE_INT32, src_y,
-                                          GIMP_TYPE_INT32, src_width,
-                                          GIMP_TYPE_INT32, src_height,
-                                          GIMP_TYPE_INT32, dest_width,
-                                          GIMP_TYPE_INT32, dest_height,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-drawable-sub-thumbnail",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-drawable-sub-thumbnail",
-                                            args);
-  gimp_value_array_unref (args);
-
-  *width = 0;
-  *height = 0;
-  *bpp = 0;
-  *thumbnail_data_count = 0;
-  *thumbnail_data = NULL;
-
-  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    {
-      *width = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
-      *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
-      *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
-    }
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
- * __gimp_drawable_sub_thumbnail: (skip)
- * @drawable_ID: The drawable.
- * @src_x: The x coordinate of the area.
- * @src_y: The y coordinate of the area.
- * @src_width: The width of the area.
- * @src_height: The height of the area.
- * @dest_width: The thumbnail width.
- * @dest_height: The thumbnail height.
- * @width: (out): The previews width.
- * @height: (out): The previews height.
- * @bpp: (out): The previews bpp.
- * @thumbnail_data_count: (out): The number of bytes in thumbnail data.
- * @thumbnail_data: (out) (array length=thumbnail_data_count): The thumbnail data.
- *
- * Get a thumbnail of a sub-area of a drawable drawable.
- *
- * This function gets data from which a thumbnail of a drawable preview
- * can be created. Maximum x or y dimension is 1024 pixels. The pixels
- * are returned in RGB[A] or GRAY[A] format. The bpp return value gives
- * the number of bytes in the image.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.2
- **/
-gboolean
-__gimp_drawable_sub_thumbnail (gint32   drawable_ID,
-                               gint     src_x,
-                               gint     src_y,
-                               gint     src_width,
-                               gint     src_height,
-                               gint     dest_width,
-                               gint     dest_height,
-                               gint    *width,
-                               gint    *height,
-                               gint    *bpp,
-                               gint    *thumbnail_data_count,
-                               guint8 **thumbnail_data)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           GIMP_TYPE_INT32, src_x,
                                           GIMP_TYPE_INT32, src_y,
                                           GIMP_TYPE_INT32, src_width,

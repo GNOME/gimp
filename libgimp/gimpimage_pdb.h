@@ -237,13 +237,8 @@ gchar**                  gimp_image_get_parasite_list          (GimpImage       
 #define gimp_image_flatten _gimp_image_flatten
 #define gimp_image_merge_visible_layers _gimp_image_merge_visible_layers
 #define gimp_image_merge_down _gimp_image_merge_down
-#define _gimp_image_get_colormap __gimp_image_get_colormap
-#define _gimp_image_set_colormap __gimp_image_set_colormap
-#define _gimp_image_get_metadata __gimp_image_get_metadata
-#define _gimp_image_set_metadata __gimp_image_set_metadata
 #define gimp_image_clean_all _gimp_image_clean_all
 #define gimp_image_is_dirty _gimp_image_is_dirty
-#define _gimp_image_thumbnail __gimp_image_thumbnail
 #define gimp_image_get_active_layer _gimp_image_get_active_layer
 #define gimp_image_set_active_layer _gimp_image_set_active_layer
 #define gimp_image_get_active_channel _gimp_image_get_active_channel
@@ -286,164 +281,148 @@ gchar**                  gimp_image_get_parasite_list          (GimpImage       
  * They are not marked internal as a trick to keep the old API alive for now.
  */
 
-gboolean          _gimp_image_is_valid                   (gint32               image_ID);
-gint32            _gimp_image_new                        (gint                 width,
-                                                          gint                 height,
-                                                          GimpImageBaseType    type);
-gint32            _gimp_image_new_with_precision         (gint                 width,
-                                                          gint                 height,
-                                                          GimpImageBaseType    type,
-                                                          GimpPrecision        precision);
-gint32            _gimp_image_duplicate                  (gint32               image_ID);
-gboolean          _gimp_image_delete                     (gint32               image_ID);
-GimpImageBaseType _gimp_image_base_type                  (gint32               image_ID);
-GimpPrecision     _gimp_image_get_precision              (gint32               image_ID);
-GimpLayerMode     _gimp_image_get_default_new_layer_mode (gint32               image_ID);
-gint              _gimp_image_width                      (gint32               image_ID);
-gint              _gimp_image_height                     (gint32               image_ID);
-gint*             _gimp_image_get_layers                 (gint32               image_ID,
-                                                          gint                *num_layers);
-gint*             _gimp_image_get_channels               (gint32               image_ID,
-                                                          gint                *num_channels);
-gint*             _gimp_image_get_vectors                (gint32               image_ID,
-                                                          gint                *num_vectors);
-gint32            _gimp_image_get_active_drawable        (gint32               image_ID);
-gboolean          _gimp_image_unset_active_channel       (gint32               image_ID);
-gint32            _gimp_image_get_floating_sel           (gint32               image_ID);
-gint32            _gimp_image_floating_sel_attached_to   (gint32               image_ID);
-gboolean          _gimp_image_pick_color                 (gint32               image_ID,
-                                                          gint32               drawable_ID,
-                                                          gdouble              x,
-                                                          gdouble              y,
-                                                          gboolean             sample_merged,
-                                                          gboolean             sample_average,
-                                                          gdouble              average_radius,
-                                                          GimpRGB             *color);
-gint32            _gimp_image_pick_correlate_layer       (gint32               image_ID,
-                                                          gint                 x,
-                                                          gint                 y);
-gboolean          _gimp_image_insert_layer               (gint32               image_ID,
-                                                          gint32               layer_ID,
-                                                          gint32               parent_ID,
-                                                          gint                 position);
-gboolean          _gimp_image_remove_layer               (gint32               image_ID,
-                                                          gint32               layer_ID);
-gboolean          _gimp_image_freeze_layers              (gint32               image_ID);
-gboolean          _gimp_image_thaw_layers                (gint32               image_ID);
-gboolean          _gimp_image_insert_channel             (gint32               image_ID,
-                                                          gint32               channel_ID,
-                                                          gint32               parent_ID,
-                                                          gint                 position);
-gboolean          _gimp_image_remove_channel             (gint32               image_ID,
-                                                          gint32               channel_ID);
-gboolean          _gimp_image_freeze_channels            (gint32               image_ID);
-gboolean          _gimp_image_thaw_channels              (gint32               image_ID);
-gboolean          _gimp_image_insert_vectors             (gint32               image_ID,
-                                                          gint32               vectors_ID,
-                                                          gint32               parent_ID,
-                                                          gint                 position);
-gboolean          _gimp_image_remove_vectors             (gint32               image_ID,
-                                                          gint32               vectors_ID);
-gboolean          _gimp_image_freeze_vectors             (gint32               image_ID);
-gboolean          _gimp_image_thaw_vectors               (gint32               image_ID);
-gint              _gimp_image_get_item_position          (gint32               image_ID,
-                                                          gint32               item_ID);
-gboolean          _gimp_image_raise_item                 (gint32               image_ID,
-                                                          gint32               item_ID);
-gboolean          _gimp_image_lower_item                 (gint32               image_ID,
-                                                          gint32               item_ID);
-gboolean          _gimp_image_raise_item_to_top          (gint32               image_ID,
-                                                          gint32               item_ID);
-gboolean          _gimp_image_lower_item_to_bottom       (gint32               image_ID,
-                                                          gint32               item_ID);
-gboolean          _gimp_image_reorder_item               (gint32               image_ID,
-                                                          gint32               item_ID,
-                                                          gint32               parent_ID,
-                                                          gint                 position);
-gint32            _gimp_image_flatten                    (gint32               image_ID);
-gint32            _gimp_image_merge_visible_layers       (gint32               image_ID,
-                                                          GimpMergeType        merge_type);
-gint32            _gimp_image_merge_down                 (gint32               image_ID,
-                                                          gint32               merge_layer_ID,
-                                                          GimpMergeType        merge_type);
-guint8*           __gimp_image_get_colormap              (gint32               image_ID,
-                                                          gint                *num_bytes);
-gboolean          __gimp_image_set_colormap              (gint32               image_ID,
-                                                          gint                 num_bytes,
-                                                          const guint8        *colormap);
-gchar*            __gimp_image_get_metadata              (gint32               image_ID);
-gboolean          __gimp_image_set_metadata              (gint32               image_ID,
-                                                          const gchar         *metadata_string);
-gboolean          _gimp_image_clean_all                  (gint32               image_ID);
-gboolean          _gimp_image_is_dirty                   (gint32               image_ID);
-gboolean          __gimp_image_thumbnail                 (gint32               image_ID,
-                                                          gint                 width,
-                                                          gint                 height,
-                                                          gint                *actual_width,
-                                                          gint                *actual_height,
-                                                          gint                *bpp,
-                                                          gint                *thumbnail_data_count,
-                                                          guint8             **thumbnail_data);
-gint32            _gimp_image_get_active_layer           (gint32               image_ID);
-gboolean          _gimp_image_set_active_layer           (gint32               image_ID,
-                                                          gint32               active_layer_ID);
-gint32            _gimp_image_get_active_channel         (gint32               image_ID);
-gboolean          _gimp_image_set_active_channel         (gint32               image_ID,
-                                                          gint32               active_channel_ID);
-gint32            _gimp_image_get_active_vectors         (gint32               image_ID);
-gboolean          _gimp_image_set_active_vectors         (gint32               image_ID,
-                                                          gint32               active_vectors_ID);
-gint32            _gimp_image_get_selection              (gint32               image_ID);
-gboolean          _gimp_image_get_component_active       (gint32               image_ID,
-                                                          GimpChannelType      component);
-gboolean          _gimp_image_set_component_active       (gint32               image_ID,
-                                                          GimpChannelType      component,
-                                                          gboolean             active);
-gboolean          _gimp_image_get_component_visible      (gint32               image_ID,
-                                                          GimpChannelType      component);
-gboolean          _gimp_image_set_component_visible      (gint32               image_ID,
-                                                          GimpChannelType      component,
-                                                          gboolean             visible);
-gchar*            _gimp_image_get_filename               (gint32               image_ID);
-gboolean          _gimp_image_set_filename               (gint32               image_ID,
-                                                          const gchar         *filename);
-gchar*            _gimp_image_get_uri                    (gint32               image_ID);
-gchar*            _gimp_image_get_xcf_uri                (gint32               image_ID);
-gchar*            _gimp_image_get_imported_uri           (gint32               image_ID);
-gchar*            _gimp_image_get_exported_uri           (gint32               image_ID);
-gchar*            _gimp_image_get_name                   (gint32               image_ID);
-gboolean          _gimp_image_get_resolution             (gint32               image_ID,
-                                                          gdouble             *xresolution,
-                                                          gdouble             *yresolution);
-gboolean          _gimp_image_set_resolution             (gint32               image_ID,
-                                                          gdouble              xresolution,
-                                                          gdouble              yresolution);
-GimpUnit          _gimp_image_get_unit                   (gint32               image_ID);
-gboolean          _gimp_image_set_unit                   (gint32               image_ID,
-                                                          GimpUnit             unit);
-gint              _gimp_image_get_tattoo_state           (gint32               image_ID);
-gboolean          _gimp_image_set_tattoo_state           (gint32               image_ID,
-                                                          gint                 tattoo_state);
-gint32            _gimp_image_get_layer_by_tattoo        (gint32               image_ID,
-                                                          gint                 tattoo);
-gint32            _gimp_image_get_channel_by_tattoo      (gint32               image_ID,
-                                                          gint                 tattoo);
-gint32            _gimp_image_get_vectors_by_tattoo      (gint32               image_ID,
-                                                          gint                 tattoo);
-gint32            _gimp_image_get_layer_by_name          (gint32               image_ID,
-                                                          const gchar         *name);
-gint32            _gimp_image_get_channel_by_name        (gint32               image_ID,
-                                                          const gchar         *name);
-gint32            _gimp_image_get_vectors_by_name        (gint32               image_ID,
-                                                          const gchar         *name);
-gboolean          _gimp_image_attach_parasite            (gint32               image_ID,
-                                                          const GimpParasite  *parasite);
-gboolean          _gimp_image_detach_parasite            (gint32               image_ID,
-                                                          const gchar         *name);
-GimpParasite*     _gimp_image_get_parasite               (gint32               image_ID,
-                                                          const gchar         *name);
-gchar**           _gimp_image_get_parasite_list          (gint32               image_ID,
-                                                          gint                *num_parasites);
+gboolean          _gimp_image_is_valid                   (gint32              image_ID);
+gint32            _gimp_image_new                        (gint                width,
+                                                          gint                height,
+                                                          GimpImageBaseType   type);
+gint32            _gimp_image_new_with_precision         (gint                width,
+                                                          gint                height,
+                                                          GimpImageBaseType   type,
+                                                          GimpPrecision       precision);
+gint32            _gimp_image_duplicate                  (gint32              image_ID);
+gboolean          _gimp_image_delete                     (gint32              image_ID);
+GimpImageBaseType _gimp_image_base_type                  (gint32              image_ID);
+GimpPrecision     _gimp_image_get_precision              (gint32              image_ID);
+GimpLayerMode     _gimp_image_get_default_new_layer_mode (gint32              image_ID);
+gint              _gimp_image_width                      (gint32              image_ID);
+gint              _gimp_image_height                     (gint32              image_ID);
+gint*             _gimp_image_get_layers                 (gint32              image_ID,
+                                                          gint               *num_layers);
+gint*             _gimp_image_get_channels               (gint32              image_ID,
+                                                          gint               *num_channels);
+gint*             _gimp_image_get_vectors                (gint32              image_ID,
+                                                          gint               *num_vectors);
+gint32            _gimp_image_get_active_drawable        (gint32              image_ID);
+gboolean          _gimp_image_unset_active_channel       (gint32              image_ID);
+gint32            _gimp_image_get_floating_sel           (gint32              image_ID);
+gint32            _gimp_image_floating_sel_attached_to   (gint32              image_ID);
+gboolean          _gimp_image_pick_color                 (gint32              image_ID,
+                                                          gint32              drawable_ID,
+                                                          gdouble             x,
+                                                          gdouble             y,
+                                                          gboolean            sample_merged,
+                                                          gboolean            sample_average,
+                                                          gdouble             average_radius,
+                                                          GimpRGB            *color);
+gint32            _gimp_image_pick_correlate_layer       (gint32              image_ID,
+                                                          gint                x,
+                                                          gint                y);
+gboolean          _gimp_image_insert_layer               (gint32              image_ID,
+                                                          gint32              layer_ID,
+                                                          gint32              parent_ID,
+                                                          gint                position);
+gboolean          _gimp_image_remove_layer               (gint32              image_ID,
+                                                          gint32              layer_ID);
+gboolean          _gimp_image_freeze_layers              (gint32              image_ID);
+gboolean          _gimp_image_thaw_layers                (gint32              image_ID);
+gboolean          _gimp_image_insert_channel             (gint32              image_ID,
+                                                          gint32              channel_ID,
+                                                          gint32              parent_ID,
+                                                          gint                position);
+gboolean          _gimp_image_remove_channel             (gint32              image_ID,
+                                                          gint32              channel_ID);
+gboolean          _gimp_image_freeze_channels            (gint32              image_ID);
+gboolean          _gimp_image_thaw_channels              (gint32              image_ID);
+gboolean          _gimp_image_insert_vectors             (gint32              image_ID,
+                                                          gint32              vectors_ID,
+                                                          gint32              parent_ID,
+                                                          gint                position);
+gboolean          _gimp_image_remove_vectors             (gint32              image_ID,
+                                                          gint32              vectors_ID);
+gboolean          _gimp_image_freeze_vectors             (gint32              image_ID);
+gboolean          _gimp_image_thaw_vectors               (gint32              image_ID);
+gint              _gimp_image_get_item_position          (gint32              image_ID,
+                                                          gint32              item_ID);
+gboolean          _gimp_image_raise_item                 (gint32              image_ID,
+                                                          gint32              item_ID);
+gboolean          _gimp_image_lower_item                 (gint32              image_ID,
+                                                          gint32              item_ID);
+gboolean          _gimp_image_raise_item_to_top          (gint32              image_ID,
+                                                          gint32              item_ID);
+gboolean          _gimp_image_lower_item_to_bottom       (gint32              image_ID,
+                                                          gint32              item_ID);
+gboolean          _gimp_image_reorder_item               (gint32              image_ID,
+                                                          gint32              item_ID,
+                                                          gint32              parent_ID,
+                                                          gint                position);
+gint32            _gimp_image_flatten                    (gint32              image_ID);
+gint32            _gimp_image_merge_visible_layers       (gint32              image_ID,
+                                                          GimpMergeType       merge_type);
+gint32            _gimp_image_merge_down                 (gint32              image_ID,
+                                                          gint32              merge_layer_ID,
+                                                          GimpMergeType       merge_type);
+gboolean          _gimp_image_clean_all                  (gint32              image_ID);
+gboolean          _gimp_image_is_dirty                   (gint32              image_ID);
+gint32            _gimp_image_get_active_layer           (gint32              image_ID);
+gboolean          _gimp_image_set_active_layer           (gint32              image_ID,
+                                                          gint32              active_layer_ID);
+gint32            _gimp_image_get_active_channel         (gint32              image_ID);
+gboolean          _gimp_image_set_active_channel         (gint32              image_ID,
+                                                          gint32              active_channel_ID);
+gint32            _gimp_image_get_active_vectors         (gint32              image_ID);
+gboolean          _gimp_image_set_active_vectors         (gint32              image_ID,
+                                                          gint32              active_vectors_ID);
+gint32            _gimp_image_get_selection              (gint32              image_ID);
+gboolean          _gimp_image_get_component_active       (gint32              image_ID,
+                                                          GimpChannelType     component);
+gboolean          _gimp_image_set_component_active       (gint32              image_ID,
+                                                          GimpChannelType     component,
+                                                          gboolean            active);
+gboolean          _gimp_image_get_component_visible      (gint32              image_ID,
+                                                          GimpChannelType     component);
+gboolean          _gimp_image_set_component_visible      (gint32              image_ID,
+                                                          GimpChannelType     component,
+                                                          gboolean            visible);
+gchar*            _gimp_image_get_filename               (gint32              image_ID);
+gboolean          _gimp_image_set_filename               (gint32              image_ID,
+                                                          const gchar        *filename);
+gchar*            _gimp_image_get_uri                    (gint32              image_ID);
+gchar*            _gimp_image_get_xcf_uri                (gint32              image_ID);
+gchar*            _gimp_image_get_imported_uri           (gint32              image_ID);
+gchar*            _gimp_image_get_exported_uri           (gint32              image_ID);
+gchar*            _gimp_image_get_name                   (gint32              image_ID);
+gboolean          _gimp_image_get_resolution             (gint32              image_ID,
+                                                          gdouble            *xresolution,
+                                                          gdouble            *yresolution);
+gboolean          _gimp_image_set_resolution             (gint32              image_ID,
+                                                          gdouble             xresolution,
+                                                          gdouble             yresolution);
+GimpUnit          _gimp_image_get_unit                   (gint32              image_ID);
+gboolean          _gimp_image_set_unit                   (gint32              image_ID,
+                                                          GimpUnit            unit);
+gint              _gimp_image_get_tattoo_state           (gint32              image_ID);
+gboolean          _gimp_image_set_tattoo_state           (gint32              image_ID,
+                                                          gint                tattoo_state);
+gint32            _gimp_image_get_layer_by_tattoo        (gint32              image_ID,
+                                                          gint                tattoo);
+gint32            _gimp_image_get_channel_by_tattoo      (gint32              image_ID,
+                                                          gint                tattoo);
+gint32            _gimp_image_get_vectors_by_tattoo      (gint32              image_ID,
+                                                          gint                tattoo);
+gint32            _gimp_image_get_layer_by_name          (gint32              image_ID,
+                                                          const gchar        *name);
+gint32            _gimp_image_get_channel_by_name        (gint32              image_ID,
+                                                          const gchar        *name);
+gint32            _gimp_image_get_vectors_by_name        (gint32              image_ID,
+                                                          const gchar        *name);
+gboolean          _gimp_image_attach_parasite            (gint32              image_ID,
+                                                          const GimpParasite *parasite);
+gboolean          _gimp_image_detach_parasite            (gint32              image_ID,
+                                                          const gchar        *name);
+GimpParasite*     _gimp_image_get_parasite               (gint32              image_ID,
+                                                          const gchar        *name);
+gchar**           _gimp_image_get_parasite_list          (gint32              image_ID,
+                                                          gint               *num_parasites);
 
 
 G_END_DECLS
