@@ -116,7 +116,7 @@ libgimp_private_sources = \
 	gimplegacy.c		\
 	gimplegacy.h		\
 	gimplegacy-private.h	\
-	gimpdb-private.h	\
+	gimppdb-private.h	\
 	gimppdbprocedure.c	\
 	gimppdbprocedure.h	\
 	gimppixbuf.c		\
