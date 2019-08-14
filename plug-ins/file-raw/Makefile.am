@@ -25,7 +25,6 @@ rt_libexecdir = $(gimpplugindir)/plug-ins/file-rawtherapee
 rp_libexecdir = $(gimpplugindir)/plug-ins/file-raw-placeholder
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)	\
 	-I$(includedir)	\
 	$(GTK_CFLAGS)	\
