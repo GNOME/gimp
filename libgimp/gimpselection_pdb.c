@@ -493,56 +493,6 @@ _gimp_selection_float (GimpDrawable *drawable,
 }
 
 /**
- * __gimp_selection_float: (skip)
- * @drawable_ID: The drawable from which to float selection.
- * @offx: x offset for translation.
- * @offy: y offset for translation.
- *
- * Float the selection from the specified drawable with initial offsets
- * as specified.
- *
- * This procedure determines the region of the specified drawable that
- * lies beneath the current selection. The region is then cut from the
- * drawable and the resulting data is made into a new layer which is
- * instantiated as a floating selection. The offsets allow initial
- * positioning of the new floating selection.
- *
- * Returns: The floated layer.
- **/
-gint32
-__gimp_selection_float (gint32 drawable_ID,
-                        gint   offx,
-                        gint   offy)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          G_TYPE_INT, offx,
-                                          G_TYPE_INT, offy,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-selection-float",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-selection-float",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_ID;
-}
-
-/**
  * gimp_selection_invert:
  * @image: The image.
  *

@@ -97,68 +97,6 @@ _gimp_layer_new (GimpImage     *image,
 }
 
 /**
- * __gimp_layer_new: (skip)
- * @image_ID: The image to which to add the layer.
- * @width: The layer width.
- * @height: The layer height.
- * @type: The layer type.
- * @name: The layer name.
- * @opacity: The layer opacity.
- * @mode: The layer combination mode.
- *
- * Create a new layer.
- *
- * This procedure creates a new layer with the specified width, height,
- * and type. Name, opacity, and mode are also supplied parameters. The
- * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the gimp_image_insert_layer()
- * command. Other attributes such as layer mask modes, and offsets
- * should be set with explicit procedure calls.
- *
- * Returns: The newly created layer.
- **/
-gint32
-__gimp_layer_new (gint32         image_ID,
-                  gint           width,
-                  gint           height,
-                  GimpImageType  type,
-                  const gchar   *name,
-                  gdouble        opacity,
-                  GimpLayerMode  mode)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, width,
-                                          G_TYPE_INT, height,
-                                          GIMP_TYPE_IMAGE_TYPE, type,
-                                          G_TYPE_STRING, name,
-                                          G_TYPE_DOUBLE, opacity,
-                                          GIMP_TYPE_LAYER_MODE, mode,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-layer-new",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-layer-new",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_ID;
-}
-
-/**
  * gimp_layer_new_from_visible:
  * @image: The source image from where the content is copied.
  * @dest_image: The destination image to which to add the layer.
@@ -491,53 +429,6 @@ _gimp_layer_copy (GimpLayer *layer,
   gimp_value_array_unref (return_vals);
 
   return layer_copy;
-}
-
-/**
- * __gimp_layer_copy: (skip)
- * @layer_ID: The layer to copy.
- * @add_alpha: Add an alpha channel to the copied layer.
- *
- * Copy a layer.
- *
- * This procedure copies the specified layer and returns the copy. The
- * newly copied layer is for use within the original layer's image. It
- * should not be subsequently added to any other image. The copied
- * layer can optionally have an added alpha channel. This is useful if
- * the background layer in an image is being copied and added to the
- * same image.
- *
- * Returns: The newly copied layer.
- **/
-gint32
-__gimp_layer_copy (gint32   layer_ID,
-                   gboolean add_alpha)
-{
-  GimpPDB        *pdb = gimp_get_pdb ();
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gint32 layer_copy_ID = -1;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_ID, layer_ID,
-                                          G_TYPE_BOOLEAN, add_alpha,
-                                          G_TYPE_NONE);
-
-  if (pdb)
-    return_vals = gimp_pdb_run_procedure_array (pdb,
-                                                "gimp-layer-copy",
-                                                args);
-  else
-    return_vals = gimp_run_procedure_array ("gimp-layer-copy",
-                                            args);
-  gimp_value_array_unref (args);
-
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_copy_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
-
-  gimp_value_array_unref (return_vals);
-
-  return layer_copy_ID;
 }
 
 /**
