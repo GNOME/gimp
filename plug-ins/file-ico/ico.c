@@ -71,8 +71,8 @@ static GimpValueArray * ico_load_thumb       (GimpProcedure        *procedure,
                                               gpointer              run_data);
 static GimpValueArray * ico_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
-                                              gint32                image_id,
-                                              gint32                drawable_id,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -229,7 +229,7 @@ ico_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   gchar          *filename;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -237,11 +237,11 @@ ico_load (GimpProcedure        *procedure,
 
   filename = g_file_get_path (file);
 
-  image_id = ico_load_image (filename, &error);
+  image = ico_load_image (filename, &error);
 
   g_free (filename);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -250,8 +250,8 @@ ico_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  g_value_set_object (gimp_value_array_index (return_vals, 1),
+                      image);
 
   return return_vals;
 }
@@ -265,7 +265,7 @@ ico_load_thumb (GimpProcedure        *procedure,
   const gchar    *filename;
   gint            width;
   gint            height;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -274,10 +274,10 @@ ico_load_thumb (GimpProcedure        *procedure,
   width    = g_value_get_int    (gimp_value_array_index (args, 1));
   height   = width;
 
-  image_id = ico_load_thumbnail_image (filename,
-                                       &width, &height, &error);
+  image = ico_load_thumbnail_image (filename,
+                                    &width, &height, &error);
 
-  if (image_id < 1)
+  if (image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -286,9 +286,9 @@ ico_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
-  g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
-  g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+  g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+  g_value_set_int    (gimp_value_array_index (return_vals, 2), width);
+  g_value_set_int    (gimp_value_array_index (return_vals, 3), height);
 
   return return_vals;
 }
@@ -296,8 +296,8 @@ ico_load_thumb (GimpProcedure        *procedure,
 static GimpValueArray *
 ico_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -311,7 +311,7 @@ ico_save (GimpProcedure        *procedure,
 
   filename = g_file_get_path (file);
 
-  status = ico_save_image (filename, image_id, run_mode, &error);
+  status = ico_save_image (filename, image, run_mode, &error);
 
   g_free (filename);
 
