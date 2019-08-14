@@ -97,11 +97,11 @@ gimp_load_procedure_constructed (GObject *object)
                                                        GIMP_PARAM_READWRITE));
 
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "Output image",
-                                                             FALSE,
-                                                             GIMP_PARAM_READWRITE));
+                                   g_param_spec_object ("image",
+                                                        "Image",
+                                                        "Output image",
+                                                        GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
