@@ -72,20 +72,15 @@ static void
 export_merge (GimpImage     *image,
               GimpDrawable **drawable)
 {
-  gint32  nlayers;
+  GList  *layers;
+  GList  *iter;
   gint32  nvisible = 0;
-  gint32  i;
-  gint32 *layers;
 
-  layers = gimp_image_get_layers (image, &nlayers);
-  for (i = 0; i < nlayers; i++)
+  layers = gimp_image_get_layers (image);
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
-
-      if (gimp_item_get_visible (GIMP_ITEM (layer)))
+      if (gimp_item_get_visible (GIMP_ITEM (iter->data)))
         nvisible++;
-
-      g_object_unref (layer);
     }
 
   if (nvisible <= 1)
@@ -114,7 +109,6 @@ export_merge (GimpImage     *image,
     {
       GimpLayer *merged;
 
-      g_free (layers);
       merged = gimp_image_merge_visible_layers (image, GIMP_CLIP_TO_IMAGE);
 
       if (merged != NULL)
@@ -127,7 +121,8 @@ export_merge (GimpImage     *image,
           return;  /* shouldn't happen */
         }
 
-      layers = gimp_image_get_layers (image, &nlayers);
+      g_list_free_full (layers, g_object_unref);
+      layers = gimp_image_get_layers (image);
 
       /*  make sure that the merged drawable matches the image size  */
       if (gimp_drawable_width  (GIMP_DRAWABLE (merged)) != gimp_image_width  (image) ||
@@ -144,18 +139,12 @@ export_merge (GimpImage     *image,
     }
 
   /* remove any remaining (invisible) layers */
-  for (i = 0; i < nlayers; i++)
+  for (iter = layers; iter; iter = iter->next)
     {
-      if (layers[i] != gimp_item_get_id (GIMP_ITEM (*drawable)))
-        {
-          GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
-
-          gimp_image_remove_layer (image, layer);
-
-          g_object_unref (layer);
-        }
+      if (gimp_item_get_id (iter->data) != gimp_item_get_id (GIMP_ITEM (*drawable)))
+        gimp_image_remove_layer (image, iter->data);
     }
-  g_free (layers);
+  g_list_free_full (layers, g_object_unref);
 }
 
 static void
@@ -174,51 +163,41 @@ static void
 export_remove_alpha (GimpImage     *image,
                      GimpDrawable **drawable)
 {
-  gint32  n_layers;
-  gint32 *layers;
-  gint    i;
+  GList  *layers;
+  GList  *iter;
 
-  layers = gimp_image_get_layers (image, &n_layers);
+  layers = gimp_image_get_layers (image);
 
-  for (i = 0; i < n_layers; i++)
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer;
-
-      layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        gimp_layer_flatten (layer);
-
-      g_object_unref (layer);
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
+        gimp_layer_flatten (iter->data);
     }
 
-  g_free (layers);
+  g_list_free_full (layers, g_object_unref);
 }
 
 static void
 export_apply_masks (GimpImage     *image,
                     GimpDrawable **drawable)
 {
-  gint32  n_layers;
-  gint32 *layers;
-  gint    i;
+  GList  *layers;
+  GList  *iter;
 
-  layers = gimp_image_get_layers (image, &n_layers);
+  layers = gimp_image_get_layers (image);
 
-  for (i = 0; i < n_layers; i++)
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer     *layer;
       GimpLayerMask *mask;
 
-      layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
-      mask = gimp_layer_get_mask (layer);
+      mask = gimp_layer_get_mask (iter->data);
       if (mask)
-        gimp_layer_remove_mask (layer, GIMP_MASK_APPLY);
+        gimp_layer_remove_mask (iter->data, GIMP_MASK_APPLY);
 
-      g_object_unref (layer);
       g_clear_object (&mask);
     }
 
-  g_free (layers);
+  g_list_free_full (layers, g_object_unref);
 }
 
 static void
@@ -239,11 +218,11 @@ static void
 export_convert_indexed (GimpImage     *image,
                         GimpDrawable **drawable)
 {
-  gint32 nlayers;
+  GList *layers;
 
   /* check alpha */
-  g_free (gimp_image_get_layers (image, &nlayers));
-  if (nlayers > 1 || gimp_drawable_has_alpha (*drawable))
+  layers = gimp_image_get_layers (image);
+  if (layers || gimp_drawable_has_alpha (*drawable))
     gimp_image_convert_indexed (image,
                                 GIMP_CONVERT_DITHER_NONE,
                                 GIMP_CONVERT_PALETTE_GENERATE,
@@ -253,6 +232,7 @@ export_convert_indexed (GimpImage     *image,
                                 GIMP_CONVERT_DITHER_NONE,
                                 GIMP_CONVERT_PALETTE_GENERATE,
                                 256, FALSE, FALSE, "");
+  g_list_free_full (layers, g_object_unref);
 }
 
 static void
@@ -272,22 +252,16 @@ static void
 export_add_alpha (GimpImage     *image,
                   GimpDrawable **drawable)
 {
-  gint32  nlayers;
-  gint32  i;
-  gint32 *layers;
+  GList  *layers;
+  GList  *iter;
 
-  layers = gimp_image_get_layers (image, &nlayers);
-  for (i = 0; i < nlayers; i++)
+  layers = gimp_image_get_layers (image);
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer;
-
-      layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
-      if (!gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        gimp_layer_add_alpha (GIMP_LAYER (layer));
-
-      g_object_unref (layer);
+      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
+        gimp_layer_add_alpha (GIMP_LAYER (iter->data));
     }
-  g_free (layers);
+  g_list_free_full (layers, g_object_unref);
 }
 
 static void
@@ -768,9 +742,8 @@ gimp_export_image (GimpImage             **image,
 {
   GSList            *actions = NULL;
   GimpImageBaseType  type;
-  gint32             i;
-  gint32             n_layers;
-  gint32            *layers;
+  GList             *layers;
+  GList             *iter;
   gboolean           interactive          = FALSE;
   gboolean           added_flatten        = FALSE;
   gboolean           has_layer_masks      = FALSE;
@@ -823,11 +796,11 @@ gimp_export_image (GimpImage             **image,
 
 
   /* check alpha and layer masks */
-  layers = gimp_image_get_layers (*image, &n_layers);
+  layers = gimp_image_get_layers (*image);
 
-  for (i = 0; i < n_layers; i++)
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+      GimpLayer *layer = GIMP_LAYER (iter->data);
 
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         {
@@ -851,7 +824,7 @@ gimp_export_image (GimpImage             **image,
           /*  If this is the last layer, it's visible and has no alpha
            *  channel, then the image has a "flat" background
            */
-          if (i == n_layers - 1 && gimp_item_get_visible (GIMP_ITEM (layer)))
+          if (iter->next == NULL && gimp_item_get_visible (GIMP_ITEM (layer)))
             background_has_alpha = FALSE;
 
           if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -860,36 +833,32 @@ gimp_export_image (GimpImage             **image,
               break;
             }
         }
-      g_object_unref (layer);
     }
 
   if (! added_flatten)
     {
-      for (i = 0; i < n_layers; i++)
+      for (iter = layers; iter; iter = iter->next)
         {
-          GimpLayer     *layer = GIMP_LAYER (gimp_item_new_by_id (layers[i]));
+          GimpLayer     *layer = GIMP_LAYER (iter->data);
           GimpLayerMask *mask;
 
           mask = gimp_layer_get_mask (layer);
           if (mask)
             has_layer_masks = TRUE;
 
-          g_object_unref (layer);
           g_clear_object (&mask);
         }
     }
 
   if (! added_flatten)
     {
-      GimpLayer *layer = GIMP_LAYER (gimp_item_new_by_id (layers[0]));
-      gint32    *children;
-      gint32     n_children;
+      GimpLayer *layer = GIMP_LAYER (layers->data);
+      GList     *children;
 
-      children = gimp_item_get_children (GIMP_ITEM (layer), &n_children);
-      g_object_unref (layer);
+      children = gimp_item_get_children (GIMP_ITEM (layer));
 
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
-      if (n_layers == 1                     &&
+      if (g_list_length (layers) == 1       &&
           ! children                        &&
           gimp_item_is_layer (GIMP_ITEM (*drawable)) &&
           ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
@@ -919,7 +888,7 @@ gimp_export_image (GimpImage             **image,
             }
         }
       /* check multiple layers */
-      else if (n_layers > 1)
+      else if (layers && layers->next != NULL)
         {
           if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
             {
@@ -955,7 +924,7 @@ gimp_export_image (GimpImage             **image,
             }
         }
 
-      g_free (children);
+      g_list_free_full (children, g_object_unref);
 
       /* check layer masks */
       if (has_layer_masks &&
@@ -963,7 +932,7 @@ gimp_export_image (GimpImage             **image,
         actions = g_slist_prepend (actions, &export_action_apply_masks);
     }
 
-  g_free (layers);
+  g_list_free_full (layers, g_object_unref);
 
   /* check the image type */
   type = gimp_image_base_type (*image);
