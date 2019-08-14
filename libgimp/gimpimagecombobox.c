@@ -71,8 +71,7 @@ static void  gimp_image_combo_box_finalize  (GObject                 *object);
 
 static void  gimp_image_combo_box_populate  (GimpImageComboBox       *combo_box);
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
-                                             gint                     num_images,
-                                             gint32                  *images,
+                                             GList                   *images,
                                              GimpImageConstraintFunc  constraint,
                                              GimpImageConstraintDeprecatedFunc
                                                                       constraint_d,
@@ -181,20 +180,18 @@ gimp_image_combo_box_populate (GimpImageComboBox *combo_box)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  gint32       *images;
-  gint          num_images;
+  GList        *images;
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  images = gimp_image_list (&num_images);
+  images = gimp_image_list ();
 
-  gimp_image_combo_box_model_add (GTK_LIST_STORE (model),
-                                  num_images, images,
+  gimp_image_combo_box_model_add (GTK_LIST_STORE (model), images,
                                   combo_box->constraint,
                                   combo_box->constraint_d,
                                   combo_box->data);
 
-  g_free (images);
+  g_list_free_full (images, g_object_unref);
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
@@ -202,30 +199,29 @@ gimp_image_combo_box_populate (GimpImageComboBox *combo_box)
 
 static void
 gimp_image_combo_box_model_add (GtkListStore            *store,
-                                gint                     num_images,
-                                gint32                  *images,
+                                GList                   *images,
                                 GimpImageConstraintFunc  constraint,
                                 GimpImageConstraintDeprecatedFunc
                                                          constraint_d,
                                 gpointer                 data)
 {
   GtkTreeIter  iter;
-  gint         i;
+  GList       *list;
 
-  for (i = 0; i < num_images; i++)
+  for (list = images; list; list = list->next)
     {
-      GimpImage *image;
+      GimpImage *image    = list->data;
+      gint32     image_id = gimp_image_get_id (image);
 
-      image = gimp_image_new_by_id (images[i]);
       if ((! constraint && ! constraint_d)             ||
           (constraint && (* constraint) (image, data)) ||
-          (constraint_d && (* constraint_d) (images[i], data)))
+          (constraint_d && (* constraint_d) (image_id, data)))
         {
           gchar     *image_name = gimp_image_get_name (image);
           gchar     *label;
           GdkPixbuf *thumb;
 
-          label = g_strdup_printf ("%s-%d", image_name, images[i]);
+          label = g_strdup_printf ("%s-%d", image_name, image_id);
 
           g_free (image_name);
 
@@ -235,7 +231,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
 
           gtk_list_store_append (store, &iter);
           gtk_list_store_set (store, &iter,
-                              GIMP_INT_STORE_VALUE,  images[i],
+                              GIMP_INT_STORE_VALUE,  image_id,
                               GIMP_INT_STORE_LABEL,  label,
                               GIMP_INT_STORE_PIXBUF, thumb,
                               -1);
@@ -245,7 +241,6 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
 
           g_free (label);
         }
-      g_object_unref (image);
     }
 }
 
