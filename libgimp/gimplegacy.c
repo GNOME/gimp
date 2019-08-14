@@ -64,16 +64,8 @@
 
 static void       gimp_loop                    (GimpRunProc      run_proc);
 static void       gimp_process_message         (GimpWireMessage *msg);
-static void       gimp_single_message          (void);
-static gboolean   gimp_extension_read          (GIOChannel      *channel,
-                                                GIOCondition     condition,
-                                                gpointer         data);
 static void       gimp_proc_run                (GPProcRun       *proc_run,
                                                 GimpRunProc      run_proc);
-static void       gimp_temp_proc_run           (GPProcRun       *proc_run);
-static void       gimp_proc_run_internal       (GPProcRun       *proc_run,
-                                                GimpRunProc      run_proc,
-                                                GPProcReturn    *proc_return);
 static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
                                                 GIOCondition     cond,
                                                 gpointer         data);
@@ -93,8 +85,6 @@ static gchar               write_buffer[WRITE_BUFFER_SIZE];
 static gulong              write_buffer_index = 0;
 
 static GimpPlugInInfo      PLUG_IN_INFO       = { 0, };
-
-static GHashTable         *gimp_temp_proc_ht  = NULL;
 
 static GimpPDBStatusType   pdb_error_status  = GIMP_PDB_SUCCESS;
 static gchar              *pdb_error_message = NULL;
@@ -263,162 +253,6 @@ gimp_install_procedure (const gchar        *name,
   g_free (proc_install.return_vals);
 }
 
-/**
- * gimp_install_temp_proc:
- * @name:          the procedure's name.
- * @blurb:         a short text describing what the procedure does.
- * @help:          the help text for the procedure (usually considerably
- *                 longer than @blurb).
- * @authors:       the procedure's authors.
- * @copyright:     the procedure's copyright.
- * @date:          the date the procedure was added.
- * @menu_label:    the procedure's menu label, or %NULL if the procedure has
- *                 no menu entry.
- * @image_types:   the drawable types the procedure can handle.
- * @type:          the type of the procedure.
- * @n_params:      the number of parameters the procedure takes.
- * @n_return_vals: the number of return values the procedure returns.
- * @params: (array length=n_params):
- *                 the procedure's parameters.
- * @return_vals: (array length=n_return_vals):
- *                 the procedure's return values.
- * @run_proc: (closure) (scope async):
- *                 the function to call for executing the procedure.
- *
- * Installs a new temporary procedure with the PDB (procedural database).
- *
- * A temporary procedure is a procedure which is only available while
- * one of your plug-in's "real" procedures is running.
- *
- * See gimp_install_procedure() for most details.
- *
- * @type <emphasis>must</emphasis> be %GIMP_TEMPORARY or the function
- * will fail.
- *
- * @run_proc is the function which will be called to execute the
- * procedure.
- *
- * NOTE: Normally, plug-in communication is triggered by the plug-in
- * and the GIMP core only responds to the plug-in's requests. You must
- * explicitly enable receiving of temporary procedure run requests
- * using either gimp_extension_enable() or
- * gimp_extension_process(). See this functions' documentation for
- * details.
- **/
-void
-gimp_install_temp_proc (const gchar        *name,
-                        const gchar        *blurb,
-                        const gchar        *help,
-                        const gchar        *authors,
-                        const gchar        *copyright,
-                        const gchar        *date,
-                        const gchar        *menu_label,
-                        const gchar        *image_types,
-                        GimpPDBProcType     type,
-                        gint                n_params,
-                        gint                n_return_vals,
-                        const GimpParamDef *params,
-                        const GimpParamDef *return_vals,
-                        GimpRunProc         run_proc)
-{
-  g_return_if_fail (name != NULL);
-  g_return_if_fail ((n_params == 0 && params == NULL) ||
-                    (n_params > 0  && params != NULL));
-  g_return_if_fail ((n_return_vals == 0 && return_vals == NULL) ||
-                    (n_return_vals > 0  && return_vals != NULL));
-  g_return_if_fail (type == GIMP_TEMPORARY);
-  g_return_if_fail (run_proc != NULL);
-
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  gimp_install_procedure (name,
-                          blurb, help,
-                          authors, copyright, date,
-                          menu_label,
-                          image_types,
-                          type,
-                          n_params, n_return_vals,
-                          params, return_vals);
-
-  /*  Insert the temp proc run function into the hash table  */
-  g_hash_table_insert (gimp_temp_proc_ht, g_strdup (name),
-                       (gpointer) run_proc);
-}
-
-/**
- * gimp_uninstall_temp_proc:
- * @name: the procedure's name
- *
- * Uninstalls a temporary procedure which has previously been
- * installed using gimp_install_temp_proc().
- **/
-void
-gimp_uninstall_temp_proc (const gchar *name)
-{
-  GPProcUninstall proc_uninstall;
-  gpointer        hash_name;
-  gboolean        found;
-
-  g_return_if_fail (name != NULL);
-
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  proc_uninstall.name = (gchar *) name;
-
-  if (! gp_proc_uninstall_write (_gimp_writechannel, &proc_uninstall, NULL))
-    gimp_quit ();
-
-  found = g_hash_table_lookup_extended (gimp_temp_proc_ht, name, &hash_name,
-                                        NULL);
-  if (found)
-    {
-      g_hash_table_remove (gimp_temp_proc_ht, (gpointer) name);
-      g_free (hash_name);
-    }
-}
-
-/**
- * gimp_extension_enable:
- *
- * Enables asynchronous processing of messages from the main GIMP
- * application.
- *
- * Normally, a plug-in is not called by GIMP except for the call to
- * the procedure it implements. All subsequent communication is
- * triggered by the plug-in and all messages sent from GIMP to the
- * plug-in are just answers to requests the plug-in made.
- *
- * If the plug-in however registered temporary procedures using
- * gimp_install_temp_proc(), it needs to be able to receive requests
- * to execute them. Usually this will be done by running
- * gimp_extension_process() in an endless loop.
- *
- * If the plug-in cannot use gimp_extension_process(), i.e. if it has
- * a GUI and is hanging around in a #GMainLoop, it must call
- * gimp_extension_enable().
- *
- * Note that the plug-in does not need to be a #GIMP_EXTENSION to
- * register temporary procedures.
- *
- * See also: gimp_install_procedure(), gimp_install_temp_proc()
- **/
-void
-gimp_extension_enable (void)
-{
-  static gboolean callback_added = FALSE;
-
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  if (! callback_added)
-    {
-      g_io_add_watch (_gimp_readchannel, G_IO_IN | G_IO_PRI,
-                      gimp_extension_read,
-                      NULL);
-
-      callback_added = TRUE;
-    }
-}
-
 void
 _gimp_legacy_read_expect_msg (GimpWireMessage *msg,
                               gint             type)
@@ -576,8 +410,6 @@ void
 _gimp_legacy_run (void)
 {
   ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  gimp_temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   g_io_add_watch (_gimp_readchannel,
                   G_IO_ERR | G_IO_HUP,
@@ -972,7 +804,7 @@ gimp_process_message (GimpWireMessage *msg)
       g_warning ("unexpected proc return message received (should not happen)");
       break;
     case GP_TEMP_PROC_RUN:
-      gimp_temp_proc_run (msg->data);
+      g_warning ("unexpected temp proc run message received (support removed)");
       break;
     case GP_TEMP_PROC_RETURN:
       g_warning ("unexpected temp proc return message received (should not happen)");
@@ -987,70 +819,10 @@ gimp_process_message (GimpWireMessage *msg)
 }
 
 static void
-gimp_single_message (void)
-{
-  GimpWireMessage msg;
-
-  /* Run a temp function */
-  if (! gimp_wire_read_msg (_gimp_readchannel, &msg, NULL))
-    gimp_quit ();
-
-  gimp_process_message (&msg);
-
-  gimp_wire_destroy (&msg);
-}
-
-static gboolean
-gimp_extension_read (GIOChannel  *channel,
-                     GIOCondition condition,
-                     gpointer     data)
-{
-  gimp_single_message ();
-
-  return G_SOURCE_CONTINUE;
-}
-
-static void
 gimp_proc_run (GPProcRun   *proc_run,
                GimpRunProc  run_proc)
 {
-  GPProcReturn proc_return;
-
-  gimp_proc_run_internal (proc_run, run_proc, &proc_return);
-
-  if (! gp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
-    gimp_quit ();
-}
-
-static void
-gimp_temp_proc_run (GPProcRun *proc_run)
-{
-  GPProcReturn proc_return;
-  GimpRunProc  run_proc = g_hash_table_lookup (gimp_temp_proc_ht,
-                                               proc_run->name);
-
-  if (run_proc)
-    {
-#ifdef GDK_WINDOWING_QUARTZ
-      if (proc_run->params &&
-          proc_run->params[0].data.d_int == GIMP_RUN_INTERACTIVE)
-        {
-          [NSApp activateIgnoringOtherApps: YES];
-        }
-#endif
-
-      gimp_proc_run_internal (proc_run, run_proc, &proc_return);
-
-      if (! gp_temp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
-        gimp_quit ();
-    }
-}
-
-static void
-gimp_proc_run_internal (GPProcRun     *proc_run,
-                        GimpRunProc   run_proc,
-                        GPProcReturn *proc_return)
-{
+  GPProcReturn    proc_return;
   GimpValueArray *arguments;
   GimpValueArray *return_values = NULL;
   GimpParam      *params;
@@ -1079,11 +851,14 @@ gimp_proc_run_internal (GPProcRun     *proc_run,
   g_free (params);
   gimp_value_array_unref (arguments);
 
-  proc_return->name    = proc_run->name;
-  proc_return->nparams = gimp_value_array_length (return_values);
-  proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
+  proc_return.name    = proc_run->name;
+  proc_return.nparams = gimp_value_array_length (return_values);
+  proc_return.params  = _gimp_value_array_to_gp_params (return_values, TRUE);
 
   gimp_value_array_unref (return_values);
+
+  if (! gp_proc_return_write (_gimp_writechannel, &proc_return, NULL))
+    gimp_quit ();
 }
 
 static gboolean

@@ -253,31 +253,6 @@ void           gimp_install_procedure   (const gchar        *name,
                                          const GimpParamDef *params,
                                          const GimpParamDef *return_vals);
 
-/* Install a temporary procedure in the procedure database.
- */
-void           gimp_install_temp_proc   (const gchar        *name,
-                                         const gchar        *blurb,
-                                         const gchar        *help,
-                                         const gchar        *authors,
-                                         const gchar        *copyright,
-                                         const gchar        *date,
-                                         const gchar        *menu_label,
-                                         const gchar        *image_types,
-                                         GimpPDBProcType     type,
-                                         gint                n_params,
-                                         gint                n_return_vals,
-                                         const GimpParamDef *params,
-                                         const GimpParamDef *return_vals,
-                                         GimpRunProc         run_proc);
-
-/* Uninstall a temporary procedure
- */
-void           gimp_uninstall_temp_proc (const gchar        *name);
-
-/* Enable asynchronous processing of temp_procs
- */
-void           gimp_extension_enable    (void);
-
 /* Run a procedure in the procedure database. The parameters are
  *  specified as a GimpValueArray, so are the return values.
  */

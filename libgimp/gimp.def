@@ -253,7 +253,6 @@ EXPORTS
 	gimp_export_exif
 	gimp_export_iptc
 	gimp_export_xmp
-	gimp_extension_enable
 	gimp_file_load
 	gimp_file_load_layer
 	gimp_file_load_layers
@@ -476,7 +475,6 @@ EXPORTS
 	gimp_image_unset_active_channel
 	gimp_image_width
 	gimp_install_procedure
-	gimp_install_temp_proc
 	gimp_item_attach_parasite
 	gimp_item_delete
 	gimp_item_detach_parasite
@@ -768,7 +766,6 @@ EXPORTS
 	gimp_text_layer_set_text
 	gimp_tile_height
 	gimp_tile_width
-	gimp_uninstall_temp_proc
 	gimp_user_time
 	gimp_value_get_channel_id
 	gimp_value_get_display_id
