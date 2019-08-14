@@ -53,6 +53,7 @@ This procedure returns the list of images currently open in GIMP.
 HELP
 
     &std_pdb_misc;
+    $lib_private = 1;
 
     @outargs = (
         { name => 'image_ids', type => 'int32array',
@@ -246,6 +247,7 @@ The order of layers is from topmost to bottommost.
 HELP
 
     &std_pdb_misc;
+    $lib_private = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -291,6 +293,7 @@ include the image's color components.
 HELP
 
     &std_pdb_misc;
+    $lib_private = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -333,6 +336,7 @@ This procedure returns the list of vectors contained in the specified image.
 HELP
 
     &simon_pdb_misc('2005', '2.4');
+    $lib_private = 1;
 
     @inargs = (
         { name => 'image', type => 'image',
