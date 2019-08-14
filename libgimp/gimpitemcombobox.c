@@ -119,8 +119,7 @@ static void  gimp_item_combo_box_populate  (GimpIntComboBox            *combo_bo
 static void  gimp_item_combo_box_model_add (GimpIntComboBox            *combo_box,
                                             GtkListStore               *store,
                                             GimpImage                  *image,
-                                            gint                        num_items,
-                                            gint32                     *items,
+                                            GList                      *items,
                                             gint                        tree_level);
 
 static void  gimp_item_combo_box_drag_data_received (GtkWidget         *widget,
@@ -389,52 +388,46 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  gint32       *images;
-  gint          num_images;
-  gint          i;
+  GList        *images;
+  GList        *list;
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  images = gimp_image_list (&num_images);
+  images = gimp_image_list ();
 
-  for (i = 0; i < num_images; i++)
+  for (list = images; list; list = list->next)
     {
-      GimpImage *image;
-      gint32    *items;
-      gint       num_items;
-
-      image = gimp_image_new_by_id (images[i]);
+      GimpImage *image = list->data;
+      GList     *items;
 
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_LAYER_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_layers (image, &num_items);
+          items = gimp_image_get_layers (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
-                                         image, num_items, items, 0);
-          g_free (items);
+                                         image, items, 0);
+          g_list_free_full (items, g_object_unref);
         }
 
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_CHANNEL_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_channels (image, &num_items);
+          items = gimp_image_get_channels (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
-                                         image, num_items, items, 0);
-          g_free (items);
+                                         image, items, 0);
+          g_list_free_full (items, g_object_unref);
         }
 
       if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_vectors (image, &num_items);
+          items = gimp_image_get_vectors (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
-                                         image, num_items, items, 0);
-          g_free (items);
+                                         image, items, 0);
+          g_list_free_full (items, g_object_unref);
         }
-
-      g_object_unref (image);
     }
 
-  g_free (images);
+  g_list_free_full (images, g_object_unref);
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
@@ -444,13 +437,12 @@ static void
 gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
                                GtkListStore    *store,
                                GimpImage       *image,
-                               gint             num_items,
-                               gint32          *items,
+                               GList           *items,
                                gint             tree_level)
 {
   GimpItemComboBoxPrivate *private = GET_PRIVATE (combo_box);
   GtkTreeIter              iter;
-  gint                     i;
+  GList                   *list;
   gchar                   *indent;
 
   if (tree_level > 0)
@@ -465,13 +457,14 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
       indent = g_strdup ("");
     }
 
-  for (i = 0; i < num_items; i++)
+  for (list = items; list; list = list->next)
     {
-      GimpItem *item = gimp_item_new_by_id (items[i]);
+      GimpItem *item    = list->data;
+      gint32    item_id = gimp_item_get_id (item);
 
       if ((! private->constraint && ! private->constraint_d)                                ||
-          (private->constraint && (* private->constraint) (image, items[i], private->data)) ||
-          (private->constraint_d && (* private->constraint_d) (gimp_image_get_id (image), items[i], private->data)))
+          (private->constraint && (* private->constraint) (image, item, private->data)) ||
+          (private->constraint_d && (* private->constraint_d) (gimp_image_get_id (image), item_id, private->data)))
         {
           gchar     *image_name = gimp_image_get_name (image);
           gchar     *item_name  = gimp_item_get_name (item);
@@ -481,7 +474,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           label = g_strdup_printf ("%s%s-%d / %s-%d",
                                    indent, image_name,
                                    gimp_image_get_id (image),
-                                   item_name, items[i]);
+                                   item_name, item_id);
 
           g_free (item_name);
           g_free (image_name);
@@ -495,7 +488,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
 
           gtk_list_store_append (store, &iter);
           gtk_list_store_set (store, &iter,
-                              GIMP_INT_STORE_VALUE,  items[i],
+                              GIMP_INT_STORE_VALUE,  item_id,
                               GIMP_INT_STORE_LABEL,  label,
                               GIMP_INT_STORE_PIXBUF, thumb,
                               -1);
@@ -508,18 +501,14 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
 
       if (gimp_item_is_group (item))
         {
-          gint32 *children;
-          gint    n_children;
+          GList *children;
 
-          children = gimp_item_get_children (item, &n_children);
+          children = gimp_item_get_children (item);
           gimp_item_combo_box_model_add (combo_box, store,
-                                         image,
-                                         n_children, children,
+                                         image, children,
                                          tree_level + 1);
           g_free (children);
         }
-
-      g_object_unref (item);
     }
 
   g_free (indent);
