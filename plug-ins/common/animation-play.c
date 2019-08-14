@@ -67,13 +67,36 @@ typedef struct
   gint x, y;
 } CursorOffset;
 
-/* Declare local functions. */
-static void        query                     (void);
-static void        run                       (const gchar      *name,
-                                              gint              nparams,
-                                              const GimpParam  *param,
-                                              gint             *nreturn_vals,
-                                              GimpParam       **return_vals);
+
+typedef struct _Play      Play;
+typedef struct _PlayClass PlayClass;
+
+struct _Play
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _PlayClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+/* Declare local functions.
+ */
+
+#define PLAY_TYPE  (play_get_type ())
+#define PLAY (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLAY_TYPE, Play))
+
+GType                   play_get_type         (void) G_GNUC_CONST;
+
+static GList          * play_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * play_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * play_run              (GimpProcedure        *procedure,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 
 static void        initialize                (void);
 static void        build_dialog              (gchar           *imagename);
@@ -136,13 +159,9 @@ static gboolean    is_ms_tag                 (const gchar     *str,
                                               gint            *taglength);
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
+G_DEFINE_TYPE (Play, play, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (PLAY_TYPE)
 
 
 /* Global widgets'n'stuff */
@@ -191,77 +210,106 @@ static AnimationSettings settings =
 
 static gint32 frames_image_id = 0;
 
-MAIN ()
 
 static void
-query (void)
+play_class_init (PlayClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"      }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Preview a GIMP layer-based animation"),
-                          "",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "Adam D. Moss <adam@gimp.org>",
-                          "1997, 1998...",
-                          N_("_Playback..."),
-                          "RGB*, INDEXED*, GRAY*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Animation");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) "media-playback-start");
+  plug_in_class->query_procedures = play_query_procedures;
+  plug_in_class->create_procedure = play_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+play_init (Play *play)
 {
-  static GimpParam  values[1];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+}
+
+static GList *
+play_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+play_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      play_run, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("_Playback..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Animation/");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Preview a GIMP layer-based "
+                                           "animation"),
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Adam D. Moss <adam@gimp.org>",
+                                      "Adam D. Moss <adam@gimp.org>",
+                                      "1997, 1998...");
+
+      gimp_procedure_set_icon_name (procedure, "media-playback-start");
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_NONINTERACTIVE,
+                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_image_id ("image",
+                                                             "Image",
+                                                             "The input image",
+                                                             FALSE,
+                                                             G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_drawable_id ("drawable",
+                                                                "Drawable",
+                                                                "The input drawable",
+                                                                FALSE,
+                                                                G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+play_run (GimpProcedure        *procedure,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpRunMode run_mode;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  run_mode = g_value_get_enum        (gimp_value_array_index (args, 0));
+  image_id = gimp_value_get_image_id (gimp_value_array_index (args, 1));
 
-  run_mode = param[0].data.d_int32;
+  gimp_get_data (PLUG_IN_PROC, &settings);
 
- if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
-   {
-     status = GIMP_PDB_CALLING_ERROR;
-   }
+  initialize ();
+  gtk_main ();
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      gimp_get_data (PLUG_IN_PROC, &settings);
-      image_id = param[1].data.d_image;
+  gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
 
-      initialize ();
-      gtk_main ();
-      gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
-
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
-    }
-
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
+    gimp_displays_flush ();
 
   gimp_image_delete (frames_image_id);
   gegl_exit ();
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gboolean
