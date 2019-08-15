@@ -58,9 +58,9 @@ _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
       break;
 
     case GIMP_PDB_INT8:
-      pspec = gimp_param_spec_int8 (name, nick, blurb,
-                                    0, G_MAXUINT8, 0,
-                                    G_PARAM_READWRITE);
+      pspec = g_param_spec_uchar (name, nick, blurb,
+                                  0, G_MAXUINT8, 0,
+                                  G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_FLOAT:
@@ -195,7 +195,7 @@ _gimp_pdb_arg_type_to_gtype (GimpPDBArgType  type)
       return GIMP_TYPE_INT16;
 
     case GIMP_PDB_INT8:
-      return GIMP_TYPE_INT8;
+      return G_TYPE_UCHAR;
 
     case GIMP_PDB_FLOAT:
       return G_TYPE_DOUBLE;
@@ -286,7 +286,7 @@ _gimp_pdb_gtype_to_arg_type (GType type)
         { G_TYPE_BOOLEAN,            GIMP_PDB_INT32       },
 
         { GIMP_TYPE_INT16,           GIMP_PDB_INT16       },
-        { GIMP_TYPE_INT8,            GIMP_PDB_INT8        },
+        { G_TYPE_UCHAR,              GIMP_PDB_INT8        },
         { G_TYPE_DOUBLE,             GIMP_PDB_FLOAT       },
 
         { G_TYPE_STRING,             GIMP_PDB_STRING      },
@@ -381,7 +381,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_INT8:
-          g_value_set_uint (&value, params[i].data.d_int8);
+          g_value_set_uchar (&value, params[i].data.d_int8);
           break;
 
         case GIMP_PDB_FLOAT:
@@ -569,7 +569,7 @@ _gimp_value_array_to_params (GimpValueArray *args,
           break;
 
         case GIMP_PDB_INT8:
-          params[i].data.d_int8 = g_value_get_uint (value);
+          params[i].data.d_int8 = g_value_get_uchar (value);
           break;
 
         case GIMP_PDB_FLOAT:

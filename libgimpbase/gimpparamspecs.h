@@ -149,43 +149,6 @@ GParamSpec * gimp_param_spec_int16     (const gchar *name,
 
 
 /*
- * GIMP_TYPE_INT8
- */
-
-#define GIMP_TYPE_INT8               (gimp_int8_get_type ())
-#define GIMP_VALUE_HOLDS_INT8(value) (G_TYPE_CHECK_VALUE_TYPE ((value),\
-                                      GIMP_TYPE_INT8))
-
-GType   gimp_int8_get_type           (void) G_GNUC_CONST;
-
-
-/*
- * GIMP_TYPE_PARAM_INT8
- */
-
-#define GIMP_TYPE_PARAM_INT8           (gimp_param_int8_get_type ())
-#define GIMP_PARAM_SPEC_INT8(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_INT8, GimpParamSpecInt8))
-#define GIMP_IS_PARAM_SPEC_INT8(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_INT8))
-
-typedef struct _GimpParamSpecInt8 GimpParamSpecInt8;
-
-struct _GimpParamSpecInt8
-{
-  GParamSpecUInt parent_instance;
-};
-
-GType        gimp_param_int8_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_int8     (const gchar *name,
-                                       const gchar *nick,
-                                       const gchar *blurb,
-                                       guint        minimum,
-                                       guint        maximum,
-                                       guint        default_value,
-                                       GParamFlags  flags);
-
-
-/*
  * GIMP_TYPE_PARAM_STRING
  */
 

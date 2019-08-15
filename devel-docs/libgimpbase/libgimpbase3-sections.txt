@@ -298,7 +298,6 @@ GIMP_PARAM_WRITABLE
 GIMP_PARAM_READWRITE
 gimp_param_spec_int32
 gimp_param_spec_int16
-gimp_param_spec_int8
 gimp_param_spec_string
 gimp_array_new
 gimp_array_copy
@@ -350,7 +349,6 @@ GIMP_IS_PARAM_SPEC_INT16
 GIMP_IS_PARAM_SPEC_INT16_ARRAY
 GIMP_IS_PARAM_SPEC_INT32
 GIMP_IS_PARAM_SPEC_INT32_ARRAY
-GIMP_IS_PARAM_SPEC_INT8
 GIMP_IS_PARAM_SPEC_INT8_ARRAY
 GIMP_IS_PARAM_SPEC_RGB_ARRAY
 GIMP_IS_PARAM_SPEC_STRING
@@ -361,7 +359,6 @@ GIMP_PARAM_SPEC_INT16
 GIMP_PARAM_SPEC_INT16_ARRAY
 GIMP_PARAM_SPEC_INT32
 GIMP_PARAM_SPEC_INT32_ARRAY
-GIMP_PARAM_SPEC_INT8
 GIMP_PARAM_SPEC_INT8_ARRAY
 GIMP_PARAM_SPEC_RGB_ARRAY
 GIMP_PARAM_SPEC_STRING
@@ -372,7 +369,6 @@ GIMP_TYPE_INT16
 GIMP_TYPE_INT16_ARRAY
 GIMP_TYPE_INT32
 GIMP_TYPE_INT32_ARRAY
-GIMP_TYPE_INT8
 GIMP_TYPE_INT8_ARRAY
 GIMP_TYPE_PARAM_ARRAY
 GIMP_TYPE_PARAM_FLOAT_ARRAY
@@ -380,7 +376,6 @@ GIMP_TYPE_PARAM_INT16
 GIMP_TYPE_PARAM_INT16_ARRAY
 GIMP_TYPE_PARAM_INT32
 GIMP_TYPE_PARAM_INT32_ARRAY
-GIMP_TYPE_PARAM_INT8
 GIMP_TYPE_PARAM_INT8_ARRAY
 GIMP_TYPE_PARAM_RGB_ARRAY
 GIMP_TYPE_PARAM_STRING
@@ -393,7 +388,6 @@ GIMP_VALUE_HOLDS_INT16
 GIMP_VALUE_HOLDS_INT16_ARRAY
 GIMP_VALUE_HOLDS_INT32
 GIMP_VALUE_HOLDS_INT32_ARRAY
-GIMP_VALUE_HOLDS_INT8
 GIMP_VALUE_HOLDS_INT8_ARRAY
 GIMP_VALUE_HOLDS_RGB_ARRAY
 GIMP_VALUE_HOLDS_STRING_ARRAY
@@ -405,7 +399,6 @@ GimpParamSpecInt16
 GimpParamSpecInt16Array
 GimpParamSpecInt32
 GimpParamSpecInt32Array
-GimpParamSpecInt8
 GimpParamSpecInt8Array
 GimpParamSpecRGBArray
 GimpParamSpecString
@@ -417,7 +410,6 @@ gimp_int16_get_type
 gimp_int32_array_get_type
 gimp_int32_get_type
 gimp_int8_array_get_type
-gimp_int8_get_type
 gimp_param_array_get_type
 gimp_param_float_array_get_type
 gimp_param_int16_array_get_type
@@ -425,7 +417,6 @@ gimp_param_int16_get_type
 gimp_param_int32_array_get_type
 gimp_param_int32_get_type
 gimp_param_int8_array_get_type
-gimp_param_int8_get_type
 gimp_param_rgb_array_get_type
 gimp_param_string_array_get_type
 gimp_param_string_get_type

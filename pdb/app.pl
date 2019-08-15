@@ -407,11 +407,11 @@ CODE
 	}
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
-gimp_param_spec_int8 ("$name",
-                      "$nick",
-                      "$blurb",
-                      $min, $max, $default,
-                      $flags)
+g_param_spec_uchar ("$name",
+                    "$nick",
+                    "$blurb",
+                    $min, $max, $default,
+                    $flags)
 CODE
     }
     elsif ($pdbtype eq 'boolean') {

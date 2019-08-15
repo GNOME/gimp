@@ -115,7 +115,6 @@ EXPORTS
 	gimp_param_int32_array_get_type
 	gimp_param_int32_get_type
 	gimp_param_int8_array_get_type
-	gimp_param_int8_get_type
 	gimp_param_memsize_get_type
 	gimp_param_parasite_get_type
 	gimp_param_rgb_array_get_type
@@ -125,7 +124,6 @@ EXPORTS
 	gimp_param_spec_int16_array
 	gimp_param_spec_int32
 	gimp_param_spec_int32_array
-	gimp_param_spec_int8
 	gimp_param_spec_int8_array
 	gimp_param_spec_memsize
 	gimp_param_spec_parasite

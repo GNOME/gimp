@@ -216,19 +216,19 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                                                 FALSE,
                                                                 G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int8 ("index1",
-                                                         "Index 1",
-                                                         "First index in the "
-                                                         "colormap",
-                                                         0, 255, 0,
-                                                         G_PARAM_READWRITE));
+                                   g_param_spec_uchar ("index1",
+                                                       "Index 1",
+                                                       "First index in the "
+                                                       "colormap",
+                                                       0, 255, 0,
+                                                       G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int8 ("index2",
-                                                         "Index 2",
-                                                         "First (other) index "
-                                                         "in the colormap",
-                                                         0, 255, 0,
-                                                         G_PARAM_READWRITE));
+                                   g_param_spec_uchar ("index2",
+                                                       "Index 2",
+                                                       "First (other) index "
+                                                       "in the colormap",
+                                                       0, 255, 0,
+                                                       G_PARAM_READWRITE));
     }
 
   return procedure;
@@ -309,8 +309,8 @@ remap_run (GimpProcedure        *procedure,
   else if (strcmp (gimp_procedure_get_name (procedure),
                    PLUG_IN_PROC_SWAP) == 0)
     {
-      guchar index1 = g_value_get_uint (gimp_value_array_index (args, 3));
-      guchar index2 = g_value_get_uint (gimp_value_array_index (args, 4));
+      guchar index1 = g_value_get_uchar (gimp_value_array_index (args, 3));
+      guchar index2 = g_value_get_uchar (gimp_value_array_index (args, 4));
       guchar tmp;
       gint   n_cols;
 

@@ -417,10 +417,10 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
   greenangle = g_value_get_double (gimp_value_array_index (args, 6));
   bluefrequency = g_value_get_double (gimp_value_array_index (args, 7));
   blueangle = g_value_get_double (gimp_value_array_index (args, 8));
-  colormodel = g_value_get_uint (gimp_value_array_index (args, 9));
-  redmode = g_value_get_uint (gimp_value_array_index (args, 10));
-  greenmode = g_value_get_uint (gimp_value_array_index (args, 11));
-  bluemode = g_value_get_uint (gimp_value_array_index (args, 12));
+  colormodel = g_value_get_uchar (gimp_value_array_index (args, 9));
+  redmode = g_value_get_uchar (gimp_value_array_index (args, 10));
+  greenmode = g_value_get_uchar (gimp_value_array_index (args, 11));
+  bluemode = g_value_get_uchar (gimp_value_array_index (args, 12));
 
   if (success)
     {
@@ -1736,15 +1736,15 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
   guint8 blue_threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  from_red = g_value_get_uint (gimp_value_array_index (args, 3));
-  from_green = g_value_get_uint (gimp_value_array_index (args, 4));
-  from_blue = g_value_get_uint (gimp_value_array_index (args, 5));
-  to_red = g_value_get_uint (gimp_value_array_index (args, 6));
-  to_green = g_value_get_uint (gimp_value_array_index (args, 7));
-  to_blue = g_value_get_uint (gimp_value_array_index (args, 8));
-  red_threshold = g_value_get_uint (gimp_value_array_index (args, 9));
-  green_threshold = g_value_get_uint (gimp_value_array_index (args, 10));
-  blue_threshold = g_value_get_uint (gimp_value_array_index (args, 11));
+  from_red = g_value_get_uchar (gimp_value_array_index (args, 3));
+  from_green = g_value_get_uchar (gimp_value_array_index (args, 4));
+  from_blue = g_value_get_uchar (gimp_value_array_index (args, 5));
+  to_red = g_value_get_uchar (gimp_value_array_index (args, 6));
+  to_green = g_value_get_uchar (gimp_value_array_index (args, 7));
+  to_blue = g_value_get_uchar (gimp_value_array_index (args, 8));
+  red_threshold = g_value_get_uchar (gimp_value_array_index (args, 9));
+  green_threshold = g_value_get_uchar (gimp_value_array_index (args, 10));
+  blue_threshold = g_value_get_uchar (gimp_value_array_index (args, 11));
 
   if (success)
     {
@@ -2354,8 +2354,8 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   width = g_value_get_int (gimp_value_array_index (args, 3));
   height = g_value_get_int (gimp_value_array_index (args, 4));
-  tileable = g_value_get_uint (gimp_value_array_index (args, 5));
-  algorithm = g_value_get_uint (gimp_value_array_index (args, 6));
+  tileable = g_value_get_uchar (gimp_value_array_index (args, 5));
+  algorithm = g_value_get_uchar (gimp_value_array_index (args, 6));
   seed = g_value_get_int (gimp_value_array_index (args, 7));
 
   if (success)
@@ -4851,29 +4851,29 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0, 360, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("colormodel",
-                                                     "colormodel",
-                                                     "Color model { RGB-MODEL (0), HSL-MODEL (1) }",
-                                                     0, 1, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("colormodel",
+                                                   "colormodel",
+                                                   "Color model { RGB-MODEL (0), HSL-MODEL (1) }",
+                                                   0, 1, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("redmode",
-                                                     "redmode",
-                                                     "Red/hue application mode { TRUE, FALSE }",
-                                                     0, 1, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("redmode",
+                                                   "redmode",
+                                                   "Red/hue application mode { TRUE, FALSE }",
+                                                   0, 1, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("greenmode",
-                                                     "greenmode",
-                                                     "Green/saturation application mode { TRUE, FALSE }",
-                                                     0, 1, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("greenmode",
+                                                   "greenmode",
+                                                   "Green/saturation application mode { TRUE, FALSE }",
+                                                   0, 1, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("bluemode",
-                                                     "bluemode",
-                                                     "Blue/luminance application mode { TRUE, FALSE }",
-                                                     0, 1, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("bluemode",
+                                                   "bluemode",
+                                                   "Blue/luminance application mode { TRUE, FALSE }",
+                                                   0, 1, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6255,59 +6255,59 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("from-red",
-                                                     "from red",
-                                                     "Red value (from)",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("from-red",
+                                                   "from red",
+                                                   "Red value (from)",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("from-green",
-                                                     "from green",
-                                                     "Green value (from)",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("from-green",
+                                                   "from green",
+                                                   "Green value (from)",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("from-blue",
-                                                     "from blue",
-                                                     "Blue value (from)",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("from-blue",
+                                                   "from blue",
+                                                   "Blue value (from)",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("to-red",
-                                                     "to red",
-                                                     "Red value (to)",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("to-red",
+                                                   "to red",
+                                                   "Red value (to)",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("to-green",
-                                                     "to green",
-                                                     "Green value (to)",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("to-green",
+                                                   "to green",
+                                                   "Green value (to)",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("to-blue",
-                                                     "to blue",
-                                                     "Blue value (to)",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("to-blue",
+                                                   "to blue",
+                                                   "Blue value (to)",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("red-threshold",
-                                                     "red threshold",
-                                                     "Red threshold",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("red-threshold",
+                                                   "red threshold",
+                                                   "Red threshold",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("green-threshold",
-                                                     "green threshold",
-                                                     "Green threshold",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("green-threshold",
+                                                   "green threshold",
+                                                   "Green threshold",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("blue-threshold",
-                                                     "blue threshold",
-                                                     "Blue threshold",
-                                                     0, G_MAXUINT8, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("blue-threshold",
+                                                   "blue threshold",
+                                                   "Blue threshold",
+                                                   0, G_MAXUINT8, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7035,17 +7035,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       1, 1024, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("tileable",
-                                                     "tileable",
-                                                     "Tileable maze? (TRUE or FALSE)",
-                                                     0, 1, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("tileable",
+                                                   "tileable",
+                                                   "Tileable maze? (TRUE or FALSE)",
+                                                   0, 1, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8 ("algorithm",
-                                                     "algorithm",
-                                                     "Generation algorithm (0 = DEPTH FIRST, 1 = PRIM'S ALGORITHM)",
-                                                     0, 1, 0,
-                                                     GIMP_PARAM_READWRITE));
+                               g_param_spec_uchar ("algorithm",
+                                                   "algorithm",
+                                                   "Generation algorithm (0 = DEPTH FIRST, 1 = PRIM'S ALGORITHM)",
+                                                   0, 1, 0,
+                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("seed",
                                                       "seed",

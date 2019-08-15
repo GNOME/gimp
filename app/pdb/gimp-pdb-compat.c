@@ -57,7 +57,7 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
         { G_TYPE_BOOLEAN,            GIMP_PDB_INT32       },
 
         { GIMP_TYPE_INT16,           GIMP_PDB_INT16       },
-        { GIMP_TYPE_INT8,            GIMP_PDB_INT8        },
+        { G_TYPE_UCHAR,              GIMP_PDB_INT8        },
         { G_TYPE_DOUBLE,             GIMP_PDB_FLOAT       },
 
         { G_TYPE_STRING,             GIMP_PDB_STRING      },

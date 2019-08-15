@@ -51,10 +51,19 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_int.max_val     = ispec->maximum;
       param_def->meta.m_int.default_val = ispec->default_value;
     }
-  else if (pspec_type == G_TYPE_PARAM_UINT ||
-           pspec_type == GIMP_TYPE_PARAM_INT8)
+  else if (pspec_type == G_TYPE_PARAM_UINT)
     {
       GParamSpecUInt *uspec = G_PARAM_SPEC_UINT (pspec);
+
+      param_def->param_def_type = GP_PARAM_DEF_TYPE_INT;
+
+      param_def->meta.m_int.min_val     = uspec->minimum;
+      param_def->meta.m_int.max_val     = uspec->maximum;
+      param_def->meta.m_int.default_val = uspec->default_value;
+    }
+  else if (pspec_type == G_TYPE_PARAM_UCHAR)
+    {
+      GParamSpecUChar *uspec = G_PARAM_SPEC_UCHAR (pspec);
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_INT;
 
@@ -436,12 +445,17 @@ _gimp_value_to_gp_param (const GValue *value,
 
       param->data.d_int = g_value_get_int (value);
     }
-  else if (type == G_TYPE_UINT ||
-           type == GIMP_TYPE_INT8)
+  else if (type == G_TYPE_UINT)
     {
       param->param_type = GP_PARAM_TYPE_INT;
 
       param->data.d_int = g_value_get_uint (value);
+    }
+  else if (type == G_TYPE_UCHAR)
+    {
+      param->param_type = GP_PARAM_TYPE_INT;
+
+      param->data.d_int = g_value_get_uchar (value);
     }
   else if (G_VALUE_HOLDS_ENUM (value))
     {
