@@ -246,11 +246,11 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                                      1, 4, 1,
                                                      GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int8_array ("rank",
-                                                               "Rank",
-                                                               "Ranks of the "
-                                                               "dimensions",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("rank",
+                                                                "Rank",
+                                                                "Ranks of the "
+                                                                "dimensions",
+                                                                GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_int ("dimension",
                                                      "Dimension",
@@ -259,10 +259,10 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                                      1, 4, 1,
                                                      GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int8_array ("sel",
-                                                               "Sel",
-                                                               "Selection modes",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_string_array ("sel",
+                                                                 "Sel",
+                                                                 "Selection modes",
+                                                                 GIMP_PARAM_READWRITE));
     }
 
   return procedure;
@@ -399,7 +399,7 @@ gih_save (GimpProcedure        *procedure,
       else
         {
           const guint8 *rank =
-            gimp_value_get_int8_array (gimp_value_array_index (args, 7));
+            gimp_value_get_uint8_array (gimp_value_array_index (args, 7));
 
           const gchar **sel =
             gimp_value_get_string_array (gimp_value_array_index (args, 9));

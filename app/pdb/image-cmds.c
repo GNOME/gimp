@@ -1481,7 +1481,7 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_bytes);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), colormap, num_bytes);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), colormap, num_bytes);
     }
 
   return return_vals;
@@ -1502,7 +1502,7 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  colormap = gimp_value_get_int8_array (gimp_value_array_index (args, 2));
+  colormap = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1693,7 +1693,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 2), actual_height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
@@ -4122,10 +4122,10 @@ register_image_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("colormap",
-                                                               "colormap",
-                                                               "The image's colormap.",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("colormap",
+                                                                "colormap",
+                                                                "The image's colormap.",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4156,10 +4156,10 @@ register_image_procs (GimpPDB *pdb)
                                                  0, 768, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("colormap",
-                                                           "colormap",
-                                                           "The new colormap values",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("colormap",
+                                                            "colormap",
+                                                            "The new colormap values",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4332,10 +4332,10 @@ register_image_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("thumbnail-data",
-                                                               "thumbnail data",
-                                                               "The thumbnail data",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("thumbnail-data",
+                                                                "thumbnail data",
+                                                                "The thumbnail data",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -447,7 +447,7 @@ _gimp_pdb_get_data (const gchar  *identifier,
   if (success)
     {
       *bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      *data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
+      *data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
     }
 
   gimp_value_array_unref (return_vals);
@@ -523,9 +523,9 @@ _gimp_pdb_set_data (const gchar  *identifier,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, identifier,
                                           G_TYPE_INT, bytes,
-                                          GIMP_TYPE_INT8_ARRAY, NULL,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_int8_array (gimp_value_array_index (args, 2), data, bytes);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), data, bytes);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

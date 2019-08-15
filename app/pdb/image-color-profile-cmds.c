@@ -82,7 +82,7 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_bytes);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), profile_data, num_bytes);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), profile_data, num_bytes);
     }
 
   return return_vals;
@@ -128,7 +128,7 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_bytes);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), profile_data, num_bytes);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), profile_data, num_bytes);
     }
 
   return return_vals;
@@ -149,7 +149,7 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  color_profile = gimp_value_get_int8_array (gimp_value_array_index (args, 2));
+  color_profile = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -244,7 +244,7 @@ image_convert_color_profile_invoker (GimpProcedure         *procedure,
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   num_bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  color_profile = gimp_value_get_int8_array (gimp_value_array_index (args, 2));
+  color_profile = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
   intent = g_value_get_enum (gimp_value_array_index (args, 3));
   bpc = g_value_get_boolean (gimp_value_array_index (args, 4));
 
@@ -356,10 +356,10 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("profile-data",
-                                                               "profile data",
-                                                               "The image's serialized color profile.",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("profile-data",
+                                                                "profile data",
+                                                                "The image's serialized color profile.",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -390,10 +390,10 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("profile-data",
-                                                               "profile data",
-                                                               "The image's serialized color profile.",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("profile-data",
+                                                                "profile data",
+                                                                "The image's serialized color profile.",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -424,10 +424,10 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("color-profile",
-                                                           "color profile",
-                                                           "The new serialized color profile",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("color-profile",
+                                                            "color profile",
+                                                            "The new serialized color profile",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -488,10 +488,10 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("color-profile",
-                                                           "color profile",
-                                                           "The serialized color profile",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("color-profile",
+                                                            "color profile",
+                                                            "The serialized color profile",
+                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("intent",
                                                   "intent",

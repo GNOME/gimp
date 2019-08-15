@@ -166,11 +166,11 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                                      1, 256, 1,
                                                      G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int8_array ("map",
-                                                               "Map",
-                                                               "Remap array "
-                                                               "for the colormap",
-                                                               G_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("map",
+                                                                "Map",
+                                                                "Remap array "
+                                                                "for the colormap",
+                                                                G_PARAM_READWRITE));
     }
   else if (! strcmp (name, PLUG_IN_PROC_SWAP))
     {
@@ -268,8 +268,8 @@ remap_run (GimpProcedure        *procedure,
 
       g_free (gimp_image_get_colormap (image_ID, &n_cols));
 
-      n_col_args = g_value_get_int           (gimp_value_array_index (args, 3));
-      col_args   = gimp_value_get_int8_array (gimp_value_array_index (args, 4));
+      n_col_args = g_value_get_int            (gimp_value_array_index (args, 3));
+      col_args   = gimp_value_get_uint8_array (gimp_value_array_index (args, 4));
 
       switch (run_mode)
         {

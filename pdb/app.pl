@@ -537,10 +537,10 @@ CODE
     }
     elsif ($pdbtype eq 'int8array') {
 	$pspec = <<CODE;
-gimp_param_spec_int8_array ("$name",
-                            "$nick",
-                            "$blurb",
-                            $flags)
+gimp_param_spec_uint8_array ("$name",
+                             "$nick",
+                             "$blurb",
+                             $flags)
 CODE
     }
     elsif ($pdbtype eq 'floatarray') {

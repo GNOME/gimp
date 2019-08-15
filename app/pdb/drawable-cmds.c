@@ -636,7 +636,7 @@ drawable_get_pixel_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), pixel, num_channels);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), pixel, num_channels);
     }
 
   return return_vals;
@@ -661,7 +661,7 @@ drawable_set_pixel_invoker (GimpProcedure         *procedure,
   x_coord = g_value_get_int (gimp_value_array_index (args, 1));
   y_coord = g_value_get_int (gimp_value_array_index (args, 2));
   num_channels = g_value_get_int (gimp_value_array_index (args, 3));
-  pixel = gimp_value_get_int8_array (gimp_value_array_index (args, 4));
+  pixel = gimp_value_get_uint8_array (gimp_value_array_index (args, 4));
 
   if (success)
     {
@@ -825,7 +825,7 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 2), actual_height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
@@ -907,7 +907,7 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
       g_value_set_int (gimp_value_array_index (return_vals, 2), height);
       g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
       g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
@@ -1584,10 +1584,10 @@ register_drawable_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("pixel",
-                                                               "pixel",
-                                                               "The pixel value",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("pixel",
+                                                                "pixel",
+                                                                "The pixel value",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1630,10 +1630,10 @@ register_drawable_procs (GimpPDB *pdb)
                                                  0, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("pixel",
-                                                           "pixel",
-                                                           "The pixel value",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("pixel",
+                                                            "pixel",
+                                                            "The pixel value",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1773,10 +1773,10 @@ register_drawable_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("thumbnail-data",
-                                                               "thumbnail data",
-                                                               "The thumbnail data",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("thumbnail-data",
+                                                                "thumbnail data",
+                                                                "The thumbnail data",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1861,10 +1861,10 @@ register_drawable_procs (GimpPDB *pdb)
                                                      0, G_MAXINT32, 0,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("thumbnail-data",
-                                                               "thumbnail data",
-                                                               "The thumbnail data",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("thumbnail-data",
+                                                                "thumbnail data",
+                                                                "The thumbnail data",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

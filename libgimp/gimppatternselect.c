@@ -112,11 +112,11 @@ gimp_pattern_select_new (const gchar            *title,
                                                  0, G_MAXINT, 0,
                                                  G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("mask-data",
-                                                           "Mask data",
-                                                           "The pattern mask "
-                                                           "data",
-                                                           G_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("mask-data",
+                                                            "Mask data",
+                                                            "The pattern mask "
+                                                            "data",
+                                                            G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("closing",
                                                      "Closing",
@@ -189,7 +189,7 @@ gimp_temp_pattern_run (GimpProcedure        *procedure,
   data->width             = g_value_get_int    (gimp_value_array_index (args, 1));
   data->height            = g_value_get_int    (gimp_value_array_index (args, 2));
   data->bytes             = g_value_get_int    (gimp_value_array_index (args, 3));
-  data->pattern_mask_data = gimp_value_dup_int8_array (gimp_value_array_index (args, 5));
+  data->pattern_mask_data = gimp_value_dup_uint8_array (gimp_value_array_index (args, 5));
   data->closing           = g_value_get_boolean (gimp_value_array_index (args, 6));
 
   if (! data->idle_id)

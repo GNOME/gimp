@@ -213,9 +213,9 @@ gimp_image_convert_set_dither_matrix (gint          width,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_INT, matrix_length,
-                                          GIMP_TYPE_INT8_ARRAY, NULL,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_int8_array (gimp_value_array_index (args, 3), matrix, matrix_length);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 3), matrix, matrix_length);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

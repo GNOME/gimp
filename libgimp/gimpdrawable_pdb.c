@@ -848,7 +848,7 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
       *num_channels = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      pixel = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
+      pixel = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
     }
 
   gimp_value_array_unref (return_vals);
@@ -891,9 +891,9 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
                                           G_TYPE_INT, x_coord,
                                           G_TYPE_INT, y_coord,
                                           G_TYPE_INT, num_channels,
-                                          GIMP_TYPE_INT8_ARRAY, NULL,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_int8_array (gimp_value_array_index (args, 4), pixel, num_channels);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 4), pixel, num_channels);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -1082,7 +1082,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
       *actual_height = g_value_get_int (gimp_value_array_index (return_vals, 2));
       *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
       *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
+      *thumbnail_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
     }
 
   gimp_value_array_unref (return_vals);
@@ -1168,7 +1168,7 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
       *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
       *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
       *thumbnail_data_count = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *thumbnail_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
+      *thumbnail_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
     }
 
   gimp_value_array_unref (return_vals);

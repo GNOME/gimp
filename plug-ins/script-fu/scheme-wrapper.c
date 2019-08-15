@@ -829,7 +829,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #endif
             }
         }
-      else if (GIMP_VALUE_HOLDS_INT8_ARRAY (&value))
+      else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
@@ -870,7 +870,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   array[j] = (guint8) sc->vptr->ivalue (v_element);
                 }
 
-              gimp_value_take_int8_array (&value, array, n_elements);
+              gimp_value_take_uint8_array (&value, array, n_elements);
 
 #if DEBUG_MARSHALL
               {
@@ -1406,11 +1406,11 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_INT8_ARRAY (value))
+          else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
             {
               gint32        n      = g_value_get_int
                                        (gimp_value_array_index (values, i));
-              const guint8 *v      = gimp_value_get_int8_array (value);
+              const guint8 *v      = gimp_value_get_uint8_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)

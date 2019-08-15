@@ -388,7 +388,7 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
   if (success)
     {
       g_value_set_int (gimp_value_array_index (return_vals, 1), bytes);
-      gimp_value_take_int8_array (gimp_value_array_index (return_vals, 2), data, bytes);
+      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), data, bytes);
     }
 
   return return_vals;
@@ -444,7 +444,7 @@ pdb_set_data_invoker (GimpProcedure         *procedure,
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
   bytes = g_value_get_int (gimp_value_array_index (args, 1));
-  data = gimp_value_get_int8_array (gimp_value_array_index (args, 2));
+  data = gimp_value_get_uint8_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -798,10 +798,10 @@ register_pdb_procs (GimpPDB *pdb)
                                                      1, G_MAXINT32, 1,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int8_array ("data",
-                                                               "data",
-                                                               "A byte array containing data",
-                                                               GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_uint8_array ("data",
+                                                                "data",
+                                                                "A byte array containing data",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -863,10 +863,10 @@ register_pdb_procs (GimpPDB *pdb)
                                                  1, G_MAXINT32, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("data",
-                                                           "data",
-                                                           "A byte array containing data",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("data",
+                                                            "data",
+                                                            "A byte array containing data",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

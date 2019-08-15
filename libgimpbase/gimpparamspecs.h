@@ -153,48 +153,48 @@ GParamSpec * gimp_param_spec_array     (const gchar  *name,
 
 
 /*
- * GIMP_TYPE_INT8_ARRAY
+ * GIMP_TYPE_UINT8_ARRAY
  */
 
-#define GIMP_TYPE_INT8_ARRAY               (gimp_int8_array_get_type ())
-#define GIMP_VALUE_HOLDS_INT8_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_INT8_ARRAY))
+#define GIMP_TYPE_UINT8_ARRAY               (gimp_uint8_array_get_type ())
+#define GIMP_VALUE_HOLDS_UINT8_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UINT8_ARRAY))
 
-GType   gimp_int8_array_get_type           (void) G_GNUC_CONST;
+GType   gimp_uint8_array_get_type           (void) G_GNUC_CONST;
 
 
 /*
- * GIMP_TYPE_PARAM_INT8_ARRAY
+ * GIMP_TYPE_PARAM_UINT8_ARRAY
  */
 
-#define GIMP_TYPE_PARAM_INT8_ARRAY           (gimp_param_int8_array_get_type ())
-#define GIMP_PARAM_SPEC_INT8_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_INT8_ARRAY, GimpParamSpecInt8Array))
-#define GIMP_IS_PARAM_SPEC_INT8_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_INT8_ARRAY))
+#define GIMP_TYPE_PARAM_UINT8_ARRAY           (gimp_param_uint8_array_get_type ())
+#define GIMP_PARAM_SPEC_UINT8_ARRAY(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UINT8_ARRAY, GimpParamSpecUInt8Array))
+#define GIMP_IS_PARAM_SPEC_UINT8_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UINT8_ARRAY))
 
-typedef struct _GimpParamSpecInt8Array GimpParamSpecInt8Array;
+typedef struct _GimpParamSpecUInt8Array GimpParamSpecUInt8Array;
 
-struct _GimpParamSpecInt8Array
+struct _GimpParamSpecUInt8Array
 {
   GimpParamSpecArray parent_instance;
 };
 
-GType          gimp_param_int8_array_get_type   (void) G_GNUC_CONST;
+GType          gimp_param_uint8_array_get_type   (void) G_GNUC_CONST;
 
-GParamSpec   * gimp_param_spec_int8_array       (const gchar  *name,
-                                                 const gchar  *nick,
-                                                 const gchar  *blurb,
-                                                 GParamFlags   flags);
+GParamSpec   * gimp_param_spec_uint8_array       (const gchar  *name,
+                                                  const gchar  *nick,
+                                                  const gchar  *blurb,
+                                                  GParamFlags   flags);
 
-const guint8 * gimp_value_get_int8_array        (const GValue *value);
-guint8       * gimp_value_dup_int8_array        (const GValue *value);
-void           gimp_value_set_int8_array        (GValue       *value,
-                                                 const guint8 *array,
-                                                 gsize         length);
-void           gimp_value_set_static_int8_array (GValue       *value,
-                                                 const guint8 *array,
-                                                 gsize         length);
-void           gimp_value_take_int8_array       (GValue       *value,
-                                                 guint8       *array,
-                                                 gsize         length);
+const guint8 * gimp_value_get_uint8_array        (const GValue *value);
+guint8       * gimp_value_dup_uint8_array        (const GValue *value);
+void           gimp_value_set_uint8_array        (GValue       *value,
+                                                  const guint8 *array,
+                                                  gsize         length);
+void           gimp_value_set_static_uint8_array (GValue       *value,
+                                                  const guint8 *array,
+                                                  gsize         length);
+void           gimp_value_take_uint8_array       (GValue       *value,
+                                                  guint8       *array,
+                                                  gsize         length);
 
 
 /*

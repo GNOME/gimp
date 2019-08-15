@@ -720,7 +720,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
       if ((! strcmp (param_def->type_name, "GimpParamInt32Array")     ||
            ! strcmp (param_def->type_name, "GimpParamInt16Array")     ||
-           ! strcmp (param_def->type_name, "GimpParamInt8Array")      ||
+           ! strcmp (param_def->type_name, "GimpParamUInt8Array")     ||
            ! strcmp (param_def->type_name, "GimpParamIntFloatArray")  ||
            ! strcmp (param_def->type_name, "GimpParamIntStringArray") ||
            ! strcmp (param_def->type_name, "GimpParamIntColorArray"))

@@ -87,8 +87,8 @@ _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
       break;
 
     case GIMP_PDB_INT8ARRAY:
-      pspec = gimp_param_spec_int8_array (name, nick, blurb,
-                                          G_PARAM_READWRITE);
+      pspec = gimp_param_spec_uint8_array (name, nick, blurb,
+                                           G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_FLOATARRAY:
@@ -210,7 +210,7 @@ _gimp_pdb_arg_type_to_gtype (GimpPDBArgType  type)
       return GIMP_TYPE_INT16_ARRAY;
 
     case GIMP_PDB_INT8ARRAY:
-      return GIMP_TYPE_INT8_ARRAY;
+      return GIMP_TYPE_UINT8_ARRAY;
 
     case GIMP_PDB_FLOATARRAY:
       return GIMP_TYPE_FLOAT_ARRAY;
@@ -293,7 +293,7 @@ _gimp_pdb_gtype_to_arg_type (GType type)
 
         { GIMP_TYPE_INT32_ARRAY,     GIMP_PDB_INT32ARRAY  },
         { GIMP_TYPE_INT16_ARRAY,     GIMP_PDB_INT16ARRAY  },
-        { GIMP_TYPE_INT8_ARRAY,      GIMP_PDB_INT8ARRAY   },
+        { GIMP_TYPE_UINT8_ARRAY,     GIMP_PDB_INT8ARRAY   },
         { GIMP_TYPE_FLOAT_ARRAY,     GIMP_PDB_FLOATARRAY  },
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
         { GIMP_TYPE_RGB_ARRAY,       GIMP_PDB_COLORARRAY  },
@@ -420,13 +420,13 @@ _gimp_params_to_value_array (const GimpParam  *params,
         case GIMP_PDB_INT8ARRAY:
           count = g_value_get_int (gimp_value_array_index (args, i - 1));
           if (full_copy)
-            gimp_value_set_int8_array (&value,
-                                       params[i].data.d_int8array,
-                                       count);
+            gimp_value_set_uint8_array (&value,
+                                        params[i].data.d_int8array,
+                                        count);
           else
-            gimp_value_set_static_int8_array (&value,
-                                              params[i].data.d_int8array,
-                                              count);
+            gimp_value_set_static_uint8_array (&value,
+                                               params[i].data.d_int8array,
+                                               count);
           break;
 
         case GIMP_PDB_FLOATARRAY:
@@ -597,9 +597,9 @@ _gimp_value_array_to_params (GimpValueArray *args,
 
         case GIMP_PDB_INT8ARRAY:
           if (full_copy)
-            params[i].data.d_int8array = gimp_value_dup_int8_array (value);
+            params[i].data.d_int8array = gimp_value_dup_uint8_array (value);
           else
-            params[i].data.d_int8array = (guint8 *) gimp_value_get_int8_array (value);
+            params[i].data.d_int8array = (guint8 *) gimp_value_get_uint8_array (value);
           break;
 
         case GIMP_PDB_FLOATARRAY:

@@ -64,7 +64,7 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
 
         { GIMP_TYPE_INT32_ARRAY,     GIMP_PDB_INT32ARRAY  },
         { GIMP_TYPE_INT16_ARRAY,     GIMP_PDB_INT16ARRAY  },
-        { GIMP_TYPE_INT8_ARRAY,      GIMP_PDB_INT8ARRAY   },
+        { GIMP_TYPE_UINT8_ARRAY,     GIMP_PDB_INT8ARRAY   },
         { GIMP_TYPE_FLOAT_ARRAY,     GIMP_PDB_FLOATARRAY  },
         { GIMP_TYPE_STRING_ARRAY,    GIMP_PDB_STRINGARRAY },
         { GIMP_TYPE_RGB_ARRAY,       GIMP_PDB_COLORARRAY  },

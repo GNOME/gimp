@@ -220,7 +220,7 @@ gimp_g_value_get_memsize (GValue *value)
                                                 NULL);
         }
       else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
-               GIMP_VALUE_HOLDS_INT8_ARRAY (value)  ||
+               GIMP_VALUE_HOLDS_UINT8_ARRAY (value) ||
                GIMP_VALUE_HOLDS_INT16_ARRAY (value) ||
                GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
                GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))

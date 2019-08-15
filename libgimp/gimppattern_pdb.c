@@ -151,7 +151,7 @@ gimp_pattern_get_pixels (const gchar  *name,
       *height = g_value_get_int (gimp_value_array_index (return_vals, 2));
       *bpp = g_value_get_int (gimp_value_array_index (return_vals, 3));
       *num_color_bytes = g_value_get_int (gimp_value_array_index (return_vals, 4));
-      *color_bytes = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 5));
+      *color_bytes = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 5));
     }
 
   gimp_value_array_unref (return_vals);

@@ -247,7 +247,7 @@ plugin_icon_register_invoker (GimpProcedure         *procedure,
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
   icon_type = g_value_get_enum (gimp_value_array_index (args, 1));
   icon_data_length = g_value_get_int (gimp_value_array_index (args, 2));
-  icon_data = gimp_value_get_int8_array (gimp_value_array_index (args, 3));
+  icon_data = gimp_value_get_uint8_array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -598,10 +598,10 @@ register_plug_in_procs (GimpPDB *pdb)
                                                  1, G_MAXINT32, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("icon-data",
-                                                           "icon data",
-                                                           "The procedure's icon. The format depends on the 'icon_type' parameter",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("icon-data",
+                                                            "icon data",
+                                                            "The procedure's icon. The format depends on the 'icon_type' parameter",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -77,7 +77,7 @@ _gimp_image_get_color_profile (gint32  image_ID,
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
       *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      profile_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
+      profile_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
     }
 
   gimp_value_array_unref (return_vals);
@@ -131,7 +131,7 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
     {
       *num_bytes = g_value_get_int (gimp_value_array_index (return_vals, 1));
-      profile_data = gimp_value_dup_int8_array (gimp_value_array_index (return_vals, 2));
+      profile_data = gimp_value_dup_uint8_array (gimp_value_array_index (return_vals, 2));
     }
 
   gimp_value_array_unref (return_vals);
@@ -170,9 +170,9 @@ _gimp_image_set_color_profile (gint32        image_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_INT8_ARRAY, NULL,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,
@@ -272,11 +272,11 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_INT8_ARRAY, NULL,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
-  gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
 
   if (pdb)
     return_vals = gimp_pdb_run_procedure_array (pdb,

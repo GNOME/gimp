@@ -202,7 +202,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
   width = g_value_get_int (gimp_value_array_index (args, 0));
   height = g_value_get_int (gimp_value_array_index (args, 1));
   matrix_length = g_value_get_int (gimp_value_array_index (args, 2));
-  matrix = gimp_value_get_int8_array (gimp_value_array_index (args, 3));
+  matrix = gimp_value_get_uint8_array (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -406,10 +406,10 @@ register_image_convert_procs (GimpPDB *pdb)
                                                  1, 1024, 1,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("matrix",
-                                                           "matrix",
-                                                           "The matrix -- all values must be >= 1",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_uint8_array ("matrix",
+                                                            "matrix",
+                                                            "The matrix -- all values must be >= 1",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

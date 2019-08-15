@@ -66,8 +66,8 @@ _gimp_gp_param_def_to_param_spec (gpointer          gimp,
       if (! strcmp (param_def->type_name, "GimpParamInt16Array"))
         return gimp_param_spec_int16_array (name, nick, blurb, flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamInt8Array"))
-        return gimp_param_spec_int8_array (name, nick, blurb, flags);
+      if (! strcmp (param_def->type_name, "GimpParamUInt8Array"))
+        return gimp_param_spec_uint8_array (name, nick, blurb, flags);
 
       if (! strcmp (param_def->type_name, "GimpParamFloatArray"))
         return gimp_param_spec_float_array (name, nick, blurb, flags);
