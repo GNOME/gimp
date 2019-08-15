@@ -10,7 +10,7 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011.
 # Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013.
 # Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017
-# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2018
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2019
 #
 msgid ""
 msgstr ""
@@ -178,7 +178,7 @@ msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
 msgstr ""
-"Alguns fitxers de desat/exportació són més robustos a l'error ja que no es "
+"Alguns fitxers de desat/exportació són més robustos a l'error perquè no es "
 "desen de forma parcial"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
@@ -278,7 +278,7 @@ msgstr "Filtre nou «Ombra llarga»"
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
-msgstr "L’opció \"Redreçar\" de l’eina compàs permet ara el redreçat vertical"
+msgstr "L’opció «Redreça» de l'eina compàs permet ara el redreçat vertical"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
@@ -311,7 +311,7 @@ msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
-"GIMP 2.10.4 inclou la correcció de moltes errades així com també vàries "
+"GIMP 2.10.4 inclou la correcció de moltes errades així com vàries "
 "optimitzacions. Les més notables són:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
@@ -391,7 +391,7 @@ msgid ""
 "color-managed"
 msgstr ""
 "La gestió de color és una funció principal ara, la majora dels ginys i àrees "
-"de previsualització usen la gestió de color."
+"de previsualització usen la gestió de color"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
@@ -6501,7 +6501,7 @@ msgstr "Convertint la imatge a %s"
 #: ../app/actions/image-commands.c:1283
 #, c-format
 msgid "Converting to '%s'"
-msgstr "Convertint a '%s'"
+msgstr "Convertint a «%s»"
 
 #: ../app/actions/image-commands.c:1389
 msgid "Change Print Size"
@@ -8458,8 +8458,8 @@ msgstr "Edita el valor predefinit de l'eina activa"
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
-"No es poden desar les opcions de l'eina '%s' a uns valors predefinits "
-"existents '%s'."
+"No es poden desar les opcions de l'eina «%s» a uns valors predefinits "
+"existents «%s»."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -10447,7 +10447,7 @@ msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
 msgstr ""
-"L’acoblador recent seleccionat conté una caixa d'eines. Tanqueu la caixa "
+"L'acoblador acabat de seleccionar conté una caixa d'eines. Tanqueu la caixa "
 "d'eines oberta i torneu a intentar-ho."
 
 #: ../app/config/config-enums.c:25
@@ -10722,7 +10722,7 @@ msgid ""
 "However, they require overhead that you may want to do without."
 msgstr ""
 "Els punters del ratolí que canvien segons el context són de gran utilitat. "
-"Per defecte són els que s'utilitzen. Tot i així, suposen una sobrecàrrega "
+"Per defecte són els que s'utilitzen. Tot i això, suposen una sobrecàrrega "
 "que potser no desitgeu."
 
 #: ../app/config/gimprc-blurbs.h:71
@@ -10767,7 +10767,7 @@ msgstr ""
 "Eines com la selecció de regions contigües i el cubell reconeixen les "
 "regions basant-se en l'algorisme seed-fill. El seed-fill comença per un "
 "píxel seleccionat inicialment i progressa en totes direccions fins que la "
-"diferència d'intensitat del píxel respecte l'original és més gran que el "
+"diferència d'intensitat del píxel respecte a l'original és més gran que el "
 "llindar especificat. Aquest valor representa el llindar per defecte."
 
 #: ../app/config/gimprc-blurbs.h:125
@@ -14459,7 +14459,7 @@ msgstr ""
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
-"Les dades de capçalera no són vàlides a '%s': width=%lu, height=%lu, bytes="
+"Les dades de capçalera no són vàlides a «%s»: width=%lu, height=%lu, bytes="
 "%lu"
 
 #: ../app/core/gimppattern-load.c:115
@@ -15680,22 +15680,22 @@ msgstr "%1$s\t%2$s"
 
 #: ../app/dialogs/lebl-dialog.c:139
 msgid "Press 'p' to unpause"
-msgstr "Premeu 'p' per acabar la pausa"
+msgstr "Premeu «p» per acabar la pausa"
 
 #: ../app/dialogs/lebl-dialog.c:145
 #, c-format
 msgid "Level: %s,  Lives: %s"
-msgstr "Nivell: %s, Vides: %s"
+msgstr "Nivell: %s, vides: %s"
 
 #: ../app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
-"Esquerra/Dreta per moure, Espai per disparar, 'p' per fer una pausa i 'q' "
+"Esquerra/Dreta per moure, espai per disparar, «p» per fer una pausa i «q» "
 "per sortir"
 
 #: ../app/dialogs/lebl-dialog.c:813
 msgid "Killer GEGLs from Outer Space"
-msgstr "Els GEGLs Assassins de l'Espai Exterior"
+msgstr "Els GEGLs assassins de l'espai exterior"
 
 #: ../app/dialogs/module-dialog.c:129
 msgid "Module Manager"
@@ -19335,7 +19335,7 @@ msgstr "Limita l'entrada"
 
 #: ../app/operations/gimplevelsconfig.c:144
 msgid "Clamp input values before applying output mapping."
-msgstr "Limita els valors d'entrada abans d'aplicar la sortida del mapatge"
+msgstr "Limita els valors d'entrada abans d'aplicar la sortida del mapatge."
 
 #: ../app/operations/gimplevelsconfig.c:155
 #: ../app/operations/gimplevelsconfig.c:156
@@ -19384,7 +19384,7 @@ msgid ""
 "tool"
 msgstr ""
 "Converteix un conjunt de coeficients amb un conjunt de coordenades útils per "
-"l'eina Transformació de la regió del GIMP."
+"l'eina Transformació de la regió del GIMP"
 
 #: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
@@ -20169,7 +20169,7 @@ msgstr ""
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "L'element «%s» (%d) no es pot utilitzar perquè està associat a una altra "
-"imatge."
+"imatge"
 
 #: ../app/pdb/gimppdb-utils.c:476
 #, c-format
@@ -20510,12 +20510,12 @@ msgstr "Color a alfa"
 #: ../app/pdb/plug-in-compat-cmds.c:1030
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
-msgstr "La matriu 'matrix' només té %d membres; n'ha de tenir 25"
+msgstr "La matriu «matrix» només té %d membres; n'ha de tenir 25"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1038
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
-msgstr "La matriu 'channels' només té %d membres; n'ha de tenir 5"
+msgstr "La matriu «channels» només té %d membres; n'ha de tenir 5"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1110
 msgctxt "undo-type"
@@ -20685,7 +20685,7 @@ msgstr "Desplaçament"
 #: ../app/pdb/plug-in-compat-cmds.c:3497
 msgctxt "undo-type"
 msgid "Sinus"
-msgstr "Sinusoïdal"
+msgstr "Sinusoidal"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3545
 msgctxt "undo-type"
@@ -21397,7 +21397,7 @@ msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
 msgstr ""
-"No es pot dibuixar el vostre text ja que possiblement és massa gran. Feu-lo "
+"No es pot dibuixar el vostre text perquè possiblement és massa gran. Feu-lo "
 "més curt o utilitzeu un tipus de lletra més petit."
 
 #: ../app/text/gimptextlayer-xcf.c:78
@@ -25462,7 +25462,7 @@ msgstr "TempBuf"
 
 #: ../app/widgets/gimpdashboard.c:709
 msgid "Total size of temporary buffers"
-msgstr "Mida total a les memòries intermedies"
+msgstr "Mida total a les memòries intermèdies"
 
 #: ../app/widgets/gimpdashboard.c:721
 msgctxt "dashboard-group"
@@ -26486,7 +26486,7 @@ msgstr "%d ppi, %s"
 #: ../app/widgets/gimptextbuffer-serialize.c:276
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
-msgstr "En aquest context, l'atribut \"%s\" no és vàlid en l'element <%s>"
+msgstr "En aquest context, l'atribut «%s» no és vàlid en l'element <%s>"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:348
 #, c-format
