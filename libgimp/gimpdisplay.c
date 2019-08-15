@@ -37,6 +37,9 @@ struct _GimpDisplayPrivate
   gint id;
 };
 
+static GHashTable *gimp_displays = NULL;
+
+
 static void       gimp_display_set_property  (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
@@ -132,29 +135,51 @@ gimp_display_get_property (GObject    *object,
 gint32
 gimp_display_get_id (GimpDisplay *display)
 {
-  return display->priv->id;
+  return display ? display->priv->id : -1;
 }
 
 /**
- * gimp_display_new_by_id:
+ * gimp_display_get_by_id:
  * @display_id: The display id.
  *
  * Creates a #GimpDisplay representing @display_id.
  *
- * Returns: (nullable) (transfer full): a #GimpDisplay for @display_id or
+ * Returns: (nullable) (transfer none): a #GimpDisplay for @display_id or
  *          %NULL if @display_id does not represent a valid display.
+ *          The object belongs to libgimp and you should not free it.
  *
  * Since: 3.0
  **/
 GimpDisplay *
-gimp_display_new_by_id (gint32 display_id)
+gimp_display_get_by_id (gint32 display_id)
 {
   GimpDisplay *display = NULL;
 
-  if (_gimp_display_is_valid (display_id))
-    display = g_object_new (GIMP_TYPE_DISPLAY,
-                            "id", display_id,
-                            NULL);
+  if (G_UNLIKELY (! gimp_displays))
+    gimp_displays = g_hash_table_new_full (g_direct_hash,
+                                           g_direct_equal,
+                                           NULL,
+                                           (GDestroyNotify) g_object_unref);
+
+  if (! _gimp_display_is_valid (display_id))
+    {
+      g_hash_table_remove (gimp_displays, GINT_TO_POINTER (display_id));
+    }
+  else
+    {
+      display = g_hash_table_lookup (gimp_displays,
+                                     GINT_TO_POINTER (display_id));
+
+      if (! display)
+        {
+          display = g_object_new (GIMP_TYPE_DISPLAY,
+                                  "id", display_id,
+                                  NULL);
+          g_hash_table_insert (gimp_displays,
+                               GINT_TO_POINTER (display_id),
+                               display);
+        }
+    }
 
   return display;
 }
