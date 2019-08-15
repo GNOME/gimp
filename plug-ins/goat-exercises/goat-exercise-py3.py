@@ -73,8 +73,18 @@ class Goat (Gimp.PlugIn):
 
         return procedure
 
+    def on_image_destroyed(self, image):
+        # This is a very simple demonstration on signals. Here I simply
+        # quit the plug-in if the image we were working on has been
+        # destroyed.
+        Gimp.quit()
+
     def run(self, procedure, args, data):
+        Gimp.get_plug_in().extension_enable()
         runmode = args.index(0)
+        image   = args.index(1)
+
+        image.connect("destroyed", self.on_image_destroyed);
 
         if runmode == Gimp.RunMode.INTERACTIVE:
             gi.require_version('Gtk', '3.0')

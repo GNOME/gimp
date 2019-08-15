@@ -84,8 +84,16 @@ var Goat = GObject.registerClass({
     }
 
     run(procedure, args, data) {
+        Gimp.get_plug_in().extension_enable();
+
         /* TODO: localization. */
         let run_mode = args.index(0);
+        let image    = args.index(1);
+
+        image.connect("destroyed", (image) => {
+            Gimp.quit();
+        });
+
         if (run_mode == Gimp.RunMode.INTERACTIVE) {
             Gimp.ui_init("goat-exercise-gjs", false);
             /* TODO: help function and ID. */
