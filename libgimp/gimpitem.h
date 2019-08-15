@@ -69,6 +69,12 @@ GType         gimp_item_get_type     (void) G_GNUC_CONST;
 gint32        gimp_item_get_id       (GimpItem    *item);
 GimpItem    * gimp_item_get_by_id    (gint32       item_id);
 
+
+G_GNUC_INTERNAL
+void          _gimp_item_process_signal    (gint32        item_id,
+                                            const gchar  *name);
+
+
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
 GList       * gimp_item_get_children (GimpItem     *item);

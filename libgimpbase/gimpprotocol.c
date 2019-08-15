@@ -144,6 +144,13 @@ static void _gp_has_init_write           (GIOChannel       *channel,
                                           gpointer          user_data);
 static void _gp_has_init_destroy         (GimpWireMessage  *msg);
 
+static void _gp_signal_read              (GIOChannel       *channel,
+                                          GimpWireMessage  *msg,
+                                          gpointer          user_data);
+static void _gp_signal_write             (GIOChannel       *channel,
+                                          GimpWireMessage  *msg,
+                                          gpointer          user_data);
+static void _gp_signal_destroy           (GimpWireMessage  *msg);
 
 
 void
@@ -201,6 +208,10 @@ gp_init (void)
                       _gp_has_init_read,
                       _gp_has_init_write,
                       _gp_has_init_destroy);
+  gimp_wire_register (GP_SIGNAL,
+                      _gp_signal_read,
+                      _gp_signal_write,
+                      _gp_signal_destroy);
 }
 
 /* public writing API */
@@ -438,6 +449,25 @@ gp_has_init_write (GIOChannel *channel,
 
   msg.type = GP_HAS_INIT;
   msg.data = NULL;
+
+  if (! gimp_wire_write_msg (channel, &msg, user_data))
+    return FALSE;
+
+  if (! gimp_wire_flush (channel, user_data))
+    return FALSE;
+
+  return TRUE;
+}
+
+gboolean
+gp_signal_write (GIOChannel *channel,
+                 GPSignal   *signal,
+                 gpointer    user_data)
+{
+  GimpWireMessage msg;
+
+  msg.type = GP_SIGNAL;
+  msg.data = signal;
 
   if (! gimp_wire_write_msg (channel, &msg, user_data))
     return FALSE;
@@ -1952,4 +1982,61 @@ _gp_has_init_write (GIOChannel      *channel,
 static void
 _gp_has_init_destroy (GimpWireMessage *msg)
 {
+}
+
+static void
+_gp_signal_read (GIOChannel      *channel,
+                 GimpWireMessage *msg,
+                 gpointer         user_data)
+{
+  GPSignal *signal = g_slice_new0 (GPSignal);
+
+  if (! _gimp_wire_read_int32 (channel,
+                               &signal->type, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_int32 (channel,
+                               &signal->id, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_string (channel,
+                                &signal->name, 1, user_data))
+    goto cleanup;
+
+  msg->data = signal;
+  return;
+
+ cleanup:
+  g_clear_pointer (&signal->name, g_free);
+
+  g_slice_free (GPSignal, signal);
+  msg->data = NULL;
+}
+
+static void
+_gp_signal_write (GIOChannel      *channel,
+                  GimpWireMessage *msg,
+                  gpointer         user_data)
+{
+  GPSignal *signal = msg->data;
+
+  if (! _gimp_wire_write_int32 (channel,
+                                &signal->type, 1, user_data))
+    return;
+  if (! _gimp_wire_write_int32 (channel,
+                                &signal->id, 1, user_data))
+    return;
+  if (! _gimp_wire_write_string (channel,
+                                 &signal->name, 1, user_data))
+    return;
+}
+
+static void
+_gp_signal_destroy (GimpWireMessage *msg)
+{
+  GPSignal *signal = msg->data;
+
+  if (signal)
+    {
+      g_free (signal->name);
+      g_slice_free (GPSignal, signal);
+    }
 }
