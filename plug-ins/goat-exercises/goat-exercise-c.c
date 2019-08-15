@@ -68,6 +68,9 @@ static GimpValueArray * goat_run              (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
+static void             goat_image_destroyed  (GimpImage            *image,
+                                               gpointer              data);
+
 
 G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
 
@@ -137,6 +140,13 @@ goat_run (GimpProcedure        *procedure,
   gint              x, y, width, height;
 
   INIT_I18N();
+
+  gimp_plug_in_extension_enable (gimp_get_plug_in());
+
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+  g_signal_connect (image, "destroyed",
+                    G_CALLBACK (goat_image_destroyed),
+                    NULL);
 
   /* In interactive mode, display a dialog to advertize the exercise. */
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -263,4 +273,11 @@ goat_run (GimpProcedure        *procedure,
     }
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
+}
+
+static void
+goat_image_destroyed (GimpImage *image,
+                      gpointer   data)
+{
+  gimp_quit();
 }
