@@ -60,7 +60,8 @@ gimp_channel_init (GimpChannel *channel)
  * set with explicit procedure calls. The channel's contents are
  * undefined initially.
  *
- * Returns: The newly created channel.
+ * Returns: (transfer none): The newly created channel.
+ *          The object belongs to libgimp and you should not free it.
  */
 GimpChannel *
 gimp_channel_new (GimpImage     *image,
@@ -112,14 +113,9 @@ gimp_channel_new_deprecated (gint32         image_id,
                              const GimpRGB *color)
 {
   GimpChannel *channel;
-  gint32       channel_id;
 
   channel = gimp_channel_new (gimp_image_get_by_id (image_id),
                               name, width, height,
                               opacity, color);
-  channel_id = gimp_item_get_id (GIMP_ITEM (channel));
-
-  g_object_unref (channel);
-
-  return channel_id;
+  return gimp_item_get_id (GIMP_ITEM (channel));
 }
