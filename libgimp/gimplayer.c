@@ -297,15 +297,14 @@ gimp_layer_new_deprecated (gint32         image_id,
                            gdouble        opacity,
                            GimpLayerMode  mode)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
   GimpLayer *layer;
   gint32     layer_id;
 
-  layer = gimp_layer_new (image, name, width, height,
+  layer = gimp_layer_new (gimp_image_get_by_id (image_id),
+                          name, width, height,
                           type, opacity, mode);
   layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
-  g_object_unref (image);
   g_object_unref (layer);
 
   return layer_id;
@@ -344,15 +343,14 @@ gimp_layer_new_from_pixbuf_deprecated (gint32         image_id,
                                        gdouble        progress_start,
                                        gdouble        progress_end)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
   GimpLayer *layer;
   gint32     layer_id;
 
-  layer = gimp_layer_new_from_pixbuf (image, name, pixbuf, opacity, mode,
+  layer = gimp_layer_new_from_pixbuf (gimp_image_get_by_id (image_id),
+                                      name, pixbuf, opacity, mode,
                                       progress_start, progress_end);
   layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
-  g_object_unref (image);
   g_object_unref (layer);
 
   return layer_id;
@@ -387,15 +385,14 @@ gimp_layer_new_from_surface_deprecated (gint32                image_id,
                                         gdouble               progress_start,
                                         gdouble               progress_end)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
   GimpLayer *layer;
   gint32     layer_id;
 
-  layer = gimp_layer_new_from_surface (image, name, surface,
+  layer = gimp_layer_new_from_surface (gimp_image_get_by_id (image_id),
+                                       name, surface,
                                        progress_start, progress_end);
   layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
-  g_object_unref (image);
   g_object_unref (layer);
 
   return layer_id;

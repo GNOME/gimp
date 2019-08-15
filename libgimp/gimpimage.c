@@ -36,6 +36,9 @@ struct _GimpImagePrivate
   gint id;
 };
 
+static GHashTable *gimp_images = NULL;
+
+
 static void       gimp_image_set_property  (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
@@ -131,29 +134,49 @@ gimp_image_get_property (GObject    *object,
 gint32
 gimp_image_get_id (GimpImage *image)
 {
-  return image->priv->id;
+  return image ? image->priv->id : -1;
 }
 
 /**
- * gimp_image_new_by_id:
+ * gimp_image_get_by_id:
  * @image_id: The image id.
  *
- * Returns: (nullable) (transfer full): a #GimpImage for @image_id or
+ * Returns: (nullable) (transfer none): a #GimpImage for @image_id or
  *          %NULL if @image_id does not represent a valid image.
+ *          The object belongs to libgimp and you should not free it.
  *
  * Since: 3.0
  **/
 GimpImage *
-gimp_image_new_by_id (gint32 image_id)
+gimp_image_get_by_id (gint32 image_id)
 {
-  GimpImage *image;
+  GimpImage *image = NULL;
 
-  image = g_object_new (GIMP_TYPE_IMAGE,
-                        "id", image_id,
-                        NULL);
+  if (G_UNLIKELY (! gimp_images))
+    gimp_images = g_hash_table_new_full (g_direct_hash,
+                                         g_direct_equal,
+                                         NULL,
+                                         (GDestroyNotify) g_object_unref);
 
-  if (! gimp_image_is_valid (image))
-    g_clear_object (&image);
+  if (! _gimp_image_is_valid (image_id))
+    {
+      g_hash_table_remove (gimp_images, GINT_TO_POINTER (image_id));
+    }
+  else
+    {
+      image = g_hash_table_lookup (gimp_images,
+                                   GINT_TO_POINTER (image_id));
+
+      if (! image)
+        {
+          image = g_object_new (GIMP_TYPE_IMAGE,
+                                "id", image_id,
+                                NULL);
+          g_hash_table_insert (gimp_images,
+                               GINT_TO_POINTER (image_id),
+                               image);
+        }
+    }
 
   return image;
 }
@@ -165,10 +188,10 @@ gimp_image_new_by_id (gint32 image_id)
  *
  * This procedure returns the list of images currently open in GIMP.
  *
- * Returns: (element-type GimpImage) (transfer full):
+ * Returns: (element-type GimpImage) (transfer container):
  *          The list of images currently open.
- *          The returned value must be freed with:
- *          g_list_free_full(list, g_object_unref);
+ *          The returned value must be freed with g_list_free(). Image
+ *          elements belong to libgimp and must not be freed.
  **/
 GList *
 gimp_image_list (void)
@@ -180,13 +203,8 @@ gimp_image_list (void)
 
   ids = _gimp_image_list (&num_images);
   for (i = 0; i < num_images; i++)
-    {
-      GimpImage *image;
-
-      image = gimp_image_new_by_id (ids[i]);
-
-      images = g_list_prepend (images, image);
-    }
+    images = g_list_prepend (images,
+                             gimp_image_get_by_id (ids[i]));
   images = g_list_reverse (images);
   g_free (ids);
 
@@ -547,14 +565,8 @@ gint *
 gimp_image_get_layers_deprecated (gint32  image_id,
                                   gint   *num_layers)
 {
-  GimpImage *image;
-  gint      *layers;
-
-  image  = gimp_image_new_by_id (image_id);
-  layers = _gimp_image_get_layers (image, num_layers);
-  g_object_unref (image);
-
-  return layers;
+  return _gimp_image_get_layers (gimp_image_get_by_id (image_id),
+                                   num_layers);
 }
 
 /**
@@ -578,14 +590,8 @@ gint *
 gimp_image_get_channels_deprecated (gint32  image_id,
                                     gint   *num_channels)
 {
-  GimpImage *image;
-  gint      *channels;
-
-  image    = gimp_image_new_by_id (image_id);
-  channels = _gimp_image_get_layers (image, num_channels);
-  g_object_unref (image);
-
-  return channels;
+  return _gimp_image_get_layers (gimp_image_get_by_id (image_id),
+                                 num_channels);
 }
 
 /**
@@ -608,14 +614,8 @@ gint *
 gimp_image_get_vectors_deprecated (gint32  image_id,
                                    gint   *num_vectors)
 {
-  GimpImage *image;
-  gint      *vectors;
-
-  image   = gimp_image_new_by_id (image_id);
-  vectors = _gimp_image_get_vectors (image, num_vectors);
-  g_object_unref (image);
-
-  return vectors;
+  return _gimp_image_get_vectors (gimp_image_get_by_id (image_id),
+                                  num_vectors);
 }
 
 /**
@@ -635,14 +635,8 @@ guchar *
 gimp_image_get_colormap_deprecated (gint32  image_id,
                                     gint   *num_colors)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  guchar    *colormap;
-
-  colormap = gimp_image_get_colormap (image, num_colors);
-
-  g_object_unref (image);
-
-  return colormap;
+  return gimp_image_get_colormap (gimp_image_get_by_id (image_id),
+                                  num_colors);
 }
 
 /**
@@ -665,14 +659,8 @@ gimp_image_set_colormap_deprecated (gint32        image_id,
                                     const guchar *colormap,
                                     gint          num_colors)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  gboolean   success;
-
-  success = gimp_image_set_colormap (image, colormap, num_colors);
-
-  g_object_unref (image);
-
-  return success;
+  return gimp_image_set_colormap (gimp_image_get_by_id (image_id),
+                                  colormap, num_colors);
 }
 
 /**
@@ -697,14 +685,8 @@ gimp_image_get_thumbnail_data_deprecated (gint32  image_id,
                                           gint   *height,
                                           gint   *bpp)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  guchar    *thumbdata;
-
-  thumbdata = gimp_image_get_thumbnail_data (image, width, height, bpp);
-
-  g_object_unref (image);
-
-  return thumbdata;
+  return gimp_image_get_thumbnail_data (gimp_image_get_by_id (image_id),
+                                        width, height, bpp);
 }
 
 /**
@@ -727,14 +709,8 @@ gimp_image_get_thumbnail_deprecated (gint32                 image_id,
                                      gint                   height,
                                      GimpPixbufTransparency alpha)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  GdkPixbuf *thumbnail;
-
-  thumbnail = gimp_image_get_thumbnail (image, width, height, alpha);
-
-  g_object_unref (image);
-
-  return thumbnail;
+  return gimp_image_get_thumbnail (gimp_image_get_by_id (image_id),
+                                   width, height, alpha);
 }
 
 /**
@@ -753,14 +729,7 @@ gimp_image_get_thumbnail_deprecated (gint32                 image_id,
 GimpMetadata *
 gimp_image_get_metadata_deprecated (gint32 image_id)
 {
-  GimpImage    *image = gimp_image_new_by_id (image_id);
-  GimpMetadata *metadata;
-
-  metadata = gimp_image_get_metadata (image);
-
-  g_object_unref (image);
-
-  return metadata;
+  return gimp_image_get_metadata (gimp_image_get_by_id (image_id));
 }
 
 /**
@@ -781,12 +750,6 @@ gboolean
 gimp_image_set_metadata_deprecated (gint32        image_id,
                                     GimpMetadata *metadata)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  gboolean   success;
-
-  success = gimp_image_set_metadata (image, metadata);
-
-  g_object_unref (image);
-
-  return success;
+  return gimp_image_set_metadata (gimp_image_get_by_id (image_id),
+                                  metadata);
 }
