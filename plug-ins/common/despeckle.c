@@ -188,7 +188,7 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
 
   switch (run_mode)
     {
@@ -199,10 +199,7 @@ run (const gchar      *name,
           gimp_drawable_is_gray (drawable))
        {
           if (! despeckle_dialog ())
-            {
-              g_object_unref (drawable);
-              return;
-            }
+            return;
        }
       break;
 
@@ -270,7 +267,6 @@ run (const gchar      *name,
         }
     }
 
-  g_object_unref (drawable);
   values[0].data.d_status = status;
 }
 
