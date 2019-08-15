@@ -39,8 +39,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
   pspec_type = G_PARAM_SPEC_TYPE (pspec);
 
-  if (pspec_type == G_TYPE_PARAM_INT ||
-      pspec_type == GIMP_TYPE_PARAM_INT16)
+  if (pspec_type == G_TYPE_PARAM_INT)
     {
       GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
 
@@ -190,8 +189,7 @@ _gimp_gp_param_to_value (gpointer        gimp,
 
   g_value_init (value, type);
 
-  if (type == G_TYPE_INT      ||
-      type == GIMP_TYPE_INT16 ||
+  if (type == G_TYPE_INT ||
       type == GIMP_TYPE_UNIT)
     {
       g_value_set_int (value, param->data.d_int);
@@ -434,8 +432,7 @@ _gimp_value_to_gp_param (const GValue *value,
   else
     param->type_name = (gchar *) g_type_name (type);
 
-  if (type == G_TYPE_INT      ||
-      type == GIMP_TYPE_INT16 ||
+  if (type == G_TYPE_INT ||
       type == GIMP_TYPE_UNIT)
     {
       param->param_type = GP_PARAM_TYPE_INT;

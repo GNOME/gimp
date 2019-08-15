@@ -52,9 +52,9 @@ _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
       break;
 
     case GIMP_PDB_INT16:
-      pspec = gimp_param_spec_int16 (name, nick, blurb,
-                                     G_MININT16, G_MAXINT16, 0,
-                                     G_PARAM_READWRITE);
+      pspec = g_param_spec_int (name, nick, blurb,
+                                G_MININT16, G_MAXINT16, 0,
+                                G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT8:
@@ -192,7 +192,7 @@ _gimp_pdb_arg_type_to_gtype (GimpPDBArgType  type)
       return G_TYPE_INT;
 
     case GIMP_PDB_INT16:
-      return GIMP_TYPE_INT16;
+      return G_TYPE_INT;
 
     case GIMP_PDB_INT8:
       return G_TYPE_UCHAR;
@@ -284,7 +284,6 @@ _gimp_pdb_gtype_to_arg_type (GType type)
         { G_TYPE_ENUM,               GIMP_PDB_INT32       },
         { G_TYPE_BOOLEAN,            GIMP_PDB_INT32       },
 
-        { GIMP_TYPE_INT16,           GIMP_PDB_INT16       },
         { G_TYPE_UCHAR,              GIMP_PDB_INT8        },
         { G_TYPE_DOUBLE,             GIMP_PDB_FLOAT       },
 

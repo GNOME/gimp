@@ -28,7 +28,7 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_int ($value, $var)' },
 
     int16       => { name            => 'INT16',
-		     gtype           => 'GIMP_TYPE_INT16',
+		     gtype           => 'G_TYPE_INT',
 		     type            => 'gint16 ',
 		     const_type      => 'gint16 ',
 		     init_value      => '0',

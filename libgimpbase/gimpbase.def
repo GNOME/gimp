@@ -67,7 +67,6 @@ EXPORTS
 	gimp_installation_directory
 	gimp_installation_directory_file
 	gimp_int16_array_get_type
-	gimp_int16_get_type
 	gimp_int32_array_get_type
 	gimp_int8_array_get_type
 	gimp_int8_get_type
@@ -110,7 +109,6 @@ EXPORTS
 	gimp_param_array_get_type
 	gimp_param_float_array_get_type
 	gimp_param_int16_array_get_type
-	gimp_param_int16_get_type
 	gimp_param_int32_array_get_type
 	gimp_param_int8_array_get_type
 	gimp_param_memsize_get_type
@@ -118,7 +116,6 @@ EXPORTS
 	gimp_param_rgb_array_get_type
 	gimp_param_spec_array
 	gimp_param_spec_float_array
-	gimp_param_spec_int16
 	gimp_param_spec_int16_array
 	gimp_param_spec_int32_array
 	gimp_param_spec_int8_array

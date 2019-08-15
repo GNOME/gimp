@@ -7023,17 +7023,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int16 ("width",
-                                                      "width",
-                                                      "Width of the passages",
-                                                      1, 1024, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "Width of the passages",
+                                                 1, 1024, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int16 ("height",
-                                                      "height",
-                                                      "Height of the passages",
-                                                      1, 1024, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "Height of the passages",
+                                                 1, 1024, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_uchar ("tileable",
                                                    "tileable",
@@ -7053,17 +7053,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int16 ("multiple",
-                                                      "multiple",
-                                                      "Multiple (use 57)",
-                                                      G_MININT16, G_MAXINT16, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("multiple",
+                                                 "multiple",
+                                                 "Multiple (use 57)",
+                                                 G_MININT16, G_MAXINT16, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int16 ("offset",
-                                                      "offset",
-                                                      "Offset (use 1)",
-                                                      G_MININT16, G_MAXINT16, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offset",
+                                                 "offset",
+                                                 "Offset (use 1)",
+                                                 G_MININT16, G_MAXINT16, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

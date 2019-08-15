@@ -75,43 +75,6 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_INT16
- */
-
-#define GIMP_TYPE_INT16               (gimp_int16_get_type ())
-#define GIMP_VALUE_HOLDS_INT16(value) (G_TYPE_CHECK_VALUE_TYPE ((value),\
-                                       GIMP_TYPE_INT16))
-
-GType   gimp_int16_get_type           (void) G_GNUC_CONST;
-
-
-/*
- * GIMP_TYPE_PARAM_INT16
- */
-
-#define GIMP_TYPE_PARAM_INT16           (gimp_param_int16_get_type ())
-#define GIMP_PARAM_SPEC_INT16(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_INT16, GimpParamSpecInt16))
-#define GIMP_IS_PARAM_SPEC_INT16(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_INT16))
-
-typedef struct _GimpParamSpecInt16 GimpParamSpecInt16;
-
-struct _GimpParamSpecInt16
-{
-  GParamSpecInt parent_instance;
-};
-
-GType        gimp_param_int16_get_type (void) G_GNUC_CONST;
-
-GParamSpec * gimp_param_spec_int16     (const gchar *name,
-                                        const gchar *nick,
-                                        const gchar *blurb,
-                                        gint         minimum,
-                                        gint         maximum,
-                                        gint         default_value,
-                                        GParamFlags  flags);
-
-
-/*
  * GIMP_TYPE_PARAM_STRING
  */
 
