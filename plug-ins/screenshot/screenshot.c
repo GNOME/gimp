@@ -53,12 +53,31 @@
 #endif
 
 
-static void                query               (void);
-static void                run                 (const gchar      *name,
-                                                gint              nparams,
-                                                const GimpParam  *param,
-                                                gint             *nreturn_vals,
-                                                GimpParam       **return_vals);
+typedef struct _Screenshot      Screenshot;
+typedef struct _ScreenshotClass ScreenshotClass;
+
+struct _Screenshot
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _ScreenshotClass
+{
+  GimpPlugInClass parent_class;
+};
+
+#define SCREENSHOT_TYPE  (screenshot_get_type ())
+#define SCREENSHOT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCREENSHOT_TYPE, Screenshot))
+
+GType                   screenshot_get_type         (void) G_GNUC_CONST;
+
+static GList          * screenshot_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * screenshot_create_procedure (GimpPlugIn           *plug_in,
+                                                     const gchar          *name);
+
+static GimpValueArray * screenshot_run              (GimpProcedure        *procedure,
+                                                     const GimpValueArray *args,
+                                                     gpointer              run_data);
 
 static GimpPDBStatusType   shoot               (GdkMonitor       *monitor,
                                                 gint32           *image_ID,
@@ -69,7 +88,10 @@ static gboolean            shoot_quit_timeout  (gpointer          data);
 static gboolean            shoot_delay_timeout (gpointer          data);
 
 
-/* Global Variables */
+G_DEFINE_TYPE (Screenshot, screenshot, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (SCREENSHOT_TYPE)
+
 
 static ScreenshotBackend       backend           = SCREENSHOT_BACKEND_NONE;
 static ScreenshotCapabilities  capabilities      = 0;
@@ -91,81 +113,134 @@ static ScreenshotValues shootvals =
   SCREENSHOT_PROFILE_POLICY_MONITOR
 };
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run    /* run_proc   */
-};
-
-
-/* Functions */
-
-MAIN ()
 
 static void
-query (void)
+screenshot_class_init (ScreenshotClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32, "run-mode",   "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
-    { GIMP_PDB_INT32, "shoot-type", "The Shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }" },
-    { GIMP_PDB_INT32, "window-id",  "Window id for SHOOT-WINDOW"       },
-    { GIMP_PDB_INT32, "x1",         "Region left x coord for SHOOT-REGION"   },
-    { GIMP_PDB_INT32, "y1",         "Region top y coord for SHOOT-REGION"    },
-    { GIMP_PDB_INT32, "x2",         "Region right x coord for SHOOT-REGION"  },
-    { GIMP_PDB_INT32, "y2",         "Region bottom y coord for SHOOT-REGION" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create an image from an area of the screen"),
-                          "The plug-in takes screenshots of an "
-                          "interactively selected window or of the desktop, "
-                          "either the whole desktop or an interactively "
-                          "selected region. When called non-interactively, it "
-                          "may grab the root window or use the window-id "
-                          "passed as a parameter.  The last four parameters "
-                          "are optional and can be used to specify the corners "
-                          "of the region to be grabbed."
-                          "On Mac OS X or on gnome-shell, "
-                          "when called non-interactively, the plug-in"
-                          "only can take screenshots of the entire root window."
-                          "Grabbing a window or a region is not supported"
-                          "non-interactively. To grab a region or a particular"
-                          "window, you need to use the interactive mode."
-                          ,
-                          "Sven Neumann <sven@gimp.org>, "
-                          "Henrik Brix Andersen <brix@gimp.org>,"
-                          "Simone Karin Lehmann",
-                          "1998 - 2008",
-                          "v1.1 (2008/04)",
-                          N_("_Screenshot..."),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_vals),
-                          args, return_vals);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Create/Acquire");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_PIXBUF,
-                             gdk_pixbuf_new_from_inline (-1, screenshot_icon,
-                                                         FALSE, NULL));
+  plug_in_class->query_procedures = screenshot_query_procedures;
+  plug_in_class->create_procedure = screenshot_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint             nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+screenshot_init (Screenshot *screenshot)
 {
-  static GimpParam   values[2];
+}
+
+static GList *
+screenshot_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+screenshot_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      screenshot_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("_Screenshot..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+
+      gimp_procedure_set_documentation
+        (procedure,
+         N_("Create an image from an area of the screen"),
+         "The plug-in takes screenshots of an "
+         "interactively selected window or of the desktop, "
+         "either the whole desktop or an interactively "
+         "selected region. When called non-interactively, it "
+         "may grab the root window or use the window-id "
+         "passed as a parameter.  The last four parameters "
+         "are optional and can be used to specify the corners "
+         "of the region to be grabbed."
+         "On Mac OS X or on gnome-shell, "
+         "when called non-interactively, the plug-in"
+         "only can take screenshots of the entire root window."
+         "Grabbing a window or a region is not supported"
+         "non-interactively. To grab a region or a particular"
+         "window, you need to use the interactive mode.",
+         name);
+
+      gimp_procedure_set_attribution (procedure,
+                                      "Sven Neumann <sven@gimp.org>, "
+                                      "Henrik Brix Andersen <brix@gimp.org>,"
+                                      "Simone Karin Lehmann",
+                                      "1998 - 2008",
+                                      "v1.1 (2008/04)");
+
+
+      gimp_procedure_set_icon_pixbuf (procedure,
+                                      gdk_pixbuf_new_from_inline (-1, screenshot_icon,
+                                                                  FALSE, NULL));
+
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_enum ("run-mode",
+                                                      "Run mode",
+                                                      "The run mode",
+                                                      GIMP_TYPE_RUN_MODE,
+                                                      GIMP_RUN_NONINTERACTIVE,
+                                                      G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("shoot-type",
+                                                     "Shoot type",
+                                                     "The shoot type "
+                                                     "{ SHOOT-WINDOW (0), "
+                                                     "SHOOT-ROOT (1), "
+                                                     "SHOOT-REGION (2) }",
+                                                     0, 2, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("x1",
+                                                     "X1",
+                                                     "Region left x coord "
+                                                     "for SHOOT-WINDOW",
+                                                     G_MININT, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("y1",
+                                                     "Y1",
+                                                     "Region top y coord "
+                                                     "for SHOOT-WINDOW",
+                                                     G_MININT, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("x2",
+                                                     "X2",
+                                                     "Region right x coord "
+                                                     "for SHOOT-WINDOW",
+                                                     G_MININT, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("y2",
+                                                     "Y2",
+                                                     "Region bottom y coord "
+                                                     "for SHOOT-WINDOW",
+                                                     G_MININT, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE));
+
+      gimp_procedure_add_return_value (procedure,
+                                       gimp_param_spec_image_id ("image",
+                                                                 "Image",
+                                                                 "Output image",
+                                                                 FALSE,
+                                                                 G_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+screenshot_run (GimpProcedure        *procedure,
+                const GimpValueArray *args,
+                gpointer              run_data)
+{
+  GimpValueArray    *return_vals;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   GdkMonitor        *monitor = NULL;
@@ -175,13 +250,7 @@ run (const gchar      *name,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
 
 #ifdef PLATFORM_OSX
   if (! backend && screenshot_osx_available ())
@@ -252,52 +321,26 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams == 3 || nparams == 7)
-        {
-          shootvals.shoot_type   = param[1].data.d_int32;
-          shootvals.window_id    = param[2].data.d_int32;
-          shootvals.select_delay = 0;
+      shootvals.shoot_type   = g_value_get_int (gimp_value_array_index (args, 1));
+      shootvals.window_id    = g_value_get_int (gimp_value_array_index (args, 2));
+      shootvals.select_delay = 0;
+      shootvals.x1           = g_value_get_int (gimp_value_array_index (args, 3));
+      shootvals.y1           = g_value_get_int (gimp_value_array_index (args, 4));
+      shootvals.x2           = g_value_get_int (gimp_value_array_index (args, 5));
+      shootvals.y2           = g_value_get_int (gimp_value_array_index (args, 6));
 
-          if (shootvals.shoot_type < SHOOT_WINDOW ||
-              shootvals.shoot_type > SHOOT_REGION)
+      if (! gdk_init_check (NULL, NULL))
+        status = GIMP_PDB_CALLING_ERROR;
+
+      if (! (capabilities & SCREENSHOT_CAN_PICK_NONINTERACTIVELY))
+        {
+          if (shootvals.shoot_type == SHOOT_WINDOW ||
+              shootvals.shoot_type == SHOOT_REGION)
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
-          else if (shootvals.shoot_type == SHOOT_REGION)
-            {
-              if (nparams == 7)
-                {
-                  shootvals.x1 = param[3].data.d_int32;
-                  shootvals.y1 = param[4].data.d_int32;
-                  shootvals.x2 = param[5].data.d_int32;
-                  shootvals.y2 = param[6].data.d_int32;
-                }
-              else
-                {
-                  status = GIMP_PDB_CALLING_ERROR;
-                }
-            }
         }
-      else
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          if (! gdk_init_check (NULL, NULL))
-            status = GIMP_PDB_CALLING_ERROR;
-
-          if (! (capabilities & SCREENSHOT_CAN_PICK_NONINTERACTIVELY))
-            {
-              if (shootvals.shoot_type == SHOOT_WINDOW ||
-                  shootvals.shoot_type == SHOOT_REGION)
-                {
-                  status = GIMP_PDB_CALLING_ERROR;
-                }
-            }
-        }
-        break;
+      break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data from a previous run */
@@ -359,21 +402,15 @@ run (const gchar      *name,
               gdk_display_flush (gdk_monitor_get_display (monitor));
             }
         }
-
-      *nreturn_vals = 2;
-
-      values[1].type         = GIMP_PDB_IMAGE;
-      values[1].data.d_image = image_ID;
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
+  return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
-  values[0].data.d_status = status;
+  if (status == GIMP_PDB_SUCCESS)
+    gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                             image_ID);
+
+  return return_vals;
 }
 
 
