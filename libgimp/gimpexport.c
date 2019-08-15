@@ -1147,28 +1147,22 @@ gimp_export_image_deprecated (gint32                 *image_ID,
                               GimpExportCapabilities  capabilities)
 {
   GimpImage        *image;
-  GimpImage        *new_image;
   GimpDrawable     *drawable;
   GimpDrawable     *new_drawable;
   GimpExportReturn  retval;
 
-  image        = gimp_image_new_by_id (*image_ID);
-  new_image    = image;
+  image        = gimp_image_get_by_id (*image_ID);
   drawable     = GIMP_DRAWABLE (gimp_item_new_by_id (*drawable_ID));
   new_drawable = drawable;
 
-  retval = gimp_export_image (&new_image, &new_drawable,
+  retval = gimp_export_image (&image, &new_drawable,
                               format_name, capabilities);
 
-  *image_ID    = gimp_image_get_id (new_image);
+  *image_ID    = gimp_image_get_id (image);
   *drawable_ID = gimp_item_get_id (GIMP_ITEM (new_drawable));
   if (retval == GIMP_EXPORT_EXPORT)
-    {
-      g_object_unref (new_image);
-      g_object_unref (new_drawable);
-    }
+    g_object_unref (new_drawable);
 
-  g_object_unref (image);
   g_object_unref (drawable);
 
   return retval;
