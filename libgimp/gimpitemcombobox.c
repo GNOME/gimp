@@ -427,7 +427,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
         }
     }
 
-  g_list_free_full (images, g_object_unref);
+  g_list_free (images);
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);

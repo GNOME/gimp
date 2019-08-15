@@ -111,15 +111,14 @@ gimp_channel_new_deprecated (gint32         image_id,
                              gdouble        opacity,
                              const GimpRGB *color)
 {
-  GimpImage   *image = gimp_image_new_by_id (image_id);
   GimpChannel *channel;
   gint32       channel_id;
 
-  channel = gimp_channel_new (image, name, width, height,
+  channel = gimp_channel_new (gimp_image_get_by_id (image_id),
+                              name, width, height,
                               opacity, color);
   channel_id = gimp_item_get_id (GIMP_ITEM (channel));
 
-  g_object_unref (image);
   g_object_unref (channel);
 
   return channel_id;
