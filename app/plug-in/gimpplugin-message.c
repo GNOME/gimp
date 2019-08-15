@@ -725,7 +725,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
            ! strcmp (param_def->type_name, "GimpParamIntStringArray") ||
            ! strcmp (param_def->type_name, "GimpParamIntColorArray"))
           &&
-          strcmp (prev_param_def->type_name, "GimpParamInt32"))
+          strcmp (prev_param_def->type_name, "GParamInt"))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                         "Plug-in \"%s\"\n(%s)\n\n"
@@ -876,7 +876,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       if (pspec)
         {
           if (i == 0 &&
-              GIMP_IS_PARAM_SPEC_INT32 (pspec) &&
+              G_IS_PARAM_SPEC_INT (pspec) &&
               (! strcmp ("run-mode", g_param_spec_get_name (pspec)) ||
                ! strcmp ("run_mode", g_param_spec_get_name (pspec))))
             {

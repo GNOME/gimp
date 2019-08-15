@@ -105,7 +105,7 @@ pdb_query_invoker (GimpProcedure         *procedure,
   const gchar *copyright;
   const gchar *date;
   const gchar *proc_type;
-  gint32 num_matches = 0;
+  gint num_matches = 0;
   gchar **procedure_names = NULL;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -199,9 +199,9 @@ pdb_proc_info_invoker (GimpProcedure         *procedure,
   gchar *authors = NULL;
   gchar *copyright = NULL;
   gchar *date = NULL;
-  gint32 proc_type = 0;
-  gint32 num_args = 0;
-  gint32 num_values = 0;
+  gint proc_type = 0;
+  gint num_args = 0;
+  gint num_values = 0;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -251,7 +251,7 @@ pdb_proc_argument_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *procedure_name;
-  gint32 arg_num;
+  gint arg_num;
   GParamSpec *param_spec = NULL;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -306,7 +306,7 @@ pdb_proc_return_value_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *procedure_name;
-  gint32 val_num;
+  gint val_num;
   GParamSpec *param_spec = NULL;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -361,7 +361,7 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *identifier;
-  gint32 bytes = 0;
+  gint bytes = 0;
   guint8 *data = NULL;
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
@@ -405,7 +405,7 @@ pdb_get_data_size_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *identifier;
-  gint32 bytes = 0;
+  gint bytes = 0;
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -439,7 +439,7 @@ pdb_set_data_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *identifier;
-  gint32 bytes;
+  gint bytes;
   const guint8 *data;
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
@@ -577,11 +577,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-matches",
-                                                          "num matches",
-                                                          "The number of matching procedures",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-matches",
+                                                     "num matches",
+                                                     "The number of matching procedures",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("procedure-names",
                                                                  "procedure names",
@@ -684,17 +684,17 @@ register_pdb_procs (GimpPDB *pdb)
                                                       GIMP_INTERNAL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-args",
-                                                          "num args",
-                                                          "The number of input arguments",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-args",
+                                                     "num args",
+                                                     "The number of input arguments",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-values",
-                                                          "num values",
-                                                          "The number of return values",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-values",
+                                                     "num values",
+                                                     "The number of return values",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -720,11 +720,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("arg-num",
-                                                      "arg num",
-                                                      "The argument number",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("arg-num",
+                                                 "arg num",
+                                                 "The argument number",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_param ("param-spec",
                                                        "param spec",
@@ -756,11 +756,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("val-num",
-                                                      "val num",
-                                                      "The return value number",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("val-num",
+                                                 "val num",
+                                                 "The return value number",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_param ("param-spec",
                                                        "param spec",
@@ -792,11 +792,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("bytes",
-                                                          "bytes",
-                                                          "The number of bytes in the data",
-                                                          1, G_MAXINT32, 1,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("bytes",
+                                                     "bytes",
+                                                     "The number of bytes in the data",
+                                                     1, G_MAXINT32, 1,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("data",
                                                                "data",
@@ -827,11 +827,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("bytes",
-                                                          "bytes",
-                                                          "The number of bytes in the data",
-                                                          1, G_MAXINT32, 1,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("bytes",
+                                                     "bytes",
+                                                     "The number of bytes in the data",
+                                                     1, G_MAXINT32, 1,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -857,11 +857,11 @@ register_pdb_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("bytes",
-                                                      "bytes",
-                                                      "The number of bytes in the data",
-                                                      1, G_MAXINT32, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("bytes",
+                                                 "bytes",
+                                                 "The number of bytes in the data",
+                                                 1, G_MAXINT32, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int8_array ("data",
                                                            "data",

@@ -49,7 +49,7 @@ gradients_popup_invoker (GimpProcedure         *procedure,
   const gchar *gradient_callback;
   const gchar *popup_title;
   const gchar *initial_gradient;
-  gint32 sample_size;
+  gint sample_size;
 
   gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
@@ -171,11 +171,11 @@ register_gradient_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("sample-size",
-                                                      "sample size",
-                                                      "Size of the sample to return when the gradient is changed",
-                                                      1, 10000, 1,
-                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               g_param_spec_int ("sample-size",
+                                                 "sample size",
+                                                 "Size of the sample to return when the gradient is changed",
+                                                 1, 10000, 1,
+                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

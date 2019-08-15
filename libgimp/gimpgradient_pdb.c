@@ -322,7 +322,7 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, num_samples,
+                                          G_TYPE_INT, num_samples,
                                           G_TYPE_BOOLEAN, reverse,
                                           G_TYPE_NONE);
 
@@ -388,7 +388,7 @@ gimp_gradient_get_custom_samples (const gchar    *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, num_samples,
+                                          G_TYPE_INT, num_samples,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, reverse,
                                           G_TYPE_NONE);
@@ -448,7 +448,7 @@ gimp_gradient_segment_get_left_color (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -504,7 +504,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
@@ -554,7 +554,7 @@ gimp_gradient_segment_get_right_color (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -610,7 +610,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
@@ -658,7 +658,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -714,7 +714,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_DOUBLE, pos,
                                           G_TYPE_NONE);
 
@@ -766,7 +766,7 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -821,7 +821,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_DOUBLE, pos,
                                           G_TYPE_NONE);
 
@@ -873,7 +873,7 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -929,7 +929,7 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_DOUBLE, pos,
                                           G_TYPE_NONE);
 
@@ -981,7 +981,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1032,7 +1032,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, segment,
+                                          G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1085,8 +1085,8 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           GIMP_TYPE_GRADIENT_SEGMENT_TYPE, blending_function,
                                           G_TYPE_NONE);
 
@@ -1135,8 +1135,8 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           GIMP_TYPE_GRADIENT_SEGMENT_COLOR, coloring_type,
                                           G_TYPE_NONE);
 
@@ -1182,8 +1182,8 @@ gimp_gradient_segment_range_flip (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1232,9 +1232,9 @@ gimp_gradient_segment_range_replicate (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
-                                          GIMP_TYPE_INT32, replicate_times,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
+                                          G_TYPE_INT, replicate_times,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1280,8 +1280,8 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1329,9 +1329,9 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
-                                          GIMP_TYPE_INT32, split_parts,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
+                                          G_TYPE_INT, split_parts,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1376,8 +1376,8 @@ gimp_gradient_segment_range_delete (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1423,8 +1423,8 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1471,8 +1471,8 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1519,8 +1519,8 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1571,8 +1571,8 @@ gimp_gradient_segment_range_move (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, start_segment,
-                                          GIMP_TYPE_INT32, end_segment,
+                                          G_TYPE_INT, start_segment,
+                                          G_TYPE_INT, end_segment,
                                           G_TYPE_DOUBLE, delta,
                                           G_TYPE_BOOLEAN, control_compress,
                                           G_TYPE_NONE);

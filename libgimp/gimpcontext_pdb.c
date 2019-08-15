@@ -1378,7 +1378,7 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INT32, num_dashes,
+                                          G_TYPE_INT, num_dashes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 1), dashes, num_dashes);
@@ -3593,7 +3593,7 @@ gimp_context_set_sample_threshold_int (gint sample_threshold)
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INT32, sample_threshold,
+                                          G_TYPE_INT, sample_threshold,
                                           G_TYPE_NONE);
 
   if (pdb)

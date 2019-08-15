@@ -53,9 +53,9 @@ pattern_get_info_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 width = 0;
-  gint32 height = 0;
-  gint32 bpp = 0;
+  gint width = 0;
+  gint height = 0;
+  gint bpp = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -102,10 +102,10 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 width = 0;
-  gint32 height = 0;
-  gint32 bpp = 0;
-  gint32 num_color_bytes = 0;
+  gint width = 0;
+  gint height = 0;
+  gint bpp = 0;
+  gint num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -177,23 +177,23 @@ register_pattern_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The pattern width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The pattern width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The pattern height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The pattern height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("bpp",
-                                                          "bpp",
-                                                          "The pattern bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("bpp",
+                                                     "bpp",
+                                                     "The pattern bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -219,29 +219,29 @@ register_pattern_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The pattern width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The pattern width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The pattern height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The pattern height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("bpp",
-                                                          "bpp",
-                                                          "The pattern bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("bpp",
+                                                     "bpp",
+                                                     "The pattern bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-color-bytes",
-                                                          "num color bytes",
-                                                          "Number of pattern bytes",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-color-bytes",
+                                                     "num color bytes",
+                                                     "Number of pattern bytes",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("color-bytes",
                                                                "color bytes",

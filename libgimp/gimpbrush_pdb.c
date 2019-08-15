@@ -499,7 +499,7 @@ gimp_brush_set_spacing (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, spacing,
+                                          G_TYPE_INT, spacing,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -767,7 +767,7 @@ gimp_brush_set_spikes (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, spikes_in,
+                                          G_TYPE_INT, spikes_in,
                                           G_TYPE_NONE);
 
   if (pdb)

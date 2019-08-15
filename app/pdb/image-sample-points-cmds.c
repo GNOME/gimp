@@ -52,9 +52,9 @@ image_add_sample_point_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 position_x;
-  gint32 position_y;
-  gint32 sample_point = 0;
+  gint position_x;
+  gint position_y;
+  gint sample_point = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   position_x = g_value_get_int (gimp_value_array_index (args, 1));
@@ -94,7 +94,7 @@ image_delete_sample_point_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 sample_point;
+  gint sample_point;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -125,8 +125,8 @@ image_find_next_sample_point_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 sample_point;
-  gint32 next_sample_point = 0;
+  gint sample_point;
+  gint next_sample_point = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -167,9 +167,9 @@ image_get_sample_point_position_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 sample_point;
-  gint32 position_x = 0;
-  gint32 position_y = 0;
+  gint sample_point;
+  gint position_x = 0;
+  gint position_y = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -223,17 +223,17 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position-x",
-                                                      "position x",
-                                                      "The guide'sample points x-offset from left of image",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("position-x",
+                                                 "position x",
+                                                 "The guide'sample points x-offset from left of image",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position-y",
-                                                      "position y",
-                                                      "The guide'sample points y-offset from top of image",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("position-y",
+                                                 "position y",
+                                                 "The guide'sample points y-offset from top of image",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("sample-point",
                                                       "sample point",
@@ -334,17 +334,17 @@ register_image_sample_points_procs (GimpPDB *pdb)
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("position-x",
-                                                          "position x",
-                                                          "The sample points's position relative to top of image",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("position-x",
+                                                     "position x",
+                                                     "The sample points's position relative to top of image",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("position-y",
-                                                          "position y",
-                                                          "The sample points's position relative to top of image",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("position-y",
+                                                     "position y",
+                                                     "The sample points's position relative to top of image",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -329,7 +329,7 @@ image_grid_get_style_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 style = 0;
+  gint style = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -362,7 +362,7 @@ image_grid_set_style_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 style;
+  gint style;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   style = g_value_get_enum (gimp_value_array_index (args, 1));

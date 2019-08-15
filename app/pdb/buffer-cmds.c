@@ -53,7 +53,7 @@ buffers_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint32 num_buffers = 0;
+  gint num_buffers = 0;
   gchar **buffer_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -153,7 +153,7 @@ buffer_get_width_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *buffer_name;
-  gint32 width = 0;
+  gint width = 0;
 
   buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -187,7 +187,7 @@ buffer_get_height_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *buffer_name;
-  gint32 height = 0;
+  gint height = 0;
 
   buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -221,7 +221,7 @@ buffer_get_bytes_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *buffer_name;
-  gint32 bytes = 0;
+  gint bytes = 0;
 
   buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -259,7 +259,7 @@ buffer_get_image_type_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *buffer_name;
-  gint32 image_type = 0;
+  gint image_type = 0;
 
   buffer_name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -309,11 +309,11 @@ register_buffer_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-buffers",
-                                                          "num buffers",
-                                                          "The number of buffers",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-buffers",
+                                                     "num buffers",
+                                                     "The number of buffers",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("buffer-list",
                                                                  "buffer list",
@@ -406,11 +406,11 @@ register_buffer_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The buffer width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The buffer width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -436,11 +436,11 @@ register_buffer_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The buffer height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The buffer height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -466,11 +466,11 @@ register_buffer_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("bytes",
-                                                          "bytes",
-                                                          "The buffer bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("bytes",
+                                                     "bytes",
+                                                     "The buffer bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

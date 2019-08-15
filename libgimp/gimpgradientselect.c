@@ -86,11 +86,11 @@ gimp_gradient_select_new (const gchar             *title,
                                                     NULL,
                                                     G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("gradient-width",
-                                                      "Gradient width",
-                                                      "The gradient width",
-                                                      0, G_MAXINT, 0,
-                                                      G_PARAM_READWRITE));
+                               g_param_spec_int ("gradient-width",
+                                                 "Gradient width",
+                                                 "The gradient width",
+                                                 0, G_MAXINT, 0,
+                                                 G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("gradient-data",
                                                             "Gradient data",

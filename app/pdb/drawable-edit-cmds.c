@@ -91,7 +91,7 @@ drawable_edit_fill_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 fill_type;
+  gint fill_type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   fill_type = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -137,7 +137,7 @@ drawable_edit_bucket_fill_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 fill_type;
+  gint fill_type;
   gdouble x;
   gdouble y;
 
@@ -196,10 +196,10 @@ drawable_edit_gradient_fill_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 gradient_type;
+  gint gradient_type;
   gdouble offset;
   gboolean supersample;
-  gint32 supersample_max_depth;
+  gint supersample_max_depth;
   gdouble supersample_threshold;
   gboolean dither;
   gdouble x1;
@@ -518,11 +518,11 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("supersample-max-depth",
-                                                      "supersample max depth",
-                                                      "Maximum recursion levels for supersampling",
-                                                      1, 9, 1,
-                                                      GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+                               g_param_spec_int ("supersample-max-depth",
+                                                 "supersample max depth",
+                                                 "Maximum recursion levels for supersampling",
+                                                 1, 9, 1,
+                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("supersample-threshold",
                                                     "supersample threshold",

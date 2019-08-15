@@ -140,7 +140,7 @@ file_load_layer_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 run_mode;
+  gint run_mode;
   GimpImage *image;
   const gchar *filename;
   GimpLayer *layer = NULL;
@@ -195,10 +195,10 @@ file_load_layers_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 run_mode;
+  gint run_mode;
   GimpImage *image;
   const gchar *filename;
-  gint32 num_layers = 0;
+  gint num_layers = 0;
   gint32 *layer_ids = NULL;
 
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
@@ -344,9 +344,9 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filename;
-  gint32 width = 0;
-  gint32 height = 0;
-  gint32 thumb_data_count = 0;
+  gint width = 0;
+  gint height = 0;
+  gint thumb_data_count = 0;
   guint8 *thumb_data = NULL;
 
   filename = g_value_get_string (gimp_value_array_index (args, 0));
@@ -515,7 +515,7 @@ register_file_handler_priority_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
-  gint32 priority;
+  gint priority;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
   priority = g_value_get_int (gimp_value_array_index (args, 1));
@@ -781,11 +781,11 @@ register_fileops_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-layers",
-                                                          "num layers",
-                                                          "The number of loaded layers",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-layers",
+                                                     "num layers",
+                                                     "The number of loaded layers",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("layer-ids",
                                                                 "layer ids",
@@ -866,23 +866,23 @@ register_fileops_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The width of the thumbnail",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The width of the thumbnail",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The height of the thumbnail",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The height of the thumbnail",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("thumb-data-count",
-                                                          "thumb data count",
-                                                          "The number of bytes in thumbnail data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("thumb-data-count",
+                                                     "thumb data count",
+                                                     "The number of bytes in thumbnail data",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("thumb-data",
                                                                "thumb data",
@@ -1064,11 +1064,11 @@ register_fileops_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("priority",
-                                                      "priority",
-                                                      "The procedure priority.",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("priority",
+                                                 "priority",
+                                                 "The procedure priority.",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

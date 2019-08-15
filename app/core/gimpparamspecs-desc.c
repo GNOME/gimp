@@ -46,7 +46,7 @@ gimp_param_spec_boolean_desc (GParamSpec *pspec)
 }
 
 static gchar *
-gimp_param_spec_int32_desc (GParamSpec *pspec)
+gimp_param_spec_int_desc (GParamSpec *pspec)
 {
   GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
   const gchar   *blurb = gimp_param_spec_get_blurb (pspec);
@@ -170,9 +170,9 @@ gimp_param_spec_get_desc (GParamSpec *pspec)
   if (GIMP_IS_PARAM_SPEC_UNIT (pspec))
     {
     }
-  else if (GIMP_IS_PARAM_SPEC_INT32 (pspec))
+  else if (G_IS_PARAM_SPEC_INT (pspec))
     {
-      return gimp_param_spec_int32_desc (pspec);
+      return gimp_param_spec_int_desc (pspec);
     }
   else
     {

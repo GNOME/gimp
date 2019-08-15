@@ -103,7 +103,7 @@ drawable_color_balance_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 transfer_mode;
+  gint transfer_mode;
   gboolean preserve_lum;
   gdouble cyan_red;
   gdouble magenta_green;
@@ -204,8 +204,8 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 channel;
-  gint32 num_values;
+  gint channel;
+  gint num_values;
   const gdouble *values;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -253,8 +253,8 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 channel;
-  gint32 num_points;
+  gint channel;
+  gint num_points;
   const gdouble *points;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -301,7 +301,7 @@ drawable_desaturate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 desaturate_mode;
+  gint desaturate_mode;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   desaturate_mode = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -373,7 +373,7 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpDrawable *drawable;
-  gint32 channel;
+  gint channel;
   gdouble start_range;
   gdouble end_range;
   gdouble mean = 0.0;
@@ -463,7 +463,7 @@ drawable_hue_saturation_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 hue_range;
+  gint hue_range;
   gdouble hue_offset;
   gdouble lightness;
   gdouble saturation;
@@ -553,7 +553,7 @@ drawable_levels_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 channel;
+  gint channel;
   gdouble low_input;
   gdouble high_input;
   gboolean clamp_input;
@@ -649,7 +649,7 @@ drawable_posterize_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 levels;
+  gint levels;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   levels = g_value_get_int (gimp_value_array_index (args, 1));
@@ -689,7 +689,7 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 channel;
+  gint channel;
   gdouble low_threshold;
   gdouble high_threshold;
 
@@ -888,11 +888,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-values",
-                                                      "num values",
-                                                      "The number of values in the new curve",
-                                                      256, 2096, 256,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-values",
+                                                 "num values",
+                                                 "The number of values in the new curve",
+                                                 256, 2096, 256,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("values",
                                                             "values",
@@ -929,11 +929,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-points",
-                                                      "num points",
-                                                      "The number of values in the control point array",
-                                                      4, 2048, 4,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-points",
+                                                 "num points",
+                                                 "The number of values in the control point array",
+                                                 4, 2048, 4,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("points",
                                                             "points",
@@ -1278,11 +1278,11 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("levels",
-                                                      "levels",
-                                                      "Levels of posterization",
-                                                      2, 255, 2,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("levels",
+                                                 "levels",
+                                                 "Levels of posterization",
+                                                 2, 255, 2,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

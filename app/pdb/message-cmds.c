@@ -77,7 +77,7 @@ message_get_handler_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 handler = 0;
+  gint handler = 0;
 
   handler = gimp->message_handler;
 
@@ -96,7 +96,7 @@ message_set_handler_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   gboolean success = TRUE;
-  gint32 handler;
+  gint handler;
 
   handler = g_value_get_enum (gimp_value_array_index (args, 0));
 

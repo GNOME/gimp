@@ -57,10 +57,10 @@ selection_bounds_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gboolean non_empty = FALSE;
-  gint32 x1 = 0;
-  gint32 y1 = 0;
-  gint32 x2 = 0;
-  gint32 y2 = 0;
+  gint x1 = 0;
+  gint y1 = 0;
+  gint x2 = 0;
+  gint y2 = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -103,9 +103,9 @@ selection_value_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 x;
-  gint32 y;
-  gint32 value = 0;
+  gint x;
+  gint y;
+  gint value = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   x = g_value_get_int (gimp_value_array_index (args, 1));
@@ -169,8 +169,8 @@ selection_translate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 offx;
-  gint32 offy;
+  gint offx;
+  gint offy;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   offx = g_value_get_int (gimp_value_array_index (args, 1));
@@ -197,8 +197,8 @@ selection_float_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpDrawable *drawable;
-  gint32 offx;
-  gint32 offy;
+  gint offx;
+  gint offy;
   GimpLayer *layer = NULL;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
@@ -356,7 +356,7 @@ selection_border_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 radius;
+  gint radius;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   radius = g_value_get_int (gimp_value_array_index (args, 1));
@@ -384,7 +384,7 @@ selection_grow_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 steps;
+  gint steps;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   steps = g_value_get_int (gimp_value_array_index (args, 1));
@@ -409,7 +409,7 @@ selection_shrink_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 steps;
+  gint steps;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   steps = g_value_get_int (gimp_value_array_index (args, 1));
@@ -519,29 +519,29 @@ register_selection_procs (GimpPDB *pdb)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("x1",
-                                                          "x1",
-                                                          "x coordinate of upper left corner of selection bounds",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("x1",
+                                                     "x1",
+                                                     "x coordinate of upper left corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("y1",
-                                                          "y1",
-                                                          "y coordinate of upper left corner of selection bounds",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("y1",
+                                                     "y1",
+                                                     "y coordinate of upper left corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("x2",
-                                                          "x2",
-                                                          "x coordinate of lower right corner of selection bounds",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("x2",
+                                                     "x2",
+                                                     "x coordinate of lower right corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("y2",
-                                                          "y2",
-                                                          "y coordinate of lower right corner of selection bounds",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("y2",
+                                                     "y2",
+                                                     "y coordinate of lower right corner of selection bounds",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -566,23 +566,23 @@ register_selection_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("x",
-                                                      "x",
-                                                      "x coordinate of value",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("x",
+                                                 "x",
+                                                 "x coordinate of value",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("y",
-                                                      "y",
-                                                      "y coordinate of value",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("y",
+                                                 "y",
+                                                 "y coordinate of value",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("value",
-                                                          "value",
-                                                          "Value of the selection",
-                                                          0, 255, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("value",
+                                                     "value",
+                                                     "Value of the selection",
+                                                     0, 255, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -636,17 +636,17 @@ register_selection_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "x offset for translation",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "y offset for translation",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -671,17 +671,17 @@ register_selection_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "x offset for translation",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "y offset for translation",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset for translation",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_id ("layer",
                                                              "layer",
@@ -833,11 +833,11 @@ register_selection_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("radius",
-                                                      "radius",
-                                                      "Radius of border (in pixels)",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("radius",
+                                                 "radius",
+                                                 "Radius of border (in pixels)",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -862,11 +862,11 @@ register_selection_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("steps",
-                                                      "steps",
-                                                      "Steps of grow (in pixels)",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("steps",
+                                                 "steps",
+                                                 "Steps of grow (in pixels)",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -891,11 +891,11 @@ register_selection_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("steps",
-                                                      "steps",
-                                                      "Steps of shrink (in pixels)",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("steps",
+                                                 "steps",
+                                                 "Steps of shrink (in pixels)",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

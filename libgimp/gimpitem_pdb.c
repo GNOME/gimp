@@ -1240,7 +1240,7 @@ gimp_item_set_tattoo (gint32 item_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_ITEM_ID, item_ID,
-                                          GIMP_TYPE_INT32, tattoo,
+                                          G_TYPE_INT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)

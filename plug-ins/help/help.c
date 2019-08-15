@@ -137,22 +137,22 @@ help_create_procedure (GimpPlugIn  *plug_in,
                                       "1999-2008");
 
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32 ("num-domain-names",
-                                                          "Num Domain Names",
-                                                          "Num domain names",
-                                                          0, G_MAXINT, 0,
-                                                          G_PARAM_READWRITE));
+                                   g_param_spec_int ("num-domain-names",
+                                                     "Num Domain Names",
+                                                     "Num domain names",
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_string_array ("domain-names",
                                                                  "Domain Names",
                                                                  "Domain names",
                                                                  G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32 ("num-domain-uris",
-                                                          "Num Domain URIs",
-                                                          "Num domain URIs",
-                                                          0, G_MAXINT, 0,
-                                                          G_PARAM_READWRITE));
+                                   g_param_spec_int ("num-domain-uris",
+                                                     "Num Domain URIs",
+                                                     "Num domain URIs",
+                                                     0, G_MAXINT, 0,
+                                                     G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_string_array ("domain-uris",
                                                                  "Domain URIs",

@@ -237,7 +237,7 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
                                           GIMP_TYPE_ICON_TYPE, icon_type,
-                                          GIMP_TYPE_INT32, icon_data_length,
+                                          G_TYPE_INT, icon_data_length,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_int8_array (gimp_value_array_index (args, 3), icon_data, icon_data_length);

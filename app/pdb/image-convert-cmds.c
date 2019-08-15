@@ -116,9 +116,9 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 dither_type;
-  gint32 palette_type;
-  gint32 num_cols;
+  gint dither_type;
+  gint palette_type;
+  gint num_cols;
   gboolean alpha_dither;
   gboolean remove_unused;
   const gchar *palette;
@@ -194,9 +194,9 @@ image_convert_set_dither_matrix_invoker (GimpProcedure         *procedure,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  gint32 width;
-  gint32 height;
-  gint32 matrix_length;
+  gint width;
+  gint height;
+  gint matrix_length;
   const guint8 *matrix;
 
   width = g_value_get_int (gimp_value_array_index (args, 0));
@@ -233,7 +233,7 @@ image_convert_precision_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 precision;
+  gint precision;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   precision = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -346,11 +346,11 @@ register_image_convert_procs (GimpPDB *pdb)
                                                   GIMP_CONVERT_PALETTE_GENERATE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-cols",
-                                                      "num cols",
-                                                      "The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-cols",
+                                                 "num cols",
+                                                 "The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("alpha-dither",
                                                      "alpha dither",
@@ -388,23 +388,23 @@ register_image_convert_procs (GimpPDB *pdb)
                                      "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("width",
-                                                      "width",
-                                                      "Width of the matrix (0 to reset to default matrix)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "Width of the matrix (0 to reset to default matrix)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "Height of the matrix (0 to reset to default matrix)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "Height of the matrix (0 to reset to default matrix)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("matrix-length",
-                                                      "matrix length",
-                                                      "The length of 'matrix'",
-                                                      1, 1024, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("matrix-length",
+                                                 "matrix length",
+                                                 "The length of 'matrix'",
+                                                 1, 1024, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int8_array ("matrix",
                                                            "matrix",

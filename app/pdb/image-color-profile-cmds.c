@@ -53,7 +53,7 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_bytes = 0;
+  gint num_bytes = 0;
   guint8 *profile_data = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -99,7 +99,7 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_bytes = 0;
+  gint num_bytes = 0;
   guint8 *profile_data = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -144,7 +144,7 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 num_bytes;
+  gint num_bytes;
   const guint8 *color_profile;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -237,9 +237,9 @@ image_convert_color_profile_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 num_bytes;
+  gint num_bytes;
   const guint8 *color_profile;
-  gint32 intent;
+  gint intent;
   gboolean bpc;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -287,7 +287,7 @@ image_convert_color_profile_from_file_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpImage *image;
   const gchar *uri;
-  gint32 intent;
+  gint intent;
   gboolean bpc;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -350,11 +350,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-bytes",
-                                                          "num bytes",
-                                                          "Number of bytes in the color_profile array",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-bytes",
+                                                     "num bytes",
+                                                     "Number of bytes in the color_profile array",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("profile-data",
                                                                "profile data",
@@ -384,11 +384,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-bytes",
-                                                          "num bytes",
-                                                          "Number of bytes in the color_profile array",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-bytes",
+                                                     "num bytes",
+                                                     "Number of bytes in the color_profile array",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("profile-data",
                                                                "profile data",
@@ -418,11 +418,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-bytes",
-                                                      "num bytes",
-                                                      "Number of bytes in the color_profile array",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-bytes",
+                                                 "num bytes",
+                                                 "Number of bytes in the color_profile array",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int8_array ("color-profile",
                                                            "color profile",
@@ -482,11 +482,11 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-bytes",
-                                                      "num bytes",
-                                                      "Number of bytes in the color_profile array",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-bytes",
+                                                 "num bytes",
+                                                 "Number of bytes in the color_profile array",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int8_array ("color-profile",
                                                            "color profile",

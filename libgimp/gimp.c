@@ -446,7 +446,7 @@ _gimp_main_internal (GType                 plug_in_type,
   {
     GType init_types[] =
     {
-      GIMP_TYPE_INT32,         GIMP_TYPE_PARAM_INT32,
+      G_TYPE_INT,              G_TYPE_PARAM_INT,
       GIMP_TYPE_INT16,         GIMP_TYPE_PARAM_INT16,
       G_TYPE_UCHAR,            G_TYPE_PARAM_UCHAR,
 

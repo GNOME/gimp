@@ -169,7 +169,7 @@ _gimp_image_set_color_profile (gint32        image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, num_bytes,
+                                          G_TYPE_INT, num_bytes,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
@@ -271,7 +271,7 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, num_bytes,
+                                          G_TYPE_INT, num_bytes,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,

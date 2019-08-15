@@ -55,8 +55,8 @@ channel_new_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 width;
-  gint32 height;
+  gint width;
+  gint height;
   const gchar *name;
   gdouble opacity;
   GimpRGB color;
@@ -100,7 +100,7 @@ channel_new_from_component_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 component;
+  gint component;
   const gchar *name;
   GimpChannel *channel = NULL;
 
@@ -183,9 +183,9 @@ channel_combine_masks_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpChannel *channel1;
   GimpChannel *channel2;
-  gint32 operation;
-  gint32 offx;
-  gint32 offy;
+  gint operation;
+  gint offx;
+  gint offy;
 
   channel1 = gimp_value_get_channel (gimp_value_array_index (args, 0), gimp);
   channel2 = gimp_value_get_channel (gimp_value_array_index (args, 1), gimp);
@@ -396,17 +396,17 @@ register_channel_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("width",
-                                                      "width",
-                                                      "The channel width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "The channel width",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "The channel height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "The channel height",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -544,17 +544,17 @@ register_channel_procs (GimpPDB *pdb)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "x offset between upper left corner of channels: (second - first)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset between upper left corner of channels: (second - first)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "y offset between upper left corner of channels: (second - first)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset between upper left corner of channels: (second - first)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

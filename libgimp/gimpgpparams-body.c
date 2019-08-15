@@ -39,8 +39,7 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
 
   pspec_type = G_PARAM_SPEC_TYPE (pspec);
 
-  if (pspec_type == G_TYPE_PARAM_INT      ||
-      pspec_type == GIMP_TYPE_PARAM_INT32 ||
+  if (pspec_type == G_TYPE_PARAM_INT ||
       pspec_type == GIMP_TYPE_PARAM_INT16)
     {
       GParamSpecInt *ispec = G_PARAM_SPEC_INT (pspec);
@@ -192,7 +191,6 @@ _gimp_gp_param_to_value (gpointer        gimp,
   g_value_init (value, type);
 
   if (type == G_TYPE_INT      ||
-      type == GIMP_TYPE_INT32 ||
       type == GIMP_TYPE_INT16 ||
       type == GIMP_TYPE_UNIT)
     {
@@ -386,19 +384,19 @@ _gimp_gp_params_to_value_array (gpointer        gimp,
                        */
                       type = pspec_type;
                     }
-                  else if (type == GIMP_TYPE_INT32)
+                  else if (type == G_TYPE_INT)
                     {
                       if (g_type_is_a (pspec_type, G_TYPE_ENUM))
                         {
                           /*  if the param spec's type is enum, but an
-                           *  int32 was passed, use the enum type.
+                           *  int was passed, use the enum type.
                            */
                           type = pspec_type;
                         }
                       else if (g_type_is_a (pspec_type, G_TYPE_BOOLEAN))
                         {
                           /*  if the param spec's type is boolean, but
-                           *  an int32 was passed, use the boolean
+                           *  an int was passed, use the boolean
                            *  type.
                            */
                           type = pspec_type;
@@ -437,7 +435,6 @@ _gimp_value_to_gp_param (const GValue *value,
     param->type_name = (gchar *) g_type_name (type);
 
   if (type == G_TYPE_INT      ||
-      type == GIMP_TYPE_INT32 ||
       type == GIMP_TYPE_INT16 ||
       type == GIMP_TYPE_UNIT)
     {

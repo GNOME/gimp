@@ -243,7 +243,7 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
@@ -305,7 +305,7 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, dist,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
@@ -363,7 +363,7 @@ gimp_vectors_remove_stroke (gint32 vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -406,7 +406,7 @@ gimp_vectors_stroke_close (gint32 vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -453,9 +453,9 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
-                                          GIMP_TYPE_INT32, off_x,
-                                          GIMP_TYPE_INT32, off_y,
+                                          G_TYPE_INT, stroke_id,
+                                          G_TYPE_INT, off_x,
+                                          G_TYPE_INT, off_y,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -502,7 +502,7 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, scale_x,
                                           G_TYPE_DOUBLE, scale_y,
                                           G_TYPE_NONE);
@@ -553,7 +553,7 @@ gimp_vectors_stroke_rotate (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, center_x,
                                           G_TYPE_DOUBLE, center_y,
                                           G_TYPE_DOUBLE, angle,
@@ -603,7 +603,7 @@ gimp_vectors_stroke_flip (gint32              vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           GIMP_TYPE_ORIENTATION_TYPE, flip_type,
                                           G_TYPE_DOUBLE, axis,
                                           G_TYPE_NONE);
@@ -658,7 +658,7 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x1,
                                           G_TYPE_DOUBLE, y1,
                                           G_TYPE_DOUBLE, x2,
@@ -714,7 +714,7 @@ gimp_vectors_stroke_get_points (gint32     vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -779,7 +779,7 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           GIMP_TYPE_VECTORS_STROKE_TYPE, type,
-                                          GIMP_TYPE_INT32, num_points,
+                                          G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, closed,
                                           G_TYPE_NONE);
@@ -834,7 +834,7 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, precision,
                                           G_TYPE_NONE);
 
@@ -936,7 +936,7 @@ gimp_vectors_bezier_stroke_lineto (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_NONE);
@@ -991,7 +991,7 @@ gimp_vectors_bezier_stroke_conicto (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -1050,7 +1050,7 @@ gimp_vectors_bezier_stroke_cubicto (gint32  vectors_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
-                                          GIMP_TYPE_INT32, stroke_id,
+                                          G_TYPE_INT, stroke_id,
                                           G_TYPE_DOUBLE, x0,
                                           G_TYPE_DOUBLE, y0,
                                           G_TYPE_DOUBLE, x1,
@@ -1231,7 +1231,7 @@ gimp_vectors_import_from_string (gint32        image_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           G_TYPE_STRING, string,
-                                          GIMP_TYPE_INT32, length,
+                                          G_TYPE_INT, length,
                                           G_TYPE_BOOLEAN, merge,
                                           G_TYPE_BOOLEAN, scale,
                                           G_TYPE_NONE);

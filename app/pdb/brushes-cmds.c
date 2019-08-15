@@ -67,7 +67,7 @@ brushes_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint32 num_brushes = 0;
+  gint num_brushes = 0;
   gchar **brush_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -134,11 +134,11 @@ register_brushes_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-brushes",
-                                                          "num brushes",
-                                                          "The number of brushes in the brush list",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-brushes",
+                                                     "num brushes",
+                                                     "The number of brushes in the brush list",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("brush-list",
                                                                  "brush list",

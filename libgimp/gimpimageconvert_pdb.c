@@ -160,7 +160,7 @@ gimp_image_convert_indexed (gint32                  image_ID,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_CONVERT_DITHER_TYPE, dither_type,
                                           GIMP_TYPE_CONVERT_PALETTE_TYPE, palette_type,
-                                          GIMP_TYPE_INT32, num_cols,
+                                          G_TYPE_INT, num_cols,
                                           G_TYPE_BOOLEAN, alpha_dither,
                                           G_TYPE_BOOLEAN, remove_unused,
                                           G_TYPE_STRING, palette,
@@ -210,9 +210,9 @@ gimp_image_convert_set_dither_matrix (gint          width,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
-                                          GIMP_TYPE_INT32, matrix_length,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
+                                          G_TYPE_INT, matrix_length,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_int8_array (gimp_value_array_index (args, 3), matrix, matrix_length);

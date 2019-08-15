@@ -406,7 +406,7 @@ gimp_image_select_polygon (gint32          image_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_INT32, num_segs,
+                                          G_TYPE_INT, num_segs,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), segs, num_segs);

@@ -62,7 +62,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
                                           G_TYPE_STRING, gradient_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_gradient,
-                                          GIMP_TYPE_INT32, sample_size,
+                                          G_TYPE_INT, sample_size,
                                           G_TYPE_NONE);
 
   if (pdb)

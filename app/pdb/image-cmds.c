@@ -109,7 +109,7 @@ image_list_invoker (GimpProcedure         *procedure,
                     GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 num_images = 0;
+  gint num_images = 0;
   gint32 *image_ids = NULL;
 
   GList *list = gimp_get_image_iter (gimp);
@@ -144,9 +144,9 @@ image_new_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 width;
-  gint32 height;
-  gint32 type;
+  gint width;
+  gint height;
+  gint type;
   GimpImage *image = NULL;
 
   width = g_value_get_int (gimp_value_array_index (args, 0));
@@ -181,10 +181,10 @@ image_new_with_precision_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 width;
-  gint32 height;
-  gint32 type;
-  gint32 precision;
+  gint width;
+  gint height;
+  gint type;
+  gint precision;
   GimpImage *image = NULL;
 
   width = g_value_get_int (gimp_value_array_index (args, 0));
@@ -282,7 +282,7 @@ image_base_type_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 base_type = 0;
+  gint base_type = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -311,7 +311,7 @@ image_get_precision_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 precision = 0;
+  gint precision = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -340,7 +340,7 @@ image_get_default_new_layer_mode_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 mode = 0;
+  gint mode = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -369,7 +369,7 @@ image_width_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 width = 0;
+  gint width = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -398,7 +398,7 @@ image_height_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 height = 0;
+  gint height = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -427,7 +427,7 @@ image_get_layers_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_layers = 0;
+  gint num_layers = 0;
   gint32 *layer_ids = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -472,7 +472,7 @@ image_get_channels_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_channels = 0;
+  gint num_channels = 0;
   gint32 *channel_ids = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -517,7 +517,7 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_vectors = 0;
+  gint num_vectors = 0;
   gint32 *vector_ids = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -743,8 +743,8 @@ image_pick_correlate_layer_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 x;
-  gint32 y;
+  gint x;
+  gint y;
   GimpLayer *layer = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -777,7 +777,7 @@ image_insert_layer_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpLayer *layer;
   GimpLayer *parent;
-  gint32 position;
+  gint position;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
@@ -914,7 +914,7 @@ image_insert_channel_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpChannel *channel;
   GimpChannel *parent;
-  gint32 position;
+  gint position;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   channel = gimp_value_get_channel (gimp_value_array_index (args, 1), gimp);
@@ -1044,7 +1044,7 @@ image_insert_vectors_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpVectors *vectors;
   GimpVectors *parent;
-  gint32 position;
+  gint position;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 1), gimp);
@@ -1174,7 +1174,7 @@ image_get_item_position_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   GimpItem *item;
-  gint32 position = 0;
+  gint position = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   item = gimp_value_get_item (gimp_value_array_index (args, 1), gimp);
@@ -1316,7 +1316,7 @@ image_reorder_item_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   GimpItem *item;
   GimpItem *parent;
-  gint32 position;
+  gint position;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   item = gimp_value_get_item (gimp_value_array_index (args, 1), gimp);
@@ -1386,7 +1386,7 @@ image_merge_visible_layers_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 merge_type;
+  gint merge_type;
   GimpLayer *layer = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1423,7 +1423,7 @@ image_merge_down_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   GimpLayer *merge_layer;
-  gint32 merge_type;
+  gint merge_type;
   GimpLayer *layer = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1464,7 +1464,7 @@ image_get_colormap_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_bytes = 0;
+  gint num_bytes = 0;
   guint8 *colormap = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1497,7 +1497,7 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 num_bytes;
+  gint num_bytes;
   const guint8 *colormap;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1636,12 +1636,12 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 width;
-  gint32 height;
-  gint32 actual_width = 0;
-  gint32 actual_height = 0;
-  gint32 bpp = 0;
-  gint32 thumbnail_data_count = 0;
+  gint width;
+  gint height;
+  gint actual_width = 0;
+  gint actual_height = 0;
+  gint bpp = 0;
+  gint thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1904,7 +1904,7 @@ image_get_component_active_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 component;
+  gint component;
   gboolean active = FALSE;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1942,7 +1942,7 @@ image_set_component_active_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 component;
+  gint component;
   gboolean active;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1977,7 +1977,7 @@ image_get_component_visible_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 component;
+  gint component;
   gboolean visible = FALSE;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2015,7 +2015,7 @@ image_set_component_visible_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 component;
+  gint component;
   gboolean visible;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2412,7 +2412,7 @@ image_get_tattoo_state_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 tattoo_state = 0;
+  gint tattoo_state = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -2440,7 +2440,7 @@ image_set_tattoo_state_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 tattoo_state;
+  gint tattoo_state;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   tattoo_state = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -2465,7 +2465,7 @@ image_get_layer_by_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 tattoo;
+  gint tattoo;
   GimpLayer *layer = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2496,7 +2496,7 @@ image_get_channel_by_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 tattoo;
+  gint tattoo;
   GimpChannel *channel = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2527,7 +2527,7 @@ image_get_vectors_by_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 tattoo;
+  gint tattoo;
   GimpVectors *vectors = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2736,7 +2736,7 @@ image_get_parasite_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 num_parasites = 0;
+  gint num_parasites = 0;
   gchar **parasites = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2807,11 +2807,11 @@ register_image_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-images",
-                                                          "num images",
-                                                          "The number of images currently open",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-images",
+                                                     "num images",
+                                                     "The number of images currently open",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("image-ids",
                                                                 "image ids",
@@ -2837,17 +2837,17 @@ register_image_procs (GimpPDB *pdb)
                                      "1995-1996",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("width",
-                                                      "width",
-                                                      "The width of the image",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "The width of the image",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "The height of the image",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "The height of the image",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
@@ -2879,17 +2879,17 @@ register_image_procs (GimpPDB *pdb)
                                      "2012",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("width",
-                                                      "width",
-                                                      "The width of the image",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "The width of the image",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "The height of the image",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "The height of the image",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
@@ -3076,11 +3076,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The image's width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The image's width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3105,11 +3105,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The image's height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The image's height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3134,11 +3134,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-layers",
-                                                          "num layers",
-                                                          "The number of layers contained in the image",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-layers",
+                                                     "num layers",
+                                                     "The number of layers contained in the image",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("layer-ids",
                                                                 "layer ids",
@@ -3168,11 +3168,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-channels",
-                                                          "num channels",
-                                                          "The number of channels contained in the image",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-channels",
+                                                     "num channels",
+                                                     "The number of channels contained in the image",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("channel-ids",
                                                                 "channel ids",
@@ -3202,11 +3202,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-vectors",
-                                                          "num vectors",
-                                                          "The number of vectors contained in the image",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-vectors",
+                                                     "num vectors",
+                                                     "The number of vectors contained in the image",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("vector-ids",
                                                                 "vector ids",
@@ -3412,17 +3412,17 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("x",
-                                                      "x",
-                                                      "The x coordinate for the pick",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("x",
+                                                 "x",
+                                                 "The x coordinate for the pick",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("y",
-                                                      "y",
-                                                      "The y coordinate for the pick",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("y",
+                                                 "y",
+                                                 "The y coordinate for the pick",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_id ("layer",
                                                              "layer",
@@ -3465,11 +3465,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The layer position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("position",
+                                                 "position",
+                                                 "The layer position",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3585,11 +3585,11 @@ register_image_procs (GimpPDB *pdb)
                                                            pdb->gimp, TRUE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The channel position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("position",
+                                                 "position",
+                                                 "The channel position",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3705,11 +3705,11 @@ register_image_procs (GimpPDB *pdb)
                                                            pdb->gimp, TRUE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The vectors position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("position",
+                                                 "position",
+                                                 "The vectors position",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3819,11 +3819,11 @@ register_image_procs (GimpPDB *pdb)
                                                         pdb->gimp, FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("position",
-                                                          "position",
-                                                          "The position of the item in its level in the item tree",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("position",
+                                                     "position",
+                                                     "The position of the item in its level in the item tree",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3976,11 +3976,11 @@ register_image_procs (GimpPDB *pdb)
                                                         pdb->gimp, TRUE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The new position of the item",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("position",
+                                                 "position",
+                                                 "The new position of the item",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4116,11 +4116,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-bytes",
-                                                          "num bytes",
-                                                          "Number of bytes in the colormap array",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-bytes",
+                                                     "num bytes",
+                                                     "Number of bytes in the colormap array",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("colormap",
                                                                "colormap",
@@ -4150,11 +4150,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-bytes",
-                                                      "num bytes",
-                                                      "Number of bytes in the colormap array",
-                                                      0, 768, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-bytes",
+                                                 "num bytes",
+                                                 "Number of bytes in the colormap array",
+                                                 0, 768, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int8_array ("colormap",
                                                            "colormap",
@@ -4296,41 +4296,41 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("width",
-                                                      "width",
-                                                      "The requested thumbnail width",
-                                                      1, 1024, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "The requested thumbnail width",
+                                                 1, 1024, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "The requested thumbnail height",
-                                                      1, 1024, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "The requested thumbnail height",
+                                                 1, 1024, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("actual-width",
-                                                          "actual width",
-                                                          "The previews width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("actual-width",
+                                                     "actual width",
+                                                     "The previews width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("actual-height",
-                                                          "actual height",
-                                                          "The previews height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("actual-height",
+                                                     "actual height",
+                                                     "The previews height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("bpp",
-                                                          "bpp",
-                                                          "The previews bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("bpp",
+                                                     "bpp",
+                                                     "The previews bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("thumbnail-data-count",
-                                                          "thumbnail data count",
-                                                          "The number of bytes in thumbnail data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("thumbnail-data-count",
+                                                     "thumbnail data count",
+                                                     "The number of bytes in thumbnail data",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("thumbnail-data",
                                                                "thumbnail data",
@@ -5413,11 +5413,11 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-parasites",
-                                                          "num parasites",
-                                                          "The number of attached parasites",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-parasites",
+                                                     "num parasites",
+                                                     "The number of attached parasites",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("parasites",
                                                                  "parasites",

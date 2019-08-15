@@ -299,12 +299,12 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                                          TRUE,
                                                          G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32 ("num-images",
-                                                          "Num images",
-                                                          "Number of images to "
-                                                          "be used for film",
-                                                          1, MAX_FILM_PICTURES, 1,
-                                                          G_PARAM_READWRITE));
+                                   g_param_spec_int ("num-images",
+                                                     "Num images",
+                                                     "Number of images to "
+                                                     "be used for film",
+                                                     1, MAX_FILM_PICTURES, 1,
+                                                     G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_int32_array ("image-ids",
                                                                 "Image IDs",

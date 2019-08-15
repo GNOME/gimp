@@ -129,8 +129,8 @@ gimp_selection_value (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, x,
-                                          GIMP_TYPE_INT32, y,
+                                          G_TYPE_INT, x,
+                                          G_TYPE_INT, y,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -218,8 +218,8 @@ gimp_selection_translate (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -267,8 +267,8 @@ _gimp_selection_float (gint32 drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -512,7 +512,7 @@ gimp_selection_border (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, radius,
+                                          G_TYPE_INT, radius,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -554,7 +554,7 @@ gimp_selection_grow (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, steps,
+                                          G_TYPE_INT, steps,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -597,7 +597,7 @@ gimp_selection_shrink (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, steps,
+                                          G_TYPE_INT, steps,
                                           G_TYPE_NONE);
 
   if (pdb)

@@ -170,7 +170,7 @@ vectors_get_strokes_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpVectors *vectors;
-  gint32 num_strokes = 0;
+  gint num_strokes = 0;
   gint32 *stroke_ids = NULL;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
@@ -219,7 +219,7 @@ vectors_stroke_get_length_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble precision;
   gdouble length = 0.0;
 
@@ -257,7 +257,7 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble dist;
   gdouble precision;
   gdouble x_point = 0.0;
@@ -311,7 +311,7 @@ vectors_remove_stroke_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
@@ -348,7 +348,7 @@ vectors_stroke_close_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
@@ -387,9 +387,9 @@ vectors_stroke_translate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
-  gint32 off_x;
-  gint32 off_y;
+  gint stroke_id;
+  gint off_x;
+  gint off_y;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
@@ -432,7 +432,7 @@ vectors_stroke_scale_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble scale_x;
   gdouble scale_y;
 
@@ -477,7 +477,7 @@ vectors_stroke_rotate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble center_x;
   gdouble center_y;
   gdouble angle;
@@ -524,8 +524,8 @@ vectors_stroke_flip_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
-  gint32 flip_type;
+  gint stroke_id;
+  gint flip_type;
   gdouble axis;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
@@ -569,7 +569,7 @@ vectors_stroke_flip_free_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble x1;
   gdouble y1;
   gdouble x2;
@@ -619,9 +619,9 @@ vectors_stroke_get_points_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpVectors *vectors;
-  gint32 stroke_id;
-  gint32 type = 0;
-  gint32 num_points = 0;
+  gint stroke_id;
+  gint type = 0;
+  gint num_points = 0;
   gdouble *controlpoints = NULL;
   gboolean closed = FALSE;
 
@@ -687,11 +687,11 @@ vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpVectors *vectors;
-  gint32 type;
-  gint32 num_points;
+  gint type;
+  gint num_points;
   const gdouble *controlpoints;
   gboolean closed;
-  gint32 stroke_id = 0;
+  gint stroke_id = 0;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   type = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -759,9 +759,9 @@ vectors_stroke_interpolate_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble precision;
-  gint32 num_coords = 0;
+  gint num_coords = 0;
   gdouble *coords = NULL;
   gboolean closed = FALSE;
 
@@ -826,7 +826,7 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
   GimpVectors *vectors;
   gdouble x0;
   gdouble y0;
-  gint32 stroke_id = 0;
+  gint stroke_id = 0;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
@@ -879,7 +879,7 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble x0;
   gdouble y0;
 
@@ -927,7 +927,7 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble x0;
   gdouble y0;
   gdouble x1;
@@ -983,7 +983,7 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
-  gint32 stroke_id;
+  gint stroke_id;
   gdouble x0;
   gdouble y0;
   gdouble x1;
@@ -1053,7 +1053,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
   gdouble radius_x;
   gdouble radius_y;
   gdouble angle;
-  gint32 stroke_id = 0;
+  gint stroke_id = 0;
 
   vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
   x0 = g_value_get_double (gimp_value_array_index (args, 1));
@@ -1113,7 +1113,7 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
   const gchar *filename;
   gboolean merge;
   gboolean scale;
-  gint32 num_vectors = 0;
+  gint num_vectors = 0;
   gint32 *vectors_ids = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1177,10 +1177,10 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   const gchar *string;
-  gint32 length;
+  gint length;
   gboolean merge;
   gboolean scale;
-  gint32 num_vectors = 0;
+  gint num_vectors = 0;
   gint32 *vectors_ids = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -1418,11 +1418,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-strokes",
-                                                          "num strokes",
-                                                          "The number of strokes returned.",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-strokes",
+                                                     "num strokes",
+                                                     "The number of strokes returned.",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("stroke-ids",
                                                                 "stroke ids",
@@ -1452,11 +1452,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("precision",
                                                     "precision",
@@ -1493,11 +1493,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("dist",
                                                     "dist",
@@ -1558,11 +1558,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1587,11 +1587,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1616,23 +1616,23 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("off-x",
-                                                      "off x",
-                                                      "Offset in x direction",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("off-x",
+                                                 "off x",
+                                                 "Offset in x direction",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("off-y",
-                                                      "off y",
-                                                      "Offset in y direction",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("off-y",
+                                                 "off y",
+                                                 "Offset in y direction",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1657,11 +1657,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("scale-x",
                                                     "scale x",
@@ -1698,11 +1698,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("center-x",
                                                     "center x",
@@ -1745,11 +1745,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_enum ("flip-type",
                                                      "flip type",
@@ -1789,11 +1789,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x1",
                                                     "x1",
@@ -1842,11 +1842,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
@@ -1855,11 +1855,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                       GIMP_VECTORS_STROKE_TYPE_BEZIER,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-points",
-                                                          "num points",
-                                                          "The number of floats returned.",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-points",
+                                                     "num points",
+                                                     "The number of floats returned.",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("controlpoints",
                                                                 "controlpoints",
@@ -1902,11 +1902,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                   GIMP_VECTORS_STROKE_TYPE_BEZIER,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-points",
-                                                      "num points",
-                                                      "The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-points",
+                                                 "num points",
+                                                 "The number of elements in the array, i.e. the number of controlpoints in the stroke * 2 (x- and y-coordinate).",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("controlpoints",
                                                             "controlpoints",
@@ -1919,11 +1919,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("stroke-id",
-                                                          "stroke id",
-                                                          "The stroke ID of the newly created stroke.",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("stroke-id",
+                                                     "stroke id",
+                                                     "The stroke ID of the newly created stroke.",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1948,11 +1948,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("precision",
                                                     "precision",
@@ -1960,11 +1960,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-coords",
-                                                          "num coords",
-                                                          "The number of floats returned.",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-coords",
+                                                     "num coords",
+                                                     "The number of floats returned.",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("coords",
                                                                 "coords",
@@ -2012,11 +2012,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("stroke-id",
-                                                          "stroke id",
-                                                          "The resulting stroke",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("stroke-id",
+                                                     "stroke id",
+                                                     "The resulting stroke",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2041,11 +2041,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -2082,11 +2082,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -2135,11 +2135,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("stroke-id",
-                                                      "stroke id",
-                                                      "The stroke ID",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("stroke-id",
+                                                 "stroke id",
+                                                 "The stroke ID",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x0",
                                                     "x0",
@@ -2230,11 +2230,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("stroke-id",
-                                                          "stroke id",
-                                                          "The resulting stroke",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("stroke-id",
+                                                     "stroke id",
+                                                     "The resulting stroke",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2278,11 +2278,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-vectors",
-                                                          "num vectors",
-                                                          "The number of newly created vectors",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-vectors",
+                                                     "num vectors",
+                                                     "The number of newly created vectors",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("vectors-ids",
                                                                 "vectors ids",
@@ -2319,11 +2319,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("length",
-                                                      "length",
-                                                      "Number of bytes in string or -1 if the string is NULL terminated.",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("length",
+                                                 "length",
+                                                 "Number of bytes in string or -1 if the string is NULL terminated.",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("merge",
                                                      "merge",
@@ -2337,11 +2337,11 @@ register_vectors_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-vectors",
-                                                          "num vectors",
-                                                          "The number of newly created vectors",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-vectors",
+                                                     "num vectors",
+                                                     "The number of newly created vectors",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("vectors-ids",
                                                                 "vectors ids",

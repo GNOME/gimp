@@ -46,7 +46,7 @@ unit_get_number_of_units_invoker (GimpProcedure         *procedure,
                                   GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 num_units = 0;
+  gint num_units = 0;
 
   num_units = _gimp_unit_get_number_of_units (gimp);
 
@@ -65,7 +65,7 @@ unit_get_number_of_built_in_units_invoker (GimpProcedure         *procedure,
                                            GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 num_units = 0;
+  gint num_units = 0;
 
   num_units = _gimp_unit_get_number_of_built_in_units (gimp);
 
@@ -87,7 +87,7 @@ unit_new_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   const gchar *identifier;
   gdouble factor;
-  gint32 digits;
+  gint digits;
   const gchar *symbol;
   const gchar *abbreviation;
   const gchar *singular;
@@ -239,7 +239,7 @@ unit_get_digits_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpUnit unit_id;
-  gint32 digits = 0;
+  gint digits = 0;
 
   unit_id = g_value_get_int (gimp_value_array_index (args, 0));
 
@@ -393,11 +393,11 @@ register_unit_procs (GimpPDB *pdb)
                                      "1999",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-units",
-                                                          "num units",
-                                                          "The number of units",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-units",
+                                                     "num units",
+                                                     "The number of units",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -416,11 +416,11 @@ register_unit_procs (GimpPDB *pdb)
                                      "1999",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-units",
-                                                          "num units",
-                                                          "The number of built-in units",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-units",
+                                                     "num units",
+                                                     "The number of built-in units",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -452,11 +452,11 @@ register_unit_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("digits",
-                                                      "digits",
-                                                      "The new unit's digits",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("digits",
+                                                 "digits",
+                                                 "The new unit's digits",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("symbol",
                                                        "symbol",
@@ -644,11 +644,11 @@ register_unit_procs (GimpPDB *pdb)
                                                      GIMP_UNIT_PIXEL,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("digits",
-                                                          "digits",
-                                                          "The unit's number of digits",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("digits",
+                                                     "digits",
+                                                     "The unit's number of digits",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

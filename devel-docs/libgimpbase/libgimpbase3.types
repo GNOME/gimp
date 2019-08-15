@@ -3,7 +3,6 @@ gimp_float_array_get_type
 gimp_int16_array_get_type
 gimp_int16_get_type
 gimp_int32_array_get_type
-gimp_int32_get_type
 gimp_int8_array_get_type
 gimp_memsize_get_type
 gimp_metadata_get_type
@@ -12,7 +11,6 @@ gimp_param_float_array_get_type
 gimp_param_int16_array_get_type
 gimp_param_int16_get_type
 gimp_param_int32_array_get_type
-gimp_param_int32_get_type
 gimp_param_int8_array_get_type
 gimp_param_rgb_array_get_type
 gimp_param_string_array_get_type

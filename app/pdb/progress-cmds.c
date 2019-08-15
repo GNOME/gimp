@@ -187,7 +187,7 @@ progress_get_window_handle_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 window = 0;
+  gint window = 0;
 
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
@@ -420,11 +420,11 @@ register_progress_procs (GimpPDB *pdb)
                                      "2004",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("window",
-                                                          "window",
-                                                          "The progress bar's toplevel window",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("window",
+                                                     "window",
+                                                     "The progress bar's toplevel window",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

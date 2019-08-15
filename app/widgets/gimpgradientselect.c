@@ -184,7 +184,7 @@ gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
                                         NULL, error,
                                         dialog->callback_name,
                                         G_TYPE_STRING,         gimp_object_get_name (object),
-                                        GIMP_TYPE_INT32,       array->length / sizeof (gdouble),
+                                        G_TYPE_INT,            array->length / sizeof (gdouble),
                                         GIMP_TYPE_FLOAT_ARRAY, array,
                                         G_TYPE_BOOLEAN,        closing,
                                         G_TYPE_NONE);

@@ -63,7 +63,7 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint32 num_fonts = 0;
+  gint num_fonts = 0;
   gchar **font_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -136,11 +136,11 @@ register_fonts_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-fonts",
-                                                          "num fonts",
-                                                          "The number of available fonts",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-fonts",
+                                                     "num fonts",
+                                                     "The number of available fonts",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("font-list",
                                                                  "font list",

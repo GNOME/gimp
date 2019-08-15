@@ -154,8 +154,8 @@ gimp_image_new (gint              width,
   gint32 image_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           GIMP_TYPE_IMAGE_BASE_TYPE, type,
                                           G_TYPE_NONE);
 
@@ -207,8 +207,8 @@ gimp_image_new_with_precision (gint              width,
   gint32 image_ID = -1;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           GIMP_TYPE_IMAGE_BASE_TYPE, type,
                                           GIMP_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
@@ -932,8 +932,8 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, x,
-                                          GIMP_TYPE_INT32, y,
+                                          G_TYPE_INT, x,
+                                          G_TYPE_INT, y,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -991,7 +991,7 @@ gimp_image_insert_layer (gint32 image_ID,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_LAYER_ID, layer_ID,
                                           GIMP_TYPE_LAYER_ID, parent_ID,
-                                          GIMP_TYPE_INT32, position,
+                                          G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1178,7 +1178,7 @@ gimp_image_insert_channel (gint32 image_ID,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_CHANNEL_ID, channel_ID,
                                           GIMP_TYPE_CHANNEL_ID, parent_ID,
-                                          GIMP_TYPE_INT32, position,
+                                          G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1363,7 +1363,7 @@ gimp_image_insert_vectors (gint32 image_ID,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_VECTORS_ID, vectors_ID,
                                           GIMP_TYPE_VECTORS_ID, parent_ID,
-                                          GIMP_TYPE_INT32, position,
+                                          G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1771,7 +1771,7 @@ gimp_image_reorder_item (gint32 image_ID,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
                                           GIMP_TYPE_ITEM_ID, item_ID,
                                           GIMP_TYPE_ITEM_ID, parent_ID,
-                                          GIMP_TYPE_INT32, position,
+                                          G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -2010,7 +2010,7 @@ _gimp_image_set_colormap (gint32        image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, num_bytes,
+                                          G_TYPE_INT, num_bytes,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), colormap, num_bytes);
@@ -2234,8 +2234,8 @@ _gimp_image_thumbnail (gint32   image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3314,7 +3314,7 @@ gimp_image_set_tattoo_state (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, tattoo_state,
+                                          G_TYPE_INT, tattoo_state,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3356,7 +3356,7 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, tattoo,
+                                          G_TYPE_INT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3399,7 +3399,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, tattoo,
+                                          G_TYPE_INT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3444,7 +3444,7 @@ gimp_image_get_vectors_by_tattoo (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, tattoo,
+                                          G_TYPE_INT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)

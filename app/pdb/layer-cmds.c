@@ -67,12 +67,12 @@ layer_new_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 width;
-  gint32 height;
-  gint32 type;
+  gint width;
+  gint height;
+  gint type;
   const gchar *name;
   gdouble opacity;
-  gint32 mode;
+  gint mode;
   GimpLayer *layer = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -389,8 +389,8 @@ layer_scale_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 new_width;
-  gint32 new_height;
+  gint new_width;
+  gint new_height;
   gboolean local_origin;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
@@ -436,10 +436,10 @@ layer_resize_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 new_width;
-  gint32 new_height;
-  gint32 offx;
-  gint32 offy;
+  gint new_width;
+  gint new_height;
+  gint offx;
+  gint offy;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
@@ -499,8 +499,8 @@ layer_set_offsets_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 offx;
-  gint32 offy;
+  gint offx;
+  gint offy;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   offx = g_value_get_int (gimp_value_array_index (args, 1));
@@ -546,7 +546,7 @@ layer_create_mask_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 mask_type;
+  gint mask_type;
   GimpLayerMask *mask = NULL;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
@@ -679,7 +679,7 @@ layer_remove_mask_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 mode;
+  gint mode;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   mode = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -1030,7 +1030,7 @@ layer_get_mode_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 mode = 0;
+  gint mode = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -1058,7 +1058,7 @@ layer_set_mode_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 mode;
+  gint mode;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   mode = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -1098,7 +1098,7 @@ layer_get_blend_space_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 blend_space = 0;
+  gint blend_space = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -1126,7 +1126,7 @@ layer_set_blend_space_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 blend_space;
+  gint blend_space;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   blend_space = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -1151,7 +1151,7 @@ layer_get_composite_space_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 composite_space = 0;
+  gint composite_space = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -1179,7 +1179,7 @@ layer_set_composite_space_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 composite_space;
+  gint composite_space;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   composite_space = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -1204,7 +1204,7 @@ layer_get_composite_mode_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 composite_mode = 0;
+  gint composite_mode = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -1232,7 +1232,7 @@ layer_set_composite_mode_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 composite_mode;
+  gint composite_mode;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   composite_mode = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -1272,17 +1272,17 @@ register_layer_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("width",
-                                                      "width",
-                                                      "The layer width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("width",
+                                                 "width",
+                                                 "The layer width",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "The layer height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "The layer height",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
                                                   "type",
@@ -1528,17 +1528,17 @@ register_layer_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New layer width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-width",
+                                                 "new width",
+                                                 "New layer width",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New layer height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-height",
+                                                 "new height",
+                                                 "New layer height",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("local-origin",
                                                      "local origin",
@@ -1569,29 +1569,29 @@ register_layer_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New layer width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-width",
+                                                 "new width",
+                                                 "New layer width",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New layer height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-height",
+                                                 "new height",
+                                                 "New layer height",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "x offset between upper left corner of old and new layers: (old - new)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset between upper left corner of old and new layers: (old - new)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "y offset between upper left corner of old and new layers: (old - new)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset between upper left corner of old and new layers: (old - new)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1639,17 +1639,17 @@ register_layer_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "Offset in x direction",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "Offset in x direction",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "Offset in y direction",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "Offset in y direction",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

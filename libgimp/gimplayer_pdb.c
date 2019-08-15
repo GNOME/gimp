@@ -71,8 +71,8 @@ _gimp_layer_new (gint32         image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           GIMP_TYPE_IMAGE_TYPE, type,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
@@ -403,8 +403,8 @@ gimp_layer_scale (gint32   layer_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER_ID, layer_ID,
-                                          GIMP_TYPE_INT32, new_width,
-                                          GIMP_TYPE_INT32, new_height,
+                                          G_TYPE_INT, new_width,
+                                          G_TYPE_INT, new_height,
                                           G_TYPE_BOOLEAN, local_origin,
                                           G_TYPE_NONE);
 
@@ -455,10 +455,10 @@ gimp_layer_resize (gint32 layer_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER_ID, layer_ID,
-                                          GIMP_TYPE_INT32, new_width,
-                                          GIMP_TYPE_INT32, new_height,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, new_width,
+                                          G_TYPE_INT, new_height,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -542,8 +542,8 @@ gimp_layer_set_offsets (gint32 layer_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_LAYER_ID, layer_ID,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)

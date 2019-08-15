@@ -66,7 +66,7 @@ palettes_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint32 num_palettes = 0;
+  gint num_palettes = 0;
   gchar **palette_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -133,11 +133,11 @@ register_palettes_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-palettes",
-                                                          "num palettes",
-                                                          "The number of palettes in the list",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-palettes",
+                                                     "num palettes",
+                                                     "The number of palettes in the list",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("palette-list",
                                                                  "palette list",

@@ -410,7 +410,7 @@ gimp_palette_set_columns (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, columns,
+                                          G_TYPE_INT, columns,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -508,7 +508,7 @@ gimp_palette_delete_entry (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, entry_num,
+                                          G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -555,7 +555,7 @@ gimp_palette_entry_get_color (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, entry_num,
+                                          G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -605,7 +605,7 @@ gimp_palette_entry_set_color (const gchar   *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, entry_num,
+                                          G_TYPE_INT, entry_num,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -653,7 +653,7 @@ gimp_palette_entry_get_name (const gchar  *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, entry_num,
+                                          G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -705,7 +705,7 @@ gimp_palette_entry_set_name (const gchar *name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
-                                          GIMP_TYPE_INT32, entry_num,
+                                          G_TYPE_INT, entry_num,
                                           G_TYPE_STRING, entry_name,
                                           G_TYPE_NONE);
 

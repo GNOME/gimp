@@ -462,7 +462,7 @@ _gimp_register_file_handler_priority (const gchar *procedure_name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
-                                          GIMP_TYPE_INT32, priority,
+                                          G_TYPE_INT, priority,
                                           G_TYPE_NONE);
 
   if (pdb)

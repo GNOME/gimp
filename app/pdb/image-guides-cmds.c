@@ -54,8 +54,8 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 yposition;
-  gint32 guide = 0;
+  gint yposition;
+  gint guide = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   yposition = g_value_get_int (gimp_value_array_index (args, 1));
@@ -93,8 +93,8 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 xposition;
-  gint32 guide = 0;
+  gint xposition;
+  gint guide = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   xposition = g_value_get_int (gimp_value_array_index (args, 1));
@@ -131,7 +131,7 @@ image_delete_guide_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 guide;
+  gint guide;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -161,8 +161,8 @@ image_find_next_guide_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 guide;
-  gint32 next_guide = 0;
+  gint guide;
+  gint next_guide = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -202,8 +202,8 @@ image_get_guide_orientation_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 guide;
-  gint32 orientation = 0;
+  gint guide;
+  gint orientation = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -238,8 +238,8 @@ image_get_guide_position_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint32 guide;
-  gint32 position = 0;
+  gint guide;
+  gint position = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -289,11 +289,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("yposition",
-                                                      "yposition",
-                                                      "The guide's y-offset from top of image",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("yposition",
+                                                 "yposition",
+                                                 "The guide's y-offset from top of image",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("guide",
                                                       "guide",
@@ -324,11 +324,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("xposition",
-                                                      "xposition",
-                                                      "The guide's x-offset from left of image",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("xposition",
+                                                 "xposition",
+                                                 "The guide's x-offset from left of image",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_uint ("guide",
                                                       "guide",
@@ -467,11 +467,11 @@ register_image_guides_procs (GimpPDB *pdb)
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("position",
-                                                          "position",
-                                                          "The guide's position relative to top or left of image",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("position",
+                                                     "position",
+                                                     "The guide's position relative to top or left of image",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

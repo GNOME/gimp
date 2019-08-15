@@ -90,13 +90,6 @@ _gimp_gp_param_def_to_param_spec (gpointer          gimp,
                                  param_def->meta.m_int.default_val,
                                  flags);
 
-      if (! strcmp (param_def->type_name, "GimpParamInt32"))
-        return gimp_param_spec_int32 (name, nick, blurb,
-                                      param_def->meta.m_int.min_val,
-                                      param_def->meta.m_int.max_val,
-                                      param_def->meta.m_int.default_val,
-                                      flags);
-
       if (! strcmp (param_def->type_name, "GimpParamInt16"))
         return gimp_param_spec_int16 (name, nick, blurb,
                                       param_def->meta.m_int.min_val,

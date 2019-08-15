@@ -184,11 +184,11 @@ file_data_init (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spacing",
-                                                      "spacing",
-                                                      "Spacing of the brush",
-                                                      1, 1000, 10,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("spacing",
+                                                 "spacing",
+                                                 "Spacing of the brush",
+                                                 1, 1000, 10,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",
@@ -334,11 +334,11 @@ file_data_init (Gimp *gimp)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spacing",
-                                                      "spacing",
-                                                      "Spacing of the brush",
-                                                      1, 1000, 10,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("spacing",
+                                                 "spacing",
+                                                 "Spacing of the brush",
+                                                 1, 1000, 10,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",
                                                        "name",

@@ -269,10 +269,10 @@ brush_get_info_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 width = 0;
-  gint32 height = 0;
-  gint32 mask_bpp = 0;
-  gint32 color_bpp = 0;
+  gint width = 0;
+  gint height = 0;
+  gint mask_bpp = 0;
+  gint color_bpp = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -330,13 +330,13 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 width = 0;
-  gint32 height = 0;
-  gint32 mask_bpp = 0;
-  gint32 num_mask_bytes = 0;
+  gint width = 0;
+  gint height = 0;
+  gint mask_bpp = 0;
+  gint num_mask_bytes = 0;
   guint8 *mask_bytes = NULL;
-  gint32 color_bpp = 0;
-  gint32 num_color_bytes = 0;
+  gint color_bpp = 0;
+  gint num_color_bytes = 0;
   guint8 *color_bytes = NULL;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
@@ -413,7 +413,7 @@ brush_get_spacing_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 spacing = 0;
+  gint spacing = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -446,7 +446,7 @@ brush_set_spacing_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *name;
-  gint32 spacing;
+  gint spacing;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
   spacing = g_value_get_int (gimp_value_array_index (args, 1));
@@ -476,7 +476,7 @@ brush_get_shape_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 shape = 0;
+  gint shape = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -510,8 +510,8 @@ brush_set_shape_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 shape_in;
-  gint32 shape_out = 0;
+  gint shape_in;
+  gint shape_out = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
   shape_in = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -624,7 +624,7 @@ brush_get_spikes_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 spikes = 0;
+  gint spikes = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
 
@@ -658,8 +658,8 @@ brush_set_spikes_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *name;
-  gint32 spikes_in;
-  gint32 spikes_out = 0;
+  gint spikes_in;
+  gint spikes_out = 0;
 
   name = g_value_get_string (gimp_value_array_index (args, 0));
   spikes_in = g_value_get_int (gimp_value_array_index (args, 1));
@@ -1120,29 +1120,29 @@ register_brush_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The brush width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The brush width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The brush height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The brush height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("mask-bpp",
-                                                          "mask bpp",
-                                                          "The brush mask bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("mask-bpp",
+                                                     "mask bpp",
+                                                     "The brush mask bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("color-bpp",
-                                                          "color bpp",
-                                                          "The brush color bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("color-bpp",
+                                                     "color bpp",
+                                                     "The brush color bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1168,46 +1168,46 @@ register_brush_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The brush width",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The brush width",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The brush height",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The brush height",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("mask-bpp",
-                                                          "mask bpp",
-                                                          "The brush mask bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("mask-bpp",
+                                                     "mask bpp",
+                                                     "The brush mask bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-mask-bytes",
-                                                          "num mask bytes",
-                                                          "Length of brush mask data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-mask-bytes",
+                                                     "num mask bytes",
+                                                     "Length of brush mask data",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("mask-bytes",
                                                                "mask bytes",
                                                                "The brush mask data",
                                                                GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("color-bpp",
-                                                          "color bpp",
-                                                          "The brush color bpp",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("color-bpp",
+                                                     "color bpp",
+                                                     "The brush color bpp",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-color-bytes",
-                                                          "num color bytes",
-                                                          "Length of brush color data",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-color-bytes",
+                                                     "num color bytes",
+                                                     "Length of brush color data",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int8_array ("color-bytes",
                                                                "color bytes",
@@ -1238,11 +1238,11 @@ register_brush_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spacing",
-                                                          "spacing",
-                                                          "The brush spacing",
-                                                          0, 1000, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("spacing",
+                                                     "spacing",
+                                                     "The brush spacing",
+                                                     0, 1000, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1268,11 +1268,11 @@ register_brush_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spacing",
-                                                      "spacing",
-                                                      "The brush spacing",
-                                                      0, 1000, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("spacing",
+                                                 "spacing",
+                                                 "The brush spacing",
+                                                 0, 1000, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1433,11 +1433,11 @@ register_brush_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spikes",
-                                                          "spikes",
-                                                          "The number of spikes on the brush.",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("spikes",
+                                                     "spikes",
+                                                     "The number of spikes on the brush.",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1463,17 +1463,17 @@ register_brush_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spikes-in",
-                                                      "spikes in",
-                                                      "The desired number of spikes",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("spikes-in",
+                                                 "spikes in",
+                                                 "The desired number of spikes",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spikes-out",
-                                                          "spikes out",
-                                                          "The number of spikes actually assigned",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("spikes-out",
+                                                     "spikes out",
+                                                     "The number of spikes actually assigned",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

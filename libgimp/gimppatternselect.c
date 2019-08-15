@@ -105,12 +105,12 @@ gimp_pattern_select_new (const gchar            *title,
                                                  0, 10000, 0,
                                                  G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("mask-len",
-                                                      "Mask length",
-                                                      "Length of pattern "
-                                                      "mask data",
-                                                      0, G_MAXINT, 0,
-                                                      G_PARAM_READWRITE));
+                               g_param_spec_int ("mask-len",
+                                                 "Mask length",
+                                                 "Length of pattern "
+                                                 "mask data",
+                                                 0, G_MAXINT, 0,
+                                                 G_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int8_array ("mask-data",
                                                            "Mask data",

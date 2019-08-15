@@ -159,12 +159,12 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                                                 FALSE,
                                                                 G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32 ("num-colors",
-                                                          "Num colors",
-                                                          "Length of 'map' "
-                                                          "argument",
-                                                          1, 256, 1,
-                                                          G_PARAM_READWRITE));
+                                   g_param_spec_int ("num-colors",
+                                                     "Num colors",
+                                                     "Length of 'map' "
+                                                     "argument",
+                                                     1, 256, 1,
+                                                     G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_int8_array ("map",
                                                                "Map",

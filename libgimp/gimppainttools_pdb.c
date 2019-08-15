@@ -65,7 +65,7 @@ gimp_airbrush (gint32         drawable_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_DOUBLE, pressure,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
@@ -114,7 +114,7 @@ gimp_airbrush_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -182,7 +182,7 @@ gimp_clone (gint32         drawable_ID,
                                           GIMP_TYPE_CLONE_TYPE, clone_type,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 6), strokes, num_strokes);
@@ -232,7 +232,7 @@ gimp_clone_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -286,7 +286,7 @@ gimp_convolve (gint32            drawable_ID,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_DOUBLE, pressure,
                                           GIMP_TYPE_CONVOLVE_TYPE, convolve_type,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 4), strokes, num_strokes);
@@ -335,7 +335,7 @@ gimp_convolve_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -389,7 +389,7 @@ gimp_dodgeburn (gint32             drawable_ID,
                                           G_TYPE_DOUBLE, exposure,
                                           GIMP_TYPE_DODGE_BURN_TYPE, dodgeburn_type,
                                           GIMP_TYPE_TRANSFER_MODE, dodgeburn_mode,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
@@ -437,7 +437,7 @@ gimp_dodgeburn_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -490,7 +490,7 @@ gimp_eraser (gint32                    drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           GIMP_TYPE_BRUSH_APPLICATION_MODE, hardness,
                                           GIMP_TYPE_PAINT_APPLICATION_MODE, method,
@@ -541,7 +541,7 @@ gimp_eraser_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -602,7 +602,7 @@ gimp_heal (gint32         drawable_ID,
                                           GIMP_TYPE_DRAWABLE_ID, src_drawable_ID,
                                           G_TYPE_DOUBLE, src_x,
                                           G_TYPE_DOUBLE, src_y,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 5), strokes, num_strokes);
@@ -654,7 +654,7 @@ gimp_heal_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -715,7 +715,7 @@ gimp_paintbrush (gint32                    drawable_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_DOUBLE, fade_out,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           GIMP_TYPE_PAINT_APPLICATION_MODE, method,
                                           G_TYPE_DOUBLE, gradient_length,
@@ -775,7 +775,7 @@ gimp_paintbrush_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -825,7 +825,7 @@ gimp_pencil (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);
@@ -875,7 +875,7 @@ gimp_smudge (gint32         drawable_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_DOUBLE, pressure,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), strokes, num_strokes);
@@ -923,7 +923,7 @@ gimp_smudge_default (gint32         drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, num_strokes,
+                                          G_TYPE_INT, num_strokes,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 2), strokes, num_strokes);

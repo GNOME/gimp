@@ -62,7 +62,7 @@ dynamics_get_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   const gchar *filter;
-  gint32 num_dynamics = 0;
+  gint num_dynamics = 0;
   gchar **dynamics_list = NULL;
 
   filter = g_value_get_string (gimp_value_array_index (args, 0));
@@ -129,11 +129,11 @@ register_dynamics_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-dynamics",
-                                                          "num dynamics",
-                                                          "The number of available paint dynamics",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-dynamics",
+                                                     "num dynamics",
+                                                     "The number of available paint dynamics",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("dynamics-list",
                                                                  "dynamics list",

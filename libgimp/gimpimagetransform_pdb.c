@@ -68,10 +68,10 @@ gimp_image_resize (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, new_width,
-                                          GIMP_TYPE_INT32, new_height,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, new_width,
+                                          G_TYPE_INT, new_height,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -161,8 +161,8 @@ gimp_image_scale (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, new_width,
-                                          GIMP_TYPE_INT32, new_height,
+                                          G_TYPE_INT, new_width,
+                                          G_TYPE_INT, new_height,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -214,10 +214,10 @@ gimp_image_crop (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, new_width,
-                                          GIMP_TYPE_INT32, new_height,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, new_width,
+                                          G_TYPE_INT, new_height,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)

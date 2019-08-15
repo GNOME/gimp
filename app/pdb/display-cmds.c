@@ -134,7 +134,7 @@ display_get_window_handle_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpObject *display;
-  gint32 window = 0;
+  gint window = 0;
 
   display = gimp_value_get_display (gimp_value_array_index (args, 0), gimp);
 
@@ -307,11 +307,11 @@ register_display_procs (GimpPDB *pdb)
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("window",
-                                                          "window",
-                                                          "The native window handle or 0",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("window",
+                                                     "window",
+                                                     "The native window handle or 0",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

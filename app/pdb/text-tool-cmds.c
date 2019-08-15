@@ -56,7 +56,7 @@ text_fontname_invoker (GimpProcedure         *procedure,
   gdouble x;
   gdouble y;
   const gchar *text;
-  gint32 border;
+  gint border;
   gboolean antialias;
   gdouble size;
   const gchar *fontname;
@@ -114,10 +114,10 @@ text_get_extents_fontname_invoker (GimpProcedure         *procedure,
   const gchar *text;
   gdouble size;
   const gchar *fontname;
-  gint32 width = 0;
-  gint32 height = 0;
-  gint32 ascent = 0;
-  gint32 descent = 0;
+  gint width = 0;
+  gint height = 0;
+  gint ascent = 0;
+  gint descent = 0;
 
   text = g_value_get_string (gimp_value_array_index (args, 0));
   size = g_value_get_double (gimp_value_array_index (args, 1));
@@ -200,11 +200,11 @@ register_text_tool_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("border",
-                                                      "border",
-                                                      "The size of the border",
-                                                      -1, G_MAXINT32, -1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("border",
+                                                 "border",
+                                                 "The size of the border",
+                                                 -1, G_MAXINT32, -1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
@@ -282,29 +282,29 @@ register_text_tool_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("width",
-                                                          "width",
-                                                          "The width of the specified font",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("width",
+                                                     "width",
+                                                     "The width of the specified font",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("height",
-                                                          "height",
-                                                          "The height of the specified font",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("height",
+                                                     "height",
+                                                     "The height of the specified font",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("ascent",
-                                                          "ascent",
-                                                          "The ascent of the specified font",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("ascent",
+                                                     "ascent",
+                                                     "The ascent of the specified font",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("descent",
-                                                          "descent",
-                                                          "The descent of the specified font",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("descent",
+                                                     "descent",
+                                                     "The descent of the specified font",
+                                                     G_MININT32, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

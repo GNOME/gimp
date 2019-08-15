@@ -231,7 +231,7 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          GIMP_TYPE_INT32, num_values,
+                                          G_TYPE_INT, num_values,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), values, num_values);
@@ -286,7 +286,7 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
-                                          GIMP_TYPE_INT32, num_points,
+                                          G_TYPE_INT, num_points,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_float_array (gimp_value_array_index (args, 3), points, num_points);
@@ -742,7 +742,7 @@ gimp_drawable_posterize (gint32 drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, levels,
+                                          G_TYPE_INT, levels,
                                           G_TYPE_NONE);
 
   if (pdb)

@@ -778,10 +778,10 @@ gimp_drawable_update (gint32 drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, x,
-                                          GIMP_TYPE_INT32, y,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, x,
+                                          G_TYPE_INT, y,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -830,8 +830,8 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, x_coord,
-                                          GIMP_TYPE_INT32, y_coord,
+                                          G_TYPE_INT, x_coord,
+                                          G_TYPE_INT, y_coord,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -888,9 +888,9 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, x_coord,
-                                          GIMP_TYPE_INT32, y_coord,
-                                          GIMP_TYPE_INT32, num_channels,
+                                          G_TYPE_INT, x_coord,
+                                          G_TYPE_INT, y_coord,
+                                          G_TYPE_INT, num_channels,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_int8_array (gimp_value_array_index (args, 4), pixel, num_channels);
@@ -998,8 +998,8 @@ gimp_drawable_offset (gint32         drawable_ID,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
                                           G_TYPE_BOOLEAN, wrap_around,
                                           GIMP_TYPE_OFFSET_TYPE, fill_type,
-                                          GIMP_TYPE_INT32, offset_x,
-                                          GIMP_TYPE_INT32, offset_y,
+                                          G_TYPE_INT, offset_x,
+                                          G_TYPE_INT, offset_y,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1055,8 +1055,8 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -1137,12 +1137,12 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                          GIMP_TYPE_INT32, src_x,
-                                          GIMP_TYPE_INT32, src_y,
-                                          GIMP_TYPE_INT32, src_width,
-                                          GIMP_TYPE_INT32, src_height,
-                                          GIMP_TYPE_INT32, dest_width,
-                                          GIMP_TYPE_INT32, dest_height,
+                                          G_TYPE_INT, src_x,
+                                          G_TYPE_INT, src_y,
+                                          G_TYPE_INT, src_width,
+                                          G_TYPE_INT, src_height,
+                                          G_TYPE_INT, dest_width,
+                                          G_TYPE_INT, dest_height,
                                           G_TYPE_NONE);
 
   if (pdb)

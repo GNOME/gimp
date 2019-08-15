@@ -104,7 +104,7 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 flip_type;
+  gint flip_type;
   gboolean auto_center;
   gdouble axis;
 
@@ -401,7 +401,7 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 rotate_type;
+  gint rotate_type;
   gboolean auto_center;
   gdouble center_x;
   gdouble center_y;
@@ -701,7 +701,7 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 shear_type;
+  gint shear_type;
   gdouble magnitude;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);

@@ -452,7 +452,7 @@ text_layer_get_hint_style_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 style = 0;
+  gint style = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -489,7 +489,7 @@ text_layer_set_hint_style_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 style;
+  gint style;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   style = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -668,7 +668,7 @@ text_layer_get_base_direction_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 direction = 0;
+  gint direction = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -705,7 +705,7 @@ text_layer_set_base_direction_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 direction;
+  gint direction;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   direction = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -740,7 +740,7 @@ text_layer_get_justification_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpLayer *layer;
-  gint32 justify = 0;
+  gint justify = 0;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 
@@ -777,7 +777,7 @@ text_layer_set_justification_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gint32 justify;
+  gint justify;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
   justify = g_value_get_enum (gimp_value_array_index (args, 1));

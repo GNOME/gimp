@@ -334,7 +334,7 @@ _gimp_pdb_proc_argument (const gchar *procedure_name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
-                                          GIMP_TYPE_INT32, arg_num,
+                                          G_TYPE_INT, arg_num,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -381,7 +381,7 @@ _gimp_pdb_proc_return_value (const gchar *procedure_name,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
-                                          GIMP_TYPE_INT32, val_num,
+                                          G_TYPE_INT, val_num,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -522,7 +522,7 @@ _gimp_pdb_set_data (const gchar  *identifier,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, identifier,
-                                          GIMP_TYPE_INT32, bytes,
+                                          G_TYPE_INT, bytes,
                                           GIMP_TYPE_INT8_ARRAY, NULL,
                                           G_TYPE_NONE);
   gimp_value_set_int8_array (gimp_value_array_index (args, 2), data, bytes);

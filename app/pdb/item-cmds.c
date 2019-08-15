@@ -399,7 +399,7 @@ item_get_children_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 num_children = 0;
+  gint num_children = 0;
   gint32 *child_ids = NULL;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
@@ -779,7 +779,7 @@ item_get_color_tag_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 color_tag = 0;
+  gint color_tag = 0;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
 
@@ -807,7 +807,7 @@ item_set_color_tag_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpItem *item;
-  gint32 color_tag;
+  gint color_tag;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
   color_tag = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -832,7 +832,7 @@ item_get_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 tattoo = 0;
+  gint tattoo = 0;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
 
@@ -860,7 +860,7 @@ item_set_tattoo_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpItem *item;
-  gint32 tattoo;
+  gint tattoo;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
   tattoo = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -970,7 +970,7 @@ item_get_parasite_list_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint32 num_parasites = 0;
+  gint num_parasites = 0;
   gchar **parasites = NULL;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
@@ -1360,11 +1360,11 @@ register_item_procs (GimpPDB *pdb)
                                                         pdb->gimp, FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-children",
-                                                          "num children",
-                                                          "The item's number of children",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-children",
+                                                     "num children",
+                                                     "The item's number of children",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32_array ("child-ids",
                                                                 "child ids",
@@ -1955,11 +1955,11 @@ register_item_procs (GimpPDB *pdb)
                                                         pdb->gimp, FALSE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-parasites",
-                                                          "num parasites",
-                                                          "The number of attached parasites",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-parasites",
+                                                     "num parasites",
+                                                     "The number of attached parasites",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("parasites",
                                                                  "parasites",

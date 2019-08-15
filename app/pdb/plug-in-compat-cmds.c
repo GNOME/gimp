@@ -503,8 +503,8 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 direction;
-  gint32 depth;
+  gint direction;
+  gint depth;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   direction = g_value_get_int (gimp_value_array_index (args, 3));
@@ -764,14 +764,14 @@ plug_in_bump_map_invoker (GimpProcedure         *procedure,
   GimpDrawable *bumpmap;
   gdouble azimuth;
   gdouble elevation;
-  gint32 depth;
-  gint32 xofs;
-  gint32 yofs;
+  gint depth;
+  gint xofs;
+  gint yofs;
   gdouble waterlevel;
   gdouble ambient;
   gboolean compensate;
   gboolean invert;
-  gint32 type;
+  gint type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   bumpmap = gimp_value_get_drawable (gimp_value_array_index (args, 3), gimp);
@@ -822,14 +822,14 @@ plug_in_bump_map_tiled_invoker (GimpProcedure         *procedure,
   GimpDrawable *bumpmap;
   gdouble azimuth;
   gdouble elevation;
-  gint32 depth;
-  gint32 xofs;
-  gint32 yofs;
+  gint depth;
+  gint xofs;
+  gint yofs;
   gdouble waterlevel;
   gdouble ambient;
   gboolean compensate;
   gboolean invert;
-  gint32 type;
+  gint type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   bumpmap = gimp_value_get_drawable (gimp_value_array_index (args, 3), gimp);
@@ -958,7 +958,7 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 monochrome;
+  gint monochrome;
   gdouble rr_gain;
   gdouble rg_gain;
   gdouble rb_gain;
@@ -1081,14 +1081,14 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 argc_matrix;
+  gint argc_matrix;
   const gdouble *matrix;
   gboolean alpha_alg;
   gdouble divisor;
   gdouble offset;
-  gint32 argc_channels;
+  gint argc_channels;
   const gint32 *channels;
-  gint32 bmode;
+  gint bmode;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   argc_matrix = g_value_get_int (gimp_value_array_index (args, 3));
@@ -1209,7 +1209,7 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gdouble tile_size;
   gdouble tile_saturation;
-  gint32 bg_color;
+  gint bg_color;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   tile_size = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1269,7 +1269,7 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 evenodd;
+  gint evenodd;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   evenodd = g_value_get_int (gimp_value_array_index (args, 3));
@@ -1399,7 +1399,7 @@ plug_in_displace_invoker (GimpProcedure         *procedure,
   gboolean do_y;
   GimpDrawable *displace_map_x;
   GimpDrawable *displace_map_y;
-  gint32 displace_type;
+  gint displace_type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   amount_x = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1445,7 +1445,7 @@ plug_in_displace_polar_invoker (GimpProcedure         *procedure,
   gboolean do_y;
   GimpDrawable *displace_map_x;
   GimpDrawable *displace_map_y;
-  gint32 displace_type;
+  gint displace_type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   amount_x = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1565,8 +1565,8 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble amount;
-  gint32 warpmode;
-  gint32 edgemode;
+  gint warpmode;
+  gint edgemode;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   amount = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1633,7 +1633,7 @@ plug_in_emboss_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gdouble azimuth;
   gdouble elevation;
-  gint32 depth;
+  gint depth;
   gboolean emboss;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -1682,7 +1682,7 @@ plug_in_engrave_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 height;
+  gint height;
   gboolean limit;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -1799,8 +1799,8 @@ plug_in_flarefx_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 pos_x;
-  gint32 pos_y;
+  gint pos_x;
+  gint pos_y;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   pos_x = g_value_get_int (gimp_value_array_index (args, 3));
@@ -1851,8 +1851,8 @@ plug_in_fractal_trace_invoker (GimpProcedure         *procedure,
   gdouble xmax;
   gdouble ymin;
   gdouble ymax;
-  gint32 depth;
-  gint32 outside_type;
+  gint depth;
+  gint outside_type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   xmin = g_value_get_double (gimp_value_array_index (args, 3));
@@ -2052,8 +2052,8 @@ plug_in_glasstile_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 tilex;
-  gint32 tiley;
+  gint tilex;
+  gint tiley;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   tilex = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2096,10 +2096,10 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 holdness;
-  gint32 hue_distance;
-  gint32 saturation_distance;
-  gint32 value_distance;
+  gint holdness;
+  gint hue_distance;
+  gint saturation_distance;
+  gint value_distance;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   holdness = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2149,8 +2149,8 @@ plug_in_illusion_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 division;
-  gint32 type;
+  gint division;
+  gint type;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   division = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2349,7 +2349,7 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
   gint16 height;
   guint8 tileable;
   guint8 algorithm;
-  gint32 seed;
+  gint seed;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   width = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2412,7 +2412,7 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 type;
+  gint type;
   gdouble length;
   gdouble angle;
   gdouble center_x;
@@ -2499,7 +2499,7 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 type;
+  gint type;
   gdouble length;
   gdouble angle;
   gdouble center_x;
@@ -2587,14 +2587,14 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
   gdouble tile_height;
   gdouble tile_spacing;
   gdouble tile_neatness;
-  gint32 tile_allow_split;
+  gint tile_allow_split;
   gdouble light_dir;
   gdouble color_variation;
-  gint32 antialiasing;
-  gint32 color_averaging;
-  gint32 tile_type;
-  gint32 tile_surface;
-  gint32 grout_color;
+  gint antialiasing;
+  gint color_averaging;
+  gint tile_type;
+  gint tile_surface;
+  gint grout_color;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   tile_size = g_value_get_double (gimp_value_array_index (args, 3));
@@ -2724,18 +2724,18 @@ plug_in_newsprint_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 cell_width;
-  gint32 colorspace;
-  gint32 k_pullout;
+  gint cell_width;
+  gint colorspace;
+  gint k_pullout;
   gdouble gry_ang;
-  gint32 gry_spotfn;
+  gint gry_spotfn;
   gdouble red_ang;
-  gint32 red_spotfn;
+  gint red_spotfn;
   gdouble grn_ang;
-  gint32 grn_spotfn;
+  gint grn_spotfn;
   gdouble blu_ang;
-  gint32 blu_spotfn;
-  gint32 oversample;
+  gint blu_spotfn;
+  gint oversample;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   cell_width = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2852,12 +2852,12 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 xcenter;
-  gint32 ycenter;
+  gint xcenter;
+  gint ycenter;
   GimpRGB color;
-  gint32 radius;
-  gint32 nspoke;
-  gint32 randomhue;
+  gint radius;
+  gint nspoke;
+  gint randomhue;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   xcenter = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2914,8 +2914,8 @@ plug_in_oilify_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 mask_size;
-  gint32 mode;
+  gint mask_size;
+  gint mode;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   mask_size = g_value_get_int (gimp_value_array_index (args, 3));
@@ -2958,10 +2958,10 @@ plug_in_oilify_enhanced_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 mode;
-  gint32 mask_size;
+  gint mode;
+  gint mask_size;
   GimpDrawable *mask_size_map;
-  gint32 exponent;
+  gint exponent;
   GimpDrawable *exponent_map;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -3023,12 +3023,12 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 tile_size;
+  gint tile_size;
   gdouble move_max;
-  gint32 fractional_type;
+  gint fractional_type;
   gboolean wrap_around;
   gboolean centering;
-  gint32 background_type;
+  gint background_type;
   GimpRGB background_color;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -3162,7 +3162,7 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 pixel_width;
+  gint pixel_width;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
@@ -3203,8 +3203,8 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 pixel_width;
-  gint32 pixel_height;
+  gint pixel_width;
+  gint pixel_height;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   pixel_width = g_value_get_int (gimp_value_array_index (args, 3));
@@ -3246,7 +3246,7 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 seed;
+  gint seed;
   gdouble turbulence;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -3351,7 +3351,7 @@ plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 threshold;
+  gint threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   threshold = g_value_get_int (gimp_value_array_index (args, 3));
@@ -3394,7 +3394,7 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
   gdouble rndm_pct;
   gdouble rndm_rcount;
   gboolean randomize;
-  gint32 seed;
+  gint seed;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
@@ -3447,7 +3447,7 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
   gdouble rndm_pct;
   gdouble rndm_rcount;
   gboolean randomize;
-  gint32 seed;
+  gint seed;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
@@ -3500,7 +3500,7 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
   gdouble rndm_pct;
   gdouble rndm_rcount;
   gboolean randomize;
-  gint32 seed;
+  gint seed;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   rndm_pct = g_value_get_double (gimp_value_array_index (args, 3));
@@ -3625,11 +3625,11 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 period;
-  gint32 amplitude;
-  gint32 orientation;
-  gint32 edges;
-  gint32 waveform;
+  gint period;
+  gint amplitude;
+  gint orientation;
+  gint edges;
+  gint waveform;
   gboolean antialias;
   gboolean tile;
 
@@ -3698,7 +3698,7 @@ plug_in_rotate_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpImage *image;
   GimpDrawable *drawable;
-  gint32 angle;
+  gint angle;
   gboolean everything;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
@@ -3821,7 +3821,7 @@ plug_in_sel_gauss_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble radius;
-  gint32 max_delta;
+  gint max_delta;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   radius = g_value_get_double (gimp_value_array_index (args, 3));
@@ -3908,8 +3908,8 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 shift_amount;
-  gint32 orientation;
+  gint shift_amount;
+  gint orientation;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   shift_amount = g_value_get_int (gimp_value_array_index (args, 3));
@@ -3954,15 +3954,15 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
   gdouble xscale;
   gdouble yscale;
   gdouble complex;
-  gint32 seed;
+  gint seed;
   gboolean tiling;
   gboolean perturb;
-  gint32 colors;
+  gint colors;
   GimpRGB col1;
   GimpRGB col2;
   gdouble alpha1;
   gdouble alpha2;
-  gint32 blend;
+  gint blend;
   gdouble blend_power;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -4152,8 +4152,8 @@ plug_in_solid_noise_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gboolean tileable;
   gboolean turbulent;
-  gint32 seed;
-  gint32 detail;
+  gint seed;
+  gint detail;
   gdouble xsize;
   gdouble ysize;
 
@@ -4255,7 +4255,7 @@ plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 threshold;
+  gint threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   threshold = g_value_get_int (gimp_value_array_index (args, 3));
@@ -4298,7 +4298,7 @@ plug_in_unsharp_mask_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gdouble radius;
   gdouble amount;
-  gint32 threshold;
+  gint threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   radius = g_value_get_double (gimp_value_array_index (args, 3));
@@ -4342,7 +4342,7 @@ plug_in_video_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 pattern_number;
+  gint pattern_number;
   gboolean additive;
   gboolean rotated;
 
@@ -4425,12 +4425,12 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 propagate_mode;
-  gint32 propagating_channel;
+  gint propagate_mode;
+  gint propagating_channel;
   gdouble propagating_rate;
-  gint32 direction_mask;
-  gint32 lower_limit;
-  gint32 upper_limit;
+  gint direction_mask;
+  gint lower_limit;
+  gint upper_limit;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   propagate_mode = g_value_get_int (gimp_value_array_index (args, 3));
@@ -4734,11 +4734,11 @@ plug_in_wind_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 threshold;
-  gint32 direction;
-  gint32 strength;
-  gint32 algorithm;
-  gint32 edge;
+  gint threshold;
+  gint direction;
+  gint strength;
+  gint algorithm;
+  gint edge;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   threshold = g_value_get_int (gimp_value_array_index (args, 3));
@@ -4947,17 +4947,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("direction",
-                                                      "direction",
-                                                      "Light direction (0 - 3)",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("direction",
+                                                 "direction",
+                                                 "Light direction (0 - 3)",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("depth",
-                                                      "depth",
-                                                      "Texture depth (1 - 50)",
-                                                      1, 50, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("depth",
+                                                 "depth",
+                                                 "Texture depth (1 - 50)",
+                                                 1, 50, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5181,23 +5181,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.5, 90.0, 0.5,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("depth",
-                                                      "depth",
-                                                      "Depth",
-                                                      1, 65, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("depth",
+                                                 "depth",
+                                                 "Depth",
+                                                 1, 65, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("xofs",
-                                                      "xofs",
-                                                      "X offset",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("xofs",
+                                                 "xofs",
+                                                 "X offset",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("yofs",
-                                                      "yofs",
-                                                      "Y offset",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("yofs",
+                                                 "yofs",
+                                                 "Y offset",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("waterlevel",
                                                     "waterlevel",
@@ -5223,11 +5223,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("type",
-                                                      "type",
-                                                      "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("type",
+                                                 "type",
+                                                 "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5283,23 +5283,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.5, 90.0, 0.5,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("depth",
-                                                      "depth",
-                                                      "Depth",
-                                                      1, 65, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("depth",
+                                                 "depth",
+                                                 "Depth",
+                                                 1, 65, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("xofs",
-                                                      "xofs",
-                                                      "X offset",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("xofs",
+                                                 "xofs",
+                                                 "X offset",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("yofs",
-                                                      "yofs",
-                                                      "Y offset",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("yofs",
+                                                 "yofs",
+                                                 "Y offset",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("waterlevel",
                                                     "waterlevel",
@@ -5325,11 +5325,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("type",
-                                                      "type",
-                                                      "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("type",
+                                                 "type",
+                                                 "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5452,11 +5452,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("monochrome",
-                                                      "monochrome",
-                                                      "Monochrome { TRUE, FALSE }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("monochrome",
+                                                 "monochrome",
+                                                 "Monochrome { TRUE, FALSE }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("rr-gain",
                                                     "rr gain",
@@ -5591,11 +5591,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("argc-matrix",
-                                                      "argc matrix",
-                                                      "The number of elements in the following array, must always be 25",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("argc-matrix",
+                                                 "argc matrix",
+                                                 "The number of elements in the following array, must always be 25",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("matrix",
                                                             "matrix",
@@ -5620,22 +5620,22 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("argc-channels",
-                                                      "argc channels",
-                                                      "The number of elements in following array, must always be 5",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("argc-channels",
+                                                 "argc channels",
+                                                 "The number of elements in following array, must always be 5",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32_array ("channels",
                                                             "channels",
                                                             "Mask of the channels to be filtered",
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("bmode",
-                                                      "bmode",
-                                                      "Mode for treating image borders { EXTEND (0), WRAP (1), CLEAR (2) }",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("bmode",
+                                                 "bmode",
+                                                 "Mode for treating image borders { EXTEND (0), WRAP (1), CLEAR (2) }",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5685,11 +5685,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 10.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("bg-color",
-                                                      "bg color",
-                                                      "Background color { BLACK (0), BG (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("bg-color",
+                                                 "bg color",
+                                                 "Background color { BLACK (0), BG (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5727,11 +5727,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("evenodd",
-                                                      "evenodd",
-                                                      "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("evenodd",
+                                                 "evenodd",
+                                                 "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5913,11 +5913,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("displace-type",
-                                                      "displace type",
-                                                      "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
-                                                      1, 3, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("displace-type",
+                                                 "displace type",
+                                                 "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
+                                                 1, 3, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -5991,11 +5991,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("displace-type",
-                                                      "displace type",
-                                                      "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
-                                                      1, 3, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("displace-type",
+                                                 "displace type",
+                                                 "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
+                                                 1, 3, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6099,17 +6099,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     1.0, 10.0, 1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("warpmode",
-                                                      "warpmode",
-                                                      "Edge detection behavior { NONE (0), WRAP (1), SMEAR (2), BLACK (3) }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("warpmode",
+                                                 "warpmode",
+                                                 "Edge detection behavior { NONE (0), WRAP (1), SMEAR (2), BLACK (3) }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("edgemode",
-                                                      "edgemode",
-                                                      "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }",
-                                                      0, 5, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("edgemode",
+                                                 "edgemode",
+                                                 "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }",
+                                                 0, 5, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6159,11 +6159,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 180, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("depth",
-                                                      "depth",
-                                                      "The Filter Width",
-                                                      1, 99, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("depth",
+                                                 "depth",
+                                                 "The Filter Width",
+                                                 1, 99, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("emboss",
                                                      "emboss",
@@ -6207,11 +6207,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("height",
-                                                      "height",
-                                                      "Resolution in pixels",
-                                                      2, 16, 2,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("height",
+                                                 "height",
+                                                 "Resolution in pixels",
+                                                 2, 16, 2,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("limit",
                                                      "limit",
@@ -6345,17 +6345,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("pos-x",
-                                                      "pos x",
-                                                      "X-Position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("pos-x",
+                                                 "pos x",
+                                                 "X-Position",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("pos-y",
-                                                      "pos y",
-                                                      "Y-Position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("pos-y",
+                                                 "pos y",
+                                                 "Y-Position",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6417,17 +6417,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     -50.0, 50.0, -50.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("depth",
-                                                      "depth",
-                                                      "Trace depth",
-                                                      1, 65536, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("depth",
+                                                 "depth",
+                                                 "Trace depth",
+                                                 1, 65536, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("outside-type",
-                                                      "outside type",
-                                                      "Outside type { WRAP (0), TRANS (1), BLACK (2), WHITE (3) }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("outside-type",
+                                                 "outside type",
+                                                 "Outside type { WRAP (0), TRANS (1), BLACK (2), WHITE (3) }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6477,11 +6477,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 500.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("method",
-                                                      "method",
-                                                      "Blur method { IIR (0), RLE (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("method",
+                                                 "method",
+                                                 "Blur method { IIR (0), RLE (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6723,17 +6723,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("tilex",
-                                                      "tilex",
-                                                      "Tile width",
-                                                      10, 500, 10,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("tilex",
+                                                 "tilex",
+                                                 "Tile width",
+                                                 10, 500, 10,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("tiley",
-                                                      "tiley",
-                                                      "Tile height",
-                                                      10, 500, 10,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("tiley",
+                                                 "tiley",
+                                                 "Tile height",
+                                                 10, 500, 10,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6771,29 +6771,29 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("holdness",
-                                                      "holdness",
-                                                      "Convolution strength",
-                                                      1, 8, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("holdness",
+                                                 "holdness",
+                                                 "Convolution strength",
+                                                 1, 8, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("hue-distance",
-                                                      "hue distance",
-                                                      "Scattering of hue angle",
-                                                      0, 180, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("hue-distance",
+                                                 "hue distance",
+                                                 "Scattering of hue angle",
+                                                 0, 180, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("saturation-distance",
-                                                      "saturation distance",
-                                                      "Distribution distance on saturation axis",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("saturation-distance",
+                                                 "saturation distance",
+                                                 "Distribution distance on saturation axis",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("value-distance",
-                                                      "value distance",
-                                                      "Distribution distance on value axis",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("value-distance",
+                                                 "value distance",
+                                                 "Distribution distance on value axis",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6831,17 +6831,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("division",
-                                                      "division",
-                                                      "The number of divisions",
-                                                      0, 64, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("division",
+                                                 "division",
+                                                 "The number of divisions",
+                                                 0, 64, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("type",
-                                                      "type",
-                                                      "Illusion type { TYPE1 (0), TYPE2 (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("type",
+                                                 "type",
+                                                 "Illusion type { TYPE1 (0), TYPE2 (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7047,11 +7047,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                    0, 1, 0,
                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Random Seed",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Random Seed",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int16 ("multiple",
                                                       "multiple",
@@ -7101,11 +7101,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("type",
-                                                      "type",
-                                                      "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("type",
+                                                 "type",
+                                                 "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("length",
                                                     "length",
@@ -7167,11 +7167,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("type",
-                                                      "type",
-                                                      "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("type",
+                                                 "type",
+                                                 "Type of motion blur { LINEAR (0), RADIAL (1), ZOOM (2) }",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("length",
                                                     "length",
@@ -7257,11 +7257,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0, 1.0, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("tile-allow-split",
-                                                      "tile allow split",
-                                                      "Allows splitting tiles at hard edges",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("tile-allow-split",
+                                                 "tile allow split",
+                                                 "Allows splitting tiles at hard edges",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("light-dir",
                                                     "light dir",
@@ -7275,35 +7275,35 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("antialiasing",
-                                                      "antialiasing",
-                                                      "Enables smoother tile output at the cost of speed",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("antialiasing",
+                                                 "antialiasing",
+                                                 "Enables smoother tile output at the cost of speed",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("color-averaging",
-                                                      "color averaging",
-                                                      "Tile color based on average of subsumed pixels",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("color-averaging",
+                                                 "color averaging",
+                                                 "Tile color based on average of subsumed pixels",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("tile-type",
-                                                      "tile type",
-                                                      "Tile geometry { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("tile-type",
+                                                 "tile type",
+                                                 "Tile geometry { SQUARES (0), HEXAGONS (1), OCTAGONS (2), TRIANGLES (3) }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("tile-surface",
-                                                      "tile surface",
-                                                      "Surface characteristics { SMOOTH (0), ROUGH (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("tile-surface",
+                                                 "tile surface",
+                                                 "Surface characteristics { SMOOTH (0), ROUGH (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("grout-color",
-                                                      "grout color",
-                                                      "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("grout-color",
+                                                 "grout color",
+                                                 "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7389,23 +7389,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("cell-width",
-                                                      "cell width",
-                                                      "Screen cell width in pixels",
-                                                      0, 1500, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("cell-width",
+                                                 "cell width",
+                                                 "Screen cell width in pixels",
+                                                 0, 1500, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("colorspace",
-                                                      "colorspace",
-                                                      "Separate to { GRAYSCALE (0), RGB (1), CMYK (2), LUMINANCE (3) }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("colorspace",
+                                                 "colorspace",
+                                                 "Separate to { GRAYSCALE (0), RGB (1), CMYK (2), LUMINANCE (3) }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("k-pullout",
-                                                      "k pullout",
-                                                      "Percentage of black to pullout (CMYK only)",
-                                                      0, 100, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("k-pullout",
+                                                 "k pullout",
+                                                 "Percentage of black to pullout (CMYK only)",
+                                                 0, 100, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("gry-ang",
                                                     "gry ang",
@@ -7413,11 +7413,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 360.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("gry-spotfn",
-                                                      "gry spotfn",
-                                                      "Grey/black spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
-                                                      0, 4, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("gry-spotfn",
+                                                 "gry spotfn",
+                                                 "Grey/black spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                 0, 4, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("red-ang",
                                                     "red ang",
@@ -7425,11 +7425,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 360.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("red-spotfn",
-                                                      "red spotfn",
-                                                      "Red/cyan spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
-                                                      0, 4, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("red-spotfn",
+                                                 "red spotfn",
+                                                 "Red/cyan spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                 0, 4, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("grn-ang",
                                                     "grn ang",
@@ -7437,11 +7437,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 360.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("grn-spotfn",
-                                                      "grn spotfn",
-                                                      "Green/magenta spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
-                                                      0, 4, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("grn-spotfn",
+                                                 "grn spotfn",
+                                                 "Green/magenta spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                 0, 4, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("blu-ang",
                                                     "blu ang",
@@ -7449,17 +7449,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 360.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("blu-spotfn",
-                                                      "blu spotfn",
-                                                      "Blue/yellow spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
-                                                      0, 4, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("blu-spotfn",
+                                                 "blu spotfn",
+                                                 "Blue/yellow spot function { DOTS (0), LINES (1), DIAMONDS (2), EUCLIDIAN-DOT (3), PS-DIAMONDS (4) }",
+                                                 0, 4, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("oversample",
-                                                      "oversample",
-                                                      "how many times to oversample spot fn",
-                                                      0, 128, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("oversample",
+                                                 "oversample",
+                                                 "how many times to oversample spot fn",
+                                                 0, 128, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7533,17 +7533,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("xcenter",
-                                                      "xcenter",
-                                                      "X coordinates of the center of supernova",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("xcenter",
+                                                 "xcenter",
+                                                 "X coordinates of the center of supernova",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("ycenter",
-                                                      "ycenter",
-                                                      "Y coordinates of the center of supernova",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("ycenter",
+                                                 "ycenter",
+                                                 "Y coordinates of the center of supernova",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("color",
                                                     "color",
@@ -7552,23 +7552,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("radius",
-                                                      "radius",
-                                                      "Radius of supernova",
-                                                      1, 3000, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("radius",
+                                                 "radius",
+                                                 "Radius of supernova",
+                                                 1, 3000, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("nspoke",
-                                                      "nspoke",
-                                                      "Number of spokes",
-                                                      1, 1024, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("nspoke",
+                                                 "nspoke",
+                                                 "Number of spokes",
+                                                 1, 1024, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("randomhue",
-                                                      "randomhue",
-                                                      "Random hue",
-                                                      0, 360, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("randomhue",
+                                                 "randomhue",
+                                                 "Random hue",
+                                                 0, 360, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7606,17 +7606,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("mask-size",
-                                                      "mask size",
-                                                      "Oil paint mask size",
-                                                      1, 200, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("mask-size",
+                                                 "mask size",
+                                                 "Oil paint mask size",
+                                                 1, 200, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("mode",
-                                                      "mode",
-                                                      "Algorithm { RGB (0), INTENSITY (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("mode",
+                                                 "mode",
+                                                 "Algorithm { RGB (0), INTENSITY (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7654,17 +7654,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("mode",
-                                                      "mode",
-                                                      "Algorithm { RGB (0), INTENSITY (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("mode",
+                                                 "mode",
+                                                 "Algorithm { RGB (0), INTENSITY (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("mask-size",
-                                                      "mask size",
-                                                      "Oil paint mask size",
-                                                      1, 200, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("mask-size",
+                                                 "mask size",
+                                                 "Oil paint mask size",
+                                                 1, 200, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("mask-size-map",
                                                             "mask size map",
@@ -7672,11 +7672,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, TRUE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("exponent",
-                                                      "exponent",
-                                                      "Oil paint exponent",
-                                                      1, 20, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("exponent",
+                                                 "exponent",
+                                                 "Oil paint exponent",
+                                                 1, 20, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("exponent-map",
                                                             "exponent map",
@@ -7720,11 +7720,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("tile-size",
-                                                      "tile size",
-                                                      "Tile size (pixels)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("tile-size",
+                                                 "tile size",
+                                                 "Tile size (pixels)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("move-max",
                                                     "move max",
@@ -7732,11 +7732,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("fractional-type",
-                                                      "fractional type",
-                                                      "Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("fractional-type",
+                                                 "fractional type",
+                                                 "Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("wrap-around",
                                                      "wrap around",
@@ -7750,11 +7750,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("background-type",
-                                                      "background type",
-                                                      "Background type { TRANSPARENT (0), INVERTED (1), IMAGE (2), FG (3), BG (4), COLOR (5) }",
-                                                      0, 5, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("background-type",
+                                                 "background type",
+                                                 "Background type { TRANSPARENT (0), INVERTED (1), IMAGE (2), FG (3), BG (4), COLOR (5) }",
+                                                 0, 5, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("background-color",
                                                     "background color",
@@ -7763,11 +7763,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("background-alpha",
-                                                      "background alpha",
-                                                      "Background alpha (unused)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("background-alpha",
+                                                 "background alpha",
+                                                 "Background alpha (unused)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7866,11 +7866,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("pixel-width",
-                                                      "pixel width",
-                                                      "Pixel width (the decrease in resolution)",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("pixel-width",
+                                                 "pixel width",
+                                                 "Pixel width (the decrease in resolution)",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7908,17 +7908,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("pixel-width",
-                                                      "pixel width",
-                                                      "Pixel width (the decrease in horizontal resolution)",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("pixel-width",
+                                                 "pixel width",
+                                                 "Pixel width (the decrease in horizontal resolution)",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("pixel-height",
-                                                      "pixel height",
-                                                      "Pixel height (the decrease in vertical resolution)",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("pixel-height",
+                                                 "pixel height",
+                                                 "Pixel height (the decrease in vertical resolution)",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -7956,11 +7956,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Random seed",
-                                                      -1, G_MAXINT, -1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Random seed",
+                                                 -1, G_MAXINT, -1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("turbulence",
                                                     "turbulence",
@@ -8070,11 +8070,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Red eye threshold in percent",
-                                                      0, 100, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("threshold",
+                                                 "threshold",
+                                                 "Red eye threshold in percent",
+                                                 0, 100, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8130,11 +8130,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Seed value (used only if randomize is FALSE)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Seed value (used only if randomize is FALSE)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8190,11 +8190,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Seed value (used only if randomize is FALSE)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Seed value (used only if randomize is FALSE)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8250,11 +8250,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Seed value (used only if randomize is FALSE)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Seed value (used only if randomize is FALSE)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8364,35 +8364,35 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("period",
-                                                      "period",
-                                                      "Period: number of pixels for one wave to complete",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("period",
+                                                 "period",
+                                                 "Period: number of pixels for one wave to complete",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("amplitude",
-                                                      "amplitude",
-                                                      "Amplitude: maximum displacement of wave",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("amplitude",
+                                                 "amplitude",
+                                                 "Amplitude: maximum displacement of wave",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("orientation",
-                                                      "orientation",
-                                                      "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("orientation",
+                                                 "orientation",
+                                                 "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("edges",
-                                                      "edges",
-                                                      "Edges { SMEAR (0), WRAP (1), BLANK (2) }",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("edges",
+                                                 "edges",
+                                                 "Edges { SMEAR (0), WRAP (1), BLANK (2) }",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("waveform",
-                                                      "waveform",
-                                                      "Waveform { SAWTOOTH (0), SINE (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("waveform",
+                                                 "waveform",
+                                                 "Waveform { SAWTOOTH (0), SINE (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
@@ -8442,11 +8442,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("angle",
-                                                      "angle",
-                                                      "Angle { 90 (1), 180 (2), 270 (3) } degrees",
-                                                      1, 3, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("angle",
+                                                 "angle",
+                                                 "Angle { 90 (1), 180 (2), 270 (3) } degrees",
+                                                 1, 3, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("everything",
                                                      "everything",
@@ -8562,11 +8562,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, G_MAXDOUBLE, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("max-delta",
-                                                      "max delta",
-                                                      "Maximum delta",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("max-delta",
+                                                 "max delta",
+                                                 "Maximum delta",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8640,17 +8640,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("shift-amount",
-                                                      "shift amount",
-                                                      "Shift amount",
-                                                      0, 200, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("shift-amount",
+                                                 "shift amount",
+                                                 "Shift amount",
+                                                 0, 200, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("orientation",
-                                                      "orientation",
-                                                      "Orientation { ORIENTATION-VERTICAL (0), ORIENTATION-HORIZONTAL (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("orientation",
+                                                 "orientation",
+                                                 "Orientation { ORIENTATION-VERTICAL (0), ORIENTATION-HORIZONTAL (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -8706,11 +8706,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Seed value for random number generator",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Seed value for random number generator",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("tiling",
                                                      "tiling",
@@ -8724,11 +8724,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("colors",
-                                                      "colors",
-                                                      "where to take the colors (0=B&W, 1=fg/bg, 2=col1/col2)",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("colors",
+                                                 "colors",
+                                                 "where to take the colors (0=B&W, 1=fg/bg, 2=col1/col2)",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("col1",
                                                     "col1",
@@ -8756,11 +8756,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0, 1, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("blend",
-                                                      "blend",
-                                                      "0=linear, 1=bilinear, 2=sinusoidal",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("blend",
+                                                 "blend",
+                                                 "0=linear, 1=bilinear, 2=sinusoidal",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("blend-power",
                                                     "blend power",
@@ -8924,17 +8924,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("seed",
-                                                      "seed",
-                                                      "Random seed",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("seed",
+                                                 "seed",
+                                                 "Random seed",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("detail",
-                                                      "detail",
-                                                      "Detail level",
-                                                      0, 15, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("detail",
+                                                 "detail",
+                                                 "Detail level",
+                                                 0, 15, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("xsize",
                                                     "xsize",
@@ -9032,11 +9032,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Threshold",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("threshold",
+                                                 "threshold",
+                                                 "Threshold",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -9086,11 +9086,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 300.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Threshold",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("threshold",
+                                                 "threshold",
+                                                 "Threshold",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -9128,11 +9128,11 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("pattern-number",
-                                                      "pattern number",
-                                                      "Type of RGB pattern to use",
-                                                      0, 8, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("pattern-number",
+                                                 "pattern number",
+                                                 "Type of RGB pattern to use",
+                                                 0, 8, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("additive",
                                                      "additive",
@@ -9218,17 +9218,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("propagate-mode",
-                                                      "propagate mode",
-                                                      "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
-                                                      0, 7, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("propagate-mode",
+                                                 "propagate mode",
+                                                 "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
+                                                 0, 7, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("propagating-channel",
-                                                      "propagating channel",
-                                                      "Channels which values are propagated",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("propagating-channel",
+                                                 "propagating channel",
+                                                 "Channels which values are propagated",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("propagating-rate",
                                                     "propagating rate",
@@ -9236,23 +9236,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("direction-mask",
-                                                      "direction mask",
-                                                      "Direction mask",
-                                                      0, 15, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("direction-mask",
+                                                 "direction mask",
+                                                 "Direction mask",
+                                                 0, 15, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("lower-limit",
-                                                      "lower limit",
-                                                      "Lower limit",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("lower-limit",
+                                                 "lower limit",
+                                                 "Lower limit",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("upper-limit",
-                                                      "upper limit",
-                                                      "Upper limit",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("upper-limit",
+                                                 "upper limit",
+                                                 "Upper limit",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -9290,17 +9290,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("propagate-mode",
-                                                      "propagate mode",
-                                                      "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
-                                                      0, 7, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("propagate-mode",
+                                                 "propagate mode",
+                                                 "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
+                                                 0, 7, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("propagating-channel",
-                                                      "propagating channel",
-                                                      "Channels which values are propagated",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("propagating-channel",
+                                                 "propagating channel",
+                                                 "Channels which values are propagated",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("propagating-rate",
                                                     "propagating rate",
@@ -9308,23 +9308,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("direction-mask",
-                                                      "direction mask",
-                                                      "Direction mask",
-                                                      0, 15, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("direction-mask",
+                                                 "direction mask",
+                                                 "Direction mask",
+                                                 0, 15, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("lower-limit",
-                                                      "lower limit",
-                                                      "Lower limit",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("lower-limit",
+                                                 "lower limit",
+                                                 "Lower limit",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("upper-limit",
-                                                      "upper limit",
-                                                      "Upper limit",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("upper-limit",
+                                                 "upper limit",
+                                                 "Upper limit",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -9362,17 +9362,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("propagate-mode",
-                                                      "propagate mode",
-                                                      "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
-                                                      0, 7, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("propagate-mode",
+                                                 "propagate mode",
+                                                 "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
+                                                 0, 7, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("propagating-channel",
-                                                      "propagating channel",
-                                                      "Channels which values are propagated",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("propagating-channel",
+                                                 "propagating channel",
+                                                 "Channels which values are propagated",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("propagating-rate",
                                                     "propagating rate",
@@ -9380,23 +9380,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("direction-mask",
-                                                      "direction mask",
-                                                      "Direction mask",
-                                                      0, 15, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("direction-mask",
+                                                 "direction mask",
+                                                 "Direction mask",
+                                                 0, 15, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("lower-limit",
-                                                      "lower limit",
-                                                      "Lower limit",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("lower-limit",
+                                                 "lower limit",
+                                                 "Lower limit",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("upper-limit",
-                                                      "upper limit",
-                                                      "Upper limit",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("upper-limit",
+                                                 "upper limit",
+                                                 "Upper limit",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -9554,35 +9554,35 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Controls where blending will be done",
-                                                      0, 50, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("threshold",
+                                                 "threshold",
+                                                 "Controls where blending will be done",
+                                                 0, 50, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("direction",
-                                                      "direction",
-                                                      "Wind direction { 0:left, 1:right, 2:top, 3:bottom }",
-                                                      0, 3, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("direction",
+                                                 "direction",
+                                                 "Wind direction { 0:left, 1:right, 2:top, 3:bottom }",
+                                                 0, 3, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("strength",
-                                                      "strength",
-                                                      "Controls the extent of the blending",
-                                                      1, 100, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("strength",
+                                                 "strength",
+                                                 "Controls the extent of the blending",
+                                                 1, 100, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("algorithm",
-                                                      "algorithm",
-                                                      "Algorithm { WIND (0), BLAST (1) }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("algorithm",
+                                                 "algorithm",
+                                                 "Algorithm { WIND (0), BLAST (1) }",
+                                                 0, 1, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("edge",
-                                                      "edge",
-                                                      "Affected edge { BOTH (0), LEADING (1), TRAILING (2) }",
-                                                      0, 2, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("edge",
+                                                 "edge",
+                                                 "Affected edge { BOTH (0), LEADING (1), TRAILING (2) }",
+                                                 0, 2, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

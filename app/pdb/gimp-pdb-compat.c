@@ -50,7 +50,6 @@ gimp_pdb_compat_arg_type_from_gtype (GType type)
       }
       type_mapping[] =
       {
-        { GIMP_TYPE_INT32,           GIMP_PDB_INT32       },
         { G_TYPE_INT,                GIMP_PDB_INT32       },
         { G_TYPE_UINT,               GIMP_PDB_INT32       },
         { G_TYPE_ENUM,               GIMP_PDB_INT32       },

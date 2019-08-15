@@ -54,10 +54,10 @@ image_resize_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 new_width;
-  gint32 new_height;
-  gint32 offx;
-  gint32 offy;
+  gint new_width;
+  gint new_height;
+  gint offx;
+  gint offy;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
@@ -107,8 +107,8 @@ image_scale_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 new_width;
-  gint32 new_height;
+  gint new_width;
+  gint new_height;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
@@ -143,10 +143,10 @@ image_crop_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 new_width;
-  gint32 new_height;
-  gint32 offx;
-  gint32 offy;
+  gint new_width;
+  gint new_height;
+  gint offx;
+  gint offy;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   new_width = g_value_get_int (gimp_value_array_index (args, 1));
@@ -181,7 +181,7 @@ image_flip_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 flip_type;
+  gint flip_type;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   flip_type = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -205,7 +205,7 @@ image_rotate_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 rotate_type;
+  gint rotate_type;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   rotate_type = g_value_get_enum (gimp_value_array_index (args, 1));
@@ -251,29 +251,29 @@ register_image_transform_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New image width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-width",
+                                                 "new width",
+                                                 "New image width",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New image height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-height",
+                                                 "new height",
+                                                 "New image height",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "x offset between upper left corner of old and new images: (new - old)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "x offset between upper left corner of old and new images: (new - old)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "y offset between upper left corner of old and new images: (new - old)",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "y offset between upper left corner of old and new images: (new - old)",
+                                                 G_MININT32, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -321,17 +321,17 @@ register_image_transform_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New image width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-width",
+                                                 "new width",
+                                                 "New image width",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New image height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-height",
+                                                 "new height",
+                                                 "New image height",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -356,29 +356,29 @@ register_image_transform_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New image width: (0 < new_width <= width)",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-width",
+                                                 "new width",
+                                                 "New image width: (0 < new_width <= width)",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New image height: (0 < new_height <= height)",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("new-height",
+                                                 "new height",
+                                                 "New image height: (0 < new_height <= height)",
+                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "X offset: (0 <= offx <= (width - new_width))",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offx",
+                                                 "offx",
+                                                 "X offset: (0 <= offx <= (width - new_width))",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "Y offset: (0 <= offy <= (height - new_height))",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("offy",
+                                                 "offy",
+                                                 "Y offset: (0 <= offy <= (height - new_height))",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

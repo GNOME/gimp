@@ -239,12 +239,12 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                                      1, 1000, 1,
                                                      GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32 ("dimension",
-                                                          "Dimension",
-                                                          "Dimension of the "
-                                                          "brush pipe",
-                                                          1, 4, 1,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("dimension",
+                                                     "Dimension",
+                                                     "Dimension of the "
+                                                     "brush pipe",
+                                                     1, 4, 1,
+                                                     GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_int8_array ("rank",
                                                                "Rank",
@@ -252,12 +252,12 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                                                "dimensions",
                                                                GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32 ("dimension",
-                                                          "Dimension",
-                                                          "Dimension of the "
-                                                          "brush pipe",
-                                                          1, 4, 1,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("dimension",
+                                                     "Dimension",
+                                                     "Dimension of the "
+                                                     "brush pipe",
+                                                     1, 4, 1,
+                                                     GIMP_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_int8_array ("sel",
                                                                "Sel",

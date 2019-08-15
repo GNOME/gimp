@@ -263,9 +263,9 @@ gimp_plug_in_progress_install (GimpPlugIn  *plug_in,
   if (! GIMP_IS_TEMPORARY_PROCEDURE (procedure)                ||
       GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in != plug_in ||
       procedure->num_args                           != 3       ||
-      ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0])          ||
-      ! G_IS_PARAM_SPEC_STRING   (procedure->args[1])          ||
-      ! G_IS_PARAM_SPEC_DOUBLE   (procedure->args[2]))
+      ! G_IS_PARAM_SPEC_INT    (procedure->args[0])            ||
+      ! G_IS_PARAM_SPEC_STRING (procedure->args[1])            ||
+      ! G_IS_PARAM_SPEC_DOUBLE (procedure->args[2]))
     {
       return FALSE;
     }

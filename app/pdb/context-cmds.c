@@ -114,7 +114,7 @@ context_list_paint_methods_invoker (GimpProcedure         *procedure,
                                     GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 num_paint_methods = 0;
+  gint num_paint_methods = 0;
   gchar **paint_methods = NULL;
 
   paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
@@ -192,7 +192,7 @@ context_get_stroke_method_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 stroke_method = 0;
+  gint stroke_method = 0;
 
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
@@ -216,7 +216,7 @@ context_set_stroke_method_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  gint32 stroke_method;
+  gint stroke_method;
 
   stroke_method = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -396,7 +396,7 @@ context_get_paint_mode_invoker (GimpProcedure         *procedure,
                                 GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 paint_mode = 0;
+  gint paint_mode = 0;
 
   paint_mode = gimp_context_get_paint_mode (context);
 
@@ -415,7 +415,7 @@ context_set_paint_mode_invoker (GimpProcedure         *procedure,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  gint32 paint_mode;
+  gint paint_mode;
 
   paint_mode = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -542,7 +542,7 @@ context_get_line_cap_style_invoker (GimpProcedure         *procedure,
                                     GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 cap_style = 0;
+  gint cap_style = 0;
 
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
@@ -566,7 +566,7 @@ context_set_line_cap_style_invoker (GimpProcedure         *procedure,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  gint32 cap_style;
+  gint cap_style;
 
   cap_style = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -593,7 +593,7 @@ context_get_line_join_style_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 join_style = 0;
+  gint join_style = 0;
 
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
@@ -617,7 +617,7 @@ context_set_line_join_style_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  gint32 join_style;
+  gint join_style;
 
   join_style = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -746,7 +746,7 @@ context_get_line_dash_pattern_invoker (GimpProcedure         *procedure,
                                        GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 num_dashes = 0;
+  gint num_dashes = 0;
   gdouble *dashes = NULL;
 
   GimpStrokeOptions *options =
@@ -773,7 +773,7 @@ context_set_line_dash_pattern_invoker (GimpProcedure         *procedure,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  gint32 num_dashes;
+  gint num_dashes;
   const gdouble *dashes;
 
   num_dashes = g_value_get_int (gimp_value_array_index (args, 0));
@@ -1629,7 +1629,7 @@ context_get_gradient_blend_color_space_invoker (GimpProcedure         *procedure
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 blend_color_space = 0;
+  gint blend_color_space = 0;
 
   /* all options should have the same value, so pick a random one */
   GimpPaintOptions *options =
@@ -1661,7 +1661,7 @@ context_set_gradient_blend_color_space_invoker (GimpProcedure         *procedure
                                                 GError               **error)
 {
   gboolean success = TRUE;
-  gint32 blend_color_space;
+  gint blend_color_space;
 
   blend_color_space = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -1692,7 +1692,7 @@ context_get_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 repeat_mode = 0;
+  gint repeat_mode = 0;
 
   /* all options should have the same value, so pick a random one */
   GimpPaintOptions *options =
@@ -1724,7 +1724,7 @@ context_set_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
                                           GError               **error)
 {
   gboolean success = TRUE;
-  gint32 repeat_mode;
+  gint repeat_mode;
 
   repeat_mode = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -2114,7 +2114,7 @@ context_get_sample_criterion_invoker (GimpProcedure         *procedure,
                                       GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 sample_criterion = 0;
+  gint sample_criterion = 0;
 
   g_object_get (context,
                 "sample-criterion", &sample_criterion,
@@ -2135,7 +2135,7 @@ context_set_sample_criterion_invoker (GimpProcedure         *procedure,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  gint32 sample_criterion;
+  gint sample_criterion;
 
   sample_criterion = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -2204,7 +2204,7 @@ context_get_sample_threshold_int_invoker (GimpProcedure         *procedure,
                                           GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 sample_threshold = 0;
+  gint sample_threshold = 0;
 
   gdouble threshold;
 
@@ -2229,7 +2229,7 @@ context_set_sample_threshold_int_invoker (GimpProcedure         *procedure,
                                           GError               **error)
 {
   gboolean success = TRUE;
-  gint32 sample_threshold;
+  gint sample_threshold;
 
   sample_threshold = g_value_get_int (gimp_value_array_index (args, 0));
 
@@ -2343,7 +2343,7 @@ context_get_distance_metric_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 metric = 0;
+  gint metric = 0;
 
   g_object_get (context,
                 "distance-metric", &metric,
@@ -2364,7 +2364,7 @@ context_set_distance_metric_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  gint32 metric;
+  gint metric;
 
   metric = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -2388,7 +2388,7 @@ context_get_interpolation_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 interpolation = 0;
+  gint interpolation = 0;
 
   g_object_get (context,
                 "interpolation", &interpolation,
@@ -2409,7 +2409,7 @@ context_set_interpolation_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  gint32 interpolation;
+  gint interpolation;
 
   interpolation = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -2433,7 +2433,7 @@ context_get_transform_direction_invoker (GimpProcedure         *procedure,
                                          GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 transform_direction = 0;
+  gint transform_direction = 0;
 
   g_object_get (context,
                 "transform-direction", &transform_direction,
@@ -2454,7 +2454,7 @@ context_set_transform_direction_invoker (GimpProcedure         *procedure,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  gint32 transform_direction;
+  gint transform_direction;
 
   transform_direction = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -2478,7 +2478,7 @@ context_get_transform_resize_invoker (GimpProcedure         *procedure,
                                       GError               **error)
 {
   GimpValueArray *return_vals;
-  gint32 transform_resize = 0;
+  gint transform_resize = 0;
 
   g_object_get (context,
                 "transform-resize", &transform_resize,
@@ -2499,7 +2499,7 @@ context_set_transform_resize_invoker (GimpProcedure         *procedure,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  gint32 transform_resize;
+  gint transform_resize;
 
   transform_resize = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -2839,7 +2839,7 @@ context_get_ink_blob_type_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  gint32 type = 0;
+  gint type = 0;
 
   GimpPaintOptions *options =
     gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
@@ -2870,7 +2870,7 @@ context_set_ink_blob_type_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  gint32 type;
+  gint type;
 
   type = g_value_get_enum (gimp_value_array_index (args, 0));
 
@@ -3092,11 +3092,11 @@ register_context_procs (GimpPDB *pdb)
                                      "2007",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-paint-methods",
-                                                          "num paint methods",
-                                                          "The number of the available paint methods",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-paint-methods",
+                                                     "num paint methods",
+                                                     "The number of the available paint methods",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string_array ("paint-methods",
                                                                  "paint methods",
@@ -3737,11 +3737,11 @@ register_context_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-dashes",
-                                                          "num dashes",
-                                                          "The number of dashes in the dash_pattern array",
-                                                          0, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("num-dashes",
+                                                     "num dashes",
+                                                     "The number of dashes in the dash_pattern array",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_float_array ("dashes",
                                                                 "dashes",
@@ -3769,11 +3769,11 @@ register_context_procs (GimpPDB *pdb)
                                      "2015",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-dashes",
-                                                      "num dashes",
-                                                      "The number of dashes in the dash_pattern array",
-                                                      0, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-dashes",
+                                                 "num dashes",
+                                                 "The number of dashes in the dash_pattern array",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("dashes",
                                                             "dashes",
@@ -4972,11 +4972,11 @@ register_context_procs (GimpPDB *pdb)
                                      "2011",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("sample-threshold",
-                                                          "sample threshold",
-                                                          "The sample threshold setting",
-                                                          0, 255, 0,
-                                                          GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("sample-threshold",
+                                                     "sample threshold",
+                                                     "The sample threshold setting",
+                                                     0, 255, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4995,11 +4995,11 @@ register_context_procs (GimpPDB *pdb)
                                      "2011",
                                      NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("sample-threshold",
-                                                      "sample threshold",
-                                                      "The sample threshold setting",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("sample-threshold",
+                                                 "sample threshold",
+                                                 "The sample threshold setting",
+                                                 0, 255, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -49,8 +49,8 @@ brushes_popup_invoker (GimpProcedure         *procedure,
   const gchar *popup_title;
   const gchar *initial_brush;
   gdouble opacity;
-  gint32 spacing;
-  gint32 paint_mode;
+  gint spacing;
+  gint paint_mode;
 
   brush_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
@@ -118,8 +118,8 @@ brushes_set_popup_invoker (GimpProcedure         *procedure,
   const gchar *brush_callback;
   const gchar *brush_name;
   gdouble opacity;
-  gint32 spacing;
-  gint32 paint_mode;
+  gint spacing;
+  gint paint_mode;
 
   brush_callback = g_value_get_string (gimp_value_array_index (args, 0));
   brush_name = g_value_get_string (gimp_value_array_index (args, 1));
@@ -194,11 +194,11 @@ register_brush_select_procs (GimpPDB *pdb)
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spacing",
-                                                      "spacing",
-                                                      "The initial spacing of the brush (if < 0 then use brush default spacing)",
-                                                      G_MININT32, 1000, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("spacing",
+                                                 "spacing",
+                                                 "The initial spacing of the brush (if < 0 then use brush default spacing)",
+                                                 G_MININT32, 1000, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
@@ -268,11 +268,11 @@ register_brush_select_procs (GimpPDB *pdb)
                                                     0, 100, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("spacing",
-                                                      "spacing",
-                                                      "The initial spacing of the brush (if < 0 then use brush default spacing)",
-                                                      G_MININT32, 1000, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("spacing",
+                                                 "spacing",
+                                                 "The initial spacing of the brush (if < 0 then use brush default spacing)",
+                                                 G_MININT32, 1000, 0,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",

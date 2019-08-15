@@ -57,7 +57,7 @@ image_select_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
+  gint operation;
   GimpDrawable *drawable;
   GimpRGB color;
 
@@ -103,7 +103,7 @@ image_select_contiguous_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
+  gint operation;
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
@@ -154,7 +154,7 @@ image_select_rectangle_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
+  gint operation;
   gdouble x;
   gdouble y;
   gdouble width;
@@ -195,7 +195,7 @@ image_select_round_rectangle_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
+  gint operation;
   gdouble x;
   gdouble y;
   gdouble width;
@@ -243,7 +243,7 @@ image_select_ellipse_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
+  gint operation;
   gdouble x;
   gdouble y;
   gdouble width;
@@ -285,8 +285,8 @@ image_select_polygon_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
-  gint32 num_segs;
+  gint operation;
+  gint num_segs;
   const gdouble *segs;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -324,7 +324,7 @@ image_select_item_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint32 operation;
+  gint operation;
   GimpItem *item;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -665,11 +665,11 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-segs",
-                                                      "num segs",
-                                                      "Number of points (count 1 coordinate as two points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_int ("num-segs",
+                                                 "num segs",
+                                                 "Number of points (count 1 coordinate as two points)",
+                                                 2, G_MAXINT32, 2,
+                                                 GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_float_array ("segs",
                                                             "segs",

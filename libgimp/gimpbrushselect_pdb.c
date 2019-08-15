@@ -67,7 +67,7 @@ gimp_brushes_popup (const gchar   *brush_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_brush,
                                           G_TYPE_DOUBLE, opacity,
-                                          GIMP_TYPE_INT32, spacing,
+                                          G_TYPE_INT, spacing,
                                           GIMP_TYPE_LAYER_MODE, paint_mode,
                                           G_TYPE_NONE);
 
@@ -155,7 +155,7 @@ gimp_brushes_set_popup (const gchar   *brush_callback,
                                           G_TYPE_STRING, brush_callback,
                                           G_TYPE_STRING, brush_name,
                                           G_TYPE_DOUBLE, opacity,
-                                          GIMP_TYPE_INT32, spacing,
+                                          G_TYPE_INT, spacing,
                                           GIMP_TYPE_LAYER_MODE, paint_mode,
                                           G_TYPE_NONE);
 

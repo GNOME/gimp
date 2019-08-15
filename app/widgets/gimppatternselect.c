@@ -129,7 +129,7 @@ gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
                                         G_TYPE_INT,           gimp_temp_buf_get_width  (pattern->mask),
                                         G_TYPE_INT,           gimp_temp_buf_get_height (pattern->mask),
                                         G_TYPE_INT,           babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask)),
-                                        GIMP_TYPE_INT32,      array->length,
+                                        G_TYPE_INT,           array->length,
                                         GIMP_TYPE_INT8_ARRAY, array,
                                         G_TYPE_BOOLEAN,       closing,
                                         G_TYPE_NONE);

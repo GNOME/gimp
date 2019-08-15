@@ -70,8 +70,8 @@ _gimp_channel_new (gint32         image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          GIMP_TYPE_INT32, width,
-                                          GIMP_TYPE_INT32, height,
+                                          G_TYPE_INT, width,
+                                          G_TYPE_INT, height,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
                                           GIMP_TYPE_RGB, color,
@@ -217,8 +217,8 @@ gimp_channel_combine_masks (gint32         channel1_ID,
                                           GIMP_TYPE_CHANNEL_ID, channel1_ID,
                                           GIMP_TYPE_CHANNEL_ID, channel2_ID,
                                           GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_INT32, offx,
-                                          GIMP_TYPE_INT32, offy,
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
   if (pdb)
