@@ -652,7 +652,6 @@ EXPORTS
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_pdb_error_handler
 	gimp_plug_in_set_translation_domain
-	gimp_plugin_icon_register
 	gimp_plugin_menu_register
 	gimp_procedure_add_argument
 	gimp_procedure_add_argument_from_property
