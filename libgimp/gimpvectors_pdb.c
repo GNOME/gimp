@@ -44,7 +44,7 @@
  * Creates a new empty vectors object. The vectors object needs to be
  * added to the image using gimp_image_insert_vectors().
  *
- * Returns: (transfer full):
+ * Returns: (transfer none):
  *          the current vector object, 0 if no vector exists in the image.
  *
  * Since: 2.4
@@ -73,7 +73,7 @@ gimp_vectors_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -135,7 +135,7 @@ _gimp_vectors_new (gint32       image_ID,
  * Creates a new vectors object from a text layer. The vectors object
  * needs to be added to the image using gimp_image_insert_vectors().
  *
- * Returns: (transfer full): The vectors of the text layer.
+ * Returns: (transfer none): The vectors of the text layer.
  *
  * Since: 2.6
  **/
@@ -163,7 +163,7 @@ gimp_vectors_new_from_text_layer (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -224,7 +224,7 @@ _gimp_vectors_new_from_text_layer (gint32 image_ID,
  * This procedure copies the specified vectors object and returns the
  * copy.
  *
- * Returns: (transfer full): The newly copied vectors object.
+ * Returns: (transfer none): The newly copied vectors object.
  *
  * Since: 2.6
  **/
@@ -250,7 +250,7 @@ gimp_vectors_copy (GimpVectors *vectors)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors_copy = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors_copy = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
