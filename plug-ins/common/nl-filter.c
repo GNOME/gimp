@@ -153,7 +153,7 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_id));
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -167,10 +167,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &nlfvals);
 
       if (! nlfilter_dialog (drawable))
-        {
-          g_object_unref (drawable);
-          return;
-        }
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -204,7 +201,6 @@ run (const gchar      *name,
         gimp_set_data (PLUG_IN_PROC, &nlfvals, sizeof (NLFilterValues));
     }
 
-  g_object_unref (drawable);
   values[0].data.d_status = status;
 }
 

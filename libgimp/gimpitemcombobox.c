@@ -406,7 +406,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
           items = gimp_image_get_layers (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
-          g_list_free_full (items, g_object_unref);
+          g_list_free (items);
         }
 
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
@@ -415,7 +415,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
           items = gimp_image_get_channels (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
-          g_list_free_full (items, g_object_unref);
+          g_list_free (items);
         }
 
       if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
@@ -423,7 +423,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
           items = gimp_image_get_vectors (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
-          g_list_free_full (items, g_object_unref);
+          g_list_free (items);
         }
     }
 
@@ -507,7 +507,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
           gimp_item_combo_box_model_add (combo_box, store,
                                          image, children,
                                          tree_level + 1);
-          g_list_free_full (children, g_object_unref);
+          g_list_free (children);
         }
     }
 

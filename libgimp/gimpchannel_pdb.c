@@ -53,7 +53,7 @@
  * explicit procedure calls.
  * The channel's contents are undefined initially.
  *
- * Returns: (transfer full): The newly created channel.
+ * Returns: (transfer none): The newly created channel.
  **/
 GimpChannel *
 _gimp_channel_new (GimpImage     *image,
@@ -87,7 +87,7 @@ _gimp_channel_new (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -108,7 +108,7 @@ _gimp_channel_new (GimpImage     *image,
  * Other attributes, such as channel visibility, should be set with
  * explicit procedure calls.
  *
- * Returns: (transfer full): The newly created channel.
+ * Returns: (transfer none): The newly created channel.
  *
  * Since: 2.4
  **/
@@ -138,7 +138,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -206,7 +206,7 @@ _gimp_channel_new_from_component (gint32           image_ID,
  * The new channel still needs to be added to the image, as this is not
  * automatic. Add the new channel with gimp_image_insert_channel().
  *
- * Returns: (transfer full): The newly copied channel.
+ * Returns: (transfer none): The newly copied channel.
  **/
 GimpChannel *
 gimp_channel_copy (GimpChannel *channel)
@@ -230,7 +230,7 @@ gimp_channel_copy (GimpChannel *channel)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel_copy = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel_copy = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
