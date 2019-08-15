@@ -52,7 +52,7 @@
  * linked flag set to TRUE will also be translated by the specified
  * offsets.
  *
- * Returns: (transfer full): The translated item.
+ * Returns: (transfer none): The translated item.
  *
  * Since: 2.10
  **/
@@ -82,7 +82,7 @@ gimp_item_transform_translate (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -173,7 +173,7 @@ _gimp_item_transform_translate (gint32  item_ID,
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The flipped item.
+ * Returns: (transfer none): The flipped item.
  *
  * Since: 2.2
  **/
@@ -205,7 +205,7 @@ gimp_item_transform_flip_simple (GimpItem            *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -310,7 +310,7 @@ _gimp_item_transform_flip_simple (gint32              item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The flipped item.
+ * Returns: (transfer none): The flipped item.
  *
  * Since: 2.8
  **/
@@ -344,7 +344,7 @@ gimp_item_transform_flip (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -465,7 +465,7 @@ _gimp_item_transform_flip (gint32  item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The transformed item.
+ * Returns: (transfer none): The transformed item.
  *
  * Since: 2.8
  **/
@@ -507,7 +507,7 @@ gimp_item_transform_perspective (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -639,7 +639,7 @@ _gimp_item_transform_perspective (gint32  item_ID,
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The rotated item.
+ * Returns: (transfer none): The rotated item.
  *
  * Since: 2.8
  **/
@@ -673,7 +673,7 @@ gimp_item_transform_rotate_simple (GimpItem         *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -789,7 +789,7 @@ _gimp_item_transform_rotate_simple (gint32           item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The rotated item.
+ * Returns: (transfer none): The rotated item.
  *
  * Since: 2.8
  **/
@@ -823,7 +823,7 @@ gimp_item_transform_rotate (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -938,7 +938,7 @@ _gimp_item_transform_rotate (gint32   item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The scaled item.
+ * Returns: (transfer none): The scaled item.
  *
  * Since: 2.8
  **/
@@ -972,7 +972,7 @@ gimp_item_transform_scale (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1084,7 +1084,7 @@ _gimp_item_transform_scale (gint32  item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The sheared item.
+ * Returns: (transfer none): The sheared item.
  *
  * Since: 2.8
  **/
@@ -1114,7 +1114,7 @@ gimp_item_transform_shear (GimpItem            *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1228,7 +1228,7 @@ _gimp_item_transform_shear (gint32              item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The transformed item.
+ * Returns: (transfer none): The transformed item.
  *
  * Since: 2.8
  **/
@@ -1268,7 +1268,7 @@ gimp_item_transform_2d (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -1398,7 +1398,7 @@ _gimp_item_transform_2d (gint32  item_ID,
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: (transfer full): The transformed item.
+ * Returns: (transfer none): The transformed item.
  *
  * Since: 2.8
  **/
@@ -1442,7 +1442,7 @@ gimp_item_transform_matrix (GimpItem *item,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    ret_item = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    ret_item = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

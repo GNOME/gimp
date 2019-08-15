@@ -64,7 +64,7 @@
  * divide the size in points by 72.0 and multiply it by the image's
  * vertical resolution.
  *
- * Returns: (transfer full): The new text layer or -1 if no layer was created.
+ * Returns: (transfer none): The new text layer or -1 if no layer was created.
  **/
 GimpLayer *
 gimp_text_fontname (GimpImage    *image,
@@ -106,7 +106,7 @@ gimp_text_fontname (GimpImage    *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    text_layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    text_layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 

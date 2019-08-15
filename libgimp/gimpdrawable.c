@@ -369,7 +369,10 @@ gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
   gchar      *format_str = _gimp_drawable_get_thumbnail_format (drawable);
 
   if (format_str)
-    format = babl_format (format_str);
+    {
+      format = babl_format (format_str);
+      g_free (format_str);
+    }
 
   return format;
 }
@@ -388,7 +391,8 @@ gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
  * Retrieves thumbnail data for the drawable identified by @drawable_ID.
  * The thumbnail will be not larger than the requested size.
  *
- * Returns: (transfer full):
+ * Returns: (transfer full) (nullable): thumbnail data or %NULL if
+ *          @drawable_ID is invalid.
  **/
 guchar *
 gimp_drawable_get_thumbnail_data_deprecated (gint32  drawable_ID,
@@ -396,17 +400,8 @@ gimp_drawable_get_thumbnail_data_deprecated (gint32  drawable_ID,
                                              gint   *height,
                                              gint   *bpp)
 {
-  GimpDrawable *drawable;
-  guchar       *data = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  data = gimp_drawable_get_thumbnail_data (drawable, width, height, bpp);
-  g_object_unref (drawable);
-
-  return data;
+  return gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
+                                           width, height, bpp);
 }
 
 /**
@@ -420,7 +415,8 @@ gimp_drawable_get_thumbnail_data_deprecated (gint32  drawable_ID,
  * @drawable_ID. The thumbnail will be not larger than the requested
  * size.
  *
- * Returns: (transfer full): a new #GdkPixbuf
+ * Returns: (transfer full) (nullable): a new #GdkPixbuf or %NULL if
+ *          @drawable_ID is invalid.
  *
  * Since: 2.2
  **/
@@ -430,17 +426,8 @@ gimp_drawable_get_thumbnail_deprecated (gint32                  drawable_ID,
                                         gint                    height,
                                         GimpPixbufTransparency  alpha)
 {
-  GimpDrawable *drawable;
-  GdkPixbuf    *thumbnail = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  thumbnail = gimp_drawable_get_thumbnail (drawable, width, height, alpha);
-  g_object_unref (drawable);
-
-  return thumbnail;
+  return gimp_drawable_get_thumbnail (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
+                                      width, height, alpha);
 }
 
 guchar *
@@ -453,19 +440,10 @@ gimp_drawable_get_sub_thumbnail_data_deprecated (gint32  drawable_ID,
                                                  gint   *dest_height,
                                                  gint   *bpp)
 {
-  GimpDrawable *drawable;
-  guchar       *data = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  data = gimp_drawable_get_sub_thumbnail_data (drawable, src_x, src_y,
+  return gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
+                                               src_x, src_y,
                                                src_width, src_height,
                                                dest_width, dest_height, bpp);
-  g_object_unref (drawable);
-
-  return data;
 }
 
 /**
@@ -497,19 +475,10 @@ gimp_drawable_get_sub_thumbnail_deprecated (gint32                  drawable_ID,
                                             gint                    dest_height,
                                             GimpPixbufTransparency  alpha)
 {
-  GimpDrawable *drawable;
-  GdkPixbuf    *thumbnail = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  thumbnail = gimp_drawable_get_sub_thumbnail (drawable, src_x, src_y,
-                                               src_width, src_height,
-                                               dest_width, dest_height, alpha);
-  g_object_unref (drawable);
-
-  return thumbnail;
+  return gimp_drawable_get_sub_thumbnail (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
+                                          src_x, src_y,
+                                          src_width, src_height,
+                                          dest_width, dest_height, alpha);
 }
 
 /**
@@ -530,17 +499,7 @@ gimp_drawable_get_sub_thumbnail_deprecated (gint32                  drawable_ID,
 GeglBuffer *
 gimp_drawable_get_buffer_deprecated (gint32 drawable_ID)
 {
-  GimpDrawable *drawable;
-  GeglBuffer   *buffer = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  buffer = gimp_drawable_get_buffer (drawable);
-  g_object_unref (drawable);
-
-  return buffer;
+  return gimp_drawable_get_buffer (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
 }
 
 /**
@@ -561,17 +520,7 @@ gimp_drawable_get_buffer_deprecated (gint32 drawable_ID)
 GeglBuffer *
 gimp_drawable_get_shadow_buffer_deprecated (gint32 drawable_ID)
 {
-  GimpDrawable *drawable;
-  GeglBuffer   *buffer = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  buffer = gimp_drawable_get_shadow_buffer (drawable);
-  g_object_unref (drawable);
-
-  return buffer;
+  return gimp_drawable_get_shadow_buffer (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
 }
 
 /**
@@ -587,17 +536,7 @@ gimp_drawable_get_shadow_buffer_deprecated (gint32 drawable_ID)
 const Babl *
 gimp_drawable_get_format_deprecated (gint32 drawable_ID)
 {
-  GimpDrawable *drawable;
-  const Babl   *format = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  format = gimp_drawable_get_format (drawable);
-  g_object_unref (drawable);
-
-  return format;
+  return gimp_drawable_get_format (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
 }
 /**
  * gimp_drawable_get_thumbnail_format_deprecated: (skip)
@@ -612,15 +551,5 @@ gimp_drawable_get_format_deprecated (gint32 drawable_ID)
 const Babl *
 gimp_drawable_get_thumbnail_format_deprecated (gint32 drawable_ID)
 {
-  GimpDrawable *drawable;
-  const Babl   *format = NULL;
-
-  drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
-
-  g_return_val_if_fail (drawable, NULL);
-
-  format = gimp_drawable_get_thumbnail_format (drawable);
-  g_object_unref (drawable);
-
-  return format;
+  return gimp_drawable_get_thumbnail_format (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
 }

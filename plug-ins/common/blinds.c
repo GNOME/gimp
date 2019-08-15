@@ -150,17 +150,14 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
-  drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_id));
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &bvals);
       if (! blinds_dialog (drawable))
-        {
-          g_object_unref (drawable);
-          return;
-        }
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -202,7 +199,6 @@ run (const gchar      *name,
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  g_object_unref (drawable);
   values[0].data.d_status = status;
 }
 
