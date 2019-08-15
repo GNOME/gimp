@@ -405,10 +405,10 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
   gdouble greenangle;
   gdouble bluefrequency;
   gdouble blueangle;
-  guint8 colormodel;
-  guint8 redmode;
-  guint8 greenmode;
-  guint8 bluemode;
+  guchar colormodel;
+  guchar redmode;
+  guchar greenmode;
+  guchar bluemode;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   redfrequency = g_value_get_double (gimp_value_array_index (args, 3));
@@ -1725,15 +1725,15 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  guint8 from_red;
-  guint8 from_green;
-  guint8 from_blue;
-  guint8 to_red;
-  guint8 to_green;
-  guint8 to_blue;
-  guint8 red_threshold;
-  guint8 green_threshold;
-  guint8 blue_threshold;
+  guchar from_red;
+  guchar from_green;
+  guchar from_blue;
+  guchar to_red;
+  guchar to_green;
+  guchar to_blue;
+  guchar red_threshold;
+  guchar green_threshold;
+  guchar blue_threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   from_red = g_value_get_uchar (gimp_value_array_index (args, 3));
@@ -2345,10 +2345,10 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint16 width;
-  gint16 height;
-  guint8 tileable;
-  guint8 algorithm;
+  gint width;
+  gint height;
+  guchar tileable;
+  guchar algorithm;
   gint seed;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
@@ -7056,13 +7056,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                g_param_spec_int ("multiple",
                                                  "multiple",
                                                  "Multiple (use 57)",
-                                                 G_MININT16, G_MAXINT16, 0,
+                                                 G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("offset",
                                                  "offset",
                                                  "Offset (use 1)",
-                                                 G_MININT16, G_MAXINT16, 0,
+                                                 G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

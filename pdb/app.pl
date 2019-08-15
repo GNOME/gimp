@@ -392,7 +392,7 @@ g_param_spec_int ("$name",
                   $flags)
 CODE
     }
-    elsif ($pdbtype eq 'int8') {
+    elsif ($pdbtype eq 'uchar') {
 	if (defined $typeinfo[0]) {
 	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
 	}
