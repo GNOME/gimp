@@ -29,127 +29,132 @@
 #define PLUG_IN_VERSION "0.0.0"
 
 
-/*
- * Declare some local functions.
- */
-static void     query            (void);
-static void     run              (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *param,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
+typedef struct _Exr      Exr;
+typedef struct _ExrClass ExrClass;
 
-static gint32   load_image       (const gchar      *filename,
-                                  gboolean          interactive,
-                                  GError          **error);
-
-static void     sanitize_comment (gchar            *comment);
-
-
-/*
- * Some global variables.
- */
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Exr
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
+};
+
+struct _ExrClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define EXR_TYPE  (exr_get_type ())
+#define EXR (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXR_TYPE, Exr))
+
+GType                   exr_get_type         (void) G_GNUC_CONST;
+
+static GList          * exr_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * exr_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * exr_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static gint32           load_image           (const gchar          *filename,
+                                              gboolean              interactive,
+                                              GError              **error);
+static void             sanitize_comment     (gchar                *comment);
+
+
+G_DEFINE_TYPE (Exr, exr, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (EXR_TYPE)
 
 
 static void
-query (void)
+exr_class_init (ExrClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (LOAD_PROC,
-                          "Loads files in the OpenEXR file format",
-                          "This plug-in loads OpenEXR files. ",
-                          "Dominik Ernst <dernst@gmx.de>, "
-                          "Mukund Sivaraman <muks@banu.com>",
-                          "Dominik Ernst <dernst@gmx.de>, "
-                          "Mukund Sivaraman <muks@banu.com>",
-                          PLUG_IN_VERSION,
-                          N_("OpenEXR image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-exr");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "exr",
-                                    "",
-                                    "0,long,0x762f3101");
+  plug_in_class->query_procedures = exr_query_procedures;
+  plug_in_class->create_procedure = exr_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+exr_init (Exr *exr)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  GError           *error  = NULL;
+}
+
+static GList *
+exr_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (LOAD_PROC));
+}
+
+static GimpProcedure *
+exr_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           exr_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("OpenEXR image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files in the OpenEXR file format",
+                                        "This plug-in loads OpenEXR files. ",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dominik Ernst <dernst@gmx.de>, "
+                                      "Mukund Sivaraman <muks@banu.com>",
+                                      "Dominik Ernst <dernst@gmx.de>, "
+                                      "Mukund Sivaraman <muks@banu.com>",
+                                      NULL);
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-exr");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "exr");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,long,0x762f3101");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+exr_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  gint32          image_ID;
+  GError         *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  image_ID = load_image (g_file_get_path (file),
+                         run_mode == GIMP_RUN_INTERACTIVE,
+                         &error);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  if (image_ID < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  if (strcmp (name, LOAD_PROC) == 0)
-    {
-      run_mode = param[0].data.d_int32;
+  return_vals =  gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_SUCCESS,
+                                                   NULL);
 
-      image_ID = load_image (param[1].data.d_string,
-                             run_mode == GIMP_RUN_INTERACTIVE, &error);
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                           image_ID);
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-          values[1].type = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
+  return return_vals;
 }
 
 static gint32
