@@ -191,14 +191,7 @@ gimp_image_convert_color_profile (GimpImage                 *image,
 GimpColorProfile *
 gimp_image_get_color_profile_deprecated (gint32 image_id)
 {
-  GimpImage        *image = gimp_image_new_by_id (image_id);
-  GimpColorProfile *profile;
-
-  profile = gimp_image_get_color_profile (image);
-
-  g_object_unref (image);
-
-  return profile;
+  return gimp_image_get_color_profile (gimp_image_get_by_id (image_id));
 }
 
 /**
@@ -216,14 +209,8 @@ gboolean
 gimp_image_set_color_profile_deprecated (gint32            image_id,
                                          GimpColorProfile *profile)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  gboolean   success;
-
-  success = gimp_image_set_color_profile (image, profile);
-
-  g_object_unref (image);
-
-  return success;
+  return gimp_image_set_color_profile (gimp_image_get_by_id (image_id),
+                                       profile);
 }
 
 /**
@@ -245,14 +232,7 @@ gimp_image_set_color_profile_deprecated (gint32            image_id,
 GimpColorProfile *
 gimp_image_get_effective_color_profile_deprecated (gint32 image_id)
 {
-  GimpImage        *image = gimp_image_new_by_id (image_id);
-  GimpColorProfile *profile;
-
-  profile = gimp_image_get_effective_color_profile (image);
-
-  g_object_unref (image);
-
-  return profile;
+  return gimp_image_get_effective_color_profile (gimp_image_get_by_id (image_id));
 }
 
 /**
@@ -276,12 +256,6 @@ gimp_image_convert_color_profile_deprecated (gint32                    image_id,
                                              GimpColorRenderingIntent  intent,
                                              gboolean                  bpc)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  gboolean   success;
-
-  success = gimp_image_convert_color_profile (image, profile, intent, bpc);
-
-  g_object_unref (image);
-
-  return success;
+  return gimp_image_convert_color_profile (gimp_image_get_by_id (image_id),
+                                           profile, intent, bpc);
 }
