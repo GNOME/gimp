@@ -189,7 +189,6 @@ gimp_progress_init (const gchar  *message)
   gimp_progress_current = 0.0;
 
   success = _gimp_progress_init (message, display);
-  g_clear_object (&display);
 
   return success;
 }
