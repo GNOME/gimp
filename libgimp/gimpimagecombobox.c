@@ -191,7 +191,7 @@ gimp_image_combo_box_populate (GimpImageComboBox *combo_box)
                                   combo_box->constraint_d,
                                   combo_box->data);
 
-  g_list_free_full (images, g_object_unref);
+  g_list_free (images);
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
@@ -288,10 +288,7 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
                                      &image_ID))
     {
-      GimpImage *image;
-
-      image = gimp_image_new_by_id (image_ID);
-      if (! gimp_image_is_valid (image))
+      if (! _gimp_image_is_valid (image_ID))
         {
           GtkTreeModel *model;
 
@@ -302,7 +299,6 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
           gtk_list_store_clear (GTK_LIST_STORE (model));
           gimp_image_combo_box_populate (combo_box);
         }
-      g_object_unref (image);
     }
 }
 

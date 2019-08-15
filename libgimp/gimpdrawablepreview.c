@@ -485,7 +485,6 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
             default:
               g_free (sel);
               g_free (src);
-              g_object_unref (image);
               return;
             }
 
@@ -506,7 +505,6 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
           g_free (src);
         }
     }
-  g_object_unref (image);
 }
 
 static void
@@ -552,7 +550,6 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
       cmap = gimp_image_get_colormap (image, &num_colors);
       gimp_preview_area_set_colormap (GIMP_PREVIEW_AREA (area),
                                       cmap, num_colors);
-      g_object_unref (image);
       g_free (cmap);
     }
 }
