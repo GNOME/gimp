@@ -243,6 +243,32 @@ gimp_item_get_children (GimpItem *item)
   return children;
 }
 
+
+/* Internal API. */
+
+
+void
+_gimp_item_process_signal (gint32       item_id,
+                           const gchar *name)
+{
+  GimpItem *item = NULL;
+
+  if (! gimp_items)
+    return;
+
+  item = g_hash_table_lookup (gimp_items,
+                              GINT_TO_POINTER (item_id));
+
+  if (! item)
+    return;
+
+  /* Below process item signals. */
+}
+
+
+/* Deprecated API. */
+
+
 /**
  * gimp_item_get_children_deprecated: (skip)
  * @item_id: The item.

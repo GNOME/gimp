@@ -26,6 +26,12 @@
 
 enum
 {
+  DESTROYED,
+  LAST_SIGNAL
+};
+
+enum
+{
   PROP_0,
   PROP_ID,
   N_PROPS
@@ -52,7 +58,8 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpImage, gimp_image, G_TYPE_OBJECT)
 
 #define parent_class gimp_image_parent_class
 
-static GParamSpec *props[N_PROPS] = { NULL, };
+static GParamSpec *props[N_PROPS]       = { NULL, };
+static guint       signals[LAST_SIGNAL] = { 0 };
 
 static void
 gimp_image_class_init (GimpImageClass *klass)
@@ -61,6 +68,26 @@ gimp_image_class_init (GimpImageClass *klass)
 
   object_class->set_property = gimp_image_set_property;
   object_class->get_property = gimp_image_get_property;
+
+  /**
+   * GimpImageClass::destroy:
+   * @image: a #GimpImage
+   *
+   * This signal will be emitted when an image has been destroyed, just
+   * before we g_object_unref() it. This image is now invalid, none of
+   * its data can be accessed anymore, therefore all processing has to
+   * be stopped immediately.
+   * The only thing still feasible is to compare the image if you kept a
+   * reference to identify images, or to run gimp_image_get_id().
+   */
+  signals[DESTROYED] =
+    g_signal_new ("destroyed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, destroyed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   props[PROP_ID] =
     g_param_spec_int ("id",
@@ -508,6 +535,38 @@ gimp_image_set_metadata (GimpImage    *image,
     g_free (metadata_string);
 
   return success;
+}
+
+
+/* Internal API. */
+
+
+void
+_gimp_image_process_signal (gint32       image_id,
+                            const gchar *name)
+{
+  GimpImage *image = NULL;
+
+  if (! gimp_images)
+    return;
+
+  image = g_hash_table_lookup (gimp_images,
+                               GINT_TO_POINTER (image_id));
+
+  if (! image)
+    /* No need to create images not referenced by the plug-in. */
+    return;
+
+  /* Below process image signals. */
+
+  if (g_strcmp0 (name, "destroyed") == 0)
+    {
+      g_hash_table_steal (gimp_images,
+                          GINT_TO_POINTER (image->priv->id));
+
+      g_signal_emit (image, signals[DESTROYED], 0);
+      g_object_unref (image);
+    }
 }
 
 
