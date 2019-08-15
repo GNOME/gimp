@@ -559,8 +559,6 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       g_free (sel);
       g_free (src);
     }
-
-  g_object_unref (image);
 }
 
 static void

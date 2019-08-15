@@ -66,7 +66,7 @@ struct _GimpImageClass
 GType          gimp_image_get_type           (void) G_GNUC_CONST;
 
 gint32         gimp_image_get_id             (GimpImage    *image);
-GimpImage    * gimp_image_new_by_id          (gint32        image_id);
+GimpImage    * gimp_image_get_by_id          (gint32        image_id);
 
 GList        * gimp_image_list               (void);
 

@@ -1431,11 +1431,11 @@ gimp_procedure_validate_args (GimpProcedure   *procedure,
       if (arg_type == GIMP_TYPE_IMAGE_ID &&
           spec_type == GIMP_TYPE_IMAGE)
         {
-          GValue     value = G_VALUE_INIT;
-          GimpImage *image = gimp_image_new_by_id (g_value_get_int (arg));
+          GValue value = G_VALUE_INIT;
 
           g_value_init (&value, GIMP_TYPE_IMAGE);
-          g_value_take_object (&value, image);
+          g_value_set_object (&value,
+                              gimp_image_get_by_id (g_value_get_int (arg)));
           gimp_value_array_remove (args, i);
           gimp_value_array_insert (args, i, &value);
           g_value_unset (&value);
