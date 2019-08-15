@@ -77,17 +77,17 @@ static GimpValueArray * sgi_load             (GimpProcedure        *procedure,
                                               gpointer              run_data);
 static GimpValueArray * sgi_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
-                                              gint32                image_id,
-                                              gint32                drawable_id,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gint32           load_image           (const gchar          *filename,
+static GimpImage      * load_image           (const gchar          *filename,
                                               GError              **error);
 static gint             save_image           (const gchar          *filename,
-                                              gint32                image_ID,
-                                              gint32                drawable_ID,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GError              **error);
 
 static gboolean         save_dialog          (void);
@@ -205,7 +205,7 @@ sgi_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   gchar          *filename;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -213,11 +213,11 @@ sgi_load (GimpProcedure        *procedure,
 
   filename = g_file_get_path (file);
 
-  image_id = load_image (filename, &error);
+  image = load_image (filename, &error);
 
   g_free (filename);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -226,8 +226,8 @@ sgi_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  g_value_set_object (gimp_value_array_index (return_vals, 1),
+                      image);
 
   return return_vals;
 }
@@ -235,8 +235,8 @@ sgi_load (GimpProcedure        *procedure,
 static GimpValueArray *
 sgi_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -254,7 +254,7 @@ sgi_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_id, &drawable_id, "SGI",
+      export = gimp_export_image (&image, &drawable, "SGI",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -295,7 +295,7 @@ sgi_save (GimpProcedure        *procedure,
     {
       gchar *filename = g_file_get_path (file);
 
-      if (save_image (filename, image_id, drawable_id,
+      if (save_image (filename, image, drawable,
                       &error))
         {
           gimp_set_data (SAVE_PROC, &compression, sizeof (compression));
@@ -309,12 +309,12 @@ sgi_save (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_id);
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
@@ -327,8 +327,8 @@ load_image (const gchar  *filename,
                  count,       /* Count of rows to put in image */
                  bytes;       /* Number of channels to use */
   sgi_t         *sgip;        /* File pointer */
-  gint32         image,       /* Image */
-                 layer;       /* Layer */
+  GimpImage     *image;       /* Image */
+  GimpLayer     *layer;       /* Layer */
   GeglBuffer    *buffer;      /* Buffer for layer */
   guchar       **pixels,      /* Pixel rows */
                 *pptr;        /* Current pixel */
@@ -347,7 +347,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading."),
                    gimp_filename_to_utf8 (filename));
-      return -1;
+      return NULL;
     };
 
   /*
@@ -361,21 +361,21 @@ load_image (const gchar  *filename,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid width: %hu"), sgip->xsize);
-      return -1;
+      return NULL;
     }
 
   if (sgip->ysize == 0 /*|| sgip->ysize > GIMP_MAX_IMAGE_SIZE*/)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid height: %hu"), sgip->ysize);
-      return -1;
+      return NULL;
     }
 
   if (sgip->zsize == 0 /*|| sgip->zsize > GIMP_MAX_IMAGE_SIZE*/)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid number of channels: %hu"), sgip->zsize);
-      return -1;
+      return NULL;
     }
 
   bytes = sgip->zsize;
@@ -410,12 +410,12 @@ load_image (const gchar  *filename,
     }
 
   image = gimp_image_new (sgip->xsize, sgip->ysize, image_type);
-  if (image == -1)
+  if (! image)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "Could not allocate new image: %s",
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
-      return -1;
+      return NULL;
     }
 
   gimp_image_set_filename (image, filename);
@@ -428,13 +428,13 @@ load_image (const gchar  *filename,
                           layer_type,
                           100,
                           gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
   /*
    * Get the drawable and set the pixel region for our load...
    */
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   /*
    * Temporary buffers...
@@ -527,8 +527,8 @@ load_image (const gchar  *filename,
 
 static gint
 save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
+            GimpImage    *image,
+            GimpDrawable *drawable,
             GError      **error)
 {
   gint         i, j,        /* Looping var */
@@ -550,12 +550,12 @@ save_image (const gchar  *filename,
    * Get the drawable for the current image...
    */
 
-  width  = gimp_drawable_width  (drawable_ID);
-  height = gimp_drawable_height (drawable_ID);
+  width  = gimp_drawable_width  (drawable);
+  height = gimp_drawable_height (drawable);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
-  switch (gimp_drawable_type (drawable_ID))
+  switch (gimp_drawable_type (drawable))
     {
     case GIMP_GRAY_IMAGE:
       zsize = 1;
