@@ -301,7 +301,7 @@ text_layer_get_font_size_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpLayer *layer;
   gdouble font_size = 0.0;
-  GimpUnit unit = 0;
+  GimpUnit unit = GIMP_UNIT_PIXEL;
 
   layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
 

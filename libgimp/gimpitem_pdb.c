@@ -1185,13 +1185,13 @@ gimp_item_set_color_tag (gint32       item_ID,
  *
  * Since: 2.8
  **/
-gint
+guint
 gimp_item_get_tattoo (gint32 item_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint tattoo = 0;
+  guint tattoo = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_ITEM_ID, item_ID,
@@ -1231,7 +1231,7 @@ gimp_item_get_tattoo (gint32 item_ID)
  **/
 gboolean
 gimp_item_set_tattoo (gint32 item_ID,
-                      gint   tattoo)
+                      guint  tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -1240,7 +1240,7 @@ gimp_item_set_tattoo (gint32 item_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_ITEM_ID, item_ID,
-                                          G_TYPE_INT, tattoo,
+                                          G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)

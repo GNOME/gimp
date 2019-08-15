@@ -168,15 +168,15 @@ gboolean                 gimp_image_set_resolution             (gint32          
 GimpUnit                 gimp_image_get_unit                   (gint32               image_ID);
 gboolean                 gimp_image_set_unit                   (gint32               image_ID,
                                                                 GimpUnit             unit);
-gint                     gimp_image_get_tattoo_state           (gint32               image_ID);
+guint                    gimp_image_get_tattoo_state           (gint32               image_ID);
 gboolean                 gimp_image_set_tattoo_state           (gint32               image_ID,
-                                                                gint                 tattoo_state);
+                                                                guint                tattoo_state);
 gint32                   gimp_image_get_layer_by_tattoo        (gint32               image_ID,
-                                                                gint                 tattoo);
+                                                                guint                tattoo);
 gint32                   gimp_image_get_channel_by_tattoo      (gint32               image_ID,
-                                                                gint                 tattoo);
+                                                                guint                tattoo);
 gint32                   gimp_image_get_vectors_by_tattoo      (gint32               image_ID,
-                                                                gint                 tattoo);
+                                                                guint                tattoo);
 gint32                   gimp_image_get_layer_by_name          (gint32               image_ID,
                                                                 const gchar         *name);
 gint32                   gimp_image_get_channel_by_name        (gint32               image_ID,

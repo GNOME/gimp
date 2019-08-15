@@ -140,7 +140,7 @@ get_default_unit_invoker (GimpProcedure         *procedure,
                           GError               **error)
 {
   GimpValueArray *return_vals;
-  GimpUnit unit_id = 0;
+  GimpUnit unit_id = GIMP_UNIT_PIXEL;
 
   unit_id = gimp_get_default_unit ();
 

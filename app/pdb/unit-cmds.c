@@ -92,7 +92,7 @@ unit_new_invoker (GimpProcedure         *procedure,
   const gchar *abbreviation;
   const gchar *singular;
   const gchar *plural;
-  GimpUnit unit_id = 0;
+  GimpUnit unit_id = GIMP_UNIT_PIXEL;
 
   identifier = g_value_get_string (gimp_value_array_index (args, 0));
   factor = g_value_get_double (gimp_value_array_index (args, 1));

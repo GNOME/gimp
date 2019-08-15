@@ -491,7 +491,7 @@ context_get_line_width_unit_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   GimpValueArray *return_vals;
-  GimpUnit line_width_unit = 0;
+  GimpUnit line_width_unit = GIMP_UNIT_PIXEL;
 
   GimpStrokeOptions *options =
     gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));

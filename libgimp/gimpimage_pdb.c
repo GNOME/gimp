@@ -3172,7 +3172,7 @@ gimp_image_get_unit (gint32 image_ID)
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit unit = 0;
+  GimpUnit unit = GIMP_UNIT_PIXEL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
@@ -3252,13 +3252,13 @@ gimp_image_set_unit (gint32   image_ID,
  *
  * Returns: The tattoo state.
  **/
-gint
+guint
 gimp_image_get_tattoo_state (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint tattoo_state = 0;
+  guint tattoo_state = 0;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
@@ -3305,7 +3305,7 @@ gimp_image_get_tattoo_state (gint32 image_ID)
  **/
 gboolean
 gimp_image_set_tattoo_state (gint32 image_ID,
-                             gint   tattoo_state)
+                             guint  tattoo_state)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3314,7 +3314,7 @@ gimp_image_set_tattoo_state (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, tattoo_state,
+                                          G_TYPE_UINT, tattoo_state,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3347,7 +3347,7 @@ gimp_image_set_tattoo_state (gint32 image_ID,
  **/
 gint32
 gimp_image_get_layer_by_tattoo (gint32 image_ID,
-                                gint   tattoo)
+                                guint  tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3356,7 +3356,7 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, tattoo,
+                                          G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3390,7 +3390,7 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
  **/
 gint32
 gimp_image_get_channel_by_tattoo (gint32 image_ID,
-                                  gint   tattoo)
+                                  guint  tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3399,7 +3399,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, tattoo,
+                                          G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -3435,7 +3435,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
  **/
 gint32
 gimp_image_get_vectors_by_tattoo (gint32 image_ID,
-                                  gint   tattoo)
+                                  guint  tattoo)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -3444,7 +3444,7 @@ gimp_image_get_vectors_by_tattoo (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, tattoo,
+                                          G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
   if (pdb)

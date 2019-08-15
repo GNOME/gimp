@@ -54,7 +54,7 @@ image_add_sample_point_invoker (GimpProcedure         *procedure,
   GimpImage *image;
   gint position_x;
   gint position_y;
-  gint sample_point = 0;
+  guint sample_point = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   position_x = g_value_get_int (gimp_value_array_index (args, 1));
@@ -94,7 +94,7 @@ image_delete_sample_point_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint sample_point;
+  guint sample_point;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -125,8 +125,8 @@ image_find_next_sample_point_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint sample_point;
-  gint next_sample_point = 0;
+  guint sample_point;
+  guint next_sample_point = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   sample_point = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -167,7 +167,7 @@ image_get_sample_point_position_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint sample_point;
+  guint sample_point;
   gint position_x = 0;
   gint position_y = 0;
 

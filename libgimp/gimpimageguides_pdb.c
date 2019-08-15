@@ -145,7 +145,7 @@ gimp_image_delete_guide (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, guide_ID,
+                                          G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -190,7 +190,7 @@ gimp_image_find_next_guide (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, guide_ID,
+                                          G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -233,7 +233,7 @@ gimp_image_get_guide_orientation (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, guide_ID,
+                                          G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -276,7 +276,7 @@ gimp_image_get_guide_position (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, guide_ID,
+                                          G_TYPE_UINT, guide_ID,
                                           G_TYPE_NONE);
 
   if (pdb)

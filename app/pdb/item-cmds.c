@@ -832,7 +832,7 @@ item_get_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpItem *item;
-  gint tattoo = 0;
+  guint tattoo = 0;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
 
@@ -860,7 +860,7 @@ item_set_tattoo_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpItem *item;
-  gint tattoo;
+  guint tattoo;
 
   item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
   tattoo = g_value_get_uint (gimp_value_array_index (args, 1));

@@ -55,7 +55,7 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint yposition;
-  gint guide = 0;
+  guint guide = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   yposition = g_value_get_int (gimp_value_array_index (args, 1));
@@ -94,7 +94,7 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image;
   gint xposition;
-  gint guide = 0;
+  guint guide = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   xposition = g_value_get_int (gimp_value_array_index (args, 1));
@@ -131,7 +131,7 @@ image_delete_guide_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint guide;
+  guint guide;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -161,8 +161,8 @@ image_find_next_guide_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint guide;
-  gint next_guide = 0;
+  guint guide;
+  guint next_guide = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   guide = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -202,7 +202,7 @@ image_get_guide_orientation_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint guide;
+  guint guide;
   gint orientation = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -238,7 +238,7 @@ image_get_guide_position_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint guide;
+  guint guide;
   gint position = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);

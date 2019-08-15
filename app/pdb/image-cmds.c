@@ -2359,7 +2359,7 @@ image_get_unit_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  GimpUnit unit = 0;
+  GimpUnit unit = GIMP_UNIT_PIXEL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -2412,7 +2412,7 @@ image_get_tattoo_state_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint tattoo_state = 0;
+  guint tattoo_state = 0;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
@@ -2440,7 +2440,7 @@ image_set_tattoo_state_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  gint tattoo_state;
+  guint tattoo_state;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
   tattoo_state = g_value_get_uint (gimp_value_array_index (args, 1));
@@ -2465,7 +2465,7 @@ image_get_layer_by_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint tattoo;
+  guint tattoo;
   GimpLayer *layer = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2496,7 +2496,7 @@ image_get_channel_by_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint tattoo;
+  guint tattoo;
   GimpChannel *channel = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
@@ -2527,7 +2527,7 @@ image_get_vectors_by_tattoo_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gint tattoo;
+  guint tattoo;
   GimpVectors *vectors = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);

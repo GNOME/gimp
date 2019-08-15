@@ -108,7 +108,7 @@ gimp_image_delete_sample_point (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, sample_point_ID,
+                                          G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -156,7 +156,7 @@ gimp_image_find_next_sample_point (gint32 image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, sample_point_ID,
+                                          G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
   if (pdb)
@@ -204,7 +204,7 @@ gimp_image_get_sample_point_position (gint32  image_ID,
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE_ID, image_ID,
-                                          G_TYPE_INT, sample_point_ID,
+                                          G_TYPE_UINT, sample_point_ID,
                                           G_TYPE_NONE);
 
   if (pdb)

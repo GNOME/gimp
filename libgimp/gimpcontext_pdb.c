@@ -890,7 +890,7 @@ gimp_context_get_line_width_unit (void)
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit line_width_unit = 0;
+  GimpUnit line_width_unit = GIMP_UNIT_PIXEL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);

@@ -182,7 +182,7 @@ gimp_get_default_unit (void)
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpUnit unit_id = 0;
+  GimpUnit unit_id = GIMP_UNIT_PIXEL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);

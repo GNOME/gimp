@@ -67,9 +67,9 @@ gboolean      gimp_item_set_lock_position (gint32              item_ID,
 GimpColorTag  gimp_item_get_color_tag     (gint32              item_ID);
 gboolean      gimp_item_set_color_tag     (gint32              item_ID,
                                            GimpColorTag        color_tag);
-gint          gimp_item_get_tattoo        (gint32              item_ID);
+guint         gimp_item_get_tattoo        (gint32              item_ID);
 gboolean      gimp_item_set_tattoo        (gint32              item_ID,
-                                           gint                tattoo);
+                                           guint               tattoo);
 gboolean      gimp_item_attach_parasite   (gint32              item_ID,
                                            const GimpParasite *parasite);
 gboolean      gimp_item_detach_parasite   (gint32              item_ID,
