@@ -424,3 +424,15 @@ gimp_plug_in_manager_plug_in_pop (GimpPlugInManager *manager)
   else
     manager->current_plug_in = NULL;
 }
+
+void
+gimp_plug_in_manager_emit_signal (GimpPlugInManager *manager,
+                                  GObject           *object,
+                                  gint32             id,
+                                  const gchar       *name)
+{
+  GSList *iter = manager->open_plug_ins;
+
+  for (; iter; iter = iter->next)
+    gimp_plug_in_emit_signal (iter->data, object, id, name);
+}

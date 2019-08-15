@@ -75,6 +75,8 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimp-spawn.h"
 #include "core/gimpprogress.h"
 
@@ -1043,4 +1045,34 @@ gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
     return proc_frame->error_handler;
 
   return GIMP_PDB_ERROR_HANDLER_INTERNAL;
+}
+
+void
+gimp_plug_in_emit_signal (GimpPlugIn   *plug_in,
+                          GObject      *object,
+                          gint32        id,
+                          const gchar  *name)
+{
+  if (plug_in->open)
+    {
+      GPSignalType type = GP_SIGNAL_TYPE_NONE;
+
+      if (GIMP_IS_IMAGE (object))
+        type = GP_SIGNAL_TYPE_IMAGE;
+      else if (GIMP_IS_ITEM (object))
+        type = GP_SIGNAL_TYPE_ITEM;
+      else if (g_strcmp0 (G_OBJECT_TYPE_NAME (object), "GimpDisplay") == 0)
+        type = GP_SIGNAL_TYPE_DISPLAY;
+
+      if (type != GP_SIGNAL_TYPE_NONE)
+        {
+          GPSignal signal;
+
+          signal.type = type;
+          signal.id   = id;
+          signal.name = (gchar *) name;
+
+          gp_signal_write (plug_in->my_write, &signal, plug_in);
+        }
+    }
 }

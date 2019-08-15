@@ -256,6 +256,11 @@ _gimp_legacy_read_expect_msg (GimpWireMessage *msg,
         {
           gimp_process_message (msg);
         }
+      else if (msg->type == GP_SIGNAL)
+        {
+          /* Don't process signals in legacy. */
+          continue;
+        }
       else
         {
           g_error ("unexpected message: %d", msg->type);
@@ -622,6 +627,10 @@ gimp_loop (GimpRunProc run_proc)
         case GP_HAS_INIT:
           g_warning ("unexpected has init message received (should not happen)");
           break;
+
+        case GP_SIGNAL:
+          g_warning ("unexpected signal message received (should not happen)");
+          break;
         }
 
       gimp_wire_destroy (&msg);
@@ -661,6 +670,10 @@ gimp_process_message (GimpWireMessage *msg)
       break;
     case GP_HAS_INIT:
       g_warning ("unexpected has init message received (should not happen)");
+      break;
+    case GP_SIGNAL:
+      /* Don't process signals in legacy. */
+      g_warning ("signal message received; not supported with legacy API");
       break;
     }
 }
