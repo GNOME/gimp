@@ -717,7 +717,6 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
       g_object_unref (pixbuf);
 
       gimp_image_insert_layer (image, layer, NULL, 0);
-      g_object_unref (layer);
 
       gimp_image_metadata_rotate (image,
                                   gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)));

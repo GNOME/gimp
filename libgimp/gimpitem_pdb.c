@@ -954,7 +954,7 @@ _gimp_item_is_group (gint32 item_ID)
  *
  * This procedure returns the item's parent item, if any.
  *
- * Returns: (transfer full): The item's parent item.
+ * Returns: (transfer none): The item's parent item.
  *
  * Since: 2.8
  **/
@@ -980,7 +980,7 @@ gimp_item_get_parent (GimpItem *item)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    parent = gimp_item_new_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
+    parent = gimp_item_get_by_id (gimp_value_get_item_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

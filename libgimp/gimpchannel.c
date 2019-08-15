@@ -60,7 +60,8 @@ gimp_channel_init (GimpChannel *channel)
  * set with explicit procedure calls. The channel's contents are
  * undefined initially.
  *
- * Returns: The newly created channel.
+ * Returns: (transfer none): The newly created channel.
+ *          The object belongs to libgimp and you should not free it.
  */
 GimpChannel *
 gimp_channel_new (GimpImage     *image,

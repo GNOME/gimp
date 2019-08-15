@@ -63,7 +63,10 @@ gimp_layer_init (GimpLayer *layer)
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
- * Returns: The newly created layer.
+ * Returns: (transfer none): The newly created layer.
+ *          The object belongs to libgimp and you should not free it.
+ *
+ * Since: 3.0
  */
 GimpLayer *
 gimp_layer_new (GimpImage     *image,
@@ -93,7 +96,10 @@ gimp_layer_new (GimpImage     *image,
  * newly copied layer is for use within the original layer's image. It
  * should not be subsequently added to any other image.
  *
- * Returns: (transfer full): The newly copied layer.
+ * Returns: (transfer none): The newly copied layer.
+ *          The object belongs to libgimp and you should not free it.
+ *
+ * Since: 3.0
  */
 GimpLayer *
 gimp_layer_copy (GimpLayer *layer)
@@ -121,9 +127,10 @@ gimp_layer_copy (GimpLayer *layer)
  * gimp_progress_update() will be called for. You have to call
  * gimp_progress_init() beforehand then.
  *
- * Returns: The newly created layer.
+ * Returns: (transfer none): The newly created layer.
+ *          The object belongs to libgimp and you should not free it.
  *
- * Since: 2.4
+ * Since: 3.0
  */
 GimpLayer *
 gimp_layer_new_from_pixbuf (GimpImage     *image,
@@ -199,9 +206,10 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  * gimp_progress_update() will be called for. You have to call
  * gimp_progress_init() beforehand then.
  *
- * Returns: The newly created layer.
+ * Returns: (transfer none): The newly created layer.
+ *          The object belongs to libgimp and you should not free it.
  *
- * Since: 2.8
+ * Since: 3.0
  */
 GimpLayer *
 gimp_layer_new_from_surface (GimpImage            *image,
@@ -286,7 +294,7 @@ gimp_layer_new_from_surface (GimpImage            *image,
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
- * Returns: The newly created layer.
+ * Returns: The newly created layer ID.
  */
 gint32
 gimp_layer_new_deprecated (gint32         image_id,
@@ -298,16 +306,12 @@ gimp_layer_new_deprecated (gint32         image_id,
                            GimpLayerMode  mode)
 {
   GimpLayer *layer;
-  gint32     layer_id;
 
   layer = gimp_layer_new (gimp_image_get_by_id (image_id),
                           name, width, height,
                           type, opacity, mode);
-  layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
-  g_object_unref (layer);
-
-  return layer_id;
+  return gimp_item_get_id (GIMP_ITEM (layer));
 }
 
 /**
@@ -330,7 +334,7 @@ gimp_layer_new_deprecated (gint32         image_id,
  * gimp_progress_update() will be called for. You have to call
  * gimp_progress_init() beforehand then.
  *
- * Returns: The newly created layer.
+ * Returns: The newly created layer ID.
  *
  * Since: 2.4
  */
@@ -344,16 +348,12 @@ gimp_layer_new_from_pixbuf_deprecated (gint32         image_id,
                                        gdouble        progress_end)
 {
   GimpLayer *layer;
-  gint32     layer_id;
 
   layer = gimp_layer_new_from_pixbuf (gimp_image_get_by_id (image_id),
                                       name, pixbuf, opacity, mode,
                                       progress_start, progress_end);
-  layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
-  g_object_unref (layer);
-
-  return layer_id;
+  return gimp_item_get_id (GIMP_ITEM (layer));
 }
 
 /**
@@ -374,7 +374,7 @@ gimp_layer_new_from_pixbuf_deprecated (gint32         image_id,
  * gimp_progress_update() will be called for. You have to call
  * gimp_progress_init() beforehand then.
  *
- * Returns: The newly created layer.
+ * Returns: The newly created layer ID.
  *
  * Since: 2.8
  */
@@ -386,16 +386,12 @@ gimp_layer_new_from_surface_deprecated (gint32                image_id,
                                         gdouble               progress_end)
 {
   GimpLayer *layer;
-  gint32     layer_id;
 
   layer = gimp_layer_new_from_surface (gimp_image_get_by_id (image_id),
                                        name, surface,
                                        progress_start, progress_end);
-  layer_id = gimp_item_get_id (GIMP_ITEM (layer));
 
-  g_object_unref (layer);
-
-  return layer_id;
+  return gimp_item_get_id (GIMP_ITEM (layer));
 }
 
 /**
@@ -408,25 +404,14 @@ gimp_layer_new_from_surface_deprecated (gint32                image_id,
  * newly copied layer is for use within the original layer's image. It
  * should not be subsequently added to any other image.
  *
- * Returns: The newly copied layer.
+ * Returns: The newly copied layer ID.
  */
 gint32
 gimp_layer_copy_deprecated (gint32 layer_ID)
 {
-  GimpLayer *layer;
   GimpLayer *copy;
-  gint32     copy_id;
 
-  layer = GIMP_LAYER (gimp_item_new_by_id (layer_ID));
-  g_return_val_if_fail (layer, -1);
+  copy = gimp_layer_copy (GIMP_LAYER (gimp_item_get_by_id (layer_ID)));
 
-  copy = gimp_layer_copy (layer);
-  g_return_val_if_fail (copy, -1);
-
-  copy_id = gimp_item_get_id (GIMP_ITEM (copy));
-
-  g_object_unref (copy);
-  g_object_unref (layer);
-
-  return copy_id;
+  return gimp_item_get_id (GIMP_ITEM (copy));
 }
