@@ -473,13 +473,7 @@ gimp_osx_focus_window (void)
 GdkWindow *
 gimp_ui_get_display_window_deprecated (guint32 gdisp_ID)
 {
-  GimpDisplay *display = gimp_display_new_by_id (gdisp_ID);
-  GdkWindow   *window;
-
-  window = gimp_ui_get_display_window (display);
-  g_object_unref (display);
-
-  return window;
+  return gimp_ui_get_display_window (gimp_display_get_by_id (gdisp_ID));
 }
 
 /**
@@ -500,8 +494,6 @@ void
 gimp_window_set_transient_for_display_deprecated (GtkWindow *window,
                                                   guint32    gdisp_ID)
 {
-  GimpDisplay *display = gimp_display_new_by_id (gdisp_ID);
-
-  gimp_window_set_transient_for_display (window, display);
-  g_object_unref (display);
+  gimp_window_set_transient_for_display (window,
+                                         gimp_display_get_by_id (gdisp_ID));
 }
