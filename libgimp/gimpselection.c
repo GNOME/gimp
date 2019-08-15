@@ -93,21 +93,19 @@ gimp_selection_float_deprecated (gint32 image_ID,
                                  gint   offx,
                                  gint   offy)
 {
-  GimpImage    *image;
   GimpDrawable *drawable;
   GimpLayer    *selection;
   gint32        selection_id = -1;
 
-  image    = gimp_image_new_by_id (image_ID);
   drawable = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
 
-  selection = gimp_selection_float (image, drawable,
+  selection = gimp_selection_float (gimp_image_get_by_id (image_ID),
+                                    drawable,
                                     offx,
                                     offy);
   if (selection)
     selection_id = gimp_item_get_id (GIMP_ITEM (selection));
 
-  g_object_unref (image);
   g_object_unref (drawable);
   g_object_unref (selection);
 

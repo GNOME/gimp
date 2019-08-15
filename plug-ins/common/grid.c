@@ -178,7 +178,7 @@ run (const gchar      *name,
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
-  image       = gimp_image_new_by_id (image_ID);
+  image       = gimp_image_get_by_id (image_ID);
   drawable    = GIMP_DRAWABLE (gimp_item_new_by_id (drawable_ID));
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
@@ -254,7 +254,6 @@ run (const gchar      *name,
         gimp_set_data (PLUG_IN_PROC, &grid_cfg, sizeof (grid_cfg));
     }
 
-  g_object_unref (image);
   g_object_unref (drawable);
 
   values[0].type          = GIMP_PDB_STATUS;

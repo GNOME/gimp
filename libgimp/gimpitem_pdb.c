@@ -126,7 +126,7 @@ _gimp_item_is_valid (gint32 item_ID)
  *
  * This procedure returns the item's image.
  *
- * Returns: (transfer full): The item's image.
+ * Returns: (transfer none): The item's image.
  *
  * Since: 2.8
  **/
@@ -152,7 +152,7 @@ gimp_item_get_image (GimpItem *item)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

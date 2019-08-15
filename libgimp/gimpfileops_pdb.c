@@ -50,7 +50,7 @@
  * https://www.gimp.org/foo.png he wants to fetch a URL, and the full
  * pathname will not look like a URL.
  *
- * Returns: (transfer full): The output image.
+ * Returns: (transfer none): The output image.
  **/
 GimpImage *
 gimp_file_load (GimpRunMode  run_mode,
@@ -78,7 +78,7 @@ gimp_file_load (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
