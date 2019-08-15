@@ -36,6 +36,8 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
@@ -1038,6 +1040,10 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->projection);
   g_clear_object (&private->graph);
   private->visible_mask = NULL;
+
+  gimp_plug_in_manager_emit_signal (image->gimp->plug_in_manager,
+                                    object, gimp_image_get_ID (image),
+                                    "destroyed");
 
   if (private->colormap)
     gimp_image_colormap_free (image);
