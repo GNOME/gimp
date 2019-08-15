@@ -220,10 +220,10 @@ gimp_image_list (void)
  * This procedure returns the list of layers contained in the specified
  * image. The order of layers is from topmost to bottommost.
  *
- * Returns: (element-type GimpImage) (transfer full):
+ * Returns: (element-type GimpImage) (transfer container):
  *          The list of layers contained in the image.
- *          The returned value must be freed with:
- *          g_list_free_full(list, g_object_unref);
+ *          The returned value must be freed with g_list_free(). Layer
+ *          elements belong to libgimp and must not be freed.
  *
  * Since: 3.0
  **/
@@ -237,13 +237,8 @@ gimp_image_get_layers (GimpImage *image)
 
   ids = _gimp_image_get_layers (image, &num_layers);
   for (i = 0; i < num_layers; i++)
-    {
-      GimpLayer *layer;
-
-      layer = GIMP_LAYER (gimp_item_new_by_id (ids[i]));
-
-      layers = g_list_prepend (layers, layer);
-    }
+    layers = g_list_prepend (layers,
+                             GIMP_LAYER (gimp_item_get_by_id (ids[i])));
   layers = g_list_reverse (layers);
   g_free (ids);
 
@@ -262,10 +257,10 @@ gimp_image_get_layers (GimpImage *image)
  * \"channels\" are custom channels and do not include the image's
  * color components.
  *
- * Returns: (element-type GimpChannel) (transfer full):
+ * Returns: (element-type GimpChannel) (transfer container):
  *          The list of channels contained in the image.
- *          The returned value must be freed with:
- *          g_list_free_full(list, g_object_unref);
+ *          The returned value must be freed with g_list_free(). Channel
+ *          elements belong to libgimp and must not be freed.
  *
  * Since: 3.0
  **/
@@ -279,13 +274,8 @@ gimp_image_get_channels (GimpImage *image)
 
   ids = _gimp_image_get_channels (image, &num_channels);
   for (i = 0; i < num_channels; i++)
-    {
-      GimpChannel *channel;
-
-      channel = GIMP_CHANNEL (gimp_item_new_by_id (ids[i]));
-
-      channels = g_list_prepend (channels, channel);
-    }
+    channels = g_list_prepend (channels,
+                               GIMP_CHANNEL (gimp_item_get_by_id (ids[i])));
   channels = g_list_reverse (channels);
   g_free (ids);
 
@@ -301,10 +291,10 @@ gimp_image_get_channels (GimpImage *image)
  * This procedure returns the list of vectors contained in the
  * specified image.
  *
- * Returns: (element-type GimpVectors) (transfer full):
+ * Returns: (element-type GimpVectors) (transfer container):
  *          The list of vectors contained in the image.
- *          The returned value must be freed with:
- *          g_list_free_full(list, g_object_unref);
+ *          The returned value must be freed with g_list_free(). Vectors
+ *          elements belong to libgimp and must not be freed.
  *
  * Since: 3.0
  **/
@@ -318,13 +308,8 @@ gimp_image_get_vectors (GimpImage *image)
 
   ids = _gimp_image_get_vectors (image, &num_vectors);
   for (i = 0; i < num_vectors; i++)
-    {
-      GimpVectors *path;
-
-      path = GIMP_VECTORS (gimp_item_new_by_id (ids[i]));
-
-      vectors = g_list_prepend (vectors, path);
-    }
+    vectors = g_list_prepend (vectors,
+                              GIMP_VECTORS (gimp_item_get_by_id (ids[i])));
   vectors = g_list_reverse (vectors);
   g_free (ids);
 
