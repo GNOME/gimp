@@ -58,7 +58,7 @@ static GimpValueArray * exr_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gint32           load_image           (const gchar          *filename,
+static GimpImage      * load_image           (const gchar          *filename,
                                               gboolean              interactive,
                                               GError              **error);
 static void             sanitize_comment     (gchar                *comment);
@@ -132,17 +132,17 @@ exr_load (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gint32          image_ID;
+  GimpImage      *image;
   GError         *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image_ID = load_image (g_file_get_path (file),
-                         run_mode == GIMP_RUN_INTERACTIVE,
-                         &error);
+  image = load_image (g_file_get_path (file),
+                      run_mode == GIMP_RUN_INTERACTIVE,
+                      &error);
 
-  if (image_ID < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -151,13 +151,13 @@ exr_load (GimpProcedure        *procedure,
                                                    GIMP_PDB_SUCCESS,
                                                    NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_ID);
+  g_value_set_object (gimp_value_array_index (return_vals, 1),
+                      image);
 
   return return_vals;
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             gboolean      interactive,
             GError      **error)
@@ -168,9 +168,9 @@ load_image (const gchar  *filename,
   gboolean          has_alpha;
   GimpImageBaseType image_type;
   GimpPrecision     image_precision;
-  gint32            image = -1;
+  GimpImage        *image = NULL;
   GimpImageType     layer_type;
-  gint32            layer;
+  GimpLayer        *layer;
   const Babl       *format;
   GeglBuffer       *buffer = NULL;
   gint              bpp;
@@ -248,7 +248,7 @@ load_image (const gchar  *filename,
 
   image = gimp_image_new_with_precision (width, height,
                                          image_type, image_precision);
-  if (image == -1)
+  if (! image)
     {
       g_set_error (error, 0, 0,
                    _("Could not create new image for '%s': %s"),
@@ -273,10 +273,10 @@ load_image (const gchar  *filename,
   layer = gimp_layer_new (image, _("Background"), width, height,
                           layer_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (layer);
-  format = gimp_drawable_get_format (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
   bpp = babl_format_get_bytes_per_pixel (format);
 
   tile_height = gimp_tile_height ();
@@ -374,10 +374,10 @@ load_image (const gchar  *filename,
   if (success)
     return image;
 
-  if (image != -1)
+  if (image)
     gimp_image_delete (image);
 
-  return -1;
+  return NULL;
 }
 
 /* copy & pasted from file-jpeg/jpeg-load.c */
