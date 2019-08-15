@@ -160,6 +160,15 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
     case GP_HAS_INIT:
       gimp_plug_in_handle_has_init (plug_in);
       break;
+
+    case GP_SIGNAL:
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n\n"
+                    "sent a SIGNAL message.  This should not happen.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file));
+      gimp_plug_in_close (plug_in, TRUE);
+      break;
     }
 }
 

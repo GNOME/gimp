@@ -70,6 +70,11 @@ gint32        gimp_display_get_id       (GimpDisplay    *display);
 GimpDisplay * gimp_display_get_by_id    (gint32          display_id);
 
 
+G_GNUC_INTERNAL
+void          _gimp_display_process_signal (gint32        display_id,
+                                            const gchar  *name);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_DISPLAY_H__ */

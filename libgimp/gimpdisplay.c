@@ -183,3 +183,26 @@ gimp_display_get_by_id (gint32 display_id)
 
   return display;
 }
+
+
+/* Internal API. */
+
+
+G_GNUC_INTERNAL
+void
+_gimp_display_process_signal (gint32       display_id,
+                              const gchar *name)
+{
+  GimpDisplay *display = NULL;
+
+  if (! gimp_displays)
+    return;
+
+  display = g_hash_table_lookup (gimp_displays,
+                                 GINT_TO_POINTER (display_id));
+
+  if (! display)
+    return;
+
+  /* Below process display signals. */
+}

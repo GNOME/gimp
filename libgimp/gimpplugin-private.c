@@ -42,6 +42,9 @@ static void       gimp_plug_in_register          (GimpPlugIn      *plug_in,
 static void       gimp_plug_in_loop              (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
                                                   GimpWireMessage *msg);
+
+static void       gimp_plug_in_signal            (GimpPlugIn      *plug_in,
+                                                  GPSignal        *signal);
 static void       gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
 static void       gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
@@ -279,6 +282,10 @@ gimp_plug_in_loop (GimpPlugIn *plug_in)
         case GP_HAS_INIT:
           g_warning ("unexpected has init message received (should not happen)");
           break;
+
+        case GP_SIGNAL:
+          g_warning ("unexpected signal message received (should not happen)");
+          break;
         }
 
       gimp_wire_destroy (&msg);
@@ -333,6 +340,31 @@ gimp_plug_in_process_message (GimpPlugIn      *plug_in,
       break;
     case GP_HAS_INIT:
       g_warning ("unexpected has init message received (should not happen)");
+      break;
+    case GP_SIGNAL:
+      gimp_plug_in_signal (plug_in, msg->data);
+      break;
+    }
+}
+
+static void
+gimp_plug_in_signal (GimpPlugIn *plug_in,
+                     GPSignal   *signal)
+{
+  switch (signal->type)
+    {
+    case GP_SIGNAL_TYPE_IMAGE:
+      _gimp_image_process_signal (signal->id, signal->name);
+      break;
+    case GP_SIGNAL_TYPE_ITEM:
+      _gimp_item_process_signal (signal->id, signal->name);
+      break;
+    case GP_SIGNAL_TYPE_DISPLAY:
+      _gimp_display_process_signal (signal->id, signal->name);
+      break;
+
+    case GP_SIGNAL_TYPE_NONE:
+      g_warning ("Unexpected signal without type received (should not happen)");
       break;
     }
 }
