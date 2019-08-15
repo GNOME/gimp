@@ -119,5 +119,9 @@ void          gimp_plug_in_set_error_handler (GimpPlugIn             *plug_in,
 GimpPDBErrorHandler
               gimp_plug_in_get_error_handler (GimpPlugIn             *plug_in);
 
+void          gimp_plug_in_emit_signal       (GimpPlugIn             *plug_in,
+                                              GObject                *object,
+                                              gint32                  id,
+                                              const gchar            *name);
 
 #endif /* __GIMP_PLUG_IN_H__ */

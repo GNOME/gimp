@@ -114,5 +114,10 @@ void    gimp_plug_in_manager_plug_in_push         (GimpPlugInManager   *manager,
                                                    GimpPlugIn          *plug_in);
 void    gimp_plug_in_manager_plug_in_pop          (GimpPlugInManager   *manager);
 
+void    gimp_plug_in_manager_emit_signal          (GimpPlugInManager   *manager,
+                                                   GObject             *object,
+                                                   gint32               id,
+                                                   const gchar         *name);
+
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_H__ */
