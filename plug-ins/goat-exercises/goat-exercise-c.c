@@ -67,6 +67,9 @@ static GimpValueArray * goat_run              (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
+static void             goat_image_destroyed  (GimpImage            *image,
+                                               gpointer              data);
+
 
 G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
 
@@ -153,10 +156,18 @@ goat_run (GimpProcedure        *procedure,
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   GimpRunMode       run_mode;
+  GimpImage        *image;
   GimpDrawable     *drawable;
   gint              x, y, width, height;
 
   INIT_I18N();
+
+  gimp_plug_in_extension_enable (gimp_get_plug_in());
+
+  image = g_value_get_object (gimp_value_array_index (args, 1));
+  g_signal_connect (image, "destroyed",
+                    G_CALLBACK (goat_image_destroyed),
+                    NULL);
 
   /* In interactive mode, display a dialog to advertize the exercise. */
   run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
@@ -292,4 +303,11 @@ static GQuark
 goat_error_quark (void)
 {
   return g_quark_from_static_string ("goat-error-quark");
+}
+
+static void
+goat_image_destroyed (GimpImage *image,
+                      gpointer   data)
+{
+  gimp_quit();
 }
