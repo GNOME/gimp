@@ -347,7 +347,6 @@ gimp_drawable_get_format (GimpDrawable *drawable)
           format = babl_format_with_space (format_str, space);
         }
 
-      g_object_unref (image);
       g_free (format_str);
     }
 

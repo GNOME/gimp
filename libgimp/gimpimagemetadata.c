@@ -666,7 +666,7 @@ gimp_image_metadata_save_finish (GimpImage              *image,
  *
  * Retrieves a thumbnail from metadata if present.
  *
- * Returns: (transfer full) (nullable): a #GimpImage of the @file thumbnail.
+ * Returns: (transfer none) (nullable): a #GimpImage of the @file thumbnail.
  */
 GimpImage *
 gimp_image_metadata_load_thumbnail (GFile   *file,
@@ -705,8 +705,8 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
       GimpLayer *layer;
 
       image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
-                                 gdk_pixbuf_get_height (pixbuf),
-                                 GIMP_RGB);
+                              gdk_pixbuf_get_height (pixbuf),
+                              GIMP_RGB);
       gimp_image_undo_disable (image);
 
       layer = gimp_layer_new_from_pixbuf (image, _("Background"),
@@ -1059,14 +1059,8 @@ gimp_image_metadata_load_prepare_deprecated (gint32        image_id,
                                              GFile        *file,
                                              GError      **error)
 {
-  GimpImage    *image = gimp_image_new_by_id (image_id);
-  GimpMetadata *metadata;
-
-  metadata = gimp_image_metadata_load_prepare (image, mime_type, file, error);
-
-  g_object_unref (image);
-
-  return metadata;
+  return gimp_image_metadata_load_prepare (gimp_image_get_by_id (image_id),
+                                           mime_type, file, error);
 }
 
 /**
@@ -1090,10 +1084,8 @@ gimp_image_metadata_load_finish_deprecated (gint32                 image_id,
                                             GimpMetadataLoadFlags  flags,
                                             gboolean               interactive)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-
-  gimp_image_metadata_load_finish (image, mime_type, metadata, flags, interactive);
-  g_object_unref (image);
+  gimp_image_metadata_load_finish (gimp_image_get_by_id (image_id),
+                                   mime_type, metadata, flags, interactive);
 }
 
 /**
@@ -1127,14 +1119,8 @@ gimp_image_metadata_save_prepare_deprecated (gint32                 image_id,
                                              const gchar           *mime_type,
                                              GimpMetadataSaveFlags *suggested_flags)
 {
-  GimpImage    *image = gimp_image_new_by_id (image_id);
-  GimpMetadata *metadata;
-
-  metadata = gimp_image_metadata_save_prepare (image, mime_type, suggested_flags);
-
-  g_object_unref (image);
-
-  return metadata;
+  return gimp_image_metadata_save_prepare (gimp_image_get_by_id (image_id),
+                                           mime_type, suggested_flags);
 }
 
 /**
@@ -1162,15 +1148,9 @@ gimp_image_metadata_save_finish_deprecated (gint32                  image_id,
                                             GFile                  *file,
                                             GError                **error)
 {
-  GimpImage *image = gimp_image_new_by_id (image_id);
-  gboolean   success;
-
-  success = gimp_image_metadata_save_finish (image, mime_type, metadata,
-                                             flags, file, error);
-
-  g_object_unref (image);
-
-  return success;
+  return gimp_image_metadata_save_finish (gimp_image_get_by_id (image_id),
+                                          mime_type, metadata,
+                                          flags, file, error);
 }
 
 /**
@@ -1187,11 +1167,8 @@ gimp_image_metadata_load_thumbnail_deprecated (GFile   *file,
                                                GError **error)
 {
   GimpImage *image;
-  gint32     image_id;
 
   image = gimp_image_metadata_load_thumbnail (file, error);
-  image_id = gimp_image_get_id (image);
-  g_object_unref (image);
 
-  return image_id;
+  return gimp_image_get_id (image);
 }

@@ -116,20 +116,16 @@ gimp_param_image_id_validate (GParamSpec *pspec,
                               GValue     *value)
 {
   GimpParamSpecImageID *ispec    = GIMP_PARAM_SPEC_IMAGE_ID (pspec);
-  GimpImage            *image;
   gint                  image_id = value->data[0].v_int;
 
   if (ispec->none_ok && (image_id == 0 || image_id == -1))
     return FALSE;
 
-  image = gimp_image_new_by_id (image_id);
-  if (! gimp_image_is_valid (image))
+  if (! _gimp_image_is_valid (image_id))
     {
       value->data[0].v_int = -1;
-      g_object_unref (image);
       return TRUE;
     }
-  g_object_unref (image);
 
   return FALSE;
 }
