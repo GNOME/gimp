@@ -333,7 +333,7 @@ _gimp_edit_copy_visible (gint32 image_ID)
  * specified drawable, and a subsequent call to floating_sel_attach is
  * not needed.
  *
- * Returns: (transfer full): The new floating selection.
+ * Returns: (transfer none): The new floating selection.
  **/
 GimpLayer *
 gimp_edit_paste (GimpDrawable *drawable,
@@ -359,7 +359,7 @@ gimp_edit_paste (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    floating_sel = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -808,7 +808,7 @@ _gimp_edit_named_copy_visible (gint32       image_ID,
  * This procedure works like gimp_edit_paste() but pastes a named
  * buffer instead of the global buffer.
  *
- * Returns: (transfer full): The new floating selection.
+ * Returns: (transfer none): The new floating selection.
  *
  * Since: 2.4
  **/
@@ -838,7 +838,7 @@ gimp_edit_named_paste (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    floating_sel = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 

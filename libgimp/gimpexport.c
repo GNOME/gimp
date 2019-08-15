@@ -101,8 +101,6 @@ export_merge (GimpImage     *image,
       gimp_selection_none (image);
       gimp_drawable_edit_clear (GIMP_DRAWABLE (transp));
       nvisible++;
-
-      g_object_unref (transp);
     }
 
   if (nvisible > 1)
@@ -121,7 +119,7 @@ export_merge (GimpImage     *image,
           return;  /* shouldn't happen */
         }
 
-      g_list_free_full (layers, g_object_unref);
+      g_list_free (layers);
       layers = gimp_image_get_layers (image);
 
       /*  make sure that the merged drawable matches the image size  */
@@ -144,7 +142,7 @@ export_merge (GimpImage     *image,
       if (gimp_item_get_id (iter->data) != gimp_item_get_id (GIMP_ITEM (*drawable)))
         gimp_image_remove_layer (image, iter->data);
     }
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 }
 
 static void
@@ -174,7 +172,7 @@ export_remove_alpha (GimpImage     *image,
         gimp_layer_flatten (iter->data);
     }
 
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 }
 
 static void
@@ -193,11 +191,9 @@ export_apply_masks (GimpImage     *image,
       mask = gimp_layer_get_mask (iter->data);
       if (mask)
         gimp_layer_remove_mask (iter->data, GIMP_MASK_APPLY);
-
-      g_clear_object (&mask);
     }
 
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 }
 
 static void
@@ -232,7 +228,7 @@ export_convert_indexed (GimpImage     *image,
                                 GIMP_CONVERT_DITHER_NONE,
                                 GIMP_CONVERT_PALETTE_GENERATE,
                                 256, FALSE, FALSE, "");
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 }
 
 static void
@@ -261,7 +257,7 @@ export_add_alpha (GimpImage     *image,
       if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
         gimp_layer_add_alpha (GIMP_LAYER (iter->data));
     }
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 }
 
 static void
@@ -839,14 +835,8 @@ gimp_export_image (GimpImage             **image,
     {
       for (iter = layers; iter; iter = iter->next)
         {
-          GimpLayer     *layer = GIMP_LAYER (iter->data);
-          GimpLayerMask *mask;
-
-          mask = gimp_layer_get_mask (layer);
-          if (mask)
+          if (gimp_layer_get_mask (iter->data))
             has_layer_masks = TRUE;
-
-          g_clear_object (&mask);
         }
     }
 
@@ -924,7 +914,7 @@ gimp_export_image (GimpImage             **image,
             }
         }
 
-      g_list_free_full (children, g_object_unref);
+      g_list_free (children);
 
       /* check layer masks */
       if (has_layer_masks &&
@@ -932,7 +922,7 @@ gimp_export_image (GimpImage             **image,
         actions = g_slist_prepend (actions, &export_action_apply_masks);
     }
 
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 
   /* check the image type */
   type = gimp_image_base_type (*image);
@@ -1148,22 +1138,16 @@ gimp_export_image_deprecated (gint32                 *image_ID,
 {
   GimpImage        *image;
   GimpDrawable     *drawable;
-  GimpDrawable     *new_drawable;
   GimpExportReturn  retval;
 
-  image        = gimp_image_get_by_id (*image_ID);
-  drawable     = GIMP_DRAWABLE (gimp_item_new_by_id (*drawable_ID));
-  new_drawable = drawable;
+  image    = gimp_image_get_by_id (*image_ID);
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (*drawable_ID));
 
-  retval = gimp_export_image (&image, &new_drawable,
+  retval = gimp_export_image (&image, &drawable,
                               format_name, capabilities);
 
   *image_ID    = gimp_image_get_id (image);
-  *drawable_ID = gimp_item_get_id (GIMP_ITEM (new_drawable));
-  if (retval == GIMP_EXPORT_EXPORT)
-    g_object_unref (new_drawable);
-
-  g_object_unref (drawable);
+  *drawable_ID = gimp_item_get_id (GIMP_ITEM (drawable));
 
   return retval;
 }

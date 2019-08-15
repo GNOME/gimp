@@ -149,7 +149,7 @@ _gimp_file_load (GimpRunMode  run_mode,
  * needs to be added to the existing image with
  * gimp_image_insert_layer().
  *
- * Returns: (transfer full): The layer created when loading the image file.
+ * Returns: (transfer none): The layer created when loading the image file.
  *
  * Since: 2.4
  **/
@@ -179,7 +179,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 

@@ -327,7 +327,6 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
                                               &w, &h, &bpp);
       sel = gimp_drawable_get_thumbnail_data (GIMP_DRAWABLE (selection),
                                               &w, &h, &bpp);
-      g_object_unref (selection);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
                               0, 0, width, height,

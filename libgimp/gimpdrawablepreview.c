@@ -474,7 +474,6 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                                       draw_width, draw_height,
                                                       &s_w, &s_h,
                                                       &s_bpp);
-          g_object_unref (selection);
 
           switch (d_bpp)
             {

@@ -51,7 +51,7 @@
  * added to the image, as this is not automatic. Add the new layer
  * using gimp_image_insert_layer().
  *
- * Returns: (transfer full): The new text layer.
+ * Returns: (transfer none): The new text layer.
  *
  * Since: 2.6
  **/
@@ -85,7 +85,7 @@ gimp_text_layer_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
