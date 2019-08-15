@@ -432,7 +432,7 @@ _gimp_edit_paste (gint32   drawable_ID,
  * previously made to either gimp_edit_cut() or gimp_edit_copy(). This
  * procedure returns the new image or -1 if the edit buffer was empty.
  *
- * Returns: (transfer full): The new image.
+ * Returns: (transfer none): The new image.
  *
  * Since: 2.10
  **/
@@ -457,7 +457,7 @@ gimp_edit_paste_as_new_image (void)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -902,7 +902,7 @@ _gimp_edit_named_paste (gint32       drawable_ID,
  * This procedure works like gimp_edit_paste_as_new_image() but pastes
  * a named buffer instead of the global buffer.
  *
- * Returns: (transfer full): The new image.
+ * Returns: (transfer none): The new image.
  *
  * Since: 2.10
  **/
@@ -928,7 +928,7 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 

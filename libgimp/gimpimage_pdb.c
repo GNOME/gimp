@@ -183,7 +183,7 @@ _gimp_image_list (gint *num_images)
  * gimp_image_set_colormap(). An indexed image without a colormap will
  * output unexpected colors.
  *
- * Returns: (transfer full): The newly created image.
+ * Returns: (transfer none): The newly created image.
  **/
 GimpImage *
 gimp_image_new (gint              width,
@@ -211,7 +211,7 @@ gimp_image_new (gint              width,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -287,7 +287,7 @@ _gimp_image_new (gint              width,
  * GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
  * further details.
  *
- * Returns: (transfer full): The newly created image.
+ * Returns: (transfer none): The newly created image.
  *
  * Since: 2.10
  **/
@@ -319,7 +319,7 @@ gimp_image_new_with_precision (gint              width,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
@@ -389,7 +389,7 @@ _gimp_image_new_with_precision (gint              width,
  * This procedure duplicates the specified image, copying all layers,
  * channels, and image information.
  *
- * Returns: (transfer full): The new, duplicated image.
+ * Returns: (transfer none): The new, duplicated image.
  **/
 GimpImage *
 gimp_image_duplicate (GimpImage *image)
@@ -413,7 +413,7 @@ gimp_image_duplicate (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    new_image = gimp_image_new_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
+    new_image = gimp_image_get_by_id (gimp_value_get_image_id (gimp_value_array_index (return_vals, 1)));
 
   gimp_value_array_unref (return_vals);
 
