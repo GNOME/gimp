@@ -53,7 +53,7 @@
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
- * Returns: (transfer full): The newly created layer.
+ * Returns: (transfer none): The newly created layer.
  **/
 GimpLayer *
 _gimp_layer_new (GimpImage     *image,
@@ -89,7 +89,7 @@ _gimp_layer_new (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -110,7 +110,7 @@ _gimp_layer_new (GimpImage     *image,
  * gimp_image_insert_layer() command. Other attributes such as layer
  * mask modes, and offsets should be set with explicit procedure calls.
  *
- * Returns: (transfer full): The newly created layer.
+ * Returns: (transfer none): The newly created layer.
  *
  * Since: 2.6
  **/
@@ -140,7 +140,7 @@ gimp_layer_new_from_visible (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -211,7 +211,7 @@ _gimp_layer_new_from_visible (gint32       image_ID,
  * gimp_image_insert_layer() command. Other attributes such as layer
  * mask modes, and offsets should be set with explicit procedure calls.
  *
- * Returns: (transfer full): The newly copied layer.
+ * Returns: (transfer none): The newly copied layer.
  **/
 GimpLayer *
 gimp_layer_new_from_drawable (GimpDrawable *drawable,
@@ -237,7 +237,7 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_copy = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer_copy = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -304,7 +304,7 @@ _gimp_layer_new_from_drawable (gint32 drawable_ID,
  * gimp_image_reorder_item(), gimp_item_get_parent(),
  * gimp_item_get_children(), gimp_item_is_group().
  *
- * Returns: (transfer full): The newly created layer group.
+ * Returns: (transfer none): The newly created layer group.
  *
  * Since: 2.8
  **/
@@ -330,7 +330,7 @@ gimp_layer_group_new (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_group = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer_group = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -398,7 +398,7 @@ _gimp_layer_group_new (gint32 image_ID)
  * the background layer in an image is being copied and added to the
  * same image.
  *
- * Returns: (transfer full): The newly copied layer.
+ * Returns: (transfer none): The newly copied layer.
  **/
 GimpLayer *
 _gimp_layer_copy (GimpLayer *layer,
@@ -424,7 +424,7 @@ _gimp_layer_copy (GimpLayer *layer,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_copy = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer_copy = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1009,7 +1009,7 @@ _gimp_layer_set_offsets (gint32 layer_ID,
  * 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with
  * 'ADD-SELECTION-MASK' when there is no selection on the image.
  *
- * Returns: (transfer full): The newly created mask.
+ * Returns: (transfer none): The newly created mask.
  **/
 GimpLayerMask *
 gimp_layer_create_mask (GimpLayer       *layer,
@@ -1035,7 +1035,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask = GIMP_LAYER_MASK (gimp_item_new_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
+    mask = GIMP_LAYER_MASK (gimp_item_get_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1112,7 +1112,7 @@ _gimp_layer_create_mask (gint32          layer_ID,
  * This procedure returns the specified layer's mask, or -1 if none
  * exists.
  *
- * Returns: (transfer full): The layer mask.
+ * Returns: (transfer none): The layer mask.
  **/
 GimpLayerMask *
 gimp_layer_get_mask (GimpLayer *layer)
@@ -1136,7 +1136,7 @@ gimp_layer_get_mask (GimpLayer *layer)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    mask = GIMP_LAYER_MASK (gimp_item_new_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
+    mask = GIMP_LAYER_MASK (gimp_item_get_by_id (gimp_value_get_layer_mask_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1192,7 +1192,7 @@ _gimp_layer_get_mask (gint32 layer_ID)
  * This procedure returns the specified mask's layer , or -1 if none
  * exists.
  *
- * Returns: (transfer full): The mask's layer.
+ * Returns: (transfer none): The mask's layer.
  *
  * Since: 2.2
  **/
@@ -1218,7 +1218,7 @@ gimp_layer_from_mask (GimpLayerMask *mask)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 

@@ -547,7 +547,6 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
                                                   src_x + offsx, src_y + offsy,
                                                   src_width, src_height,
                                                   &width, &height, &bpp);
-      g_object_unref (selection);
 
       gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
                               0, 0, width, height,
