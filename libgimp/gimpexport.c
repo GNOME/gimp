@@ -101,8 +101,6 @@ export_merge (GimpImage     *image,
       gimp_selection_none (image);
       gimp_drawable_edit_clear (GIMP_DRAWABLE (transp));
       nvisible++;
-
-      g_object_unref (transp);
     }
 
   if (nvisible > 1)
@@ -924,7 +922,7 @@ gimp_export_image (GimpImage             **image,
             }
         }
 
-      g_list_free_full (children, g_object_unref);
+      g_list_free (children);
 
       /* check layer masks */
       if (has_layer_masks &&
@@ -1148,22 +1146,16 @@ gimp_export_image_deprecated (gint32                 *image_ID,
 {
   GimpImage        *image;
   GimpDrawable     *drawable;
-  GimpDrawable     *new_drawable;
   GimpExportReturn  retval;
 
-  image        = gimp_image_get_by_id (*image_ID);
-  drawable     = GIMP_DRAWABLE (gimp_item_new_by_id (*drawable_ID));
-  new_drawable = drawable;
+  image    = gimp_image_get_by_id (*image_ID);
+  drawable = GIMP_DRAWABLE (gimp_item_get_by_id (*drawable_ID));
 
-  retval = gimp_export_image (&image, &new_drawable,
+  retval = gimp_export_image (&image, &drawable,
                               format_name, capabilities);
 
   *image_ID    = gimp_image_get_id (image);
-  *drawable_ID = gimp_item_get_id (GIMP_ITEM (new_drawable));
-  if (retval == GIMP_EXPORT_EXPORT)
-    g_object_unref (new_drawable);
-
-  g_object_unref (drawable);
+  *drawable_ID = gimp_item_get_id (GIMP_ITEM (drawable));
 
   return retval;
 }

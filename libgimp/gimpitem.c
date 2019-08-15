@@ -37,6 +37,9 @@ struct _GimpItemPrivate
   gint id;
 };
 
+static GHashTable *gimp_items = NULL;
+
+
 static void       gimp_item_set_property  (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
@@ -136,29 +139,70 @@ gimp_item_get_id (GimpItem *item)
 }
 
 /**
- * gimp_item_new_by_id:
+ * gimp_item_get_by_id:
  * @item_id: The item id.
  *
  * Creates a #GimpItem representing @item_id. Since #GimpItem is an
  * abstract class, the object real type will actually be the proper
  * subclass.
  *
- * Returns: (nullable) (transfer full): a #GimpItem for @item_id or
+ * Returns: (nullable) (transfer none): a #GimpItem for @item_id or
  *          %NULL if @item_id does not represent a valid item.
+ *          The object belongs to libgimp and you should not free it.
  *
  * Since: 3.0
  **/
 GimpItem *
-gimp_item_new_by_id (gint32 item_id)
+gimp_item_get_by_id (gint32 item_id)
 {
   GimpItem *item = NULL;
 
-  if (_gimp_item_is_valid (item_id))
+  if (G_UNLIKELY (! gimp_items))
+    gimp_items = g_hash_table_new_full (g_direct_hash,
+                                        g_direct_equal,
+                                        NULL,
+                                        (GDestroyNotify) g_object_unref);
+
+  if (! _gimp_item_is_valid (item_id))
     {
-      if (_gimp_item_is_layer (item_id))
-        item = g_object_new (GIMP_TYPE_LAYER,
-                             "id", item_id,
-                             NULL);
+      g_hash_table_remove (gimp_items, GINT_TO_POINTER (item_id));
+    }
+  else
+    {
+      item = g_hash_table_lookup (gimp_items,
+                                  GINT_TO_POINTER (item_id));
+
+      if (! item)
+        {
+          if (_gimp_item_is_layer (item_id))
+            item = g_object_new (GIMP_TYPE_LAYER,
+                                 "id", item_id,
+                                 NULL);
+          else if (_gimp_item_is_channel (item_id))
+            item = g_object_new (GIMP_TYPE_CHANNEL,
+                                 "id", item_id,
+                                 NULL);
+          else if (_gimp_item_is_layer_mask (item_id))
+            item = g_object_new (GIMP_TYPE_LAYER_MASK,
+                                 "id", item_id,
+                                 NULL);
+          else if (_gimp_item_is_layer_mask (item_id))
+            item = g_object_new (GIMP_TYPE_LAYER_MASK,
+                                 "id", item_id,
+                                 NULL);
+          else if (_gimp_item_is_selection (item_id))
+            item = g_object_new (GIMP_TYPE_SELECTION,
+                                 "id", item_id,
+                                 NULL);
+          else if (_gimp_item_is_vectors (item_id))
+            item = g_object_new (GIMP_TYPE_VECTORS,
+                                 "id", item_id,
+                                 NULL);
+          if (item)
+            g_hash_table_insert (gimp_items,
+                                 GINT_TO_POINTER (item_id),
+                                 item);
+        }
     }
 
   return item;
@@ -173,10 +217,10 @@ gimp_item_new_by_id (gint32 item_id)
  * This procedure returns the list of items which are children of the
  * specified item. The order is topmost to bottommost.
  *
- * Returns: (element-type GimpItem) (transfer full):
+ * Returns: (element-type GimpItem) (transfer container):
  *          The item's list of children.
- *          The returned value must be freed with:
- *          g_list_free_full(list, g_object_unref);
+ *          The returned value must be freed with g_list_free(). Item
+ *          elements belong to libgimp and must not be freed.
  *
  * Since: 3.0
  **/
@@ -191,7 +235,7 @@ gimp_item_get_children (GimpItem *item)
   ids = _gimp_item_get_children (item, &num_items);
 
   for (i = 0; i < num_items; i++)
-    children = g_list_prepend (children, gimp_item_new_by_id (ids[i]));
+    children = g_list_prepend (children, gimp_item_get_by_id (ids[i]));
 
   children = g_list_reverse (children);
   g_free (ids);
@@ -219,12 +263,6 @@ gint *
 gimp_item_get_children_deprecated (gint32    item_id,
                                    gint     *num_children)
 {
-  GimpItem *item;
-  gint     *children;
-
-  item     = gimp_item_new_by_id (item_id);
-  children = _gimp_item_get_children (item, num_children);
-  g_object_unref (item);
-
-  return children;
+  return _gimp_item_get_children (gimp_item_get_by_id (item_id),
+                                  num_children);
 }

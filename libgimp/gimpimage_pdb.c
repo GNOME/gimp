@@ -1115,7 +1115,7 @@ _gimp_image_get_vectors (GimpImage *image,
  * layer mask and the layer mask is in edit mode, then the layer mask
  * is the active drawable.
  *
- * Returns: (transfer full): The active drawable.
+ * Returns: (transfer none): The active drawable.
  **/
 GimpDrawable *
 gimp_image_get_active_drawable (GimpImage *image)
@@ -1139,7 +1139,7 @@ gimp_image_get_active_drawable (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    drawable = GIMP_DRAWABLE (gimp_item_new_by_id (gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1))));
+    drawable = GIMP_DRAWABLE (gimp_item_get_by_id (gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1281,7 +1281,7 @@ _gimp_image_unset_active_channel (gint32 image_ID)
  * This procedure returns the image's floating selection, if it exists.
  * If it doesn't exist, -1 is returned as the layer ID.
  *
- * Returns: (transfer full): The image's floating selection.
+ * Returns: (transfer none): The image's floating selection.
  **/
 GimpLayer *
 gimp_image_get_floating_sel (GimpImage *image)
@@ -1305,7 +1305,7 @@ gimp_image_get_floating_sel (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    floating_sel = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1362,7 +1362,7 @@ _gimp_image_get_floating_sel (gint32 image_ID)
  * is attached to, if it exists. If it doesn't exist, -1 is returned as
  * the drawable ID.
  *
- * Returns: (transfer full):
+ * Returns: (transfer none):
  *          The drawable the floating selection is attached to.
  **/
 GimpDrawable *
@@ -1387,7 +1387,7 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    drawable = GIMP_DRAWABLE (gimp_item_new_by_id (gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1))));
+    drawable = GIMP_DRAWABLE (gimp_item_get_by_id (gimp_value_get_drawable_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1591,7 +1591,7 @@ _gimp_image_pick_color (gint32    image_ID,
  * at the specified coordinates. This procedure will return -1 if no
  * layer is found.
  *
- * Returns: (transfer full): The layer found at the specified coordinates.
+ * Returns: (transfer none): The layer found at the specified coordinates.
  **/
 GimpLayer *
 gimp_image_pick_correlate_layer (GimpImage *image,
@@ -1619,7 +1619,7 @@ gimp_image_pick_correlate_layer (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -3360,7 +3360,7 @@ _gimp_image_reorder_item (gint32 image_ID,
  * merging with the CLIP_TO_IMAGE merge type. Non-visible layers are
  * discarded, and the resulting image is stripped of its alpha channel.
  *
- * Returns: (transfer full): The resulting layer.
+ * Returns: (transfer none): The resulting layer.
  **/
 GimpLayer *
 gimp_image_flatten (GimpImage *image)
@@ -3384,7 +3384,7 @@ gimp_image_flatten (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -3447,7 +3447,7 @@ _gimp_image_flatten (gint32 image_ID)
  * extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the
  * final layer to the size of the bottommost layer.
  *
- * Returns: (transfer full): The resulting layer.
+ * Returns: (transfer none): The resulting layer.
  **/
 GimpLayer *
 gimp_image_merge_visible_layers (GimpImage     *image,
@@ -3473,7 +3473,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -3543,7 +3543,7 @@ _gimp_image_merge_visible_layers (gint32        image_ID,
  * CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the
  * bottommost layer.
  *
- * Returns: (transfer full): The resulting layer.
+ * Returns: (transfer none): The resulting layer.
  **/
 GimpLayer *
 gimp_image_merge_down (GimpImage     *image,
@@ -3571,7 +3571,7 @@ gimp_image_merge_down (GimpImage     *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -4063,7 +4063,7 @@ _gimp_image_thumbnail (GimpImage  *image,
  * If a channel is currently active, then no layer will be. If a layer
  * mask is active, then this will return the associated layer.
  *
- * Returns: (transfer full): The active layer.
+ * Returns: (transfer none): The active layer.
  **/
 GimpLayer *
 gimp_image_get_active_layer (GimpImage *image)
@@ -4087,7 +4087,7 @@ gimp_image_get_active_layer (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    active_layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    active_layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -4232,7 +4232,7 @@ _gimp_image_set_active_layer (gint32 image_ID,
  * If there is an active channel, this will return the channel ID,
  * otherwise, -1.
  *
- * Returns: (transfer full): The active channel.
+ * Returns: (transfer none): The active channel.
  **/
 GimpChannel *
 gimp_image_get_active_channel (GimpImage *image)
@@ -4256,7 +4256,7 @@ gimp_image_get_active_channel (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    active_channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    active_channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -4399,7 +4399,7 @@ _gimp_image_set_active_channel (gint32 image_ID,
  *
  * If there is an active path, its ID will be returned, otherwise, -1.
  *
- * Returns: (transfer full): The active vectors.
+ * Returns: (transfer none): The active vectors.
  **/
 GimpVectors *
 gimp_image_get_active_vectors (GimpImage *image)
@@ -4423,7 +4423,7 @@ gimp_image_get_active_vectors (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    active_vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    active_vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -4560,7 +4560,7 @@ _gimp_image_set_active_vectors (gint32 image_ID,
  * This will always return a valid ID for a selection -- which is
  * represented as a channel internally.
  *
- * Returns: (transfer full): The selection channel.
+ * Returns: (transfer none): The selection channel.
  **/
 GimpSelection *
 gimp_image_get_selection (GimpImage *image)
@@ -4584,7 +4584,7 @@ gimp_image_get_selection (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    selection = GIMP_SELECTION (gimp_item_new_by_id (gimp_value_get_selection_id (gimp_value_array_index (return_vals, 1))));
+    selection = GIMP_SELECTION (gimp_item_get_by_id (gimp_value_get_selection_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -6191,7 +6191,7 @@ _gimp_image_set_tattoo_state (gint32 image_ID,
  * This procedure returns the layer with the given tattoo in the
  * specified image.
  *
- * Returns: (transfer full): The layer with the specified tattoo.
+ * Returns: (transfer none): The layer with the specified tattoo.
  **/
 GimpLayer *
 gimp_image_get_layer_by_tattoo (GimpImage *image,
@@ -6217,7 +6217,7 @@ gimp_image_get_layer_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -6277,7 +6277,7 @@ _gimp_image_get_layer_by_tattoo (gint32 image_ID,
  * This procedure returns the channel with the given tattoo in the
  * specified image.
  *
- * Returns: (transfer full): The channel with the specified tattoo.
+ * Returns: (transfer none): The channel with the specified tattoo.
  **/
 GimpChannel *
 gimp_image_get_channel_by_tattoo (GimpImage *image,
@@ -6303,7 +6303,7 @@ gimp_image_get_channel_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -6363,7 +6363,7 @@ _gimp_image_get_channel_by_tattoo (gint32 image_ID,
  * This procedure returns the vectors with the given tattoo in the
  * specified image.
  *
- * Returns: (transfer full): The vectors with the specified tattoo.
+ * Returns: (transfer none): The vectors with the specified tattoo.
  *
  * Since: 2.6
  **/
@@ -6391,7 +6391,7 @@ gimp_image_get_vectors_by_tattoo (GimpImage *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -6453,7 +6453,7 @@ _gimp_image_get_vectors_by_tattoo (gint32 image_ID,
  * This procedure returns the layer with the given name in the
  * specified image.
  *
- * Returns: (transfer full): The layer with the specified name.
+ * Returns: (transfer none): The layer with the specified name.
  *
  * Since: 2.8
  **/
@@ -6481,7 +6481,7 @@ gimp_image_get_layer_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -6543,7 +6543,7 @@ _gimp_image_get_layer_by_name (gint32       image_ID,
  * This procedure returns the channel with the given name in the
  * specified image.
  *
- * Returns: (transfer full): The channel with the specified name.
+ * Returns: (transfer none): The channel with the specified name.
  *
  * Since: 2.8
  **/
@@ -6571,7 +6571,7 @@ gimp_image_get_channel_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -6633,7 +6633,7 @@ _gimp_image_get_channel_by_name (gint32       image_ID,
  * This procedure returns the vectors with the given name in the
  * specified image.
  *
- * Returns: (transfer full): The vectors with the specified name.
+ * Returns: (transfer none): The vectors with the specified name.
  *
  * Since: 2.8
  **/
@@ -6661,7 +6661,7 @@ gimp_image_get_vectors_by_name (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VECTORS (gimp_item_new_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
+    vectors = GIMP_VECTORS (gimp_item_get_by_id (gimp_value_get_vectors_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 

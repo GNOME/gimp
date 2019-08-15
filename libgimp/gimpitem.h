@@ -67,7 +67,7 @@ struct _GimpItemClass
 GType         gimp_item_get_type     (void) G_GNUC_CONST;
 
 gint32        gimp_item_get_id       (GimpItem    *item);
-GimpItem    * gimp_item_new_by_id    (gint32       item_id);
+GimpItem    * gimp_item_get_by_id    (gint32       item_id);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 

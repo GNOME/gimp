@@ -457,7 +457,7 @@ _gimp_selection_translate (gint32 image_ID,
  * instantiated as a floating selection. The offsets allow initial
  * positioning of the new floating selection.
  *
- * Returns: (transfer full): The floated layer.
+ * Returns: (transfer none): The floated layer.
  **/
 GimpLayer *
 _gimp_selection_float (GimpDrawable *drawable,
@@ -485,7 +485,7 @@ _gimp_selection_float (GimpDrawable *drawable,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer = GIMP_LAYER (gimp_item_new_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
@@ -1244,7 +1244,7 @@ _gimp_selection_flood (gint32 image_ID)
  * new channel. The new channel is automatically inserted into the
  * image's list of channels.
  *
- * Returns: (transfer full): The new channel.
+ * Returns: (transfer none): The new channel.
  **/
 GimpChannel *
 gimp_selection_save (GimpImage *image)
@@ -1268,7 +1268,7 @@ gimp_selection_save (GimpImage *image)
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    channel = GIMP_CHANNEL (gimp_item_new_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
