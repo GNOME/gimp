@@ -28,41 +28,22 @@ _ = gettext.gettext
 def N_(message): return message
 
 class Goat (Gimp.PlugIn):
-    ## Parameter: run-mode ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
-                      nick="Run mode", blurb="The run mode")
-    def run_mode(self):
-        """Read-write integer property."""
-        return self._run_mode
-
-    @run_mode.setter
-    def run_mode(self, run_mode):
-        self._run_mode = run_mode
-
-    ## Parameter: image ##
-    @GObject.Property(type=Gimp.Image,
-                      default=0,
-                      nick= _("Image"),
-                      blurb= _("The input image"))
-    def image(self):
-        return self._image
-
-    @image.setter
-    def image(self, image):
-        self._image = image
-
-    ## Parameter: drawable ##
-    @GObject.Property(type=Gimp.Drawable,
-                      default=0,
-                      nick= _("Drawable"),
-                      blurb= _("The input drawable"))
-    def drawable(self):
-        return self._drawable
-
-    @drawable.setter
-    def drawable(self, drawable):
-        self._drawable = drawable
+    ## Parameters ##
+    __gproperties__ = {
+        "run-mode": (Gimp.RunMode,
+                     "Run mode",
+                     "The run mode",
+                     Gimp.RunMode.NONINTERACTIVE,
+                     GObject.ParamFlags.READWRITE),
+        "image": (Gimp.Image,
+                  _("Image"),
+                  _("The input image"),
+                  GObject.ParamFlags.READWRITE),
+        "drawable": (Gimp.Drawable,
+                    _("Drawable"),
+                    _("The input drawable"),
+                    GObject.ParamFlags.READWRITE),
+    }
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
@@ -83,6 +64,9 @@ class Goat (Gimp.PlugIn):
                                     "");
         procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/');
         procedure.set_attribution("Jehan", "Jehan", "2019");
+        # XXX pygobject has broken GParamSpec support (see bug
+        # pygobject#227). As a special trick, to create arguments and
+        # return values, we make them from object properties.
         procedure.add_argument_from_property(self, "run-mode")
         procedure.add_argument_from_property(self, "image")
         procedure.add_argument_from_property(self, "drawable")
