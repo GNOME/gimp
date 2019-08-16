@@ -25,7 +25,7 @@ ScreenshotCapabilities screenshot_gnome_shell_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_gnome_shell_shoot            (ScreenshotValues  *shootvals,
                                                                 GdkMonitor        *monitor,
-                                                                gint32            *image_ID,
+                                                                GimpImage        **image,
                                                                 GError           **error);
 
 
