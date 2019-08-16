@@ -992,8 +992,6 @@ file_pix_LDADD = \
 
 file_png_CFLAGS = $(PNG_CFLAGS)
 
-file_png_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_png_SOURCES = \
 	file-png.c
 
