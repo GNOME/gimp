@@ -83,7 +83,7 @@ screenshot_kwin_get_capabilities (void)
 GimpPDBStatusType
 screenshot_kwin_shoot (ScreenshotValues  *shootvals,
                        GdkMonitor        *monitor,
-                       gint32            *image_ID,
+                       GimpImage        **image,
                        GError           **error)
 {
   gchar       *filename = NULL;
@@ -168,9 +168,9 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
     {
       GimpColorProfile *profile;
 
-      *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                   filename, filename);
-      gimp_image_set_filename (*image_ID, "screenshot.png");
+      gimp_image_set_filename (*image, "screenshot.png");
 
       /* This is very wrong in multi-display setups since we have no
        * idea which profile is to be used. Let's keep it anyway and
@@ -181,7 +181,7 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
 
       if (profile)
         {
-          gimp_image_set_color_profile (*image_ID, profile);
+          gimp_image_set_color_profile (*image, profile);
           g_object_unref (profile);
         }
 
