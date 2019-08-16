@@ -259,11 +259,6 @@ void           gimp_install_procedure   (const gchar        *name,
 GimpValueArray * gimp_run_procedure_array (const gchar          *name,
                                            const GimpValueArray *arguments);
 
-/* Retrieve the error message and return status for the last procedure
- * call.
- */
-const gchar    * gimp_get_pdb_error  (void);
-
 /* gimp_plugin API that should now be done by using GimpProcedure
  */
 
