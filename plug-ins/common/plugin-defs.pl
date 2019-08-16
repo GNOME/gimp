@@ -57,7 +57,7 @@
     'guillotine' => { old_api => 1 },
     'hot' => { ui => 1, gegl => 1, old_api => 1 },
     'jigsaw' => { ui => 1, gegl => 1 },
-    'mail' => { ui => 1, optional => 1, old_api => 1 },
+    'mail' => { ui => 1, optional => 1 },
     'nl-filter' => { ui => 1, gegl => 1 },
     'plugin-browser' => { ui => 1, old_api => 1 },
     'procedure-browser' => { ui => 1, old_api => 1 },

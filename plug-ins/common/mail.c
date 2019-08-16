@@ -90,8 +90,8 @@ static GimpValueArray * mail_run              (GimpProcedure        *procedure,
                                                gpointer              run_data);
 
 static GimpPDBStatusType  send_image              (const gchar      *filename,
-                                                   gint32            image_ID,
-                                                   gint32            drawable_ID,
+                                                   GimpImage        *image,
+                                                   GimpDrawable     *drawable,
                                                    gint32            run_mode);
 
 static gboolean           send_dialog             (void);
@@ -220,17 +220,17 @@ mail_create_procedure (GimpPlugIn  *plug_in,
                                                       GIMP_RUN_NONINTERACTIVE,
                                                       G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
+                                   g_param_spec_object ("image",
+                                                        "Image",
+                                                        "The input image",
+                                                        GIMP_TYPE_IMAGE,
+                                                        G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
+                                   g_param_spec_object ("drawable",
+                                                        "Drawable",
+                                                        "The input drawable",
+                                                        GIMP_TYPE_DRAWABLE,
+                                                        G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_string ("filename",
                                                         "Filename",
@@ -276,21 +276,21 @@ mail_run (GimpProcedure        *procedure,
 {
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
-  gint32             drawable_ID;
+  GimpImage         *image;
+  GimpDrawable      *drawable;
 
   INIT_I18N ();
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_ID    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_ID = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
+  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
+  image    = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (gimp_value_array_index (args, 2));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &mail_info);
       {
-        gchar *filename = gimp_image_get_filename (image_ID);
+        gchar *filename = gimp_image_get_filename (image);
 
         if (filename)
           {
@@ -334,8 +334,8 @@ mail_run (GimpProcedure        *procedure,
     }
 
   status = send_image (mail_info.filename,
-                       image_ID,
-                       drawable_ID,
+                       image,
+                       drawable,
                        run_mode);
 
   if (status == GIMP_PDB_SUCCESS)
@@ -350,10 +350,10 @@ mail_run (GimpProcedure        *procedure,
 }
 
 static GimpPDBStatusType
-send_image (const gchar *filename,
-            gint32       image_ID,
-            gint32       drawable_ID,
-            gint32       run_mode)
+send_image (const gchar  *filename,
+            GimpImage    *image,
+            GimpDrawable *drawable,
+            gint32        run_mode)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gchar             *ext;
@@ -380,8 +380,8 @@ send_image (const gchar *filename,
   tmpname = gimp_temp_name (ext + 1);
 
   if (! (gimp_file_save (run_mode,
-                         image_ID,
-                         drawable_ID,
+                         image,
+                         drawable,
                          tmpname,
                          tmpname) && valid_file (tmpname)))
     {
@@ -400,7 +400,7 @@ send_image (const gchar *filename,
    * So I use a known directory that we control under $GIMP_DIRECTORY/tmp/,
    * and clean it out each time the plugin runs. This means that *if* you
    * are in the above case (your email client requires the file to stay
-   * alive), * you cannot run twice the plugin at the same time.
+   * alive), you cannot run twice the plugin at the same time.
    */
   tmp_dir = gimp_directory_file ("tmp", PLUG_IN_PROC, NULL);
 
