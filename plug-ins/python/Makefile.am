@@ -28,6 +28,10 @@ if GIMP_UNSTABLE
 ##	whirlpinch.py
 endif
 
+EXTRA_DIST = \
+	palette-offset.py		\
+	palette-to-gradient.py
+
 # Python interpreter file.
 
 pyinterpdir = $(gimpplugindir)/interpreters

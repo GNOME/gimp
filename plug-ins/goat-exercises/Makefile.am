@@ -75,3 +75,7 @@ if BUILD_PYTHON
 #goat_exercise_py3dir = $(gimpplugindir)/plug-ins/goat-exercise-py3
 #goat_exercise_py3_SCRIPTS = goat-exercise-py3.py
 endif
+
+EXTRA_DIST = \
+	goat-exercise-gjs.js	\
+	goat-exercise-py3.py
