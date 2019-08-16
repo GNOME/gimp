@@ -27,7 +27,7 @@ ScreenshotCapabilities screenshot_x11_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_x11_shoot            (ScreenshotValues  *shootvals,
                                                         GdkMonitor        *monitor,
-                                                        gint32            *image_ID,
+                                                        GimpImage        **image,
                                                         GError           **error);
 
 #endif /* GDK_WINDOWING_X11 */

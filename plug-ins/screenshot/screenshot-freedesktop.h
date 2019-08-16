@@ -25,7 +25,7 @@ ScreenshotCapabilities screenshot_freedesktop_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_freedesktop_shoot            (ScreenshotValues  *shootvals,
                                                                 GdkMonitor        *monitor,
-                                                                gint32            *image_ID,
+                                                                GimpImage        **image,
                                                                 GError           **error);
 
 
