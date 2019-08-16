@@ -35,7 +35,7 @@ ScreenshotCapabilities screenshot_win32_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_win32_shoot            (ScreenshotValues  *shootvals,
                                                           GdkMonitor        *monitor,
-                                                          gint32            *image_ID,
+                                                          GimpImage        **image,
                                                           GError           **error);
 
 #endif /* G_OS_WIN32 */
