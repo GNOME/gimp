@@ -378,8 +378,6 @@ cml_explorer_LDADD = \
 	$(INTLLIBS)		\
 	$(cml_explorer_RC)
 
-colormap_remap_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 colormap_remap_SOURCES = \
 	colormap-remap.c
 
