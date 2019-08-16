@@ -84,15 +84,17 @@ babl-git-meson:
     - cd _gegl
     - mkdir _build
 
-gegl-git-autotools:
+gegl-git-meson:
   extends: .gegl-base
   variables:
     GIT_STRATEGY: none
   script:
-    - cd _build
-    - PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS
-    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make -j `nproc`
-    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make install
+    - export PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig"
+    - export LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH"
+    - export XDG_DATA_DIRS="$INSTALL_PREFIX/share:$XDG_DATA_DIRS"
+    - meson -Dprefix="$INSTALL_PREFIX" _build
+    - ninja -C _build
+    - ninja -C _build install
 
 .gimp-base:
   stage: gimp
@@ -197,7 +199,7 @@ build-all-git:
   extends: .build-all
   dependencies:
     - babl-git-meson
-    - gegl-git-autotools
+    - gegl-git-meson
 
 # build-all-git-meson:
 #   extends: .build-all
