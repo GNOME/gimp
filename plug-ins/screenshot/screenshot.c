@@ -80,7 +80,7 @@ static GimpValueArray * screenshot_run              (GimpProcedure        *proce
                                                      gpointer              run_data);
 
 static GimpPDBStatusType   shoot               (GdkMonitor       *monitor,
-                                                gint32           *image_ID,
+                                                GimpImage       **image,
                                                 GError          **error);
 
 static gboolean            shoot_dialog        (GdkMonitor      **monitor);
@@ -235,8 +235,8 @@ screenshot_run (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   GdkMonitor        *monitor = NULL;
-  gint32             image_ID;
-  GError            *error  = NULL;
+  GimpImage         *image   = NULL;
+  GError            *error   = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -344,7 +344,7 @@ screenshot_run (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      status = shoot (monitor, &image_ID, &error);
+      status = shoot (monitor, &image, &error);
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -355,7 +355,7 @@ screenshot_run (GimpProcedure        *procedure,
         {
           GimpColorProfile *srgb_profile = gimp_color_profile_new_rgb_srgb ();
 
-          gimp_image_convert_color_profile (image_ID,
+          gimp_image_convert_color_profile (image,
                                             srgb_profile,
                                             GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             TRUE);
@@ -370,20 +370,20 @@ screenshot_run (GimpProcedure        *procedure,
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (comment) + 1, comment);
 
-          gimp_image_attach_parasite (image_ID, parasite);
+          gimp_image_attach_parasite (image, parasite);
           gimp_parasite_free (parasite);
 
           g_free (comment);
         }
 
-      gimp_image_clean_all (image_ID);
+      gimp_image_clean_all (image);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           /* Store variable states for next run */
           gimp_set_data (PLUG_IN_PROC, &shootvals, sizeof (ScreenshotValues));
 
-          gimp_display_new (image_ID);
+          gimp_display_new (image);
 
           /* Give some sort of feedback that the shot is done */
           if (shootvals.select_delay > 0)
@@ -398,8 +398,8 @@ screenshot_run (GimpProcedure        *procedure,
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
   if (status == GIMP_PDB_SUCCESS)
-    gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                             image_ID);
+    g_value_set_object (gimp_value_array_index (return_vals, 1),
+                        image);
 
   return return_vals;
 }
@@ -408,30 +408,30 @@ screenshot_run (GimpProcedure        *procedure,
 /* The main Screenshot function */
 
 static GimpPDBStatusType
-shoot (GdkMonitor *monitor,
-       gint32     *image_ID,
-       GError    **error)
+shoot (GdkMonitor  *monitor,
+       GimpImage  **image,
+       GError     **error)
 {
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
-    return screenshot_osx_shoot (&shootvals, monitor, image_ID, error);
+    return screenshot_osx_shoot (&shootvals, monitor, image, error);
 #endif
 
 #ifdef G_OS_WIN32
   if (backend == SCREENSHOT_BACKEND_WIN32)
-    return screenshot_win32_shoot (&shootvals, monitor, image_ID, error);
+    return screenshot_win32_shoot (&shootvals, monitor, image, error);
 #endif
 
   if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
-    return screenshot_freedesktop_shoot (&shootvals, monitor, image_ID, error);
+    return screenshot_freedesktop_shoot (&shootvals, monitor, image, error);
   else if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
-    return screenshot_gnome_shell_shoot (&shootvals, monitor, image_ID, error);
+    return screenshot_gnome_shell_shoot (&shootvals, monitor, image, error);
   else if (backend == SCREENSHOT_BACKEND_KWIN)
-    return screenshot_kwin_shoot (&shootvals, monitor, image_ID, error);
+    return screenshot_kwin_shoot (&shootvals, monitor, image, error);
 
 #ifdef GDK_WINDOWING_X11
   if (backend == SCREENSHOT_BACKEND_X11)
-    return screenshot_x11_shoot (&shootvals, monitor, image_ID, error);
+    return screenshot_x11_shoot (&shootvals, monitor, image, error);
 #endif
 
   return GIMP_PDB_CALLING_ERROR; /* silence compiler */
