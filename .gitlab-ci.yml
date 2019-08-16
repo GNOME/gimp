@@ -149,7 +149,7 @@ gegl-git-autotools:
     GIT_STRATEGY: none
   script:
     - cd _build
-    - LIBMYPAINT_CFLAGS="-I/usr/include/libmypaint-1.3 -I/usr/include/json-c" LIBMYPAINT_LIBS="-lmypaint-1.3 -ljson-c" PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS --with-python=force --with-javascript=force
+    - LIBMYPAINT_CFLAGS="-I/usr/include/libmypaint-1.3 -I/usr/include/json-c" LIBMYPAINT_LIBS="-lmypaint-1.3 -ljson-c" PKG_CONFIG_PATH="$INSTALL_PREFIX/lib/pkgconfig" ../autogen.sh --prefix="$INSTALL_PREFIX" $CONFIG_OPTIONS --with-python=force --with-javascript=force --with-lua=force
     - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make -j `nproc`
 #    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make check
   artifacts:
