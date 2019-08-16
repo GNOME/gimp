@@ -1372,8 +1372,6 @@ jigsaw_LDADD = \
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
 
-mail_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 mail_SOURCES = \
 	mail.c
 
