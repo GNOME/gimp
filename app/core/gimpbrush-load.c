@@ -500,6 +500,7 @@ gimp_brush_load_abr (GimpContext   *context,
                                                 file, &my_error);
           break;
 
+        case 10:
         case 6:
           brush_list = gimp_brush_load_abr_v6 (data_input, &abr_hdr,
                                                file, &my_error);
@@ -1048,6 +1049,7 @@ abr_supported (AbrHeader  *abr_hdr,
       return TRUE;
       break;
 
+    case 10:
     case 6:
       /* in this case, count contains format sub-version */
       if (abr_hdr->count == 1 || abr_hdr->count == 2)
