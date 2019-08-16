@@ -36,7 +36,7 @@
     'file-pat' => { ui => 1, gegl => 1 },
     'file-pcx' => { ui => 1, gegl => 1, old_api => 1 },
     'file-pix' => { ui => 1, gegl => 1, old_api => 1 },
-    'file-png' => { ui => 1, gegl => 1, libs => 'PNG_LIBS', cflags => 'PNG_CFLAGS', old_api => 1 },
+    'file-png' => { ui => 1, gegl => 1, libs => 'PNG_LIBS', cflags => 'PNG_CFLAGS' },
     'file-pnm' => { ui => 1, gegl => 1, old_api => 1 },
     'file-pdf-load' => { ui => 1, gegl => 1, libs => 'POPPLER_LIBS', cflags => 'POPPLER_CFLAGS', old_api => 1 },
     'file-pdf-save' => { ui => 1, gegl => 1, optional => 1, libs => 'CAIRO_PDF_LIBS', cflags => 'CAIRO_PDF_CFLAGS', old_api => 1 },
