@@ -67,6 +67,13 @@ goat_exercise_gjsdir = $(gimpplugindir)/plug-ins/goat-exercise-gjs
 goat_exercise_gjs_SCRIPTS = goat-exercise-gjs.js
 endif
 
+# Lua (lua-jit + LGI) version.
+
+if BUILD_LUA
+goat_exercise_luadir = $(gimpplugindir)/plug-ins/goat-exercise-lua
+goat_exercise_lua_SCRIPTS = goat-exercise-lua.lua
+endif
+
 # Python 3 (pygobject) version.
 
 # Commented out for now until we figure out the GParamSpec issues.
@@ -78,4 +85,5 @@ endif
 
 EXTRA_DIST = \
 	goat-exercise-gjs.js	\
+	goat-exercise-lua.lua	\
 	goat-exercise-py3.py

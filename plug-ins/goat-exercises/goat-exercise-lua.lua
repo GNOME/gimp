@@ -33,6 +33,9 @@ local Goat = lgi.package 'Goat'
 local Goat = lgi.Goat
 
 function run(procedure, args, data)
+  -- procedure:new_return_values() crashes LGI so we construct the
+  -- GimpValueArray manually.
+  local retval = Gimp.ValueArray(1)
   local run_mode = GObject.Value.get_enum(args:index(0))
   if run_mode == Gimp.RunMode.INTERACTIVE then
     Gimp.ui_init("goat-exercise-lua", false);
@@ -93,14 +96,16 @@ function run(procedure, args, data)
         Gio.app_info_launch_default_for_uri(url, nil);
       else -- CANCEL, CLOSE, DELETE_EVENT
         dialog:destroy()
-        return procedure:new_return_values(Gimp.PDBStatusType.CANCEL, nil)
+        local cancel = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.CANCEL)
+        retval:append(cancel)
+        return retval
       end
     end
   end
 
   local drawable_id = args:index(2):get_int()
   local x, y, width, height = Gimp.drawable_mask_intersect (drawable_id)
-  if width > 0 and height > 0 then
+  if width ~= nill and height ~= nil and width > 0 and height > 0 then
     Gegl.init(nil)
 
     local buffer = Gimp.drawable_get_buffer (drawable_id)
@@ -122,12 +127,16 @@ function run(procedure, args, data)
     Gimp.drawable_update(drawable_id, x, y, width, height)
     Gimp.displays_flush()
   else
-    local err = GLib.Error.new_literal(GLib.quark_from_string("goat-error-quark"), 0,
-                                       "No pixels to process in the selected area.")
-    return procedure:new_return_values(Gimp.PDBStatusType.CALLING_ERROR, err)
+    local fail = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.CALLING_ERROR)
+    retval:append(fail)
+    local err = GObject.Value(GObject.Type.STRING, "No pixels to process in the selected area.")
+    retval:append(err)
+    return retval
   end
 
-  return procedure:new_return_values(Gimp.PDBStatusType.SUCCESS, 0)
+  local success = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
+  retval:append(success)
+  return retval
 end
 
 Goat:class('Exercise', Gimp.PlugIn)

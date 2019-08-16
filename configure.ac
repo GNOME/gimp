@@ -2359,6 +2359,52 @@ fi
 AM_CONDITIONAL(HAS_JAVASCRIPT_INTERP, test "x$GJS" != "xno")
 AM_CONDITIONAL(BUILD_JAVASCRIPT, test "x$with_javascript" != xno)
 
+####################################
+# Check for Lua runtime dependencies
+####################################
+
+AC_ARG_WITH(lua,
+            [  --with-lua=no|yes|force install Lua plug-ins (default=yes)], ,
+            [with_lua=yes])
+
+if test "x$with_lua" = xno; then
+  warning_lua="
+WARNING: you disabled the installation of core Lua plug-ins. This
+         is discouraged as it won't provide the full GIMP experience.
+         Note that you may install the Lua plug-ins even if Lua LGI
+         is not installed at build-time by passing the configure option
+         --with-lua=force.
+         Just make sure that it is available at run-time."
+elif test "x$with_lua" = xforce; then
+  with_lua="yes"
+  warning_lua=
+  AC_CHECK_PROGS(LUA, luajit, no)
+  if test "x$LUA" = xno; then
+    warning_lua="
+WARNING: luagit not found.
+         Lua plug-ins will be installed anyway but you should make
+         sure that luagit and LGI are available at installation,
+         otherwise installed plug-ins won't be usable."
+    with_lua="yes (see warning below)"
+  fi
+else
+  with_lua="yes"
+  AC_CHECK_PROGS(LUA, luajit, no)
+  if test "x$GJS" = xno; then
+    required_deps="$required_deps
+    - luagit not found.
+        *** Please install the Lua interpreter luagit.
+        *** Note that you may install the Lua plug-ins even if luajit
+        *** is not installed at build-time by passing the configure
+        *** option --with-lua=force.
+        *** Just make sure that luajit and LGI are available at run-time."
+    with_lua="no"
+  fi
+fi
+
+AM_CONDITIONAL(HAS_LUA_INTERP, test "x$LUA" != "xno")
+AM_CONDITIONAL(BUILD_LUA, test "x$with_lua" != xno)
+
 ###########################################################
 # Some plug-ins don't build on Win32, others are Win32-only
 ###########################################################
@@ -3092,6 +3138,7 @@ Optional Plug-Ins:
   Print:                     $enable_print
   Python 3 plug-ins:         $with_python
   JavaScript plug-ins:       $with_javascript
+  Lua plug-ins:              $with_lua
   TWAIN (Win32):             $os_win32
   Webpage:                   $have_webkit
   WMF:                       $have_libwmf
@@ -3110,7 +3157,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
