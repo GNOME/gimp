@@ -439,7 +439,27 @@ send_image (const gchar *filename,
 
   filepath = g_build_filename (gimp_file_get_utf8_name (tmp_dir),
                                mail_info.filename, NULL);
-  g_rename (tmpname, filepath);
+  if (g_rename (tmpname, filepath) == -1)
+    {
+      /* But on some system, I got an 'Invalid cross-device link' errno
+       * with g_rename().
+       * On the other hand, g_file_move() seems to be more robust.
+       */
+      GFile *source = g_file_new_for_path (tmpname);
+      GFile *target = g_file_new_for_path (filepath);
+
+      if (! g_file_move (source, target, G_FILE_COPY_NONE, NULL, NULL, NULL, &error))
+        {
+          g_message ("%s", error->message);
+          g_clear_error (&error);
+          g_object_unref (source);
+          g_object_unref (target);
+          goto error;
+        }
+
+      g_object_unref (source);
+      g_object_unref (target);
+    }
 
   mailcmd[0] = g_strdup ("xdg-email");
   mailcmd[1] = "--attach";
