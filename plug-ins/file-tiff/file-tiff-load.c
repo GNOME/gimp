@@ -800,7 +800,7 @@ load_image (GFile        *file,
             {
               TIFFClose (tif);
               g_message ("Could not create a new image: %s",
-                         gimp_get_pdb_error ());
+                         gimp_pdb_get_last_error (gimp_get_pdb ()));
               return GIMP_PDB_EXECUTION_ERROR;
             }
 
