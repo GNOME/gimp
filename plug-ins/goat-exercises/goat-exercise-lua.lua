@@ -66,6 +66,21 @@ function run(procedure, args, data)
     label:show()
 
     -- TODO: show source.
+    local contents = GLib.file_get_contents(arg[0])
+    if (contents) then
+      local scrolled = Gtk.ScrolledWindow()
+      scrolled:set_vexpand (true)
+      box:pack_start(scrolled, true, true, 1)
+      scrolled:show()
+
+      local view = Gtk.TextView()
+      view:set_wrap_mode(Gtk.WrapMode.WORD)
+      view:set_editable(false)
+      local buffer = view:get_buffer()
+      buffer:set_text(contents, -1)
+      scrolled:add(view)
+      view:show()
+    end
 
     while (true) do
       local response = dialog:run()
