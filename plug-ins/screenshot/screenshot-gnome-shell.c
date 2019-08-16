@@ -78,7 +78,7 @@ screenshot_gnome_shell_get_capabilities (void)
 GimpPDBStatusType
 screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                               GdkMonitor        *monitor,
-                              gint32            *image_ID,
+                              GimpImage        **image,
                               GError           **error)
 {
   gchar       *filename;
@@ -176,15 +176,15 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
     {
       GimpColorProfile *profile;
 
-      *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                   filename, filename);
-      gimp_image_set_filename (*image_ID, "screenshot.png");
+      gimp_image_set_filename (*image, "screenshot.png");
 
       profile = gimp_monitor_get_color_profile (monitor);
 
       if (profile)
         {
-          gimp_image_set_color_profile (*image_ID, profile);
+          gimp_image_set_color_profile (*image, profile);
           g_object_unref (profile);
         }
 
