@@ -27,7 +27,7 @@ ScreenshotCapabilities screenshot_osx_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_osx_shoot            (ScreenshotValues  *shootvals,
                                                         GdkScreen         *screen,
-                                                        gint32            *image_ID,
+                                                        GimpImage        **image,
                                                         GError           **error);
 
 #endif /* PLATFORM_OSX */
