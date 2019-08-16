@@ -68,16 +68,16 @@ static GimpProcedure  * remap_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray * remap_run              (GimpProcedure        *procedure,
                                                 GimpRunMode           run_mode,
-                                                gint32                image_id,
-                                                gint32                drawable_id,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
                                                 const GimpValueArray *args,
                                                 gpointer              run_data);
 
-static gboolean         remap                  (gint32                image_ID,
+static gboolean         remap                  (GimpImage            *image,
                                                 gint                  num_colors,
                                                 guchar               *map);
 
-static gboolean         remap_dialog           (gint32                image_ID,
+static gboolean         remap_dialog           (GimpImage            *image,
                                                 guchar               *map);
 
 
@@ -194,8 +194,8 @@ remap_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 remap_run (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
-           gint32                image_id,
-           gint32                drawable_id,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
            const GimpValueArray *args,
            gpointer              run_data)
 {
@@ -206,7 +206,7 @@ remap_run (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   /*  Make sure that the image is indexed  */
-  if (gimp_image_base_type (image_id) != GIMP_INDEXED)
+  if (gimp_image_base_type (image) != GIMP_INDEXED)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              NULL);
@@ -221,7 +221,7 @@ remap_run (GimpProcedure        *procedure,
       gint          n_col_args;
       const guchar *col_args;
 
-      g_free (gimp_image_get_colormap (image_id, &n_cols));
+      g_free (gimp_image_get_colormap (image, &n_cols));
 
       n_col_args = g_value_get_int            (gimp_value_array_index (args, 0));
       col_args   = gimp_value_get_uint8_array (gimp_value_array_index (args, 1));
@@ -229,7 +229,7 @@ remap_run (GimpProcedure        *procedure,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          if (! remap_dialog (image_id, map))
+          if (! remap_dialog (image, map))
             return gimp_procedure_new_return_values (procedure,
                                                      GIMP_PDB_CANCEL,
                                                      NULL);
@@ -250,7 +250,7 @@ remap_run (GimpProcedure        *procedure,
           break;
         }
 
-      if (! remap (image_id, n_cols, map))
+      if (! remap (image, n_cols, map))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_EXECUTION_ERROR,
                                                  NULL);
@@ -274,7 +274,7 @@ remap_run (GimpProcedure        *procedure,
                                                  GIMP_PDB_CALLING_ERROR,
                                                  NULL);
 
-      g_free (gimp_image_get_colormap (image_id, &n_cols));
+      g_free (gimp_image_get_colormap (image, &n_cols));
 
       if (index1 >= n_cols || index2 >= n_cols)
         return gimp_procedure_new_return_values (procedure,
@@ -285,7 +285,7 @@ remap_run (GimpProcedure        *procedure,
       map[index1] = map[index2];
       map[index2] = tmp;
 
-      if (! remap (image_id, n_cols, map))
+      if (! remap (image, n_cols, map))
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_EXECUTION_ERROR,
                                                  NULL);
@@ -296,23 +296,23 @@ remap_run (GimpProcedure        *procedure,
 
 
 static gboolean
-remap (gint32  image_ID,
-       gint    num_colors,
-       guchar *map)
+remap (GimpImage *image,
+       gint       num_colors,
+       guchar    *map)
 {
   guchar   *cmap;
   guchar   *new_cmap;
   guchar   *new_cmap_i;
   gint      ncols;
-  gint      num_layers;
-  gint32   *layers;
+  GList    *layers;
+  GList    *list;
   glong     pixels    = 0;
   glong     processed = 0;
   guchar    pixel_map[256];
   gboolean  valid[256];
   gint      i;
 
-  cmap = gimp_image_get_colormap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image, &ncols);
 
   g_return_val_if_fail (cmap != NULL, FALSE);
   g_return_val_if_fail (ncols > 0, FALSE);
@@ -358,9 +358,9 @@ remap (gint32  image_ID,
       *new_cmap_i++ = cmap[j + 2];
     }
 
-  gimp_image_undo_group_start (image_ID);
+  gimp_image_undo_group_start (image);
 
-  gimp_image_set_colormap (image_ID, new_cmap, ncols);
+  gimp_image_set_colormap (image, new_cmap, ncols);
 
   g_free (cmap);
   g_free (new_cmap);
@@ -370,13 +370,13 @@ remap (gint32  image_ID,
   /*  There is no needs to process the layers recursively, because
    *  indexed images cannot have layer groups.
    */
-  layers = gimp_image_get_layers (image_ID, &num_layers);
+  layers = gimp_image_get_layers (image);
 
-  for (i = 0; i < num_layers; i++)
+  for (list = layers; list; list = list->next)
     pixels +=
-      gimp_drawable_width (layers[i]) * gimp_drawable_height (layers[i]);
+      gimp_drawable_width (list->data) * gimp_drawable_height (list->data);
 
-  for (i = 0; i < num_layers; i++)
+  for (list = layers; list; list = list->next)
     {
       GeglBuffer         *buffer;
       GeglBuffer         *shadow;
@@ -387,8 +387,8 @@ remap (gint32  image_ID,
       gint                width, height, bpp;
       gint                update = 0;
 
-      buffer = gimp_drawable_get_buffer (layers[i]);
-      shadow = gimp_drawable_get_shadow_buffer (layers[i]);
+      buffer = gimp_drawable_get_buffer (list->data);
+      shadow = gimp_drawable_get_shadow_buffer (list->data);
 
       width   = gegl_buffer_get_width  (buffer);
       height  = gegl_buffer_get_height (buffer);
@@ -449,15 +449,15 @@ remap (gint32  image_ID,
       g_object_unref (buffer);
       g_object_unref (shadow);
 
-      gimp_drawable_merge_shadow (layers[i], TRUE);
-      gimp_drawable_update (layers[i], 0, 0, width, height);
+      gimp_drawable_merge_shadow (list->data, TRUE);
+      gimp_drawable_update (list->data, 0, 0, width, height);
     }
 
-  g_free (layers);
+  g_list_free (layers);
 
   gimp_progress_update (1.0);
 
-  gimp_image_undo_group_end (image_ID);
+  gimp_image_undo_group_end (image);
 
   return TRUE;
 }
@@ -629,8 +629,8 @@ remap_response (GtkWidget       *dialog,
 }
 
 static gboolean
-remap_dialog (gint32  image_ID,
-              guchar *map)
+remap_dialog (GimpImage *image,
+              guchar    *map)
 {
   GtkWidget       *dialog;
   GtkWidget       *vbox;
@@ -668,7 +668,7 @@ remap_dialog (gint32  image_ID,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
 
-  cmap = gimp_image_get_colormap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image, &ncols);
 
   g_return_val_if_fail ((ncols > 0) && (ncols <= 256), FALSE);
 
