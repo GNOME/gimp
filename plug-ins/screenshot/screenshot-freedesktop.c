@@ -73,11 +73,11 @@ screenshot_freedesktop_get_capabilities (void)
 }
 
 static void
-screenshot_freedesktop_dbus_signal (GDBusProxy *proxy,
-                                    gchar      *sender_name,
-                                    gchar      *signal_name,
-                                    GVariant   *parameters,
-                                    gint32     *image_ID)
+screenshot_freedesktop_dbus_signal (GDBusProxy  *proxy,
+                                    gchar       *sender_name,
+                                    gchar       *signal_name,
+                                    GVariant    *parameters,
+                                    GimpImage  **image)
 {
   if (g_strcmp0 (signal_name, "Response") == 0)
     {
@@ -103,9 +103,9 @@ screenshot_freedesktop_dbus_signal (GDBusProxy *proxy,
               GFile *file = g_file_new_for_uri (uri);
               gchar *path = g_file_get_path (file);
 
-              *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                                          path, path);
-              gimp_image_set_filename (*image_ID, "screenshot.png");
+              *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                                       path, path);
+              gimp_image_set_filename (*image, "screenshot.png");
 
               /* Delete the actual file. */
               g_file_delete (file, NULL, NULL);
@@ -125,7 +125,7 @@ screenshot_freedesktop_dbus_signal (GDBusProxy *proxy,
 GimpPDBStatusType
 screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
                               GdkMonitor        *monitor,
-                              gint32            *image_ID,
+                              GimpImage        **image,
                               GError           **error)
 {
   GVariant *retval;
@@ -163,17 +163,17 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
                                               opath,
                                               "org.freedesktop.portal.Request",
                                               NULL, NULL);
-      *image_ID = 0;
+      *image = NULL;
       g_signal_connect (proxy2, "g-signal",
                         G_CALLBACK (screenshot_freedesktop_dbus_signal),
-                        image_ID);
+                        image);
 
       gtk_main ();
       g_object_unref (proxy2);
       g_free (opath);
 
       /* Signal got a response. */
-      if (*image_ID)
+      if (*image)
         {
           GimpColorProfile *profile;
 
@@ -186,7 +186,7 @@ screenshot_freedesktop_shoot (ScreenshotValues  *shootvals,
           profile = gimp_monitor_get_color_profile (monitor);
           if (profile)
             {
-              gimp_image_set_color_profile (*image_ID, profile);
+              gimp_image_set_color_profile (*image, profile);
               g_object_unref (profile);
             }
 
