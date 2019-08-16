@@ -40,19 +40,19 @@
 
 GType              gimp_config_writer_get_type     (void) G_GNUC_CONST;
 
-GimpConfigWriter * gimp_config_writer_new_file     (const gchar       *filename,
-                                                    gboolean           atomic,
-                                                    const gchar       *header,
-                                                    GError           **error);
-GimpConfigWriter * gimp_config_writer_new_gfile    (GFile             *file,
-                                                    gboolean           atomic,
-                                                    const gchar       *header,
-                                                    GError           **error);
-GimpConfigWriter * gimp_config_writer_new_stream   (GOutputStream     *output,
-                                                    const gchar       *header,
-                                                    GError           **error);
-GimpConfigWriter * gimp_config_writer_new_fd       (gint               fd);
-GimpConfigWriter * gimp_config_writer_new_string   (GString           *string);
+GimpConfigWriter * gimp_config_writer_new_from_file     (const gchar       *filename,
+                                                         gboolean           atomic,
+                                                         const gchar       *header,
+                                                         GError           **error);
+GimpConfigWriter * gimp_config_writer_new_from_gfile    (GFile             *file,
+                                                         gboolean           atomic,
+                                                         const gchar       *header,
+                                                         GError           **error);
+GimpConfigWriter * gimp_config_writer_new_from_stream   (GOutputStream     *output,
+                                                         const gchar       *header,
+                                                         GError           **error);
+GimpConfigWriter * gimp_config_writer_new_from_fd       (gint               fd);
+GimpConfigWriter * gimp_config_writer_new_from_string   (GString           *string);
 
 GimpConfigWriter * gimp_config_writer_ref          (GimpConfigWriter  *writer);
 void               gimp_config_writer_unref        (GimpConfigWriter  *writer);

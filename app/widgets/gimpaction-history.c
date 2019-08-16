@@ -222,8 +222,8 @@ gimp_action_history_exit (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  writer = gimp_config_writer_new_gfile (file, TRUE, "GIMP action-history",
-                                         NULL);
+  writer = gimp_config_writer_new_from_gfile (file, TRUE, "GIMP action-history",
+                                              NULL);
   g_object_unref (file);
 
   for (actions = history.items->head, i = 0;

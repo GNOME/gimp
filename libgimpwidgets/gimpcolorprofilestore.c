@@ -698,10 +698,10 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
   gboolean          iter_valid;
   gint              i;
 
-  writer = gimp_config_writer_new_file (filename,
-                                        TRUE,
-                                        "GIMP color profile history",
-                                        error);
+  writer = gimp_config_writer_new_from_file (filename,
+                                             TRUE,
+                                             "GIMP color profile history",
+                                             error);
   if (! writer)
     return FALSE;
 
