@@ -76,7 +76,7 @@ screenshot_osx_get_capabilities (void)
 GimpPDBStatusType
 screenshot_osx_shoot (ScreenshotValues  *shootvals,
                       GdkScreen         *screen,
-                      gint32            *image_ID,
+                      GimpImage        **image,
                       GError           **error)
 {
   const gchar *mode    = " ";
@@ -139,9 +139,9 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
       /* don't attach a profile, screencapture attached one
        */
 
-      *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
-                                  filename, filename);
-      gimp_image_set_filename (*image_ID, "screenshot.png");
+      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+                               filename, filename);
+      gimp_image_set_filename (*image, "screenshot.png");
 
       g_unlink (filename);
       g_free (filename);
