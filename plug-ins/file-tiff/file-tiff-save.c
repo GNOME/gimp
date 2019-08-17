@@ -63,7 +63,7 @@
 
 
 static gboolean  save_paths             (TIFF          *tif,
-                                         gint32         image,
+                                         GimpImage     *image,
                                          gdouble        width,
                                          gdouble        height,
                                          gint           offset_x,
@@ -78,7 +78,7 @@ static void      byte2bit               (const guchar  *byteline,
                                          gboolean       invert);
 
 static void      save_thumbnail         (TiffSaveVals  *tsvals,
-                                         gint32         image,
+                                         GimpImage     *image,
                                          TIFF          *tif);
 
 
@@ -106,27 +106,29 @@ double_to_psd_fixed (gdouble  value,
 }
 
 static gboolean
-save_paths (TIFF    *tif,
-            gint32   image,
-            gdouble  width,
-            gdouble  height,
-            gint     offset_x,
-            gint     offset_y)
+save_paths (TIFF      *tif,
+            GimpImage *image,
+            gdouble    width,
+            gdouble    height,
+            gint       offset_x,
+            gint       offset_y)
 {
   gint id = 2000; /* Photoshop paths have IDs >= 2000 */
-  gint num_vectors, *vectors, v;
+  GList *vectors;
+  GList *iter;
+  gint   v;
   gint num_strokes, *strokes, s;
   GString *ps_tag;
 
-  vectors = gimp_image_get_vectors (image, &num_vectors);
+  vectors = gimp_image_get_vectors (image);
 
-  if (num_vectors <= 0)
+  if (! vectors)
     return FALSE;
 
   ps_tag = g_string_new ("");
 
   /* Only up to 1000 paths supported */
-  for (v = 0; v < MIN (num_vectors, 1000); v++)
+  for (iter = vectors, v = 0; iter && v < 1000; iter = iter->next, v++)
     {
       GString *data;
       gchar   *name, *nameend;
@@ -144,7 +146,7 @@ save_paths (TIFF    *tif,
        * - use iso8859-1 if possible
        * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
        */
-      name = gimp_item_get_name (vectors[v]);
+      name = gimp_item_get_name (iter->data);
       tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
 
       if (tmpname && err == NULL)
@@ -181,7 +183,7 @@ save_paths (TIFF    *tif,
       pointrecord[1] = 6;  /* fill rule record */
       g_string_append_len (data, pointrecord, 26);
 
-      strokes = gimp_vectors_get_strokes (vectors[v], &num_strokes);
+      strokes = gimp_vectors_get_strokes (iter->data, &num_strokes);
 
       for (s = 0; s < num_strokes; s++)
         {
@@ -191,7 +193,7 @@ save_paths (TIFF    *tif,
           gboolean  closed;
           gint      p = 0;
 
-          type = gimp_vectors_stroke_get_points (vectors[v], strokes[s],
+          type = gimp_vectors_stroke_get_points (iter->data, strokes[s],
                                                  &num_points, &points, &closed);
 
           if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
@@ -242,7 +244,7 @@ save_paths (TIFF    *tif,
   TIFFSetField (tif, TIFFTAG_PHOTOSHOP, ps_tag->len, ps_tag->str);
   g_string_free (ps_tag, TRUE);
 
-  g_free (vectors);
+  g_list_free (vectors);
 
   return TRUE;
 }
@@ -268,11 +270,11 @@ static gboolean
 save_layer (TIFF         *tif,
             TiffSaveVals *tsvals,
             const Babl   *space,
-            gint32        image,
-            gint32        layer,
+            GimpImage    *image,
+            GimpLayer    *layer,
             gint32        page,
             gint32        num_pages,
-            gint32        orig_image, /* the export function might */
+            GimpImage    *orig_image, /* the export function might */
                                       /* have created a duplicate  */
             gint         *saved_bpp,
             gboolean      out_linear,
@@ -318,7 +320,7 @@ save_layer (TIFF         *tif,
 
   compression = tsvals->compression;
 
-  layer_name = gimp_item_get_name (layer);
+  layer_name = gimp_item_get_name (GIMP_ITEM (layer));
 
   /* Disabled because this isn't in older releases of libtiff, and it
    * wasn't helping much anyway
@@ -332,8 +334,8 @@ save_layer (TIFF         *tif,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
-  drawable_type = gimp_drawable_type (layer);
-  buffer        = gimp_drawable_get_buffer (layer);
+  drawable_type = gimp_drawable_type (GIMP_DRAWABLE (layer));
+  buffer        = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   format = gegl_buffer_get_format (buffer);
   type   = babl_format_get_type (format, 0);
@@ -582,7 +584,7 @@ save_layer (TIFF         *tif,
       samplesperpixel = (drawable_type == GIMP_INDEXEDA_IMAGE) ? 2 : 1;
       bytesperrow     = cols;
       alpha           = (drawable_type == GIMP_INDEXEDA_IMAGE);
-      format          = gimp_drawable_get_format (layer);
+      format          = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
 
       g_free (cmap);
       break;
@@ -683,7 +685,7 @@ save_layer (TIFF         *tif,
       TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
     }
 
-  gimp_drawable_offsets (layer, &offset_x, &offset_y);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
 
   if (offset_x || offset_y)
     {
@@ -777,7 +779,7 @@ out:
 
 static void
 save_thumbnail (TiffSaveVals *tsvals,
-                gint32        image,
+                GimpImage    *image,
                 TIFF         *tif)
 {
   /* now switch IFD and write thumbnail
@@ -860,7 +862,7 @@ save_thumbnail (TiffSaveVals *tsvals,
 static void
 save_metadata (GFile                 *file,
                TiffSaveVals          *tsvals,
-               gint32                 image,
+               GimpImage             *image,
                GimpMetadata          *metadata,
                GimpMetadataSaveFlags  metadata_flags,
                gint                   saved_bpp)
@@ -942,8 +944,8 @@ save_metadata (GFile                 *file,
 gboolean
 save_image (GFile                  *file,
             TiffSaveVals           *tsvals,
-            gint32                  image,
-            gint32                  orig_image,    /* the export function */
+            GimpImage              *image,
+            GimpImage              *orig_image,    /* the export function */
                                                    /* might have created  */
                                                    /* a duplicate         */
             const gchar            *image_comment,
@@ -958,9 +960,11 @@ save_image (GFile                  *file,
   gboolean    out_linear          = FALSE;
   gint        number_of_sub_IFDs  = 1;
   toff_t      sub_IFDs_offsets[1] = { 0UL };
-  gint32      num_layers, *layers, current_layer = 0;
+  gint32      num_layers, current_layer = 0;
+  GList      *layers;
 
-  layers = gimp_image_get_layers (image, &num_layers);
+  layers = gimp_image_get_layers (image);
+  num_layers = g_list_length (layers);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -1055,7 +1059,7 @@ save_image (GFile                  *file,
 
   /* write last layer as first page. */
   if (! save_layer (tif,  tsvals, space, image,
-                    layers[num_layers - current_layer - 1],
+                    g_list_nth_data (layers, num_layers - current_layer - 1),
                     current_layer, num_layers,
                     orig_image, saved_bpp, out_linear, error))
     {
@@ -1096,7 +1100,7 @@ save_image (GFile                  *file,
         {
           gint tmp_saved_bpp;
           if (! save_layer (tif,  tsvals, space, image,
-                            layers[num_layers - current_layer - 1],
+                            g_list_nth_data (layers, num_layers - current_layer - 1),
                             current_layer, num_layers, orig_image,
                             &tmp_saved_bpp, out_linear, error))
             {
@@ -1128,6 +1132,7 @@ save_image (GFile                  *file,
   status = TRUE;
 
 out:
+  g_list_free (layers);
   return status;
 }
 
