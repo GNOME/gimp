@@ -233,6 +233,9 @@ gimp_unit_get_factor (GimpUnit unit)
 {
   g_return_val_if_fail (_gimp_unit_vtable.unit_get_factor != NULL, 1.0);
 
+  if (unit == GIMP_UNIT_PIXEL)
+    return 0.0;
+
   return _gimp_unit_vtable.unit_get_factor (unit);
 }
 
