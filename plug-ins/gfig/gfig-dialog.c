@@ -199,7 +199,7 @@ gfig_dialog (void)
   GtkWidget    *vbox;
   GFigObj      *gfig;
   GimpParasite *parasite;
-  gint          newlayer;
+  GimpLayer    *newlayer;
   GtkWidget    *menubar;
   GtkWidget    *toolbar;
   GtkWidget    *combo;
@@ -216,9 +216,9 @@ gfig_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  img_width  = gimp_drawable_width (gfig_context->drawable_id);
-  img_height = gimp_drawable_height (gfig_context->drawable_id);
-  img_type   = gimp_drawable_type_with_alpha (gfig_context->drawable_id);
+  img_width  = gimp_drawable_width (gfig_context->drawable);
+  img_height = gimp_drawable_height (gfig_context->drawable);
+  img_type   = gimp_drawable_type_with_alpha (gfig_context->drawable);
 
   /*
    * See if there is a "gfig" parasite.  If so, this is a gfig layer,
@@ -227,7 +227,7 @@ gfig_dialog (void)
    */
   gfig_list = NULL;
   undo_level = -1;
-  parasite = gimp_item_get_parasite (gfig_context->drawable_id, "gfig");
+  parasite = gimp_item_get_parasite (GIMP_ITEM (gfig_context->drawable), "gfig");
   gfig_context->enable_repaint = FALSE;
 
   /* debug */
@@ -239,20 +239,20 @@ gfig_dialog (void)
 
   if (parasite)
     {
-      gimp_drawable_fill (gfig_context->drawable_id, GIMP_FILL_TRANSPARENT);
+      gimp_drawable_fill (gfig_context->drawable, GIMP_FILL_TRANSPARENT);
       gfig_context->using_new_layer = FALSE;
       gimp_parasite_free (parasite);
     }
   else
     {
-      newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
+      newlayer = gimp_layer_new (gfig_context->image, "GFig",
                                  img_width, img_height,
                                  img_type,
                                  100.0,
-                                 gimp_image_get_default_new_layer_mode (gfig_context->image_id));
-      gimp_drawable_fill (newlayer, GIMP_FILL_TRANSPARENT);
-      gimp_image_insert_layer (gfig_context->image_id, newlayer, -1, -1);
-      gfig_context->drawable_id = newlayer;
+                                 gimp_image_get_default_new_layer_mode (gfig_context->image));
+      gimp_drawable_fill (GIMP_DRAWABLE (newlayer), GIMP_FILL_TRANSPARENT);
+      gimp_image_insert_layer (gfig_context->image, newlayer, NULL, -1);
+      gfig_context->drawable = GIMP_DRAWABLE (newlayer);
       gfig_context->using_new_layer = TRUE;
     }
 
@@ -553,8 +553,8 @@ gfig_response (GtkWidget *widget,
       /* if we created a new layer, delete it */
       if (gfig_context->using_new_layer)
         {
-          gimp_image_remove_layer (gfig_context->image_id,
-                                   gfig_context->drawable_id);
+          gimp_image_remove_layer (gfig_context->image,
+                                   GIMP_LAYER (gfig_context->drawable));
         }
       else /* revert back to the original figure */
         {
@@ -1757,15 +1757,15 @@ num_sides_widget (const gchar *d_title,
 }
 
 void
-gfig_paint (BrushType brush_type,
-            gint32    drawable_ID,
-            gint      seg_count,
-            gdouble   line_pnts[])
+gfig_paint (BrushType     brush_type,
+            GimpDrawable *drawable,
+            gint          seg_count,
+            gdouble       line_pnts[])
 {
   switch (brush_type)
     {
     case BRUSH_BRUSH_TYPE:
-      gimp_paintbrush (drawable_ID,
+      gimp_paintbrush (drawable,
                        selvals.brushfade,
                        seg_count, line_pnts,
                        GIMP_PAINT_CONSTANT,
@@ -1773,19 +1773,19 @@ gfig_paint (BrushType brush_type,
       break;
 
     case BRUSH_PENCIL_TYPE:
-      gimp_pencil (drawable_ID,
+      gimp_pencil (drawable,
                    seg_count, line_pnts);
       break;
 
     case BRUSH_AIRBRUSH_TYPE:
-      gimp_airbrush (drawable_ID,
+      gimp_airbrush (drawable,
                      selvals.airbrushpressure,
                      seg_count, line_pnts);
       break;
 
     case BRUSH_PATTERN_TYPE:
-      gimp_clone (drawable_ID,
-                  drawable_ID,
+      gimp_clone (drawable,
+                  drawable,
                   GIMP_CLONE_PATTERN,
                   0.0, 0.0,
                   seg_count, line_pnts);
@@ -1929,7 +1929,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       break;
 
     case FILL_GRADIENT:
-      gimp_drawable_edit_gradient_fill (gfig_context->drawable_id,
+      gimp_drawable_edit_gradient_fill (gfig_context->drawable,
                                         GIMP_GRADIENT_SHAPEBURST_DIMPLED,
                                         0.0,       /* offset             */
                                         FALSE,     /* supersampling      */
@@ -1940,7 +1940,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
                                         0.0, 0.0); /* (x2, y2) - ignored */
       return;
     case FILL_VERTICAL:
-      gimp_drawable_edit_gradient_fill (gfig_context->drawable_id,
+      gimp_drawable_edit_gradient_fill (gfig_context->drawable,
                                         GIMP_GRADIENT_LINEAR,
                                         0.0,
                                         FALSE,
@@ -1951,7 +1951,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
                                         x1, y2);
       return;
     case FILL_HORIZONTAL:
-      gimp_drawable_edit_gradient_fill (gfig_context->drawable_id,
+      gimp_drawable_edit_gradient_fill (gfig_context->drawable,
                                         GIMP_GRADIENT_LINEAR,
                                         0.0,
                                         FALSE,
@@ -1965,7 +1965,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 
   gimp_context_set_opacity (current_style->fill_opacity);
 
-  gimp_drawable_edit_fill (gfig_context->drawable_id,
+  gimp_drawable_edit_fill (gfig_context->drawable,
                            fill_type);
 
   gimp_context_pop ();
@@ -1983,7 +1983,7 @@ gfig_paint_callback (void)
 
   objs = gfig_context->current_obj->obj_list;
 
-  gimp_drawable_fill (gfig_context->drawable_id, GIMP_FILL_TRANSPARENT);
+  gimp_drawable_fill (gfig_context->drawable, GIMP_FILL_TRANSPARENT);
 
   while (objs)
     {

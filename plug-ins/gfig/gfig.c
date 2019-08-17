@@ -82,8 +82,8 @@ static GimpProcedure  * gfig_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray * gfig_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
-                                               gint32                image_id,
-                                               gint32                drawable_id,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -188,8 +188,8 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 gfig_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           const GimpValueArray *args,
           gpointer              run_data)
 {
@@ -203,23 +203,23 @@ gfig_run (GimpProcedure        *procedure,
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj    = NULL;
 
-  gfig_context->image_id    = image_id;
-  gfig_context->drawable_id = drawable_id;
+  gfig_context->image    = image;
+  gfig_context->drawable = drawable;
 
-  gimp_image_undo_group_start (gfig_context->image_id);
+  gimp_image_undo_group_start (gfig_context->image);
 
   gimp_context_push ();
 
   /* TMP Hack - clear any selections */
-  if (! gimp_selection_is_empty (gfig_context->image_id))
-    gimp_selection_none (gfig_context->image_id);
+  if (! gimp_selection_is_empty (gfig_context->image))
+    gimp_selection_none (gfig_context->image);
 
-  if (! gimp_drawable_mask_intersect (drawable_id, &sel_x, &sel_y,
+  if (! gimp_drawable_mask_intersect (drawable, &sel_x, &sel_y,
                                       &sel_width, &sel_height))
     {
       gimp_context_pop ();
 
-      gimp_image_undo_group_end (gfig_context->image_id);
+      gimp_image_undo_group_end (gfig_context->image);
 
       return gimp_procedure_new_return_values (procedure, status, NULL);
     }
@@ -254,7 +254,7 @@ gfig_run (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       if (! gfig_dialog ())
         {
-          gimp_image_undo_group_end (gfig_context->image_id);
+          gimp_image_undo_group_end (gfig_context->image);
 
           return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
                                                    NULL);
@@ -271,7 +271,7 @@ gfig_run (GimpProcedure        *procedure,
 
   gimp_context_pop ();
 
-  gimp_image_undo_group_end (gfig_context->image_id);
+  gimp_image_undo_group_end (gfig_context->image);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -753,7 +753,8 @@ gfig_save_as_parasite (void)
 
   g_string_free (string, TRUE);
 
-  if (!gimp_item_attach_parasite (gfig_context->drawable_id, parasite))
+  if (!gimp_item_attach_parasite (GIMP_ITEM (gfig_context->drawable),
+                                  parasite))
     {
       g_message (_("Error trying to save figure as a parasite: "
                    "can't attach parasite to drawable."));
@@ -773,7 +774,8 @@ gfig_load_from_parasite (void)
   GimpParasite *parasite;
   GFigObj      *gfig;
 
-  parasite = gimp_item_get_parasite (gfig_context->drawable_id, "gfig");
+  parasite = gimp_item_get_parasite (GIMP_ITEM (gfig_context->drawable),
+                                     "gfig");
   if (! parasite)
     return NULL;
 
