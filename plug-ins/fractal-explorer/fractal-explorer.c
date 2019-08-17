@@ -95,12 +95,12 @@ static GimpProcedure  * explorer_create_procedure (GimpPlugIn           *plug_in
 
 static GimpValueArray * explorer_run              (GimpProcedure        *procedure,
                                                    GimpRunMode           run_mode,
-                                                   gint32                image_id,
-                                                   gint32                drawable_id,
+                                                   GimpImage            *image,
+                                                   GimpDrawable         *drawable,
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
-static void       explorer                         (gint32              drawable_id);
+static void       explorer                         (GimpDrawable       *drawable);
 
 static void       delete_dialog_callback           (GtkWidget          *widget,
                                                     gboolean            value,
@@ -398,8 +398,8 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 explorer_run (GimpProcedure        *procedure,
               GimpRunMode           run_mode,
-              gint32                image_id,
-              gint32                drawable_id,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
               const GimpValueArray *args,
               gpointer              run_data)
 {
@@ -412,9 +412,7 @@ explorer_run (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
-
-  if (! gimp_drawable_mask_intersect (drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &sel_x, &sel_y,
                                       &sel_width, &sel_height))
     {
@@ -494,7 +492,7 @@ explorer_run (GimpProcedure        *procedure,
     {
       gimp_progress_init (_("Rendering fractal"));
 
-      explorer (drawable_id);
+      explorer (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -513,7 +511,7 @@ explorer_run (GimpProcedure        *procedure,
  *********************************************************************/
 
 static void
-explorer (gint32 drawable_id)
+explorer (GimpDrawable *drawable)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -535,16 +533,16 @@ explorer (gint32 drawable_id)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  if (! gimp_drawable_mask_intersect (drawable_id, &x, &y, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
     return;
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width  = gimp_drawable_width  (drawable_id);
-  height = gimp_drawable_height (drawable_id);
+  width  = gimp_drawable_width  (drawable);
+  height = gimp_drawable_height (drawable);
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
@@ -555,8 +553,8 @@ explorer (gint32 drawable_id)
   src_row  = g_new (guchar, bpp * w);
   dest_row = g_new (guchar, bpp * w);
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_id);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   xbild = width;
   ybild = height;
@@ -592,8 +590,8 @@ explorer (gint32 drawable_id)
   gimp_progress_update (1.0);
 
   /*  update the processed region  */
-  gimp_drawable_merge_shadow (drawable_id, TRUE);
-  gimp_drawable_update (drawable_id, x, y, w, h);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, x, y, w, h);
 }
 
 /**********************************************************************
