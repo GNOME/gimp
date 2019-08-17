@@ -162,7 +162,6 @@ register_pattern_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-info");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pattern-get-info",
                                      "Retrieve information about the specified pattern.",
                                      "This procedure retrieves information about the specified pattern. This includes the pattern extents (width and height).",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -204,7 +203,6 @@ register_pattern_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pattern-get-pixels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pattern-get-pixels",
                                      "Retrieve information about the specified pattern (including pixels).",
                                      "This procedure retrieves information about the specified. This includes the pattern extents (width and height), its bpp and its pixel data.",
                                      "Michael Natterer <mitch@gimp.org>",

@@ -4788,7 +4788,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-alienmap2");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-alienmap2",
                                      "Alter colors in various psychedelic ways",
                                      "No help yet. Just try it and you'll see!",
                                      "Compatibility procedure. Please see 'gegl:alien-map' for credits.",
@@ -4884,7 +4883,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-antialias");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-antialias",
                                      "Antialias using the Scale3X edge-extrapolation algorithm",
                                      "No more help.",
                                      "Compatibility procedure. Please see 'gegl:antialias' for credits.",
@@ -4920,7 +4918,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-apply-canvas");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-apply-canvas",
                                      "Add a canvas texture to the image",
                                      "This function applies a canvas texture map to the drawable.",
                                      "Compatibility procedure. Please see 'gegl:texturize-canvas' for credits.",
@@ -4968,7 +4965,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-applylens");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-applylens",
                                      "Simulate an elliptical lens over the image",
                                      "This plug-in uses Snell's law to draw an ellipsoid lens over the image.",
                                      "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
@@ -5028,7 +5024,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-autocrop");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-autocrop",
                                      "Remove empty borders from the image",
                                      "Remove empty borders from the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -5064,7 +5059,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-autocrop-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-autocrop-layer",
                                      "Crop the active layer based on empty borders of the input drawable",
                                      "Crop the active layer of the input \"image\" based on empty borders of the input \"drawable\". \n\nThe input drawable serves as a base for detecting cropping extents (transparency or background color), and is not necessarily the cropped layer (the current active layer).",
                                      "Spencer Kimball & Peter Mattis",
@@ -5100,7 +5094,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-autostretch-hsv");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-autostretch-hsv",
                                      "Stretch contrast to cover the maximum possible range",
                                      "This simple plug-in does an automatic contrast stretch. For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range. For some images it may do just what you want; for others it may be total crap :). This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast-hsv' for credits.",
@@ -5136,7 +5129,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-bump-map");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-bump-map",
                                      "Create an embossing effect using a bump map",
                                      "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be applied as a bump map to another image and produces a nice embossing effect.",
                                      "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
@@ -5238,7 +5230,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-bump-map-tiled");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-bump-map-tiled",
                                      "Create an embossing effect using a tiled image as a bump map",
                                      "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be tiled and applied as a bump map to another image and produces a nice embossing effect.",
                                      "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
@@ -5340,7 +5331,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-c-astretch");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-c-astretch",
                                      "Stretch contrast to cover the maximum possible range",
                                      "This simple plug-in does an automatic contrast stretch. For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range. For some images it may do just what you want; for others it may not work that well.",
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
@@ -5376,7 +5366,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-cartoon");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-cartoon",
                                      "Simulate a cartoon by enhancing edges",
                                      "Propagates dark values in an image based on each pixel's relative darkness to a neighboring average. The idea behind this filter is to give the look of a black felt pen drawing subsequently shaded with color. This is achieved by darkening areas of the image which are measured to be darker than a neighborhood average. In this way, sufficiently large shifts in intensity are darkened to black. The rate at which they are darkened to black is determined by the second pct_black parameter. The mask_radius parameter controls the size of the pixel neighborhood over which the average intensity is computed and then compared to each pixel in the neighborhood to decide whether or not to darken it to black. Large values for mask_radius result in very thick black areas bordering the shaded regions of color and much less detail for black areas everywhere including inside regions of color. Small values result in more subtle pen strokes and detail everywhere. Small values for the pct_black make the\n"
                                      "blend from the color regions to the black border lines smoother and the lines themselves thinner and less noticeable; larger values achieve the opposite effect.",
@@ -5425,7 +5414,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-colors-channel-mixer");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-colors-channel-mixer",
                                      "Alter colors by mixing RGB Channels",
                                      "This plug-in mixes the RGB channels.",
                                      "Compatibility procedure. Please see 'gegl:channel-mixer' for credits.",
@@ -5521,7 +5509,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-colortoalpha");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-colortoalpha",
                                      "Convert a specified color to transparency",
                                      "This replaces as much of a given color as possible in each pixel with a corresponding amount of alpha, then readjusts the color accordingly.",
                                      "Spencer Kimball & Peter Mattis",
@@ -5564,7 +5551,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-convmatrix");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-convmatrix",
                                      "Apply a generic 5x5 convolution matrix",
                                      "Apply a generic 5x5 convolution matrix.",
                                      "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
@@ -5646,7 +5632,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-cubism");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-cubism",
                                      "Convert the image into randomly rotated square blobs",
                                      "Convert the image into randomly rotated square blobs.",
                                      "Compatibility procedure. Please see 'gegl:cubism' for credits.",
@@ -5700,7 +5685,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-deinterlace");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-deinterlace",
                                      "Fix images where every other row is missing",
                                      "Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this.",
                                      "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
@@ -5742,7 +5726,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-diffraction");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-diffraction",
                                      "Generate diffraction patterns",
                                      "Help? What help?",
                                      "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
@@ -5850,7 +5833,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-displace");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-displace",
                                      "Displace pixels as indicated by displacement maps",
                                      "Displaces the contents of the specified drawable by the amounts specified by 'amount-x' and 'amount-y' multiplied by the luminance of corresponding pixels in the 'displace-map' drawables.",
                                      "Compatibility procedure. Please see 'gegl:displace' for credits.",
@@ -5928,7 +5910,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-displace-polar");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-displace-polar",
                                      "Displace pixels as indicated by displacement maps",
                                      "Just like plug-in-displace but working in polar coordinates. The drawable is whirled and pinched according to the map.",
                                      "Compatibility procedure. Please see 'gegl:displace' for credits.",
@@ -6006,7 +5987,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-dog");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-dog",
                                      "Edge detection with control of edge thickness",
                                      "Applies two Gaussian blurs to the drawable, and subtracts the results. This is robust and widely used method for detecting edges.",
                                      "Compatibility procedure. Please see 'gegl:difference-of-gaussians' for credits.",
@@ -6066,7 +6046,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-edge");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-edge",
                                      "Several simple methods for detecting edges",
                                      "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tileable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
                                      "Compatibility procedure. Please see 'gegl:edge' for credits.",
@@ -6120,7 +6099,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-emboss");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-emboss",
                                      "Simulate an image created by embossing",
                                      "Emboss or Bumpmap the given drawable, specifying the angle and elevation for the light source.",
                                      "Compatibility procedure. Please see 'gegl:emboss' for credits.",
@@ -6180,7 +6158,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-engrave");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-engrave",
                                      "Simulate an antique engraving",
                                      "Creates a black-and-white 'engraved' version of an image as seen in old illustrations.",
                                      "Compatibility procedure. Please see 'gegl:engrave' for credits.",
@@ -6228,7 +6205,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-exchange");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-exchange",
                                      "Swap one color with another",
                                      "Exchange one color with another, optionally setting a threshold to convert from one shade to another.",
                                      "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
@@ -6318,7 +6294,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-flarefx");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-flarefx",
                                      "Add a lens flare effect",
                                      "Adds a lens flare effects. Makes your image look like it was snapped with a cheap camera with a lot of lens :)",
                                      "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
@@ -6366,7 +6341,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-fractal-trace");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-fractal-trace",
                                      "Transform image with the Mandelbrot Fractal",
                                      "Transform image with the Mandelbrot Fractal",
                                      "Compatibility procedure. Please see 'gegl:fractal-trace' for credits.",
@@ -6438,7 +6412,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-gauss");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-gauss",
                                      "Simplest, most commonly used way of blurring",
                                      "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run. The 'method' parameter is ignored.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
@@ -6492,7 +6465,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-gauss-iir");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-gauss-iir",
                                      "Apply a gaussian blur",
                                      "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
@@ -6546,7 +6518,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-gauss-iir2");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-gauss-iir2",
                                      "Apply a gaussian blur",
                                      "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
@@ -6594,7 +6565,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-gauss-rle");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-gauss-rle",
                                      "Apply a gaussian blur",
                                      "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
@@ -6648,7 +6618,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-gauss-rle2");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-gauss-rle2",
                                      "Apply a gaussian blur",
                                      "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
@@ -6696,7 +6665,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-glasstile");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-glasstile",
                                      "Simulate distortion caused by square glass tiles",
                                      "Divide the image into square glassblocks in which the image is refracted.",
                                      "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
@@ -6744,7 +6712,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-hsv-noise");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-hsv-noise",
                                      "Randomize hue, saturation and value independently",
                                      "Scattering pixel values in HSV space",
                                      "Compatibility procedure. Please see 'gegl:noise-hsv' for credits.",
@@ -6804,7 +6771,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-illusion");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-illusion",
                                      "Superimpose many altered copies of the image",
                                      "Produce illusion.",
                                      "Compatibility procedure. Please see 'gegl:illusion' for credits.",
@@ -6852,7 +6818,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-laplace");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-laplace",
                                      "High-resolution edge detection",
                                      "This plug-in creates one-pixel wide edges from the image, with the value proportional to the gradient. It uses the Laplace operator (a 3x3 kernel with -8 in the middle). The image has to be laplacered to get useful results, a gauss_iir with 1.5 - 5.0 depending on the noise in the image is best.",
                                      "Compatibility procedure. Please see 'gegl:edge-laplace' for credits.",
@@ -6888,7 +6853,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-lens-distortion");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-lens-distortion",
                                      "Corrects lens distortion",
                                      "Corrects barrel or pincushion lens distortion.",
                                      "Compatibility procedure. Please see 'gegl:lens-distortion' for credits.",
@@ -6960,7 +6924,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-make-seamless");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-make-seamless",
                                      "Alters edges to make the image seamlessly tileable",
                                      "This plug-in creates a seamless tileable from the input drawable.",
                                      "Compatibility procedure. Please see 'gegl:tile-seamless' for credits.",
@@ -6996,7 +6959,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-maze");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-maze",
                                      "Draw a labyrinth",
                                      "Generates a maze using either the depth-first search method or Prim's algorithm. Can make tileable mazes too.",
                                      "Compatibility procedure. Please see 'gegl:maze' for credits.",
@@ -7074,7 +7036,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-mblur");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-mblur",
                                      "Simulate movement using directional blur",
                                      "This plug-in simulates the effect seen when photographing a moving object at a slow shutter speed. Done by adding multiple displaced copies.",
                                      "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
@@ -7140,7 +7101,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-mblur-inward");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-mblur-inward",
                                      "Simulate movement using directional blur",
                                      "This procedure is equivalent to plug-in-mblur but performs the zoom blur inward instead of outward.",
                                      "Compatibility procedure. Please see 'gegl:motion-blur-linear, -zoom, -cirular' for credits.",
@@ -7206,7 +7166,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-mosaic");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-mosaic",
                                      "Convert the image into irregular tiles",
                                      "Mosaic is a filter which transforms an image into what appears to be a mosaic, composed of small primitives, each of constant color and of an approximate size.",
                                      "Compatibility procedure. Please see 'gegl:mosaic' for credits.",
@@ -7314,7 +7273,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-neon");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-neon",
                                      "Simulate the glowing boundary of a neon light",
                                      "This filter works in a manner similar to the edge plug-in, but uses the first derivative of the gaussian operator to achieve resolution independence. The IIR method of calculating the effect is utilized to keep the processing time constant between large and small standard deviations.",
                                      "Compatibility procedure. Please see 'gegl:edge-neon' for credits.",
@@ -7362,7 +7320,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-newsprint");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-newsprint",
                                      "Halftone the image to give newspaper-like effect",
                                      "Halftone the image to give newspaper-like effect",
                                      "Compatibility procedure. Please see 'gegl:newsprint' for credits.",
@@ -7470,7 +7427,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-normalize");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-normalize",
                                      "Stretch brightness values to cover the full range",
                                      "This plug-in performs almost the same operation as the 'contrast autostretch' plug-in, except that it won't allow the color channels to normalize independently. This is actually what most people probably want instead of contrast-autostretch; use c-a only if you wish to remove an undesirable color-tint from a source image which is supposed to contain pure-white and pure-black.",
                                      "Compatibility procedure. Please see 'gegl:stretch-contrast' for credits.",
@@ -7506,7 +7462,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-nova");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-nova",
                                      "Add a starburst to the image",
                                      "This plug-in produces an effect like a supernova burst. The amount of the light effect is approximately in proportion to 1/r, where r is the distance from the center of the star.",
                                      "Compatibility procedure. Please see 'gegl:supernova' for credits.",
@@ -7579,7 +7534,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-oilify");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-oilify",
                                      "Smear colors to simulate an oil painting",
                                      "This function performs the well-known oil-paint effect on the specified drawable.",
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
@@ -7627,7 +7581,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-oilify-enhanced");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-oilify-enhanced",
                                      "Smear colors to simulate an oil painting",
                                      "This function performs the well-known oil-paint effect on the specified drawable.",
                                      "Compatibility procedure. Please see 'gegl:oilify' for credits.",
@@ -7693,7 +7646,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-papertile");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-papertile",
                                      "Cut image into paper tiles, and slide them",
                                      "This plug-in cuts an image into paper tiles and slides each paper tile.",
                                      "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
@@ -7778,7 +7730,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-photocopy");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-photocopy",
                                      "Simulate color distortion produced by a copy machine",
                                      "Propagates dark values in an image based on each pixel's relative darkness to a neighboring average. The idea behind this filter is to give the look of a photocopied version of the image, with toner transferred based on the relative darkness of a particular region. This is achieved by darkening areas of the image which are measured to be darker than a neighborhood average and setting other pixels to white. In this way, sufficiently large shifts in intensity are darkened to black. The rate at which they are darkened to black is determined by the second pct_black parameter. The mask_radius parameter controls the size of the pixel neighborhood over which the average intensity is computed and then compared to each pixel in the neighborhood to decide whether or not to darken it to black. Large values for mask_radius result in very thick black areas bordering the regions of white and much less detail for black areas everywhere including inside regions of color. Small values result in\n"
                                      "less toner overall and more detail everywhere. Small values for the pct_black make the blend from the white regions to the black border lines smoother and the toner regions themselves thinner and less noticeable; larger values achieve the opposite effect.",
@@ -7839,7 +7790,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-pixelize");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-pixelize",
                                      "Simplify image into an array of solid-colored squares",
                                      "Pixelize the contents of the specified drawable with specified pixelizing width.",
                                      "Spencer Kimball & Peter Mattis",
@@ -7881,7 +7831,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-pixelize2");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-pixelize2",
                                      "Simplify image into an array of solid-colored rectangles",
                                      "Pixelize the contents of the specified drawable with specified pixelizing width and height.",
                                      "Spencer Kimball & Peter Mattis",
@@ -7929,7 +7878,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-plasma");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-plasma",
                                      "Create a random plasma texture",
                                      "This plug-in produces plasma fractal images.",
                                      "Compatibility procedure. Please see 'gegl:plasma' for credits.",
@@ -7977,7 +7925,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-polar-coords");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-polar-coords",
                                      "Convert image to or from polar coordinates",
                                      "Remaps and image from rectangular coordinates to polar coordinates or vice versa.",
                                      "Spencer Kimball & Peter Mattis",
@@ -8043,7 +7990,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-red-eye-removal");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-red-eye-removal",
                                      "Remove the red eye effect caused by camera flashes",
                                      "This procedure removes the red eye effect caused by camera flashes by using a percentage based red color threshold. Make a selection containing the eyes, and apply the filter while adjusting the threshold to accurately remove the red eyes.",
                                      "Compatibility procedure. Please see 'gegl:red-eye-removal' for credits.",
@@ -8085,7 +8031,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-randomize-hurl");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-randomize-hurl",
                                      "Completely randomize a fraction of pixels",
                                      "This plug-in \"hurls\" randomly-valued pixels onto the selection or image. You may select the percentage of pixels to modify and the number of times to repeat the process.",
                                      "Compatibility procedure. Please see 'gegl:noise-hurl' for credits.",
@@ -8145,7 +8090,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-randomize-pick");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-randomize-pick",
                                      "Randomly interchange some pixels with neighbors",
                                      "This plug-in replaces a pixel with a random adjacent pixel. You may select the percentage of pixels to modify and the number of times to repeat the process.",
                                      "Compatibility procedure. Please see 'gegl:noise-pick' for credits.",
@@ -8205,7 +8149,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-randomize-slur");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-randomize-slur",
                                      "Randomly slide some pixels downward (similar to melting",
                                      "This plug-in \"slurs\" (melts like a bunch of icicles) an image. You may select the percentage of pixels to modify and the number of times to repeat the process.",
                                      "Compatibility procedure. Please see 'gegl:noise-slur' for credits.",
@@ -8265,7 +8208,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-rgb-noise");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-rgb-noise",
                                      "Distort colors by random amounts",
                                      "Add normally distributed (zero mean) random values to image channels. Noise may be additive (uncorrelated) or multiplicative (correlated - also known as speckle noise). For color images color channels may be treated together or independently.",
                                      "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
@@ -8337,7 +8279,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-ripple");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-ripple",
                                      "Displace pixels in a ripple pattern",
                                      "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form.",
                                      "Compatibility procedure. Please see 'gegl:ripple' for credits.",
@@ -8415,7 +8356,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-rotate");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-rotate",
                                      "Rotates a layer or the whole image by 90, 180 or 270 degrees",
                                      "This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is chosen, the image is resized if necessary.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -8463,7 +8403,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-noisify");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-noisify",
                                      "Adds random noise to image channels",
                                      "Add normally distributed random values to image channels. For color images each color channel may be treated together or independently.",
                                      "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
@@ -8529,7 +8468,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-sel-gauss");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-sel-gauss",
                                      "Blur neighboring pixels, but only in low-contrast areas",
                                      "This filter functions similar to the regular gaussian blur filter except that neighbouring pixels that differ more than the given maxdelta parameter will not be blended with. This way with the correct parameters, an image can be smoothed out without losing details. However, this filter can be rather slow.",
                                      "Compatibility procedure. Please see 'gegl:gaussian-blur-selective' for credits.",
@@ -8577,7 +8515,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-semiflatten");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-semiflatten",
                                      "Replace partial transparency with the current background color",
                                      "This plug-in flattens pixels in an RGBA image that aren't completely transparent against the current GIMP background color.",
                                      "Spencer Kimball & Peter Mattis",
@@ -8613,7 +8550,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-shift");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-shift",
                                      "Shift each row or column of pixels by a random amount",
                                      "Shifts the pixels of the specified drawable. Each row or column will be displaced a random value of pixels.",
                                      "Compatibility procedure. Please see 'gegl:shift' for credits.",
@@ -8661,7 +8597,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-sinus");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-sinus",
                                      "Generate complex sinusoidal textures",
                                      "FIXME: sinus help",
                                      "Compatibility procedure. Please see 'gegl:sinus' for credits.",
@@ -8777,7 +8712,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-sobel");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-sobel",
                                      "Specialized direction-dependent edge detection",
                                      "This plug-in calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolute value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled.\"",
                                      "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
@@ -8831,7 +8765,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-softglow");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-softglow",
                                      "Simulate glow by making highlights intense and fuzzy",
                                      "Gives an image a softglow effect by intensifying the highlights in the image. This is done by screening a modified version of the drawable with itself. The modified version is desaturated and then a sigmoidal transfer function is applied to force the distribution of intensities into very small and very large only. This desaturated version is then blurred to give it a fuzzy 'vaseline-on-the-lens' effect. The glow radius parameter controls the sharpness of the glow effect. The brightness parameter controls the degree of intensification applied to image highlights. The sharpness parameter controls how defined or alternatively, diffuse, the glow effect should be.",
                                      "Compatibility procedure. Please see 'gegl:softglow' for credits.",
@@ -8885,7 +8818,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-solid-noise");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-solid-noise",
                                      "Create a random cloud-like texture",
                                      "Generates 2D textures using Perlin's classic solid noise function.",
                                      "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
@@ -8957,7 +8889,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-spread");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-spread",
                                      "Move pixels around randomly",
                                      "Spreads the pixels of the specified drawable. Pixels are randomly moved to another location whose distance varies from the original by the horizontal and vertical spread amounts.",
                                      "Compatibility procedure. Please see 'gegl:noise-spread' for credits.",
@@ -9005,7 +8936,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-threshold-alpha");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-threshold-alpha",
                                      "Make transparency all-or-nothing",
                                      "Make transparency all-or-nothing.",
                                      "Spencer Kimball & Peter Mattis",
@@ -9047,7 +8977,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-unsharp-mask");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-unsharp-mask",
                                      "The most widely useful method for sharpening an image",
                                      "The unsharp mask is a sharpening filter that works by comparing using the difference of the image and a blurred version of the image. It is commonly used on photographic images, and is provides a much more pleasing result than the standard sharpen filter.",
                                      "Compatibility procedure. Please see 'gegl:unsharp-mask' for credits.",
@@ -9101,7 +9030,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-video");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-video",
                                      "Simulate distortion produced by a fuzzy or low-res monitor",
                                      "This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable.",
                                      "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
@@ -9155,7 +9083,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-vinvert");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-vinvert",
                                      "Invert the brightness of each pixel",
                                      "This function takes an indexed/RGB image and inverts its 'value' in HSV space. The upshot of this is that the color and saturation at any given point remains the same, but its brightness is effectively inverted. Quite strange. Sometimes produces unpleasant color artifacts on images from lossy sources (ie. JPEG).",
                                      "Spencer Kimball & Peter Mattis",
@@ -9191,7 +9118,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-vpropagate");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-vpropagate",
                                      "Propagate certain colors to neighboring pixels",
                                      "Propagate values of the layer.",
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
@@ -9263,7 +9189,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-dilate");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-dilate",
                                      "Grow lighter areas of the image",
                                      "Dilate image.",
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
@@ -9335,7 +9260,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-erode");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-erode",
                                      "Shrink lighter areas of the image",
                                      "Erode image.",
                                      "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
@@ -9407,7 +9331,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-waves");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-waves",
                                      "Distort the image with waves",
                                      "Distort the image with waves.",
                                      "Compatibility procedure. Please see 'gegl:waves' for credits.",
@@ -9473,7 +9396,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-whirl-pinch");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-whirl-pinch",
                                      "Distort an image by whirling and pinching",
                                      "Distorts the image by whirling and pinching, which are two common center-based, circular distortions. Whirling is like projecting the image onto the surface of water in a toilet and flushing. Pinching is similar to projecting the image onto an elastic surface and pressing or pulling on the center of the surface.",
                                      "Compatibility procedure. Please see 'gegl:whirl-pinch' for credits.",
@@ -9527,7 +9449,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "plug-in-wind");
   gimp_procedure_set_static_strings (procedure,
-                                     "plug-in-wind",
                                      "Smear image to give windblown effect",
                                      "Renders a wind effect.",
                                      "Compatibility procedure. Please see 'gegl:wind' for credits.",

@@ -701,7 +701,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 {
   GimpPlugInProcedure *proc       = NULL;
   GimpProcedure       *procedure  = NULL;
-  gchar               *canonical;
   gboolean             null_name  = FALSE;
   gboolean             valid_utf8 = FALSE;
   gint                 i;
@@ -709,7 +708,17 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   g_return_if_fail (proc_install != NULL);
   g_return_if_fail (proc_install->name != NULL);
 
-  canonical = gimp_canonicalize_identifier (proc_install->name);
+  if (! gimp_is_canonical_identifier (proc_install->name))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n\n"
+                    "attempted to install procedure \"%s\" with a "
+                    "non-canonical name.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file),
+                    proc_install->name);
+      return;
+    }
 
   /*  Sanity check for array arguments  */
 
@@ -734,8 +743,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                         "passing standard.  Argument %d is noncompliant.",
                         gimp_object_get_name (plug_in),
                         gimp_file_get_utf8_name (plug_in->file),
-                        canonical, i);
-          g_free (canonical);
+                        proc_install->name, i);
           return;
         }
     }
@@ -745,8 +753,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 #define VALIDATE(str)         (g_utf8_validate ((str), -1, NULL))
 #define VALIDATE_OR_NULL(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
 
-  if (VALIDATE_OR_NULL (proc_install->menu_label) &&
-      VALIDATE         (canonical)                &&
+  if (VALIDATE         (proc_install->name)       &&
+      VALIDATE_OR_NULL (proc_install->menu_label) &&
       VALIDATE_OR_NULL (proc_install->blurb)      &&
       VALIDATE_OR_NULL (proc_install->help)       &&
       VALIDATE_OR_NULL (proc_install->help_id)    &&
@@ -797,8 +805,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                     "NULL parameter name.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    canonical);
-      g_free (canonical);
+                    proc_install->name);
       return;
     }
 
@@ -810,8 +817,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                     "invalid UTF-8 strings.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    canonical);
-      g_free (canonical);
+                    proc_install->name);
       return;
     }
 
@@ -825,9 +831,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                     "any longer.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    canonical,
+                    proc_install->name,
                     proc_install->menu_label);
-      g_free (canonical);
       return;
     }
 
@@ -851,9 +856,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   proc->mtime                 = time (NULL);
   proc->installed_during_init = (plug_in->call_mode == GIMP_PLUG_IN_CALL_INIT);
 
-  gimp_object_take_name (GIMP_OBJECT (procedure), canonical);
+  gimp_object_set_name (GIMP_OBJECT (procedure), proc_install->name);
   gimp_procedure_set_strings (procedure,
-                              proc_install->name,
                               proc_install->blurb,
                               proc_install->help,
                               proc_install->authors,
@@ -932,19 +936,27 @@ gimp_plug_in_handle_proc_uninstall (GimpPlugIn      *plug_in,
                                     GPProcUninstall *proc_uninstall)
 {
   GimpPlugInProcedure *proc;
-  gchar               *canonical;
 
   g_return_if_fail (proc_uninstall != NULL);
   g_return_if_fail (proc_uninstall->name != NULL);
 
-  canonical = gimp_canonicalize_identifier (proc_uninstall->name);
+  if (! gimp_is_canonical_identifier (proc_uninstall->name))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n\n"
+                    "attempted to uninstall procedure \"%s\" with a "
+                    "non-canonical name.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file),
+                    proc_uninstall->name);
+      return;
+    }
 
-  proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
+  proc = gimp_plug_in_procedure_find (plug_in->temp_procedures,
+                                      proc_uninstall->name);
 
   if (proc)
     gimp_plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
-
-  g_free (canonical);
 }
 
 static void

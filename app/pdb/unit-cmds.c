@@ -385,7 +385,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-number-of-units");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-number-of-units",
                                      "Returns the number of units.",
                                      "This procedure returns the number of defined units.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -408,7 +407,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-number-of-built-in-units");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-number-of-built-in-units",
                                      "Returns the number of built-in units.",
                                      "This procedure returns the number of defined units built-in to GIMP.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -431,7 +429,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-new",
                                      "Creates a new unit and returns it's integer ID.",
                                      "This procedure creates a new unit and returns it's integer ID. Note that the new unit will have it's deletion flag set to TRUE, so you will have to set it to FALSE with 'gimp-unit-set-deletion-flag' to make it persistent.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -503,7 +500,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-deletion-flag");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-deletion-flag",
                                      "Returns the deletion flag of the unit.",
                                      "This procedure returns the deletion flag of the unit. If this value is TRUE the unit's definition will not be saved in the user's unitrc file on gimp exit.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -534,7 +530,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-set-deletion-flag");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-set-deletion-flag",
                                      "Sets the deletion flag of a unit.",
                                      "This procedure sets the unit's deletion flag. If the deletion flag of a unit is TRUE on gimp exit, this unit's definition will not be saved in the user's unitrc.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -565,7 +560,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-identifier");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-identifier",
                                      "Returns the textual identifier of the unit.",
                                      "This procedure returns the textual identifier of the unit. For built-in units it will be the english singular form of the unit's name. For user-defined units this should equal to the singular form.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -597,7 +591,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-factor");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-factor",
                                      "Returns the factor of the unit.",
                                      "This procedure returns the unit's factor which indicates how many units make up an inch. Note that asking for the factor of \"pixels\" will produce an error.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -628,7 +621,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-digits");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-digits",
                                      "Returns the number of digits of the unit.",
                                      "This procedure returns the number of digits you should provide in input or output functions to get approximately the same accuracy as with two digits and inches. Note that asking for the digits of \"pixels\" will produce an error.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -659,7 +651,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-symbol");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-symbol",
                                      "Returns the symbol of the unit.",
                                      "This procedure returns the symbol of the unit (\"''\" for inches).",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -691,7 +682,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-abbreviation");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-abbreviation",
                                      "Returns the abbreviation of the unit.",
                                      "This procedure returns the abbreviation of the unit (\"in\" for inches).",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -723,7 +713,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-singular");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-singular",
                                      "Returns the singular form of the unit.",
                                      "This procedure returns the singular form of the unit.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -755,7 +744,6 @@ register_unit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-unit-get-plural");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-unit-get-plural",
                                      "Returns the plural form of the unit.",
                                      "This procedure returns the plural form of the unit.",
                                      "Michael Natterer <mitch@gimp.org>",

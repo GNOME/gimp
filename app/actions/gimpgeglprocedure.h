@@ -40,6 +40,8 @@ struct _GimpGeglProcedure
 {
   GimpProcedure  parent_instance;
 
+  gchar         *operation;
+
   GimpRunMode    default_run_mode;
   GimpObject    *default_settings;
 

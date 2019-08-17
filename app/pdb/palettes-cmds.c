@@ -101,7 +101,6 @@ register_palettes_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-refresh",
                                      "Refreshes current palettes. This function always succeeds.",
                                      "This procedure retrieves all palettes currently in the user's palette path and updates the palette dialogs accordingly.",
                                      "Adrian Likins <adrian@gimp.org>",
@@ -118,7 +117,6 @@ register_palettes_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palettes-get-list",
                                      "Retrieves a list of all of the available palettes",
                                      "This procedure returns a complete listing of available palettes. Each name returned can be used as input to the command 'gimp-context-set-palette'.",
                                      "Nathan Summers <rock@gimp.org>",

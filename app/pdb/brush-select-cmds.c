@@ -159,7 +159,6 @@ register_brush_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-popup",
                                      "Invokes the Gimp brush selection.",
                                      "This procedure opens the brush selection dialog.",
                                      "Andy Thomas",
@@ -216,7 +215,6 @@ register_brush_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-close-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-close-popup",
                                      "Close the brush selection dialog.",
                                      "This procedure closes an opened brush selection dialog.",
                                      "Andy Thomas",
@@ -240,7 +238,6 @@ register_brush_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-set-popup");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-set-popup",
                                      "Sets the current brush in a brush selection dialog.",
                                      "Sets the current brush in a brush selection dialog.",
                                      "Andy Thomas",

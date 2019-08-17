@@ -245,7 +245,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-version");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-version",
                                      "Returns the host GIMP version.",
                                      "This procedure returns the version number of the currently running GIMP.",
                                      "Manish Singh",
@@ -269,7 +268,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-getpid");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-getpid",
                                      "Returns the PID of the host GIMP process.",
                                      "This procedure returns the process ID of the currently running GIMP.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -292,7 +290,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-quit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-quit",
                                      "Causes GIMP to exit gracefully.",
                                      "If there are unsaved images in an interactive GIMP session, the user will be asked for confirmation. If force is TRUE, the application is quit without querying the user to save any dirty images.",
                                      "Spencer Kimball & Peter Mattis",
@@ -315,7 +312,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-attach-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-attach-parasite",
                                      "Add a global parasite.",
                                      "This procedure attaches a global parasite. It has no return values.",
                                      "Jay Cox",
@@ -337,7 +333,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-detach-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-detach-parasite",
                                      "Removes a global parasite.",
                                      "This procedure detaches a global parasite from. It has no return values.",
                                      "Jay Cox",
@@ -361,7 +356,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-parasite",
                                      "Look up a global parasite.",
                                      "Finds and returns the global parasite that was previously attached.",
                                      "Jay Cox",
@@ -390,7 +384,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-parasite-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-parasite-list",
                                      "List all parasites.",
                                      "Returns a list of all currently attached global parasites.",
                                      "Marc Lehmann",
@@ -418,7 +411,6 @@ register_gimp_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-temp-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-temp-name",
                                      "Generates a unique filename.",
                                      "Generates a unique filename using the temp path supplied in the user's gimprc.",
                                      "Josh MacDonald",

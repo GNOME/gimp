@@ -237,7 +237,6 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-resize",
                                      "Resize the image to the specified extents.",
                                      "This procedure resizes the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels within the image are resized according to the specified parameters; this includes the image selection mask. All layers within the image are repositioned according to the specified offsets.",
                                      "Spencer Kimball & Peter Mattis",
@@ -284,7 +283,6 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-resize-to-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-resize-to-layers",
                                      "Resize the image to fit all layers.",
                                      "This procedure resizes the image to the bounding box of all layers of the image. All channels within the image are resized to the new size; this includes the image selection mask. All layers within the image are repositioned to the new image area.",
                                      "Simon Budig",
@@ -307,7 +305,6 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-scale");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-scale",
                                      "Scale the image using the default interpolation method.",
                                      "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
                                      "Spencer Kimball & Peter Mattis",
@@ -342,7 +339,6 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-crop");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-crop",
                                      "Crop the image to the specified extents.",
                                      "This procedure crops the image so that it's new width and height are equal to the supplied parameters. Offsets are also provided which describe the position of the previous image's content. All channels and layers within the image are cropped to the new image extents; this includes the image selection mask. If any parameters are out of range, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -389,7 +385,6 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-flip");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-flip",
                                      "Flips the image horizontally or vertically.",
                                      "This procedure flips (mirrors) the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -421,7 +416,6 @@ register_image_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-rotate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-rotate",
                                      "Rotates the image by the specified degrees.",
                                      "This procedure rotates the image.",
                                      "Michael Natterer <mitch@gimp.org>",

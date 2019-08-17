@@ -110,9 +110,7 @@ HELP
                                           domain_name, domain_path);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -152,9 +150,7 @@ HELP
                                         domain_name, domain_uri);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -183,16 +179,13 @@ HELP
 {
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-  if (plug_in)
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-      success = gimp_plug_in_menu_register (plug_in, canonical, menu_path);
-      g_free (canonical);
+      success = gimp_plug_in_menu_register (plug_in, procedure_name, menu_path);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -229,9 +222,7 @@ HELP
                                             plug_in->file, menu_path, menu_name);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -265,17 +256,14 @@ HELP
 {
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-  if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
+  if (plug_in &&
+      plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
       GimpPlugInProcedure *proc;
-      gchar               *canonical;
-
-      canonical = gimp_canonicalize_identifier (procedure_name);
 
       proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                          canonical);
-
-      g_free (canonical);
+                                          procedure_name);
 
       if (proc)
         gimp_plug_in_procedure_set_icon (proc, icon_type,
@@ -284,9 +272,7 @@ HELP
         success = FALSE;
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -325,9 +311,7 @@ HELP
       gimp_plug_in_set_error_handler (plug_in, handler);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -361,9 +345,7 @@ HELP
       handler = gimp_plug_in_get_error_handler (plug_in);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 }
 CODE
     );
@@ -378,7 +360,8 @@ CODE
               "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-menu-branch.h"
               "plug-in/gimppluginmanager-query.h"
-              "plug-in/gimppluginprocedure.h");
+              "plug-in/gimppluginprocedure.h"
+              "gimppdb-utils.h");
 
 @procs = qw(plugins_query
 	    plugin_domain_register

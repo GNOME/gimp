@@ -2770,7 +2770,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-is-valid");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-is-valid",
                                      "Returns TRUE if the image is valid.",
                                      "This procedure checks if the given image ID is valid and refers to an existing image.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -2799,7 +2798,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-list",
                                      "Returns the list of images currently open.",
                                      "This procedure returns the list of images currently open in GIMP.",
                                      "Spencer Kimball & Peter Mattis",
@@ -2827,7 +2825,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-new",
                                      "Creates a new image with the specified width, height, and type.",
                                      "Creates a new image, undisplayed, with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-insert-layer' command.\n"
                                      "\n"
@@ -2871,7 +2868,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-new-with-precision");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-new-with-precision",
                                      "Creates a new image with the specified width, height, type and precision.",
                                      "Creates a new image, undisplayed with the specified extents, type and precision. Indexed images can only be created at GIMP_PRECISION_U8_NON_LINEAR precision. See 'gimp-image-new' for further details.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -2920,7 +2916,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-duplicate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-duplicate",
                                      "Duplicate the specified image",
                                      "This procedure duplicates the specified image, copying all layers, channels, and image information.",
                                      "Spencer Kimball & Peter Mattis",
@@ -2949,7 +2944,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-delete",
                                      "Delete the specified image.",
                                      "If there are no displays associated with this image it will be deleted. This means that you can not delete an image through the PDB that was created by the user. If the associated display was however created through the PDB and you know the display ID, you may delete the display. Removal of the last associated display will then delete the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -2972,7 +2966,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-base-type");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-base-type",
                                      "Get the base type of the image.",
                                      "This procedure returns the image's base type. Layers in the image must be of this subtype, but can have an optional alpha channel.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3002,7 +2995,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-precision");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-precision",
                                      "Get the precision of the image.",
                                      "This procedure returns the image's precision.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3032,7 +3024,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-default-new-layer-mode");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-default-new-layer-mode",
                                      "Get the default mode for newly created layers of this image.",
                                      "Returns the default mode for newly created layers of this image.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3062,7 +3053,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-width");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-width",
                                      "Return the width of the image",
                                      "This procedure returns the image's width. This value is independent of any of the layers in this image. This is the \"canvas\" width.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3091,7 +3081,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-height");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-height",
                                      "Return the height of the image",
                                      "This procedure returns the image's height. This value is independent of any of the layers in this image. This is the \"canvas\" height.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3120,7 +3109,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-layers",
                                      "Returns the list of layers contained in the specified image.",
                                      "This procedure returns the list of layers contained in the specified image. The order of layers is from topmost to bottommost.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3154,7 +3142,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-channels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-channels",
                                      "Returns the list of channels contained in the specified image.",
                                      "This procedure returns the list of channels contained in the specified image. This does not include the selection mask, or layer masks. The order is from topmost to bottommost. Note that \"channels\" are custom channels and do not include the image's color components.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3188,7 +3175,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-vectors",
                                      "Returns the list of vectors contained in the specified image.",
                                      "This procedure returns the list of vectors contained in the specified image.",
                                      "Simon Budig",
@@ -3222,7 +3208,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-active-drawable");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-drawable",
                                      "Get the image's active drawable",
                                      "This procedure returns the ID of the image's active drawable. This can be either a layer, a channel, or a layer mask. The active drawable is specified by the active image channel. If that is -1, then by the active image layer. If the active image layer has a layer mask and the layer mask is in edit mode, then the layer mask is the active drawable.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3251,7 +3236,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-unset-active-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-unset-active-channel",
                                      "Unsets the active channel in the specified image.",
                                      "If an active channel exists, it is unset. There then exists no active channel, and if desired, one can be set through a call to 'Set Active Channel'. No error is returned in the case of no existing active channel.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3274,7 +3258,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-floating-sel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-floating-sel",
                                      "Return the floating selection of the image.",
                                      "This procedure returns the image's floating selection, if it exists. If it doesn't exist, -1 is returned as the layer ID.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3303,7 +3286,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-floating-sel-attached-to");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-floating-sel-attached-to",
                                      "Return the drawable the floating selection is attached to.",
                                      "This procedure returns the drawable the image's floating selection is attached to, if it exists. If it doesn't exist, -1 is returned as the drawable ID.",
                                      "Wolfgang Hofer",
@@ -3332,7 +3314,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-pick-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-pick-color",
                                      "Determine the color at the given drawable coordinates",
                                      "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawable, then an error is returned. If the drawable has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3398,7 +3379,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-pick-correlate-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-pick-correlate-layer",
                                      "Find the layer visible at the specified coordinates.",
                                      "This procedure finds the layer which is visible at the specified coordinates. Layers which do not qualify are those whose extents do not pass within the specified coordinates, or which are transparent at the specified coordinates. This procedure will return -1 if no layer is found.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3439,7 +3419,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-insert-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-insert-layer",
                                      "Add the specified layer to the image.",
                                      "This procedure adds the specified layer to the image at the given position. If the specified parent is a valid layer group (See 'gimp-item-is-group' and 'gimp-layer-group-new') then the layer is added inside the group. If the parent is 0, the layer is added inside the main stack, outside of any group. The position argument specifies the location of the layer inside the stack (or the group, if a valid parent was supplied), starting from the top (0) and increasing. If the position is specified as -1 and the parent is specified as 0, then the layer is inserted above the active layer, or inside the group if the active layer is a layer group. The layer type must be compatible with the image base type.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3480,7 +3459,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-remove-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-layer",
                                      "Remove the specified layer from the image.",
                                      "This procedure removes the specified layer from the image. If the layer doesn't exist, an error is returned. If there are no layers left in the image, this call will fail. If this layer is the last layer remaining, the image will become empty and have no active layer.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3509,7 +3487,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-freeze-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-freeze-layers",
                                      "Freeze the image's layer list.",
                                      "This procedure freezes the layer list of the image, suppressing any updates to the Layers dialog in response to changes to the image's layers. This can significantly improve performance while applying changes affecting the layer list.\n"
                                      "\n"
@@ -3534,7 +3511,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-thaw-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-thaw-layers",
                                      "Thaw the image's layer list.",
                                      "This procedure thaws the layer list of the image, re-enabling updates to the Layers dialog.\n"
                                      "\n"
@@ -3559,7 +3535,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-insert-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-insert-channel",
                                      "Add the specified channel to the image.",
                                      "This procedure adds the specified channel to the image at the given position. Since channel groups are not currently supported, the parent argument must always be 0. The position argument specifies the location of the channel inside the stack, starting from the top (0) and increasing. If the position is specified as -1, then the channel is inserted above the active channel.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3600,7 +3575,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-remove-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-channel",
                                      "Remove the specified channel from the image.",
                                      "This procedure removes the specified channel from the image. If the channel doesn't exist, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3629,7 +3603,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-freeze-channels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-freeze-channels",
                                      "Freeze the image's channel list.",
                                      "This procedure freezes the channel list of the image, suppressing any updates to the Channels dialog in response to changes to the image's channels. This can significantly improve performance while applying changes affecting the channel list.\n"
                                      "\n"
@@ -3654,7 +3627,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-thaw-channels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-thaw-channels",
                                      "Thaw the image's channel list.",
                                      "This procedure thaws the channel list of the image, re-enabling updates to the Channels dialog.\n"
                                      "\n"
@@ -3679,7 +3651,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-insert-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-insert-vectors",
                                      "Add the specified vectors to the image.",
                                      "This procedure adds the specified vectors to the image at the given position. Since vectors groups are not currently supported, the parent argument must always be 0. The position argument specifies the location of the vectors inside the stack, starting from the top (0) and increasing. If the position is specified as -1, then the vectors is inserted above the active vectors.",
                                      "Spencer Kimball & Peter Mattis",
@@ -3720,7 +3691,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-remove-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-vectors",
                                      "Remove the specified path from the image.",
                                      "This procedure removes the specified path from the image. If the path doesn't exist, an error is returned.",
                                      "Simon Budig",
@@ -3749,7 +3719,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-freeze-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-freeze-vectors",
                                      "Freeze the image's vectors list.",
                                      "This procedure freezes the vectors list of the image, suppressing any updates to the Paths dialog in response to changes to the image's vectors. This can significantly improve performance while applying changes affecting the vectors list.\n"
                                      "\n"
@@ -3774,7 +3743,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-thaw-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-thaw-vectors",
                                      "Thaw the image's vectors list.",
                                      "This procedure thaws the vectors list of the image, re-enabling updates to the Paths dialog.\n"
                                      "\n"
@@ -3799,7 +3767,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-item-position");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-item-position",
                                      "Returns the position of the item in its level of its item tree.",
                                      "This procedure determines the position of the specified item in its level in its item tree in the image. If the item doesn't exist in the image, or the item is not part of an item tree, an error is returned.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3834,7 +3801,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-raise-item");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-item",
                                      "Raise the specified item in its level in its item tree",
                                      "This procedure raises the specified item one step in the item tree. The procedure call will fail if there is no item above it.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3863,7 +3829,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-lower-item");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-item",
                                      "Lower the specified item in its level in its item tree",
                                      "This procedure lowers the specified item one step in the item tree. The procedure call will fail if there is no item below it.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3892,7 +3857,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-raise-item-to-top");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-item-to-top",
                                      "Raise the specified item to the top of its level in its item tree",
                                      "This procedure raises the specified item to top of its level in the item tree. It will not move the item if there is no item above it.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3921,7 +3885,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-lower-item-to-bottom");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-item-to-bottom",
                                      "Lower the specified item to the bottom of its level in its item tree",
                                      "This procedure lowers the specified item to bottom of its level in the item tree. It will not move the layer if there is no layer below it.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3950,7 +3913,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-reorder-item");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-reorder-item",
                                      "Reorder the specified item within its item tree",
                                      "This procedure reorders the specified item within its item tree.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -3991,7 +3953,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-flatten");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-flatten",
                                      "Flatten all visible layers into a single layer. Discard all invisible layers.",
                                      "This procedure combines the visible layers in a manner analogous to merging with the CLIP_TO_IMAGE merge type. Non-visible layers are discarded, and the resulting image is stripped of its alpha channel.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4020,7 +3981,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-merge-visible-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-merge-visible-layers",
                                      "Merge the visible image layers into one.",
                                      "This procedure combines the visible layers into a single layer using the specified merge type. A merge type of EXPAND_AS_NECESSARY expands the final layer to encompass the areas of the visible layers. A merge type of CLIP_TO_IMAGE clips the final layer to the extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the bottommost layer.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4058,7 +4018,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-merge-down");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-merge-down",
                                      "Merge the layer passed and the first visible layer below.",
                                      "This procedure combines the passed layer and the first visible layer below it using the specified merge type. A merge type of EXPAND_AS_NECESSARY expands the final layer to encompass the areas of the visible layers. A merge type of CLIP_TO_IMAGE clips the final layer to the extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the bottommost layer.",
                                      "Larry Ewing",
@@ -4102,7 +4061,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-colormap");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-colormap",
                                      "Returns the image's colormap",
                                      "This procedure returns an actual pointer to the image's colormap, as well as the number of bytes contained in the colormap. The actual number of colors in the transmitted colormap will be 'num-bytes' / 3. If the image is not in Indexed color mode, no colormap is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4136,7 +4094,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-colormap");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-colormap",
                                      "Sets the entries in the image's colormap.",
                                      "This procedure sets the entries in the specified image's colormap. The number of entries is specified by the 'num-bytes' parameter and corresponds to the number of INT8 triples that must be contained in the 'colormap' array. The actual number of colors in the transmitted colormap is 'num-bytes' / 3.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4170,7 +4127,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-metadata");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-metadata",
                                      "Returns the image's metadata.",
                                      "Returns exif/iptc/xmp metadata from the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4200,7 +4156,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-metadata");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-metadata",
                                      "Set the image's metadata.",
                                      "Sets exif/iptc/xmp metadata on the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4230,7 +4185,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-clean-all");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-clean-all",
                                      "Set the image dirty count to 0.",
                                      "This procedure sets the specified image's dirty count to 0, allowing operations to occur without having a 'dirtied' image. This is especially useful for creating and loading images which should not initially be considered dirty, even though layers must be created, filled, and installed in the image. Note that save plug-ins must NOT call this function themselves after saving the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4253,7 +4207,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-is-dirty");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-is-dirty",
                                      "Checks if the image has unsaved changes.",
                                      "This procedure checks the specified image's dirty count to see if it needs to be saved. Note that saving the image does not automatically set the dirty count to 0, you need to call 'gimp-image-clean-all' after calling a save procedure to make the image clean.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4282,7 +4235,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-thumbnail");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-thumbnail",
                                      "Get a thumbnail of an image.",
                                      "This function gets data from which a thumbnail of an image preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bits per pixel in the image.",
                                      "Andy Thomas",
@@ -4346,7 +4298,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-active-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-layer",
                                      "Returns the specified image's active layer.",
                                      "If there is an active layer, its ID will be returned, otherwise, -1. If a channel is currently active, then no layer will be. If a layer mask is active, then this will return the associated layer.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4375,7 +4326,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-active-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-active-layer",
                                      "Sets the specified image's active layer.",
                                      "If the layer exists, it is set as the active layer in the image. Any previous active layer or channel is set to inactive. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4404,7 +4354,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-active-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-channel",
                                      "Returns the specified image's active channel.",
                                      "If there is an active channel, this will return the channel ID, otherwise, -1.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4433,7 +4382,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-active-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-active-channel",
                                      "Sets the specified image's active channel.",
                                      "If the channel exists, it is set as the active channel in the image. Any previous active channel or layer is set to inactive. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4462,7 +4410,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-active-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-active-vectors",
                                      "Returns the specified image's active vectors.",
                                      "If there is an active path, its ID will be returned, otherwise, -1.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4491,7 +4438,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-active-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-active-vectors",
                                      "Sets the specified image's active vectors.",
                                      "If the path exists, it is set as the active path in the image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4520,7 +4466,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-selection");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-selection",
                                      "Returns the specified image's selection.",
                                      "This will always return a valid ID for a selection -- which is represented as a channel internally.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4549,7 +4494,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-component-active");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-component-active",
                                      "Returns if the specified image's image component is active.",
                                      "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive -- whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4585,7 +4529,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-component-active");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-component-active",
                                      "Sets if the specified image's image component is active.",
                                      "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is active or inactive -- whether or not it can be modified. If the specified component is not valid for the image type, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4621,7 +4564,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-component-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-component-visible",
                                      "Returns if the specified image's image component is visible.",
                                      "This procedure returns if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible -- whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4657,7 +4599,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-component-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-component-visible",
                                      "Sets if the specified image's image component is visible.",
                                      "This procedure sets if the specified image's image component (i.e. Red, Green, Blue intensity channels in an RGB image) is visible or invisible -- whether or not it can be seen. If the specified component is not valid for the image type, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4693,7 +4634,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-filename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-filename",
                                      "Returns the specified image's filename.",
                                      "This procedure returns the specified image's filename in the filesystem encoding. The image has a filename only if it was loaded or imported from a file or has since been saved or exported. Otherwise, this function returns %NULL. See also 'gimp-image-get-uri'.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4723,7 +4663,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-filename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-filename",
                                      "Sets the specified image's filename.",
                                      "This procedure sets the specified image's filename. The filename should be in the filesystem encoding.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4753,7 +4692,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-uri");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-uri",
                                      "Returns the URI for the specified image.",
                                      "This procedure returns the URI associated with the specified image. The image has an URI only if it was loaded or imported from a file or has since been saved or exported. Otherwise, this function returns %NULL. See also gimp-image-get-imported-uri to get the URI of the current file if it was imported from a non-GIMP file format and not yet saved, or gimp-image-get-exported-uri if the image has been exported to a non-GIMP file format.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -4783,7 +4721,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-xcf-uri");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-xcf-uri",
                                      "Returns the XCF URI for the specified image.",
                                      "This procedure returns the XCF URI associated with the image. If there is no such URI, this procedure returns %NULL.",
                                      "Eric Grivel <gimp@lumenssolutions.com>",
@@ -4813,7 +4750,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-imported-uri");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-imported-uri",
                                      "Returns the imported URI for the specified image.",
                                      "This procedure returns the URI associated with the specified image if the image was imported from a non-native Gimp format. If the image was not imported, or has since been saved in the native Gimp format, this procedure returns %NULL.",
                                      "Eric Grivel <gimp@lumenssolutions.com>",
@@ -4843,7 +4779,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-exported-uri");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-exported-uri",
                                      "Returns the exported URI for the specified image.",
                                      "This procedure returns the URI associated with the specified image if the image was exported a non-native GIMP format. If the image was not exported, this procedure returns %NULL.",
                                      "Eric Grivel <gimp@lumenssolutions.com>",
@@ -4873,7 +4808,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-name",
                                      "Returns the specified image's name.",
                                      "This procedure returns the image's name. If the image has a filename or an URI, then the returned name contains the filename's or URI's base name (the last component of the path). Otherwise it is the translated string \"Untitled\". The returned name is formatted like the image name in the image window title, it may contain '[]', '(imported)' etc. and should only be used to label user interface elements. Never use it to construct filenames.",
                                      "Spencer Kimball & Peter Mattis",
@@ -4903,7 +4837,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-resolution");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-resolution",
                                      "Returns the specified image's resolution.",
                                      "This procedure returns the specified image's resolution in dots per inch. This value is independent of any of the layers in this image.",
                                      "Austin Donnelly",
@@ -4938,7 +4871,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-resolution");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-resolution",
                                      "Sets the specified image's resolution.",
                                      "This procedure sets the specified image's resolution in dots per inch. This value is independent of any of the layers in this image. No scaling or resizing is performed.",
                                      "Austin Donnelly",
@@ -4973,7 +4905,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-unit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-unit",
                                      "Returns the specified image's unit.",
                                      "This procedure returns the specified image's unit. This value is independent of any of the layers in this image. See the gimp_unit_*() procedure definitions for the valid range of unit IDs and a description of the unit system.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -5004,7 +4935,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-unit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-unit",
                                      "Sets the specified image's unit.",
                                      "This procedure sets the specified image's unit. No scaling or resizing is performed. This value is independent of any of the layers in this image. See the gimp_unit_*() procedure definitions for the valid range of unit IDs and a description of the unit system.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -5035,7 +4965,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-tattoo-state");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-tattoo-state",
                                      "Returns the tattoo state associated with the image.",
                                      "This procedure returns the tattoo state of the image. Use only by save/load plug-ins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results.",
                                      "Andy Thomas",
@@ -5064,7 +4993,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-set-tattoo-state");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-tattoo-state",
                                      "Set the tattoo state associated with the image.",
                                      "This procedure sets the tattoo state of the image. Use only by save/load plug-ins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results. A full check of uniqueness of states in layers, channels and paths will be performed by this procedure and a execution failure will be returned if this fails. A failure will also be returned if the new tattoo state value is less than the maximum tattoo value from all of the tattoos from the paths, layers and channels. After the image data has been loaded and all the tattoos have been set then this is the last procedure that should be called. If effectively does a status check on the tattoo values that have been set to make sure that all is OK.",
                                      "Andy Thomas",
@@ -5093,7 +5021,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-layer-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-layer-by-tattoo",
                                      "Find a layer with a given tattoo in an image.",
                                      "This procedure returns the layer with the given tattoo in the specified image.",
                                      "Jay Cox",
@@ -5128,7 +5055,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-channel-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-channel-by-tattoo",
                                      "Find a channel with a given tattoo in an image.",
                                      "This procedure returns the channel with the given tattoo in the specified image.",
                                      "Jay Cox",
@@ -5163,7 +5089,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-vectors-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-vectors-by-tattoo",
                                      "Find a vectors with a given tattoo in an image.",
                                      "This procedure returns the vectors with the given tattoo in the specified image.",
                                      "Simon Budig",
@@ -5198,7 +5123,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-layer-by-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-layer-by-name",
                                      "Find a layer with a given name in an image.",
                                      "This procedure returns the layer with the given name in the specified image.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -5234,7 +5158,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-channel-by-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-channel-by-name",
                                      "Find a channel with a given name in an image.",
                                      "This procedure returns the channel with the given name in the specified image.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -5270,7 +5193,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-vectors-by-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-vectors-by-name",
                                      "Find a vectors with a given name in an image.",
                                      "This procedure returns the vectors with the given name in the specified image.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -5306,7 +5228,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-attach-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-attach-parasite",
                                      "Add a parasite to an image.",
                                      "This procedure attaches a parasite to an image. It has no return values.",
                                      "Jay Cox",
@@ -5334,7 +5255,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-detach-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-detach-parasite",
                                      "Removes a parasite from an image.",
                                      "This procedure detaches a parasite from an image. It has no return values.",
                                      "Jay Cox",
@@ -5364,7 +5284,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-parasite",
                                      "Look up a parasite in an image",
                                      "Finds and returns the parasite that was previously attached to an image.",
                                      "Jay Cox",
@@ -5399,7 +5318,6 @@ register_image_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-parasite-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-parasite-list",
                                      "List all parasites.",
                                      "Returns a list of all currently attached parasites.",
                                      "Marc Lehmann",

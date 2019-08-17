@@ -1004,7 +1004,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-valid");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-valid",
                                      "Returns TRUE if the item is valid.",
                                      "This procedure checks if the given item ID is valid and refers to an existing item.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -1033,7 +1032,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-image");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-image",
                                      "Returns the item's image.",
                                      "This procedure returns the item's image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1062,7 +1060,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-delete",
                                      "Delete a item.",
                                      "This procedure deletes the specified item. This must not be done if the image containing this item was already deleted or if the item was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a item which has not yet been added to an image.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1085,7 +1082,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-drawable");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-drawable",
                                      "Returns whether the item is a drawable.",
                                      "This procedure returns TRUE if the specified item is a drawable.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1114,7 +1110,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-layer",
                                      "Returns whether the item is a layer.",
                                      "This procedure returns TRUE if the specified item is a layer.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1143,7 +1138,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-text-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-text-layer",
                                      "Returns whether the item is a text layer.",
                                      "This procedure returns TRUE if the specified item is a text layer.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1172,7 +1166,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-channel");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-channel",
                                      "Returns whether the item is a channel.",
                                      "This procedure returns TRUE if the specified item is a channel.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1201,7 +1194,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-layer-mask");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-layer-mask",
                                      "Returns whether the item is a layer mask.",
                                      "This procedure returns TRUE if the specified item is a layer mask.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1230,7 +1222,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-selection");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-selection",
                                      "Returns whether the item is a selection.",
                                      "This procedure returns TRUE if the specified item is a selection.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1259,7 +1250,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-vectors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-vectors",
                                      "Returns whether the item is a vectors.",
                                      "This procedure returns TRUE if the specified item is a vectors.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1288,7 +1278,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-is-group");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-is-group",
                                      "Returns whether the item is a group item.",
                                      "This procedure returns TRUE if the specified item is a group item which can have children.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1317,7 +1306,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-parent");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-parent",
                                      "Returns the item's parent item.",
                                      "This procedure returns the item's parent item, if any.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1346,7 +1334,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-children");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-children",
                                      "Returns the item's list of children.",
                                      "This procedure returns the list of items which are children of the specified item. The order is topmost to bottommost.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1380,7 +1367,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-expanded");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-expanded",
                                      "Returns whether the item is expanded.",
                                      "This procedure returns TRUE if the specified item is expanded.",
                                      "Ell",
@@ -1409,7 +1395,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-expanded");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-expanded",
                                      "Sets the expanded state of the item.",
                                      "This procedure expands or collapses the item.",
                                      "Ell",
@@ -1438,7 +1423,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-name",
                                      "Get the name of the specified item.",
                                      "This procedure returns the specified item's name.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1468,7 +1452,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-name",
                                      "Set the name of the specified item.",
                                      "This procedure sets the specified item's name.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1498,7 +1481,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-visible",
                                      "Get the visibility of the specified item.",
                                      "This procedure returns the specified item's visibility.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1527,7 +1509,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-visible");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-visible",
                                      "Set the visibility of the specified item.",
                                      "This procedure sets the specified item's visibility.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1556,7 +1537,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-linked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-linked",
                                      "Get the linked state of the specified item.",
                                      "This procedure returns the specified item's linked state.",
                                      "Wolfgang Hofer",
@@ -1585,7 +1565,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-linked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-linked",
                                      "Set the linked state of the specified item.",
                                      "This procedure sets the specified item's linked state.",
                                      "Wolfgang Hofer",
@@ -1614,7 +1593,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-lock-content");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-lock-content",
                                      "Get the 'lock content' state of the specified item.",
                                      "This procedure returns the specified item's lock content state.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1643,7 +1621,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-lock-content");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-lock-content",
                                      "Set the 'lock content' state of the specified item.",
                                      "This procedure sets the specified item's lock content state.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1672,7 +1649,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-lock-position");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-lock-position",
                                      "Get the 'lock position' state of the specified item.",
                                      "This procedure returns the specified item's lock position state.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1701,7 +1677,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-lock-position");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-lock-position",
                                      "Set the 'lock position' state of the specified item.",
                                      "This procedure sets the specified item's lock position state.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1730,7 +1705,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-color-tag");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-color-tag",
                                      "Get the color tag of the specified item.",
                                      "This procedure returns the specified item's color tag.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1760,7 +1734,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-color-tag");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-color-tag",
                                      "Set the color tag of the specified item.",
                                      "This procedure sets the specified item's color tag.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1790,7 +1763,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-tattoo",
                                      "Get the tattoo of the specified item.",
                                      "This procedure returns the specified item's tattoo. A tattoo is a unique and permanent identifier attached to a item that can be used to uniquely identify a item within an image even between sessions.",
                                      "Jay Cox",
@@ -1819,7 +1791,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-set-tattoo",
                                      "Set the tattoo of the specified item.",
                                      "This procedure sets the specified item's tattoo. A tattoo is a unique and permanent identifier attached to a item that can be used to uniquely identify a item within an image even between sessions.",
                                      "Jay Cox",
@@ -1848,7 +1819,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-attach-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-attach-parasite",
                                      "Add a parasite to an item.",
                                      "This procedure attaches a parasite to an item. It has no return values.",
                                      "Jay Cox",
@@ -1876,7 +1846,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-detach-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-detach-parasite",
                                      "Removes a parasite from an item.",
                                      "This procedure detaches a parasite from an item. It has no return values.",
                                      "Jay Cox",
@@ -1906,7 +1875,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-parasite",
                                      "Look up a parasite in an item",
                                      "Finds and returns the parasite that is attached to an item.",
                                      "Jay Cox",
@@ -1941,7 +1909,6 @@ register_item_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-get-parasite-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-get-parasite-list",
                                      "List all parasites.",
                                      "Returns a list of all parasites currently attached the an item.",
                                      "Marc Lehmann",

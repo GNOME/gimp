@@ -104,7 +104,6 @@ register_fonts_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-fonts-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-fonts-refresh",
                                      "Refresh current fonts. This function always succeeds.",
                                      "This procedure retrieves all fonts currently in the user's font path and updates the font dialogs accordingly. Depending on the amount of fonts on the system, this can take considerable time.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -121,7 +120,6 @@ register_fonts_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-fonts-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-fonts-get-list",
                                      "Retrieve the list of loaded fonts.",
                                      "This procedure returns a list of the fonts that are currently available.",
                                      "Sven Neumann <sven@gimp.org>",

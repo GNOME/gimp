@@ -223,7 +223,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gimprc-query");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gimprc-query",
                                      "Queries the gimprc file parser for information on a specified token.",
                                      "This procedure is used to locate additional information contained in the gimprc file considered extraneous to the operation of GIMP. Plug-ins that need configuration information can expect it will be stored in the user gimprc file and can use this procedure to retrieve it. This query procedure will return the value associated with the specified token. This corresponds _only_ to entries with the format: (<token> <value>). The value must be a string. Entries not corresponding to this format will cause warnings to be issued on gimprc parsing and will not be queryable.",
                                      "Spencer Kimball & Peter Mattis",
@@ -254,7 +253,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gimprc-set");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gimprc-set",
                                      "Sets a gimprc token to a value and saves it in the gimprc.",
                                      "This procedure is used to add or change additional information in the gimprc file that is considered extraneous to the operation of GIMP. Plug-ins that need configuration information can use this function to store it, and 'gimp-gimprc-query' to retrieve it. This will accept _only_ string values in UTF-8 encoding.",
                                      "Seth Burgess",
@@ -285,7 +283,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-default-comment");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-default-comment",
                                      "Get the default image comment as specified in the Preferences.",
                                      "Returns a copy of the default image comment.",
                                      "Spencer Kimball & Peter Mattis",
@@ -309,7 +306,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-default-unit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-default-unit",
                                      "Get the default unit (taken from the user's locale).",
                                      "Returns the default unit's integer ID.",
                                      "Spencer Kimball & Peter Mattis",
@@ -334,7 +330,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-monitor-resolution");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-monitor-resolution",
                                      "Get the monitor resolution as specified in the Preferences.",
                                      "Returns the resolution of the monitor in pixels/inch. This value is taken from the Preferences (or the windowing system if this is set in the Preferences) and there's no guarantee for the value to be reasonable.",
                                      "Spencer Kimball & Peter Mattis",
@@ -363,7 +358,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-color-configuration");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-color-configuration",
                                      "Get a serialized version of the color management configuration.",
                                      "Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -387,7 +381,6 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-get-module-load-inhibit");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-module-load-inhibit",
                                      "Get the list of modules which should not be loaded.",
                                      "Returns a copy of the list of modules which should not be loaded.",
                                      "Spencer Kimball & Peter Mattis",

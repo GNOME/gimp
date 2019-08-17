@@ -97,7 +97,6 @@ register_dynamics_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dynamics-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-dynamics-refresh",
                                      "Refresh current paint dynamics. This function always succeeds.",
                                      "This procedure retrieves all paint dynamics currently in the user's paint dynamics path and updates the paint dynamics dialogs accordingly.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -114,7 +113,6 @@ register_dynamics_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dynamics-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-dynamics-get-list",
                                      "Retrieve the list of loaded paint dynamics.",
                                      "This procedure returns a list of the paint dynamics that are currently available.",
                                      "Michael Natterer <mitch@gimp.org>",

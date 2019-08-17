@@ -380,7 +380,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-new",
                                      "Create a new channel.",
                                      "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
                                      "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
@@ -443,7 +442,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-new-from-component");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-new-from-component",
                                      "Create a new channel from a color component",
                                      "This procedure creates a new channel from a color component.\n"
                                      "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
@@ -487,7 +485,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-copy");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-copy",
                                      "Copy a channel.",
                                      "This procedure copies the specified channel and returns the copy.\n"
                                      "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
@@ -517,7 +514,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-combine-masks");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-combine-masks",
                                      "Combine two channel masks.",
                                      "This procedure combines two channel masks. The result is stored in the first channel.",
                                      "Spencer Kimball & Peter Mattis",
@@ -565,7 +561,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-show-masked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-get-show-masked",
                                      "Get the composite method of the specified channel.",
                                      "This procedure returns the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
                                      "Spencer Kimball & Peter Mattis",
@@ -594,7 +589,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-show-masked");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-set-show-masked",
                                      "Set the composite method of the specified channel.",
                                      "This procedure sets the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
                                      "Spencer Kimball & Peter Mattis",
@@ -623,7 +617,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-get-opacity",
                                      "Get the opacity of the specified channel.",
                                      "This procedure returns the specified channel's opacity.",
                                      "Spencer Kimball & Peter Mattis",
@@ -652,7 +645,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-opacity");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-set-opacity",
                                      "Set the opacity of the specified channel.",
                                      "This procedure sets the specified channel's opacity.",
                                      "Spencer Kimball & Peter Mattis",
@@ -681,7 +673,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-get-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-get-color",
                                      "Get the compositing color of the specified channel.",
                                      "This procedure returns the specified channel's compositing color.",
                                      "Spencer Kimball & Peter Mattis",
@@ -711,7 +702,6 @@ register_channel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-channel-set-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-channel-set-color",
                                      "Set the compositing color of the specified channel.",
                                      "This procedure sets the specified channel's compositing color.",
                                      "Spencer Kimball & Peter Mattis",

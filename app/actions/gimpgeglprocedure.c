@@ -124,6 +124,7 @@ gimp_gegl_procedure_finalize (GObject *object)
 
   g_clear_object (&proc->default_settings);
 
+  g_clear_pointer (&proc->operation,  g_free);
   g_clear_pointer (&proc->menu_label, g_free);
   g_clear_pointer (&proc->label,      g_free);
   g_clear_pointer (&proc->help_id,    g_free);
@@ -138,6 +139,7 @@ gimp_gegl_procedure_get_memsize (GimpObject *object,
   GimpGeglProcedure *proc    = GIMP_GEGL_PROCEDURE (object);
   gint64             memsize = 0;
 
+  memsize += gimp_string_get_memsize (proc->operation);
   memsize += gimp_string_get_memsize (proc->menu_label);
   memsize += gimp_string_get_memsize (proc->label);
 
@@ -245,7 +247,8 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
   config   = g_value_get_object      (gimp_value_array_index (args, 3));
 
   node = gegl_node_new_child (NULL,
-                              "operation", procedure->original_name,
+                              "operation",
+                              GIMP_GEGL_PROCEDURE (procedure)->operation,
                               NULL);
   if (config)
     gimp_operation_config_sync_node (config, node);
@@ -268,10 +271,11 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                                    GimpValueArray *args,
                                    GimpObject     *display)
 {
-  GimpRunMode  run_mode;
-  GimpObject  *settings;
-  GimpTool    *active_tool;
-  const gchar *tool_name;
+  GimpGeglProcedure *gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
+  GimpRunMode        run_mode;
+  GimpObject        *settings;
+  GimpTool          *active_tool;
+  const gchar       *tool_name;
 
   run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
   settings = g_value_get_object (gimp_value_array_index (args, 3));
@@ -323,23 +327,23 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                     gimp_procedure_get_label (procedure));
     }
 
-  if (! strcmp (procedure->original_name, "gimp:brightness-contrast"))
+  if (! strcmp (gegl_procedure->operation, "gimp:brightness-contrast"))
     {
       tool_name = "gimp-brightness-contrast-tool";
     }
-  else if (! strcmp (procedure->original_name, "gimp:curves"))
+  else if (! strcmp (gegl_procedure->operation, "gimp:curves"))
     {
       tool_name = "gimp-curves-tool";
     }
-  else if (! strcmp (procedure->original_name, "gimp:levels"))
+  else if (! strcmp (gegl_procedure->operation, "gimp:levels"))
     {
       tool_name = "gimp-levels-tool";
     }
-  else if (! strcmp (procedure->original_name, "gimp:threshold"))
+  else if (! strcmp (gegl_procedure->operation, "gimp:threshold"))
     {
       tool_name = "gimp-threshold-tool";
     }
-  else if (! strcmp (procedure->original_name, "gimp:offset"))
+  else if (! strcmp (gegl_procedure->operation, "gimp:offset"))
     {
       tool_name = "gimp-offset-tool";
     }
@@ -384,7 +388,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       if (! strcmp (tool_name, "gimp-operation-tool"))
         {
           gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
-                                             procedure->original_name,
+                                             gegl_procedure->operation,
                                              gimp_procedure_get_label (procedure),
                                              gimp_procedure_get_label (procedure),
                                              gimp_procedure_get_label (procedure),
@@ -430,6 +434,7 @@ gimp_gegl_procedure_new (Gimp        *gimp,
 
   gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
 
+  gegl_procedure->operation        = g_strdup (operation);
   gegl_procedure->default_run_mode = default_run_mode;
   gegl_procedure->menu_label       = g_strdup (menu_label);
   gegl_procedure->help_id          = g_strdup (help_id);
@@ -440,7 +445,6 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   gimp_object_set_name (GIMP_OBJECT (procedure), name);
   gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);
   gimp_procedure_set_strings (procedure,
-                              operation,
                               tooltip,
                               tooltip,
                               "author", "copyright", "date",

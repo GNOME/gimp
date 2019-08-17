@@ -102,7 +102,6 @@ register_brushes_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-refresh",
                                      "Refresh current brushes. This function always succeeds.",
                                      "This procedure retrieves all brushes currently in the user's brush path and updates the brush dialogs accordingly.",
                                      "Seth Burgess",
@@ -119,7 +118,6 @@ register_brushes_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-brushes-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brushes-get-list",
                                      "Retrieve a complete listing of the available brushes.",
                                      "This procedure returns a complete listing of available GIMP brushes. Each name returned can be used as input to the 'gimp-context-set-brush' procedure.",
                                      "Spencer Kimball & Peter Mattis",

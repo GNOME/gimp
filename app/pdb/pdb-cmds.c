@@ -37,6 +37,7 @@
 #include "plug-in/gimppluginmanager-data.h"
 
 #include "gimppdb.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -154,24 +155,25 @@ pdb_proc_exists_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpProcedure *procedure;
-      gchar         *canonical;
-
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      procedure = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
-
-      if (! procedure)
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
-          procedure_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+          GimpProcedure *procedure;
 
-          if (procedure_name)
-            procedure = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
+          procedure = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
+
+          if (! procedure)
+            {
+              procedure_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
+                                                                 procedure_name);
+
+              if (procedure_name)
+                procedure = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
+            }
+
+          exists = (procedure != NULL);
         }
-
-      g_free (canonical);
-
-      exists = (procedure != NULL);
+      else
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -207,19 +209,19 @@ pdb_proc_info_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPDBProcType  ptype;
-      gchar           *canonical;
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          GimpPDBProcType  ptype;
 
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_pdb_proc_info (gimp->pdb, canonical,
-                                    &blurb, &help, &authors,
-                                    &copyright, &date, &ptype,
-                                    &num_args, &num_values,
-                                    error);
-      proc_type = ptype;
-
-      g_free (canonical);
+          success = gimp_pdb_proc_info (gimp->pdb, procedure_name,
+                                        &blurb, &help, &authors,
+                                        &copyright, &date, &ptype,
+                                        &num_args, &num_values,
+                                        error);
+          proc_type = ptype;
+        }
+      else
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -259,28 +261,29 @@ pdb_proc_argument_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpProcedure *proc;
-      gchar         *canonical;
-
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
-
-      if (! proc)
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
-          const gchar *compat_name;
+          GimpProcedure *proc;
 
-          compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+          proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
 
-          if (compat_name)
-            proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
-        }
+          if (! proc)
+            {
+              const gchar *compat_name;
 
-      g_free (canonical);
+              compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
+                                                              procedure_name);
 
-      if (proc && (arg_num >= 0 && arg_num < proc->num_args))
-        {
-          param_spec = g_param_spec_ref (proc->args[arg_num]);
+              if (compat_name)
+                proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
+            }
+
+          if (proc && (arg_num >= 0 && arg_num < proc->num_args))
+            {
+              param_spec = g_param_spec_ref (proc->args[arg_num]);
+            }
+          else
+            success = FALSE;
         }
       else
         success = FALSE;
@@ -314,28 +317,29 @@ pdb_proc_return_value_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpProcedure *proc;
-      gchar         *canonical;
-
-      canonical = gimp_canonicalize_identifier (procedure_name);
-
-      proc = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
-
-      if (! proc)
+      if (gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
-          const gchar *compat_name;
+          GimpProcedure *proc;
 
-          compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+          proc = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
 
-          if (compat_name)
-            proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
-        }
+          if (! proc)
+            {
+              const gchar *compat_name;
 
-      g_free (canonical);
+              compat_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb,
+                                                              procedure_name);
 
-      if (proc && (val_num >= 0 && val_num < proc->num_values))
-        {
-          param_spec = g_param_spec_ref (proc->values[val_num]);
+              if (compat_name)
+                proc = gimp_pdb_lookup_procedure (gimp->pdb, compat_name);
+            }
+
+          if (proc && (val_num >= 0 && val_num < proc->num_values))
+            {
+              param_spec = g_param_spec_ref (proc->values[val_num]);
+            }
+          else
+            success = FALSE;
         }
       else
         success = FALSE;
@@ -368,16 +372,18 @@ pdb_get_data_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar        *canonical = gimp_canonicalize_identifier (identifier);
-      const guint8 *orig_data;
+      if (gimp_pdb_is_canonical_procedure (identifier, error))
+        {
+          const guint8 *orig_data;
 
-      orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
-                                                 canonical, &bytes);
+          orig_data = gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+                                                     identifier, &bytes);
 
-      g_free (canonical);
-
-      if (orig_data)
-        data = g_memdup (orig_data, bytes);
+          if (orig_data)
+            data = g_memdup (orig_data, bytes);
+          else
+            success = FALSE;
+        }
       else
         success = FALSE;
     }
@@ -411,13 +417,14 @@ pdb_get_data_size_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (identifier);
-
-      if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
-                                           canonical, &bytes))
+      if (gimp_pdb_is_canonical_procedure (identifier, error))
+        {
+          if (! gimp_plug_in_manager_get_data (gimp->plug_in_manager,
+                                               identifier, &bytes))
+            success = FALSE;
+        }
+      else
         success = FALSE;
-
-      g_free (canonical);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -448,12 +455,13 @@ pdb_set_data_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (identifier);
-
-      gimp_plug_in_manager_set_data (gimp->plug_in_manager,
-                                     canonical, bytes, data);
-
-      g_free (canonical);
+      if (gimp_pdb_is_canonical_procedure (identifier, error))
+        {
+          gimp_plug_in_manager_set_data (gimp->plug_in_manager,
+                                         identifier, bytes, data);
+        }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -472,7 +480,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-temp-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-temp-name",
                                      "Generates a unique temporary PDB name.",
                                      "This procedure generates a temporary PDB entry name that is guaranteed to be unique.",
                                      "Andy Thomas",
@@ -496,7 +503,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-dump");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-dump",
                                      "Dumps the current contents of the procedural database",
                                      "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure.",
                                      "Spencer Kimball & Josh MacDonald",
@@ -520,7 +526,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-query");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-query",
                                      "Queries the procedural database for its contents using regular expression matching.",
                                      "This procedure queries the contents of the procedural database. It is supplied with seven arguments matching procedures on { name, blurb, help, authors, copyright, date, procedure type}. This is accomplished using regular expression matching. For instance, to find all procedures with \"jpeg\" listed in the blurb, all seven arguments can be supplied as \".*\", except for the second, which can be supplied as \".*jpeg.*\". There are two return arguments for this procedure. The first is the number of procedures matching the query. The second is a concatenated list of procedure names corresponding to those matching the query. If no matching entries are found, then the returned string is NULL and the number of entries is 0.",
                                      "Spencer Kimball & Peter Mattis",
@@ -597,7 +602,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-proc-exists");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-proc-exists",
                                      "Checks if the specified procedure exists in the procedural database",
                                      "This procedure checks if the specified procedure is registered in the procedural database.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -627,7 +631,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-proc-info");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-proc-info",
                                      "Queries the procedural database for information on the specified procedure.",
                                      "This procedure returns information on the specified procedure. A short blurb, detailed help, authors, copyright information, procedure type, number of input, and number of return values are returned. For specific information on each input argument and return value, use the 'gimp-pdb-db-proc-argument' and 'gimp-pdb-db-proc-return-value' procedures.",
                                      "Spencer Kimball & Peter Mattis",
@@ -705,7 +708,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-proc-argument");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-proc-argument",
                                      "Queries the procedural database for information on the specified procedure's argument.",
                                      "This procedure returns the #GParamSpec of procedure_name's argument.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -741,7 +743,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-proc-return-value");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-proc-return-value",
                                      "Queries the procedural database for information on the specified procedure's return value.",
                                      "This procedure returns the #GParamSpec of procedure_name's return value.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -777,7 +778,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-data");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-get-data",
                                      "Returns data associated with the specified identifier.",
                                      "This procedure returns any data which may have been associated with the specified identifier. The data is a variable length array of bytes. If no data has been associated with the identifier, an error is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -812,7 +812,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-get-data-size");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-get-data-size",
                                      "Returns size of data associated with the specified identifier.",
                                      "This procedure returns the size of any data which may have been associated with the specified identifier. If no data has been associated with the identifier, an error is returned.",
                                      "Nick Lamb",
@@ -842,7 +841,6 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pdb-set-data");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pdb-set-data",
                                      "Associates the specified identifier with the supplied data.",
                                      "This procedure associates the supplied data with the provided identifier. The data may be subsequently retrieved by a call to 'procedural-db-get-data'.",
                                      "Spencer Kimball & Peter Mattis",

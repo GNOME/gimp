@@ -472,13 +472,11 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
-                                                        canonical,
-                                                        extensions, prefixes, magics);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+                                                         procedure_name,
+                                                         extensions, prefixes,
+                                                         magics));
 }
 CODE
     );
@@ -511,13 +509,11 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
-                                                        canonical,
-                                                        extensions, prefixes, NULL);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+                                                         procedure_name,
+                                                         extensions, prefixes,
+                                                         NULL));
 }
 CODE
     );
@@ -549,13 +545,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_save_handler (gimp->plug_in_manager,
-                                                        canonical,
-                                                        extensions, prefixes);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_save_handler (gimp->plug_in_manager,
+                                                         procedure_name,
+                                                         extensions, prefixes));
 }
 CODE
     );
@@ -586,12 +579,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
-                                                    canonical, priority);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
+                                                     procedure_name, priority));
 }
 CODE
     );
@@ -619,12 +609,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_handles_uri (gimp->plug_in_manager,
-                                                       canonical);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_handles_uri (gimp->plug_in_manager,
+                                                        procedure_name));
 }
 CODE
     );
@@ -655,12 +642,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
-                                                      canonical, mime_types);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
+                                                       procedure_name,
+                                                       mime_types));
 }
 CODE
     );
@@ -687,12 +672,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-  success = gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
-                                                       canonical);
-
-  g_free (canonical);
+  success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+             gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
+                                                        procedure_name));
 }
 CODE
     );
@@ -723,14 +705,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *canonical   = gimp_canonicalize_identifier (load_proc);
-  gchar *canon_thumb = gimp_canonicalize_identifier (thumb_proc);
-
-  success = gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
-                                                        canonical, canon_thumb);
-
-  g_free (canonical);
-  g_free (canon_thumb);
+  success = (gimp_pdb_is_canonical_procedure (load_proc, error) &&
+             gimp_pdb_is_canonical_procedure (thumb_proc, error) &&
+             gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
+                                                         load_proc, thumb_proc));
 }
 CODE
     );
@@ -743,6 +721,7 @@ CODE
               "core/gimp-utils.h"
               "plug-in/gimppluginmanager-file.h"
               "plug-in/gimppluginprocedure.h"
+              "gimppdb-utils.h"
               "file/file-open.h"
               "file/file-save.h"
               "file/file-utils.h");

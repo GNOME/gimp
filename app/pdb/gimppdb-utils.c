@@ -22,6 +22,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -843,4 +845,21 @@ gimp_pdb_get_vectors_stroke (GimpVectors        *vectors,
     }
 
   return stroke;
+}
+
+gboolean
+gimp_pdb_is_canonical_procedure (const gchar  *procedure_name,
+                                 GError      **error)
+{
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_is_canonical_identifier (procedure_name))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Procedure name '%s' is not a canonical identifier"),
+                   procedure_name);
+      return FALSE;
+    }
+
+  return TRUE;
 }

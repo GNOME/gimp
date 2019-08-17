@@ -499,7 +499,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-bounds");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-bounds",
                                      "Find the bounding box of the current selection.",
                                      "This procedure returns whether there is a selection for the specified image. If there is one, the upper left and lower right corners of the bounding box are returned. These coordinates are relative to the image. Please note that the pixel specified by the lower right coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
                                      "Spencer Kimball & Peter Mattis",
@@ -552,7 +551,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-value");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-value",
                                      "Find the value of the selection at the specified coordinates.",
                                      "This procedure returns the value of the selection at the specified coordinates. If the coordinates lie out of bounds, 0 is returned.",
                                      "Spencer Kimball & Peter Mattis",
@@ -593,7 +591,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-is-empty");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-is-empty",
                                      "Determine whether the selection is empty.",
                                      "This procedure returns TRUE if the selection for the specified image is empty.",
                                      "Spencer Kimball & Peter Mattis",
@@ -622,7 +619,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-translate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-translate",
                                      "Translate the selection by the specified offsets.",
                                      "This procedure actually translates the selection for the specified image by the specified offsets. Regions that are translated from beyond the bounds of the image are set to empty. Valid regions of the selection which are translated beyond the bounds of the image because of this call are lost.",
                                      "Spencer Kimball & Peter Mattis",
@@ -657,7 +653,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-float");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-float",
                                      "Float the selection from the specified drawable with initial offsets as specified.",
                                      "This procedure determines the region of the specified drawable that lies beneath the current selection. The region is then cut from the drawable and the resulting data is made into a new layer which is instantiated as a floating selection. The offsets allow initial positioning of the new floating selection.",
                                      "Spencer Kimball & Peter Mattis",
@@ -698,7 +693,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-invert");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-invert",
                                      "Invert the selection mask.",
                                      "This procedure inverts the selection mask. For every pixel in the selection channel, its new value is calculated as (255 - old-value).",
                                      "Spencer Kimball & Peter Mattis",
@@ -721,7 +715,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-sharpen");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-sharpen",
                                      "Sharpen the selection mask.",
                                      "This procedure sharpens the selection mask. For every pixel in the selection channel, if the value is > 127, the new pixel is assigned a value of 255. This removes any \"anti-aliasing\" that might exist in the selection mask's boundary.",
                                      "Spencer Kimball & Peter Mattis",
@@ -744,7 +737,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-all");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-all",
                                      "Select all of the image.",
                                      "This procedure sets the selection mask to completely encompass the image. Every pixel in the selection channel is set to 255.",
                                      "Spencer Kimball & Peter Mattis",
@@ -767,7 +759,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-none");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-none",
                                      "Deselect the entire image.",
                                      "This procedure deselects the entire image. Every pixel in the selection channel is set to 0.",
                                      "Spencer Kimball & Peter Mattis",
@@ -790,7 +781,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-feather");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-feather",
                                      "Feather the image's selection",
                                      "This procedure feathers the selection. Feathering is implemented using a gaussian blur.",
                                      "Spencer Kimball & Peter Mattis",
@@ -819,7 +809,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-border");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-border",
                                      "Border the image's selection",
                                      "This procedure borders the selection. Bordering creates a new selection which is defined along the boundary of the previous selection at every point within the specified radius.",
                                      "Spencer Kimball & Peter Mattis",
@@ -848,7 +837,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-grow");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-grow",
                                      "Grow the image's selection",
                                      "This procedure grows the selection. Growing involves expanding the boundary in all directions by the specified pixel amount.",
                                      "Spencer Kimball & Peter Mattis",
@@ -877,7 +865,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-shrink");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-shrink",
                                      "Shrink the image's selection",
                                      "This procedure shrinks the selection. Shrinking involves trimming the existing selection boundary on all sides by the specified number of pixels.",
                                      "Spencer Kimball & Peter Mattis",
@@ -906,7 +893,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-flood");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-flood",
                                      "Remove holes from the image's selection",
                                      "This procedure removes holes from the selection, that can come from selecting a patchy area with the Fuzzy Select Tool. In technical terms this procedure floods the selection. See the Algorithms page in the developer wiki for details.",
                                      "Ell",
@@ -929,7 +915,6 @@ register_selection_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-selection-save");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-save",
                                      "Copy the selection mask to a new channel.",
                                      "This procedure copies the selection mask and stores the content in a new channel. The new channel is automatically inserted into the image's list of channels.",
                                      "Spencer Kimball & Peter Mattis",

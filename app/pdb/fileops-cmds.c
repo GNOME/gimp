@@ -44,6 +44,7 @@
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimppdb.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -428,13 +429,11 @@ register_magic_load_handler_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
-                                                            canonical,
-                                                            extensions, prefixes, magics);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+                                                             procedure_name,
+                                                             extensions, prefixes,
+                                                             magics));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -460,13 +459,11 @@ register_load_handler_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
-                                                            canonical,
-                                                            extensions, prefixes, NULL);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_load_handler (gimp->plug_in_manager,
+                                                             procedure_name,
+                                                             extensions, prefixes,
+                                                             NULL));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -492,13 +489,10 @@ register_save_handler_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_save_handler (gimp->plug_in_manager,
-                                                            canonical,
-                                                            extensions, prefixes);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_save_handler (gimp->plug_in_manager,
+                                                             procedure_name,
+                                                             extensions, prefixes));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -522,12 +516,9 @@ register_file_handler_priority_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
-                                                        canonical, priority);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
+                                                         procedure_name, priority));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -551,12 +542,10 @@ register_file_handler_mime_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
-                                                          canonical, mime_types);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
+                                                           procedure_name,
+                                                           mime_types));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -578,12 +567,9 @@ register_file_handler_uri_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_handles_uri (gimp->plug_in_manager,
-                                                           canonical);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_handles_uri (gimp->plug_in_manager,
+                                                            procedure_name));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -605,12 +591,9 @@ register_file_handler_raw_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-
-      success = gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
-                                                           canonical);
-
-      g_free (canonical);
+      success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
+                 gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
+                                                            procedure_name));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -634,14 +617,10 @@ register_thumbnail_loader_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *canonical   = gimp_canonicalize_identifier (load_proc);
-      gchar *canon_thumb = gimp_canonicalize_identifier (thumb_proc);
-
-      success = gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
-                                                            canonical, canon_thumb);
-
-      g_free (canonical);
-      g_free (canon_thumb);
+      success = (gimp_pdb_is_canonical_procedure (load_proc, error) &&
+                 gimp_pdb_is_canonical_procedure (thumb_proc, error) &&
+                 gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
+                                                             load_proc, thumb_proc));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -660,7 +639,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load",
                                      "Loads an image file by invoking the right load handler.",
                                      "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png he wants to fetch a URL, and the full pathname will not look like a URL.",
                                      "Josh MacDonald",
@@ -706,7 +684,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load-layer",
                                      "Loads an image file as a layer for an existing image.",
                                      "This procedure behaves like the file-load procedure but opens the specified image as a layer for an existing image. The returned layer needs to be added to the existing image with 'gimp-image-insert-layer'.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -751,7 +728,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load-layers",
                                      "Loads an image file as layers for an existing image.",
                                      "This procedure behaves like the file-load procedure but opens the specified image as layers for an existing image. The returned layers needs to be added to the existing image with 'gimp-image-insert-layer'.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -801,7 +777,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-save");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-save",
                                      "Saves a file by extension.",
                                      "This procedure invokes the correct file save handler according to the file's extension and/or prefix. The name of the file to save is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types https://www.gimp.org/foo.png she wants to fetch a URL, and the full pathname will not look like a URL.",
                                      "Josh MacDonald",
@@ -851,7 +826,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-load-thumbnail");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-load-thumbnail",
                                      "Loads the thumbnail for a file.",
                                      "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
                                      "Adam D. Moss, Sven Neumann",
@@ -898,7 +872,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-file-save-thumbnail");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-file-save-thumbnail",
                                      "Saves a thumbnail for the given image",
                                      "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the file with the given filename. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
                                      "Josh MacDonald",
@@ -928,7 +901,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-magic-load-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-magic-load-handler",
                                      "Registers a file load handler procedure.",
                                      "Registers a procedural database procedure to be called to load files of a particular file format using magic file information.",
                                      "Spencer Kimball & Peter Mattis",
@@ -973,7 +945,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-load-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-load-handler",
                                      "Registers a file load handler procedure.",
                                      "Registers a procedural database procedure to be called to load files of a particular file format.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1011,7 +982,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-save-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-save-handler",
                                      "Registers a file save handler procedure.",
                                      "Registers a procedural database procedure to be called to save files in a particular file format.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1049,7 +1019,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-priority");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-file-handler-priority",
                                      "Sets the priority of a file handler procedure.",
                                      "Sets the priority of a file handler procedure. When more than one procedure matches a given file, the procedure with the lowest priority is used; if more than one procedure has the lowest priority, it is unspecified which one of them is used. The default priority for file handler procedures is 0.",
                                      "Ell",
@@ -1079,7 +1048,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-mime");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-file-handler-mime",
                                      "Associates MIME types with a file handler procedure.",
                                      "Registers MIME types for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure. It is recommended that only one MIME type is registered per file procedure; when registering more than one MIME type, GIMP will associate the first one with files opened or saved with this procedure.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -1110,7 +1078,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-uri");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-file-handler-uri",
                                      "Registers a file handler procedure as capable of handling URIs.",
                                      "Registers a file handler procedure as capable of handling URIs. This allows GIMP to call the procedure directly for all kinds of URIs, and the 'filename' traditionally passed to file procedures turns into an URI.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1134,7 +1101,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-file-handler-raw");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-file-handler-raw",
                                      "Registers a file handler procedure as capable of handling raw camera files.",
                                      "Registers a file handler procedure as capable of handling raw digital camera files. Use this procedure only to register raw load handlers, calling it on a save handler will generate an error.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1158,7 +1124,6 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-register-thumbnail-loader");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-register-thumbnail-loader",
                                      "Associates a thumbnail loader with a file load procedure.",
                                      "Some file formats allow for embedded thumbnails, other file formats contain a scalable image or provide the image data in different resolutions. A file plug-in for such a format may register a special procedure that allows GIMP to load a thumbnail preview of the image. This procedure is then associated with the standard load procedure using this function.",
                                      "Sven Neumann <sven@gimp.org>",

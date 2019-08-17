@@ -144,7 +144,6 @@ gimp_procedure_get_memsize (GimpObject *object,
 
   if (! procedure->static_strings)
     {
-      memsize += gimp_string_get_memsize (procedure->original_name);
       memsize += gimp_string_get_memsize (procedure->blurb);
       memsize += gimp_string_get_memsize (procedure->help);
       memsize += gimp_string_get_memsize (procedure->authors);
@@ -264,7 +263,6 @@ gimp_procedure_new (GimpMarshalFunc marshal_func)
 
 void
 gimp_procedure_set_strings (GimpProcedure *procedure,
-                            const gchar   *original_name,
                             const gchar   *blurb,
                             const gchar   *help,
                             const gchar   *authors,
@@ -276,20 +274,18 @@ gimp_procedure_set_strings (GimpProcedure *procedure,
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->original_name = g_strdup (original_name);
-  procedure->blurb         = g_strdup (blurb);
-  procedure->help          = g_strdup (help);
-  procedure->authors       = g_strdup (authors);
-  procedure->copyright     = g_strdup (copyright);
-  procedure->date          = g_strdup (date);
-  procedure->deprecated    = g_strdup (deprecated);
+  procedure->blurb      = g_strdup (blurb);
+  procedure->help       = g_strdup (help);
+  procedure->authors    = g_strdup (authors);
+  procedure->copyright  = g_strdup (copyright);
+  procedure->date       = g_strdup (date);
+  procedure->deprecated = g_strdup (deprecated);
 
   procedure->static_strings = FALSE;
 }
 
 void
 gimp_procedure_set_static_strings (GimpProcedure *procedure,
-                                   const gchar   *original_name,
                                    const gchar   *blurb,
                                    const gchar   *help,
                                    const gchar   *authors,
@@ -301,20 +297,18 @@ gimp_procedure_set_static_strings (GimpProcedure *procedure,
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->original_name = (gchar *) original_name;
-  procedure->blurb         = (gchar *) blurb;
-  procedure->help          = (gchar *) help;
-  procedure->authors       = (gchar *) authors;
-  procedure->copyright     = (gchar *) copyright;
-  procedure->date          = (gchar *) date;
-  procedure->deprecated    = (gchar *) deprecated;
+  procedure->blurb      = (gchar *) blurb;
+  procedure->help       = (gchar *) help;
+  procedure->authors    = (gchar *) authors;
+  procedure->copyright  = (gchar *) copyright;
+  procedure->date       = (gchar *) date;
+  procedure->deprecated = (gchar *) deprecated;
 
   procedure->static_strings = TRUE;
 }
 
 void
 gimp_procedure_take_strings (GimpProcedure *procedure,
-                             gchar         *original_name,
                              gchar         *blurb,
                              gchar         *help,
                              gchar         *authors,
@@ -326,13 +320,12 @@ gimp_procedure_take_strings (GimpProcedure *procedure,
 
   gimp_procedure_free_strings (procedure);
 
-  procedure->original_name = original_name;
-  procedure->blurb         = blurb;
-  procedure->help          = help;
-  procedure->authors       = authors;
-  procedure->copyright     = copyright;
-  procedure->date          = date;
-  procedure->deprecated    = deprecated;
+  procedure->blurb      = blurb;
+  procedure->help       = help;
+  procedure->authors    = authors;
+  procedure->copyright  = copyright;
+  procedure->date       = date;
+  procedure->deprecated = deprecated;
 
   procedure->static_strings = FALSE;
 }
@@ -698,8 +691,8 @@ gimp_procedure_name_compare (GimpProcedure *proc1,
                              GimpProcedure *proc2)
 {
   /* Assume there always is a name, don't bother with NULL checks */
-  return strcmp (proc1->original_name,
-                 proc2->original_name);
+  return strcmp (gimp_object_get_name (proc1),
+                 gimp_object_get_name (proc2));
 }
 
 /*  private functions  */
@@ -709,7 +702,6 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
 {
   if (! procedure->static_strings)
     {
-      g_free (procedure->original_name);
       g_free (procedure->blurb);
       g_free (procedure->help);
       g_free (procedure->authors);
@@ -718,13 +710,12 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
       g_free (procedure->deprecated);
     }
 
-  procedure->original_name = NULL;
-  procedure->blurb         = NULL;
-  procedure->help          = NULL;
-  procedure->authors       = NULL;
-  procedure->copyright     = NULL;
-  procedure->date          = NULL;
-  procedure->deprecated    = NULL;
+  procedure->blurb      = NULL;
+  procedure->help       = NULL;
+  procedure->authors    = NULL;
+  procedure->copyright  = NULL;
+  procedure->date       = NULL;
+  procedure->deprecated = NULL;
 
   procedure->static_strings = FALSE;
 }

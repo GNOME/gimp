@@ -381,7 +381,6 @@ register_drawable_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-clear");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-edit-clear",
                                      "Clear selected area of drawable.",
                                      "This procedure clears the specified drawable. If the drawable has an alpha channel, the cleared pixels will become transparent. If the drawable does not have an alpha channel, cleared pixels will be set to the background color. This procedure only affects regions within a selection if there is a selection active.\n"
                                      "\n"
@@ -406,7 +405,6 @@ register_drawable_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-fill");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-edit-fill",
                                      "Fill selected area of drawable.",
                                      "This procedure fills the specified drawable according to fill mode. This procedure only affects regions within a selection if there is a selection active. If you want to fill the whole drawable, regardless of the selection, use 'gimp-drawable-fill'.\n"
                                      "\n"
@@ -438,7 +436,6 @@ register_drawable_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-bucket-fill");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-edit-bucket-fill",
                                      "Fill the area by a seed fill starting at the specified coordinates.",
                                      "This procedure does a seed fill at the specified coordinates, using various parameters from the current context.\n"
                                      "In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.\n"
@@ -483,7 +480,6 @@ register_drawable_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-gradient-fill");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-edit-gradient-fill",
                                      "Draw a gradient between the starting and ending coordinates with the specified gradient type.",
                                      "This tool requires information on the gradient type. It creates the specified variety of gradient using the starting and ending coordinates as defined for each gradient type. For shapeburst gradient types, the context's distance metric is also relevant and can be updated with 'gimp-context-set-distance-metric'.\n"
                                      "\n"
@@ -569,7 +565,6 @@ register_drawable_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-stroke-selection");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-edit-stroke-selection",
                                      "Stroke the current selection",
                                      "This procedure strokes the current selection, painting along the selection boundary with the active paint method and brush, or using a plain line with configurable properties. The paint is applied to the specified drawable regardless of the active selection.\n"
                                      "\n"
@@ -594,7 +589,6 @@ register_drawable_edit_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-drawable-edit-stroke-item");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-edit-stroke-item",
                                      "Stroke the specified item",
                                      "This procedure strokes the specified item, painting along its outline (e.g. along a path, or along a channel's boundary), with the active paint method and brush, or using a plain line with configurable properties.\n"
                                      "\n"

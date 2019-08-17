@@ -121,7 +121,6 @@ register_message_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-message");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-message",
                                      "Displays a dialog box with a message.",
                                      "Displays a dialog box with a message. Useful for status or error reporting. The message must be in UTF-8 encoding.",
                                      "Manish Singh",
@@ -145,7 +144,6 @@ register_message_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-message-get-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-message-get-handler",
                                      "Returns the current state of where warning messages are displayed.",
                                      "This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
                                      "Manish Singh",
@@ -169,7 +167,6 @@ register_message_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-message-set-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-message-set-handler",
                                      "Controls where warning messages are displayed.",
                                      "This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
                                      "Manish Singh",

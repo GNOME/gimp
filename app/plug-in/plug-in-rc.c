@@ -419,10 +419,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
 
   *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
-  gimp_object_take_name (GIMP_OBJECT (procedure),
-                         gimp_canonicalize_identifier (str));
-
-  procedure->original_name = str;
+  gimp_object_take_name (GIMP_OBJECT (procedure), str);
 
   if (! gimp_scanner_parse_string (scanner, &procedure->blurb))
     return G_TOKEN_STRING;
@@ -1164,7 +1161,7 @@ plug_in_rc_write (GSList  *plug_in_defs,
 
               gimp_config_writer_open (writer, "proc-def");
               gimp_config_writer_printf (writer, "\"%s\" %d",
-                                         procedure->original_name,
+                                         gimp_object_get_name (procedure),
                                          procedure->proc_type);
               gimp_config_writer_linefeed (writer);
               gimp_config_writer_string (writer, procedure->blurb);

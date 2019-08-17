@@ -275,7 +275,6 @@ register_image_guides_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-add-hguide");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-hguide",
                                      "Add a horizontal guide to an image.",
                                      "This procedure adds a horizontal guide to an image. It takes the input image and the y-position of the new guide as parameters. It returns the guide ID of the new guide.",
                                      "Adam D. Moss",
@@ -310,7 +309,6 @@ register_image_guides_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-add-vguide");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-vguide",
                                      "Add a vertical guide to an image.",
                                      "This procedure adds a vertical guide to an image. It takes the input image and the x-position of the new guide as parameters. It returns the guide ID of the new guide.",
                                      "Adam D. Moss",
@@ -345,7 +343,6 @@ register_image_guides_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-delete-guide");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-delete-guide",
                                      "Deletes a guide from an image.",
                                      "This procedure takes an image and a guide ID as input and removes the specified guide from the specified image.",
                                      "Adam D. Moss",
@@ -374,7 +371,6 @@ register_image_guides_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-find-next-guide");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-find-next-guide",
                                      "Find next guide on an image.",
                                      "This procedure takes an image and a guide ID as input and finds the guide ID of the successor of the given guide ID in the image's guide list. If the supplied guide ID is 0, the procedure will return the first Guide. The procedure will return 0 if given the final guide ID as an argument or the image has no guides.",
                                      "Adam D. Moss",
@@ -409,7 +405,6 @@ register_image_guides_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-guide-orientation");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-guide-orientation",
                                      "Get orientation of a guide on an image.",
                                      "This procedure takes an image and a guide ID as input and returns the orientations of the guide.",
                                      "Adam D. Moss",
@@ -447,7 +442,6 @@ register_image_guides_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-image-get-guide-position");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-guide-position",
                                      "Get position of a guide on an image.",
                                      "This procedure takes an image and a guide ID as input and returns the position of the guide relative to the top or left of the image.",
                                      "Adam D. Moss",

@@ -101,7 +101,6 @@ register_gradients_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradients-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradients-refresh",
                                      "Refresh current gradients. This function always succeeds.",
                                      "This procedure retrieves all gradients currently in the user's gradient path and updates the gradient dialogs accordingly.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -118,7 +117,6 @@ register_gradients_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-gradients-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-gradients-get-list",
                                      "Retrieve the list of loaded gradients.",
                                      "This procedure returns a list of the gradients that are currently loaded. You can later use the 'gimp-context-set-gradient' function to set the active gradient.",
                                      "Federico Mena Quintero",

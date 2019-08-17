@@ -1304,7 +1304,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-new",
                                      "Creates a new empty vectors object.",
                                      "Creates a new empty vectors object. The vectors object needs to be added to the image using 'gimp-image-insert-vectors'.",
                                      "Simon Budig",
@@ -1340,7 +1339,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-new-from-text-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-new-from-text-layer",
                                      "Creates a new vectors object from a text layer.",
                                      "Creates a new vectors object from a text layer. The vectors object needs to be added to the image using 'gimp-image-insert-vectors'.",
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
@@ -1375,7 +1373,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-copy");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-copy",
                                      "Copy a vectors object.",
                                      "This procedure copies the specified vectors object and returns the copy.",
                                      "Barak Itkin <lightningismyname@gmail.com>",
@@ -1404,7 +1401,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-get-strokes");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-strokes",
                                      "List the strokes associated with the passed path.",
                                      "Returns an Array with the stroke-IDs associated with the passed path.",
                                      "Simon Budig",
@@ -1438,7 +1434,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-get-length");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-get-length",
                                      "Measure the length of the given stroke.",
                                      "Measure the length of the given stroke.",
                                      "Simon Budig",
@@ -1479,7 +1474,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-get-point-at-dist");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-get-point-at-dist",
                                      "Get point at a specified distance along the stroke.",
                                      "This will return the x,y position of a point at a given distance along the stroke. The distance will be obtained by first digitizing the curve internally and then walking along the curve. For a closed stroke the start of the path is the first point on the path that was created. This might not be obvious. If the stroke is not long enough, a \"valid\" flag will be FALSE.",
                                      "Simon Budig",
@@ -1544,7 +1538,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-remove-stroke");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-remove-stroke",
                                      "remove the stroke from a vectors object.",
                                      "Remove the stroke from a vectors object.",
                                      "Simon Budig",
@@ -1573,7 +1566,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-close");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-close",
                                      "closes the specified stroke.",
                                      "Closes the specified stroke.",
                                      "Simon Budig",
@@ -1602,7 +1594,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-translate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-translate",
                                      "translate the given stroke.",
                                      "Translate the given stroke.",
                                      "Simon Budig",
@@ -1643,7 +1634,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-scale");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-scale",
                                      "scales the given stroke.",
                                      "Scale the given stroke.",
                                      "Simon Budig",
@@ -1684,7 +1674,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-rotate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-rotate",
                                      "rotates the given stroke.",
                                      "Rotates the given stroke around given center by angle (in degrees).",
                                      "Jo\xc3\xa3o S. O. Bueno",
@@ -1731,7 +1720,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-flip");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-flip",
                                      "flips the given stroke.",
                                      "Rotates the given stroke around given center by angle (in degrees).",
                                      "Jo\xc3\xa3o S. O. Bueno",
@@ -1775,7 +1763,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-flip-free");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-flip-free",
                                      "flips the given stroke about an arbitrary axis.",
                                      "Flips the given stroke about an arbitrary axis. Axis is defined by two coordinates in the image (in pixels), through which the flipping axis passes.",
                                      "Jo\xc3\xa3o S. O. Bueno",
@@ -1828,7 +1815,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-get-points");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-get-points",
                                      "returns the control points of a stroke.",
                                      "returns the control points of a stroke. The interpretation of the coordinates returned depends on the type of the stroke. For Gimp 2.4 this is always a bezier stroke, where the coordinates are the control points.",
                                      "Simon Budig",
@@ -1881,7 +1867,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-new-from-points");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-new-from-points",
                                      "Adds a stroke of a given type to the vectors object.",
                                      "Adds a stroke of a given type to the vectors object. The coordinates of the control points can be specified. For now only strokes of the type GIMP_VECTORS_STROKE_TYPE_BEZIER are supported. The control points are specified as a pair of float values for the x- and y-coordinate. The Bezier stroke type needs a multiple of three control points. Each Bezier segment endpoint (anchor, A) has two additional control points (C) associated. They are specified in the order CACCACCAC...",
                                      "Simon Budig",
@@ -1934,7 +1919,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-stroke-interpolate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-stroke-interpolate",
                                      "returns polygonal approximation of the stroke.",
                                      "returns polygonal approximation of the stroke.",
                                      "Simon Budig",
@@ -1986,7 +1970,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-bezier-stroke-new-moveto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-new-moveto",
                                      "Adds a bezier stroke with a single moveto to the vectors object.",
                                      "Adds a bezier stroke with a single moveto to the vectors object.",
                                      "Simon Budig",
@@ -2027,7 +2010,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-bezier-stroke-lineto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-lineto",
                                      "Extends a bezier stroke with a lineto.",
                                      "Extends a bezier stroke with a lineto.",
                                      "Simon Budig",
@@ -2068,7 +2050,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-bezier-stroke-conicto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-conicto",
                                      "Extends a bezier stroke with a conic bezier spline.",
                                      "Extends a bezier stroke with a conic bezier spline. Actually a cubic bezier spline gets added that realizes the shape of a conic bezier spline.",
                                      "Simon Budig",
@@ -2121,7 +2102,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-bezier-stroke-cubicto");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-cubicto",
                                      "Extends a bezier stroke with a cubic bezier spline.",
                                      "Extends a bezier stroke with a cubic bezier spline.",
                                      "Simon Budig",
@@ -2186,7 +2166,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-bezier-stroke-new-ellipse");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-bezier-stroke-new-ellipse",
                                      "Adds a bezier stroke describing an ellipse the vectors object.",
                                      "Adds a bezier stroke describing an ellipse the vectors object.",
                                      "Simon Budig",
@@ -2245,7 +2224,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-import-from-file");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-import-from-file",
                                      "Import paths from an SVG file.",
                                      "This procedure imports paths from an SVG file. SVG elements other than paths and basic shapes are ignored.",
                                      "Simon Budig",
@@ -2298,7 +2276,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-import-from-string");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-import-from-string",
                                      "Import paths from an SVG string.",
                                      "This procedure works like 'gimp-vectors-import-from-file' but takes a string rather than reading the SVG from a file. This allows you to write scripts that generate SVG and feed it to GIMP.",
                                      "Simon Budig",
@@ -2357,7 +2334,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-export-to-file");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-export-to-file",
                                      "save a path as an SVG file.",
                                      "This procedure creates an SVG file to save a Vectors object, that is, a path. The resulting file can be edited using a vector graphics application, or later reloaded into GIMP. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -2393,7 +2369,6 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-vectors-export-to-string");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-export-to-string",
                                      "Save a path as an SVG string.",
                                      "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The contents are a NUL-terminated string that holds a complete XML document. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",

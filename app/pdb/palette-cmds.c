@@ -611,7 +611,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-new");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-new",
                                      "Creates a new palette",
                                      "This procedure creates a new, uninitialized palette",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -642,7 +641,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-duplicate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-duplicate",
                                      "Duplicates a palette",
                                      "This procedure creates an identical palette by a different name",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -673,7 +671,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-rename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-rename",
                                      "Rename a palette",
                                      "This procedure renames a palette",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -711,7 +708,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-delete",
                                      "Deletes a palette",
                                      "This procedure deletes a palette",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -735,7 +731,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-is-editable");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-is-editable",
                                      "Tests if palette can be edited",
                                      "Returns TRUE if you have permission to change the palette",
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
@@ -765,7 +760,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-get-info");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-get-info",
                                      "Retrieve information about the specified palette.",
                                      "This procedure retrieves information about the specified palette. This includes the name, and the number of colors.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -795,7 +789,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-get-colors");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-get-colors",
                                      "Gets all colors from the specified palette.",
                                      "This procedure retrieves all color entries of the specified palette.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -830,7 +823,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-get-columns");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-get-columns",
                                      "Retrieves the number of columns to use to display this palette",
                                      "This procedures retrieves the preferred number of columns to use when the palette is being displayed.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -860,7 +852,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-set-columns");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-set-columns",
                                      "Sets the number of columns to use when displaying the palette",
                                      "This procedures controls how many colors are shown per row when the palette is being displayed. This value can only be changed if the palette is writable. The maximum allowed value is 64.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -890,7 +881,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-add-entry");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-add-entry",
                                      "Adds a palette entry to the specified palette.",
                                      "This procedure adds an entry to the specified palette. It returns an error if the entry palette does not exist.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -934,7 +924,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-delete-entry");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-delete-entry",
                                      "Deletes a palette entry from the specified palette.",
                                      "This procedure deletes an entry from the specified palette. It returns an error if the entry palette does not exist.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -964,7 +953,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-entry-get-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-entry-get-color",
                                      "Gets the specified palette entry from the specified palette.",
                                      "This procedure retrieves the color of the zero-based entry specified for the specified palette. It returns an error if the entry does not exist.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1001,7 +989,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-entry-set-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-entry-set-color",
                                      "Sets the specified palette entry in the specified palette.",
                                      "This procedure sets the color of the zero-based entry specified for the specified palette. It returns an error if the entry does not exist.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1038,7 +1025,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-entry-get-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-entry-get-name",
                                      "Gets the specified palette entry from the specified palette.",
                                      "This procedure retrieves the name of the zero-based entry specified for the specified palette. It returns an error if the entry does not exist.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1075,7 +1061,6 @@ register_palette_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palette-entry-set-name");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-palette-entry-set-name",
                                      "Sets the specified palette entry in the specified palette.",
                                      "This procedure sets the name of the zero-based entry specified for the specified palette. It returns an error if the entry does not exist.",
                                      "Michael Natterer <mitch@gimp.org>",

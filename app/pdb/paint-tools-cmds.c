@@ -951,7 +951,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-airbrush");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-airbrush",
                                      "Paint in the current brush with varying pressure. Paint application is time-dependent.",
                                      "This tool simulates the use of an airbrush. Paint pressure represents the relative intensity of the paint application. High pressure results in a thicker layer of paint while low pressure results in a thinner layer.",
                                      "Spencer Kimball & Peter Mattis",
@@ -991,7 +990,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-airbrush-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-airbrush-default",
                                      "Paint in the current brush with varying pressure. Paint application is time-dependent.",
                                      "This tool simulates the use of an airbrush. It is similar to 'gimp-airbrush' except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
                                      "Andy Thomas",
@@ -1025,7 +1023,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-clone");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-clone",
                                      "Clone from the source to the dest drawable using the current brush",
                                      "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored. Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern. For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1084,7 +1081,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-clone-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-clone-default",
                                      "Clone from the source to the dest drawable using the current brush",
                                      "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'gimp-clone' function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                      "Andy Thomas",
@@ -1118,7 +1114,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-convolve");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-convolve",
                                      "Convolve (Blur, Sharpen) using the current brush.",
                                      "This tool convolves the specified drawable with either a sharpening or blurring kernel. The pressure parameter controls the magnitude of the operation. Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1165,7 +1160,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-convolve-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-convolve-default",
                                      "Convolve (Blur, Sharpen) using the current brush.",
                                      "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the 'gimp-convolve' function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                      "Andy Thomas",
@@ -1199,7 +1193,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dodgeburn");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-dodgeburn",
                                      "Dodgeburn image with varying exposure.",
                                      "Dodgeburn. More details here later.",
                                      "Andy Thomas",
@@ -1253,7 +1246,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-dodgeburn-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-dodgeburn-default",
                                      "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn() function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
                                      "Dodgeburn. More details here later.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1287,7 +1279,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-eraser");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-eraser",
                                      "Erase using the current brush.",
                                      "This tool erases using the current brush mask. If the specified drawable contains an alpha channel, then the erased pixels will become transparent. Otherwise, the eraser tool replaces the contents of the drawable with the background color. Like paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1335,7 +1326,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-eraser-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-eraser-default",
                                      "Erase using the current brush.",
                                      "This tool erases using the current brush mask. This function performs exactly the same as the 'gimp-eraser' function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                      "Andy Thomas",
@@ -1369,7 +1359,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-heal");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-heal",
                                      "Heal from the source to the dest drawable using the current brush",
                                      "This tool heals the source drawable starting at the specified source coordinates to the dest drawable. For image healing, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred. The healing tool is capable of transforming between any image types except RGB->Indexed.",
                                      "Kevin Sookocheff",
@@ -1421,7 +1410,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-heal-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-heal-default",
                                      "Heal from the source to the dest drawable using the current brush",
                                      "This tool heals from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the 'gimp-heal' function except that the tools arguments are obtained from the healing option dialog. It this dialog has not been activated then the dialogs default values will be used.",
                                      "Kevin Sookocheff",
@@ -1455,7 +1443,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-paintbrush");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-paintbrush",
                                      "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
                                      "This tool is the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The 'fade-out' parameter is measured in pixels and allows the brush stroke to linearly fall off. The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade-out value, the pressure will approach zero. The gradient-length is the distance to spread the gradient over. It is measured in pixels. If the gradient-length is 0, no gradient is used.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1508,7 +1495,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-paintbrush-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-paintbrush-default",
                                      "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
                                      "This tool is similar to the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The 'fade-out' parameter is measured in pixels and allows the brush stroke to linearly fall off (value obtained from the option dialog). The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade-out value, the pressure will approach zero. The gradient-length (value obtained from the option dialog) is the distance to spread the gradient over. It is measured in pixels. If the gradient-length is 0, no gradient is used.",
                                      "Andy Thomas",
@@ -1542,7 +1528,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-pencil");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-pencil",
                                      "Paint in the current brush without sub-pixel sampling.",
                                      "This tool is the standard pencil. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The brush mask is treated as though it contains only black and white values. Any value below half is treated as black; any above half, as white.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1576,7 +1561,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-smudge");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-smudge",
                                      "Smudge image with varying pressure.",
                                      "This tool simulates a smudge using the current brush. High pressure results in a greater smudge of paint while low pressure results in a lesser smudge.",
                                      "Spencer Kimball & Peter Mattis",
@@ -1616,7 +1600,6 @@ register_paint_tools_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-smudge-default");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-smudge-default",
                                      "Smudge image with varying pressure.",
                                      "This tool simulates a smudge using the current brush. It behaves exactly the same as 'gimp-smudge' except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
                                      "Andy Thomas",

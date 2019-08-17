@@ -227,7 +227,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.swap_path        = gegl_config->swap_path;
       config.num_processors   = gegl_config->num_processors;
 
-      proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
+      proc_run.name    = (gchar *) gimp_object_get_name (procedure);
       proc_run.nparams = gimp_value_array_length (args);
       proc_run.params  = _gimp_value_array_to_gp_params (args, FALSE);
 
@@ -322,7 +322,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
       proc_frame = gimp_plug_in_proc_frame_push (plug_in, context, progress,
                                                  procedure);
 
-      proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
+      proc_run.name    = (gchar *) gimp_object_get_name (procedure);
       proc_run.nparams = gimp_value_array_length (args);
       proc_run.params  = _gimp_value_array_to_gp_params (args, FALSE);
 

@@ -113,5 +113,8 @@ GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
                                                  GimpPDBItemModify   modify,
                                                  GError            **error);
 
+gboolean        gimp_pdb_is_canonical_procedure (const gchar        *procedure_name,
+                                                 GError            **error);
+
 
 #endif /* __GIMP_PDB_UTILS_H__ */

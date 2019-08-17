@@ -122,7 +122,6 @@ xcf_init (Gimp *gimp)
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-save");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-xcf-save",
                                      "Saves file in the .xcf file format",
                                      "The XCF file format has been designed "
                                      "specifically for loading and saving "
@@ -195,7 +194,6 @@ xcf_init (Gimp *gimp)
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-load");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-xcf-load",
                                      "Loads file saved in the .xcf file format",
                                      "The XCF file format has been designed "
                                      "specifically for loading and saving "

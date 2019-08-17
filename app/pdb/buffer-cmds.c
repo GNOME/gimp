@@ -294,7 +294,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffers-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffers-get-list",
                                      "Retrieve a complete listing of the available buffers.",
                                      "This procedure returns a complete listing of available named buffers.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -329,7 +328,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffer-rename");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-rename",
                                      "Renames a named buffer.",
                                      "This procedure renames a named buffer.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -367,7 +365,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffer-delete");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-delete",
                                      "Deletes a named buffer.",
                                      "This procedure deletes a named buffer.",
                                      "David Gowers <neota@softhome.net>",
@@ -391,7 +388,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffer-get-width");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-width",
                                      "Retrieves the specified buffer's width.",
                                      "This procedure retrieves the specified named buffer's width.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -421,7 +417,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffer-get-height");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-height",
                                      "Retrieves the specified buffer's height.",
                                      "This procedure retrieves the specified named buffer's height.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -451,7 +446,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffer-get-bytes");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-bytes",
                                      "Retrieves the specified buffer's bytes.",
                                      "This procedure retrieves the specified named buffer's bytes.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -481,7 +475,6 @@ register_buffer_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-buffer-get-image-type");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-buffer-get-image-type",
                                      "Retrieves the specified buffer's image type.",
                                      "This procedure retrieves the specified named buffer's image type.",
                                      "Michael Natterer <mitch@gimp.org>",

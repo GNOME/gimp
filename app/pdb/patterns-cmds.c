@@ -102,7 +102,6 @@ register_patterns_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-refresh");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-patterns-refresh",
                                      "Refresh current patterns. This function always succeeds.",
                                      "This procedure retrieves all patterns currently in the user's pattern path and updates all pattern dialogs accordingly.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -119,7 +118,6 @@ register_patterns_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-patterns-get-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-patterns-get-list",
                                      "Retrieve a complete listing of the available patterns.",
                                      "This procedure returns a complete listing of available GIMP patterns. Each name returned can be used as input to the 'gimp-context-set-pattern'.",
                                      "Spencer Kimball & Peter Mattis",

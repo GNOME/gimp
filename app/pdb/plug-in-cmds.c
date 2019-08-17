@@ -42,6 +42,7 @@
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimppdb.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -118,9 +119,7 @@ plugin_domain_register_invoker (GimpProcedure         *procedure,
                                               domain_name, domain_path);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -152,9 +151,7 @@ plugin_help_register_invoker (GimpProcedure         *procedure,
                                             domain_name, domain_uri);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -186,9 +183,7 @@ plugin_menu_branch_register_invoker (GimpProcedure         *procedure,
                                                 plug_in->file, menu_path, menu_name);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -214,16 +209,13 @@ plugin_menu_register_invoker (GimpProcedure         *procedure,
     {
       GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-      if (plug_in)
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
-          gchar *canonical = gimp_canonicalize_identifier (procedure_name);
-          success = gimp_plug_in_menu_register (plug_in, canonical, menu_path);
-          g_free (canonical);
+          success = gimp_plug_in_menu_register (plug_in, procedure_name, menu_path);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -253,17 +245,14 @@ plugin_icon_register_invoker (GimpProcedure         *procedure,
     {
       GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
-      if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
+      if (plug_in &&
+          plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           GimpPlugInProcedure *proc;
-          gchar               *canonical;
-
-          canonical = gimp_canonicalize_identifier (procedure_name);
 
           proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                              canonical);
-
-          g_free (canonical);
+                                              procedure_name);
 
           if (proc)
             gimp_plug_in_procedure_set_icon (proc, icon_type,
@@ -272,9 +261,7 @@ plugin_icon_register_invoker (GimpProcedure         *procedure,
             success = FALSE;
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -303,9 +290,7 @@ plugin_set_pdb_error_handler_invoker (GimpProcedure         *procedure,
           gimp_plug_in_set_error_handler (plug_in, handler);
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -331,9 +316,7 @@ plugin_get_pdb_error_handler_invoker (GimpProcedure         *procedure,
       handler = gimp_plug_in_get_error_handler (plug_in);
     }
   else
-    {
-      success = FALSE;
-    }
+    success = FALSE;
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
@@ -356,7 +339,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugins-query");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugins-query",
                                      "Queries the plug-in database for its contents.",
                                      "This procedure queries the contents of the plug-in database.",
                                      "Andy Thomas",
@@ -446,7 +428,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-domain-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-domain-register",
                                      "Registers a textdomain for localisation.",
                                      "This procedure adds a textdomain to the list of domains Gimp searches for strings when translating its menu entries. There is no need to call this function for plug-ins that have their strings included in the 'gimp-std-plugins' domain as that is used by default. If the compiled message catalog is not in the standard location, you may specify an absolute path to another location. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -477,7 +458,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-help-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-help-register",
                                      "Register a help path for a plug-in.",
                                      "This procedure registers user documentation for the calling plug-in with the GIMP help system. The domain_uri parameter points to the root directory where the plug-in help is installed. For each supported language there should be a file called 'gimp-help.xml' that maps the help IDs to the actual help files.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -508,7 +488,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-menu-branch-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-menu-branch-register",
                                      "Register a sub-menu.",
                                      "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -539,7 +518,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-menu-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-menu-register",
                                      "Register an additional menu path for a plug-in procedure.",
                                      "This procedure installs an additional menu entry for the given procedure.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -570,7 +548,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-icon-register");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-icon-register",
                                      "Register an icon for a plug-in procedure.",
                                      "This procedure installs an icon for the given procedure.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -612,7 +589,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-set-pdb-error-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-set-pdb-error-handler",
                                      "Sets an error handler for procedure calls.",
                                      "This procedure changes the way that errors in procedure calls are handled. By default GIMP will raise an error dialog if a procedure call made by a plug-in fails. Using this procedure the plug-in can change this behavior. If the error handler is set to %GIMP_PDB_ERROR_HANDLER_PLUGIN, then the plug-in is responsible for calling 'gimp-get-pdb-error' and handling the error whenever one if its procedure calls fails. It can do this by displaying the error message or by forwarding it in its own return values.",
                                      "Sven Neumann <sven@gimp.org>",
@@ -636,7 +612,6 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-plugin-get-pdb-error-handler");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-plugin-get-pdb-error-handler",
                                      "Retrieves the active error handler for procedure calls.",
                                      "This procedure retrieves the currently active error handler for procedure calls made by the calling plug-in. See 'gimp-plugin-set-pdb-error-handler' for details.",
                                      "Sven Neumann <sven@gimp.org>",

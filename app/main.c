@@ -743,7 +743,7 @@ gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
     {
       GimpProcedure *procedure = GIMP_PROCEDURE (iter->data);
 
-      g_print ("%s\n", procedure->original_name);
+      g_print ("%s\n", gimp_object_get_name (procedure));
     }
 
   g_list_free (deprecated_procs);

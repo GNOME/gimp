@@ -190,7 +190,6 @@ register_floating_sel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-remove");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-floating-sel-remove",
                                      "Remove the specified floating selection from its associated drawable.",
                                      "This procedure removes the floating selection completely, without any side effects. The associated drawable is then set to active.",
                                      "Spencer Kimball & Peter Mattis",
@@ -213,7 +212,6 @@ register_floating_sel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-anchor");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-floating-sel-anchor",
                                      "Anchor the specified floating selection to its associated drawable.",
                                      "This procedure anchors the floating selection to its associated drawable. This is similar to merging with a merge type of ClipToBottomLayer. The floating selection layer is no longer valid after this operation.",
                                      "Spencer Kimball & Peter Mattis",
@@ -236,7 +234,6 @@ register_floating_sel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-to-layer");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-floating-sel-to-layer",
                                      "Transforms the specified floating selection into a layer.",
                                      "This procedure transforms the specified floating selection into a layer with the same offsets and extents. The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to. The floating selection will become the active layer. This procedure will not work if the floating selection has a different base type from the underlying image. This might be the case if the floating selection is above an auxiliary channel or a layer mask.",
                                      "Spencer Kimball & Peter Mattis",
@@ -259,7 +256,6 @@ register_floating_sel_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-floating-sel-attach");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-floating-sel-attach",
                                      "Attach the specified layer as floating to the specified drawable.",
                                      "This procedure attaches the layer as floating selection to the drawable.",
                                      "Spencer Kimball & Peter Mattis",

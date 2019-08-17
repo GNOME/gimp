@@ -1029,7 +1029,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-translate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-translate",
                                      "Translate the item by the specified offsets.",
                                      "This procedure translates the item by the amounts specified in the off_x and off_y arguments. These can be negative, and are considered offsets from the current position. The offsets will be rounded to the nearest pixel unless the item is a path.\n"
                                      "\n"
@@ -1072,7 +1071,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-flip-simple");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-flip-simple",
                                      "Flip the specified item either vertically or horizontally.",
                                      "This procedure flips the specified item.\n"
                                      "\n"
@@ -1128,7 +1126,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-flip");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-flip",
                                      "Flip the specified item around a given line.",
                                      "This procedure flips the specified item.\n"
                                      "\n"
@@ -1187,7 +1184,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-perspective");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-perspective",
                                      "Perform a possibly non-affine transformation on the specified item.",
                                      "This procedure performs a possibly non-affine transformation on the specified item by allowing the corners of the original bounding box to be arbitrarily remapped to any values.\n"
                                      "\n"
@@ -1272,7 +1268,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-rotate-simple");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-rotate-simple",
                                      "Rotate the specified item about given coordinates through the specified angle.",
                                      "This function rotates the specified item.\n"
                                      "\n"
@@ -1332,7 +1327,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-rotate");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-rotate",
                                      "Rotate the specified item about given coordinates through the specified angle.",
                                      "This function rotates the specified item.\n"
                                      "\n"
@@ -1391,7 +1385,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-scale");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-scale",
                                      "Scale the specified item.",
                                      "This procedure scales the specified item.\n"
                                      "\n"
@@ -1452,7 +1445,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-shear");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-shear",
                                      "Shear the specified item about its center by the specified magnitude.",
                                      "This procedure shears the specified item.\n"
                                      "\n"
@@ -1504,7 +1496,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-2d");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-2d",
                                      "Transform the specified item in 2d.",
                                      "This procedure transforms the specified item.\n"
                                      "\n"
@@ -1583,7 +1574,6 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-item-transform-matrix");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-transform-matrix",
                                      "Transform the specified item in 2d.",
                                      "This procedure transforms the specified item.\n"
                                      "\n"
