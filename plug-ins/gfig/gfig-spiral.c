@@ -242,7 +242,7 @@ d_paint_spiral (GfigObject *obj)
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-                  gfig_context->drawable_id,
+                  gfig_context->drawable,
                   i, line_pnts);
     }
 
