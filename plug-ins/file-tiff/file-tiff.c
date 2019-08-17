@@ -81,23 +81,23 @@ GType                   tiff_get_type         (void) G_GNUC_CONST;
 
 static GList          * tiff_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * tiff_create_procedure (GimpPlugIn           *plug_in,
-                                              const gchar          *name);
+                                               const gchar          *name);
 
 static GimpValueArray * tiff_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+                                               GimpRunMode           run_mode,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 static GimpValueArray * tiff_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              gint32                image,
-                                              gint32                drawable,
-                                              GFile                *file,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 
-static gboolean         image_is_monochrome  (gint32                image);
-static gboolean         image_is_multi_layer (gint32                image);
+static gboolean         image_is_monochrome  (GimpImage            *image);
+static gboolean         image_is_multi_layer (GimpImage            *image);
 
 
 G_DEFINE_TYPE (Tiff, tiff, GIMP_TYPE_PLUG_IN)
@@ -243,7 +243,7 @@ tiff_load (GimpProcedure        *procedure,
 {
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
-  gint32             image             = 0;
+  GimpImage         *image             = NULL;
   gboolean           resolution_loaded = FALSE;
   gboolean           profile_loaded    = FALSE;
   GimpMetadata      *metadata;
@@ -260,7 +260,7 @@ tiff_load (GimpProcedure        *procedure,
                        &profile_loaded,
                        &error);
 
-  if (image < 1)
+  if (!image)
     return gimp_procedure_new_return_values (procedure, status, error);
 
   metadata = gimp_image_metadata_load_prepare (image,
@@ -288,8 +288,8 @@ tiff_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image);
+  g_value_set_object (gimp_value_array_index (return_vals, 1),
+                      image);
 
   return return_vals;
 }
@@ -297,8 +297,8 @@ tiff_load (GimpProcedure        *procedure,
 static GimpValueArray *
 tiff_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image,
-          gint32                drawable,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -307,7 +307,7 @@ tiff_save (GimpProcedure        *procedure,
   GimpMetadata          *metadata;
   GimpMetadataSaveFlags  metadata_flags;
   GimpParasite          *parasite;
-  gint32                 orig_image = image;
+  GimpImage             *orig_image = image;
   GimpExportReturn       export     = GIMP_EXPORT_CANCEL;
   GError                *error      = NULL;
 
@@ -470,13 +470,13 @@ tiff_save (GimpProcedure        *procedure,
 }
 
 static gboolean
-image_is_monochrome (gint32 image)
+image_is_monochrome (GimpImage *image)
 {
   guchar   *colors;
   gint      num_colors;
   gboolean  monochrome = FALSE;
 
-  g_return_val_if_fail (image != -1, FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   colors = gimp_image_get_colormap (image, &num_colors);
 
@@ -501,13 +501,14 @@ image_is_monochrome (gint32 image)
 }
 
 static gboolean
-image_is_multi_layer (gint32 image)
+image_is_multi_layer (GimpImage *image)
 {
-  gint32 *layers;
+  GList  *layers;
   gint32  n_layers;
 
-  layers = gimp_image_get_layers (image, &n_layers);
-  g_free (layers);
+  layers = gimp_image_get_layers (image);
+  n_layers = g_list_length (layers);
+  g_list_free (layers);
 
   return (n_layers > 1);
 }
