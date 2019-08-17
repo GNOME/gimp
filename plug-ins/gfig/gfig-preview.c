@@ -146,7 +146,7 @@ static void
 draw_background (cairo_t  *cr)
 {
   if (! back_pixbuf)
-    back_pixbuf = gimp_image_get_thumbnail (gfig_context->image_id,
+    back_pixbuf = gimp_image_get_thumbnail (gfig_context->image,
                                             preview_width, preview_height,
                                             GIMP_PIXBUF_LARGE_CHECKS);
 
