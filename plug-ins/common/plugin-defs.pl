@@ -68,7 +68,7 @@
     'sphere-designer' => { ui => 1, gegl => 1, old_api => 1 },
     'tile' => { ui => 1, gegl => 1, old_api => 1 },
     'tile-small' => { ui => 1, gegl => 1, old_api => 1 },
-    'unit-editor' => { ui => 1, old_api => 1 },
+    'unit-editor' => { ui => 1 },
     'van-gogh-lic' => { ui => 1, gegl => 1, old_api => 1 },
     'warp' => { ui => 1, gegl => 1, old_api => 1 },
     'wavelet-decompose' => { ui => 1, gegl => 1, old_api => 1 },

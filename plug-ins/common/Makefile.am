@@ -1583,8 +1583,6 @@ tile_small_LDADD = \
 	$(INTLLIBS)		\
 	$(tile_small_RC)
 
-unit_editor_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 unit_editor_SOURCES = \
 	unit-editor.c
 
