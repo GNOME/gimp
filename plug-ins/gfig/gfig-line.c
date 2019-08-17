@@ -115,7 +115,7 @@ d_paint_line (GfigObject *obj)
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
-                  gfig_context->drawable_id,
+                  gfig_context->drawable,
                   seg_count * 2, line_pnts);
     }
 
