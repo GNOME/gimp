@@ -131,8 +131,8 @@ typedef struct
 {
   gboolean     debug_styles;
   gboolean     show_background;  /* show thumbnail of image behind figure */
-  gint32       image_id;         /* Gimp image id */
-  gint32       drawable_id;      /* Gimp drawable to paint on */
+  GimpImage    *image;           /* Gimp image */
+  GimpDrawable *drawable;        /* Gimp drawable to paint on */
   GFigObj     *current_obj;
   GfigObject  *selected_obj;
   GtkWidget   *preview;
@@ -171,10 +171,10 @@ void            scale_to_xy     (gdouble *list,
 void            scale_to_original_xy (gdouble *list,
                                       gint     size);
 
-void gfig_paint (BrushType brush_type,
-                 gint32    drawable_ID,
-                 gint      seg_count,
-                 gdouble   line_pnts[]);
+void gfig_paint (BrushType     brush_type,
+                 GimpDrawable *drawable,
+                 gint          seg_count,
+                 gdouble       line_pnts[]);
 
 void draw_item   (cairo_t *cr,
                   gboolean fill);

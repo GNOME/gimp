@@ -315,17 +315,17 @@ d_paint_star (GfigObject *obj)
       gimp_context_set_antialias (selopt.antia);
       gimp_context_set_feather (selopt.feather);
       gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
-      gimp_image_select_polygon (gfig_context->image_id,
+      gimp_image_select_polygon (gfig_context->image,
                                  selopt.type,
                                  i, line_pnts);
       gimp_context_pop ();
 
       paint_layer_fill (min_max[0], min_max[1], min_max[2], min_max[3]);
-      gimp_selection_none (gfig_context->image_id);
+      gimp_selection_none (gfig_context->image);
     }
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)
-    gfig_paint (selvals.brshtype, gfig_context->drawable_id, i, line_pnts);
+    gfig_paint (selvals.brshtype, gfig_context->drawable, i, line_pnts);
 
   g_free (line_pnts);
   g_free (min_max);
