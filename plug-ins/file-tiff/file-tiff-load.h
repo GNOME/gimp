@@ -36,7 +36,7 @@ typedef struct
 
 GimpPDBStatusType load_image  (GFile        *file,
                                GimpRunMode   run_mode,
-                               gint32       *image,
+                               GimpImage   **image,
                                gboolean     *resolution_loaded,
                                gboolean     *profile_loaded,
                                GError      **error);
