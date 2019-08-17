@@ -70,11 +70,11 @@ typedef struct
 
 typedef struct
 {
-  gint32      ID;
-  GeglBuffer *buffer;
-  const Babl *format;
-  guchar     *pixels;
-  guchar     *pixel;
+  GimpDrawable *drawable;
+  GeglBuffer   *buffer;
+  const Babl   *format;
+  guchar       *pixels;
+  guchar       *pixel;
 } ChannelData;
 
 typedef enum
@@ -105,7 +105,7 @@ static void               load_separate    (TIFF              *tif,
                                             gboolean           is_bw,
                                             gint               extra);
 static void               load_paths       (TIFF              *tif,
-                                            gint               image,
+                                            GimpImage         *image,
                                             gint               width,
                                             gint               height,
                                             gint               offset_x,
@@ -149,7 +149,7 @@ tiff_get_page_name (TIFF *tif)
 GimpPDBStatusType
 load_image (GFile        *file,
             GimpRunMode   run_mode,
-            gint32       *image,
+            GimpImage   **image,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
             GError      **error)
@@ -166,7 +166,7 @@ load_image (GFile        *file,
   gint               max_col          = 0;
   gint               li;
 
-  *image = 0;
+  *image = NULL;
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
 
@@ -315,7 +315,7 @@ load_image (GFile        *file,
       gint              rows;
       gboolean          alpha;
       gint              image_type           = GIMP_RGB;
-      gint              layer;
+      GimpLayer        *layer;
       gint              layer_type           = GIMP_RGB_IMAGE;
       float             layer_offset_x       = 0.0;
       float             layer_offset_y       = 0.0;
@@ -796,7 +796,7 @@ load_image (GFile        *file,
           *image = gimp_image_new_with_precision (cols, rows, image_type,
                                                   image_precision);
 
-          if (*image < 1)
+          if (! *image)
             {
               TIFFClose (tif);
               g_message ("Could not create a new image: %s",
@@ -814,8 +814,7 @@ load_image (GFile        *file,
               gimp_image_set_filename (*image, fname);
               g_free (fname);
 
-              images_list = g_list_prepend (images_list,
-                                            GINT_TO_POINTER (*image));
+              images_list = g_list_prepend (images_list, *image);
             }
           else if (pages.o_pages != pages.n_pages)
             {
@@ -1047,18 +1046,18 @@ load_image (GFile        *file,
           /* can't create the palette format here, need to get it from
            * an existing layer
            */
-          base_format = gimp_drawable_get_format (layer);
+          base_format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
         }
       else
         {
           base_format =
             babl_format_with_space (babl_format_get_encoding (base_format),
-                                    gimp_drawable_get_format (layer));
+                                    gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
         }
 
-      channel[0].ID     = layer;
-      channel[0].buffer = gimp_drawable_get_buffer (layer);
-      channel[0].format = base_format;
+      channel[0].drawable = GIMP_DRAWABLE (layer);
+      channel[0].buffer   = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      channel[0].format   = base_format;
 
       if (extra > 0 && ! worst_case)
         {
@@ -1069,11 +1068,11 @@ load_image (GFile        *file,
 
               gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
-              channel[i].ID = gimp_channel_new (*image, _("TIFF Channel"),
-                                                cols, rows,
-                                                100.0, &color);
-              gimp_image_insert_channel (*image, channel[i].ID, -1, 0);
-              channel[i].buffer = gimp_drawable_get_buffer (channel[i].ID);
+              channel[i].drawable = GIMP_DRAWABLE (gimp_channel_new (*image, _("TIFF Channel"),
+                                                                     cols, rows,
+                                                                     100.0, &color));
+              gimp_image_insert_channel (*image, GIMP_CHANNEL (channel[i].drawable), NULL, 0);
+              channel[i].buffer = gimp_drawable_get_buffer (channel[i].drawable);
 
               /* Unlike color channels, we don't care about the source
                * TRC for extra channels. We just want to import them
@@ -1140,13 +1139,13 @@ load_image (GFile        *file,
             }
 
           if (flip_horizontal)
-            gimp_item_transform_flip_simple (layer,
+            gimp_item_transform_flip_simple (GIMP_ITEM (layer),
                                              GIMP_ORIENTATION_HORIZONTAL,
                                              TRUE /* auto_center */,
                                              -1.0 /* axis */);
 
           if (flip_vertical)
-            gimp_item_transform_flip_simple (layer,
+            gimp_item_transform_flip_simple (GIMP_ITEM (layer),
                                              GIMP_ORIENTATION_VERTICAL,
                                              TRUE /* auto_center */,
                                              -1.0 /* axis */);
@@ -1184,7 +1183,7 @@ load_image (GFile        *file,
             }
         }
 
-      gimp_image_insert_layer (*image, layer, -1, -1);
+      gimp_image_insert_layer (*image, layer, NULL, -1);
 
       if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
@@ -1201,14 +1200,14 @@ load_image (GFile        *file,
 
       if (list)
         {
-          *image = GPOINTER_TO_INT (list->data);
+          *image = list->data;
 
           list = g_list_next (list);
         }
 
       for (; list; list = g_list_next (list))
         {
-          gimp_display_new (GPOINTER_TO_INT (list->data));
+          gimp_display_new (list->data);
         }
 
       g_list_free (images_list);
@@ -1308,12 +1307,12 @@ load_rgba (TIFF        *tif,
 }
 
 static void
-load_paths (TIFF *tif,
-            gint  image,
-            gint  width,
-            gint  height,
-            gint  offset_x,
-            gint  offset_y)
+load_paths (TIFF      *tif,
+            GimpImage *image,
+            gint       width,
+            gint       height,
+            gint       offset_x,
+            gint       offset_y)
 {
   gsize  n_bytes;
   gchar *bytes;
@@ -1387,16 +1386,16 @@ load_paths (TIFF *tif,
       if (id >= 2000 && id <= 2998)
         {
           /* path information */
-          guint16   type;
-          gint      rec = pos;
-          gint32    vectors;
-          gdouble  *points          = NULL;
-          gint      expected_points = 0;
-          gint      pointcount      = 0;
-          gboolean  closed          = FALSE;
+          guint16      type;
+          gint         rec = pos;
+          GimpVectors *vectors;
+          gdouble     *points          = NULL;
+          gint         expected_points = 0;
+          gint         pointcount      = 0;
+          gboolean     closed          = FALSE;
 
           vectors = gimp_vectors_new (image, name);
-          gimp_image_insert_vectors (image, vectors, -1, path_index);
+          gimp_image_insert_vectors (image, vectors, NULL, path_index);
           path_index++;
 
           while (rec < pos + len)
