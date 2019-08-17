@@ -39,8 +39,8 @@ typedef struct
 
 gboolean  save_image  (GFile                  *file,
                        TiffSaveVals           *tsvals,
-                       gint32                  image,
-                       gint32                  orig_image,
+                       GimpImage              *image,
+                       GimpImage              *orig_image,
                        const gchar            *image_comment,
                        gint                   *saved_bpp,
                        GimpMetadata           *metadata,
