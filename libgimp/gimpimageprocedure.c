@@ -111,13 +111,13 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   GimpValueArray     *remaining;
   GimpValueArray     *return_values;
   GimpRunMode         run_mode;
-  gint32              image_id;
-  gint32              drawable_id;
+  GimpImage          *image;
+  GimpDrawable       *drawable;
   gint                i;
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_id    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
+  run_mode    = g_value_get_enum   (gimp_value_array_index (args, 0));
+  image       = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable    = g_value_get_object (gimp_value_array_index (args, 2));
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - 3);
 
@@ -130,7 +130,7 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
 
   return_values = image_proc->priv->run_func (procedure,
                                               run_mode,
-                                              image_id, drawable_id,
+                                              image, drawable,
                                               remaining,
                                               image_proc->priv->run_data);
 
