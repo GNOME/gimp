@@ -148,7 +148,7 @@ gfig_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 gfig_create_procedure (GimpPlugIn  *plug_in,
-                           const gchar *name)
+                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -451,7 +451,7 @@ gfig_load (const gchar *filename,
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
