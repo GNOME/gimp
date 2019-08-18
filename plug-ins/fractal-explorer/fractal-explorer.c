@@ -450,25 +450,25 @@ explorer_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      wvals.fractaltype  = g_value_get_int    (gimp_value_array_index (args, 3));
-      wvals.xmin         = g_value_get_double (gimp_value_array_index (args, 4));
-      wvals.xmax         = g_value_get_double (gimp_value_array_index (args, 5));
-      wvals.ymin         = g_value_get_double (gimp_value_array_index (args, 6));
-      wvals.ymax         = g_value_get_double (gimp_value_array_index (args, 7));
-      wvals.iter         = g_value_get_double (gimp_value_array_index (args, 8));
-      wvals.cx           = g_value_get_double (gimp_value_array_index (args, 9));
-      wvals.cy           = g_value_get_double (gimp_value_array_index (args, 10));
-      wvals.colormode    = g_value_get_int    (gimp_value_array_index (args, 11));
-      wvals.redstretch   = g_value_get_double (gimp_value_array_index (args, 12));
-      wvals.greenstretch = g_value_get_double (gimp_value_array_index (args, 13));
-      wvals.bluestretch  = g_value_get_double (gimp_value_array_index (args, 14));
-      wvals.redmode      = g_value_get_int    (gimp_value_array_index (args, 15));
-      wvals.greenmode    = g_value_get_int    (gimp_value_array_index (args, 16));
-      wvals.bluemode     = g_value_get_int    (gimp_value_array_index (args, 17));
-      wvals.redinvert    = g_value_get_int    (gimp_value_array_index (args, 18));
-      wvals.greeninvert  = g_value_get_int    (gimp_value_array_index (args, 19));
-      wvals.blueinvert   = g_value_get_int    (gimp_value_array_index (args, 20));
-      wvals.ncolors      = g_value_get_int    (gimp_value_array_index (args, 21));
+      wvals.fractaltype  = g_value_get_int    (gimp_value_array_index (args, 0));
+      wvals.xmin         = g_value_get_double (gimp_value_array_index (args, 1));
+      wvals.xmax         = g_value_get_double (gimp_value_array_index (args, 2));
+      wvals.ymin         = g_value_get_double (gimp_value_array_index (args, 3));
+      wvals.ymax         = g_value_get_double (gimp_value_array_index (args, 4));
+      wvals.iter         = g_value_get_double (gimp_value_array_index (args, 5));
+      wvals.cx           = g_value_get_double (gimp_value_array_index (args, 6));
+      wvals.cy           = g_value_get_double (gimp_value_array_index (args, 7));
+      wvals.colormode    = g_value_get_int    (gimp_value_array_index (args, 8));
+      wvals.redstretch   = g_value_get_double (gimp_value_array_index (args, 9));
+      wvals.greenstretch = g_value_get_double (gimp_value_array_index (args, 10));
+      wvals.bluestretch  = g_value_get_double (gimp_value_array_index (args, 11));
+      wvals.redmode      = g_value_get_int    (gimp_value_array_index (args, 12));
+      wvals.greenmode    = g_value_get_int    (gimp_value_array_index (args, 13));
+      wvals.bluemode     = g_value_get_int    (gimp_value_array_index (args, 14));
+      wvals.redinvert    = g_value_get_int    (gimp_value_array_index (args, 15));
+      wvals.greeninvert  = g_value_get_int    (gimp_value_array_index (args, 16));
+      wvals.blueinvert   = g_value_get_int    (gimp_value_array_index (args, 17));
+      wvals.ncolors      = g_value_get_int    (gimp_value_array_index (args, 18));
 
       make_color_map ();
       break;

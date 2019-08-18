@@ -229,8 +229,8 @@ remap_run (GimpProcedure        *procedure,
 
       g_free (gimp_image_get_colormap (image_id, &n_cols));
 
-      n_col_args = g_value_get_int            (gimp_value_array_index (args, 3));
-      col_args   = gimp_value_get_uint8_array (gimp_value_array_index (args, 4));
+      n_col_args = g_value_get_int            (gimp_value_array_index (args, 0));
+      col_args   = gimp_value_get_uint8_array (gimp_value_array_index (args, 1));
 
       switch (run_mode)
         {
@@ -270,8 +270,8 @@ remap_run (GimpProcedure        *procedure,
   else if (strcmp (gimp_procedure_get_name (procedure),
                    PLUG_IN_PROC_SWAP) == 0)
     {
-      guchar index1 = g_value_get_uchar (gimp_value_array_index (args, 3));
-      guchar index2 = g_value_get_uchar (gimp_value_array_index (args, 4));
+      guchar index1 = g_value_get_uchar (gimp_value_array_index (args, 0));
+      guchar index2 = g_value_get_uchar (gimp_value_array_index (args, 1));
       guchar tmp;
       gint   n_cols;
 

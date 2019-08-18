@@ -334,7 +334,7 @@ film_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      filmvals.film_height = g_value_get_int (gimp_value_array_index (args, 3));
+      filmvals.film_height = g_value_get_int (gimp_value_array_index (args, 0));
       if (filmvals.film_height <= 0)
         {
           filmvals.keep_height = TRUE;
@@ -344,19 +344,19 @@ film_run (GimpProcedure        *procedure,
         {
           filmvals.keep_height = FALSE;
         }
-      gimp_value_get_rgb (gimp_value_array_index (args, 4),
+      gimp_value_get_rgb (gimp_value_array_index (args, 1),
                           &filmvals.film_color);
-      filmvals.number_start = g_value_get_int (gimp_value_array_index (args, 5));
+      filmvals.number_start = g_value_get_int (gimp_value_array_index (args, 2));
       g_strlcpy (filmvals.number_font,
-                 g_value_get_string (gimp_value_array_index (args, 6)),
+                 g_value_get_string (gimp_value_array_index (args, 3)),
                  FONT_LEN);
-      gimp_value_get_rgb (gimp_value_array_index (args, 7),
+      gimp_value_get_rgb (gimp_value_array_index (args, 4),
                           &filmvals.number_color);
-      filmvals.number_pos[0] = g_value_get_int (gimp_value_array_index (args, 8));
-      filmvals.number_pos[1] = g_value_get_int (gimp_value_array_index (args, 9));
-      filmvals.num_images    = g_value_get_int (gimp_value_array_index (args, 10));
+      filmvals.number_pos[0] = g_value_get_int (gimp_value_array_index (args, 5));
+      filmvals.number_pos[1] = g_value_get_int (gimp_value_array_index (args, 6));
+      filmvals.num_images    = g_value_get_int (gimp_value_array_index (args, 7));
       memcpy (filmvals.image,
-              gimp_value_get_int32_array (gimp_value_array_index (args, 11)),
+              gimp_value_get_int32_array (gimp_value_array_index (args, 8)),
               filmvals.num_images * sizeof (gint32));
       break;
 
