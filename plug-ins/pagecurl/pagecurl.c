@@ -291,10 +291,10 @@ pagecurl_run (GimpProcedure        *procedure,
 
   image_id = image;
 
-  curl.colors      = g_value_get_int     (gimp_value_array_index (args, 3));
-  curl.edge        = g_value_get_int     (gimp_value_array_index (args, 4));
-  curl.orientation = g_value_get_int     (gimp_value_array_index (args, 5));
-  curl.shade       = g_value_get_boolean (gimp_value_array_index (args, 6));
+  curl.colors      = g_value_get_int     (gimp_value_array_index (args, 0));
+  curl.edge        = g_value_get_int     (gimp_value_array_index (args, 1));
+  curl.orientation = g_value_get_int     (gimp_value_array_index (args, 2));
+  curl.shade       = g_value_get_boolean (gimp_value_array_index (args, 3));
 
   if (! gimp_drawable_mask_intersect (drawable_id, &sel_x, &sel_y,
                                       &true_sel_width, &true_sel_height))
