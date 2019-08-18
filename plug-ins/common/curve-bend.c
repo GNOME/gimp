@@ -56,7 +56,7 @@
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
 
-#define PLUG_IN_ITER_NAME       "plug_in_curve_bend_Iterator"
+#define PLUG_IN_ITER_NAME       "plug-in-curve-bend-Iterator"
 #define PLUG_IN_DATA_ITER_FROM  "plug_in_curve_bend_ITER_FROM"
 #define PLUG_IN_DATA_ITER_TO    "plug_in_curve_bend_ITER_TO"
 
