@@ -83,17 +83,46 @@
 /* #define GIFDEBUG yesplease */
 
 
-/* Declare some local functions.
- */
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
-static gint32 load_image (const gchar      *filename,
-                          gboolean          thumbnail,
-                          GError          **error);
+typedef struct _Gif      Gif;
+typedef struct _GifClass GifClass;
+
+struct _Gif
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _GifClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define GIF_TYPE  (gif_get_type ())
+#define GIF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIF_TYPE, Gif))
+
+GType                   gif_get_type         (void) G_GNUC_CONST;
+
+static GList          * gif_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * gif_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * gif_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+static GimpValueArray * gif_load_thumb       (GimpProcedure        *procedure,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static gint32           load_image           (const gchar          *filename,
+                                              gboolean              thumbnail,
+                                              GError              **error);
+
+
+G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GIF_TYPE)
 
 
 static guchar        used_cmap[3][256];
@@ -103,160 +132,214 @@ static guchar        gimp_cmap[768];
 static GimpParasite *comment_parasite = NULL;
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-
-MAIN ()
-
 static void
-query (void)
+gif_class_init (GifClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image"                 }
-  };
-  static const GimpParamDef thumb_args[] =
-  {
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"     }
-  };
-  static const GimpParamDef thumb_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image"                 },
-    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"    },
-    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"   }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (LOAD_PROC,
-                          "Loads files of Compuserve GIF file format",
-                          "FIXME: write help for gif_load",
-                          "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
-                          "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
-                          "1995-2006",
-                          N_("GIF image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/gif");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "gif",
-                                    "",
-                                    "0,string,GIF8");
-
-  gimp_install_procedure (LOAD_THUMB_PROC,
-                          "Loads only the first frame of a GIF image, to be "
-                          "used as a thumbnail",
-                          "",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2006",
-                          NULL,
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (thumb_args),
-                          G_N_ELEMENTS (thumb_return_vals),
-                          thumb_args, thumb_return_vals);
-
-  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
+  plug_in_class->query_procedures = gif_query_procedures;
+  plug_in_class->create_procedure = gif_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+gif_init (Gif *gif)
 {
-  static GimpParam   values[4];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GError            *error  = NULL;
-  gint32             image_ID;
+}
+
+static GList *
+gif_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+gif_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           gif_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("GIF image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files of Compuserve GIF "
+                                        "file format",
+                                        "FIXME: write help for gif_load",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Spencer Kimball, Peter Mattis, "
+                                      "Adam Moss, David Koblas",
+                                      "Spencer Kimball, Peter Mattis, "
+                                      "Adam Moss, David Koblas",
+                                      "1995-2006");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/gif");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "gif");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,GIF8");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
+    }
+  else if (! strcmp (name, LOAD_THUMB_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      gif_load_thumb, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads only the first frame of a "
+                                        "GIF image, to be "
+                                        "used as a thumbnail",
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Sven Neumann",
+                                      "Sven Neumann",
+                                      "2006");
+
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_string ("filename",
+                                                           "Filename",
+                                                           "Name of the file "
+                                                           "to load",
+                                                           FALSE, TRUE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+      gimp_procedure_add_argument (procedure,
+                                   g_param_spec_int ("thumb-size",
+                                                     "Thumb Size",
+                                                     "Preferred thumbnail size",
+                                                     16, 2014, 256,
+                                                     GIMP_PARAM_READWRITE));
+
+      gimp_procedure_add_return_value (procedure,
+                                       gimp_param_spec_image_id ("image",
+                                                                 "Image",
+                                                                 "Thumbnail image",
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE));
+      gimp_procedure_add_return_value (procedure,
+                                       g_param_spec_int ("image-width",
+                                                         "Image width",
+                                                         "Width of the "
+                                                         "full-sized image",
+                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                         GIMP_PARAM_READWRITE));
+      gimp_procedure_add_return_value (procedure,
+                                       g_param_spec_int ("image-height",
+                                                         "Image height",
+                                                         "Height of the "
+                                                         "full-sized image",
+                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                                                         GIMP_PARAM_READWRITE));
+    }
+
+  return procedure;
+}
+
+
+static GimpValueArray *
+gif_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  gchar          *filename;
+  gint32          image_id;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  filename = g_file_get_path (file);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  image_id = load_image (filename, FALSE, &error);
 
-  if (strcmp (name, LOAD_PROC) == 0)
-    {
-      image_ID = load_image (param[1].data.d_string, FALSE, &error);
-    }
-  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
-    {
-      image_ID = load_image (param[0].data.d_string, TRUE, &error);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
+  g_free (filename);
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      if (image_ID != -1)
-        {
-          /* The GIF format only tells you how many bits per pixel
-           *  are in the image, not the actual number of used indices (D'OH!)
-           *
-           * So if we're not careful, repeated load/save of a transparent GIF
-           *  without intermediate indexed->RGB->indexed pumps up the number of
-           *  bits used, as we add an index each time for the transparent
-           *  color.  Ouch.  We either do some heavier analysis at save-time,
-           *  or trim down the number of GIMP colors at load-time.  We do the
-           *  latter for now.
-           */
+  if (image_id < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  /* The GIF format only tells you how many bits per pixel are in the
+   *  image, not the actual number of used indices (D'OH!)
+   *
+   * So if we're not careful, repeated load/save of a transparent GIF
+   *  without intermediate indexed->RGB->indexed pumps up the number
+   *  of bits used, as we add an index each time for the transparent
+   *  color.  Ouch.  We either do some heavier analysis at save-time,
+   *  or trim down the number of GIMP colors at load-time.  We do the
+   *  latter for now.
+   */
 #ifdef GIFDEBUG
-          g_print ("GIF: Highest used index is %d\n", highest_used_index);
+  g_print ("GIF: Highest used index is %d\n", highest_used_index);
 #endif
-          if (! promote_to_rgb)
-            gimp_image_set_colormap (image_ID,
-                                     gimp_cmap, highest_used_index + 1);
 
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
+  if (! promote_to_rgb)
+    gimp_image_set_colormap (image_id,
+                             gimp_cmap, highest_used_index + 1);
 
-          if (strcmp (name, LOAD_THUMB_PROC) == 0)
-            {
-              *nreturn_vals = 4;
-              values[2].type         = GIMP_PDB_INT32;
-              values[2].data.d_int32 = gimp_image_width (image_ID);
-              values[3].type         = GIMP_PDB_INT32;
-              values[3].data.d_int32 = gimp_image_height (image_ID);
-            }
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-          if (error)
-            {
-              *nreturn_vals = 2;
-              values[1].type          = GIMP_PDB_STRING;
-              values[1].data.d_string = error->message;
-            }
-        }
-    }
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
+                           image_id);
 
-  values[0].data.d_status = status;
+  return return_vals;
+}
+
+static GimpValueArray *
+gif_load_thumb (GimpProcedure        *procedure,
+                const GimpValueArray *args,
+                gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  const gchar    *filename;
+  gint32          image_id;
+  GError         *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  filename = g_value_get_string (gimp_value_array_index (args, 0));
+
+  image_id = load_image (filename, TRUE, &error);
+
+  if (image_id < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  if (! promote_to_rgb)
+    gimp_image_set_colormap (image_id,
+                             gimp_cmap, highest_used_index + 1);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+  g_value_set_int         (gimp_value_array_index (return_vals, 2),
+                           gimp_image_width (image_id));
+  g_value_set_int         (gimp_value_array_index (return_vals, 3),
+                           gimp_image_height (image_id));
+
+  return return_vals;
 }
 
 
@@ -378,7 +461,7 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  g_strlcpy (version, (gchar *) buf + 3, 3);
+  g_strlcpy (version, (gchar *) buf + 3, 4);
 
   if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
     {
