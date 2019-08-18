@@ -620,12 +620,22 @@ gimp_scanner_parse_float (GimpScanner *scanner,
     }
   else if (g_scanner_peek_next_token (scanner) == G_TOKEN_INT)
     {
+      /* use a temp value because for whatever reason writing
+       *
+       * *dest = -scanner->value.v_int;
+       *
+       * fails.
+       */
+      gint64 int_value;
+
       g_scanner_get_next_token (scanner);
 
       if (negate)
-        *dest = -scanner->value.v_int;
+        int_value = -scanner->value.v_int;
       else
-        *dest = scanner->value.v_int;
+        int_value = scanner->value.v_int;
+
+      *dest = int_value;
 
       return TRUE;
     }
