@@ -106,6 +106,10 @@
     <title>Index</title>
     <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
   </index>
+  <index role="2.0" id="api-index-2-0">
+    <title>Index of new symbols in GIMP 2.0</title>
+    <xi:include href="xml/api-index-2.0.xml"><xi:fallback /></xi:include>
+  </index>
   <index role="2.2" id="api-index-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
     <xi:include href="xml/api-index-2.2.xml"><xi:fallback /></xi:include>

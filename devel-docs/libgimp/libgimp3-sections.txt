@@ -829,6 +829,8 @@ gimp_pdb_run_procedure_array
 gimp_pdb_temp_procedure_name
 gimp_pdb_dump_to_file
 gimp_pdb_query_procedures
+gimp_pdb_get_last_error
+gimp_pdb_get_last_status
 gimp_pdb_get_data
 gimp_pdb_get_data_size
 gimp_pdb_set_data
@@ -859,6 +861,13 @@ gimp_procedure_set_menu_label
 gimp_procedure_get_menu_label
 gimp_procedure_add_menu_path
 gimp_procedure_get_menu_paths
+gimp_procedure_set_icon_name
+gimp_procedure_set_icon_file
+gimp_procedure_set_icon_pixbuf
+gimp_procedure_get_icon_type
+gimp_procedure_get_icon_name
+gimp_procedure_get_icon_file
+gimp_procedure_get_icon_pixbuf
 gimp_procedure_set_documentation
 gimp_procedure_get_blurb
 gimp_procedure_get_help
@@ -867,13 +876,6 @@ gimp_procedure_set_attribution
 gimp_procedure_get_authors
 gimp_procedure_get_copyright
 gimp_procedure_get_date
-gimp_procedure_set_icon_name
-gimp_procedure_set_icon_file
-gimp_procedure_set_icon_pixbuf
-gimp_procedure_get_icon_type
-gimp_procedure_get_icon_name
-gimp_procedure_get_icon_file
-gimp_procedure_get_icon_pixbuf
 gimp_procedure_add_argument
 gimp_procedure_add_return_value
 gimp_procedure_get_arguments
@@ -893,6 +895,24 @@ GimpProcedure
 GimpProcedureClass
 GimpProcedurePrivate
 gimp_procedure_get_type
+</SECTION>
+
+<SECTION>
+<FILE>gimpimageprocedure</FILE>
+<TITLE>GimpImageProcedure</TITLE>
+GimpRunImageFunc
+gimp_image_procedure_new
+<SUBSECTION Standard>
+GIMP_IMAGE_PROCEDURE
+GIMP_IMAGE_PROCEDURE_CLASS
+GIMP_IMAGE_PROCEDURE_GET_CLASS
+GIMP_IS_IMAGE_PROCEDURE
+GIMP_IS_IMAGE_PROCEDURE_CLASS
+GIMP_TYPE_IMAGE_PROCEDURE
+GimpImageProcedure
+GimpImageProcedureClass
+GimpImageProcedurePrivate
+gimp_image_procedure_get_type
 </SECTION>
 
 <SECTION>

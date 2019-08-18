@@ -25,10 +25,6 @@
     <title>Index of new symbols in GIMP 2.8</title>
     <xi:include href="xml/api-index-2.8.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="2.10" id="api-index-2-10">
-    <title>Index of new symbols in GIMP 2.10</title>
-    <xi:include href="xml/api-index-2.10.xml"><xi:fallback /></xi:include>
-  </index>
   <index role="3.0" id="api-index-3-0">
     <title>Index of new symbols in GIMP 3.0</title>
     <xi:include href="xml/api-index-3.0.xml"><xi:fallback /></xi:include>

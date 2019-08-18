@@ -34,6 +34,7 @@
       <xi:include href="xml/gimpplugin.xml" />
       <xi:include href="xml/gimppdb.xml" />
       <xi:include href="xml/gimpprocedure.xml" />
+      <xi:include href="xml/gimpimageprocedure.xml" />
       <xi:include href="xml/gimpfileprocedure.xml" />
       <xi:include href="xml/gimploadprocedure.xml" />
       <xi:include href="xml/gimpsaveprocedure.xml" />
