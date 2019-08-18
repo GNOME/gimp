@@ -1261,8 +1261,6 @@ file_xwd_LDADD = \
 	$(INTLLIBS)		\
 	$(file_xwd_RC)
 
-film_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 film_SOURCES = \
 	film.c
 
