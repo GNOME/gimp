@@ -1064,6 +1064,7 @@ file_svg_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(SVG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
