@@ -39,7 +39,7 @@ static void       print_settings_add_to_key_file             (const gchar       
 
 static GKeyFile * print_settings_key_file_from_resource_file (void);
 
-static GKeyFile * print_settings_key_file_from_parasite      (gint32             image_ID);
+static GKeyFile * print_settings_key_file_from_parasite      (GimpImage         *image);
 
 static gboolean   print_settings_load_from_key_file          (PrintData         *data,
                                                               GKeyFile          *key_file);
@@ -54,7 +54,7 @@ static gboolean   print_settings_check_version               (GKeyFile          
 gboolean
 print_settings_load (PrintData *data)
 {
-  GKeyFile *key_file = print_settings_key_file_from_parasite (data->image_id);
+  GKeyFile *key_file = print_settings_key_file_from_parasite (data->image);
 
   if (! key_file)
     key_file = print_settings_key_file_from_resource_file ();
@@ -79,12 +79,12 @@ print_settings_save (PrintData *data)
   GKeyFile *key_file = print_settings_key_file_from_settings (data);
 
   /* image setup */
-  if (gimp_image_is_valid (data->image_id))
+  if (gimp_image_is_valid (data->image))
     {
       gdouble xres;
       gdouble yres;
 
-      gimp_image_get_resolution (data->image_id, &xres, &yres);
+      gimp_image_get_resolution (data->image, &xres, &yres);
 
       g_key_file_set_integer (key_file, "image-setup",
                               "unit", data->unit);
@@ -114,7 +114,7 @@ print_settings_save (PrintData *data)
                               "crop-marks", data->draw_crop_marks);
 
       print_utils_key_file_save_as_parasite (key_file,
-                                             data->image_id,
+                                             data->image,
                                              PRINT_SETTINGS_NAME);
     }
 
@@ -197,11 +197,11 @@ print_settings_key_file_from_resource_file (void)
  * NULL otherwise
  */
 static GKeyFile *
-print_settings_key_file_from_parasite (gint32 image_ID)
+print_settings_key_file_from_parasite (GimpImage *image)
 {
   GKeyFile *key_file;
 
-  key_file = print_utils_key_file_load_from_parasite (image_ID,
+  key_file = print_utils_key_file_load_from_parasite (image,
                                                       PRINT_SETTINGS_NAME);
 
   if (key_file && ! print_settings_check_version (key_file))
