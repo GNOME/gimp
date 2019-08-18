@@ -51,7 +51,7 @@
     'file-xmc' => { ui => 1, gegl => 1, optional => 1, libs => 'XMC_LIBS', old_api => 1 },
     'file-xpm' => { ui => 1, gegl => 1, optional => 1, libs => 'XPM_LIBS', old_api => 1 },
     'file-xwd' => {  ui => 1, gegl => 1, old_api => 1 },
-    'film' => { ui => 1, gegl => 1, old_api => 1 },
+    'film' => { ui => 1, gegl => 1 },
     'gradient-map' => { gegl => 1, old_api => 1 },
     'grid' => { ui => 1, gegl => 1 },
     'guillotine' => { old_api => 1 },
