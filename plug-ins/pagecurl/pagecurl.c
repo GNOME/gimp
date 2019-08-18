@@ -127,6 +127,9 @@ static GimpProcedure  * pagecurl_create_procedure (GimpPlugIn           *plug_in
                                                    const gchar          *name);
 
 static GimpValueArray * pagecurl_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   gint32                image_id,
+                                                   gint32                drawable_id,
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
@@ -214,8 +217,8 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      pagecurl_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            pagecurl_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -231,25 +234,6 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
                                       "Federico Mena Quintero and Simon Budig",
                                       PLUG_IN_VERSION);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_int ("colors",
                                                      "Colors",
@@ -294,19 +278,18 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 pagecurl_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              gint32                image,
+              gint32                drawable_id,
               const GimpValueArray *args,
               gpointer              run_data)
 {
   GimpValueArray *return_vals = NULL;
-  GimpRunMode     run_mode;
-  gint32          drawable_id;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_id    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
+  image_id = image;
 
   curl.colors      = g_value_get_int     (gimp_value_array_index (args, 3));
   curl.edge        = g_value_get_int     (gimp_value_array_index (args, 4));

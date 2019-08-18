@@ -165,6 +165,7 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure,
                                      N_("Silicon Graphics IRIS image"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in SGI image file format",
@@ -174,8 +175,6 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
                                       "Michael Sweet <mike@easysw.com>",
                                       "Copyright 1997-1998 by Michael Sweet",
                                       PLUG_IN_VERSION);
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-sgi");

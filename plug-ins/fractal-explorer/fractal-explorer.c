@@ -94,6 +94,9 @@ static GimpProcedure  * explorer_create_procedure (GimpPlugIn           *plug_in
                                                    const gchar          *name);
 
 static GimpValueArray * explorer_run              (GimpProcedure        *procedure,
+                                                   GimpRunMode           run_mode,
+                                                   gint32                image_id,
+                                                   gint32                drawable_id,
                                                    const GimpValueArray *args,
                                                    gpointer              run_data);
 
@@ -157,7 +160,6 @@ gchar               *fractalexplorer_path = NULL;
 
 static gfloat        cx = -0.75;
 static gfloat        cy = -0.2;
-gint32               drawable_id;
 static GList        *fractalexplorer_list = NULL;
 
 explorer_interface_t wint =
@@ -225,8 +227,8 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      explorer_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            explorer_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -244,25 +246,6 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "www.multimania.com/cotting)",
                                       "December, 1998");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_int ("fractal-type",
                                                      "Fractal type",
@@ -414,10 +397,12 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 explorer_run (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              gint32                image_id,
+              gint32                drawable_id,
               const GimpValueArray *args,
               gpointer              run_data)
 {
-  GimpRunMode        run_mode;
   gint               pwidth;
   gint               pheight;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -427,7 +412,6 @@ explorer_run (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
   drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
 
   if (! gimp_drawable_mask_intersect (drawable_id,

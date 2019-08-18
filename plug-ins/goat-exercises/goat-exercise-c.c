@@ -107,8 +107,8 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure,
-                                     N_("Exercise in _C minor"));
+      gimp_procedure_set_menu_label (procedure, N_("Exercise in _C minor"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Development/Goat exercises/");
 
@@ -116,13 +116,10 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                         N_("Exercise a goat in the C language"),
                                         "Takes a goat for a walk",
                                         PLUG_IN_PROC);
-
       gimp_procedure_set_attribution (procedure,
                                       "Øyvind Kolås <pippin@gimp.org>",
                                       "Øyvind Kolås <pippin@gimp.org>",
                                       "21 march 2012");
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
     }
 
   return procedure;

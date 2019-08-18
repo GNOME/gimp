@@ -68,6 +68,9 @@ static GimpProcedure    * print_create_procedure (GimpPlugIn           *plug_in,
                                                   const gchar          *name);
 
 static GimpValueArray   * print_run              (GimpProcedure        *procedure,
+                                                  GimpRunMode           run_mode,
+                                                  gint32                image_id,
+                                                  gint32                drawable_id,
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
@@ -148,15 +151,14 @@ print_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PRINT_PROC_NAME))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      print_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, N_("_Print..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
-
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PRINT);
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
       gimp_procedure_set_documentation (procedure,
                                         N_("Print the image"),
@@ -172,15 +174,14 @@ print_create_procedure (GimpPlugIn  *plug_in,
 #ifndef EMBED_PAGE_SETUP
   else if (! strcmp (name, PAGE_SETUP_PROC_NAME))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      print_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            print_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, N_("Page Set_up"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
-
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PAGE_SETUP);
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
       gimp_procedure_set_documentation (procedure,
                                         N_("Adjust page size and orientation "
@@ -196,46 +197,27 @@ print_create_procedure (GimpPlugIn  *plug_in,
     }
 #endif
 
-  if (procedure)
-    {
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The image to save",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-    }
-
   return procedure;
 }
 
 static GimpValueArray *
 print_run (GimpProcedure        *procedure,
+           GimpRunMode           run_mode,
+           gint32                image_id,
+           gint32                drawable_id,
            const GimpValueArray *args,
            gpointer              run_data)
 {
-  GimpRunMode        run_mode;
-  gint32             image_ID;
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_ID    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-
   if (strcmp (gimp_procedure_get_name (procedure),
               PRINT_PROC_NAME) == 0)
     {
-      status = print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE, &error);
+      status = print_image (image_id, run_mode == GIMP_RUN_INTERACTIVE, &error);
 
       if (error && run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -248,7 +230,7 @@ print_run (GimpProcedure        *procedure,
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          status = page_setup (image_ID);
+          status = page_setup (image_id);
         }
       else
         {

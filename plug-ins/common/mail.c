@@ -86,6 +86,9 @@ static GimpProcedure  * mail_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * mail_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               gint32                image_id,
+                                               gint32                drawable_id,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -184,12 +187,13 @@ mail_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      mail_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            mail_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, N_("Send by E_mail..."));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_EDIT);
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
       gimp_procedure_set_documentation (procedure,
@@ -210,27 +214,6 @@ mail_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball and Peter Mattis",
                                       "1995-1997");
 
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_EDIT);
-
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_string ("filename",
                                                         "Filename",
@@ -271,26 +254,22 @@ mail_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 mail_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          gint32                image_id,
+          gint32                drawable_id,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
-  gint32             drawable_ID;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
-
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_ID    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_ID = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &mail_info);
       {
-        gchar *filename = gimp_image_get_filename (image_ID);
+        gchar *filename = gimp_image_get_filename (image_id);
 
         if (filename)
           {
@@ -334,8 +313,8 @@ mail_run (GimpProcedure        *procedure,
     }
 
   status = send_image (mail_info.filename,
-                       image_ID,
-                       drawable_ID,
+                       image_id,
+                       drawable_id,
                        run_mode);
 
   if (status == GIMP_PDB_SUCCESS)

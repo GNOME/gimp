@@ -130,10 +130,10 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
       procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
                                            gbr_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure,
-                                      "RGB*, INDEXED*, GRAY*");
+      gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, N_("GIMP brush"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the GIMP brush "
@@ -141,15 +141,12 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
                                         "Exports files in the GIMP brush "
                                         "file format",
                                         SAVE_PROC);
-
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome, Jens Lautenbacher, "
                                       "Sven Neumann",
                                       "Tim Newsome, Jens Lautenbacher, "
                                       "Sven Neumann",
                                       "1997-2000");
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-gimp-gbr");

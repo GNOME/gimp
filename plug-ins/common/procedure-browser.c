@@ -127,7 +127,6 @@ browser_create_procedure (GimpPlugIn  *plug_in,
                                         N_("List available procedures in the PDB"),
                                         NULL,
                                         PLUG_IN_PROC);
-
       gimp_procedure_set_attribution (procedure,
                                       "Thomas Noel",
                                       "Thomas Noel",

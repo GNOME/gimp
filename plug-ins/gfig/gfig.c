@@ -81,6 +81,9 @@ static GimpProcedure  * gfig_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * gfig_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               gint32                image_id,
+                                               gint32                drawable_id,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -151,8 +154,8 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      gfig_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            gfig_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
@@ -177,26 +180,6 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
                                       "Andy Thomas",
                                       "Andy Thomas",
                                       "1997");
-
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
     }
 
   return procedure;
@@ -204,14 +187,14 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 gfig_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          gint32                image_id,
+          gint32                drawable_id,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpRunMode        run_mode;
-  gint32             image_id;
-  gint32             drawable_id;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint               pwidth, pheight;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint              pwidth, pheight;
 
   INIT_I18N ();
 
@@ -219,10 +202,6 @@ gfig_run (GimpProcedure        *procedure,
 
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj    = NULL;
-
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_id    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
 
   gfig_context->image_id    = image_id;
   gfig_context->drawable_id = drawable_id;

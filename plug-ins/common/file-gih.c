@@ -172,6 +172,7 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
       gimp_procedure_set_menu_label (procedure, N_("GIMP brush (animated)"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
                                         "exports images in GIMP brush pipe "
@@ -185,13 +186,10 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                         "layers can be divided into a "
                                         "rectangular array of brushes.",
                                         SAVE_PROC);
-
       gimp_procedure_set_attribution (procedure,
                                       "Tor Lillqvist",
                                       "Tor Lillqvist",
                                       "1999");
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-gimp-gih");

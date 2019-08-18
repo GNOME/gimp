@@ -97,6 +97,9 @@ static GimpProcedure  * film_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * film_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               gint32                image_id,
+                                               gint32                drawable_id,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -187,8 +190,6 @@ static FilmInterface filmint =
   NULL, NULL  /* image list widgets */
 };
 
-static GimpRunMode run_mode;
-
 
 static void
 film_class_init (FilmClass *klass)
@@ -212,14 +213,14 @@ film_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 film_create_procedure (GimpPlugIn  *plug_in,
-                           const gchar *name)
+                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      film_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            film_run, NULL, NULL);
 
       gimp_procedure_set_image_types (procedure, "*");
 
@@ -236,25 +237,6 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1997");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
       gimp_procedure_add_argument (procedure,
                                    g_param_spec_int ("film-height",
                                                      "Film height",
@@ -327,6 +309,9 @@ film_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 film_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          gint32                image_id,
+          gint32                drawable_id,
           const GimpValueArray *args,
           gpointer              run_data)
 {
@@ -336,8 +321,6 @@ film_run (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
-
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
@@ -345,7 +328,7 @@ film_run (GimpProcedure        *procedure,
       gimp_get_data (PLUG_IN_PROC, &filmvals);
 
       /*  First acquire information with a dialog  */
-      if (! film_dialog (gimp_value_get_image_id (gimp_value_array_index (args, 1))))
+      if (! film_dialog (image_id))
         return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
                                                  NULL);
       break;

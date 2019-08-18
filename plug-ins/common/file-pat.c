@@ -104,10 +104,10 @@ pat_create_procedure (GimpPlugIn  *plug_in,
       procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
                                            pat_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure,
-                                      "RGB*, INDEXED*, GRAY*");
+      gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, N_("GIMP pattern"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports Gimp pattern file (.PAT)",
@@ -115,13 +115,10 @@ pat_create_procedure (GimpPlugIn  *plug_in,
                                         "by exporting them in the "
                                         "appropriate place with this plug-in.",
                                         SAVE_PROC);
-
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome",
                                       "Tim Newsome",
                                       "1997");
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-gimp-pat");

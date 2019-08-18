@@ -121,6 +121,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                            ico_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("Microsoft Windows icon"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Windows ICO file format",
@@ -130,8 +131,6 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "Christian Kreibich <christian@whoop.org>",
                                       "2002");
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-ico");
@@ -201,6 +200,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "*");
 
       gimp_procedure_set_menu_label (procedure, N_("Microsoft Windows icon"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,
                                         "Saves files in Windows ICO file format",
@@ -210,8 +210,6 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "Christian Kreibich <christian@whoop.org>",
                                       "2002");
-
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-ico");

@@ -165,9 +165,8 @@ browser_create_procedure (GimpPlugIn  *plug_in,
                                       browser_run, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure, N_("_Plug-In Browser"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
-
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_PLUGIN);
+      gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
 
       gimp_procedure_set_documentation (procedure,
                                         N_("Display information about plug-ins"),
@@ -180,7 +179,6 @@ browser_create_procedure (GimpPlugIn  *plug_in,
                                         "new plug-ins have installed "
                                         "themselves in the menus.",
                                         PLUG_IN_PROC);
-
       gimp_procedure_set_attribution (procedure,
                                       "Andy Thomas",
                                       "Andy Thomas",
