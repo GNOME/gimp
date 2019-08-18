@@ -60,6 +60,9 @@ struct _GimpProcedurePrivate
   gchar            *menu_label;
   GList            *menu_paths;
 
+  GimpIconType      icon_type;
+  gpointer          icon_data;
+
   gchar            *blurb;
   gchar            *help;
   gchar            *help_id;
@@ -67,9 +70,6 @@ struct _GimpProcedurePrivate
   gchar            *authors;
   gchar            *copyright;
   gchar            *date;
-
-  GimpIconType      icon_type;
-  gpointer          icon_data;
 
   gint32            n_args;
   GParamSpec      **args;
@@ -694,6 +694,154 @@ gimp_procedure_get_menu_paths (GimpProcedure *procedure)
 }
 
 /**
+ * gimp_procedure_set_icon_name:
+ * @procedure: a #GimpProcedure.
+ * @icon_name: (nullable): an icon name.
+ *
+ * Sets the icon for @procedure to the icon referenced by @icon_name.
+ *
+ * Since: 3.0
+ */
+void
+gimp_procedure_set_icon_name (GimpProcedure *procedure,
+                              const gchar   *icon_name)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  gimp_procedure_set_icon (procedure,
+                           GIMP_ICON_TYPE_ICON_NAME,
+                           icon_name);
+}
+
+/**
+ * gimp_procedure_set_icon_pixbuf:
+ * @procedure: a #GimpProcedure.
+ * @pixbuf:    (nullable): a #GdkPixbuf.
+ *
+ * Sets the icon for @procedure to @pixbuf.
+ *
+ * Since: 3.0
+ */
+void
+gimp_procedure_set_icon_pixbuf (GimpProcedure *procedure,
+                                GdkPixbuf     *pixbuf)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
+
+  gimp_procedure_set_icon (procedure,
+                           GIMP_ICON_TYPE_PIXBUF,
+                           pixbuf);
+}
+
+/**
+ * gimp_procedure_set_icon_file:
+ * @procedure: a #GimpProcedure.
+ * @file:      (nullable): a #GFile pointing to an image file.
+ *
+ * Sets the icon for @procedure to the contents of an image file.
+ *
+ * Since: 3.0
+ */
+void
+gimp_procedure_set_icon_file (GimpProcedure *procedure,
+                              GFile         *file)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
+
+  gimp_procedure_set_icon (procedure,
+                           GIMP_ICON_TYPE_IMAGE_FILE,
+                           file);
+}
+
+/**
+ * gimp_procedure_get_icon_type:
+ * @procedure: a #GimpProcedure.
+ *
+ * Gets the type of data set as @procedure's icon. Depending on the
+ * result, you can call the relevant specific function, such as
+ * gimp_procedure_get_icon_name().
+ *
+ * Returns: the #GimpIconType of @procedure's icon.
+ *
+ * Since: 3.0
+ */
+GimpIconType
+gimp_procedure_get_icon_type (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), -1);
+
+  return procedure->priv->icon_type;
+}
+
+/**
+ * gimp_procedure_get_icon_name:
+ * @procedure: a #GimpProcedure.
+ *
+ * Gets the name of the icon if one was set for @procedure.
+ *
+ * Returns: (nullable): the icon name or %NULL if no icon name was set.
+ *
+ * Since: 3.0
+ */
+const gchar *
+gimp_procedure_get_icon_name (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  if (procedure->priv->icon_type == GIMP_ICON_TYPE_ICON_NAME)
+    return (const gchar *) procedure->priv->icon_data;
+
+  return NULL;
+}
+
+/**
+ * gimp_procedure_get_icon_file:
+ * @procedure: a #GimpProcedure.
+ *
+ * Gets the file of the icon if one was set for @procedure.
+ *
+ * Returns: (nullable) (transfer none): the icon #GFile or %NULL if no
+ *          file was set.
+ *
+ * Since: 3.0
+ */
+GFile *
+gimp_procedure_get_icon_file (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  if (procedure->priv->icon_type == GIMP_ICON_TYPE_IMAGE_FILE)
+    return (GFile *) procedure->priv->icon_data;
+
+  return NULL;
+}
+
+/**
+ * gimp_procedure_get_icon_pixbuf:
+ * @procedure: a #GimpProcedure.
+ *
+ * Gets the #GdkPixbuf of the icon if an icon was set this way for
+ * @procedure.
+ *
+ * Returns: (nullable) (transfer none): the icon pixbuf or %NULL if no
+ *          icon name was set.
+ *
+ * Since: 3.0
+ */
+GdkPixbuf *
+gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+
+  if (procedure->priv->icon_type == GIMP_ICON_TYPE_PIXBUF)
+    return (GdkPixbuf *) procedure->priv->icon_data;
+
+  return NULL;
+}
+
+/**
  * gimp_procedure_set_documentation:
  * @procedure: A #GimpProcedure.
  * @blurb:     The @procedure's blurb.
@@ -860,154 +1008,6 @@ gimp_procedure_get_date (GimpProcedure *procedure)
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
 
   return procedure->priv->date;
-}
-
-/**
- * gimp_procedure_set_icon_name:
- * @procedure: a #GimpProcedure.
- * @icon_name: (nullable): an icon name.
- *
- * Sets the icon for @procedure to the icon referenced by @icon_name.
- *
- * Since: 3.0
- */
-void
-gimp_procedure_set_icon_name (GimpProcedure *procedure,
-                              const gchar   *icon_name)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-
-  gimp_procedure_set_icon (procedure,
-                           GIMP_ICON_TYPE_ICON_NAME,
-                           icon_name);
-}
-
-/**
- * gimp_procedure_set_icon_pixbuf:
- * @procedure: a #GimpProcedure.
- * @pixbuf:    (nullable): a #GdkPixbuf.
- *
- * Sets the icon for @procedure to @pixbuf.
- *
- * Since: 3.0
- */
-void
-gimp_procedure_set_icon_pixbuf (GimpProcedure *procedure,
-                                GdkPixbuf     *pixbuf)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
-
-  gimp_procedure_set_icon (procedure,
-                           GIMP_ICON_TYPE_PIXBUF,
-                           pixbuf);
-}
-
-/**
- * gimp_procedure_set_icon_file:
- * @procedure: a #GimpProcedure.
- * @file:      (nullable): a #GFile pointing to an image file.
- *
- * Sets the icon for @procedure to the contents of an image file.
- *
- * Since: 3.0
- */
-void
-gimp_procedure_set_icon_file (GimpProcedure *procedure,
-                              GFile         *file)
-{
-  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
-  g_return_if_fail (file == NULL || G_IS_FILE (file));
-
-  gimp_procedure_set_icon (procedure,
-                           GIMP_ICON_TYPE_IMAGE_FILE,
-                           file);
-}
-
-/**
- * gimp_procedure_get_icon_type:
- * @procedure: a #GimpProcedure.
- *
- * Gets the type of data set as @procedure's icon. Depending on the
- * result, you can call the relevant specific function, such as
- * gimp_procedure_get_icon_name().
- *
- * Returns: the #GimpIconType of @procedure's icon.
- *
- * Since: 3.0
- */
-GimpIconType
-gimp_procedure_get_icon_type (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), -1);
-
-  return procedure->priv->icon_type;
-}
-
-/**
- * gimp_procedure_get_icon_name:
- * @procedure: a #GimpProcedure.
- *
- * Gets the name of the icon if one was set for @procedure.
- *
- * Returns: (nullable): the icon name or %NULL if no icon name was set.
- *
- * Since: 3.0
- */
-const gchar *
-gimp_procedure_get_icon_name (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_ICON_NAME)
-    return (const gchar *) procedure->priv->icon_data;
-
-  return NULL;
-}
-
-/**
- * gimp_procedure_get_icon_file:
- * @procedure: a #GimpProcedure.
- *
- * Gets the file of the icon if one was set for @procedure.
- *
- * Returns: (nullable) (transfer none): the icon #GFile or %NULL if no
- *          file was set.
- *
- * Since: 3.0
- */
-GFile *
-gimp_procedure_get_icon_file (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_IMAGE_FILE)
-    return (GFile *) procedure->priv->icon_data;
-
-  return NULL;
-}
-
-/**
- * gimp_procedure_get_icon_pixbuf:
- * @procedure: a #GimpProcedure.
- *
- * Gets the #GdkPixbuf of the icon if an icon was set this way for
- * @procedure.
- *
- * Returns: (nullable) (transfer none): the icon pixbuf or %NULL if no
- *          icon name was set.
- *
- * Since: 3.0
- */
-GdkPixbuf *
-gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
-{
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-
-  if (procedure->priv->icon_type == GIMP_ICON_TYPE_PIXBUF)
-    return (GdkPixbuf *) procedure->priv->icon_data;
-
-  return NULL;
 }
 
 /**

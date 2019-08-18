@@ -114,6 +114,18 @@ void             gimp_procedure_add_menu_path      (GimpProcedure        *proced
                                                     const gchar          *menu_path);
 GList          * gimp_procedure_get_menu_paths     (GimpProcedure        *procedure);
 
+void             gimp_procedure_set_icon_name      (GimpProcedure        *procedure,
+                                                    const gchar          *icon_name);
+void             gimp_procedure_set_icon_file      (GimpProcedure        *procedure,
+                                                    GFile                *file);
+void             gimp_procedure_set_icon_pixbuf    (GimpProcedure        *procedure,
+                                                    GdkPixbuf            *pixbuf);
+
+GimpIconType     gimp_procedure_get_icon_type      (GimpProcedure        *procedure);
+const gchar    * gimp_procedure_get_icon_name      (GimpProcedure        *procedure);
+GFile          * gimp_procedure_get_icon_file      (GimpProcedure        *procedure);
+GdkPixbuf      * gimp_procedure_get_icon_pixbuf    (GimpProcedure        *procedure);
+
 void             gimp_procedure_set_documentation  (GimpProcedure        *procedure,
                                                     const gchar          *blurb,
                                                     const gchar          *help,
@@ -129,18 +141,6 @@ void             gimp_procedure_set_attribution    (GimpProcedure        *proced
 const gchar    * gimp_procedure_get_authors        (GimpProcedure        *procedure);
 const gchar    * gimp_procedure_get_copyright      (GimpProcedure        *procedure);
 const gchar    * gimp_procedure_get_date           (GimpProcedure        *procedure);
-
-void             gimp_procedure_set_icon_name      (GimpProcedure        *procedure,
-                                                    const gchar          *icon_name);
-void             gimp_procedure_set_icon_file      (GimpProcedure        *procedure,
-                                                    GFile                *file);
-void             gimp_procedure_set_icon_pixbuf    (GimpProcedure        *procedure,
-                                                    GdkPixbuf            *pixbuf);
-
-GimpIconType     gimp_procedure_get_icon_type      (GimpProcedure        *procedure);
-const gchar    * gimp_procedure_get_icon_name      (GimpProcedure        *procedure);
-GFile          * gimp_procedure_get_icon_file      (GimpProcedure        *procedure);
-GdkPixbuf      * gimp_procedure_get_icon_pixbuf    (GimpProcedure        *procedure);
 
 void             gimp_procedure_add_argument       (GimpProcedure        *procedure,
                                                     GParamSpec           *pspec);
