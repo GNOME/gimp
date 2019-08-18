@@ -69,28 +69,28 @@ static GimpProcedure    * print_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray   * print_run              (GimpProcedure        *procedure,
                                                   GimpRunMode           run_mode,
-                                                  gint32                image_id,
-                                                  gint32                drawable_id,
+                                                  GimpImage            *image,
+                                                  GimpDrawable         *drawable,
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
-static GimpPDBStatusType  print_image            (gint32             image_ID,
+static GimpPDBStatusType  print_image            (GimpImage         *image,
                                                   gboolean           interactive,
                                                   GError           **error);
 #ifndef EMBED_PAGE_SETUP
-static GimpPDBStatusType  page_setup             (gint32             image_ID);
+static GimpPDBStatusType  page_setup             (GimpImage         *image);
 #endif
 
 static void        print_show_error         (const gchar       *message);
 static void        print_operation_set_name (GtkPrintOperation *operation,
-                                             gint               image_ID);
+                                             GimpImage         *image);
 
 static void        begin_print              (GtkPrintOperation *operation,
                                              GtkPrintContext   *context,
                                              PrintData         *data);
 static void        end_print                (GtkPrintOperation *operation,
                                              GtkPrintContext   *context,
-                                             gint32            *layer_ID);
+                                             GimpLayer        **layer);
 static void        draw_page                (GtkPrintOperation *print,
                                              GtkPrintContext   *context,
                                              gint               page_nr,
@@ -100,8 +100,8 @@ static GtkWidget * create_custom_widget     (GtkPrintOperation *operation,
                                              PrintData         *data);
 
 #ifndef EMBED_PAGE_SETUP
-static gchar     * print_temp_proc_name     (gint32             image_ID);
-static gchar     * print_temp_proc_install  (gint32             image_ID);
+static gchar     * print_temp_proc_name     (GimpImage         *image);
+static gchar     * print_temp_proc_install  (GimpImage         *image);
 
 /*  Keep a reference to the current GtkPrintOperation
  *  for access by the temporary procedure.
@@ -203,8 +203,8 @@ print_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 print_run (GimpProcedure        *procedure,
            GimpRunMode           run_mode,
-           gint32                image_id,
-           gint32                drawable_id,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
            const GimpValueArray *args,
            gpointer              run_data)
 {
@@ -217,7 +217,7 @@ print_run (GimpProcedure        *procedure,
   if (strcmp (gimp_procedure_get_name (procedure),
               PRINT_PROC_NAME) == 0)
     {
-      status = print_image (image_id, run_mode == GIMP_RUN_INTERACTIVE, &error);
+      status = print_image (image, run_mode == GIMP_RUN_INTERACTIVE, &error);
 
       if (error && run_mode == GIMP_RUN_INTERACTIVE)
         {
@@ -230,7 +230,7 @@ print_run (GimpProcedure        *procedure,
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          status = page_setup (image_id);
+          status = page_setup (image);
         }
       else
         {
@@ -247,33 +247,33 @@ print_run (GimpProcedure        *procedure,
 }
 
 static GimpPDBStatusType
-print_image (gint32     image_ID,
+print_image (GimpImage *image,
              gboolean   interactive,
              GError   **error)
 {
   GtkPrintOperation       *operation;
   GtkPrintOperationResult  result;
-  gint32                   layer;
+  GimpLayer               *layer;
   PrintData                data;
 #ifndef EMBED_PAGE_SETUP
   gchar                   *temp_proc;
 #endif
 
   /*  create a print layer from the projection  */
-  layer = gimp_layer_new_from_visible (image_ID, image_ID, PRINT_PROC_NAME);
+  layer = gimp_layer_new_from_visible (image, image, PRINT_PROC_NAME);
 
   operation = gtk_print_operation_new ();
 
   gtk_print_operation_set_n_pages (operation, 1);
-  print_operation_set_name (operation, image_ID);
+  print_operation_set_name (operation, image);
 
-  print_page_setup_load (operation, image_ID);
+  print_page_setup_load (operation, image);
 
   /* fill in the PrintData struct */
-  data.image_id        = image_ID;
-  data.drawable_id     = layer;
+  data.image           = image;
+  data.drawable        = GIMP_DRAWABLE (layer);
   data.unit            = gimp_get_default_unit ();
-  data.image_unit      = gimp_image_get_unit (image_ID);
+  data.image_unit      = gimp_image_get_unit (image);
   data.offset_x        = 0;
   data.offset_y        = 0;
   data.center          = CENTER_BOTH;
@@ -281,7 +281,7 @@ print_image (gint32     image_ID,
   data.draw_crop_marks = FALSE;
   data.operation       = operation;
 
-  gimp_image_get_resolution (image_ID, &data.xres, &data.yres);
+  gimp_image_get_resolution (image, &data.xres, &data.yres);
 
   print_settings_load (&data);
 
@@ -299,7 +299,7 @@ print_image (gint32     image_ID,
 
 #ifndef EMBED_PAGE_SETUP
   print_operation = operation;
-  temp_proc = print_temp_proc_install (image_ID);
+  temp_proc = print_temp_proc_install (image);
   gimp_plug_in_extension_enable (gimp_get_plug_in ());
 #endif
 
@@ -328,7 +328,7 @@ print_image (gint32     image_ID,
       if (result == GTK_PRINT_OPERATION_RESULT_APPLY ||
           result == GTK_PRINT_OPERATION_RESULT_IN_PROGRESS)
         {
-          print_page_setup_save (operation, image_ID);
+          print_page_setup_save (operation, image);
         }
     }
   else
@@ -346,8 +346,8 @@ print_image (gint32     image_ID,
 
   g_object_unref (operation);
 
-  if (gimp_item_is_valid (layer))
-    gimp_item_delete (layer);
+  if (gimp_item_is_valid (GIMP_ITEM (layer)))
+    gimp_item_delete (GIMP_ITEM (layer));
 
   switch (result)
     {
@@ -367,7 +367,7 @@ print_image (gint32     image_ID,
 
 #ifndef EMBED_PAGE_SETUP
 static GimpPDBStatusType
-page_setup (gint32 image_ID)
+page_setup (GimpImage *image)
 {
   GtkPrintOperation  *operation;
   GimpValueArray     *return_vals;
@@ -377,14 +377,14 @@ page_setup (gint32 image_ID)
 
   operation = gtk_print_operation_new ();
 
-  print_page_setup_load (operation, image_ID);
+  print_page_setup_load (operation, image);
   print_page_setup_dialog (operation);
-  print_page_setup_save (operation, image_ID);
+  print_page_setup_save (operation, image);
 
   g_object_unref (operation);
 
   /* now notify a running print procedure about this change */
-  name = print_temp_proc_name (image_ID);
+  name = print_temp_proc_name (image);
 
   /* we don't want the core to show an error message if the
    * temporary procedure does not exist
@@ -394,7 +394,7 @@ page_setup (gint32 image_ID)
 
   return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
                                         name,
-                                        GIMP_TYPE_IMAGE_ID, image_ID,
+                                        GIMP_TYPE_IMAGE, image,
                                         G_TYPE_NONE);
   gimp_value_array_unref (return_vals);
 
@@ -424,9 +424,9 @@ print_show_error (const gchar *message)
 
 static void
 print_operation_set_name (GtkPrintOperation *operation,
-                          gint               image_ID)
+                          GimpImage         *image)
 {
-  gchar *name = gimp_image_get_name (image_ID);
+  gchar *name = gimp_image_get_name (image);
 
   gtk_print_operation_set_job_name (operation, name);
 
@@ -446,13 +446,13 @@ begin_print (GtkPrintOperation *operation,
 static void
 end_print (GtkPrintOperation *operation,
            GtkPrintContext   *context,
-           gint32            *layer_ID)
+           GimpLayer        **layer)
 {
   /* we don't need the print layer any longer, delete it */
-  if (gimp_item_is_valid (*layer_ID))
+  if (gimp_item_is_valid (GIMP_ITEM (*layer)))
     {
-      gimp_item_delete (*layer_ID);
-      *layer_ID = -1;
+      gimp_item_delete (GIMP_ITEM (*layer));
+      *layer = NULL;
     }
 
   gimp_progress_end ();
@@ -498,25 +498,25 @@ print_temp_proc_run (GimpProcedure        *procedure,
                      const GimpValueArray *args,
                      gpointer              run_data)
 {
-  gint32 image_ID = GIMP_VALUES_GET_IMAGE (args, 0);
+  GimpImage *image = GIMP_VALUES_GET_IMAGE (args, 0);
 
   if (print_operation)
-    print_page_setup_load (print_operation, image_ID);
+    print_page_setup_load (print_operation, image);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gchar *
-print_temp_proc_name (gint32 image_ID)
+print_temp_proc_name (GimpImage *image)
 {
-  return g_strdup_printf (PRINT_TEMP_PROC_NAME "-%d", image_ID);
+  return g_strdup_printf (PRINT_TEMP_PROC_NAME "-%d", image);
 }
 
 static gchar *
-print_temp_proc_install (gint32  image_ID)
+print_temp_proc_install (GimpImage *image)
 {
   GimpPlugIn    *plug_in = gimp_get_plug_in ();
-  gchar         *name    = print_temp_proc_name (image_ID);
+  gchar         *name    = print_temp_proc_name (image);
   GimpProcedure *procedure;
 
   procedure = gimp_procedure_new (plug_in, name, GIMP_TEMPORARY,

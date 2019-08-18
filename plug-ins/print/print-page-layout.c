@@ -101,7 +101,7 @@ static PrintSizeInfo  info;
 
 GtkWidget *
 print_page_layout_gui (PrintData   *data,
-                       const gchar *help_id)
+                       const gchar *help)
 {
   GtkWidget    *main_hbox;
   GtkWidget    *main_vbox;
@@ -114,8 +114,8 @@ print_page_layout_gui (PrintData   *data,
   memset (&info, 0, sizeof (PrintSizeInfo));
 
   info.data         = data;
-  info.image_width  = gimp_drawable_width (data->drawable_id);
-  info.image_height = gimp_drawable_height (data->drawable_id);
+  info.image_width  = gimp_drawable_width (data->drawable);
+  info.image_height = gimp_drawable_height (data->drawable);
 
   setup = gtk_print_operation_get_default_page_setup (data->operation);
   if (! setup)
@@ -181,7 +181,7 @@ print_page_layout_gui (PrintData   *data,
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  info.preview = print_preview_new (setup, data->drawable_id);
+  info.preview = print_preview_new (setup, data->drawable);
   print_preview_set_use_full_page (PRINT_PREVIEW (info.preview),
                                    data->use_full_page);
   gtk_container_add (GTK_CONTAINER (frame), info.preview);
@@ -200,7 +200,7 @@ print_page_layout_gui (PrintData   *data,
                            G_CALLBACK (update_custom_widget),
                            main_hbox, 0);
 
-  gimp_help_connect (main_hbox, gimp_standard_help_func, help_id, NULL, NULL);
+  gimp_help_connect (main_hbox, gimp_standard_help_func, help, NULL, NULL);
 
   return main_hbox;
 }
@@ -937,7 +937,7 @@ print_resolution_load_defaults (PrintSizeInfo *info)
   gdouble xres;
   gdouble yres;
 
-  gimp_image_get_resolution (info->data->image_id, &xres, &yres);
+  gimp_image_get_resolution (info->data->image, &xres, &yres);
 
   gimp_size_entry_set_refval (info->resolution_entry, 0, xres);
   gimp_size_entry_set_refval (info->resolution_entry, 1, yres);
