@@ -140,7 +140,7 @@ gimp_pdb_procedure_exists (GimpPDB     *pdb,
                            const gchar *procedure_name)
 {
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
-  g_return_val_if_fail (procedure_name != NULL, FALSE);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), FALSE);
 
   return _gimp_pdb_proc_exists (procedure_name);
 }
@@ -167,7 +167,7 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
   GimpProcedure *procedure;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
   procedure = g_hash_table_lookup (pdb->priv->procedures, procedure_name);
 
@@ -207,7 +207,7 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
   va_list         args;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
   va_start (args, first_type);
 
@@ -244,7 +244,7 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
   gchar          *error_msg = NULL;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
   arguments = gimp_value_array_new_from_types_valist (&error_msg,
                                                       first_type,
@@ -293,7 +293,7 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
   GimpValueArray  *return_values;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
   g_return_val_if_fail (arguments != NULL, NULL);
 
   proc_run.name    = (gchar *) procedure_name;

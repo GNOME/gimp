@@ -187,7 +187,7 @@ _gimp_pdb_procedure_new (GimpPDB     *pdb,
   gint             i;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
 
   _gimp_pdb_proc_info (name,
                        &blurb,

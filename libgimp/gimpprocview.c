@@ -32,6 +32,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimp.h"
@@ -97,7 +98,7 @@ gimp_proc_view_new (const gchar *procedure_name,
   const gchar     *type_str;
   gint             row;
 
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
   procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
                                          procedure_name);

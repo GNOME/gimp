@@ -349,7 +349,7 @@ gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
                                const gchar *procedure_name)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
     return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
@@ -414,7 +414,7 @@ gimp_plug_in_remove_temp_procedure (GimpPlugIn  *plug_in,
   GimpProcedure *procedure;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (procedure_name != NULL);
+  g_return_if_fail (gimp_is_canonical_identifier (procedure_name));
 
   procedure = gimp_plug_in_get_temp_procedure (plug_in, procedure_name);
 
@@ -468,7 +468,7 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
   GList *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
-  g_return_val_if_fail (procedure_name != NULL, NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
 
   for (list = plug_in->priv->temp_procedures; list; list = g_list_next (list))
     {
