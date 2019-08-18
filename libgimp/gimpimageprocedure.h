@@ -31,12 +31,12 @@ G_BEGIN_DECLS
 
 /**
  * GimpRunImageFunc:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
- * @image_id:    the image id.
- * @drawable_id: the drawable id.
- * @args:        the @procedure's remaining arguments.
- * @run_data:    the run_data given in gimp_image_procedure_new().
+ * @procedure: the #GimpProcedure that runs.
+ * @run_mode:  the #GimpRunMode.
+ * @image:     the #GimpImage.
+ * @drawable:  the #GimpDrawable.
+ * @args:      the @procedure's remaining arguments.
+ * @run_data:  the run_data given in gimp_image_procedure_new().
  *
  * The image function is run during the lifetime of the GIMP session,
  * each time a plug-in image procedure is called.
@@ -46,11 +46,11 @@ G_BEGIN_DECLS
  * Since: 3.0
  **/
 typedef GimpValueArray * (* GimpRunImageFunc) (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              gint32                image_id,
-                                              gint32                drawable_id,
-                                              const GimpValueArray *args,
-                                              gpointer              run_data);
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
 
 
 #define GIMP_TYPE_IMAGE_PROCEDURE            (gimp_image_procedure_get_type ())
