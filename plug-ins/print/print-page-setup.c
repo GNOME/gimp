@@ -48,13 +48,13 @@ print_page_setup_dialog (GtkPrintOperation *operation)
 
 void
 print_page_setup_load (GtkPrintOperation *operation,
-                       gint32             image_ID)
+                       GimpImage         *image)
 {
   GKeyFile *key_file;
 
   g_return_if_fail (GTK_IS_PRINT_OPERATION (operation));
 
-  key_file = print_utils_key_file_load_from_parasite (image_ID,
+  key_file = print_utils_key_file_load_from_parasite (image,
                                                       PRINT_PAGE_SETUP_NAME);
 
   if (! key_file)
@@ -79,7 +79,7 @@ print_page_setup_load (GtkPrintOperation *operation,
 
 void
 print_page_setup_save (GtkPrintOperation *operation,
-                       gint32             image_ID)
+                       GimpImage         *image)
 {
   GtkPageSetup *setup;
   GKeyFile     *key_file;
@@ -93,7 +93,7 @@ print_page_setup_save (GtkPrintOperation *operation,
   gtk_page_setup_to_key_file (setup, key_file, PRINT_PAGE_SETUP_NAME);
 
   print_utils_key_file_save_as_parasite (key_file,
-                                         image_ID, PRINT_PAGE_SETUP_NAME);
+                                         image, PRINT_PAGE_SETUP_NAME);
   print_utils_key_file_save_as_rcfile (key_file,
                                        PRINT_PAGE_SETUP_NAME);
 

@@ -35,7 +35,7 @@ typedef struct _PrintPreviewClass  PrintPreviewClass;
 GType       print_preview_get_type              (void) G_GNUC_CONST;
 
 GtkWidget * print_preview_new                   (GtkPageSetup *page,
-                                                 gint32        drawable_id);
+                                                 GimpDrawable *drawable);
 
 void        print_preview_set_image_dpi         (PrintPreview *preview,
                                                  gdouble       xres,

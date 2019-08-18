@@ -39,8 +39,8 @@ typedef enum
 
 typedef struct
 {
-  gint32              image_id;
-  gint32              drawable_id;
+  GimpImage          *image;
+  GimpDrawable       *drawable;
   GimpUnit            unit;
   gdouble             xres;
   gdouble             yres;
