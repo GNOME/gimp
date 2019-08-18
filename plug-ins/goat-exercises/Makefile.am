@@ -37,6 +37,7 @@ AM_CPPFLAGS = \
 # C version.
 
 goat_exercise_c_libexecdir = $(gimpplugindir)/plug-ins/goat-exercise-c
+goat_exercise_c_datadir    = $(goat_exercise_c_libexecdir)
 
 goat_exercise_c_libexec_PROGRAMS = goat-exercise-c
 goat_exercise_c_libexec_DATA = goat-exercise-c.c

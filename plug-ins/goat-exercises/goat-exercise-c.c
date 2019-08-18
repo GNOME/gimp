@@ -30,11 +30,9 @@
 #define PLUG_IN_BINARY "goat-exercise-c"
 #define PLUG_IN_SOURCE PLUG_IN_BINARY ".c"
 #define PLUG_IN_PROC   "plug-in-goat-exercise-c"
-#define PLUG_IN_ROLE   "goat-exercise-C"
+#define PLUG_IN_ROLE   "goat-exercise-c"
 
-#define GOAT_URI       "https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise.c"
-#define GOAT_ERROR (goat_error_quark ())
-static GQuark  goat_error_quark (void) G_GNUC_CONST;
+#define GOAT_URI       "https://gitlab.gnome.org/GNOME/gimp/blob/master/plug-ins/goat-exercises/goat-exercise-c.c"
 
 
 typedef struct _Goat      Goat;
@@ -64,6 +62,9 @@ static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
                                                const gchar          *name);
 
 static GimpValueArray * goat_run              (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               gint32                image_id,
+                                               gint32                drawable_id,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -101,14 +102,15 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      goat_run, NULL, NULL);
+      procedure = gimp_image_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                            goat_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure,
-                                      "RGB*, INDEXED*, GRAY*");
+      gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("Exercise in _C minor"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Development/Goat exercises/");
+      gimp_procedure_set_menu_label (procedure,
+                                     N_("Exercise in _C minor"));
+      gimp_procedure_add_menu_path (procedure,
+                                    "<Image>/Filters/Development/Goat exercises/");
 
       gimp_procedure_set_documentation (procedure,
                                         N_("Exercise a goat in the C language"),
@@ -121,26 +123,6 @@ goat_create_procedure (GimpPlugIn  *plug_in,
                                       "21 march 2012");
 
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_GEGL);
-
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_image_id ("image",
-                                                             "Image",
-                                                             "The input image",
-                                                             FALSE,
-                                                             G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_drawable_id ("drawable",
-                                                                "Drawable",
-                                                                "The input drawable",
-                                                                FALSE,
-                                                                G_PARAM_READWRITE));
     }
 
   return procedure;
@@ -148,23 +130,18 @@ goat_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 goat_run (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          gint32                image_id,
+          gint32                drawable_id,
           const GimpValueArray *args,
           gpointer              run_data)
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  GimpRunMode       run_mode;
-  gint32            drawable_id;
   gint              x, y, width, height;
-
-  g_printerr ("goat run %d %d %d\n",
-              g_value_get_enum           (gimp_value_array_index (args, 0)),
-              gimp_value_get_image_id    (gimp_value_array_index (args, 1)),
-              gimp_value_get_drawable_id (gimp_value_array_index (args, 2)));
 
   INIT_I18N();
 
   /* In interactive mode, display a dialog to advertize the exercise. */
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       GtkTextBuffer    *buffer;
@@ -175,7 +152,6 @@ goat_run (GimpProcedure        *procedure,
       GFile            *file;
       GFileInputStream *input;
       gchar            *head_text;
-      gchar            *dir;
       gchar            *path;
       GdkGeometry       geometry;
       gchar             source_text[4096];
@@ -197,7 +173,8 @@ goat_run (GimpProcedure        *procedure,
       gtk_window_set_geometry_hints (GTK_WINDOW (dialog), NULL,
                                      &geometry, GDK_HINT_ASPECT);
 
-      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (box), 12);
       gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                          box);
       gtk_widget_show (box);
@@ -218,23 +195,28 @@ goat_run (GimpProcedure        *procedure,
       gtk_widget_set_vexpand (GTK_WIDGET (scrolled), TRUE);
       gtk_widget_show (scrolled);
 
-      dir  = g_path_get_dirname (__FILE__);
-      path = g_build_filename (dir, PLUG_IN_SOURCE, NULL);
+      path = g_build_filename (gimp_plug_in_directory (), "plug-ins",
+                               PLUG_IN_BINARY, PLUG_IN_SOURCE,
+                               NULL);
       file = g_file_new_for_path (path);
-      g_free (dir);
       g_free (path);
 
       widget = gtk_text_view_new ();
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (widget), GTK_WRAP_WORD);
       gtk_text_view_set_editable (GTK_TEXT_VIEW (widget), FALSE);
       buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+
       input = g_file_read (file, NULL, NULL);
 
-      while ((read = g_input_stream_read (G_INPUT_STREAM (input), source_text, 4096, NULL, NULL)) &&
+      while ((read = g_input_stream_read (G_INPUT_STREAM (input),
+                                          source_text, 4096, NULL, NULL)) &&
              read != -1)
-        gtk_text_buffer_insert_at_cursor (buffer, source_text, read);
+        {
+          gtk_text_buffer_insert_at_cursor (buffer, source_text, read);
+        }
 
       g_object_unref (file);
+
       gtk_container_add (GTK_CONTAINER (scrolled), widget);
       gtk_widget_show (widget);
 
@@ -254,12 +236,12 @@ goat_run (GimpProcedure        *procedure,
           else /* CANCEL, CLOSE, DELETE_EVENT */
             {
               gtk_widget_destroy (dialog);
-              return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL, NULL);
+              return gimp_procedure_new_return_values (procedure,
+                                                       GIMP_PDB_CANCEL,
+                                                       NULL);
             }
         }
     }
-
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
 
   if (gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
     {
@@ -282,19 +264,6 @@ goat_run (GimpProcedure        *procedure,
 
       gegl_exit ();
     }
-  else
-    {
-      return gimp_procedure_new_return_values (procedure, GIMP_PDB_CALLING_ERROR,
-                                               g_error_new (GOAT_ERROR, 0,
-                                                            "No pixels to process in the selected area."));
-    }
-
 
   return gimp_procedure_new_return_values (procedure, status, NULL);
-}
-
-static GQuark
-goat_error_quark (void)
-{
-  return g_quark_from_static_string ("goat-error-quark");
 }
