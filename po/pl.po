@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-11 14:50+0200\n"
-"PO-Revision-Date: 2019-08-11 14:55+0200\n"
+"POT-Creation-Date: 2019-08-18 15:58+0200\n"
+"PO-Revision-Date: 2019-08-18 15:59+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -8645,10 +8645,15 @@ msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
 msgstr "_Dowolny obrót…"
 
-#: ../app/actions/tools-actions.c:64 ../app/actions/tools-actions.c:70
+#: ../app/actions/tools-actions.c:64
 msgctxt "tools-action"
-msgid "Rotate by an arbitrary angle"
-msgstr "Obraca o dowolny kąt"
+msgid "Rotate drawable by an arbitrary angle"
+msgstr "Obraca obszar rysowania o dowolny kąt"
+
+#: ../app/actions/tools-actions.c:70
+msgctxt "tools-action"
+msgid "Rotate image by an arbitrary angle"
+msgstr "Obraca obraz o dowolny kąt"
 
 #: ../app/actions/tools-actions.c:158
 msgctxt "tools-action"
@@ -20341,329 +20346,329 @@ msgstr ""
 msgid "Free Select"
 msgstr "Zaznaczenie odręczne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:241
+#: ../app/pdb/plug-in-compat-cmds.c:238
 msgctxt "undo-type"
 msgid "Bump Map"
 msgstr "Mapa wypukłości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:313
+#: ../app/pdb/plug-in-compat-cmds.c:307
 msgctxt "undo-type"
 msgid "Displace"
 msgstr "Przemieszczenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:347
+#: ../app/pdb/plug-in-compat-cmds.c:341
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "Rozmycie Gaussa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:453
+#: ../app/pdb/plug-in-compat-cmds.c:447
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr "Alien Map"
 
-#: ../app/pdb/plug-in-compat-cmds.c:490
+#: ../app/pdb/plug-in-compat-cmds.c:484
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Wygładzenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:533
+#: ../app/pdb/plug-in-compat-cmds.c:527
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "Nałożenie płótna"
 
-#: ../app/pdb/plug-in-compat-cmds.c:593
+#: ../app/pdb/plug-in-compat-cmds.c:587
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "Zastosowanie soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:639
+#: ../app/pdb/plug-in-compat-cmds.c:633
 msgid "Autocrop image"
 msgstr "Automatyczne kadrowanie obrazu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:701
+#: ../app/pdb/plug-in-compat-cmds.c:695
 msgid "Autocrop layer"
 msgstr "Automatyczne kadrowanie warstwy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:748
+#: ../app/pdb/plug-in-compat-cmds.c:742
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Rozciągnięcie kontrastu HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:902
+#: ../app/pdb/plug-in-compat-cmds.c:896
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Rozciągnięcie kontrastu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:981
+#: ../app/pdb/plug-in-compat-cmds.c:975
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Mikser kanałów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1025
+#: ../app/pdb/plug-in-compat-cmds.c:1019
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Zmiana koloru na alfę"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1071
+#: ../app/pdb/plug-in-compat-cmds.c:1065
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "Macierz „matrix” ma tylko %d elementy, musi mieć 25"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1079
+#: ../app/pdb/plug-in-compat-cmds.c:1073
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Macierz „channels” ma tylko %d elementy, musi mieć 5"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1151
+#: ../app/pdb/plug-in-compat-cmds.c:1145
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Zniekształcenia macierzowe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1213
+#: ../app/pdb/plug-in-compat-cmds.c:1207
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kubizm"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1258
+#: ../app/pdb/plug-in-compat-cmds.c:1252
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Usunięcie przeplotu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1337
+#: ../app/pdb/plug-in-compat-cmds.c:1331
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Desenie dyfrakcyjne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1496
+#: ../app/pdb/plug-in-compat-cmds.c:1490
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Krawędź"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1540
+#: ../app/pdb/plug-in-compat-cmds.c:1534
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Grawerowanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1613
+#: ../app/pdb/plug-in-compat-cmds.c:1607
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Wymiana kolorów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1661
+#: ../app/pdb/plug-in-compat-cmds.c:1655
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Błysk soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1845
+#: ../app/pdb/plug-in-compat-cmds.c:1839
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Szklane płytki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1898
+#: ../app/pdb/plug-in-compat-cmds.c:1892
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Szum HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2177 ../app/pdb/plug-in-compat-cmds.c:2232
+#: ../app/pdb/plug-in-compat-cmds.c:2171 ../app/pdb/plug-in-compat-cmds.c:2226
 msgid "Set color profile"
 msgstr "Ustaw profil kolorów"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2287
+#: ../app/pdb/plug-in-compat-cmds.c:2281
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Iluzja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2324
+#: ../app/pdb/plug-in-compat-cmds.c:2318
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2400
+#: ../app/pdb/plug-in-compat-cmds.c:2394
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Zniekształcenie soczewki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2440
+#: ../app/pdb/plug-in-compat-cmds.c:2434
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Bezszwowe kafelki"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2507
+#: ../app/pdb/plug-in-compat-cmds.c:2501
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirynt"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2590 ../app/pdb/plug-in-compat-cmds.c:2674
+#: ../app/pdb/plug-in-compat-cmds.c:2584 ../app/pdb/plug-in-compat-cmds.c:2668
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Rozmycie ruchu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2775
+#: ../app/pdb/plug-in-compat-cmds.c:2769
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaika"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2819
+#: ../app/pdb/plug-in-compat-cmds.c:2813
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "Neon"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2907
+#: ../app/pdb/plug-in-compat-cmds.c:2901
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "Papier gazetowy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2947
+#: ../app/pdb/plug-in-compat-cmds.c:2941
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "Normalizacja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3009
+#: ../app/pdb/plug-in-compat-cmds.c:3003
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernowa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3053 ../app/pdb/plug-in-compat-cmds.c:3118
+#: ../app/pdb/plug-in-compat-cmds.c:3047 ../app/pdb/plug-in-compat-cmds.c:3112
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "Farba olejna"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3208
+#: ../app/pdb/plug-in-compat-cmds.c:3202
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Kawałki papieru"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3249 ../app/pdb/plug-in-compat-cmds.c:3292
+#: ../app/pdb/plug-in-compat-cmds.c:3243 ../app/pdb/plug-in-compat-cmds.c:3286
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikselizacja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3343
+#: ../app/pdb/plug-in-compat-cmds.c:3337
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3397
+#: ../app/pdb/plug-in-compat-cmds.c:3391
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Współrzędne polarne"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3437
+#: ../app/pdb/plug-in-compat-cmds.c:3431
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Usunięcie efektu czerwonych oczu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3490
+#: ../app/pdb/plug-in-compat-cmds.c:3484
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Losowe wygniecenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3543
+#: ../app/pdb/plug-in-compat-cmds.c:3537
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Losowe wyciosanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3596
+#: ../app/pdb/plug-in-compat-cmds.c:3590
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Losowe rozszarpanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3671
+#: ../app/pdb/plug-in-compat-cmds.c:3665
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Szum RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3741
+#: ../app/pdb/plug-in-compat-cmds.c:3735
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "Falowanie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3866
+#: ../app/pdb/plug-in-compat-cmds.c:3860
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Dodanie szumu"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3910
+#: ../app/pdb/plug-in-compat-cmds.c:3904
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Wybiórcze rozmycie Gaussa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3954
+#: ../app/pdb/plug-in-compat-cmds.c:3948
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Półspłaszczenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3997
+#: ../app/pdb/plug-in-compat-cmds.c:3991
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Przesunięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4100
+#: ../app/pdb/plug-in-compat-cmds.c:4094
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Sinus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4148
+#: ../app/pdb/plug-in-compat-cmds.c:4142
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4209
+#: ../app/pdb/plug-in-compat-cmds.c:4203
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Jednolity szum"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4253
+#: ../app/pdb/plug-in-compat-cmds.c:4247
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Rozrzucenie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4294
+#: ../app/pdb/plug-in-compat-cmds.c:4288
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Próg alfy"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4340
+#: ../app/pdb/plug-in-compat-cmds.c:4334
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Wyostrzenie (maska wyostrzająca)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4386
+#: ../app/pdb/plug-in-compat-cmds.c:4380
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Wideo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4423
+#: ../app/pdb/plug-in-compat-cmds.c:4417
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Odwrócenie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4527
+#: ../app/pdb/plug-in-compat-cmds.c:4521
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Rozprowadzanie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4574
+#: ../app/pdb/plug-in-compat-cmds.c:4568
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Rozciągnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4621
+#: ../app/pdb/plug-in-compat-cmds.c:4615
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erozja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4684
+#: ../app/pdb/plug-in-compat-cmds.c:4678
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Fale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4732
+#: ../app/pdb/plug-in-compat-cmds.c:4726
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Skręcenie i zaciśnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4784
+#: ../app/pdb/plug-in-compat-cmds.c:4778
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Wiatr"
