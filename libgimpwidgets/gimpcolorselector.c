@@ -596,6 +596,7 @@ gimp_color_selector_channel_changed (GimpColorSelector *selector)
 /**
  * gimp_color_selector_model_visible_changed:
  * @selector: A #GimpColorSelector widget.
+ * @model:    The #GimpColorSelectorModel where visibility changed.
  *
  * Emits the "model-visible-changed" signal.
  *

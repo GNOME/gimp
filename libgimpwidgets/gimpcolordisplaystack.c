@@ -175,7 +175,7 @@ gimp_color_display_stack_dispose (GObject *object)
  *
  * Returns: (transfer full): a newly allocated #GimpColorDisplayStack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 GimpColorDisplayStack *
 gimp_color_display_stack_new (void)
@@ -192,7 +192,7 @@ gimp_color_display_stack_new (void)
  *
  * Returns: (transfer full): a duplicate of @stack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 GimpColorDisplayStack *
 gimp_color_display_stack_clone (GimpColorDisplayStack *stack)
@@ -226,7 +226,7 @@ gimp_color_display_stack_clone (GimpColorDisplayStack *stack)
  *
  * Emit the "changed" signal of @stack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 void
 gimp_color_display_stack_changed (GimpColorDisplayStack *stack)
@@ -262,7 +262,7 @@ gimp_color_display_stack_get_filters (GimpColorDisplayStack *stack)
  *
  * Add the color module @display to @stack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 void
 gimp_color_display_stack_add (GimpColorDisplayStack *stack,
@@ -299,7 +299,7 @@ gimp_color_display_stack_add (GimpColorDisplayStack *stack,
  *
  * Remove the color module @display from @stack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 void
 gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
@@ -332,7 +332,7 @@ gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
  *
  * Move the color module @display up in the filter list of @stack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 void
 gimp_color_display_stack_reorder_up (GimpColorDisplayStack *stack,
@@ -369,7 +369,7 @@ gimp_color_display_stack_reorder_up (GimpColorDisplayStack *stack,
  *
  * Move the color module @display down in the filter list of @stack.
  *
- * Since: 1.3.23
+ * Since: 2.0
  **/
 void
 gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,

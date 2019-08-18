@@ -415,6 +415,7 @@ track_monitor_hierarchy_changed (GtkWidget        *widget,
  * @widget:                   a #GtkWidget
  * @monitor_changed_callback: the callback when @widget's monitor changes
  * @user_data:                data passed to @monitor_changed_callback
+ * @user_data_destroy:        destroy function for @user_data.
  *
  * This function behaves as if #GtkWidget had a signal
  *
