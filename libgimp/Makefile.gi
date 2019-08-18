@@ -118,6 +118,7 @@ libgimp_introspectable_headers = \
 	../libgimp/gimpgradientselect.h		\
 	../libgimp/gimpimage.h			\
 	../libgimp/gimpimagecolorprofile.h	\
+	../libgimp/gimpimageprocedure.h		\
 	../libgimp/gimplayer.h			\
 	../libgimp/gimploadprocedure.h		\
 	../libgimp/gimppaletteselect.h		\
@@ -144,6 +145,7 @@ libgimp_introspectable = \
 	../libgimp/gimpgradientselect.c		\
 	../libgimp/gimpimage.c			\
 	../libgimp/gimpimagecolorprofile.c	\
+	../libgimp/gimpimageprocedure.c		\
 	../libgimp/gimplayer.c			\
 	../libgimp/gimploadprocedure.c		\
 	../libgimp/gimppaletteselect.c		\
