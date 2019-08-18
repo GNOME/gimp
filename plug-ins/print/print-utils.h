@@ -16,11 +16,11 @@
  */
 
 GKeyFile * print_utils_key_file_load_from_rcfile   (const gchar *basename);
-GKeyFile * print_utils_key_file_load_from_parasite (gint32       image_ID,
+GKeyFile * print_utils_key_file_load_from_parasite (GimpImage   *image,
                                                     const gchar *parasite_name);
 
 void       print_utils_key_file_save_as_rcfile     (GKeyFile    *key_file,
                                                     const gchar *basename);
 void       print_utils_key_file_save_as_parasite   (GKeyFile    *key_file,
-                                                    gint32       image_ID,
+                                                    GimpImage   *image,
                                                     const gchar *parasite_name);
