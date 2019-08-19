@@ -27,6 +27,12 @@
 
 enum
 {
+  DESTROYED,
+  LAST_SIGNAL
+};
+
+enum
+{
   PROP_0,
   PROP_ID,
   N_PROPS
@@ -53,7 +59,8 @@ G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpItem, gimp_item, G_TYPE_OBJECT)
 
 #define parent_class gimp_item_parent_class
 
-static GParamSpec *props[N_PROPS] = { NULL, };
+static GParamSpec *props[N_PROPS]       = { NULL, };
+static guint       signals[LAST_SIGNAL] = { 0 };
 
 static void
 gimp_item_class_init (GimpItemClass *klass)
@@ -62,6 +69,26 @@ gimp_item_class_init (GimpItemClass *klass)
 
   object_class->set_property = gimp_item_set_property;
   object_class->get_property = gimp_item_get_property;
+
+  /**
+   * GimpItemClass::destroy:
+   * @item: a #GimpItem
+   *
+   * This signal will be emitted when an item has been destroyed, just
+   * before we g_object_unref() it. This item is now invalid, none of
+   * its data can be accessed anymore, therefore all processing has to
+   * be stopped immediately.
+   * The only thing still feasible is to compare the item if you kept a
+   * reference to identify item, or to run gimp_item_get_id().
+   */
+  signals[DESTROYED] =
+    g_signal_new ("destroyed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, destroyed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   props[PROP_ID] =
     g_param_spec_int ("id",
@@ -282,6 +309,15 @@ _gimp_item_process_signal (gint32       item_id,
     return;
 
   /* Below process item signals. */
+
+  if (g_strcmp0 (name, "destroyed") == 0)
+    {
+      g_hash_table_steal (gimp_items,
+                          GINT_TO_POINTER (item->priv->id));
+
+      g_signal_emit (item, signals[DESTROYED], 0);
+      g_object_unref (item);
+    }
 }
 
 
