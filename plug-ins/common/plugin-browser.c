@@ -394,10 +394,9 @@ browser_search (GimpBrowser   *gimp_browser,
                                         G_TYPE_STRING, search_text,
                                         G_TYPE_NONE);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
-      GIMP_PDB_SUCCESS)
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
     {
-      num_plugins = g_value_get_int (gimp_value_array_index (return_vals, 1));
+      num_plugins = GIMP_VALUES_GET_INT (return_vals, 1);
     }
 
   if (! search_text || strlen (search_text) == 0)
@@ -442,12 +441,12 @@ browser_search (GimpBrowser   *gimp_browser,
       const gint        *time_ints;
       gint               i;
 
-      menu_strs     = gimp_value_get_string_array (gimp_value_array_index (return_vals, 2));
-      accel_strs    = gimp_value_get_string_array (gimp_value_array_index (return_vals, 4));
-      prog_strs     = gimp_value_get_string_array (gimp_value_array_index (return_vals, 6));
-      types_strs    = gimp_value_get_string_array (gimp_value_array_index (return_vals, 8));
-      time_ints     = gimp_value_get_int32_array (gimp_value_array_index (return_vals, 10));
-      realname_strs = gimp_value_get_string_array (gimp_value_array_index (return_vals, 12));
+      menu_strs     = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 2);
+      accel_strs    = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 4);
+      prog_strs     = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 6);
+      types_strs    = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 8);
+      time_ints     = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 10);
+      realname_strs = GIMP_VALUES_GET_STRING_ARRAY (return_vals, 12);
 
       for (i = 0; i < num_plugins; i++)
         {

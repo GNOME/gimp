@@ -242,11 +242,11 @@ svg_load (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      load_vals.resolution = g_value_get_double (gimp_value_array_index (args, 0));
-      load_vals.width      = g_value_get_int (gimp_value_array_index (args, 1));
-      load_vals.height     = g_value_get_int (gimp_value_array_index (args, 2));
-      load_vals.import     = g_value_get_int (gimp_value_array_index (args, 3)) != FALSE;
-      load_vals.merge      = g_value_get_int (gimp_value_array_index (args, 3)) == 2;
+      load_vals.resolution = GIMP_VALUES_GET_DOUBLE (args, 0);
+      load_vals.width      = GIMP_VALUES_GET_INT    (args, 1);
+      load_vals.height     = GIMP_VALUES_GET_INT    (args, 2);
+      load_vals.import     = GIMP_VALUES_GET_INT    (args, 3) != FALSE;
+      load_vals.merge      = GIMP_VALUES_GET_INT    (args, 3) == 2;
       break;
 
     case GIMP_RUN_INTERACTIVE:
@@ -289,8 +289,7 @@ svg_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
   return return_vals;
 }
@@ -334,9 +333,9 @@ svg_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
-  g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
-  g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_INT   (return_vals, 2, width);
+  GIMP_VALUES_SET_INT   (return_vals, 3, height);
 
   gimp_value_array_truncate (return_vals, 4);
 

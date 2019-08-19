@@ -498,7 +498,7 @@ print_temp_proc_run (GimpProcedure        *procedure,
                      const GimpValueArray *args,
                      gpointer              run_data)
 {
-  gint32 image_ID = gimp_value_get_image_id (gimp_value_array_index (args, 0));
+  gint32 image_ID = GIMP_VALUES_GET_IMAGE (args, 0);
 
   if (print_operation)
     print_page_setup_load (print_operation, image_ID);

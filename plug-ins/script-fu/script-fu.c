@@ -294,7 +294,7 @@ script_fu_run (GimpProcedure        *procedure,
     }
 
   if (gimp_value_array_length (args) > 0)
-    ts_set_run_mode (g_value_get_enum (gimp_value_array_index (args, 0)));
+    ts_set_run_mode (GIMP_VALUES_GET_ENUM (args, 0));
 
   /*  Load all of the available scripts  */
   script_fu_find_scripts (plug_in, path);

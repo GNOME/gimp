@@ -624,19 +624,19 @@ ps_load (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      plvals.resolution = g_value_get_int     (gimp_value_array_index (args, 0));
-      plvals.width      = g_value_get_int     (gimp_value_array_index (args, 1));
-      plvals.height     = g_value_get_int     (gimp_value_array_index (args, 2));
-      plvals.use_bbox   = g_value_get_boolean (gimp_value_array_index (args, 3));
-      if (g_value_get_string (gimp_value_array_index (args, 4)))
+      plvals.resolution = GIMP_VALUES_GET_INT     (args, 0);
+      plvals.width      = GIMP_VALUES_GET_INT     (args, 1);
+      plvals.height     = GIMP_VALUES_GET_INT     (args, 2);
+      plvals.use_bbox   = GIMP_VALUES_GET_BOOLEAN (args, 3);
+      if (GIMP_VALUES_GET_STRING (args, 4))
         g_strlcpy (plvals.pages,
-                   g_value_get_string (gimp_value_array_index (args, 4)),
+                   GIMP_VALUES_GET_STRING (args, 4),
                    sizeof (plvals.pages));
       else
         plvals.pages[0] = '\0';
-      plvals.pnm_type      = g_value_get_int (gimp_value_array_index (args, 5));
-      plvals.textalpha     = g_value_get_int (gimp_value_array_index (args, 6));
-      plvals.graphicsalpha = g_value_get_int (gimp_value_array_index (args, 7));
+      plvals.pnm_type      = GIMP_VALUES_GET_INT (args, 5);
+      plvals.textalpha     = GIMP_VALUES_GET_INT (args, 6);
+      plvals.graphicsalpha = GIMP_VALUES_GET_INT (args, 7);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -664,7 +664,7 @@ ps_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
   return return_vals;
 }
@@ -705,7 +705,7 @@ ps_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
   gimp_value_array_truncate (return_vals, 2);
 
@@ -767,17 +767,17 @@ ps_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      psvals.width        = g_value_get_double  (gimp_value_array_index (args, 0));
-      psvals.height       = g_value_get_double  (gimp_value_array_index (args, 1));
-      psvals.x_offset     = g_value_get_double  (gimp_value_array_index (args, 2));
-      psvals.y_offset     = g_value_get_double  (gimp_value_array_index (args, 3));
-      psvals.unit_mm      = g_value_get_int     (gimp_value_array_index (args, 4));
-      psvals.keep_ratio   = g_value_get_boolean (gimp_value_array_index (args, 5));
-      psvals.rotate       = g_value_get_int     (gimp_value_array_index (args, 6));
-      psvals.eps          = g_value_get_int     (gimp_value_array_index (args, 7));
-      psvals.preview_size = g_value_get_int     (gimp_value_array_index (args, 8));
+      psvals.width        = GIMP_VALUES_GET_DOUBLE  (args, 0);
+      psvals.height       = GIMP_VALUES_GET_DOUBLE  (args, 1);
+      psvals.x_offset     = GIMP_VALUES_GET_DOUBLE  (args, 2);
+      psvals.y_offset     = GIMP_VALUES_GET_DOUBLE  (args, 3);
+      psvals.unit_mm      = GIMP_VALUES_GET_INT     (args, 4);
+      psvals.keep_ratio   = GIMP_VALUES_GET_BOOLEAN (args, 5);
+      psvals.rotate       = GIMP_VALUES_GET_INT     (args, 6);
+      psvals.eps          = GIMP_VALUES_GET_INT     (args, 7);
+      psvals.preview_size = GIMP_VALUES_GET_INT     (args, 8);
       psvals.preview      = psvals.preview_size != 0;
-      psvals.level        = g_value_get_int     (gimp_value_array_index (args, 9));
+      psvals.level        = GIMP_VALUES_GET_INT     (args, 9);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

@@ -327,7 +327,7 @@ film_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      filmvals.film_height = g_value_get_int (gimp_value_array_index (args, 0));
+      filmvals.film_height = GIMP_VALUES_GET_INT (args, 0);
       if (filmvals.film_height <= 0)
         {
           filmvals.keep_height = TRUE;
@@ -337,19 +337,17 @@ film_run (GimpProcedure        *procedure,
         {
           filmvals.keep_height = FALSE;
         }
-      gimp_value_get_rgb (gimp_value_array_index (args, 1),
-                          &filmvals.film_color);
-      filmvals.number_start = g_value_get_int (gimp_value_array_index (args, 2));
+      GIMP_VALUES_GET_RGB (args, 1, &filmvals.film_color);
+      filmvals.number_start = GIMP_VALUES_GET_INT (args, 2);
       g_strlcpy (filmvals.number_font,
-                 g_value_get_string (gimp_value_array_index (args, 3)),
+                 GIMP_VALUES_GET_STRING (args, 3),
                  FONT_LEN);
-      gimp_value_get_rgb (gimp_value_array_index (args, 4),
-                          &filmvals.number_color);
-      filmvals.number_pos[0] = g_value_get_int (gimp_value_array_index (args, 5));
-      filmvals.number_pos[1] = g_value_get_int (gimp_value_array_index (args, 6));
-      filmvals.num_images    = g_value_get_int (gimp_value_array_index (args, 7));
+      GIMP_VALUES_GET_RGB (args, 4, &filmvals.number_color);
+      filmvals.number_pos[0] = GIMP_VALUES_GET_INT (args, 5);
+      filmvals.number_pos[1] = GIMP_VALUES_GET_INT (args, 6);
+      filmvals.num_images    = GIMP_VALUES_GET_INT (args, 7);
       memcpy (filmvals.image,
-              gimp_value_get_int32_array (gimp_value_array_index (args, 8)),
+              GIMP_VALUES_GET_INT32_ARRAY (args, 8),
               filmvals.num_images * sizeof (gint32));
       break;
 
@@ -382,8 +380,7 @@ film_run (GimpProcedure        *procedure,
           return_vals = gimp_procedure_new_return_values (procedure, status,
                                                           NULL);
 
-          gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                                   image_id);
+          GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
           gimp_image_undo_enable (image_id);
           gimp_image_clean_all (image_id);

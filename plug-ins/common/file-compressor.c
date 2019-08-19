@@ -387,8 +387,7 @@ compressor_load (GimpProcedure        *procedure,
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
   if (image_ID != -1 && status == GIMP_PDB_SUCCESS)
-    gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                             image_ID);
+    GIMP_VALUES_SET_IMAGE (return_vals, 1, image_ID);
 
   return return_vals;
 }

@@ -141,21 +141,16 @@ desktop_load (GimpProcedure        *procedure,
 
   image_ID = load_image (file, run_mode, &error);
 
-  if (image_ID != -1)
-    {
-      return_values = gimp_procedure_new_return_values (procedure,
-                                                        GIMP_PDB_SUCCESS,
-                                                        NULL);
+  if (image_ID < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-      gimp_value_set_image_id (gimp_value_array_index (return_values, 1),
-                               image_ID);
-    }
-  else
-    {
-      return_values = gimp_procedure_new_return_values (procedure,
-                                                        GIMP_PDB_EXECUTION_ERROR,
-                                                        error);
-    }
+  return_values = gimp_procedure_new_return_values (procedure,
+                                                    GIMP_PDB_SUCCESS,
+                                                    NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_values, 1, image_ID);
 
   return return_values;
 }

@@ -278,8 +278,7 @@ tiff_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -367,7 +366,7 @@ tiff_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      switch (g_value_get_int (gimp_value_array_index (args, 0)))
+      switch (GIMP_VALUES_GET_INT (args, 0))
         {
         case 0: tsvals.compression = COMPRESSION_NONE;          break;
         case 1: tsvals.compression = COMPRESSION_LZW;           break;
@@ -378,8 +377,7 @@ tiff_save (GimpProcedure        *procedure,
         case 6: tsvals.compression = COMPRESSION_CCITTFAX4;     break;
         }
 
-      tsvals.save_transp_pixels =
-        g_value_get_boolean (gimp_value_array_index (args, 1));
+      tsvals.save_transp_pixels = GIMP_VALUES_GET_BOOLEAN (args, 1);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

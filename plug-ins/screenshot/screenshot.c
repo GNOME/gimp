@@ -242,7 +242,7 @@ screenshot_run (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
 
 #ifdef PLATFORM_OSX
   if (! backend && screenshot_osx_available ())
@@ -313,13 +313,13 @@ screenshot_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      shootvals.shoot_type   = g_value_get_int (gimp_value_array_index (args, 1));
-      shootvals.window_id    = g_value_get_int (gimp_value_array_index (args, 2));
+      shootvals.shoot_type   = GIMP_VALUES_GET_INT (args, 1);
+      shootvals.window_id    = GIMP_VALUES_GET_INT (args, 2);
       shootvals.select_delay = 0;
-      shootvals.x1           = g_value_get_int (gimp_value_array_index (args, 3));
-      shootvals.y1           = g_value_get_int (gimp_value_array_index (args, 4));
-      shootvals.x2           = g_value_get_int (gimp_value_array_index (args, 5));
-      shootvals.y2           = g_value_get_int (gimp_value_array_index (args, 6));
+      shootvals.x1           = GIMP_VALUES_GET_INT (args, 3);
+      shootvals.y1           = GIMP_VALUES_GET_INT (args, 4);
+      shootvals.x2           = GIMP_VALUES_GET_INT (args, 5);
+      shootvals.y2           = GIMP_VALUES_GET_INT (args, 6);
 
       if (! gdk_init_check (NULL, NULL))
         status = GIMP_PDB_CALLING_ERROR;
@@ -399,8 +399,7 @@ screenshot_run (GimpProcedure        *procedure,
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
 
   if (status == GIMP_PDB_SUCCESS)
-    gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                             image_ID);
+    GIMP_VALUES_SET_IMAGE (return_vals, 1, image_ID);
 
   return return_vals;
 }

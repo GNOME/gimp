@@ -34,8 +34,8 @@ script_fu_eval_run (GimpProcedure        *procedure,
   GimpRunMode        run_mode;
   const gchar       *code;
 
-  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
-  code     = g_value_get_string (gimp_value_array_index (args, 1));
+  run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
+  code     = GIMP_VALUES_GET_STRING (args, 1);
 
   ts_set_run_mode (run_mode);
   ts_register_output_func (ts_gstring_output_func, output);

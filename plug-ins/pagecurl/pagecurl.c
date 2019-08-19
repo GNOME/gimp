@@ -287,10 +287,10 @@ pagecurl_run (GimpProcedure        *procedure,
 
   image_id = image;
 
-  curl.colors      = g_value_get_int     (gimp_value_array_index (args, 0));
-  curl.edge        = g_value_get_int     (gimp_value_array_index (args, 1));
-  curl.orientation = g_value_get_int     (gimp_value_array_index (args, 2));
-  curl.shade       = g_value_get_boolean (gimp_value_array_index (args, 3));
+  curl.colors      = GIMP_VALUES_GET_INT     (args, 0);
+  curl.edge        = GIMP_VALUES_GET_INT     (args, 1);
+  curl.orientation = GIMP_VALUES_GET_INT     (args, 2);
+  curl.shade       = GIMP_VALUES_GET_BOOLEAN (args, 3);
 
   if (! gimp_drawable_mask_intersect (drawable_id, &sel_x, &sel_y,
                                       &true_sel_width, &true_sel_height))
@@ -336,8 +336,7 @@ pagecurl_run (GimpProcedure        *procedure,
   return_vals = gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_layer_id (gimp_value_array_index (return_vals, 1),
-                           page_curl (drawable_id));
+  GIMP_VALUES_SET_LAYER (return_vals, 1, page_curl (drawable_id));
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();

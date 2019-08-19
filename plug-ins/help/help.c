@@ -171,22 +171,11 @@ help_run (GimpProcedure        *procedure,
 
   INIT_I18N ();
 
-  /*  make sure all the arguments are there  */
-  if (gimp_value_array_length (args) == 4)
+  if (! gimp_help_init (GIMP_VALUES_GET_INT          (args, 0),
+                        GIMP_VALUES_GET_STRING_ARRAY (args, 1),
+                        GIMP_VALUES_GET_INT          (args, 2),
+                        GIMP_VALUES_GET_STRING_ARRAY (args, 3)))
     {
-      if (! gimp_help_init
-              (g_value_get_int             (gimp_value_array_index (args, 0)),
-               gimp_value_get_string_array (gimp_value_array_index (args, 1)),
-               g_value_get_int             (gimp_value_array_index (args, 2)),
-               gimp_value_get_string_array (gimp_value_array_index (args, 3))))
-        {
-          status = GIMP_PDB_CALLING_ERROR;
-        }
-    }
-  else
-    {
-      g_printerr ("help: wrong number of arguments in procedure call.\n");
-
       status = GIMP_PDB_CALLING_ERROR;
     }
 
@@ -267,21 +256,17 @@ help_temp_run (GimpProcedure        *procedure,
   const gchar       *help_locales = NULL;
   const gchar       *help_id      = GIMP_HELP_DEFAULT_ID;
 
-  /*  make sure all the arguments are there  */
-  if (gimp_value_array_length (args) == 4)
-    {
-      if (g_value_get_string (gimp_value_array_index (args, 0)))
-        help_proc = g_value_get_string (gimp_value_array_index (args, 0));
+  if (GIMP_VALUES_GET_STRING (args, 0))
+    help_proc = GIMP_VALUES_GET_STRING (args, 0);
 
-      if (g_value_get_string (gimp_value_array_index (args, 1)))
-        help_domain = g_value_get_string (gimp_value_array_index (args, 1));
+  if (GIMP_VALUES_GET_STRING (args, 1))
+    help_domain = GIMP_VALUES_GET_STRING (args, 1);
 
-      if (g_value_get_string (gimp_value_array_index (args, 2)))
-        help_locales = g_value_get_string (gimp_value_array_index (args, 2));
+  if (GIMP_VALUES_GET_STRING (args, 2))
+    help_locales = GIMP_VALUES_GET_STRING (args, 2);
 
-      if (g_value_get_string (gimp_value_array_index (args, 3)))
-        help_id = g_value_get_string (gimp_value_array_index (args, 3));
-    }
+  if (GIMP_VALUES_GET_STRING (args, 3))
+    help_id = GIMP_VALUES_GET_STRING (args, 3);
 
   if (! help_proc)
     status = GIMP_PDB_CALLING_ERROR;

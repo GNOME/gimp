@@ -221,8 +221,7 @@ sgi_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
   return return_vals;
 }
@@ -275,7 +274,7 @@ sgi_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      compression = g_value_get_int (gimp_value_array_index (args, 0));
+      compression = GIMP_VALUES_GET_INT (args, 0);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

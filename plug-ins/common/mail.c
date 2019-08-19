@@ -283,20 +283,15 @@ mail_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      g_strlcpy (mail_info.filename,
-                 g_value_get_string (gimp_value_array_index (args, 0)),
+      g_strlcpy (mail_info.filename, GIMP_VALUES_GET_STRING (args, 0),
                  BUFFER_SIZE);
-      g_strlcpy (mail_info.receipt,
-                 g_value_get_string (gimp_value_array_index (args, 1)),
+      g_strlcpy (mail_info.receipt,  GIMP_VALUES_GET_STRING (args, 1),
                  BUFFER_SIZE);
-      g_strlcpy (mail_info.from,
-                 g_value_get_string (gimp_value_array_index (args, 2)),
+      g_strlcpy (mail_info.from,     GIMP_VALUES_GET_STRING (args, 2),
                  BUFFER_SIZE);
-      g_strlcpy (mail_info.subject,
-                 g_value_get_string (gimp_value_array_index (args, 3)),
+      g_strlcpy (mail_info.subject,  GIMP_VALUES_GET_STRING (args, 3),
                  BUFFER_SIZE);
-      g_strlcpy (mail_info.comment,
-                 g_value_get_string (gimp_value_array_index (args, 4)),
+      g_strlcpy (mail_info.comment,  GIMP_VALUES_GET_STRING (args, 4),
                  BUFFER_SIZE);
       break;
 

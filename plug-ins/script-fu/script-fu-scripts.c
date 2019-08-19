@@ -743,7 +743,7 @@ script_fu_script_proc (GimpProcedure        *procedure,
                                              GIMP_PDB_CALLING_ERROR,
                                              NULL);
 
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
 
   ts_set_run_mode (run_mode);
 

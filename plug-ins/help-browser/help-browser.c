@@ -172,11 +172,10 @@ help_browser_run (GimpProcedure        *procedure,
 {
   INIT_I18N ();
 
-  if (! gimp_help_init
-          (g_value_get_int             (gimp_value_array_index (args, 1)),
-           gimp_value_get_string_array (gimp_value_array_index (args, 2)),
-           g_value_get_int             (gimp_value_array_index (args, 3)),
-           gimp_value_get_string_array (gimp_value_array_index (args, 4))))
+  if (! gimp_help_init (GIMP_VALUES_GET_INT          (args, 1),
+                        GIMP_VALUES_GET_STRING_ARRAY (args, 2),
+                        GIMP_VALUES_GET_INT          (args, 3),
+                        GIMP_VALUES_GET_STRING_ARRAY (args, 4)))
     {
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
@@ -248,15 +247,15 @@ temp_proc_run (GimpProcedure        *procedure,
   const gchar *help_id      = GIMP_HELP_DEFAULT_ID;
   const gchar *string;
 
-  string = g_value_get_string (gimp_value_array_index (args, 0));
+  string = GIMP_VALUES_GET_STRING (args, 0);
   if (string && strlen (string))
     help_domain = string;
 
-  string = g_value_get_string (gimp_value_array_index (args, 1));
+  string = GIMP_VALUES_GET_STRING (args, 1);
   if (string && strlen (string))
     help_locales = string;
 
-  string = g_value_get_string (gimp_value_array_index (args, 2));
+  string = GIMP_VALUES_GET_STRING (args, 2);
   if (string && strlen (string))
     help_id = string;
 

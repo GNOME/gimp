@@ -151,8 +151,7 @@ exr_load (GimpProcedure        *procedure,
                                                    GIMP_PDB_SUCCESS,
                                                    NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_ID);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_ID);
 
   return return_vals;
 }

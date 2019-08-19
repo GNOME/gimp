@@ -216,8 +216,7 @@ ico_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
   return return_vals;
 }
@@ -255,9 +254,9 @@ ico_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
-  g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
-  g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_INT   (return_vals, 2, width);
+  GIMP_VALUES_SET_INT   (return_vals, 3, height);
 
   gimp_value_array_truncate (return_vals, 4);
 

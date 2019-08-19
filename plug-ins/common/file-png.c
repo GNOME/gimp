@@ -449,8 +449,7 @@ png_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
 
   return return_vals;
 }
@@ -539,15 +538,15 @@ png_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      pngvals.interlaced         = g_value_get_boolean (gimp_value_array_index (args, 0));
-      pngvals.compression_level  = g_value_get_int     (gimp_value_array_index (args, 1));
-      pngvals.bkgd               = g_value_get_boolean (gimp_value_array_index (args, 2));
-      pngvals.gama               = g_value_get_boolean (gimp_value_array_index (args, 3));
-      pngvals.offs               = g_value_get_boolean (gimp_value_array_index (args, 4));
-      pngvals.phys               = g_value_get_boolean (gimp_value_array_index (args, 5));
-      pngvals.time               = g_value_get_boolean (gimp_value_array_index (args, 6));
-      pngvals.comment            = g_value_get_boolean (gimp_value_array_index (args, 7));
-      pngvals.save_transp_pixels = g_value_get_boolean (gimp_value_array_index (args, 8));
+      pngvals.interlaced         = GIMP_VALUES_GET_BOOLEAN (args, 0);
+      pngvals.compression_level  = GIMP_VALUES_GET_INT     (args, 1);
+      pngvals.bkgd               = GIMP_VALUES_GET_BOOLEAN (args, 2);
+      pngvals.gama               = GIMP_VALUES_GET_BOOLEAN (args, 3);
+      pngvals.offs               = GIMP_VALUES_GET_BOOLEAN (args, 4);
+      pngvals.phys               = GIMP_VALUES_GET_BOOLEAN (args, 5);
+      pngvals.time               = GIMP_VALUES_GET_BOOLEAN (args, 6);
+      pngvals.comment            = GIMP_VALUES_GET_BOOLEAN (args, 7);
+      pngvals.save_transp_pixels = GIMP_VALUES_GET_BOOLEAN (args, 8);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

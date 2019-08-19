@@ -372,29 +372,26 @@ gih_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      info.spacing = g_value_get_int (gimp_value_array_index (args, 0));
+      info.spacing = GIMP_VALUES_GET_INT (args, 0);
       g_strlcpy (info.description,
-                 g_value_get_string (gimp_value_array_index (args, 1)),
+                 GIMP_VALUES_GET_STRING (args, 1),
                  sizeof (info.description));
 
-      gihparams.cellwidth  = g_value_get_int (gimp_value_array_index (args, 2));
-      gihparams.cellheight = g_value_get_int (gimp_value_array_index (args, 3));
-      gihparams.cols       = g_value_get_int (gimp_value_array_index (args, 4));
-      gihparams.rows       = g_value_get_int (gimp_value_array_index (args, 5));
-      gihparams.dim        = g_value_get_int (gimp_value_array_index (args, 6));
+      gihparams.cellwidth  = GIMP_VALUES_GET_INT (args, 2);
+      gihparams.cellheight = GIMP_VALUES_GET_INT (args, 3);
+      gihparams.cols       = GIMP_VALUES_GET_INT (args, 4);
+      gihparams.rows       = GIMP_VALUES_GET_INT (args, 5);
+      gihparams.dim        = GIMP_VALUES_GET_INT (args, 6);
       gihparams.ncells     = 1;
 
-      if (g_value_get_int (gimp_value_array_index (args, 8)) != gihparams.dim)
+      if (GIMP_VALUES_GET_INT (args, 8) != gihparams.dim)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
       else
         {
-          const guint8 *rank =
-            gimp_value_get_uint8_array (gimp_value_array_index (args, 7));
-
-          const gchar **sel =
-            gimp_value_get_string_array (gimp_value_array_index (args, 9));
+          const guint8  *rank = GIMP_VALUES_GET_UINT8_ARRAY  (args, 7);
+          const gchar  **sel  = GIMP_VALUES_GET_STRING_ARRAY (args, 9);
 
           for (i = 0; i < gihparams.dim; i++)
             {
@@ -441,8 +438,7 @@ gih_save (GimpProcedure        *procedure,
 
       g_free (uri);
 
-      if (g_value_get_enum (gimp_value_array_index (save_retvals, 0)) ==
-          GIMP_PDB_SUCCESS)
+      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
           gimp_set_data (SAVE_PROC, &info, sizeof (info));
 

@@ -250,9 +250,9 @@ gbr_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      info.spacing = g_value_get_int (gimp_value_array_index (args, 0));
+      info.spacing = GIMP_VALUES_GET_INT (args, 0);
       g_strlcpy (info.description,
-                 g_value_get_string (gimp_value_array_index (args, 1)),
+                 GIMP_VALUES_GET_STRING (args, 1),
                  sizeof (info.description));
       break;
 
@@ -279,8 +279,7 @@ gbr_save (GimpProcedure        *procedure,
 
       g_free (uri);
 
-      if (g_value_get_enum (gimp_value_array_index (save_retvals, 0)) ==
-          GIMP_PDB_SUCCESS)
+      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
           gimp_set_data (SAVE_PROC, &info, sizeof (info));
         }

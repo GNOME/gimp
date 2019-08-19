@@ -216,7 +216,7 @@ pat_save (GimpProcedure        *procedure,
 
     case GIMP_RUN_NONINTERACTIVE:
       g_strlcpy (description,
-                 g_value_get_string (gimp_value_array_index (args, 0)),
+                 GIMP_VALUES_GET_STRING (args, 0),
                  sizeof (description));
       break;
 
@@ -242,8 +242,7 @@ pat_save (GimpProcedure        *procedure,
 
       g_free (uri);
 
-      if (g_value_get_enum (gimp_value_array_index (save_retvals, 0)) ==
-          GIMP_PDB_SUCCESS)
+      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) == GIMP_PDB_SUCCESS)
         {
           gimp_set_data (SAVE_PROC, description, sizeof (description));
         }

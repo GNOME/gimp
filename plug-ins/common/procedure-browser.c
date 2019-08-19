@@ -148,9 +148,7 @@ browser_run (GimpProcedure        *procedure,
              const GimpValueArray *args,
              gpointer              run_data)
 {
-  GimpRunMode run_mode;
-
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+  GimpRunMode run_mode = GIMP_VALUES_GET_ENUM (args, 0);
 
   INIT_I18N ();
 

@@ -721,7 +721,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gint32 *array;
 
-              n_elements = g_value_get_int (gimp_value_array_index (args, i - 1));
+              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
               if (n_elements < 0 ||
                   n_elements > sc->vptr->vector_length (vector))
@@ -781,7 +781,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gint16 *array;
 
-              n_elements = g_value_get_int (gimp_value_array_index (args, i - 1));
+              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
               if (n_elements < 0 ||
                   n_elements > sc->vptr->vector_length (vector))
@@ -839,7 +839,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               guint8 *array;
 
-              n_elements = g_value_get_int (gimp_value_array_index (args, i - 1));
+              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
               if (n_elements < 0 ||
                   n_elements > sc->vptr->vector_length (vector))
@@ -898,7 +898,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gdouble *array;
 
-              n_elements = g_value_get_int (gimp_value_array_index (args, i - 1));
+              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
               if (n_elements < 0 ||
                   n_elements > sc->vptr->vector_length (vector))
@@ -957,7 +957,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gchar **array;
 
-              n_elements = g_value_get_int (gimp_value_array_index (args, i - 1));
+              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
               if (n_elements < 0 ||
                   n_elements > sc->vptr->list_length (sc, vector))
@@ -1079,7 +1079,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               GimpRGB *array;
 
-              n_elements = g_value_get_int (gimp_value_array_index (args, i - 1));
+              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
 
               if (n_elements < 0 ||
                   n_elements > sc->vptr->vector_length (vector))
@@ -1272,7 +1272,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
   }
 #endif
 
-  switch (g_value_get_enum (gimp_value_array_index (values, 0)))
+  switch (GIMP_VALUES_GET_ENUM (values, 0))
     {
     case GIMP_PDB_EXECUTION_ERROR:
       if (gimp_value_array_length (values) > 1 &&
@@ -1281,7 +1281,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
           g_snprintf (error_str, sizeof (error_str),
                       "Procedure execution of %s failed: %s",
                       proc_name,
-                      g_value_get_string (gimp_value_array_index (values, 1)));
+                      GIMP_VALUES_GET_STRING (values, 1));
         }
       else
         {
@@ -1299,7 +1299,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
           g_snprintf (error_str, sizeof (error_str),
                       "Procedure execution of %s failed on invalid input arguments: %s",
                       proc_name,
-                      g_value_get_string (gimp_value_array_index (values, 1)));
+                      GIMP_VALUES_GET_STRING (values, 1));
         }
       else
         {
@@ -1378,8 +1378,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
           else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
             {
-              gint32        n      = g_value_get_int
-                                       (gimp_value_array_index (values, i));
+              gint32        n      = GIMP_VALUES_GET_INT (values, i);
               const gint32 *v      = gimp_value_get_int32_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
@@ -1393,8 +1392,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
           else if (GIMP_VALUE_HOLDS_INT16_ARRAY (value))
             {
-              gint32        n      = g_value_get_int
-                                       (gimp_value_array_index (values, i));
+              gint32        n      = GIMP_VALUES_GET_INT (values, i);
               const gint16 *v      = gimp_value_get_int16_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
@@ -1408,8 +1406,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
           else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
             {
-              gint32        n      = g_value_get_int
-                                       (gimp_value_array_index (values, i));
+              gint32        n      = GIMP_VALUES_GET_INT (values, i);
               const guint8 *v      = gimp_value_get_uint8_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
@@ -1423,8 +1420,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
           else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
             {
-              gint32         n      = g_value_get_int
-                                        (gimp_value_array_index (values, i));
+              gint32         n      = GIMP_VALUES_GET_INT (values, i);
               const gdouble *v      = gimp_value_get_float_array (value);
               pointer        vector = sc->vptr->mk_vector (sc, n);
 
@@ -1438,8 +1434,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
           else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
             {
-              gint32         n    = g_value_get_int
-                                      (gimp_value_array_index (values, i));
+              gint32         n    = GIMP_VALUES_GET_INT (values, i);
               const gchar  **v    = gimp_value_get_string_array (value);
               pointer        list = sc->NIL;
 
@@ -1480,8 +1475,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             }
           else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
             {
-              gint32          n    = g_value_get_int
-                                       (gimp_value_array_index (values, i));
+              gint32          n = GIMP_VALUES_GET_INT (values, i);
               const GimpRGB  *v = gimp_value_get_rgb_array (value);
               pointer  vector   = sc->vptr->mk_vector (sc, n);
 
@@ -1574,8 +1568,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
    */
   if (return_val == sc->NIL)
     {
-      if (g_value_get_enum (gimp_value_array_index (values, 0)) ==
-          GIMP_PDB_SUCCESS)
+      if (GIMP_VALUES_GET_INT (values, 0) == GIMP_PDB_SUCCESS)
         return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
       else
         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);

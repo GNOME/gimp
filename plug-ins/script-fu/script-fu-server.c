@@ -229,10 +229,10 @@ script_fu_server_run (GimpProcedure        *procedure,
   gint               port;
   const gchar       *logfile;
 
-  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
-  ip       = g_value_get_string (gimp_value_array_index (args, 1));
-  port     = g_value_get_int    (gimp_value_array_index (args, 2));
-  logfile  = g_value_get_string (gimp_value_array_index (args, 3));
+  run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
+  ip       = GIMP_VALUES_GET_STRING (args, 1);
+  port     = GIMP_VALUES_GET_INT    (args, 2);
+  logfile  = GIMP_VALUES_GET_STRING (args, 3);
 
   ts_set_run_mode (run_mode);
   ts_set_print_flag (1);
