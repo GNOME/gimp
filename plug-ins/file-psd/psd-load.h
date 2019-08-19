@@ -22,11 +22,11 @@
 #define __PSD_LOAD_H__
 
 
-gint32  load_image (const gchar  *filename,
-                    gboolean      merged_image_only,
-                    gboolean     *resolution_loaded,
-                    gboolean     *profile_loaded,
-                    GError      **error);
+GimpImage * load_image (const gchar  *filename,
+                        gboolean      merged_image_only,
+                        gboolean     *resolution_loaded,
+                        gboolean     *profile_loaded,
+                        GError      **error);
 
 
 #endif /* __PSD_LOAD_H__ */

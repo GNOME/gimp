@@ -60,26 +60,26 @@ static gint             read_merged_image_block    (PSDimage     *img_a,
                                                     FILE         *f,
                                                     GError      **error);
 
-static gint32           create_gimp_image          (PSDimage     *img_a,
+static GimpImage *      create_gimp_image          (PSDimage     *img_a,
                                                     const gchar  *filename);
 
-static gint             add_color_map              (gint32        image_id,
+static gint             add_color_map              (GimpImage    *image,
                                                     PSDimage     *img_a);
 
-static gint             add_image_resources        (gint32        image_id,
+static gint             add_image_resources        (GimpImage    *image,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
                                                     gboolean     *resolution_loaded,
                                                     gboolean     *profile_loaded,
                                                     GError      **error);
 
-static gint             add_layers                 (gint32        image_id,
+static gint             add_layers                 (GimpImage    *image,
                                                     PSDimage     *img_a,
                                                     PSDlayer    **lyr_a,
                                                     FILE         *f,
                                                     GError      **error);
 
-static gint             add_merged_image           (gint32        image_id,
+static gint             add_merged_image           (GimpImage    *image,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
                                                     GError      **error);
@@ -112,7 +112,7 @@ static const Babl*      get_mask_format            (PSDimage    *img_a);
 
 
 /* Main file load function */
-gint32
+GimpImage *
 load_image (const gchar  *filename,
             gboolean      merged_image_only,
             gboolean     *resolution_loaded,
@@ -123,12 +123,12 @@ load_image (const gchar  *filename,
   struct stat   st;
   PSDimage      img_a;
   PSDlayer    **lyr_a;
-  gint32        image_id = -1;
-  GError       *error    = NULL;
+  GimpImage    *image = NULL;
+  GError       *error = NULL;
 
   /* ----- Open PSD file ----- */
   if (g_stat (filename, &st) == -1)
-    return -1;
+    return NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -140,7 +140,7 @@ load_image (const gchar  *filename,
       g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   img_a.merged_image_only = merged_image_only;
@@ -178,20 +178,20 @@ load_image (const gchar  *filename,
 
   /* ----- Create GIMP image ----- */
   IFDBG(2) g_debug ("Create GIMP image");
-  image_id = create_gimp_image (&img_a, filename);
-  if (image_id < 0)
+  image = create_gimp_image (&img_a, filename);
+  if (! image)
     goto load_error;
   gimp_progress_update (0.6);
 
   /* ----- Add color map ----- */
   IFDBG(2) g_debug ("Add color map");
-  if (add_color_map (image_id, &img_a) < 0)
+  if (add_color_map (image, &img_a) < 0)
     goto load_error;
   gimp_progress_update (0.7);
 
   /* ----- Add image resources ----- */
   IFDBG(2) g_debug ("Add image resources");
-  if (add_image_resources (image_id, &img_a, f,
+  if (add_image_resources (image, &img_a, f,
                            resolution_loaded, profile_loaded,
                            &error) < 0)
     goto load_error;
@@ -199,24 +199,24 @@ load_image (const gchar  *filename,
 
   /* ----- Add layers -----*/
   IFDBG(2) g_debug ("Add layers");
-  if (add_layers (image_id, &img_a, lyr_a, f, &error) < 0)
+  if (add_layers (image, &img_a, lyr_a, f, &error) < 0)
     goto load_error;
   gimp_progress_update (0.9);
 
   /* ----- Add merged image data and extra alpha channels ----- */
   IFDBG(2) g_debug ("Add merged image data and extra alpha channels");
-  if (add_merged_image (image_id, &img_a, f, &error) < 0)
+  if (add_merged_image (image, &img_a, f, &error) < 0)
     goto load_error;
   gimp_progress_update (1.0);
 
-  IFDBG(2) g_debug ("Close file & return, image id: %d", image_id);
+  IFDBG(2) g_debug ("Close file & return, image id: %d", gimp_image_get_id (image));
   IFDBG(1) g_debug ("\n----------------------------------------"
                     "----------------------------------------\n");
 
-  gimp_image_clean_all (image_id);
-  gimp_image_undo_enable (image_id);
+  gimp_image_clean_all (image);
+  gimp_image_undo_enable (image);
   fclose (f);
-  return image_id;
+  return image;
 
   /* ----- Process load errors ----- */
  load_error:
@@ -228,14 +228,14 @@ load_image (const gchar  *filename,
     }
 
   /* Delete partially loaded image */
-  if (image_id > 0)
-    gimp_image_delete (image_id);
+  if (image)
+    gimp_image_delete (image);
 
   /* Close file if Open */
   if (! (f == NULL))
     fclose (f);
 
-  return -1;
+  return NULL;
 }
 
 
@@ -973,12 +973,12 @@ read_merged_image_block (PSDimage  *img_a,
   return 0;
 }
 
-static gint32
+static GimpImage *
 create_gimp_image (PSDimage    *img_a,
                    const gchar *filename)
 {
-  gint32 image_id = -1;
-  GimpPrecision precision;
+  GimpImage     *image = NULL;
+  GimpPrecision  precision;
 
   switch (img_a->color_mode)
     {
@@ -999,7 +999,7 @@ create_gimp_image (PSDimage    *img_a,
     default:
       /* Color mode already validated - should not be here */
       g_warning ("Invalid color mode");
-      return -1;
+      return NULL;
       break;
     }
 
@@ -1021,23 +1021,23 @@ create_gimp_image (PSDimage    *img_a,
       default:
         /* Precision not supported */
         g_warning ("Invalid precision");
-        return -1;
+        return NULL;
         break;
       }
 
   /* Create gimp image */
   IFDBG(2) g_debug ("Create image");
-  image_id = gimp_image_new_with_precision (img_a->columns, img_a->rows,
-                                            img_a->base_type, precision);
-  gimp_image_set_filename (image_id, filename);
-  gimp_image_undo_disable (image_id);
+  image = gimp_image_new_with_precision (img_a->columns, img_a->rows,
+                                         img_a->base_type, precision);
+  gimp_image_set_filename (image, filename);
+  gimp_image_undo_disable (image);
 
-  return image_id;
+  return image;
 }
 
 static gint
-add_color_map (gint32    image_id,
-               PSDimage *img_a)
+add_color_map (GimpImage *image,
+               PSDimage  *img_a)
 {
   GimpParasite *parasite;
 
@@ -1045,7 +1045,7 @@ add_color_map (gint32    image_id,
     {
       if (img_a->color_mode != PSD_DUOTONE)
         {
-          gimp_image_set_colormap (image_id, img_a->color_map,
+          gimp_image_set_colormap (image, img_a->color_map,
                                    img_a->color_map_entries);
         }
       else
@@ -1054,7 +1054,7 @@ add_color_map (gint32    image_id,
           IFDBG(2) g_debug ("Add Duotone color data parasite");
           parasite = gimp_parasite_new (PSD_PARASITE_DUOTONE_DATA, 0,
                                         img_a->color_map_len, img_a->color_map);
-          gimp_image_attach_parasite (image_id, parasite);
+          gimp_image_attach_parasite (image, parasite);
           gimp_parasite_free (parasite);
         }
       g_free (img_a->color_map);
@@ -1064,7 +1064,7 @@ add_color_map (gint32    image_id,
 }
 
 static gint
-add_image_resources (gint32     image_id,
+add_image_resources (GimpImage *image,
                      PSDimage  *img_a,
                      FILE      *f,
                      gboolean  *resolution_loaded,
@@ -1101,7 +1101,7 @@ add_image_resources (gint32     image_id,
           return 0;
         }
 
-      if (load_image_resource (&res_a, image_id, img_a, f,
+      if (load_image_resource (&res_a, image, img_a, f,
                                resolution_loaded, profile_loaded,
                                error) < 0)
         return -1;
@@ -1111,7 +1111,7 @@ add_image_resources (gint32     image_id,
 }
 
 static gint
-add_layers (gint32     image_id,
+add_layers (GimpImage *image,
             PSDimage  *img_a,
             PSDlayer **lyr_a,
             FILE      *f,
@@ -1119,7 +1119,7 @@ add_layers (gint32     image_id,
 {
   PSDchannel          **lyr_chn;
   GArray               *parent_group_stack;
-  gint32                parent_group_id = -1;
+  GimpLayer            *parent_group = NULL;
   guchar               *pixels;
   guint16               alpha_chn;
   guint16               user_mask_chn;
@@ -1136,9 +1136,9 @@ add_layers (gint32     image_id,
   gint32                lm_w;                  /* Layer mask width */
   gint32                lm_h;                  /* Layer mask height */
   gint32                layer_size;
-  gint32                layer_id = -1;
-  gint32                mask_id = -1;
-  gint32                active_layer_id = -1;
+  GimpLayer            *layer        = NULL;
+  GimpLayerMask        *mask         = NULL;
+  GimpLayer            *active_layer = NULL;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
@@ -1169,8 +1169,8 @@ add_layers (gint32     image_id,
     }
 
   /* set the root of the group hierarchy */
-  parent_group_stack = g_array_new (FALSE, FALSE, sizeof (gint32));
-  g_array_append_val (parent_group_stack, parent_group_id);
+  parent_group_stack = g_array_new (FALSE, FALSE, sizeof (GimpLayer *));
+  g_array_append_val (parent_group_stack, parent_group);
 
   for (lidx = 0; lidx < img_a->num_layers; ++lidx)
     {
@@ -1351,10 +1351,10 @@ add_layers (gint32     image_id,
           l_w = img_a->columns;
           l_h = img_a->rows;
           if (parent_group_stack->len > 0)
-            parent_group_id = g_array_index (parent_group_stack, gint32,
-                                             parent_group_stack->len - 1);
+            parent_group = g_array_index (parent_group_stack, GimpLayer *,
+                                          parent_group_stack->len - 1);
           else
-            parent_group_id = -1; /* root */
+            parent_group = NULL; /* root */
 
           IFDBG(3) g_debug ("Re-hash channel indices");
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
@@ -1391,17 +1391,17 @@ add_layers (gint32     image_id,
                    * assemble the layer structure in a single pass
                    */
                   IFDBG(2) g_debug ("Create placeholder group layer");
-                  layer_id = gimp_layer_group_new (image_id);
+                  layer = gimp_layer_group_new (image);
                   /* add this group layer as the new parent */
-                  g_array_append_val (parent_group_stack, layer_id);
+                  g_array_append_val (parent_group_stack, layer);
                 }
               else /* group-type == 1 || group_type == 2 */
                 {
                   if (parent_group_stack->len)
                     {
-                      layer_id = g_array_index (parent_group_stack, gint32,
-                                                parent_group_stack->len - 1);
-                      IFDBG(2) g_debug ("End group layer id %d.", layer_id);
+                      layer = g_array_index (parent_group_stack, GimpLayer *,
+                                             parent_group_stack->len - 1);
+                      IFDBG(2) g_debug ("End group layer id %d.", gimp_item_get_id (GIMP_ITEM (layer)));
                       /* since the layers are stored in reverse, the group
                        * layer start marker actually means we're done with
                        * that layer group
@@ -1409,15 +1409,15 @@ add_layers (gint32     image_id,
                       g_array_remove_index (parent_group_stack,
                                             parent_group_stack->len - 1);
 
-                      gimp_drawable_offsets (layer_id, &l_x, &l_y);
+                      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &l_x, &l_y);
 
-                      l_w = gimp_drawable_width  (layer_id);
-                      l_h = gimp_drawable_height (layer_id);
+                      l_w = gimp_drawable_width  (GIMP_DRAWABLE (layer));
+                      l_h = gimp_drawable_height (GIMP_DRAWABLE (layer));
                     }
                   else
                     {
                       IFDBG(1) g_debug ("WARNING: Unmatched group layer start marker.");
-                      layer_id = -1;
+                      layer = NULL;
                     }
                 }
             }
@@ -1439,19 +1439,19 @@ add_layers (gint32     image_id,
               image_type = get_gimp_image_type (img_a->base_type, TRUE);
               IFDBG(3) g_debug ("Layer type %d", image_type);
 
-              layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name,
-                                         l_w, l_h, image_type,
-                                         100, GIMP_LAYER_MODE_NORMAL);
+              layer = gimp_layer_new (image, lyr_a[lidx]->name,
+                                      l_w, l_h, image_type,
+                                      100, GIMP_LAYER_MODE_NORMAL);
             }
 
-          if (layer_id != -1)
+          if (layer != NULL)
             {
               /* Set the layer name.  Note that we do this even for group-end
                * markers, to avoid having the default group name collide with
                * subsequent layers; the real group name is set by the group
                * start marker.
                */
-              gimp_item_set_name (layer_id, lyr_a[lidx]->name);
+              gimp_item_set_name (GIMP_ITEM (layer), lyr_a[lidx]->name);
 
               /* Set the layer properties (skip this for layer group end
                * markers; we set their properties when processing the start
@@ -1461,18 +1461,18 @@ add_layers (gint32     image_id,
                 {
                   /* Mode */
                   psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
-                  gimp_layer_set_mode (layer_id, mode_info.mode);
-                  gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
-                  gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
-                  gimp_layer_set_composite_mode (layer_id, mode_info.composite_mode);
+                  gimp_layer_set_mode (layer, mode_info.mode);
+                  gimp_layer_set_blend_space (layer, mode_info.blend_space);
+                  gimp_layer_set_composite_space (layer, mode_info.composite_space);
+                  gimp_layer_set_composite_mode (layer, mode_info.composite_mode);
 
                   /* Opacity */
-                  gimp_layer_set_opacity (layer_id,
+                  gimp_layer_set_opacity (layer,
                                           lyr_a[lidx]->opacity * 100.0 / 255.0);
 
                   /* Flags */
-                  gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
-                  gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
+                  gimp_layer_set_lock_alpha  (layer, lyr_a[lidx]->layer_flags.trans_prot);
+                  gimp_item_set_visible (GIMP_ITEM (layer), lyr_a[lidx]->layer_flags.visible);
 #if 0
                   /* according to the spec, the 'irrelevant' flag indicates
                    * that the layer's "pixel data is irrelevant to the
@@ -1487,26 +1487,26 @@ add_layers (gint32     image_id,
                   if (lyr_a[lidx]->layer_flags.irrelevant &&
                       lyr_a[lidx]->group_type == 0)
                     {
-                      gimp_item_set_visible (layer_id, FALSE);
+                      gimp_item_set_visible (GIMP_ITEM (layer), FALSE);
                     }
 #endif
 
                   /* Position */
                   if (l_x != 0 || l_y != 0)
-                    gimp_layer_set_offsets (layer_id, l_x, l_y);
+                    gimp_layer_set_offsets (layer, l_x, l_y);
 
                   /* Color tag */
-                  gimp_item_set_color_tag (layer_id,
+                  gimp_item_set_color_tag (GIMP_ITEM (layer),
                                            psd_to_gimp_layer_color_tag (lyr_a[lidx]->color_tag[0]));
 
                   /* Tattoo */
                   if (lyr_a[lidx]->id)
-                    gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                    gimp_item_set_tattoo (GIMP_ITEM (layer), lyr_a[lidx]->id);
 
                   /* For layer groups, expand or collapse the group */
                   if (lyr_a[lidx]->group_type != 0)
                     {
-                      gimp_item_set_expanded (layer_id,
+                      gimp_item_set_expanded (GIMP_ITEM (layer),
                                               lyr_a[lidx]->group_type == 1);
                     }
                 }
@@ -1514,7 +1514,7 @@ add_layers (gint32     image_id,
               /* Remember the active layer ID */
               if (lidx == img_a->layer_state)
                 {
-                  active_layer_id = layer_id;
+                  active_layer = layer;
                 }
 
               /* Set the layer data */
@@ -1524,7 +1524,7 @@ add_layers (gint32     image_id,
 
                   if (empty)
                     {
-                      gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
+                      gimp_drawable_fill (GIMP_DRAWABLE (layer), GIMP_FILL_TRANSPARENT);
                     }
                   else
                     {
@@ -1542,7 +1542,7 @@ add_layers (gint32     image_id,
                           g_free (lyr_chn[channel_idx[cidx]]->data);
                         }
 
-                      buffer = gimp_drawable_get_buffer (layer_id);
+                      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
                       gegl_buffer_set (buffer,
                                        GEGL_RECTANGLE (0, 0,
                                                        gegl_buffer_get_width (buffer),
@@ -1561,14 +1561,14 @@ add_layers (gint32     image_id,
                     {
                       IFDBG(3) g_debug ("Create empty mask");
                       if (lyr_a[lidx]->layer_mask.def_color == 255)
-                        mask_id = gimp_layer_create_mask (layer_id,
-                                                          GIMP_ADD_MASK_WHITE);
+                        mask = gimp_layer_create_mask (layer,
+                                                       GIMP_ADD_MASK_WHITE);
                       else
-                        mask_id = gimp_layer_create_mask (layer_id,
-                                                          GIMP_ADD_MASK_BLACK);
-                      gimp_layer_add_mask (layer_id, mask_id);
-                      gimp_layer_set_apply_mask (layer_id,
-                        ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
+                        mask = gimp_layer_create_mask (layer,
+                                                       GIMP_ADD_MASK_BLACK);
+                      gimp_layer_add_mask (layer, mask);
+                      gimp_layer_set_apply_mask (layer,
+                                                 ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                     }
                   else
                     {
@@ -1637,21 +1637,21 @@ add_layers (gint32     image_id,
                           IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
 
                           if (lyr_a[lidx]->layer_mask.def_color == 255)
-                            mask_id = gimp_layer_create_mask (layer_id,
-                                                              GIMP_ADD_MASK_WHITE);
+                            mask = gimp_layer_create_mask (layer,
+                                                           GIMP_ADD_MASK_WHITE);
                           else
-                            mask_id = gimp_layer_create_mask (layer_id,
-                                                              GIMP_ADD_MASK_BLACK);
+                            mask = gimp_layer_create_mask (layer,
+                                                           GIMP_ADD_MASK_BLACK);
 
-                          IFDBG(3) g_debug ("New layer mask %d", mask_id);
-                          gimp_layer_add_mask (layer_id, mask_id);
-                          buffer = gimp_drawable_get_buffer (mask_id);
+                          IFDBG(3) g_debug ("New layer mask %d", gimp_item_get_id (GIMP_ITEM (mask)));
+                          gimp_layer_add_mask (layer, mask);
+                          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
                           gegl_buffer_set (buffer,
                                            GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
                                            0, get_mask_format (img_a),
                                            pixels, GEGL_AUTO_ROWSTRIDE);
                           g_object_unref (buffer);
-                          gimp_layer_set_apply_mask (layer_id,
+                          gimp_layer_set_apply_mask (layer,
                                                      ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                         }
                       g_free (pixels);
@@ -1662,7 +1662,7 @@ add_layers (gint32     image_id,
                 if (lyr_a[lidx]->group_type == 0 || /* normal layer */
                     lyr_a[lidx]->group_type == 3    /* group layer end marker */)
                   {
-                    gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
+                    gimp_image_insert_layer (image, layer, parent_group, 0);
                   }
             }
 
@@ -1679,14 +1679,14 @@ add_layers (gint32     image_id,
   g_array_free (parent_group_stack, FALSE);
 
   /* Set the active layer */
-  if (active_layer_id >= 0)
-    gimp_image_set_active_layer (image_id, active_layer_id);
+  if (active_layer >= 0)
+    gimp_image_set_active_layer (image, active_layer);
 
   return 0;
 }
 
 static gint
-add_merged_image (gint32     image_id,
+add_merged_image (GimpImage *image,
                   PSDimage  *img_a,
                   FILE      *f,
                   GError   **error)
@@ -1702,8 +1702,8 @@ add_merged_image (gint32     image_id,
   guint16              *rle_pack_len[MAX_CHANNELS];
   guint32               alpha_id;
   gint32                layer_size;
-  gint32                layer_id = -1;
-  gint32                channel_id = -1;
+  GimpLayer            *layer   = NULL;
+  GimpChannel          *channel = NULL;
   gint16                alpha_opacity;
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
@@ -1855,14 +1855,14 @@ add_merged_image (gint32     image_id,
 
       /* Add background layer */
       IFDBG(2) g_debug ("Draw merged image");
-      layer_id = gimp_layer_new (image_id, _("Background"),
-                                 img_a->columns, img_a->rows,
-                                 image_type,
-                                 100,
-                                 gimp_image_get_default_new_layer_mode (image_id));
-      gimp_image_insert_layer (image_id, layer_id, -1, 0);
+      layer = gimp_layer_new (image, _("Background"),
+                              img_a->columns, img_a->rows,
+                              image_type,
+                              100,
+                              gimp_image_get_default_new_layer_mode (image));
+      gimp_image_insert_layer (image, layer, NULL, 0);
 
-      buffer = gimp_drawable_get_buffer (layer_id);
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, 0,
                                        gegl_buffer_get_width (buffer),
@@ -1923,7 +1923,7 @@ add_merged_image (gint32     image_id,
 
   /* ----- Draw extra alpha channels ----- */
   if (extra_channels                   /* Extra alpha channels */
-      && image_id > -1)
+      && image)
     {
       IFDBG(2) g_debug ("Add extra channels");
       pixels = g_malloc(0);
@@ -1979,15 +1979,15 @@ add_merged_image (gint32     image_id,
           cidx = base_channels + i;
           pixels = g_realloc (pixels, chn_a[cidx].columns * chn_a[cidx].rows * bps);
           memcpy (pixels, chn_a[cidx].data, chn_a[cidx].columns * chn_a[cidx].rows * bps);
-          channel_id = gimp_channel_new (image_id, alpha_name,
-                                         chn_a[cidx].columns, chn_a[cidx].rows,
-                                         alpha_opacity, &alpha_rgb);
-          gimp_image_insert_channel (image_id, channel_id, -1, 0);
+          channel = gimp_channel_new (image, alpha_name,
+                                      chn_a[cidx].columns, chn_a[cidx].rows,
+                                      alpha_opacity, &alpha_rgb);
+          gimp_image_insert_channel (image, channel, NULL, 0);
           g_free (alpha_name);
-          buffer = gimp_drawable_get_buffer (channel_id);
+          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
           if (alpha_id)
-            gimp_item_set_tattoo (channel_id, alpha_id);
-          gimp_item_set_visible (channel_id, alpha_visible);
+            gimp_item_set_tattoo (GIMP_ITEM (channel), alpha_id);
+          gimp_item_set_visible (GIMP_ITEM (channel), alpha_visible);
           gegl_buffer_set (buffer,
                            GEGL_RECTANGLE (0, 0,
                                            gegl_buffer_get_width (buffer),

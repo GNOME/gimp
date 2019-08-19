@@ -46,16 +46,16 @@ static gint    read_image_resource_block  (PSDimage     *img_a,
                                            FILE         *f,
                                            GError      **error);
 
-static gint32  create_gimp_image          (PSDimage     *img_a,
+static GimpImage * create_gimp_image      (PSDimage     *img_a,
                                            const gchar  *filename);
 
-static gint    add_image_resources        (gint32        image_id,
+static gint    add_image_resources        (GimpImage    *image,
                                            PSDimage     *img_a,
                                            FILE         *f,
                                            GError      **error);
 
 /* Main file load function */
-gint32
+GimpImage *
 load_thumbnail_image (const gchar  *filename,
                       gint         *width,
                       gint         *height,
@@ -64,12 +64,12 @@ load_thumbnail_image (const gchar  *filename,
   FILE        *f;
   struct stat  st;
   PSDimage     img_a;
-  gint32       image_id = -1;
-  GError      *error    = NULL;
+  GimpImage   *image = NULL;
+  GError      *error = NULL;
 
   /* ----- Open PSD file ----- */
   if (g_stat (filename, &st) == -1)
-    return -1;
+    return NULL;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -81,7 +81,7 @@ load_thumbnail_image (const gchar  *filename,
       g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   /* ----- Read the PSD file Header block ----- */
@@ -104,23 +104,23 @@ load_thumbnail_image (const gchar  *filename,
 
   /* ----- Create GIMP image ----- */
   IFDBG(2) g_debug ("Create GIMP image");
-  image_id = create_gimp_image (&img_a, filename);
-  if (image_id < 0)
+  image = create_gimp_image (&img_a, filename);
+  if (! image)
     goto load_error;
 
   /* ----- Add image resources ----- */
   IFDBG(2) g_debug ("Add image resources");
-  if (add_image_resources (image_id, &img_a, f, &error) < 1)
+  if (add_image_resources (image, &img_a, f, &error) < 1)
     goto load_error;
   gimp_progress_update (1.0);
 
-  gimp_image_clean_all (image_id);
-  gimp_image_undo_enable (image_id);
+  gimp_image_clean_all (image);
+  gimp_image_undo_enable (image);
   fclose (f);
 
   *width = img_a.columns;
   *height = img_a.rows;
-  return image_id;
+  return image;
 
   /* ----- Process load errors ----- */
  load_error:
@@ -132,14 +132,14 @@ load_thumbnail_image (const gchar  *filename,
     }
 
   /* Delete partially loaded image */
-  if (image_id > 0)
-    gimp_image_delete (image_id);
+  if (image)
+    gimp_image_delete (image);
 
   /* Close file if Open */
   if (! (f == NULL))
     fclose (f);
 
-  return -1;
+  return NULL;
 }
 
 
@@ -254,26 +254,26 @@ read_image_resource_block (PSDimage  *img_a,
   return 0;
 }
 
-static gint32
+static GimpImage *
 create_gimp_image (PSDimage    *img_a,
                    const gchar *filename)
 {
-  gint32 image_id = -1;
+  GimpImage *image = NULL;
 
   img_a->base_type = GIMP_RGB;
 
   /* Create gimp image */
   IFDBG(2) g_debug ("Create image");
-  image_id = gimp_image_new (img_a->columns, img_a->rows, img_a->base_type);
+  image = gimp_image_new (img_a->columns, img_a->rows, img_a->base_type);
 
-  gimp_image_set_filename (image_id, filename);
-  gimp_image_undo_disable (image_id);
+  gimp_image_set_filename (image, filename);
+  gimp_image_undo_disable (image);
 
-  return image_id;
+  return image;
 }
 
 static gint
-add_image_resources (gint32     image_id,
+add_image_resources (GimpImage *image,
                      PSDimage  *img_a,
                      FILE      *f,
                      GError   **error)
@@ -296,7 +296,7 @@ add_image_resources (gint32     image_id,
           img_a->image_res_start + img_a->image_res_len)
         return 0;
 
-      status = load_thumbnail_resource (&res_a, image_id, f, error);
+      status = load_thumbnail_resource (&res_a, image, f, error);
       /* Error */
       if (status < 0)
         return -1;
