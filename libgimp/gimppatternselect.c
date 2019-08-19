@@ -181,12 +181,12 @@ gimp_temp_pattern_run (GimpProcedure        *procedure,
   g_free (data->pattern_name);
   g_free (data->pattern_mask_data);
 
-  data->pattern_name      = g_value_dup_string (gimp_value_array_index (args, 0));
-  data->width             = g_value_get_int    (gimp_value_array_index (args, 1));
-  data->height            = g_value_get_int    (gimp_value_array_index (args, 2));
-  data->bytes             = g_value_get_int    (gimp_value_array_index (args, 3));
-  data->pattern_mask_data = gimp_value_dup_uint8_array (gimp_value_array_index (args, 5));
-  data->closing           = g_value_get_boolean (gimp_value_array_index (args, 6));
+  data->pattern_name      = GIMP_VALUES_DUP_STRING      (args, 0);
+  data->width             = GIMP_VALUES_GET_INT         (args, 1);
+  data->height            = GIMP_VALUES_GET_INT         (args, 2);
+  data->bytes             = GIMP_VALUES_GET_INT         (args, 3);
+  data->pattern_mask_data = GIMP_VALUES_DUP_UINT8_ARRAY (args, 5);
+  data->closing           = GIMP_VALUES_GET_BOOLEAN     (args, 6);
 
   if (! data->idle_id)
     data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_pattern_idle, data);

@@ -200,14 +200,14 @@ gimp_temp_brush_run (GimpProcedure        *procedure,
   g_free (data->brush_name);
   g_free (data->brush_mask_data);
 
-  data->brush_name      = g_value_dup_string (gimp_value_array_index (args, 0));
-  data->opacity         = g_value_get_double (gimp_value_array_index (args, 1));
-  data->spacing         = g_value_get_int    (gimp_value_array_index (args, 2));
-  data->paint_mode      = g_value_get_enum   (gimp_value_array_index (args, 3));
-  data->width           = g_value_get_int    (gimp_value_array_index (args, 4));
-  data->height          = g_value_get_int    (gimp_value_array_index (args, 5));
-  data->brush_mask_data = gimp_value_dup_uint8_array (gimp_value_array_index (args, 7));
-  data->closing         = g_value_get_boolean (gimp_value_array_index (args, 8));
+  data->brush_name      = GIMP_VALUES_DUP_STRING      (args, 0);
+  data->opacity         = GIMP_VALUES_GET_DOUBLE      (args, 1);
+  data->spacing         = GIMP_VALUES_GET_INT         (args, 2);
+  data->paint_mode      = GIMP_VALUES_GET_ENUM        (args, 3);
+  data->width           = GIMP_VALUES_GET_INT         (args, 4);
+  data->height          = GIMP_VALUES_GET_INT         (args, 5);
+  data->brush_mask_data = GIMP_VALUES_DUP_UINT8_ARRAY (args, 7);
+  data->closing         = GIMP_VALUES_GET_BOOLEAN     (args, 8);
 
   if (! data->idle_id)
     data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_brush_idle, data);

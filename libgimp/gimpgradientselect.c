@@ -163,10 +163,10 @@ gimp_temp_gradient_run (GimpProcedure        *procedure,
   g_free (data->gradient_name);
   g_free (data->gradient_data);
 
-  data->gradient_name = g_value_dup_string  (gimp_value_array_index (args, 0));
-  data->width         = g_value_get_int     (gimp_value_array_index (args, 1));
-  data->gradient_data = gimp_value_dup_float_array (gimp_value_array_index (args, 2));
-  data->closing       = g_value_get_boolean (gimp_value_array_index (args, 3));
+  data->gradient_name = GIMP_VALUES_DUP_STRING      (args, 0);
+  data->width         = GIMP_VALUES_GET_INT         (args, 1);
+  data->gradient_data = GIMP_VALUES_DUP_FLOAT_ARRAY (args, 2);
+  data->closing       = GIMP_VALUES_GET_BOOLEAN     (args, 3);
 
   if (! data->idle_id)
     data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_gradient_idle, data);

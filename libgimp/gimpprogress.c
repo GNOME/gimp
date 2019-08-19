@@ -338,9 +338,9 @@ gimp_temp_progress_run (GimpProcedure        *procedure,
   const gchar         *text;
   gdouble              value;
 
-  command = g_value_get_enum   (gimp_value_array_index (args, 0));
-  text    = g_value_get_string (gimp_value_array_index (args, 1));
-  value   = g_value_get_double (gimp_value_array_index (args, 2));
+  command = GIMP_VALUES_GET_ENUM   (args, 0);
+  text    = GIMP_VALUES_GET_STRING (args, 1);
+  value   = GIMP_VALUES_GET_DOUBLE (args, 2);
 
   switch (command)
     {
@@ -379,7 +379,7 @@ gimp_temp_progress_run (GimpProcedure        *procedure,
         return_vals = gimp_procedure_new_return_values (procedure,
                                                         GIMP_PDB_SUCCESS,
                                                         NULL);
-        g_value_set_double (gimp_value_array_index (return_vals, 1), window_id);
+        GIMP_VALUES_SET_DOUBLE (return_vals, 1, window_id);
 
         return return_vals;
       }

@@ -168,9 +168,9 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   GFile             *file;
   gint               i;
 
-  run_mode   = g_value_get_enum   (gimp_value_array_index (args, 0));
-  uri        = g_value_get_string (gimp_value_array_index (args, 1));
-  /* raw_uri = g_value_get_string (gimp_value_array_index (args, 2)); */
+  run_mode   = GIMP_VALUES_GET_ENUM   (args, 0);
+  uri        = GIMP_VALUES_GET_STRING (args, 1);
+  /* raw_uri = GIMP_VALUES_GET_STRING (args, 2); */
 
   file = g_file_new_for_uri (uri);
 

@@ -141,8 +141,8 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
   gint                    size;
   gint                    i;
 
-  uri  = g_value_get_string (gimp_value_array_index (args, 0));
-  size = g_value_get_int    (gimp_value_array_index (args, 1));
+  uri  = GIMP_VALUES_GET_STRING (args, 0);
+  size = GIMP_VALUES_GET_INT    (args, 1);
 
   file = g_file_new_for_uri (uri);
 

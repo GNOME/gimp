@@ -393,7 +393,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_INT32ARRAY:
-          count = g_value_get_int (gimp_value_array_index (args, i - 1));
+          count = GIMP_VALUES_GET_INT (args, i - 1);
           if (full_copy)
             gimp_value_set_int32_array (&value,
                                         params[i].data.d_int32array,
@@ -405,7 +405,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_INT16ARRAY:
-          count = g_value_get_int (gimp_value_array_index (args, i - 1));
+          count = GIMP_VALUES_GET_INT (args, i - 1);
           if (full_copy)
             gimp_value_set_int16_array (&value,
                                         params[i].data.d_int16array,
@@ -417,7 +417,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_INT8ARRAY:
-          count = g_value_get_int (gimp_value_array_index (args, i - 1));
+          count = GIMP_VALUES_GET_INT (args, i - 1);
           if (full_copy)
             gimp_value_set_uint8_array (&value,
                                         params[i].data.d_int8array,
@@ -429,7 +429,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_FLOATARRAY:
-          count = g_value_get_int (gimp_value_array_index (args, i - 1));
+          count = GIMP_VALUES_GET_INT (args, i - 1);
           if (full_copy)
             gimp_value_set_float_array (&value,
                                         params[i].data.d_floatarray,
@@ -441,7 +441,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_STRINGARRAY:
-          count = g_value_get_int (gimp_value_array_index (args, i - 1));
+          count = GIMP_VALUES_GET_INT (args, i - 1);
           if (full_copy)
             gimp_value_set_string_array (&value,
                                         (const gchar **) params[i].data.d_stringarray,
@@ -485,7 +485,7 @@ _gimp_params_to_value_array (const GimpParam  *params,
           break;
 
         case GIMP_PDB_COLORARRAY:
-          count = g_value_get_int (gimp_value_array_index (args, i - 1));
+          count = GIMP_VALUES_GET_INT (args, i - 1);
           if (full_copy)
             gimp_value_set_rgb_array (&value,
                                       params[i].data.d_colorarray,

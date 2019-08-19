@@ -146,8 +146,8 @@ gimp_temp_font_run (GimpProcedure        *procedure,
 
   g_free (data->font_name);
 
-  data->font_name = g_value_dup_string  (gimp_value_array_index (args, 0));
-  data->closing   = g_value_get_boolean (gimp_value_array_index (args, 1));
+  data->font_name = GIMP_VALUES_DUP_STRING  (args, 0);
+  data->closing   = GIMP_VALUES_GET_BOOLEAN (args, 1);
 
   if (! data->idle_id)
     data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_font_idle,

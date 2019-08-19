@@ -117,9 +117,9 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
   gint32              drawable_id;
   gint                i;
 
-  run_mode    = g_value_get_enum           (gimp_value_array_index (args, 0));
-  image_id    = gimp_value_get_image_id    (gimp_value_array_index (args, 1));
-  drawable_id = gimp_value_get_drawable_id (gimp_value_array_index (args, 2));
+  run_mode    = GIMP_VALUES_GET_ENUM     (args, 0);
+  image_id    = GIMP_VALUES_GET_IMAGE    (args, 1);
+  drawable_id = GIMP_VALUES_GET_DRAWABLE (args, 2);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - 3);
 

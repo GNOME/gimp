@@ -602,8 +602,7 @@ gimp_pdb_set_error (GimpPDB        *pdb,
 
   if (gimp_value_array_length (return_values) > 0)
     {
-      pdb->priv->error_status =
-        g_value_get_enum (gimp_value_array_index (return_values, 0));
+      pdb->priv->error_status = GIMP_VALUES_GET_ENUM (return_values, 0);
 
       switch (pdb->priv->error_status)
         {

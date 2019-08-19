@@ -153,9 +153,9 @@ gimp_temp_palette_run (GimpProcedure        *procedure,
 
   g_free (data->palette_name);
 
-  data->palette_name = g_value_dup_string  (gimp_value_array_index (args, 0));
-  data->num_colors   = g_value_get_int     (gimp_value_array_index (args, 1));
-  data->closing      = g_value_get_boolean (gimp_value_array_index (args, 2));
+  data->palette_name = GIMP_VALUES_DUP_STRING  (args, 0);
+  data->num_colors   = GIMP_VALUES_GET_INT     (args, 1);
+  data->closing      = GIMP_VALUES_GET_BOOLEAN (args, 2);
 
   if (! data->idle_id)
     data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_palette_idle,
