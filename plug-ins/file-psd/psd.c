@@ -68,8 +68,8 @@ static GimpValueArray * psd_load_thumb       (GimpProcedure        *procedure,
                                               gpointer              run_data);
 static GimpValueArray * psd_save             (GimpProcedure        *procedure,
                                               GimpRunMode           run_mode,
-                                              gint32                image_id,
-                                              gint32                drawable_id,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
@@ -232,7 +232,7 @@ psd_load (GimpProcedure        *procedure,
   gboolean        resolution_loaded = FALSE;
   gboolean        profile_loaded    = FALSE;
   gboolean        interactive;
-  gint32          image_id;
+  GimpImage      *image;
   GimpMetadata   *metadata;
   GError         *error = NULL;
 
@@ -251,19 +251,19 @@ psd_load (GimpProcedure        *procedure,
       break;
     }
 
-  image_id = load_image (g_file_get_path (file),
-                         strcmp (gimp_procedure_get_name (procedure),
-                                 LOAD_MERGED_PROC) == 0,
-                         &resolution_loaded,
-                         &profile_loaded,
-                         &error);
+  image = load_image (g_file_get_path (file),
+                      strcmp (gimp_procedure_get_name (procedure),
+                              LOAD_MERGED_PROC) == 0,
+                      &resolution_loaded,
+                      &profile_loaded,
+                      &error);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
 
-  metadata = gimp_image_metadata_load_prepare (image_id, "image/x-psd",
+  metadata = gimp_image_metadata_load_prepare (image, "image/x-psd",
                                                file, NULL);
   if (metadata)
     {
@@ -275,7 +275,7 @@ psd_load (GimpProcedure        *procedure,
       if (profile_loaded)
         flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
-      gimp_image_metadata_load_finish (image_id, "image/x-psd",
+      gimp_image_metadata_load_finish (image, "image/x-psd",
                                        metadata, flags,
                                        interactive);
 
@@ -286,8 +286,8 @@ psd_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1),
-                           image_id);
+  g_value_set_object (gimp_value_array_index (return_vals, 1),
+                      image);
 
   return return_vals;
 }
@@ -303,7 +303,7 @@ psd_load_thumb (GimpProcedure        *procedure,
   gchar          *filename;
   gint            width  = 0;
   gint            height = 0;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -311,9 +311,9 @@ psd_load_thumb (GimpProcedure        *procedure,
 
   filename = g_file_get_path (file);
 
-  image_id = load_thumbnail_image (filename, &width, &height, &error);
+  image    = load_thumbnail_image (filename, &width, &height, &error);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -322,9 +322,9 @@ psd_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
-  g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
-  g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+  g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+  g_value_set_int    (gimp_value_array_index (return_vals, 2), width);
+  g_value_set_int    (gimp_value_array_index (return_vals, 3), height);
 
   gimp_value_array_truncate (return_vals, 4);
 
@@ -334,8 +334,8 @@ psd_load_thumb (GimpProcedure        *procedure,
 static GimpValueArray *
 psd_save (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image_id,
-          gint32                drawable_id,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
           GFile                *file,
           const GimpValueArray *args,
           gpointer              run_data)
@@ -355,7 +355,7 @@ psd_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_id, &drawable_id, "PSD",
+      export = gimp_export_image (&image, &drawable, "PSD",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -372,17 +372,17 @@ psd_save (GimpProcedure        *procedure,
       break;
     }
 
-  metadata = gimp_image_metadata_save_prepare (image_id,
+  metadata = gimp_image_metadata_save_prepare (image,
                                                "image/x-psd",
                                                &metadata_flags);
 
-  if (save_image (g_file_get_path (file), image_id, &error))
+  if (save_image (g_file_get_path (file), image, &error))
     {
       if (metadata)
         {
           gimp_metadata_set_bits_per_sample (metadata, 8);
 
-          gimp_image_metadata_save_finish (image_id,
+          gimp_image_metadata_save_finish (image,
                                            "image/x-psd",
                                            metadata, metadata_flags,
                                            file, NULL);
@@ -394,7 +394,7 @@ psd_save (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_id);
+    gimp_image_delete (image);
 
   if (metadata)
     g_object_unref (metadata);
