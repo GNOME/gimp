@@ -168,27 +168,27 @@ static GimpValueArray * ps_load_thumb       (GimpProcedure        *procedure,
                                              gpointer              run_data);
 static GimpValueArray * ps_save             (GimpProcedure        *procedure,
                                              GimpRunMode           run_mode,
-                                             gint32                image_id,
-                                             gint32                drawable_id,
+                                             GimpImage            *image,
+                                             GimpDrawable         *drawable,
                                              GFile                *file,
                                              const GimpValueArray *args,
                                              gpointer              run_data);
 
-static gint32           load_image          (const gchar          *filename,
+static GimpImage      * load_image          (const gchar          *filename,
                                              GError              **error);
 static gboolean         save_image          (GFile                *file,
-                                             gint32                image_ID,
-                                             gint32                drawable_ID,
+                                             GimpImage            *image,
+                                             GimpDrawable         *drawable,
                                              GError              **error);
 
 static void      ps_set_save_size (PSSaveVals        *vals,
-                                   gint32             image_ID);
+                                   GimpImage         *image);
 
 static gboolean  save_ps_header   (GOutputStream     *output,
                                    GFile             *file,
                                    GError           **error);
 static gboolean  save_ps_setup    (GOutputStream     *output,
-                                   gint32             drawable_ID,
+                                   GimpDrawable      *drawable,
                                    gint               width,
                                    gint               height,
                                    gint               bpp,
@@ -197,24 +197,24 @@ static gboolean  save_ps_trailer  (GOutputStream     *output,
                                    GError           **error);
 
 static gboolean  save_ps_preview  (GOutputStream     *output,
-                                   gint32             drawable_ID,
+                                   GimpDrawable      *drawable,
                                    GError           **error);
 
 static gboolean  save_gray        (GOutputStream     *output,
-                                   gint32             image_ID,
-                                   gint32             drawable_ID,
+                                   GimpImage         *image,
+                                   GimpDrawable      *drawable,
                                    GError           **error);
 static gboolean  save_bw          (GOutputStream     *output,
-                                   gint32             image_ID,
-                                   gint32             drawable_ID,
+                                   GimpImage         *image,
+                                   GimpDrawable      *drawable,
                                    GError           **error);
 static gboolean  save_index       (GOutputStream     *output,
-                                   gint32             image_ID,
-                                   gint32             drawable_ID,
+                                   GimpImage         *image,
+                                   GimpDrawable      *drawable,
                                    GError           **error);
 static gboolean  save_rgb         (GOutputStream     *output,
-                                   gint32             image_ID,
-                                   gint32             drawable_ID,
+                                   GimpImage         *image,
+                                   GimpDrawable      *drawable,
                                    GError           **error);
 
 static gboolean  print            (GOutputStream     *output,
@@ -222,12 +222,12 @@ static gboolean  print            (GOutputStream     *output,
                                    const gchar       *format,
                                    ...) G_GNUC_PRINTF (3, 4);
 
-static gint32    create_new_image (const gchar       *filename,
-                                   guint              pagenum,
-                                   guint              width,
-                                   guint              height,
-                                   GimpImageBaseType  type,
-                                   gint32            *layer_ID);
+static GimpImage * create_new_image (const gchar       *filename,
+                                     guint              pagenum,
+                                     guint              width,
+                                     guint              height,
+                                     GimpImageBaseType  type,
+                                     GimpLayer        **layer);
 
 static void      check_load_vals  (void);
 static void      check_save_vals  (void);
@@ -253,7 +253,7 @@ static void      ps_close         (FILE              *ifp);
 
 static gboolean  skip_ps          (FILE              *ifp);
 
-static gint32    load_ps          (const gchar       *filename,
+static GimpImage * load_ps        (const gchar       *filename,
                                    guint              pagenum,
                                    FILE              *ifp,
                                    gint               llx,
@@ -595,14 +595,14 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 ps_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+         GimpRunMode           run_mode,
+         GFile                *file,
+         const GimpValueArray *args,
+         gpointer              run_data)
 {
   GimpValueArray *return_vals;
   gchar          *filename;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -649,11 +649,11 @@ ps_load (GimpProcedure        *procedure,
 
   check_load_vals ();
 
-  image_id = load_image (filename, &error);
+  image = load_image (filename, &error);
 
   g_free (filename);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -664,7 +664,7 @@ ps_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -677,7 +677,7 @@ ps_load_thumb (GimpProcedure        *procedure,
                gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -694,9 +694,9 @@ ps_load_thumb (GimpProcedure        *procedure,
 
   check_load_vals ();
 
-  image_id = load_image (g_file_get_path (file), &error);
+  image = load_image (g_file_get_path (file), &error);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -705,7 +705,7 @@ ps_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   gimp_value_array_truncate (return_vals, 2);
 
@@ -715,15 +715,15 @@ ps_load_thumb (GimpProcedure        *procedure,
 static GimpValueArray *
 ps_save (GimpProcedure        *procedure,
          GimpRunMode           run_mode,
-         gint32                image_id,
-         gint32                drawable_id,
+         GimpImage            *image,
+         GimpDrawable         *drawable,
          GFile                *file,
          const GimpValueArray *args,
          gpointer              run_data)
 {
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  gint32             orig_image_id;
+  GimpImage         *orig_image;
   GError            *error  = NULL;
 
   INIT_I18N ();
@@ -731,7 +731,7 @@ ps_save (GimpProcedure        *procedure,
 
   psvals.eps = strcmp (gimp_procedure_get_name (procedure), SAVE_PS_PROC);
 
-  orig_image_id = image_id;
+  orig_image = image;
 
   switch (run_mode)
     {
@@ -739,7 +739,7 @@ ps_save (GimpProcedure        *procedure,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_id, &drawable_id,
+      export = gimp_export_image (&image, &drawable,
                                   psvals.eps ? "EPS" : "PostScript",
                                   GIMP_EXPORT_CAN_HANDLE_RGB  |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY |
@@ -760,7 +760,7 @@ ps_save (GimpProcedure        *procedure,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (gimp_procedure_get_name (procedure), &psvals);
 
-      ps_set_save_size (&psvals, orig_image_id);
+      ps_set_save_size (&psvals, orig_image);
 
       if (! save_dialog ())
         status = GIMP_PDB_CANCEL;
@@ -791,11 +791,11 @@ ps_save (GimpProcedure        *procedure,
   if (status == GIMP_PDB_SUCCESS)
     {
       if ((psvals.width == 0.0) || (psvals.height == 0.0))
-        ps_set_save_size (&psvals, orig_image_id);
+        ps_set_save_size (&psvals, orig_image);
 
       check_save_vals ();
 
-      if (save_image (file, image_id, drawable_id, &error))
+      if (save_image (file, image, drawable, &error))
         {
           gimp_set_data (gimp_procedure_get_name (procedure),
                          &psvals, sizeof (PSSaveVals));
@@ -807,7 +807,7 @@ ps_save (GimpProcedure        *procedure,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_id);
+    gimp_image_delete (image);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
@@ -1098,18 +1098,18 @@ ps_end_data (GOutputStream  *output,
   return TRUE;
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint32    image_ID = 0;
-  gint32   *image_list, *nl;
-  guint     page_count;
-  FILE     *ifp;
-  gchar    *temp;
-  gint      llx, lly, urx, ury;
-  gint      k, n_images, max_images, max_pagenum;
-  gboolean  is_epsf;
+  GimpImage  *image = NULL;
+  GimpImage **image_list, **nl;
+  guint       page_count;
+  FILE       *ifp;
+  gchar      *temp;
+  gint        llx, lly, urx, ury;
+  gint        k, n_images, max_images, max_pagenum;
+  gboolean    is_epsf;
 
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
@@ -1130,7 +1130,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
   fclose (ifp);
 
@@ -1140,10 +1140,10 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
                    _("Could not interpret PostScript file '%s'"),
                    gimp_filename_to_utf8 (filename));
-      return -1;
+      return NULL;
     }
 
-  image_list = g_new (gint32, 10);
+  image_list = g_new (GimpImage *, 10);
   n_images = 0;
   max_images = 10;
 
@@ -1175,27 +1175,27 @@ load_image (const gchar  *filename,
     {
       if (page_in_list (plvals.pages, page_count))
         {
-          image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
-          if (image_ID == -1)
+          image = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
+          if (! image)
             break;
 
-          gimp_image_set_resolution (image_ID,
+          gimp_image_set_resolution (image,
                                      (gdouble) plvals.resolution,
                                      (gdouble) plvals.resolution);
 
           if (n_images == max_images)
             {
-              nl = (gint32 *) g_realloc (image_list,
-                                         (max_images+10)*sizeof (gint32));
+              nl = (GimpImage **) g_realloc (image_list,
+                                             (max_images+10)*sizeof (GimpImage *));
               if (nl == NULL) break;
               image_list = nl;
               max_images += 10;
             }
-          image_list[n_images++] = image_ID;
+          image_list[n_images++] = image;
         }
       else  /* Skip an image */
         {
-          image_ID = -1;
+          image = NULL;
           if (! skip_ps (ifp))
             break;
         }
@@ -1211,31 +1211,31 @@ load_image (const gchar  *filename,
 
           if (k == 0)
             {
-              image_ID = image_list[0];
+              image = image_list[0];
 
               name = g_strdup_printf (_("%s-pages"), filename);
-              gimp_image_set_filename (image_ID, name);
+              gimp_image_set_filename (image, name);
               g_free (name);
             }
           else
             {
-              gint32 current_layer;
-              gint32 tmp_ID;
+              GimpLayer    *current_layer;
+              GimpDrawable *tmp_drawable;
 
-              tmp_ID = gimp_image_get_active_drawable (image_list[k]);
+              tmp_drawable = gimp_image_get_active_drawable (image_list[k]);
 
-              name = gimp_item_get_name (tmp_ID);
+              name = gimp_item_get_name (GIMP_ITEM (tmp_drawable));
 
-              current_layer = gimp_layer_new_from_drawable (tmp_ID, image_ID);
-              gimp_item_set_name (current_layer, name);
-              gimp_image_insert_layer (image_ID, current_layer, -1, -1);
+              current_layer = gimp_layer_new_from_drawable (tmp_drawable, image);
+              gimp_item_set_name (GIMP_ITEM (current_layer), name);
+              gimp_image_insert_layer (image, current_layer, NULL, -1);
               gimp_image_delete (image_list[k]);
 
               g_free (name);
             }
         }
 
-      gimp_image_undo_enable (image_ID);
+      gimp_image_undo_enable (image);
     }
   else
     {
@@ -1251,29 +1251,29 @@ load_image (const gchar  *filename,
             gimp_display_new (image_list[k]);
         }
 
-      image_ID = (n_images > 0) ? image_list[0] : -1;
+      image = (n_images > 0) ? image_list[0] : NULL;
     }
 
   g_free (image_list);
 
-  return image_ID;
+  return image;
 }
 
 
 static gboolean
-save_image (GFile   *file,
-            gint32   image_ID,
-            gint32   drawable_ID,
-            GError **error)
+save_image (GFile         *file,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GError       **error)
 {
   GOutputStream *output;
   GCancellable  *cancellable;
   GimpImageType  drawable_type;
 
-  drawable_type = gimp_drawable_type (drawable_ID);
+  drawable_type = gimp_drawable_type (drawable);
 
   /*  Make sure we're not exporting an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable_ID))
+  if (gimp_drawable_has_alpha (drawable))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("PostScript export cannot handle images with alpha channels"));
@@ -1320,17 +1320,17 @@ save_image (GFile   *file,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      if (! save_index (output, image_ID, drawable_ID, error))
+      if (! save_index (output, image, drawable, error))
         goto fail;
       break;
 
     case GIMP_GRAY_IMAGE:
-      if (! save_gray (output, image_ID, drawable_ID, error))
+      if (! save_gray (output, image, drawable, error))
         goto fail;
       break;
 
     case GIMP_RGB_IMAGE:
-      if (! save_rgb (output, image_ID, drawable_ID, error))
+      if (! save_rgb (output, image, drawable, error))
         goto fail;
       break;
 
@@ -1403,24 +1403,24 @@ check_save_vals (void)
 
 static void
 ps_set_save_size (PSSaveVals *vals,
-                  gint32      image_ID)
+                  GimpImage  *image)
 {
   gdouble  xres, yres, factor, iw, ih;
   guint    width, height;
   GimpUnit unit;
 
-  gimp_image_get_resolution (image_ID, &xres, &yres);
+  gimp_image_get_resolution (image, &xres, &yres);
 
   if ((xres < 1e-5) || (yres < 1e-5))
     xres = yres = 72.0;
 
   /* Calculate size of image in inches */
-  width  = gimp_image_width (image_ID);
-  height = gimp_image_height (image_ID);
+  width  = gimp_image_width (image);
+  height = gimp_image_height (image);
   iw = width  / xres;
   ih = height / yres;
 
-  unit = gimp_image_get_unit (image_ID);
+  unit = gimp_image_get_unit (image);
   factor = gimp_unit_get_factor (unit);
 
   if (factor == 0.0254 ||
@@ -1953,16 +1953,16 @@ read_pnmraw_type (FILE *ifp,
 }
 
 
-/* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
-static gint32
+/* Create an image. Sets layer, drawable and rgn. Returns image */
+static GimpImage *
 create_new_image (const gchar        *filename,
                   guint               pagenum,
                   guint               width,
                   guint               height,
                   GimpImageBaseType   type,
-                  gint32             *layer_ID)
+                  GimpLayer         **layer)
 {
-  gint32         image_ID;
+  GimpImage     *image;
   GimpImageType  gdtype;
   gchar         *tmp;
 
@@ -1979,24 +1979,24 @@ create_new_image (const gchar        *filename,
       gdtype = GIMP_RGB_IMAGE;
     }
 
-  image_ID = gimp_image_new_with_precision (width, height, type,
-                                            GIMP_PRECISION_U8_NON_LINEAR);
-  gimp_image_undo_disable (image_ID);
+  image = gimp_image_new_with_precision (width, height, type,
+                                         GIMP_PRECISION_U8_NON_LINEAR);
+  gimp_image_undo_disable (image);
 
   tmp = g_strdup_printf ("%s-%d", filename, pagenum);
-  gimp_image_set_filename (image_ID, tmp);
+  gimp_image_set_filename (image, tmp);
   g_free (tmp);
 
   tmp = g_strdup_printf (_("Page %d"), pagenum);
-  *layer_ID = gimp_layer_new (image_ID, tmp, width, height,
-                              gdtype,
-                              100,
-                              gimp_image_get_default_new_layer_mode (image_ID));
+  *layer = gimp_layer_new (image, tmp, width, height,
+                           gdtype,
+                           100,
+                           gimp_image_get_default_new_layer_mode (image));
   g_free (tmp);
 
-  gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
+  gimp_image_insert_layer (image, *layer, NULL, 0);
 
-  return image_ID;
+  return image;
 }
 
 
@@ -2036,7 +2036,7 @@ skip_ps (FILE *ifp)
 
 
 /* Load PNM image generated from PostScript file */
-static gint32
+static GimpImage *
 load_ps (const gchar *filename,
          guint        pagenum,
          FILE        *ifp,
@@ -2053,7 +2053,8 @@ load_ps (const gchar *filename,
   int skip_left, skip_bottom;
   int i, j, pnmtype, maxval, bpp, nread;
   GimpImageBaseType imagetype;
-  gint32 layer_ID, image_ID;
+  GimpImage *image;
+  GimpLayer *layer;
   GeglBuffer *buffer = NULL;
   int err = 0, e;
 
@@ -2100,12 +2101,12 @@ load_ps (const gchar *filename,
       byteline = g_new (guchar, nread);
     }
   else
-    return -1;
+    return NULL;
 
-  image_ID = create_new_image (filename, pagenum,
-                               image_width, image_height, imagetype,
-                               &layer_ID);
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  image = create_new_image (filename, pagenum,
+                            image_width, image_height, imagetype,
+                            &layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * image_width * bpp);
@@ -2117,7 +2118,7 @@ load_ps (const gchar *filename,
     {
       const guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
-      gimp_image_set_colormap (image_ID, BWColorMap, 2);
+      gimp_image_set_colormap (image, BWColorMap, 2);
 
       for (i = 0; i < height; i++)
         {
@@ -2212,7 +2213,7 @@ load_ps (const gchar *filename,
 
   g_object_unref (buffer);
 
-  return (err ? -1 : image_ID);
+  return (err ? NULL : image);
 }
 
 
@@ -2263,7 +2264,7 @@ save_ps_header (GOutputStream  *output,
 /* Write out transformation for image */
 static gboolean
 save_ps_setup (GOutputStream  *output,
-               gint32          drawable_ID,
+               GimpDrawable   *drawable,
                gint            width,
                gint            height,
                gint            bpp,
@@ -2331,7 +2332,7 @@ save_ps_setup (GOutputStream  *output,
 
   if (psvals.preview && (psvals.preview_size > 0))
     {
-      if (! save_ps_preview (output, drawable_ID, error))
+      if (! save_ps_preview (output, drawable, error))
         return FALSE;
     }
 
@@ -2520,7 +2521,7 @@ dither_grey (const guchar *grey,
 /* Write a device independent screen preview */
 static gboolean
 save_ps_preview (GOutputStream  *output,
-                 gint32          drawable_ID,
+                 GimpDrawable   *drawable,
                  GError        **error)
 {
   GimpImageType  drawable_type;
@@ -2538,10 +2539,10 @@ save_ps_preview (GOutputStream  *output,
   if (psvals.preview_size <= 0)
     return TRUE;
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
   cmap = NULL;
 
-  drawable_type = gimp_drawable_type (drawable_ID);
+  drawable_type = gimp_drawable_type (drawable);
   switch (drawable_type)
     {
     case GIMP_GRAY_IMAGE:
@@ -2549,9 +2550,9 @@ save_ps_preview (GOutputStream  *output,
       break;
 
     case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (gimp_item_get_image (drawable_ID),
+      cmap = gimp_image_get_colormap (gimp_item_get_image (GIMP_ITEM (drawable)),
                                       &ncols);
-      format = gimp_drawable_get_format (drawable_ID);
+      format = gimp_drawable_get_format (drawable);
       break;
 
     case GIMP_RGB_IMAGE:
@@ -2696,8 +2697,8 @@ save_ps_preview (GOutputStream  *output,
 
 static gboolean
 save_gray (GOutputStream  *output,
-           gint32          image_ID,
-           gint32          drawable_ID,
+           GimpImage      *image,
+           GimpDrawable   *drawable,
            GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -2710,7 +2711,7 @@ save_gray (GOutputStream  *output,
   guchar     *packb = NULL;
   gboolean    level2 = (psvals.level > 1);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
   format = babl_format ("Y' u8");
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
@@ -2722,7 +2723,7 @@ save_gray (GOutputStream  *output,
   src = data = (guchar *) g_malloc (tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
-  if (! save_ps_setup (output, drawable_ID, width, height, 1 * 8, error))
+  if (! save_ps_setup (output, drawable, width, height, 1 * 8, error))
     goto fail;
 
   /* Write read image procedure */
@@ -2836,8 +2837,8 @@ save_gray (GOutputStream  *output,
 
 static gboolean
 save_bw (GOutputStream  *output,
-         gint32          image_ID,
-         gint32          drawable_ID,
+         GimpImage      *image,
+         GimpDrawable   *drawable,
          GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -2853,10 +2854,10 @@ save_bw (GOutputStream  *output,
   guchar     *hex_scanline;
   gboolean    level2 = (psvals.level > 1);
 
-  cmap = gimp_image_get_colormap (image_ID, &ncols);
+  cmap = gimp_image_get_colormap (image, &ncols);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
-  format = gimp_drawable_get_format (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
+  format = gimp_drawable_get_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -2872,7 +2873,7 @@ save_bw (GOutputStream  *output,
   hex_scanline = g_new (guchar, (nbsl + 1) * 2);
 
   /* Set up transformation in PostScript */
-  if (! save_ps_setup (output, drawable_ID, width, height, 1, error))
+  if (! save_ps_setup (output, drawable, width, height, 1, error))
     goto fail;
 
   /* Write read image procedure */
@@ -3020,8 +3021,8 @@ save_bw (GOutputStream  *output,
 
 static gboolean
 save_index (GOutputStream  *output,
-            gint32          image_ID,
-            gint32          drawable_ID,
+            GimpImage      *image,
+            GimpDrawable   *drawable,
             GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -3037,7 +3038,7 @@ save_index (GOutputStream  *output,
   gchar       coltab[256 * 6], *ct;
   gboolean    level2 = (psvals.level > 1);
 
-  cmap = cmap_start = gimp_image_get_colormap (image_ID, &ncols);
+  cmap = cmap_start = gimp_image_get_colormap (image, &ncols);
 
   ct = coltab;
   bw = 1;
@@ -3063,10 +3064,10 @@ save_index (GOutputStream  *output,
     }
 
   if (bw)
-    return save_bw (output, image_ID, drawable_ID, error);
+    return save_bw (output, image, drawable, error);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
-  format = gimp_drawable_get_format (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
+  format = gimp_drawable_get_format (drawable);
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -3077,7 +3078,7 @@ save_index (GOutputStream  *output,
   src = data = (guchar *) g_malloc (tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
-  if (! save_ps_setup (output, drawable_ID, width, height, 3 * 8, error))
+  if (! save_ps_setup (output, drawable, width, height, 3 * 8, error))
     goto fail;
 
   /* Write read image procedure */
@@ -3214,8 +3215,8 @@ save_index (GOutputStream  *output,
 
 static gboolean
 save_rgb (GOutputStream  *output,
-          gint32          image_ID,
-          gint32          drawable_ID,
+          GimpImage      *image,
+          GimpDrawable   *drawable,
           GError        **error)
 {
   GeglBuffer *buffer = NULL;
@@ -3228,7 +3229,7 @@ save_rgb (GOutputStream  *output,
   guchar     *plane = NULL;
   gboolean    level2 = (psvals.level > 1);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
   format = babl_format ("R'G'B' u8");
   bpp    = babl_format_get_bytes_per_pixel (format);
   width  = gegl_buffer_get_width (buffer);
@@ -3240,7 +3241,7 @@ save_rgb (GOutputStream  *output,
   src = data = g_new (guchar, tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
-  if (! save_ps_setup (output, drawable_ID, width, height, 3 * 8, error))
+  if (! save_ps_setup (output, drawable, width, height, 3 * 8, error))
     goto fail;
 
   /* Write read image procedure */
