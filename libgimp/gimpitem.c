@@ -199,6 +199,29 @@ gimp_item_get_by_id (gint32 item_id)
       item = g_hash_table_lookup (gimp_items,
                                   GINT_TO_POINTER (item_id));
 
+      if (item)
+        {
+          /* Make sure the item is the proper class, since it could be
+           * reused (which means we'd have cycled over the whole int
+           * range; not that likely yet still possible on a very very
+           * long run process).
+           */
+          if ((_gimp_item_is_layer (item_id) &&
+               ! GIMP_IS_LAYER (item))               ||
+              (_gimp_item_is_layer_mask (item_id) &&
+               ! GIMP_IS_LAYER_MASK (item))          ||
+              (_gimp_item_is_selection (item_id)  &&
+               ! GIMP_IS_SELECTION (item))           ||
+              (_gimp_item_is_channel (item_id)    &&
+               ! GIMP_IS_CHANNEL (item))             ||
+              (_gimp_item_is_vectors (item_id)    &&
+               ! GIMP_IS_VECTORS (item)))
+            {
+              g_hash_table_remove (gimp_items, GINT_TO_POINTER (item_id));
+              item = NULL;
+            }
+        }
+
       if (! item)
         {
           if (_gimp_item_is_layer (item_id))
