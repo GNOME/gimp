@@ -303,66 +303,61 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
           break;
 
         case SF_FILENAME:
-          pspec = gimp_param_spec_string ("filename",
-                                          "Filename",
-                                          script->args[i].label,
-                                          TRUE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("filename",
+                                       "Filename",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE |
+                                       GIMP_PARAM_NO_VALIDATE);
           break;
 
         case SF_DIRNAME:
-          pspec = gimp_param_spec_string ("dirname",
-                                          "Dirname",
-                                          script->args[i].label,
-                                          TRUE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("dirname",
+                                       "Dirname",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE |
+                                       GIMP_PARAM_NO_VALIDATE);
           break;
 
         case SF_FONT:
-          pspec = gimp_param_spec_string ("Font",
-                                          "font",
-                                          script->args[i].label,
-                                          FALSE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("Font",
+                                       "font",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE);
           break;
 
         case SF_PALETTE:
-          pspec = gimp_param_spec_string ("palette",
-                                          "Palette",
-                                          script->args[i].label,
-                                          FALSE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("palette",
+                                       "Palette",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE);
           break;
 
         case SF_PATTERN:
-          pspec = gimp_param_spec_string ("pattern",
-                                          "Pattern",
-                                          script->args[i].label,
-                                          FALSE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("pattern",
+                                       "Pattern",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE);
           break;
 
         case SF_BRUSH:
-          pspec = gimp_param_spec_string ("brush",
-                                          "Brush",
-                                          script->args[i].label,
-                                          FALSE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("brush",
+                                       "Brush",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE);
           break;
 
         case SF_GRADIENT:
-          pspec = gimp_param_spec_string ("gradient",
-                                          "Gradient",
-                                          script->args[i].label,
-                                          FALSE, TRUE, FALSE,
-                                          NULL,
-                                          G_PARAM_READWRITE);
+          pspec = g_param_spec_string ("gradient",
+                                       "Gradient",
+                                       script->args[i].label,
+                                       NULL,
+                                       G_PARAM_READWRITE);
           break;
 
         case SF_OPTION:

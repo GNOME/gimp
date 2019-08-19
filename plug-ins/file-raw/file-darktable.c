@@ -239,14 +239,11 @@ darktable_create_procedure (GimpPlugIn  *plug_in,
                                       "Tobias Ellinghaus",
                                       "2016");
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string ("filename",
-                                                           "Filename",
-                                                           "Name of the file "
-                                                           "to load",
-                                                           FALSE, TRUE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "uri",
+                            "URI",
+                            "URI of the file to load",
+                            NULL,
+                            GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "thumb-size",
                          "Thumb Size",
@@ -369,7 +366,7 @@ darktable_load_thumb (GimpProcedure        *procedure,
                       gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  const gchar    *filename;
+  GFile          *file;
   gint            width;
   gint            height;
   gint32          image_id;
@@ -378,11 +375,13 @@ darktable_load_thumb (GimpProcedure        *procedure,
 
   INIT_I18N ();
 
-  filename = g_value_get_string (gimp_value_array_index (args, 0));
-  width    = g_value_get_int    (gimp_value_array_index (args, 1));
-  height   = width;
+  file = g_file_new_for_uri (g_value_get_string (gimp_value_array_index (args, 0)));
 
-  image_id = load_thumbnail_image (filename, width, &width, &height, &error);
+  width  = g_value_get_int    (gimp_value_array_index (args, 1));
+  height = width;
+
+  image_id = load_thumbnail_image (g_file_get_path (file),
+                                   width, &width, &height, &error);
 
   if (image_id < 1)
     return gimp_procedure_new_return_values (procedure,

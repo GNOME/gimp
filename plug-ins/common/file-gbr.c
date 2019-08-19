@@ -161,14 +161,11 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
                          1, 1000, 10,
                          GIMP_PARAM_READWRITE);
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string ("description",
-                                                           "Description",
-                                                           "Short description "
-                                                           "of the brush",
-                                                           FALSE, FALSE, TRUE,
-                                                           "GIMP Brush",
-                                                           GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "description",
+                            "Description",
+                            "Short description of the brush",
+                            "GIMP Brush",
+                            GIMP_PARAM_READWRITE);
     }
 
   return procedure;

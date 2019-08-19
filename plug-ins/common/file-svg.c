@@ -216,14 +216,11 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       SVG_VERSION);
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string ("filename",
-                                                           "Filename",
-                                                           "Name of the file "
-                                                           "to load",
-                                                           FALSE, TRUE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "uri",
+                            "URI",
+                            "URI of the file to load",
+                            NULL,
+                            GIMP_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "thumb-size",
                          "Thumb Size",
@@ -332,7 +329,7 @@ svg_load_thumb (GimpProcedure        *procedure,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  const gchar    *filename;
+  GFile          *file;
   gint            width  = 0;
   gint            height = 0;
   gint32          image_id;
@@ -341,9 +338,10 @@ svg_load_thumb (GimpProcedure        *procedure,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_value_get_string (gimp_value_array_index (args, 0));
+  file = g_file_new_for_uri (g_value_get_string (gimp_value_array_index (args, 0)));
 
-  if (load_rsvg_size (filename, &load_vals, NULL))
+  if (load_rsvg_size (g_file_get_path (file),
+                      &load_vals, NULL))
     {
       width  = load_vals.width;
       height = load_vals.height;
@@ -353,7 +351,8 @@ svg_load_thumb (GimpProcedure        *procedure,
   load_vals.width      = - g_value_get_int (gimp_value_array_index (args, 1));
   load_vals.height     = - g_value_get_int (gimp_value_array_index (args, 1));
 
-  image_id = load_image (filename, &error);
+  image_id = load_image (g_file_get_path (file),
+                         &error);
 
   if (image_id < 1)
     return gimp_procedure_new_return_values (procedure,

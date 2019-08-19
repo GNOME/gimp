@@ -55,7 +55,9 @@ _gimp_gp_param_def_to_param_spec (gpointer          gimp,
   const gchar *name  = param_def->name;
   const gchar *nick  = param_def->nick;
   const gchar *blurb = param_def->blurb;
-  GParamFlags  flags = G_PARAM_READWRITE;
+  GParamFlags  flags = param_def->flags;
+
+  flags &= ~G_PARAM_STATIC_STRINGS;
 
   switch (param_def->param_def_type)
     {
@@ -145,14 +147,10 @@ _gimp_gp_param_def_to_param_spec (gpointer          gimp,
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! strcmp (param_def->type_name, "GimpParamString") ||
-          ! strcmp (param_def->type_name, "GParamString"))
-        return gimp_param_spec_string (name, nick, blurb,
-                                       param_def->meta.m_string.allow_non_utf8,
-                                       param_def->meta.m_string.null_ok,
-                                       param_def->meta.m_string.non_empty,
-                                       param_def->meta.m_string.default_val,
-                                       flags);
+      if (! strcmp (param_def->type_name, "GParamString"))
+        return g_param_spec_string (name, nick, blurb,
+                                    param_def->meta.m_string.default_val,
+                                    flags);
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:

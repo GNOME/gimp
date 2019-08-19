@@ -156,14 +156,12 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "Sven Neumann <sven@gimp.org>",
                                       "2005");
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string ("filename",
-                                                           "Filename",
-                                                           "Name of the file "
-                                                           "to load",
-                                                           FALSE, TRUE, FALSE,
-                                                           NULL,
-                                                           GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "uri",
+                            "URI",
+                            "URI of the file to load",
+                            NULL,
+                            GIMP_PARAM_READWRITE);
+
       GIMP_PROC_ARG_INT (procedure, "thumb-size",
                          "Thumb Size",
                          "Preferred thumbnail size",

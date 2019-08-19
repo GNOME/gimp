@@ -127,14 +127,11 @@ pat_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string ("description",
-                                                           "Description",
-                                                           "Short description "
-                                                           "of the pattern",
-                                                           FALSE, TRUE, FALSE,
-                                                           "GIMP Pattern",
-                                                           GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "description",
+                            "Description",
+                            "Short description of the pattern",
+                            "GIMP Pattern",
+                            GIMP_PARAM_READWRITE);
     }
 
   return procedure;

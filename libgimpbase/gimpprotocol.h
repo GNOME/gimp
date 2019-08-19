@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0108
+#define GIMP_PROTOCOL_VERSION  0x0109
 
 
 enum
@@ -175,9 +175,6 @@ struct _GPParamDefFloat
 
 struct _GPParamDefString
 {
-  gint32  allow_non_utf8;
-  gint32  null_ok;
-  gint32  non_empty;
   gchar  *default_val;
 };
 
@@ -204,6 +201,7 @@ struct _GPParamDef
   gchar          *name;
   gchar          *nick;
   gchar          *blurb;
+  guint           flags;
 
   union
   {

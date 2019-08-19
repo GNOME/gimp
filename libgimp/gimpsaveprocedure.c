@@ -84,27 +84,21 @@ gimp_save_procedure_constructed (GObject *object)
 
   GIMP_PROC_ARG_DRAWABLE (procedure, "drawable",
                           "Drawable",
-                          "The drawable "
-                          "to save",
+                          "The drawable to save",
                           FALSE,
                           G_PARAM_READWRITE);
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to save to",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
-                                                       "The URI of the file "
-                                                       "to save to",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "uri",
+                        "URI",
+                        "The URI of the file to save to",
+                        NULL,
+                        GIMP_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_STRING (procedure, "raw-uri",
+                        "Raw URI",
+                        "The URI of the file to save to",
+                        NULL,
+                        GIMP_PARAM_READWRITE);
 }
 
 static void

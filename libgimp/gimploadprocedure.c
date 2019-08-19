@@ -79,22 +79,17 @@ gimp_load_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("uri",
-                                                       "URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("raw-uri",
-                                                       "Raw URI",
-                                                       "The URI of the file "
-                                                       "to load",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "uri",
+                        "URI",
+                        "The URI of the file to load",
+                        NULL,
+                        GIMP_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_STRING (procedure, "raw-uri",
+                        "Raw URI",
+                        "The URI of the file to load",
+                        NULL,
+                        GIMP_PARAM_READWRITE);
 
   GIMP_PROC_VAL_IMAGE (procedure, "image",
                        "Image",

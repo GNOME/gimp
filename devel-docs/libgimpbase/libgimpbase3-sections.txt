@@ -296,7 +296,6 @@ GIMP_PARAM_STATIC_STRINGS
 GIMP_PARAM_READABLE
 GIMP_PARAM_WRITABLE
 GIMP_PARAM_READWRITE
-gimp_param_spec_string
 gimp_array_new
 gimp_array_copy
 gimp_array_free
@@ -387,7 +386,6 @@ GimpParamSpecInt16Array
 GimpParamSpecInt32Array
 GimpParamSpecUInt8Array
 GimpParamSpecRGBArray
-GimpParamSpecString
 GimpParamSpecStringArray
 gimp_array_get_type
 gimp_float_array_get_type

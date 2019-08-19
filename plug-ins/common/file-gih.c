@@ -204,14 +204,12 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                          1, 1000, 10,
                          GIMP_PARAM_READWRITE);
 
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string ("description",
-                                                           "Description",
-                                                           "Short description "
-                                                           "of the gihtern",
-                                                           FALSE, TRUE, FALSE,
-                                                           "GIMP Gihtern",
-                                                           GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "description",
+                            "Description",
+                            "Short description of the gihtern",
+                            "GIMP Gihtern",
+                            GIMP_PARAM_READWRITE);
+
       GIMP_PROC_ARG_INT (procedure, "cell-width",
                          "Cell width",
                          "Width of the brush cells",

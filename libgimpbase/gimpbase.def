@@ -118,13 +118,11 @@ EXPORTS
 	gimp_param_spec_memsize
 	gimp_param_spec_parasite
 	gimp_param_spec_rgb_array
-	gimp_param_spec_string
 	gimp_param_spec_string_array
 	gimp_param_spec_uint8_array
 	gimp_param_spec_unit
 	gimp_param_spec_value_array
 	gimp_param_string_array_get_type
-	gimp_param_string_get_type
 	gimp_param_uint8_array_get_type
 	gimp_param_unit_get_type
 	gimp_param_value_array_get_type

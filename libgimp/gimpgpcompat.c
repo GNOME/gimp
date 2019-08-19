@@ -70,10 +70,9 @@ _gimp_gp_compat_param_spec (GimpPDBArgType  arg_type,
       break;
 
     case GIMP_PDB_STRING:
-      pspec = gimp_param_spec_string (name, nick, blurb,
-                                      TRUE, TRUE, FALSE,
-                                      NULL,
-                                      G_PARAM_READWRITE);
+      pspec = g_param_spec_string (name, nick, blurb,
+                                   NULL,
+                                   G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_INT32ARRAY:

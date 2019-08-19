@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 10
+#define PLUG_IN_RC_FILE_VERSION 11
 
 
 /*
@@ -764,7 +764,8 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
   if (! gimp_scanner_parse_string (scanner, &param_def.type_name) ||
       ! gimp_scanner_parse_string (scanner, &param_def.name)      ||
       ! gimp_scanner_parse_string (scanner, &param_def.nick)      ||
-      ! gimp_scanner_parse_string (scanner, &param_def.blurb))
+      ! gimp_scanner_parse_string (scanner, &param_def.blurb)     ||
+      ! gimp_scanner_parse_int    (scanner, (gint *) &param_def.flags))
     {
       token = G_TOKEN_STRING;
       goto error;
@@ -839,16 +840,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_string.allow_non_utf8) ||
-          ! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_string.null_ok) ||
-          ! gimp_scanner_parse_int (scanner,
-                                    &param_def.meta.m_string.non_empty))
-        {
-          token = G_TOKEN_INT;
-          goto error;
-        }
       if (! gimp_scanner_parse_string (scanner,
                                        &param_def.meta.m_string.default_val))
         {
@@ -1017,6 +1008,7 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
   gimp_config_writer_string (writer, g_param_spec_get_name (pspec));
   gimp_config_writer_string (writer, g_param_spec_get_nick (pspec));
   gimp_config_writer_string (writer, g_param_spec_get_blurb (pspec));
+  gimp_config_writer_printf (writer, "%d", pspec->flags);
 
   switch (param_def.param_def_type)
     {
@@ -1066,10 +1058,6 @@ plug_in_rc_write_proc_arg (GimpConfigWriter *writer,
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      gimp_config_writer_printf (writer, "%d %d %d",
-                                 param_def.meta.m_string.allow_non_utf8,
-                                 param_def.meta.m_string.null_ok,
-                                 param_def.meta.m_string.non_empty);
       gimp_config_writer_string (writer,
                                  param_def.meta.m_string.default_val);
       break;

@@ -12,7 +12,6 @@ gimp_param_int32_array_get_type
 gimp_param_uint8_array_get_type
 gimp_param_rgb_array_get_type
 gimp_param_string_array_get_type
-gimp_param_string_get_type
 gimp_parasite_get_type
 gimp_rgb_array_get_type
 gimp_string_array_get_type

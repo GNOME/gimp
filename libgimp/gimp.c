@@ -449,7 +449,7 @@ _gimp_main_internal (GType                 plug_in_type,
       G_TYPE_INT,              G_TYPE_PARAM_INT,
       G_TYPE_UCHAR,            G_TYPE_PARAM_UCHAR,
 
-      G_TYPE_STRING,           GIMP_TYPE_PARAM_STRING,
+      G_TYPE_STRING,           G_TYPE_PARAM_STRING,
 
       GIMP_TYPE_ARRAY,         GIMP_TYPE_PARAM_ARRAY,
       GIMP_TYPE_UINT8_ARRAY,   GIMP_TYPE_PARAM_UINT8_ARRAY,

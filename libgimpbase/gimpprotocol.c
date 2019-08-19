@@ -1043,6 +1043,11 @@ _gp_param_def_read (GIOChannel *channel,
                                 user_data))
     return FALSE;
 
+  if (! _gimp_wire_read_int32 (channel,
+                               &param_def->flags, 1,
+                               user_data))
+    return FALSE;
+
   switch (param_def->param_def_type)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
@@ -1105,16 +1110,7 @@ _gp_param_def_read (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_string.allow_non_utf8, 1,
-                                   user_data) ||
-          ! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_string.null_ok, 1,
-                                   user_data) ||
-          ! _gimp_wire_read_int32 (channel,
-                                   (guint32 *) &param_def->meta.m_string.non_empty, 1,
-                                   user_data) ||
-          ! _gimp_wire_read_string (channel,
+      if (! _gimp_wire_read_string (channel,
                                     &param_def->meta.m_string.default_val, 1,
                                     user_data))
         return FALSE;
@@ -1325,6 +1321,11 @@ _gp_param_def_write (GIOChannel *channel,
                                  user_data))
     return FALSE;
 
+  if (! _gimp_wire_write_int32 (channel,
+                                &param_def->flags, 1,
+                                user_data))
+    return FALSE;
+
   switch (param_def->param_def_type)
     {
     case GP_PARAM_DEF_TYPE_DEFAULT:
@@ -1387,16 +1388,7 @@ _gp_param_def_write (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_string.allow_non_utf8, 1,
-                                    user_data) ||
-          ! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_string.null_ok, 1,
-                                    user_data) ||
-          ! _gimp_wire_write_int32 (channel,
-                                    (guint32 *) &param_def->meta.m_string.non_empty, 1,
-                                    user_data) ||
-          ! _gimp_wire_write_string (channel,
+      if (! _gimp_wire_write_string (channel,
                                      &param_def->meta.m_string.default_val, 1,
                                      user_data))
         return FALSE;
