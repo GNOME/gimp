@@ -1508,11 +1508,34 @@ gimp_procedure_validate_args (GimpProcedure         *procedure,
             }
 
           /*  UTT-8 validate all strings  */
-          if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
+          if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING ||
+              G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_STRING_ARRAY)
             {
-              const gchar *string = g_value_get_string (arg);
+              gboolean valid = TRUE;
 
-              if (string && ! g_utf8_validate (string, -1, NULL))
+              if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
+                {
+                  const gchar *string = g_value_get_string (arg);
+
+                  if (string)
+                    valid = g_utf8_validate (string, -1, NULL);
+                }
+              else
+                {
+                  const GimpArray *array = g_value_get_boxed (arg);
+
+                  if (array)
+                    {
+                      const gchar **strings = (const gchar **) array->data;
+                      gint          i;
+
+                      for (i = 0; i < array->length && valid; i++)
+                        if (strings[i])
+                          valid = g_utf8_validate (strings[i], -1, NULL);
+                    }
+                }
+
+              if (! valid)
                 {
                   if (return_vals)
                     {
