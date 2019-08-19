@@ -27,7 +27,7 @@ gint  get_image_resource_header (PSDimageres  *res_a,
                                  GError      **error);
 
 gint  load_image_resource       (PSDimageres  *res_a,
-                                 gint32        image_id,
+                                 GimpImage    *image,
                                  PSDimage     *img_a,
                                  FILE         *f,
                                  gboolean     *resolution_loaded,
@@ -35,7 +35,7 @@ gint  load_image_resource       (PSDimageres  *res_a,
                                  GError      **error);
 
 gint  load_thumbnail_resource   (PSDimageres  *res_a,
-                                 gint32        image_id,
+                                 GimpImage    *image,
                                  FILE         *f,
                                  GError      **error);
 
