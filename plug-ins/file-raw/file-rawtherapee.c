@@ -32,7 +32,7 @@
 #include "file-raw-utils.h"
 
 
-#define LOAD_THUMB_PROC "file-rawtherapee-load-thumb"
+#define LOAD_THUMB_PROC   "file-rawtherapee-load-thumb"
 #define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\rawtherapee"
 
 
@@ -65,6 +65,8 @@ static GimpValueArray * rawtherapee_load             (GimpProcedure        *proc
                                                       const GimpValueArray *args,
                                                       gpointer              run_data);
 static GimpValueArray * rawtherapee_load_thumb       (GimpProcedure        *procedure,
+                                                      GFile                *file,
+                                                      gint                  size,
                                                       const GimpValueArray *args,
                                                       gpointer              run_data);
 
@@ -175,8 +177,8 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
 
   if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      rawtherapee_load_thumb, NULL, NULL);
+      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                                rawtherapee_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Load thumbnail from a raw image "
@@ -189,24 +191,6 @@ rawtherapee_create_procedure (GimpPlugIn  *plug_in,
                                       "Alberto Griggio",
                                       "Alberto Griggio",
                                       "2017");
-
-      GIMP_PROC_ARG_STRING (procedure, "uri",
-                            "URI",
-                            "URI of the file to load",
-                            NULL,
-                            GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "thumb-size",
-                         "Thumb Size",
-                         "Preferred thumbnail size",
-                         16, 2014, 256,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
-                           "Image",
-                           "Thumbnail image",
-                           FALSE,
-                           GIMP_PARAM_READWRITE);
     }
   else
     {
@@ -301,21 +285,16 @@ rawtherapee_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 rawtherapee_load_thumb (GimpProcedure        *procedure,
+                        GFile                *file,
+                        gint                  size,
                         const GimpValueArray *args,
                         gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  GFile          *file;
-  gint            size;
   gint32          image_id;
-  GValue          value = G_VALUE_INIT;
   GError         *error = NULL;
 
   INIT_I18N ();
-
-  file = g_file_new_for_uri (g_value_get_string (gimp_value_array_index (args, 0)));
-
-  size = g_value_get_int (gimp_value_array_index (args, 1));
 
   image_id = load_thumbnail_image (g_file_get_path (file),
                                    size, &error);
@@ -330,16 +309,12 @@ rawtherapee_load_thumb (GimpProcedure        *procedure,
                                                   NULL);
 
   gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
+  g_value_set_int         (gimp_value_array_index (return_vals, 2), 0);
+  g_value_set_int         (gimp_value_array_index (return_vals, 3), 0);
+  g_value_set_enum        (gimp_value_array_index (return_vals, 4), GIMP_RGB_IMAGE);
+  g_value_set_int         (gimp_value_array_index (return_vals, 5), 1);
 
-  g_value_init (&value, GIMP_TYPE_IMAGE_TYPE);
-  g_value_set_enum (&value, GIMP_RGB_IMAGE);
-  gimp_value_array_append (return_vals, &value);
-  g_value_unset (&value);
-
-  g_value_init (&value, G_TYPE_INT);
-  g_value_set_int (&value, 1);
-  gimp_value_array_append (return_vals, &value);
-  g_value_unset (&value);
+  gimp_value_array_truncate (return_vals, 6);
 
   return return_vals;
 }

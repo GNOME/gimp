@@ -67,6 +67,8 @@ static GimpValueArray * ico_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 static GimpValueArray * ico_load_thumb       (GimpProcedure        *procedure,
+                                              GFile                *file,
+                                              gint                  size,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 static GimpValueArray * ico_save             (GimpProcedure        *procedure,
@@ -144,8 +146,8 @@ ico_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      ico_load_thumb, NULL, NULL);
+      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                                ico_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads a preview from an Windows ICO file",
@@ -155,36 +157,6 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                       "Dom Lachowicz, Sven Neumann",
                                       "Sven Neumann <sven@gimp.org>",
                                       "2005");
-
-      GIMP_PROC_ARG_STRING (procedure, "uri",
-                            "URI",
-                            "URI of the file to load",
-                            NULL,
-                            GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "thumb-size",
-                         "Thumb Size",
-                         "Preferred thumbnail size",
-                         16, 2014, 256,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
-                           "Image",
-                           "Thumbnail image",
-                           FALSE,
-                           GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_INT (procedure, "image-width",
-                         "Image width",
-                         "Width of the full-sized image",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_INT (procedure, "image-height",
-                         "Image height",
-                         "Height of the full-sized image",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         GIMP_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
     {
@@ -252,21 +224,24 @@ ico_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 ico_load_thumb (GimpProcedure        *procedure,
+                GFile                *file,
+                gint                  size,
                 const GimpValueArray *args,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  const gchar    *filename;
+  gchar          *filename;
   gint            width;
   gint            height;
   gint32          image_id;
   GError         *error = NULL;
+
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  filename = g_value_get_string (gimp_value_array_index (args, 0));
-  width    = g_value_get_int    (gimp_value_array_index (args, 1));
-  height   = width;
+  filename = g_file_get_path (file);
+  width    = size;
+  height   = size;
 
   image_id = ico_load_thumbnail_image (filename,
                                        &width, &height, &error);
@@ -283,6 +258,8 @@ ico_load_thumb (GimpProcedure        *procedure,
   gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
   g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
   g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+
+  gimp_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }

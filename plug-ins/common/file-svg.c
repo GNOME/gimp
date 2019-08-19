@@ -83,6 +83,8 @@ static GimpValueArray * svg_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 static GimpValueArray * svg_load_thumb       (GimpProcedure        *procedure,
+                                              GFile                *file,
+                                              gint                  size,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
@@ -203,8 +205,8 @@ svg_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      svg_load_thumb, NULL, NULL);
+      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                                svg_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Generates a thumbnail of an SVG image",
@@ -215,36 +217,6 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                       "Dom Lachowicz, Sven Neumann",
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       SVG_VERSION);
-
-      GIMP_PROC_ARG_STRING (procedure, "uri",
-                            "URI",
-                            "URI of the file to load",
-                            NULL,
-                            GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "thumb-size",
-                         "Thumb Size",
-                         "Preferred thumbnail size",
-                         16, 2014, 256,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
-                           "Image",
-                           "Thumbnail image",
-                           FALSE,
-                           GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_INT (procedure, "image-width",
-                         "Image width",
-                         "Width of the full-sized image",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_INT (procedure, "image-height",
-                         "Image height",
-                         "Height of the full-sized image",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -325,11 +297,12 @@ svg_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 svg_load_thumb (GimpProcedure        *procedure,
+                GFile                *file,
+                gint                  size,
                 const GimpValueArray *args,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  GFile          *file;
   gint            width  = 0;
   gint            height = 0;
   gint32          image_id;
@@ -337,8 +310,6 @@ svg_load_thumb (GimpProcedure        *procedure,
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  file = g_file_new_for_uri (g_value_get_string (gimp_value_array_index (args, 0)));
 
   if (load_rsvg_size (g_file_get_path (file),
                       &load_vals, NULL))
@@ -348,8 +319,8 @@ svg_load_thumb (GimpProcedure        *procedure,
     }
 
   load_vals.resolution = SVG_DEFAULT_RESOLUTION;
-  load_vals.width      = - g_value_get_int (gimp_value_array_index (args, 1));
-  load_vals.height     = - g_value_get_int (gimp_value_array_index (args, 1));
+  load_vals.width      = - size;
+  load_vals.height     = - size;
 
   image_id = load_image (g_file_get_path (file),
                          &error);
@@ -366,6 +337,8 @@ svg_load_thumb (GimpProcedure        *procedure,
   gimp_value_set_image_id (gimp_value_array_index (return_vals, 1), image_id);
   g_value_set_int         (gimp_value_array_index (return_vals, 2), width);
   g_value_set_int         (gimp_value_array_index (return_vals, 3), height);
+
+  gimp_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }

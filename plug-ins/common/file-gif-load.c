@@ -112,6 +112,8 @@ static GimpValueArray * gif_load             (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 static GimpValueArray * gif_load_thumb       (GimpProcedure        *procedure,
+                                              GFile                *file,
+                                              gint                  size,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
@@ -194,8 +196,8 @@ gif_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
-                                      gif_load_thumb, NULL, NULL);
+      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                                gif_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads only the first frame of a "
@@ -207,36 +209,6 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                       "Sven Neumann",
                                       "Sven Neumann",
                                       "2006");
-
-      GIMP_PROC_ARG_STRING (procedure, "uri",
-                            "URI",
-                            "URI of the file to load",
-                            NULL,
-                            GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_INT (procedure, "thumb-size",
-                         "Thumb Size",
-                         "Preferred thumbnail size",
-                         16, 2014, 256,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_IMAGE (procedure, "image",
-                           "Image",
-                           "Thumbnail image",
-                           FALSE,
-                           GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_INT (procedure, "image-width",
-                         "Image width",
-                         "Width of the full-sized image",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         GIMP_PARAM_READWRITE);
-
-      GIMP_PROC_VAL_INT (procedure, "image-height",
-                         "Image height",
-                         "Height of the full-sized image",
-                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                         GIMP_PARAM_READWRITE);
     }
 
   return procedure;
@@ -299,18 +271,17 @@ gif_load (GimpProcedure        *procedure,
 
 static GimpValueArray *
 gif_load_thumb (GimpProcedure        *procedure,
+                GFile                *file,
+                gint                  size,
                 const GimpValueArray *args,
                 gpointer              run_data)
 {
   GimpValueArray *return_vals;
-  GFile          *file;
   gint32          image_id;
   GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  file = g_file_new_for_uri (g_value_get_string (gimp_value_array_index (args, 0)));
 
   image_id = load_image (g_file_get_path (file), TRUE, &error);
 
@@ -332,6 +303,8 @@ gif_load_thumb (GimpProcedure        *procedure,
                            gimp_image_width (image_id));
   g_value_set_int         (gimp_value_array_index (return_vals, 3),
                            gimp_image_height (image_id));
+
+  gimp_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
