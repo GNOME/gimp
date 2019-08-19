@@ -1507,6 +1507,40 @@ gimp_procedure_validate_args (GimpProcedure         *procedure,
               return FALSE;
             }
 
+          /*  UTT-8 validate all strings  */
+          if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
+            {
+              const gchar *string = g_value_get_string (arg);
+
+              if (string && ! g_utf8_validate (string, -1, NULL))
+                {
+                  if (return_vals)
+                    {
+                      g_set_error (error,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
+                                   _("Procedure '%s' returned an "
+                                     "invalid UTF-8 string for argument '%s'."),
+                                   gimp_procedure_get_name (procedure),
+                                   g_param_spec_get_name (pspec));
+                    }
+                  else
+                    {
+                      g_set_error (error,
+                                   GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                                   _("Procedure '%s' has been called with an "
+                                     "invalid UTF-8 string for argument '%s'."),
+                                   gimp_procedure_get_name (procedure),
+                                   g_param_spec_get_name (pspec));
+                    }
+
+                  g_value_unset (&string_value);
+
+                  return FALSE;
+                }
+            }
+
           g_value_unset (&string_value);
         }
     }
