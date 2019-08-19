@@ -179,57 +179,49 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                       gdk_pixbuf_new_from_inline (-1, screenshot_icon,
                                                                   FALSE, NULL));
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_NONINTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("shoot-type",
-                                                     "Shoot type",
-                                                     "The shoot type "
-                                                     "{ SHOOT-WINDOW (0), "
-                                                     "SHOOT-ROOT (1), "
-                                                     "SHOOT-REGION (2) }",
-                                                     0, 2, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("x1",
-                                                     "X1",
-                                                     "Region left x coord "
-                                                     "for SHOOT-WINDOW",
-                                                     G_MININT, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("y1",
-                                                     "Y1",
-                                                     "Region top y coord "
-                                                     "for SHOOT-WINDOW",
-                                                     G_MININT, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("x2",
-                                                     "X2",
-                                                     "Region right x coord "
-                                                     "for SHOOT-WINDOW",
-                                                     G_MININT, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("y2",
-                                                     "Y2",
-                                                     "Region bottom y coord "
-                                                     "for SHOOT-WINDOW",
-                                                     G_MININT, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_NONINTERACTIVE,
+                          G_PARAM_READWRITE);
 
-      gimp_procedure_add_return_value (procedure,
-                                       gimp_param_spec_image_id ("image",
-                                                                 "Image",
-                                                                 "Output image",
-                                                                 FALSE,
-                                                                 G_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "shoot-type",
+                         "Shoot type",
+                         "The shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), "
+                         "SHOOT-REGION (2) }",
+                         0, 2, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "x1",
+                         "X1",
+                         "Region left x coord for SHOOT-WINDOW",
+                         G_MININT, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "y1",
+                         "Y1",
+                         "Region top y coord for SHOOT-WINDOW",
+                         G_MININT, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "x2",
+                         "X2",
+                         "Region right x coord for SHOOT-WINDOW",
+                         G_MININT, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "y2",
+                         "Y2",
+                         "Region bottom y coord for SHOOT-WINDOW",
+                         G_MININT, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_IMAGE (procedure, "image",
+                           "Image",
+                           "Output image",
+                           FALSE,
+                           G_PARAM_READWRITE);
     }
 
   return procedure;

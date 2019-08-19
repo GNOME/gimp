@@ -194,33 +194,29 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                                            FALSE, TRUE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("thumb-size",
-                                                     "Thumb Size",
-                                                     "Preferred thumbnail size",
-                                                     16, 2014, 256,
-                                                     GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "thumb-size",
+                         "Thumb Size",
+                         "Preferred thumbnail size",
+                         16, 2014, 256,
+                         GIMP_PARAM_READWRITE);
 
-      gimp_procedure_add_return_value (procedure,
-                                       gimp_param_spec_image_id ("image",
-                                                                 "Image",
-                                                                 "Thumbnail image",
-                                                                 FALSE,
-                                                                 GIMP_PARAM_READWRITE));
-      gimp_procedure_add_return_value (procedure,
-                                       g_param_spec_int ("image-width",
-                                                         "Image width",
-                                                         "Width of the "
-                                                         "full-sized image",
-                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                         GIMP_PARAM_READWRITE));
-      gimp_procedure_add_return_value (procedure,
-                                       g_param_spec_int ("image-height",
-                                                         "Image height",
-                                                         "Height of the "
-                                                         "full-sized image",
-                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                         GIMP_PARAM_READWRITE));
+      GIMP_PROC_VAL_IMAGE (procedure, "image",
+                           "Image",
+                           "Thumbnail image",
+                           FALSE,
+                           GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_INT (procedure, "image-width",
+                         "Image width",
+                         "Width of the full-sized image",
+                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_INT (procedure, "image-height",
+                         "Image height",
+                         "Height of the full-sized image",
+                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                         GIMP_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
     {

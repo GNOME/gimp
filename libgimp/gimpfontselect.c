@@ -76,19 +76,17 @@ gimp_font_select_new (const gchar         *title,
                                   (GDestroyNotify)
                                   gimp_font_data_free);
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("font-name",
-                                                    "Font name",
-                                                    "The font name",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("closing",
-                                                     "Closing",
-                                                     "If the dialog was "
-                                                     "closing",
-                                                     FALSE,
-                                                     G_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "font-name",
+                        "Font name",
+                        "The font name",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+                         "Closing",
+                         "If the dialog was closing",
+                         FALSE,
+                         G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

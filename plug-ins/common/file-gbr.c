@@ -155,12 +155,12 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
                                            TRUE);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("spacing",
-                                                     "Spacing",
-                                                     "Spacing of the brush",
-                                                     1, 1000, 10,
-                                                     GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "spacing",
+                         "Spacing",
+                         "Spacing of the brush",
+                         1, 1000, 10,
+                         GIMP_PARAM_READWRITE);
+
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_string ("description",
                                                            "Description",

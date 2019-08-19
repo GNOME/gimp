@@ -326,62 +326,59 @@ png_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "png");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("interlace",
-                                                         "Interlace",
-                                                         "Use Adam7 interlacing?",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("compression",
-                                                     "Compression",
-                                                     "Deflate Compression "
-                                                     "factor (0..9)",
-                                                     0, 9, 9,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("bkgd",
-                                                         "bKGD",
-                                                         "Write bKGD chunk?",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("gama",
-                                                         "gAMA",
-                                                         "Write gAMA chunk?",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("offs",
-                                                         "oFFs",
-                                                         "Write oFFs chunk?",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("phys",
-                                                         "pHYs",
-                                                         "Write pHYs chunk?",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("time",
-                                                         "tIME",
-                                                         "Write tIME chunk?",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("comment",
-                                                         "Comment",
-                                                         "Write comment?",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("save-trans",
-                                                         "Save trans",
-                                                         "Preserve color of "
-                                                         "transparent pixels?",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
+      GIMP_PROC_ARG_BOOLEAN (procedure, "interlace",
+                             "Interlace",
+                             "Use Adam7 interlacing?",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "compression",
+                         "Compression",
+                         "Deflate Compression factor (0..9)",
+                         0, 9, 9,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
+                             "bKGD",
+                             "Write bKGD chunk?",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
+                             "gAMA",
+                             "Write gAMA chunk?",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
+                             "oFFs",
+                             "Write oFFs chunk?",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
+                             "pHYs",
+                             "Write pHYs chunk?",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "time",
+                             "tIME",
+                             "Write tIME chunk?",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "comment",
+                             "Comment",
+                             "Write comment?",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-trans",
+                             "Save trans",
+                             "Preserve color of transparent pixels?",
+                             TRUE,
+                             G_PARAM_READWRITE);
     }
 
   return procedure;

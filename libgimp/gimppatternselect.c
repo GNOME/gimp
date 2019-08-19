@@ -80,50 +80,46 @@ gimp_pattern_select_new (const gchar            *title,
                                   (GDestroyNotify)
                                   gimp_pattern_data_free);
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("pattern-name",
-                                                    "Pattern name",
-                                                    "The pattern name",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-width",
-                                                 "Mask width",
-                                                 "Pattern width",
-                                                 0, 10000, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-height",
-                                                 "Mask height",
-                                                 "Pattern height",
-                                                 0, 10000, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-bpp",
-                                                 "Mask bpp",
-                                                 "Pattern bytes per pixel",
-                                                 0, 10000, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-len",
-                                                 "Mask length",
-                                                 "Length of pattern "
-                                                 "mask data",
-                                                 0, G_MAXINT, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("mask-data",
-                                                            "Mask data",
-                                                            "The pattern mask "
-                                                            "data",
-                                                            G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("closing",
-                                                     "Closing",
-                                                     "If the dialog was "
-                                                     "cloaing",
-                                                     FALSE,
-                                                     G_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "pattern-name",
+                        "Pattern name",
+                        "The pattern name",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-width",
+                     "Mask width",
+                     "Pattern width",
+                     0, 10000, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-height",
+                     "Mask height",
+                     "Pattern height",
+                     0, 10000, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-bpp",
+                     "Mask bpp",
+                     "Pattern bytes per pixel",
+                     0, 10000, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-len",
+                     "Mask length",
+                     "Length of pattern mask data",
+                     0, G_MAXINT, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_UINT8_ARRAY (procedure, "mask-data",
+                             "Mask data",
+                             "The pattern mask data",
+                             G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+                         "Closing",
+                         "If the dialog was cloaing",
+                         FALSE,
+                         G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

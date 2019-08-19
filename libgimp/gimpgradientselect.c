@@ -79,31 +79,28 @@ gimp_gradient_select_new (const gchar             *title,
                                   (GDestroyNotify)
                                   gimp_gradient_data_free);
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("gradient-name",
-                                                    "Gradient name",
-                                                    "The gradient name",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("gradient-width",
-                                                 "Gradient width",
-                                                 "The gradient width",
-                                                 0, G_MAXINT, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("gradient-data",
-                                                            "Gradient data",
-                                                            "The gradient "
-                                                            "data",
-                                                            G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("closing",
-                                                     "Closing",
-                                                     "If the dialog was "
-                                                     "closing",
-                                                     FALSE,
-                                                     G_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "gradient-name",
+                        "Gradient name",
+                        "The gradient name",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "gradient-width",
+                     "Gradient width",
+                     "The gradient width",
+                     0, G_MAXINT, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_FLOAT_ARRAY (procedure, "gradient-data",
+                             "Gradient data",
+                             "The gradient data",
+                             G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+                         "Closing",
+                         "If the dialog was closing",
+                         FALSE,
+                         G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

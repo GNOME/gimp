@@ -85,63 +85,59 @@ gimp_brush_select_new (const gchar          *title,
                                   (GDestroyNotify)
                                   gimp_brush_data_free);
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("brush-name",
-                                                    "Brush name",
-                                                    "The brush name",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("opacity",
-                                                    "Opacity",
-                                                    NULL,
-                                                    0.0, 1.0, 1.0,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("spacing",
-                                                 "Spacing",
-                                                 NULL,
-                                                 -1, 1000, 20,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("paint-mode",
-                                                  "Paint mode",
-                                                  NULL,
-                                                  GIMP_TYPE_LAYER_MODE,
-                                                  GIMP_LAYER_MODE_NORMAL,
-                                                  G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-width",
-                                                 "Brush width",
-                                                 NULL,
-                                                 0, 10000, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-height",
-                                                 "Brush height",
-                                                 NULL,
-                                                 0, 10000, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("mask-len",
-                                                 "Mask length",
-                                                 "Length of brush "
-                                                 "mask data",
-                                                 0, G_MAXINT, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("mask-data",
-                                                            "Mask data",
-                                                            "The brush mask "
-                                                            "data",
-                                                            G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("closing",
-                                                     "Closing",
-                                                     "If the dialog was "
-                                                     "cloaing",
-                                                     FALSE,
-                                                     G_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "brush-name",
+                        "Brush name",
+                        "The brush name",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_DOUBLE (procedure, "opacity",
+                        "Opacity",
+                        NULL,
+                        0.0, 1.0, 1.0,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "spacing",
+                     "Spacing",
+                     NULL,
+                     -1, 1000, 20,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_ENUM (procedure, "paint-mode",
+                      "Paint mode",
+                      NULL,
+                      GIMP_TYPE_LAYER_MODE,
+                      GIMP_LAYER_MODE_NORMAL,
+                      G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-width",
+                     "Brush width",
+                     NULL,
+                     0, 10000, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-height",
+                     "Brush height",
+                     NULL,
+                     0, 10000, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "mask-len",
+                     "Mask length",
+                     "Length of brush mask data",
+                     0, G_MAXINT, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_UINT8_ARRAY (procedure, "mask-data",
+                             "Mask data",
+                             "The brush mask data",
+                             G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+                         "Closing",
+                         "If the dialog was closing",
+                         FALSE,
+                         G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

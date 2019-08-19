@@ -77,25 +77,23 @@ gimp_palette_select_new (const gchar            *title,
                                   (GDestroyNotify)
                                   gimp_palette_data_free);
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("palette-name",
-                                                    "Palette name",
-                                                    "The palette name",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("num-colors",
-                                                 "Num colors",
-                                                 "Number of colors",
-                                                 0, G_MAXINT, 0,
-                                                 G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("closing",
-                                                     "Closing",
-                                                     "If the dialog was "
-                                                     "closing",
-                                                     FALSE,
-                                                     G_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "palette-name",
+                        "Palette name",
+                        "The palette name",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_INT (procedure, "num-colors",
+                     "Num colors",
+                     "Number of colors",
+                     0, G_MAXINT, 0,
+                     G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+                         "Closing",
+                         "If the dialog was closing",
+                         FALSE,
+                         G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

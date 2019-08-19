@@ -533,12 +533,11 @@ print_temp_proc_install (gint32  image_ID)
                                   "Sven Neumann",
                                   "2008");
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "The image to save",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
+  GIMP_PROC_ARG_IMAGE (procedure, "image",
+                       "Image",
+                       "The image to notify about",
+                       FALSE,
+                       G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

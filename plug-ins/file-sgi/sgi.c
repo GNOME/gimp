@@ -181,15 +181,11 @@ sgi_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "sgi,rgb,rgba,bw,icon");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("compression",
-                                                     "Compression",
-                                                     "Compression level "
-                                                     "(0 = none, "
-                                                     "1 = RLE, "
-                                                     "2 = ARLE)",
-                                                     0, 2, 1,
-                                                     G_PARAM_STATIC_STRINGS));
+      GIMP_PROC_ARG_INT (procedure, "compression",
+                         "Compression",
+                         "Compression level (0 = none, 1 = RLE, 2 = ARLE)",
+                         0, 2, 1,
+                         G_PARAM_STATIC_STRINGS);
     }
 
   return procedure;

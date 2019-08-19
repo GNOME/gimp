@@ -237,71 +237,64 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner (peter@kirchgessner.net)",
                                       "1997");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("film-height",
-                                                     "Film height",
-                                                     "Height of film (0: fit "
-                                                     "to images)",
-                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_rgb ("film-color",
-                                                        "Film color",
-                                                        "Color of the film",
-                                                        TRUE, NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("number-start",
-                                                     "Number start",
-                                                     "Start index for numbering",
-                                                     G_MININT, G_MAXINT, 1,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("number-font",
-                                                        "Number font",
-                                                        "Font for drawing numbers",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_rgb ("number-color",
-                                                        "Number color",
-                                                        "Color for numbers",
-                                                        TRUE, NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("at-top",
-                                                         "At top",
-                                                         "Draw numbers at top",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("at-bottom",
-                                                         "At bottom",
-                                                         "Draw numbers at bottom",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("num-images",
-                                                     "Num images",
-                                                     "Number of images to "
-                                                     "be used for film",
-                                                     1, MAX_FILM_PICTURES, 1,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_int32_array ("image-ids",
-                                                                "Image IDs",
-                                                                "num-images "
-                                                                "image IDs to "
-                                                                "be used for "
-                                                                "film",
-                                                                G_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "film-height",
+                         "Film height",
+                         "Height of film (0: fit to images)",
+                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         G_PARAM_READWRITE);
 
-      gimp_procedure_add_return_value (procedure,
-                                       gimp_param_spec_image_id ("new-image",
-                                                                 "New image",
-                                                                 "Outout image",
-                                                                 FALSE,
-                                                                 G_PARAM_READWRITE));
+      GIMP_PROC_ARG_RGB (procedure, "film-color",
+                         "Film color",
+                         "Color of the film",
+                         TRUE, NULL,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "number-start",
+                         "Number start",
+                         "Start index for numbering",
+                         G_MININT, G_MAXINT, 1,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "number-font",
+                            "Number font",
+                            "Font for drawing numbers",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_RGB (procedure, "number-color",
+                         "Number color",
+                         "Color for numbers",
+                         TRUE, NULL,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "at-top",
+                             "At top",
+                             "Draw numbers at top",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "at-bottom",
+                             "At bottom",
+                             "Draw numbers at bottom",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "num-images",
+                         "Num images",
+                         "Number of images to be used for film",
+                         1, MAX_FILM_PICTURES, 1,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT32_ARRAY (procedure, "image-ids",
+                                 "Image IDs",
+                                 "num-images image IDs to be used for film",
+                                 G_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
+                           "New image",
+                           "Outout image",
+                           FALSE,
+                           G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -172,45 +172,34 @@ svg_create_procedure (GimpPlugIn  *plug_in,
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("resolution",
-                                                        "Resolution",
-                                                        "Resolution to use for "
-                                                        "rendering the SVG",
-                                                        GIMP_MIN_RESOLUTION,
-                                                        GIMP_MAX_RESOLUTION,
-                                                        90,
-                                                        GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("width",
-                                                     "Width",
-                                                     "Width (in pixels) to load "
-                                                     "the SVG in. "
-                                                     "(0 for original width, "
-                                                     "a negative width to "
-                                                     "specify a maximum width)",
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("height",
-                                                     "Height",
-                                                     "Height (in pixels) to load "
-                                                     "the SVG in. "
-                                                     "(0 for original heght, "
-                                                     "a negative width to "
-                                                     "specify a maximum height)",
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("paths",
-                                                     "Paths",
-                                                     "(0) don't import paths, "
-                                                     "(1) paths individually, "
-                                                     "(2) paths merged",
-                                                     0, 2, 0,
-                                                     GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
+                            "Resolution",
+                            "Resolution to use for rendering the SVG",
+                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION, 90,
+                            GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "width",
+                         "Width",
+                         "Width (in pixels) to load the SVG in. "
+                         "(0 for original width, a negative width to "
+                         "specify a maximum width)",
+                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "height",
+                         "Height",
+                         "Height (in pixels) to load the SVG in. "
+                         "(0 for original heght, a negative width to "
+                         "specify a maximum height)",
+                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "paths",
+                         "Paths",
+                         "(0) don't import paths, (1) paths individually, "
+                         "(2) paths merged",
+                         0, 2, 0,
+                         GIMP_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
@@ -235,33 +224,30 @@ svg_create_procedure (GimpPlugIn  *plug_in,
                                                            FALSE, TRUE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("thumb-size",
-                                                     "Thumb Size",
-                                                     "Preferred thumbnail size",
-                                                     16, 2014, 256,
-                                                     GIMP_PARAM_READWRITE));
 
-      gimp_procedure_add_return_value (procedure,
-                                       gimp_param_spec_image_id ("image",
-                                                                 "Image",
-                                                                 "Thumbnail image",
-                                                                 FALSE,
-                                                                 GIMP_PARAM_READWRITE));
-      gimp_procedure_add_return_value (procedure,
-                                       g_param_spec_int ("image-width",
-                                                         "Image width",
-                                                         "Width of the "
-                                                         "full-sized image",
-                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                         GIMP_PARAM_READWRITE));
-      gimp_procedure_add_return_value (procedure,
-                                       g_param_spec_int ("image-height",
-                                                         "Image height",
-                                                         "Height of the "
-                                                         "full-sized image",
-                                                         1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                         GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "thumb-size",
+                         "Thumb Size",
+                         "Preferred thumbnail size",
+                         16, 2014, 256,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_IMAGE (procedure, "image",
+                           "Image",
+                           "Thumbnail image",
+                           FALSE,
+                           GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_INT (procedure, "image-width",
+                         "Image width",
+                         "Width of the full-sized image",
+                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_INT (procedure, "image-height",
+                         "Image height",
+                         "Height of the full-sized image",
+                         1, GIMP_MAX_IMAGE_SIZE, 1,
+                         GIMP_PARAM_READWRITE);
     }
 
   return procedure;

@@ -198,12 +198,12 @@ gih_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
                                            TRUE);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("spacing",
-                                                     "Spacing",
-                                                     "Spacing of the brush",
-                                                     1, 1000, 10,
-                                                     GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "spacing",
+                         "Spacing",
+                         "Spacing of the brush",
+                         1, 1000, 10,
+                         GIMP_PARAM_READWRITE);
+
       gimp_procedure_add_argument (procedure,
                                    gimp_param_spec_string ("description",
                                                            "Description",
@@ -212,55 +212,51 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                                            FALSE, TRUE, FALSE,
                                                            "GIMP Gihtern",
                                                            GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("cell-width",
-                                                     "Cell width",
-                                                     "Width of the brush cells",
-                                                     1, 1000, 10,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("cell-height",
-                                                     "Cell height",
-                                                     "Height of the brush cells",
-                                                     1, 1000, 10,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("display-cols",
-                                                     "Display columns",
-                                                     "Display column number",
-                                                     1, 1000, 1,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("display-rows",
-                                                     "Display rows",
-                                                     "Display row number",
-                                                     1, 1000, 1,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("dimension",
-                                                     "Dimension",
-                                                     "Dimension of the "
-                                                     "brush pipe",
-                                                     1, 4, 1,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_uint8_array ("rank",
-                                                                "Rank",
-                                                                "Ranks of the "
-                                                                "dimensions",
-                                                                GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("dimension",
-                                                     "Dimension",
-                                                     "Dimension of the "
-                                                     "brush pipe",
-                                                     1, 4, 1,
-                                                     GIMP_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string_array ("sel",
-                                                                 "Sel",
-                                                                 "Selection modes",
-                                                                 GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "cell-width",
+                         "Cell width",
+                         "Width of the brush cells",
+                         1, 1000, 10,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "cell-height",
+                         "Cell height",
+                         "Height of the brush cells",
+                         1, 1000, 10,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "display-cols",
+                         "Display columns",
+                         "Display column number",
+                         1, 1000, 1,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "display-rows",
+                         "Display rows",
+                         "Display row number",
+                         1, 1000, 1,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "dimension",
+                         "Dimension",
+                         "Dimension of the brush pipe",
+                         1, 4, 1,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_UINT8_ARRAY (procedure, "rank",
+                                 "Rank",
+                                 "Ranks of the dimensions",
+                                 GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "dimension",
+                         "Dimension",
+                         "Dimension of the brush pipe",
+                         1, 4, 1,
+                         GIMP_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING_ARRAY (procedure, "sel",
+                                  "Sel",
+                                  "Selection modes",
+                                  GIMP_PARAM_READWRITE);
     }
 
   return procedure;

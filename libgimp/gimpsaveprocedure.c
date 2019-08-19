@@ -76,19 +76,19 @@ gimp_save_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "Image",
-                                                         "The image to save",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "Drawable",
-                                                            "The drawable "
-                                                            "to save",
-                                                            FALSE,
-                                                            G_PARAM_READWRITE));
+  GIMP_PROC_ARG_IMAGE (procedure, "image",
+                       "Image",
+                       "The image to save",
+                       FALSE,
+                       G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_DRAWABLE (procedure, "drawable",
+                          "Drawable",
+                          "The drawable "
+                          "to save",
+                          FALSE,
+                          G_PARAM_READWRITE);
+
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("uri",
                                                        "URI",

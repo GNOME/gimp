@@ -69,13 +69,12 @@ gimp_file_procedure_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "Run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_NONINTERACTIVE,
-                                                  G_PARAM_READWRITE));
+  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                      "Run mode",
+                      "The run mode",
+                      GIMP_TYPE_RUN_MODE,
+                      GIMP_RUN_NONINTERACTIVE,
+                      G_PARAM_READWRITE);
 }
 
 static void

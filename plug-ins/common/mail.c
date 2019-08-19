@@ -214,39 +214,35 @@ mail_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball and Peter Mattis",
                                       "1995-1997");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("filename",
-                                                        "Filename",
-                                                        "The name of the file "
-                                                        "to save the image in",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("to-address",
-                                                        "To address",
-                                                        "The email address "
-                                                        "to send to",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("from-address",
-                                                        "From address",
-                                                        "The email address "
-                                                        "for the From: field",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("subject",
-                                                        "Subject",
-                                                        "The subject",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("comment",
-                                                        "Comment",
-                                                        "The comment",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
+      GIMP_PROC_ARG_STRING (procedure, "filename",
+                            "Filename",
+                            "The name of the file to save the image in",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "to-address",
+                            "To address",
+                            "The email address to send to",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "from-address",
+                            "From address",
+                            "The email address for the From: field",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "subject",
+                            "Subject",
+                            "The subject",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "comment",
+                            "Comment",
+                            "The comment",
+                            NULL,
+                            G_PARAM_READWRITE);
     }
 
   return procedure;

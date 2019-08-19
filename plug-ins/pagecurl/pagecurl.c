@@ -234,43 +234,39 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
                                       "Federico Mena Quintero and Simon Budig",
                                       PLUG_IN_VERSION);
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("colors",
-                                                     "Colors",
-                                                     "FG- and BG-Color (0), Current gradient (1), Current gradient reversed (2)",
-                                                     CURL_COLORS_FG_BG,
-                                                     CURL_COLORS_LAST,
-                                                     CURL_COLORS_FG_BG,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("edge",
-                                                     "Edge",
-                                                     "Edge to curl (1-4, clockwise, starting in the lower right edge)",
-                                                     CURL_EDGE_LOWER_RIGHT,
-                                                     CURL_EDGE_UPPER_RIGHT,
-                                                     CURL_EDGE_LOWER_RIGHT,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("orientation",
-                                                     "Orientation",
-                                                     "Vertical (0), Horizontal (1)",
-                                                     CURL_ORIENTATION_VERTICAL,
-                                                     CURL_ORIENTATION_HORIZONTAL,
-                                                     CURL_ORIENTATION_VERTICAL,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("shade",
-                                                         "Shade",
-                                                         "Shade the region under the curl",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "colors",
+                         "Colors",
+                         "FG- and BG-Color (0), Current gradient (1), "
+                         "Current gradient reversed (2)",
+                         CURL_COLORS_FG_BG, CURL_COLORS_LAST, CURL_COLORS_FG_BG,
+                         G_PARAM_READWRITE);
 
-      gimp_procedure_add_return_value (procedure,
-                                       gimp_param_spec_layer_id ("curl-layer",
-                                                                 "Curl layer",
-                                                                 "The new layer with the curl.",
-                                                                 FALSE,
-                                                                 G_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "edge",
+                         "Edge",
+                         "Edge to curl (1-4, clockwise, starting in the "
+                         "lower right edge)",
+                         CURL_EDGE_LOWER_RIGHT, CURL_EDGE_UPPER_RIGHT,
+                         CURL_EDGE_LOWER_RIGHT,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "orientation",
+                         "Orientation",
+                         "Vertical (0), Horizontal (1)",
+                         CURL_ORIENTATION_VERTICAL, CURL_ORIENTATION_HORIZONTAL,
+                         CURL_ORIENTATION_VERTICAL,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "shade",
+                             "Shade",
+                             "Shade the region under the curl",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_LAYER (procedure, "curl-layer",
+                           "Curl layer",
+                           "The new layer with the curl.",
+                           FALSE,
+                           G_PARAM_READWRITE);
     }
 
   return procedure;

@@ -148,13 +148,12 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, "plug-in-script-fu-text-console"))
     {
@@ -172,13 +171,12 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, "plug-in-script-fu-server"))
     {
@@ -207,34 +205,30 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball & Peter Mattis",
                                       "1997");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("ip",
-                                                        "IP",
-                                                        "The IP on which to "
-                                                        "listen for requests",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("port",
-                                                     "Port",
-                                                     "The port on which to "
-                                                     "listen for requests",
-                                                     0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("logfile",
-                                                        "Log File",
-                                                        "The file to log "
-                                                        "activity to",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "ip",
+                            "IP",
+                            "The IP on which to listen for requests",
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "port",
+                         "Port",
+                         "The port on which to listen for requests",
+                         0, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "logfile",
+                            "Log File",
+                            "The file to log activity to",
+                            NULL,
+                            G_PARAM_READWRITE);
     }
   else if (! strcmp (name, "plug-in-script-fu-eval"))
     {
@@ -251,19 +245,18 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       "Manish Singh",
                                       "1998");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_string ("code",
-                                                        "Code",
-                                                        "The code to run",
-                                                        NULL,
-                                                        G_PARAM_READWRITE));
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "code",
+                            "Code",
+                            "The code to run",
+                            NULL,
+                            G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -437,13 +430,12 @@ script_fu_extension_init (GimpPlugIn *plug_in)
                                   "Spencer Kimball & Peter Mattis",
                                   "1997");
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("run-mode",
-                                                  "Run mode",
-                                                  "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  G_PARAM_READWRITE));
+  GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                      "Run mode",
+                      "The run mode",
+                      GIMP_TYPE_RUN_MODE,
+                      GIMP_RUN_INTERACTIVE,
+                      G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);

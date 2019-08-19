@@ -205,30 +205,20 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tif,tiff");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("compression",
-                                                     "Compression",
-                                                     "Compression type: "
-                                                     "{ NONE (0), "
-                                                     "LZW (1), "
-                                                     "PACKBITS (2), "
-                                                     "DEFLATE (3), "
-                                                     "JPEG (4), "
-                                                     "CCITT G3 Fax (5), "
-                                                     "CCITT G4 Fax (6) }",
-                                                     0, 6, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("save-transp-pixels",
-                                                         "Save transp pixels",
-                                                         "Keep the color data "
-                                                         "masked by an alpha "
-                                                         "channel intact "
-                                                         "(do not store "
-                                                         "premultiplied "
-                                                         "components)",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "compression",
+                         "Compression",
+                         "Compression type: { NONE (0), LZW (1), PACKBITS (2), "
+                         "DEFLATE (3), JPEG (4), CCITT G3 Fax (5), "
+                         "CCITT G4 Fax (6) }",
+                         0, 6, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-transp-pixels",
+                             "Save transp pixels",
+                             "Keep the color data masked by an alpha channel "
+                             "intact (do not store premultiplied components)",
+                             TRUE,
+                             G_PARAM_READWRITE);
     }
 
   return procedure;

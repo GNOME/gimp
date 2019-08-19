@@ -246,150 +246,122 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                       "www.multimania.com/cotting)",
                                       "December, 1998");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("fractal-type",
-                                                     "Fractal type",
-                                                     "0: Mandelbrot; "
-                                                     "1: Julia; "
-                                                     "2: Barnsley 1; "
-                                                     "3: Barnsley 2; "
-                                                     "4: Barnsley 3; "
-                                                     "5: Spider; "
-                                                     "6: ManOWar; "
-                                                     "7: Lambda; "
-                                                     "8: Sierpinski",
-                                                     0, 8, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("xmin",
-                                                        "X min",
-                                                        "xmin fractal image "
-                                                        "delimiter",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("xmax",
-                                                        "X max",
-                                                        "xmax fractal image "
-                                                        "delimiter",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("ymin",
-                                                        "Y min",
-                                                        "ymin fractal image "
-                                                        "delimiter",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("ymax",
-                                                        "Y max",
-                                                        "ymax fractal image "
-                                                        "delimiter",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("iter",
-                                                        "Iter",
-                                                        "Iteration value",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("cx",
-                                                        "CX",
-                                                        "cx value (only Julia)",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("cy",
-                                                        "CY",
-                                                        "cy value (only Julia)",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("color-mode",
-                                                     "Color mode",
-                                                     "0: Apply colormap as "
-                                                     "specified by the "
-                                                     "parameters below; "
-                                                     "1: Apply active gradient "
-                                                     "to final image",
-                                                     0, 1, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("red-stretch",
-                                                        "Red stretch",
-                                                        "Red stretching factor",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("green-stretch",
-                                                        "Green stretch",
-                                                        "Green stretching factor",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_double ("blues-tretch",
-                                                        "Blue stretch",
-                                                        "Blue stretching factor",
-                                                        -G_MAXDOUBLE,
-                                                        G_MAXDOUBLE, 0,
-                                                        G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("red-mode",
-                                                     "Red mode",
-                                                     "Red application mode "
-                                                     "(0:SIN;1:COS;2:NONE)",
-                                                     0, 2, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("green-mode",
-                                                     "Green mode",
-                                                     "Green application mode "
-                                                     "(0:SIN;1:COS;2:NONE)",
-                                                     0, 2, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("blue-mode",
-                                                     "Blue mode",
-                                                     "Blue application mode "
-                                                     "(0:SIN;1:COS;2:NONE)",
-                                                     0, 2, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("red-invert",
-                                                         "Red invert",
-                                                         "Red inversion mode",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("green-invert",
-                                                         "Green invert",
-                                                         "Green inversion mode",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_boolean ("blue-invert",
-                                                         "Blue invert",
-                                                         "Blue inversion mode",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("n-colors",
-                                                     "N volors",
-                                                     "Number of Colors "
-                                                     "for mapping",
-                                                     2, 8192, 512,
-                                                     G_PARAM_READWRITE));
+      GIMP_PROC_ARG_INT (procedure, "fractal-type",
+                         "Fractal type",
+                         "0: Mandelbrot; 1: Julia; 2: Barnsley 1; "
+                         "3: Barnsley 2; 4: Barnsley 3; 5: Spider; "
+                         "6: ManOWar; 7: Lambda; 8: Sierpinski",
+                         0, 8, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "xmin",
+                            "X min",
+                            "xmin fractal image delimiter",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "xmax",
+                            "X max",
+                            "xmax fractal image delimiter",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "ymin",
+                            "Y min",
+                            "ymin fractal image delimiter",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "ymax",
+                            "Y max",
+                            "ymax fractal image delimiter",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "iter",
+                            "Iter",
+                            "Iteration value",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "cx",
+                            "CX",
+                            "cx value (only Julia)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "cy",
+                            "CY",
+                            "cy value (only Julia)",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "color-mode",
+                         "Color mode",
+                         "0: Apply colormap as specified by the parameters "
+                         "below; 1: Apply active gradient to final image",
+                         0, 1, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "red-stretch",
+                            "Red stretch",
+                            "Red stretching factor",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "green-stretch",
+                            "Green stretch",
+                            "Green stretching factor",
+                            -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "blues-tretch",
+                            "Blue stretch",
+                            "Blue stretching factor",
+                            -G_MAXDOUBLE,G_MAXDOUBLE, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "red-mode",
+                         "Red mode",
+                         "Red application mode (0:SIN; 1:COS; 2:NONE)",
+                         0, 2, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "green-mode",
+                         "Green mode",
+                         "Green application mode (0:SIN; 1:COS; 2:NONE)",
+                         0, 2, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "blue-mode",
+                         "Blue mode",
+                         "Blue application mode (0:SIN; 1:COS; 2:NONE)",
+                         0, 2, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "red-invert",
+                             "Red invert",
+                             "Red inversion mode",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "green-invert",
+                             "Green invert",
+                             "Green inversion mode",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "blue-invert",
+                             "Blue invert",
+                             "Blue inversion mode",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "n-colors",
+                         "N volors",
+                         "Number of Colors for mapping",
+                         2, 8192, 512,
+                         G_PARAM_READWRITE);
     }
 
   return procedure;

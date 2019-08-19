@@ -132,35 +132,34 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
                                       "Henrik Brix Andersen",
                                       "1999-2008");
 
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_enum ("run-mode",
-                                                      "Run mode",
-                                                      "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
-                                                      G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("num-domain-names",
-                                                     "Num domain names",
-                                                     "Num domain names",
-                                                     0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string_array ("domain-names",
-                                                                 "Domain names",
-                                                                 "Domain names",
-                                                                 G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   g_param_spec_int ("num-domain-uris",
-                                                     "Num domain URIs",
-                                                     "Num domain URIs",
-                                                     0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE));
-      gimp_procedure_add_argument (procedure,
-                                   gimp_param_spec_string_array ("domain-uris",
-                                                                 "Domain URIs",
-                                                                 "Domain URIs",
-                                                                 G_PARAM_READWRITE));
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "num-domain-names",
+                         "Num domain names",
+                         "Num domain names",
+                         0, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING_ARRAY (procedure, "domain-names",
+                                  "Domain names",
+                                  "Domain names",
+                                  G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "num-domain-uris",
+                         "Num domain URIs",
+                         "Num domain URIs",
+                         0, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING_ARRAY (procedure, "domain-uris",
+                                  "Domain URIs",
+                                  "Domain URIs",
+                                  G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -217,24 +216,23 @@ temp_proc_install (GimpPlugIn *plug_in)
                                   "Henrik Brix Andersen",
                                   "1999-2008");
 
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("help-domain",
-                                                    "Help domain",
-                                                    "Help domain to use",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("help-locales",
-                                                    "Help locales",
-                                                    "Language to use",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_string ("help-id",
-                                                    "Help ID",
-                                                    "Help ID to open",
-                                                    NULL,
-                                                    G_PARAM_READWRITE));
+  GIMP_PROC_ARG_STRING (procedure, "help-domain",
+                        "Help domain",
+                        "Help domain to use",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_STRING (procedure, "help-locales",
+                        "Help locales",
+                        "Language to use",
+                        NULL,
+                        G_PARAM_READWRITE);
+
+  GIMP_PROC_ARG_STRING (procedure, "help-id",
+                        "Help ID",
+                        "Help ID to open",
+                        NULL,
+                        G_PARAM_READWRITE);
 
   gimp_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
