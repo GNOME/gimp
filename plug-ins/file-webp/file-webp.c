@@ -158,7 +158,9 @@ run (const gchar      *name,
 
   if (! strcmp (name, LOAD_PROC))
     {
-      image_ID = load_image (param[1].data.d_string, FALSE, &error);
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+      image_ID = load_image (g_file_get_path (file), FALSE, &error);
 
       if (image_ID != -1)
         {
@@ -174,6 +176,7 @@ run (const gchar      *name,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
+      GFile                 *file     = g_file_new_for_uri (param[3].data.d_string);
       GimpMetadata          *metadata = NULL;
       GimpMetadataSaveFlags  metadata_flags;
       WebPSaveParams         params;
@@ -283,7 +286,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (! save_image (param[3].data.d_string,
+          if (! save_image (g_file_get_path (file),
                             image_ID,
                             drawable_ID,
                             metadata, metadata_flags,

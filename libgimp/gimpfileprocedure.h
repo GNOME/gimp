@@ -76,9 +76,11 @@ void            gimp_file_procedure_set_priority    (GimpFileProcedure *procedur
                                                      gint               priority);
 gint            gimp_file_procedure_get_priority    (GimpFileProcedure *procedure);
 
-void            gimp_file_procedure_set_handles_uri (GimpFileProcedure *procedure,
-                                                     gboolean           handles_uri);
-gboolean        gimp_file_procedure_get_handles_uri (GimpFileProcedure *procedure);
+void            gimp_file_procedure_set_handles_remote
+                                                    (GimpFileProcedure *procedure,
+                                                     gboolean           handles_remote);
+gboolean        gimp_file_procedure_get_handles_remote
+                                                    (GimpFileProcedure *procedure);
 
 
 G_END_DECLS

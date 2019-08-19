@@ -64,7 +64,7 @@ struct _GimpPlugInProcedure
   gchar               *magics;
   gint                 priority;
   gchar               *mime_types;
-  gboolean             handles_uri;
+  gboolean             handles_remote;
   gboolean             handles_raw;
   GSList              *extensions_list;
   GSList              *prefixes_list;
@@ -132,7 +132,7 @@ void          gimp_plug_in_procedure_set_priority      (GimpPlugInProcedure *pro
                                                         gint                 priority);
 void          gimp_plug_in_procedure_set_mime_types    (GimpPlugInProcedure *proc,
                                                         const gchar         *mime_ypes);
-void          gimp_plug_in_procedure_set_handles_uri   (GimpPlugInProcedure *proc);
+void          gimp_plug_in_procedure_set_handles_remote(GimpPlugInProcedure *proc);
 void          gimp_plug_in_procedure_set_handles_raw   (GimpPlugInProcedure *proc);
 void          gimp_plug_in_procedure_set_thumb_loader  (GimpPlugInProcedure *proc,
                                                         const gchar         *thumbnailer);

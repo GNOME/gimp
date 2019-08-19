@@ -314,7 +314,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-xwindowdump");
-  gimp_register_file_handler_uri (SAVE_PROC);
+  gimp_register_file_handler_remote (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "xwd", "");
 }
 

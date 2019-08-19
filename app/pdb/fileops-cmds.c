@@ -91,12 +91,8 @@ file_load_invoker (GimpProcedure         *procedure,
   g_value_transform (gimp_value_array_index (args, 0),
                      gimp_value_array_index (new_args, 0));
 
-  if (file_proc->handles_uri)
-    g_value_take_string (gimp_value_array_index (new_args, 1),
-                         g_file_get_uri (file));
-  else
-    g_value_transform (gimp_value_array_index (args, 1),
-                       gimp_value_array_index (new_args, 1));
+  g_value_take_string (gimp_value_array_index (new_args, 1),
+                       g_file_get_uri (file));
 
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
@@ -307,12 +303,8 @@ file_save_invoker (GimpProcedure         *procedure,
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
 
-  if (file_proc->handles_uri)
-    g_value_take_string (gimp_value_array_index (new_args, 3),
-                         g_file_get_uri (file));
-  else
-    g_value_transform (gimp_value_array_index (args, 3),
-                       gimp_value_array_index (new_args, 3));
+  g_value_take_string (gimp_value_array_index (new_args, 3),
+                       g_file_get_uri (file));
 
   g_value_transform (gimp_value_array_index (args, 4),
                      gimp_value_array_index (new_args, 4));
@@ -553,12 +545,12 @@ register_file_handler_mime_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-register_file_handler_uri_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
-                                   GError               **error)
+register_file_handler_remote_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -568,8 +560,8 @@ register_file_handler_uri_invoker (GimpProcedure         *procedure,
   if (success)
     {
       success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-                 gimp_plug_in_manager_register_handles_uri (gimp->plug_in_manager,
-                                                            procedure_name));
+                 gimp_plug_in_manager_register_handles_remote (gimp->plug_in_manager,
+                                                               procedure_name));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1072,14 +1064,14 @@ register_fileops_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-register-file-handler-uri
+   * gimp-register-file-handler-remote
    */
-  procedure = gimp_procedure_new (register_file_handler_uri_invoker);
+  procedure = gimp_procedure_new (register_file_handler_remote_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-register-file-handler-uri");
+                               "gimp-register-file-handler-remote");
   gimp_procedure_set_static_strings (procedure,
-                                     "Registers a file handler procedure as capable of handling URIs.",
-                                     "Registers a file handler procedure as capable of handling URIs. This allows GIMP to call the procedure directly for all kinds of URIs, and the 'filename' traditionally passed to file procedures turns into an URI.",
+                                     "Registers a file handler procedure as capable of handling remote URIs.",
+                                     "Registers a file handler procedure as capable of handling remote URIs. This allows GIMP to call the procedure directly for all kinds of URIs, not only on local file:// URIs.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2012",
@@ -1087,7 +1079,7 @@ register_fileops_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
-                                                       "The name of the procedure to enable URIs for.",
+                                                       "The name of the procedure to enable remote URIs for.",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

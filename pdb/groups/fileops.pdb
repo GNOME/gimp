@@ -85,12 +85,8 @@ HELP
   g_value_transform (gimp_value_array_index (args, 0),
 		     gimp_value_array_index (new_args, 0));
 
-  if (file_proc->handles_uri)
-    g_value_take_string (gimp_value_array_index (new_args, 1),
-                         g_file_get_uri (file));
-  else
-    g_value_transform (gimp_value_array_index (args, 1),
-                       gimp_value_array_index (new_args, 1));
+  g_value_take_string (gimp_value_array_index (new_args, 1),
+                       g_file_get_uri (file));
 
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
@@ -330,12 +326,8 @@ HELP
   g_value_transform (gimp_value_array_index (args, 2),
                      gimp_value_array_index (new_args, 2));
 
-  if (file_proc->handles_uri)
-    g_value_take_string (gimp_value_array_index (new_args, 3),
-                         g_file_get_uri (file));
-  else
-    g_value_transform (gimp_value_array_index (args, 3),
-                       gimp_value_array_index (new_args, 3));
+  g_value_take_string (gimp_value_array_index (new_args, 3),
+                       g_file_get_uri (file));
 
   g_value_transform (gimp_value_array_index (args, 4),
                      gimp_value_array_index (new_args, 4));
@@ -587,14 +579,13 @@ CODE
     );
 }
 
-sub register_file_handler_uri {
-    $blurb = 'Registers a file handler procedure as capable of handling URIs.';
+sub register_file_handler_remote {
+    $blurb = 'Registers a file handler procedure as capable of handling remote URIs.';
 
     $help = <<'HELP';
-Registers a file handler procedure as capable of handling URIs. This
-allows GIMP to call the procedure directly for all kinds of URIs, and
-the 'filename' traditionally passed to file procedures turns into an
-URI.
+Registers a file handler procedure as capable of handling remote
+URIs. This allows GIMP to call the procedure directly for all kinds of
+URIs, not only on local file:// URIs.
 HELP
 
     &mitch_pdb_misc('2012', '2.10');
@@ -603,15 +594,15 @@ HELP
 
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
-          desc => "The name of the procedure to enable URIs for." }
+          desc => "The name of the procedure to enable remote URIs for." }
     );
 
     %invoke = (
         code => <<'CODE'
 {
   success = (gimp_pdb_is_canonical_procedure (procedure_name, error) &&
-             gimp_plug_in_manager_register_handles_uri (gimp->plug_in_manager,
-                                                        procedure_name));
+             gimp_plug_in_manager_register_handles_remote (gimp->plug_in_manager,
+                                                           procedure_name));
 }
 CODE
     );
@@ -737,7 +728,7 @@ CODE
             register_save_handler
             register_file_handler_priority
             register_file_handler_mime
-            register_file_handler_uri
+            register_file_handler_remote
             register_file_handler_raw
             register_thumbnail_loader);
 

@@ -188,7 +188,9 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          gint32 image_ID = load_image (param[1].data.d_string,
+          GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+          gint32 image_ID = load_image (g_file_get_path (file),
                                         &error);
 
           if (image_ID != -1)
@@ -240,10 +242,14 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-        status = save_image (param[3].data.d_string,
-                             image_ID, drawable_ID,
-                             run_mode,
-                             &error);
+        {
+          GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
+          status = save_image (g_file_get_path (file),
+                               image_ID, drawable_ID,
+                               run_mode,
+                               &error);
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);

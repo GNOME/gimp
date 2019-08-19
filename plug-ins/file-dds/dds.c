@@ -250,7 +250,9 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = read_dds (param[1].data.d_string, &imageID,
+          GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+          status = read_dds (g_file_get_path (file), &imageID,
                              run_mode == GIMP_RUN_INTERACTIVE);
           if (status == GIMP_PDB_SUCCESS && imageID != -1)
             {
@@ -374,8 +376,12 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          status = write_dds (param[3].data.d_string, imageID, drawableID,
+          GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
+          status = write_dds (g_file_get_path (file),
+                              imageID, drawableID,
                               run_mode == GIMP_RUN_INTERACTIVE);
+
           if (status == GIMP_PDB_SUCCESS)
             gimp_set_data (SAVE_PROC, &dds_write_vals, sizeof (dds_write_vals));
         }

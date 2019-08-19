@@ -205,7 +205,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-xbitmap");
-  gimp_register_file_handler_uri (SAVE_PROC);
+  gimp_register_file_handler_remote (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "xbm,icon,bitmap", "");
 }
 
@@ -272,7 +272,9 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, &error);
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+      image_ID = load_image (g_file_get_path (file), &error);
 
       if (image_ID != -1)
         {

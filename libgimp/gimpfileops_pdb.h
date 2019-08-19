@@ -63,7 +63,7 @@ G_GNUC_INTERNAL gboolean _gimp_register_file_handler_priority (const gchar *proc
                                                                gint         priority);
 G_GNUC_INTERNAL gboolean _gimp_register_file_handler_mime     (const gchar *procedure_name,
                                                                const gchar *mime_types);
-G_GNUC_INTERNAL gboolean _gimp_register_file_handler_uri      (const gchar *procedure_name);
+G_GNUC_INTERNAL gboolean _gimp_register_file_handler_remote   (const gchar *procedure_name);
 G_GNUC_INTERNAL gboolean _gimp_register_file_handler_raw      (const gchar *procedure_name);
 G_GNUC_INTERNAL gboolean _gimp_register_thumbnail_loader      (const gchar *load_proc,
                                                                const gchar *thumb_proc);

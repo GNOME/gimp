@@ -399,6 +399,8 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0 ||
       strcmp (name, LOAD_HGT_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
       gboolean is_hgt = (strcmp (name, LOAD_HGT_PROC) == 0);
 
       run_mode = param[0].data.d_int32;
@@ -417,12 +419,12 @@ run (const gchar      *name,
 
           runtime->image_type   = RAW_GRAY_16BPP_SBE;
 
-          fp = g_fopen (param[1].data.d_string, "rb");
+          fp = g_fopen (g_file_get_path (file), "rb");
           if (! fp)
             {
               g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Could not open '%s' for size verification: %s"),
-                           gimp_filename_to_utf8 (param[1].data.d_string),
+                           gimp_file_get_utf8_name (file),
                            g_strerror (errno));
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -469,20 +471,20 @@ run (const gchar      *name,
           if (! is_hgt)
             gimp_get_data (LOAD_PROC, runtime);
 
-          preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
+          preview_fd = g_open (g_file_get_path (file), O_RDONLY, 0);
           if (preview_fd < 0)
             {
               g_set_error (&error,
                            G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Could not open '%s' for reading: %s"),
-                           gimp_filename_to_utf8 (param[1].data.d_string),
+                           gimp_file_get_utf8_name (file),
                            g_strerror (errno));
 
               status = GIMP_PDB_EXECUTION_ERROR;
             }
           else
             {
-              if (! load_dialog (param[1].data.d_string, is_hgt))
+              if (! load_dialog (g_file_get_path (file), is_hgt))
                 status = GIMP_PDB_CANCEL;
 
               close (preview_fd);
@@ -522,7 +524,7 @@ run (const gchar      *name,
                                      "or its variant is not supported yet. "
                                      "Supported HGT files are: SRTM-1 and SRTM-3. "
                                      "If you know the variant, run with argument 1 or 3."),
-                                   gimp_filename_to_utf8 (param[1].data.d_string));
+                                   gimp_file_get_utf8_name (file));
                     }
                   break;
                 case 1:
@@ -549,7 +551,7 @@ run (const gchar      *name,
       /* we are okay, and the user clicked OK in the load dialog */
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_id = load_image (param[1].data.d_string, &error);
+          image_id = load_image (g_file_get_path (file), &error);
 
           if (image_id != -1)
             {
@@ -568,7 +570,7 @@ run (const gchar      *name,
       if (status != GIMP_PDB_SUCCESS && error)
         {
           g_warning ("Loading \"%s\" failed with error: %s",
-                     param[1].data.d_string,
+                     gimp_file_get_utf8_name (file),
                      error->message);
         }
 
@@ -577,6 +579,8 @@ run (const gchar      *name,
   else if (strcmp (name, SAVE_PROC) == 0 ||
            strcmp (name, SAVE_PROC2) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
       run_mode    = param[0].data.d_int32;
       image_id    = param[1].data.d_int32;
       drawable_id = param[2].data.d_int32;
@@ -649,7 +653,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string,
+          if (save_image (g_file_get_path (file),
                           image_id, drawable_id, &error))
             {
               gimp_set_data (SAVE_PROC, &rawvals, sizeof (rawvals));

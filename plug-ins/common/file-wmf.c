@@ -186,7 +186,9 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      filename = param[1].data.d_string;
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+      filename = g_file_get_path (file);
 
       gimp_get_data (LOAD_PROC, &load_vals);
 
@@ -199,7 +201,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_INTERACTIVE:
-          if (!load_dialog (param[1].data.d_string))
+          if (! load_dialog (filename))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -209,9 +211,11 @@ run (const gchar      *name,
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[0].data.d_string);
+
       gint size = param[1].data.d_int32;
 
-      filename = param[0].data.d_string;
+      filename = g_file_get_path (file);
 
       if (size > 0                             &&
           load_wmf_size (filename, &load_vals) &&

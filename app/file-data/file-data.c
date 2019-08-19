@@ -65,7 +65,7 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_file_proc (proc, "gbr, gbp", "",
                                         "20, string, GIMP");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gbr");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gbr-load");
   gimp_procedure_set_static_strings (procedure,
@@ -132,7 +132,7 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
   gimp_plug_in_procedure_set_file_proc (proc, "gbr", "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-gbr");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 #endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
@@ -215,7 +215,7 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_image_types (proc, NULL);
   gimp_plug_in_procedure_set_file_proc (proc, "gih", "", "");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gih");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gih-load");
   gimp_procedure_set_static_strings (procedure,
@@ -280,7 +280,7 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
   gimp_plug_in_procedure_set_file_proc (proc, "gih", "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-gih");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 #endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
@@ -371,7 +371,7 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_file_proc (proc, "pat", "",
                                         "20,string,GPAT");
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-pat");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-pat-load");
   gimp_procedure_set_static_strings (procedure,
@@ -434,7 +434,7 @@ file_data_init (Gimp *gimp)
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
   gimp_plug_in_procedure_set_file_proc (proc, "pat", "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-pat");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 #endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
@@ -513,7 +513,7 @@ file_data_init (Gimp *gimp)
                                         "20, string, GIMP");
   gimp_plug_in_procedure_set_generic_file_proc (proc, TRUE);
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gex");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "file-gex-load");
   gimp_procedure_set_static_strings (procedure,

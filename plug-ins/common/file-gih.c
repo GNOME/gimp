@@ -195,8 +195,8 @@ gih_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-gimp-gih");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "gih");
-      gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
-                                           TRUE);
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
 
       GIMP_PROC_ARG_INT (procedure, "spacing",
                          "Spacing",

@@ -270,7 +270,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-portable-anymap");
-  gimp_register_file_handler_uri (LOAD_PROC);
+  gimp_register_file_handler_remote (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
                                     "pnm,ppm,pgm,pbm,pfm",
                                     "",
@@ -344,11 +344,11 @@ query (void)
   gimp_register_file_handler_mime (PPM_SAVE_PROC, "image/x-portable-pixmap");
   gimp_register_file_handler_mime (PPM_SAVE_PROC, "image/x-portable-floatmap");
 
-  gimp_register_file_handler_uri (PNM_SAVE_PROC);
-  gimp_register_file_handler_uri (PBM_SAVE_PROC);
-  gimp_register_file_handler_uri (PGM_SAVE_PROC);
-  gimp_register_file_handler_uri (PPM_SAVE_PROC);
-  gimp_register_file_handler_uri (PFM_SAVE_PROC);
+  gimp_register_file_handler_remote (PNM_SAVE_PROC);
+  gimp_register_file_handler_remote (PBM_SAVE_PROC);
+  gimp_register_file_handler_remote (PGM_SAVE_PROC);
+  gimp_register_file_handler_remote (PPM_SAVE_PROC);
+  gimp_register_file_handler_remote (PFM_SAVE_PROC);
 
   gimp_register_save_handler (PNM_SAVE_PROC, "pnm", "");
   gimp_register_save_handler (PBM_SAVE_PROC, "pbm", "");

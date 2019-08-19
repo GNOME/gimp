@@ -82,7 +82,7 @@ file_open_image (Gimp                *gimp,
   GimpValueArray *return_vals;
   GimpImage      *image       = NULL;
   GFile          *local_file  = NULL;
-  gchar          *path        = NULL;
+  gchar          *uri         = NULL;
   gchar          *entered_uri = NULL;
   gboolean        mounted     = TRUE;
   GError         *my_error    = NULL;
@@ -167,7 +167,7 @@ file_open_image (Gimp                *gimp,
         }
     }
 
-  if (! file_proc || ! file_proc->handles_uri || ! mounted)
+  if (! file_proc || ! file_proc->handles_remote || ! mounted)
     {
       gchar *my_path = g_file_get_path (file);
 
@@ -202,27 +202,19 @@ file_open_image (Gimp                *gimp,
               return NULL;
             }
 
-          if (file_proc->handles_uri)
-            path = g_file_get_uri (local_file);
-          else
-            path = g_file_get_path (local_file);
+          uri = g_file_get_uri (local_file);
         }
 
       g_free (my_path);
     }
 
-  if (! path)
-    {
-      if (file_proc->handles_uri)
-        path = g_file_get_uri (file);
-      else
-        path = g_file_get_path (file);
-    }
+  if (! uri)
+    uri = g_file_get_uri (file);
 
   entered_uri = g_file_get_uri (entered_file);
 
   if (! entered_uri)
-    entered_uri = g_strdup (path);
+    entered_uri = g_strdup (uri);
 
   if (progress)
     g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
@@ -232,14 +224,14 @@ file_open_image (Gimp                *gimp,
                                         context, progress, error,
                                         gimp_object_get_name (file_proc),
                                         GIMP_TYPE_RUN_MODE, run_mode,
-                                        G_TYPE_STRING,      path,
+                                        G_TYPE_STRING,      uri,
                                         G_TYPE_STRING,      entered_uri,
                                         G_TYPE_NONE);
 
   if (progress)
     g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
-  g_free (path);
+  g_free (uri);
   g_free (entered_uri);
 
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
@@ -374,23 +366,19 @@ file_open_thumbnail (Gimp           *gimp,
       GimpPDBStatusType  status;
       GimpValueArray    *return_vals;
       GimpImage         *image = NULL;
-      gchar             *path  = NULL;
+      gchar             *uri   = NULL;
 
-      if (! file_proc->handles_uri)
-        path = g_file_get_path (file);
-
-      if (! path)
-        path = g_file_get_uri (file);
+      uri = g_file_get_uri (file);
 
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             context, progress, error,
                                             gimp_object_get_name (procedure),
-                                            G_TYPE_STRING, path,
+                                            G_TYPE_STRING, uri,
                                             G_TYPE_INT,    size,
                                             G_TYPE_NONE);
 
-      g_free (path);
+      g_free (uri);
 
       status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 

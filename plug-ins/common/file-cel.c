@@ -133,7 +133,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_uri (SAVE_PROC);
+  gimp_register_file_handler_remote (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "cel", "");
 }
 
@@ -207,7 +207,9 @@ run (const gchar      *name,
 
       if (! error)
         {
-          image = load_image (param[1].data.d_string,
+          GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+          image = load_image (g_file_get_path (file),
                               &error);
 
           if (image != -1)

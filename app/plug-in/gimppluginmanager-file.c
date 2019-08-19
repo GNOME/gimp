@@ -221,8 +221,8 @@ gimp_plug_in_manager_register_mime_types (GimpPlugInManager *manager,
 }
 
 gboolean
-gimp_plug_in_manager_register_handles_uri (GimpPlugInManager *manager,
-                                           const gchar       *name)
+gimp_plug_in_manager_register_handles_remote (GimpPlugInManager *manager,
+                                              const gchar       *name)
 {
   GimpPlugInProcedure *file_proc;
   GSList              *list;
@@ -240,7 +240,7 @@ gimp_plug_in_manager_register_handles_uri (GimpPlugInManager *manager,
   if (! file_proc)
     return FALSE;
 
-  gimp_plug_in_procedure_set_handles_uri (file_proc);
+  gimp_plug_in_procedure_set_handles_remote (file_proc);
 
   return TRUE;
 }

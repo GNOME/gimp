@@ -248,8 +248,11 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
+          GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
           check_load_vals ();
-          image_ID = load_image (param[1].data.d_string, &error);
+
+          image_ID = load_image (g_file_get_path (file), &error);
 
           /* Write out error messages of FITS-Library */
           show_fits_errors ();
@@ -317,7 +320,10 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+          GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
+          if (! save_image (g_file_get_path (file),
+                            image_ID, drawable_ID,
                             &error))
             status = GIMP_PDB_EXECUTION_ERROR;
         }

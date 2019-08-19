@@ -67,7 +67,6 @@ file_save (Gimp                *gimp,
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
   GFile             *local_file = NULL;
-  gchar             *path       = NULL;
   gchar             *uri        = NULL;
   gboolean           mounted    = TRUE;
   gint32             image_ID;
@@ -161,7 +160,7 @@ file_save (Gimp                *gimp,
         }
     }
 
-  if (! file_proc->handles_uri || ! mounted)
+  if (! file_proc->handles_remote || ! mounted)
     {
       gchar *my_path = g_file_get_path (file);
 
@@ -180,24 +179,14 @@ file_save (Gimp                *gimp,
               goto out;
             }
 
-          if (file_proc->handles_uri)
-            path = g_file_get_uri (local_file);
-          else
-            path = g_file_get_path (local_file);
+          uri = g_file_get_uri (local_file);
         }
 
       g_free (my_path);
     }
 
-  if (! path)
-    {
-      if (file_proc->handles_uri)
-        path = g_file_get_uri (file);
-      else
-        path = g_file_get_path (file);
-    }
-
-  uri = g_file_get_uri (file);
+  if (! uri)
+    uri = g_file_get_uri (file);
 
   image_ID    = gimp_image_get_ID (image);
   drawable_ID = gimp_item_get_ID (GIMP_ITEM (drawable));
@@ -210,7 +199,7 @@ file_save (Gimp                *gimp,
                                         GIMP_TYPE_RUN_MODE,    run_mode,
                                         GIMP_TYPE_IMAGE_ID,    image_ID,
                                         GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                        G_TYPE_STRING,         path,
+                                        G_TYPE_STRING,         uri,
                                         G_TYPE_STRING,         uri,
                                         G_TYPE_NONE);
 
@@ -318,7 +307,6 @@ file_save (Gimp                *gimp,
   g_object_unref (file);
   g_object_unref (image);
 
-  g_free (path);
   g_free (uri);
 
   return status;

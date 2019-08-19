@@ -40,7 +40,8 @@ gboolean   gimp_plug_in_manager_register_mime_types   (GimpPlugInManager *manage
                                                        const gchar       *name,
                                                        const gchar       *mime_types);
 
-gboolean   gimp_plug_in_manager_register_handles_uri  (GimpPlugInManager *manager,
+gboolean   gimp_plug_in_manager_register_handles_remote
+                                                      (GimpPlugInManager *manager,
                                                        const gchar       *name);
 
 gboolean   gimp_plug_in_manager_register_handles_raw  (GimpPlugInManager *manager,

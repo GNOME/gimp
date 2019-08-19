@@ -168,8 +168,8 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "1995-1996,1998-2003");
 
-      gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
-                                           TRUE);
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/tiff");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -198,8 +198,8 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                       "Spencer Kimball & Peter Mattis",
                                       "1995-1996,2000-2003");
 
-      gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
-                                           TRUE);
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/tiff");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),

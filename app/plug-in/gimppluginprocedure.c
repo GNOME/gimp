@@ -462,48 +462,48 @@ gimp_plug_in_procedure_validate_args (GimpPlugInProcedure *proc,
                                       GimpValueArray      *args,
                                       GError             **error)
 {
-  if (proc->file_proc && proc->handles_uri)
+  GimpProcedure *procedure = GIMP_PROCEDURE (proc);
+  GValue        *uri_value = NULL;
+
+  if (! proc->file_proc)
+    return TRUE;
+
+  /*  make sure that the passed strings are actually URIs, not just a
+   *  file path (bug 758685)
+   */
+
+  if ((procedure->num_args   >= 3)                     &&
+      (procedure->num_values >= 1)                     &&
+      GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
+      G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
+      G_IS_PARAM_SPEC_STRING      (procedure->args[2]) &&
+      GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
     {
-      /*  for file procedures that handle URIs, make sure that the
-       *  passed string actually is an URI, not just a file path
-       *  (bug 758685)
-       */
-      GimpProcedure *procedure = GIMP_PROCEDURE (proc);
-      GValue        *uri_value = NULL;
+      uri_value = gimp_value_array_index (args, 1);
+    }
+  else if ((procedure->num_args >= 5)                          &&
+           GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) &&
+           GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
+           GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) &&
+           G_IS_PARAM_SPEC_STRING         (procedure->args[3]) &&
+           G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
+    {
+      uri_value = gimp_value_array_index (args, 3);
+    }
 
-      if ((procedure->num_args   >= 3)                     &&
-          (procedure->num_values >= 1)                     &&
-          GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) &&
-          G_IS_PARAM_SPEC_STRING      (procedure->args[1]) &&
-          G_IS_PARAM_SPEC_STRING      (procedure->args[2]) &&
-          GIMP_IS_PARAM_SPEC_IMAGE_ID (procedure->values[0]))
-        {
-          uri_value = gimp_value_array_index (args, 1);
-        }
-      else if ((procedure->num_args >= 5)                          &&
-               GIMP_IS_PARAM_SPEC_RUN_MODE    (procedure->args[0]) &&
-               GIMP_IS_PARAM_SPEC_IMAGE_ID    (procedure->args[1]) &&
-               GIMP_IS_PARAM_SPEC_DRAWABLE_ID (procedure->args[2]) &&
-               G_IS_PARAM_SPEC_STRING         (procedure->args[3]) &&
-               G_IS_PARAM_SPEC_STRING         (procedure->args[4]))
-        {
-          uri_value = gimp_value_array_index (args, 3);
-        }
+  if (uri_value)
+    {
+      GFile *file;
 
-      if (uri_value)
-        {
-          GFile *file;
+      file = file_utils_filename_to_file (gimp,
+                                          g_value_get_string (uri_value),
+                                          error);
 
-          file = file_utils_filename_to_file (gimp,
-                                              g_value_get_string (uri_value),
-                                              error);
+      if (! file)
+        return FALSE;
 
-          if (! file)
-            return FALSE;
-
-          g_value_take_string (uri_value, g_file_get_uri (file));
-          g_object_unref (file);
-        }
+      g_value_take_string (uri_value, g_file_get_uri (file));
+      g_object_unref (file);
     }
 
   return TRUE;
@@ -1219,11 +1219,11 @@ gimp_plug_in_procedure_set_mime_types (GimpPlugInProcedure *proc,
 }
 
 void
-gimp_plug_in_procedure_set_handles_uri (GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_set_handles_remote (GimpPlugInProcedure *proc)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  proc->handles_uri = TRUE;
+  proc->handles_remote = TRUE;
 }
 
 void

@@ -220,7 +220,9 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (save_aa (drawable_ID, param[3].data.d_string, output_type))
+      GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
+      if (save_aa (drawable_ID, g_file_get_path (file), output_type))
         {
           gimp_set_data (SAVE_PROC, &output_type, sizeof (output_type));
         }

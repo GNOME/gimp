@@ -131,8 +131,8 @@ gimp_save_procedure_install (GimpProcedure *procedure)
                                gimp_file_procedure_get_extensions (file_proc),
                                gimp_file_procedure_get_prefixes (file_proc));
 
-  if (gimp_file_procedure_get_handles_uri (file_proc))
-    _gimp_register_file_handler_uri (gimp_procedure_get_name (procedure));
+  if (gimp_file_procedure_get_handles_remote (file_proc))
+    _gimp_register_file_handler_remote (gimp_procedure_get_name (procedure));
 
   mime_types = gimp_file_procedure_get_mime_types (file_proc);
   if (mime_types)
@@ -165,10 +165,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
   uri         = g_value_get_string         (gimp_value_array_index (args, 3));
   /* raw_uri  = g_value_get_string         (gimp_value_array_index (args, 4)); */
 
-  if (gimp_file_procedure_get_handles_uri (GIMP_FILE_PROCEDURE (procedure)))
-    file = g_file_new_for_uri (uri);
-  else
-    file = g_file_new_for_path (uri);
+  file = g_file_new_for_uri (uri);
 
   remaining = gimp_value_array_new (gimp_value_array_length (args) - 5);
 

@@ -69,6 +69,7 @@ query (void)
     { GIMP_PDB_STRINGARRAY, "files",     "The list of matching names"   }
   };
 
+  /* FIXME filename encoding */
 
   gimp_install_procedure (PLUG_IN_PROC,
                           "Returns a list of matching filenames",

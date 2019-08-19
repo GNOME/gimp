@@ -33,7 +33,7 @@ struct _GimpFileProcedurePrivate
   gchar    *prefixes;
   gchar    *magics;
   gint      priority;
-  gboolean  handles_uri;
+  gboolean  handles_remote;
 };
 
 
@@ -178,7 +178,7 @@ gimp_file_procedure_get_extensions (GimpFileProcedure *procedure)
  *             handle (i.e. "http:,ftp:").
  *
  * It should almost never be neccessary to register prefixes with file
- * procedures, because most sorty of URIs should be handled by GIO.
+ * procedures, because most sorts of URIs should be handled by GIO.
  *
  * Since: 3.0
  **/
@@ -284,45 +284,45 @@ gimp_file_procedure_get_priority (GimpFileProcedure *procedure)
 }
 
 /**
- * gimp_file_procedure_set_handles_uri:
- * @procedure:   A #GimpFileProcedure.
- * @handles_uri: The procedure's handles uri flag.
+ * gimp_file_procedure_set_handles_remote:
+ * @procedure:      A #GimpFileProcedure.
+ * @handles_remote: The procedure's 'handles remote' flag.
  *
- * Registers a file procedure as capable of handling arbitrary URIs
- * via GIO.
+ * Registers a file procedure as capable of handling arbitrary remote
+ * URIs via GIO.
  *
- * When @handles_uri is set to %TRUE, the procedure will get a #GFile
- * passed that can point to a remote file.
+ * When @handles_remote is set to %TRUE, the procedure will get a
+ * #GFile passed that can point to a remote file.
  *
- * When @handles_uri is set to %FALSE, the procedure will get a local
- * #GFile passed and can use g_file_get_path() to get to a filename
- * that can be used with whatever non-GIO means of dealing with the
- * file.
+ * When @handles_remote is set to %FALSE, the procedure will get a
+ * local #GFile passed and can use g_file_get_path() to get to a
+ * filename that can be used with whatever non-GIO means of dealing
+ * with the file.
  *
  * Since: 3.0
  **/
 void
-gimp_file_procedure_set_handles_uri (GimpFileProcedure *procedure,
-                                     gint               handles_uri)
+gimp_file_procedure_set_handles_remote (GimpFileProcedure *procedure,
+                                        gint               handles_remote)
 {
   g_return_if_fail (GIMP_IS_FILE_PROCEDURE (procedure));
 
-  procedure->priv->handles_uri = handles_uri;
+  procedure->priv->handles_remote = handles_remote;
 }
 
 /**
- * gimp_file_procedure_get_handles_uri:
+ * gimp_file_procedure_get_handles_remote:
  * @procedure: A #GimpFileProcedure.
  *
- * Returns: The procedure's handles uri flag as set with
- *          gimp_file_procedure_set_handles_uri().
+ * Returns: The procedure's 'handles remote' flag as set with
+ *          gimp_file_procedure_set_handles_remote().
  *
  * Since: 3.0
  **/
 gint
-gimp_file_procedure_get_handles_uri (GimpFileProcedure *procedure)
+gimp_file_procedure_get_handles_remote (GimpFileProcedure *procedure)
 {
   g_return_val_if_fail (GIMP_IS_FILE_PROCEDURE (procedure), 0);
 
-  return procedure->priv->handles_uri;
+  return procedure->priv->handles_remote;
 }

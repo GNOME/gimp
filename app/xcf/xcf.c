@@ -118,7 +118,7 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
   gimp_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-save");
   gimp_procedure_set_static_strings (procedure,
@@ -190,7 +190,7 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_file_proc (proc, "xcf", "",
                                         "0,string,gimp\\040xcf\\040");
   gimp_plug_in_procedure_set_mime_types (proc, "image/x-xcf");
-  gimp_plug_in_procedure_set_handles_uri (proc);
+  gimp_plug_in_procedure_set_handles_remote (proc);
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-load");
   gimp_procedure_set_static_strings (procedure,

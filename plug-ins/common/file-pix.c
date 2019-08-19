@@ -147,7 +147,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_uri (LOAD_PROC);
+  gimp_register_file_handler_remote (LOAD_PROC);
   gimp_register_load_handler (LOAD_PROC, "pix,matte,mask,alpha,als", "");
 
   gimp_install_procedure (SAVE_PROC,
@@ -162,7 +162,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_uri (SAVE_PROC);
+  gimp_register_file_handler_remote (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "pix,matte,mask,alpha,als", "");
 }
 

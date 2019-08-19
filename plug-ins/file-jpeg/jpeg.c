@@ -196,7 +196,9 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      gboolean resolution_loaded = FALSE;
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+      gboolean  resolution_loaded = FALSE;
 
       switch (run_mode)
         {
@@ -210,12 +212,11 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, run_mode, FALSE,
+      image_ID = load_image (g_file_get_path (file), run_mode, FALSE,
                              &resolution_loaded, &error);
 
       if (image_ID != -1)
         {
-          GFile        *file = g_file_new_for_path (param[1].data.d_string);
           GimpMetadata *metadata;
 
           metadata = gimp_image_metadata_load_prepare (image_ID, "image/jpeg",
@@ -235,8 +236,6 @@ run (const gchar      *name,
               g_object_unref (metadata);
             }
 
-          g_object_unref (file);
-
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
@@ -254,7 +253,7 @@ run (const gchar      *name,
         }
       else
         {
-          GFile        *file   = g_file_new_for_path (param[0].data.d_string);
+          GFile        *file   = g_file_new_for_uri (param[0].data.d_string);
           gint          width  = 0;
           gint          height = 0;
           GimpImageType type   = -1;
@@ -286,6 +285,7 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
+      GFile                 *file = g_file_new_for_uri (param[3].data.d_string);
       GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
       gint32                 orig_image_ID;
@@ -499,7 +499,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (! save_image (param[3].data.d_string,
+          if (! save_image (g_file_get_path (file),
                             image_ID, drawable_ID, orig_image_ID, FALSE,
                             &error))
             {
@@ -546,8 +546,6 @@ run (const gchar      *name,
 
           if (metadata)
             {
-              GFile *file;
-
               gimp_metadata_set_bits_per_sample (metadata, 8);
 
               if (jsvals.save_exif)
@@ -575,12 +573,10 @@ run (const gchar      *name,
               else
                 metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
-              file = g_file_new_for_path (param[3].data.d_string);
               gimp_image_metadata_save_finish (orig_image_ID,
                                                "image/jpeg",
                                                metadata, metadata_flags,
                                                file, NULL);
-              g_object_unref (file);
             }
         }
 

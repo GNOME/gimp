@@ -392,6 +392,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0 || strcmp (name, LOAD2_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
       PdfSelectedPages pages = { 0, NULL };
       GimpRunMode      run_mode;
 
@@ -409,7 +411,7 @@ run (const gchar      *name,
               gimp_get_data (LOAD2_PROC, &loadvals);
             }
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          doc = open_document (param[1].data.d_string,
+          doc = open_document (g_file_get_path (file),
                                loadvals.PDF_password,
                                run_mode, &error);
 
@@ -441,12 +443,12 @@ run (const gchar      *name,
         case GIMP_RUN_NONINTERACTIVE:
           if (strcmp (name, LOAD_PROC) == 0)
             {
-              doc = open_document (param[1].data.d_string,
+              doc = open_document (g_file_get_path (file),
                                    NULL, run_mode, &error);
             }
           else if (strcmp (name, LOAD2_PROC) == 0)
             {
-              doc = open_document (param[1].data.d_string,
+              doc = open_document (g_file_get_path (file),
                                    param[3].data.d_string,
                                    run_mode, &error);
             }
@@ -504,7 +506,7 @@ run (const gchar      *name,
                                                ngettext ("PDF document '%1$s' has %3$d page. Page %2$d is out of range.",
                                                          "PDF document '%1$s' has %3$d pages. Page %2$d is out of range.",
                                                          doc_n_pages),
-                                               param[1].data.d_string,
+                                               gimp_file_get_utf8_name (file),
                                                param[5].data.d_int32array[i],
                                                doc_n_pages);
                                   break;
@@ -533,7 +535,8 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_ID = load_image (doc, param[1].data.d_string,
+          image_ID = load_image (doc,
+                                 g_file_get_path (file),
                                  run_mode,
                                  loadvals.target,
                                  loadvals.resolution,
@@ -559,6 +562,8 @@ run (const gchar      *name,
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[0].data.d_string);
+
       if (nparams < 2)
         {
           status = GIMP_PDB_CALLING_ERROR;
@@ -582,7 +587,7 @@ run (const gchar      *name,
               gimp_get_data (LOAD2_PROC, &loadvals);
             }
 
-          doc = open_document (param[0].data.d_string,
+          doc = open_document (g_file_get_path (file),
                                loadvals.PDF_password,
                                GIMP_RUN_NONINTERACTIVE,
                                &error);

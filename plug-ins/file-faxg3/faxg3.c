@@ -137,7 +137,9 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image_ID = load_image (param[1].data.d_string, &error);
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+      image_ID = load_image (g_file_get_path (file), &error);
 
       if (image_ID != -1)
         {

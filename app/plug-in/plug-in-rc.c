@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 9
+#define PLUG_IN_RC_FILE_VERSION 10
 
 
 /*
@@ -93,7 +93,7 @@ enum
   MAGICS,
   PRIORITY,
   MIME_TYPES,
-  HANDLES_URI,
+  HANDLES_REMOTE,
   HANDLES_RAW,
   THUMB_LOADER
 };
@@ -161,7 +161,7 @@ plug_in_rc_parse (Gimp    *gimp,
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "mime-types", GINT_TO_POINTER (MIME_TYPES));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
-                              "handles-uri", GINT_TO_POINTER (HANDLES_URI));
+                              "handles-remote", GINT_TO_POINTER (HANDLES_REMOTE));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "handles-raw", GINT_TO_POINTER (HANDLES_RAW));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
@@ -176,7 +176,7 @@ plug_in_rc_parse (Gimp    *gimp,
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "mime-types", GINT_TO_POINTER (MIME_TYPES));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
-                              "handles-uri", GINT_TO_POINTER (HANDLES_URI));
+                              "handles-remote", GINT_TO_POINTER (HANDLES_REMOTE));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -696,8 +696,8 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
           }
           break;
 
-        case HANDLES_URI:
-          gimp_plug_in_procedure_set_handles_uri (proc);
+        case HANDLES_REMOTE:
+          gimp_plug_in_procedure_set_handles_remote (proc);
           break;
 
         case HANDLES_RAW:
@@ -1255,9 +1255,9 @@ plug_in_rc_write (GSList  *plug_in_defs,
                       gimp_config_writer_close (writer);
                     }
 
-                  if (proc->handles_uri)
+                  if (proc->handles_remote)
                     {
-                      gimp_config_writer_open (writer, "handles-uri");
+                      gimp_config_writer_open (writer, "handles-remote");
                       gimp_config_writer_close (writer);
                     }
 

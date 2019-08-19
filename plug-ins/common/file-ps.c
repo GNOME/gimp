@@ -541,8 +541,8 @@ ps_create_procedure (GimpPlugIn  *plug_in,
                                       "Peter Kirchgessner",
                                       dversion);
 
-      gimp_file_procedure_set_handles_uri (GIMP_FILE_PROCEDURE (procedure),
-                                           TRUE);
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "width",
                             "Width",

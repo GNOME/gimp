@@ -224,6 +224,8 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_JP2_PROC) == 0 ||
       strcmp (name, LOAD_J2K_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
       OPJ_COLOR_SPACE color_space = OPJ_CLRSPC_UNKNOWN;
       gboolean        interactive;
 
@@ -270,20 +272,19 @@ run (const gchar      *name,
 
       if (strcmp (name, LOAD_JP2_PROC) == 0)
         {
-          image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2,
+          image_ID = load_image (g_file_get_path (file), OPJ_CODEC_JP2,
                                  color_space, interactive, &profile_loaded,
                                  &error);
         }
       else /* strcmp (name, LOAD_J2K_PROC) == 0 */
         {
-          image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K,
+          image_ID = load_image (g_file_get_path (file), OPJ_CODEC_J2K,
                                  color_space, interactive, &profile_loaded,
                                  &error);
         }
 
       if (image_ID != -1)
         {
-          GFile        *file = g_file_new_for_path (param[1].data.d_string);
           GimpMetadata *metadata;
 
           metadata = gimp_image_metadata_load_prepare (image_ID, "image/jp2",
@@ -302,8 +303,6 @@ run (const gchar      *name,
 
               g_object_unref (metadata);
             }
-
-          g_object_unref (file);
 
           *nreturn_vals = 2;
           values[1].type         = GIMP_PDB_IMAGE;

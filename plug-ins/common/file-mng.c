@@ -1749,9 +1749,11 @@ run (const gchar      *name,
 
           if (values[0].data.d_status == GIMP_PDB_SUCCESS)
             {
+              GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
               GError *error = NULL;
 
-              if (mng_save_image (param[3].data.d_string,
+              if (mng_save_image (g_file_get_path (file),
                                   image_id, drawable_id,
                                   original_image_id, &error))
                 {

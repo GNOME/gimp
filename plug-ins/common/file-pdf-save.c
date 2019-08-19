@@ -658,10 +658,12 @@ init_vals (const gchar      *name,
   if ((g_str_equal (name, SAVE_PROC) && nparams == SA_ARG_COUNT - 2) ||
       (g_str_equal (name, SAVE2_PROC) && nparams == SA_ARG_COUNT))
     {
+      GFile *file = g_file_new_for_uri (param[SA_FILENAME].data.d_string);
+
       single = TRUE;
       *run_mode = param[SA_RUN_MODE].data.d_int32;
       image = param[SA_IMAGE].data.d_int32;
-      file_name = param[SA_FILENAME].data.d_string;
+      file_name = g_file_get_path (file);
 
       if (*run_mode == GIMP_RUN_NONINTERACTIVE)
         {
@@ -679,13 +681,15 @@ init_vals (const gchar      *name,
     }
   else if (g_str_equal (name, SAVE_MULTI_PROC))
     {
+      GFile *file = g_file_new_for_uri (param[SMA_FILENAME].data.d_string);
+
       single = FALSE;
       if (nparams != SMA_ARG_COUNT)
         return FALSE;
 
       *run_mode = param[SMA_RUN_MODE].data.d_int32;
       image = -1;
-      file_name = param[SMA_FILENAME].data.d_string;
+      file_name = g_file_get_path (file);
 
       optimize.apply_masks = param[SMA_APPLY_MASKS].data.d_int32;
       optimize.vectorize = param[SMA_VECTORIZE].data.d_int32;

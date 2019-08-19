@@ -422,9 +422,12 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
       DM_XMC ("Starting to load file.\tparam.data=%s\n",
-              param[1].data.d_string);
-      image_ID = load_image (param[1].data.d_string, &error);
+              gimp_file_get_utf8_name (file));
+
+      image_ID = load_image (g_file_get_path (file), &error);
 
       if (image_ID != -1)
         {
@@ -440,9 +443,12 @@ run (const gchar      *name,
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[0].data.d_string);
+
       DM_XMC ("Starting to load thumbnail.\tfilename=%s\tthumb-size=%d\n",
-              param[0].data.d_string, param[1].data.d_int32);
-      image_ID = load_thumbnail (param[0].data.d_string,
+              gimp_file_get_utf8_name (file), param[1].data.d_int32);
+
+      image_ID = load_thumbnail (g_file_get_path (file),
                                  param[1].data.d_int32,
                                  &width,
                                  &height,
@@ -473,7 +479,10 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      DM_XMC ("run: export %s\n", name);
+      GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
+      DM_XMC ("run: exprort %s\n", name);
+
       run_mode    = param[0].data.d_int32;
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -483,7 +492,9 @@ run (const gchar      *name,
         {
           g_set_error (&error, 0, 0,
                        _("Cannot set the hot spot!\n"
-                         "You must arrange layers so that all of them have an intersection."));
+                         "You must arrange layers so that all of them have "
+                         "an intersection."));
+
           *nreturn_vals = 2;
           values[1].type          = GIMP_PDB_STRING;
           values[1].data.d_string = error->message;
@@ -589,10 +600,12 @@ run (const gchar      *name,
         default:
           break;
         }
+
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string, image_ID,
-                          drawable_ID, orig_image_ID, &error))
+          if (save_image (g_file_get_path (file),
+                          image_ID, drawable_ID, orig_image_ID,
+                          &error))
             {
               gimp_set_data (SAVE_PROC, &xmcvals, sizeof (XmcSaveVals));
             }

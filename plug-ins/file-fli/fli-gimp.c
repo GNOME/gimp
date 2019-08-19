@@ -226,6 +226,7 @@ run (const gchar      *name,
   gint32             image_ID;
   gint32             drawable_ID;
   gint32             orig_image_ID;
+  GFile             *file;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
@@ -242,6 +243,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
+      file = g_file_new_for_uri (param[1].data.d_string);
+
       switch (run_mode)
         {
         case GIMP_RUN_NONINTERACTIVE:
@@ -277,7 +280,7 @@ run (const gchar      *name,
           from_frame = ((nparams < G_N_ELEMENTS (load_args)) ?
                         -1 : param[4].data.d_int32);
 
-          image_ID = load_image (param[1].data.d_string,
+          image_ID = load_image (g_file_get_path (file),
                                  from_frame, to_frame, &error);
 
           if (image_ID != -1)
@@ -293,9 +296,9 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_INTERACTIVE:
-          if (load_dialog (param[1].data.d_string))
+          if (load_dialog (g_file_get_path (file)))
             {
-              image_ID = load_image (param[1].data.d_string,
+              image_ID = load_image (g_file_get_path (file),
                                      from_frame, to_frame, &error);
 
               if (image_ID != -1)
@@ -322,6 +325,8 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
+      GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -341,7 +346,7 @@ run (const gchar      *name,
                   break;
                 }
             }
-          if (! save_image (param[3].data.d_string, image_ID,
+          if (! save_image (g_file_get_path (file), image_ID,
                             param[5].data.d_int32,
                             param[6].data.d_int32, &error))
             {
@@ -367,7 +372,7 @@ run (const gchar      *name,
 
           if (save_dialog (param[1].data.d_image))
             {
-              if (! save_image (param[3].data.d_string,
+              if (! save_image (g_file_get_path (file),
                                 image_ID, from_frame, to_frame, &error))
                 {
                   status = GIMP_PDB_EXECUTION_ERROR;

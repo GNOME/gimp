@@ -216,7 +216,9 @@ run (const gchar      *name,
 
       if (format->load_proc && !strcmp (name, format->load_proc))
         {
-          image_ID = load_image (param[1].data.d_string, &error);
+          GFile *file = g_file_new_for_uri (param[1].data.d_string);
+
+          image_ID = load_image (g_file_get_path (file), &error);
 
           if (image_ID != -1)
             {
@@ -233,6 +235,8 @@ run (const gchar      *name,
         }
       else if (format->save_proc && !strcmp (name, format->save_proc))
         {
+          GFile *file = g_file_new_for_uri (param[3].data.d_string);
+
           GimpExportReturn export = GIMP_EXPORT_CANCEL;
 
           image_ID    = param[1].data.d_int32;
@@ -263,7 +267,8 @@ run (const gchar      *name,
               break;
             }
 
-          if (! save_image (param[3].data.d_string, image_ID, drawable_ID,
+          if (! save_image (g_file_get_path (file),
+                            image_ID, drawable_ID,
                             &error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
