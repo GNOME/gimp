@@ -52,6 +52,7 @@
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimpplugin.h>
+#include <libgimp/gimpprocedure-params.h>
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>

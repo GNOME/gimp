@@ -96,6 +96,7 @@ include $(top_srcdir)/libgimp/Makefile.gi
 
 libgimp_sources = \
 	$(libgimp_introspectable)	\
+	gimpprocedure-params.h		\
 	gimptilebackendplugin.c 	\
 	gimptilebackendplugin.h 	\
 	gimpunitcache.c			\
@@ -155,6 +156,7 @@ libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
 gimpinclude_HEADERS = \
 	$(libgimp_introspectable_headers)	\
 	gimplegacy.h				\
+	gimpprocedure-params.h			\
 	$(libgimpui_introspectable_headers)
 
 libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
