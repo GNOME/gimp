@@ -1031,8 +1031,6 @@ file_pnm_LDADD = \
 	$(INTLLIBS)		\
 	$(file_pnm_RC)
 
-file_ps_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_ps_SOURCES = \
 	file-ps.c
 
