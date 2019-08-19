@@ -52,6 +52,9 @@ struct _GimpItemClass
 {
   GObjectClass parent_class;
 
+  /* Signals. */
+  void (* destroyed) (GimpItem *image);
+
   /* Padding for future expansion */
   void (*_gimp_reserved1) (void);
   void (*_gimp_reserved2) (void);
