@@ -20,7 +20,7 @@
 
 
 gboolean   save_image (const gchar  *filename,
-                       gint32        image_id,
+                       GimpImage    *image,
                        GError      **error);
 
 
