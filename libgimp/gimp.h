@@ -56,6 +56,7 @@
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
+#include <libgimp/gimpthumbnailprocedure.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 

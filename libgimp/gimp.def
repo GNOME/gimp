@@ -431,6 +431,8 @@ EXPORTS
 	gimp_image_new_with_precision
 	gimp_image_pick_color
 	gimp_image_pick_correlate_layer
+	gimp_image_procedure_get_type
+	gimp_image_procedure_new
 	gimp_image_raise_item
 	gimp_image_raise_item_to_top
 	gimp_image_remove_channel
@@ -760,6 +762,8 @@ EXPORTS
 	gimp_text_layer_set_letter_spacing
 	gimp_text_layer_set_line_spacing
 	gimp_text_layer_set_text
+	gimp_thumbnail_procedure_get_type
+	gimp_thumbnail_procedure_new
 	gimp_tile_height
 	gimp_tile_width
 	gimp_user_time
