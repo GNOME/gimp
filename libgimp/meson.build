@@ -138,12 +138,15 @@ libgimp_sources_introspectable = [
   'gimpbrushselect.c',
   'gimpchannel.c',
   'gimpdrawable.c',
+  'gimpfileprocedure.c',
   'gimpfontselect.c',
   'gimpgimprc.c',
   'gimpgradientselect.c',
   'gimpimage.c',
   'gimpimagecolorprofile.c',
+  'gimpimageprocedure.c',
   'gimplayer.c',
+  'gimploadprocedure.c',
   'gimppaletteselect.c',
   'gimpparamspecs.c',
   'gimppatternselect.c',
@@ -151,7 +154,9 @@ libgimp_sources_introspectable = [
   'gimpplugin.c',
   'gimpprocedure.c',
   'gimpprogress.c',
+  'gimpsaveprocedure.c',
   'gimpselection.c',
+  'gimpthumbnailprocedure.c',
   gimpenums,
   pdb_wrappers_sources,
 ]
@@ -168,10 +173,9 @@ libgimp_sources = [
   'gimppixbuf.c',
   'gimpplugin_pdb.c',
   'gimpplugin-private.c',
-  'gimpprocedure-private.c',
-  'gimptilebackendplugin.c',
   'gimpunit_pdb.c',
   'gimpunitcache.c',
+  'gimptilebackendplugin.c',
 ]
 
 libgimp_headers_introspectable = [
@@ -180,12 +184,15 @@ libgimp_headers_introspectable = [
   'gimpchannel.h',
   'gimpdrawable.h',
   'gimpenums.h',
+  'gimpfileprocedure.h',
   'gimpfontselect.h',
   'gimpgimprc.h',
   'gimpgradientselect.h',
   'gimpimage.h',
   'gimpimagecolorprofile.h',
+  'gimpimageprocedure.h',
   'gimplayer.h',
+  'gimploadprocedure.h',
   'gimppaletteselect.h',
   'gimpparamspecs.h',
   'gimppatternselect.h',
@@ -193,48 +200,16 @@ libgimp_headers_introspectable = [
   'gimpplugin.h',
   'gimpprocedure.h',
   'gimpprogress.h',
+  'gimpsaveprocedure.h',
   'gimpselection.h',
+  'gimpthumbnailprocedure.h',
   'gimptypes.h',
 ]
 
 libgimp_headers = [
-  'gimp.h',
-  'gimpaspectpreview.h',
-  'gimpbrushselect.h',
-  'gimpbrushselectbutton.h',
-  'gimpchannel.h',
-  'gimpdrawable.h',
-  'gimpdrawablepreview.h',
-  'gimpenums.h',
-  'gimpexport.h',
-  'gimpfontselect.h',
-  'gimpfontselectbutton.h',
-  'gimpgimprc.h',
-  'gimpgradientselect.h',
-  'gimpgradientselectbutton.h',
-  'gimpimage.h',
-  'gimpimagecolorprofile.h',
-  'gimpimagecombobox.h',
-  'gimpimagemetadata.h',
-  'gimpitemcombobox.h',
-  'gimplayer.h',
+  libgimp_headers_introspectable,
   'gimplegacy.h',
-  'gimppaletteselect.h',
-  'gimppaletteselectbutton.h',
-  'gimpparamspecs.h',
-  'gimppatternselect.h',
-  'gimppatternselectbutton.h',
-  'gimpplugin.h',
-  'gimpprocbrowserdialog.h',
-  'gimpprocview.h',
-  'gimpprogress.h',
-  'gimpprogressbar.h',
-  'gimpselectbutton.h',
-  'gimpselection.h',
-  'gimptypes.h',
-  'gimpui.h',
-  'gimpuitypes.h',
-  'gimpzoompreview.h',
+  'gimpprocedure-params.h',
 ]
 
 libgimpui_sources_introspectable = [
@@ -392,14 +367,10 @@ libgimp_gir = gnome.generate_gir(
     'Gtk-3.0',
   ],
 
+  link_with: [
+    libgimpthumb,
+  ],
+
   include_directories: rootInclude,
   install: true,
 )
-
-# girdir = $(datadir)/gir-1.0
-# gir_DATA = $(INTROSPECTION_GIRS)
-#
-# typelibdir = $(libdir)/girepository-1.0
-# typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
-#
-# CLEANFILES += $(gir_DATA) $(typelib_DATA)
