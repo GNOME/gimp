@@ -49,5 +49,7 @@ option('linux-input',       type: 'boolean', value: true, description: 'Linux in
 option('poppler',           type: 'boolean', value: true, description: 'Poppler support')
 option('print',             type: 'boolean', value: true, description: 'Print support')
 option('screenshot',        type: 'boolean', value: true, description: 'Screensh')
-option('python',            type: 'boolean', value: true, description: 'Install Python 3 plug-ins')
 option('vec-icons',         type: 'boolean', value: true, description: 'Use vector icons rather than raster ones')
+
+option('python',            type: 'feature', value: 'auto', description: 'Install Python 3 plug-ins')
+option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')

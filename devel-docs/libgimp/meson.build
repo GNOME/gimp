@@ -30,6 +30,11 @@ gnome.gtkdoc(module_name,
   content_files: [
   ],
   ignore_headers: [
+    'gimp-debug.h',
+    'gimp-private.h',
+    'gimp-shm.h',
+    'gimppdb-private.h',
+    'gimppdbprocedure.h',
     'gimptilebackendplugin.h',
     'gimpunit_pdb.h',
     'gimpunitcache.h',

@@ -714,28 +714,18 @@ conf.set('HAVE_ISO_CODES', isocodes.found())
 
 perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
+## Python
 
-# Python
+# By default, we want packagers to install Python plug-ins to get the
+# optimum experience. -Dpython=true will check for a Python 3
+# interpreter and PyGObject, and warns without.
+# It is up to the packager to ensure they are available at run time.
+# This can be useful in particular when cross-compiling since anyway
+# the interpreter is not useful at build time.
 
-if get_option('python')
-  python = pythonmod.find_installation('python3', required: false)
-  python3_required_version = '>=3.6.0'
+python3_required_version = '>=3.6.0'
 
-  have_python = (
-    python.found() and
-    python.language_version().version_compare(python3_required_version)
-  )
-
-  if not have_python
-    warning('''
-    Python @0@ was not found.
-    Python plug-ins will be installed anyway but you should make
-    sure that a compatible Python interpreter is available at
-    installation, otherwise installed plug-ins won't be usable.
-    '''.format(python3_required_version))
-  endif
-
-else
+if get_option('python').disabled()
   warning('''
   You disabled the installation of core Python plug-ins. This is
   discouraged as it won't provide the full GIMP experience.
@@ -746,6 +736,108 @@ else
   '''.format(python3_required_version))
 
   have_python = false
+
+else
+  python_required = get_option('python').auto()
+
+  python = pythonmod.find_installation('python3', required: false)
+
+  pygobject_found = run_command(
+    python, '-c',
+    '\n'.join([
+      '''import sys, gi''',
+      '''version = '@0@' '''.format('3.0'),
+      '''sys.exit(gi.check_version(version))''',
+    ]),
+  ).returncode() == 0
+
+  python_found = (
+    python.found() and
+    python.language_version().version_compare(python3_required_version) and
+    pygobject_found
+  )
+
+  if (not python_found) and (python_required)
+    error('''
+    Python @0@ or PyGObject was not found.
+
+    Note that you may install the Python plug-ins even if you have
+    no Python interpreter at build-time by passing the configure
+    option -Dpython=enabled.
+    Just make sure that a Python @0@ interpreter is available at run-time.
+    '''.format(python3_required_version))
+  endif
+
+  if (not python_found) and (not python_required)
+    warning('''
+    Python @0@ or PyGObject was not found.
+    Python plug-ins will be installed anyway but you should make
+    sure that a compatible Python interpreter is available at
+    installation, otherwise installed plug-ins won't be usable.
+    '''.format(python3_required_version))
+  endif
+
+  have_python = python_found or (not python_required)
+endif
+
+## Javascript
+
+if get_option('javascript').disabled()
+  warning('''
+    You disabled the installation of core JavaScript plug-ins. This
+    is discouraged as it won't provide the full GIMP experience.
+    Note that you may install the JavaScript plug-ins even if the
+    GJS interpreter is not installed at build-time by passing the
+    configure option -Djavascript=enabled.
+    Just make sure that GJS is available at run-time.
+  ''')
+  have_javascript = false
+
+else
+  js_required = get_option('javascript').auto()
+
+  gjs = find_program('gjs', required: js_required)
+
+  if (not gjs.found()) and (not js_required)
+    warning('''
+    GJS not found.
+    JavaScript plug-ins will be installed anyway but you should make
+    sure that the JavaScript interpreter GJS is available at
+    installation, otherwise installed plug-ins won't be usable.
+    ''')
+  endif
+
+  have_javascript = gjs.found() or (not js_required)
+endif
+
+## Lua
+
+if get_option('lua').disabled()
+  warning('''
+    You disabled the installation of core Lua plug-ins. This
+    is discouraged as it won't provide the full GIMP experience.
+    Note that you may install the Lua plug-ins even if Lua LGI
+    is not installed at build-time by passing the configure option
+    -Dlua=enabled.
+    Just make sure that it is available at run-time.
+  ''')
+  have_lua = false
+
+else
+  lua_required = get_option('lua').auto()
+
+  lua = find_program('luajit', required: lua_required)
+
+  if (not lua.found()) and (not lua_required)
+    warning('''
+    Luajit not found.
+    Lua plug-ins will be installed anyway but you should make
+    sure that luajit and LGI are available at installation,
+    otherwise installed plug-ins won't be usable.
+    ''')
+  endif
+
+  have_lua = jua.found() or (not lua_required)
 endif
 
 
@@ -1501,48 +1593,51 @@ pkgconfig.generate(libgimpui,
 
 ################################################################################
 
-message('''
-Extra Binaries:
-  gimp-console:        @0@'''.format(enable_console_bin) +'''
+final_message = [
+'''Extra Binaries:''',
+'''  gimp-console:        @0@'''.format(enable_console_bin),
+'',
+'''Optional Features:''',
+'''  Language selection:  @0@'''.format(isocodes.found()),
+'''  Vector icons:        @0@'''.format(have_vector_icons),
+'''  Dr. Mingw (Win32):   @0@'''.format(drmingw.found()),
+'''  Relocatable Bundle:  @0@'''.format(relocatable_bundle),
+'''  Default ICC directory:     @0@'''.format(icc_directory),
+'''  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder')),
+'''  Detailed backtraces:       @0@'''.format(detailed_backtraces),
+'',
+'''Optional Plug-Ins:''',
+'''  Ascii Art:           @0@'''.format(libaa.found()),
+'''  Ghostscript:         @0@'''.format(ghostscript.found()),
+'''  Help Browser:        @0@'''.format(webkit.found()),
+'''  JPEG 2000:           @0@'''.format(openjpeg.found()),
+'''  MNG:                 @0@'''.format(libmng.found()),
+'''  OpenEXR:             @0@'''.format(openexr.found()),
+'''  WebP:                @0@'''.format(webp_found),
+'''  Heif:                @0@'''.format(libheif.found()),
+'''  PDF (export):        @0@'''.format(cairopdf.found()),
+'''  Print:               @0@'''.format(have_print),
+'''  Python 3 plug-ins:   @0@'''.format(have_python),
+'''  Javascript plug-ins: @0@'''.format(have_javascript),
+'''  Lua plug-ins:        @0@'''.format(have_lua),
+'''  TWAIN (Win32):       @0@'''.format(platform_win32),
+'''  Webpage:             @0@'''.format(webkit.found()),
+'''  WMF:                 @0@'''.format(wmf.found()),
+'''  X11 Mouse Cursor:    @0@'''.format(xmc.found()),
+'''  XPM:                 @0@'''.format(libxpm.found()),
+'''  Email:               @0@'''.format(email_message),
+'',
+'''Optional Modules:''',
+'''  ALSA (MIDI Input):   @0@'''.format(alsa.found()),
+'''  Linux Input:         @0@ (GUdev support: @1@)'''
+                                .format(have_linuxinput, gudev.found()),
+'''  DirectInput (Win32): @0@'''.format(directx.found()),
+'',
+'''Tests:''',
+'''  Use xvfb-run         @0@'''.format(xvfb_run.found()),
+'''  Test appdata         @0@'''.format(appstream_util.found()),
+'',
+'''Bug report URL: @0@'''.format(bug_report_url),
+]
 
-Optional Features:
-  Language selection:  @0@'''.format(isocodes.found()) +'''
-  Vector icons:        @0@'''.format(have_vector_icons) +'''
-  Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
-  Relocatable Bundle:  @0@'''.format(relocatable_bundle)+'''
-  Default ICC directory:     @0@'''.format(icc_directory)+'''
-  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder'))+'''
-  Detailed backtraces:       @0@'''.format(detailed_backtraces) +'''
-
-Optional Plug-Ins:
-  Ascii Art:           @0@'''.format(libaa.found()) +'''
-  Ghostscript:         @0@'''.format(ghostscript.found()) +'''
-  Help Browser:        @0@'''.format(webkit.found()) +'''
-  JPEG 2000:           @0@'''.format(openjpeg.found()) +'''
-  MNG:                 @0@'''.format(libmng.found()) +'''
-  OpenEXR:             @0@'''.format(openexr.found()) +'''
-  WebP:                @0@'''.format(webp_found) +'''
-  Heif:                @0@'''.format(libheif.found()) +'''
-  PDF (export):        @0@'''.format(cairopdf.found()) +'''
-  Print:               @0@'''.format(have_print) +'''
-  Python 3 plug-ins:   @0@'''.format(have_python) +'''
-  TWAIN (Win32):       @0@'''.format(platform_win32) +'''
-  Webpage:             @0@'''.format(webkit.found()) +'''
-  WMF:                 @0@'''.format(wmf.found()) +'''
-  X11 Mouse Cursor:    @0@'''.format(xmc.found()) +'''
-  XPM:                 @0@'''.format(libxpm.found()) +'''
-  Email:               @0@'''.format(email_message) +'''
-
-Optional Modules:
-  ALSA (MIDI Input):   @0@'''.format(alsa.found()) +'''
-  Linux Input:         @0@ (GUdev support: @0@)'''
-                        .format(have_linuxinput, gudev.found()) +'''
-  DirectInput (Win32): @0@'''.format(directx.found()) +'''
-
-Tests:
-  Use xvfb-run         @0@'''.format(xvfb_run.found()) +'''
-  Test appdata         @0@'''.format(appstream_util.found()) +'''
-
-Bug report URL: @0@'''.format(bug_report_url) +'''
-'''
-)
+message('\n'.join(final_message))

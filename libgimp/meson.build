@@ -152,6 +152,7 @@ libgimp_sources_introspectable = [
   'gimpprocedure.c',
   'gimpprogress.c',
   'gimpselection.c',
+  gimpenums,
   pdb_wrappers_sources,
 ]
 
@@ -171,8 +172,6 @@ libgimp_sources = [
   'gimptilebackendplugin.c',
   'gimpunit_pdb.c',
   'gimpunitcache.c',
-
-  gimpenums,
 ]
 
 libgimp_headers_introspectable = [

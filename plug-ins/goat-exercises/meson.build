@@ -13,7 +13,7 @@ rc_file = platform_win32 ? windows.compile_resources(
 ) : []
 
 executable(plugin_name,
-  'goat-exercise.c',
+  'goat-exercise-c.c',
   rc_file,
   include_directories: [ rootInclude, ],
   dependencies: [
@@ -32,7 +32,30 @@ executable(plugin_name,
   install_dir: gimpplugindir /  'plug-ins' / plugin_name,
 )
 
+
 install_data(
-  'goat-exercise-gjs.js',
-  install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-gjs',
+  'goat-exercise-c.c',
+  install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-c',
 )
+
+if have_python
+  # install_data(
+  #   'goat-exercise-py3.py',
+  #   install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-py3',
+  # )
+endif
+
+
+if have_javascript
+  install_data(
+    'goat-exercise-gjs.js',
+    install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-gjs',
+  )
+endif
+
+if have_lua
+  install_data(
+    'goat-exercise-lua.lua',
+    install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-lua',
+  )
+endif
