@@ -7,10 +7,6 @@ variables:
   INSTALL_DIR: "_install"
   INSTALL_PREFIX: "${CI_PROJECT_DIR}/${INSTALL_DIR}"
 
-  PKG_CONFIG_PATH: "${INSTALL_PREFIX}/lib/pkgconfig"
-  LD_LIBRARY_PATH: "${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-  XDG_DATA_DIRS:   "${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}"
-
   PACMAN_CACHE: "${CI_PROJECT_DIR}/_pacman_cache"
 
 cache:
@@ -35,7 +31,7 @@ image: archlinux/base:latest
         lcms2
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
 
-babl-git-meson:
+babl-git:
   extends: .babl-base
   variables:
     GIT_STRATEGY: none
@@ -45,7 +41,7 @@ babl-git-meson:
     - ninja -C _build
     - ninja -C _build install
 
-# babl-min-meson:
+# babl-min:
 #   extends: .babl-base
 #   script:
 #     - grep babl_required_version ../configure.ac | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | sed 's/\./_/g' > .babl_min_version
@@ -63,6 +59,9 @@ babl-git-meson:
   variables:
     GIT_DEPTH: "5"
   before_script:
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
+    - export   XDG_DATA_DIRS="${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}"
     - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
         git
         base-devel
@@ -87,7 +86,7 @@ babl-git-meson:
         suitesparse
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
-gegl-git-meson:
+gegl-git:
   extends: .gegl-base
   variables:
     GIT_STRATEGY: none
@@ -105,6 +104,9 @@ gegl-git-meson:
   variables:
     GIT_DEPTH: "5"
   before_script:
+    - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
+    - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
+    - export   XDG_DATA_DIRS="${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}"
     - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
         git
         base-devel
@@ -187,38 +189,26 @@ gegl-git-meson:
       - _build/app/tests/
 
 
-# build-default-git-meson:
-#   extends: .build-default
-#   dependencies:
-#     - babl-git-meson
-#     - gegl-git-meson
-
-# build-default-min-meson:
-#   extends: .build-default
-#   dependencies:
-#     - babl-min-meson
-#     - gegl-min-meson
-
 build-git-autotools:
   extends: .gimp-autotools
   dependencies:
-    - babl-git-meson
-    - gegl-git-meson
+    - babl-git
+    - gegl-git
 
 build-git-meson:
   extends: .gimp-meson
   dependencies:
-    - babl-git-meson
-    - gegl-git-meson
+    - babl-git
+    - gegl-git
 
-# build-all-git-meson:
-#   extends: .build-all
+# build-min-autotools:
+#   extends: .gimp-autotools
 #   dependencies:
-#     - babl-git-meson
-#     - gegl-git-meson
+#     - babl-git
+#     - gegl-git
 
-# build-all-min-meson:
-#   extends: .build-all
+# build-min-meson:
+#   extends: .gimp-meson
 #   dependencies:
-#     - babl-min-meson
-#     - gegl-min-meson
+#     - babl-min
+#     - gegl-min
