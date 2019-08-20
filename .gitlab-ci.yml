@@ -33,8 +33,6 @@ image: archlinux/base:latest
 
 babl-git:
   extends: .babl-base
-  variables:
-    GIT_STRATEGY: none
   script:
     - cd _babl
     - meson -Dprefix="${INSTALL_PREFIX}" _build
@@ -88,8 +86,6 @@ babl-git:
 
 gegl-git:
   extends: .gegl-base
-  variables:
-    GIT_STRATEGY: none
   script:
     - cd _gegl
     - meson --prefix="${INSTALL_PREFIX}" _build
@@ -148,7 +144,6 @@ gegl-git:
 .gimp-autotools:
   extends: .gimp-base
   variables:
-    GIT_STRATEGY: none
     LIBMYPAINT_CFLAGS: "-I/usr/include/libmypaint-1.3 -I/usr/include/json-c" 
     LIBMYPAINT_LIBS: "-lmypaint-1.3 -ljson-c" 
   script:
@@ -171,8 +166,6 @@ gegl-git:
 
 .gimp-meson:
   extends: .gimp-base
-  variables:
-    GIT_STRATEGY: none
   script:
     - meson _build
       --prefix="${INSTALL_PREFIX}"
