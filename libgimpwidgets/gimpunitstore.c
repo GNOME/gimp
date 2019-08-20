@@ -851,9 +851,9 @@ gimp_unit_store_set_resolutions  (GimpUnitStore *store,
 }
 
 gdouble
-gimp_unit_store_get_value (GimpUnitStore *store,
-                           GimpUnit       unit,
-                           gint           index)
+gimp_unit_store_get_nth_value (GimpUnitStore *store,
+                               GimpUnit       unit,
+                               gint           index)
 {
   GimpUnitStorePrivate *private;
   GtkTreeIter          iter;
@@ -894,7 +894,7 @@ gimp_unit_store_get_values (GimpUnitStore *store,
   for (i = 0; i < private->num_values; )
     {
       if (first_value)
-        *first_value = gimp_unit_store_get_value (store, unit, i);
+        *first_value = gimp_unit_store_get_nth_value (store, unit, i);
 
       if (++i < private->num_values)
         first_value = va_arg (args, gdouble *);
