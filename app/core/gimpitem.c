@@ -377,7 +377,7 @@ gimp_item_finalize (GObject *object)
 
   gimp_plug_in_manager_emit_signal (private->image->gimp->plug_in_manager,
                                     object, gimp_item_get_ID (GIMP_ITEM (object)),
-                                    "destroyed");
+                                    "destroyed", G_TYPE_NONE);
 
   if (private->offset_nodes)
     {

@@ -72,6 +72,8 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#include "libgimp/gimpgpparams.h"
+
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
@@ -1048,10 +1050,11 @@ gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
 }
 
 void
-gimp_plug_in_emit_signal (GimpPlugIn   *plug_in,
-                          GObject      *object,
-                          gint32        id,
-                          const gchar  *name)
+gimp_plug_in_emit_signal (GimpPlugIn     *plug_in,
+                          GObject        *object,
+                          gint32          id,
+                          const gchar    *name,
+                          GimpValueArray *params)
 {
   if (plug_in->open)
     {
@@ -1071,8 +1074,12 @@ gimp_plug_in_emit_signal (GimpPlugIn   *plug_in,
           signal.type = type;
           signal.id   = id;
           signal.name = (gchar *) name;
+          signal.params = _gimp_value_array_to_gp_params (params, FALSE);
+          signal.nparams = gimp_value_array_length (params);
 
           gp_signal_write (plug_in->my_write, &signal, plug_in);
+
+          g_free (signal.params);
         }
     }
 }

@@ -300,6 +300,8 @@ struct _GPSignal
   guint32       id;
   gchar        *name;
 
+  guint32       nparams;
+  GPParam      *params;
 };
 
 void      gp_init                   (void);

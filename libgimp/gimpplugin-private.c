@@ -356,22 +356,30 @@ static void
 gimp_plug_in_signal (GimpPlugIn *plug_in,
                      GPSignal   *signal)
 {
+  GimpValueArray *arguments;
+
+  arguments = _gimp_gp_params_to_value_array (NULL,
+                                              NULL, 0,
+                                              signal->params,
+                                              signal->nparams,
+                                              FALSE, FALSE);
   switch (signal->type)
     {
     case GP_SIGNAL_TYPE_IMAGE:
-      _gimp_image_process_signal (signal->id, signal->name);
+      _gimp_image_process_signal (signal->id, signal->name, arguments);
       break;
     case GP_SIGNAL_TYPE_ITEM:
-      _gimp_item_process_signal (signal->id, signal->name);
+      _gimp_item_process_signal (signal->id, signal->name, arguments);
       break;
     case GP_SIGNAL_TYPE_DISPLAY:
-      _gimp_display_process_signal (signal->id, signal->name);
+      _gimp_display_process_signal (signal->id, signal->name, arguments);
       break;
 
     case GP_SIGNAL_TYPE_NONE:
       g_warning ("Unexpected signal without type received (should not happen)");
       break;
     }
+  gimp_value_array_unref (arguments);
 }
 
 static void
