@@ -211,7 +211,7 @@ gimp_save_procedure_run (GimpProcedure        *procedure,
  * arguments.
  *
  * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguemnts and calls @run_func which is a #GimpRunSaveFunc. The
+ * arguments and calls @run_func which is a #GimpRunSaveFunc. The
  * "args" #GimpValueArray of #GimpRunSaveFunc only contains
  * additionally added arguments.
  *

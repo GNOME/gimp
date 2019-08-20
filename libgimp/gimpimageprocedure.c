@@ -169,7 +169,7 @@ gimp_image_procedure_run (GimpProcedure        *procedure,
  * arguments.
  *
  * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguemnts and calls @run_func which is a #GimpRunImageFunc. The
+ * arguments and calls @run_func which is a #GimpRunImageFunc. The
  * "args" #GimpValueArray of #GimpRunImageFunc only contains
  * additionally added arguments.
  *

@@ -644,7 +644,7 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * @procedure: A #GimpProcedure.
  * @menu_path: The @procedure's additional menu path.
  *
- * Adds a menu path to te procedure. Only procedures which have a menu
+ * Adds a menu path to the procedure. Only procedures which have a menu
  * label can add a menu path.
  *
  * Menu paths are untranslated paths to menus and submenus with the
