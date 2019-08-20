@@ -67,15 +67,16 @@ struct _GimpItemClass
   void (*_gimp_reserved9) (void);
 };
 
-GType         gimp_item_get_type     (void) G_GNUC_CONST;
+GType         gimp_item_get_type         (void) G_GNUC_CONST;
 
-gint32        gimp_item_get_id       (GimpItem    *item);
-GimpItem    * gimp_item_get_by_id    (gint32       item_id);
+gint32        gimp_item_get_id           (GimpItem       *item);
+GimpItem    * gimp_item_get_by_id        (gint32          item_id);
 
 
 G_GNUC_INTERNAL
-void          _gimp_item_process_signal    (gint32        item_id,
-                                            const gchar  *name);
+void          _gimp_item_process_signal  (gint32          item_id,
+                                          const gchar    *name,
+                                          GimpValueArray *params);
 
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API

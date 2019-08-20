@@ -122,6 +122,7 @@ GimpPDBErrorHandler
 void          gimp_plug_in_emit_signal       (GimpPlugIn             *plug_in,
                                               GObject                *object,
                                               gint32                  id,
-                                              const gchar            *name);
+                                              const gchar            *name,
+                                              GimpValueArray         *params);
 
 #endif /* __GIMP_PLUG_IN_H__ */

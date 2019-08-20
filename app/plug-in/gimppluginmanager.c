@@ -23,6 +23,8 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <glib-object.h>
+#include <gobject/gvaluecollector.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -429,10 +431,48 @@ void
 gimp_plug_in_manager_emit_signal (GimpPlugInManager *manager,
                                   GObject           *object,
                                   gint32             id,
-                                  const gchar       *name)
+                                  const gchar       *name,
+                                  GType              first_type,
+                                  ...)
 {
-  GSList *iter = manager->open_plug_ins;
+  GSList         *iter = manager->open_plug_ins;
+  GimpValueArray *params;
+  GType           param_type;
+  va_list         va_args;
+
+  va_start (va_args, first_type);
+
+  param_type = first_type;
+  params = gimp_value_array_new (param_type == G_TYPE_NONE ? 0 : 1);
+
+  while (param_type != G_TYPE_NONE)
+    {
+      GValue  value = G_VALUE_INIT;
+      gchar  *error = NULL;
+
+      g_value_init (&value, param_type);
+      G_VALUE_COLLECT (&value, va_args, G_VALUE_NOCOPY_CONTENTS, &error);
+
+      if (error)
+        {
+          g_critical ("%s: %s", G_STRFUNC, error);
+          g_free (error);
+          g_value_unset (&value);
+          gimp_value_array_unref (params);
+
+          return;
+        }
+
+      gimp_value_array_append (params, &value);
+      g_value_unset (&value);
+
+      param_type = va_arg (va_args, GType);
+    }
+
+  va_end (va_args);
 
   for (; iter; iter = iter->next)
-    gimp_plug_in_emit_signal (iter->data, object, id, name);
+    gimp_plug_in_emit_signal (iter->data, object, id, name, params);
+
+  gimp_value_array_unref (params);
 }

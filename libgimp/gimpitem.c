@@ -294,8 +294,9 @@ gimp_item_get_children (GimpItem *item)
 
 
 void
-_gimp_item_process_signal (gint32       item_id,
-                           const gchar *name)
+_gimp_item_process_signal (gint32          item_id,
+                           const gchar    *name,
+                           GimpValueArray *params)
 {
   GimpItem *item = NULL;
 

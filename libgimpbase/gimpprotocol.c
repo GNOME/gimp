@@ -1993,6 +1993,10 @@ _gp_signal_read (GIOChannel      *channel,
                                 &signal->name, 1, user_data))
     goto cleanup;
 
+  _gp_params_read (channel,
+                   &signal->params, (guint *) &signal->nparams,
+                   user_data);
+
   msg->data = signal;
   return;
 
@@ -2019,6 +2023,8 @@ _gp_signal_write (GIOChannel      *channel,
   if (! _gimp_wire_write_string (channel,
                                  &signal->name, 1, user_data))
     return;
+
+  _gp_params_write (channel, signal->params, signal->nparams, user_data);
 }
 
 static void
@@ -2028,7 +2034,9 @@ _gp_signal_destroy (GimpWireMessage *msg)
 
   if (signal)
     {
+      _gp_params_destroy (signal->params, signal->nparams);
       g_free (signal->name);
+
       g_slice_free (GPSignal, signal);
     }
 }

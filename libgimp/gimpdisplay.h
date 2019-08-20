@@ -64,15 +64,16 @@ struct _GimpDisplayClass
   void (*_gimp_reserved9) (void);
 };
 
-GType         gimp_display_get_type     (void) G_GNUC_CONST;
+GType         gimp_display_get_type        (void) G_GNUC_CONST;
 
-gint32        gimp_display_get_id       (GimpDisplay    *display);
-GimpDisplay * gimp_display_get_by_id    (gint32          display_id);
+gint32        gimp_display_get_id          (GimpDisplay    *display);
+GimpDisplay * gimp_display_get_by_id       (gint32          display_id);
 
 
 G_GNUC_INTERNAL
-void          _gimp_display_process_signal (gint32        display_id,
-                                            const gchar  *name);
+void          _gimp_display_process_signal (gint32          display_id,
+                                            const gchar    *name,
+                                            GimpValueArray *arguments);
 
 
 G_END_DECLS

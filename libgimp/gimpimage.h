@@ -52,7 +52,10 @@ struct _GimpImageClass
   GObjectClass parent_class;
 
   /* Signals. */
-  void (* destroyed) (GimpImage *image);
+  void (* destroyed) (GimpImage   *image);
+  void (* new_layer) (GimpImage   *image,
+                      GimpLayer   *layer,
+                      const gchar *add_name);
 
   /* Padding for future expansion */
   void (*_gimp_reserved1) (void);
@@ -68,15 +71,16 @@ struct _GimpImageClass
 
 GType          gimp_image_get_type           (void) G_GNUC_CONST;
 
-gint32         gimp_image_get_id             (GimpImage    *image);
-GimpImage    * gimp_image_get_by_id          (gint32        image_id);
+gint32         gimp_image_get_id             (GimpImage      *image);
+GimpImage    * gimp_image_get_by_id          (gint32          image_id);
 
 GList        * gimp_image_list               (void);
 
 
 G_GNUC_INTERNAL
-void           _gimp_image_process_signal    (gint32        image_id,
-                                              const gchar  *name);
+void           _gimp_image_process_signal    (gint32          image_id,
+                                              const gchar    *name,
+                                              GimpValueArray *params);
 
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
