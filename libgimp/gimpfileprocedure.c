@@ -177,7 +177,7 @@ gimp_file_procedure_get_extensions (GimpFileProcedure *procedure)
  * @prefixes:  A comma separated list of prefixes this procedure can
  *             handle (i.e. "http:,ftp:").
  *
- * It should almost never be neccessary to register prefixes with file
+ * It should almost never be necessary to register prefixes with file
  * procedures, because most sorts of URIs should be handled by GIO.
  *
  * Since: 3.0

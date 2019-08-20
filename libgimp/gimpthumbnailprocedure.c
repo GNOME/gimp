@@ -199,7 +199,7 @@ gimp_thumbnail_procedure_run (GimpProcedure        *procedure,
  * additional arguments.
  *
  * When invoked via gimp_procedure_run(), it unpacks these standard
- * arguemnts and calls @run_func which is a #GimpRunThumbnailFunc. The
+ * arguments and calls @run_func which is a #GimpRunThumbnailFunc. The
  * "args" #GimpValueArray of #GimpRunThumbnailFunc only contains
  * additionally added arguments.
  *

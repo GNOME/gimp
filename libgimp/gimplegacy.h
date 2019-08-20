@@ -92,7 +92,7 @@ struct _GimpPlugInInfo
  * GimpParamDef:
  * @type:        the parameter's type.
  * @name:        the parameter's name.
- * @description: the parameter's desctiption.
+ * @description: the parameter's description.
  **/
 struct _GimpParamDef
 {
