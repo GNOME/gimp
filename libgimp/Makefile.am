@@ -331,6 +331,9 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimpthumb_introspectable)					\
 	$(libgimpwidgets_introspectable)
 
+Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_SCANNERFLAGS = \
+	--c-include="libgimp/gimp.h"
+
 INTROSPECTION_GIRS += Gimp-@GIMP_API_VERSION@.gir
 
 girdir = $(datadir)/gir-1.0
