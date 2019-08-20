@@ -41,12 +41,67 @@
 #define WMF_DEFAULT_SIZE        500
 #define WMF_PREVIEW_SIZE        128
 
+
 typedef struct
 {
   gdouble    resolution;
   gint       width;
   gint       height;
 } WmfLoadVals;
+
+
+typedef struct _Wmf      Wmf;
+typedef struct _WmfClass WmfClass;
+
+struct _Wmf
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _WmfClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define WMF_TYPE  (wmf_get_type ())
+#define WMF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WMF_TYPE, Wmf))
+
+GType                   wmf_get_type         (void) G_GNUC_CONST;
+
+static GList          * wmf_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * wmf_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * wmf_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+static GimpValueArray * wmf_load_thumb       (GimpProcedure        *procedure,
+                                              GFile                *file,
+                                              gint                  size,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static gint32           load_image           (const gchar          *filename,
+                                              GError              **error);
+static gboolean         load_wmf_size        (const gchar          *filename,
+                                              WmfLoadVals          *vals);
+static gboolean         load_dialog          (const gchar          *filename);
+static guchar         * wmf_get_pixbuf       (const gchar          *filename,
+                                              gint                 *width,
+                                              gint                 *height);
+static guchar         * wmf_load_file        (const gchar          *filename,
+                                              guint                *width,
+                                              guint                *height,
+                                              GError              **error);
+
+
+G_DEFINE_TYPE (Wmf, wmf, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (WMF_TYPE)
+
 
 static WmfLoadVals load_vals =
 {
@@ -56,242 +111,222 @@ static WmfLoadVals load_vals =
 };
 
 
-static void      query          (void);
-static void      run            (const gchar       *name,
-                                 gint               nparams,
-                                 const GimpParam   *param,
-                                 gint              *nreturn_vals,
-                                 GimpParam        **return_vals);
-static gint32    load_image     (const gchar       *filename,
-                                 GError           **error);
-static gboolean  load_wmf_size  (const gchar       *filename,
-                                 WmfLoadVals       *vals);
-static gboolean  load_dialog    (const gchar       *filename);
-static guchar   *wmf_get_pixbuf (const gchar       *filename,
-                                 gint              *width,
-                                 gint              *height);
-static guchar   *wmf_load_file  (const gchar       *filename,
-                                 guint             *width,
-                                 guint             *height,
-                                 GError           **error);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,   /* init_proc  */
-  NULL,   /* quit_proc  */
-  query,  /* query_proc */
-  run     /* run_proc   */
-};
-
-MAIN ()
-
-
-/*
- * 'query()' - Respond to a plug-in query...
- */
 static void
-query (void)
+wmf_class_init (WmfClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" },
-    { GIMP_PDB_FLOAT,  "resolution",   "Resolution to use for rendering the WMF (defaults to 72 dpi"     },
-    { GIMP_PDB_INT32,  "width",        "Width (in pixels) to load the WMF in, 0 for original width"      },
-    { GIMP_PDB_INT32,  "height",       "Height (in pixels) to load the WMF in, 0 for original height"    }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,   "image",         "Output image"               }
-  };
-
-  static const GimpParamDef thumb_args[] =
-  {
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load"   },
-    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"       }
-  };
-  static const GimpParamDef thumb_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"                },
-    { GIMP_PDB_INT32,  "image-width",  "Width of full-sized image"      },
-    { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"     }
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "Loads files in the WMF file format",
-                          "Loads files in the WMF file format",
-                          "Dom Lachowicz <cinamod@hotmail.com>",
-                          "Dom Lachowicz <cinamod@hotmail.com>",
-                          "(c) 2003 - Version 0.3.0",
-                          N_("Microsoft WMF file"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-wmf");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "wmf,apm", "",
-                                    "0,string,\\327\\315\\306\\232,0,string,\\1\\0\\11\\0");
-
-  gimp_install_procedure (LOAD_THUMB_PROC,
-                          "Loads a small preview from a WMF image",
-                          "",
-                          "Dom Lachowicz <cinamod@hotmail.com>",
-                          "Dom Lachowicz <cinamod@hotmail.com>",
-                          "(c) 2003 - Version 0.3.0",
-                          NULL,
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (thumb_args),
-                          G_N_ELEMENTS (thumb_return_vals),
-                          thumb_args, thumb_return_vals);
-
-  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
+  plug_in_class->query_procedures = wmf_query_procedures;
+  plug_in_class->create_procedure = wmf_create_procedure;
 }
 
-/*
- * 'run()' - Run the plug-in...
- */
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+wmf_init (Wmf *wmf)
 {
-  static GimpParam   values[4];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  const gchar       *filename = NULL;
-  GError            *error    = NULL;
-  gint32             image_ID = -1;
-  gint               width    = 0;
-  gint               height   = 0;
+}
+
+static GList *
+wmf_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+wmf_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           wmf_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("Microsoft WMF file"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files in the WMF file format",
+                                        "Loads files in the WMF file format",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dom Lachowicz <cinamod@hotmail.com>",
+                                      "Dom Lachowicz <cinamod@hotmail.com>",
+                                      "(c) 2003 - Version 0.3.0");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-wmf");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "wmf,apm");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,\\327\\315\\306\\232,0,string,\\1\\0\\11\\0");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
+                            "Resolution",
+                            "Resolution to use for rendering the WMF",
+                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                            WMF_DEFAULT_RESOLUTION,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "width",
+                         "Width",
+                         "Width (in pixels) to load the WMF in, "
+                         "0 for original width",
+                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "height",
+                         "Height",
+                         "Height (in pixels) to load the WMF in, "
+                         "0 for original height",
+                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         G_PARAM_READWRITE);
+    }
+  else if (! strcmp (name, LOAD_THUMB_PROC))
+    {
+      procedure = gimp_thumbnail_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                                wmf_load_thumb, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads a small preview from a WMF image",
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dom Lachowicz <cinamod@hotmail.com>",
+                                      "Dom Lachowicz <cinamod@hotmail.com>",
+                                      "(c) 2003 - Version 0.3.0");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+wmf_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  gchar          *filename;
+  gint32          image;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  filename = g_file_get_path (file);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (strcmp (name, LOAD_PROC) == 0)
+  switch (run_mode)
     {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+    case GIMP_RUN_NONINTERACTIVE:
+      load_vals.resolution = GIMP_VALUES_GET_DOUBLE (args, 0);
+      load_vals.width      = GIMP_VALUES_GET_INT    (args, 1);
+      load_vals.height     = GIMP_VALUES_GET_INT    (args, 2);
+      break;
 
-      filename = g_file_get_path (file);
-
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data (LOAD_PROC, &load_vals);
+      if (! load_dialog (filename))
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
 
-      switch (run_mode)
-        {
-        case GIMP_RUN_NONINTERACTIVE:
-          if (nparams > 3)  load_vals.resolution = param[3].data.d_float;
-          if (nparams > 4)  load_vals.width      = param[4].data.d_int32;
-          if (nparams > 5)  load_vals.height     = param[5].data.d_int32;
-          break;
-
-        case GIMP_RUN_INTERACTIVE:
-          if (! load_dialog (filename))
-            status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          break;
-        }
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_get_data (LOAD_PROC, &load_vals);
+      break;
     }
-  else if (strcmp (name, LOAD_THUMB_PROC) == 0)
+
+  image = load_image (filename, &error);
+
+  g_free (filename);
+
+  if (image < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+wmf_load_thumb (GimpProcedure        *procedure,
+                GFile                *file,
+                gint                  size,
+                const GimpValueArray *args,
+                gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  gchar          *filename;
+  gint            width;
+  gint            height;
+  gint32          image;
+  GError         *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  filename = g_file_get_path (file);
+
+  if (load_wmf_size (filename, &load_vals) &&
+      load_vals.width  > 0                 &&
+      load_vals.height > 0)
     {
-      GFile *file = g_file_new_for_uri (param[0].data.d_string);
+      width  = load_vals.width;
+      height = load_vals.height;
 
-      gint size = param[1].data.d_int32;
-
-      filename = g_file_get_path (file);
-
-      if (size > 0                             &&
-          load_wmf_size (filename, &load_vals) &&
-          load_vals.width  > 0                 &&
-          load_vals.height > 0)
+      if ((gdouble) load_vals.width > (gdouble) load_vals.height)
         {
-          width  = load_vals.width;
-          height = load_vals.height;
-
-          if ((gdouble) load_vals.width > (gdouble) load_vals.height)
-            {
-              load_vals.width   = size;
-              load_vals.height *= size / (gdouble) load_vals.width;
-            }
-          else
-            {
-              load_vals.width  *= size / (gdouble) load_vals.height;
-              load_vals.height  = size;
-            }
+          load_vals.width   = size;
+          load_vals.height *= size / (gdouble) load_vals.width;
         }
       else
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          load_vals.width  *= size / (gdouble) load_vals.height;
+          load_vals.height  = size;
         }
     }
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               NULL);
     }
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      if (load_vals.resolution < GIMP_MIN_RESOLUTION ||
-          load_vals.resolution > GIMP_MAX_RESOLUTION)
-        {
-          load_vals.resolution = WMF_DEFAULT_RESOLUTION;
-        }
+  image = load_image (filename, &error);
 
-      image_ID = load_image (filename, &error);
+  g_free (filename);
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    }
+  if (image < 1)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      if (strcmp (name, LOAD_THUMB_PROC) == 0)
-        {
-          *nreturn_vals = 4;
-          values[2].type         = GIMP_PDB_INT32;
-          values[2].data.d_int32 = width;
-          values[3].type         = GIMP_PDB_INT32;
-          values[3].data.d_int32 = height;
-        }
-      else
-        {
-          gimp_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
-        }
-    }
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  GIMP_VALUES_SET_INT   (return_vals, 2, width);
+  GIMP_VALUES_SET_INT   (return_vals, 3, height);
 
-  values[0].data.d_status = status;
+  gimp_value_array_truncate (return_vals, 4);
+
+  return return_vals;
 }
 
 
