@@ -104,9 +104,9 @@ void            gimp_unit_store_set_resolution   (GimpUnitStore *store,
 void            gimp_unit_store_set_resolutions  (GimpUnitStore *store,
                                                   gdouble        first_resolution,
                                                   ...);
-gdouble         gimp_unit_store_get_value        (GimpUnitStore *store,
-                                                  GimpUnit       unit,
-                                                  gint           index);
+gdouble         gimp_unit_store_get_value_at_index (GimpUnitStore *store,
+                                                    GimpUnit       unit,
+                                                    gint           index);
 void            gimp_unit_store_get_values       (GimpUnitStore *store,
                                                   GimpUnit       unit,
                                                   gdouble       *first_value,
