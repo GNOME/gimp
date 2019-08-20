@@ -141,9 +141,6 @@ gegl-git-meson:
         intltool
         iso-codes
         xorg-server-xvfb
-    - git clone --depth=$GIT_DEPTH https://gitlab.gnome.org/GNOME/gimp.git _gimp
-    - cd _gimp
-    - mkdir _build
 
 .build-gimp:
   extends: .gimp-base
@@ -161,13 +158,13 @@ gegl-git-meson:
       -Dlua=enabled
     - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH"
       ninja -C _build
-#    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" make check
+#    - LD_LIBRARY_PATH="$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH" ninja check
   artifacts:
     name: "app-tests-logs-$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     when: on_failure
     expire_in: 1 week
     paths:
-      - _gimp/_build/app/tests/
+      - _build/app/tests/
 
 # .build-default:
 #   extends: .build-gimp
