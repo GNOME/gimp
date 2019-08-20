@@ -837,7 +837,7 @@ else
     ''')
   endif
 
-  have_lua = jua.found() or (not lua_required)
+  have_lua = lua.found() or (not lua_required)
 endif
 
 

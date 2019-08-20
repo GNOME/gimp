@@ -53,3 +53,4 @@ option('vec-icons',         type: 'boolean', value: true, description: 'Use vect
 
 option('python',            type: 'feature', value: 'auto', description: 'Install Python 3 plug-ins')
 option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
+option('lua',               type: 'feature', value: 'auto', description: 'Install Lua plug-ins')
