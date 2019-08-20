@@ -716,7 +716,7 @@ gimp_unit_store_set_pixel_value
 gimp_unit_store_set_pixel_values
 gimp_unit_store_set_resolution
 gimp_unit_store_set_resolutions
-gimp_unit_store_get_value
+gimp_unit_store_get_nth_value
 gimp_unit_store_get_values
 <SUBSECTION Standard>
 GimpUnitStoreClass
