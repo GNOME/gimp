@@ -2381,9 +2381,9 @@ elif test "x$with_lua" = xforce; then
   AC_CHECK_PROGS(LUA, luajit, no)
   if test "x$LUA" = xno; then
     warning_lua="
-WARNING: luagit not found.
+WARNING: luajit not found.
          Lua plug-ins will be installed anyway but you should make
-         sure that luagit and LGI are available at installation,
+         sure that luajit and LGI are available at installation,
          otherwise installed plug-ins won't be usable."
     with_lua="yes (see warning below)"
   fi
@@ -2392,8 +2392,8 @@ else
   AC_CHECK_PROGS(LUA, luajit, no)
   if test "x$GJS" = xno; then
     required_deps="$required_deps
-    - luagit not found.
-        *** Please install the Lua interpreter luagit.
+    - luajit not found.
+        *** Please install the Lua interpreter luajit.
         *** Note that you may install the Lua plug-ins even if luajit
         *** is not installed at build-time by passing the configure
         *** option --with-lua=force.
