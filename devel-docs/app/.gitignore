@@ -1,6 +1,3 @@
-/Makefile
-/Makefile.in
-/.libs
 /deprecated
 /app.args
 /app.hierarchy
@@ -16,5 +13,3 @@
 /tmpl
 /xml
 /version
-/*.bak
-/*.stamp
