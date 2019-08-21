@@ -3,7 +3,6 @@
 /gimpdir-output
 Makefile
 Makefile.in
-libgimpapptestutils.a
 test-core*
 test-gimpidtable*
 test-gimptilebackendtilemanager*
@@ -17,5 +16,4 @@ test-ui*
 test-window-management*
 test-xcf*
 /*.trs
-/*.log
 /gimp-test-icon-theme

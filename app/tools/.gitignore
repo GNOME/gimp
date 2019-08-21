@@ -1,8 +1,1 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/*.lo
-/libapptools.a
-/libapptools.la
 /xgen-tec

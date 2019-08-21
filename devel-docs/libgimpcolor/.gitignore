@@ -1,5 +1,3 @@
-/Makefile
-/Makefile.in
 /deprecated
 /libgimpcolor3.args
 /libgimpcolor3-decl.txt
@@ -15,6 +13,3 @@
 /tmpl
 /xml
 /version
-/.libs
-/*.bak
-/*.stamp
