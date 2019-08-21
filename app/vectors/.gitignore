@@ -1,7 +1,0 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/*.lo
-/libappvectors.a
-/libappvectors.la

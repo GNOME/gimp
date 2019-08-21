@@ -1,5 +1,3 @@
-/Makefile
-/Makefile.in
 /deprecated
 /libgimpwidgets3.args
 /libgimpwidgets3.hierarchy
@@ -14,6 +12,3 @@
 /html
 /xml
 /version
-/.libs
-/*.bak
-/*.stamp
