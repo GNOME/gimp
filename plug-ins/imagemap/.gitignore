@@ -1,9 +1,3 @@
-/Makefile.in
-/Makefile
-/.deps
-/_libs
-/.libs
 /imagemap
-/imagemap.exe
 /y.tab.c
 /y.tab.h
