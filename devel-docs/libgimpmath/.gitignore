@@ -1,5 +1,3 @@
-/Makefile
-/Makefile.in
 /deprecated
 /libgimpmath3.args
 /libgimpmath3-decl.txt
@@ -15,6 +13,3 @@
 /tmpl
 /xml
 /version
-/.libs
-/*.bak
-/*.stamp

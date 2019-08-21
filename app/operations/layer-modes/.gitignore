@@ -1,8 +1,0 @@
-/Makefile
-/Makefile.in
-/.deps
-/.libs
-/libapplayermodes.a
-/libapplayermodes-generic.a
-/libapplayermodes-sse2.a
-/libapplayermodes-sse4.a
