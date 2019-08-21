@@ -1,5 +1,3 @@
-/Makefile
-/Makefile.in
 /deprecated
 /libgimpmodule3.args
 /libgimpmodule3.hierarchy
@@ -15,6 +13,3 @@
 /tmpl
 /xml
 /version
-/.libs
-/*.bak
-/*.stamp

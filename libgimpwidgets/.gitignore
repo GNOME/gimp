@@ -1,11 +1,4 @@
 /.dirstamp
-/*.la
-/*.lo
-/.deps
-/.libs
-/Makefile
-/Makefile.in
-/_libs
 /gimp-color-picker-cursors.c
 /gimp-color-picker-cursors.h
 /gimp-icon-pixbufs.c
@@ -16,5 +9,4 @@
 /test-eevl*
 /test-preview-area
 /*.trs
-/*.log
 /xgen-wec
