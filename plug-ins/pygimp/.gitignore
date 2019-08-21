@@ -1,12 +1,4 @@
-/Makefile
-/Makefile.in
-/*.pyc
-/*.pyo
-/*.so
-/*.lo
-/*.la
 /configure
-/config.log
 /config.h
 /config.cache
 /stamp-h
@@ -18,5 +10,3 @@
 /install-sh
 /gimpui.c
 /gimpthumb.c
-/.libs
-/.deps
