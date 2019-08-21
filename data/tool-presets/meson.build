@@ -1,4 +1,4 @@
-tools_presets_types = [
+tool_presets_types = [
   'Crop',
   'FX',
   'Paint',
@@ -6,15 +6,10 @@ tools_presets_types = [
   'Sketch',
 ]
 
-foreach tools_presets_type : tools_presets_types
-
-  install_subdir(tools_presets_type,
-    install_dir: join_paths(gimpdatadir, 'tools-presets'),
-    exclude_files: [
-      '.gitignore',
-      'Makefile.am',
-      'Makefile.in',
-    ],
+foreach tool_presets_type : tool_presets_types
+  subdir(tool_presets_type)
+  install_data(
+    tool_presets,
+    install_dir: gimpdatadir / 'tool-presets' / tool_presets_type,
   )
-
 endforeach
