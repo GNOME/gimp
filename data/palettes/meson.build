@@ -1,5 +1,5 @@
 
-palettes = [
+palettes = files(
   'Bears.gpl',
   'Bgold.gpl',
   'Blues.gpl',
@@ -30,17 +30,17 @@ palettes = [
   'Paintjet.gpl',
   'Pastels.gpl',
   'Plasma.gpl',
-  'Reds.gpl',
   'Reds_And_Purples.gpl',
+  'Reds.gpl',
   'Royal.gpl',
   'Tango.gpl',
   'Topographic.gpl',
-  'Visibone.gpl',
   'Visibone_2.gpl',
+  'Visibone.gpl',
   'Volcano.gpl',
   'Warm_Colors.gpl',
   'Web.gpl',
-]
+)
 
 install_data(palettes,
   install_dir: join_paths(gimpdatadir, 'palettes'),

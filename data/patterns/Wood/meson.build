@@ -1,0 +1,15 @@
+patterns = files(
+  'bark.pat',
+  'burlwood.pat',
+  'corkboard.pat',
+  'parque1.pat',
+  'parque2.pat',
+  'parque3.pat',
+  'pine.pat',
+  'walnut.pat',
+  'wood1.pat',
+  'wood2.pat',
+  'wood3.pat',
+  'wood4.pat',
+  'wood5.pat',
+)
