@@ -1,14 +1,6 @@
-/Makefile
-/Makefile.in
 /makefile.mingw
 /gimpthumb-enums.c
 /.dirstamp
-/*.lo
-/_libs
-/.libs
-/.deps
-/*.la
 /*.lib
 /*.exp
 /gimp-thumbnail-list
-/gimp-thumbnail-list.exe

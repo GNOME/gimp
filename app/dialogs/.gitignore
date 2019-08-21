@@ -1,8 +1,1 @@
-/Makefile
-/Makefile.in
 /authors.h
-/.deps
-/.libs
-/*.lo
-/libappdialogs.a
-/libappdialogs.la
