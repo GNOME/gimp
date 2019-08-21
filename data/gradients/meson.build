@@ -1,4 +1,4 @@
-gradients = [
+gradients = files(
   'Abstract_1.ggr',
   'Abstract_2.ggr',
   'Abstract_3.ggr',
@@ -69,10 +69,10 @@ gradients = [
   'Wood_2.ggr',
   'Yellow_Contrast.ggr',
   'Yellow_Orange.ggr',
-]
+)
 
 
-gradients_obsolete = [
+gradients_obsolete = files(
   'French_flag.ggr',
   'French_flag_smooth.ggr',
   'German_flag.ggr',
@@ -81,7 +81,7 @@ gradients_obsolete = [
   'Mexican_flag_smooth.ggr',
   'Romanian_flag.ggr',
   'Romanian_flag_smooth.ggr',
-]
+)
 
 install_data(
   gradients,
