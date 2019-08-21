@@ -1,8 +1,2 @@
-/Makefile.in
-/Makefile
-/.deps
-/_libs
-/.libs
 /help-browser
-/help-browser.exe
 /logo-pixbuf.h
