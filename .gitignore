@@ -1,9 +1,30 @@
-.vscode
-_build
+# Meson
+/_build
+/compile_commands.json
 
+# Atom editor
+/.vscode
+
+# Autotools
+
+.deps/
+.libs/
+_libs/
+Makefile
+Makefile.in
+
+*.bak
+*.log
+
+*.pyc
+*.pyo
+
+*.stamp
 *.la
 *.lo
 *.o
+*.exe
+
 *~
 /*.config
 /*.creator
@@ -14,8 +35,6 @@ _build
 /Gimp-3.0.gir
 /Gimp-3.0.typelib
 /INSTALL
-/Makefile
-/Makefile.in
 /aclocal.m4
 /authors.md
 /autom4te.cache
@@ -24,7 +43,6 @@ _build
 /config.guess
 /config.h
 /config.h.in
-/config.log
 /config.status
 /config.status.lineno
 /config.sub

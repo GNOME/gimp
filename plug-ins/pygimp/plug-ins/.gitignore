@@ -1,5 +1,3 @@
-/Makefile
-/Makefile.in
 /*.pyc
 /*.pyo
 /benchmark-foreground-extract/benchmark-foreground-extract.py
