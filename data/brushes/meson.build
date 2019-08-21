@@ -9,14 +9,9 @@ brushes_types = [
 ]
 
 foreach brushes_type : brushes_types
-
-  install_subdir(brushes_type,
-    install_dir: join_paths(gimpdatadir, 'brushes'),
-    exclude_files: [
-      '.gitignore',
-      'Makefile.am',
-      'Makefile.in',
-    ],
+  subdir(brushes_type)
+  install_data(
+    brushes,
+    install_dir: gimpdatadir / 'brushes' / brushes_type,
   )
-
 endforeach
