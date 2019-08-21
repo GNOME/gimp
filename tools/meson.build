@@ -21,12 +21,6 @@ gimptool = executable('gimptool-' + gimp_app_version,
   install: true,
 )
 
-executable('kernelgen',
-  'kernelgen.c',
-  include_directories: rootInclude,
-  install: false,
-)
-
 executable('gimp-test-clipboard-' + gimp_app_version,
   'gimp-test-clipboard.c',
   include_directories: rootInclude,
@@ -34,4 +28,10 @@ executable('gimp-test-clipboard-' + gimp_app_version,
     gtk3,
   ],
   install: true,
+)
+
+executable('kernelgen',
+  'kernelgen.c',
+  include_directories: rootInclude,
+  install: false,
 )
