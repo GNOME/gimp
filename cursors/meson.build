@@ -159,9 +159,6 @@ color_picker_cursors = [
   'cursor-color-picker.png',
 ]
 
-# Build xml files, in source dir, at Meson-runtime
-# TODO : versionning, or write in build dir
-
 cursors_resourcename = 'gimp-tool-cursors'
 cursors_xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
 cursors_xml_content += '<gresources>\n'
