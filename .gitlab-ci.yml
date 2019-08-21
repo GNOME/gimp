@@ -59,7 +59,7 @@ babl-git:
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export   XDG_DATA_DIRS="${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}"
+    - export   XDG_DATA_DIRS="${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}:/usr/share"
     - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
         git
         base-devel
@@ -102,7 +102,7 @@ gegl-git:
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
-    - export   XDG_DATA_DIRS="${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}"
+    - export   XDG_DATA_DIRS="${INSTALL_PREFIX}/share:${XDG_DATA_DIRS}:/usr/share"
     - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
         git
         base-devel
