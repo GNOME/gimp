@@ -1197,8 +1197,6 @@ file_xbm_LDADD = \
 	$(INTLLIBS)		\
 	$(file_xbm_RC)
 
-file_xmc_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_xmc_SOURCES = \
 	file-xmc.c
 
