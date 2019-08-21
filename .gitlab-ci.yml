@@ -1,7 +1,4 @@
-stages:
-  - babl
-  - gegl
-  - gimp
+image: salamandar/archlinux-gimp:latest
 
 variables:
   INSTALL_DIR: "_install"
@@ -13,7 +10,10 @@ cache:
   paths:
   - _pacman_cache
 
-image: archlinux/base:latest
+stages:
+  - babl
+  - gegl
+  - gimp
 
 .babl-base:
   stage: babl
@@ -148,11 +148,11 @@ gegl-git:
     - cd _build
     - LIBMYPAINT_CFLAGS="-I/usr/include/libmypaint-1.3 -I/usr/include/json-c"
       LIBMYPAINT_LIBS="-lmypaint-1.3 -ljson-c"
-      ../autogen.sh 
-        --prefix="${INSTALL_PREFIX}" 
+      ../autogen.sh
+        --prefix="${INSTALL_PREFIX}"
         --enable-debug
-        --with-python=force 
-        --with-javascript=force 
+        --with-python=force
+        --with-javascript=force
         --with-lua=force
     - make -j "$(nproc)"
     #- make check
