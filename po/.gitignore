@@ -2,8 +2,6 @@
 /*.mo
 /*.pot
 /.intltool-merge-cache
-/Makefile
-/Makefile.in
 /POTFILES
 /messages
 /missing
