@@ -1,26 +1,11 @@
 module_name = 'libgimp3'
 
-gimp_dep = declare_dependency(
-  include_directories: rootInclude,
-  link_with: [
-    libgimp,
-    libgimpui,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
-  ]
-)
 
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
   gobject_typesfile: files(module_name + '.types'),
-  src_dir: meson.current_source_dir(),
+  src_dir: meson.source_root() / 'libgimp',
 
-  content_files: [
-  ],
   ignore_headers: [
     'gimp-debug.h',
     'gimp-private.h',
@@ -36,25 +21,29 @@ gnome.gtkdoc(module_name,
 
   dependencies: [
     fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
-    gimp_dep,
+    declare_dependency(
+      include_directories: rootInclude,
+      link_with: [
+        libgimp,
+        libgimpui,
+        libgimpbase,
+        libgimpcolor,
+        libgimpconfig,
+        libgimpmath,
+        libgimpui,
+        libgimpwidgets,
+      ]
+    )
   ],
-  scanobjs_args: [
-  ],
-  scan_args: [
-    '--deprecated-guards=GIMP_DISABLE_DEPRECATED',
-  ],
-  mkdb_args: [
-    '--name-space=gimp',
-  ],
+
+  scan_args: scan_args_common,
+  mkdb_args: mkdb_args_common,
+
   fixxref_args:  [
-    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpbase'    / 'html',
-    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpcolor'   / 'html',
-    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpconfig'  / 'html',
-    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpmath'    / 'html',
-    '--extra-dir='+ meson.current_source_dir() /'..'/ 'libgimpwidgets' / 'html',
-  ],
-  html_assets: [
-  ],
-  html_args: [
+    '--extra-dir='+ devel_docs_build_root / 'libgimpbase'    / 'html',
+    '--extra-dir='+ devel_docs_build_root / 'libgimpcolor'   / 'html',
+    '--extra-dir='+ devel_docs_build_root / 'libgimpconfig'  / 'html',
+    '--extra-dir='+ devel_docs_build_root / 'libgimpmath'    / 'html',
+    '--extra-dir='+ devel_docs_build_root / 'libgimpwidgets' / 'html',
   ],
 )
