@@ -4,28 +4,20 @@ module_name = 'libgimpmodule3'
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
   gobject_typesfile: files(module_name + '.types'),
-  src_dir: meson.current_source_dir(),
-
-  content_files: [
-  ],
-  ignore_headers: [
-  ],
+  src_dir: meson.source_root() / 'libgimpmodule',
 
   dependencies: [
     fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
+    declare_dependency(
+      include_directories: rootInclude,
+      link_with: [
+        libgimpmodule,
+      ],
+    )
   ],
-  scanobjs_args: [
+
+  scan_args: scan_args_common + [
+    '--deprecated-guards="GIMP_DISABLE_DEPRECATED"'
   ],
-  scan_args: [
-    '--deprecated-guards=GIMP_DISABLE_DEPRECATED',
-  ],
-  mkdb_args: [
-    '--name-space=gimp',
-  ],
-  fixxref_args:  [
-  ],
-  html_assets: [
-  ],
-  html_args: [
-  ],
+  mkdb_args: mkdb_args_common,
 )
