@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <sys/types.h>
-#include <process.h>
 
 #include <glib.h>
 
@@ -51,6 +50,7 @@
 
 #  include <windows.h>
 #  include <tlhelp32.h>
+#  include <process.h>
 #  undef RGB
 #endif
 
