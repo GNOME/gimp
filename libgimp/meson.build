@@ -137,6 +137,7 @@ libgimp_sources_introspectable = [
   'gimp.c',
   'gimpbrushselect.c',
   'gimpchannel.c',
+  'gimpdisplay.c',
   'gimpdrawable.c',
   'gimpfileprocedure.c',
   'gimpfontselect.c',
@@ -146,6 +147,7 @@ libgimp_sources_introspectable = [
   'gimpimagecolorprofile.c',
   'gimpimageprocedure.c',
   'gimplayer.c',
+  'gimplayermask.c',
   'gimploadprocedure.c',
   'gimppaletteselect.c',
   'gimpparamspecs.c',
@@ -157,6 +159,7 @@ libgimp_sources_introspectable = [
   'gimpsaveprocedure.c',
   'gimpselection.c',
   'gimpthumbnailprocedure.c',
+  'gimpvectors.c',
   gimpenums,
   pdb_wrappers_sources,
 ]
@@ -182,6 +185,7 @@ libgimp_headers_introspectable = [
   'gimp.h',
   'gimpbrushselect.h',
   'gimpchannel.h',
+  'gimpdisplay.h',
   'gimpdrawable.h',
   'gimpenums.h',
   'gimpfileprocedure.h',
@@ -192,6 +196,7 @@ libgimp_headers_introspectable = [
   'gimpimagecolorprofile.h',
   'gimpimageprocedure.h',
   'gimplayer.h',
+  'gimplayermask.h',
   'gimploadprocedure.h',
   'gimppaletteselect.h',
   'gimpparamspecs.h',
@@ -204,6 +209,7 @@ libgimp_headers_introspectable = [
   'gimpselection.h',
   'gimpthumbnailprocedure.h',
   'gimptypes.h',
+  'gimpvectors.h',
 ]
 
 libgimp_headers = [
