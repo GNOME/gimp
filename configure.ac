@@ -1339,7 +1339,7 @@ AC_MSG_CHECKING([whether symbols are prefixed])
 
 case "$host_os" in
   mingw*)
-    case "$host_cpu" in 
+    case "$host_cpu" in
 	  x86_64) SYMPREFIX='' ;;
 	  *) SYMPREFIX='_' ;;
 	esac
@@ -1886,8 +1886,11 @@ fi
 PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
                   [add_deps_error([libmypaint >= libmypaint_required_version])])
 
-PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
-                  [add_deps_error([mypaint-brushes-1.0])])
+PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,, [
+  PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-2.0,, [
+    add_deps_error([mypaint-brushes-1.0 or mypaint-brushes-2.0])
+  ])
+])
 
 if test "x$enable_relocatable_bundle" != xno; then
   mypaint_brushes_dir='${gimp_installation_dir}/share/mypaint-data/1.0/brushes'
