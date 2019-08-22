@@ -78,12 +78,12 @@ libgimpwidgets_sources_introspectable = files(
 
 libgimpwidgets_sources = [
   libgimpwidgets_sources_introspectable,
-	'gimpcolorscale.c',
-	'gimpcolorscales.c',
-	'gimpcolorselect.c',
-	'gimpcontroller.c',
-	'gimpeevl.c',
-	'gimpwidgets-private.c',
+  'gimpcolorscale.c',
+  'gimpcolorscales.c',
+  'gimpcolorselect.c',
+  'gimpcontroller.c',
+  'gimpeevl.c',
+  'gimpwidgets-private.c',
 
   gimpwidgetsenums,
   gimpwidgetsmarshal,
