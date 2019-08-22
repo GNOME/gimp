@@ -1,6 +1,7 @@
 image: archlinux/base:latest
 
 stages:
+  - mypaint-brushes
   - babl
   - gegl
   - gimp
@@ -13,6 +14,32 @@ variables:
 cache:
   paths:
   - _pacman_cache
+
+.mypaint-brushes-base:
+  stage: mypaint-brushes
+  artifacts:
+    paths:
+    - "${INSTALL_DIR}"
+  variables:
+    GIT_DEPTH: "5"
+  before_script:
+    - pacman -Syu --noconfirm --needed --cachedir "${PACMAN_CACHE}"
+        git
+        base-devel
+    - git clone --depth="${GIT_DEPTH}" https://github.com/mypaint/mypaint-brushes.git _mypaint-brushes
+
+mypaint-brushes-git:
+  extends: .mypaint-brushes-base
+  script:
+    - cd _mypaint-brushes
+    - git checkout v1.3.x
+    - ./autogen.sh
+    - mkdir _build
+    - cd _build
+    - ../configure
+        --prefix="${INSTALL_PREFIX}"
+    - make -j "$(nproc)"
+    - make install
 
 .babl-base:
   stage: babl
@@ -181,6 +208,7 @@ gegl-git:
 build-git-autotools:
   extends: .gimp-autotools
   dependencies:
+    - mypaint-brushes-git
     - babl-git
     - gegl-git
 
