@@ -32,12 +32,13 @@ local Gdk     = lgi.Gdk
 local Goat = lgi.package 'Goat'
 local Goat = lgi.Goat
 
-function run(procedure, args, data)
+function run(procedure, run_mode, image, drawable, args, run_data)
   -- procedure:new_return_values() crashes LGI so we construct the
   -- GimpValueArray manually.
   local retval = Gimp.ValueArray(1)
-  local run_mode = GObject.Value.get_enum(args:index(0))
-  if run_mode == Gimp.RunMode.INTERACTIVE then
+  -- Not sure why run_mode has become a string instead of testing
+  -- against Gimp.RunMode.INTERACTIVE.
+  if run_mode == "INTERACTIVE" then
     Gimp.ui_init("goat-exercise-lua", false);
     local dialog = Gimp.Dialog {
       title          = "Exercise a goat (Lua)",
@@ -68,7 +69,6 @@ function run(procedure, args, data)
     box:pack_start(label, false, false, 1)
     label:show()
 
-    -- TODO: show source.
     local contents = GLib.file_get_contents(arg[0])
     if (contents) then
       local scrolled = Gtk.ScrolledWindow()
@@ -103,13 +103,12 @@ function run(procedure, args, data)
     end
   end
 
-  local drawable_id = args:index(2):get_int()
-  local x, y, width, height = Gimp.drawable_mask_intersect (drawable_id)
+  local x, y, width, height = drawable:mask_intersect()
   if width ~= nill and height ~= nil and width > 0 and height > 0 then
     Gegl.init(nil)
 
-    local buffer = Gimp.drawable_get_buffer (drawable_id)
-    local shadow_buffer = Gimp.drawable_get_shadow_buffer (drawable_id)
+    local buffer = drawable:get_buffer()
+    local shadow_buffer = drawable:get_shadow_buffer()
 
     local graph = Gegl.Node()
     local input = graph:create_child("gegl:buffer-source")
@@ -123,15 +122,9 @@ function run(procedure, args, data)
 
     shadow_buffer:flush()
 
-    Gimp.drawable_merge_shadow(drawable_id, true)
-    Gimp.drawable_update(drawable_id, x, y, width, height)
+    drawable:merge_shadow(true)
+    drawable:update(x, y, width, height)
     Gimp.displays_flush()
-  else
-    local fail = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.CALLING_ERROR)
-    retval:append(fail)
-    local err = GObject.Value(GObject.Type.STRING, "No pixels to process in the selected area.")
-    retval:append(err)
-    return retval
   end
 
   local success = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
@@ -146,32 +139,20 @@ function Goat.Exercise:do_query_procedures()
 end
 
 function Goat.Exercise:do_create_procedure(name)
-  local procedure = Gimp.Procedure.new(self, name,
-                                       Gimp.PDBProcType.PLUGIN,
-                                       run, nil)
-  procedure:set_image_types("RGB*, INDEXED*, GRAY*");
+  local procedure = Gimp.ImageProcedure.new(self, name,
+                                            Gimp.PDBProcType.PLUGIN,
+                                            run, nil)
+
+  procedure:set_image_types("*");
+
   procedure:set_menu_label("Exercise a Lua goat");
+  procedure:set_icon_name(Gimp.ICON_GEGL);
+  procedure:add_menu_path('<Image>/Filters/Development/Goat exercises/');
+
   procedure:set_documentation("Exercise a goat in the Lua language",
                               "Takes a goat for a walk in Lua",
-                              "");
-  procedure:add_menu_path('<Image>/Filters/Development/Goat exercises/');
+                              name);
   procedure:set_attribution("Jehan", "Jehan", "2019");
-  procedure:add_argument(GObject.param_spec_enum("run-mode",
-                                                 "Run mode",
-                                                 "The run mode",
-                                                 GObject.Type.name(Gimp.RunMode),
-                                                 Gimp.RunMode.NONINTERACTIVE,
-                                                 GObject.ParamFlags.READWRITE));
-  procedure:add_argument(Gimp.param_spec_image_id ("image",
-                                                   "Image",
-                                                   "The input image",
-                                                   false,
-                                                   GObject.ParamFlags.READWRITE));
-  procedure:add_argument(Gimp.param_spec_drawable_id ("drawable",
-                                                      "Drawable",
-                                                      "The input drawable",
-                                                      false,
-                                                      GObject.ParamFlags.READWRITE));
 
   return procedure
 end

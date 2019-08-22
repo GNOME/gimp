@@ -28,23 +28,6 @@ _ = gettext.gettext
 def N_(message): return message
 
 class Goat (Gimp.PlugIn):
-    ## Parameters ##
-    __gproperties__ = {
-        "run-mode": (Gimp.RunMode,
-                     "Run mode",
-                     "The run mode",
-                     Gimp.RunMode.NONINTERACTIVE,
-                     GObject.ParamFlags.READWRITE),
-        "image": (Gimp.Image,
-                  _("Image"),
-                  _("The input image"),
-                  GObject.ParamFlags.READWRITE),
-        "drawable": (Gimp.Drawable,
-                    _("Drawable"),
-                    _("The input drawable"),
-                    GObject.ParamFlags.READWRITE),
-    }
-
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
         # Localization
@@ -54,29 +37,25 @@ class Goat (Gimp.PlugIn):
         return [ "goat-exercise-python" ]
 
     def do_create_procedure(self, name):
-        procedure = Gimp.Procedure.new(self, name,
+        procedure = Gimp.ImageProcedure.new(self, name,
                                        Gimp.PDBProcType.PLUGIN,
                                        self.run, None)
-        procedure.set_image_types("RGB*, INDEXED*, GRAY*");
+
+        procedure.set_image_types("*");
+
         procedure.set_menu_label("Exercise a goat and a python");
+        procedure.set_icon_name(Gimp.ICON_GEGL);
+        procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/');
+
         procedure.set_documentation("Exercise a goat in the Python 3 language",
                                     "Takes a goat for a walk in Python 3",
-                                    "");
-        procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/');
+                                    name);
         procedure.set_attribution("Jehan", "Jehan", "2019");
-        # XXX pygobject has broken GParamSpec support (see bug
-        # pygobject#227). As a special trick, to create arguments and
-        # return values, we make them from object properties.
-        procedure.add_argument_from_property(self, "run-mode")
-        procedure.add_argument_from_property(self, "image")
-        procedure.add_argument_from_property(self, "drawable")
 
         return procedure
 
-    def run(self, procedure, args, data):
-        runmode = args.index(0)
-
-        if runmode == Gimp.RunMode.INTERACTIVE:
+    def run(self, procedure, run_mode, image, drawable, args, run_data):
+        if run_mode == Gimp.RunMode.INTERACTIVE:
             gi.require_version('Gtk', '3.0')
             from gi.repository import Gtk
             gi.require_version('Gdk', '3.0')
@@ -148,10 +127,8 @@ class Goat (Gimp.PlugIn):
                     return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                        GLib.Error())
 
-        drawable = args.index(2)
-
-        success, x, y, width, height = drawable.mask_intersect();
-        if success:
+        intersect, x, y, width, height = drawable.mask_intersect();
+        if intersect:
             Gegl.init(None);
 
             buffer = drawable.get_buffer()
@@ -176,9 +153,6 @@ class Goat (Gimp.PlugIn):
             drawable.merge_shadow(True)
             drawable.update(x, y, width, height)
             Gimp.displays_flush()
-        else:
-            retval = procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
-                                                 GLib.Error("No pixels to process in the selected area."))
 
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 

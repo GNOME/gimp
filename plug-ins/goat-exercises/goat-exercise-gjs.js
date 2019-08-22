@@ -51,41 +51,25 @@ var Goat = GObject.registerClass({
     }
 
     vfunc_create_procedure(name) {
-        let procedure = Gimp.Procedure.new(this, name, Gimp.PDBProcType.PLUGIN, this.run);
+        let procedure = Gimp.ImageProcedure.new(this, name, Gimp.PDBProcType.PLUGIN, this.run);
 
-        procedure.set_image_types("RGB*, INDEXED*, GRAY*");
+        procedure.set_image_types("*");
+
         procedure.set_menu_label("Exercise a JavaScript goat");
+        procedure.set_icon_name(Gimp.ICON_GEGL);
+        procedure.add_menu_path ('<Image>/Filters/Development/Goat exercises/');
+
         procedure.set_documentation("Exercise a goat in the JavaScript language (GJS)",
                                     "Takes a goat for a walk in Javascript with the GJS interpreter",
-                                    "");
-        procedure.add_menu_path ('<Image>/Filters/Development/Goat exercises/');
+                                    name);
         procedure.set_attribution("Jehan", "Jehan", "2019");
-        procedure.set_icon_name(Gimp.ICON_GEGL);
-
-
-        procedure.add_argument(GObject.param_spec_enum("run-mode",
-                                                       "Run mode",
-                                                       "The run mode",
-                                                       Gimp.RunMode.$gtype,
-                                                       Gimp.RunMode.NONINTERACTIVE,
-                                                       GObject.ParamFlags.READWRITE));
-        procedure.add_argument(GObject.param_spec_object ("image",
-                                                          "Image",
-                                                          "The input image",
-                                                          Gimp.Image.$gtype,
-                                                          GObject.ParamFlags.READWRITE));
-        procedure.add_argument(GObject.param_spec_object ("drawable",
-                                                          "Drawable",
-                                                          "The input drawable",
-                                                          Gimp.Drawable.$gtype,
-                                                          GObject.ParamFlags.READWRITE));
 
         return procedure;
     }
 
-    run(procedure, args, data) {
+    run(procedure, run_mode, image, drawable, args, run_data) {
         /* TODO: localization. */
-        let run_mode = args.index(0);
+
         if (run_mode == Gimp.RunMode.INTERACTIVE) {
             Gimp.ui_init("goat-exercise-gjs", false);
             /* TODO: help function and ID. */
@@ -156,9 +140,8 @@ var Goat = GObject.registerClass({
             }
         }
 
-        let drawable = args.index(2);
-        let [ success, x, y, width, height ] = drawable.mask_intersect();
-        if (success) {
+        let [ intersect, x, y, width, height ] = drawable.mask_intersect();
+        if (intersect) {
             Gegl.init(null);
 
             let buffer = drawable.get_buffer();
@@ -184,11 +167,6 @@ var Goat = GObject.registerClass({
             drawable.merge_shadow(true);
             drawable.update(x, y, width, height);
             Gimp.displays_flush();
-        }
-        else {
-            let error = GLib.Error.new_literal(GLib.quark_from_string("goat-error-quark"), 0,
-                                               "No pixels to process in the selected area.");
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error);
         }
 
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, null);
