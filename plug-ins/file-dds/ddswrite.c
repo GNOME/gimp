@@ -2113,7 +2113,7 @@ save_dialog (gint32 image_id,
   opt = string_value_combo_new (mipmap_filter_strings,
                                 dds_write_vals.mipmap_filter);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_F_ilter:"),
+                            _("F_ilter:"),
                             0.0, 0.5,
                             opt, 1);
 
