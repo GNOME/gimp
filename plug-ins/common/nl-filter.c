@@ -73,12 +73,12 @@ static void     run              (const gchar      *name,
                                   gint             *nretvals,
                                   GimpParam       **retvals);
 
-static void     nlfilter         (gint32            drawable_id,
+static void     nlfilter         (GimpDrawable     *drawable,
                                   GimpPreview      *preview);
-static void     nlfilter_preview (gpointer          drawable_id,
+static void     nlfilter_preview (GimpDrawable     *drawable,
                                   GimpPreview      *preview);
 
-static gboolean nlfilter_dialog  (gint32            drawable_id);
+static gboolean nlfilter_dialog  (GimpDrawable     *drawable);
 
 static gint     nlfiltInit       (gdouble           alpha,
                                   gdouble           radius,
@@ -144,6 +144,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpRunMode        run_mode;
+  GimpDrawable      *drawable;
   gint32             drawable_id;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
@@ -152,6 +153,7 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_id));
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -164,7 +166,7 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &nlfvals);
 
-      if (! nlfilter_dialog (drawable_id))
+      if (! nlfilter_dialog (drawable))
         return;
       break;
 
@@ -192,7 +194,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      nlfilter (drawable_id, NULL);
+      nlfilter (drawable, NULL);
 
       /* Store data */
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -901,7 +903,7 @@ rectang_area (gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
 }
 
 static void
-nlfilter (gint32        drawable_id,
+nlfilter (GimpDrawable *drawable,
           GimpPreview  *preview)
 {
   GeglBuffer *src_buffer;
@@ -921,24 +923,24 @@ nlfilter (gint32        drawable_id,
     }
   else
     {
-      if (! gimp_drawable_mask_intersect (drawable_id,
+      if (! gimp_drawable_mask_intersect (drawable,
                                           &x1, &y1, &width, &height))
         return;
 
       y2 = y1 + height;
     }
 
-  if (gimp_drawable_has_alpha (drawable_id))
+  if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
 
-  src_buffer = gimp_drawable_get_buffer (drawable_id);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   if (preview)
     dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer), format);
   else
-    dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+    dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
@@ -1024,21 +1026,21 @@ nlfilter (gint32        drawable_id,
     {
       gimp_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
-      gimp_drawable_update (drawable_id, x1, y1, width, height);
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable, x1, y1, width, height);
       gimp_displays_flush ();
     }
 }
 
 static void
-nlfilter_preview (gpointer     drawable_id,
-                  GimpPreview *preview)
+nlfilter_preview (GimpDrawable *drawable,
+                  GimpPreview  *preview)
 {
-  nlfilter (GPOINTER_TO_INT (drawable_id), preview);
+  nlfilter (drawable, preview);
 }
 
 static gboolean
-nlfilter_dialog (gint32 drawable_id)
+nlfilter_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -1075,13 +1077,13 @@ nlfilter_dialog (gint32 drawable_id)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable_id);
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (nlfilter_preview),
-                            GINT_TO_POINTER (drawable_id));
+                            drawable);
 
   frame = gimp_int_radio_group_new (TRUE, _("Filter"),
                                     G_CALLBACK (gimp_radio_button_update),

@@ -36,6 +36,76 @@
 
 /**
  * gimp_selection_bounds:
+ * @image: The image.
+ * @non_empty: (out): TRUE if there is a selection.
+ * @x1: (out): x coordinate of upper left corner of selection bounds.
+ * @y1: (out): y coordinate of upper left corner of selection bounds.
+ * @x2: (out): x coordinate of lower right corner of selection bounds.
+ * @y2: (out): y coordinate of lower right corner of selection bounds.
+ *
+ * Find the bounding box of the current selection.
+ *
+ * This procedure returns whether there is a selection for the
+ * specified image. If there is one, the upper left and lower right
+ * corners of the bounding box are returned. These coordinates are
+ * relative to the image. Please note that the pixel specified by the
+ * lower right coordinate of the bounding box is not part of the
+ * selection. The selection ends at the upper left corner of this
+ * pixel. This means the width of the selection can be calculated as
+ * (x2 - x1), its height as (y2 - y1).
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_bounds (GimpImage *image,
+                       gboolean  *non_empty,
+                       gint      *x1,
+                       gint      *y1,
+                       gint      *x2,
+                       gint      *y2)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-bounds",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-bounds",
+                                            args);
+  gimp_value_array_unref (args);
+
+  *non_empty = FALSE;
+  *x1 = 0;
+  *y1 = 0;
+  *x2 = 0;
+  *y2 = 0;
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *non_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+      *x1 = g_value_get_int (gimp_value_array_index (return_vals, 2));
+      *y1 = g_value_get_int (gimp_value_array_index (return_vals, 3));
+      *x2 = g_value_get_int (gimp_value_array_index (return_vals, 4));
+      *y2 = g_value_get_int (gimp_value_array_index (return_vals, 5));
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_bounds: (skip)
  * @image_ID: The image.
  * @non_empty: (out): TRUE if there is a selection.
  * @x1: (out): x coordinate of upper left corner of selection bounds.
@@ -57,12 +127,12 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_bounds (gint32    image_ID,
-                       gboolean *non_empty,
-                       gint     *x1,
-                       gint     *y1,
-                       gint     *x2,
-                       gint     *y2)
+_gimp_selection_bounds (gint32    image_ID,
+                        gboolean *non_empty,
+                        gint     *x1,
+                        gint     *y1,
+                        gint     *x2,
+                        gint     *y2)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -106,6 +176,52 @@ gimp_selection_bounds (gint32    image_ID,
 
 /**
  * gimp_selection_value:
+ * @image: The image.
+ * @x: x coordinate of value.
+ * @y: y coordinate of value.
+ *
+ * Find the value of the selection at the specified coordinates.
+ *
+ * This procedure returns the value of the selection at the specified
+ * coordinates. If the coordinates lie out of bounds, 0 is returned.
+ *
+ * Returns: Value of the selection.
+ **/
+gint
+gimp_selection_value (GimpImage *image,
+                      gint       x,
+                      gint       y)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gint value = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_INT, x,
+                                          G_TYPE_INT, y,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-value",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-value",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    value = g_value_get_int (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return value;
+}
+
+/**
+ * _gimp_selection_value: (skip)
  * @image_ID: The image.
  * @x: x coordinate of value.
  * @y: y coordinate of value.
@@ -118,9 +234,9 @@ gimp_selection_bounds (gint32    image_ID,
  * Returns: Value of the selection.
  **/
 gint
-gimp_selection_value (gint32 image_ID,
-                      gint   x,
-                      gint   y)
+_gimp_selection_value (gint32 image_ID,
+                       gint   x,
+                       gint   y)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -152,6 +268,46 @@ gimp_selection_value (gint32 image_ID,
 
 /**
  * gimp_selection_is_empty:
+ * @image: The image.
+ *
+ * Determine whether the selection is empty.
+ *
+ * This procedure returns TRUE if the selection for the specified image
+ * is empty.
+ *
+ * Returns: Is the selection empty?
+ **/
+gboolean
+gimp_selection_is_empty (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean is_empty = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-is-empty",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-is-empty",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    is_empty = g_value_get_boolean (gimp_value_array_index (return_vals, 1));
+
+  gimp_value_array_unref (return_vals);
+
+  return is_empty;
+}
+
+/**
+ * _gimp_selection_is_empty: (skip)
  * @image_ID: The image.
  *
  * Determine whether the selection is empty.
@@ -162,7 +318,7 @@ gimp_selection_value (gint32 image_ID,
  * Returns: Is the selection empty?
  **/
 gboolean
-gimp_selection_is_empty (gint32 image_ID)
+_gimp_selection_is_empty (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -192,6 +348,54 @@ gimp_selection_is_empty (gint32 image_ID)
 
 /**
  * gimp_selection_translate:
+ * @image: The image.
+ * @offx: x offset for translation.
+ * @offy: y offset for translation.
+ *
+ * Translate the selection by the specified offsets.
+ *
+ * This procedure actually translates the selection for the specified
+ * image by the specified offsets. Regions that are translated from
+ * beyond the bounds of the image are set to empty. Valid regions of
+ * the selection which are translated beyond the bounds of the image
+ * because of this call are lost.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_translate (GimpImage *image,
+                          gint       offx,
+                          gint       offy)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_INT, offx,
+                                          G_TYPE_INT, offy,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-translate",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-translate",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_translate: (skip)
  * @image_ID: The image.
  * @offx: x offset for translation.
  * @offy: y offset for translation.
@@ -207,9 +411,9 @@ gimp_selection_is_empty (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_translate (gint32 image_ID,
-                          gint   offx,
-                          gint   offy)
+_gimp_selection_translate (gint32 image_ID,
+                           gint   offx,
+                           gint   offy)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -240,7 +444,7 @@ gimp_selection_translate (gint32 image_ID,
 
 /**
  * _gimp_selection_float:
- * @drawable_ID: The drawable from which to float selection.
+ * @drawable: The drawable from which to float selection.
  * @offx: x offset for translation.
  * @offy: y offset for translation.
  *
@@ -253,20 +457,20 @@ gimp_selection_translate (gint32 image_ID,
  * instantiated as a floating selection. The offsets allow initial
  * positioning of the new floating selection.
  *
- * Returns: The floated layer.
+ * Returns: (transfer none): The floated layer.
  **/
-gint32
-_gimp_selection_float (gint32 drawable_ID,
-                       gint   offx,
-                       gint   offy)
+GimpLayer *
+_gimp_selection_float (GimpDrawable *drawable,
+                       gint          offx,
+                       gint          offy)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint32 layer_ID = -1;
+  GimpLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE_ID, drawable_ID,
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
@@ -281,15 +485,54 @@ _gimp_selection_float (gint32 drawable_ID,
   gimp_value_array_unref (args);
 
   if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
-    layer_ID = gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1));
+    layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
 
   gimp_value_array_unref (return_vals);
 
-  return layer_ID;
+  return layer;
 }
 
 /**
  * gimp_selection_invert:
+ * @image: The image.
+ *
+ * Invert the selection mask.
+ *
+ * This procedure inverts the selection mask. For every pixel in the
+ * selection channel, its new value is calculated as (255 - old-value).
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_invert (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-invert",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-invert",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_invert: (skip)
  * @image_ID: The image.
  *
  * Invert the selection mask.
@@ -300,7 +543,7 @@ _gimp_selection_float (gint32 drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_invert (gint32 image_ID)
+_gimp_selection_invert (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -329,6 +572,47 @@ gimp_selection_invert (gint32 image_ID)
 
 /**
  * gimp_selection_sharpen:
+ * @image: The image.
+ *
+ * Sharpen the selection mask.
+ *
+ * This procedure sharpens the selection mask. For every pixel in the
+ * selection channel, if the value is &gt; 127, the new pixel is
+ * assigned a value of 255. This removes any \"anti-aliasing\" that
+ * might exist in the selection mask's boundary.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_sharpen (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-sharpen",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-sharpen",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_sharpen: (skip)
  * @image_ID: The image.
  *
  * Sharpen the selection mask.
@@ -341,7 +625,7 @@ gimp_selection_invert (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_sharpen (gint32 image_ID)
+_gimp_selection_sharpen (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -370,6 +654,45 @@ gimp_selection_sharpen (gint32 image_ID)
 
 /**
  * gimp_selection_all:
+ * @image: The image.
+ *
+ * Select all of the image.
+ *
+ * This procedure sets the selection mask to completely encompass the
+ * image. Every pixel in the selection channel is set to 255.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_all (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-all",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-all",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_all: (skip)
  * @image_ID: The image.
  *
  * Select all of the image.
@@ -380,7 +703,7 @@ gimp_selection_sharpen (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_all (gint32 image_ID)
+_gimp_selection_all (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -409,6 +732,45 @@ gimp_selection_all (gint32 image_ID)
 
 /**
  * gimp_selection_none:
+ * @image: The image.
+ *
+ * Deselect the entire image.
+ *
+ * This procedure deselects the entire image. Every pixel in the
+ * selection channel is set to 0.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_none (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-none",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-none",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_none: (skip)
  * @image_ID: The image.
  *
  * Deselect the entire image.
@@ -419,7 +781,7 @@ gimp_selection_all (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_none (gint32 image_ID)
+_gimp_selection_none (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -448,6 +810,48 @@ gimp_selection_none (gint32 image_ID)
 
 /**
  * gimp_selection_feather:
+ * @image: The image.
+ * @radius: Radius of feather (in pixels).
+ *
+ * Feather the image's selection
+ *
+ * This procedure feathers the selection. Feathering is implemented
+ * using a gaussian blur.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_feather (GimpImage *image,
+                        gdouble    radius)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_DOUBLE, radius,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-feather",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-feather",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_feather: (skip)
  * @image_ID: The image.
  * @radius: Radius of feather (in pixels).
  *
@@ -459,8 +863,8 @@ gimp_selection_none (gint32 image_ID)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_feather (gint32  image_ID,
-                        gdouble radius)
+_gimp_selection_feather (gint32  image_ID,
+                         gdouble radius)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -490,6 +894,49 @@ gimp_selection_feather (gint32  image_ID,
 
 /**
  * gimp_selection_border:
+ * @image: The image.
+ * @radius: Radius of border (in pixels).
+ *
+ * Border the image's selection
+ *
+ * This procedure borders the selection. Bordering creates a new
+ * selection which is defined along the boundary of the previous
+ * selection at every point within the specified radius.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_border (GimpImage *image,
+                       gint       radius)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_INT, radius,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-border",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-border",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_border: (skip)
  * @image_ID: The image.
  * @radius: Radius of border (in pixels).
  *
@@ -502,8 +949,8 @@ gimp_selection_feather (gint32  image_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_border (gint32 image_ID,
-                       gint   radius)
+_gimp_selection_border (gint32 image_ID,
+                        gint   radius)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -533,6 +980,48 @@ gimp_selection_border (gint32 image_ID,
 
 /**
  * gimp_selection_grow:
+ * @image: The image.
+ * @steps: Steps of grow (in pixels).
+ *
+ * Grow the image's selection
+ *
+ * This procedure grows the selection. Growing involves expanding the
+ * boundary in all directions by the specified pixel amount.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_grow (GimpImage *image,
+                     gint       steps)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_INT, steps,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-grow",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-grow",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_grow: (skip)
  * @image_ID: The image.
  * @steps: Steps of grow (in pixels).
  *
@@ -544,8 +1033,8 @@ gimp_selection_border (gint32 image_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_grow (gint32 image_ID,
-                     gint   steps)
+_gimp_selection_grow (gint32 image_ID,
+                      gint   steps)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -575,6 +1064,49 @@ gimp_selection_grow (gint32 image_ID,
 
 /**
  * gimp_selection_shrink:
+ * @image: The image.
+ * @steps: Steps of shrink (in pixels).
+ *
+ * Shrink the image's selection
+ *
+ * This procedure shrinks the selection. Shrinking involves trimming
+ * the existing selection boundary on all sides by the specified number
+ * of pixels.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_selection_shrink (GimpImage *image,
+                       gint       steps)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_INT, steps,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-shrink",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-shrink",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_shrink: (skip)
  * @image_ID: The image.
  * @steps: Steps of shrink (in pixels).
  *
@@ -587,8 +1119,8 @@ gimp_selection_grow (gint32 image_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_selection_shrink (gint32 image_ID,
-                       gint   steps)
+_gimp_selection_shrink (gint32 image_ID,
+                        gint   steps)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -618,6 +1150,49 @@ gimp_selection_shrink (gint32 image_ID,
 
 /**
  * gimp_selection_flood:
+ * @image: The image.
+ *
+ * Remove holes from the image's selection
+ *
+ * This procedure removes holes from the selection, that can come from
+ * selecting a patchy area with the Fuzzy Select Tool. In technical
+ * terms this procedure floods the selection. See the Algorithms page
+ * in the developer wiki for details.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_selection_flood (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-flood",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-flood",
+                                            args);
+  gimp_value_array_unref (args);
+
+  success = g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * _gimp_selection_flood: (skip)
  * @image_ID: The image.
  *
  * Remove holes from the image's selection
@@ -632,7 +1207,7 @@ gimp_selection_shrink (gint32 image_ID,
  * Since: 2.10
  **/
 gboolean
-gimp_selection_flood (gint32 image_ID)
+_gimp_selection_flood (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -661,6 +1236,47 @@ gimp_selection_flood (gint32 image_ID)
 
 /**
  * gimp_selection_save:
+ * @image: The image.
+ *
+ * Copy the selection mask to a new channel.
+ *
+ * This procedure copies the selection mask and stores the content in a
+ * new channel. The new channel is automatically inserted into the
+ * image's list of channels.
+ *
+ * Returns: (transfer none): The new channel.
+ **/
+GimpChannel *
+gimp_selection_save (GimpImage *image)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpChannel *channel = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-selection-save",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-selection-save",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    channel = GIMP_CHANNEL (gimp_item_get_by_id (gimp_value_get_channel_id (gimp_value_array_index (return_vals, 1))));
+
+  gimp_value_array_unref (return_vals);
+
+  return channel;
+}
+
+/**
+ * _gimp_selection_save: (skip)
  * @image_ID: The image.
  *
  * Copy the selection mask to a new channel.
@@ -672,7 +1288,7 @@ gimp_selection_flood (gint32 image_ID)
  * Returns: The new channel.
  **/
 gint32
-gimp_selection_save (gint32 image_ID)
+_gimp_selection_save (gint32 image_ID)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

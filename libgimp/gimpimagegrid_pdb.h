@@ -32,29 +32,77 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean      gimp_image_grid_get_spacing          (gint32         image_ID,
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+gboolean      gimp_image_grid_get_spacing          (GimpImage     *image,
                                                     gdouble       *xspacing,
                                                     gdouble       *yspacing);
-gboolean      gimp_image_grid_set_spacing          (gint32         image_ID,
+gboolean      gimp_image_grid_set_spacing          (GimpImage     *image,
                                                     gdouble        xspacing,
                                                     gdouble        yspacing);
-gboolean      gimp_image_grid_get_offset           (gint32         image_ID,
+gboolean      gimp_image_grid_get_offset           (GimpImage     *image,
                                                     gdouble       *xoffset,
                                                     gdouble       *yoffset);
-gboolean      gimp_image_grid_set_offset           (gint32         image_ID,
+gboolean      gimp_image_grid_set_offset           (GimpImage     *image,
                                                     gdouble        xoffset,
                                                     gdouble        yoffset);
-gboolean      gimp_image_grid_get_foreground_color (gint32         image_ID,
+gboolean      gimp_image_grid_get_foreground_color (GimpImage     *image,
                                                     GimpRGB       *fgcolor);
-gboolean      gimp_image_grid_set_foreground_color (gint32         image_ID,
+gboolean      gimp_image_grid_set_foreground_color (GimpImage     *image,
                                                     const GimpRGB *fgcolor);
-gboolean      gimp_image_grid_get_background_color (gint32         image_ID,
+gboolean      gimp_image_grid_get_background_color (GimpImage     *image,
                                                     GimpRGB       *bgcolor);
-gboolean      gimp_image_grid_set_background_color (gint32         image_ID,
+gboolean      gimp_image_grid_set_background_color (GimpImage     *image,
                                                     const GimpRGB *bgcolor);
-GimpGridStyle gimp_image_grid_get_style            (gint32         image_ID);
-gboolean      gimp_image_grid_set_style            (gint32         image_ID,
+GimpGridStyle gimp_image_grid_get_style            (GimpImage     *image);
+gboolean      gimp_image_grid_set_style            (GimpImage     *image,
                                                     GimpGridStyle  style);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_image_grid_get_spacing _gimp_image_grid_get_spacing
+#define gimp_image_grid_set_spacing _gimp_image_grid_set_spacing
+#define gimp_image_grid_get_offset _gimp_image_grid_get_offset
+#define gimp_image_grid_set_offset _gimp_image_grid_set_offset
+#define gimp_image_grid_get_foreground_color _gimp_image_grid_get_foreground_color
+#define gimp_image_grid_set_foreground_color _gimp_image_grid_set_foreground_color
+#define gimp_image_grid_get_background_color _gimp_image_grid_get_background_color
+#define gimp_image_grid_set_background_color _gimp_image_grid_set_background_color
+#define gimp_image_grid_get_style _gimp_image_grid_get_style
+#define gimp_image_grid_set_style _gimp_image_grid_set_style
+
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+/* Below API are deprecated and should not be used by new plug-ins.
+ * They are not marked internal as a trick to keep the old API alive for now.
+ */
+
+gboolean      _gimp_image_grid_get_spacing          (gint32         image_ID,
+                                                     gdouble       *xspacing,
+                                                     gdouble       *yspacing);
+gboolean      _gimp_image_grid_set_spacing          (gint32         image_ID,
+                                                     gdouble        xspacing,
+                                                     gdouble        yspacing);
+gboolean      _gimp_image_grid_get_offset           (gint32         image_ID,
+                                                     gdouble       *xoffset,
+                                                     gdouble       *yoffset);
+gboolean      _gimp_image_grid_set_offset           (gint32         image_ID,
+                                                     gdouble        xoffset,
+                                                     gdouble        yoffset);
+gboolean      _gimp_image_grid_get_foreground_color (gint32         image_ID,
+                                                     GimpRGB       *fgcolor);
+gboolean      _gimp_image_grid_set_foreground_color (gint32         image_ID,
+                                                     const GimpRGB *fgcolor);
+gboolean      _gimp_image_grid_get_background_color (gint32         image_ID,
+                                                     GimpRGB       *bgcolor);
+gboolean      _gimp_image_grid_set_background_color (gint32         image_ID,
+                                                     const GimpRGB *bgcolor);
+GimpGridStyle _gimp_image_grid_get_style            (gint32         image_ID);
+gboolean      _gimp_image_grid_set_style            (gint32         image_ID,
+                                                     GimpGridStyle  style);
 
 
 G_END_DECLS

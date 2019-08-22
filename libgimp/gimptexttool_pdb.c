@@ -36,6 +36,85 @@
 
 /**
  * gimp_text_fontname:
+ * @image: The image.
+ * @drawable: The affected drawable: (-1 for a new text layer).
+ * @x: The x coordinate for the left of the text bounding box.
+ * @y: The y coordinate for the top of the text bounding box.
+ * @text: The text to generate (in UTF-8 encoding).
+ * @border: The size of the border.
+ * @antialias: Antialiasing.
+ * @size: The size of text in either pixels or points.
+ * @size_type: The units of specified size.
+ * @fontname: The name of the font.
+ *
+ * Add text at the specified location as a floating selection or a new
+ * layer.
+ *
+ * This tool requires a fontname matching an installed PangoFT2 font.
+ * You can specify the fontsize in units of pixels or points, and the
+ * appropriate metric is specified using the size_type argument. The x
+ * and y parameters together control the placement of the new text by
+ * specifying the upper left corner of the text bounding box. If the
+ * specified drawable parameter is valid, the text will be created as a
+ * floating selection attached to the drawable. If the drawable
+ * parameter is not valid (-1), the text will appear as a new layer.
+ * Finally, a border can be specified around the final rendered text.
+ * The border is measured in pixels. Parameter size-type is not used
+ * and is currently ignored. If you need to display a font in points,
+ * divide the size in points by 72.0 and multiply it by the image's
+ * vertical resolution.
+ *
+ * Returns: (transfer none): The new text layer or -1 if no layer was created.
+ **/
+GimpLayer *
+gimp_text_fontname (GimpImage    *image,
+                    GimpDrawable *drawable,
+                    gdouble       x,
+                    gdouble       y,
+                    const gchar  *text,
+                    gint          border,
+                    gboolean      antialias,
+                    gdouble       size,
+                    GimpSizeType  size_type,
+                    const gchar  *fontname)
+{
+  GimpPDB        *pdb = gimp_get_pdb ();
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpLayer *text_layer = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE_ID, gimp_image_get_id (image),
+                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_id (GIMP_ITEM (drawable)),
+                                          G_TYPE_DOUBLE, x,
+                                          G_TYPE_DOUBLE, y,
+                                          G_TYPE_STRING, text,
+                                          G_TYPE_INT, border,
+                                          G_TYPE_BOOLEAN, antialias,
+                                          G_TYPE_DOUBLE, size,
+                                          GIMP_TYPE_SIZE_TYPE, size_type,
+                                          G_TYPE_STRING, fontname,
+                                          G_TYPE_NONE);
+
+  if (pdb)
+    return_vals = gimp_pdb_run_procedure_array (pdb,
+                                                "gimp-text-fontname",
+                                                args);
+  else
+    return_vals = gimp_run_procedure_array ("gimp-text-fontname",
+                                            args);
+  gimp_value_array_unref (args);
+
+  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) == GIMP_PDB_SUCCESS)
+    text_layer = GIMP_LAYER (gimp_item_get_by_id (gimp_value_get_layer_id (gimp_value_array_index (return_vals, 1))));
+
+  gimp_value_array_unref (return_vals);
+
+  return text_layer;
+}
+
+/**
+ * _gimp_text_fontname: (skip)
  * @image_ID: The image.
  * @drawable_ID: The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
@@ -67,16 +146,16 @@
  * Returns: The new text layer or -1 if no layer was created.
  **/
 gint32
-gimp_text_fontname (gint32        image_ID,
-                    gint32        drawable_ID,
-                    gdouble       x,
-                    gdouble       y,
-                    const gchar  *text,
-                    gint          border,
-                    gboolean      antialias,
-                    gdouble       size,
-                    GimpSizeType  size_type,
-                    const gchar  *fontname)
+_gimp_text_fontname (gint32        image_ID,
+                     gint32        drawable_ID,
+                     gdouble       x,
+                     gdouble       y,
+                     const gchar  *text,
+                     gint          border,
+                     gboolean      antialias,
+                     gdouble       size,
+                     GimpSizeType  size_type,
+                     const gchar  *fontname)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;

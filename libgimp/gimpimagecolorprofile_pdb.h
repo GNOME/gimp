@@ -32,24 +32,47 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL guint8*  _gimp_image_get_color_profile              (gint32                    image_ID,
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+G_GNUC_INTERNAL guint8*  _gimp_image_get_color_profile              (GimpImage                *image,
                                                                      gint                     *num_bytes);
-G_GNUC_INTERNAL guint8*  _gimp_image_get_effective_color_profile    (gint32                    image_ID,
+G_GNUC_INTERNAL guint8*  _gimp_image_get_effective_color_profile    (GimpImage                *image,
                                                                      gint                     *num_bytes);
-G_GNUC_INTERNAL gboolean _gimp_image_set_color_profile              (gint32                    image_ID,
+G_GNUC_INTERNAL gboolean _gimp_image_set_color_profile              (GimpImage                *image,
                                                                      gint                      num_bytes,
                                                                      const guint8             *color_profile);
-gboolean                 gimp_image_set_color_profile_from_file     (gint32                    image_ID,
+gboolean                 gimp_image_set_color_profile_from_file     (GimpImage                *image,
                                                                      const gchar              *uri);
-G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile          (gint32                    image_ID,
+G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile          (GimpImage                *image,
                                                                      gint                      num_bytes,
                                                                      const guint8             *color_profile,
                                                                      GimpColorRenderingIntent  intent,
                                                                      gboolean                  bpc);
-gboolean                 gimp_image_convert_color_profile_from_file (gint32                    image_ID,
+gboolean                 gimp_image_convert_color_profile_from_file (GimpImage                *image,
                                                                      const gchar              *uri,
                                                                      GimpColorRenderingIntent  intent,
                                                                      gboolean                  bpc);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_image_set_color_profile_from_file _gimp_image_set_color_profile_from_file
+#define gimp_image_convert_color_profile_from_file _gimp_image_convert_color_profile_from_file
+
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+/* Below API are deprecated and should not be used by new plug-ins.
+ * They are not marked internal as a trick to keep the old API alive for now.
+ */
+
+gboolean _gimp_image_set_color_profile_from_file     (gint32                    image_ID,
+                                                      const gchar              *uri);
+gboolean _gimp_image_convert_color_profile_from_file (gint32                    image_ID,
+                                                      const gchar              *uri,
+                                                      GimpColorRenderingIntent  intent,
+                                                      gboolean                  bpc);
 
 
 G_END_DECLS

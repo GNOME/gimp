@@ -29,23 +29,59 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+#include <libgimp/gimpitem.h>
 
-GeglBuffer * gimp_drawable_get_buffer             (gint32         drawable_ID);
-GeglBuffer * gimp_drawable_get_shadow_buffer      (gint32         drawable_ID);
+#define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
+#define GIMP_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
+#define GIMP_DRAWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
+#define GIMP_IS_DRAWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE))
+#define GIMP_IS_DRAWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
+#define GIMP_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
 
-const Babl * gimp_drawable_get_format             (gint32         drawable_ID);
-const Babl * gimp_drawable_get_thumbnail_format   (gint32         drawable_ID);
 
-guchar     * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
+typedef struct _GimpDrawableClass   GimpDrawableClass;
+
+struct _GimpDrawable
+{
+  GimpItem      parent_instance;
+};
+
+struct _GimpDrawableClass
+{
+  GimpItemClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
+};
+
+GType        gimp_drawable_get_type               (void) G_GNUC_CONST;
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GeglBuffer * gimp_drawable_get_buffer             (GimpDrawable  *drawable);
+GeglBuffer * gimp_drawable_get_shadow_buffer      (GimpDrawable  *drawable);
+
+const Babl * gimp_drawable_get_format             (GimpDrawable  *drawable);
+const Babl * gimp_drawable_get_thumbnail_format   (GimpDrawable  *drawable);
+
+guchar     * gimp_drawable_get_thumbnail_data     (GimpDrawable  *drawable,
                                                    gint          *width,
                                                    gint          *height,
                                                    gint          *bpp);
-GdkPixbuf  * gimp_drawable_get_thumbnail          (gint32         drawable_ID,
+GdkPixbuf  * gimp_drawable_get_thumbnail          (GimpDrawable  *drawable,
                                                    gint           width,
                                                    gint           height,
                                                    GimpPixbufTransparency alpha);
 
-guchar     * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
+guchar     * gimp_drawable_get_sub_thumbnail_data (GimpDrawable  *drawable,
                                                    gint           src_x,
                                                    gint           src_y,
                                                    gint           src_width,
@@ -53,7 +89,7 @@ guchar     * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
                                                    gint          *dest_width,
                                                    gint          *dest_height,
                                                    gint          *bpp);
-GdkPixbuf  * gimp_drawable_get_sub_thumbnail      (gint32         drawable_ID,
+GdkPixbuf  * gimp_drawable_get_sub_thumbnail      (GimpDrawable  *drawable,
                                                    gint           src_x,
                                                    gint           src_y,
                                                    gint           src_width,
@@ -61,6 +97,52 @@ GdkPixbuf  * gimp_drawable_get_sub_thumbnail      (gint32         drawable_ID,
                                                    gint           dest_width,
                                                    gint           dest_height,
                                                    GimpPixbufTransparency alpha);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_drawable_get_buffer             gimp_drawable_get_buffer_deprecated
+#define gimp_drawable_get_shadow_buffer      gimp_drawable_get_shadow_buffer_deprecated
+#define gimp_drawable_get_format             gimp_drawable_get_format_deprecated
+#define gimp_drawable_get_thumbnail_format   gimp_drawable_get_thumbnail_format_deprecated
+#define gimp_drawable_get_thumbnail_data     gimp_drawable_get_thumbnail_data_deprecated
+#define gimp_drawable_get_thumbnail          gimp_drawable_get_thumbnail_deprecated
+#define gimp_drawable_get_sub_thumbnail_data gimp_drawable_get_sub_thumbnail_data_deprecated
+#define gimp_drawable_get_sub_thumbnail      gimp_drawable_get_sub_thumbnail_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+GeglBuffer * gimp_drawable_get_buffer_deprecated             (gint32         drawable_ID);
+GeglBuffer * gimp_drawable_get_shadow_buffer_deprecated      (gint32         drawable_ID);
+
+const Babl * gimp_drawable_get_format_deprecated             (gint32         drawable_ID);
+const Babl * gimp_drawable_get_thumbnail_format_deprecated   (gint32         drawable_ID);
+
+guchar     * gimp_drawable_get_thumbnail_data_deprecated     (gint32         drawable_ID,
+                                                              gint          *width,
+                                                              gint          *height,
+                                                              gint          *bpp);
+GdkPixbuf  * gimp_drawable_get_thumbnail_deprecated          (gint32         drawable_ID,
+                                                              gint           width,
+                                                              gint           height,
+                                                              GimpPixbufTransparency alpha);
+
+guchar     * gimp_drawable_get_sub_thumbnail_data_deprecated (gint32         drawable_ID,
+                                                              gint           src_x,
+                                                              gint           src_y,
+                                                              gint           src_width,
+                                                              gint           src_height,
+                                                              gint          *dest_width,
+                                                              gint          *dest_height,
+                                                              gint          *bpp);
+GdkPixbuf  * gimp_drawable_get_sub_thumbnail_deprecated      (gint32         drawable_ID,
+                                                              gint           src_x,
+                                                              gint           src_y,
+                                                              gint           src_width,
+                                                              gint           src_height,
+                                                              gint           dest_width,
+                                                              gint           dest_height,
+                                                              GimpPixbufTransparency alpha);
 
 
 G_END_DECLS

@@ -77,11 +77,9 @@ endif
 
 # Python 3 (pygobject) version.
 
-# Commented out for now until we figure out the GParamSpec issues.
-
 if BUILD_PYTHON
-#goat_exercise_py3dir = $(gimpplugindir)/plug-ins/goat-exercise-py3
-#goat_exercise_py3_SCRIPTS = goat-exercise-py3.py
+goat_exercise_py3dir = $(gimpplugindir)/plug-ins/goat-exercise-py3
+goat_exercise_py3_SCRIPTS = goat-exercise-py3.py
 endif
 
 EXTRA_DIST = \

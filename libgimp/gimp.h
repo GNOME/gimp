@@ -37,6 +37,7 @@
 
 #include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
+#include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfontselect.h>
 #include <libgimp/gimpgimprc.h>
@@ -44,7 +45,9 @@
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimpimageprocedure.h>
+#include <libgimp/gimpitem.h>
 #include <libgimp/gimplayer.h>
+#include <libgimp/gimplayermask.h>
 #include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimplegacy.h>
 #include <libgimp/gimppaletteselect.h>
@@ -57,6 +60,7 @@
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimpthumbnailprocedure.h>
+#include <libgimp/gimpvectors.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 
@@ -171,7 +175,7 @@ gboolean            gimp_export_xmp           (void) G_GNUC_CONST;
 gboolean            gimp_export_iptc          (void) G_GNUC_CONST;
 GimpCheckSize       gimp_check_size           (void) G_GNUC_CONST;
 GimpCheckType       gimp_check_type           (void) G_GNUC_CONST;
-gint32              gimp_default_display      (void) G_GNUC_CONST;
+GimpDisplay       * gimp_default_display      (void) G_GNUC_CONST;
 const gchar       * gimp_wm_class             (void) G_GNUC_CONST;
 const gchar       * gimp_display_name         (void) G_GNUC_CONST;
 gint                gimp_monitor_number       (void) G_GNUC_CONST;

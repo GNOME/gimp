@@ -30,10 +30,57 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_selection_float (gint32 image_ID,
-                               gint32 drawable_ID,
-                               gint   offx,
-                               gint   offy);
+#define GIMP_TYPE_SELECTION            (gimp_selection_get_type ())
+#define GIMP_SELECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION, GimpSelection))
+#define GIMP_SELECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION, GimpSelectionClass))
+#define GIMP_IS_SELECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION))
+#define GIMP_IS_SELECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION))
+#define GIMP_SELECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION, GimpSelectionClass))
+
+
+typedef struct _GimpSelectionClass   GimpSelectionClass;
+
+struct _GimpSelection
+{
+  GimpChannel      parent_instance;
+};
+
+struct _GimpSelectionClass
+{
+  GimpChannelClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
+};
+
+GType       gimp_selection_get_type     (void) G_GNUC_CONST;
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GimpLayer * gimp_selection_float (GimpImage    *image,
+                                  GimpDrawable *drawable,
+                                  gint          offx,
+                                  gint          offy);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_selection_float gimp_selection_float_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+gint32   gimp_selection_float_deprecated (gint32 image_ID,
+                                          gint32 drawable_ID,
+                                          gint   offx,
+                                          gint   offy);
 
 
 G_END_DECLS

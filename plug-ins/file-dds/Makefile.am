@@ -47,6 +47,7 @@ file_dds_SOURCES = \
 	vec.h
 
 AM_CPPFLAGS = \
+	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS) \

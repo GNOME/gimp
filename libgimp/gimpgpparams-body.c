@@ -162,6 +162,41 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
       param_def->meta.m_param_def.type_name =
         (gchar *) g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec));
     }
+  else if (pspec_type == G_TYPE_PARAM_OBJECT)
+    {
+      /* We can't pass objects over the wire, but we can support
+       * specific objects which are actually handled in the core through
+       * IDs by converting these types to their respective IDs.
+       */
+
+      /* Don't compare with libgimp types directly as this file is also
+       * included from app/ which won't know of the types.
+       */
+      if (g_strcmp0 (g_type_name (pspec->value_type), "GimpImage") == 0)
+        param_def->type_name = "GimpParamImageID";
+      if (g_strcmp0 (g_type_name (pspec->value_type), "GimpDisplay") == 0)
+        param_def->type_name = "GimpParamDisplayID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpItem") == 0)
+        param_def->type_name = "GimpParamItemID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpDrawable") == 0)
+        param_def->type_name = "GimpParamDrawableID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpLayer") == 0)
+        param_def->type_name = "GimpParamLayerID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpChannel") == 0)
+        param_def->type_name = "GimpParamChannelID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpLayerMask") == 0)
+        param_def->type_name = "GimpParamLayerMaskID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpSelection") == 0)
+        param_def->type_name = "GimpParamSelectionID";
+      else if (g_strcmp0 (g_type_name (pspec->value_type), "GimpVectors") == 0)
+        param_def->type_name = "GimpParamVectorsID";
+
+      if (G_PARAM_SPEC_TYPE_NAME (pspec)  != param_def->type_name)
+        {
+          param_def->param_def_type = GP_PARAM_DEF_TYPE_ID;
+          param_def->meta.m_id.none_ok = TRUE;
+        }
+    }
 }
 
 void
@@ -574,6 +609,56 @@ _gimp_value_to_gp_param (const GValue *value,
 
       _gimp_param_spec_to_gp_param_def (g_value_get_param (value),
                                         &param->data.d_param_def);
+    }
+  else if (G_VALUE_HOLDS_OBJECT (value))
+    {
+#ifdef  __LIBGIMP_GPPARAMS__
+      GObject     *object    = g_value_get_object (value);
+      const gchar *type_name = NULL;
+
+      if (full_copy)
+        g_clear_pointer (&param->type_name, g_free);
+
+      if (GIMP_IS_IMAGE (object))
+        {
+          type_name = "GimpImageID";
+          param->param_type = GP_PARAM_TYPE_INT;
+          param->data.d_int = gimp_image_get_id (GIMP_IMAGE (object));
+        }
+      if (GIMP_IS_DISPLAY (object))
+        {
+          type_name = "GimpDisplayID";
+          param->param_type = GP_PARAM_TYPE_INT;
+          param->data.d_int = gimp_display_get_id (GIMP_DISPLAY (object));
+        }
+      else if (GIMP_IS_ITEM (object))
+        {
+          param->param_type = GP_PARAM_TYPE_INT;
+          param->data.d_int = gimp_item_get_id (GIMP_ITEM (object));
+
+          if (GIMP_IS_LAYER (object))
+            type_name = "GimpLayerID";
+          else if (GIMP_IS_LAYER_MASK (object))
+            type_name = "GimpLayerMaskID";
+          else if (GIMP_IS_SELECTION (object))
+            type_name = "GimpSelectionID";
+          else if (GIMP_IS_VECTORS (object))
+            type_name = "GimpVectorsID";
+          else if (GIMP_IS_CHANNEL (object))
+            type_name = "GimpChannelID";
+          else if (GIMP_IS_DRAWABLE (object))
+            type_name = "GimpDrawableID";
+          else
+            type_name = "GimpItemID";
+        }
+      if (type_name)
+        {
+          if (full_copy)
+            param->type_name = g_strdup (type_name);
+          else
+            param->type_name = (gchar *) type_name;
+        }
+#endif  /* __LIBGIMP_GPPARAMS__ */
     }
 
   if (param->param_type == -1)

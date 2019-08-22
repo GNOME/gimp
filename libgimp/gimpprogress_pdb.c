@@ -37,7 +37,7 @@
 /**
  * _gimp_progress_init:
  * @message: Message to use in the progress dialog.
- * @gdisplay_ID: GimpDisplay to update progressbar in, or -1 for a separate window.
+ * @gdisplay: GimpDisplay to update progressbar in, or -1 for a separate window.
  *
  * Initializes the progress bar for the current plug-in.
  *
@@ -48,7 +48,7 @@
  **/
 gboolean
 _gimp_progress_init (const gchar *message,
-                     gint32       gdisplay_ID)
+                     GimpDisplay *gdisplay)
 {
   GimpPDB        *pdb = gimp_get_pdb ();
   GimpValueArray *args;
@@ -57,7 +57,7 @@ _gimp_progress_init (const gchar *message,
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, message,
-                                          GIMP_TYPE_DISPLAY_ID, gdisplay_ID,
+                                          GIMP_TYPE_DISPLAY_ID, gimp_display_get_id (gdisplay),
                                           G_TYPE_NONE);
 
   if (pdb)

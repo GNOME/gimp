@@ -28,8 +28,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static cairo_surface_t * print_surface_from_drawable (gint32        drawable_ID,
-                                                      GError      **error);
+static cairo_surface_t * print_surface_from_drawable (GimpDrawable    *drawable,
+                                                      GError         **error);
 
 static void              print_draw_crop_marks       (GtkPrintContext *context,
                                                       gdouble          x,
@@ -45,7 +45,7 @@ print_draw_page (GtkPrintContext *context,
   cairo_t         *cr = gtk_print_context_get_cairo_context (context);
   cairo_surface_t *surface;
 
-  surface = print_surface_from_drawable (data->drawable_id, error);
+  surface = print_surface_from_drawable (data->drawable, error);
 
   if (surface)
     {
@@ -86,27 +86,27 @@ print_draw_page (GtkPrintContext *context,
 }
 
 static cairo_surface_t *
-print_surface_from_drawable (gint32   drawable_ID,
-                             GError **error)
+print_surface_from_drawable (GimpDrawable  *drawable,
+                             GError       **error)
 {
-  GeglBuffer         *buffer   = gimp_drawable_get_buffer (drawable_ID);
+  GeglBuffer         *buffer   = gimp_drawable_get_buffer (drawable);
   const Babl         *format;
   cairo_surface_t    *surface;
   cairo_status_t      status;
-  const gint          width    = gimp_drawable_width  (drawable_ID);
-  const gint          height   = gimp_drawable_height (drawable_ID);
+  const gint          width    = gimp_drawable_width  (drawable);
+  const gint          height   = gimp_drawable_height (drawable);
   GeglBufferIterator *iter;
   guchar             *pixels;
   gint                stride;
   guint               count    = 0;
   guint               done     = 0;
 
-  if (gimp_drawable_has_alpha (drawable_ID))
+  if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("cairo-ARGB32");
   else
     format = babl_format ("cairo-RGB24");
 
-  surface = cairo_image_surface_create (gimp_drawable_has_alpha (drawable_ID) ?
+  surface = cairo_image_surface_create (gimp_drawable_has_alpha (drawable) ?
                                         CAIRO_FORMAT_ARGB32 :
                                         CAIRO_FORMAT_RGB24,
                                         width, height);

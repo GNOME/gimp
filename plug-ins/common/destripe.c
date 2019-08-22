@@ -54,12 +54,12 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static void      destripe         (gint32        drawable_ID,
+static void      destripe         (GimpDrawable *drawable,
                                    GimpPreview  *preview);
-static void      destripe_preview (gpointer      drawable_ID,
+static void      destripe_preview (GimpDrawable *drawable,
                                    GimpPreview  *preview);
 
-static gboolean  destripe_dialog  (gint32        drawable_ID);
+static gboolean  destripe_dialog  (GimpDrawable *drawable);
 
 /*
  * Globals...
@@ -127,6 +127,7 @@ run (const gchar      *name,
   static GimpParam   values[1];  /* Return values */
   GimpPDBStatusType  status;     /* Return status */
   GimpRunMode        run_mode;   /* Current run mode */
+  GimpDrawable      *drawable;
   gint32             drawable_ID;
 
   INIT_I18N ();
@@ -142,6 +143,7 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
 
   switch (run_mode)
     {
@@ -154,7 +156,7 @@ run (const gchar      *name,
       /*
        * Get information from the dialog...
        */
-      if (! destripe_dialog (drawable_ID))
+      if (! destripe_dialog (drawable))
         return;
       break;
 
@@ -186,13 +188,13 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if ((gimp_drawable_is_rgb (drawable_ID) ||
-           gimp_drawable_is_gray (drawable_ID)))
+      if ((gimp_drawable_is_rgb (drawable) ||
+           gimp_drawable_is_gray (drawable)))
         {
           /*
            * Run!
            */
-          destripe (drawable_ID, NULL);
+          destripe (drawable, NULL);
 
           /*
            * If run mode is interactive, flush displays...
@@ -219,7 +221,7 @@ run (const gchar      *name,
 }
 
 static void
-destripe (gint32       drawable_ID,
+destripe (GimpDrawable *drawable,
           GimpPreview *preview)
 {
   GeglBuffer *src_buffer;
@@ -246,7 +248,7 @@ destripe (gint32       drawable_ID,
     {
       gimp_progress_init (_("Destriping"));
 
-      if (! gimp_drawable_mask_intersect (drawable_ID,
+      if (! gimp_drawable_mask_intersect (drawable,
                                           &x1, &y1, &width, &height))
         {
           return;
@@ -258,16 +260,16 @@ destripe (gint32       drawable_ID,
 
   x2 = x1 + width;
 
-  if (gimp_drawable_is_rgb (drawable_ID))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -279,8 +281,8 @@ destripe (gint32       drawable_ID,
    * Setup for filter...
    */
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   hist = g_new (long, width * bpp);
   corr = g_new (long, width * bpp);
@@ -431,8 +433,8 @@ destripe (gint32       drawable_ID,
 
       gimp_progress_update (1.0);
 
-      gimp_drawable_merge_shadow (drawable_ID, TRUE);
-      gimp_drawable_update (drawable_ID,
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable,
                             x1, y1, width, height);
     }
 
@@ -441,15 +443,15 @@ destripe (gint32       drawable_ID,
 }
 
 static void
-destripe_preview (gpointer     drawable_ID,
+destripe_preview (GimpDrawable *drawable,
                   GimpPreview *preview)
 {
-  destripe (GPOINTER_TO_INT (drawable_ID), preview);
+  destripe (drawable, preview);
 }
 
 
 static gboolean
-destripe_dialog (gint32 drawable_ID)
+destripe_dialog (GimpDrawable *drawable)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -483,13 +485,13 @@ destripe_dialog (gint32 drawable_ID)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (destripe_preview),
-                            GINT_TO_POINTER (drawable_ID));
+                            drawable);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);

@@ -28,43 +28,22 @@ _ = gettext.gettext
 def N_(message): return message
 
 class Goat (Gimp.PlugIn):
-    ## Parameter: run-mode ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
-                      nick="Run mode", blurb="The run mode")
-    def run_mode(self):
-        """Read-write integer property."""
-        return self._run_mode
-
-    @run_mode.setter
-    def run_mode(self, run_mode):
-        self._run_mode = run_mode
-
-    ## Parameter: image ##
-    #@GObject.Property(type=Gimp.ImageID.__gtype__,
-    @GObject.Property(type=int,
-                      default=0,
-                      nick= _("Image"),
-                      blurb= _("The input image"))
-    def image(self):
-        return self._image
-
-    @image.setter
-    def image(self, image):
-        self._image = image
-
-    ## Parameter: drawable ##
-    #@GObject.Property(type=Gimp.DrawableID.__gtype__,
-    @GObject.Property(type=int,
-                      default=0,
-                      nick= _("Drawable"),
-                      blurb= _("The input drawable"))
-    def drawable(self):
-        return self._drawable
-
-    @drawable.setter
-    def drawable(self, drawable):
-        self._drawable = drawable
+    ## Parameters ##
+    __gproperties__ = {
+        "run-mode": (Gimp.RunMode,
+                     "Run mode",
+                     "The run mode",
+                     Gimp.RunMode.NONINTERACTIVE,
+                     GObject.ParamFlags.READWRITE),
+        "image": (Gimp.Image,
+                  _("Image"),
+                  _("The input image"),
+                  GObject.ParamFlags.READWRITE),
+        "drawable": (Gimp.Drawable,
+                    _("Drawable"),
+                    _("The input drawable"),
+                    GObject.ParamFlags.READWRITE),
+    }
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
@@ -85,6 +64,9 @@ class Goat (Gimp.PlugIn):
                                     "");
         procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/');
         procedure.set_attribution("Jehan", "Jehan", "2019");
+        # XXX pygobject has broken GParamSpec support (see bug
+        # pygobject#227). As a special trick, to create arguments and
+        # return values, we make them from object properties.
         procedure.add_argument_from_property(self, "run-mode")
         procedure.add_argument_from_property(self, "image")
         procedure.add_argument_from_property(self, "drawable")
@@ -166,21 +148,14 @@ class Goat (Gimp.PlugIn):
                     return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                        GLib.Error())
 
-        # Parameters are not working fine yet because properties should
-        # be Gimp.ImageID/Gimp.DrawableID but we can't make these with
-        # pygobject. Until I figure out how to make it work, you could
-        # uncomment the following lines instead of using the args value.
-        #images = Gimp.image_list()
-        #image_id = images[0]
-        #drawable_id = Gimp.image_get_active_drawable(image_id)
-        drawable_id = args.index(2)
+        drawable = args.index(2)
 
-        success, x, y, width, height = Gimp.drawable_mask_intersect(drawable_id);
+        success, x, y, width, height = drawable.mask_intersect();
         if success:
             Gegl.init(None);
 
-            buffer = Gimp.drawable_get_buffer(drawable_id)
-            shadow_buffer = Gimp.drawable_get_shadow_buffer(drawable_id)
+            buffer = drawable.get_buffer()
+            shadow_buffer = drawable.get_shadow_buffer()
 
             graph = Gegl.Node()
             input = graph.create_child("gegl:buffer-source")
@@ -198,8 +173,8 @@ class Goat (Gimp.PlugIn):
             # during an unref().
             shadow_buffer.flush()
 
-            Gimp.drawable_merge_shadow(drawable_id, True)
-            Gimp.drawable_update(drawable_id, x, y, width, height)
+            drawable.merge_shadow(True)
+            drawable.update(x, y, width, height)
             Gimp.displays_flush()
         else:
             retval = procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,

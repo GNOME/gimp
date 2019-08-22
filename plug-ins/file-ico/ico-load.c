@@ -597,37 +597,37 @@ ico_read_icon (FILE    *fp,
   return TRUE;
 }
 
-static gint32
+static GimpLayer *
 ico_load_layer (FILE        *fp,
-                gint32       image,
+                GimpImage   *image,
                 gint32       icon_num,
                 guchar      *buf,
                 gint         maxsize,
                 IcoLoadInfo *info)
 {
   gint        width, height;
-  gint32      layer;
+  GimpLayer  *layer;
   guint32     first_bytes;
   GeglBuffer *buffer;
   gchar       name[ICO_MAXBUF];
 
   if (fseek (fp, info->offset, SEEK_SET) < 0 ||
       ! ico_read_int32 (fp, &first_bytes, 1))
-    return -1;
+    return NULL;
 
   if (first_bytes == ICO_PNG_MAGIC)
     {
       if (!ico_read_png (fp, first_bytes, buf, maxsize, &width, &height))
-        return -1;
+        return NULL;
     }
   else if (first_bytes == 40)
     {
       if (!ico_read_icon (fp, first_bytes, buf, maxsize, &width, &height))
-        return -1;
+        return NULL;
     }
   else
     {
-      return -1;
+      return NULL;
     }
 
   /* read successfully. add to image */
@@ -636,9 +636,9 @@ ico_load_layer (FILE        *fp,
                           GIMP_RGBA_IMAGE,
                           100,
                           gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, -1, icon_num);
+  gimp_image_insert_layer (image, layer, NULL, icon_num);
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    NULL, buf, GEGL_AUTO_ROWSTRIDE);
@@ -649,7 +649,7 @@ ico_load_layer (FILE        *fp,
 }
 
 
-gint32
+GimpImage *
 ico_load_image (const gchar  *filename,
                 GError      **error)
 {
@@ -657,7 +657,7 @@ ico_load_image (const gchar  *filename,
   IcoLoadInfo *info;
   gint         max_width, max_height;
   gint         i;
-  gint32       image;
+  GimpImage   *image;
   guchar      *buf;
   guint        icon_count;
   gint         maxsize;
@@ -671,21 +671,21 @@ ico_load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   icon_count = ico_read_init (fp);
   if (!icon_count)
     {
       fclose (fp);
-      return -1;
+      return NULL;
     }
 
   info = ico_read_info (fp, icon_count, error);
   if (! info)
     {
       fclose (fp);
-      return -1;
+      return NULL;
     }
 
   /* find width and height of image */
@@ -702,7 +702,7 @@ ico_load_image (const gchar  *filename,
     {
       g_free (info);
       fclose (fp);
-      return -1;
+      return NULL;
     }
   D(("image size: %ix%i\n", max_width, max_height));
 
@@ -724,7 +724,7 @@ ico_load_image (const gchar  *filename,
   return image;
 }
 
-gint32
+GimpImage *
 ico_load_thumbnail_image (const gchar  *filename,
                           gint         *width,
                           gint         *height,
@@ -732,7 +732,7 @@ ico_load_thumbnail_image (const gchar  *filename,
 {
   FILE        *fp;
   IcoLoadInfo *info;
-  gint32       image;
+  GimpImage   *image;
   gint         w     = 0;
   gint         h     = 0;
   gint         bpp   = 0;
@@ -749,14 +749,14 @@ ico_load_thumbnail_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   icon_count = ico_read_init (fp);
   if (! icon_count)
     {
       fclose (fp);
-      return -1;
+      return NULL;
     }
 
   D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
@@ -766,7 +766,7 @@ ico_load_thumbnail_image (const gchar  *filename,
   if (! info)
     {
       fclose (fp);
-      return -1;
+      return NULL;
     }
 
   /* Do a quick scan of the icons in the file to find the best match */
@@ -792,7 +792,7 @@ ico_load_thumbnail_image (const gchar  *filename,
     }
 
   if (w <= 0 || h <= 0)
-    return -1;
+    return NULL;
 
   image = gimp_image_new (w, h, GIMP_RGB);
   buf = g_new (guchar, w*h*4);

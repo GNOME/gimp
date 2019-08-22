@@ -29,29 +29,98 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+#define GIMP_TYPE_LAYER            (gimp_layer_get_type ())
+#define GIMP_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
+#define GIMP_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
+#define GIMP_IS_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER))
+#define GIMP_IS_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER))
+#define GIMP_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER, GimpLayerClass))
 
-gint32   gimp_layer_new                (gint32           image_ID,
-                                        const gchar     *name,
-                                        gint             width,
-                                        gint             height,
-                                        GimpImageType    type,
-                                        gdouble          opacity,
-                                        GimpLayerMode    mode);
-gint32   gimp_layer_copy               (gint32           layer_ID);
 
-gint32   gimp_layer_new_from_pixbuf    (gint32           image_ID,
-                                        const gchar     *name,
-                                        GdkPixbuf       *pixbuf,
-                                        gdouble          opacity,
-                                        GimpLayerMode    mode,
-                                        gdouble          progress_start,
-                                        gdouble          progress_end);
-gint32   gimp_layer_new_from_surface   (gint32           image_ID,
-                                        const gchar     *name,
-                                        cairo_surface_t *surface,
-                                        gdouble          progress_start,
-                                        gdouble          progress_end);
+typedef struct _GimpLayerClass   GimpLayerClass;
+typedef struct _GimpLayerPrivate GimpLayerPrivate;
 
+struct _GimpLayer
+{
+  GimpDrawable      parent_instance;
+};
+
+struct _GimpLayerClass
+{
+  GimpDrawableClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
+};
+
+GType    gimp_layer_get_type           (void) G_GNUC_CONST;
+
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GimpLayer * gimp_layer_new                (GimpImage       *image,
+                                           const gchar     *name,
+                                           gint             width,
+                                           gint             height,
+                                           GimpImageType    type,
+                                           gdouble          opacity,
+                                           GimpLayerMode    mode);
+
+GimpLayer * gimp_layer_new_from_pixbuf    (GimpImage       *image,
+                                           const gchar     *name,
+                                           GdkPixbuf       *pixbuf,
+                                           gdouble          opacity,
+                                           GimpLayerMode    mode,
+                                           gdouble          progress_start,
+                                           gdouble          progress_end);
+GimpLayer * gimp_layer_new_from_surface   (GimpImage       *image,
+                                           const gchar     *name,
+                                           cairo_surface_t *surface,
+                                           gdouble          progress_start,
+                                           gdouble          progress_end);
+
+GimpLayer * gimp_layer_copy               (GimpLayer       *layer);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_layer_new              gimp_layer_new_deprecated
+#define gimp_layer_new_from_pixbuf  gimp_layer_new_from_pixbuf_deprecated
+#define gimp_layer_new_from_surface gimp_layer_new_from_surface_deprecated
+#define gimp_layer_copy             gimp_layer_copy_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+gint32   gimp_layer_new_deprecated              (gint32           image_id,
+                                                 const gchar     *name,
+                                                 gint             width,
+                                                 gint             height,
+                                                 GimpImageType    type,
+                                                 gdouble          opacity,
+                                                 GimpLayerMode    mode);
+
+gint32   gimp_layer_new_from_pixbuf_deprecated  (gint32           image_id,
+                                                 const gchar     *name,
+                                                 GdkPixbuf       *pixbuf,
+                                                 gdouble          opacity,
+                                                 GimpLayerMode    mode,
+                                                 gdouble          progress_start,
+                                                 gdouble          progress_end);
+gint32   gimp_layer_new_from_surface_deprecated (gint32           image_id,
+                                                 const gchar     *name,
+                                                 cairo_surface_t *surface,
+                                                 gdouble          progress_start,
+                                                 gdouble          progress_end);
+
+gint32   gimp_layer_copy_deprecated             (gint32           layer_ID);
 
 G_END_DECLS
 

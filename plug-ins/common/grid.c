@@ -64,11 +64,11 @@ static void   run    (const gchar      *name,
 static guchar      best_cmap_match (const guchar  *cmap,
                                     gint           ncolors,
                                     const GimpRGB *color);
-static void        grid            (gint32         image_ID,
-                                    gint32         drawable_ID,
+static void        grid            (GimpImage     *image,
+                                    GimpDrawable  *drawable,
                                     GimpPreview   *preview);
-static gint        dialog          (gint32         image_ID,
-                                    gint32         drawable_ID);
+static gint        dialog          (GimpImage     *image,
+                                    GimpDrawable  *drawable);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -162,6 +162,8 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
+  GimpImage         *image;
+  GimpDrawable      *drawable;
   gint32             image_ID;
   gint32             drawable_ID;
   GimpRunMode        run_mode;
@@ -176,6 +178,8 @@ run (const gchar      *name,
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
+  image       = gimp_image_get_by_id (image_ID);
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
@@ -225,7 +229,7 @@ run (const gchar      *name,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! dialog (image_ID, drawable_ID))
+      if (! dialog (image, drawable))
         {
           /* The dialog was closed, or something similarly evil happened. */
           status = GIMP_PDB_EXECUTION_ERROR;
@@ -241,7 +245,7 @@ run (const gchar      *name,
     {
       gimp_progress_init (_("Drawing grid"));
 
-      grid (image_ID, drawable_ID, NULL);
+      grid (image, drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -323,9 +327,9 @@ pix_composite (guchar   *p1,
 }
 
 static void
-grid (gint32       image_ID,
-      gint32       drawable_ID,
-      GimpPreview *preview)
+grid (GimpImage    *image,
+      GimpDrawable *drawable,
+      GimpPreview  *preview)
 {
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
@@ -351,9 +355,9 @@ grid (gint32       image_ID,
   gimp_rgba_get_uchar (&grid_cfg.icolor,
                        icolor, icolor + 1, icolor + 2, icolor + 3);
 
-  alpha = gimp_drawable_has_alpha (drawable_ID);
+  alpha = gimp_drawable_has_alpha (drawable);
 
-  switch (gimp_image_base_type (image_ID))
+  switch (gimp_image_base_type (image))
     {
     case GIMP_RGB:
       blend = TRUE;
@@ -377,7 +381,7 @@ grid (gint32       image_ID,
       break;
 
     case GIMP_INDEXED:
-      cmap = gimp_image_get_colormap (image_ID, &ncolors);
+      cmap = gimp_image_get_colormap (image, &ncolors);
 
       hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
       vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);
@@ -386,7 +390,7 @@ grid (gint32       image_ID,
       g_free (cmap);
       blend = FALSE;
 
-      format = gimp_drawable_get_format (drawable_ID);
+      format = gimp_drawable_get_format (drawable);
       break;
 
     default:
@@ -410,17 +414,17 @@ grid (gint32       image_ID,
     {
       gint w, h;
 
-      if (! gimp_drawable_mask_intersect (drawable_ID,
+      if (! gimp_drawable_mask_intersect (drawable,
                                           &sx1, &sy1, &w, &h))
         return;
 
       sx2 = sx1 + w;
       sy2 = sy1 + h;
 
-      dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+      dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
     }
 
-  src_buffer = gimp_drawable_get_buffer (drawable_ID);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   dest = g_new (guchar, (sx2 - sx1) * bytes);
 
@@ -533,8 +537,8 @@ grid (gint32       image_ID,
 
       g_object_unref (dest_buffer);
 
-      gimp_drawable_merge_shadow (drawable_ID, TRUE);
-      gimp_drawable_update (drawable_ID,
+      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_update (drawable,
                             sx1, sy1, sx2 - sx1, sy2 - sy1);
     }
 }
@@ -580,13 +584,12 @@ update_values (void)
 
 static void
 update_preview (GimpPreview  *preview,
-                gpointer      drawable_ID)
+                GimpDrawable  *drawable)
 {
   update_values ();
 
-  grid (gimp_item_get_image (GPOINTER_TO_INT (drawable_ID)),
-        GPOINTER_TO_INT (drawable_ID),
-        preview);
+  grid (gimp_item_get_image (GIMP_ITEM (drawable)),
+        drawable, preview);
 }
 
 static void
@@ -640,8 +643,8 @@ color_callback (GtkWidget *widget,
 
 
 static gint
-dialog (gint32 image_ID,
-        gint32 drawable_ID)
+dialog (GimpImage    *image,
+        GimpDrawable *drawable)
 {
   GimpColorConfig *config;
   GtkWidget       *dlg;
@@ -666,8 +669,8 @@ dialog (gint32 image_ID,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  d_width  = gimp_drawable_width  (drawable_ID);
-  d_height = gimp_drawable_height (drawable_ID);
+  d_width  = gimp_drawable_width  (drawable);
+  d_height = gimp_drawable_height (drawable);
 
   main_dialog = dlg = gimp_dialog_new (_("Grid"), PLUG_IN_ROLE,
                                        NULL, 0,
@@ -686,8 +689,8 @@ dialog (gint32 image_ID,
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
   /*  Get the image resolution and unit  */
-  gimp_image_get_resolution (image_ID, &xres, &yres);
-  unit = gimp_image_get_unit (image_ID);
+  gimp_image_get_resolution (image, &xres, &yres);
+  unit = gimp_image_get_unit (image);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -695,13 +698,13 @@ dialog (gint32 image_ID,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (update_preview),
-                    GINT_TO_POINTER (drawable_ID));
+                    drawable);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);

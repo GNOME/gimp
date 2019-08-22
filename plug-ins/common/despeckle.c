@@ -119,8 +119,8 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run    /* run   */
 };
 
-static GtkWidget *preview;          /* Preview widget   */
-static gint32     drawable_ID = -1; /* Current drawable */
+static GtkWidget    *preview;         /* Preview widget   */
+static GimpDrawable *drawable = NULL; /* Current drawable */
 
 
 static gint despeckle_vals[4] =
@@ -175,6 +175,7 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   static GimpParam   values[1];
+  gint32             drawable_ID;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -187,17 +188,18 @@ run (const gchar      *name,
 
   run_mode    = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
+  drawable    = GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID));
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE :
       gimp_get_data (PLUG_IN_PROC, &despeckle_radius);
 
-      if (gimp_drawable_is_rgb (drawable_ID) ||
-          gimp_drawable_is_gray (drawable_ID))
+      if (gimp_drawable_is_rgb (drawable) ||
+          gimp_drawable_is_gray (drawable))
        {
           if (! despeckle_dialog ())
-          return;
+            return;
        }
       break;
 
@@ -247,8 +249,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drawable_ID) ||
-          gimp_drawable_is_gray (drawable_ID))
+      if (gimp_drawable_is_rgb (drawable) ||
+          gimp_drawable_is_gray (drawable))
         {
           despeckle ();
 
@@ -329,20 +331,20 @@ despeckle (void)
   gint        x, y;
   gint        width, height;
 
-  if (! gimp_drawable_mask_intersect (drawable_ID,
+  if (! gimp_drawable_mask_intersect (drawable,
                                       &x, &y, &width, &height))
     return;
 
-  if (gimp_drawable_is_rgb (drawable_ID))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -350,8 +352,8 @@ despeckle (void)
 
   img_bpp = babl_format_get_bytes_per_pixel (format);
 
-  src_buffer  = gimp_drawable_get_buffer (drawable_ID);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_ID);
+  src_buffer  = gimp_drawable_get_buffer (drawable);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
 
   src = g_new (guchar, width * height * img_bpp);
   dst = g_new (guchar, width * height * img_bpp);
@@ -369,8 +371,8 @@ despeckle (void)
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable_ID, TRUE);
-  gimp_drawable_update (drawable_ID, x, y, width, height);
+  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_update (drawable, x, y, width, height);
 
   g_free (dst);
   g_free (src);
@@ -412,7 +414,7 @@ despeckle_dialog (void)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable_id (drawable_ID);
+  preview = gimp_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -525,16 +527,16 @@ preview_update (GtkWidget *widget)
 
   preview = GIMP_PREVIEW (widget);
 
-  if (gimp_drawable_is_rgb (drawable_ID))
+  if (gimp_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("R'G'B'A u8");
       else
         format = babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable_ID))
+      if (gimp_drawable_has_alpha (drawable))
         format = babl_format ("Y'A u8");
       else
         format = babl_format ("Y' u8");
@@ -545,7 +547,7 @@ preview_update (GtkWidget *widget)
   gimp_preview_get_size (preview, &width, &height);
   gimp_preview_get_position (preview, &x1, &y1);
 
-  src_buffer = gimp_drawable_get_buffer (drawable_ID);
+  src_buffer = gimp_drawable_get_buffer (drawable);
 
   dst = g_new (guchar, width * height * img_bpp);
   src = g_new (guchar, width * height * img_bpp);

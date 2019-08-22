@@ -29,25 +29,114 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+#define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
+#define GIMP_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE, GimpImage))
+#define GIMP_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE, GimpImageClass))
+#define GIMP_IS_IMAGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE))
+#define GIMP_IS_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE))
+#define GIMP_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE, GimpImageClass))
 
-guchar       * gimp_image_get_colormap       (gint32        image_ID,
+
+typedef struct _GimpImageClass   GimpImageClass;
+typedef struct _GimpImagePrivate GimpImagePrivate;
+
+struct _GimpImage
+{
+  GObject           parent_instance;
+
+  GimpImagePrivate *priv;
+};
+
+struct _GimpImageClass
+{
+  GObjectClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
+};
+
+GType          gimp_image_get_type           (void) G_GNUC_CONST;
+
+gint32         gimp_image_get_id             (GimpImage    *image);
+GimpImage    * gimp_image_get_by_id          (gint32        image_id);
+
+GList        * gimp_image_list               (void);
+
+#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+
+GList        * gimp_image_get_layers         (GimpImage    *image);
+GList        * gimp_image_get_channels       (GimpImage    *image);
+GList        * gimp_image_get_vectors        (GimpImage    *image);
+
+guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
-gboolean       gimp_image_set_colormap       (gint32        image_ID,
+gboolean       gimp_image_set_colormap       (GimpImage    *image,
                                               const guchar *colormap,
                                               gint          num_colors);
 
-guchar       * gimp_image_get_thumbnail_data (gint32        image_ID,
+guchar       * gimp_image_get_thumbnail_data (GimpImage    *image,
                                               gint         *width,
                                               gint         *height,
                                               gint         *bpp);
-GdkPixbuf    * gimp_image_get_thumbnail      (gint32        image_ID,
+GdkPixbuf    * gimp_image_get_thumbnail      (GimpImage    *image,
                                               gint          width,
                                               gint          height,
                                               GimpPixbufTransparency  alpha);
 
-GimpMetadata * gimp_image_get_metadata       (gint32        image_ID);
-gboolean       gimp_image_set_metadata       (gint32        image_ID,
+GimpMetadata * gimp_image_get_metadata       (GimpImage    *image);
+gboolean       gimp_image_set_metadata       (GimpImage    *image,
                                               GimpMetadata *metadata);
+
+#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+#define gimp_image_list               gimp_image_list_deprecated
+#define gimp_image_get_layers         gimp_image_get_layers_deprecated
+#define gimp_image_get_channel        gimp_image_get_channels_deprecated
+#define gimp_image_get_vectors        gimp_image_get_vectors_deprecated
+#define gimp_image_get_colormap       gimp_image_get_colormap_deprecated
+#define gimp_image_set_colormap       gimp_image_set_colormap_deprecated
+#define gimp_image_get_thumbnail_data gimp_image_get_thumbnail_data_deprecated
+#define gimp_image_get_thumbnail      gimp_image_get_thumbnail_deprecated
+#define gimp_image_get_metadata       gimp_image_get_metadata_deprecated
+#define gimp_image_set_metadata       gimp_image_set_metadata_deprecated
+
+#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
+
+
+gint         * gimp_image_list_deprecated               (gint          *num_images);
+
+gint         * gimp_image_get_layers_deprecated         (gint32         image_id,
+                                                         gint          *num_layers);
+gint         * gimp_image_get_channels_deprecated       (gint32         image_id,
+                                                         gint          *num_channels);
+gint         * gimp_image_get_vectors_deprecated        (gint32         image_id,
+                                                         gint          *num_vectors);
+guchar       * gimp_image_get_colormap_deprecated       (gint32        image_id,
+                                                         gint         *num_colors);
+gboolean       gimp_image_set_colormap_deprecated       (gint32        image_id,
+                                                         const guchar *colormap,
+                                                         gint          num_colors);
+
+guchar       * gimp_image_get_thumbnail_data_deprecated (gint32        image_id,
+                                                         gint         *width,
+                                                         gint         *height,
+                                                         gint         *bpp);
+GdkPixbuf    * gimp_image_get_thumbnail_deprecated      (gint32        image_id,
+                                                         gint          width,
+                                                         gint          height,
+                                                         GimpPixbufTransparency  alpha);
+
+GimpMetadata * gimp_image_get_metadata_deprecated       (gint32        image_id);
+gboolean       gimp_image_set_metadata_deprecated       (gint32        image_id,
+                                                         GimpMetadata *metadata);
 
 
 G_END_DECLS
