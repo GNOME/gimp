@@ -1,5 +1,50 @@
 module_name = 'app'
 
+app_libs = shared_library('app',
+  include_directories: [ rootInclude, rootAppInclude, configInclude, ],
+
+  link_whole: [
+
+    libappconfig,
+    libappcore,
+    libappfile,
+    libappfiledata,
+    libappgegl,
+    libappinternalprocs,
+    libapplayermodes,
+    libapplayermodeslegacy,
+    libappoperations,
+    libapppaint,
+    libapppdb,
+    libappplugin,
+    libapptext,
+    libappvectors,
+    libappxcf,
+
+    libappactions,
+    libappdialogs,
+    libappdisplay,
+    libappgui,
+    libappmenus,
+    libapppropgui,
+    libapptools,
+    libappwidgets,
+  ],
+
+  link_with: [
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+    libgimpmodule,
+    libgimpthumb,
+    libgimpwidgets,
+  ],
+  dependencies: [
+    gegl, gdk_pixbuf, gtk3,
+  ],
+)
+
 
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
@@ -18,57 +63,35 @@ gnome.gtkdoc(module_name,
 
   dependencies: [
     fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
-    declare_dependency(link_with: [
-      libappactions,
-      libappconfig,
-      libappcore,
-      libappdialogs,
-      libappdisplay,
-      libappfile,
-      libappgegl,
-      libappgui,
-      libappinternalprocs,
-      libappmenus,
-      libappoperations,
-      libapppaint,
-      libapppdb,
-      libappplugin,
-      libapppropgui,
-      libapptext,
-      libapptools,
-      libappvectors,
-      libappwidgets,
-      libappxcf,
+    gegl,
+    declare_dependency(
+      include_directories: rootInclude,
+      link_with: [
+      app_libs,
 
-      libgimpwidgets,
-      libgimpmodule,
-      libgimpcolor,
-      libgimpthumb,
-      libgimpmath,
-      libgimpconfig,
       libgimpbase,
+      libgimpcolor,
+      libgimpconfig,
+      libgimpmath,
+      libgimpmodule,
+      libgimpthumb,
+      libgimpwidgets,
     ])
   ],
 
-  scanobjs_args: [
-  ],
-  scan_args: [
-  ],
-  mkdb_args: [
-  ],
+  scan_args: scan_args_common,
+  mkdb_args: mkdb_args_common,
   c_args: [
     '-UGTK_DISABLE_SINGLE_INCLUDES',
+    '-fdiagnostics-color=always',
   ],
+
   fixxref_args:  [
     '--extra-dir=' + devel_docs_build_root / 'libgimpbase'    / 'html',
     '--extra-dir=' + devel_docs_build_root / 'libgimpcolor'   / 'html',
     '--extra-dir=' + devel_docs_build_root / 'libgimpconfig'  / 'html',
     '--extra-dir=' + devel_docs_build_root / 'libgimpmath'    / 'html',
     '--extra-dir=' + devel_docs_build_root / 'libgimpwidgets' / 'html',
-  ],
-  html_assets: [
-  ],
-  html_args: [
   ],
 
   install: true,
