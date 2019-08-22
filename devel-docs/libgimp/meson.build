@@ -1,13 +1,5 @@
 module_name = 'libgimp3'
 
-version_data = configuration_data()
-version_data.set('GIMP_VERSION', gimp_version)
-configure_file(
-  input : 'version.in',
-  output: 'version',
-  configuration: version_data,
-)
-
 gimp_dep = declare_dependency(
   include_directories: rootInclude,
   link_with: [
