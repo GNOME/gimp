@@ -771,7 +771,7 @@ if get_option('python').disabled()
   have_python = false
 
 else
-  python_required = get_option('python').auto()
+  python_required = get_option('python').enabled()
 
   python = pythonmod.find_installation('python3', required: false)
 
