@@ -3,8 +3,10 @@ module_name = 'libgimpbase3'
 
 gnome.gtkdoc(module_name,
   main_sgml: module_name + '-docs.sgml',
+
   gobject_typesfile: files(module_name + '.types'),
-  src_dir: meson.current_source_dir(),
+
+  src_dir: meson.source_root() / 'libgimpbase',
 
   content_files: [
   ],
@@ -20,15 +22,14 @@ gnome.gtkdoc(module_name,
 
   dependencies: [
     fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
+    declare_dependency(link_with: [
+      libgimpbase,
+    ]),
   ],
   scanobjs_args: [
   ],
-  scan_args: [
-    '--deprecated-guards=GIMP_DISABLE_DEPRECATED',
-  ],
-  mkdb_args: [
-    '--name-space=gimp',
-  ],
+  scan_args: scan_args_common,
+  mkdb_args: mkdb_args_common,
   fixxref_args:  [
   ],
   html_assets: [
