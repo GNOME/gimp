@@ -222,7 +222,6 @@ libappwidgets_sources = [
   'gimpwindow.c',
   'gimpwindowstrategy.c',
   appwidgetsenums,
-  appcoremarshal,
 ]
 
 

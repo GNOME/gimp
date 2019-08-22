@@ -32,6 +32,7 @@ subdir('widgets')
 subdir('xcf')
 
 
+# For app/config
 app_debug_files = files(
   'gimp-debug.c',
   'gimp-log.c',
@@ -112,12 +113,12 @@ app_deps = [
 
 # Executables
 
-rc_name = 'gimp-'+ gimp_app_version
-rc_file = platform_win32 ? windows.compile_resources(
+console_rc_name = 'gimp-'+ gimp_app_version
+console_rc_file = platform_win32 ? windows.compile_resources(
   gimp_app_rc,
   args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(rc_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(rc_name),
+    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
+    '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
     '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
   ],
   include_directories: [
@@ -125,33 +126,50 @@ rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
+gui_rc_name = 'gimp-console-'+ gimp_app_version
+gui_rc_file = platform_win32 ? windows.compile_resources(
+  gimp_app_rc,
+  args: [
+    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
+    '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
+    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+  ],
+  include_directories: [
+    rootInclude, appInclude,
+  ],
+) : []
+
+
 gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
-  libapp_sources + [ 'main.c', rc_file, ],
-  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ] + [ '-DGIMP_CONSOLE_COMPILATION', ],
-  include_directories: [ rootInclude, ],
+  'main.c',
+  libapp_sources,
+  console_rc_file,
+  c_args: [
+    '-DG_LOG_DOMAIN="Gimp"',
+    '-DGIMP_APP_GLUE_COMPILATION',
+    '-DGIMP_CONSOLE_COMPILATION',
+  ],
+  include_directories: rootInclude,
   dependencies: app_deps,
-  link_with: app_links,
+  link_with: [
+    app_links,
+  ],
   install: true,
 )
 
-rc_name = 'gimp-console-'+ gimp_app_version
-rc_file = platform_win32 ? windows.compile_resources(
-  gimp_app_rc,
-  args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(rc_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(rc_name),
-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-  ],
-  include_directories: [
-    rootInclude, appInclude,
-  ],
-) : []
-
 gimpmain_exe = executable('gimp-'+gimp_app_version,
-  libapp_sources + [ 'main.c', rc_file, ],
-  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
-  include_directories: [ rootInclude, ],
+  'main.c',
+  libapp_sources,
+  gui_rc_file,
+  c_args: [
+    '-DG_LOG_DOMAIN="Gimp"',
+    '-DGIMP_APP_GLUE_COMPILATION',
+  ],
+  include_directories: rootInclude,
   dependencies: app_deps,
-  link_with: app_links + app_gui_links,
+  link_with: [
+    app_links,
+    app_gui_links,
+  ],
   install: true,
 )

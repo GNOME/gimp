@@ -21,7 +21,6 @@ libapptext_sources = [
   'gimptextlayout.c',
   'gimptextundo.c',
   apptextenums,
-  appcoremarshal,
 ]
 
 
