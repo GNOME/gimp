@@ -1,5 +1,5 @@
 
-common_exes_list = [
+common_plugins_list = [
   { 'name': 'align-layers',       'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
   { 'name': 'animation-optimize', 'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
   { 'name': 'animation-play',     'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
@@ -46,7 +46,7 @@ common_exes_list = [
   { 'name': 'file-jp2-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, openjpeg, ],
   },
-{ 'name': 'file-mng',             'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
+  { 'name': 'file-mng',           'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
     'deps': [ gtk3, gegl, libmng, libpng, ],
   },
   { 'name': 'file-pat', },
@@ -54,7 +54,7 @@ common_exes_list = [
   { 'name': 'file-pdf-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, poppler ],
   },
-{ 'name': 'file-pdf-save',        'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
+  { 'name': 'file-pdf-save',      'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
     'deps': [ gtk3, gegl, gdk_pixbuf, poppler, cairo ],
   },
   { 'name': 'file-pix', },
@@ -100,47 +100,51 @@ common_exes_list = [
 ]
 
 if platform_win32
-  common_exes_list += { 'name': 'mail', }
+  common_plugins_list += { 'name': 'mail', }
 endif
 
 if wmf.found()
-  common_exes_list += { 'name': 'file-wmf',
+  common_plugins_list += { 'name': 'file-wmf',
     'deps': [ gtk3, gegl, wmf, ],
   }
 endif
 
 if xmc.found()
-  common_exes_list += { 'name': 'file-xmc',
+  common_plugins_list += { 'name': 'file-xmc',
     'deps': [ gtk3, gegl, xmc, ],
     'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
   }
 endif
 
 if libxpm.found()
-  common_exes_list += { 'name': 'file-xpm',
+  common_plugins_list += { 'name': 'file-xpm',
     'deps': [ gtk3, gegl, libxpm, ],
   }
 endif
 
 if webkit.found()
-  common_exes_list += { 'name': 'web-page',
+  common_plugins_list += { 'name': 'web-page',
     'deps': [ gtk3, gegl, gdk_pixbuf, webkit, ],
   }
 endif
 
-foreach exe : common_exes_list
-  exe_name = exe.get('name')
-  exe_sources = exe.get('sources', exe_name + '.c')
-  exe_deps = exe.get('deps', [ gtk3, gegl, gdk_pixbuf, ])
-  exe_cflags = exe.get('cflags', [])
+foreach plugin : common_plugins_list
+  plugin_name = plugin.get('name')
+  plugin_sources = plugin.get('sources', plugin_name + '.c')
+  plugin_deps = plugin.get('deps', [ gtk3, gegl, gdk_pixbuf, ])
+  plugin_cflags = plugin.get('cflags', [])
 
-  plugin_name = exe_name
+  plugin_rc = configure_file(
+    input : gimp_plugins_rc,
+    output: plugin_name + '.rc',
+    copy: true,
+  )
 
   rc_file = platform_win32 ? windows.compile_resources(
-    gimp_plugins_rc,
+    plugin_rc,
     args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(exe_name+'.exe'),
-      '--define', 'INTERNALNAME_STR="@0@"'    .format(exe_name),
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
       '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
     ],
     include_directories: [
@@ -148,8 +152,8 @@ foreach exe : common_exes_list
     ],
   ) : []
 
-  executable(exe_name,
-    [ exe_sources, rc_file ],
+  executable(plugin_name,
+    [ plugin_sources, rc_file ],
     include_directories: [ rootInclude, ],
     link_with : [
       libgimp,
@@ -160,8 +164,8 @@ foreach exe : common_exes_list
       libgimpui,
       libgimpwidgets,
     ],
-    dependencies: [ exe_deps, math ],
-    c_args: exe_cflags,
+    dependencies: [ plugin_deps, math ],
+    c_args: plugin_cflags,
     install: true,
     install_dir: gimpplugindir / 'plug-ins' / plugin_name,
   )
