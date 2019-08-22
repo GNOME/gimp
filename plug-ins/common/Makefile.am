@@ -926,8 +926,6 @@ file_pcx_LDADD = \
 
 file_pdf_load_CFLAGS = $(POPPLER_CFLAGS)
 
-file_pdf_load_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_pdf_load_SOURCES = \
 	file-pdf-load.c
 

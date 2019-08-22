@@ -249,7 +249,7 @@ static GimpValueArray * pdf_load_thumb       (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gint32            load_image          (PopplerDocument      *doc,
+static GimpImage       * load_image          (PopplerDocument      *doc,
                                               const gchar          *filename,
                                               GimpRunMode           run_mode,
                                               GimpPageSelectorTarget target,
@@ -269,11 +269,11 @@ static cairo_surface_t * get_thumb_surface   (PopplerDocument      *doc,
                                               gint                  page,
                                               gint                  preferred_size);
 
-static GdkPixbuf *       get_thumb_pixbuf    (PopplerDocument      *doc,
+static GdkPixbuf       * get_thumb_pixbuf    (PopplerDocument      *doc,
                                               gint                  page,
                                               gint                  preferred_size);
 
-static gint32            layer_from_surface  (gint32                image,
+static GimpLayer       * layer_from_surface  (GimpImage            *image,
                                               const gchar          *layer_name,
                                               gint                  position,
                                               cairo_surface_t      *surface,
@@ -391,12 +391,12 @@ pdf_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray   *return_vals;
-  GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
-  gint32            image_id = -1;
-  PopplerDocument  *doc      = NULL;
-  PdfSelectedPages  pages    = { 0, NULL };
-  GError           *error    = NULL;
+  GimpValueArray    *return_vals;
+  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
+  GimpImage         *image    = NULL;
+  PopplerDocument   *doc      = NULL;
+  PdfSelectedPages   pages    = { 0, NULL };
+  GError            *error    = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -503,13 +503,13 @@ pdf_load (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      image_id = load_image (doc,
-                             g_file_get_path (file),
-                             run_mode,
-                             loadvals.target,
-                             loadvals.resolution,
-                             loadvals.antialias,
-                             &pages);
+      image = load_image (doc,
+                          g_file_get_path (file),
+                          run_mode,
+                          loadvals.target,
+                          loadvals.resolution,
+                          loadvals.antialias,
+                          &pages);
     }
 
   if (doc)
@@ -517,7 +517,7 @@ pdf_load (GimpProcedure        *procedure,
 
   g_free (pages.pages);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -526,7 +526,7 @@ pdf_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -542,7 +542,7 @@ pdf_load_thumb (GimpProcedure        *procedure,
   gdouble          width  = 0;
   gdouble          height = 0;
   gdouble          scale;
-  gint32           image     = -1;
+  GimpImage       *image     = NULL;
   gint             num_pages = 0;
   PopplerDocument *doc       = NULL;
   cairo_surface_t *surface   = NULL;
@@ -594,7 +594,7 @@ pdf_load_thumb (GimpProcedure        *procedure,
   width  *= scale;
   height *= scale;
 
-  if (image < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -694,20 +694,20 @@ open_document (const gchar  *filename,
   return doc;
 }
 
-static gint32
-layer_from_surface (gint32           image,
+static GimpLayer *
+layer_from_surface (GimpImage       *image,
                     const gchar     *layer_name,
                     gint             position,
                     cairo_surface_t *surface,
                     gdouble          progress_start,
                     gdouble          progress_scale)
 {
-  gint32 layer;
+  GimpLayer *layer;
 
   layer = gimp_layer_new_from_surface (image, layer_name, surface,
                                        progress_start,
                                        progress_start + progress_scale);
-  gimp_image_insert_layer (image, layer, -1, position);
+  gimp_image_insert_layer (image, layer, NULL, position);
 
   return layer;
 }
@@ -780,7 +780,7 @@ render_page_to_pixbuf (PopplerPage *page,
 
 #endif
 
-static gint32
+static GimpImage *
 load_image (PopplerDocument        *doc,
             const gchar            *filename,
             GimpRunMode             run_mode,
@@ -789,14 +789,14 @@ load_image (PopplerDocument        *doc,
             gboolean                antialias,
             PdfSelectedPages       *pages)
 {
-  gint32   image_ID = 0;
-  gint32  *images   = NULL;
-  gint     i;
-  gdouble  scale;
-  gdouble  doc_progress = 0;
+  GimpImage  *image = NULL;
+  GimpImage **images   = NULL;
+  gint        i;
+  gdouble     scale;
+  gdouble     doc_progress = 0;
 
   if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
-    images = g_new0 (gint32, pages->n_pages);
+    images = g_new0 (GimpImage *, pages->n_pages);
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -824,27 +824,27 @@ load_image (PopplerDocument        *doc,
 
       g_object_get (G_OBJECT (page), "label", &page_label, NULL);
 
-      if (! image_ID)
+      if (! image)
         {
           gchar *name;
 
-          image_ID = gimp_image_new (width, height, GIMP_RGB);
-          gimp_image_undo_disable (image_ID);
+          image = gimp_image_new (width, height, GIMP_RGB);
+          gimp_image_undo_disable (image);
 
           if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             name = g_strdup_printf (_("%s-%s"), filename, page_label);
           else
             name = g_strdup_printf (_("%s-pages"), filename);
 
-          gimp_image_set_filename (image_ID, name);
+          gimp_image_set_filename (image, name);
           g_free (name);
 
-          gimp_image_set_resolution (image_ID, resolution, resolution);
+          gimp_image_set_resolution (image, resolution, resolution);
         }
 
       surface = render_page_to_surface (page, width, height, scale, antialias);
 
-      layer_from_surface (image_ID, page_label, i, surface,
+      layer_from_surface (image, page_label, i, surface,
                           doc_progress, 1.0 / pages->n_pages);
 
       g_free (page_label);
@@ -855,20 +855,20 @@ load_image (PopplerDocument        *doc,
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
-          images[i] = image_ID;
+          images[i] = image;
 
-          gimp_image_undo_enable (image_ID);
-          gimp_image_clean_all (image_ID);
+          gimp_image_undo_enable (image);
+          gimp_image_clean_all (image);
 
-          image_ID = 0;
+          image = 0;
         }
     }
   gimp_progress_update (1.0);
 
-  if (image_ID)
+  if (image)
     {
-      gimp_image_undo_enable (image_ID);
-      gimp_image_clean_all (image_ID);
+      gimp_image_undo_enable (image);
+      gimp_image_clean_all (image);
     }
 
   if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
@@ -882,12 +882,12 @@ load_image (PopplerDocument        *doc,
             gimp_display_new (images[i]);
         }
 
-      image_ID = images[0];
+      image = images[0];
 
       g_free (images);
     }
 
-  return image_ID;
+  return image;
 }
 
 static cairo_surface_t *
