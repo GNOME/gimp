@@ -96,8 +96,8 @@ static GimpProcedure  * play_create_procedure (GimpPlugIn           *plug_in,
 
 static GimpValueArray * play_run              (GimpProcedure        *procedure,
                                                GimpRunMode           run_mode,
-                                               gint32                image_id,
-                                               gint32                drawable_id,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
@@ -177,11 +177,10 @@ static GtkWidget         *fpscombo                  = NULL;
 static GtkWidget         *zoomcombo                 = NULL;
 static GtkWidget         *frame_disposal_combo      = NULL;
 
-static gint32             image_id;
+static GimpImage         *image                     = NULL;
 static guint              width                     = -1;
 static guint              height                    = -1;
-static gint32            *layers                    = NULL;
-static gint32             total_layers              = 0;
+static GList             *layers                    = NULL;
 
 static GtkWidget         *drawing_area              = NULL;
 static cairo_surface_t   *drawing_area_surface      = NULL;
@@ -194,7 +193,7 @@ static guint              shape_drawing_area_width  = -1;
 static guint              shape_drawing_area_height = -1;
 
 static gint32             total_frames              = 0;
-static gint32            *frames                    = NULL;
+static GimpLayer        **frames                    = NULL;
 static guint32           *frame_durations           = NULL;
 static guint              frame_number              = 0;
 
@@ -211,7 +210,7 @@ static AnimationSettings settings =
   100 /* ms */
 };
 
-static gint32 frames_image_id = 0;
+static GimpImage *frames_image = NULL;
 
 
 static void
@@ -268,15 +267,15 @@ play_create_procedure (GimpPlugIn  *plug_in,
 static GimpValueArray *
 play_run (GimpProcedure        *procedure,
           GimpRunMode           run_mode,
-          gint32                image,
-          gint32                drawable,
+          GimpImage            *_image,
+          GimpDrawable         *drawable,
           const GimpValueArray *args,
           gpointer              run_data)
 {
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  image_id = image;
+  image = _image;
 
   gimp_get_data (PLUG_IN_PROC, &settings);
 
@@ -288,7 +287,7 @@ play_run (GimpProcedure        *procedure,
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 
-  gimp_image_delete (frames_image_id);
+  gimp_image_delete (frames_image);
   gegl_exit ();
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
@@ -1013,23 +1012,26 @@ init_frames (void)
 {
   /* Frames are associated to an unused image. */
   gint          i;
-  gint32        new_frame, previous_frame, new_layer;
+  GimpLayer    *new_frame;
+  GimpLayer    *previous_frame;
+  GimpLayer    *new_layer;
   gboolean      animated;
   GtkAction    *action;
   gint          duration = 0;
   DisposeType   disposal = settings.default_frame_disposal;
   gchar        *layer_name;
+  GList        *iter;
 
-  total_frames = total_layers;
+  total_frames = g_list_length (layers);
 
   /* Cleanup before re-generation. */
   if (frames)
     {
-      gimp_image_delete (frames_image_id);
+      gimp_image_delete (frames_image);
       g_free (frames);
       g_free (frame_durations);
     }
-  frames = g_try_malloc0_n (total_frames, sizeof (gint32));
+  frames = g_try_malloc0_n (total_frames, sizeof (GimpLayer *));
   frame_durations = g_try_malloc0_n (total_frames, sizeof (guint32));
   if (! frames || ! frame_durations)
     {
@@ -1041,13 +1043,13 @@ init_frames (void)
   /* We only use RGB images for display because indexed images would somehow
      render terrible colors. Layers from other types will be automatically
      converted. */
-  frames_image_id = gimp_image_new (width, height, GIMP_RGB);
+  frames_image = gimp_image_new (width, height, GIMP_RGB);
   /* Save processing time and memory by not saving history and merged frames. */
-  gimp_image_undo_disable (frames_image_id);
+  gimp_image_undo_disable (frames_image);
 
-  for (i = 0; i < total_frames; i++)
+  for (iter = g_list_last (layers), i = 0; iter; iter = iter->prev, i++)
     {
-      layer_name = gimp_item_get_name (layers[total_layers - (i + 1)]);
+      layer_name = gimp_item_get_name (iter->data);
       if (layer_name)
         {
           duration = parse_ms_tag (layer_name);
@@ -1058,15 +1060,15 @@ init_frames (void)
       if (i > 0 && disposal != DISPOSE_REPLACE)
         {
           previous_frame = gimp_layer_copy (frames[i - 1]);
-          gimp_image_insert_layer (frames_image_id, previous_frame, 0, -1);
-          gimp_item_set_visible (previous_frame, TRUE);
+          gimp_image_insert_layer (frames_image, previous_frame, NULL, -1);
+          gimp_item_set_visible (GIMP_ITEM (previous_frame), TRUE);
         }
-      new_layer = gimp_layer_new_from_drawable (layers[total_layers - (i + 1)], frames_image_id);
-      gimp_image_insert_layer (frames_image_id, new_layer, 0, -1);
-      gimp_item_set_visible (new_layer, TRUE);
-      new_frame = gimp_image_merge_visible_layers (frames_image_id, GIMP_CLIP_TO_IMAGE);
+      new_layer = gimp_layer_new_from_drawable (iter->data, frames_image);
+      gimp_image_insert_layer (frames_image, new_layer, NULL, -1);
+      gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE);
+      new_frame = gimp_image_merge_visible_layers (frames_image, GIMP_CLIP_TO_IMAGE);
       frames[i] = new_frame;
-      gimp_item_set_visible (new_frame, FALSE);
+      gimp_item_set_visible (GIMP_ITEM (new_frame), FALSE);
 
       if (duration <= 0)
         duration = settings.default_frame_duration;
@@ -1100,23 +1102,23 @@ static void
 initialize (void)
 {
   /* Freeing existing data after a refresh. */
-  g_free (layers);
+  g_list_free (layers);
 
   /* Catch the case when the user has closed the image in the meantime. */
-  if (! gimp_image_is_valid (image_id))
+  if (! gimp_image_is_valid (image))
     {
       gimp_message (_("Invalid image. Did you close it?"));
       gtk_main_quit ();
       return;
     }
 
-  width     = gimp_image_width (image_id);
-  height    = gimp_image_height (image_id);
-  layers    = gimp_image_get_layers (image_id, &total_layers);
+  width     = gimp_image_width (image);
+  height    = gimp_image_height (image);
+  layers    = gimp_image_get_layers (image);
 
   if (!window)
-    build_dialog (gimp_image_get_name (image_id));
-  refresh_dialog (gimp_image_get_name (image_id));
+    build_dialog (gimp_image_get_name (image));
+  refresh_dialog (gimp_image_get_name (image));
 
   init_frames ();
   render_frame (frame_number);
@@ -1153,7 +1155,7 @@ render_frame (gint32 whichframe)
       drawing_scale   = scale;
     }
 
-  buffer = gimp_drawable_get_buffer (frames[whichframe]);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (frames[whichframe]));
 
   if (*drawing_surface)
     cairo_surface_destroy (*drawing_surface);

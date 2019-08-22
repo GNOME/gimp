@@ -262,8 +262,6 @@ animation_optimize_LDADD = \
 	$(INTLLIBS)		\
 	$(animation_optimize_RC)
 
-animation_play_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 animation_play_SOURCES = \
 	animation-play.c
 
