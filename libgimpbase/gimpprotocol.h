@@ -43,7 +43,8 @@ enum
   GP_PROC_INSTALL,
   GP_PROC_UNINSTALL,
   GP_EXTENSION_ACK,
-  GP_HAS_INIT
+  GP_HAS_INIT,
+  GP_SIGNAL
 };
 
 typedef enum
@@ -72,6 +73,14 @@ typedef enum
   GP_PARAM_TYPE_PARAM_DEF
 } GPParamType;
 
+typedef enum
+{
+  GP_SIGNAL_TYPE_NONE,
+  GP_SIGNAL_TYPE_IMAGE,
+  GP_SIGNAL_TYPE_ITEM,
+  GP_SIGNAL_TYPE_DISPLAY
+} GPSignalType;
+
 
 typedef struct _GPConfig           GPConfig;
 typedef struct _GPTileReq          GPTileReq;
@@ -94,6 +103,7 @@ typedef struct _GPProcRun          GPProcRun;
 typedef struct _GPProcReturn       GPProcReturn;
 typedef struct _GPProcInstall      GPProcInstall;
 typedef struct _GPProcUninstall    GPProcUninstall;
+typedef struct _GPSignal           GPSignal;
 
 
 struct _GPConfig
@@ -284,6 +294,15 @@ struct _GPProcUninstall
   gchar *name;
 };
 
+struct _GPSignal
+{
+  GPSignalType  type;
+  guint32       id;
+  gchar        *name;
+
+  guint32       nparams;
+  GPParam      *params;
+};
 
 void      gp_init                   (void);
 
@@ -321,6 +340,9 @@ gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
 gboolean  gp_extension_ack_write    (GIOChannel      *channel,
                                      gpointer         user_data);
 gboolean  gp_has_init_write         (GIOChannel      *channel,
+                                     gpointer         user_data);
+gboolean  gp_signal_write           (GIOChannel      *channel,
+                                     GPSignal        *signal,
                                      gpointer         user_data);
 
 

@@ -47,6 +47,8 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "gimp-intl.h"
 
 
@@ -372,6 +374,10 @@ static void
 gimp_item_finalize (GObject *object)
 {
   GimpItemPrivate *private = GET_PRIVATE (object);
+
+  gimp_plug_in_manager_emit_signal (private->image->gimp->plug_in_manager,
+                                    object, gimp_item_get_ID (GIMP_ITEM (object)),
+                                    "destroyed", G_TYPE_NONE);
 
   if (private->offset_nodes)
     {

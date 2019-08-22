@@ -36,6 +36,8 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
@@ -68,6 +70,7 @@
 #include "gimplayermask.h"
 #include "gimplayerstack.h"
 #include "gimpmarshal.h"
+#include "gimpparamspecs.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
@@ -1038,6 +1041,10 @@ gimp_image_finalize (GObject *object)
   g_clear_object (&private->projection);
   g_clear_object (&private->graph);
   private->visible_mask = NULL;
+
+  gimp_plug_in_manager_emit_signal (image->gimp->plug_in_manager,
+                                    object, gimp_image_get_ID (image),
+                                    "destroyed", G_TYPE_NONE);
 
   if (private->colormap)
     gimp_image_colormap_free (image);
@@ -4338,6 +4345,7 @@ gimp_image_add_layer (GimpImage *image,
                       gboolean   push_undo)
 {
   GimpImagePrivate *private;
+  gchar            *add_name;
   gboolean          old_has_alpha;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -4368,6 +4376,7 @@ gimp_image_add_layer (GimpImage *image,
                                     layer,
                                     gimp_image_get_active_layer (image));
 
+  add_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
   gimp_item_tree_add_item (private->layers, GIMP_ITEM (layer),
                            GIMP_ITEM (parent), position);
 
@@ -4380,6 +4389,14 @@ gimp_image_add_layer (GimpImage *image,
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
+
+  gimp_plug_in_manager_emit_signal (image->gimp->plug_in_manager,
+                                    G_OBJECT (image), gimp_image_get_ID (image),
+                                    "added-layer",
+                                    GIMP_TYPE_LAYER_ID, gimp_item_get_ID (GIMP_ITEM (layer)),
+                                    G_TYPE_STRING, add_name,
+                                    G_TYPE_NONE);
+  g_free (add_name);
 
   return TRUE;
 }

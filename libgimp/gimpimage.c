@@ -26,6 +26,13 @@
 
 enum
 {
+  DESTROYED,
+  ADDED_LAYER,
+  LAST_SIGNAL
+};
+
+enum
+{
   PROP_0,
   PROP_ID,
   N_PROPS
@@ -52,7 +59,8 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpImage, gimp_image, G_TYPE_OBJECT)
 
 #define parent_class gimp_image_parent_class
 
-static GParamSpec *props[N_PROPS] = { NULL, };
+static GParamSpec *props[N_PROPS]       = { NULL, };
+static guint       signals[LAST_SIGNAL] = { 0 };
 
 static void
 gimp_image_class_init (GimpImageClass *klass)
@@ -61,6 +69,47 @@ gimp_image_class_init (GimpImageClass *klass)
 
   object_class->set_property = gimp_image_set_property;
   object_class->get_property = gimp_image_get_property;
+
+  /**
+   * GimpImageClass::destroy:
+   * @image: a #GimpImage
+   *
+   * This signal will be emitted when an image has been destroyed, just
+   * before we g_object_unref() it. This image is now invalid, none of
+   * its data can be accessed anymore, therefore all processing has to
+   * be stopped immediately.
+   * The only thing still feasible is to compare the image if you kept a
+   * reference to identify images, or to run gimp_image_get_id().
+   */
+  signals[DESTROYED] =
+    g_signal_new ("destroyed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, destroyed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  /**
+   * GimpImageClass::added-layer:
+   * @image:    a #GimpImage
+   * @layer:    the new #GimpLayer
+   * @add_name: the string passed initially as @layer name. It may be
+   *            different from the actual name @layer has now.
+   *
+   * This signal will be emitted just after a new layer has been added
+   * to @image.
+   */
+  signals[ADDED_LAYER] =
+    g_signal_new ("added-layer",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, new_layer),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_LAYER,
+                  G_TYPE_STRING);
 
   props[PROP_ID] =
     g_param_spec_int ("id",
@@ -508,6 +557,56 @@ gimp_image_set_metadata (GimpImage    *image,
     g_free (metadata_string);
 
   return success;
+}
+
+
+/* Internal API. */
+
+
+void
+_gimp_image_process_signal (gint32          image_id,
+                            const gchar    *name,
+                            GimpValueArray *params)
+{
+  GimpImage *image = NULL;
+
+  if (! gimp_images)
+    return;
+
+  image = g_hash_table_lookup (gimp_images,
+                               GINT_TO_POINTER (image_id));
+
+  if (! image)
+    /* No need to create images not referenced by the plug-in. */
+    return;
+
+  /* Below process image signals. */
+
+  if (g_strcmp0 (name, "destroyed") == 0)
+    {
+      g_hash_table_steal (gimp_images,
+                          GINT_TO_POINTER (image->priv->id));
+
+      g_signal_emit (image, signals[DESTROYED], 0);
+      g_object_unref (image);
+    }
+  else if (g_strcmp0 (name, "added-layer") == 0)
+    {
+      GimpItem    *layer;
+      const gchar *name;
+      GValue      *value;
+
+      g_return_if_fail (gimp_value_array_length (params) == 2                          &&
+                        GIMP_VALUE_HOLDS_LAYER_ID (gimp_value_array_index (params, 0)) &&
+                        G_VALUE_HOLDS_STRING (gimp_value_array_index (params, 1)));
+
+      value = gimp_value_array_index (params, 0);
+      layer = gimp_item_get_by_id (gimp_value_get_layer_id (value));
+      value = gimp_value_array_index (params, 1);
+      name  = g_value_get_string (value);
+
+      g_signal_emit (image, signals[ADDED_LAYER], 0, layer, name);
+    }
 }
 
 
