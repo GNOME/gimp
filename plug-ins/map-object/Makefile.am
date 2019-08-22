@@ -42,8 +42,8 @@ map_object_SOURCES = \
 	map-object-shade.h	\
 	map-object-ui.c		\
 	map-object-ui.h		\
-	../lighting/images/lighting-icon-images.h		\
-	../lighting/images/lighting-icon-images.c
+	../lighting/images/lighting-icon-images.c	\
+	../lighting/images/lighting-icon-images.h
 
 AM_CPPFLAGS = \
 	-DGIMP_DEPRECATED_REPLACE_NEW_API \

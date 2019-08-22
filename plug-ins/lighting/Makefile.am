@@ -42,8 +42,8 @@ lighting_SOURCES = \
 	lighting-shade.h	\
 	lighting-ui.c		\
 	lighting-ui.h		\
-	images/lighting-icon-images.h		\
-	images/lighting-icon-images.c
+	images/lighting-icon-images.c	\
+	images/lighting-icon-images.h
 
 AM_CPPFLAGS = \
 	-DGIMP_DEPRECATED_REPLACE_NEW_API \
