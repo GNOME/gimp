@@ -169,10 +169,12 @@ endforeach
 cursors_xml_content += '  </gresource>\n'
 cursors_xml_content += '</gresources>\n'
 
+cursors_xml_data = configuration_data()
+cursors_xml_data.set('DATA', cursors_xml_content)
 cursors_xml = configure_file(
+  input : 'dummy_file.xml',
   output: cursors_resourcename + '.gresource.xml',
-  command: [ 'echo', cursors_xml_content ],
-  capture: true,
+  configuration: cursors_xml_data,
 )
 
 
@@ -191,10 +193,12 @@ endforeach
 pickers_xml_content += '  </gresource>\n'
 pickers_xml_content += '</gresources>\n'
 
+pickers_xml_data = configuration_data()
+pickers_xml_data.set('DATA', pickers_xml_content)
 pickers_xml = configure_file(
+  input : 'dummy_file.xml',
   output: pickers_resourcename + '.gresource.xml',
-  command: [ 'echo', pickers_xml_content ],
-  capture: true,
+  configuration: pickers_xml_data,
 )
 
 cursors_sources = gnome.compile_resources(
