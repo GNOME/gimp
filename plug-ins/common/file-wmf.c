@@ -84,7 +84,7 @@ static GimpValueArray * wmf_load_thumb       (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gint32           load_image           (const gchar          *filename,
+static GimpImage      * load_image           (const gchar          *filename,
                                               GError              **error);
 static gboolean         load_wmf_size        (const gchar          *filename,
                                               WmfLoadVals          *vals);
@@ -216,7 +216,7 @@ wmf_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   gchar          *filename;
-  gint32          image;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -249,7 +249,7 @@ wmf_load (GimpProcedure        *procedure,
 
   g_free (filename);
 
-  if (image < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -272,9 +272,9 @@ wmf_load_thumb (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   gchar          *filename;
+  GimpImage      *image;
   gint            width;
   gint            height;
-  gint32          image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -311,7 +311,7 @@ wmf_load_thumb (GimpProcedure        *procedure,
 
   g_free (filename);
 
-  if (image < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -1018,15 +1018,15 @@ wmf_load_file (const gchar  *filename,
 /*
  * 'load_image()' - Load a WMF image into a new image window.
  */
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint32        image;
-  gint32        layer;
-  GeglBuffer   *buffer;
-  guchar       *pixels;
-  guint         width, height;
+  GimpImage   *image;
+  GimpLayer   *layer;
+  GeglBuffer  *buffer;
+  guchar      *pixels;
+  guint        width, height;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -1034,7 +1034,7 @@ load_image (const gchar  *filename,
   pixels = wmf_load_file (filename, &width, &height, error);
 
   if (! pixels)
-    return -1;
+    return NULL;
 
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_set_filename (image, filename);
@@ -1048,7 +1048,7 @@ load_image (const gchar  *filename,
                           100,
                           gimp_image_get_default_new_layer_mode (image));
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    babl_format ("R'G'B'A u8"),
@@ -1058,7 +1058,7 @@ load_image (const gchar  *filename,
 
   g_free (pixels);
 
-  gimp_image_insert_layer (image, layer, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
   gimp_progress_update (1.0);
 

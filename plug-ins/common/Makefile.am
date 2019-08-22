@@ -1156,8 +1156,6 @@ file_tga_LDADD = \
 
 file_wmf_CFLAGS = $(WMF_CFLAGS)
 
-file_wmf_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_wmf_SOURCES = \
 	file-wmf.c
 
