@@ -1339,7 +1339,7 @@ AC_MSG_CHECKING([whether symbols are prefixed])
 
 case "$host_os" in
   mingw*)
-    case "$host_cpu" in 
+    case "$host_cpu" in
 	  x86_64) SYMPREFIX='' ;;
 	  *) SYMPREFIX='_' ;;
 	esac
@@ -2983,24 +2983,16 @@ plug-ins/common/Makefile
 plug-ins/goat-exercises/Makefile
 modules/Makefile
 devel-docs/Makefile
+devel-docs/version
 devel-docs/app/Makefile
-devel-docs/app/version
 devel-docs/libgimp/Makefile
-devel-docs/libgimp/version
 devel-docs/libgimpbase/Makefile
-devel-docs/libgimpbase/version
 devel-docs/libgimpconfig/Makefile
-devel-docs/libgimpconfig/version
 devel-docs/libgimpcolor/Makefile
-devel-docs/libgimpcolor/version
 devel-docs/libgimpmath/Makefile
-devel-docs/libgimpmath/version
 devel-docs/libgimpmodule/Makefile
-devel-docs/libgimpmodule/version
 devel-docs/libgimpthumb/Makefile
-devel-docs/libgimpthumb/version
 devel-docs/libgimpwidgets/Makefile
-devel-docs/libgimpwidgets/version
 devel-docs/performance-logs/Makefile
 devel-docs/tools/Makefile
 docs/Makefile

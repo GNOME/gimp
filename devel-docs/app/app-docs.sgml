@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
@@ -7,10 +7,10 @@
   <bookinfo>
     <title>GIMP Application Reference Manual</title>
     <releaseinfo>
-      for GIMP <xi:include href="version" parse="text" />
+      for GIMP <xi:include href="../version" parse="text" />
     </releaseinfo>
   </bookinfo>
- 
+
   <part id="app-hierarchy-part">
     <title>Object Hierarchy</title>
     <xi:include href="xml/tree_index.sgml" />
@@ -56,7 +56,7 @@
     <title>Compositing</title>
     <xi:include href="xml/gimp-composite.xml" />
     <xi:include href="xml/gimp-composite-generic.xml" />
-  </part>  
+  </part>
 
   <part id="app-base-part">
     <title>Base</title>
