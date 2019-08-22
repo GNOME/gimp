@@ -20,13 +20,6 @@ option('libbacktrace',      type: 'boolean', value: true, description: 'Build wi
 
 # Features
 
-# Core features
-option('jpeg',              type: 'feature', value: 'auto', description: 'Jpeg support')
-option('tiff',              type: 'feature', value: 'auto', description: 'TIFF support')
-option('png',               type: 'feature', value: 'auto', description: 'PNG support')
-
-
-
 option('aa',                type: 'feature', value: 'auto', description: 'AA plugin')
 option('alsa',              type: 'feature', value: 'auto', description: 'Alsa support in midi input controller')
 option('appdata-test',      type: 'feature', value: 'auto', description: 'Validate the appdata file')
@@ -34,9 +27,14 @@ option('cairo-pdf',         type: 'feature', value: 'auto', description: 'Cairo-
 option('ghostscript',       type: 'feature', value: 'auto', description: 'Ghostscript support')
 option('gudev',             type: 'feature', value: 'auto', description: 'Gudev support')
 option('heif',              type: 'feature', value: 'auto', description: 'HEIF support')
+option('jpeg',              type: 'feature', value: 'auto', description: 'Jpeg support')
 option('jpeg2000',          type: 'feature', value: 'auto', description: 'Jpeg-2000 support')
 option('mng',               type: 'feature', value: 'auto', description: 'Mng support')
 option('openexr',           type: 'feature', value: 'auto', description: 'Openexr support')
+option('png',               type: 'feature', value: 'auto', description: 'PNG support')
+option('print',             type: 'feature', value: 'auto', description: 'Print support')
+option('screenshot',        type: 'feature', value: 'auto', description: 'Screensh')
+option('tiff',              type: 'feature', value: 'auto', description: 'TIFF support')
 option('webkit',            type: 'feature', value: 'auto', description: 'Help browser and webpage plugins')
 option('webp',              type: 'feature', value: 'auto', description: 'Webp support')
 option('wmf',               type: 'feature', value: 'auto', description: 'Wmf support')
@@ -45,12 +43,10 @@ option('xpm',               type: 'feature', value: 'auto', description: 'XPM su
 option('xvfb-run',          type: 'feature', value: 'auto', description: 'Use xvfb-run for UI-dependent automatic tests')
 
 option('gtk-doc-app',       type: 'boolean', value: false,  description: 'Build developer documentation for app')
-option('linux-input',       type: 'boolean', value: true,   description: 'Linux input event controller module')
+option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('poppler',           type: 'boolean', value: true,   description: 'Poppler support')
-option('print',             type: 'boolean', value: true,   description: 'Print support')
-option('screenshot',        type: 'boolean', value: true,   description: 'Screensh')
 option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
-option('python',            type: 'feature', value: 'auto', description: 'Install Python 3 plug-ins')
 option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
 option('lua',               type: 'feature', value: 'auto', description: 'Install Lua plug-ins')
+option('python',            type: 'feature', value: 'auto', description: 'Install Python 3 plug-ins')
