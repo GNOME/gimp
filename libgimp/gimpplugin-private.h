@@ -25,39 +25,6 @@
 G_BEGIN_DECLS
 
 
-#define WRITE_BUFFER_SIZE 1024
-
-
-typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
-
-struct _GimpPlugInMenuBranch
-{
-  gchar *menu_path;
-  gchar *menu_label;
-};
-
-struct _GimpPlugInPrivate
-{
-  GIOChannel *read_channel;
-  GIOChannel *write_channel;
-
-  gchar       write_buffer[WRITE_BUFFER_SIZE];
-  gulong      write_buffer_index;
-
-  guint       extension_source_id;
-
-  gchar      *translation_domain_name;
-  GFile      *translation_domain_path;
-
-  gchar      *help_domain_name;
-  GFile      *help_domain_uri;
-
-  GList      *menu_branches;
-
-  GList      *temp_procedures;
-};
-
-
 void         _gimp_plug_in_query             (GimpPlugIn      *plug_in);
 void         _gimp_plug_in_init              (GimpPlugIn      *plug_in);
 void         _gimp_plug_in_run               (GimpPlugIn      *plug_in);
@@ -69,11 +36,6 @@ GIOChannel * _gimp_plug_in_get_write_channel (GimpPlugIn      *plug_in);
 void         _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
                                               GimpWireMessage *msg,
                                               gint             type);
-
-gboolean     _gimp_plug_in_extension_read    (GIOChannel      *channel,
-                                              GIOCondition     condition,
-                                              gpointer         data);
-void         _gimp_plug_in_single_message    (GimpPlugIn      *plug_in);
 
 
 G_END_DECLS

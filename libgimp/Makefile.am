@@ -69,8 +69,8 @@ endif
 gimpincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimp
 
 AM_CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"				\
-	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"		\
+	-DGIMPDIR=\""$(gimpdir)"\"			\
+	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"	\
 	-DG_LOG_DOMAIN=\"LibGimp\"	\
 	-DGIMP_COMPILATION		\
 	-I$(top_srcdir)			\
@@ -122,7 +122,6 @@ libgimp_private_sources = \
 	gimppdbprocedure.h	\
 	gimppixbuf.c		\
 	gimppixbuf.h		\
-	gimpplugin-private.c	\
 	gimpplugin-private.h	\
 	\
 	gimpunit_pdb.c		\

@@ -31,6 +31,9 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#include "gimp-private.h"
+#include "gimp-shm.h"
+#include "gimpgpparams.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
 
@@ -47,6 +50,9 @@
  **/
 
 
+#define WRITE_BUFFER_SIZE 1024
+
+
 enum
 {
   PROP_0,
@@ -56,23 +62,74 @@ enum
 };
 
 
-static void       gimp_plug_in_constructed   (GObject      *object);
-static void       gimp_plug_in_finalize      (GObject      *object);
-static void       gimp_plug_in_set_property  (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void       gimp_plug_in_get_property  (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
 
-static gboolean   gimp_plug_in_write         (GIOChannel      *channel,
-                                              const guint8    *buf,
-                                              gulong           count,
-                                              gpointer         user_data);
-static gboolean   gimp_plug_in_flush         (GIOChannel      *channel,
-                                              gpointer         user_data);
+struct _GimpPlugInMenuBranch
+{
+  gchar *menu_path;
+  gchar *menu_label;
+};
+
+struct _GimpPlugInPrivate
+{
+  GIOChannel *read_channel;
+  GIOChannel *write_channel;
+
+  gchar       write_buffer[WRITE_BUFFER_SIZE];
+  gulong      write_buffer_index;
+
+  guint       extension_source_id;
+
+  gchar      *translation_domain_name;
+  GFile      *translation_domain_path;
+
+  gchar      *help_domain_name;
+  GFile      *help_domain_uri;
+
+  GList      *menu_branches;
+
+  GList      *temp_procedures;
+};
+
+
+static void       gimp_plug_in_constructed       (GObject      *object);
+static void       gimp_plug_in_finalize          (GObject      *object);
+static void       gimp_plug_in_set_property      (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void       gimp_plug_in_get_property      (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
+
+static void       gimp_plug_in_register          (GimpPlugIn   *plug_in,
+                                                  GList        *procedures);
+
+static gboolean   gimp_plug_in_write             (GIOChannel      *channel,
+                                                  const guint8    *buf,
+                                                  gulong           count,
+                                                  gpointer         user_data);
+static gboolean   gimp_plug_in_flush             (GIOChannel      *channel,
+                                                  gpointer         user_data);
+static gboolean   gimp_plug_in_io_error_handler  (GIOChannel      *channel,
+                                                  GIOCondition     cond,
+                                                  gpointer         data);
+
+static void       gimp_plug_in_loop              (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_single_message    (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_process_message   (GimpPlugIn      *plug_in,
+                                                  GimpWireMessage *msg);
+static void       gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
+                                                  GPProcRun       *proc_run);
+static void       gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
+                                                  GPProcRun       *proc_run);
+static void       gimp_plug_in_proc_run_internal (GPProcRun       *proc_run,
+                                                  GimpProcedure   *procedure,
+                                                  GPProcReturn    *proc_return);
+static gboolean   gimp_plug_in_extension_read    (GIOChannel      *channel,
+                                                  GIOCondition     condition,
+                                                  gpointer         data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
@@ -518,7 +575,7 @@ gimp_plug_in_extension_enable (GimpPlugIn *plug_in)
     {
       plug_in->priv->extension_source_id =
         g_io_add_watch (plug_in->priv->read_channel, G_IO_IN | G_IO_PRI,
-                        _gimp_plug_in_extension_read,
+                        gimp_plug_in_extension_read,
                         plug_in);
     }
 }
@@ -572,7 +629,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 
       if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
         {
-          _gimp_plug_in_single_message (plug_in);
+          gimp_plug_in_single_message (plug_in);
         }
       else if (select_val == -1 && errno != EINTR)
         {
@@ -600,7 +657,7 @@ gimp_plug_in_extension_process (GimpPlugIn *plug_in,
 
   if (g_io_channel_win32_poll (&pollfd, 1, timeout) == 1)
     {
-      _gimp_plug_in_single_message (plug_in);
+      gimp_plug_in_single_message (plug_in);
     }
 
 #endif
@@ -657,7 +714,168 @@ gimp_plug_in_get_pdb_error_handler (GimpPlugIn *plug_in)
 }
 
 
+/*  internal functions  */
+
+void
+_gimp_plug_in_query (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+    gp_has_init_write (plug_in->priv->write_channel, plug_in);
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures)
+    {
+      GList *procedures =
+        GIMP_PLUG_IN_GET_CLASS (plug_in)->query_procedures (plug_in);
+
+      gimp_plug_in_register (plug_in, procedures);
+    }
+}
+
+void
+_gimp_plug_in_init (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures)
+    {
+      GList *procedures =
+        GIMP_PLUG_IN_GET_CLASS (plug_in)->init_procedures (plug_in);
+
+      gimp_plug_in_register (plug_in, procedures);
+    }
+}
+
+void
+_gimp_plug_in_run (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  g_io_add_watch (plug_in->priv->read_channel,
+                  G_IO_ERR | G_IO_HUP,
+                  gimp_plug_in_io_error_handler,
+                  NULL);
+
+  gimp_plug_in_loop (plug_in);
+}
+
+void
+_gimp_plug_in_quit (GimpPlugIn *plug_in)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  if (GIMP_PLUG_IN_GET_CLASS (plug_in)->quit)
+    GIMP_PLUG_IN_GET_CLASS (plug_in)->quit (plug_in);
+
+  _gimp_shm_close ();
+
+  gp_quit_write (plug_in->priv->write_channel, plug_in);
+}
+
+GIOChannel *
+_gimp_plug_in_get_read_channel (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  return plug_in->priv->read_channel;
+}
+
+GIOChannel *
+_gimp_plug_in_get_write_channel (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  return plug_in->priv->write_channel;
+}
+
+void
+_gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
+                               GimpWireMessage *msg,
+                               gint             type)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  while (TRUE)
+    {
+      if (! gimp_wire_read_msg (plug_in->priv->read_channel, msg, NULL))
+        gimp_quit ();
+
+      if (msg->type == type)
+        return; /* up to the caller to call wire_destroy() */
+
+      if (msg->type == GP_TEMP_PROC_RUN || msg->type == GP_QUIT)
+        {
+          gimp_plug_in_process_message (plug_in, msg);
+        }
+      else
+        {
+          g_error ("unexpected message: %d", msg->type);
+        }
+
+      gimp_wire_destroy (msg);
+    }
+}
+
+
 /*  private functions  */
+
+static void
+gimp_plug_in_register (GimpPlugIn *plug_in,
+                       GList      *procedures)
+{
+  GList *list;
+
+  for (list = procedures; list; list = g_list_next (list))
+    {
+      const gchar   *name = list->data;
+      GimpProcedure *procedure;
+
+      procedure = gimp_plug_in_create_procedure (plug_in, name);
+      if (procedure)
+        {
+          GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
+          g_object_unref (procedure);
+        }
+      else
+        {
+          g_warning ("Plug-in failed to create procedure '%s'\n", name);
+        }
+    }
+
+  g_list_free_full (procedures, g_free);
+
+  if (plug_in->priv->translation_domain_name)
+    {
+      gchar *path = NULL;
+
+      if (plug_in->priv->translation_domain_path)
+        path = g_file_get_path (plug_in->priv->translation_domain_path);
+
+      _gimp_plugin_domain_register (plug_in->priv->translation_domain_name,
+                                    path);
+
+      g_free (path);
+    }
+
+  if (plug_in->priv->help_domain_name)
+    {
+      gchar *uri = g_file_get_uri (plug_in->priv->help_domain_uri);
+
+      _gimp_plugin_help_register (plug_in->priv->help_domain_name,
+                                  uri);
+
+      g_free (uri);
+    }
+
+  for (list = plug_in->priv->menu_branches; list; list = g_list_next (list))
+    {
+      GimpPlugInMenuBranch *branch = list->data;
+
+      _gimp_plugin_menu_branch_register (branch->menu_path,
+                                         branch->menu_label);
+    }
+}
 
 static gboolean
 gimp_plug_in_write (GIOChannel   *channel,
@@ -746,4 +964,201 @@ gimp_plug_in_flush (GIOChannel *channel,
     }
 
   return TRUE;
+}
+
+static gboolean
+gimp_plug_in_io_error_handler (GIOChannel   *channel,
+                               GIOCondition  cond,
+                               gpointer      data)
+{
+  g_printerr ("%s: fatal error: GIMP crashed\n", gimp_get_progname ());
+  gimp_quit ();
+
+  /* never reached */
+  return TRUE;
+}
+
+static void
+gimp_plug_in_loop (GimpPlugIn *plug_in)
+{
+  while (TRUE)
+    {
+      GimpWireMessage msg;
+
+      if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
+        return;
+
+      switch (msg.type)
+        {
+        case GP_QUIT:
+          gimp_wire_destroy (&msg);
+          return;
+
+        case GP_CONFIG:
+          _gimp_config (msg.data);
+          break;
+
+        case GP_TILE_REQ:
+        case GP_TILE_ACK:
+        case GP_TILE_DATA:
+          g_warning ("unexpected tile message received (should not happen)");
+          break;
+
+        case GP_PROC_RUN:
+          gimp_plug_in_proc_run (plug_in, msg.data);
+          gimp_wire_destroy (&msg);
+          return;
+
+        case GP_PROC_RETURN:
+          g_warning ("unexpected proc return message received (should not happen)");
+          break;
+
+        case GP_TEMP_PROC_RUN:
+          g_warning ("unexpected temp proc run message received (should not happen");
+          break;
+
+        case GP_TEMP_PROC_RETURN:
+          g_warning ("unexpected temp proc return message received (should not happen");
+          break;
+
+        case GP_PROC_INSTALL:
+          g_warning ("unexpected proc install message received (should not happen)");
+          break;
+
+        case GP_HAS_INIT:
+          g_warning ("unexpected has init message received (should not happen)");
+          break;
+        }
+
+      gimp_wire_destroy (&msg);
+    }
+}
+
+static void
+gimp_plug_in_single_message (GimpPlugIn *plug_in)
+{
+  GimpWireMessage msg;
+
+  /* Run a temp function */
+  if (! gimp_wire_read_msg (plug_in->priv->read_channel, &msg, NULL))
+    gimp_quit ();
+
+  gimp_plug_in_process_message (plug_in, &msg);
+
+  gimp_wire_destroy (&msg);
+}
+
+static void
+gimp_plug_in_process_message (GimpPlugIn      *plug_in,
+                              GimpWireMessage *msg)
+{
+  switch (msg->type)
+    {
+    case GP_QUIT:
+      gimp_quit ();
+      break;
+    case GP_CONFIG:
+      _gimp_config (msg->data);
+      break;
+    case GP_TILE_REQ:
+    case GP_TILE_ACK:
+    case GP_TILE_DATA:
+      g_warning ("unexpected tile message received (should not happen)");
+      break;
+    case GP_PROC_RUN:
+      g_warning ("unexpected proc run message received (should not happen)");
+      break;
+    case GP_PROC_RETURN:
+      g_warning ("unexpected proc return message received (should not happen)");
+      break;
+    case GP_TEMP_PROC_RUN:
+      gimp_plug_in_temp_proc_run (plug_in, msg->data);
+      break;
+    case GP_TEMP_PROC_RETURN:
+      g_warning ("unexpected temp proc return message received (should not happen)");
+      break;
+    case GP_PROC_INSTALL:
+      g_warning ("unexpected proc install message received (should not happen)");
+      break;
+    case GP_HAS_INIT:
+      g_warning ("unexpected has init message received (should not happen)");
+      break;
+    }
+}
+
+static void
+gimp_plug_in_proc_run (GimpPlugIn *plug_in,
+                       GPProcRun  *proc_run)
+{
+  GPProcReturn   proc_return;
+  GimpProcedure *procedure;
+
+  procedure = gimp_plug_in_create_procedure (plug_in, proc_run->name);
+
+  if (procedure)
+    {
+      gimp_plug_in_proc_run_internal (proc_run, procedure,
+                                      &proc_return);
+      g_object_unref (procedure);
+    }
+
+  if (! gp_proc_return_write (plug_in->priv->write_channel,
+                              &proc_return, plug_in))
+    gimp_quit ();
+}
+
+static void
+gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
+                            GPProcRun  *proc_run)
+{
+  GPProcReturn   proc_return;
+  GimpProcedure *procedure;
+
+  procedure = gimp_plug_in_get_temp_procedure (plug_in, proc_run->name);
+
+  if (procedure)
+    {
+      gimp_plug_in_proc_run_internal (proc_run, procedure,
+                                      &proc_return);
+    }
+
+  if (! gp_temp_proc_return_write (plug_in->priv->write_channel,
+                                   &proc_return, plug_in))
+    gimp_quit ();
+}
+
+static void
+gimp_plug_in_proc_run_internal (GPProcRun     *proc_run,
+                                GimpProcedure *procedure,
+                                GPProcReturn  *proc_return)
+{
+  GimpValueArray *arguments;
+  GimpValueArray *return_values = NULL;
+
+  arguments = _gimp_gp_params_to_value_array (NULL,
+                                              NULL, 0,
+                                              proc_run->params,
+                                              proc_run->nparams,
+                                              FALSE, FALSE);
+
+  return_values = gimp_procedure_run (procedure, arguments);
+  gimp_value_array_unref (arguments);
+
+  proc_return->name    = proc_run->name;
+  proc_return->nparams = gimp_value_array_length (return_values);
+  proc_return->params  = _gimp_value_array_to_gp_params (return_values, TRUE);
+
+  gimp_value_array_unref (return_values);
+}
+
+static gboolean
+gimp_plug_in_extension_read (GIOChannel  *channel,
+                             GIOCondition condition,
+                             gpointer     data)
+{
+  GimpPlugIn *plug_in = data;
+
+  gimp_plug_in_single_message (plug_in);
+
+  return G_SOURCE_CONTINUE;
 }
