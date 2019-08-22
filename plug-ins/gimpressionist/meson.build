@@ -55,7 +55,8 @@ executable(plugin_name,
     '-DDEFAULTPATH="@0@:@1@"'.format(
       '~/'   / gimpdir      / 'gimpressionist',
       prefix / gimpdatadir  / 'gimpressionist'
-    )
+    ),
+    '-DGIMP_DEPRECATED_REPLACE_NEW_API',
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
