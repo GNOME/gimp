@@ -1397,8 +1397,6 @@ nl_filter_LDADD = \
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
 
-plugin_browser_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 plugin_browser_SOURCES = \
 	plugin-browser.c
 
@@ -1415,8 +1413,6 @@ plugin_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(plugin_browser_RC)
-
-procedure_browser_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
 
 procedure_browser_SOURCES = \
 	procedure-browser.c
