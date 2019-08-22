@@ -39,10 +39,10 @@ install_data(
 )
 
 if have_python
-  # install_data(
-  #   'goat-exercise-py3.py',
-  #   install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-py3',
-  # )
+  install_data(
+    'goat-exercise-py3.py',
+    install_dir: gimpplugindir /  'plug-ins' / plugin_name + '-py3',
+  )
 endif
 
 
