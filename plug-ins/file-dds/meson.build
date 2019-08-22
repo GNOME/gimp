@@ -13,17 +13,15 @@ rc_file = platform_win32 ? windows.compile_resources(
 ) : []
 
 executable(plugin_name,
-  [
-  	'dds.c',
-  	'color.c',
-  	'ddsread.c',
-  	'ddswrite.c',
-  	'dxt.c',
-  	'mipmap.c',
-  	'misc.c',
-  	'mktables.c',
-    rc_file,
-  ],
+  'dds.c',
+  'color.c',
+  'ddsread.c',
+  'ddswrite.c',
+  'dxt.c',
+  'mipmap.c',
+  'misc.c',
+  'mktables.c',
+  rc_file,
   include_directories: [ rootInclude, ],
   dependencies: [
     gtk3, gegl, gdk_pixbuf, cairo, math,
