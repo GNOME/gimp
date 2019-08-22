@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <sys/types.h>
+#include <process.h>
 
 #include <glib.h>
 
