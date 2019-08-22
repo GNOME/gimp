@@ -935,7 +935,7 @@ conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
 # endif
 
 
-gtkdoc_scan = find_program('gtkdoc-scan', required : get_option('gtk-doc'))
+gtkdoc_scan = find_program('gtkdoc-scan')
 
 enable_default_bin = get_option('enable-default-bin')
 enable_console_bin = get_option('enable-console-bin')
