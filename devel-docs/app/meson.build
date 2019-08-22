@@ -1,12 +1,5 @@
 module_name = 'app'
 
-version_data = configuration_data()
-version_data.set('GIMP_VERSION', gimp_version)
-configure_file(
-  input : 'version.in',
-  output: 'version',
-  configuration: version_data,
-)
 
 gnome.gtkdoc(module_name,
   content_files: [],
