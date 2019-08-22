@@ -254,7 +254,7 @@ add_project_arguments(cxx.get_supported_arguments(warning_cflags_cpp), language:
 if platform_win32 and cc.get_id() == 'gcc'
   msvc_compat_args = cc.first_supported_argument([
     '-fnative-struct',
-    '-mms-bitfielads',
+    '-mms-bitfields',
   ])
   if msvc_compat_args == []
     error('''
@@ -288,7 +288,9 @@ conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
 math              = cc.find_library('m')
-dl                = cc.find_library('dl')
+dl                = platform_win32 ? no_dep : cc.find_library('dl')
+rpc               = platform_win32 ? cc.find_library('rpcrt4') : no_dep
+dbghelp           = platform_win32 ? cc.find_library('dbghelp') : no_dep
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
@@ -359,7 +361,7 @@ glib_networking_works =(glib_networking_works_run.compiled()
                     and glib_networking_works_run.returncode() == 0)
 
 if not glib_networking_works
-  if is_cross_build()
+  if meson.is_cross_build()
     warning('''
       Test for glib-networking cannot be performed while cross-compiling.
       Make sure glib-networking is installed, otherwise GIMP will not be able
@@ -426,7 +428,7 @@ endif
 # Check for 32-bit DLLs (Win32 64-bit)
 
 if platform_win32 and arch_x86_64
-  conf.set('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
+  conf.set_quoted('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
 endif
 
 ################################################################################
@@ -491,22 +493,29 @@ if x11_target
     endif
   endforeach
 endif
-conf.set('HAVE_X11_EXTENSIONS_SHAPE_H', cc.has_header('X11/extensions/shape.h'))
-conf.set('HAVE_X11_XMU_WINUTIL_H',      cc.has_header('X11/Xmu/WinUtil.h'))
+conf.set('HAVE_X11_EXTENSIONS_SHAPE_H', x11_target and cc.has_header('X11/extensions/shape.h'))
+conf.set('HAVE_X11_XMU_WINUTIL_H',      x11_target and cc.has_header('X11/Xmu/WinUtil.h'))
 
 
 # Features requiring x11
 
 have_doc_shooter= x11_target
-have_screenshot = get_option('screenshot')
-have_print      = get_option('print')
-if have_print and not x11_target
+
+if get_option('print').disabled()
+  have_print = false
+elif get_option('print').enabled() and not x11_target
   error('Printing requires x libs')
-endif
-if have_screenshot and not x11_target
-  error('Screenshot requires x libs')
+else
+  have_print = x11_target
 endif
 
+if get_option('screenshot').disabled()
+  have_screenshot = false
+elif get_option('screenshot').enabled() and not x11_target
+  error('Printing requires x libs')
+else
+  have_screenshot = x11_target
+endif
 
 ################################################################################
 # Plugins (optional dependencies)
@@ -653,9 +662,12 @@ alsa = dependency('alsa', version: '>=1.0.0', required: get_option('alsa'))
 conf.set('HAVE_ALSA', alsa.found())
 
 
-have_linuxinput = get_option('linux-input')
-if have_linuxinput and not cc.has_header('linux/input.h')
+if get_option('linux-input').disabled()
+  have_linuxinput = false
+elif get_option('linux-input').enabled() and not cc.has_header('linux/input.h')
   error('linux/input.h header not found.')
+else
+  have_linuxinput = x11_target
 endif
 
 # DirectX DirectInput
@@ -815,7 +827,7 @@ if get_option('javascript').disabled()
   have_javascript = false
 
 else
-  js_required = get_option('javascript').auto()
+  js_required = get_option('javascript').enabled()
 
   gjs = find_program('gjs', required: js_required)
 
@@ -845,7 +857,7 @@ if get_option('lua').disabled()
   have_lua = false
 
 else
-  lua_required = get_option('lua').auto()
+  lua_required = get_option('lua').enabled()
 
   lua = find_program('luajit', required: lua_required)
 
@@ -1296,6 +1308,7 @@ compiler_args +='-DHAVE_CONFIG_H'
 
 
 add_project_arguments(compiler_args, language: [ 'c', 'cpp' ])
+add_project_link_arguments(linker_args, language: [ 'c', 'cpp' ])
 
 ################################################################################
 # Miscelaneous targets

@@ -108,14 +108,19 @@ app_gui_links = [
 ]
 
 app_deps = [
-  gio, gtk3, pangocairo, pangoft2, gegl, lcms, gexiv2, drmingw,
+  gio, gtk3, pangocairo, pangoft2, gegl, lcms, gexiv2, drmingw, rpc, dbghelp,
 ]
 
 # Executables
 
-console_rc_name = 'gimp-'+ gimp_app_version
+console_rc_name = 'gimp-console-'+ gimp_app_version
+gimp_app_console_rc = configure_file(
+  input : gimp_plugins_rc,
+  output: console_rc_name + '.rc',
+  copy: true,
+)
 console_rc_file = platform_win32 ? windows.compile_resources(
-  gimp_app_rc,
+  gimp_app_console_rc,
   args: [
     '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
     '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
@@ -126,7 +131,12 @@ console_rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
-gui_rc_name = 'gimp-console-'+ gimp_app_version
+gui_rc_name = 'gimp-'+ gimp_app_version
+gimp_app_gui_rc = configure_file(
+  input : gimp_plugins_rc,
+  output: gui_rc_name + '.rc',
+  copy: true,
+)
 gui_rc_file = platform_win32 ? windows.compile_resources(
   gimp_app_rc,
   args: [

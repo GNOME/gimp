@@ -1,8 +1,13 @@
 
 plugin_name = 'metadata-editor'
 
+plugin_rc = configure_file(
+  input : gimp_plugins_rc,
+  output: plugin_name + '.rc',
+  copy: true,
+)
 rc_file = platform_win32 ? windows.compile_resources(
-  gimp_plugins_rc,
+  plugin_rc,
   args: [
     '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
     '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
@@ -40,8 +45,13 @@ executable(plugin_name,
 
 plugin_name = 'metadata-viewer'
 
+plugin_rc = configure_file(
+  input : gimp_plugins_rc,
+  output: plugin_name + '.rc',
+  copy: true,
+)
 rc_file = platform_win32 ? windows.compile_resources(
-  gimp_plugins_rc,
+  plugin_rc,
   args: [
     '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
     '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
