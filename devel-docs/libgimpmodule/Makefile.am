@@ -53,6 +53,3 @@ GTKDOC_LIBS = \
 
 
 include $(top_srcdir)/gtk-doc.make
-
-# Other files to distribute
-EXTRA_DIST += version.in
