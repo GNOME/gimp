@@ -1109,8 +1109,6 @@ file_sunras_LDADD = \
 
 file_svg_CFLAGS = $(SVG_CFLAGS)
 
-file_svg_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_svg_SOURCES = \
 	file-svg.c
 

@@ -88,7 +88,7 @@ static GimpValueArray * svg_load_thumb       (GimpProcedure        *procedure,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
 
-static gint32              load_image        (const gchar  *filename,
+static GimpImage         * load_image        (const gchar  *filename,
                                               GError      **error);
 static GdkPixbuf         * load_rsvg_pixbuf  (const gchar  *filename,
                                               SvgLoadVals  *vals,
@@ -231,7 +231,7 @@ svg_load (GimpProcedure        *procedure,
 {
   GimpValueArray *return_vals;
   gchar          *filename;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -262,9 +262,9 @@ svg_load (GimpProcedure        *procedure,
       break;
     }
 
-  image_id = load_image (filename, &error);
+  image = load_image (filename, &error);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -273,7 +273,7 @@ svg_load (GimpProcedure        *procedure,
       gint32 *vectors;
       gint    num_vectors;
 
-      gimp_vectors_import_from_file (image_id, filename,
+      gimp_vectors_import_from_file (image, filename,
                                      load_vals.merge, TRUE,
                                      &num_vectors, &vectors);
       if (num_vectors > 0)
@@ -289,7 +289,7 @@ svg_load (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -304,7 +304,7 @@ svg_load_thumb (GimpProcedure        *procedure,
   GimpValueArray *return_vals;
   gint            width  = 0;
   gint            height = 0;
-  gint32          image_id;
+  GimpImage      *image;
   GError         *error = NULL;
 
   INIT_I18N ();
@@ -321,10 +321,10 @@ svg_load_thumb (GimpProcedure        *procedure,
   load_vals.width      = - size;
   load_vals.height     = - size;
 
-  image_id = load_image (g_file_get_path (file),
-                         &error);
+  image = load_image (g_file_get_path (file),
+                      &error);
 
-  if (image_id < 1)
+  if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
@@ -333,7 +333,7 @@ svg_load_thumb (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image_id);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
   GIMP_VALUES_SET_INT   (return_vals, 2, width);
   GIMP_VALUES_SET_INT   (return_vals, 3, height);
 
@@ -342,12 +342,12 @@ svg_load_thumb (GimpProcedure        *procedure,
   return return_vals;
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **load_error)
 {
-  gint32        image;
-  gint32        layer;
+  GimpImage    *image;
+  GimpLayer    *layer;
   GdkPixbuf    *pixbuf;
   gint          width;
   gint          height;
@@ -365,7 +365,7 @@ load_image (const gchar  *filename,
                    error ? error->message : _("Unknown reason"));
       g_clear_error (&error);
 
-      return -1;
+      return NULL;
     }
 
   gimp_progress_init (_("Rendering SVG"));
@@ -384,7 +384,7 @@ load_image (const gchar  *filename,
                                       100,
                                       gimp_image_get_default_new_layer_mode (image),
                                       0.0, 1.0);
-  gimp_image_insert_layer (image, layer, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
   gimp_image_undo_enable (image);
 
