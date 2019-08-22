@@ -109,6 +109,7 @@ foreach pylib : python_so_libs
       gdk_pixbuf, gegl,
     ],
     link_with: pylib[3],
+    c_args: '-DGIMP_DEPRECATED_REPLACE_NEW_API',
     name_prefix: '',
     install: true,
     install_dir: gimpplugindir / 'python',

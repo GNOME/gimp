@@ -45,6 +45,7 @@ executable(plugin_name,
     '-DSTANDALONE=0',
     '-DUSE_INTERFACE=1',
     '-DUSE_STRLWR=0',
+    '-DGIMP_DEPRECATED_REPLACE_NEW_API',
   ],
   link_whole: [
     scriptfu_tinyscheme,
