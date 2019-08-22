@@ -29,7 +29,7 @@ gimpthumbenums = custom_target('gimpthumb-enums.c',
   capture: true,
 )
 
-libgimpthumb_sources_introspectable =	files(
+libgimpthumb_sources_introspectable = files(
   'gimpthumb-error.c',
   'gimpthumb-utils.c',
   'gimpthumbnail.c',
