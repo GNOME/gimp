@@ -32,6 +32,7 @@ executable(plugin_name,
     libgimpui,
     libgimpwidgets,
   ],
+  c_args: '-DGIMP_DEPRECATED_REPLACE_NEW_API',
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,
 )
