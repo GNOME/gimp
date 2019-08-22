@@ -24,7 +24,7 @@
     'file-dicom' => { ui => 1, gegl => 1, cflags => '-fno-strict-aliasing', old_api => 1 },
     'file-gbr' => { ui => 1, gegl => 1 },
     'file-gegl' => { ui => 1, gegl => 1, old_api => 1 },
-    'file-gif-load' => { gegl => 1, old_api => 1 },
+    'file-gif-load' => { gegl => 1 },
     'file-gif-save' => { ui => 1, gegl => 1, old_api => 1 },
     'file-gih' => { ui => 1, gegl => 1 },
     'file-glob' => {},

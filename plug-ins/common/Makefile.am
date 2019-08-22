@@ -706,8 +706,6 @@ file_gegl_LDADD = \
 	$(INTLLIBS)		\
 	$(file_gegl_RC)
 
-file_gif_load_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_gif_load_SOURCES = \
 	file-gif-load.c
 
