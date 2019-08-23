@@ -31,7 +31,13 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "core/gimplayermask.h"
+#include "core/gimpselection.h"
 #include "core/gimpparamspecs.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "libgimp/gimpgpparams.h"
 

@@ -37,9 +37,7 @@
 /*  include the implementation, they are shared between app/ and
  *  libgimp/ but need different headers.
  */
-#define  __LIBGIMP_GPPARAMS__
 #include "gimpgpparams-body.c"
-#undef  __LIBGIMP_GPPARAMS__
 
 GParamSpec *
 _gimp_gp_param_def_to_param_spec (gpointer          gimp,
