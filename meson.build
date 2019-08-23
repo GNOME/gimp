@@ -294,7 +294,7 @@ dbghelp           = platform_win32 ? cc.find_library('dbghelp') : no_dep
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
-babl              = dependency('babl',               version: '>=0.1.70')
+babl              = dependency('babl',               version: '>=0.1.72')
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
