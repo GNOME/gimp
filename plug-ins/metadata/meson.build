@@ -14,7 +14,7 @@ if platform_win32
     copy: true,
   )
   plugin_sources += windows.compile_resources(
-    plugins_rc,
+    plugin_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),

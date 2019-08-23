@@ -129,7 +129,7 @@ endif
 
 foreach plugin : common_plugins_list
   plugin_name = plugin.get('name')
-  plugin_sources = plugin.get('sources', plugin_name + '.c')
+  plugin_sources = [ plugin.get('sources', plugin_name + '.c') ]
   plugin_deps = plugin.get('deps', [ gtk3, gegl, gdk_pixbuf, ])
   plugin_cflags = plugin.get('cflags', [])
 
