@@ -6,19 +6,7 @@ subdir('scripts')
 
 plugin_name = 'script-fu'
 
-rc_file = platform_win32 ? windows.compile_resources(
-  gimp_plugins_rc,
-  args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-  ],
-  include_directories: [
-    rootInclude, appInclude,
-  ],
-) : []
-
-plugin_scriptfu_sources = [
+plugin_sources = [
   'scheme-wrapper.c',
   'script-fu-console.c',
   'script-fu-eval.c',
@@ -30,13 +18,26 @@ plugin_scriptfu_sources = [
   'script-fu-text-console.c',
   'script-fu-utils.c',
   'script-fu.c',
-  rc_file,
 ]
+
+if platform_win32
+  plugin_sources += windows.compile_resources(
+    gimp_plugins_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+endif
 
 winsock = platform_win32 ? cc.find_library('ws2_32') : []
 
 executable(plugin_name,
-  plugin_scriptfu_sources,
+  plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
     gegl, gtk3, math, winsock,

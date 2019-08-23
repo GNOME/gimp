@@ -113,41 +113,47 @@ app_deps = [
 
 # Executables
 
-console_rc_name = 'gimp-console-'+ gimp_app_version
-gimp_app_console_rc = configure_file(
-  input : gimp_plugins_rc,
-  output: console_rc_name + '.rc',
-  copy: true,
-)
-console_rc_file = platform_win32 ? windows.compile_resources(
-  gimp_app_console_rc,
-  args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-  ],
-  include_directories: [
-    rootInclude, appInclude,
-  ],
-) : []
+if platform_win32
+  console_rc_name = 'gimp-console-'+ gimp_app_version
+  gimp_app_console_rc = configure_file(
+    input : gimp_plugins_rc,
+    output: console_rc_name + '.rc',
+    copy: true,
+  )
+  console_rc_file = windows.compile_resources(
+    gimp_app_console_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
 
-gui_rc_name = 'gimp-'+ gimp_app_version
-gimp_app_gui_rc = configure_file(
-  input : gimp_plugins_rc,
-  output: gui_rc_name + '.rc',
-  copy: true,
-)
-gui_rc_file = platform_win32 ? windows.compile_resources(
-  gimp_app_rc,
-  args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-  ],
-  include_directories: [
-    rootInclude, appInclude,
-  ],
-) : []
+  gui_rc_name = 'gimp-'+ gimp_app_version
+  gimp_app_gui_rc = configure_file(
+    input : gimp_plugins_rc,
+    output: gui_rc_name + '.rc',
+    copy: true,
+  )
+  gui_rc_file = windows.compile_resources(
+    gimp_app_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+
+else
+  console_rc_file = []
+  gui_rc_file = []
+endif
 
 
 gimpconsole_exe = executable('gimp-console-'+gimp_app_version,

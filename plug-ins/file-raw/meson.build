@@ -6,30 +6,34 @@ file_raw_exes = [
 ]
 
 foreach plugin_name : file_raw_exes
-  plugin_rc = configure_file(
-    input : gimp_plugins_rc,
-    output: plugin_name + '.rc',
-    copy: true,
-  )
 
-  rc_file = platform_win32 ? windows.compile_resources(
-    plugin_rc,
-    args: [
-      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
-      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-    ],
-    include_directories: [
-      rootInclude, appInclude,
-    ],
-  ) : []
+  plugin_sources = [
+    plugin_name +'.c',
+    'file-raw-utils.c',
+  ]
+
+  if platform_win32
+    plugin_rc = configure_file(
+      input : gimp_plugins_rc,
+      output: plugin_name + '.rc',
+      copy: true,
+    )
+    plugin_sources += windows.compile_resources(
+      plugin_rc,
+      args: [
+        '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+        '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+        '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+      ],
+      include_directories: [
+        rootInclude, appInclude,
+      ],
+    )
+  endif
+
 
   executable(plugin_name,
-    [
-      plugin_name +'.c',
-      'file-raw-utils.c',
-      rc_file,
-    ],
+    plugin_sources,
     include_directories: [ rootInclude, ],
     dependencies: [
       gtk3, gegl,

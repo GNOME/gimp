@@ -2,7 +2,14 @@ if platform_win32
 
 plugin_name = 'twain'
 
-rc_file = platform_win32 ? windows.compile_resources(
+plugin_sources = [
+  'tw_func.c',
+  'tw_util.c',
+  'tw_win.c',
+  'twain.c',
+]
+
+plugin_sources += windows.compile_resources(
   gimp_plugins_rc,
   args: [
     '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
@@ -12,19 +19,10 @@ rc_file = platform_win32 ? windows.compile_resources(
   include_directories: [
     rootInclude, appInclude,
   ],
-) : []
-
-# Win32 specific
-plugin_twain_sources = [
-  'tw_func.c',
-  'tw_util.c',
-  'tw_win.c',
-  'twain.c',
-  rc_file,
-]
+)
 
 twain = executable(plugin_name,
-  plugin_twain_sources,
+  plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
     glib, gtk3, gegl,
