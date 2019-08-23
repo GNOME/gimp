@@ -176,7 +176,6 @@ libgimp_sources = [
   'gimppdbprocedure.c',
   'gimppixbuf.c',
   'gimpplugin_pdb.c',
-  'gimpplugin-private.c',
   'gimpunit_pdb.c',
   'gimpunitcache.c',
   'gimptilebackendplugin.c',
