@@ -1043,7 +1043,6 @@ conf.set10('ENABLE_MP', get_option('enable-multiproc'))
 foreach fn : [
     { 'm': 'HAVE_ALLOCA',                   'v': 'alloca', },
     { 'm': 'HAVE_BACKTRACE',                'v': 'backtrace', },
-    { 'm': 'HAVE_BIND_TEXTDOMAIN_CODESET',  'v': 'bind_textdomain_codeset', },
     { 'm': 'HAVE_DCGETTEXT',                'v': 'dcgettext', },
     { 'm': 'HAVE_DIFFTIME',                 'v': 'difftime', },
     { 'm': 'HAVE_FINITE',                   'v': 'finite', },
@@ -1057,10 +1056,18 @@ foreach fn : [
     { 'm': 'HAVE_RINT',                     'v': 'rint', },
     { 'm': 'HAVE_THR_SELF',                 'v': 'thr_self', },
     { 'm': 'HAVE_VFORK',                    'v': 'vfork', },
-    { 'm': 'HAVE_VPRINTF',                  'v': 'vprintf', },
   ]
-  conf.set(fn['m'], cc.has_function(fn['v']) ? 1 : false)
+  conf.set(fn['m'],
+    cc.has_function(fn['v']) ? 1 : false
+  )
 endforeach
+
+conf.set('HAVE_BIND_TEXTDOMAIN_CODESET',
+  cc.has_header_symbol('libintl.h', 'bind_textdomain_codeset') ? 1 : false
+)
+conf.set('HAVE_VPRINTF',
+  cc.has_header_symbol('libintl.h', 'vprintf') ? 1 : false
+)
 
 
 # Check for available headers
