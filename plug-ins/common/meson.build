@@ -2,7 +2,7 @@
 common_plugins_list = [
   { 'name': 'align-layers',       'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
   { 'name': 'animation-optimize', 'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
-  { 'name': 'animation-play',     'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
+  { 'name': 'animation-play', },
   { 'name': 'blinds', },
   { 'name': 'border-average', },
   { 'name': 'busy-dialog', },
@@ -112,7 +112,6 @@ endif
 if xmc.found()
   common_plugins_list += { 'name': 'file-xmc',
     'deps': [ gtk3, gegl, xmc, ],
-    'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ],
   }
 endif
 
