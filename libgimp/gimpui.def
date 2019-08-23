@@ -1,4 +1,6 @@
 EXPORTS
+	_gimp_drawable_has_alpha
+	_gimp_image_base_type
 	gimp_aspect_preview_get_type
 	gimp_aspect_preview_new_from_drawable
 	gimp_brush_select_button_get_brush
