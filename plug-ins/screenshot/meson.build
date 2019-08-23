@@ -1,6 +1,6 @@
 if have_screenshot
 
-plugin_screenshot_sources = [
+plugin_sources = [
   'screenshot-freedesktop.c',
   'screenshot-gnome-shell.c',
   'screenshot-kwin.c',
@@ -12,7 +12,7 @@ plugin_screenshot_sources = [
 ]
 
 screenshot = executable('screenshot',
-  plugin_screenshot_sources,
+  plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
     gtk3, gegl,

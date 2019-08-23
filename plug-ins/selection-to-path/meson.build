@@ -1,18 +1,6 @@
 plugin_name = 'selection-to-path'
 
-rc_file = platform_win32 ? windows.compile_resources(
-  gimp_plugins_rc,
-  args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-  ],
-  include_directories: [
-    rootInclude, appInclude,
-  ],
-) : []
-
-plugin_selection_to_path_sources = [
+plugin_sources = [
   'curve.c',
   'edge.c',
   'fit.c',
@@ -22,8 +10,22 @@ plugin_selection_to_path_sources = [
   'selection-to-path.c',
   'spline.c',
   'vector.c',
-  rc_file
 ]
+
+if platform_win32
+  plugin_sources += windows.compile_resources(
+    gimp_plugins_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+endif
+
 plugin_selection_to_path_link = [
   libgimp,
   libgimpbase,
@@ -38,7 +40,7 @@ plugin_selection_to_path_deps = [
 ]
 
 selection_to_path = executable(plugin_name,
-  plugin_selection_to_path_sources,
+  plugin_sources,
   include_directories: [ rootInclude, ],
   link_with:    plugin_selection_to_path_link,
   dependencies: plugin_selection_to_path_deps,
