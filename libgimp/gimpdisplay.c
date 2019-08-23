@@ -23,7 +23,11 @@
 
 #include "gimp.h"
 
-#include "gimppixbuf.h"
+#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+
+#include "gimpplugin-private.h"
+#include "gimpprocedure-private.h"
+
 
 enum
 {
@@ -32,12 +36,11 @@ enum
   N_PROPS
 };
 
+
 struct _GimpDisplayPrivate
 {
   gint id;
 };
-
-static GHashTable *gimp_displays = NULL;
 
 
 static void       gimp_display_set_property  (GObject      *object,
@@ -49,11 +52,13 @@ static void       gimp_display_get_property  (GObject      *object,
                                               GValue       *value,
                                               GParamSpec   *pspec);
 
+
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDisplay, gimp_display, G_TYPE_OBJECT)
 
 #define parent_class gimp_display_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
+
 
 static void
 gimp_display_class_init (GimpDisplayClass *klass)
@@ -121,8 +126,7 @@ gimp_display_get_property (GObject    *object,
 }
 
 
-/* Public API. */
-
+/* Public API */
 
 /**
  * gimp_display_get_id:
@@ -142,44 +146,25 @@ gimp_display_get_id (GimpDisplay *display)
  * gimp_display_get_by_id:
  * @display_id: The display id.
  *
- * Creates a #GimpDisplay representing @display_id.
+ * Returns a #GimpDisplay representing @display_id.
  *
  * Returns: (nullable) (transfer none): a #GimpDisplay for @display_id or
  *          %NULL if @display_id does not represent a valid display.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libgimp and you must not modify or
+ *          unref it.
  *
  * Since: 3.0
  **/
 GimpDisplay *
 gimp_display_get_by_id (gint32 display_id)
 {
-  GimpDisplay *display = NULL;
-
-  if (G_UNLIKELY (! gimp_displays))
-    gimp_displays = g_hash_table_new_full (g_direct_hash,
-                                           g_direct_equal,
-                                           NULL,
-                                           (GDestroyNotify) g_object_unref);
-
-  if (! _gimp_display_is_valid (display_id))
+  if (display_id > 0)
     {
-      g_hash_table_remove (gimp_displays, GINT_TO_POINTER (display_id));
-    }
-  else
-    {
-      display = g_hash_table_lookup (gimp_displays,
-                                     GINT_TO_POINTER (display_id));
+      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
+      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
 
-      if (! display)
-        {
-          display = g_object_new (GIMP_TYPE_DISPLAY,
-                                  "id", display_id,
-                                  NULL);
-          g_hash_table_insert (gimp_displays,
-                               GINT_TO_POINTER (display_id),
-                               display);
-        }
+      return _gimp_procedure_get_display (procedure, display_id);
     }
 
-  return display;
+  return NULL;
 }

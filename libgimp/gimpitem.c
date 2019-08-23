@@ -23,7 +23,11 @@
 
 #include "gimp.h"
 
-#include "gimppixbuf.h"
+#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+
+#include "gimpplugin-private.h"
+#include "gimpprocedure-private.h"
+
 
 enum
 {
@@ -32,12 +36,11 @@ enum
   N_PROPS
 };
 
+
 struct _GimpItemPrivate
 {
   gint id;
 };
-
-static GHashTable *gimp_items = NULL;
 
 
 static void       gimp_item_set_property  (GObject      *object,
@@ -49,11 +52,13 @@ static void       gimp_item_get_property  (GObject      *object,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
+
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpItem, gimp_item, G_TYPE_OBJECT)
 
 #define parent_class gimp_item_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
+
 
 static void
 gimp_item_class_init (GimpItemClass *klass)
@@ -142,89 +147,29 @@ gimp_item_get_id (GimpItem *item)
  * gimp_item_get_by_id:
  * @item_id: The item id.
  *
- * Creates a #GimpItem representing @item_id. Since #GimpItem is an
- * abstract class, the object real type will actually be the proper
+ * Returns a #GimpItem representing @item_id. Since #GimpItem is an
+ * abstract class, the real object type will actually be the proper
  * subclass.
  *
  * Returns: (nullable) (transfer none): a #GimpItem for @item_id or
  *          %NULL if @item_id does not represent a valid item.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libgimp and you must not modify
+ *          or unref it.
  *
  * Since: 3.0
  **/
 GimpItem *
 gimp_item_get_by_id (gint32 item_id)
 {
-  GimpItem *item = NULL;
-
-  if (G_UNLIKELY (! gimp_items))
-    gimp_items = g_hash_table_new_full (g_direct_hash,
-                                        g_direct_equal,
-                                        NULL,
-                                        (GDestroyNotify) g_object_unref);
-
-  if (! _gimp_item_is_valid (item_id))
+  if (item_id > 0)
     {
-      g_hash_table_remove (gimp_items, GINT_TO_POINTER (item_id));
-    }
-  else
-    {
-      item = g_hash_table_lookup (gimp_items,
-                                  GINT_TO_POINTER (item_id));
+      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
+      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
 
-      if (item)
-        {
-          /* Make sure the item is the proper class, since it could be
-           * reused (which means we'd have cycled over the whole int
-           * range; not that likely yet still possible on a very very
-           * long run process).
-           */
-          if ((_gimp_item_is_layer (item_id) &&
-               ! GIMP_IS_LAYER (item))               ||
-              (_gimp_item_is_layer_mask (item_id) &&
-               ! GIMP_IS_LAYER_MASK (item))          ||
-              (_gimp_item_is_selection (item_id)  &&
-               ! GIMP_IS_SELECTION (item))           ||
-              (_gimp_item_is_channel (item_id)    &&
-               ! GIMP_IS_CHANNEL (item))             ||
-              (_gimp_item_is_vectors (item_id)    &&
-               ! GIMP_IS_VECTORS (item)))
-            {
-              g_hash_table_remove (gimp_items, GINT_TO_POINTER (item_id));
-              item = NULL;
-            }
-        }
-
-      if (! item)
-        {
-          if (_gimp_item_is_layer (item_id))
-            item = g_object_new (GIMP_TYPE_LAYER,
-                                 "id", item_id,
-                                 NULL);
-          else if (_gimp_item_is_layer_mask (item_id))
-            item = g_object_new (GIMP_TYPE_LAYER_MASK,
-                                 "id", item_id,
-                                 NULL);
-          else if (_gimp_item_is_selection (item_id))
-            item = g_object_new (GIMP_TYPE_SELECTION,
-                                 "id", item_id,
-                                 NULL);
-          else if (_gimp_item_is_channel (item_id))
-            item = g_object_new (GIMP_TYPE_CHANNEL,
-                                 "id", item_id,
-                                 NULL);
-          else if (_gimp_item_is_vectors (item_id))
-            item = g_object_new (GIMP_TYPE_VECTORS,
-                                 "id", item_id,
-                                 NULL);
-          if (item)
-            g_hash_table_insert (gimp_items,
-                                 GINT_TO_POINTER (item_id),
-                                 item);
-        }
+      return _gimp_procedure_get_item (procedure, item_id);
     }
 
-  return item;
+  return NULL;
 }
 
 /**
@@ -239,7 +184,7 @@ gimp_item_get_by_id (gint32 item_id)
  * Returns: (element-type GimpItem) (transfer container):
  *          The item's list of children.
  *          The returned value must be freed with g_list_free(). Item
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libgimp and must not be unrefed.
  *
  * Since: 3.0
  **/
@@ -256,10 +201,9 @@ gimp_item_get_children (GimpItem *item)
   for (i = 0; i < num_items; i++)
     children = g_list_prepend (children, gimp_item_get_by_id (ids[i]));
 
-  children = g_list_reverse (children);
   g_free (ids);
 
-  return children;
+  return g_list_reverse (children);
 }
 
 /**

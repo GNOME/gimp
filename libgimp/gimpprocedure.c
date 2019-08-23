@@ -34,6 +34,7 @@
 #include "gimppdb-private.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
+#include "gimpprocedure-private.h"
 
 #include "libgimp-intl.h"
 
@@ -82,6 +83,10 @@ struct _GimpProcedurePrivate
   GDestroyNotify    run_data_destroy;
 
   gboolean          installed;
+
+  GHashTable       *displays;
+  GHashTable       *images;
+  GHashTable       *items;
 };
 
 
@@ -221,6 +226,8 @@ gimp_procedure_finalize (GObject *object)
 
       g_clear_pointer (&procedure->priv->values, g_free);
     }
+
+  _gimp_procedure_destroy_proxies (procedure);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1640,4 +1647,116 @@ gimp_procedure_set_icon (GimpProcedure *procedure,
     default:
       g_return_if_reached ();
     }
+}
+
+
+/*  internal functions  */
+
+GimpDisplay *
+_gimp_procedure_get_display (GimpProcedure *procedure,
+                             gint32         display_id)
+{
+  GimpDisplay *display = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (_gimp_display_is_valid (display_id), NULL);
+
+  if (G_UNLIKELY (! procedure->priv->displays))
+    procedure->priv->displays =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  display = g_hash_table_lookup (procedure->priv->displays,
+                                 GINT_TO_POINTER (display_id));
+
+  if (! display)
+    {
+      display = _gimp_plug_in_get_display (procedure->priv->plug_in,
+                                           display_id);
+
+      if (display)
+        g_hash_table_insert (procedure->priv->displays,
+                             GINT_TO_POINTER (display_id),
+                             g_object_ref (display));
+    }
+
+  return display;
+}
+
+GimpImage *
+_gimp_procedure_get_image (GimpProcedure *procedure,
+                           gint32         image_id)
+{
+  GimpImage *image = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (_gimp_image_is_valid (image_id), NULL);
+
+  if (G_UNLIKELY (! procedure->priv->images))
+    procedure->priv->images =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  image = g_hash_table_lookup (procedure->priv->images,
+                               GINT_TO_POINTER (image_id));
+
+  if (! image)
+    {
+      image = _gimp_plug_in_get_image (procedure->priv->plug_in,
+                                       image_id);
+
+      if (image)
+        g_hash_table_insert (procedure->priv->images,
+                             GINT_TO_POINTER (image_id),
+                             g_object_ref (image));
+    }
+
+  return image;
+}
+
+GimpItem *
+_gimp_procedure_get_item (GimpProcedure *procedure,
+                          gint32         item_id)
+{
+  GimpItem *item = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (_gimp_item_is_valid (item_id), NULL);
+
+  if (G_UNLIKELY (! procedure->priv->items))
+    procedure->priv->items =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  item = g_hash_table_lookup (procedure->priv->items,
+                              GINT_TO_POINTER (item_id));
+
+  if (! item)
+    {
+      item = _gimp_plug_in_get_item (procedure->priv->plug_in,
+                                     item_id);
+
+      if (item)
+        g_hash_table_insert (procedure->priv->items,
+                             GINT_TO_POINTER (item_id),
+                             g_object_ref (item));
+    }
+
+  return item;
+}
+
+void
+_gimp_procedure_destroy_proxies (GimpProcedure *procedure)
+{
+  g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
+
+  g_clear_pointer (&procedure->priv->displays, g_hash_table_unref);
+  g_clear_pointer (&procedure->priv->images,   g_hash_table_unref);
+  g_clear_pointer (&procedure->priv->items,    g_hash_table_unref);
 }

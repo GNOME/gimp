@@ -25,17 +25,26 @@
 G_BEGIN_DECLS
 
 
-void         _gimp_plug_in_query             (GimpPlugIn      *plug_in);
-void         _gimp_plug_in_init              (GimpPlugIn      *plug_in);
-void         _gimp_plug_in_run               (GimpPlugIn      *plug_in);
-void         _gimp_plug_in_quit              (GimpPlugIn      *plug_in);
+void            _gimp_plug_in_query             (GimpPlugIn      *plug_in);
+void            _gimp_plug_in_init              (GimpPlugIn      *plug_in);
+void            _gimp_plug_in_run               (GimpPlugIn      *plug_in);
+void            _gimp_plug_in_quit              (GimpPlugIn      *plug_in);
 
-GIOChannel * _gimp_plug_in_get_read_channel  (GimpPlugIn      *plug_in);
-GIOChannel * _gimp_plug_in_get_write_channel (GimpPlugIn      *plug_in);
+GIOChannel    * _gimp_plug_in_get_read_channel  (GimpPlugIn      *plug_in);
+GIOChannel    * _gimp_plug_in_get_write_channel (GimpPlugIn      *plug_in);
 
-void         _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
-                                              GimpWireMessage *msg,
-                                              gint             type);
+void            _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
+                                                 GimpWireMessage *msg,
+                                                 gint             type);
+
+GimpProcedure * _gimp_plug_in_get_procedure     (GimpPlugIn      *plug_in);
+
+GimpDisplay   * _gimp_plug_in_get_display       (GimpPlugIn      *plug_in,
+                                                 gint32           display_id);
+GimpImage     * _gimp_plug_in_get_image         (GimpPlugIn      *plug_in,
+                                                 gint32           image_id);
+GimpItem      * _gimp_plug_in_get_item          (GimpPlugIn      *plug_in,
+                                                 gint32           item_id);
 
 
 G_END_DECLS

@@ -36,6 +36,7 @@
 #include "gimpgpparams.h"
 #include "gimpplugin-private.h"
 #include "gimpplugin_pdb.h"
+#include "gimpprocedure-private.h"
 
 
 /**
@@ -89,6 +90,11 @@ struct _GimpPlugInPrivate
   GList      *menu_branches;
 
   GList      *temp_procedures;
+
+  GList      *procedure_stack;
+  GHashTable *displays;
+  GHashTable *images;
+  GHashTable *items;
 };
 
 
@@ -124,12 +130,19 @@ static void       gimp_plug_in_proc_run          (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
 static void       gimp_plug_in_temp_proc_run     (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
-static void       gimp_plug_in_proc_run_internal (GPProcRun       *proc_run,
+static void       gimp_plug_in_proc_run_internal (GimpPlugIn      *plug_in,
+                                                  GPProcRun       *proc_run,
                                                   GimpProcedure   *procedure,
                                                   GPProcReturn    *proc_return);
 static gboolean   gimp_plug_in_extension_read    (GIOChannel      *channel,
                                                   GIOCondition     condition,
                                                   gpointer         data);
+
+static void       gimp_plug_in_push_procedure    (GimpPlugIn      *plug_in,
+                                                  GimpProcedure   *procedure);
+static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
+                                                  GimpProcedure   *procedure);
+static void       gimp_plug_in_destroy_proxies   (GimpPlugIn      *plug_in);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
@@ -224,6 +237,8 @@ gimp_plug_in_finalize (GObject *object)
     }
 
   g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
+
+  gimp_plug_in_destroy_proxies (plug_in);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1097,7 +1112,8 @@ gimp_plug_in_proc_run (GimpPlugIn *plug_in,
 
   if (procedure)
     {
-      gimp_plug_in_proc_run_internal (proc_run, procedure,
+      gimp_plug_in_proc_run_internal (plug_in,
+                                      proc_run, procedure,
                                       &proc_return);
       g_object_unref (procedure);
     }
@@ -1118,7 +1134,8 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
 
   if (procedure)
     {
-      gimp_plug_in_proc_run_internal (proc_run, procedure,
+      gimp_plug_in_proc_run_internal (plug_in,
+                                      proc_run, procedure,
                                       &proc_return);
     }
 
@@ -1128,7 +1145,8 @@ gimp_plug_in_temp_proc_run (GimpPlugIn *plug_in,
 }
 
 static void
-gimp_plug_in_proc_run_internal (GPProcRun     *proc_run,
+gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
+                                GPProcRun     *proc_run,
                                 GimpProcedure *procedure,
                                 GPProcReturn  *proc_return)
 {
@@ -1141,7 +1159,10 @@ gimp_plug_in_proc_run_internal (GPProcRun     *proc_run,
                                               proc_run->nparams,
                                               FALSE, FALSE);
 
+  gimp_plug_in_push_procedure (plug_in, procedure);
   return_values = gimp_procedure_run (procedure, arguments);
+  gimp_plug_in_pop_procedure (plug_in, procedure);
+
   gimp_value_array_unref (arguments);
 
   proc_return->name    = proc_run->name;
@@ -1161,4 +1182,203 @@ gimp_plug_in_extension_read (GIOChannel  *channel,
   gimp_plug_in_single_message (plug_in);
 
   return G_SOURCE_CONTINUE;
+}
+
+
+/*  procedure stack / display-, image-, item-cache  */
+
+GimpProcedure *
+_gimp_plug_in_get_procedure (GimpPlugIn *plug_in)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (plug_in->priv->procedure_stack != NULL, NULL);
+
+  return plug_in->priv->procedure_stack->data;
+}
+
+static void
+gimp_plug_in_push_procedure (GimpPlugIn    *plug_in,
+                             GimpProcedure *procedure)
+{
+  plug_in->priv->procedure_stack =
+    g_list_prepend (plug_in->priv->procedure_stack, procedure);
+}
+
+static void
+gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
+                            GimpProcedure *procedure)
+{
+  plug_in->priv->procedure_stack =
+    g_list_remove (plug_in->priv->procedure_stack, procedure);
+
+  _gimp_procedure_destroy_proxies (procedure);
+
+  if (plug_in->priv->procedure_stack)
+    {
+      GHashTableIter iter;
+      gpointer       key, value;
+
+      g_hash_table_iter_init (&iter, plug_in->priv->displays);
+      while (g_hash_table_iter_next (&iter, &key, &value))
+        {
+          GObject *object = value;
+
+          if (object->ref_count == 1)
+            g_hash_table_iter_remove (&iter);
+        }
+
+      g_hash_table_iter_init (&iter, plug_in->priv->images);
+      while (g_hash_table_iter_next (&iter, &key, &value))
+        {
+          GObject *object = value;
+
+          if (object->ref_count == 1)
+            g_hash_table_iter_remove (&iter);
+        }
+
+      g_hash_table_iter_init (&iter, plug_in->priv->items);
+      while (g_hash_table_iter_next (&iter, &key, &value))
+        {
+          GObject *object = value;
+
+          if (object->ref_count == 1)
+            g_hash_table_iter_remove (&iter);
+        }
+    }
+  else
+    {
+      gimp_plug_in_destroy_proxies (plug_in);
+    }
+}
+
+GimpDisplay *
+_gimp_plug_in_get_display (GimpPlugIn *plug_in,
+                           gint32      display_id)
+{
+  GimpDisplay *display = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  if (G_UNLIKELY (! plug_in->priv->displays))
+    plug_in->priv->displays =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  display = g_hash_table_lookup (plug_in->priv->displays,
+                                 GINT_TO_POINTER (display_id));
+
+  if (! display)
+    {
+      display = g_object_new (GIMP_TYPE_DISPLAY,
+                              "id", display_id,
+                              NULL);
+
+      g_hash_table_insert (plug_in->priv->displays,
+                           GINT_TO_POINTER (display_id),
+                           display);
+    }
+
+  return display;
+}
+
+GimpImage *
+_gimp_plug_in_get_image (GimpPlugIn *plug_in,
+                         gint32      image_id)
+{
+  GimpImage *image = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  if (G_UNLIKELY (! plug_in->priv->images))
+    plug_in->priv->images =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  image = g_hash_table_lookup (plug_in->priv->images,
+                               GINT_TO_POINTER (image_id));
+
+  if (! image)
+    {
+      image = g_object_new (GIMP_TYPE_IMAGE,
+                            "id", image_id,
+                            NULL);
+
+      g_hash_table_insert (plug_in->priv->images,
+                           GINT_TO_POINTER (image_id),
+                           image);
+    }
+
+  return image;
+}
+
+GimpItem *
+_gimp_plug_in_get_item (GimpPlugIn *plug_in,
+                        gint32      item_id)
+{
+  GimpItem *item = NULL;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+
+  if (G_UNLIKELY (! plug_in->priv->items))
+    plug_in->priv->items =
+      g_hash_table_new_full (g_direct_hash,
+                             g_direct_equal,
+                             NULL,
+                             (GDestroyNotify) g_object_unref);
+
+  item = g_hash_table_lookup (plug_in->priv->items,
+                              GINT_TO_POINTER (item_id));
+
+  if (! item)
+    {
+      if (_gimp_item_is_layer (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_LAYER,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (_gimp_item_is_layer_mask (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_LAYER_MASK,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (_gimp_item_is_selection (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_SELECTION,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (_gimp_item_is_channel (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_CHANNEL,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (_gimp_item_is_vectors (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_VECTORS,
+                               "id", item_id,
+                               NULL);
+        }
+
+      if (item)
+        g_hash_table_insert (plug_in->priv->items,
+                             GINT_TO_POINTER (item_id),
+                             item);
+    }
+
+  return item;
+}
+
+static void
+gimp_plug_in_destroy_proxies (GimpPlugIn *plug_in)
+{
+  g_clear_pointer (&plug_in->priv->displays, g_hash_table_unref);
+  g_clear_pointer (&plug_in->priv->images,   g_hash_table_unref);
+  g_clear_pointer (&plug_in->priv->items,    g_hash_table_unref);
 }

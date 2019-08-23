@@ -22,7 +22,12 @@
 
 #include "gimp.h"
 
+#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+
 #include "gimppixbuf.h"
+#include "gimpplugin-private.h"
+#include "gimpprocedure-private.h"
+
 
 enum
 {
@@ -31,12 +36,11 @@ enum
   N_PROPS
 };
 
+
 struct _GimpImagePrivate
 {
   gint id;
 };
-
-static GHashTable *gimp_images = NULL;
 
 
 static void       gimp_image_set_property  (GObject      *object,
@@ -48,11 +52,13 @@ static void       gimp_image_get_property  (GObject      *object,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
+
 G_DEFINE_TYPE_WITH_PRIVATE (GimpImage, gimp_image, G_TYPE_OBJECT)
 
 #define parent_class gimp_image_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
+
 
 static void
 gimp_image_class_init (GimpImageClass *klass)
@@ -120,8 +126,7 @@ gimp_image_get_property (GObject    *object,
 }
 
 
-/* Public API. */
-
+/* Public API */
 
 /**
  * gimp_image_get_id:
@@ -143,42 +148,23 @@ gimp_image_get_id (GimpImage *image)
  *
  * Returns: (nullable) (transfer none): a #GimpImage for @image_id or
  *          %NULL if @image_id does not represent a valid image.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libgimp and you must not modify
+ *          or unref it.
  *
  * Since: 3.0
  **/
 GimpImage *
 gimp_image_get_by_id (gint32 image_id)
 {
-  GimpImage *image = NULL;
-
-  if (G_UNLIKELY (! gimp_images))
-    gimp_images = g_hash_table_new_full (g_direct_hash,
-                                         g_direct_equal,
-                                         NULL,
-                                         (GDestroyNotify) g_object_unref);
-
-  if (! _gimp_image_is_valid (image_id))
+  if (image_id > 0)
     {
-      g_hash_table_remove (gimp_images, GINT_TO_POINTER (image_id));
-    }
-  else
-    {
-      image = g_hash_table_lookup (gimp_images,
-                                   GINT_TO_POINTER (image_id));
+      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
+      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
 
-      if (! image)
-        {
-          image = g_object_new (GIMP_TYPE_IMAGE,
-                                "id", image_id,
-                                NULL);
-          g_hash_table_insert (gimp_images,
-                               GINT_TO_POINTER (image_id),
-                               image);
-        }
+      return _gimp_procedure_get_image (procedure, image_id);
     }
 
-  return image;
+  return NULL;
 }
 
 /**
@@ -202,13 +188,14 @@ gimp_image_list (void)
   gint   i;
 
   ids = _gimp_image_list (&num_images);
+
   for (i = 0; i < num_images; i++)
     images = g_list_prepend (images,
                              gimp_image_get_by_id (ids[i]));
-  images = g_list_reverse (images);
+
   g_free (ids);
 
-  return images;
+  return g_list_reverse (images);
 }
 
 /**
