@@ -59,9 +59,9 @@ GimpDisplay      * gimp_display_new             (Gimp              *gimp,
 void               gimp_display_delete          (GimpDisplay       *display);
 void               gimp_display_close           (GimpDisplay       *display);
 
-gint               gimp_display_get_ID          (GimpDisplay       *display);
-GimpDisplay      * gimp_display_get_by_ID       (Gimp              *gimp,
-                                                 gint               ID);
+gint               gimp_display_get_id          (GimpDisplay       *display);
+GimpDisplay      * gimp_display_get_by_id       (Gimp              *gimp,
+                                                 gint               id);
 
 gchar            * gimp_display_get_action_name (GimpDisplay       *display);
 

@@ -269,7 +269,7 @@ gimp_vectors_init (GimpVectors *vectors)
 
   vectors->strokes        = g_queue_new ();
   vectors->stroke_to_list = g_hash_table_new (g_direct_hash, g_direct_equal);
-  vectors->last_stroke_ID = 0;
+  vectors->last_stroke_id = 0;
   vectors->freeze_count   = 0;
   vectors->precision      = 0.2;
 
@@ -640,7 +640,7 @@ gimp_vectors_transform (GimpItem               *item,
       g_object_unref (stroke);
     }
 
-  vectors->last_stroke_ID = 0;
+  vectors->last_stroke_id = 0;
 
   for (list = strokes.head; list; list = g_list_next (list))
     {
@@ -842,7 +842,7 @@ gimp_vectors_copy_strokes (GimpVectors *src_vectors,
   dest_vectors->strokes = g_queue_new ();
   g_hash_table_remove_all (dest_vectors->stroke_to_list);
 
-  dest_vectors->last_stroke_ID = 0;
+  dest_vectors->last_stroke_id = 0;
 
   gimp_vectors_add_strokes (src_vectors, dest_vectors);
 
@@ -874,9 +874,9 @@ gimp_vectors_add_strokes (GimpVectors *src_vectors,
                            newstroke,
                            g_queue_peek_tail_link (dest_vectors->strokes));
 
-      dest_vectors->last_stroke_ID++;
-      gimp_stroke_set_ID (newstroke,
-                          dest_vectors->last_stroke_ID);
+      dest_vectors->last_stroke_id++;
+      gimp_stroke_set_id (newstroke,
+                          dest_vectors->last_stroke_id);
     }
 
   gimp_vectors_thaw (dest_vectors);
@@ -912,8 +912,8 @@ gimp_vectors_real_stroke_add (GimpVectors *vectors,
                        stroke,
                        g_queue_peek_tail_link (vectors->strokes));
 
-  vectors->last_stroke_ID++;
-  gimp_stroke_set_ID (stroke, vectors->last_stroke_ID);
+  vectors->last_stroke_id++;
+  gimp_stroke_set_id (stroke, vectors->last_stroke_id);
 }
 
 void
@@ -992,7 +992,7 @@ gimp_vectors_real_stroke_get (GimpVectors      *vectors,
 }
 
 GimpStroke *
-gimp_vectors_stroke_get_by_ID (GimpVectors *vectors,
+gimp_vectors_stroke_get_by_id (GimpVectors *vectors,
                                gint         id)
 {
   GList *list;
@@ -1001,7 +1001,7 @@ gimp_vectors_stroke_get_by_ID (GimpVectors *vectors,
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      if (gimp_stroke_get_ID (list->data) == id)
+      if (gimp_stroke_get_id (list->data) == id)
         return list->data;
     }
 

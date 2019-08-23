@@ -172,7 +172,7 @@ windows_menu_display_remove (GimpContainer *container,
                              GimpUIManager *manager)
 {
   gchar *merge_key = g_strdup_printf ("windows-display-%04d-merge-id",
-                                      gimp_display_get_ID (display));
+                                      gimp_display_get_id (display));
   guint  merge_id;
 
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
@@ -224,7 +224,7 @@ windows_menu_image_notify (GimpDisplay      *display,
   if (gimp_display_get_image (display))
     {
       gchar *merge_key = g_strdup_printf ("windows-display-%04d-merge-id",
-                                          gimp_display_get_ID (display));
+                                          gimp_display_get_id (display));
       guint  merge_id;
 
       merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),

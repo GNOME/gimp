@@ -491,7 +491,7 @@ gimp_selection_data_set_image (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  str = g_strdup_printf ("%d:%d", gimp_get_pid (), gimp_image_get_ID (image));
+  str = g_strdup_printf ("%d:%d", gimp_get_pid (), gimp_image_get_id (image));
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
@@ -519,7 +519,7 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
           pid == gimp_get_pid ())
         {
-          return gimp_image_get_by_ID (gimp, ID);
+          return gimp_image_get_by_id (gimp, ID);
         }
     }
 
@@ -536,7 +536,7 @@ gimp_selection_data_set_component (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  str = g_strdup_printf ("%d:%d:%d", gimp_get_pid (), gimp_image_get_ID (image),
+  str = g_strdup_printf ("%d:%d:%d", gimp_get_pid (), gimp_image_get_id (image),
                          (gint) channel);
 
   gtk_selection_data_set (selection,
@@ -570,7 +570,7 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
       if (sscanf (str, "%i:%i:%i", &pid, &ID, &ch) == 3 &&
           pid == gimp_get_pid ())
         {
-          GimpImage *image = gimp_image_get_by_ID (gimp, ID);
+          GimpImage *image = gimp_image_get_by_id (gimp, ID);
 
           if (image && channel)
             *channel = ch;
@@ -591,7 +591,7 @@ gimp_selection_data_set_item (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  str = g_strdup_printf ("%d:%d", gimp_get_pid (), gimp_item_get_ID (item));
+  str = g_strdup_printf ("%d:%d", gimp_get_pid (), gimp_item_get_id (item));
 
   gtk_selection_data_set (selection,
                           gtk_selection_data_get_target (selection),
@@ -619,7 +619,7 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
       if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
           pid == gimp_get_pid ())
         {
-          return gimp_item_get_by_ID (gimp, ID);
+          return gimp_item_get_by_id (gimp, ID);
         }
     }
 

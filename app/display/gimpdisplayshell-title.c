@@ -220,7 +220,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'p': /* PDB id */
-              i += print (title, title_len, i, "%d", gimp_image_get_ID (image));
+              i += print (title, title_len, i, "%d", gimp_image_get_id (image));
               break;
 
             case 'i': /* instance */
@@ -369,7 +369,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
             case 'P': /* active drawable PDB id */
               if (drawable)
                 i += print (title, title_len, i, "%d",
-                            gimp_item_get_ID (GIMP_ITEM (drawable)));
+                            gimp_item_get_id (GIMP_ITEM (drawable)));
               else
                 i += print (title, title_len, i, "%s", _("(none)"));
               break;

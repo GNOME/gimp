@@ -150,7 +150,7 @@ static gboolean            _export_xmp       = FALSE;
 static gboolean            _export_iptc      = FALSE;
 static GimpCheckSize       _check_size       = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType       _check_type       = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static gint                _gdisp_ID         = -1;
+static gint                _gdisp_id         = -1;
 static gchar              *_wm_class         = NULL;
 static gchar              *_display_name     = NULL;
 static gint                _monitor_number   = 0;
@@ -842,7 +842,7 @@ gimp_check_type (void)
 GimpDisplay *
 gimp_default_display (void)
 {
-  return gimp_display_get_by_id (_gdisp_ID);
+  return gimp_display_get_by_id (_gdisp_id);
 }
 
 /**
@@ -1139,7 +1139,7 @@ _gimp_config (GPConfig *config)
   _export_exif      = config->export_exif      ? TRUE : FALSE;
   _export_xmp       = config->export_xmp       ? TRUE : FALSE;
   _export_iptc      = config->export_iptc      ? TRUE : FALSE;
-  _gdisp_ID         = config->gdisp_ID;
+  _gdisp_id         = config->gdisp_id;
   _wm_class         = g_strdup (config->wm_class);
   _display_name     = g_strdup (config->display_name);
   _monitor_number   = config->monitor_number;
@@ -1165,5 +1165,5 @@ _gimp_config (GPConfig *config)
   g_free (path);
   g_object_unref (file);
 
-  _gimp_shm_open (config->shm_ID);
+  _gimp_shm_open (config->shm_id);
 }

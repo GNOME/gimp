@@ -1890,7 +1890,7 @@ gimp_item_remove_offset_node (GimpItem *item,
 }
 
 gint
-gimp_item_get_ID (GimpItem *item)
+gimp_item_get_id (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
@@ -1898,7 +1898,7 @@ gimp_item_get_ID (GimpItem *item)
 }
 
 GimpItem *
-gimp_item_get_by_ID (Gimp *gimp,
+gimp_item_get_by_id (Gimp *gimp,
                      gint  item_id)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -2009,11 +2009,11 @@ gimp_item_replace_item (GimpItem *item,
 
   if (private->ID)
     gimp_id_table_remove (gimp_item_get_image (item)->gimp->item_table,
-                          gimp_item_get_ID (item));
+                          gimp_item_get_id (item));
 
-  private->ID = gimp_item_get_ID (replace);
+  private->ID = gimp_item_get_id (replace);
   gimp_id_table_replace (gimp_item_get_image (item)->gimp->item_table,
-                         gimp_item_get_ID (item),
+                         gimp_item_get_id (item),
                          item);
 
   /* Set image before tattoo so that the explicitly set tattoo overrides

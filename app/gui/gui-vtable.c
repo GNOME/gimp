@@ -121,7 +121,7 @@ static void           gui_help                   (Gimp                *gimp,
                                                   const gchar         *help_id);
 static const gchar  * gui_get_program_class      (Gimp                *gimp);
 static gchar        * gui_get_display_name       (Gimp                *gimp,
-                                                  gint                 display_ID,
+                                                  gint                 display_id,
                                                   GObject            **monitor,
                                                   gint                *monitor_number);
 static guint32        gui_get_user_time          (Gimp                *gimp);
@@ -129,9 +129,9 @@ static GFile        * gui_get_theme_dir          (Gimp                *gimp);
 static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
 static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
 static GimpObject   * gui_get_empty_display      (Gimp                *gimp);
-static GimpObject   * gui_display_get_by_ID      (Gimp                *gimp,
+static GimpObject   * gui_display_get_by_id      (Gimp                *gimp,
                                                   gint                 ID);
-static gint           gui_display_get_ID         (GimpObject          *display);
+static gint           gui_display_get_id         (GimpObject          *display);
 static guint32        gui_display_get_window_id  (GimpObject          *display);
 static GimpObject   * gui_display_create         (Gimp                *gimp,
                                                   GimpImage           *image,
@@ -203,8 +203,8 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.get_icon_theme_dir     = gui_get_icon_theme_dir;
   gimp->gui.get_window_strategy    = gui_get_window_strategy;
   gimp->gui.get_empty_display      = gui_get_empty_display;
-  gimp->gui.display_get_by_id      = gui_display_get_by_ID;
-  gimp->gui.display_get_id         = gui_display_get_ID;
+  gimp->gui.display_get_by_id      = gui_display_get_by_id;
+  gimp->gui.display_get_id         = gui_display_get_id;
   gimp->gui.display_get_window_id  = gui_display_get_window_id;
   gimp->gui.display_create         = gui_display_create;
   gimp->gui.display_delete         = gui_display_delete;
@@ -282,15 +282,15 @@ get_monitor_number (GdkMonitor *monitor)
 
 static gchar *
 gui_get_display_name (Gimp     *gimp,
-                      gint      display_ID,
+                      gint      display_id,
                       GObject **monitor,
                       gint     *monitor_number)
 {
   GimpDisplay *display = NULL;
   GdkDisplay  *gdk_display;
 
-  if (display_ID > 0)
-    display = gimp_display_get_by_ID (gimp, display_ID);
+  if (display_id > 0)
+    display = gimp_display_get_by_id (gimp, display_id);
 
   if (display)
     {
@@ -365,16 +365,16 @@ gui_get_empty_display (Gimp *gimp)
 }
 
 static GimpObject *
-gui_display_get_by_ID (Gimp *gimp,
-                       gint  ID)
+gui_display_get_by_id (Gimp *gimp,
+                       gint  id)
 {
-  return (GimpObject *) gimp_display_get_by_ID (gimp, ID);
+  return (GimpObject *) gimp_display_get_by_id (gimp, id);
 }
 
 static gint
-gui_display_get_ID (GimpObject *display)
+gui_display_get_id (GimpObject *display)
 {
-  return gimp_display_get_ID (GIMP_DISPLAY (display));
+  return gimp_display_get_id (GIMP_DISPLAY (display));
 }
 
 static guint32

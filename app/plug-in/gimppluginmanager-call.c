@@ -173,7 +173,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (core_config);
       GPConfig           config;
       GPProcRun          proc_run;
-      gint               display_ID;
+      gint               display_id;
       GObject           *monitor;
       GFile             *icon_theme_dir;
 
@@ -194,14 +194,14 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
           return return_vals;
         }
 
-      display_ID = display ? gimp_get_display_ID (manager->gimp, display) : -1;
+      display_id = display ? gimp_get_display_id (manager->gimp, display) : -1;
 
       icon_theme_dir = gimp_get_icon_theme_dir (manager->gimp);
 
       config.tile_width       = GIMP_PLUG_IN_TILE_WIDTH;
       config.tile_height      = GIMP_PLUG_IN_TILE_HEIGHT;
-      config.shm_ID           = (manager->shm ?
-                                 gimp_plug_in_shm_get_ID (manager->shm) : -1);
+      config.shm_id           = (manager->shm ?
+                                 gimp_plug_in_shm_get_id (manager->shm) : -1);
       config.check_size       = display_config->transparency_size;
       config.check_type       = display_config->transparency_type;
       config.show_help_button = (gui_config->use_help &&
@@ -212,11 +212,11 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.export_exif      = core_config->export_metadata_exif;
       config.export_xmp       = core_config->export_metadata_xmp;
       config.export_iptc      = core_config->export_metadata_iptc;
-      config.gdisp_ID         = display_ID;
+      config.gdisp_id         = display_id;
       config.app_name         = (gchar *) g_get_application_name ();
       config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);
       config.display_name     = gimp_get_display_name (manager->gimp,
-                                                       display_ID,
+                                                       display_id,
                                                        &monitor,
                                                        &config.monitor_number);
       config.timestamp        = gimp_get_user_time (manager->gimp);

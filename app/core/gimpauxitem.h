@@ -48,7 +48,7 @@ struct _GimpAuxItemClass
 
 GType     gimp_aux_item_get_type (void) G_GNUC_CONST;
 
-guint32   gimp_aux_item_get_ID       (GimpAuxItem *aux_item);
+guint32   gimp_aux_item_get_id       (GimpAuxItem *aux_item);
 
 void      gimp_aux_item_removed      (GimpAuxItem *aux_item);
 

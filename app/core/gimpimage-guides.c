@@ -46,7 +46,7 @@ gimp_image_add_hguide (GimpImage *image,
                         position <= gimp_image_get_height (image), NULL);
 
   guide = gimp_guide_new (GIMP_ORIENTATION_HORIZONTAL,
-                          image->gimp->next_guide_ID++);
+                          image->gimp->next_guide_id++);
 
   if (push_undo)
     gimp_image_undo_push_guide (image,
@@ -70,7 +70,7 @@ gimp_image_add_vguide (GimpImage *image,
                         position <= gimp_image_get_width (image), NULL);
 
   guide = gimp_guide_new (GIMP_ORIENTATION_VERTICAL,
-                          image->gimp->next_guide_ID++);
+                          image->gimp->next_guide_id++);
 
   if (push_undo)
     gimp_image_undo_push_guide (image,
@@ -177,7 +177,7 @@ gimp_image_get_guide (GimpImage *image,
     {
       GimpGuide *guide = guides->data;
 
-      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (guide)) == id)
+      if (gimp_aux_item_get_id (GIMP_AUX_ITEM (guide)) == id)
         return guide;
     }
 
@@ -208,7 +208,7 @@ gimp_image_get_next_guide (GimpImage *image,
       if (*guide_found) /* this is the first guide after the found one */
         return guide;
 
-      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (guide)) == id) /* found it, next one will be returned */
+      if (gimp_aux_item_get_id (GIMP_AUX_ITEM (guide)) == id) /* found it, next one will be returned */
         *guide_found = TRUE;
     }
 

@@ -46,7 +46,7 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
   g_return_val_if_fail (x >= 0 && x < gimp_image_get_width  (image), NULL);
   g_return_val_if_fail (y >= 0 && y < gimp_image_get_height (image), NULL);
 
-  sample_point = gimp_sample_point_new (image->gimp->next_sample_point_ID++);
+  sample_point = gimp_sample_point_new (image->gimp->next_sample_point_id++);
 
   if (push_undo)
     gimp_image_undo_push_sample_point (image, C_("undo-type", "Add Sample Point"),
@@ -174,7 +174,7 @@ gimp_image_get_sample_point (GimpImage *image,
     {
       GimpSamplePoint *sample_point = sample_points->data;
 
-      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (sample_point)) == id)
+      if (gimp_aux_item_get_id (GIMP_AUX_ITEM (sample_point)) == id)
         return sample_point;
     }
 
@@ -205,7 +205,7 @@ gimp_image_get_next_sample_point (GimpImage *image,
       if (*sample_point_found) /* this is the first guide after the found one */
         return sample_point;
 
-      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (sample_point)) == id) /* found it, next one will be returned */
+      if (gimp_aux_item_get_id (GIMP_AUX_ITEM (sample_point)) == id) /* found it, next one will be returned */
         *sample_point_found = TRUE;
     }
 

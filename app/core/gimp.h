@@ -81,13 +81,13 @@ struct _Gimp
   GList                  *filter_history;
 
   GimpContainer          *images;
-  guint32                 next_guide_ID;
-  guint32                 next_sample_point_ID;
+  guint32                 next_guide_id;
+  guint32                 next_sample_point_id;
   GimpIdTable            *image_table;
   GimpIdTable            *item_table;
 
   GimpContainer          *displays;
-  gint                    next_display_ID;
+  gint                    next_display_id;
 
   GList                  *image_windows;
 

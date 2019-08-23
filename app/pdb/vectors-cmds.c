@@ -190,7 +190,7 @@ vectors_get_strokes_invoker (GimpProcedure         *procedure,
                cur_stroke;
                cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
             {
-              stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
+              stroke_ids[i] = gimp_stroke_get_id (cur_stroke);
               i++;
             }
         }
@@ -730,7 +730,7 @@ vectors_stroke_new_from_points_invoker (GimpProcedure         *procedure,
               gimp_vectors_stroke_add (vectors, stroke);
               g_object_unref (stroke);
 
-              stroke_id = gimp_stroke_get_ID (stroke);
+              stroke_id = gimp_stroke_get_id (stroke);
 
               success = TRUE;
             }
@@ -854,7 +854,7 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
           gimp_vectors_stroke_add (vectors, stroke);
           g_object_unref (stroke);
 
-          stroke_id = gimp_stroke_get_ID (stroke);
+          stroke_id = gimp_stroke_get_id (stroke);
         }
       else
         success = FALSE;
@@ -1084,7 +1084,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
           gimp_vectors_stroke_add (vectors, stroke);
           g_object_unref (stroke);
 
-          stroke_id = gimp_stroke_get_ID (stroke);
+          stroke_id = gimp_stroke_get_id (stroke);
         }
       else
         success = FALSE;
@@ -1146,7 +1146,7 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
 
               list = vectors_list;
               for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-                vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+                vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
 
               g_list_free (vectors_list);
             }
@@ -1210,7 +1210,7 @@ vectors_import_from_string_invoker (GimpProcedure         *procedure,
 
               list = vectors_list;
               for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-                vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+                vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
 
               g_list_free (vectors_list);
             }

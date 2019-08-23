@@ -409,7 +409,7 @@ HELP
                list;
                list = g_list_next (list), i++)
             {
-              child_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+              child_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
             }
         }
     }

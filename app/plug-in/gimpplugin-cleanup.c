@@ -45,7 +45,7 @@ typedef struct _GimpPlugInCleanupImage GimpPlugInCleanupImage;
 struct _GimpPlugInCleanupImage
 {
   GimpImage *image;
-  gint       image_ID;
+  gint       image_id;
 
   gint       undo_group_count;
   gint       layers_freeze_count;
@@ -59,7 +59,7 @@ typedef struct _GimpPlugInCleanupItem GimpPlugInCleanupItem;
 struct _GimpPlugInCleanupItem
 {
   GimpItem *item;
-  gint      item_ID;
+  gint      item_id;
 
   gboolean  shadow_buffer;
 };
@@ -357,8 +357,8 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
     {
       GimpPlugInCleanupImage *cleanup = proc_frame->image_cleanups->data;
 
-      if (gimp_image_get_by_ID (plug_in->manager->gimp,
-                                cleanup->image_ID) == cleanup->image)
+      if (gimp_image_get_by_id (plug_in->manager->gimp,
+                                cleanup->image_id) == cleanup->image)
         {
           gimp_plug_in_cleanup_image (proc_frame, cleanup);
         }
@@ -370,8 +370,8 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
     {
       GimpPlugInCleanupItem *cleanup = proc_frame->item_cleanups->data;
 
-      if (gimp_item_get_by_ID (plug_in->manager->gimp,
-                               cleanup->item_ID) == cleanup->item)
+      if (gimp_item_get_by_id (plug_in->manager->gimp,
+                               cleanup->item_id) == cleanup->item)
         {
           gimp_plug_in_cleanup_item (proc_frame, cleanup);
         }
@@ -390,7 +390,7 @@ gimp_plug_in_cleanup_image_new (GimpPlugInProcFrame *proc_frame,
   GimpPlugInCleanupImage *cleanup = g_slice_new0 (GimpPlugInCleanupImage);
 
   cleanup->image    = image;
-  cleanup->image_ID = gimp_image_get_ID (image);
+  cleanup->image_id = gimp_image_get_id (image);
 
   proc_frame->image_cleanups = g_list_prepend (proc_frame->image_cleanups,
                                                cleanup);
@@ -514,7 +514,7 @@ gimp_plug_in_cleanup_item_new (GimpPlugInProcFrame *proc_frame,
   GimpPlugInCleanupItem *cleanup = g_slice_new0 (GimpPlugInCleanupItem);
 
   cleanup->item    = item;
-  cleanup->item_ID = gimp_item_get_ID (item);
+  cleanup->item_id = gimp_item_get_id (item);
 
   proc_frame->item_cleanups = g_list_remove (proc_frame->item_cleanups,
                                              cleanup);

@@ -140,8 +140,8 @@ GimpLayerMode   gimp_image_get_default_new_layer_mode
 void            gimp_image_unset_default_new_layer_mode
                                                  (GimpImage          *image);
 
-gint            gimp_image_get_ID                (GimpImage          *image);
-GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
+gint            gimp_image_get_id                (GimpImage          *image);
+GimpImage     * gimp_image_get_by_id             (Gimp               *gimp,
                                                   gint                id);
 
 GFile         * gimp_image_get_file              (GimpImage          *image);

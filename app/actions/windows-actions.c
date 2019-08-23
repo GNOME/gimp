@@ -393,7 +393,7 @@ windows_actions_image_notify (GimpDisplay      *display,
       escaped = gimp_escape_uline (display_name);
 
       title = g_strdup_printf ("%s-%d.%d", escaped,
-                               gimp_image_get_ID (image),
+                               gimp_image_get_id (image),
                                gimp_display_get_instance (display));
       g_free (escaped);
 

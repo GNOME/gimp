@@ -66,10 +66,10 @@ gimp_image_colormap_init (GimpImage *image)
   g_return_if_fail (private->palette == NULL);
 
   palette_name = g_strdup_printf (_("Colormap of Image #%d (%s)"),
-                                  gimp_image_get_ID (image),
+                                  gimp_image_get_id (image),
                                   gimp_image_get_display_name (image));
   palette_id = g_strdup_printf ("gimp-indexed-image-palette-%d",
-                                gimp_image_get_ID (image));
+                                gimp_image_get_id (image));
 
   private->n_colors = 0;
   private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
@@ -142,7 +142,7 @@ gimp_image_colormap_update_formats (GimpImage *image)
   space = gimp_image_get_layer_space (image);
 
   format_name = g_strdup_printf ("-gimp-indexed-format-%d",
-                                 gimp_image_get_ID (image));
+                                 gimp_image_get_id (image));
 
   babl_new_palette_with_space (format_name, space,
                                &private->babl_palette_rgb,

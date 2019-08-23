@@ -315,7 +315,7 @@ gimp_mandala_add_guide (GimpMandala         *mandala,
   gimp  = image->gimp;
 
   guide = gimp_guide_custom_new (orientation,
-                                 gimp->next_guide_ID++,
+                                 gimp->next_guide_id++,
                                  GIMP_GUIDE_STYLE_MANDALA);
 
   if (orientation == GIMP_ORIENTATION_HORIZONTAL)

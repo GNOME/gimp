@@ -320,8 +320,8 @@ void            gimp_item_add_offset_node    (GimpItem           *item,
 void            gimp_item_remove_offset_node (GimpItem           *item,
                                               GeglNode           *node);
 
-gint            gimp_item_get_ID             (GimpItem           *item);
-GimpItem      * gimp_item_get_by_ID          (Gimp               *gimp,
+gint            gimp_item_get_id             (GimpItem           *item);
+GimpItem      * gimp_item_get_by_id          (Gimp               *gimp,
                                               gint                id);
 
 GimpTattoo      gimp_item_get_tattoo         (GimpItem           *item);

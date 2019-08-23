@@ -100,7 +100,7 @@ struct _GPConfig
 {
   guint32  tile_width;
   guint32  tile_height;
-  gint32   shm_ID;
+  gint32   shm_id;
   gint8    check_size;
   gint8    check_type;
   gint8    show_help_button;
@@ -110,7 +110,7 @@ struct _GPConfig
   gint8    export_exif;
   gint8    export_xmp;
   gint8    export_iptc;
-  gint32   gdisp_ID;
+  gint32   gdisp_id;
   gchar   *app_name;
   gchar   *wm_class;
   gchar   *display_name;
@@ -124,14 +124,14 @@ struct _GPConfig
 
 struct _GPTileReq
 {
-  gint32   drawable_ID;
+  gint32   drawable_id;
   guint32  tile_num;
   guint32  shadow;
 };
 
 struct _GPTileData
 {
-  gint32   drawable_ID;
+  gint32   drawable_id;
   guint32  tile_num;
   guint32  shadow;
   guint32  bpp;

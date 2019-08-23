@@ -159,7 +159,7 @@ HELP
            cur_stroke;
            cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
         {
-          stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
+          stroke_ids[i] = gimp_stroke_get_id (cur_stroke);
           i++;
         }
     }
@@ -772,7 +772,7 @@ HELP
 	  gimp_vectors_stroke_add (vectors, stroke);
 	  g_object_unref (stroke);
 
-	  stroke_id = gimp_stroke_get_ID (stroke);
+	  stroke_id = gimp_stroke_get_id (stroke);
 
 	  success = TRUE;
 	}
@@ -830,7 +830,7 @@ HELP
       gimp_vectors_stroke_add (vectors, stroke);
       g_object_unref (stroke);
 
-      stroke_id = gimp_stroke_get_ID (stroke);
+      stroke_id = gimp_stroke_get_id (stroke);
     }
   else
     success = FALSE;
@@ -1065,7 +1065,7 @@ HELP
       gimp_vectors_stroke_add (vectors, stroke);
       g_object_unref (stroke);
 
-      stroke_id = gimp_stroke_get_ID (stroke);
+      stroke_id = gimp_stroke_get_id (stroke);
     }
   else
     success = FALSE;
@@ -1130,7 +1130,7 @@ HELP
       
 	  list = vectors_list;
           for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+            vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
 
           g_list_free (vectors_list);
         }
@@ -1195,7 +1195,7 @@ HELP
       
 	  list = vectors_list;
           for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vectors_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+            vectors_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
 
           g_list_free (vectors_list);
         }

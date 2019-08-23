@@ -41,7 +41,7 @@ enum
 
 struct _GimpAuxItemPrivate
 {
-  guint32  aux_item_ID;
+  guint32  aux_item_id;
 };
 
 
@@ -103,7 +103,7 @@ gimp_aux_item_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_uint (value, aux_item->priv->aux_item_ID);
+      g_value_set_uint (value, aux_item->priv->aux_item_id);
       break;
 
     default:
@@ -123,7 +123,7 @@ gimp_aux_item_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_ID:
-      aux_item->priv->aux_item_ID = g_value_get_uint (value);
+      aux_item->priv->aux_item_id = g_value_get_uint (value);
       break;
 
     default:
@@ -133,11 +133,11 @@ gimp_aux_item_set_property (GObject      *object,
 }
 
 guint32
-gimp_aux_item_get_ID (GimpAuxItem *aux_item)
+gimp_aux_item_get_id (GimpAuxItem *aux_item)
 {
   g_return_val_if_fail (GIMP_IS_AUX_ITEM (aux_item), 0);
 
-  return aux_item->priv->aux_item_ID;
+  return aux_item->priv->aux_item_id;
 }
 
 void

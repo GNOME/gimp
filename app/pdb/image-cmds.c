@@ -123,7 +123,7 @@ image_list_invoker (GimpProcedure         *procedure,
       image_ids = g_new (gint32, num_images);
 
       for (i = 0; i < num_images; i++, list = g_list_next (list))
-        image_ids[i] = gimp_image_get_ID (GIMP_IMAGE (list->data));
+        image_ids[i] = gimp_image_get_id (GIMP_IMAGE (list->data));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
@@ -445,7 +445,7 @@ image_get_layers_invoker (GimpProcedure         *procedure,
           layer_ids = g_new (gint32, num_layers);
 
           for (i = 0; i < num_layers; i++, list = g_list_next (list))
-            layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+            layer_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
         }
     }
 
@@ -490,7 +490,7 @@ image_get_channels_invoker (GimpProcedure         *procedure,
           channel_ids = g_new (gint32, num_channels);
 
           for (i = 0; i < num_channels; i++, list = g_list_next (list))
-            channel_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+            channel_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
         }
     }
 
@@ -535,7 +535,7 @@ image_get_vectors_invoker (GimpProcedure         *procedure,
           vector_ids = g_new (gint32, num_vectors);
 
           for (i = 0; i < num_vectors; i++, list = g_list_next (list))
-            vector_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+            vector_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
         }
     }
 

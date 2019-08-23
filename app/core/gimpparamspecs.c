@@ -427,7 +427,7 @@ gimp_param_image_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (image_id == 0 || image_id == -1))
     return FALSE;
 
-  image = gimp_image_get_by_ID (ispec->gimp, image_id);
+  image = gimp_image_get_by_id (ispec->gimp, image_id);
 
   if (! GIMP_IS_IMAGE (image))
     {
@@ -484,7 +484,7 @@ gimp_value_get_image (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_IMAGE_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return gimp_image_get_by_ID (gimp, value->data[0].v_int);
+  return gimp_image_get_by_id (gimp, value->data[0].v_int);
 }
 
 void
@@ -494,7 +494,7 @@ gimp_value_set_image (GValue    *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_IMAGE_ID (value));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  value->data[0].v_int = image ? gimp_image_get_ID (image) : -1;
+  value->data[0].v_int = image ? gimp_image_get_id (image) : -1;
 }
 
 
@@ -594,7 +594,7 @@ gimp_param_item_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (item_id == 0 || item_id == -1))
     return FALSE;
 
-  item = gimp_item_get_by_ID (ispec->gimp, item_id);
+  item = gimp_item_get_by_id (ispec->gimp, item_id);
 
   if (! item || ! g_type_is_a (G_TYPE_FROM_INSTANCE (item), ispec->item_type))
     {
@@ -658,7 +658,7 @@ gimp_value_get_item (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_ITEM_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_ITEM (item))
     return NULL;
@@ -678,7 +678,7 @@ gimp_value_set_item (GValue   *value,
 
   if (GIMP_VALUE_HOLDS_ITEM_ID (value))
     {
-      value->data[0].v_int = item ? gimp_item_get_ID (item) : -1;
+      value->data[0].v_int = item ? gimp_item_get_id (item) : -1;
     }
   else if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value) &&
            (item == NULL || GIMP_IS_DRAWABLE (item)))
@@ -813,7 +813,7 @@ gimp_value_get_drawable (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_DRAWABLE_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_DRAWABLE (item))
     return NULL;
@@ -830,7 +830,8 @@ gimp_value_set_drawable (GValue       *value,
 
   if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value))
     {
-      value->data[0].v_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+      value->data[0].v_int =
+        drawable ? gimp_item_get_id (GIMP_ITEM (drawable)) : -1;
     }
   else if (GIMP_VALUE_HOLDS_LAYER_ID (value) &&
            (drawable == NULL || GIMP_IS_LAYER (drawable)))
@@ -955,7 +956,7 @@ gimp_value_get_layer (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_LAYER_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_LAYER (item))
     return NULL;
@@ -970,7 +971,7 @@ gimp_value_set_layer (GValue    *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_LAYER_ID (value));
   g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
 
-  value->data[0].v_int = layer ? gimp_item_get_ID (GIMP_ITEM (layer)) : -1;
+  value->data[0].v_int = layer ? gimp_item_get_id (GIMP_ITEM (layer)) : -1;
 }
 
 
@@ -1070,7 +1071,7 @@ gimp_value_get_channel (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_CHANNEL_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_CHANNEL (item))
     return NULL;
@@ -1087,7 +1088,8 @@ gimp_value_set_channel (GValue      *value,
 
   if (GIMP_VALUE_HOLDS_CHANNEL_ID (value))
     {
-      value->data[0].v_int = channel ? gimp_item_get_ID (GIMP_ITEM (channel)) : -1;
+      value->data[0].v_int =
+        channel ? gimp_item_get_id (GIMP_ITEM (channel)) : -1;
     }
   else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
            (channel == NULL || GIMP_IS_LAYER_MASK (channel)))
@@ -1202,7 +1204,7 @@ gimp_value_get_layer_mask (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_LAYER_MASK (item))
     return NULL;
@@ -1217,7 +1219,8 @@ gimp_value_set_layer_mask (GValue        *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value));
   g_return_if_fail (layer_mask == NULL || GIMP_IS_LAYER_MASK (layer_mask));
 
-  value->data[0].v_int = layer_mask ? gimp_item_get_ID (GIMP_ITEM (layer_mask)) : -1;
+  value->data[0].v_int =
+    layer_mask ? gimp_item_get_id (GIMP_ITEM (layer_mask)) : -1;
 }
 
 
@@ -1317,7 +1320,7 @@ gimp_value_get_selection (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_SELECTION_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_SELECTION (item))
     return NULL;
@@ -1332,7 +1335,8 @@ gimp_value_set_selection (GValue        *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_SELECTION_ID (value));
   g_return_if_fail (selection == NULL || GIMP_IS_SELECTION (selection));
 
-  value->data[0].v_int = selection ? gimp_item_get_ID (GIMP_ITEM (selection)) : -1;
+  value->data[0].v_int =
+    selection ? gimp_item_get_id (GIMP_ITEM (selection)) : -1;
 }
 
 
@@ -1432,7 +1436,7 @@ gimp_value_get_vectors (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_VECTORS_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
+  item = gimp_item_get_by_id (gimp, value->data[0].v_int);
 
   if (item && ! GIMP_IS_VECTORS (item))
     return NULL;
@@ -1447,7 +1451,8 @@ gimp_value_set_vectors (GValue      *value,
   g_return_if_fail (GIMP_VALUE_HOLDS_VECTORS_ID (value));
   g_return_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors));
 
-  value->data[0].v_int = vectors ? gimp_item_get_ID (GIMP_ITEM (vectors)) : -1;
+  value->data[0].v_int =
+    vectors ? gimp_item_get_id (GIMP_ITEM (vectors)) : -1;
 }
 
 
@@ -1546,7 +1551,7 @@ gimp_param_display_id_validate (GParamSpec *pspec,
   if (ispec->none_ok && (display_id == 0 || display_id == -1))
     return FALSE;
 
-  display = gimp_get_display_by_ID (ispec->gimp, display_id);
+  display = gimp_get_display_by_id (ispec->gimp, display_id);
 
   if (! GIMP_IS_OBJECT (display))
     {
@@ -1603,7 +1608,7 @@ gimp_value_get_display (const GValue *value,
   g_return_val_if_fail (GIMP_VALUE_HOLDS_DISPLAY_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  return gimp_get_display_by_ID (gimp, value->data[0].v_int);
+  return gimp_get_display_by_id (gimp, value->data[0].v_int);
 }
 
 void

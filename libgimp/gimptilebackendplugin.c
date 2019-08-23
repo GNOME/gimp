@@ -333,7 +333,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
   GPTileData                   *tile_data;
   GimpWireMessage               msg;
 
-  tile_req.drawable_ID = priv->drawable_id;
+  tile_req.drawable_id = priv->drawable_id;
   tile_req.tile_num    = tile->tile_num;
   tile_req.shadow      = priv->shadow;
 
@@ -355,7 +355,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
     }
 
   tile_data = msg.data;
-  if (tile_data->drawable_ID != priv->drawable_id ||
+  if (tile_data->drawable_id != priv->drawable_id ||
       tile_data->tile_num    != tile->tile_num    ||
       tile_data->shadow      != priv->shadow      ||
       tile_data->width       != tile->ewidth      ||
@@ -365,7 +365,7 @@ gimp_tile_get (GimpTileBackendPlugin *backend_plugin,
 #if 0
       g_printerr ("tile_data: %d %d %d %d %d %d\n"
                   "tile:      %d %d %d %d %d %d\n",
-                  tile_data->drawable_ID,
+                  tile_data->drawable_id,
                   tile_data->tile_num,
                   tile_data->shadow,
                   tile_data->width,
@@ -419,7 +419,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
   GPTileData                   *tile_info;
   GimpWireMessage               msg;
 
-  tile_req.drawable_ID = -1;
+  tile_req.drawable_id = -1;
   tile_req.tile_num    = 0;
   tile_req.shadow      = 0;
 
@@ -441,7 +441,7 @@ gimp_tile_put (GimpTileBackendPlugin *backend_plugin,
 
   tile_info = msg.data;
 
-  tile_data.drawable_ID = priv->drawable_id;
+  tile_data.drawable_id = priv->drawable_id;
   tile_data.tile_num    = tile->tile_num;
   tile_data.shadow      = priv->shadow;
   tile_data.bpp         = priv->bpp;

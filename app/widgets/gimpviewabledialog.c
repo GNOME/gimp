@@ -368,7 +368,7 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
       tmp = name;
       name = g_strdup_printf ("%s-%d (%s)",
                               tmp,
-                              gimp_item_get_ID (GIMP_ITEM (object)),
+                              gimp_item_get_id (GIMP_ITEM (object)),
                               gimp_image_get_display_name (image));
       g_free (tmp);
     }

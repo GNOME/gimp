@@ -206,12 +206,12 @@ gimp_display_set_property (GObject      *object,
 
         do
           {
-            ID = display->gimp->next_display_ID++;
+            ID = display->gimp->next_display_id++;
 
-            if (display->gimp->next_display_ID == G_MAXINT)
-              display->gimp->next_display_ID = 1;
+            if (display->gimp->next_display_id == G_MAXINT)
+              display->gimp->next_display_id = 1;
           }
-        while (gimp_display_get_by_ID (display->gimp, ID));
+        while (gimp_display_get_by_id (display->gimp, ID));
 
         private->ID = ID;
       }
@@ -549,7 +549,7 @@ gimp_display_close (GimpDisplay *display)
 }
 
 gint
-gimp_display_get_ID (GimpDisplay *display)
+gimp_display_get_id (GimpDisplay *display)
 {
   GimpDisplayPrivate *private;
 
@@ -561,8 +561,8 @@ gimp_display_get_ID (GimpDisplay *display)
 }
 
 GimpDisplay *
-gimp_display_get_by_ID (Gimp *gimp,
-                        gint  ID)
+gimp_display_get_by_id (Gimp *gimp,
+                        gint  id)
 {
   GList *list;
 
@@ -574,7 +574,7 @@ gimp_display_get_by_ID (Gimp *gimp,
     {
       GimpDisplay *display = list->data;
 
-      if (gimp_display_get_ID (display) == ID)
+      if (gimp_display_get_id (display) == id)
         return display;
     }
 
@@ -594,7 +594,7 @@ gimp_display_get_action_name (GimpDisplay *display)
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
   return g_strdup_printf ("windows-display-%04d",
-                          gimp_display_get_ID (display));
+                          gimp_display_get_id (display));
 }
 
 Gimp *

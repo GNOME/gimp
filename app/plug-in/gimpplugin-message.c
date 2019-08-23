@@ -178,7 +178,7 @@ gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
 {
   g_return_if_fail (request != NULL);
 
-  if (request->drawable_ID == -1)
+  if (request->drawable_id == -1)
     gimp_plug_in_handle_tile_put (plug_in, request);
   else
     gimp_plug_in_handle_tile_get (plug_in, request);
@@ -196,7 +196,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   const Babl      *format;
   GeglRectangle    tile_rect;
 
-  tile_data.drawable_ID = -1;
+  tile_data.drawable_id = -1;
   tile_data.tile_num    = 0;
   tile_data.shadow      = 0;
   tile_data.bpp         = 0;
@@ -231,8 +231,8 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
 
   tile_info = msg.data;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
-                                                   tile_info->drawable_ID);
+  drawable = (GimpDrawable *) gimp_item_get_by_id (plug_in->manager->gimp,
+                                                   tile_info->drawable_id);
 
   if (! GIMP_IS_DRAWABLE (drawable))
     {
@@ -241,7 +241,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                     "tried writing to invalid drawable %d (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    tile_info->drawable_ID);
+                    tile_info->drawable_id);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -253,7 +253,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                     "from the image (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    tile_info->drawable_ID);
+                    tile_info->drawable_id);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -279,7 +279,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                         "tried writing to a locked drawable %d (killing)",
                         gimp_object_get_name (plug_in),
                         gimp_file_get_utf8_name (plug_in->file),
-                        tile_info->drawable_ID);
+                        tile_info->drawable_id);
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -290,7 +290,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                         "tried writing to a group layer %d (killing)",
                         gimp_object_get_name (plug_in),
                         gimp_file_get_utf8_name (plug_in->file),
-                        tile_info->drawable_ID);
+                        tile_info->drawable_id);
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -351,8 +351,8 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   GeglRectangle    tile_rect;
   gint             tile_size;
 
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
-                                                   request->drawable_ID);
+  drawable = (GimpDrawable *) gimp_item_get_by_id (plug_in->manager->gimp,
+                                                   request->drawable_id);
 
   if (! GIMP_IS_DRAWABLE (drawable))
     {
@@ -361,7 +361,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
                     "tried reading from invalid drawable %d (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    request->drawable_ID);
+                    request->drawable_id);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -373,7 +373,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
                     "from the image (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
-                    request->drawable_ID);
+                    request->drawable_id);
       gimp_plug_in_close (plug_in, TRUE);
       return;
     }
@@ -409,7 +409,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   tile_size = (babl_format_get_bytes_per_pixel (format) *
                tile_rect.width * tile_rect.height);
 
-  tile_data.drawable_ID = request->drawable_ID;
+  tile_data.drawable_id = request->drawable_id;
   tile_data.tile_num    = request->tile_num;
   tile_data.shadow      = request->shadow;
   tile_data.bpp         = babl_format_get_bytes_per_pixel (format);

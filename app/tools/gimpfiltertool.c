@@ -1257,7 +1257,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
 
   filter_tool->preview_guide =
     gimp_guide_custom_new (orientation,
-                           image->gimp->next_guide_ID++,
+                           image->gimp->next_guide_id++,
                            GIMP_GUIDE_STYLE_SPLIT_VIEW);
 
   gimp_image_add_guide (image, filter_tool->preview_guide, position);

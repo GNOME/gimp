@@ -1237,7 +1237,7 @@ gimp_image_get_description (GimpViewable  *viewable,
 
   return g_strdup_printf ("%s-%d",
                           gimp_image_get_display_name (image),
-                          gimp_image_get_ID (image));
+                          gimp_image_get_id (image));
 }
 
 static void
@@ -1894,7 +1894,7 @@ gimp_image_unset_default_new_layer_mode (GimpImage *image)
 }
 
 gint
-gimp_image_get_ID (GimpImage *image)
+gimp_image_get_id (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), -1);
 
@@ -1902,7 +1902,7 @@ gimp_image_get_ID (GimpImage *image)
 }
 
 GimpImage *
-gimp_image_get_by_ID (Gimp *gimp,
+gimp_image_get_by_id (Gimp *gimp,
                       gint  image_id)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);

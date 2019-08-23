@@ -503,7 +503,7 @@ palette_import_image_changed (GimpContext  *context,
 
           label = g_strdup_printf ("%s-%d",
                                    gimp_image_get_display_name (image),
-                                   gimp_image_get_ID (image));
+                                   gimp_image_get_id (image));
 
           gtk_entry_set_text (GTK_ENTRY (private->entry), label);
           g_free (label);

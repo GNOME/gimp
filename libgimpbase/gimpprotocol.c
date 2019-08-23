@@ -485,7 +485,7 @@ _gp_config_read (GIOChannel      *channel,
                                &config->tile_height, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_int32 (channel,
-                               (guint32 *) &config->shm_ID, 1, user_data))
+                               (guint32 *) &config->shm_id, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->check_size, 1, user_data))
@@ -522,7 +522,7 @@ _gp_config_read (GIOChannel      *channel,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int32 (channel,
-                               (guint32 *) &config->gdisp_ID, 1, user_data))
+                               (guint32 *) &config->gdisp_id, 1, user_data))
     goto cleanup;
 
   if (! _gimp_wire_read_string (channel,
@@ -581,7 +581,7 @@ _gp_config_write (GIOChannel      *channel,
                                 &config->tile_height, 1, user_data))
     return;
   if (! _gimp_wire_write_int32 (channel,
-                                (const guint32 *) &config->shm_ID, 1,
+                                (const guint32 *) &config->shm_id, 1,
                                 user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
@@ -621,7 +621,7 @@ _gp_config_write (GIOChannel      *channel,
                                user_data))
     return;
   if (! _gimp_wire_write_int32 (channel,
-                                (const guint32 *) &config->gdisp_ID, 1,
+                                (const guint32 *) &config->gdisp_id, 1,
                                 user_data))
     return;
   if (! _gimp_wire_write_string (channel,
@@ -682,7 +682,7 @@ _gp_tile_req_read (GIOChannel      *channel,
   GPTileReq *tile_req = g_slice_new0 (GPTileReq);
 
   if (! _gimp_wire_read_int32 (channel,
-                               (guint32 *) &tile_req->drawable_ID, 1,
+                               (guint32 *) &tile_req->drawable_id, 1,
                                user_data))
     goto cleanup;
   if (! _gimp_wire_read_int32 (channel,
@@ -708,7 +708,7 @@ _gp_tile_req_write (GIOChannel      *channel,
   GPTileReq *tile_req = msg->data;
 
   if (! _gimp_wire_write_int32 (channel,
-                                (const guint32 *) &tile_req->drawable_ID, 1,
+                                (const guint32 *) &tile_req->drawable_id, 1,
                                 user_data))
     return;
   if (! _gimp_wire_write_int32 (channel,
@@ -759,7 +759,7 @@ _gp_tile_data_read (GIOChannel      *channel,
   GPTileData *tile_data = g_slice_new0 (GPTileData);
 
   if (! _gimp_wire_read_int32 (channel,
-                               (guint32 *) &tile_data->drawable_ID, 1,
+                               (guint32 *) &tile_data->drawable_id, 1,
                                user_data))
     goto cleanup;
   if (! _gimp_wire_read_int32 (channel,
@@ -810,7 +810,7 @@ _gp_tile_data_write (GIOChannel      *channel,
   GPTileData *tile_data = msg->data;
 
   if (! _gimp_wire_write_int32 (channel,
-                                (const guint32 *) &tile_data->drawable_ID, 1,
+                                (const guint32 *) &tile_data->drawable_id, 1,
                                 user_data))
     return;
   if (! _gimp_wire_write_int32 (channel,

@@ -229,7 +229,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
               for (i = 0, list = layers;
                    i < num_layers;
                    i++, list = g_list_next (list))
-                layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+                layer_ids[i] = gimp_item_get_id (GIMP_ITEM (list->data));
 
               g_list_free (layers);
             }

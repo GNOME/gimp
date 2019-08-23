@@ -357,21 +357,21 @@ gimp_stroke_get_memsize (GimpObject *object,
 }
 
 void
-gimp_stroke_set_ID (GimpStroke *stroke,
+gimp_stroke_set_id (GimpStroke *stroke,
                     gint        id)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
-  g_return_if_fail (stroke->ID == 0 /* we don't want changing IDs... */);
+  g_return_if_fail (stroke->id == 0 /* we don't want changing IDs... */);
 
-  stroke->ID = id;
+  stroke->id = id;
 }
 
 gint
-gimp_stroke_get_ID (GimpStroke *stroke)
+gimp_stroke_get_id (GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), -1);
 
-  return stroke->ID;
+  return stroke->id;
 }
 
 
@@ -1193,7 +1193,7 @@ gimp_stroke_real_transform (GimpStroke        *stroke,
 
   if (ret_strokes)
     {
-      stroke->ID = 0;
+      stroke->id = 0;
 
       g_queue_push_tail (ret_strokes, g_object_ref (stroke));
     }

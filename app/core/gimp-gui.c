@@ -239,7 +239,7 @@ gimp_get_program_class (Gimp *gimp)
 
 gchar *
 gimp_get_display_name (Gimp     *gimp,
-                       gint      display_ID,
+                       gint      display_id,
                        GObject **monitor,
                        gint     *monitor_number)
 {
@@ -248,7 +248,7 @@ gimp_get_display_name (Gimp     *gimp,
   g_return_val_if_fail (monitor_number != NULL, NULL);
 
   if (gimp->gui.get_display_name)
-    return gimp->gui.get_display_name (gimp, display_ID,
+    return gimp->gui.get_display_name (gimp, display_id,
                                        monitor, monitor_number);
 
   *monitor = NULL;
@@ -322,19 +322,19 @@ gimp_get_empty_display (Gimp *gimp)
 }
 
 GimpObject *
-gimp_get_display_by_ID (Gimp *gimp,
-                        gint  ID)
+gimp_get_display_by_id (Gimp *gimp,
+                        gint  id)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (gimp->gui.display_get_by_id)
-    return gimp->gui.display_get_by_id (gimp, ID);
+    return gimp->gui.display_get_by_id (gimp, id);
 
   return NULL;
 }
 
 gint
-gimp_get_display_ID (Gimp       *gimp,
+gimp_get_display_id (Gimp       *gimp,
                      GimpObject *display)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);

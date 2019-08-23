@@ -243,8 +243,8 @@ gimp_init (Gimp *gimp)
   gimp->images = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
 
-  gimp->next_guide_ID        = 1;
-  gimp->next_sample_point_ID = 1;
+  gimp->next_guide_id        = 1;
+  gimp->next_sample_point_id = 1;
   gimp->image_table          = gimp_id_table_new ();
   gimp->item_table           = gimp_id_table_new ();
 
@@ -254,7 +254,7 @@ gimp_init (Gimp *gimp)
                                  "append",        TRUE,
                                  NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
-  gimp->next_display_ID = 1;
+  gimp->next_display_id = 1;
 
   gimp->named_buffers = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),

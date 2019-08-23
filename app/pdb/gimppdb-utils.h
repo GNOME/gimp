@@ -101,15 +101,15 @@ gboolean        gimp_pdb_image_is_not_precision (GimpImage          *image,
                                                  GError            **error);
 
 GimpGuide     * gimp_pdb_image_get_guide        (GimpImage          *image,
-                                                 gint                guide_ID,
+                                                 gint                guide_id,
                                                  GError            **error);
 GimpSamplePoint *
                 gimp_pdb_image_get_sample_point (GimpImage          *image,
-                                                 gint                sample_point_ID,
+                                                 gint                sample_point_id,
                                                  GError            **error);
 
 GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
-                                                 gint                stroke_ID,
+                                                 gint                stroke_id,
                                                  GimpPDBItemModify   modify,
                                                  GError            **error);
 
