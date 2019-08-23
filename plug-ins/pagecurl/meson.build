@@ -1,5 +1,9 @@
 plugin_name = 'pagecurl'
 
+plugin_sources = [
+  'pagecurl.c',
+]
+
 pagecurl_icons_images = [
   'curl0.png',
   'curl1.png',
@@ -26,31 +30,29 @@ xml_file = configure_file(
   capture: true,
 )
 
-pagecurl_icons_sources = gnome.compile_resources(
+plugin_sources += gnome.compile_resources(
   resourcename,
   xml_file,
   c_name: resourcename.underscorify(),
 )
 
 
-rc_file = platform_win32 ? windows.compile_resources(
-  gimp_plugins_rc,
-  args: [
-    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
-    '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
-    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
-  ],
-  include_directories: [
-    rootInclude, appInclude,
-  ],
-) : []
+if platform_win32
+  plugin_sources += windows.compile_resources(
+    gimp_plugins_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+endif
 
 executable(plugin_name,
-  [
-    'pagecurl.c',
-    pagecurl_icons_sources,
-    rc_file,
-  ],
+  plugin_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
     gtk3, gegl, math,
