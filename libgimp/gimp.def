@@ -1,4 +1,42 @@
 EXPORTS
+    _gimp_display_new
+    _gimp_drawable_bpp
+    _gimp_drawable_has_alpha
+    _gimp_drawable_height
+    _gimp_drawable_is_gray
+    _gimp_drawable_is_indexed
+    _gimp_drawable_is_rgb
+    _gimp_drawable_mask_intersect
+    _gimp_drawable_merge_shadow
+    _gimp_drawable_offsets
+    _gimp_drawable_type
+    _gimp_drawable_update
+    _gimp_drawable_width
+    _gimp_image_base_type
+    _gimp_image_delete
+    _gimp_image_find_next_guide
+    _gimp_image_get_default_new_layer_mode
+    _gimp_image_get_guide_orientation
+    _gimp_image_get_guide_position
+    _gimp_image_get_name
+    _gimp_image_get_resolution
+    _gimp_image_get_unit
+    _gimp_image_height
+    _gimp_image_insert_layer
+    _gimp_image_is_valid
+    _gimp_image_new
+    _gimp_image_set_active_layer
+    _gimp_image_set_filename
+    _gimp_image_undo_group_end
+    _gimp_image_undo_group_start
+    _gimp_image_width
+    _gimp_item_attach_parasite
+    _gimp_item_get_image
+    _gimp_item_get_name
+    _gimp_item_get_parasite
+    _gimp_item_is_valid
+    _gimp_item_set_visible
+    _gimp_layer_add_alpha
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_parasite
