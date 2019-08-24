@@ -81,7 +81,7 @@ show_maxkeyframe_hints (GtkAdjustment *adj,
 
 gboolean
 save_dialog (WebPSaveParams *params,
-             gint32          image_ID)
+             GimpImage      *image)
 {
   GtkWidget     *dialog;
   GtkWidget     *vbox;
@@ -95,13 +95,17 @@ save_dialog (WebPSaveParams *params,
   GtkWidget     *combo;
   GtkAdjustment *quality_scale;
   GtkAdjustment *alpha_quality_scale;
+  GList         *list;
   gint32         nlayers;
   gboolean       animation_supported = FALSE;
   gboolean       run;
   gchar         *text;
   gint           row = 0;
 
-  g_free (gimp_image_get_layers (image_ID, &nlayers));
+  list = gimp_image_get_layers (image);
+  nlayers = g_list_length (list);
+  g_list_free (list);
+
   animation_supported = nlayers > 1;
 
   /* Create the dialog */

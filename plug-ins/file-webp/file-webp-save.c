@@ -54,20 +54,20 @@ const gchar * webp_error_string     (WebPEncodingError  error_code);
 
 gboolean      save_layer            (const gchar       *filename,
                                      gint32             nLayers,
-                                     gint32             image_ID,
-                                     gint32             drawable_ID,
+                                     GimpImage         *image,
+                                     GimpDrawable      *drawable,
                                      WebPSaveParams    *params,
                                      GError           **error);
 
 gboolean      save_animation        (const gchar       *filename,
                                      gint32             nLayers,
-                                     gint32            *allLayers,
-                                     gint32             image_ID,
-                                     gint32             drawable_ID,
+                                     GList             *layers,
+                                     GimpImage         *image,
+                                     GimpDrawable      *drawable,
                                      WebPSaveParams    *params,
                                      GError           **error);
 
-static void   webp_decide_output    (gint32             image_ID,
+static void   webp_decide_output    (GimpImage         *image,
                                      WebPSaveParams    *params,
                                      GimpColorProfile **profile,
                                      gboolean          *out_linear);
@@ -142,8 +142,8 @@ webp_error_string (WebPEncodingError error_code)
 gboolean
 save_layer (const gchar    *filename,
             gint32          nLayers,
-            gint32          image_ID,
-            gint32          drawable_ID,
+            GimpImage      *image,
+            GimpDrawable   *drawable,
             WebPSaveParams *params,
             GError        **error)
 {
@@ -169,7 +169,7 @@ save_layer (const gchar    *filename,
   gboolean          out_linear = FALSE;
   int               res;
 
-  webp_decide_output (image_ID, params, &profile, &out_linear);
+  webp_decide_output (image, params, &profile, &out_linear);
   if (profile)
     {
       space = gimp_color_profile_get_space (profile,
@@ -186,7 +186,7 @@ save_layer (const gchar    *filename,
 
     }
   if (! space)
-    space = gimp_drawable_get_format (drawable_ID);
+    space = gimp_drawable_get_format (drawable);
 
   /* The do...while() loop is a neat little trick that makes it easier
    * to jump to error handling code while still ensuring proper
@@ -211,7 +211,7 @@ save_layer (const gchar    *filename,
         }
 
       /* Obtain the drawable type */
-      has_alpha = gimp_drawable_has_alpha (drawable_ID);
+      has_alpha = gimp_drawable_has_alpha (drawable);
 
       if (has_alpha)
         {
@@ -232,7 +232,7 @@ save_layer (const gchar    *filename,
       bpp = babl_format_get_bytes_per_pixel (format);
 
       /* Retrieve the buffer for the layer */
-      geglbuffer = gimp_drawable_get_buffer (drawable_ID);
+      geglbuffer = gimp_drawable_get_buffer (drawable);
       extent = *gegl_buffer_get_extent (geglbuffer);
       w = extent.width;
       h = extent.height;
@@ -413,12 +413,12 @@ parse_ms_tag (const gchar *str)
 }
 
 static gint
-get_layer_delay (gint32 layer)
+get_layer_delay (GimpLayer *layer)
 {
   gchar *layer_name;
   gint   delay_ms;
 
-  layer_name = gimp_item_get_name (layer);
+  layer_name = gimp_item_get_name (GIMP_ITEM (layer));
   delay_ms   = parse_ms_tag (layer_name);
   g_free (layer_name);
 
@@ -446,12 +446,12 @@ parse_combine (const char* str)
 }
 
 static gint
-get_layer_needs_combine (gint32 layer)
+get_layer_needs_combine (GimpLayer *layer)
 {
   gchar     *layer_name;
   gboolean   needs_combine;
 
-  layer_name    = gimp_item_get_name (layer);
+  layer_name    = gimp_item_get_name (GIMP_ITEM (layer));
   needs_combine = parse_combine (layer_name);
   g_free (layer_name);
 
@@ -501,9 +501,9 @@ combine_buffers (GeglBuffer *layer_buffer,
 gboolean
 save_animation (const gchar    *filename,
                 gint32          nLayers,
-                gint32         *allLayers,
-                gint32          image_ID,
-                gint32          drawable_ID,
+                GList          *layers,
+                GimpImage      *image,
+                GimpDrawable   *drawable,
                 WebPSaveParams *params,
                 GError        **error)
 {
@@ -528,7 +528,7 @@ save_animation (const gchar    *filename,
   if (nLayers < 1)
     return FALSE;
 
-  webp_decide_output (image_ID, params, &profile, &out_linear);
+  webp_decide_output (image, params, &profile, &out_linear);
   if (profile)
     {
       space = gimp_color_profile_get_space (profile,
@@ -545,14 +545,15 @@ save_animation (const gchar    *filename,
 
     }
   if (! space)
-    space = gimp_drawable_get_format (drawable_ID);
+    space = gimp_drawable_get_format (drawable);
 
-  gimp_image_undo_freeze (image_ID);
+  gimp_image_undo_freeze (image);
 
   WebPDataInit (&webp_data);
 
   do
     {
+      GList   *list;
       gint     loop;
       gint     default_delay = params->delay;
       gboolean force_delay = params->force_delay;
@@ -593,17 +594,22 @@ save_animation (const gchar    *filename,
           enc_options.kmin = params->kf_distance - 1;
         }
 
-      for (loop = 0; loop < nLayers; loop++)
+      for (list = g_list_last (layers), loop = 0;
+           list && loop < nLayers;
+           list = g_list_previous (list), loop++)
         {
           GeglBuffer       *geglbuffer;
           GeglBuffer       *current_frame;
           GeglRectangle     extent;
           WebPConfig        config;
           WebPPicture       picture;
-          WebPMemoryWriter  mw = { 0 };
-          gint32            drawable = allLayers[nLayers - 1 - loop];
-          gint              delay = get_layer_delay (drawable);
-          gboolean          needs_combine = get_layer_needs_combine (drawable);
+          WebPMemoryWriter  mw       = { 0 };
+          GimpDrawable     *drawable = list->data;
+          gint              delay;
+          gboolean          needs_combine;
+
+          delay         = get_layer_delay (GIMP_LAYER (drawable));
+          needs_combine = get_layer_needs_combine (GIMP_LAYER (drawable));
 
           /* Obtain the drawable type */
           has_alpha = gimp_drawable_has_alpha (drawable);
@@ -627,7 +633,7 @@ save_animation (const gchar    *filename,
           bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
-          gimp_layer_resize_to_image_size (drawable);
+          gimp_layer_resize_to_image_size (GIMP_LAYER (drawable));
 
           /* Retrieve the buffer for the layer */
           geglbuffer = gimp_drawable_get_buffer (drawable);
@@ -802,8 +808,8 @@ save_animation (const gchar    *filename,
 
 gboolean
 save_image (const gchar            *filename,
-            gint32                  image_ID,
-            gint32                  drawable_ID,
+            GimpImage              *image,
+            GimpDrawable           *drawable,
             GimpMetadata           *metadata,
             GimpMetadataSaveFlags   metadata_flags,
             WebPSaveParams         *params,
@@ -811,29 +817,27 @@ save_image (const gchar            *filename,
 {
   GFile    *file;
   gboolean  status = FALSE;
-  gint32   *layers;
-  gint      nlayers;
+  GList    *layers;
 
-  layers = gimp_image_get_layers (image_ID, &nlayers);
+  layers = gimp_image_get_layers (image);
 
-  if (nlayers == 0)
-    {
-      g_free (layers);
-      return FALSE;
-    }
+  if (! layers)
+    return FALSE;
 
   g_printerr ("Saving WebP file %s\n", filename);
 
   if (params->animation)
     {
       status = save_animation (filename,
-                               nlayers, layers, image_ID, drawable_ID, params,
+                               g_list_length (layers), layers,
+                               image, drawable, params,
                                error);
     }
   else
     {
       status = save_layer (filename,
-                           nlayers, image_ID, drawable_ID, params, error);
+                           g_list_length (layers),
+                           image, drawable, params, error);
     }
 
   g_free (layers);
@@ -866,7 +870,7 @@ save_image (const gchar            *filename,
         metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
       file = g_file_new_for_path (filename);
-      gimp_image_metadata_save_finish (image_ID,
+      gimp_image_metadata_save_finish (image,
                                        "image/webp",
                                        metadata, metadata_flags,
                                        file, NULL);
@@ -878,7 +882,7 @@ save_image (const gchar            *filename,
 }
 
 static void
-webp_decide_output (gint32             image_ID,
+webp_decide_output (GimpImage         *image,
                     WebPSaveParams    *params,
                     GimpColorProfile **profile,
                     gboolean          *out_linear)
@@ -888,7 +892,7 @@ webp_decide_output (gint32             image_ID,
   *out_linear = FALSE;
   if (params->profile)
     {
-      *profile = gimp_image_get_color_profile (image_ID);
+      *profile = gimp_image_get_color_profile (image);
 
       /* If a profile is explicitly set, follow its TRC, whatever the
        * storage format.
@@ -905,11 +909,11 @@ webp_decide_output (gint32             image_ID,
       if (! *profile)
         {
           /* There is always an effective profile. */
-          *profile = gimp_image_get_effective_color_profile (image_ID);
+          *profile = gimp_image_get_effective_color_profile (image);
 
           if (gimp_color_profile_is_linear (*profile))
             {
-              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+              if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR)
                 {
                   /* If stored data was linear, let's convert the profile. */
                   GimpColorProfile *saved_profile;

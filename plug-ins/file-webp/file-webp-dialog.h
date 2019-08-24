@@ -27,7 +27,7 @@
 
 
 gboolean   save_dialog (WebPSaveParams *params,
-                        gint32          image_ID);
+                        GimpImage      *image);
 
 
 #endif /* __WEBP_DIALOG_H__ */

@@ -22,7 +22,6 @@ AM_LDFLAGS = $(mwindows)
 libexecdir = $(gimpplugindir)/plug-ins/file-webp
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(EXIF_CFLAGS)		\

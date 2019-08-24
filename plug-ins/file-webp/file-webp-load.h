@@ -23,9 +23,9 @@
 #define __WEBP_LOAD_H__
 
 
-gint32 load_image (const gchar *filename,
-                   gboolean     interactive,
-                   GError     **error);
+GimpImage * load_image (const gchar *filename,
+                        gboolean     interactive,
+                        GError     **error);
 
 
 #endif /* __WEBP_LOAD_H__ */
