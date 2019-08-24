@@ -1001,8 +1001,6 @@ file_png_LDADD = \
 	$(INTLLIBS)		\
 	$(file_png_RC)
 
-file_pnm_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_pnm_SOURCES = \
 	file-pnm.c
 
