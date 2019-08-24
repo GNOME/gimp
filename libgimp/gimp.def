@@ -745,7 +745,6 @@ EXPORTS
 	gimp_quit
 	gimp_register_file_handler_mime
 	gimp_register_file_handler_remote
-	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
 	gimp_run_procedure_array

@@ -419,30 +419,6 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
 }
 
 /**
- * gimp_register_load_handler:
- * @procedure_name: The name of the procedure to be used for loading.
- * @extensions: comma separated list of extensions this handler can load (i.e. "jpg,jpeg").
- * @prefixes: comma separated list of prefixes this handler can load (i.e. "http:,ftp:").
- *
- * Registers a file load handler procedure.
- *
- * Registers a procedural database procedure to be called to load files
- * of a particular file format.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_register_load_handler (const gchar *procedure_name,
-                            const gchar *extensions,
-                            const gchar *prefixes)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_register_load_handler (procedure_name,
-                                      extensions, prefixes);
-}
-
-/**
  * gimp_register_save_handler:
  * @procedure_name: The name of the procedure to be used for saving.
  * @extensions: comma separated list of extensions this handler can save (i.e. "jpg,jpeg").
