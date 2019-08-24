@@ -40,14 +40,14 @@ typedef struct
 
 extern JpegSaveVals     jsvals;
 
-extern gint32           orig_image_ID_global;
-extern gint32           drawable_ID_global;
+extern GimpImage       *orig_image_global;
+extern GimpDrawable    *drawable_global;
 
 
 gboolean    save_image         (const gchar  *filename,
-                                gint32        image_ID,
-                                gint32        drawable_ID,
-                                gint32        orig_image_ID,
+                                GimpImage    *image,
+                                GimpDrawable *drawable,
+                                GimpImage    *orig_image,
                                 gboolean      preview,
                                 GError      **error);
 gboolean    save_dialog        (void);

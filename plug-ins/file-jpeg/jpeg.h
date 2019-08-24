@@ -51,11 +51,11 @@ typedef enum
   JPEG_SUBSAMPLING_1x2_1x1_1x1 = 3
 } JpegSubsampling;
 
-extern gint32 volatile  preview_image_ID;
-extern gint32           preview_layer_ID;
+extern GimpImage * volatile  preview_image;
+extern GimpLayer *      preview_layer;
 extern gboolean         undo_touched;
 extern gboolean         load_interactive;
-extern gint32           display_ID;
+extern GimpDisplay     *display;
 extern gchar           *image_comment;
 extern gint             orig_quality;
 extern JpegSubsampling  orig_subsmp;
