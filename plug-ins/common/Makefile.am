@@ -824,8 +824,6 @@ file_html_table_LDADD = \
 
 file_jp2_load_CFLAGS = $(OPENJPEG_CFLAGS)
 
-file_jp2_load_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_jp2_load_SOURCES = \
 	file-jp2-load.c
 

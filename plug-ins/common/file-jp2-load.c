@@ -94,242 +94,256 @@
 #define PLUG_IN_ROLE       "gimp-file-jp2-load"
 
 
-static void           query        (void);
-static void           run          (const gchar       *name,
-                                    gint               nparams,
-                                    const GimpParam   *param,
-                                    gint              *nreturn_vals,
-                                    GimpParam        **return_vals);
-static gint32         load_image   (const gchar       *filename,
-                                    OPJ_CODEC_FORMAT   format,
-                                    OPJ_COLOR_SPACE    color_space,
-                                    gboolean           interactive,
-                                    gboolean          *profile_loaded,
-                                    GError           **error);
+typedef struct _Jp2      Jp2;
+typedef struct _Jp2Class Jp2Class;
 
-static OPJ_COLOR_SPACE open_dialog (const gchar      *filename,
-                                    OPJ_CODEC_FORMAT  format,
-                                    gint              num_components,
-                                    GError          **error);
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Jp2
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
-  query, /* query proc */
-  run,   /* run_proc */
+  GimpPlugIn      parent_instance;
+};
+
+struct _Jp2Class
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define JP2_TYPE  (jp2_get_type ())
+#define JP2 (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JP2_TYPE, Jp2))
+
+GType                   jp2_get_type         (void) G_GNUC_CONST;
+
+static GList          * jp2_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * jp2_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * jp2_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static GimpImage      * load_image           (const gchar          *filename,
+                                              OPJ_CODEC_FORMAT      format,
+                                              OPJ_COLOR_SPACE       color_space,
+                                              gboolean              interactive,
+                                              gboolean             *profile_loaded,
+                                              GError              **error);
+
+static OPJ_COLOR_SPACE  open_dialog          (const gchar         *filename,
+                                              OPJ_CODEC_FORMAT     format,
+                                              gint                 num_components,
+                                              GError             **error);
+
+
+G_DEFINE_TYPE (Jp2, jp2, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (JP2_TYPE)
+
 
 static void
-query (void)
+jp2_class_init (Jp2Class *klass)
 {
-  static const GimpParamDef jp2_load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered" },
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef j2k_load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered" },
-    { GIMP_PDB_INT32,  "colorspace",   "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), xvYCC (5) }" },
-  };
-
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image" }
-  };
-
-  gimp_install_procedure (LOAD_JP2_PROC,
-                          "Loads JPEG 2000 images.",
-                          "The JPEG 2000 image loader.",
-                          "Mukund Sivaraman",
-                          "Mukund Sivaraman",
-                          "2009",
-                          N_("JPEG 2000 image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (jp2_load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          jp2_load_args, load_return_vals);
-  /*
-   * XXX: more complete magic number would be:
-   * "0,string,\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A"
-   * But the '\0' character makes problem in a 0-terminated string
-   * obviously, as well as some other space characters, it would seem.
-   * The below smaller version seems ok and not interfering with other
-   * formats.
-   */
-  gimp_register_magic_load_handler (LOAD_JP2_PROC,
-                                    "jp2",
-                                    "",
-                                   "3,string,\x0CjP");
-  gimp_register_file_handler_mime (LOAD_JP2_PROC, "image/jp2");
-
-  gimp_install_procedure (LOAD_J2K_PROC,
-                          "Loads JPEG 2000 codestream.",
-                          "Loads JPEG 2000 codestream. "
-                          "If the color space is set to UNKNOWN (0), "
-                          "we will try to guess, which is only possible "
-                          "for few spaces (such as grayscale). Most "
-                          "such calls will fail. You are rather "
-                          "expected to know the color space of your data.",
-                          "Jehan",
-                          "Jehan",
-                          "2009",
-                          N_("JPEG 2000 codestream"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (j2k_load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          j2k_load_args, load_return_vals);
-  gimp_register_magic_load_handler (LOAD_J2K_PROC,
-                                    "j2k,j2c,jpc",
-                                    "",
-                                    "0,string,\xff\x4f\xff\x51\x00");
-  gimp_register_file_handler_mime (LOAD_J2K_PROC, "image/x-jp2-codestream");
+  plug_in_class->query_procedures = jp2_query_procedures;
+  plug_in_class->create_procedure = jp2_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+jp2_init (Jp2 *jp2)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint               image_ID;
-  gboolean           profile_loaded = FALSE;
-  GError            *error = NULL;
+}
 
-  run_mode = param[0].data.d_int32;
+static GList *
+jp2_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_JP2_PROC));
+  list = g_list_append (list, g_strdup (LOAD_J2K_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+jp2_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_JP2_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           jp2_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("JPEG 2000 image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads JPEG 2000 images.",
+                                        "The JPEG 2000 image loader.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Mukund Sivaraman",
+                                      "Mukund Sivaraman",
+                                      "2009");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/jp2");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "jp2");
+
+      /* XXX: more complete magic number would be:
+       * "0,string,\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A"
+       * But the '\0' character makes problem in a 0-terminated string
+       * obviously, as well as some other space characters, it would
+       * seem. The below smaller version seems ok and not interfering
+       * with other formats.
+       */
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "3,string,\x0CjP");
+    }
+  else if (! strcmp (name, LOAD_J2K_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           jp2_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("JPEG 2000 codestream"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads JPEG 2000 codestream.",
+                                        "Loads JPEG 2000 codestream. "
+                                        "If the color space is set to "
+                                        "UNKNOWN (0), we will try to guess, "
+                                        "which is only possible for few "
+                                        "spaces (such as grayscale). Most "
+                                        "such calls will fail. You are rather "
+                                        "expected to know the color space of "
+                                        "your data.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Jehan",
+                                      "Jehan",
+                                      "2009");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-jp2-codestream");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "j2k,j2c,jpc");
+
+      GIMP_PROC_ARG_INT (procedure, "colorspace",
+                         "Color space",
+                         "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), "
+                         "CMYK (3), YCbCr (4), xvYCC (5) }",
+                         0, 5, 0,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+jp2_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray  *return_vals;
+  GimpImage       *image;
+  OPJ_COLOR_SPACE  color_space    = OPJ_CLRSPC_UNKNOWN;
+  gboolean         interactive;
+  GimpMetadata    *metadata;
+  gboolean         profile_loaded = FALSE;
+  GError          *error          = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (strcmp (name, LOAD_JP2_PROC) == 0 ||
-      strcmp (name, LOAD_J2K_PROC) == 0)
+  switch (run_mode)
     {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      interactive = TRUE;
+      break;
 
-      OPJ_COLOR_SPACE color_space = OPJ_CLRSPC_UNKNOWN;
-      gboolean        interactive;
-
-      switch (run_mode)
+    default:
+      if (! strcmp (gimp_procedure_get_name (procedure), LOAD_J2K_PROC))
         {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          interactive = TRUE;
-          break;
-
-        default:
-          if (strcmp (name, LOAD_J2K_PROC) == 0)
+          /* Order is not the same as OpenJPEG enum on purpose,
+           * since it's better to not rely on a given order or
+           * on enum values.
+           */
+          switch (GIMP_VALUES_GET_INT (args, 0))
             {
-              /* Order is not the same as OpenJPEG enum on purpose,
-               * since it's better to not rely on a given order or
-               * on enum values.
-               */
-              switch (param[3].data.d_int32)
-                {
-                case 1:
-                  color_space = OPJ_CLRSPC_GRAY;
-                  break;
-                case 2:
-                  color_space = OPJ_CLRSPC_SRGB;
-                  break;
-                case 3:
-                  color_space = OPJ_CLRSPC_CMYK;
-                  break;
-                case 4:
-                  color_space = OPJ_CLRSPC_SYCC;
-                  break;
-                case 5:
-                  color_space = OPJ_CLRSPC_EYCC;
-                  break;
-                default:
-                  /* Stays unknown. */
-                  break;
-                }
+            case 1:
+              color_space = OPJ_CLRSPC_GRAY;
+              break;
+            case 2:
+              color_space = OPJ_CLRSPC_SRGB;
+              break;
+            case 3:
+              color_space = OPJ_CLRSPC_CMYK;
+              break;
+            case 4:
+              color_space = OPJ_CLRSPC_SYCC;
+              break;
+            case 5:
+              color_space = OPJ_CLRSPC_EYCC;
+              break;
+            default:
+              break;
             }
-          interactive = FALSE;
-          break;
         }
+      interactive = FALSE;
+      break;
+    }
 
-      if (strcmp (name, LOAD_JP2_PROC) == 0)
-        {
-          image_ID = load_image (g_file_get_path (file), OPJ_CODEC_JP2,
-                                 color_space, interactive, &profile_loaded,
-                                 &error);
-        }
-      else /* strcmp (name, LOAD_J2K_PROC) == 0 */
-        {
-          image_ID = load_image (g_file_get_path (file), OPJ_CODEC_J2K,
-                                 color_space, interactive, &profile_loaded,
-                                 &error);
-        }
-
-      if (image_ID != -1)
-        {
-          GimpMetadata *metadata;
-
-          metadata = gimp_image_metadata_load_prepare (image_ID, "image/jp2",
-                                                       file, NULL);
-
-          if (metadata)
-            {
-              GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-              if (profile_loaded)
-                flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
-
-              gimp_image_metadata_load_finish (image_ID, "image/jp2",
-                                               metadata, flags,
-                                               interactive);
-
-              g_object_unref (metadata);
-            }
-
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else if (error)
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-      else
-        {
-          status = GIMP_PDB_CANCEL;
-        }
+  if (! strcmp (gimp_procedure_get_name (procedure), LOAD_JP2_PROC))
+    {
+      image = load_image (g_file_get_path (file), OPJ_CODEC_JP2,
+                          color_space, interactive, &profile_loaded,
+                          &error);
     }
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      image = load_image (g_file_get_path (file), OPJ_CODEC_J2K,
+                          color_space, interactive, &profile_loaded,
+                          &error);
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             error ?
+                                             GIMP_PDB_EXECUTION_ERROR :
+                                             GIMP_PDB_CANCEL,
+                                             error);
+
+  metadata = gimp_image_metadata_load_prepare (image, "image/jp2",
+                                               file, NULL);
+
+  if (metadata)
     {
-      *nreturn_vals = 2;
-      values[1].type           = GIMP_PDB_STRING;
-      values[1].data.d_string  = error->message;
+      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+      if (profile_loaded)
+        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+
+      gimp_image_metadata_load_finish (image, "image/jp2",
+                                       metadata, flags,
+                                       interactive);
+
+      g_object_unref (metadata);
     }
 
-  values[0].data.d_status = status;
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
 }
 
 static void
@@ -1034,7 +1048,7 @@ open_dialog (const gchar      *filename,
   return color_space;
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar       *filename,
             OPJ_CODEC_FORMAT   format,
             OPJ_COLOR_SPACE    color_space,
@@ -1042,13 +1056,13 @@ load_image (const gchar       *filename,
             gboolean          *profile_loaded,
             GError           **error)
 {
-  opj_stream_t      *stream;
-  opj_codec_t       *codec;
+  opj_stream_t      *stream     = NULL;
+  opj_codec_t       *codec      = NULL;
   opj_dparameters_t  parameters;
-  opj_image_t       *image;
-  GimpColorProfile  *profile;
-  gint32             image_ID;
-  gint32             layer_ID;
+  opj_image_t       *image      = NULL;
+  GimpColorProfile  *profile    = NULL;
+  GimpImage         *gimp_image = NULL;
+  GimpLayer         *layer;
   GimpImageType      image_type;
   GimpImageBaseType  base_type;
   gint               width;
@@ -1062,16 +1076,8 @@ load_image (const gchar       *filename,
   GimpPrecision      image_precision;
   gint               precision_actual, precision_scaled;
   gint               temp;
-  gboolean           linear;
-  unsigned char     *c;
-
-  stream   = NULL;
-  codec    = NULL;
-  image    = NULL;
-  profile  = NULL;
-  image_ID = -1;
-  linear   = FALSE;
-  c        = NULL;
+  gboolean           linear = FALSE;
+  unsigned char     *c      = NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -1277,26 +1283,26 @@ load_image (const gchar       *filename,
   precision_scaled = get_valid_precision (precision_actual);
   image_precision = get_image_precision (precision_scaled, linear);
 
-  image_ID = gimp_image_new_with_precision (width, height,
-                                            base_type, image_precision);
+  gimp_image = gimp_image_new_with_precision (width, height,
+                                              base_type, image_precision);
 
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (gimp_image, filename);
 
   if (profile)
-    gimp_image_set_color_profile (image_ID, profile);
+    gimp_image_set_color_profile (gimp_image, profile);
 
-  layer_ID = gimp_layer_new (image_ID,
-                             _("Background"),
-                             width, height,
-                             image_type,
-                             100,
-                             gimp_image_get_default_new_layer_mode (image_ID));
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+  layer = gimp_layer_new (gimp_image,
+                          _("Background"),
+                          width, height,
+                          image_type,
+                          100,
+                          gimp_image_get_default_new_layer_mode (gimp_image));
+  gimp_image_insert_layer (gimp_image, layer, NULL, 0);
 
-  file_format = gimp_drawable_get_format (layer_ID);
+  file_format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   pixels = g_new0 (guchar, width * bpp);
 
   for (i = 0; i < height; i++)
@@ -1339,5 +1345,5 @@ load_image (const gchar       *filename,
   if (stream)
     opj_stream_destroy (stream);
 
-  return image_ID;
+  return gimp_image;
 }
