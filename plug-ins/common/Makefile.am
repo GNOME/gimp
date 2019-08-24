@@ -1163,8 +1163,6 @@ file_wmf_LDADD = \
 	$(INTLLIBS)		\
 	$(file_wmf_RC)
 
-file_xbm_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_xbm_SOURCES = \
 	file-xbm.c
 

@@ -47,7 +47,7 @@
     'file-svg' => { ui => 1, gegl => 1, libs => 'SVG_LIBS', cflags => 'SVG_CFLAGS' },
     'file-tga' => { ui => 1, gegl => 1, old_api => 1 },
     'file-wmf' => { ui => 1, gegl => 1, optional => 1, libs => 'WMF_LIBS', cflags => 'WMF_CFLAGS' },
-    'file-xbm' => { ui => 1, gegl => 1, old_api => 1 },
+    'file-xbm' => { ui => 1, gegl => 1 },
     'file-xmc' => { ui => 1, gegl => 1, optional => 1, libs => 'XMC_LIBS' },
     'file-xpm' => { ui => 1, gegl => 1, optional => 1, libs => 'XPM_LIBS', old_api => 1 },
     'file-xwd' => {  ui => 1, gegl => 1, old_api => 1 },
