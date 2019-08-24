@@ -44,18 +44,18 @@
 #endif
 
 
-static gint32 ReadImage (FILE                 *fd,
-                         const gchar          *filename,
-                         gint                  width,
-                         gint                  height,
-                         guchar                cmap[256][3],
-                         gint                  ncols,
-                         gint                  bpp,
-                         gint                  compression,
-                         gint                  rowbytes,
-                         gboolean              gray,
-                         const BitmapChannel  *masks,
-                         GError              **error);
+static GimpImage * ReadImage (FILE                 *fd,
+                              const gchar          *filename,
+                              gint                  width,
+                              gint                  height,
+                              guchar                cmap[256][3],
+                              gint                  ncols,
+                              gint                  bpp,
+                              gint                  compression,
+                              gint                  rowbytes,
+                              gboolean              gray,
+                              const BitmapChannel  *masks,
+                              GError              **error);
 
 
 static void
@@ -200,7 +200,7 @@ ReadChannelMasks (guint32       *tmp,
   return TRUE;
 }
 
-gint32
+GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
@@ -211,7 +211,7 @@ load_image (const gchar  *filename,
   gint            ColormapSize, rowbytes, Maps;
   gboolean        gray = FALSE;
   guchar          ColorMap[256][3];
-  gint32          image_ID = -1;
+  GimpImage      *image = NULL;
   gchar           magick[2];
   BitmapChannel   masks[4];
 
@@ -588,21 +588,21 @@ load_image (const gchar  *filename,
 
   fseek (fd, bitmap_file_head.bfOffs, SEEK_SET);
 
-  /* Get the Image and return the ID or -1 on error*/
-  image_ID = ReadImage (fd,
-                        filename,
-                        bitmap_head.biWidth,
-                        ABS (bitmap_head.biHeight),
-                        ColorMap,
-                        bitmap_head.biClrUsed,
-                        bitmap_head.biBitCnt,
-                        bitmap_head.biCompr,
-                        rowbytes,
-                        gray,
-                        masks,
-                        error);
+  /* Get the Image and return the image or NULL on error*/
+  image = ReadImage (fd,
+                     filename,
+                     bitmap_head.biWidth,
+                     ABS (bitmap_head.biHeight),
+                     ColorMap,
+                     bitmap_head.biClrUsed,
+                     bitmap_head.biBitCnt,
+                     bitmap_head.biCompr,
+                     rowbytes,
+                     gray,
+                     masks,
+                     error);
 
-  if (image_ID < 0)
+  if (! image)
     goto out;
 
   if (bitmap_head.biXPels > 0 &&
@@ -621,20 +621,20 @@ load_image (const gchar  *filename,
       xresolution = bitmap_head.biXPels * 0.0254;
       yresolution = bitmap_head.biYPels * 0.0254;
 
-      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+      gimp_image_set_resolution (image, xresolution, yresolution);
     }
 
   if (bitmap_head.biHeight < 0)
-    gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
+    gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
 
 out:
   if (fd)
     fclose (fd);
 
-  return image_ID;
+  return image;
 }
 
-static gint32
+static GimpImage *
 ReadImage (FILE                 *fd,
            const gchar          *filename,
            gint                  width,
@@ -651,8 +651,8 @@ ReadImage (FILE                 *fd,
   guchar             v, n;
   gint               xpos = 0;
   gint               ypos = 0;
-  gint32             image;
-  gint32             layer;
+  GimpImage         *image;
+  GimpLayer         *layer;
   GeglBuffer        *buffer;
   guchar            *dest, *temp, *row_buf;
   guchar             gimp_cmap[768];
@@ -673,7 +673,7 @@ ReadImage (FILE                 *fd,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s",
                    _("Unrecognized or invalid BMP compression format."));
-      return -1;
+      return NULL;
     }
 
   /* Make a new image in GIMP */
@@ -715,19 +715,19 @@ ReadImage (FILE                 *fd,
 
     default:
       g_message (_("Unsupported or invalid bitdepth."));
-      return -1;
+      return NULL;
     }
 
   if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
-      return -1;
+      return NULL;
     }
 
   if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
-      return -1;
+      return NULL;
     }
 
   image = gimp_image_new (width, height, base_type);
@@ -738,7 +738,7 @@ ReadImage (FILE                 *fd,
 
   gimp_image_set_filename (image, filename);
 
-  gimp_image_insert_layer (image, layer, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
   /* use g_malloc0 to initialize the dest buffer so that unspecified
      pixels in RLE bitmaps show up as the zeroth element in the palette.
@@ -1005,7 +1005,7 @@ ReadImage (FILE                 *fd,
         gimp_cmap[j++] = cmap[i][2];
       }
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                    NULL, dest, GEGL_AUTO_ROWSTRIDE);

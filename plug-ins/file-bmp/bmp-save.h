@@ -20,11 +20,11 @@
 #define __BMP_SAVE_H__
 
 
-GimpPDBStatusType   save_image (const gchar  *filename,
-                                gint32        image,
-                                gint32        drawable_ID,
-                                GimpRunMode   run_mode,
-                                GError      **error);
+GimpPDBStatusType   save_image (const gchar   *filename,
+                                GimpImage     *image,
+                                GimpDrawable  *drawable,
+                                GimpRunMode    run_mode,
+                                GError       **error);
 
 
 #endif /* __BMP_SAVE_H__ */

@@ -20,8 +20,8 @@
 #define __BMP_LOAD_H__
 
 
-gint32   load_image (const gchar  *filename,
-                     GError      **error);
+GimpImage * load_image (const gchar  *filename,
+                        GError      **error);
 
 
 #endif /* __BMP_LOAD_H__ */

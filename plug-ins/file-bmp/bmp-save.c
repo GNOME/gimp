@@ -124,11 +124,11 @@ warning_dialog (const gchar *primary,
 }
 
 GimpPDBStatusType
-save_image (const gchar  *filename,
-            gint32        image,
-            gint32        drawable_ID,
-            GimpRunMode   run_mode,
-            GError      **error)
+save_image (const gchar   *filename,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GimpRunMode    run_mode,
+            GError       **error)
 {
   FILE           *outfile;
   BitmapFileHead  bitmap_file_head;
@@ -151,11 +151,11 @@ save_image (const gchar  *filename,
   gint            color_space_size;
   guint32         Mask[4];
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
-  drawable_type   = gimp_drawable_type   (drawable_ID);
-  drawable_width  = gimp_drawable_width  (drawable_ID);
-  drawable_height = gimp_drawable_height (drawable_ID);
+  drawable_type   = gimp_drawable_type   (drawable);
+  drawable_width  = gimp_drawable_width  (drawable);
+  drawable_height = gimp_drawable_height (drawable);
 
   switch (drawable_type)
     {
@@ -220,7 +220,7 @@ save_image (const gchar  *filename,
      /* fallthrough */
 
     case GIMP_INDEXED_IMAGE:
-      format   = gimp_drawable_get_format (drawable_ID);
+      format   = gimp_drawable_get_format (drawable);
       cmap     = gimp_image_get_colormap (image, &colors);
       MapSize  = 4 * colors;
 
