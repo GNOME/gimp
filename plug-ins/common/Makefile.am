@@ -888,8 +888,6 @@ file_pat_LDADD = \
 	$(INTLLIBS)		\
 	$(file_pat_RC)
 
-file_pcx_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_pcx_SOURCES = \
 	file-pcx.c
 

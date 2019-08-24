@@ -38,256 +38,265 @@
 #define PLUG_IN_ROLE   "gimp-file-pcx"
 
 
-/* Declare local functions.  */
+typedef struct _Pcx      Pcx;
+typedef struct _PcxClass PcxClass;
 
-static void   query            (void);
-static void   run              (const gchar      *name,
-                                gint              nparams,
-                                const GimpParam  *param,
-                                gint             *nreturn_vals,
-                                GimpParam       **return_vals);
-
-static gint32 load_image       (const gchar      *filename,
-                                GError          **error);
-
-static void   load_1           (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                guchar           *buf,
-                                guint16           bytes);
-static void   load_4           (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                guchar           *buf,
-                                guint16           bytes);
-static void   load_sub_8       (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                gint              bpp,
-                                gint              plane,
-                                guchar           *buf,
-                                guint16           bytes);
-static void   load_8           (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                guchar           *buf,
-                                guint16           bytes);
-static void   load_24          (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                guchar           *buf,
-                                guint16           bytes);
-static void   readline         (FILE             *fp,
-                                guchar           *buf,
-                                gint              bytes);
-
-static gint   save_image       (const gchar      *filename,
-                                gint32            image,
-                                gint32            layer,
-                                GError          **error);
-static void   save_less_than_8 (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                const gint        bpp,
-                                const guchar     *buf,
-                                gboolean          padding);
-static void   save_8           (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                const guchar     *buf,
-                                gboolean          padding);
-static void   save_24          (FILE             *fp,
-                                gint              width,
-                                gint              height,
-                                const guchar     *buf,
-                                gboolean          padding);
-static void   writeline        (FILE             *fp,
-                                const guchar     *buf,
-                                gint              bytes);
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Pcx
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
 };
 
-MAIN ()
+struct _PcxClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define PCX_TYPE  (pcx_get_type ())
+#define PCX (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PCX_TYPE, Pcx))
+
+GType                   pcx_get_type         (void) G_GNUC_CONST;
+
+static GList          * pcx_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * pcx_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * pcx_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+static GimpValueArray * pcx_save             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static GimpImage      * load_image           (const gchar          *filename,
+                                              GError              **error);
+
+static void             load_1               (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              guchar               *buf,
+                                              guint16               bytes);
+static void             load_4               (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              guchar               *buf,
+                                              guint16               bytes);
+static void             load_sub_8           (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  bpp,
+                                              gint                  plane,
+                                              guchar               *buf,
+                                              guint16               bytes);
+static void             load_8               (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              guchar               *buf,
+                                              guint16               bytes);
+static void             load_24              (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              guchar               *buf,
+                                              guint16               bytes);
+static void             readline             (FILE                 *fp,
+                                              guchar               *buf,
+                                              gint                  bytes);
+
+static gboolean         save_image           (const gchar          *filename,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
+                                              GError              **error);
+static void             save_less_than_8     (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              const gint            bpp,
+                                              const guchar         *buf,
+                                              gboolean              padding);
+static void             save_8               (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              const guchar         *buf,
+                                              gboolean              padding);
+static void             save_24              (FILE                 *fp,
+                                              gint                  width,
+                                              gint                  height,
+                                              const guchar         *buf,
+                                              gboolean              padding);
+static void             writeline            (FILE                 *fp,
+                                              const guchar         *buf,
+                                              gint                  bytes);
+
+
+G_DEFINE_TYPE (Pcx, pcx, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (PCX_TYPE)
+
 
 static void
-query (void)
+pcx_class_init (PcxClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name entered"             }
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "Loads files in Zsoft PCX file format",
-                          "FIXME: write help for pcx_load",
-                          "Francisco Bustamante & Nick Lamb",
-                          "Nick Lamb <njl195@zepler.org.uk>",
-                          "January 1997",
-                          N_("ZSoft PCX image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-pcx");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "pcx,pcc",
-                                    "",
-                                    "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
-
-  gimp_install_procedure (SAVE_PROC,
-                          "Exports files in ZSoft PCX file format",
-                          "FIXME: write help for pcx_save",
-                          "Francisco Bustamante & Nick Lamb",
-                          "Nick Lamb <njl195@zepler.org.uk>",
-                          "January 1997",
-                          N_("ZSoft PCX image"),
-                          "INDEXED, RGB, GRAY",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-pcx");
-  gimp_register_save_handler (SAVE_PROC, "pcx,pcc", "");
+  plug_in_class->query_procedures = pcx_query_procedures;
+  plug_in_class->create_procedure = pcx_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+pcx_init (Pcx *pcx)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
-  gint32             drawable_ID;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error  = NULL;
+}
+
+static GList *
+pcx_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (SAVE_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+pcx_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           pcx_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("ZSoft PCX image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files in Zsoft PCX file format",
+                                        "FIXME: write help for pcx_load",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Francisco Bustamante & Nick Lamb",
+                                      "Nick Lamb <njl195@zepler.org.uk>",
+                                      "January 1997");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-pcx");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "pcx,pcc");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
+    }
+  else if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           pcx_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "INDEXED, RGB, GRAY");
+
+      gimp_procedure_set_menu_label (procedure, N_("ZSoft PCX image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Exports files in ZSoft PCX file format",
+                                        "FIXME: write help for pcx_save",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Francisco Bustamante & Nick Lamb",
+                                      "Nick Lamb <njl195@zepler.org.uk>",
+                                      "January 1997");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-pcx");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "pcx,pcc");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+pcx_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  image = load_image (g_file_get_path (file), &error);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+pcx_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  switch (run_mode)
     {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      image_ID = load_image (g_file_get_path (file), &error);
+      export = gimp_export_image (&image, &drawable, "PCX",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-          values[1].type = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-    }
-  else if (strcmp (name, SAVE_PROC) == 0)
-    {
-      GFile *file = g_file_new_for_uri (param[3].data.d_string);
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
 
-      image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
-
-      /*  eventually export the image */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-          export = gimp_export_image (&image_ID, &drawable_ID, "PCX",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
-
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-        default:
-          break;
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          if (nparams != 5)
-            status = GIMP_PDB_CALLING_ERROR;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          break;
-
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          if (! save_image (g_file_get_path (file),
-                            image_ID, drawable_ID,
-                            &error))
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
+    default:
+      break;
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
+  if (! save_image (g_file_get_path (file),
+                    image, drawable,
+                    &error))
     {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  values[0].data.d_status = status;
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static struct
@@ -359,7 +368,7 @@ pcx_header_to_buffer (guint8 *buf)
     }
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
@@ -368,7 +377,8 @@ load_image (const gchar  *filename,
   guint16       offset_x, offset_y, bytesperline;
   gint32        width, height;
   guint16       resolution_x, resolution_y;
-  gint32        image, layer;
+  GimpImage    *image;
+  GimpLayer    *layer;
   guchar       *dest, cmap[768];
   guint8        header_buf[128];
 
@@ -382,7 +392,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   if (fread (header_buf, 128, 1, fd) == 0)
@@ -391,7 +401,7 @@ load_image (const gchar  *filename,
                    _("Could not read header from '%s'"),
                    gimp_filename_to_utf8 (filename));
       fclose (fd);
-      return -1;
+      return NULL;
     }
 
   pcx_header_from_buffer (header_buf);
@@ -402,7 +412,7 @@ load_image (const gchar  *filename,
                    _("'%s' is not a PCX file"),
                    gimp_filename_to_utf8 (filename));
       fclose (fd);
-      return -1;
+      return NULL;
     }
 
   offset_x     = GUINT16_FROM_LE (pcx_header.x1);
@@ -417,19 +427,19 @@ load_image (const gchar  *filename,
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
       fclose (fd);
-      return -1;
+      return NULL;
     }
   if ((height <= 0) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
       fclose (fd);
-      return -1;
+      return NULL;
     }
   if (bytesperline < ((width * pcx_header.bpp + 7) / 8))
     {
       g_message (_("Invalid number of bytes per line in PCX header"));
       fclose (fd);
-      return -1;
+      return NULL;
     }
   if ((resolution_x < 1) || (resolution_x > GIMP_MAX_RESOLUTION) ||
       (resolution_y < 1) || (resolution_y > GIMP_MAX_RESOLUTION))
@@ -444,33 +454,33 @@ load_image (const gchar  *filename,
     {
       g_message (_("Image dimensions too large: width %d x height %d"), width, height);
       fclose (fd);
-      return -1;
+      return NULL;
     }
 
   if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
-      image= gimp_image_new (width, height, GIMP_RGB);
-      layer= gimp_layer_new (image, _("Background"), width, height,
-                             GIMP_RGB_IMAGE,
-                             100,
-                             gimp_image_get_default_new_layer_mode (image));
+      image = gimp_image_new (width, height, GIMP_RGB);
+      layer = gimp_layer_new (image, _("Background"), width, height,
+                              GIMP_RGB_IMAGE,
+                              100,
+                              gimp_image_get_default_new_layer_mode (image));
     }
   else
     {
-      image= gimp_image_new (width, height, GIMP_INDEXED);
-      layer= gimp_layer_new (image, _("Background"), width, height,
-                             GIMP_INDEXED_IMAGE,
-                             100,
-                             gimp_image_get_default_new_layer_mode (image));
+      image = gimp_image_new (width, height, GIMP_INDEXED);
+      layer = gimp_layer_new (image, _("Background"), width, height,
+                              GIMP_INDEXED_IMAGE,
+                              100,
+                              gimp_image_get_default_new_layer_mode (image));
     }
 
   gimp_image_set_filename (image, filename);
   gimp_image_set_resolution (image, resolution_x, resolution_y);
 
-  gimp_image_insert_layer (image, layer, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
   gimp_layer_set_offsets (layer, offset_x, offset_y);
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
@@ -549,7 +559,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("Unusual PCX flavour, giving up"));
       fclose (fd);
-      return -1;
+      return NULL;
     }
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
@@ -736,11 +746,11 @@ readline (FILE   *fp,
     }
 }
 
-static gint
-save_image (const gchar  *filename,
-            gint32        image,
-            gint32        layer,
-            GError      **error)
+static gboolean
+save_image (const gchar   *filename,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GError       **error)
 {
   FILE          *fp;
   GeglBuffer    *buffer;
@@ -755,10 +765,10 @@ save_image (const gchar  *filename,
   guint8         header_buf[128];
   gboolean       padding = FALSE;
 
-  drawable_type = gimp_drawable_type (layer);
-  gimp_drawable_offsets (layer, &offset_x, &offset_y);
+  drawable_type = gimp_drawable_type (drawable);
+  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -767,8 +777,8 @@ save_image (const gchar  *filename,
                              gimp_filename_to_utf8 (filename));
 
   pcx_header.manufacturer = 0x0a;
-  pcx_header.version = 5;
-  pcx_header.compression = 1;
+  pcx_header.version      = 5;
+  pcx_header.compression  = 1;
 
   switch (drawable_type)
     {
