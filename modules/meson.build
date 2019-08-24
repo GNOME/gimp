@@ -87,7 +87,7 @@ foreach module : modules
   library(name,
     srcs,
     include_directories: rootInclude,
-    dependencies: modules_deps + deps,
+    dependencies: modules_deps + [ deps ],
     link_with: link,
     install: true,
     install_dir: gimpplugindir / 'modules',
