@@ -810,8 +810,6 @@ file_heif_LDADD = \
 	$(INTLLIBS)		\
 	$(file_heif_RC)
 
-file_html_table_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_html_table_SOURCES = \
 	file-html-table.c
 

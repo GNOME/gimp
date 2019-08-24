@@ -80,33 +80,58 @@ typedef struct
 } GTMValues;
 
 
-/* Declare some local functions */
+typedef struct _Html      Html;
+typedef struct _HtmlClass HtmlClass;
 
-static void     query                    (void);
-static void     run                      (const gchar      *name,
-                                          gint              nparams,
-                                          const GimpParam  *param,
-                                          gint             *nreturn_vals,
-                                          GimpParam       **return_vals);
+struct _Html
+{
+  GimpPlugIn      parent_instance;
+};
 
-static gboolean save_image               (GFile            *file,
-                                          GeglBuffer       *buffer,
-                                          GError          **error);
-static gboolean save_dialog              (gint32            image_ID);
-
-static gboolean print                    (GOutputStream    *output,
-                                          GError          **error,
-                                          const gchar      *format,
-                                          ...) G_GNUC_PRINTF (3, 0);
-static gboolean color_comp               (guchar           *buffer,
-                                          guchar           *buf2);
-static void     entry_changed_callback   (GtkEntry         *entry,
-                                          gchar            *string);
+struct _HtmlClass
+{
+  GimpPlugInClass parent_class;
+};
 
 
-/* Variables */
+#define HTML_TYPE  (html_get_type ())
+#define HTML (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HTML_TYPE, Html))
 
-static GTMValues gtmvals =
+GType                   html_get_type          (void) G_GNUC_CONST;
+
+static GList          * html_query_procedures  (GimpPlugIn           *plug_in);
+static GimpProcedure  * html_create_procedure  (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
+
+static GimpValueArray * html_save              (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
+                                                GFile                *file,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+
+static gboolean         save_image             (GFile                *file,
+                                                GeglBuffer           *buffer,
+                                                GError              **error);
+static gboolean         save_dialog            (GimpImage            *image);
+
+static gboolean         print                  (GOutputStream        *output,
+                                                GError              **error,
+                                                const gchar          *format,
+                                                ...) G_GNUC_PRINTF (3, 0);
+static gboolean         color_comp             (guchar               *buffer,
+                                                guchar               *buf2);
+static void             entry_changed_callback (GtkEntry             *entry,
+                                                gchar                *string);
+
+
+G_DEFINE_TYPE (Html, html, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (HTML_TYPE)
+
+
+  static GTMValues gtmvals =
 {
   "Made with GIMP Table Magic",  /* caption text */
   "&nbsp;",  /* cellcontent text */
@@ -121,97 +146,101 @@ static GTMValues gtmvals =
   0          /* cellspacing */
 };
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
-
-MAIN ()
 
 static void
-query (void)
+html_class_init (HtmlClass *klass)
 {
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (SAVE_PROC,
-                          "GIMP Table Magic",
-                          "Allows you to draw an HTML table in GIMP. See help for more info.",
-                          "Daniel Dunbar",
-                          "Daniel Dunbar",
-                          "1998",
-                          _("HTML table"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "text/html");
-  gimp_register_file_handler_remote (SAVE_PROC);
-  gimp_register_save_handler (SAVE_PROC, "html,htm", "");
+  plug_in_class->query_procedures = html_query_procedures;
+  plug_in_class->create_procedure = html_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+html_init (Html *html)
 {
-  static GimpParam   values[2];
+}
+
+static GList *
+html_query_procedures (GimpPlugIn *plug_in)
+{
+  return  g_list_append (NULL, g_strdup (SAVE_PROC));
+}
+
+static GimpProcedure *
+html_create_procedure (GimpPlugIn  *plug_in,
+                       const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           html_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("HTML table"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "GIMP Table Magic",
+                                        "Allows you to draw an HTML table "
+                                        "in GIMP. See help for more info.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Daniel Dunbar",
+                                      "Daniel Dunbar",
+                                      "1998");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "text/html");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "html,htm");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+html_save (GimpProcedure        *procedure,
+           GimpRunMode           run_mode,
+           GimpImage            *image,
+           GimpDrawable         *drawable,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
+{
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GeglBuffer        *buffer;
   GError            *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
   gimp_get_data (SAVE_PROC, &gtmvals);
 
-  if (save_dialog (param[1].data.d_int32))
+  if (! save_dialog (image))
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
+
+  buffer = gimp_drawable_get_buffer (drawable);
+
+  if (save_image (file, buffer,
+                  &error))
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (param[2].data.d_int32);
-
-      if (save_image (g_file_new_for_uri (param[3].data.d_string),
-                      buffer, &error))
-        {
-          gimp_set_data (SAVE_PROC, &gtmvals, sizeof (GTMValues));
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-
-      g_object_unref (buffer);
+      gimp_set_data (SAVE_PROC, &gtmvals, sizeof (GTMValues));
     }
   else
     {
-      status = GIMP_PDB_CANCEL;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
+  g_object_unref (buffer);
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
@@ -454,7 +483,7 @@ save_image (GFile       *file,
 }
 
 static gint
-save_dialog (gint32 image_ID)
+save_dialog (GimpImage *image)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -476,7 +505,7 @@ save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
 
-  if (gimp_image_width (image_ID) * gimp_image_height (image_ID) > 4096)
+  if (gimp_image_width (image) * gimp_image_height (image) > 4096)
     {
       GtkWidget *eek;
       GtkWidget *label;
