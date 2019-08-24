@@ -7,7 +7,7 @@
   <bookinfo>
     <title>GIMP 3 Widgets Library Reference Manual</title>
     <releaseinfo>
-      for GIMP <xi:include href="version" parse="text"/>
+      for GIMP <xi:include href="../version" parse="text"/>
     </releaseinfo>
   </bookinfo>
 
@@ -61,7 +61,7 @@
     <xi:include href="xml/gimpunitcombobox.xml" />
     <xi:include href="xml/gimpzoommodel.xml" />
   </part>
-  
+
   <part id="libgimpwidgets-cell-renderers">
     <title>Cell Renderers for GtkTreeView</title>
     <xi:include href="xml/gimpcellrenderercolor.xml" />
