@@ -277,7 +277,6 @@ gboolean   gimp_register_save_handler          (const gchar *procedure_name,
                                                 const gchar *prefixes);
 gboolean   gimp_register_file_handler_mime     (const gchar *procedure_name,
                                                 const gchar *mime_types);
-gboolean   gimp_register_file_handler_remote   (const gchar *procedure_name);
 
 
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */

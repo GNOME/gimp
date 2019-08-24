@@ -469,28 +469,6 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
   return _gimp_register_file_handler_mime (procedure_name, mime_types);
 }
 
-/**
- * gimp_register_file_handler_remote:
- * @procedure_name: The name of the procedure to enable remote URIs for.
- *
- * Registers a file handler procedure as capable of handling remote URIs.
- *
- * Registers a file handler procedure as capable of handling URIs. This
- * allows GIMP to call the procedure directly for all kinds of URIs,
- * note only local file:// URIs.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.10
- **/
-gboolean
-gimp_register_file_handler_remote (const gchar *procedure_name)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_register_file_handler_remote (procedure_name);
-}
-
 
 /*  private functions  */
 
