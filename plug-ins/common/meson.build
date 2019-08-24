@@ -33,7 +33,7 @@ common_plugins_list = [
   { 'name': 'file-gif-load',
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo, ],
   },
-  { 'name': 'file-gif-save',      'cflags': [ '-DGIMP_DEPRECATED_REPLACE_NEW_API', ], },
+  { 'name': 'file-gif-save', },
   { 'name': 'file-gih', },
   { 'name': 'file-glob',
     'deps': [ gtk3, gegl, gdk_pixbuf, cairo,  ],
