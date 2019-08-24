@@ -1218,35 +1218,56 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
       GHashTableIter iter;
       gpointer       key, value;
 
-      g_hash_table_iter_init (&iter, plug_in->priv->displays);
-      while (g_hash_table_iter_next (&iter, &key, &value))
+      if (plug_in->priv->displays)
         {
-          GObject *object = value;
+          g_hash_table_iter_init (&iter, plug_in->priv->displays);
+          while (g_hash_table_iter_next (&iter, &key, &value))
+            {
+              GObject *object = value;
 
-          if (object->ref_count == 1)
-            g_hash_table_iter_remove (&iter);
+              if (object->ref_count == 1)
+                g_hash_table_iter_remove (&iter);
+            }
         }
 
-      g_hash_table_iter_init (&iter, plug_in->priv->images);
-      while (g_hash_table_iter_next (&iter, &key, &value))
+      if (plug_in->priv->images)
         {
-          GObject *object = value;
+          g_hash_table_iter_init (&iter, plug_in->priv->images);
+          while (g_hash_table_iter_next (&iter, &key, &value))
+            {
+              GObject *object = value;
 
-          if (object->ref_count == 1)
-            g_hash_table_iter_remove (&iter);
+              if (object->ref_count == 1)
+                g_hash_table_iter_remove (&iter);
+            }
         }
 
-      g_hash_table_iter_init (&iter, plug_in->priv->items);
-      while (g_hash_table_iter_next (&iter, &key, &value))
+      if (plug_in->priv->items)
         {
-          GObject *object = value;
+          g_hash_table_iter_init (&iter, plug_in->priv->items);
+          while (g_hash_table_iter_next (&iter, &key, &value))
+            {
+              GObject *object = value;
 
-          if (object->ref_count == 1)
-            g_hash_table_iter_remove (&iter);
+              if (object->ref_count == 1)
+                g_hash_table_iter_remove (&iter);
+            }
         }
     }
   else
     {
+#if 0
+      g_printerr ("remaining displays: %d\n"
+                  "remaining images:   %d\n"
+                  "remaining items;    %d\n",
+                  plug_in->priv->displays ?
+                  g_hash_table_size (plug_in->priv->displays) : -1,
+                  plug_in->priv->images ?
+                  g_hash_table_size (plug_in->priv->images) : -1,
+                  plug_in->priv->items ?
+                  g_hash_table_size (plug_in->priv->items) : -1);
+#endif
+
       gimp_plug_in_destroy_proxies (plug_in);
     }
 }
