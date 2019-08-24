@@ -10,8 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-09 12:07+0000\n"
-"PO-Revision-Date: 2019-03-17 16:19+0100\n"
+"POT-Creation-Date: 2019-06-19 17:43+0000\n"
+"PO-Revision-Date: 2019-07-21 11:54+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -21,8 +22,7 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Project-Style: gnome\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
@@ -455,7 +455,7 @@ msgstr "Oddaljenost padle sence _Y"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
 msgid "Spyro Layer"
-msgstr ""
+msgstr "Spiro-plast"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
 msgid "Circle"
@@ -463,7 +463,7 @@ msgstr "Krog"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
 msgid "Polygon-Star"
-msgstr ""
+msgstr "Mnogokotna zvezda"
 
 #. Sine wave on a circle ring.
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
@@ -482,7 +482,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
 msgid "Frame"
-msgstr ""
+msgstr "Okvir"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
 msgid "Selection"
@@ -548,7 +548,6 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
-#, fuzzy
 msgid "Long Gradient"
 msgstr "Dolgi preliv"
 
@@ -667,7 +666,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin (px)"
-msgstr ""
+msgstr "Rob (sl. t.)"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin from edge of selection."
