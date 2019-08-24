@@ -1061,8 +1061,6 @@ file_psp_LDADD = \
 	$(INTLLIBS)		\
 	$(file_psp_RC)
 
-file_raw_data_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_raw_data_SOURCES = \
 	file-raw-data.c
 
