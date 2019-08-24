@@ -1026,8 +1026,6 @@ file_ps_LDADD = \
 	$(INTLLIBS)		\
 	$(file_ps_RC)
 
-file_psp_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_psp_SOURCES = \
 	file-psp.c
 
