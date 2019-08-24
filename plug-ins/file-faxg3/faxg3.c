@@ -51,117 +51,133 @@
 #define LOAD_PROC "file-faxg3-load"
 #define VERSION   "0.6"
 
-/* Declare local functions.
- */
 
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+typedef struct _Faxg3      Faxg3;
+typedef struct _Faxg3Class Faxg3Class;
 
-static gint32 load_image (const gchar      *filename,
-                          GError          **error);
-
-static gint32 emitgimp   (gint              hcol,
-                          gint              row,
-                          const gchar      *bitmap,
-                          gint              bperrow,
-                          const gchar      *filename);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Faxg3
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
 };
 
-MAIN ()
-
-void
-query (void)
+struct _Faxg3Class
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name of the file to load" },
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" },
-  };
+  GimpPlugInClass parent_class;
+};
 
-  gimp_install_procedure (LOAD_PROC,
-                          "loads g3 fax files",
-                          "This plug-in loads Fax G3 Image files.",
-                          "Jochen Friedrich",
-                          "Jochen Friedrich, Gert Doering, Spencer Kimball & Peter Mattis",
-                          VERSION,
-                          N_("G3 fax image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
 
-  gimp_register_file_handler_mime (LOAD_PROC, "image/g3-fax");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "g3",
-                                    "",
-                                    "4,string,Research");
+#define FAXG3_TYPE  (faxg3_get_type ())
+#define FAXG3 (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FAXG3_TYPE, Faxg3))
+
+GType                   faxg3_get_type         (void) G_GNUC_CONST;
+
+static GList          * faxg3_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * faxg3_create_procedure (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
+
+static GimpValueArray * faxg3_load             (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GFile                *file,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+
+static GimpImage      * load_image             (const gchar          *filename,
+                                                GError              **error);
+
+static GimpImage      *  emitgimp              (gint                  hcol,
+                                                gint                  row,
+                                                const gchar          *bitmap,
+                                                gint                  bperrow,
+                                                const gchar          *filename);
+
+
+G_DEFINE_TYPE (Faxg3, faxg3, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (FAXG3_TYPE)
+
+
+static void
+faxg3_class_init (Faxg3Class *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = faxg3_query_procedures;
+  plug_in_class->create_procedure = faxg3_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+faxg3_init (Faxg3 *faxg3)
 {
-  static GimpParam  values[2];
-  gint32            image_ID;
-  GError           *error = NULL;
+}
+
+static GList *
+faxg3_query_procedures (GimpPlugIn *plug_in)
+{
+  return  g_list_append (NULL, g_strdup (LOAD_PROC));
+}
+
+static GimpProcedure *
+faxg3_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           faxg3_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("G3 fax image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads g3 fax files",
+                                        "This plug-in loads Fax G3 Image files.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Jochen Friedrich",
+                                      "Jochen Friedrich, Gert Doering, "
+                                      "Spencer Kimball & Peter Mattis",
+                                      NULL);
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/g3-fax");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "g3");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "4,string,Research");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+faxg3_load (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GFile                *file,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  image = load_image (g_file_get_path (file), &error);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  if (strcmp (name, LOAD_PROC) == 0)
-    {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-      image_ID = load_image (g_file_get_path (file), &error);
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
-
-          values[0].data.d_status = GIMP_PDB_SUCCESS;
-          values[1].type          = GIMP_PDB_IMAGE;
-          values[1].data.d_image  = image_ID;
-        }
-      else
-        {
-          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-          if (error)
-            {
-              *nreturn_vals = 2;
-
-              values[1].type          = GIMP_PDB_STRING;
-              values[1].data.d_string = error->message;
-            }
-        }
-    }
+  return return_vals;
 }
 
 #ifdef DEBUG
@@ -196,7 +212,7 @@ static  int  rs;                /* read buffer size */
 #define MAX_COLS 1728           /* !! FIXME - command line parameter */
 
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
@@ -209,7 +225,7 @@ load_image (const gchar  *filename,
   int             i, rr, rsize;
   int             cons_eol;
 
-  gint32          image_id;
+  GimpImage      *image;
   gint            bperrow = MAX_COLS/8;  /* bytes per bit row */
   gchar          *bitmap;                /* MAX_ROWS by (bperrow) bytes */
   gchar          *bp;                    /* bitmap pointer */
@@ -235,7 +251,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   hibit = 0;
@@ -484,11 +500,11 @@ load_image (const gchar  *filename,
   g_printerr ("consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol);
 #endif
 
-  image_id = emitgimp (hcol, row, bitmap, bperrow, filename);
+  image = emitgimp (hcol, row, bitmap, bperrow, filename);
 
   g_free (bitmap);
 
-  return image_id;
+  return image;
 }
 
 /* hcol is the number of columns, row the number of rows
@@ -497,7 +513,7 @@ load_image (const gchar  *filename,
  * than 1728 pixels wide]
  */
 
-static gint32
+static GimpImage *
 emitgimp (gint         hcol,
           gint         row,
           const gchar *bitmap,
@@ -505,8 +521,8 @@ emitgimp (gint         hcol,
           const gchar *filename)
 {
   GeglBuffer *buffer;
-  gint32      image_ID;
-  gint32      layer_ID;
+  GimpImage  *image;
+  GimpLayer  *layer;
   guchar     *buf;
   guchar      tmp;
   gint        x, y;
@@ -521,18 +537,18 @@ emitgimp (gint         hcol,
   g_printerr ("emit gimp: %d x %d\n", hcol, row);
 #endif
 
-  image_ID = gimp_image_new (hcol, row, GIMP_GRAY);
-  gimp_image_set_filename (image_ID, filename);
+  image = gimp_image_new (hcol, row, GIMP_GRAY);
+  gimp_image_set_filename (image, filename);
 
-  layer_ID = gimp_layer_new (image_ID, _("Background"),
-                             hcol,
-                             row,
-                             GIMP_GRAY_IMAGE,
-                             100,
-                             gimp_image_get_default_new_layer_mode (image_ID));
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+  layer = gimp_layer_new (image, _("Background"),
+                          hcol,
+                          row,
+                          GIMP_GRAY_IMAGE,
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   tile_height = gimp_tile_height ();
 #ifdef DEBUG
@@ -586,5 +602,5 @@ emitgimp (gint         hcol,
 
   g_object_unref (buffer);
 
-  return image_ID;
+  return image;
 }

@@ -29,7 +29,6 @@ file_faxg3_SOURCES = \
 	g3.h
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)		\
 	$(CAIRO_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)	\
