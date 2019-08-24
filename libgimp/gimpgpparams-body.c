@@ -681,7 +681,7 @@ _gimp_value_to_gp_param (const GValue *value,
           gint     id     = -1;
 
           if (object)
-            g_object_get (object, "id", id, NULL);
+            g_object_get (object, "id", &id, NULL);
 
           param->param_type = GP_PARAM_TYPE_INT;
 
