@@ -111,7 +111,6 @@ export_merge (GimpImage     *image,
 
       if (merged != NULL)
         {
-          g_clear_object (drawable);
           *drawable = GIMP_DRAWABLE (merged);
         }
       else
