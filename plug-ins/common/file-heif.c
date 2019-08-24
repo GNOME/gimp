@@ -41,281 +41,292 @@ struct _SaveParams
 };
 
 
-/*  local function prototypes  */
+typedef struct _Heif      Heif;
+typedef struct _HeifClass HeifClass;
 
-static void       query          (void);
-static void       run            (const gchar          *name,
-                                  gint                  nparams,
-                                  const GimpParam      *param,
-                                  gint                 *nreturn_vals,
-                                  GimpParam           **return_vals);
-
-static gint32     load_image     (GFile               *file,
-                                  gboolean             interactive,
-                                  GError              **error);
-static gboolean   save_image     (GFile                *file,
-                                  gint32                image_ID,
-                                  gint32                drawable_ID,
-                                  const SaveParams     *params,
-                                  GError              **error);
-
-static gboolean   load_dialog    (struct heif_context  *heif,
-                                  uint32_t             *selected_image);
-static gboolean   save_dialog    (SaveParams           *params);
-
-
-GimpPlugInInfo PLUG_IN_INFO =
+struct _Heif
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
+};
+
+struct _HeifClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define HEIF_TYPE  (heif_get_type ())
+#define HEIF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HEIF_TYPE, Heif))
+
+GType                   heif_get_type         (void) G_GNUC_CONST;
+
+static GList          * heif_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * heif_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * heif_load             (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+static GimpValueArray * heif_save             (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static GimpImage      * load_image            (GFile               *file,
+                                               gboolean             interactive,
+                                               GimpPDBStatusType    *status,
+                                               GError              **error);
+static gboolean         save_image            (GFile                *file,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               const SaveParams     *params,
+                                               GError              **error);
+
+static gboolean         load_dialog           (struct heif_context  *heif,
+                                               uint32_t             *selected_image);
+static gboolean         save_dialog           (SaveParams           *params);
+
+
+G_DEFINE_TYPE (Heif, heif, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (HEIF_TYPE)
 
 
 static void
-query (void)
+heif_class_init (HeifClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "uri",      "The URI of the file to load" },
-    { GIMP_PDB_STRING, "raw-uri",  "The URI of the file to load" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
-
-
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to export" },
-    { GIMP_PDB_STRING,   "uri",      "The URI of the file to export the image to" },
-    { GIMP_PDB_STRING,   "raw-uri",  "The UTI of the file to export the image to" },
-    { GIMP_PDB_INT32,    "quality",  "Quality factor (range: 0-100. 0 = worst, 100 = best)" },
-    { GIMP_PDB_INT32,    "lossless", "Use lossless compression (0 = lossy, 1 = lossless)" }
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          _("Loads HEIF images"),
-                          _("Load image stored in HEIF format (High "
-                            "Efficiency Image File Format). Typical "
-                            "suffices for HEIF files are .heif, .heic."),
-                          "Dirk Farin <farin@struktur.de>",
-                          "Dirk Farin <farin@struktur.de>",
-                          "2018",
-                          _("HEIF/HEIC"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
-  gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
-  gimp_register_file_handler_remote (LOAD_PROC);
-  /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
-   * can be of various values.
-   * See also: https://gitlab.gnome.org/GNOME/gimp/issues/2209
-   */
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "heif,heic",
-                                    "",
-                                    "4,string,ftypheic,4,string,ftypheix,"
-                                    "4,string,ftyphevc,4,string,ftypheim,"
-                                    "4,string,ftypheis,4,string,ftyphevm,"
-                                    "4,string,ftyphevs,4,string,ftypmif1,"
-                                    "4,string,ftypmsf1");
-
-  gimp_install_procedure (SAVE_PROC,
-                          _("Exports HEIF images"),
-                          _("Save image in HEIF format (High Efficiency "
-                            "Image File Format)."),
-                          "Dirk Farin <farin@struktur.de>",
-                          "Dirk Farin <farin@struktur.de>",
-                          "2018",
-                          _("HEIF/HEIC"),
-                          "RGB*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
-  gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
-  gimp_register_file_handler_remote (SAVE_PROC);
+  plug_in_class->query_procedures = heif_query_procedures;
+  plug_in_class->create_procedure = heif_create_procedure;
 }
 
-#define LOAD_HEIF_CANCEL -2
-
 static void
-run (const gchar      *name,
-     gint              n_params,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+heif_init (Heif *heif)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
+}
+
+static GList *
+heif_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (SAVE_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+heif_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           heif_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("HEIF/HEIC"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Loads HEIF images"),
+                                        _("Load image stored in HEIF format (High "
+                                          "Efficiency Image File Format). Typical "
+                                          "suffices for HEIF files are .heif, "
+                                          ".heic."),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dirk Farin <farin@struktur.de>",
+                                      "Dirk Farin <farin@struktur.de>",
+                                      "2018");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/heif");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "heif,heic");
+
+      /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
+       * can be of various values.
+       * See also: https://gitlab.gnome.org/GNOME/gimp/issues/2209
+       */
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "4,string,ftypheic,4,string,ftypheix,"
+                                      "4,string,ftyphevc,4,string,ftypheim,"
+                                      "4,string,ftypheis,4,string,ftyphevm,"
+                                      "4,string,ftyphevs,4,string,ftypmif1,"
+                                      "4,string,ftypmsf1");
+    }
+  else if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           heif_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*");
+
+      gimp_procedure_set_menu_label (procedure, N_("HEIF/HEIC"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        _("Exports HEIF images"),
+                                        _("Save image in HEIF format (High "
+                                          "Efficiency Image File Format)."),
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dirk Farin <farin@struktur.de>",
+                                      "Dirk Farin <farin@struktur.de>",
+                                      "2018");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/heif");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "heif,heic");
+
+      GIMP_PROC_ARG_INT (procedure, "quality",
+                         "Quality",
+                         "Quality factor (0 = worst, 100 = best)",
+                         0, 100, 50,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
+                             "Lossless",
+                             "Use lossless compression",
+                             FALSE,
+                             G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+heif_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray    *return_vals;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GError            *error  = NULL;
+  GimpImage         *image;
+  gboolean           interactive;
+  GError            *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  interactive = (run_mode == GIMP_RUN_INTERACTIVE);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (interactive)
     gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  image = load_image (file, interactive, &status, &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure, status, error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+heif_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
+  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
+  SaveParams             params;
+  GimpMetadata          *metadata = NULL;
+  GimpMetadataSaveFlags  metadata_flags;
+  GError                *error    = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  metadata = gimp_image_metadata_save_prepare (image,
+                                               "image/heif",
+                                               &metadata_flags);
+
+  params.lossless     = FALSE;
+  params.quality      = 50;
+  params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+
+  switch (run_mode)
     {
-      GFile    *file;
-      gboolean  interactive;
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      export = gimp_export_image (&image, &drawable, "HEIF",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (n_params != 3)
-        status = GIMP_PDB_CALLING_ERROR;
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
 
-      file        = g_file_new_for_uri (param[1].data.d_string);
-      interactive = (run_mode == GIMP_RUN_INTERACTIVE);
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          gint32 image_ID;
-
-          image_ID = load_image (file, interactive, &error);
-
-          if (image_ID >= 0)
-            {
-              *nreturn_vals = 2;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-            }
-          else if (image_ID == LOAD_HEIF_CANCEL)
-            {
-              status = GIMP_PDB_CANCEL;
-            }
-          else
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-        }
-
-      g_object_unref (file);
+    default:
+      break;
     }
-  else if (strcmp (name, SAVE_PROC) == 0)
+
+  switch (run_mode)
     {
-      gint32                 image_ID    = param[1].data.d_int32;
-      gint32                 drawable_ID = param[2].data.d_int32;
-      GimpExportReturn       export      = GIMP_EXPORT_CANCEL;
-      SaveParams             params;
-      GimpMetadata          *metadata = NULL;
-      GimpMetadataSaveFlags  metadata_flags;
+    case GIMP_RUN_INTERACTIVE:
+      gimp_get_data (SAVE_PROC, &params);
 
-      metadata = gimp_image_metadata_save_prepare (image_ID,
-                                                   "image/heif",
-                                                   &metadata_flags);
+      if (! save_dialog (&params))
+        status = GIMP_PDB_CANCEL;
+      break;
 
-      params.lossless     = FALSE;
-      params.quality      = 50;
-      params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_get_data (SAVE_PROC, &params);
+      break;
 
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          export = gimp_export_image (&image_ID, &drawable_ID, "HEIF",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+    case GIMP_RUN_NONINTERACTIVE:
+      params.quality  = GIMP_VALUES_GET_INT     (args, 0);
+      params.lossless = GIMP_VALUES_GET_BOOLEAN (args, 1);
+      break;
+    }
 
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              g_clear_object (&metadata);
-              return;
-            }
-          break;
+  if (save_image (file, image, drawable,
+                  &params,
+                  &error))
+    {
+      if (metadata)
+        gimp_image_metadata_save_finish (image,
+                                         "image/heif",
+                                         metadata, metadata_flags,
+                                         file, NULL);
 
-        default:
-          break;
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          gimp_get_data (SAVE_PROC, &params);
-
-          if (! save_dialog (&params))
-            status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (SAVE_PROC, &params);
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (n_params != 7)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          else
-            {
-              params.quality  = (param[5].data.d_int32);
-              params.lossless = (param[6].data.d_int32);
-            }
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          GFile *file = g_file_new_for_uri (param[3].data.d_string);
-
-          if (save_image (file, image_ID, drawable_ID,
-                          &params,
-                          &error))
-            {
-              if (metadata)
-                gimp_image_metadata_save_finish (image_ID,
-                                                 "image/heif",
-                                                 metadata, metadata_flags,
-                                                 file, NULL);
-              gimp_set_data (SAVE_PROC, &params, sizeof (params));
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-          g_object_unref (file);
-        }
-
-      g_clear_object (&metadata);
+      gimp_set_data (SAVE_PROC, &params, sizeof (params));
     }
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
+  g_object_unref (metadata);
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static goffset
@@ -339,10 +350,11 @@ get_file_size (GFile   *file,
   return size;
 }
 
-gint32
-load_image (GFile     *file,
-            gboolean   interactive,
-            GError   **error)
+GimpImage *
+load_image (GFile              *file,
+            gboolean            interactive,
+            GimpPDBStatusType  *status,
+            GError            **error)
 {
   GInputStream             *input;
   goffset                   file_size;
@@ -359,8 +371,8 @@ load_image (GFile     *file,
   gboolean                  has_alpha;
   gint                      width;
   gint                      height;
-  gint32                    image_ID;
-  gint32                    layer_ID;
+  GimpImage                *image;
+  GimpLayer                *layer;
   GeglBuffer               *buffer;
   const Babl               *format;
   const guint8             *data;
@@ -371,11 +383,11 @@ load_image (GFile     *file,
 
   file_size = get_file_size (file, error);
   if (file_size <= 0)
-    return -1;
+    return NULL;
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
-    return -1;
+    return NULL;
 
   file_buffer = g_malloc (file_size);
 
@@ -385,7 +397,7 @@ load_image (GFile     *file,
     {
       g_free (file_buffer);
       g_object_unref (input);
-      return -1;
+      return NULL;
     }
 
   gimp_progress_update (0.25);
@@ -402,7 +414,7 @@ load_image (GFile     *file,
       g_free (file_buffer);
       g_object_unref (input);
 
-      return -1;
+      return NULL;
     }
 
   g_free (file_buffer);
@@ -422,7 +434,7 @@ load_image (GFile     *file,
                              "Input file contains no readable images"));
       heif_context_free (ctx);
 
-      return -1;
+      return NULL;
     }
 
   err = heif_context_get_primary_image_ID (ctx, &primary);
@@ -433,7 +445,7 @@ load_image (GFile     *file,
                    err.message);
       heif_context_free (ctx);
 
-      return -1;
+      return NULL;
     }
 
   /* if primary image is no top level image or not present (invalid
@@ -458,7 +470,9 @@ load_image (GFile     *file,
         {
           heif_context_free (ctx);
 
-          return LOAD_HEIF_CANCEL;
+          *status = GIMP_PDB_CANCEL;
+
+          return NULL;
         }
     }
 
@@ -472,7 +486,7 @@ load_image (GFile     *file,
                    err.message);
       heif_context_free (ctx);
 
-      return -1;
+      return NULL;
     }
 
   has_alpha = heif_image_handle_has_alpha_channel (handle);
@@ -491,7 +505,7 @@ load_image (GFile     *file,
      heif_image_handle_release (handle);
      heif_context_free (ctx);
 
-     return -1;
+     return NULL;
     }
 
 #ifdef HAVE_LIBHEIF_1_4_0
@@ -542,22 +556,22 @@ load_image (GFile     *file,
    * (converting it to RGB)
    */
 
-  image_ID = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_set_filename (image_ID, g_file_get_uri (file));
+  image = gimp_image_new (width, height, GIMP_RGB);
+  gimp_image_set_filename (image, g_file_get_uri (file));
 
   if (profile)
-    gimp_image_set_color_profile (image_ID, profile);
+    gimp_image_set_color_profile (image, profile);
 
-  layer_ID = gimp_layer_new (image_ID,
-                             _("image content"),
-                             width, height,
-                             has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE,
-                             100.0,
-                             gimp_image_get_default_new_layer_mode (image_ID));
+  layer = gimp_layer_new (image,
+                          _("image content"),
+                          width, height,
+                          has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE,
+                          100.0,
+                          gimp_image_get_default_new_layer_mode (image));
 
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   if (has_alpha)
     format = babl_format_with_space ("R'G'B'A u8",
@@ -635,7 +649,7 @@ load_image (GFile     *file,
         if (profile)
           flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
-        gimp_image_metadata_load_finish (image_ID, "image/heif",
+        gimp_image_metadata_load_finish (image, "image/heif",
                                          metadata, flags,
                                          interactive);
       }
@@ -650,7 +664,7 @@ load_image (GFile     *file,
 
   gimp_progress_update (1.0);
 
-  return image_ID;
+  return image;
 }
 
 static struct heif_error
@@ -678,12 +692,12 @@ write_callback (struct heif_context *ctx,
 
 static gboolean
 save_image (GFile             *file,
-            gint32             image_ID,
-            gint32             drawable_ID,
+            GimpImage         *image,
+            GimpDrawable      *drawable,
             const SaveParams  *params,
             GError           **error)
 {
-  struct heif_image        *image   = NULL;
+  struct heif_image        *h_image = NULL;
   struct heif_context      *context = heif_context_alloc ();
   struct heif_encoder      *encoder = NULL;
   struct heif_image_handle *handle  = NULL;
@@ -704,17 +718,17 @@ save_image (GFile             *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
-  width   = gimp_drawable_width  (drawable_ID);
-  height  = gimp_drawable_height (drawable_ID);
+  width   = gimp_drawable_width  (drawable);
+  height  = gimp_drawable_height (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   err = heif_image_create (width, height,
                            heif_colorspace_RGB,
                            has_alpha ?
                            heif_chroma_interleaved_RGBA :
                            heif_chroma_interleaved_RGB,
-                           &image);
+                           &h_image);
 
 #ifdef HAVE_LIBHEIF_1_4_0
   if (params->save_profile)
@@ -723,17 +737,17 @@ save_image (GFile             *file,
       const guint8     *icc_data;
       gsize             icc_length;
 
-      profile = gimp_image_get_color_profile (image_ID);
+      profile = gimp_image_get_color_profile (image);
       if (profile && gimp_color_profile_is_linear (profile))
         out_linear = TRUE;
 
       if (! profile)
         {
-          profile = gimp_image_get_effective_color_profile (image_ID);
+          profile = gimp_image_get_effective_color_profile (image);
 
           if (gimp_color_profile_is_linear (profile))
             {
-              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+              if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR)
                 {
                   /* If stored data was linear, let's convert the profile. */
                   GimpColorProfile *saved_profile;
@@ -751,7 +765,7 @@ save_image (GFile             *file,
         }
 
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-      heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
+      heif_image_set_raw_color_profile (h_image, "prof", icc_data, icc_length);
       space = gimp_color_profile_get_space (profile,
                                             GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
@@ -768,14 +782,14 @@ save_image (GFile             *file,
 #endif /* HAVE_LIBHEIF_1_4_0 */
 
   if (! space)
-    space = gimp_drawable_get_format (drawable_ID);
+    space = gimp_drawable_get_format (drawable);
 
-  heif_image_add_plane (image, heif_channel_interleaved,
+  heif_image_add_plane (h_image, heif_channel_interleaved,
                         width, height, has_alpha ? 32 : 24);
 
-  data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
+  data = heif_image_get_plane (h_image, heif_channel_interleaved, &stride);
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   if (has_alpha)
     {
@@ -812,7 +826,7 @@ save_image (GFile             *file,
   /* heif_encoder_set_logging_level (encoder, logging_level); */
 
   err = heif_context_encode_image (context,
-                                   image,
+                                   h_image,
                                    encoder,
                                    NULL,
                                    &handle);
@@ -856,7 +870,7 @@ save_image (GFile             *file,
   g_object_unref (output);
 
   heif_context_free (context);
-  heif_image_release (image);
+  heif_image_release (h_image);
 
   heif_encoder_release (encoder);
 

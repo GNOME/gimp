@@ -795,8 +795,6 @@ file_header_LDADD = \
 
 file_heif_CFLAGS = $(LIBHEIF_CFLAGS)
 
-file_heif_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_heif_SOURCES = \
 	file-heif.c
 
