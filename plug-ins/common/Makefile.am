@@ -964,8 +964,6 @@ file_pdf_save_LDADD = \
 	$(INTLLIBS)		\
 	$(file_pdf_save_RC)
 
-file_pix_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_pix_SOURCES = \
 	file-pix.c
 
