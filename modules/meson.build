@@ -23,73 +23,66 @@ display_filter_libs = [
 
 # Name, Sources, deps, link.
 modules = [
-  [ 'color-selector-cmyk',
-    [ 'color-selector-cmyk.c', ],
-    [], [ color_selector_libs, ],
-  ],
-  [ 'color-selector-water',
-    [ 'color-selector-water.c', ],
-    [ ], [ color_selector_libs, ],
-  ],
-  [ 'color-selector-wheel',
-    [ 'color-selector-wheel.c', 'gimpcolorwheel.c', ],
-    [ ], [ color_selector_libs, ],
-  ],
-  [ 'display-filter-clip-warning',
-    [ 'display-filter-clip-warning.c', ],
-    [], [ display_filter_libs, ],
-  ],
-  [ 'display-filter-color-blind',
-    [ 'display-filter-color-blind.c', ],
-    [], [ display_filter_libs, ],
-  ],
-  [ 'display-filter-aces-rrt',
-    [ 'display-filter-aces-rrt.c', ],
-    [], [ display_filter_libs, ],
-  ],
-  [ 'display-filter-gamma',
-    [ 'display-filter-gamma.c', ],
-    [ ], [ display_filter_libs, ],
-  ],
-  [ 'display-filter-high-contrast',
-    [ 'display-filter-high-contrast.c', ],
-    [ ], [ display_filter_libs, ],
-  ],
+  {
+    'name': 'color-selector-cmyk',
+    'link': color_selector_libs,
+  }, {
+    'name': 'color-selector-water',
+    'link': color_selector_libs,
+  }, {
+    'name': 'color-selector-wheel',
+    'srcs': [ 'color-selector-wheel.c', 'gimpcolorwheel.c', ],
+    'link': color_selector_libs,
+  }, {
+    'name': 'display-filter-clip-warning',
+    'link': display_filter_libs,
+  }, {
+    'name': 'display-filter-color-blind',
+    'link': display_filter_libs,
+  }, {
+    'name': 'display-filter-aces-rrt',
+    'link': display_filter_libs,
+  }, {
+    'name': 'display-filter-gamma',
+    'link': display_filter_libs,
+  }, {
+    'name': 'display-filter-high-contrast',
+    'link': display_filter_libs,
+  },
 ]
 
 if have_linuxinput
-  modules += [
-    [ 'controller-linux-input',
-      [ 'controller-linux-input.c', 'gimpinputdevicestore-gudev.c', ],
-      [ gudev, ], [ controller_libs, ],
-    ],
-  ]
+  modules += {
+    'name': 'controller-linux-input',
+    'srcs': [ 'controller-linux-input.c', 'gimpinputdevicestore-gudev.c', ],
+    'deps': gudev,
+    'link': controller_libs,
+  }
 endif
 
 if directx.found()
-  modules += [
-    [ 'controller-dx-input',
-      [ 'controller-dx-dinput.c', 'gimpinputdevicestore-dx.c', ],
-      [ directx,  ], [ controller_libs, '-lrpcrt4', ],
-    ],
-  ]
+  modules += {
+    'name': 'controller-dx-input',
+    'srcs': [ 'controller-dx-dinput.c', 'gimpinputdevicestore-dx.c', ],
+    'deps': directx,
+    'link': [ controller_libs, '-lrpcrt4', ],
+  }
 endif
 
 if not platform_win32
-  modules += [
-    [ 'controller-midi',
-      [ 'controller-midi.c', ],
-      [ alsa, ], [ controller_libs, ],
-    ],
-  ]
+  modules += {
+    'name': 'controller-midi',
+    'deps': alsa,
+    'link': controller_libs,
+  }
 endif
 
 
 foreach module : modules
-  name = module[0]
-  srcs = module[1]
-  deps = module[2]
-  link = module[3]
+  name = module.get('name')
+  srcs = module.get('srcs', name + '.c')
+  deps = module.get('deps', [])
+  link = module.get('link', [])
 
   library(name,
     srcs,

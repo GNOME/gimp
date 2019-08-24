@@ -21,8 +21,9 @@ subdir('plug-ins')
 
 
 python_so_libs = [
-  [ 'gimp',
-    [
+   {
+    'name': 'gimp',
+    'srcs': [
       'gimpmodule.c',
       'pygimp-display.c',
       'pygimp-drawable.c',
@@ -33,41 +34,37 @@ python_so_libs = [
       'pygimp-tile.c',
       'pygimp-vectors.c',
     ],
-    [
+    'deps': [
       py2cairo,
       cairo,
       gtk3,
     ],
-    [
+    'link': [
       libgimp,
       libgimpbase,
       libgimpcolor,
       libgimpui,
     ],
-  ],
-  [ '_gimpenums',
-    [
-      'gimpenumsmodule.c',
-    ],
-    [
+  },
+  { 'name': '_gimpenums',
+    'srcs': 'gimpenumsmodule.c',
+    'deps': [
       gobject,
       cairo,
       gtk3,
     ],
-    [
-      libgimp,libgimpbase
+    'link': [
+      libgimp,
+      libgimpbase,
     ],
-  ],
-  [ '_gimpui',
-    [
-      'gimpuimodule.c',
-      # pygtk_generator.process('gimpui.defs'),
-    ],
-    [
+  },
+  { 'name': '_gimpui',
+    'srcs': 'gimpuimodule.c',
+    'deps': [
       py2cairo,
       gtk3,
     ],
-    [
+    'link': [
       libgimp,
       libgimpbase,
       libgimpcolor,
@@ -75,40 +72,42 @@ python_so_libs = [
       libgimpui,
       libgimpwidgets
     ],
-  ],
-  [ 'gimpcolor',
-    [
+  },
+  { 'name': 'gimpcolor',
+    'srcs': [
       'gimpcolormodule.c',
       'pygimp-colors.c',
     ],
-    [
+    'deps': [
       cairo
     ],
-    [
+    'link': [
       libgimpcolor,
     ],
-  ],
-  [ 'gimpthumb',
-    [
-      'gimpthumbmodule.c',
-      # pygtk_generator.process('gimpthumb.defs'),
-    ],
-    [],
-    [
+  },
+  { 'name': 'gimpthumb',
+    'srcs': 'gimpthumbmodule.c',
+    'deps': [],
+    'link': [
       libgimpthumb,
     ],
   ],
 ]
 
 foreach pylib : python_so_libs
-  shared_library(pylib[0],
-    pylib[1],
+  name = pylib.get('name')
+  srcs = pylib.get('srcs')
+  deps = pylib.get('deps')
+  link = pylib.get('link')
+
+  shared_library(name,
+    srcs,
     include_directories: [ rootInclude, ],
-    dependencies: pylib[2] + [
+    dependencies: deps + [
       libpython2, py2gobject,
       gdk_pixbuf, gegl,
     ],
-    link_with: pylib[3],
+    link_with: link,
     c_args: '-DGIMP_DEPRECATED_REPLACE_NEW_API',
     name_prefix: '',
     install: true,
