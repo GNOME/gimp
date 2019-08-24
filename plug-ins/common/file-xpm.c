@@ -64,15 +64,12 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 #include "libgimp/stdplugins-intl.h"
 
 
-static const gchar linenoise [] =
-" .+@#$%&*=-;>,')!~{]^/(_:<[}|1234567890abcdefghijklmnopqrstuvwxyz\
-ABCDEFGHIJKLMNOPQRSTUVWXYZ`";
-
 #define LOAD_PROC      "file-xpm-load"
 #define SAVE_PROC      "file-xpm-save"
 #define PLUG_IN_BINARY "file-xpm"
 #define PLUG_IN_ROLE   "gimp-file-xpm"
 #define SCALE_WIDTH    125
+
 
 /* Structs for the save dialog */
 typedef struct
@@ -87,6 +84,65 @@ typedef struct
   guchar b;
 } rgbkey;
 
+
+typedef struct _Xpm      Xpm;
+typedef struct _XpmClass XpmClass;
+
+struct _Xpm
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _XpmClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define XPM_TYPE  (xpm_get_type ())
+#define XPM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XPM_TYPE, Xpm))
+
+GType                   xpm_get_type         (void) G_GNUC_CONST;
+
+static GList          * xpm_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * xpm_create_procedure (GimpPlugIn           *plug_in,
+                                              const gchar          *name);
+
+static GimpValueArray * xpm_load             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+static GimpValueArray * xpm_save             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
+
+static GimpImage      * load_image           (const gchar          *filename,
+                                              GError              **error);
+static guchar         * parse_colors         (XpmImage             *xpm_image);
+static void             parse_image          (GimpImage            *image,
+                                              XpmImage             *xpm_image,
+                                              guchar               *cmap);
+static gboolean         save_image           (const gchar          *filename,
+                                              GimpImage            *image,
+                                              GimpDrawable         *drawable,
+                                              GError              **error);
+static gboolean         save_dialog          (void);
+
+
+G_DEFINE_TYPE (Xpm, xpm, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (XPM_TYPE)
+
+
+static const gchar linenoise [] =
+" .+@#$%&*=-;>,')!~{]^/(_:<[}|1234567890abcdefghijklmnopqrstuvwxyz\
+ABCDEFGHIJKLMNOPQRSTUVWXYZ`";
+
 /*  whether the image is color or not.  global so I only have to pass
  *  one user value to the GHFunc
  */
@@ -97,264 +153,234 @@ static gboolean   color;
  */
 static gint       cpp;
 
-/* Declare local functions */
-static void       query               (void);
-static void       run                 (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *param,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
-
-static gint32     load_image          (const gchar      *filename,
-                                       GError          **error);
-static guchar   * parse_colors        (XpmImage         *xpm_image);
-static void       parse_image         (gint32            image_ID,
-                                       XpmImage         *xpm_image,
-                                       guchar           *cmap);
-static gboolean   save_image          (const gchar      *filename,
-                                       gint32            image_ID,
-                                       gint32            drawable_ID,
-                                       GError          **error);
-static gboolean   save_dialog         (void);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
-};
-
 static XpmSaveVals xpmvals =
 {
   127  /* alpha threshold */
 };
 
 
-MAIN ()
-
 static void
-query (void)
+xpm_class_init (XpmClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,     "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING,    "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,    "raw-filename", "The name entered"             }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,    "image",         "Output image" }
-  };
-
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",      "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",         "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to export" },
-    { GIMP_PDB_STRING,   "filename",      "The name of the file to export the image in" },
-    { GIMP_PDB_STRING,   "raw-filename",  "The name of the file to export the image in" },
-    { GIMP_PDB_INT32,    "threshold",     "Alpha threshold (0-255)" }
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "Load files in XPM (X11 Pixmap) format.",
-                          "Load files in XPM (X11 Pixmap) format. "
-                          "XPM is a portable image format designed to be "
-                          "included in C source code. XLib provides utility "
-                          "functions to read this format. Newer code should "
-                          "however be using gdk-pixbuf-csource instead. "
-                          "XPM supports colored images, unlike the XBM "
-                          "format which XPM was designed to replace.",
-                          "Spencer Kimball & Peter Mattis & Ray Lehtiniemi",
-                          "Spencer Kimball & Peter Mattis",
-                          "1997",
-                          N_("X PixMap image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-xpixmap");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "xpm",
-                                    "",
-                                    "0, string,/*\\040XPM\\040*/");
-
-  gimp_install_procedure (SAVE_PROC,
-                          "Export files in XPM (X11 Pixmap) format.",
-                          "Export files in XPM (X11 Pixmap) format. "
-                          "XPM is a portable image format designed to be "
-                          "included in C source code. XLib provides utility "
-                          "functions to read this format. Newer code should "
-                          "however be using gdk-pixbuf-csource instead. "
-                          "XPM supports colored images, unlike the XBM "
-                          "format which XPM was designed to replace.",
-                          "Spencer Kimball & Peter Mattis & Ray Lehtiniemi & Nathan Summers",
-                          "Spencer Kimball & Peter Mattis",
-                          "1997",
-                          N_("X PixMap image"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-xpixmap");
-  gimp_register_save_handler (SAVE_PROC, "xpm", "");
+  plug_in_class->query_procedures = xpm_query_procedures;
+  plug_in_class->create_procedure = xpm_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+xpm_init (Xpm *xpm)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
-  gint32             drawable_ID;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error  = NULL;
+}
+
+static GList *
+xpm_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (SAVE_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+xpm_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           xpm_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("X PixMap image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Load files in XPM (X11 Pixmap) format.",
+                                        "Load files in XPM (X11 Pixmap) format. "
+                                        "XPM is a portable image format "
+                                        "designed to be included in C source "
+                                        "code. XLib provides utility functions "
+                                        "to read this format. Newer code should "
+                                        "however be using gdk-pixbuf-csource "
+                                        "instead. XPM supports colored images, "
+                                        "unlike the XBM format which XPM was "
+                                        "designed to replace.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Spencer Kimball & Peter Mattis & "
+                                      "Ray Lehtiniemi",
+                                      "Spencer Kimball & Peter Mattis",
+                                      "1997");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-pixmap");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "xpm");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0, string,/*\\040XPM\\040*/");
+    }
+  else if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           xpm_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("X PixMap image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Export files in XPM (X11 Pixmap) format.",
+                                        "Export files in XPM (X11 Pixmap) format. "
+                                        "XPM is a portable image format "
+                                        "designed to be included in C source "
+                                        "code. XLib provides utility functions "
+                                        "to read this format. Newer code should "
+                                        "however be using gdk-pixbuf-csource "
+                                        "instead. XPM supports colored images, "
+                                        "unlike the XBM format which XPM was "
+                                        "designed to replace.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Spencer Kimball & Peter Mattis & "
+                                      "Ray Lehtiniemi & Nathan Summers",
+                                      "Spencer Kimball & Peter Mattis",
+                                      "1997");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-pixmap");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "xpm");
+
+      GIMP_PROC_ARG_INT (procedure, "threshold",
+                         "Threshold",
+                         "Alpha threshold",
+                         0, 255, 127,
+                         G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+xpm_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  image = load_image (g_file_get_path (file), &error);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+xpm_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  switch (run_mode)
     {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      image_ID = load_image (g_file_get_path (file), &error);
+      export = gimp_export_image (&image, &drawable, "XPM",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (image_ID != -1)
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
+
+    default:
+      break;
+    }
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+      gimp_get_data (SAVE_PROC, &xpmvals);
+
+      if (gimp_drawable_has_alpha (drawable))
+        if (! save_dialog ())
+          status = GIMP_PDB_CANCEL;
+      break;
+
+    case GIMP_RUN_NONINTERACTIVE:
+      xpmvals.threshold = GIMP_VALUES_GET_INT (args, 0);
+      break;
+
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_get_data (SAVE_PROC, &xpmvals);
+      break;
+
+    default:
+      break;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (save_image (g_file_get_path (file),
+                      image, drawable,
+                      &error))
         {
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
+          gimp_set_data (SAVE_PROC, &xpmvals, sizeof (XpmSaveVals));
         }
       else
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (strcmp (name, SAVE_PROC) == 0)
-    {
-      GFile *file = g_file_new_for_uri (param[3].data.d_string);
 
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
 
-      image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
-
-      /*  eventually export the image */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          export = gimp_export_image (&image_ID, &drawable_ID, "XPM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-        default:
-          break;
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          /*  Possibly retrieve data  */
-          gimp_get_data ("file_xpm_save", &xpmvals);
-
-          /*  First acquire information with a dialog  */
-          if (gimp_drawable_has_alpha (drawable_ID))
-            if (! save_dialog ())
-              status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (nparams != 6)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          else
-            {
-              xpmvals.threshold = param[5].data.d_int32;
-
-              if (xpmvals.threshold < 0 ||
-                  xpmvals.threshold > 255)
-                status = GIMP_PDB_CALLING_ERROR;
-            }
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          /*  Possibly retrieve data  */
-          gimp_get_data ("file_xpm_save", &xpmvals);
-          break;
-
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          if (save_image (g_file_get_path (file),
-                          image_ID, drawable_ID,
-                          &error))
-            {
-              gimp_set_data ("file_xpm_save", &xpmvals, sizeof (XpmSaveVals));
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
-    }
-
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
-  XpmImage  xpm_image;
-  guchar   *cmap;
-  gint32    image_ID;
+  XpmImage   xpm_image;
+  guchar    *cmap;
+  GimpImage *image;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -369,39 +395,35 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error opening file '%s'"),
                    gimp_filename_to_utf8 (filename));
-      return -1;
+      return NULL;
 
     case XpmFileInvalid:
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", _("XPM file invalid"));
-      return -1;
+      return NULL;
 
     default:
-      return -1;
+      return NULL;
     }
 
-  /* parse out the colors into a cmap */
   cmap = parse_colors (&xpm_image);
 
-  /* create the new image */
-  image_ID = gimp_image_new (xpm_image.width,
-                             xpm_image.height,
-                             GIMP_RGB);
+  image = gimp_image_new (xpm_image.width,
+                          xpm_image.height,
+                          GIMP_RGB);
 
-  /* name it */
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (image, filename);
 
   /* fill it */
-  parse_image (image_ID, &xpm_image, cmap);
+  parse_image (image, &xpm_image, cmap);
 
-  /* clean up and exit */
   g_free (cmap);
 
-  return image_ID;
+  return image;
 }
 
 static guchar *
-parse_colors (XpmImage  *xpm_image)
+parse_colors (XpmImage *xpm_image)
 {
 #ifndef XPM_NO_X
   Display  *display;
@@ -470,9 +492,9 @@ parse_colors (XpmImage  *xpm_image)
 }
 
 static void
-parse_image (gint32    image_ID,
-             XpmImage *xpm_image,
-             guchar   *cmap)
+parse_image (GimpImage *image,
+             XpmImage  *xpm_image,
+             guchar    *cmap)
 {
   GeglBuffer *buffer;
   gint        tile_height;
@@ -481,20 +503,20 @@ parse_image (gint32    image_ID,
   guchar     *buf;
   guchar     *dest;
   guint      *src;
-  gint32      layer_ID;
+  GimpLayer  *layer;
   gint        i;
 
-  layer_ID = gimp_layer_new (image_ID,
-                             _("Color"),
-                             xpm_image->width,
-                             xpm_image->height,
-                             GIMP_RGBA_IMAGE,
-                             100,
-                             gimp_image_get_default_new_layer_mode (image_ID));
+  layer = gimp_layer_new (image,
+                          _("Color"),
+                          xpm_image->width,
+                          xpm_image->height,
+                          GIMP_RGBA_IMAGE,
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
 
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   tile_height = gimp_tile_height ();
 
@@ -559,7 +581,7 @@ set_XpmImage (XpmColor *array,
   array[index].string = p = g_new (gchar, cpp+1);
 
   /*convert the index number to base sizeof(linenoise)-1 */
-  for (i=0; i<cpp; ++i)
+  for (i = 0; i < cpp; ++i)
     {
       charnum = indtemp % (sizeof (linenoise) - 1);
       indtemp = indtemp / (sizeof (linenoise) - 1);
@@ -598,10 +620,10 @@ create_colormap_from_hash (gpointer gkey,
 }
 
 static gboolean
-save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
-            GError      **error)
+save_image (const gchar   *filename,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GError       **error)
 {
   GeglBuffer *buffer;
   const Babl *format;
@@ -612,7 +634,7 @@ save_image (const gchar  *filename,
   gboolean    indexed;
   gboolean    alpha;
   XpmColor   *colormap;
-  XpmImage   *image;
+  XpmImage   *xpm_image;
   guint      *ibuff   = NULL;
   guchar     *buf;
   guchar     *data;
@@ -621,16 +643,16 @@ save_image (const gchar  *filename,
   gint        threshold = xpmvals.threshold;
   gboolean    success = FALSE;
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  alpha   = gimp_drawable_has_alpha (drawable_ID);
-  color   = !gimp_drawable_is_gray (drawable_ID);
-  indexed = gimp_drawable_is_indexed (drawable_ID);
+  alpha   = gimp_drawable_has_alpha (drawable);
+  color   = ! gimp_drawable_is_gray (drawable);
+  indexed = gimp_drawable_is_indexed (drawable);
 
-  switch (gimp_drawable_type (drawable_ID))
+  switch (gimp_drawable_type (drawable))
     {
     case GIMP_RGB_IMAGE:
       format = babl_format ("R'G'B' u8");
@@ -741,7 +763,7 @@ save_image (const gchar  *filename,
 
   if (indexed)
     {
-      guchar *cmap = gimp_image_get_colormap (image_ID, &ncolors);
+      guchar *cmap = gimp_image_get_colormap (image, &ncolors);
       guchar *c;
 
       c = cmap;
@@ -784,17 +806,17 @@ save_image (const gchar  *filename,
       g_hash_table_foreach (hash, create_colormap_from_hash, colormap);
     }
 
-  image = g_new (XpmImage, 1);
+  xpm_image = g_new (XpmImage, 1);
 
-  image->width      = width;
-  image->height     = height;
-  image->ncolors    = ncolors;
-  image->cpp        = cpp;
-  image->colorTable = colormap;
-  image->data       = ibuff;
+  xpm_image->width      = width;
+  xpm_image->height     = height;
+  xpm_image->ncolors    = ncolors;
+  xpm_image->cpp        = cpp;
+  xpm_image->colorTable = colormap;
+  xpm_image->data       = ibuff;
 
   /* do the save */
-  switch (XpmWriteFileFromXpmImage ((char *) filename, image, NULL))
+  switch (XpmWriteFileFromXpmImage ((char *) filename, xpm_image, NULL))
     {
     case XpmSuccess:
       success = TRUE;
