@@ -567,8 +567,6 @@ file_aa_LDADD = \
 	$(INTLLIBS)		\
 	$(file_aa_RC)
 
-file_cel_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_cel_SOURCES = \
 	file-cel.c
 
