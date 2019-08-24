@@ -1108,8 +1108,6 @@ file_svg_LDADD = \
 	$(INTLLIBS)		\
 	$(file_svg_RC)
 
-file_tga_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_tga_SOURCES = \
 	file-tga.c
 
