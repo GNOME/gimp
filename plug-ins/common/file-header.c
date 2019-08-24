@@ -30,148 +30,162 @@
 #define PLUG_IN_ROLE   "gimp-file-header"
 
 
-/* Declare some local functions.
- */
-static void       query         (void);
-static void       run           (const gchar      *name,
-                                 gint              nparams,
-                                 const GimpParam  *param,
-                                 gint             *nreturn_vals,
-                                 GimpParam       **return_vals);
+typedef struct _Header      Header;
+typedef struct _HeaderClass HeaderClass;
 
-static gboolean   save_image    (GFile            *file,
-                                 gint32            image_ID,
-                                 gint32            drawable_ID,
-                                 GError          **error);
-
-static gboolean   print         (GOutputStream    *output,
-                                 GError          **error,
-                                 const gchar      *format,
-                                 ...) G_GNUC_PRINTF (3, 4);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Header
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
+};
+
+struct _HeaderClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define HEADER_TYPE  (header_get_type ())
+#define HEADER (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HEADER_TYPE, Header))
+
+GType                   header_get_type         (void) G_GNUC_CONST;
+
+static GList          * header_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * header_create_procedure (GimpPlugIn           *plug_in,
+                                                 const gchar          *name);
+
+static GimpValueArray * header_save             (GimpProcedure        *procedure,
+                                                 GimpRunMode           run_mode,
+                                                 GimpImage            *image,
+                                                 GimpDrawable         *drawable,
+                                                 GFile                *file,
+                                                 const GimpValueArray *args,
+                                                 gpointer              run_data);
+
+static gboolean         save_image              (GFile                *file,
+                                                 GimpImage            *image,
+                                                 GimpDrawable         *drawable,
+                                                 GError              **error);
+
+static gboolean         print                   (GOutputStream        *output,
+                                                 GError              **error,
+                                                 const gchar          *format,
+                                                 ...) G_GNUC_PRINTF (3, 4);
+
+
+G_DEFINE_TYPE (Header, header, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (HEADER_TYPE)
+
 
 static void
-query (void)
+header_class_init (HeaderClass *klass)
 {
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (SAVE_PROC,
-                          "saves files as C unsigned character array",
-                          "FIXME: write help",
-                          "Spencer Kimball & Peter Mattis",
-                          "Spencer Kimball & Peter Mattis",
-                          "1997",
-                          N_("C source code header"),
-                          "INDEXED, RGB",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "text/x-chdr");
-  gimp_register_file_handler_remote (SAVE_PROC);
-  gimp_register_save_handler (SAVE_PROC, "h", "");
+  plug_in_class->query_procedures = header_query_procedures;
+  plug_in_class->create_procedure = header_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+header_init (Header *header)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
+}
+
+static GList *
+header_query_procedures (GimpPlugIn *plug_in)
+{
+  return  g_list_append (NULL, g_strdup (SAVE_PROC));
+}
+
+static GimpProcedure *
+header_create_procedure (GimpPlugIn  *plug_in,
+                         const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           header_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "INDEXED, RGB");
+
+      gimp_procedure_set_menu_label (procedure, N_("C source code header"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "saves files as C unsigned character "
+                                        "array",
+                                        "FIXME: write help",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Spencer Kimball & Peter Mattis",
+                                      "Spencer Kimball & Peter Mattis",
+                                      "1997");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-chdr");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "h");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+header_save (GimpProcedure        *procedure,
+             GimpRunMode           run_mode,
+             GimpImage            *image,
+             GimpDrawable         *drawable,
+             GFile                *file,
+             const GimpValueArray *args,
+             gpointer              run_data)
+{
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  if (strcmp (name, SAVE_PROC) == 0)
+  switch (run_mode)
     {
-      gint32           image_ID;
-      gint32           drawable_ID;
-      GimpExportReturn export = GIMP_EXPORT_CANCEL;
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
+      export = gimp_export_image (&image, &drawable, "Header",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
 
-      /*  eventually export the image */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
 
-          export = gimp_export_image (&image_ID, &drawable_ID, "Header",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
-
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-
-        default:
-          break;
-        }
-
-      if (! save_image (g_file_new_for_uri (param[3].data.d_string),
-                        image_ID, drawable_ID, &error))
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
+    default:
+      break;
     }
 
-  if (status != GIMP_PDB_SUCCESS && error)
+  if (! save_image (file, image, drawable,
+                    &error))
     {
-      *nreturn_vals = 2;
-      values[1].type          = GIMP_PDB_STRING;
-      values[1].data.d_string = error->message;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  values[0].data.d_status = status;
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
-save_image (GFile   *file,
-            gint32   image_ID,
-            gint32   drawable_ID,
-            GError **error)
+save_image (GFile         *file,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GError       **error)
 {
   GeglBuffer    *buffer;
   const Babl    *format;
@@ -207,12 +221,12 @@ save_image (GFile   *file,
       return FALSE;
     }
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  drawable_type = gimp_drawable_type (drawable_ID);
+  drawable_type = gimp_drawable_type (drawable);
 
   if (! print (output, error,
                "/*  GIMP header image file format (%s): %s  */\n\n",
@@ -309,7 +323,7 @@ save_image (GFile   *file,
         }
 
       /* save colormap */
-      cmap = gimp_image_get_colormap (image_ID, &colors);
+      cmap = gimp_image_get_colormap (image, &colors);
 
       if (! print (output, error,
                    "static char header_data_cmap[256][3] = {") ||

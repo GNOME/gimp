@@ -28,7 +28,7 @@
     'file-gif-save' => { ui => 1, gegl => 1, old_api => 1 },
     'file-gih' => { ui => 1, gegl => 1 },
     'file-glob' => {},
-    'file-header' => { ui => 1, gegl => 1, old_api => 1 },
+    'file-header' => { ui => 1, gegl => 1 },
     'file-heif' => { ui => 1, optional => 1, gegl => 1, libs => 'LIBHEIF_LIBS', cflags => 'LIBHEIF_CFLAGS' },
     'file-html-table' => { ui => 1, gegl => 1, old_api => 1 },
     'file-jp2-load' => { ui => 1, optional => 1, gegl => 1, libs => 'OPENJPEG_LIBS', cflags => 'OPENJPEG_CFLAGS', old_api => 1 },

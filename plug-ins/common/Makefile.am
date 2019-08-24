@@ -771,8 +771,6 @@ file_glob_LDADD = \
 	$(INTLLIBS)		\
 	$(file_glob_RC)
 
-file_header_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_header_SOURCES = \
 	file-header.c
 
