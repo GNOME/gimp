@@ -718,8 +718,6 @@ file_gif_load_LDADD = \
 	$(INTLLIBS)		\
 	$(file_gif_load_RC)
 
-file_gif_save_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_gif_save_SOURCES = \
 	file-gif-save.c
 
