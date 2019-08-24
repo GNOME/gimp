@@ -152,6 +152,9 @@ sub generate_fun {
         if (exists $argtype->{array}) {
             $annotate = " (array length=$retarg->{array}->{name})";
         }
+        if (exists $retarg->{none_ok}) {
+            $annotate .= " (nullable)";
+        }
 
         if ($api_deprecated) {
             if (exists $argtype->{out_annotate_d}) {
@@ -276,8 +279,11 @@ sub generate_fun {
         if (exists $arg->{in_annotate}) {
             $argdesc .= " $arg->{in_annotate}";
         }
+        if (exists $_->{none_ok}) {
+            $argdesc .= " (nullable)";
+        }
 
-        if (exists $arg->{array} || exists $arg->{in_annotate}) {
+        if (exists $arg->{array} || exists $_->{none_ok} || exists $arg->{in_annotate}) {
             $argdesc .= ":";
         }
 

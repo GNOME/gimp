@@ -37,7 +37,7 @@
 /**
  * gimp_text_fontname:
  * @image: The image.
- * @drawable: The affected drawable: (-1 for a new text layer).
+ * @drawable: (nullable): The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
  * @text: The text to generate (in UTF-8 encoding).
@@ -116,7 +116,7 @@ gimp_text_fontname (GimpImage    *image,
 /**
  * _gimp_text_fontname: (skip)
  * @image_ID: The image.
- * @drawable_ID: The affected drawable: (-1 for a new text layer).
+ * @drawable_ID: (nullable): The affected drawable: (-1 for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
  * @text: The text to generate (in UTF-8 encoding).

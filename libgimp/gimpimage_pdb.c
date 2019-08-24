@@ -1438,7 +1438,7 @@ _gimp_image_floating_sel_attached_to (gint32 image_ID)
 /**
  * gimp_image_pick_color:
  * @image: The image.
- * @drawable: The drawable to pick from.
+ * @drawable: (nullable): The drawable to pick from.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @sample_merged: Use the composite image, not the drawable.
@@ -1509,7 +1509,7 @@ gimp_image_pick_color (GimpImage    *image,
 /**
  * _gimp_image_pick_color: (skip)
  * @image_ID: The image.
- * @drawable_ID: The drawable to pick from.
+ * @drawable_ID: (nullable): The drawable to pick from.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @sample_merged: Use the composite image, not the drawable.
@@ -1679,7 +1679,7 @@ _gimp_image_pick_correlate_layer (gint32 image_ID,
  * gimp_image_insert_layer:
  * @image: The image.
  * @layer: The layer.
- * @parent: The parent layer.
+ * @parent: (nullable): The parent layer.
  * @position: The layer position.
  *
  * Add the specified layer to the image.
@@ -1736,7 +1736,7 @@ gimp_image_insert_layer (GimpImage *image,
  * _gimp_image_insert_layer: (skip)
  * @image_ID: The image.
  * @layer_ID: The layer.
- * @parent_ID: The parent layer.
+ * @parent_ID: (nullable): The parent layer.
  * @position: The layer position.
  *
  * Add the specified layer to the image.
@@ -2063,7 +2063,7 @@ _gimp_image_thaw_layers (gint32 image_ID)
  * gimp_image_insert_channel:
  * @image: The image.
  * @channel: The channel.
- * @parent: The parent channel.
+ * @parent: (nullable): The parent channel.
  * @position: The channel position.
  *
  * Add the specified channel to the image.
@@ -2115,7 +2115,7 @@ gimp_image_insert_channel (GimpImage   *image,
  * _gimp_image_insert_channel: (skip)
  * @image_ID: The image.
  * @channel_ID: The channel.
- * @parent_ID: The parent channel.
+ * @parent_ID: (nullable): The parent channel.
  * @position: The channel position.
  *
  * Add the specified channel to the image.
@@ -2433,7 +2433,7 @@ _gimp_image_thaw_channels (gint32 image_ID)
  * gimp_image_insert_vectors:
  * @image: The image.
  * @vectors: The vectors.
- * @parent: The parent vectors.
+ * @parent: (nullable): The parent vectors.
  * @position: The vectors position.
  *
  * Add the specified vectors to the image.
@@ -2485,7 +2485,7 @@ gimp_image_insert_vectors (GimpImage   *image,
  * _gimp_image_insert_vectors: (skip)
  * @image_ID: The image.
  * @vectors_ID: The vectors.
- * @parent_ID: The parent vectors.
+ * @parent_ID: (nullable): The parent vectors.
  * @position: The vectors position.
  *
  * Add the specified vectors to the image.
@@ -3255,7 +3255,7 @@ _gimp_image_lower_item_to_bottom (gint32 image_ID,
  * gimp_image_reorder_item:
  * @image: The image.
  * @item: The item to reorder.
- * @parent: The new parent item.
+ * @parent: (nullable): The new parent item.
  * @position: The new position of the item.
  *
  * Reorder the specified item within its item tree
@@ -3304,7 +3304,7 @@ gimp_image_reorder_item (GimpImage *image,
  * _gimp_image_reorder_item: (skip)
  * @image_ID: The image.
  * @item_ID: The item to reorder.
- * @parent_ID: The new parent item.
+ * @parent_ID: (nullable): The new parent item.
  * @position: The new position of the item.
  *
  * Reorder the specified item within its item tree
