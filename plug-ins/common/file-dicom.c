@@ -59,240 +59,250 @@ typedef struct _DicomInfo
   gboolean   is_signed;
 } DicomInfo;
 
-/* Local function prototypes */
-static void      query                 (void);
-static void      run                   (const gchar      *name,
-                                        gint              nparams,
-                                        const GimpParam  *param,
-                                        gint             *nreturn_vals,
-                                        GimpParam       **return_vals);
-static gint32    load_image            (const gchar      *filename,
-                                        GError          **error);
-static gboolean  save_image            (const gchar      *filename,
-                                        gint32            image_ID,
-                                        gint32            drawable_ID,
-                                        GError          **error);
-static void      dicom_loader          (guint8           *pix_buf,
-                                        DicomInfo        *info,
-                                        GeglBuffer       *buffer);
-static void      guess_and_set_endian2 (guint16          *buf16,
-                                        gint              length);
-static void      toggle_endian2        (guint16          *buf16,
-                                        gint              length);
-static void      add_tag_pointer       (GByteArray       *group_stream,
-                                        gint              group,
-                                        gint              element,
-                                        const gchar      *value_rep,
-                                        const guint8     *data,
-                                        gint              length);
-static GSList *  dicom_add_tags        (FILE             *DICOM,
-                                        GByteArray       *group_stream,
-                                        GSList           *elements);
-static gboolean  write_group_to_file   (FILE             *DICOM,
-                                        gint              group,
-                                        GByteArray       *group_stream);
 
+typedef struct _Dicom      Dicom;
+typedef struct _DicomClass DicomClass;
 
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Dicom
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
 };
 
-MAIN ()
+struct _DicomClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define DICOM_TYPE  (dicom_get_type ())
+#define DICOM (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DICOM_TYPE, Dicom))
+
+GType                   dicom_get_type         (void) G_GNUC_CONST;
+
+static GList          * dicom_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * dicom_create_procedure (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
+
+static GimpValueArray * dicom_load             (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GFile                *file,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+static GimpValueArray * dicom_save             (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
+                                                GFile                *file,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+
+static GimpImage      * load_image             (const gchar          *filename,
+                                                GError              **error);
+static gboolean         save_image             (const gchar          *filename,
+                                                GimpImage            *image,
+                                                GimpDrawable         *drawable,
+                                                GError              **error);
+static void             dicom_loader           (guint8               *pix_buf,
+                                                DicomInfo            *info,
+                                                GeglBuffer           *buffer);
+static void             guess_and_set_endian2  (guint16              *buf16,
+                                                gint                  length);
+static void             toggle_endian2         (guint16              *buf16,
+                                                gint                  length);
+static void             add_tag_pointer        (GByteArray           *group_stream,
+                                                gint                  group,
+                                                gint                  element,
+                                                const gchar          *value_rep,
+                                                const guint8         *data,
+                                                gint                  length);
+static GSList         * dicom_add_tags         (FILE                 *dicom,
+                                                GByteArray           *group_stream,
+                                                GSList               *elements);
+static gboolean         write_group_to_file    (FILE                 *dicom,
+                                                gint                  group,
+                                                GByteArray           *group_stream);
+
+
+G_DEFINE_TYPE (Dicom, dicom, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (DICOM_TYPE)
+
 
 static void
-query (void)
+dicom_class_init (DicomClass *klass)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to load" }
-  };
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,    "image",        "Output image" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save" },
-  };
-
-  gimp_install_procedure (LOAD_PROC,
-                          "loads files of the dicom file format",
-                          "Load a file in the DICOM standard format."
-                          "The standard is defined at "
-                          "http://medical.nema.org/. The plug-in currently "
-                          "only supports reading images with uncompressed "
-                          "pixel sections.",
-                          "Dov Grobgeld",
-                          "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
-                          "2003",
-                          N_("DICOM image"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PROC, "image/x-dcm");
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "dcm,dicom",
-                                    "",
-                                    "128,string,DICM"
-                                    );
-
-  gimp_install_procedure (SAVE_PROC,
-                          "Save file in the DICOM file format",
-                          "Save an image in the medical standard DICOM image "
-                          "formats. The standard is defined at "
-                          "http://medical.nema.org/. The file format is "
-                          "defined in section 10 of the standard. The files "
-                          "are saved uncompressed and the compulsory DICOM "
-                          "tags are filled with default dummy values.",
-                          "Dov Grobgeld",
-                          "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
-                          "2003",
-                          N_("Digital Imaging and Communications in "
-                             "Medicine image"),
-                          "RGB, GRAY",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-dcm");
-  gimp_register_save_handler (SAVE_PROC, "dcm,dicom", "");
+  plug_in_class->query_procedures = dicom_query_procedures;
+  plug_in_class->create_procedure = dicom_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+dicom_init (Dicom *dicom)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
-  gint32             drawable_ID;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error  = NULL;
+}
+
+static GList *
+dicom_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+
+  list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (SAVE_PROC));
+
+  return list;
+}
+
+static GimpProcedure *
+dicom_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, LOAD_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           dicom_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("DICOM image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files of the dicom file format",
+                                        "Load a file in the DICOM standard "
+                                        "format. The standard is defined at "
+                                        "http://medical.nema.org/. The plug-in "
+                                        "currently only supports reading "
+                                        "images with uncompressed pixel "
+                                        "sections.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dov Grobgeld",
+                                      "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
+                                      "2003");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-dcm");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "dcm,dicom");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "128,string,DICM");
+    }
+  else if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           dicom_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB, GRAY");
+
+      gimp_procedure_set_menu_label (procedure,
+                                     N_("Digital Imaging and Communications in "
+                                        "Medicine image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Save file in the DICOM file format",
+                                        "Save an image in the medical "
+                                        "standard DICOM image formats. "
+                                        "The standard is defined at "
+                                        "http://medical.nema.org/. The file "
+                                        "format is defined in section 10 of "
+                                        "the standard. The files are saved "
+                                        "uncompressed and the compulsory DICOM "
+                                        "tags are filled with default dummy "
+                                        "values.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Dov Grobgeld",
+                                      "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
+                                      "2003");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-dcm");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "dcm,dicom");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+dicom_load (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GFile                *file,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  image = load_image (g_file_get_path (file), &error);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+dicom_save (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            GFile                *file,
+            const GimpValueArray *args,
+            gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  switch (run_mode)
     {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      export = gimp_export_image (&image, &drawable, "DICOM",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY);
 
-      image_ID = load_image (g_file_get_path (file), &error);
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
 
-      if (image_ID != -1)
-        {
-          *nreturn_vals = 2;
+    default:
+      break;
+    }
 
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_ID;
-        }
-      else
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      if (! save_image (g_file_get_path (file),
+                        image, drawable,
+                        &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
-
-          if (error)
-            {
-              *nreturn_vals = 2;
-              values[1].type          = GIMP_PDB_STRING;
-              values[1].data.d_string = error->message;
-            }
         }
     }
-  else if (strcmp (name, SAVE_PROC) == 0)
-    {
-      image_ID    = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
 
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          export = gimp_export_image (&image_ID, &drawable_ID, "DICOM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
 
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-
-        default:
-          break;
-        }
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (nparams != 5)
-            status = GIMP_PDB_CALLING_ERROR;
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          break;
-
-        default:
-          break;
-        }
-
-      if (status == GIMP_PDB_SUCCESS)
-        {
-          GFile *file = g_file_new_for_uri (param[3].data.d_string);
-
-          if (! save_image (g_file_get_path (file),
-                            image_ID, drawable_ID,
-                            &error))
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-
-              if (error)
-                {
-                  *nreturn_vals = 2;
-                  values[1].type          = GIMP_PDB_STRING;
-                  values[1].data.d_string = error->message;
-                }
-            }
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
-    }
-  else
-    {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 /**
@@ -308,52 +318,52 @@ static void
 add_parasites_to_image (gpointer data,
                         gpointer user_data)
 {
-  GimpParasite *parasite = (GimpParasite *) data;
-  gint32       *image_ID = (gint32 *) user_data;
+  GimpParasite *parasite = data;
+  GimpImage    *image    = user_data;
 
-  gimp_image_attach_parasite (*image_ID, parasite);
+  gimp_image_attach_parasite (image, parasite);
   gimp_parasite_free (parasite);
 }
 
-static gint32
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint32 volatile image_ID          = -1;
-  gint32          layer_ID;
-  GeglBuffer     *buffer;
-  GSList         *elements          = NULL;
-  FILE           *DICOM;
-  gchar           buf[500];    /* buffer for random things like scanning */
-  DicomInfo      *dicominfo;
-  guint           width             = 0;
-  guint           height            = 0;
-  gint            samples_per_pixel = 0;
-  gint            bpp               = 0;
-  gint            bits_stored       = 0;
-  gint            high_bit          = 0;
-  guint8         *pix_buf           = NULL;
-  gboolean        is_signed         = FALSE;
-  guint8          in_sequence       = 0;
+  GimpImage *image = NULL;
+  GimpLayer *layer;
+  GeglBuffer*buffer;
+  GSList    *elements          = NULL;
+  FILE      *dicom;
+  gchar      buf[500];    /* buffer for random things like scanning */
+  DicomInfo *dicominfo;
+  guint      width             = 0;
+  guint      height            = 0;
+  gint       samples_per_pixel = 0;
+  gint       bpp               = 0;
+  gint       bits_stored       = 0;
+  gint       high_bit          = 0;
+  guint8    *pix_buf           = NULL;
+  gboolean   is_signed         = FALSE;
+  guint8     in_sequence       = 0;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  DICOM = g_fopen (filename, "rb");
+  dicom = g_fopen (filename, "rb");
 
-  if (! DICOM)
+  if (! dicom)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return -1;
+      return NULL;
     }
 
   /* allocate the necessary structures */
   dicominfo = g_new0 (DicomInfo, 1);
 
   /* Parse the file */
-  fread (buf, 1, 128, DICOM); /* skip past buffer */
+  fread (buf, 1, 128, dicom); /* skip past buffer */
 
   /* Check for unsupported formats */
   if (g_ascii_strncasecmp (buf, "PAPYRUS", 7) == 0)
@@ -362,22 +372,22 @@ load_image (const gchar  *filename,
                  "This plug-in does not support this type yet.",
                  gimp_filename_to_utf8 (filename));
       g_free (dicominfo);
-      fclose (DICOM);
-      return -1;
+      fclose (dicom);
+      return NULL;
     }
 
-  fread (buf, 1, 4, DICOM); /* This should be dicom */
+  fread (buf, 1, 4, dicom); /* This should be dicom */
   if (g_ascii_strncasecmp (buf,"DICM",4) != 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a DICOM file."),
                    gimp_filename_to_utf8 (filename));
       g_free (dicominfo);
-      fclose (DICOM);
-      return -1;
+      fclose (dicom);
+      return NULL;
     }
 
-  while (!feof (DICOM))
+  while (!feof (dicom))
     {
       guint16  group_word;
       guint16  element_word;
@@ -389,15 +399,15 @@ load_image (const gchar  *filename,
       gboolean __attribute__((unused))do_toggle_endian = FALSE;
       gboolean implicit_encoding = FALSE;
 
-      if (fread (&group_word, 1, 2, DICOM) == 0)
+      if (fread (&group_word, 1, 2, dicom) == 0)
         break;
       group_word = g_ntohs (GUINT16_SWAP_LE_BE (group_word));
 
-      fread (&element_word, 1, 2, DICOM);
+      fread (&element_word, 1, 2, dicom);
       element_word = g_ntohs (GUINT16_SWAP_LE_BE (element_word));
 
       tag = (group_word << 16) | element_word;
-      fread(value_rep, 2, 1, DICOM);
+      fread(value_rep, 2, 1, dicom);
       value_rep[2] = 0;
 
       /* Check if the value rep looks valid. There probably is a
@@ -429,7 +439,7 @@ load_image (const gchar  *filename,
 
           /* For implicit value_values the length is always four bytes,
              so we need to read another two. */
-          fread (&element_length_chars[2], 1, 2, DICOM);
+          fread (&element_length_chars[2], 1, 2, dicom);
 
           /* Now cast to integer and insert into element_length */
           element_length =
@@ -441,8 +451,8 @@ load_image (const gchar  *filename,
           || strncmp (value_rep, "SQ", 2) == 0
           || strncmp (value_rep, "UN", 2) == 0)
         {
-          fread (&element_length, 1, 2, DICOM); /* skip two bytes */
-          fread (&element_length, 1, 4, DICOM);
+          fread (&element_length, 1, 2, dicom); /* skip two bytes */
+          fread (&element_length, 1, 4, dicom);
           element_length = g_ntohl (GUINT32_SWAP_LE_BE (element_length));
         }
       /* Short length */
@@ -450,7 +460,7 @@ load_image (const gchar  *filename,
         {
           guint16 el16;
 
-          fread (&el16, 1, 2, DICOM);
+          fread (&el16, 1, 2, dicom);
           element_length = g_ntohs (GUINT16_SWAP_LE_BE (el16));
         }
 
@@ -484,7 +494,7 @@ load_image (const gchar  *filename,
       /* Read contents. Allocate a bit more to make room for casts to int
        below. */
       value = g_new0 (guint8, element_length + 4);
-      fread (value, 1, element_length, DICOM);
+      fread (value, 1, element_length, dicom);
 
       /* ignore everything inside of a sequence */
       if (in_sequence)
@@ -561,8 +571,8 @@ load_image (const gchar  *filename,
             {
               /*
                * at this point, the image has not yet been created, so
-               * image_ID is not valid.  keep the parasite around
-               * until we're able to attach it.
+               * image is not valid.  keep the parasite around until
+               * we're able to attach it.
                */
 
               /* add to our list of parasites to be added (prepending
@@ -608,20 +618,20 @@ load_image (const gchar  *filename,
 
   /* Create a new image of the proper size and associate the filename with it.
    */
-  image_ID = gimp_image_new (dicominfo->width, dicominfo->height,
-                             (dicominfo->samples_per_pixel >= 3 ?
-                              GIMP_RGB : GIMP_GRAY));
-  gimp_image_set_filename (image_ID, filename);
+  image = gimp_image_new (dicominfo->width, dicominfo->height,
+                          (dicominfo->samples_per_pixel >= 3 ?
+                           GIMP_RGB : GIMP_GRAY));
+  gimp_image_set_filename (image, filename);
 
-  layer_ID = gimp_layer_new (image_ID, _("Background"),
-                             dicominfo->width, dicominfo->height,
-                             (dicominfo->samples_per_pixel >= 3 ?
-                              GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
-                             100,
-                             gimp_image_get_default_new_layer_mode (image_ID));
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+  layer = gimp_layer_new (image, _("Background"),
+                          dicominfo->width, dicominfo->height,
+                          (dicominfo->samples_per_pixel >= 3 ?
+                           GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
+  gimp_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
 #if GUESS_ENDIAN
   if (bpp == 16)
@@ -637,18 +647,18 @@ load_image (const gchar  *filename,
        */
       elements = g_slist_reverse (elements);
       /* and add each one to the image */
-      g_slist_foreach (elements, add_parasites_to_image, (gpointer) &image_ID);
+      g_slist_foreach (elements, add_parasites_to_image, image);
       g_slist_free (elements);
     }
 
   g_free (pix_buf);
   g_free (dicominfo);
 
-  fclose (DICOM);
+  fclose (dicom);
 
   g_object_unref (buffer);
 
-  return image_ID;
+  return image;
 }
 
 static void
@@ -1030,22 +1040,22 @@ dicom_element_find_by_num (GSList  *head,
 
 /**
  * dicom_get_elements_list:
- * @image_ID: the image_ID from which to read parasites in order to
- *            retrieve the dicom elements
+ * @image: the image from which to read parasites in order to
+ *         retrieve the dicom elements
  *
  * Reads all DICOMELEMENTs from the specified image's parasites.
  *
  * Returns: a GSList of all known dicom elements
 **/
 static GSList *
-dicom_get_elements_list (gint32 image_ID)
+dicom_get_elements_list (GimpImage *image)
 {
   GSList        *elements = NULL;
   GimpParasite  *parasite;
   gchar        **parasites = NULL;
   gint           count = 0;
 
-  parasites = gimp_image_get_parasite_list (image_ID, &count);
+  parasites = gimp_image_get_parasite_list (image, &count);
 
   if (parasites && count > 0)
     {
@@ -1055,7 +1065,7 @@ dicom_get_elements_list (gint32 image_ID)
         {
           if (strncmp (parasites[i], "dcm", 3) == 0)
             {
-              parasite = gimp_image_get_parasite (image_ID, parasites[i]);
+              parasite = gimp_image_get_parasite (image, parasites[i]);
 
               if (parasite)
                 {
@@ -1310,11 +1320,11 @@ dicom_ensure_required_elements_present (GSList *elements,
  */
 static gboolean
 save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
+            GimpImage    *image,
+            GimpDrawable *drawable,
             GError      **error)
 {
-  FILE          *DICOM;
+  FILE          *dicom;
   GimpImageType  drawable_type;
   GeglBuffer    *buffer;
   const Babl    *format;
@@ -1333,10 +1343,10 @@ save_image (const gchar  *filename,
   guint16        eight = 8;
   guchar        *src = NULL;
 
-  drawable_type = gimp_drawable_type (drawable_ID);
+  drawable_type = gimp_drawable_type (drawable);
 
   /*  Make sure we're not saving an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable_ID))
+  if (gimp_drawable_has_alpha (drawable))
     {
       g_message (_("Cannot save images with alpha channel."));
       return FALSE;
@@ -1368,9 +1378,9 @@ save_image (const gchar  *filename,
   g_date_free (date);
 
   /* Open the output file. */
-  DICOM = g_fopen (filename, "wb");
+  dicom = g_fopen (filename, "wb");
 
-  if (!DICOM)
+  if (! dicom)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
@@ -1378,7 +1388,7 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -1389,13 +1399,13 @@ save_image (const gchar  *filename,
     gint   i;
 
     for (i = 0; i < 0x80; i++)
-      fwrite (&val, 1, 1, DICOM);
+      fwrite (&val, 1, 1, dicom);
   }
-  fprintf (DICOM, "DICM");
+  fprintf (dicom, "DICM");
 
   group_stream = g_byte_array_new ();
 
-  elements = dicom_get_elements_list (image_ID);
+  elements = dicom_get_elements_list (image);
   if (0/*replaceElementsList*/)
     {
       /* to do */
@@ -1455,7 +1465,7 @@ save_image (const gchar  *filename,
                                     width * height * samples_per_pixel,
                                     (guint8 *) src);
 
-      elements = dicom_add_tags (DICOM, group_stream, elements);
+      elements = dicom_add_tags (dicom, group_stream, elements);
 
       g_free (src);
     }
@@ -1464,7 +1474,7 @@ save_image (const gchar  *filename,
       retval = FALSE;
     }
 
-  fclose (DICOM);
+  fclose (dicom);
 
   dicom_elements_destroy (elements);
   g_byte_array_free (group_stream, TRUE);
@@ -1486,7 +1496,7 @@ dicom_print_tags(gpointer data,
                  gpointer user_data)
 {
   struct {
-    FILE       *DICOM;
+    FILE       *dicom;
     GByteArray *group_stream;
     gint        last_group;
   } *d = user_data;
@@ -1494,7 +1504,7 @@ dicom_print_tags(gpointer data,
 
   if (d->last_group >= 0 && e->group_word != d->last_group)
     {
-      write_group_to_file (d->DICOM, d->last_group, d->group_stream);
+      write_group_to_file (d->dicom, d->last_group, d->group_stream);
     }
 
   add_tag_pointer (d->group_stream,
@@ -1505,30 +1515,30 @@ dicom_print_tags(gpointer data,
 
 /**
  * dicom_add_tags:
- * @DICOM:        File pointer to which @elements should be written.
+ * @dicom:        File pointer to which @elements should be written.
  * @group_stream: byte array used for staging Dicom Element groups
  *                before flushing them to disk.
  * @elements:     GSList container the Dicom Element elements from
  *
- * Writes all Dicom tags in @elements to the file @DICOM
+ * Writes all Dicom tags in @elements to the file @dicom
  *
  * Returns: the new head of @elements
 **/
 static GSList *
-dicom_add_tags (FILE       *DICOM,
+dicom_add_tags (FILE       *dicom,
                 GByteArray *group_stream,
                 GSList     *elements)
 {
   struct {
-    FILE       *DICOM;
+    FILE       *dicom;
     GByteArray *group_stream;
     gint        last_group;
-  } data = { DICOM, group_stream, -1 };
+  } data = { dicom, group_stream, -1 };
 
   elements = g_slist_sort (elements, dicom_elements_compare);
   g_slist_foreach (elements, dicom_print_tags, &data);
   /* make sure that the final group is written to the file */
-  write_group_to_file (data.DICOM, data.last_group, data.group_stream);
+  write_group_to_file (data.dicom, data.last_group, data.group_stream);
 
   return elements;
 }
@@ -1615,7 +1625,7 @@ add_tag_pointer (GByteArray   *group_stream,
  * write_group_to_file.
  */
 static gboolean
-write_group_to_file (FILE       *DICOM,
+write_group_to_file (FILE       *dicom,
                      gint        group,
                      GByteArray *group_stream)
 {
@@ -1626,20 +1636,20 @@ write_group_to_file (FILE       *DICOM,
   /* Add header to the group and output it */
   swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (group));
 
-  fwrite ((gchar *) &swapped16, 1, 2, DICOM);
-  fputc (0, DICOM);
-  fputc (0, DICOM);
-  fputc ('U', DICOM);
-  fputc ('L', DICOM);
+  fwrite ((gchar *) &swapped16, 1, 2, dicom);
+  fputc (0, dicom);
+  fputc (0, dicom);
+  fputc ('U', dicom);
+  fputc ('L', dicom);
 
   swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (4));
-  fwrite ((gchar *) &swapped16, 1, 2, DICOM);
+  fwrite ((gchar *) &swapped16, 1, 2, dicom);
 
   swapped32 = g_ntohl (GUINT32_SWAP_LE_BE (group_stream->len));
-  fwrite ((gchar *) &swapped32, 1, 4, DICOM);
+  fwrite ((gchar *) &swapped32, 1, 4, dicom);
 
   if (fwrite (group_stream->data,
-              1, group_stream->len, DICOM) != group_stream->len)
+              1, group_stream->len, dicom) != group_stream->len)
     retval = FALSE;
 
   g_byte_array_set_size (group_stream, 0);

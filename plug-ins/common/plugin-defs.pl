@@ -21,7 +21,7 @@
     'file-csource' => { ui => 1, gegl => 1 },
     'file-compressor' => { gio => 1, libdep => 'Z:BZIP2:LZMA', cflags => 'LZMA_CFLAGS' },
     'file-desktop-link' => { gio => 1 },
-    'file-dicom' => { ui => 1, gegl => 1, cflags => '-fno-strict-aliasing', old_api => 1 },
+    'file-dicom' => { ui => 1, gegl => 1, cflags => '-fno-strict-aliasing' },
     'file-gbr' => { ui => 1, gegl => 1 },
     'file-gegl' => { ui => 1, gegl => 1, old_api => 1 },
     'file-gif-load' => { gegl => 1 },
