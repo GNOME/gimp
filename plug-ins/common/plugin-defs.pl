@@ -18,7 +18,7 @@
     'destripe' => { ui => 1, gegl => 1 },
     'file-aa' => { ui => 1, gegl => 1, optional => 1, libs => 'AA_LIBS', old_api => 1 },
     'file-cel' => { ui => 1, gegl => 1, old_api => 1 },
-    'file-csource' => { ui => 1, gegl => 1, old_api => 1 },
+    'file-csource' => { ui => 1, gegl => 1 },
     'file-compressor' => { gio => 1, libdep => 'Z:BZIP2:LZMA', cflags => 'LZMA_CFLAGS' },
     'file-desktop-link' => { gio => 1 },
     'file-dicom' => { ui => 1, gegl => 1, cflags => '-fno-strict-aliasing', old_api => 1 },

@@ -608,8 +608,6 @@ file_compressor_LDADD = \
 	$(INTLLIBS)		\
 	$(file_compressor_RC)
 
-file_csource_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_csource_SOURCES = \
 	file-csource.c
 

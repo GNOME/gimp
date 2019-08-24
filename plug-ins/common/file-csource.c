@@ -50,28 +50,49 @@ typedef struct
 } Config;
 
 
-static void     query           (void);
-static void     run             (const gchar      *name,
-                                 gint              nparams,
-                                 const GimpParam  *param,
-                                 gint             *nreturn_vals,
-                                 GimpParam       **return_vals);
+typedef struct _Csource      Csource;
+typedef struct _CsourceClass CsourceClass;
 
-static gboolean save_image      (GFile            *file,
-                                 Config           *config,
-                                 gint32            image_ID,
-                                 gint32            drawable_ID,
-                                 GError          **error);
-static gboolean run_save_dialog (Config           *config);
-
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Csource
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
 };
+
+struct _CsourceClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define CSOURCE_TYPE  (csource_get_type ())
+#define CSOURCE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CSOURCE_TYPE, Csource))
+
+GType                   csource_get_type         (void) G_GNUC_CONST;
+
+static GList          * csource_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * csource_create_procedure (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray * csource_save             (GimpProcedure        *procedure,
+                                                  GimpRunMode           run_mode,
+                                                  GimpImage            *image,
+                                                  GimpDrawable         *drawable,
+                                                  GFile                *file,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
+
+static gboolean         save_image               (GFile                *file,
+                                                  Config               *config,
+                                                  GimpImage            *image,
+                                                  GimpDrawable         *drawable,
+                                                  GError              **error);
+static gboolean         save_dialog              (Config               *config);
+
+
+G_DEFINE_TYPE (Csource, csource, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (CSOURCE_TYPE)
+
 
 static Config config =
 {
@@ -87,148 +108,150 @@ static Config config =
 };
 
 
-MAIN ()
-
-
 static void
-query (void)
+csource_class_init (CsourceClass *klass)
 {
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (SAVE_PROC,
-                          "Dump image data in RGB(A) format for C source",
-                          "CSource cannot be run non-interactively.",
-                          "Tim Janik",
-                          "Tim Janik",
-                          "1999",
-                          N_("C source code"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "text/x-csrc");
-  gimp_register_file_handler_remote (SAVE_PROC);
-  gimp_register_save_handler (SAVE_PROC, "c", "");
+  plug_in_class->query_procedures = csource_query_procedures;
+  plug_in_class->create_procedure = csource_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+csource_init (Csource *csource)
 {
-  static GimpParam   values[2];
-  GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
-  GError            *error  = NULL;
+}
+
+static GList *
+csource_query_procedures (GimpPlugIn *plug_in)
+{
+  return  g_list_append (NULL, g_strdup (SAVE_PROC));
+}
+
+static GimpProcedure *
+csource_create_procedure (GimpPlugIn  *plug_in,
+                          const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           csource_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("C source code"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Dump image data in RGB(A) format "
+                                        "for C source",
+                                        "CSource cannot be run non-interactively.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Tim Janik",
+                                      "Tim Janik",
+                                      "1999");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-csrc");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "c");
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+csource_save (GimpProcedure        *procedure,
+              GimpRunMode           run_mode,
+              GimpImage            *image,
+              GimpDrawable         *drawable,
+              GFile                *file,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
+  GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export       = GIMP_EXPORT_CANCEL;
+  GimpParasite      *parasite;
+  gchar             *x;
+  GError            *error        = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  run_mode = param[0].data.d_int32;
+  if (run_mode != GIMP_RUN_INTERACTIVE)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CALLING_ERROR,
+                                             NULL);
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+  gimp_get_data (SAVE_PROC, &config);
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  config.prefixed_name = "gimp_image";
+  config.comment       = NULL;
+  config.alpha         = gimp_drawable_has_alpha (drawable);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE &&
-      strcmp (name, SAVE_PROC) == 0)
+  parasite = gimp_image_get_parasite (image, "gimp-comment");
+  if (parasite)
     {
-      gint32         image_ID    = param[1].data.d_int32;
-      gint32         drawable_ID = param[2].data.d_int32;
-      GimpParasite  *parasite;
-      gchar         *x;
+      config.comment = g_strndup (gimp_parasite_data (parasite),
+                                  gimp_parasite_data_size (parasite));
+      gimp_parasite_free (parasite);
+    }
+  x = config.comment;
 
-      gimp_get_data (SAVE_PROC, &config);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      config.prefixed_name = "gimp_image";
-      config.comment       = NULL;
-      config.alpha         = gimp_drawable_has_alpha (drawable_ID);
+  export = gimp_export_image (&image, &drawable, "C Source",
+                              GIMP_EXPORT_CAN_HANDLE_RGB |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
-      parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
-      if (parasite)
+  if (export == GIMP_EXPORT_CANCEL)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_CANCEL,
+                                             NULL);
+
+  if (save_dialog (&config))
+    {
+      if (x != config.comment &&
+          ! (x && config.comment && strcmp (x, config.comment) == 0))
         {
-          config.comment = g_strndup (gimp_parasite_data (parasite),
-                                      gimp_parasite_data_size (parasite));
-          gimp_parasite_free (parasite);
-        }
-      x = config.comment;
-
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-      export = gimp_export_image (&image_ID, &drawable_ID, "C Source",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-      if (export == GIMP_EXPORT_CANCEL)
-        {
-          values[0].data.d_status = GIMP_PDB_CANCEL;
-          return;
-        }
-
-      if (run_save_dialog (&config))
-        {
-          if (x != config.comment &&
-              !(x && config.comment && strcmp (x, config.comment) == 0))
+          if (! config.comment || ! config.comment[0])
             {
-              if (!config.comment || !config.comment[0])
-                {
-                  gimp_image_detach_parasite (image_ID, "gimp-comment");
-                }
-              else
-                {
-                  parasite = gimp_parasite_new ("gimp-comment",
-                                                GIMP_PARASITE_PERSISTENT,
-                                                strlen (config.comment) + 1,
-                                                config.comment);
-                  gimp_image_attach_parasite (image_ID, parasite);
-                  gimp_parasite_free (parasite);
-                }
-            }
-
-          if (! save_image (g_file_new_for_uri (param[3].data.d_string),
-                            &config, image_ID, drawable_ID, &error))
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-
-              if (error)
-                {
-                  *nreturn_vals = 2;
-                  values[1].type          = GIMP_PDB_STRING;
-                  values[1].data.d_string = error->message;
-                }
+              gimp_image_detach_parasite (image, "gimp-comment");
             }
           else
             {
-              gimp_set_data (SAVE_PROC, &config, sizeof (config));
+              parasite = gimp_parasite_new ("gimp-comment",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (config.comment) + 1,
+                                            config.comment);
+              gimp_image_attach_parasite (image, parasite);
+              gimp_parasite_free (parasite);
             }
+        }
+
+      if (! save_image (file, &config, image, drawable,
+                        &error))
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
       else
         {
-          status = GIMP_PDB_CANCEL;
+          gimp_set_data (SAVE_PROC, &config, sizeof (config));
         }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_ID);
     }
   else
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      status = GIMP_PDB_CANCEL;
     }
 
-  values[0].data.d_status = status;
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
@@ -447,16 +470,16 @@ save_uchar (GOutputStream  *output,
 }
 
 static gboolean
-save_image (GFile   *file,
-            Config  *config,
-            gint32   image_ID,
-            gint32   drawable_ID,
-            GError **error)
+save_image (GFile         *file,
+            Config        *config,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GError        **error)
 {
   GOutputStream *output;
   GeglBuffer    *buffer;
   GCancellable  *cancellable;
-  GimpImageType  drawable_type = gimp_drawable_type (drawable_ID);
+  GimpImageType  drawable_type = gimp_drawable_type (drawable);
   gchar         *s_uint_8, *s_uint, *s_char, *s_null;
   guint          c;
   gchar         *macro_name;
@@ -486,12 +509,12 @@ save_image (GFile   *file,
       return FALSE;
     }
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  if (gimp_drawable_has_alpha (drawable_ID))
+  if (gimp_drawable_has_alpha (drawable))
     drawable_format = babl_format ("R'G'B'A u8");
   else
     drawable_format = babl_format ("R'G'B' u8");
@@ -883,7 +906,7 @@ rgb565_toggle_button_update (GtkWidget *toggle,
 }
 
 static gboolean
-run_save_dialog (Config *config)
+save_dialog (Config *config)
 {
   GtkWidget     *dialog;
   GtkWidget     *vbox;
