@@ -1209,8 +1209,6 @@ file_xpm_LDADD = \
 	$(INTLLIBS)		\
 	$(file_xpm_RC)
 
-file_xwd_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_xwd_SOURCES = \
 	file-xwd.c
 
