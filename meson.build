@@ -760,11 +760,11 @@ python3_required_version = '>=3.6.0'
 
 if get_option('python') == 'never'
   warning('''
-  You disabled the installation of core Python plug-ins. This is discouraged
-  as it won't provide the full GIMP experience.
-  Note that you may install the Python plug-ins even if you have no Python
-  interpreter at build-time by passing the configure option -Dpython=auto.
-  Just make sure that a Python @0@ interpreter is available at run-time.
+    You disabled the installation of core Python plug-ins. This is discouraged
+    as it won't provide the full GIMP experience.
+    Note that you may install the Python plug-ins even if you have no Python
+    interpreter at build-time by passing the configure option -Dpython=always.
+    Just make sure that a Python @0@ interpreter is available at run-time.
   '''.format(python3_required_version))
 
   have_python = false
@@ -794,7 +794,7 @@ else
     error('''
     Python @0@ or PyGObject was not found.
     Note that you may install the Python plug-ins even if you have no Python
-    interpreter at build-time by passing the configure option -Dpython=auto.
+    interpreter at build-time by passing the configure option -Dpython=always.
     Just make sure that a Python @0@ interpreter is available at run-time.
     '''.format(python3_required_version))
   endif
@@ -818,7 +818,7 @@ if get_option('javascript') == 'never'
     You disabled the installation of core Javascript plug-ins. This is
     discouraged as it won't provide the full GIMP experience.
     Note that you may install the Javascript plug-ins even if you have no GJS
-    interpreter at build-time by passing the configure option -Djavascript=auto.
+    interpreter at build-time by passing the configure option -Djavascript=always.
     Just make sure that the GJS interpreter is available at run-time.
   ''')
   have_javascript = false
@@ -832,7 +832,7 @@ else
     error('''
     GJS was not found.
     Note that you may install the Javascript plug-ins even if you have no GJS
-    interpreter at build-time by passing the configure option -Djavascript=auto.
+    interpreter at build-time by passing the configure option -Djavascript=always.
     Just make sure that the GJS interpreter is available at run-time.
     ''')
   endif
@@ -856,7 +856,7 @@ if get_option('lua') == 'never'
     You disabled the installation of core Lua plug-ins. This is discouraged
     as it won't provide the full GIMP experience.
     Note that you may install the Lua plug-ins even if you have no Lua LGI
-    interpreter at build-time by passing the configure option -Dlua=auto.
+    interpreter at build-time by passing the configure option -Dlua=always.
     Just make sure that the Lua LGI interpreter is available at run-time.
   ''')
   have_lua = false
@@ -870,7 +870,7 @@ else
     error('''
     Luajit was not found.
     Note that you may install the Lua plug-ins even if you have no Lua LGI
-    interpreter at build-time by passing the configure option -Dlua=auto.
+    interpreter at build-time by passing the configure option -Dlua=always.
     Just make sure that the Lua LGI interpreter is available at run-time.
     ''')
   endif
