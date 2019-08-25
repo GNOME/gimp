@@ -678,8 +678,6 @@ file_gbr_LDADD = \
 	$(INTLLIBS)		\
 	$(file_gbr_RC)
 
-file_gegl_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_gegl_SOURCES = \
 	file-gegl.c
 

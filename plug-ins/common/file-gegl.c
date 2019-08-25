@@ -53,18 +53,53 @@ struct _FileFormat
 };
 
 
-static void     query      (void);
-static void     run        (const gchar      *name,
-                            gint              nparams,
-                            const GimpParam  *param,
-                            gint             *nreturn_vals,
-                            GimpParam       **return_vals);
-static gint32   load_image (const gchar      *filename,
-                            GError          **error);
-static gboolean save_image (const gchar      *filename,
-                            gint32            image_ID,
-                            gint32            drawable_ID,
-                            GError          **error);
+typedef struct _Goat      Goat;
+typedef struct _GoatClass GoatClass;
+
+struct _Goat
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _GoatClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define GOAT_TYPE  (goat_get_type ())
+#define GOAT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOAT_TYPE, Goat))
+
+GType                   goat_get_type         (void) G_GNUC_CONST;
+
+static GList          * goat_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * goat_load             (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+static GimpValueArray * goat_save             (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static GimpImage      * load_image            (const gchar          *filename,
+                                               GError              **error);
+static gboolean         save_image            (const gchar          *filename,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GError              **error);
+
+
+G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GOAT_TYPE)
 
 
 static const FileFormat file_formats[] =
@@ -99,209 +134,183 @@ static const FileFormat file_formats[] =
 };
 
 
-const GimpPlugInInfo PLUG_IN_INFO =
+static void
+goat_class_init (GoatClass *klass)
 {
-  NULL,  /* init_proc */
-  NULL,  /* quit_proc */
-  query, /* query proc */
-  run,   /* run_proc */
-};
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-MAIN ()
+  plug_in_class->query_procedures = goat_query_procedures;
+  plug_in_class->create_procedure = goat_create_procedure;
+}
 
 static void
-query (void)
+goat_init (Goat *goat)
 {
-  static const GimpParamDef load_args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered" },
-  };
+}
 
-  static const GimpParamDef load_return_vals[] =
-  {
-    { GIMP_PDB_IMAGE,  "image",        "Output image" }
-  };
-
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
-  };
-
-  gint i;
+static GList *
+goat_query_procedures (GimpPlugIn *plug_in)
+{
+  GList *list = NULL;
+  gint   i;
 
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
       const FileFormat *format = &file_formats[i];
 
       if (format->load_proc)
-        {
-          gimp_install_procedure (format->load_proc,
-                                  format->load_blurb,
-                                  format->load_help,
-                                  "Simon Budig",
-                                  "Simon Budig",
-                                  "2012",
-                                  format->file_type,
-                                  NULL,
-                                  GIMP_PLUGIN,
-                                  G_N_ELEMENTS (load_args),
-                                  G_N_ELEMENTS (load_return_vals),
-                                  load_args, load_return_vals);
-
-          gimp_register_file_handler_mime (format->load_proc,
-                                           format->mime_type);
-          gimp_register_magic_load_handler (format->load_proc,
-                                            format->extensions,
-                                            "",
-                                            format->magic);
-        }
+        list = g_list_append (list, g_strdup (format->load_proc));
 
       if (format->save_proc)
-        {
-          gimp_install_procedure (format->save_proc,
-                                  format->save_blurb,
-                                  format->save_help,
-                                  "Simon Budig",
-                                  "Simon Budig",
-                                  "2012",
-                                  format->file_type,
-                                  "*",
-                                  GIMP_PLUGIN,
-                                  G_N_ELEMENTS (save_args), 0,
-                                  save_args, NULL);
-
-          gimp_register_file_handler_mime (format->save_proc,
-                                           format->mime_type);
-          gimp_register_save_handler (format->save_proc,
-                                      format->extensions, "");
-        }
+        list = g_list_append (list, g_strdup (format->save_proc));
     }
+
+  return list;
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpProcedure *
+goat_create_procedure (GimpPlugIn  *plug_in,
+                      const gchar *name)
 {
-  static GimpParam   values[2];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
-  gint               image_ID;
-  gint               drawable_ID;
-  GError            *error = NULL;
-  gint               i;
-
-  INIT_I18N ();
-  gegl_init (NULL, NULL);
-
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  GimpProcedure *procedure = NULL;
+  gint           i;
 
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
       const FileFormat *format = &file_formats[i];
 
-      if (format->load_proc && !strcmp (name, format->load_proc))
+      if (! g_strcmp0 (name, format->load_proc))
         {
-          GFile *file = g_file_new_for_uri (param[1].data.d_string);
+          procedure = gimp_load_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                               goat_load,
+                                               (gpointer) format, NULL);
 
-          image_ID = load_image (g_file_get_path (file), &error);
+          gimp_procedure_set_menu_label (procedure, format->file_type);
 
-          if (image_ID != -1)
-            {
-              *nreturn_vals = 2;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
+          gimp_procedure_set_documentation (procedure,
+                                            format->load_blurb,
+                                            format->load_help,
+                                            name);
 
-          break;
+          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                              format->mime_type);
+          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                              format->extensions);
+          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                          format->magic);
         }
-      else if (format->save_proc && !strcmp (name, format->save_proc))
+      else if (! g_strcmp0 (name, format->save_proc))
         {
-          GFile *file = g_file_new_for_uri (param[3].data.d_string);
+          procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                               goat_save,
+                                               (gpointer) format, NULL);
 
-          GimpExportReturn export = GIMP_EXPORT_CANCEL;
+          gimp_procedure_set_image_types (procedure, "*");
 
-          image_ID    = param[1].data.d_int32;
-          drawable_ID = param[2].data.d_int32;
+          gimp_procedure_set_menu_label (procedure, format->file_type);
 
-          /*  eventually export the image */
-          switch (run_mode)
-            {
-            case GIMP_RUN_INTERACTIVE:
-            case GIMP_RUN_WITH_LAST_VALS:
-              gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          gimp_procedure_set_documentation (procedure,
+                                            format->save_blurb,
+                                            format->save_help,
+                                            name);
 
-              export = gimp_export_image (&image_ID, &drawable_ID, "GEGL",
-                                          GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                          GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                          GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                          GIMP_EXPORT_CAN_HANDLE_ALPHA);
-
-              if (export == GIMP_EXPORT_CANCEL)
-                {
-                  *nreturn_vals = 1;
-                  values[0].data.d_status = GIMP_PDB_CANCEL;
-                  return;
-                }
-              break;
-
-            default:
-              break;
-            }
-
-          if (! save_image (g_file_get_path (file),
-                            image_ID, drawable_ID,
-                            &error))
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-
-          if (export == GIMP_EXPORT_EXPORT)
-            gimp_image_delete (image_ID);
-
-          break;
+          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                              format->mime_type);
+          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                              format->extensions);
         }
     }
 
-  if (i == G_N_ELEMENTS (file_formats))
-    status = GIMP_PDB_CALLING_ERROR;
-
-  if (status != GIMP_PDB_SUCCESS && error)
-    {
-      *nreturn_vals = 2;
-      values[1].type           = GIMP_PDB_STRING;
-      values[1].data.d_string  = error->message;
-    }
-
-  values[0].data.d_status = status;
-
-  gegl_exit ();
+  return procedure;
 }
 
-static gint32
+static GimpValueArray *
+goat_load (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  image = load_image (g_file_get_path (file), &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+goat_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  GError            *error = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  switch (run_mode)
+    {
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
+      export = gimp_export_image (&image, &drawable, "GEGL",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+      if (export == GIMP_EXPORT_CANCEL)
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
+      break;
+
+    default:
+      break;
+    }
+
+  if (! save_image (g_file_get_path (file),
+                    image, drawable,
+                    &error))
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static GimpImage *
 load_image (const gchar  *filename,
             GError      **error)
 {
-  gint32             image_ID = -1;
-  gint32             layer_ID;
+  GimpImage         *image;
+  GimpLayer         *layer;
   GimpImageType      image_type;
   GimpImageBaseType  base_type;
   GimpPrecision      precision;
@@ -340,7 +349,7 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s'"),
                    gimp_filename_to_utf8 (filename));
-      return -1;
+      return NULL;
     }
 
   gimp_progress_update (0.33);
@@ -425,18 +434,19 @@ load_image (const gchar  *filename,
     }
 
 
-  image_ID = gimp_image_new_with_precision (width, height,
-                                            base_type, precision);
-  gimp_image_set_filename (image_ID, filename);
+  image = gimp_image_new_with_precision (width, height,
+                                         base_type, precision);
+  gimp_image_set_filename (image, filename);
 
-  layer_ID = gimp_layer_new (image_ID,
-                             _("Background"),
-                             width, height,
-                             image_type,
-                             100,
-                             gimp_image_get_default_new_layer_mode (image_ID));
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
-  dest_buf = gimp_drawable_get_buffer (layer_ID);
+  layer = gimp_layer_new (image,
+                          _("Background"),
+                          width, height,
+                          image_type,
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
+  gimp_image_insert_layer (image, layer, NULL, 0);
+
+  dest_buf = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   gimp_progress_update (0.66);
 
@@ -447,21 +457,21 @@ load_image (const gchar  *filename,
 
   gimp_progress_update (1.0);
 
-  return image_ID;
+  return image;
 }
 
 static gboolean
-save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
-            GError      **error)
+save_image (const gchar   *filename,
+            GimpImage     *image,
+            GimpDrawable  *drawable,
+            GError       **error)
 {
   GeglNode   *graph;
   GeglNode   *source;
   GeglNode   *sink;
   GeglBuffer *src_buf;
 
-  src_buf = gimp_drawable_get_buffer (drawable_ID);
+  src_buf = gimp_drawable_get_buffer (drawable);
 
   graph = gegl_node_new ();
 
