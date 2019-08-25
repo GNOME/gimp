@@ -127,6 +127,13 @@ if webkit.found()
   }
 endif
 
+if libaa.found()
+  common_plugins_list += {
+    'name': 'file-aa',
+    'deps': [ libaa, ],
+  }
+endif
+
 foreach plugin : common_plugins_list
   plugin_name = plugin.get('name')
   plugin_sources = [ plugin.get('sources', plugin_name + '.c') ]
