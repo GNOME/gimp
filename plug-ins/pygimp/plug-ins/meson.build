@@ -1,4 +1,4 @@
-plugins_subdirs = [
+plugins = [
   'colorxhtml',
   'file-openraster',
   'foggify',
@@ -13,7 +13,7 @@ plugins_subdirs = [
 ]
 
 if not stable
-  plugins_subdirs += [
+  plugins += [
     'benchmark-foreground-extract',
     'clothify',
     'shadow_bevel',
@@ -22,7 +22,9 @@ if not stable
   ]
 endif
 
+foreach plugin : plugins
+  name = plugin
+  srcs = name + '.py'
 
-install_subdir(plugins_subdirs,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
-)
+  install_data(srcs, install_dir: gimpplugindir / name)
+endforeach
