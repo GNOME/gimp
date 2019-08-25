@@ -774,20 +774,21 @@ else
 
   python = pythonmod.find_installation('python3', required: false)
 
-  pygobject_found = run_command(
-    python, '-c',
-    '\n'.join([
-      '''import sys, gi''',
-      '''version = '@0@' '''.format('3.0'),
-      '''sys.exit(gi.check_version(version))''',
-    ]),
-  ).returncode() == 0
-
   python_found = (
     python.found() and
-    python.language_version().version_compare(python3_required_version) and
-    pygobject_found
+    python.language_version().version_compare(python3_required_version)
   )
+  if python_found
+    pygobject_found = run_command(
+      python, '-c',
+      '\n'.join([
+        '''import sys, gi''',
+        '''version = '@0@' '''.format('3.0'),
+        '''sys.exit(gi.check_version(version))''',
+      ]),
+    ).returncode() == 0
+    python_found = python_found and pygobject_found
+  endif
 
   if (not python_found) and (python_required)
     error('''
