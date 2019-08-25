@@ -91,7 +91,7 @@ python_so_libs = [
     'link': [
       libgimpthumb,
     ],
-  ],
+  },
 ]
 
 foreach pylib : python_so_libs
