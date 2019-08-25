@@ -126,5 +126,4 @@ endif
 
 # Other files to distribute
 EXTRA_DIST += \
-	$(DOC_MODULE).types	\
-	version.in
+	$(DOC_MODULE).types

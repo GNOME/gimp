@@ -41,7 +41,8 @@ EXTRA_DIST = \
 	ui-framework.txt		\
 	undo.txt			\
 	vbr.txt				\
-	xcf.txt
+	xcf.txt				\
+	version.in
 
 
 # require gtk-doc when making dist
