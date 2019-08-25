@@ -42,67 +42,107 @@
 #define PLUG_IN_ROLE   "gimp-file-aa"
 
 
-/*
- * Declare some local functions.
- */
-static void     query       (void);
-static void     run         (const gchar      *name,
-                             gint              nparams,
-                             const GimpParam  *param,
-                             gint             *nreturn_vals,
-                             GimpParam       **return_vals);
-static gboolean save_aa     (gint32            drawable_ID,
-                             gchar            *filename,
-                             gint              output_type);
-static void     gimp2aa     (gint32            drawable_ID,
-                             aa_context       *context);
+typedef struct _Ascii      Ascii;
+typedef struct _AsciiClass AsciiClass;
 
-static gint     aa_dialog   (gint              selected);
-
-
-/*
- * Some global variables.
- */
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Ascii
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn      parent_instance;
+};
+
+struct _AsciiClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-MAIN ()
+#define ASCII_TYPE  (ascii_get_type ())
+#define ASCII (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ASCII_TYPE, Ascii))
+
+GType                   ascii_get_type         (void) G_GNUC_CONST;
+
+static GList          * ascii_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * ascii_create_procedure (GimpPlugIn           *plug_in,
+                                               const gchar          *name);
+
+static GimpValueArray * ascii_save             (GimpProcedure        *procedure,
+                                               GimpRunMode           run_mode,
+                                               GimpImage            *image,
+                                               GimpDrawable         *drawable,
+                                               GFile                *file,
+                                               const GimpValueArray *args,
+                                               gpointer              run_data);
+
+static gboolean         save_aa               (GimpDrawable         *drawable,
+                                               gchar                *filename,
+                                               gint                  output_type);
+static void             gimp2aa               (GimpDrawable         *drawable,
+                                               aa_context           *context);
+
+static gint             aa_dialog             (gint                  selected);
+
+
+G_DEFINE_TYPE (Ascii, ascii, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (ASCII_TYPE)
+
 
 static void
-query (void)
+ascii_class_init (AsciiClass *klass)
 {
-  static const GimpParamDef save_args[] =
-  {
-    {GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"},
-    {GIMP_PDB_IMAGE,    "image",        "Input image"},
-    {GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"},
-    {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
-    {GIMP_PDB_STRING,   "raw-filename", "The name entered"},
-    {GIMP_PDB_STRING,   "file-type",    "File type to use"}
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (SAVE_PROC,
-                          "Saves grayscale image in various text formats",
-                          "This plug-in uses aalib to save grayscale image "
-                          "as ascii art into a variety of text formats",
-                          "Tim Newsome <nuisance@cmu.edu>",
-                          "Tim Newsome <nuisance@cmu.edu>",
-                          "1997",
-                          N_("ASCII art"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
+  plug_in_class->query_procedures = ascii_query_procedures;
+  plug_in_class->create_procedure = ascii_create_procedure;
+}
 
-  gimp_register_file_handler_mime (SAVE_PROC, "text/plain");
-  gimp_register_save_handler (SAVE_PROC, "txt,ansi,text", "");
+static void
+ascii_init (Ascii *ascii)
+{
+}
+
+static GList *
+ascii_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (SAVE_PROC));
+}
+
+static GimpProcedure *
+ascii_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           ascii_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("ASCII art"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Saves grayscale image in various "
+                                        "text formats",
+                                        "This plug-in uses aalib to save "
+                                        "grayscale image as ascii art into "
+                                        "a variety of text formats",
+                                        name);
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "text/plain");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "txt,ansi,text");
+
+      GIMP_PROC_ARG_STRING (procedure, "file-type",
+                            "File type",
+                            "File type to use",
+                            NULL,
+                            G_PARAM_READWRITE);
+    }
+
+  return procedure;
 }
 
 /**
@@ -128,33 +168,22 @@ get_type_from_string (const gchar *string)
   return type;
 }
 
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+static GimpValueArray *
+ascii_save (GimpProcedure        *procedure,
+            GimpRunMode           run_mode,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            GFile                *file,
+            const GimpValueArray *args,
+            gpointer              run_data)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint              output_type = 0;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export      = GIMP_EXPORT_CANCEL;
+  gint               output_type = 0;
+  GError            *error       = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  run_mode    = param[0].data.d_int32;
-  image_ID    = param[1].data.d_int32;
-  drawable_ID = param[2].data.d_int32;
 
   switch (run_mode)
     {
@@ -162,67 +191,48 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      export = gimp_export_image (&image_ID, &drawable_ID, "AA",
+      export = gimp_export_image (&image, &drawable, "AA",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                   GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
       if (export == GIMP_EXPORT_CANCEL)
-        {
-          values[0].data.d_status = GIMP_PDB_CANCEL;
-          return;
-        }
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
+
     default:
       break;
     }
 
-  if (! (gimp_drawable_is_rgb (drawable_ID) ||
-         gimp_drawable_is_gray (drawable_ID)))
+  switch (run_mode)
     {
-      status = GIMP_PDB_CALLING_ERROR;
+    case GIMP_RUN_INTERACTIVE:
+      gimp_get_data (SAVE_PROC, &output_type);
+      output_type = aa_dialog (output_type);
+      if (output_type < 0)
+        status = GIMP_PDB_CANCEL;
+      break;
+
+    case GIMP_RUN_NONINTERACTIVE:
+      output_type = get_type_from_string (GIMP_VALUES_GET_STRING (args, 0));
+      if (output_type < 0)
+        status = GIMP_PDB_CALLING_ERROR;
+      break;
+
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_get_data (SAVE_PROC, &output_type);
+      break;
+
+    default:
+      break;
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-          gimp_get_data (SAVE_PROC, &output_type);
-          output_type = aa_dialog (output_type);
-          if (output_type < 0)
-            status = GIMP_PDB_CANCEL;
-          break;
-
-        case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
-          if (nparams != 6)
-            {
-              status = GIMP_PDB_CALLING_ERROR;
-            }
-          else
-            {
-              output_type = get_type_from_string (param[5].data.d_string);
-              if (output_type < 0)
-                status = GIMP_PDB_CALLING_ERROR;
-            }
-          break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data (SAVE_PROC, &output_type);
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      GFile *file = g_file_new_for_uri (param[3].data.d_string);
-
-      if (save_aa (drawable_ID, g_file_get_path (file), output_type))
+      if (save_aa (drawable, g_file_get_path (file), output_type))
         {
           gimp_set_data (SAVE_PROC, &output_type, sizeof (output_type));
         }
@@ -233,9 +243,9 @@ run (const gchar      *name,
     }
 
   if (export == GIMP_EXPORT_EXPORT)
-    gimp_image_delete (image_ID);
+    gimp_image_delete (image);
 
-  values[0].data.d_status = status;
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 /**
@@ -243,16 +253,16 @@ run (const gchar      *name,
  * The image type has to be GRAY.
  */
 static gboolean
-save_aa (gint32  drawable_ID,
-         gchar  *filename,
-         gint    output_type)
+save_aa (GimpDrawable *drawable,
+         gchar        *filename,
+         gint          output_type)
 {
   aa_savedata  savedata;
   aa_context  *context;
   aa_format    format = *aa_formats[output_type];
 
-  format.width  = gimp_drawable_width (drawable_ID)  / 2;
-  format.height = gimp_drawable_height (drawable_ID) / 2;
+  format.width  = gimp_drawable_width  (drawable) / 2;
+  format.height = gimp_drawable_height (drawable) / 2;
 
   /* Get a libaa context which will save its output to filename. */
   savedata.name   = filename;
@@ -262,7 +272,7 @@ save_aa (gint32  drawable_ID,
   if (!context)
     return FALSE;
 
-  gimp2aa (drawable_ID, context);
+  gimp2aa (drawable, context);
   aa_flush (context);
   aa_close (context);
 
@@ -270,8 +280,8 @@ save_aa (gint32  drawable_ID,
 }
 
 static void
-gimp2aa (gint32      drawable_ID,
-         aa_context *context)
+gimp2aa (GimpDrawable *drawable,
+         aa_context   *context)
 {
   GeglBuffer      *buffer;
   const Babl      *format;
@@ -283,12 +293,12 @@ gimp2aa (gint32      drawable_ID,
   guchar          *buf;
   guchar          *p;
 
-  buffer = gimp_drawable_get_buffer (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   width  = aa_imgwidth  (context);
   height = aa_imgheight (context);
 
-  switch (gimp_drawable_type (drawable_ID))
+  switch (gimp_drawable_type (drawable))
     {
     case GIMP_GRAY_IMAGE:
       format = babl_format ("Y' u8");

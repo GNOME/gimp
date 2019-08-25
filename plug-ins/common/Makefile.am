@@ -546,8 +546,6 @@ destripe_LDADD = \
 	$(INTLLIBS)		\
 	$(destripe_RC)
 
-file_aa_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_aa_SOURCES = \
 	file-aa.c
 
