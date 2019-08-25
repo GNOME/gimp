@@ -889,6 +889,8 @@ desktop_validate    = find_program('desktop-file-validate')
 
 appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 
+# Check for doc generation tools
+have_gtk_doc = get_option('gtk-doc')
 
 # Check for vector icons
 have_vector_icons = get_option('vec-icons')
@@ -945,9 +947,6 @@ endif
 conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
 
 # endif
-
-
-gtkdoc_scan = find_program('gtkdoc-scan')
 
 enable_default_bin = get_option('enable-default-bin')
 enable_console_bin = get_option('enable-console-bin')
@@ -1448,9 +1447,10 @@ subdir('pdb')
 subdir('app-tools')
 
 # Docs
-subdir('devel-docs')
 subdir('docs')
-
+if have_gtk_doc
+  subdir('devel-docs')
+endif
 
 
 
