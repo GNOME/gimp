@@ -880,7 +880,7 @@ endif
 xmllint             = find_program('xmllint', required: false)
 xsltproc            = find_program('xsltproc')
 intltool_merge      = find_program('intltool-merge')
-desktop_validate    = find_program('desktop-file-validate')
+desktop_validate    = find_program('desktop-file-validate', required: false)
 
 appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 

@@ -90,9 +90,11 @@ metainfofile = custom_target(metainfofilename,
   install_dir: get_option('datadir') / 'appdata',
 )
 
-run_target('validate-desktop',
-  command: [ desktop_validate, desktopfile ],
-)
+if desktop_validate.found()
+  run_target('validate-desktop',
+    command: [ desktop_validate, desktopfile ],
+  )
+endif
 
 if appstream_util.found()
   test('appdata_file',
