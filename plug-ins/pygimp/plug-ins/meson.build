@@ -1,12 +1,9 @@
 plugins = [
   'colorxhtml',
-  'file-openraster',
   'foggify',
   'gradients-save-as-css',
   'histogram-export',
-  'palette-offset',
   'palette-sort',
-  'palette-to-gradient',
   'py-slice',
   'python-eval',
   'spyro_plus',
