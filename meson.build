@@ -878,7 +878,7 @@ endif
 
 # Check for XML tools
 xmllint             = find_program('xmllint', required: false)
-xsltproc            = find_program('xsltproc',required: false)
+xsltproc            = find_program('xsltproc')
 intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate')
 
@@ -1325,29 +1325,27 @@ add_project_link_arguments(linker_args, language: [ 'c', 'cpp' ])
 
 
 
-if xsltproc.found()
-  custom_target('AUTHORS',
-    input : [ 'authors.xsl', 'authors.xml', ],
-    output: 'AUTHORS',
-    command: [
-      xsltproc,
-      '-o', '@OUTPUT@',
-      '@INPUT@',
-    ],
-    build_by_default: false,
-  )
-  custom_target('authors.md',
-    input : [ 'authors4gimp-web.xsl', 'authors.xml', ],
-    output: 'authors.md',
-    command: [
-      xsltproc,
-      '--stringparam', 'today', '`date --iso-8601=seconds`',
-      '-o', '@OUTPUT@',
-      '@INPUT@',
-    ],
-    build_by_default: false,
-  )
-endif
+custom_target('AUTHORS',
+  input : [ 'authors.xsl', 'authors.xml', ],
+  output: 'AUTHORS',
+  command: [
+    xsltproc,
+    '-o', '@OUTPUT@',
+    '@INPUT@',
+  ],
+  build_by_default: false,
+)
+custom_target('authors.md',
+  input : [ 'authors4gimp-web.xsl', 'authors.xml', ],
+  output: 'authors.md',
+  command: [
+    xsltproc,
+    '--stringparam', 'today', '`date --iso-8601=seconds`',
+    '-o', '@OUTPUT@',
+    '@INPUT@',
+  ],
+  build_by_default: false,
+)
 
 if xmllint.found()
   run_target('validate-authors',
