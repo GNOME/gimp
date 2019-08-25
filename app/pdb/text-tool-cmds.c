@@ -162,7 +162,7 @@ register_text_tool_procs (GimpPDB *pdb)
                                "gimp-text-fontname");
   gimp_procedure_set_static_strings (procedure,
                                      "Add text at the specified location as a floating selection or a new layer.",
-                                     "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (-1), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
+                                     "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (%NULL), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. Parameter size-type is not used and is currently ignored. If you need to display a font in points, divide the size in points by 72.0 and multiply it by the image's vertical resolution.",
                                      "Martin Edlman & Sven Neumann",
                                      "Spencer Kimball & Peter Mattis",
                                      "1998- 2001",
@@ -176,7 +176,7 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
-                                                            "The affected drawable: (-1 for a new text layer)",
+                                                            "The affected drawable: (%NULL for a new text layer)",
                                                             pdb->gimp, TRUE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -233,8 +233,8 @@ register_text_tool_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_id ("text-layer",
                                                              "text layer",
-                                                             "The new text layer or -1 if no layer was created.",
-                                                             pdb->gimp, FALSE,
+                                                             "The new text layer or %NULL if no layer was created.",
+                                                             pdb->gimp, TRUE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

@@ -37,7 +37,7 @@
 /**
  * gimp_text_fontname:
  * @image: The image.
- * @drawable: (nullable): The affected drawable: (-1 for a new text layer).
+ * @drawable: (nullable): The affected drawable: (%NULL for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
  * @text: The text to generate (in UTF-8 encoding).
@@ -57,14 +57,15 @@
  * specifying the upper left corner of the text bounding box. If the
  * specified drawable parameter is valid, the text will be created as a
  * floating selection attached to the drawable. If the drawable
- * parameter is not valid (-1), the text will appear as a new layer.
+ * parameter is not valid (%NULL), the text will appear as a new layer.
  * Finally, a border can be specified around the final rendered text.
  * The border is measured in pixels. Parameter size-type is not used
  * and is currently ignored. If you need to display a font in points,
  * divide the size in points by 72.0 and multiply it by the image's
  * vertical resolution.
  *
- * Returns: (transfer none): The new text layer or -1 if no layer was created.
+ * Returns: (nullable) (transfer none):
+ *          The new text layer or %NULL if no layer was created.
  **/
 GimpLayer *
 gimp_text_fontname (GimpImage    *image,
@@ -116,7 +117,7 @@ gimp_text_fontname (GimpImage    *image,
 /**
  * _gimp_text_fontname: (skip)
  * @image_ID: The image.
- * @drawable_ID: (nullable): The affected drawable: (-1 for a new text layer).
+ * @drawable_ID: (nullable): The affected drawable: (%NULL for a new text layer).
  * @x: The x coordinate for the left of the text bounding box.
  * @y: The y coordinate for the top of the text bounding box.
  * @text: The text to generate (in UTF-8 encoding).
@@ -136,14 +137,14 @@ gimp_text_fontname (GimpImage    *image,
  * specifying the upper left corner of the text bounding box. If the
  * specified drawable parameter is valid, the text will be created as a
  * floating selection attached to the drawable. If the drawable
- * parameter is not valid (-1), the text will appear as a new layer.
+ * parameter is not valid (%NULL), the text will appear as a new layer.
  * Finally, a border can be specified around the final rendered text.
  * The border is measured in pixels. Parameter size-type is not used
  * and is currently ignored. If you need to display a font in points,
  * divide the size in points by 72.0 and multiply it by the image's
  * vertical resolution.
  *
- * Returns: The new text layer or -1 if no layer was created.
+ * Returns: (nullable): The new text layer or %NULL if no layer was created.
  **/
 gint32
 _gimp_text_fontname (gint32        image_ID,

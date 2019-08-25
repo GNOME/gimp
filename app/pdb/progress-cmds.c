@@ -317,7 +317,7 @@ register_progress_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_display_id ("gdisplay",
                                                            "gdisplay",
-                                                           "GimpDisplay to update progressbar in, or -1 for a separate window",
+                                                           "GimpDisplay to update progressbar in, or %NULL for a separate window",
                                                            pdb->gimp, TRUE,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

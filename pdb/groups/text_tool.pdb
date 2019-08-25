@@ -29,7 +29,7 @@ argument. The x and y parameters together control the placement of the new
 text by specifying the upper left corner of the text bounding box. If the
 specified drawable parameter is valid, the text will be created as a floating
 selection attached to the drawable. If the drawable parameter is not valid
-(-1), the text will appear as a new layer. Finally, a border can be specified
+(%NULL), the text will appear as a new layer. Finally, a border can be specified
 around the final rendered text. The border is measured in pixels. Parameter
 size-type is not used and is currently ignored. If you need to display a font
 in points, divide the size in points by 72.0 and multiply it by the image's
@@ -44,7 +44,7 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'drawable', type => 'drawable',
-          desc => 'The affected drawable: (-1 for a new text layer)',
+          desc => 'The affected drawable: (%NULL for a new text layer)',
           none_ok => 1 },
         { name => 'x', type => 'float',
           desc => 'The x coordinate for the left of the text bounding box' },
@@ -65,8 +65,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'text_layer', type => 'layer',
-          desc => 'The new text layer or -1 if no layer was created.' }
+        { name => 'text_layer', type => 'layer', none_ok => 1,
+          desc => 'The new text layer or %NULL if no layer was created.' }
     );
 
     %invoke = (
