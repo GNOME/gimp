@@ -1059,8 +1059,6 @@ file_raw_data_LDADD = \
 	$(INTLLIBS)		\
 	$(file_raw_data_RC)
 
-file_sunras_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_sunras_SOURCES = \
 	file-sunras.c
 
