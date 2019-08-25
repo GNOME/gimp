@@ -758,7 +758,7 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 python3_required_version = '>=3.6.0'
 
-if get_option('python').disabled()
+if get_option('python') == 'never'
   warning('''
   You disabled the installation of core Python plug-ins. This is discouraged
   as it won't provide the full GIMP experience.
@@ -770,7 +770,7 @@ if get_option('python').disabled()
   have_python = false
 
 else
-  python_required = get_option('python').enabled()
+  always_install = get_option('python') == 'always'
 
   python = pythonmod.find_installation('python3', required: false)
 
@@ -790,7 +790,7 @@ else
     python_found = python_found and pygobject_found
   endif
 
-  if (not python_found) and (python_required)
+  if (not python_found) and (not always_install)
     error('''
     Python @0@ or PyGObject was not found.
     Note that you may install the Python plug-ins even if you have no Python
@@ -799,7 +799,7 @@ else
     '''.format(python3_required_version))
   endif
 
-  if (not python_found) and (not python_required)
+  if (not python_found) and (always_install)
     warning('''
     Python @0@ or PyGObject was not found.
     Python plug-ins will be installed anyway but you should make sure that
@@ -808,12 +808,12 @@ else
     '''.format(python3_required_version))
   endif
 
-  have_python = python_found or (not python_required)
+  have_python = python_found or always_install
 endif
 
 ## Javascript
 
-if get_option('javascript').disabled()
+if get_option('javascript') == 'never'
   warning('''
     You disabled the installation of core Javascript plug-ins. This is
     discouraged as it won't provide the full GIMP experience.
@@ -824,11 +824,20 @@ if get_option('javascript').disabled()
   have_javascript = false
 
 else
-  js_required = get_option('javascript').enabled()
+  always_install = get_option('javascript') == 'always'
 
-  gjs = find_program('gjs', required: js_required)
+  gjs = find_program('gjs', required: false)
 
-  if (not gjs.found()) and (not js_required)
+  if (not gjs.found()) and (not always_install)
+    error('''
+    GJS was not found.
+    Note that you may install the Javascript plug-ins even if you have no GJS
+    interpreter at build-time by passing the configure option -Djavascript=auto.
+    Just make sure that the GJS interpreter is available at run-time.
+    ''')
+  endif
+
+  if (not gjs.found()) and (always_install)
     warning('''
     GJS was not found.
     JavaScript plug-ins will be installed anyway but you should make sure that
@@ -837,12 +846,12 @@ else
     ''')
   endif
 
-  have_javascript = gjs.found() or (not js_required)
+  have_javascript = gjs.found() or always_install
 endif
 
 ## Lua
 
-if get_option('lua').disabled()
+if get_option('lua') == 'never'
   warning('''
     You disabled the installation of core Lua plug-ins. This is discouraged
     as it won't provide the full GIMP experience.
@@ -853,11 +862,20 @@ if get_option('lua').disabled()
   have_lua = false
 
 else
-  lua_required = get_option('lua').enabled()
+  always_install = get_option('lua') == 'always'
 
-  lua = find_program('luajit', required: lua_required)
+  lua = find_program('luajit', required: false)
 
-  if (not lua.found()) and (not lua_required)
+  if (not lua.found()) and (not always_install)
+    error('''
+    Luajit was not found.
+    Note that you may install the Lua plug-ins even if you have no Lua LGI
+    interpreter at build-time by passing the configure option -Dlua=auto.
+    Just make sure that the Lua LGI interpreter is available at run-time.
+    ''')
+  endif
+
+  if (not lua.found()) and always_install
     warning('''
     Luajit was not found.
     Lua plug-ins will be installed anyway but you should make sure that
@@ -866,7 +884,7 @@ else
     ''')
   endif
 
-  have_lua = lua.found() or (not lua_required)
+  have_lua = lua.found() or always_install
 endif
 
 

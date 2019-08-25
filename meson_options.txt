@@ -49,6 +49,12 @@ option('linux-input',       type: 'feature', value: 'auto', description: 'Linux 
 option('poppler',           type: 'boolean', value: true,   description: 'Poppler support')
 option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
-option('javascript',        type: 'feature', value: 'auto', description: 'Install Javascript plug-ins')
-option('lua',               type: 'feature', value: 'auto', description: 'Install Lua plug-ins')
-option('python',            type: 'feature', value: 'auto', description: 'Install Python 3 plug-ins')
+option('javascript',        type: 'combo',   value:'error', description: 'Install Javascript plug-ins',
+  choices: [ 'never', 'always', 'error' ],
+)
+option('lua',               type: 'combo',   value:'error', description: 'Install Lua plug-ins',
+  choices: [ 'never', 'always', 'error' ],
+)
+option('python',            type: 'combo',   value:'error', description: 'Install Python 3 plug-ins',
+  choices: [ 'never', 'always', 'error' ],
+)
