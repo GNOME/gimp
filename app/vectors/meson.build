@@ -12,6 +12,8 @@ libappvectors_sources = [
   'gimpvectorsmodundo.c',
   'gimpvectorspropundo.c',
   'gimpvectorsundo.c',
+
+  appcoremarshal,
 ]
 
 libappvectors = static_library('appvectors',

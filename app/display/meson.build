@@ -93,6 +93,8 @@ libappdisplay_sources = [
   'gimptoolwidgetgroup.c',
   appdisplayenums,
   gitversion_h,
+
+  appcoremarshal,
 ]
 
 libappdisplay = static_library('appdisplay',

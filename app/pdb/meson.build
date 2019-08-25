@@ -61,6 +61,8 @@ libappinternalprocs_sources = [
   'text-tool-cmds.c',
   'unit-cmds.c',
   'vectors-cmds.c',
+
+  appcoremarshal,
 ]
 
 libapppdb = static_library('apppdb',
