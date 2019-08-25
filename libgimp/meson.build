@@ -360,7 +360,7 @@ libgimp_gir = gnome.generate_gir(
     '-DGIMP_MODULE_COMPILATION',
     '-DGIMP_THUMB_COMPILATION',
     '-DGIMP_WIDGETS_COMPILATION',
-  ],
+  ] + linker_args,
 
   includes: [
     'Babl-0.1',
