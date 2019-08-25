@@ -7,7 +7,7 @@
   <bookinfo>
     <title>GIMP 3 Library Reference Manual</title>
     <releaseinfo>
-      for GIMP <xi:include href="version" parse="text"/>
+      for GIMP <xi:include href="../version" parse="text"/>
     </releaseinfo>
   </bookinfo>
 
@@ -114,7 +114,7 @@
     <chapter id="libgimpui-hierarchy">
       <title>Object Hierarchy</title>
       <xi:include href="xml/tree_index.sgml" />
-    </chapter>    
+    </chapter>
 
     <xi:include href="xml/gimpui.xml" />
     <xi:include href="xml/gimpexport.xml" />

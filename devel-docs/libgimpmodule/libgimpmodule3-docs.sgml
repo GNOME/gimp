@@ -7,7 +7,7 @@
   <bookinfo>
     <title>GIMP 3 Module Library Reference Manual</title>
     <releaseinfo>
-      for GIMP <xi:include href="version" parse="text"/>
+      for GIMP <xi:include href="../version" parse="text"/>
     </releaseinfo>
   </bookinfo>
 
