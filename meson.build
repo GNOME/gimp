@@ -1350,15 +1350,12 @@ if xsltproc.found()
 endif
 
 if xmllint.found()
-  custom_target('validate-authors',
-    input : [ 'authors.xml', ],
-    output: [ 'validate-authors', ],
+  run_target('validate-authors',
     command: [
       xmllint,
       '--noout',
-      '--valid', '@INPUT@',
+      '--valid', 'authors.xml',
     ],
-    build_by_default: false,
   )
 endif
 
