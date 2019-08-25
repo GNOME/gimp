@@ -115,6 +115,8 @@ enums_pl = custom_target('enums.pl',
 )
 
 
+## TODO remove that ?
+
 pdbgen = custom_target('stamp-pdbgen',
   input : [
     files(

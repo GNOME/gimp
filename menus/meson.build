@@ -57,14 +57,13 @@ foreach menu_filegen : [ 'dockable-menu.xml', 'image-menu.xml', ]
   )
 endforeach
 
-
-custom_target('validate_menus',
-  input : [ menus_files, ],
-  output: [ 'validate_menus', ],
-  command: [
-    xmllint,
-    '--noout',
-    '--path', meson.current_source_dir(),
-    '@INPUT@',
-  ],
-)
+if xmllint.found()
+  run_target('validate_menus',
+    command: [
+      xmllint,
+      '--noout',
+      '--path', meson.current_source_dir(),
+      '@INPUT@', menus_files,
+    ],
+  )
+endif

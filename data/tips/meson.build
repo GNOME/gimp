@@ -2,8 +2,8 @@
 xmlfilename = 'gimp-tips.xml'
 
 gimp_tips = custom_target(xmlfilename,
-  input : [ xmlfilename+'.in', ],
-  output: [ xmlfilename, ],
+  input : xmlfilename+'.in',
+  output: xmlfilename,
 
   command: [
     intltool_merge,
@@ -18,23 +18,9 @@ gimp_tips = custom_target(xmlfilename,
   install_dir: gimpdatadir / 'tips',
 )
 
-
-custom_target('validate-tips',
-  input : [ gimp_tips, ],
-  output: [ 'validate-tips' ],
-  command: [
-    xmllint,
-    '--noout',
-    '--path', meson.current_source_dir(),
-    '--valid', '@INPUT@',
-  ],
-  build_always_stale: false,
-  build_by_default: false,
-)
-
-custom_target('fortunes-tips',
+fortunes_tips = custom_target('fortunes-tips',
   input : [ gimp_tips, 'fortunes.xsl', ],
-  output: [ 'fortunes-tips' ],
+  output: 'fortunes-tips',
   command: [
     xsltproc,
     '--stringparam', 'lang', 'en',
@@ -43,6 +29,15 @@ custom_target('fortunes-tips',
     '@INPUT1@',
     '@INPUT0@',
   ],
-  build_always_stale: false,
-  build_by_default: false,
 )
+
+if xmllint.found()
+  run_target('validate-tips',
+    command: [
+      xmllint,
+      '--noout',
+      '--path', meson.current_source_dir(),
+      '--valid', gimp_tips,
+    ],
+  )
+endif
