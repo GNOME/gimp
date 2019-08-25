@@ -9,9 +9,11 @@ palette_offset_SCRIPTS = palette-offset.py
 palette_to_gradientdir = $(gimpplugindir)/plug-ins/palette-to-gradient
 palette_to_gradient_SCRIPTS = palette-to-gradient.py
 
+file_openrasterdir= $(gimpplugindir)/plug-ins/file-openraster
+file_openraster_SCRIPTS = file-openraster.py
+
 # TODO: to be ported:
 ##	colorxhtml.py
-##	file-openraster.py
 ##	foggify.py
 ##	gradients-save-as-css.py
 ##	histogram-export.py
@@ -29,6 +31,7 @@ if GIMP_UNSTABLE
 endif
 
 EXTRA_DIST = \
+	file-openraster.py		\
 	palette-offset.py		\
 	palette-to-gradient.py
 
