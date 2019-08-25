@@ -185,6 +185,9 @@ gegl-git:
     - sed -i "s|'libmypaint'|'libmypaint-1.3'|g" meson.build
     - meson _build
       --prefix="${INSTALL_PREFIX}"
+      -Dpython=always
+      -Djavascript=always
+      -Dlua=always
     - ninja -C _build
     # - ninja test
   artifacts:
