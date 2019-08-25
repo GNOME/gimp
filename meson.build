@@ -760,11 +760,10 @@ python3_required_version = '>=3.6.0'
 
 if get_option('python').disabled()
   warning('''
-  You disabled the installation of core Python plug-ins. This is
-  discouraged as it won't provide the full GIMP experience.
-  Note that you may install the Python plug-ins even if you have
-  no Python interpreter at build-time by passing the configure
-  option -Dpython=true.
+  You disabled the installation of core Python plug-ins. This is discouraged
+  as it won't provide the full GIMP experience.
+  Note that you may install the Python plug-ins even if you have no Python
+  interpreter at build-time by passing the configure option -Dpython=auto.
   Just make sure that a Python @0@ interpreter is available at run-time.
   '''.format(python3_required_version))
 
@@ -793,10 +792,8 @@ else
   if (not python_found) and (python_required)
     error('''
     Python @0@ or PyGObject was not found.
-
-    Note that you may install the Python plug-ins even if you have
-    no Python interpreter at build-time by passing the configure
-    option -Dpython=enabled.
+    Note that you may install the Python plug-ins even if you have no Python
+    interpreter at build-time by passing the configure option -Dpython=auto.
     Just make sure that a Python @0@ interpreter is available at run-time.
     '''.format(python3_required_version))
   endif
@@ -804,9 +801,9 @@ else
   if (not python_found) and (not python_required)
     warning('''
     Python @0@ or PyGObject was not found.
-    Python plug-ins will be installed anyway but you should make
-    sure that a compatible Python interpreter is available at
-    installation, otherwise installed plug-ins won't be usable.
+    Python plug-ins will be installed anyway but you should make sure that
+    a compatible Python interpreter is available at installation, otherwise
+    installed plug-ins won't be usable.
     '''.format(python3_required_version))
   endif
 
@@ -817,12 +814,11 @@ endif
 
 if get_option('javascript').disabled()
   warning('''
-    You disabled the installation of core JavaScript plug-ins. This
-    is discouraged as it won't provide the full GIMP experience.
-    Note that you may install the JavaScript plug-ins even if the
-    GJS interpreter is not installed at build-time by passing the
-    configure option -Djavascript=enabled.
-    Just make sure that GJS is available at run-time.
+    You disabled the installation of core Javascript plug-ins. This is
+    discouraged as it won't provide the full GIMP experience.
+    Note that you may install the Javascript plug-ins even if you have no GJS
+    interpreter at build-time by passing the configure option -Djavascript=auto.
+    Just make sure that the GJS interpreter is available at run-time.
   ''')
   have_javascript = false
 
@@ -833,10 +829,10 @@ else
 
   if (not gjs.found()) and (not js_required)
     warning('''
-    GJS not found.
-    JavaScript plug-ins will be installed anyway but you should make
-    sure that the JavaScript interpreter GJS is available at
-    installation, otherwise installed plug-ins won't be usable.
+    GJS was not found.
+    JavaScript plug-ins will be installed anyway but you should make sure that
+    the JavaScript interpreter GJS is available at installation, otherwise
+    installed plug-ins won't be usable.
     ''')
   endif
 
@@ -847,12 +843,11 @@ endif
 
 if get_option('lua').disabled()
   warning('''
-    You disabled the installation of core Lua plug-ins. This
-    is discouraged as it won't provide the full GIMP experience.
-    Note that you may install the Lua plug-ins even if Lua LGI
-    is not installed at build-time by passing the configure option
-    -Dlua=enabled.
-    Just make sure that it is available at run-time.
+    You disabled the installation of core Lua plug-ins. This is discouraged
+    as it won't provide the full GIMP experience.
+    Note that you may install the Lua plug-ins even if you have no Lua LGI
+    interpreter at build-time by passing the configure option -Dlua=auto.
+    Just make sure that the Lua LGI interpreter is available at run-time.
   ''')
   have_lua = false
 
@@ -863,10 +858,10 @@ else
 
   if (not lua.found()) and (not lua_required)
     warning('''
-    Luajit not found.
-    Lua plug-ins will be installed anyway but you should make
-    sure that luajit and LGI are available at installation,
-    otherwise installed plug-ins won't be usable.
+    Luajit was not found.
+    Lua plug-ins will be installed anyway but you should make sure that
+    luajit and LGI are available at installation, otherwise
+    installed plug-ins won't be usable.
     ''')
   endif
 
