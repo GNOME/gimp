@@ -42,7 +42,9 @@ option('xcursor',           type: 'feature', value: 'auto', description: 'Xcurso
 option('xpm',               type: 'feature', value: 'auto', description: 'XPM support')
 option('xvfb-run',          type: 'feature', value: 'auto', description: 'Use xvfb-run for UI-dependent automatic tests')
 
+option('gtk-doc',           type: 'boolean', value: true,   description: 'Build developer documentation')
 option('gtk-doc-app',       type: 'boolean', value: false,  description: 'Build developer documentation for app')
+
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
 option('poppler',           type: 'boolean', value: true,   description: 'Poppler support')
 option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
