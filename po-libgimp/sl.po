@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-06-19 17:43+0000\n"
-"PO-Revision-Date: 2019-06-21 15:18+0200\n"
+"POT-Creation-Date: 2019-08-25 16:46+0000\n"
+"PO-Revision-Date: 2019-08-25 18:51+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -23,106 +23,91 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 2.2.3\n"
 
-#. procedure executed successfully
-#: ../libgimp/gimp.c:1281
-msgid "success"
-msgstr "Uspešno"
-
-#. procedure execution failed
-#: ../libgimp/gimp.c:1285
-msgid "execution error"
-msgstr "Napaka pri izvajanju"
-
-#. procedure called incorrectly
-#: ../libgimp/gimp.c:1289
-msgid "calling error"
-msgstr "Napaka pri klicu"
-
-#. procedure execution cancelled
-#: ../libgimp/gimp.c:1293
-msgid "cancelled"
-msgstr "Preklicano"
-
-#: ../libgimp/gimpbrushselectbutton.c:178
+#: ../libgimp/gimpbrushselectbutton.c:176
 msgid "Brush Selection"
 msgstr "Izbor čopiča"
 
-#: ../libgimp/gimpbrushselectbutton.c:898
-#: ../libgimp/gimppatternselectbutton.c:718
+#: ../libgimp/gimpbrushselectbutton.c:885
+#: ../libgimp/gimppatternselectbutton.c:672
 msgid "_Browse..."
 msgstr "Pre_brskaj ..."
 
-#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:276 ../libgimp/gimpexport.c:312
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Vtičnik %s ne zna upravljati s plastmi"
 
-#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:277 ../libgimp/gimpexport.c:286
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:313
 msgid "Merge Visible Layers"
 msgstr "Spoji vidne plasti"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:285
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Vtičnik %s ne zna ravnati z zamiki, velikostmi ali prekrivnostjo plasti"
 
-#: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:294 ../libgimp/gimpexport.c:303
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Vtičnik %s lahko plasti obravnava le kot sličice animacije"
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:304
 msgid "Save as Animation"
 msgstr "Shrani kot animacijo"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:304 ../libgimp/gimpexport.c:313
+#: ../libgimp/gimpexport.c:322 ../libgimp/gimpexport.c:331
 msgid "Flatten Image"
 msgstr "Splošči sliko"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:321
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Vtičnik %s ne zna ravnati s prosojnostjo"
 
-#: ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:330
+#, c-format
+msgid "%s plug-in can't handle transparent layers"
+msgstr "Vtičnik %s ne zna ravnati s prosojnimi plastmi"
+
+#: ../libgimp/gimpexport.c:339
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Vtičnik %s ne zna ravnati z maskami plasti"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:340
 msgid "Apply Layer Masks"
 msgstr "Uporabi maske plasti"
 
-#: ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:348
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Vtičnik %s lahko obdeluje le RGB ali sivinske slike"
 
-#: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:349 ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:396
 msgid "Convert to RGB"
 msgstr "Pretvori v RGB"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:357
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Vtičnik %s lahko obdeluje le RGB ali sivinske slike"
 
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:358 ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:408
 msgid "Convert to Grayscale"
 msgstr "Pretvori v sivinsko"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:366
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Vtičnik %s lahko obdeluje le RGB ali indeksirane slike"
 
-#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
-#: ../libgimp/gimpexport.c:372
+#: ../libgimp/gimpexport.c:367 ../libgimp/gimpexport.c:396
+#: ../libgimp/gimpexport.c:406
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -130,12 +115,12 @@ msgstr ""
 "Pretvori v indeksirano sliko s privzetimi nastavitvami\n"
 "(Opravite ročno, če želite boljši nadzor na izhodnim rezultatom)"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "Vtičnik %s lahko obdeluje le rastrske (dvobarvne) indeksirane slike"
 
-#: ../libgimp/gimpexport.c:343
+#: ../libgimp/gimpexport.c:377
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -143,62 +128,62 @@ msgstr ""
 "Pretvori v indeksirano sliko s privzetimi rastrskimi nastavitvami\n"
 "(Opravite ročno, če želite boljši nadzor na izhodnim rezultatom)"
 
-#: ../libgimp/gimpexport.c:352
+#: ../libgimp/gimpexport.c:386
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Vtičnik %s lahko obdeluje le RGB ali sivinske slike"
 
-#: ../libgimp/gimpexport.c:361
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Vtičnik %s lahko obdeluje le RGB ali indeksirane slike"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "Vtičnik %s lahko obdeluje le sivinske ali indeksirane slike"
 
-#: ../libgimp/gimpexport.c:382
+#: ../libgimp/gimpexport.c:416
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Vtičnik %s potrebuje kanal alfa"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libgimp/gimpexport.c:417
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: ../libgimp/gimpexport.c:442
+#: ../libgimp/gimpexport.c:476
 msgid "Confirm Save"
 msgstr "Potrditev shranjevanja"
 
-#: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1022 ../libgimpwidgets/gimpcolorbutton.c:576
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:164
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
-#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:268
-#: ../libgimpwidgets/gimpquerybox.c:328 ../libgimpwidgets/gimpquerybox.c:391
-#: ../libgimpwidgets/gimpquerybox.c:464
+#: ../libgimp/gimpexport.c:481 ../libgimp/gimpexport.c:563
+#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
+#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
+#: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
-#: ../libgimp/gimpexport.c:448
+#: ../libgimp/gimpexport.c:482
 msgid "C_onfirm"
 msgstr "P_otrdi"
 
-#: ../libgimp/gimpexport.c:524
+#: ../libgimp/gimpexport.c:558
 msgid "Export File"
 msgstr "Izvozi datoteko"
 
-#: ../libgimp/gimpexport.c:528
+#: ../libgimp/gimpexport.c:562
 msgid "_Ignore"
 msgstr "_Prezri"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1023
+#: ../libgimp/gimpexport.c:564 ../libgimp/gimpexport.c:1064
 msgid "_Export"
 msgstr "_Izvozi"
 
 #. the headline
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:594
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -208,11 +193,11 @@ msgstr ""
 "naslednjih razlogov:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:634
+#: ../libgimp/gimpexport.c:668
 msgid "The export conversion won't modify your original image."
 msgstr "Pretvorba pri izvozu ne bo spremenila izvorne slike."
 
-#: ../libgimp/gimpexport.c:741
+#: ../libgimp/gimpexport.c:772
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -221,7 +206,7 @@ msgstr ""
 "Trenutno shranjujete masko plasti kot %s.\n"
 "Na ta način ne boste shranili vidnih plasti."
 
-#: ../libgimp/gimpexport.c:747
+#: ../libgimp/gimpexport.c:778
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -231,16 +216,16 @@ msgstr ""
 "S tem ne boste shranili vidnih plasti."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1016
+#: ../libgimp/gimpexport.c:1057
 #, c-format
 msgid "Export Image as %s"
 msgstr "Izvozi sliko kot %s"
 
-#: ../libgimp/gimpfontselectbutton.c:138
+#: ../libgimp/gimpfontselectbutton.c:136
 msgid "Font Selection"
 msgstr "Izbor pisave"
 
-#: ../libgimp/gimpgradientselectbutton.c:156
+#: ../libgimp/gimpgradientselectbutton.c:154
 msgid "Gradient Selection"
 msgstr "Izbor preliva"
 
@@ -248,122 +233,142 @@ msgstr "Izbor preliva"
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:712
 msgid "Background"
 msgstr "Ozadje"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:901
 #, c-format
 msgid "Rotate %s?"
 msgstr "Želite zasukati %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:907
 msgid "_Keep Original"
 msgstr "_Ohrani izvirnik"
 
-#: ../libgimp/gimpimagemetadata.c:899
+#: ../libgimp/gimpimagemetadata.c:908
 msgid "_Rotate"
 msgstr "_Sukaj"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:949
 msgid "Original"
 msgstr "Izvirnik"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:965
 msgid "Rotated"
 msgstr "Zasukano"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:983
 msgid "This image contains Exif orientation metadata."
 msgstr "Ta slika vsebuje metapodatke o usmeritvi Exif."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1001
 msgid "Would you like to rotate the image?"
 msgstr "Želite zasukati sliko?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1013
 msgid "_Don't ask me again"
 msgstr "_Ne vprašaj več"
 
-#: ../libgimp/gimppaletteselectbutton.c:139
+#: ../libgimp/gimppaletteselectbutton.c:135
 msgid "Palette Selection"
 msgstr "Izbor palete"
 
-#: ../libgimp/gimppatternselectbutton.c:165
+#: ../libgimp/gimppatternselectbutton.c:164
 msgid "Pattern Selection"
 msgstr "Izbor vzorca"
 
-#: ../libgimp/gimpprocbrowserdialog.c:166
+#. procedure executed successfully
+#: ../libgimp/gimppdb.c:481
+msgid "success"
+msgstr "Uspešno"
+
+#. procedure execution failed
+#: ../libgimp/gimppdb.c:485
+msgid "execution error"
+msgstr "Napaka pri izvajanju"
+
+#. procedure called incorrectly
+#: ../libgimp/gimppdb.c:489
+msgid "calling error"
+msgstr "Napaka pri klicu"
+
+#. procedure execution cancelled
+#: ../libgimp/gimppdb.c:493
+msgid "cancelled"
+msgstr "Preklicano"
+
+#: ../libgimp/gimpprocbrowserdialog.c:164
 msgid "by name"
 msgstr "po imenu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:167
+#: ../libgimp/gimpprocbrowserdialog.c:165
 msgid "by description"
 msgstr "po opisu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:168
+#: ../libgimp/gimpprocbrowserdialog.c:166
 msgid "by help"
 msgstr "po pomoči"
 
-#: ../libgimp/gimpprocbrowserdialog.c:169
-msgid "by author"
-msgstr "po avtorju"
+#: ../libgimp/gimpprocbrowserdialog.c:167
+msgid "by authors"
+msgstr "po avtorjih"
 
-#: ../libgimp/gimpprocbrowserdialog.c:170
+#: ../libgimp/gimpprocbrowserdialog.c:168
 msgid "by copyright"
 msgstr "po avtorskih pravicah"
 
-#: ../libgimp/gimpprocbrowserdialog.c:171
+#: ../libgimp/gimpprocbrowserdialog.c:169
 msgid "by date"
 msgstr "po datumu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:172
+#: ../libgimp/gimpprocbrowserdialog.c:170
 msgid "by type"
 msgstr "po vrsti"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:420
-#: ../libgimp/gimpprocbrowserdialog.c:569 ../libgimpwidgets/gimpbrowser.c:168
+#: ../libgimp/gimpprocbrowserdialog.c:371
+#: ../libgimp/gimpprocbrowserdialog.c:527 ../libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Ni zadetkov"
 
-#: ../libgimp/gimpprocbrowserdialog.c:423
+#: ../libgimp/gimpprocbrowserdialog.c:374
 msgid "Search term invalid or incomplete"
 msgstr "Iskani pojem ni veljaven ali nepopoln"
 
-#: ../libgimp/gimpprocbrowserdialog.c:432
+#: ../libgimp/gimpprocbrowserdialog.c:383
 msgid "Searching"
 msgstr "Iskanje"
 
-#: ../libgimp/gimpprocbrowserdialog.c:443
+#: ../libgimp/gimpprocbrowserdialog.c:395
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:464
+#: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by description"
 msgstr "Iskanje po opisu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:471
+#: ../libgimp/gimpprocbrowserdialog.c:424
 msgid "Searching by help"
 msgstr "Iskanje po pomoči"
 
-#: ../libgimp/gimpprocbrowserdialog.c:478
-msgid "Searching by author"
-msgstr "Iskanje po avtorju"
+#: ../libgimp/gimpprocbrowserdialog.c:432
+msgid "Searching by authors"
+msgstr "Iskanje po avtorjih"
 
-#: ../libgimp/gimpprocbrowserdialog.c:485
+#: ../libgimp/gimpprocbrowserdialog.c:440
 msgid "Searching by copyright"
 msgstr "Iskanje po copyrightu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:492
+#: ../libgimp/gimpprocbrowserdialog.c:448
 msgid "Searching by date"
 msgstr "Iskanje po datumu"
 
-#: ../libgimp/gimpprocbrowserdialog.c:499
+#: ../libgimp/gimpprocbrowserdialog.c:456
 msgid "Searching by type"
 msgstr "Iskanje po vrsti"
 
-#: ../libgimp/gimpprocbrowserdialog.c:509
+#: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -372,11 +377,11 @@ msgstr[1] "%d procedura"
 msgstr[2] "%d proceduri"
 msgstr[3] "%d procedure"
 
-#: ../libgimp/gimpprocbrowserdialog.c:518
+#: ../libgimp/gimpprocbrowserdialog.c:476
 msgid "No matches for your query"
 msgstr "Vaše povpraševanje ni vrnilo zadetkov"
 
-#: ../libgimp/gimpprocbrowserdialog.c:522
+#: ../libgimp/gimpprocbrowserdialog.c:480
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -385,27 +390,81 @@ msgstr[1] "%d procedura se ujema z vašim povpraševanjem"
 msgstr[2] "%d proceduri se ujemata z vašim povpraševanjem"
 msgstr[3] "%d procedure se ujemajo z vašim povpraševanjem"
 
-#: ../libgimp/gimpprocview.c:173
+#: ../libgimp/gimpprocedure.c:1370
+#, c-format
+msgid "Procedure '%s' returned no return values"
+msgstr "Procedura »%s« ni vrnila nobenih vrednosti"
+
+#: ../libgimp/gimpprocedure.c:1472
+#, c-format
+msgid ""
+"Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
+"Expected %s, got %s."
+msgstr ""
+"Procedura »%s« je vrnila napačno vrsto vrnjene vrednosti »%s« (#%d). "
+"Pričakovana vrednost %s, prejeta %s."
+
+#: ../libgimp/gimpprocedure.c:1484
+#, c-format
+msgid ""
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
+msgstr ""
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
+"%d). Pričakovano %s, prejeto %s."
+
+#: ../libgimp/gimpprocedure.c:1519
+#, c-format
+msgid ""
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
+"is out of range."
+msgstr ""
+"Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
+"vrednost je izven dovoljenega obsega."
+
+#: ../libgimp/gimpprocedure.c:1533
+#, c-format
+msgid ""
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
+msgstr ""
+"Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
+"vrednost je zunaj dovoljenega obsega."
+
+#: ../libgimp/gimpprocedure.c:1583
+#, c-format
+msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
+msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
+
+#: ../libgimp/gimpprocedure.c:1593
+#, c-format
+msgid ""
+"Procedure '%s' has been called with an invalid UTF-8 string for argument "
+"'%s'."
+msgstr ""
+"Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
+
+#: ../libgimp/gimpprocview.c:180
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../libgimp/gimpprocview.c:186
+#: ../libgimp/gimpprocview.c:194
 msgid "Return Values"
 msgstr "Vrnjene vrednosti"
 
-#: ../libgimp/gimpprocview.c:199
+#: ../libgimp/gimpprocview.c:209
 msgid "Additional Information"
 msgstr "Dodatni podatki"
 
-#: ../libgimp/gimpprocview.c:240
-msgid "Author:"
-msgstr "Avtor:"
+#: ../libgimp/gimpprocview.c:250
+msgid "Authors:"
+msgstr "Avtorji:"
 
-#: ../libgimp/gimpprocview.c:253
+#: ../libgimp/gimpprocview.c:263
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../libgimp/gimpprocview.c:266
+#: ../libgimp/gimpprocview.c:276
 msgid "Copyright:"
 msgstr "Nosilec avtorskih pravic:"
 
@@ -971,8 +1030,8 @@ msgstr "Ime ikone"
 
 #: ../libgimpbase/gimpbaseenums.c:863
 msgctxt "icon-type"
-msgid "Inline pixbuf"
-msgstr "Medvrstični medpomnilnik slikovnih točk"
+msgid "Pixbuf"
+msgstr "Medpomnilnik sličic"
 
 #: ../libgimpbase/gimpbaseenums.c:864
 msgctxt "icon-type"
@@ -1766,20 +1825,20 @@ msgstr "Označi barve zunaj barvnega obsega"
 msgid "Out of gamut warning color"
 msgstr "Opozorilna barva preseganja obsega"
 
-#: ../libgimpconfig/gimpcolorconfig.c:660
-#: ../libgimpconfig/gimpcolorconfig.c:844
+#: ../libgimpconfig/gimpcolorconfig.c:662
+#: ../libgimpconfig/gimpcolorconfig.c:855
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Barvni profil ‘%s’ ni za barvni prostor RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:702
-#: ../libgimpconfig/gimpcolorconfig.c:894
+#: ../libgimpconfig/gimpcolorconfig.c:706
+#: ../libgimpconfig/gimpcolorconfig.c:905
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Barvni profil ‘%s’ ni za sivinski barvni prostor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:744
-#: ../libgimpconfig/gimpcolorconfig.c:944
+#: ../libgimpconfig/gimpcolorconfig.c:750
+#: ../libgimpconfig/gimpcolorconfig.c:955
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Barvni profil ‘%s’ ni za barvni prostor CMYK."
@@ -1790,103 +1849,103 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "vrednost za žeton %s ni veljaven niz UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:466
+#: ../libgimpconfig/gimpconfig-deserialize.c:473
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "za logični žeton %s je pričakovana vrednost »yes« ali »no«, vrnjena vrednost "
 "pa je »%s«"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:568
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neveljavna vrednost »%s« za žeton %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:583
+#: ../libgimpconfig/gimpconfig-deserialize.c:599
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neveljavna vrednost »%ld« za žeton %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:652
+#: ../libgimpconfig/gimpconfig-deserialize.c:668
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "pri razčlenjevanju žetona »%s«: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:676
-#: ../libgimpconfig/gimpconfig-iface.c:689 ../libgimpconfig/gimpscanner.c:743
-#: ../libgimpconfig/gimpscanner.c:825
+#: ../libgimpconfig/gimpconfig-iface.c:689 ../libgimpconfig/gimpscanner.c:805
+#: ../libgimpconfig/gimpscanner.c:887
 #: ../libgimpwidgets/gimpcolorprofilestore.c:680
 msgid "fatal parse error"
 msgstr "usodna napaka pri razčlenjevanju"
 
-#: ../libgimpconfig/gimpconfig-path.c:504
+#: ../libgimpconfig/gimpconfig-path.c:506
 msgid "File has no path representation"
 msgstr "Datoteka nima reprezentacije poti"
 
-#: ../libgimpconfig/gimpconfig-path.c:591
+#: ../libgimpconfig/gimpconfig-path.c:593
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Ni mogoče razširiti ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:673
+#: ../libgimpconfig/gimpconfigwriter.c:95
+#: ../libgimpconfig/gimpconfigwriter.c:762
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Napaka pri pisanju v »%s«: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:183
+#: ../libgimpconfig/gimpconfigwriter.c:190
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
 msgstr "Mape »%s« za »%s« ni mogoče ustvariti: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:199
+#: ../libgimpconfig/gimpconfigwriter.c:206
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Začasne datoteke za »%s« ni mogoče ustvariti: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:783
+#: ../libgimpconfig/gimpconfigwriter.c:872
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Napaka pri pisanju »%s«: %s"
 
-#: ../libgimpconfig/gimpscanner.c:409
+#: ../libgimpconfig/gimpscanner.c:448
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "neveljaven niz UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:618
+#: ../libgimpconfig/gimpscanner.c:680
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr ""
 "za logični žeton je pričakovana vrednost »yes« ali »no«, vrnjena vrednost pa "
 "je »%s«"
 
-#: ../libgimpconfig/gimpscanner.c:852
+#: ../libgimpconfig/gimpscanner.c:914
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Napaka pri razčlenjevanju »%s« v vrstici %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
-#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
-#: ../libgimpmodule/gimpmodule.c:424
+#: ../libgimpmodule/gimpmodule.c:148 ../libgimpmodule/gimpmodule.c:166
+#: ../libgimpmodule/gimpmodule.c:275 ../libgimpmodule/gimpmodule.c:302
+#: ../libgimpmodule/gimpmodule.c:410
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Napaka nalaganja gradnika »%s«: %s"
 
-#: ../libgimpmodule/gimpmodule.c:384
+#: ../libgimpmodule/gimpmodule.c:370
 msgid "Module error"
 msgstr "Napaka gradnika"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:371
 msgid "Loaded"
 msgstr "Naloženo"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:372
 msgid "Load failed"
 msgstr "Nalaganje ni uspelo"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:373
 msgid "Not loaded"
 msgstr "Ni naloženo"
 
@@ -1904,12 +1963,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Mapa sličic za predogled »%s« ni bila ustvarjena."
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libgimpthumb/gimpthumbnail.c:479
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Sličica za predogled ne vsebuje oznake Thumb::URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:905
+#: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
@@ -1918,30 +1977,30 @@ msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
 msgid "_Search:"
 msgstr "Na_jdi:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:154
+#: ../libgimpwidgets/gimpcolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "Barva o_spredja"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:158
+#: ../libgimpwidgets/gimpcolorbutton.c:156
 msgid "_Background Color"
 msgstr "Barva o_zadja"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:162
+#: ../libgimpwidgets/gimpcolorbutton.c:160
 msgid "Blac_k"
 msgstr "_Črna"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:166
+#: ../libgimpwidgets/gimpcolorbutton.c:164
 msgid "_White"
 msgstr "_Bela"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:575
+#: ../libgimpwidgets/gimpcolorbutton.c:553
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:577
-#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:268
-#: ../libgimpwidgets/gimpquerybox.c:328 ../libgimpwidgets/gimpquerybox.c:391
-#: ../libgimpwidgets/gimpquerybox.c:464
+#: ../libgimpwidgets/gimpcolorbutton.c:555
+#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
+#: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "V _redu"
 
@@ -1953,28 +2012,28 @@ msgstr ""
 "Šestnajstiški zapis barv, kot je v uporabi v HTML in CSS. To polje sprejme "
 "tudi imena barv CSS."
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:108
 msgid "All files (*.*)"
 msgstr "Vse datoteke (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:113
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Barvni profil ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:165
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
 msgid "_Save"
 msgstr "_Shrani"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:175
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Odpri"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:337
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:346
 #: ../libgimpwidgets/gimppatheditor.c:269
 msgid "Folder"
 msgstr "Mapa"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:342
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:351
 msgid "Not a regular file."
 msgstr "Ni navadna datoteka."
 
@@ -1987,11 +2046,11 @@ msgctxt "profile"
 msgid "None"
 msgstr "Brez"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:159
+#: ../libgimpwidgets/gimpcolorprofileview.c:168
 msgid "Manufacturer: "
 msgstr "Izdelovalec: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:171
+#: ../libgimpwidgets/gimpcolorprofileview.c:180
 msgid "Copyright: "
 msgstr "Avtorske pravice: "
 
@@ -2060,14 +2119,14 @@ msgstr "Izberite mapo"
 msgid "Select File"
 msgstr "Izberite datoteko"
 
-#: ../libgimpwidgets/gimphelpui.c:381
+#: ../libgimpwidgets/gimphelpui.c:384
 msgid "Press F1 for more help"
 msgstr "Pritisnite F1 za dodatno pomoč"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimpwidgets/gimpintstore.c:253
+#: ../libgimpwidgets/gimpintstore.c:255
 msgid "(Empty)"
 msgstr "(prazno)"
 
@@ -2084,35 +2143,35 @@ msgid "Gigabytes"
 msgstr "gigabajtov"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:283
-#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libgimpwidgets/gimppageselector.c:285
+#: ../libgimpwidgets/gimppageselector.c:1081
 msgid "Nothing selected"
 msgstr "Nič ni izbrano"
 
-#: ../libgimpwidgets/gimppageselector.c:301
+#: ../libgimpwidgets/gimppageselector.c:303
 msgid "Select _All"
 msgstr "Izberi _vse"
 
-#: ../libgimpwidgets/gimppageselector.c:321
+#: ../libgimpwidgets/gimppageselector.c:323
 msgid "Select _range:"
 msgstr "Izberi _območje:"
 
-#: ../libgimpwidgets/gimppageselector.c:333
+#: ../libgimpwidgets/gimppageselector.c:335
 msgid "Open _pages as"
 msgstr "Odpri _strani kot"
 
-#: ../libgimpwidgets/gimppageselector.c:461
-#: ../libgimpwidgets/gimppageselector.c:659
+#: ../libgimpwidgets/gimppageselector.c:463
+#: ../libgimpwidgets/gimppageselector.c:661
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1084
+#: ../libgimpwidgets/gimppageselector.c:1086
 msgid "One page selected"
 msgstr "Izbrana je ena stran"
 
-#: ../libgimpwidgets/gimppageselector.c:1091
-#: ../libgimpwidgets/gimppageselector.c:1095
+#: ../libgimpwidgets/gimppageselector.c:1093
+#: ../libgimpwidgets/gimppageselector.c:1097
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2150,7 +2209,7 @@ msgstr ""
 "tega dela."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:282
+#: ../libgimpwidgets/gimppreview.c:283
 msgid "_Preview"
 msgstr "_Predogled"
 
@@ -2788,77 +2847,77 @@ msgstr "Predpreoblikovalna sprememba v postankih"
 msgid "Aces RRT"
 msgstr "Aces RRT"
 
-#: ../modules/display-filter-clip-warning.c:120
+#: ../modules/display-filter-clip-warning.c:121
 msgid "Clip warning color display filter"
 msgstr "Filter za prikaz barv opozorila porezave"
 
-#: ../modules/display-filter-clip-warning.c:157
+#: ../modules/display-filter-clip-warning.c:158
 msgid "Show shadows"
 msgstr "Pokaži sence"
 
-#: ../modules/display-filter-clip-warning.c:158
+#: ../modules/display-filter-clip-warning.c:159
 msgid "Show warning for pixels with a negative component"
 msgstr "Pokaži opozorilo za slikovne točke z negativno komponento"
 
-#: ../modules/display-filter-clip-warning.c:164
+#: ../modules/display-filter-clip-warning.c:165
 msgid "Shadows color"
 msgstr "Barva senc"
 
-#: ../modules/display-filter-clip-warning.c:165
+#: ../modules/display-filter-clip-warning.c:166
 msgid "Shadows warning color"
 msgstr "Opozorilna barva senc"
 
-#: ../modules/display-filter-clip-warning.c:177
+#: ../modules/display-filter-clip-warning.c:178
 msgid "Show highlights"
 msgstr "Pokaži svetle tone"
 
-#: ../modules/display-filter-clip-warning.c:178
+#: ../modules/display-filter-clip-warning.c:179
 msgid "Show warning for pixels with a component greater than one"
 msgstr "Pokaži opozorilo za slikovne točke s komponento, večjo od 1"
 
-#: ../modules/display-filter-clip-warning.c:184
+#: ../modules/display-filter-clip-warning.c:185
 msgid "Highlights color"
 msgstr "Barva svetlih tonov"
 
-#: ../modules/display-filter-clip-warning.c:185
+#: ../modules/display-filter-clip-warning.c:186
 msgid "Highlights warning color"
 msgstr "Opozorilna barva svetlih tonov"
 
-#: ../modules/display-filter-clip-warning.c:197
+#: ../modules/display-filter-clip-warning.c:198
 msgid "Show bogus"
 msgstr "Pokaži lažne vrednosti"
 
-#: ../modules/display-filter-clip-warning.c:198
+#: ../modules/display-filter-clip-warning.c:199
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr ""
 "Pokaži opozorilo za slikovne točke s komponento, ki je neskončna ali sploh "
 "ni število"
 
-#: ../modules/display-filter-clip-warning.c:204
+#: ../modules/display-filter-clip-warning.c:205
 msgid "Bogus color"
 msgstr "Lažna barva"
 
-#: ../modules/display-filter-clip-warning.c:205
+#: ../modules/display-filter-clip-warning.c:206
 msgid "Bogus warning color"
 msgstr "Opozorilna barva lažne vrednosti"
 
-#: ../modules/display-filter-clip-warning.c:217
+#: ../modules/display-filter-clip-warning.c:218
 msgid "Include alpha component"
 msgstr "Vključi komponento alfa"
 
-#: ../modules/display-filter-clip-warning.c:218
+#: ../modules/display-filter-clip-warning.c:219
 msgid "Include alpha component in the warning"
 msgstr "V opozorilo vključi komponento alfa"
 
-#: ../modules/display-filter-clip-warning.c:224
+#: ../modules/display-filter-clip-warning.c:225
 msgid "Include transparent pixels"
 msgstr "Vključi prosojne slikovne točke"
 
-#: ../modules/display-filter-clip-warning.c:225
+#: ../modules/display-filter-clip-warning.c:226
 msgid "Include fully transparent pixels in the warning"
 msgstr "V opozorilo vključi povsem prosojne slikovne točke"
 
-#: ../modules/display-filter-clip-warning.c:229
+#: ../modules/display-filter-clip-warning.c:230
 msgid "Clip Warning"
 msgstr "Opozorilo porezave"
 
