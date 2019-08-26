@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-06-18 17:11+0000\n"
-"PO-Revision-Date: 2019-07-21 11:54+0200\n"
+"POT-Creation-Date: 2019-08-25 16:14+0000\n"
+"PO-Revision-Date: 2019-08-25 22:16+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -478,7 +478,7 @@ msgstr "Izbokline"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
 msgid "Rack"
-msgstr ""
+msgstr "Pladenj"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
 msgid "Frame"
@@ -514,7 +514,7 @@ msgstr "Črnilo"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
 msgid "MyPaintBrush"
-msgstr ""
+msgstr "Čopič MyPaint"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
 msgid "Spyrograph"
@@ -537,6 +537,8 @@ msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
+"Vzorec epitrohoide dobimo, če je gibljivi zobnik na zunanjem robu fiksnega "
+"zobnika."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
 msgid "Tool"
@@ -545,7 +547,7 @@ msgstr "Orodje"
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
 msgid ""
 "The tool with which to draw the pattern.The Preview tool just draws quickly."
-msgstr ""
+msgstr "Orodje za risanje vzorcev. Orodje Predogled riše hitro."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
 msgid "Long Gradient"
@@ -557,10 +559,13 @@ msgid ""
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
+"Če ni potrjeno, bodo uporabljene trenutne nastavitve orodja. Če je potrjeno, "
+"bo uporabljen dolgi preliv, ki se ujema z dolžino vzorca glede na trenutni "
+"preliv in način ponavljanja iz nastavitev orodja preliva."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
 msgid "Specify pattern using one of the following tabs:"
-msgstr ""
+msgstr "Določite vzorec z uporabo enega od naslednjih zavihkov:"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
 msgid ""
@@ -569,28 +574,36 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
+"Vzorec določa le dejavni zavihek. Komplet igrač je podoben Zobnikom, vendar "
+"uporablja zobnike in številke lukenj, ki jih najdemo v kompletih igrač s "
+"sestavnimi koščki. Če sledite navodilom igralnih kompletov, bi morali biti "
+"rezultati podobni."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
+"Število zobcev fiksnega zobatega kolesa. Velikost fiksnega zobatega kolesa "
+"je sorazmerna s številom zobcev."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
 msgid "Fixed Gear Teeth"
-msgstr ""
+msgstr "Zobci fiksnega zobnika"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr ""
+"Število zobcev zobatega kolesa. Velikost zobatega kolesa je sorazmerna s "
+"številom zobcev."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
 msgid "Moving Gear Teeth"
-msgstr ""
+msgstr "Zobci gibljivega zobnika"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
 msgid "Hole percent"
@@ -601,6 +614,8 @@ msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr ""
+"Kako daleč je luknja od središča gibljivega zobnika. 100 % pomeni, da je "
+"luknja na robu zobnika."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
 msgid "Hole Number"
@@ -611,14 +626,16 @@ msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
+"Luknja št. 1 je na robu zobnika. Luknja z najvišjo številko je blizu "
+"središča. Najvišja številka luknje se za vsak zobnik razlikuje."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
 msgid "Toy Kit"
-msgstr ""
+msgstr "Komplet igrač"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
 msgid "Gears"
-msgstr ""
+msgstr "Zobniki"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
@@ -630,6 +647,8 @@ msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
+"Sukanje vzorca, v stopinjah. Začetni položaj gibljivega zobnika v fiksnem "
+"zobniku."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
 msgid "Shape"
@@ -643,26 +662,31 @@ msgid ""
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
 msgstr ""
+"Oblika fiksnega zobnika, ki bo uporabljena znotraj trenutnega izbora. "
+"Pladenj je dolg zaobljen lik, ki je vsebovan v kompletu igrač. Okvir objema "
+"robove pravokotnega izbora, uporabite luknja=100 v notaciji Zobnika, da se "
+"dotikate robov. Izbor bo zaobjel robove trenutnega izbora - poskusite s čim "
+"ne pravokotnim."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
 msgid "Sides"
-msgstr ""
+msgstr "Stranice"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
 msgid "Number of sides of the shape."
-msgstr ""
+msgstr "Število stranic lika."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
 msgid "Morph"
-msgstr ""
+msgstr "Preoblikuj"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
 msgid "Morph fixed gear shape. Only affects some of the shapes."
-msgstr ""
+msgstr "Preoblikuj kot lik fiksnega zobnika. Vpliva samo na nekatere like."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
 msgid "Rotation of the fixed gear, in degrees"
-msgstr ""
+msgstr "Sukanje fiksnega zobnika, v stopinjah"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin (px)"
@@ -681,6 +705,8 @@ msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
+"Če ni potrjeno, bo z vzorcem zapolnjena trenutna slika ali izbor. Če je "
+"potrjeno, bo imel vzorec enako širino in višino in bo na sredini."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
 msgid "Redraw"
@@ -691,6 +717,8 @@ msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
+"Če spremenite nastavitve orodja, spremenite barvo ali izbor, pritisnite to "
+"za ogled videza vzorca."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
 msgid "Reset"
@@ -718,6 +746,9 @@ msgid ""
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
 "redrawn on the layer that was active when the plugin was launched."
 msgstr ""
+"Če je potrjeno, potem je ob pritisku tipke V redu plast spiro ohranjena, "
+"vstavek pa se hitro ustavi. Če ni potrjeno, je plast spiro izbrisana, vzorec "
+"se ponovno nariše na plasti, ki je bila dejavna, ko je bil vstavek zagnan."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
 msgid "Spyrogimp"
@@ -726,7 +757,7 @@ msgstr "Spiro-gimp"
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
 msgid "Draw spyrographs using current tool settings and selection."
-msgstr ""
+msgstr "Nariše spirografe z uporabo trenutnih nastavitev orodja in izbora."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
 msgid "Curve Pattern"
@@ -734,7 +765,7 @@ msgstr "Vzorec krivulje"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
 msgid "Fixed Gear"
-msgstr ""
+msgstr "Fiksen zobnik"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
 msgid "Size"
