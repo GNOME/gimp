@@ -130,7 +130,7 @@ endif
 if libaa.found()
   common_plugins_list += {
     'name': 'file-aa',
-    'deps': [ libaa, ],
+    'deps': [ gtk3, gegl, gdk_pixbuf, libaa, ],
   }
 endif
 
