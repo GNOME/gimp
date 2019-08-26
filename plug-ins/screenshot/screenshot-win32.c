@@ -81,7 +81,7 @@ static ICONINFO        iconInfo;
 static MAGIMAGEHEADER  returnedSrcheader;
 static int             rectScreensCount = 0;
 
-static gint32    *image_id;
+static GimpImage     **image;
 
 static void sendBMPToGimp                      (HBITMAP         hBMP,
                                                 HDC             hDC,
@@ -162,7 +162,7 @@ screenshot_win32_get_capabilities (void)
 GimpPDBStatusType
 screenshot_win32_shoot (ScreenshotValues  *shootvals,
                         GdkMonitor        *monitor,
-                        gint32            *image_ID,
+                        GimpImage        **_image,
                         GError           **error)
 {
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
@@ -171,7 +171,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
    * to be able to get a monitor's color profile
    */
 
-  image_id = image_ID;
+  image = _image;
 
   winsnapvals.delay = shootvals->screenshot_delay;
 
@@ -202,7 +202,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
 
       if (profile)
         {
-          gimp_image_set_color_profile (*image_ID, profile);
+          gimp_image_set_color_profile (*image, profile);
           g_object_unref (profile);
         }
     }
@@ -282,8 +282,8 @@ sendBMPToGimp (HBITMAP hBMP,
 {
   int            width, height;
   int            imageType, layerType;
-  gint32         new_image_id;
-  gint32         layer_id;
+  GimpImage     *new_image;
+  GimpLayer     *layer;
   GeglBuffer    *buffer;
   GeglRectangle *rectangle;
 
@@ -306,13 +306,13 @@ sendBMPToGimp (HBITMAP hBMP,
   layerType = GIMP_RGB_IMAGE;
 
   /* Create the GIMP image and layers */
-  new_image_id = gimp_image_new (width, height, imageType);
-  layer_id = gimp_layer_new (new_image_id, _("Background"),
-                             ROUND4 (width), height,
-                             layerType,
-                             100,
-                             gimp_image_get_default_new_layer_mode (new_image_id));
-  gimp_image_insert_layer (new_image_id, layer_id, -1, 0);
+  new_image = gimp_image_new (width, height, imageType);
+  layer = gimp_layer_new (new_image, _("Background"),
+                          ROUND4 (width), height,
+                          layerType,
+                          100,
+                          gimp_image_get_default_new_layer_mode (new_image));
+  gimp_image_insert_layer (new_image, layer, NULL, 0);
 
   /* make rectangle */
   rectangle = g_new (GeglRectangle, 1);
@@ -322,7 +322,7 @@ sendBMPToGimp (HBITMAP hBMP,
   rectangle->height = height;
 
   /* get the buffer */
-  buffer = gimp_drawable_get_buffer (layer_id);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   /* fill the buffer */
   gegl_buffer_set (buffer, rectangle, 0, NULL, (guchar *) capBytes,
@@ -334,11 +334,11 @@ sendBMPToGimp (HBITMAP hBMP,
   /* Now resize the layer down to the correct size if necessary. */
   if (width != ROUND4 (width))
     {
-      gimp_layer_resize (layer_id, width, height, 0, 0);
-      gimp_image_resize (new_image_id, width, height, 0, 0);
+      gimp_layer_resize (layer, width, height, 0, 0);
+      gimp_image_resize (new_image, width, height, 0, 0);
     }
 
-  *image_id = new_image_id;
+  *image = new_image;
 
   return;
 }
