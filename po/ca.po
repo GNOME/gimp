@@ -1215,7 +1215,7 @@ msgstr "Enganxeu la memòria intermèdia seleccionada a la posició original"
 #: ../app/actions/buffers-actions.c:73
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "Enganxeu la memòria intermèdia dins la selecció"
+msgstr "_Enganxeu la memòria intermèdia dins la selecció"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
@@ -1358,12 +1358,12 @@ msgstr "Abaixa aquest canal al capdavall de la pila de canals"
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "Commuta la visibilitat del canal"
+msgstr "Commuta la _visibilitat del canal"
 
 #: ../app/actions/channels-actions.c:119
 msgctxt "channels-action"
 msgid "Toggle Channel _Linked State"
-msgstr "Commuta l'estat del canal enllaçat"
+msgstr "_Commuta l'estat del canal enllaçat"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/channels-actions.c:125
@@ -1509,7 +1509,7 @@ msgstr "Calcula la intersecció d'aquest canal amb la selecció actual"
 #: ../app/actions/channels-actions.c:224
 msgctxt "channels-action"
 msgid "Select _Top Channel"
-msgstr "Selecciona el canal del capdamunt"
+msgstr "_Selecciona el canal del capdamunt"
 
 #: ../app/actions/channels-actions.c:225
 msgctxt "channels-action"
@@ -1519,7 +1519,7 @@ msgstr "Selecciona el canal de més amunt"
 #: ../app/actions/channels-actions.c:230
 msgctxt "channels-action"
 msgid "Select _Bottom Channel"
-msgstr "Selecciona el canal del capdavall"
+msgstr "_Selecciona el canal del capdavall"
 
 #: ../app/actions/channels-actions.c:231
 msgctxt "channels-action"
@@ -1529,7 +1529,7 @@ msgstr "Selecciona el canal de més avall"
 #: ../app/actions/channels-actions.c:236
 msgctxt "channels-action"
 msgid "Select _Previous Channel"
-msgstr "Selecciona el canal anterior"
+msgstr "_Selecciona el canal anterior"
 
 #: ../app/actions/channels-actions.c:237
 msgctxt "channels-action"
@@ -1539,7 +1539,7 @@ msgstr "Selecciona el canal de sobre el canal actual"
 #: ../app/actions/channels-actions.c:242
 msgctxt "channels-action"
 msgid "Select _Next Channel"
-msgstr "Selecciona el canal següent"
+msgstr "S_elecciona el canal següent"
 
 #: ../app/actions/channels-actions.c:243
 msgctxt "channels-action"
@@ -3859,12 +3859,12 @@ msgstr ""
 #: ../app/actions/drawable-actions.c:67
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr "Commuta la visibilitat dibuixable"
+msgstr "Co_mmuta la visibilitat dibuixable"
 
 #: ../app/actions/drawable-actions.c:73
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr "Commuta l'estat dibuixable enllaçat"
+msgstr "Comm_uta l'estat dibuixable enllaçat"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:79
@@ -4225,7 +4225,7 @@ msgstr "Enganxa el contingut del porta-retalls a la posició original"
 #: ../app/actions/edit-actions.c:181
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
-msgstr "Enganxa dins la selecció"
+msgstr "_Enganxa dins la selecció"
 
 #: ../app/actions/edit-actions.c:183
 msgctxt "edit-action"
@@ -4259,7 +4259,7 @@ msgstr "Crea una capa nova a patir del contingut del porta-retalls"
 #: ../app/actions/edit-actions.c:202
 msgctxt "edit-action"
 msgid "New Layer In _Place"
-msgstr "Capa nova en el lloc"
+msgstr "_Capa nova en el lloc"
 
 #: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
@@ -4424,7 +4424,7 @@ msgstr "Selecciona tots els errors"
 #: ../app/actions/error-console-actions.c:56
 msgctxt "error-console-action"
 msgid "_Highlight"
-msgstr "Ressaltat"
+msgstr "_Ressaltat"
 
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
@@ -4449,7 +4449,7 @@ msgstr "Exporta les opcions seleccionades en un fitxer"
 #: ../app/actions/error-console-actions.c:78
 msgctxt "error-console-action"
 msgid "_Errors"
-msgstr "Errors"
+msgstr "_Errors"
 
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
@@ -4459,7 +4459,7 @@ msgstr "Destaca la consola d'errors en els errors"
 #: ../app/actions/error-console-actions.c:85
 msgctxt "error-console-action"
 msgid "_Warnings"
-msgstr "Avisos"
+msgstr "_Avisos"
 
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
@@ -4469,7 +4469,7 @@ msgstr "Destaca la consola d'error en les advertències"
 #: ../app/actions/error-console-actions.c:92
 msgctxt "error-console-action"
 msgid "_Messages"
-msgstr "Missatges"
+msgstr "_Missatges"
 
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
@@ -5194,7 +5194,7 @@ msgstr "_Laberint..."
 #: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr "Difuminació mitjana..."
+msgstr "_Difuminació mitjana..."
 
 #: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
@@ -5320,7 +5320,7 @@ msgstr "_Posteritza..."
 #| msgid "Recursive Transform: "
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "Transformació recursiva..."
+msgstr "_Transformació recursiva..."
 
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
@@ -5749,7 +5749,7 @@ msgstr "_Tipus de degradat per al segment"
 
 #: ../app/actions/gradient-editor-actions.c:786
 msgid "Coloring _Type for Segment"
-msgstr "Tipus de color per segment"
+msgstr "Tip_us de color per segment"
 
 #: ../app/actions/gradient-editor-actions.c:789
 msgid "_Flip Segment"
@@ -5785,7 +5785,7 @@ msgstr "_Tipus de degradat per a la selecció"
 
 #: ../app/actions/gradient-editor-actions.c:808
 msgid "Coloring _Type for Selection"
-msgstr "Tipus de color per selecció"
+msgstr "_Tipus de color per selecció"
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Flip Selection"
@@ -6021,7 +6021,7 @@ msgstr "Pr_ecisió"
 #: ../app/actions/image-actions.c:62
 msgctxt "image-action"
 msgid "Color Ma_nagement"
-msgstr "Gestió del color"
+msgstr "_Gestió del color"
 
 #: ../app/actions/image-actions.c:63
 msgctxt "image-action"
@@ -6061,7 +6061,7 @@ msgstr "_Mapa"
 #: ../app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "_Tone Mapping"
-msgstr "Mapa del to"
+msgstr "_Mapa del to"
 
 #: ../app/actions/image-actions.c:72
 msgctxt "image-action"
@@ -6963,12 +6963,12 @@ msgstr "Treu l'efecte de la màscara de capa"
 #: ../app/actions/layers-actions.c:306
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
-msgstr "Commuta la visibilitat de la capa"
+msgstr "Commut_a la visibilitat de la capa"
 
 #: ../app/actions/layers-actions.c:312
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
-msgstr "Commuta l'estat de la capa enllaçada"
+msgstr "_Commuta l'estat de la capa enllaçada"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
@@ -9204,12 +9204,12 @@ msgstr "I_mporta el camí..."
 #: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
 msgid "Toggle Path _Visibility"
-msgstr "Commuta la visibilitat del camí"
+msgstr "_Commuta la visibilitat del camí"
 
 #: ../app/actions/vectors-actions.c:172
 msgctxt "vectors-action"
 msgid "Toggle Path _Linked State"
-msgstr "Commuta l'estat de l'enllaç del camí"
+msgstr "C_ommuta l'estat de l'enllaç del camí"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
@@ -9400,7 +9400,7 @@ msgstr "Selecciona el camí del capdamunt"
 #: ../app/actions/vectors-actions.c:310
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
-msgstr "Selecciona el camí de capdavall"
+msgstr "_Selecciona el camí de capdavall"
 
 #: ../app/actions/vectors-actions.c:311
 msgctxt "vectors-action"
@@ -9410,7 +9410,7 @@ msgstr "Selecciona el camí de capdavall"
 #: ../app/actions/vectors-actions.c:316
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
-msgstr "Selecciona el camí anterior"
+msgstr "Seleccion_a el camí anterior"
 
 #: ../app/actions/vectors-actions.c:317
 msgctxt "vectors-action"
@@ -9983,7 +9983,7 @@ msgstr "Reducció 1:16"
 #: ../app/actions/view-actions.c:456
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "Un altre factor d'ampliació/reducció..."
+msgstr "_Un altre factor d'ampliació/reducció..."
 
 #: ../app/actions/view-actions.c:457
 msgctxt "view-zoom-action"
@@ -14070,7 +14070,7 @@ msgstr "Feu clic per crear la previsualització"
 
 #: ../app/core/gimpimagefile.c:792
 msgid "Loading preview..."
-msgstr "S'està carregant una previsualització ..."
+msgstr "S'està carregant una previsualització..."
 
 #: ../app/core/gimpimagefile.c:798
 msgid "Preview is out of date"
@@ -15543,7 +15543,7 @@ msgstr "_Visible"
 
 #: ../app/dialogs/item-options-dialog.c:271
 msgid "_Linked"
-msgstr "Enllaçat"
+msgstr "_Enllaçat"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
@@ -17530,7 +17530,7 @@ msgstr "_Canvi de mida"
 
 #: ../app/dialogs/resize-dialog.c:270
 msgid "C_enter"
-msgstr "Centre"
+msgstr "C_entre"
 
 #: ../app/dialogs/resize-dialog.c:321
 msgid "Resize _layers:"
@@ -26039,11 +26039,11 @@ msgstr ""
 
 #: ../app/widgets/gimphelp.c:820
 msgid "Read Selected _Language"
-msgstr "Llegeix el llenguatge seleccionat"
+msgstr "_Llegeix el llenguatge seleccionat"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
-msgstr "Manuals disponibles ..."
+msgstr "Manuals disponibles..."
 
 #: ../app/widgets/gimphelp.c:836
 msgid ""
@@ -26348,7 +26348,7 @@ msgstr "_Exporta les configuracions actuals a un fitxer..."
 
 #: ../app/widgets/gimpsettingsbox.c:364
 msgid "_Manage Saved Presets..."
-msgstr "Gestiona els predefinits desats..."
+msgstr "_Gestiona els predefinits desats..."
 
 #: ../app/widgets/gimpsettingsbox.c:589
 msgid "Save Settings as Named Preset"
@@ -26584,7 +26584,7 @@ msgstr "Miniatura %d de %d"
 
 #: ../app/widgets/gimpthumbbox.c:713 ../app/widgets/gimpthumbbox.c:723
 msgid "Creating preview..."
-msgstr "S'està creant la previsualització ..."
+msgstr "S'està creant la previsualització..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:219
 msgid "Change Foreground Color"
