@@ -129,6 +129,10 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
                                         "grayscale image as ascii art into "
                                         "a variety of text formats",
                                         name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Tim Newsome <nuisance@cmu.edu>",
+                                      "Tim Newsome <nuisance@cmu.edu>",
+                                      "1997");
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "text/plain");
