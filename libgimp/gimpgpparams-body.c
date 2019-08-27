@@ -113,8 +113,8 @@ _gimp_param_spec_to_gp_param_def (GParamSpec *pspec,
     {
       GParamSpecString *gsspec = G_PARAM_SPEC_STRING (pspec);
 
-      if (! strcmp (param_def->type_name, "GimpParamSpecString"))
-        param_def->type_name = "GParamSpecString";
+      if (! strcmp (param_def->type_name, "GimpParamString"))
+        param_def->type_name = "GParamString";
 
       param_def->param_def_type = GP_PARAM_DEF_TYPE_STRING;
 
