@@ -159,24 +159,25 @@ static void
 ico_save_init (GimpImage   *image,
                IcoSaveInfo *info)
 {
-  GList     *layers;
   GList     *iter;
   gint       num_colors;
   gint       i;
   gboolean   uses_alpha_values = FALSE;
 
-  layers = gimp_image_get_layers (image);
-  info->num_icons = g_list_length (layers);
-  info->layers = layers;
-  info->depths = g_new (gint, info->num_icons);
+  info->layers         = gimp_image_list_layers (image);
+  info->num_icons      = g_list_length (info->layers);
+  info->depths         = g_new (gint, info->num_icons);
   info->default_depths = g_new (gint, info->num_icons);
-  info->compress = g_new (gboolean, info->num_icons);
+  info->compress       = g_new (gboolean, info->num_icons);
 
-  /* Limit the color depths to values that don't cause any color loss --
-     the user should pick these anyway, so we can save her some time.
-     If the user wants to lose some colors, the settings can always be changed
-     in the dialog: */
-  for (iter = layers, i = 0; iter; iter = iter->next, i++)
+  /* Limit the color depths to values that don't cause any color loss
+   * -- the user should pick these anyway, so we can save her some
+   * time.  If the user wants to lose some colors, the settings can
+   * always be changed in the dialog:
+   */
+  for (iter = info->layers, i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
     {
       num_colors = ico_get_layer_num_colors (iter->data, &uses_alpha_values);
 
@@ -210,8 +211,8 @@ ico_save_init (GimpImage   *image,
         }
 
       /* vista icons */
-      if (gimp_drawable_width (iter->data) > 255
-          || gimp_drawable_height (iter->data) > 255 )
+      if (gimp_drawable_width  (iter->data) > 255 ||
+          gimp_drawable_height (iter->data) > 255)
         {
           info->compress[i] = TRUE;
         }
@@ -240,7 +241,9 @@ ico_save_dialog (GimpImage      *image,
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   dialog = ico_dialog_new (info);
-  for (iter = info->layers, i = 0; iter; iter = iter->next, i++)
+  for (iter = info->layers, i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
     {
       /* if (gimp_layer_get_visible(layers[i])) */
       ico_dialog_add_icon (dialog, iter->data, i);
@@ -1053,7 +1056,7 @@ ico_save_info_free (IcoSaveInfo  *info)
   g_free (info->depths);
   g_free (info->default_depths);
   g_free (info->compress);
-  g_list_free_full (info->layers, g_object_unref);
+  g_list_free (info->layers);
   memset (info, 0, sizeof (IcoSaveInfo));
 }
 
@@ -1117,7 +1120,9 @@ ico_save_image (const gchar  *filename,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  for (iter = info.layers, i = 0; iter; iter = iter->next, i++)
+  for (iter = info.layers, i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
     {
       gimp_progress_update ((gdouble)i / (gdouble)info.num_icons);
 

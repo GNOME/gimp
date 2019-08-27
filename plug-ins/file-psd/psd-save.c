@@ -627,16 +627,21 @@ save_resources (FILE      *fd,
   /* Get the active layer number id */
 
   ActLayer = gimp_image_get_active_layer (image);
-  IFDBG printf ("\tCurrent layer id: %d\n", gimp_item_get_id (GIMP_ITEM (ActLayer)));
+  IFDBG printf ("\tCurrent layer id: %d\n",
+                gimp_item_get_id (GIMP_ITEM (ActLayer)));
 
   ActiveLayerPresent = FALSE;
-  for (iter = PSDImageData.lLayers, i = 0; iter; iter = iter->next, i++)
-    if (ActLayer == ((PSD_Layer *) iter->data)->layer)
-      {
-        nActiveLayer = PSDImageData.nLayers - i - 1;
-        ActiveLayerPresent = TRUE;
-        break;
-      }
+  for (iter = PSDImageData.lLayers, i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
+    {
+      if (ActLayer == ((PSD_Layer *) iter->data)->layer)
+        {
+          nActiveLayer = PSDImageData.nLayers - i - 1;
+          ActiveLayerPresent = TRUE;
+          break;
+        }
+    }
 
   if (ActiveLayerPresent)
     {
@@ -917,14 +922,17 @@ save_layer_and_mask (FILE      *fd,
   /* Layer records section */
   /* GIMP layers must be written in reverse order */
 
-  for (iter = g_list_last (PSDImageData.lLayers), i = PSDImageData.nLayers; iter; iter = iter->prev, i--)
+  for (iter = g_list_last (PSDImageData.lLayers), i = PSDImageData.nLayers;
+       iter;
+       iter = g_list_previous (iter), i--)
     {
       PSD_Layer *psd_layer = (PSD_Layer *) iter->data;
       gint       hasMask = 0;
 
       if (psd_layer->type == PSD_LAYER_TYPE_LAYER)
         {
-          gimp_drawable_offsets (GIMP_DRAWABLE (psd_layer->layer), &offset_x, &offset_y);
+          gimp_drawable_offsets (GIMP_DRAWABLE (psd_layer->layer),
+                                 &offset_x, &offset_y);
           layerWidth = gimp_drawable_width (GIMP_DRAWABLE (psd_layer->layer));
           layerHeight = gimp_drawable_height (GIMP_DRAWABLE (psd_layer->layer));
         }
@@ -1149,7 +1157,9 @@ save_layer_and_mask (FILE      *fd,
   /* Channel image data section */
   /* Gimp layers must be written in reverse order */
 
-  for (iter = g_list_last (PSDImageData.lLayers), i = PSDImageData.nLayers; iter; iter = iter->prev, i--)
+  for (iter = g_list_last (PSDImageData.lLayers), i = PSDImageData.nLayers;
+       iter;
+       iter = g_list_previous (iter), i--)
     {
       PSD_Layer *psd_layer = (PSD_Layer *) iter->data;
 
@@ -1530,7 +1540,7 @@ get_image_data (GimpImage *image)
 
   PSDImageData.merged_layer = create_merged_image (image);
 
-  PSDImageData.lChannels = gimp_image_get_channels (image);
+  PSDImageData.lChannels = gimp_image_list_channels (image);
   PSDImageData.nChannels = g_list_length (PSDImageData.lChannels);
   IFDBG printf ("\tGot number of channels: %d\n", PSDImageData.nChannels);
 
@@ -1586,7 +1596,9 @@ save_image (const gchar  *filename,
       if (layer->type == PSD_LAYER_TYPE_LAYER)
         {
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer->layer));
-          if (gegl_buffer_get_width (buffer) > 30000 || gegl_buffer_get_height (buffer) > 30000)
+
+          if (gegl_buffer_get_width (buffer)  > 30000 ||
+              gegl_buffer_get_height (buffer) > 30000)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Unable to export '%s'.  The PSD file format does not "
@@ -1596,6 +1608,7 @@ save_image (const gchar  *filename,
               clear_image_data ();
               return FALSE;
             }
+
           g_object_unref (buffer);
         }
     }
@@ -1730,7 +1743,7 @@ append_layers (GList *layers)
           PSD_Layer *end_layer = g_new0 (PSD_Layer, 1);
           GList     *group_layers;
 
-          group_layers = gimp_item_get_children (iter->data);
+          group_layers = gimp_item_list_children (iter->data);
           psd_layers = g_list_concat (psd_layers,
                                       append_layers (group_layers));
           g_list_free (group_layers);
@@ -1751,7 +1764,7 @@ image_get_all_layers (GimpImage *image,
   GList *psd_layers = NULL;
   GList *layers;
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
   psd_layers = append_layers (layers);
   g_list_free (layers);
 

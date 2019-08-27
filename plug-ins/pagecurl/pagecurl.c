@@ -691,21 +691,16 @@ init_calculation (GimpDrawable *drawable)
   gdouble      alpha, beta;
   gdouble      angle;
   GimpVector2  v1, v2;
-  GList       *image_layers;
-  GList       *iter;
+  GList       *layers;
 
   gimp_layer_add_alpha (GIMP_LAYER (drawable));
 
   /* Image parameters */
 
   /* Determine Position of original Layer in the Layer stack. */
-
-  image_layers = gimp_image_get_layers (image);
-  iter = image_layers;
-  drawable_position = 0;
-  while (iter && iter->data != drawable)
-    drawable_position++;
-  g_list_free (image_layers);
+  layers = gimp_image_list_layers (image);
+  drawable_position = g_list_index (layers, drawable);
+  g_list_free (layers);
 
   switch (curl.orientation)
     {

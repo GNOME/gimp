@@ -470,16 +470,17 @@ film (void)
   /* Calculate total film width */
   film_width = 0;
   num_pictures = 0;
-  for (iter = images_src; iter; iter = iter->next)
+  for (iter = images_src; iter; iter = g_list_next (iter))
     {
-      layers = gimp_image_get_layers (iter->data);
+      layers = gimp_image_list_layers (iter->data);
+
       /* Get scaled image size */
       width = gimp_image_width (iter->data);
       height = gimp_image_height (iter->data);
       f = ((double)picture_height) / (double)height;
       picture_width = width * f;
 
-      for (iter2 = layers; iter2; iter2 = iter2->next)
+      for (iter2 = layers; iter2; iter2 = g_list_next (iter2))
         {
           if (gimp_layer_is_floating_sel (iter2->data))
             continue;
@@ -563,8 +564,9 @@ film (void)
         gimp_image_convert_rgb (image_tmp);
       gimp_image_scale (image_tmp, picture_width, picture_height);
 
-      layers = gimp_image_get_layers (image_tmp);
-      for (iter2 = layers; iter2; iter2 = iter2->next)
+      layers = gimp_image_list_layers (image_tmp);
+
+      for (iter2 = layers; iter2; iter2 = g_list_next (iter2))
         {
           if (gimp_layer_is_floating_sel (iter2->data))
             continue;
@@ -604,8 +606,10 @@ film (void)
         }
 
       g_list_free (layers);
+
       gimp_image_delete (image_tmp);
     }
+
   gimp_progress_update (1.0);
 
   gimp_image_flatten (image_dst);
@@ -985,7 +989,7 @@ create_selection_tab (GtkWidget *notebook,
   GtkAdjustment   *adj;
   GtkWidget       *button;
   GtkWidget       *font_button;
-  GList           *image_id_list;
+  GList           *image_list;
   gint             j;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -1151,14 +1155,14 @@ create_selection_tab (GtkWidget *notebook,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   /* Get a list of all image names */
-  image_id_list = gimp_image_list ();
-  filmint.image_list_all = add_image_list (TRUE, image_id_list, hbox);
-  g_list_free (image_id_list);
+  image_list = gimp_list_images ();
+  filmint.image_list_all = add_image_list (TRUE, image_list, hbox);
+  g_list_free (image_list);
 
   /* Get a list of the images used for the film */
-  image_id_list = g_list_prepend (NULL, image);
-  filmint.image_list_film = add_image_list (FALSE, image_id_list, hbox);
-  g_list_free (image_id_list);
+  image_list = g_list_prepend (NULL, image);
+  filmint.image_list_film = add_image_list (FALSE, image_list, hbox);
+  g_list_free (image_list);
 
   gtk_widget_show (hbox);
 }

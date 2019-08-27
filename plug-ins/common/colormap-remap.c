@@ -370,7 +370,7 @@ remap (GimpImage *image,
   /*  There is no needs to process the layers recursively, because
    *  indexed images cannot have layer groups.
    */
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
 
   for (list = layers; list; list = list->next)
     pixels +=

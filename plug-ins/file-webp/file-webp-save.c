@@ -594,9 +594,9 @@ save_animation (const gchar    *filename,
           enc_options.kmin = params->kf_distance - 1;
         }
 
-      for (list = g_list_last (layers), loop = 0;
-           list && loop < nLayers;
-           list = g_list_previous (list), loop++)
+      for (list = layers, loop = 0;
+           list;
+           list = g_list_next (list), loop++)
         {
           GeglBuffer       *geglbuffer;
           GeglBuffer       *current_frame;
@@ -819,7 +819,8 @@ save_image (const gchar            *filename,
   gboolean  status = FALSE;
   GList    *layers;
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
+  layers = g_list_reverse (layers);
 
   if (! layers)
     return FALSE;
@@ -840,7 +841,7 @@ save_image (const gchar            *filename,
                            image, drawable, params, error);
     }
 
-  g_free (layers);
+  g_list_free (layers);
 
   if (metadata)
     {

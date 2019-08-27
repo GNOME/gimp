@@ -272,7 +272,6 @@ gih_save (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GimpParasite      *parasite;
-  GList             *layers;
   GimpImage         *orig_image;
   GError            *error  = NULL;
   gint               i;
@@ -338,9 +337,7 @@ gih_save (GimpProcedure        *procedure,
       break;
     }
 
-  layers = gimp_image_get_layers (image);
-  num_layers = g_list_length (layers);
-  g_list_free_full (layers, g_object_unref);
+  g_free (gimp_image_get_layers (image, &num_layers));
 
   gimp_pixpipe_params_init (&gihparams);
 
@@ -653,10 +650,11 @@ gih_save_dialog (GimpImage *image)
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
+
   cellw_adjust.orientation = GIMP_ORIENTATION_VERTICAL;
   cellw_adjust.image       = image;
-  cellw_adjust.toplayer    = g_object_ref (g_list_last (layers)->data);
+  cellw_adjust.toplayer    = g_list_last (layers)->data;
   cellw_adjust.nguides     = 0;
   cellw_adjust.guides      = NULL;
   cellw_adjust.value       = &gihparams.cellwidth;
@@ -678,7 +676,7 @@ gih_save_dialog (GimpImage *image)
 
   cellh_adjust.orientation = GIMP_ORIENTATION_HORIZONTAL;
   cellh_adjust.image       = image;
-  cellh_adjust.toplayer    = g_object_ref (g_list_last (layers)->data);
+  cellh_adjust.toplayer    = g_list_last (layers)->data;
   cellh_adjust.nguides     = 0;
   cellh_adjust.guides      = NULL;
   cellh_adjust.value       = &gihparams.cellheight;
@@ -695,7 +693,7 @@ gih_save_dialog (GimpImage *image)
                             _("Cell size:"), 0.0, 0.5,
                             box, 1);
 
-  g_list_free_full (layers, g_object_unref);
+  g_list_free (layers);
 
   /*
    * Number of cells: ___

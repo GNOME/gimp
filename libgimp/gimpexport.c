@@ -76,8 +76,9 @@ export_merge (GimpImage     *image,
   GList  *iter;
   gint32  nvisible = 0;
 
-  layers = gimp_image_get_layers (image);
-  for (iter = layers; iter; iter = iter->next)
+  layers = gimp_image_list_layers (image);
+
+  for (iter = layers; iter; iter = g_list_next (iter))
     {
       if (gimp_item_get_visible (GIMP_ITEM (iter->data)))
         nvisible++;
@@ -119,11 +120,14 @@ export_merge (GimpImage     *image,
         }
 
       g_list_free (layers);
-      layers = gimp_image_get_layers (image);
+
+      layers = gimp_image_list_layers (image);
 
       /*  make sure that the merged drawable matches the image size  */
-      if (gimp_drawable_width  (GIMP_DRAWABLE (merged)) != gimp_image_width  (image) ||
-          gimp_drawable_height (GIMP_DRAWABLE (merged)) != gimp_image_height (image))
+      if (gimp_drawable_width  (GIMP_DRAWABLE (merged)) !=
+          gimp_image_width  (image) ||
+          gimp_drawable_height (GIMP_DRAWABLE (merged)) !=
+          gimp_image_height (image))
         {
           gint off_x, off_y;
 
@@ -138,9 +142,10 @@ export_merge (GimpImage     *image,
   /* remove any remaining (invisible) layers */
   for (iter = layers; iter; iter = iter->next)
     {
-      if (gimp_item_get_id (iter->data) != gimp_item_get_id (GIMP_ITEM (*drawable)))
+      if (iter->data != *drawable)
         gimp_image_remove_layer (image, iter->data);
     }
+
   g_list_free (layers);
 }
 
@@ -163,7 +168,7 @@ export_remove_alpha (GimpImage     *image,
   GList  *layers;
   GList  *iter;
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -181,7 +186,7 @@ export_apply_masks (GimpImage     *image,
   GList  *layers;
   GList  *iter;
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -216,7 +221,8 @@ export_convert_indexed (GimpImage     *image,
   GList *layers;
 
   /* check alpha */
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
+
   if (layers || gimp_drawable_has_alpha (*drawable))
     gimp_image_convert_indexed (image,
                                 GIMP_CONVERT_DITHER_NONE,
@@ -250,12 +256,14 @@ export_add_alpha (GimpImage     *image,
   GList  *layers;
   GList  *iter;
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
+
   for (iter = layers; iter; iter = iter->next)
     {
       if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
         gimp_layer_add_alpha (GIMP_LAYER (iter->data));
     }
+
   g_list_free (layers);
 }
 
@@ -791,7 +799,7 @@ gimp_export_image (GimpImage             **image,
 
 
   /* check alpha and layer masks */
-  layers = gimp_image_get_layers (*image);
+  layers = gimp_image_list_layers (*image);
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -844,7 +852,7 @@ gimp_export_image (GimpImage             **image,
       GimpLayer *layer = GIMP_LAYER (layers->data);
       GList     *children;
 
-      children = gimp_item_get_children (GIMP_ITEM (layer));
+      children = gimp_item_list_children (GIMP_ITEM (layer));
 
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
       if (g_list_length (layers) == 1       &&

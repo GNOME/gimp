@@ -780,11 +780,12 @@ destroy_preview (void)
     }
 
   if (gimp_image_is_valid (preview_image) &&
-      gimp_item_is_valid (preview_layer))
+      gimp_item_is_valid (GIMP_ITEM (preview_layer)))
     {
-      /*  assuming that reference counting is working correctly,
-          we do not need to delete the layer, removing it from
-          the image should be sufficient  */
+      /* assuming that reference counting is working correctly, we do
+       * not need to delete the layer, removing it from the image
+       * should be sufficient
+       */
       gimp_image_remove_layer (preview_image, preview_layer);
 
       preview_layer = NULL;

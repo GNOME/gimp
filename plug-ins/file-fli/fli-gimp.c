@@ -622,7 +622,7 @@ save_image (const gchar  *filename,
 {
   FILE         *file;
   GList        *framelist;
-  GList        *list;
+  GList        *iter;
   gint          nframes;
   gint          colors, i;
   guchar       *cmap;
@@ -638,7 +638,8 @@ save_image (const gchar  *filename,
   s_fli_header  fli_header;
   gint          cnt;
 
-  framelist = gimp_image_get_layers (image);
+  framelist = gimp_image_list_layers (image);
+  framelist = g_list_reverse (framelist);
   nframes = g_list_length (framelist);
 
   if ((from_frame == -1) && (to_frame == -1))
@@ -764,11 +765,11 @@ save_image (const gchar  *filename,
   /*
    * Now write all frames
    */
-  for (cnt = from_frame, list = g_list_nth (framelist, nframes - cnt);
-       cnt <= to_frame && list;
-       cnt++, list = g_list_previous (list))
+  for (iter = g_list_nth (framelist, from_frame - 1), cnt = from_frame;
+       iter && cnt <= to_frame;
+       iter = g_list_next (iter), cnt++)
     {
-      GimpDrawable *drawable = list->data;
+      GimpDrawable *drawable = iter->data;
       GeglBuffer   *buffer;
       const Babl   *format = NULL;
 
@@ -841,7 +842,7 @@ save_image (const gchar  *filename,
 
   g_free (fb);
   g_free (ofb);
-  g_list_free (framelist);
+  g_free (framelist);
 
   gimp_progress_update (1.0);
 
@@ -930,13 +931,10 @@ save_dialog (GimpImage *image)
   GtkWidget     *grid;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
-  GList         *frames;
   gint           nframes;
   gboolean       run;
 
-  frames = gimp_image_get_layers (image);
-  nframes = g_list_length (frames);
-  g_list_free (frames);
+  g_free (gimp_image_get_layers (image, &nframes));
 
   from_frame = 1;
   to_frame   = nframes;

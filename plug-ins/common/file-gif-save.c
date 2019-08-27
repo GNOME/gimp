@@ -688,7 +688,7 @@ sanity_check (GFile        *file,
   /*** within the bounds of the image                      ***/
 
   *image = gimp_image_duplicate (*image);
-  layers = gimp_image_get_layers (*image);
+  layers = gimp_image_list_layers (*image);
 
   for (list = layers; list; list = g_list_next (list))
     {
@@ -802,8 +802,7 @@ save_image (GFile         *file,
     }
 
   /* get a list of layers for this image */
-  layers = gimp_image_get_layers (image);
-
+  layers = gimp_image_list_layers (image);
   nlayers = g_list_length (layers);
 
   drawable_type = gimp_drawable_type (layers->data);
@@ -963,9 +962,11 @@ save_image (GFile         *file,
   cur_progress = 0;
   max_progress = nlayers * rows;
 
-  for (list = g_list_last (layers),i = nlayers - 1;
+  layers = g_list_reverse (layers);
+
+  for (list = layers, i = nlayers - 1;
        list && i >= 0;
-       list = g_list_previous (list), i--, cur_progress = (nlayers - i) * rows)
+       list = g_list_next (list), i--, cur_progress = (nlayers - i) * rows)
     {
       GimpDrawable *drawable = list->data;
 
@@ -1251,14 +1252,11 @@ save_dialog (GimpImage *image)
   GtkWidget     *toggle;
   GtkWidget     *frame;
   GimpParasite  *GIF2_CMNT;
-  GList         *layers;
   gint32         nlayers;
   gboolean       animation_supported = FALSE;
   gboolean       run;
 
-  layers = gimp_image_get_layers (image);
-  nlayers = g_list_length (layers);
-  g_list_free (layers);
+  g_free (gimp_image_get_layers (image, &nlayers));
 
   animation_supported = nlayers > 1;
 

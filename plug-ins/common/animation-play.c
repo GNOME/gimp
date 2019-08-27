@@ -937,16 +937,21 @@ build_dialog (gchar *imagename)
   /* Set up the frame disposal combo. */
   frame_disposal_combo = gtk_combo_box_text_new ();
 
-  /* 2 styles of default frame disposals: cumulative layers and one frame per layer. */
+  /* 2 styles of default frame disposals: cumulative layers and one
+   * frame per layer.
+   */
   text = g_strdup (_("Cumulative layers (combine)"));
-  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_COMBINE, text);
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo),
+                                  DISPOSE_COMBINE, text);
   g_free (text);
 
   text = g_strdup (_("One frame per layer (replace)"));
-  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo), DISPOSE_REPLACE, text);
+  gtk_combo_box_text_insert_text (GTK_COMBO_BOX_TEXT (frame_disposal_combo),
+                                  DISPOSE_REPLACE, text);
   g_free (text);
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo), settings.default_frame_disposal);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (frame_disposal_combo),
+                            settings.default_frame_disposal);
 
   g_signal_connect (frame_disposal_combo, "changed",
                     G_CALLBACK (framecombo_changed),
@@ -1040,14 +1045,19 @@ init_frames (void)
       gimp_quit ();
       return;
     }
-  /* We only use RGB images for display because indexed images would somehow
-     render terrible colors. Layers from other types will be automatically
-     converted. */
+
+  /* We only use RGB images for display because indexed images would
+   * somehow render terrible colors. Layers from other types will be
+   * automatically converted.
+   */
   frames_image = gimp_image_new (width, height, GIMP_RGB);
+
   /* Save processing time and memory by not saving history and merged frames. */
   gimp_image_undo_disable (frames_image);
 
-  for (iter = g_list_last (layers), i = 0; iter; iter = iter->prev, i++)
+  for (iter = layers, i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
     {
       layer_name = gimp_item_get_name (iter->data);
       if (layer_name)
@@ -1066,7 +1076,8 @@ init_frames (void)
       new_layer = gimp_layer_new_from_drawable (iter->data, frames_image);
       gimp_image_insert_layer (frames_image, new_layer, NULL, -1);
       gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE);
-      new_frame = gimp_image_merge_visible_layers (frames_image, GIMP_CLIP_TO_IMAGE);
+      new_frame = gimp_image_merge_visible_layers (frames_image,
+                                                   GIMP_CLIP_TO_IMAGE);
       frames[i] = new_frame;
       gimp_item_set_visible (GIMP_ITEM (new_frame), FALSE);
 
@@ -1112,9 +1123,11 @@ initialize (void)
       return;
     }
 
-  width     = gimp_image_width (image);
-  height    = gimp_image_height (image);
-  layers    = gimp_image_get_layers (image);
+  width  = gimp_image_width (image);
+  height = gimp_image_height (image);
+
+  layers = gimp_image_list_layers (image);
+  layers = g_list_reverse (layers);
 
   if (!window)
     build_dialog (gimp_image_get_name (image));

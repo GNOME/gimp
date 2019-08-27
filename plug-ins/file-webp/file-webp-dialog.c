@@ -95,16 +95,13 @@ save_dialog (WebPSaveParams *params,
   GtkWidget     *combo;
   GtkAdjustment *quality_scale;
   GtkAdjustment *alpha_quality_scale;
-  GList         *list;
   gint32         nlayers;
   gboolean       animation_supported = FALSE;
   gboolean       run;
   gchar         *text;
   gint           row = 0;
 
-  list = gimp_image_get_layers (image);
-  nlayers = g_list_length (list);
-  g_list_free (list);
+  g_free (gimp_image_get_layers (image, &nlayers));
 
   animation_supported = nlayers > 1;
 

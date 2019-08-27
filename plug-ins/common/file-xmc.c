@@ -1565,9 +1565,12 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  /* get layers */
-  orig_layers = gimp_image_get_layers (orig_image);
-  layers      = gimp_image_get_layers (image);
+  /* get layers, in bottom-to-top order */
+  orig_layers = gimp_image_list_layers (orig_image);
+  layers      = gimp_image_list_layers (image);
+
+  orig_layers = g_list_reverse (orig_layers);
+  layers      = g_list_reverse (layers);
 
   /* create new XcursorImages. */
   imagesp = XcursorImagesCreate (g_list_length (layers));
@@ -1585,11 +1588,9 @@ save_image (const gchar  *filename,
   /*
    *  Now we start to convert each layer to a XcurosrImage one by one.
    */
-  for (list = g_list_last (layers),
-         orig_list = g_list_last (orig_layers), i = 0;
+  for (list = layers, orig_list = orig_layers, i = 0;
        list && orig_list;
-       list = g_list_previous (layers),
-         orig_list = g_list_previous (orig_list), i++)
+       list = g_list_next (layers), orig_list = g_list_next (orig_list), i++)
     {
       GimpDrawable *drawable = list->data;
       GeglBuffer   *buffer;
@@ -2473,7 +2474,7 @@ get_intersection_of_frames (GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
 
   for (list = layers; list; list = g_list_next (list))
     {

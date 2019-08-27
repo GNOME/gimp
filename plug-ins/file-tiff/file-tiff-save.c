@@ -120,7 +120,7 @@ save_paths (TIFF      *tif,
   gint num_strokes, *strokes, s;
   GString *ps_tag;
 
-  vectors = gimp_image_get_vectors (image);
+  vectors = gimp_image_list_vectors (image);
 
   if (! vectors)
     return FALSE;
@@ -128,7 +128,9 @@ save_paths (TIFF      *tif,
   ps_tag = g_string_new ("");
 
   /* Only up to 1000 paths supported */
-  for (iter = vectors, v = 0; iter && v < 1000; iter = iter->next, v++)
+  for (iter = vectors, v = 0;
+       iter && v < 1000;
+       iter = g_list_next (iter), v++)
     {
       GString *data;
       gchar   *name, *nameend;
@@ -960,10 +962,12 @@ save_image (GFile                  *file,
   gboolean    out_linear          = FALSE;
   gint        number_of_sub_IFDs  = 1;
   toff_t      sub_IFDs_offsets[1] = { 0UL };
-  gint32      num_layers, current_layer = 0;
+  gint32      num_layers;
+  gint32      current_layer       = 0;
   GList      *layers;
 
-  layers = gimp_image_get_layers (image);
+  layers = gimp_image_list_layers (image);
+  layers = g_list_reverse (layers);
   num_layers = g_list_length (layers);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -1059,7 +1063,7 @@ save_image (GFile                  *file,
 
   /* write last layer as first page. */
   if (! save_layer (tif,  tsvals, space, image,
-                    g_list_nth_data (layers, num_layers - current_layer - 1),
+                    g_list_nth_data (layers, current_layer),
                     current_layer, num_layers,
                     orig_image, saved_bpp, out_linear, error))
     {
@@ -1099,23 +1103,26 @@ save_image (GFile                  *file,
       for (; current_layer < num_layers; current_layer++)
         {
           gint tmp_saved_bpp;
+
           if (! save_layer (tif,  tsvals, space, image,
-                            g_list_nth_data (layers, num_layers - current_layer - 1),
+                            g_list_nth_data (layers, current_layer),
                             current_layer, num_layers, orig_image,
                             &tmp_saved_bpp, out_linear, error))
             {
               goto out;
             }
+
           if (tmp_saved_bpp != *saved_bpp)
             {
-              /* this should never happen.
-               * if it does, decide if it's really an error.
+              /* this should never happen. if it does, decide if it's
+               * really an error.
                */
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Writing pages with different bit depth "
                              "is strange."));
               goto out;
             }
+
           gimp_progress_update ((gdouble) (current_layer + 1) / num_layers);
         }
     }

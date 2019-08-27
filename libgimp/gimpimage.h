@@ -68,13 +68,21 @@ GType          gimp_image_get_type           (void) G_GNUC_CONST;
 gint32         gimp_image_get_id             (GimpImage    *image);
 GimpImage    * gimp_image_get_by_id          (gint32        image_id);
 
-GList        * gimp_image_list               (void);
+GimpImage   ** gimp_get_images               (gint         *num_images);
+GList        * gimp_list_images              (void);
 
 #ifndef GIMP_DEPRECATED_REPLACE_NEW_API
 
-GList        * gimp_image_get_layers         (GimpImage    *image);
-GList        * gimp_image_get_channels       (GimpImage    *image);
-GList        * gimp_image_get_vectors        (GimpImage    *image);
+GimpLayer   ** gimp_image_get_layers         (GimpImage    *image,
+                                              gint          *num_layers);
+GimpChannel ** gimp_image_get_channels       (GimpImage    *image,
+                                              gint          *num_channels);
+GimpVectors ** gimp_image_get_vectors        (GimpImage    *image,
+                                              gint          *num_vectors);
+
+GList        * gimp_image_list_layers        (GimpImage    *image);
+GList        * gimp_image_list_channels      (GimpImage    *image);
+GList        * gimp_image_list_vectors       (GimpImage    *image);
 
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);

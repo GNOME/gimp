@@ -393,9 +393,9 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  images = gimp_image_list ();
+  images = gimp_list_images ();
 
-  for (list = images; list; list = list->next)
+  for (list = images; list; list = g_list_next (list))
     {
       GimpImage *image = list->data;
       GList     *items;
@@ -403,7 +403,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_LAYER_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_layers (image);
+          items = gimp_image_list_layers (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);
@@ -412,7 +412,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
       if (GIMP_IS_DRAWABLE_COMBO_BOX (combo_box) ||
           GIMP_IS_CHANNEL_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_channels (image);
+          items = gimp_image_list_channels (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);
@@ -420,7 +420,7 @@ gimp_item_combo_box_populate (GimpIntComboBox *combo_box)
 
       if (GIMP_IS_VECTORS_COMBO_BOX (combo_box))
         {
-          items = gimp_image_get_vectors (image);
+          items = gimp_image_list_vectors (image);
           gimp_item_combo_box_model_add (combo_box, GTK_LIST_STORE (model),
                                          image, items, 0);
           g_list_free (items);
@@ -457,7 +457,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
       indent = g_strdup ("");
     }
 
-  for (list = items; list; list = list->next)
+  for (list = items; list; list = g_list_next (list))
     {
       GimpItem *item    = list->data;
       gint32    item_id = gimp_item_get_id (item);
@@ -503,7 +503,7 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
         {
           GList *children;
 
-          children = gimp_item_get_children (item);
+          children = gimp_item_list_children (item);
           gimp_item_combo_box_model_add (combo_box, store,
                                          image, children,
                                          tree_level + 1);

@@ -299,6 +299,7 @@ EXPORTS
 	gimp_get_color_configuration
 	gimp_get_default_comment
 	gimp_get_default_unit
+	gimp_get_images
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
 	gimp_get_parasite
@@ -449,8 +450,10 @@ EXPORTS
 	gimp_image_insert_vectors
 	gimp_image_is_dirty
 	gimp_image_is_valid
-	gimp_image_list
+	gimp_image_list_channels
 	gimp_image_list_deprecated
+	gimp_image_list_layers
+	gimp_image_list_vectors
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
 	gimp_image_merge_down
@@ -537,6 +540,7 @@ EXPORTS
 	gimp_item_is_text_layer
 	gimp_item_is_valid
 	gimp_item_is_vectors
+	gimp_item_list_children
 	gimp_item_set_color_tag
 	gimp_item_set_expanded
 	gimp_item_set_linked
@@ -603,6 +607,7 @@ EXPORTS
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
+	gimp_list_images
 	gimp_load_procedure_get_handles_raw
 	gimp_load_procedure_get_thumbnail_loader
 	gimp_load_procedure_get_type

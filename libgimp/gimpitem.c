@@ -174,6 +174,41 @@ gimp_item_get_by_id (gint32 item_id)
 
 /**
  * gimp_item_get_children:
+ * @item:         The item.
+ * @num_children: (out): The number of items in the returned array.
+ *
+ * Returns the item's list of children.
+ *
+ * This procedure returns the list of items which are children of the
+ * specified item. The order is topmost to bottommost.
+ *
+ * Returns: (array length=num_children) (transfer container):
+ *          The item's list of children.
+ *          The returned array must be freed with g_free(). Item
+ *          elements belong to libgimp and must not be unrefed.
+ **/
+GimpItem **
+gimp_item_get_children (GimpItem *item,
+                        gint     *num_children)
+{
+  GimpItem **children;
+  gint      *ids;
+  gint       i;
+
+  ids = _gimp_item_get_children (item, num_children);
+
+  children = g_new (GimpItem *, *num_children);
+
+  for (i = 0; i < *num_children; i++)
+    children[i] = gimp_item_get_by_id (ids[i]);
+
+  g_free (ids);
+
+  return children;
+}
+
+/**
+ * gimp_item_list_children:
  * @item: The item.
  *
  * Returns the item's list of children.
@@ -183,13 +218,13 @@ gimp_item_get_by_id (gint32 item_id)
  *
  * Returns: (element-type GimpItem) (transfer container):
  *          The item's list of children.
- *          The returned value must be freed with g_list_free(). Item
+ *          The returned ist must be freed with g_list_free(). Item
  *          elements belong to libgimp and must not be unrefed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_item_get_children (GimpItem *item)
+gimp_item_list_children (GimpItem *item)
 {
   GList *children = NULL;
   gint  *ids;

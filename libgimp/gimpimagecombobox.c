@@ -184,7 +184,7 @@ gimp_image_combo_box_populate (GimpImageComboBox *combo_box)
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  images = gimp_image_list ();
+  images = gimp_list_images ();
 
   gimp_image_combo_box_model_add (GTK_LIST_STORE (model), images,
                                   combo_box->constraint,
@@ -208,7 +208,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
   GtkTreeIter  iter;
   GList       *list;
 
-  for (list = images; list; list = list->next)
+  for (list = images; list; list = g_list_next (list))
     {
       GimpImage *image    = list->data;
       gint32     image_id = gimp_image_get_id (image);
