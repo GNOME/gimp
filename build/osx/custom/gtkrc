@@ -1,0 +1,15 @@
+# Set default theme to Mac
+gtk-theme-name = "Mac"
+
+# Use Tango as icon theme, which has different icons for different MIME types
+# and also fixes the problem with missing icons for regular directories.
+gtk-icon-theme-name = "Tango"
+
+# Include Mac path to fix plugins not applying theme
+include "../../share/themes/Mac/gtk-2.0/gtkrc"
+
+# Set default key-bindings to Mac
+gtk-key-theme-name = "Mac"
+
+# Include Mac path to fix plugins not applying key-bindings
+include "../../share/themes/Mac/gtk-2.0-key/gtkrc"
