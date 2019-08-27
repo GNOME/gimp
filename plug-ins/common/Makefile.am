@@ -1598,7 +1598,7 @@ wavelet_decompose_LDADD = \
 
 web_browser_LDFLAGS = $(framework_cocoa)
 
-web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c) -DGIMP_DEPRECATED_REPLACE_NEW_API
+web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c)
 
 web_browser_SOURCES = \
 	web-browser.c
