@@ -294,8 +294,8 @@ gimp_procedure_real_install (GimpProcedure *procedure)
 {
   GParamSpec   **args;
   GParamSpec   **return_vals;
-  gint           n_args;
-  gint           n_return_vals;
+  gint           n_args        = 0;
+  gint           n_return_vals = 0;
   GList         *list;
   GimpPlugIn    *plug_in;
   GPProcInstall  proc_install;
