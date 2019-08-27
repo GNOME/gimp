@@ -288,7 +288,7 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo_box),
                                      &image_ID))
     {
-      if (! _gimp_image_is_valid (image_ID))
+      if (! gimp_image_get_by_id (image_ID))
         {
           GtkTreeModel *model;
 

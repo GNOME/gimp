@@ -576,7 +576,7 @@ gimp_item_combo_box_changed (GimpIntComboBox *combo_box)
 
   if (gimp_int_combo_box_get_active (combo_box, &item_ID))
     {
-      if (item_ID > 0 && ! _gimp_item_is_valid (item_ID))
+      if (! gimp_item_get_by_id (item_ID))
         {
           GtkTreeModel *model;
           GList        *remove = NULL;
