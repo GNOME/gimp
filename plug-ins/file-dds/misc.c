@@ -33,8 +33,8 @@ saturate (float a)
 }
 
 void
-decode_ycocg_image (gint32   drawableID,
-                    gboolean shadow)
+decode_ycocg_image (GimpDrawable *drawable,
+                    gboolean      shadow)
 {
   GeglBuffer *buffer, *sbuffer;
   const Babl *format;
@@ -44,11 +44,11 @@ decode_ycocg_image (gint32   drawableID,
   const float offset = 0.5f * 256.0f / 255.0f;
   float Y, Co, Cg, R, G, B;
 
-  buffer = gimp_drawable_get_buffer (drawableID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   if (shadow)
     {
-      sbuffer = gimp_drawable_get_shadow_buffer (drawableID);
+      sbuffer = gimp_drawable_get_shadow_buffer (drawable);
       gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
       g_object_unref (buffer);
       buffer = sbuffer;
@@ -100,9 +100,9 @@ decode_ycocg_image (gint32   drawableID,
   gegl_buffer_flush (buffer);
 
   if (shadow)
-    gimp_drawable_merge_shadow (drawableID, TRUE);
+    gimp_drawable_merge_shadow (drawable, TRUE);
 
-  gimp_drawable_update (drawableID, 0, 0, w, h);
+  gimp_drawable_update (drawable, 0, 0, w, h);
 
   g_free (data);
 
@@ -110,8 +110,8 @@ decode_ycocg_image (gint32   drawableID,
 }
 
 void
-decode_ycocg_scaled_image (gint32   drawableID,
-                           gboolean shadow)
+decode_ycocg_scaled_image (GimpDrawable *drawable,
+                           gboolean      shadow)
 {
   GeglBuffer *buffer, *sbuffer;
   const Babl *format;
@@ -121,13 +121,13 @@ decode_ycocg_scaled_image (gint32   drawableID,
   const float offset = 0.5f * 256.0f / 255.0f;
   float Y, Co, Cg, R, G, B, s;
 
-  buffer = gimp_drawable_get_buffer (drawableID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   if (shadow)
     {
-      sbuffer = gimp_drawable_get_shadow_buffer(drawableID);
-      gegl_buffer_copy(buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
-      g_object_unref(buffer);
+      sbuffer = gimp_drawable_get_shadow_buffer (drawable);
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
+      g_object_unref (buffer);
       buffer = sbuffer;
     }
 
@@ -180,9 +180,9 @@ decode_ycocg_scaled_image (gint32   drawableID,
   gegl_buffer_flush (buffer);
 
   if (shadow)
-    gimp_drawable_merge_shadow (drawableID, TRUE);
+    gimp_drawable_merge_shadow (drawable, TRUE);
 
-  gimp_drawable_update (drawableID, 0, 0, w, h);
+  gimp_drawable_update (drawable, 0, 0, w, h);
 
   g_free (data);
 
@@ -190,8 +190,8 @@ decode_ycocg_scaled_image (gint32   drawableID,
 }
 
 void
-decode_alpha_exp_image (gint32   drawableID,
-                        gboolean shadow)
+decode_alpha_exp_image (GimpDrawable *drawable,
+                        gboolean      shadow)
 {
   GeglBuffer *buffer, *sbuffer;
   const Babl *format;
@@ -199,11 +199,11 @@ decode_alpha_exp_image (gint32   drawableID,
   unsigned int i, w, h, num_pixels;
   int R, G, B, A;
 
-  buffer = gimp_drawable_get_buffer (drawableID);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   if (shadow)
     {
-      sbuffer = gimp_drawable_get_shadow_buffer (drawableID);
+      sbuffer = gimp_drawable_get_shadow_buffer (drawable);
       gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
       g_object_unref (buffer);
       buffer = sbuffer;
@@ -251,9 +251,9 @@ decode_alpha_exp_image (gint32   drawableID,
   gegl_buffer_flush (buffer);
 
   if (shadow)
-    gimp_drawable_merge_shadow (drawableID, TRUE);
+    gimp_drawable_merge_shadow (drawable, TRUE);
 
-  gimp_drawable_update (drawableID, 0, 0, w, h);
+  gimp_drawable_update (drawable, 0, 0, w, h);
 
   g_free (data);
 

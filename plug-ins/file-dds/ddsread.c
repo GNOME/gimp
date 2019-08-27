@@ -69,7 +69,7 @@ static int           setup_dxgi_format (dds_header_t      *hdr,
 static int           load_layer        (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
-                                        gint32             image,
+                                        GimpImage         *image,
                                         unsigned int       level,
                                         char              *prefix,
                                         unsigned int      *l,
@@ -78,7 +78,7 @@ static int           load_layer        (FILE              *fp,
 static int           load_mipmaps      (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
-                                        gint32             image,
+                                        GimpImage         *image,
                                         char              *prefix,
                                         unsigned int      *l,
                                         guchar            *pixels,
@@ -86,7 +86,7 @@ static int           load_mipmaps      (FILE              *fp,
 static int           load_face         (FILE              *fp,
                                         dds_header_t      *hdr,
                                         dds_load_info_t   *d,
-                                        gint32             image,
+                                        GimpImage         *image,
                                         char              *prefix,
                                         unsigned int      *l,
                                         guchar            *pixels,
@@ -98,11 +98,11 @@ static int           load_dialog       (void);
 static gboolean runme = FALSE;
 
 GimpPDBStatusType
-read_dds (gchar    *filename,
-          gint32   *imageID,
-          gboolean  interactive_dds)
+read_dds (gchar      *filename,
+          GimpImage **ret_image,
+          gboolean    interactive_dds)
 {
-  gint32 image = 0;
+  GimpImage *image = NULL;
   unsigned char *buf;
   unsigned int l = 0;
   guchar *pixels;
@@ -111,13 +111,13 @@ read_dds (gchar    *filename,
   dds_header_t hdr;
   dds_header_dx10_t dx10hdr;
   dds_load_info_t d;
-  gint *layers, layer_count;
+  GList *layers;
   GimpImageBaseType type;
   int i, j;
 
   if (interactive_dds)
     {
-      if (!load_dialog ())
+      if (! load_dialog ())
         return GIMP_PDB_CANCEL;
     }
 
@@ -275,7 +275,7 @@ read_dds (gchar    *filename,
 
   image = gimp_image_new (hdr.width, hdr.height, type);
 
-  if (image == -1)
+  if (! image)
     {
       g_message ("Can't allocate new image.\n");
       fclose (fp);
@@ -457,18 +457,18 @@ read_dds (gchar    *filename,
   g_free (pixels);
   fclose (fp);
 
-  layers = gimp_image_get_layers (image, &layer_count);
+  layers = gimp_image_list_layers (image);
 
-  if (layers == NULL || layer_count == 0)
+  if (! layers)
     {
       g_message ("Oops!  NULL image read!  Please report this!");
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_image_set_active_layer (image, layers[0]);
-  g_free (layers);
+  gimp_image_set_active_layer (image, layers->data);
+  g_list_free (layers);
 
-  *imageID = image;
+  *ret_image = image;
 
   return GIMP_PDB_SUCCESS;
 }
@@ -849,7 +849,7 @@ static int
 load_layer (FILE            *fp,
             dds_header_t    *hdr,
             dds_load_info_t *d,
-            gint32           image,
+            GimpImage       *image,
             unsigned int     level,
             char            *prefix,
             unsigned int    *l,
@@ -861,7 +861,7 @@ load_layer (FILE            *fp,
   GimpImageType  type = GIMP_RGBA_IMAGE;
   gchar         *layer_name;
   gint           x, y, z, n;
-  gint32         layer;
+  GimpLayer     *layer;
   unsigned int   width = hdr->width >> level;
   unsigned int   height = hdr->height >> level;
   unsigned int   size = hdr->pitch_or_linsize >> (2 * level);
@@ -925,14 +925,14 @@ load_layer (FILE            *fp,
     g_strdup_printf ("main surface %s", prefix);
 
   layer = gimp_layer_new (image, layer_name, width, height, type, 100,
-                          GIMP_LAYER_MODE_NORMAL);
+                          gimp_image_get_default_new_layer_mode (image));
   g_free (layer_name);
 
-  gimp_image_insert_layer (image, layer, 0, *l);
+  gimp_image_insert_layer (image, layer, NULL, *l);
 
-  if ((*l)++) gimp_item_set_visible (layer, FALSE);
+  if ((*l)++) gimp_item_set_visible (GIMP_ITEM (layer), FALSE);
 
-  buffer = gimp_drawable_get_buffer (layer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
   layerw = gegl_buffer_get_width (buffer);
 
@@ -1155,13 +1155,13 @@ load_layer (FILE            *fp,
       switch (hdr->reserved.gimp_dds_special.extra_fourcc)
         {
         case FOURCC ('A','E','X','P'):
-          decode_alpha_exp_image (layer, FALSE);
+          decode_alpha_exp_image (GIMP_DRAWABLE (layer), FALSE);
           break;
         case FOURCC ('Y','C','G','1'):
-          decode_ycocg_image (layer, FALSE);
+          decode_ycocg_image (GIMP_DRAWABLE (layer), FALSE);
           break;
         case FOURCC ('Y','C','G','2'):
-          decode_ycocg_scaled_image (layer, FALSE);
+          decode_ycocg_scaled_image (GIMP_DRAWABLE (layer), FALSE);
           break;
         default:
           break;
@@ -1175,7 +1175,7 @@ static int
 load_mipmaps (FILE            *fp,
               dds_header_t    *hdr,
               dds_load_info_t *d,
-              gint32           image,
+              GimpImage       *image,
               char            *prefix,
               unsigned int    *l,
               guchar          *pixels,
@@ -1201,7 +1201,7 @@ static int
 load_face (FILE            *fp,
            dds_header_t    *hdr,
            dds_load_info_t *d,
-           gint32           image,
+           GimpImage       *image,
            char            *prefix,
            unsigned int    *l,
            guchar          *pixels,

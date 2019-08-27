@@ -27,30 +27,29 @@ libexecdir = $(gimpplugindir)/plug-ins/file-dds
 libexec_PROGRAMS = file-dds
 
 file_dds_SOURCES = \
-	dds.c			\
-	dds.h			\
-	color.c			\
-	color.h			\
-	ddsplugin.h		\
-	ddsread.c		\
-	ddswrite.c		\
-	dxt.c			\
-	dxt.h			\
+	dds.c		\
+	dds.h		\
+	color.c		\
+	color.h		\
+	ddsplugin.h	\
+	ddsread.c	\
+	ddswrite.c	\
+	dxt.c		\
+	dxt.h		\
 	dxt_tables.h	\
-	endian_rw.h		\
-	imath.h			\
-	mipmap.c		\
-	mipmap.h		\
-	misc.c			\
-	misc.h			\
-	mktables.c		\
+	endian_rw.h	\
+	imath.h		\
+	mipmap.c	\
+	mipmap.h	\
+	misc.c		\
+	misc.h		\
+	mktables.c	\
 	vec.h
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	$(GEGL_CFLAGS) \
+	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \

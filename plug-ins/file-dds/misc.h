@@ -21,11 +21,11 @@
 #ifndef __MISC_H__
 #define __MISC_H__
 
-void decode_ycocg_image        (gint32   drawableID,
-                                gboolean shadow);
-void decode_ycocg_scaled_image (gint32   drawableID,
-                                gboolean shadow);
-void decode_alpha_exp_image    (gint32   drawableID,
-                                gboolean shadow);
+void decode_ycocg_image        (GimpDrawable *drawable,
+                                gboolean      shadow);
+void decode_ycocg_scaled_image (GimpDrawable *drawable,
+                                gboolean      shadow);
+void decode_alpha_exp_image    (GimpDrawable *drawable,
+                                gboolean      shadow);
 
 #endif /* __MISC_H__ */

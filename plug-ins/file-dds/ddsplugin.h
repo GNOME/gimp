@@ -57,13 +57,13 @@ typedef struct
 extern DDSWriteVals dds_write_vals;
 extern DDSReadVals dds_read_vals;
 
-extern GimpPDBStatusType read_dds  (gchar    *filename,
-                                    gint32   *imageID,
-                                    gboolean  interactive_dds);
-extern GimpPDBStatusType write_dds (gchar    *filename,
-                                    gint32    image_id,
-                                    gint32    drawable_id,
-                                    gboolean  interactive_dds);
+extern GimpPDBStatusType read_dds  (gchar         *filename,
+                                    GimpImage    **image,
+                                    gboolean       interactive_dds);
+extern GimpPDBStatusType write_dds (gchar         *filename,
+                                    GimpImage     *image,
+                                    GimpDrawable  *drawable,
+                                    gboolean       interactive_dds);
 
 
 #define LOAD_PROC                "file-dds-load"

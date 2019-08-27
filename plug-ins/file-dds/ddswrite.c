@@ -52,14 +52,14 @@ enum
 };
 
 
-static gint       save_dialog          (gint32     image_id,
-                                        gint32     drawable);
-static void       save_dialog_response (GtkWidget *widget,
-                                        gint       response_id,
-                                        gpointer   data);
-static gboolean   write_image          (FILE      *fp,
-                                        gint32     image_id,
-                                        gint32     drawable_id);
+static gint       save_dialog          (GimpImage    *image,
+                                        GimpDrawable *drawable);
+static void       save_dialog_response (GtkWidget    *widget,
+                                        gint          response_id,
+                                        gpointer      data);
+static gboolean   write_image          (FILE         *fp,
+                                        GimpImage    *image,
+                                        GimpDrawable *drawable);
 
 
 static gboolean runme = FALSE;
@@ -88,11 +88,11 @@ static const char *cubemap_face_names[4][6] =
   }
 };
 
-static gint     cubemap_faces[6];
-static gboolean is_cubemap            = FALSE;
-static gboolean is_volume             = FALSE;
-static gboolean is_array              = FALSE;
-static gboolean is_mipmap_chain_valid = FALSE;
+static GimpLayer *cubemap_faces[6];
+static gboolean   is_cubemap            = FALSE;
+static gboolean   is_volume             = FALSE;
+static gboolean   is_array              = FALSE;
+static gboolean   is_mipmap_chain_valid = FALSE;
 
 static GtkWidget *compress_opt;
 static GtkWidget *format_opt;
@@ -218,16 +218,17 @@ static struct
 
 
 static gboolean
-check_mipmaps (gint32 image_id,
-               gint   savetype)
+check_mipmaps (GimpImage *image,
+               gint       savetype)
 {
-  gint *layers;
-  gint  num_layers;
-  gint  i, j, w, h, mipw, miph;
-  gint  num_mipmaps;
-  gint  num_surfaces = 0;
-  gint  min_surfaces = 1;
-  gint  max_surfaces = 1;
+  GList *layers;
+  GList *list;
+  gint   num_layers;
+  gint   i, j, w, h, mipw, miph;
+  gint   num_mipmaps;
+  gint   num_surfaces = 0;
+  gint   min_surfaces = 1;
+  gint   max_surfaces = 1;
   gboolean valid = TRUE;
   GimpImageType type;
 
@@ -246,22 +247,23 @@ check_mipmaps (gint32 image_id,
       max_surfaces = INT_MAX;
     }
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
-  w = gimp_image_width (image_id);
-  h = gimp_image_height (image_id);
+  w = gimp_image_width (image);
+  h = gimp_image_height (image);
 
   num_mipmaps = get_num_mipmaps (w, h);
 
-  type = gimp_drawable_type (layers[0]);
+  type = gimp_drawable_type (layers->data);
 
-  for (i = 0; i < num_layers; ++i)
+  for (list = layers; list; list = g_list_next (list))
     {
-      if (type != gimp_drawable_type (layers[i]))
+      if (type != gimp_drawable_type (list->data))
         return 0;
 
-      if ((gimp_drawable_width (layers[i])  == w) &&
-          (gimp_drawable_height (layers[i]) == h))
+      if ((gimp_drawable_width  (list->data) == w) &&
+          (gimp_drawable_height (list->data) == h))
         ++num_surfaces;
     }
 
@@ -272,8 +274,10 @@ check_mipmaps (gint32 image_id,
 
   for (i = 0; valid && i < num_layers; i += num_mipmaps)
     {
-      if ((gimp_drawable_width (layers[i])  != w) ||
-          (gimp_drawable_height (layers[i]) != h))
+      GimpDrawable *drawable = g_list_nth_data (layers, i);
+
+      if ((gimp_drawable_width  (drawable) != w) ||
+          (gimp_drawable_height (drawable) != h))
         {
           valid = FALSE;
           break;
@@ -281,12 +285,14 @@ check_mipmaps (gint32 image_id,
 
       for (j = 1; j < num_mipmaps; ++j)
         {
+          drawable = g_list_nth_data (layers, i + j);
+
           mipw = w >> j;
           miph = h >> j;
           if (mipw < 1) mipw = 1;
           if (miph < 1) miph = 1;
-          if ((gimp_drawable_width (layers[i + j])  != mipw) ||
-              (gimp_drawable_height (layers[i + j]) != miph))
+          if ((gimp_drawable_width  (drawable) != mipw) ||
+              (gimp_drawable_height (drawable) != miph))
             {
               valid = FALSE;
               break;
@@ -298,16 +304,18 @@ check_mipmaps (gint32 image_id,
 }
 
 static gboolean
-check_cubemap (gint32 image_id)
+check_cubemap (GimpImage *image)
 {
-  gint *layers;
-  gint  num_layers;
+  GList *layers;
+  GList *list;
+  gint   num_layers;
   gboolean cubemap = TRUE;
   gint i, j, k, w, h;
   gchar *layer_name;
   GimpImageType type;
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
   if (num_layers < 6)
     return FALSE;
@@ -316,33 +324,37 @@ check_cubemap (gint32 image_id)
   if (num_layers > 6)
     {
       /* check that mipmap layers are in order for a cubemap */
-      if (! check_mipmaps (image_id, DDS_SAVE_CUBEMAP))
+      if (! check_mipmaps (image, DDS_SAVE_CUBEMAP))
         return FALSE;
 
       /* invalidate cubemap faces */
       for (i = 0; i < 6; ++i)
-        cubemap_faces[i] = -1;
+        cubemap_faces[i] = NULL;
 
       /* find the mipmap level 0 layers */
-      w = gimp_image_width (image_id);
-      h = gimp_image_height (image_id);
+      w = gimp_image_width (image);
+      h = gimp_image_height (image);
 
-      for (i = 0; i < num_layers; ++i)
+      for (i = 0, list = layers;
+           i < num_layers;
+           ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_width (layers[i])  != w) ||
-              (gimp_drawable_height (layers[i]) != h))
+          GimpDrawable *drawable = list->data;
+
+          if ((gimp_drawable_width  (drawable) != w) ||
+              (gimp_drawable_height (drawable) != h))
             continue;
 
-          layer_name = (char*)gimp_item_get_name (layers[i]);
+          layer_name = (char *) gimp_item_get_name (GIMP_ITEM (drawable));
           for (j = 0; j < 6; ++j)
             {
               for (k = 0; k < 4; ++k)
                 {
                   if (strstr (layer_name, cubemap_face_names[k][j]))
                     {
-                      if (cubemap_faces[j] == -1)
+                      if (cubemap_faces[j] == NULL)
                         {
-                          cubemap_faces[j] = layers[i];
+                          cubemap_faces[j] = GIMP_LAYER (drawable);
                           break;
                         }
                     }
@@ -353,7 +365,7 @@ check_cubemap (gint32 image_id)
       /* check for 6 valid faces */
       for (i = 0; i < 6; ++i)
         {
-          if (cubemap_faces[i] == -1)
+          if (cubemap_faces[i] == NULL)
             {
               cubemap = FALSE;
               break;
@@ -363,10 +375,10 @@ check_cubemap (gint32 image_id)
       /* make sure they are all the same type */
       if (cubemap)
         {
-          type = gimp_drawable_type (cubemap_faces[0]);
+          type = gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[0]));
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if (gimp_drawable_type (cubemap_faces[i]) != type)
+              if (gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[i])) != type)
                 cubemap = FALSE;
             }
         }
@@ -376,20 +388,25 @@ check_cubemap (gint32 image_id)
     {
       /* invalidate cubemap faces */
       for (i = 0; i < 6; ++i)
-        cubemap_faces[i] = -1;
+        cubemap_faces[i] = NULL;
 
-      for (i = 0; i < 6; ++i)
+      for (i = 0, list = layers;
+           i < 6;
+           ++i, list = g_list_next (layers))
         {
-          layer_name = (char*)gimp_item_get_name (layers[i]);
+          GimpLayer *layer = list->data;
+
+          layer_name = (gchar *) gimp_item_get_name (GIMP_ITEM (layer));
+
           for (j = 0; j < 6; ++j)
             {
               for (k = 0; k < 4; ++k)
                 {
                   if (strstr (layer_name, cubemap_face_names[k][j]))
                     {
-                      if (cubemap_faces[j] == -1)
+                      if (cubemap_faces[j] == NULL)
                         {
-                          cubemap_faces[j] = layers[i];
+                          cubemap_faces[j] = layer;
                           break;
                         }
                     }
@@ -400,7 +417,7 @@ check_cubemap (gint32 image_id)
       /* check for 6 valid faces */
       for (i = 0; i < 6; ++i)
         {
-          if (cubemap_faces[i] == -1)
+          if (cubemap_faces[i] == NULL)
             {
               cubemap = FALSE;
               break;
@@ -410,13 +427,13 @@ check_cubemap (gint32 image_id)
       /* make sure they are all the same size */
       if (cubemap)
         {
-          w = gimp_drawable_width (cubemap_faces[0]);
-          h = gimp_drawable_height (cubemap_faces[0]);
+          w = gimp_drawable_width (GIMP_DRAWABLE (cubemap_faces[0]));
+          h = gimp_drawable_height (GIMP_DRAWABLE (cubemap_faces[0]));
 
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if ((gimp_drawable_width (cubemap_faces[i])  != w) ||
-                  (gimp_drawable_height (cubemap_faces[i]) != h))
+              if ((gimp_drawable_width  (GIMP_DRAWABLE (cubemap_faces[i])) != w) ||
+                  (gimp_drawable_height (GIMP_DRAWABLE (cubemap_faces[i])) != h))
                 cubemap = FALSE;
             }
         }
@@ -424,10 +441,10 @@ check_cubemap (gint32 image_id)
       /* make sure they are all the same type */
       if (cubemap)
         {
-          type = gimp_drawable_type (cubemap_faces[0]);
+          type = gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[0]));
           for (i = 1; i < 6 && cubemap; ++i)
             {
-              if (gimp_drawable_type (cubemap_faces[i]) != type)
+              if (gimp_drawable_type (GIMP_DRAWABLE (cubemap_faces[i])) != type)
                 cubemap = FALSE;
             }
         }
@@ -437,38 +454,45 @@ check_cubemap (gint32 image_id)
 }
 
 static gboolean
-check_volume (gint32 image_id)
+check_volume (GimpImage *image)
 {
-  gint *layers;
-  gint  num_layers;
+  GList *layers;
+  GList *list;
+  gint   num_layers;
   gboolean volume = FALSE;
   gint i, w, h;
   GimpImageType type;
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
   if (num_layers > 1)
     {
       volume = TRUE;
 
       /* make sure all layers are the same size */
-      w = gimp_drawable_width (layers[0]);
-      h = gimp_drawable_height (layers[0]);
+      w = gimp_drawable_width  (layers->data);
+      h = gimp_drawable_height (layers->data);
 
-      for (i = 1; i < num_layers && volume; ++i)
+      for (i = 1, list = layers->next;
+           i < num_layers && volume;
+           ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_width (layers[i])  != w) ||
-              (gimp_drawable_height (layers[i]) != h))
+          if ((gimp_drawable_width  (list->data) != w) ||
+              (gimp_drawable_height (list->data) != h))
             volume = FALSE;
         }
 
       if (volume)
         {
           /* make sure all layers are the same type */
-          type = gimp_drawable_type (layers[0]);
-          for (i = 1; i < num_layers && volume; ++i)
+          type = gimp_drawable_type (layers->data);
+
+          for (i = 1, list = layers->next;
+               i < num_layers && volume;
+               ++i, list = g_list_next (list))
             {
-              if (gimp_drawable_type (layers[i]) != type)
+              if (gimp_drawable_type (list->data) != type)
                 volume = FALSE;
             }
         }
@@ -478,41 +502,49 @@ check_volume (gint32 image_id)
 }
 
 static gboolean
-check_array (gint32 image_id)
+check_array (GimpImage *image)
 {
-  gint *layers;
-  gint  num_layers;
+  GList *layers;
+  gint   num_layers;
   gboolean array = FALSE;
   gint i, w, h;
   GimpImageType type;
 
-  if (check_mipmaps (image_id, DDS_SAVE_ARRAY))
+  if (check_mipmaps (image, DDS_SAVE_ARRAY))
     return 1;
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
   if (num_layers > 1)
     {
+      GList *list;
+
       array = TRUE;
 
       /* make sure all layers are the same size */
-      w = gimp_drawable_width (layers[0]);
-      h = gimp_drawable_height (layers[0]);
+      w = gimp_drawable_width  (layers->data);
+      h = gimp_drawable_height (layers->data);
 
-      for (i = 1; i < num_layers && array; ++i)
+      for (i = 1, list = g_list_next (layers);
+           i < num_layers && array;
+           ++i, list = g_list_next (list))
         {
-          if ((gimp_drawable_width (layers[i])  != w) ||
-              (gimp_drawable_height (layers[i]) != h))
+          if ((gimp_drawable_width  (list->data)  != w) ||
+              (gimp_drawable_height (list->data) != h))
             array = FALSE;
         }
 
       if (array)
         {
           /* make sure all layers are the same type */
-          type = gimp_drawable_type (layers[0]);
-          for (i = 1; i < num_layers; ++i)
+          type = gimp_drawable_type (layers->data);
+
+          for (i = 1, list = g_list_next (layers);
+               i < num_layers;
+               ++i, list = g_list_next (list))
             {
-              if (gimp_drawable_type (layers[i]) != type)
+              if (gimp_drawable_type (list->data) != type)
                 {
                   array = FALSE;
                   break;
@@ -521,49 +553,57 @@ check_array (gint32 image_id)
         }
     }
 
+  g_list_free (layers);
+
   return array;
 }
 
 static int
-get_array_size (gint32 image_id)
+get_array_size (GimpImage *image)
 {
-  gint *layers;
-  gint  num_layers;
-  gint i, w, h;
-  gint elements = 0;
+  GList *layers;
+  GList *list;
+  gint   num_layers;
+  gint   i, w, h;
+  gint   elements = 0;
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
-  w = gimp_image_width (image_id);
-  h = gimp_image_height (image_id);
+  w = gimp_image_width (image);
+  h = gimp_image_height (image);
 
-  for (i = 0; i < num_layers; ++i)
+  for (i = 0, list = layers;
+       i < num_layers;
+       ++i, list = g_list_next (list))
     {
-      if ((gimp_drawable_width  (layers[i]) == w) &&
-          (gimp_drawable_height (layers[i]) == h))
+      if ((gimp_drawable_width  (list->data) == w) &&
+          (gimp_drawable_height (list->data) == h))
         {
           elements++;
         }
     }
 
+  g_list_free (layers);
+
   return elements;
 }
 
 GimpPDBStatusType
-write_dds (gchar    *filename,
-           gint32    image_id,
-           gint32    drawable_id,
-           gboolean  interactive_dds)
+write_dds (gchar        *filename,
+           GimpImage    *image,
+           GimpDrawable *drawable,
+           gboolean      interactive_dds)
 {
   FILE  *fp;
   gchar *tmp;
   int    rc = 0;
 
-  is_mipmap_chain_valid = check_mipmaps (image_id, dds_write_vals.savetype);
+  is_mipmap_chain_valid = check_mipmaps (image, dds_write_vals.savetype);
 
-  is_cubemap = check_cubemap (image_id);
-  is_volume  = check_volume (image_id);
-  is_array   = check_array (image_id);
+  is_cubemap = check_cubemap (image);
+  is_volume  = check_volume (image);
+  is_array   = check_array (image);
 
   if (interactive_dds)
     {
@@ -571,7 +611,7 @@ write_dds (gchar    *filename,
           dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING)
         dds_write_vals.mipmaps = DDS_MIPMAP_NONE;
 
-      if (! save_dialog (image_id, drawable_id))
+      if (! save_dialog (image, drawable))
         return GIMP_PDB_CANCEL;
     }
   else
@@ -617,7 +657,7 @@ write_dds (gchar    *filename,
   gimp_progress_init (tmp);
   g_free (tmp);
 
-  rc = write_image (fp, image_id, drawable_id);
+  rc = write_image (fp, image, drawable);
 
   fclose (fp);
 
@@ -803,10 +843,12 @@ get_mipmap_chain (unsigned char *dst,
                   int            w,
                   int            h,
                   int            bpp,
-                  gint32         image_id,
-                  gint           drawable_id)
+                  GimpImage     *image,
+                  GimpDrawable  *drawable)
 {
-  gint *layers, num_layers;
+  GList *layers;
+  GList *list;
+  gint   num_layers;
   GeglBuffer *buffer;
   const Babl *format = 0;
   int i, idx = 0, offset, mipw, miph;
@@ -820,24 +862,28 @@ get_mipmap_chain (unsigned char *dst,
   else
     format = babl_format ("R'G'B'A u8");
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
-  for (i = 0; i < num_layers; ++i)
+  for (i = 0, list = layers;
+       i < num_layers;
+       ++i, list = g_list_next (list))
     {
-      if (layers[i] == drawable_id)
+      if (list->data == drawable)
         {
           idx = i;
           break;
         }
     }
 
-  if (i == num_layers) return;
+  if (i == num_layers)
+    return;
 
   offset = 0;
 
   while (get_next_mipmap_dimensions (&mipw, &miph, w, h))
     {
-      buffer = gimp_drawable_get_buffer (layers[++idx]);
+      buffer = gimp_drawable_get_buffer (g_list_nth_data (layers, ++idx));
 
       if ((gegl_buffer_get_width (buffer)  != mipw) ||
           (gegl_buffer_get_height (buffer) != miph))
@@ -861,14 +907,14 @@ get_mipmap_chain (unsigned char *dst,
 }
 
 static void
-write_layer (FILE   *fp,
-             gint32  image_id,
-             gint32  drawable_id,
-             int     w,
-             int     h,
-             int     bpp,
-             int     fmtbpp,
-             int     mipmaps)
+write_layer (FILE         *fp,
+             GimpImage    *image,
+             GimpDrawable *drawable,
+             int           w,
+             int           h,
+             int           bpp,
+             int           fmtbpp,
+             int           mipmaps)
 {
   GeglBuffer *buffer;
   const Babl *format = 0;
@@ -880,10 +926,10 @@ write_layer (FILE   *fp,
   int compression = dds_write_vals.compression;
   int flags = 0;
 
-  basetype = gimp_image_base_type (image_id);
-  type = gimp_drawable_type (drawable_id);
+  basetype = gimp_image_base_type (image);
+  type = gimp_drawable_type (drawable);
 
-  buffer = gimp_drawable_get_buffer (drawable_id);
+  buffer = gimp_drawable_get_buffer (drawable);
 
   src = g_malloc (w * h * bpp);
 
@@ -901,7 +947,7 @@ write_layer (FILE   *fp,
 
   if (basetype == GIMP_INDEXED)
     {
-      palette = gimp_image_get_colormap (image_id, &colors);
+      palette = gimp_image_get_colormap (image, &colors);
 
       if (type == GIMP_INDEXEDA_IMAGE)
         {
@@ -1029,7 +1075,7 @@ write_layer (FILE   *fp,
           else
             {
               memcpy (dst, src, w * h * bpp);
-              get_mipmap_chain (dst + (w * h * bpp), w, h, bpp, image_id, drawable_id);
+              get_mipmap_chain (dst + (w * h * bpp), w, h, bpp, image, drawable);
             }
 
           if (dds_write_vals.format > DDS_FORMAT_DEFAULT)
@@ -1108,7 +1154,7 @@ write_layer (FILE   *fp,
           else
             {
               memcpy (fmtdst, src, w * h * bpp);
-              get_mipmap_chain (fmtdst + (w * h * bpp), w, h, bpp, image_id, drawable_id);
+              get_mipmap_chain (fmtdst + (w * h * bpp), w, h, bpp, image, drawable);
             }
 
           g_free (src);
@@ -1131,16 +1177,17 @@ write_layer (FILE   *fp,
 }
 
 static void
-write_volume_mipmaps (FILE   *fp,
-                      gint32  image_id,
-                      gint32 *layers,
-                      int     w,
-                      int     h,
-                      int     d,
-                      int     bpp,
-                      int     fmtbpp,
-                      int     mipmaps)
+write_volume_mipmaps (FILE      *fp,
+                      GimpImage *image,
+                      GList     *layers,
+                      int        w,
+                      int        h,
+                      int        d,
+                      int        bpp,
+                      int        fmtbpp,
+                      int        mipmaps)
 {
+  GList *list;
   int i, size, offset, colors;
   unsigned char *src, *dst, *tmp, *fmtdst;
   unsigned char *palette = 0;
@@ -1148,7 +1195,7 @@ write_volume_mipmaps (FILE   *fp,
   const Babl *format;
   GimpImageBaseType type;
 
-  type = gimp_image_base_type (image_id);
+  type = gimp_image_base_type (image);
 
   if (dds_write_vals.compression != DDS_COMPRESS_NONE) return;
 
@@ -1163,20 +1210,22 @@ write_volume_mipmaps (FILE   *fp,
   else
     format = babl_format ("R'G'B'A u8");
 
-  if (gimp_image_base_type (image_id) == GIMP_INDEXED)
-    palette = gimp_image_get_colormap (image_id, &colors);
+  if (gimp_image_base_type (image) == GIMP_INDEXED)
+    palette = gimp_image_get_colormap (image, &colors);
 
   offset = 0;
-  for (i = 0; i < d; ++i)
+  for (i = 0, list = layers;
+       i < d;
+       ++i, list = g_list_next (list))
     {
-      buffer = gimp_drawable_get_buffer (layers[i]);
+      buffer = gimp_drawable_get_buffer (list->data);
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0, format,
                        src + offset, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
       offset += (w * h * bpp);
       g_object_unref (buffer);
     }
 
-  if (gimp_drawable_type (layers[0]) == GIMP_INDEXEDA_IMAGE)
+  if (gimp_drawable_type (layers->data) == GIMP_INDEXEDA_IMAGE)
     {
       tmp = g_malloc (w * h * d);
       for (i = 0; i < w * h * d; ++i)
@@ -1241,9 +1290,9 @@ write_volume_mipmaps (FILE   *fp,
 }
 
 static gboolean
-write_image (FILE   *fp,
-             gint32  image_id,
-             gint32  drawable_id)
+write_image (FILE         *fp,
+             GimpImage    *image,
+             GimpDrawable *drawable)
 {
   GimpImageType drawable_type;
   GimpImageBaseType basetype;
@@ -1259,31 +1308,33 @@ write_image (FILE   *fp,
   guint fourcc = 0;
   DXGI_FORMAT dxgi_format = DXGI_FORMAT_UNKNOWN;
   gint32  num_layers;
-  gint32 *layers;
+  GList  *layers;
+  GList *list;
   guchar *cmap;
   gint    colors;
   guchar zero[4] = {0, 0, 0, 0};
   gint is_dx10 = 0;
   gint array_size = 1;
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_list_layers (image);
+  num_layers = g_list_length (layers);
 
   if (dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING)
-    drawable_id = layers[0];
+    drawable = layers->data;
 
   if (dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER)
     {
-      w = gimp_drawable_width (drawable_id);
-      h = gimp_drawable_height (drawable_id);
+      w = gimp_drawable_width (drawable);
+      h = gimp_drawable_height (drawable);
     }
   else
     {
-      w = gimp_image_width (image_id);
-      h = gimp_image_height (image_id);
+      w = gimp_image_width (image);
+      h = gimp_image_height (image);
     }
 
-  basetype = gimp_image_base_type (image_id);
-  drawable_type = gimp_drawable_type (drawable_id);
+  basetype = gimp_image_base_type (image);
+  drawable_type = gimp_drawable_type (drawable);
 
   switch (drawable_type)
     {
@@ -1569,7 +1620,8 @@ write_image (FILE   *fp,
 
   if (is_dx10)
     {
-      array_size = (dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER) ? 1 : get_array_size (image_id);
+      array_size = ((dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER) ?
+                    1 : get_array_size (image));
 
       PUTL32 (hdr10 +  0, dxgi_format);
       PUTL32 (hdr10 +  4, D3D10_RESOURCE_DIMENSION_TEXTURE2D);
@@ -1592,7 +1644,7 @@ write_image (FILE   *fp,
       (dds_write_vals.format == DDS_FORMAT_DEFAULT) &&
       (dds_write_vals.compression == DDS_COMPRESS_NONE))
     {
-      cmap = gimp_image_get_colormap (image_id, &colors);
+      cmap = gimp_image_get_colormap (image, &colors);
 
       for (i = 0; i < colors; ++i)
         {
@@ -1611,31 +1663,36 @@ write_image (FILE   *fp,
     {
       for (i = 0; i < 6; ++i)
         {
-          write_layer (fp, image_id, cubemap_faces[i], w, h, bpp, fmtbpp,
+          write_layer (fp, image, GIMP_DRAWABLE (cubemap_faces[i]),
+                       w, h, bpp, fmtbpp,
                        num_mipmaps);
           gimp_progress_update ((float)(i + 1) / 6.0);
         }
     }
   else if (dds_write_vals.savetype == DDS_SAVE_VOLUMEMAP)
     {
-      for (i = 0; i < num_layers; ++i)
+      for (i = 0, list = layers;
+           i < num_layers;
+           ++i, list = g_list_next (layers))
         {
-          write_layer (fp, image_id, layers[i], w, h, bpp, fmtbpp, 1);
+          write_layer (fp, image, list->data, w, h, bpp, fmtbpp, 1);
           gimp_progress_update ((float)i / (float)num_layers);
         }
 
       if (num_mipmaps > 1)
-        write_volume_mipmaps (fp, image_id, layers, w, h, num_layers,
+        write_volume_mipmaps (fp, image, layers, w, h, num_layers,
                               bpp, fmtbpp, num_mipmaps);
     }
   else if (dds_write_vals.savetype == DDS_SAVE_ARRAY)
     {
-      for (i = 0; i < num_layers; ++i)
+      for (i = 0, list = layers;
+           i < num_layers;
+           ++i, list = g_list_next (layers))
         {
-          if ((gimp_drawable_width  (layers[i]) == w) &&
-              (gimp_drawable_height (layers[i]) == h))
+          if ((gimp_drawable_width  (list->data) == w) &&
+              (gimp_drawable_height (list->data) == h))
             {
-              write_layer (fp, image_id, layers[i],
+              write_layer (fp, image, list->data,
                            w, h, bpp, fmtbpp, num_mipmaps);
             }
 
@@ -1644,7 +1701,7 @@ write_image (FILE   *fp,
     }
   else
     {
-      write_layer (fp, image_id, drawable_id, w, h, bpp, fmtbpp, num_mipmaps);
+      write_layer (fp, image, drawable, w, h, bpp, fmtbpp, num_mipmaps);
     }
 
   gimp_progress_update (1.0);
@@ -1789,7 +1846,7 @@ static void
 savetype_selected (GtkWidget *widget,
                    gpointer   data)
 {
-  gint32 image_id = *((gint32 *)data);
+  GimpImage *image = data;
 
   dds_write_vals.savetype = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
 
@@ -1810,7 +1867,7 @@ savetype_selected (GtkWidget *widget,
     }
 
   string_value_combo_set_item_sensitive (mipmap_opt, DDS_MIPMAP_EXISTING,
-                                         check_mipmaps (image_id, dds_write_vals.savetype));
+                                         check_mipmaps (image, dds_write_vals.savetype));
 }
 
 static void
@@ -1933,8 +1990,8 @@ alpha_test_threshold_changed (GtkWidget *widget,
 }
 
 static gint
-save_dialog (gint32 image_id,
-             gint32 drawable_id)
+save_dialog (GimpImage    *image,
+             GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
@@ -1949,7 +2006,7 @@ save_dialog (gint32 image_id,
   if (is_cubemap || is_volume || is_array)
     dds_write_vals.savetype = DDS_SAVE_SELECTED_LAYER;
 
-  basetype = gimp_image_base_type (image_id);
+  basetype = gimp_image_base_type (image);
 
   dlg = gimp_dialog_new (_("Export as DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
                          gimp_standard_help_func, SAVE_PROC,
@@ -2025,7 +2082,7 @@ save_dialog (gint32 image_id,
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (savetype_selected),
-                    &image_id);
+                    image);
 
   string_value_combo_set_item_sensitive (opt, DDS_SAVE_CUBEMAP, is_cubemap);
   string_value_combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
@@ -2039,10 +2096,10 @@ save_dialog (gint32 image_id,
 
   g_signal_connect (opt, "changed",
                     G_CALLBACK (mipmaps_selected),
-                    &image_id);
+                    image);
 
   string_value_combo_set_item_sensitive (opt, DDS_MIPMAP_EXISTING,
-                                         check_mipmaps (image_id,
+                                         check_mipmaps (image,
                                                         dds_write_vals.savetype));
 
   mipmap_opt = opt;
