@@ -1331,7 +1331,18 @@ script_fu_marshal_procedure_call (scheme   *sc,
                         i, type_name, return_vals[i].type);
           }
 #endif
-          if (G_VALUE_HOLDS_INT (value))
+          if (G_VALUE_HOLDS_OBJECT (value))
+            {
+              GObject *object = g_value_get_object (value);
+              gint     id     = -1;
+
+              if (object)
+                g_object_get (object, "id", &id, NULL);
+
+              return_val = sc->vptr->cons (sc, sc->vptr->mk_integer (sc, id),
+                                           return_val);
+            }
+          else if (G_VALUE_HOLDS_INT (value))
             {
               gint v = g_value_get_int (value);
 
@@ -1568,7 +1579,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
    */
   if (return_val == sc->NIL)
     {
-      if (GIMP_VALUES_GET_INT (values, 0) == GIMP_PDB_SUCCESS)
+      if (GIMP_VALUES_GET_ENUM (values, 0) == GIMP_PDB_SUCCESS)
         return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
       else
         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);

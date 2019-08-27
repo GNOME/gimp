@@ -710,7 +710,15 @@ script_fu_script_get_command_from_params (SFScript             *script,
         case SF_CHANNEL:
         case SF_VECTORS:
         case SF_DISPLAY:
-          g_string_append_printf (s, "%d", g_value_get_int (value));
+          {
+            GObject *object = g_value_get_object (value);
+            gint     id     = -1;
+
+            if (object)
+              g_object_get (object, "id", &id, NULL);
+
+            g_string_append_printf (s, "%d", id);
+          }
           break;
 
         case SF_COLOR:

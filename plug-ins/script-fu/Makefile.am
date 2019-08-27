@@ -31,7 +31,6 @@ script_fu_RC = script-fu.rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DGIMP_DEPRECATED_REPLACE_NEW_API \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
