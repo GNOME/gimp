@@ -70,121 +70,152 @@ enum
 };
 
 
-/*  local function prototypes  */
+typedef struct _Metadata      Metadata;
+typedef struct _MetadataClass MetadataClass;
 
-static void       query                            (void);
-static void       run                              (const gchar      *name,
-                                                    gint              nparams,
-                                                    const GimpParam  *param,
-                                                    gint             *nreturn_vals,
-                                                    GimpParam       **return_vals);
-
-static gboolean   metadata_viewer_dialog           (gint32          image_id,
-                                                    GimpMetadata   *g_metadata);
-static void       metadata_dialog_set_metadata     (GExiv2Metadata *metadata,
-                                                    GtkBuilder     *builder);
-static void       metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
-                                                    gchar          **tags,
-                                                    GtkListStore    *store,
-                                                    gint             tag_column,
-                                                    gint             value_column);
-static gchar    * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
-                                                    const gchar     *tag,
-                                                    gboolean         truncate);
-
-
-/* local variables */
-
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Metadata
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run,   /* run_proc   */
+  GimpPlugIn parent_instance;
 };
 
-/*  functions  */
+struct _MetadataClass
+{
+  GimpPlugInClass parent_class;
+};
 
-MAIN ()
+
+#define METADATA_TYPE  (metadata_get_type ())
+#define METADATA (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), METADATA_TYPE, Metadata))
+
+GType                   metadata_get_type         (void) G_GNUC_CONST;
+
+static GList          * metadata_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * metadata_create_procedure (GimpPlugIn           *plug_in,
+                                                   const gchar          *name);
+
+static GimpValueArray * metadata_run              (GimpProcedure        *procedure,
+                                                   const GimpValueArray *args,
+                                                   gpointer              run_data);
+
+static gboolean  metadata_viewer_dialog           (GimpImage      *image,
+                                                   GimpMetadata   *g_metadata);
+static void      metadata_dialog_set_metadata     (GExiv2Metadata *metadata,
+                                                   GtkBuilder     *builder);
+static void      metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
+                                                   gchar          **tags,
+                                                   GtkListStore    *store,
+                                                   gint             tag_column,
+                                                   gint             value_column);
+static gchar   * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
+                                                   const gchar     *tag,
+                                                   gboolean         truncate);
+
+
+G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (METADATA_TYPE)
+
 
 static void
-query (void)
+metadata_class_init (MetadataClass *klass)
 {
-  static const GimpParamDef metadata_args[] =
-  {
-    { GIMP_PDB_INT32, "run-mode", "Run mode { RUN-INTERACTIVE (0) }" },
-    { GIMP_PDB_IMAGE, "image",    "Input image"                      }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("View metadata (Exif, IPTC, XMP)"),
-                          "View metadata information attached to the "
-                          "current image.  This can include Exif, IPTC and/or "
-                          "XMP information.",
-                          "Hartmut Kuhse, Michael Natterer, Ben Touchette",
-                          "Hartmut Kuhse, Michael Natterer, Ben Touchette",
-                          "2013, 2017",
-                          N_("_View Metadata"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (metadata_args), 0,
-                          metadata_args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Image/Metadata");
+  plug_in_class->query_procedures = metadata_query_procedures;
+  plug_in_class->create_procedure = metadata_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+metadata_init (Metadata *metadata)
 {
-  static GimpParam   values[1];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+}
 
-  *nreturn_vals = 1;
-  *return_vals  = values;
+static GList *
+metadata_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-  INIT_I18N();
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+static GimpProcedure *
+metadata_create_procedure (GimpPlugIn  *plug_in,
+                           const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      GimpMetadata *metadata;
-      gint32        image_ID = param[1].data.d_image;
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      metadata_run, NULL, NULL);
 
-      metadata = gimp_image_get_metadata (image_ID);
+      gimp_procedure_set_image_types (procedure, "*");
 
-      /* Always show metadata dialog so we can add
-         appropriate iptc data as needed. Sometimes
-         license data needs to be added after the
-         fact and the image may not contain metadata
-         but should have it added as needed. */
+      gimp_procedure_set_menu_label (procedure, N_("_View Metadata"));
+      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
 
-      if (!metadata)
-        {
-          metadata = gimp_metadata_new();
-          gimp_image_set_metadata (image_ID, metadata);
-        }
+      gimp_procedure_set_documentation (procedure,
+                                        N_("View metadata (Exif, IPTC, XMP)"),
+                                        "View metadata information attached "
+                                        "to the current image. This can "
+                                        "include Exif, IPTC and/or XMP "
+                                        "information.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Hartmut Kuhse, Michael Natterer, "
+                                      "Ben Touchette",
+                                      "Hartmut Kuhse, Michael Natterer, "
+                                      "Ben Touchette",
+                                      "2013, 2017");
 
-      metadata_viewer_dialog (image_ID, metadata);
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
 
-      status = GIMP_PDB_SUCCESS;
+      GIMP_PROC_ARG_IMAGE (procedure, "image",
+                           "Image",
+                           "The input image",
+                           G_PARAM_READWRITE);
     }
-  else
+
+  return procedure;
+}
+
+static GimpValueArray *
+metadata_run (GimpProcedure        *procedure,
+              const GimpValueArray *args,
+              gpointer              run_data)
+{
+  GimpImage    *image;
+  GimpMetadata *metadata;
+
+  INIT_I18N ();
+
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+
+  image = GIMP_VALUES_GET_IMAGE (args, 1);
+
+  metadata = gimp_image_get_metadata (image);
+
+  /* Always show metadata dialog so we can add appropriate iptc data
+   * as needed. Sometimes license data needs to be added after the
+   * fact and the image may not contain metadata but should have it
+   * added as needed.
+   */
+  if (! metadata)
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      metadata = gimp_metadata_new ();
+      gimp_image_set_metadata (image, metadata);
     }
 
-  values[0].data.d_status = status;
+  metadata_viewer_dialog (image, metadata);
+
+  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-metadata_viewer_dialog (gint32        image_id,
+metadata_viewer_dialog (GimpImage    *image,
                         GimpMetadata *g_metadata)
 {
   GtkBuilder     *builder;
@@ -216,7 +247,7 @@ metadata_viewer_dialog (gint32        image_id,
 
   g_free (ui_file);
 
-  name = gimp_image_get_name (image_id);
+  name = gimp_image_get_name (image);
   title = g_strdup_printf (_("Metadata Viewer: %s"), name);
   g_free (name);
 

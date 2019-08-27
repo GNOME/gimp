@@ -25,7 +25,7 @@ typedef struct
   GtkWidget      *dialog;
   GtkBuilder     *builder;
   GExiv2Metadata *metadata;
-  gint32          image_id;
+  GimpImage      *image;
   gchar          *filename;
 } metadata_editor;
 

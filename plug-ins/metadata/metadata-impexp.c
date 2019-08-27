@@ -110,9 +110,9 @@ export_file_metadata (metadata_editor *args)
   if (force_write == TRUE)
     {
       /* Save fields in case of updates */
-      metadata_editor_write_callback (args->dialog, args->builder, args->image_id);
+      metadata_editor_write_callback (args->dialog, args->builder, args->image);
       /* Fetch a fresh copy of the metadata */
-      args->metadata = GEXIV2_METADATA (gimp_image_get_metadata (args->image_id));
+      args->metadata = GEXIV2_METADATA (gimp_image_get_metadata (args->image));
     }
 
   xmldata = g_strconcat ("<?xml version=“1.0” encoding=“utf-8”?>\n",
