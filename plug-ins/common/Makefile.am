@@ -921,8 +921,6 @@ file_pdf_load_LDADD = \
 
 file_pdf_save_CFLAGS = $(CAIRO_PDF_CFLAGS)
 
-file_pdf_save_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_pdf_save_SOURCES = \
 	file-pdf-save.c
 
