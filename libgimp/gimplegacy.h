@@ -268,10 +268,6 @@ gboolean   gimp_plugin_menu_register        (const gchar   *procedure_name,
 /* gimp_fileops API that should now be done by using GimpFileProcedure
  */
 
-gboolean   gimp_register_magic_load_handler    (const gchar *procedure_name,
-                                                const gchar *extensions,
-                                                const gchar *prefixes,
-                                                const gchar *magics);
 gboolean   gimp_register_save_handler          (const gchar *procedure_name,
                                                 const gchar *extensions,
                                                 const gchar *prefixes);
