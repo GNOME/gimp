@@ -142,7 +142,9 @@ static void       gimp_plug_in_push_procedure    (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
 static void       gimp_plug_in_pop_procedure     (GimpPlugIn      *plug_in,
                                                   GimpProcedure   *procedure);
-static void       gimp_plug_in_destroy_proxies   (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
+static void       gimp_plug_in_destroy_proxies   (GHashTable      *hash_table,
+                                                  gboolean         finalize);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
@@ -238,7 +240,11 @@ gimp_plug_in_finalize (GObject *object)
 
   g_clear_pointer (&plug_in->priv->menu_branches, g_list_free);
 
-  gimp_plug_in_destroy_proxies (plug_in);
+  gimp_plug_in_destroy_proxies (plug_in->priv->displays, TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->images,   TRUE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->items,    TRUE);
+
+  gimp_plug_in_destroy_hashes (plug_in);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1213,63 +1219,12 @@ gimp_plug_in_pop_procedure (GimpPlugIn    *plug_in,
 
   _gimp_procedure_destroy_proxies (procedure);
 
-  if (plug_in->priv->procedure_stack)
-    {
-      GHashTableIter iter;
-      gpointer       key, value;
+  gimp_plug_in_destroy_proxies (plug_in->priv->displays, FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->images,   FALSE);
+  gimp_plug_in_destroy_proxies (plug_in->priv->items,    FALSE);
 
-      if (plug_in->priv->displays)
-        {
-          g_hash_table_iter_init (&iter, plug_in->priv->displays);
-          while (g_hash_table_iter_next (&iter, &key, &value))
-            {
-              GObject *object = value;
-
-              if (object->ref_count == 1)
-                g_hash_table_iter_remove (&iter);
-            }
-        }
-
-      if (plug_in->priv->images)
-        {
-          g_hash_table_iter_init (&iter, plug_in->priv->images);
-          while (g_hash_table_iter_next (&iter, &key, &value))
-            {
-              GObject *object = value;
-
-              if (object->ref_count == 1)
-                g_hash_table_iter_remove (&iter);
-            }
-        }
-
-      if (plug_in->priv->items)
-        {
-          g_hash_table_iter_init (&iter, plug_in->priv->items);
-          while (g_hash_table_iter_next (&iter, &key, &value))
-            {
-              GObject *object = value;
-
-              if (object->ref_count == 1)
-                g_hash_table_iter_remove (&iter);
-            }
-        }
-    }
-  else
-    {
-#if 0
-      g_printerr ("remaining displays: %d\n"
-                  "remaining images:   %d\n"
-                  "remaining items;    %d\n",
-                  plug_in->priv->displays ?
-                  g_hash_table_size (plug_in->priv->displays) : -1,
-                  plug_in->priv->images ?
-                  g_hash_table_size (plug_in->priv->images) : -1,
-                  plug_in->priv->items ?
-                  g_hash_table_size (plug_in->priv->items) : -1);
-#endif
-
-      gimp_plug_in_destroy_proxies (plug_in);
-    }
+  if (! plug_in->priv->procedure_stack)
+    gimp_plug_in_destroy_hashes (plug_in);
 }
 
 GimpDisplay *
@@ -1298,7 +1253,7 @@ _gimp_plug_in_get_display (GimpPlugIn *plug_in,
 
       g_hash_table_insert (plug_in->priv->displays,
                            GINT_TO_POINTER (display_id),
-                           display);
+                           g_object_ref (display) /* add debug ref */);
     }
 
   return display;
@@ -1330,7 +1285,7 @@ _gimp_plug_in_get_image (GimpPlugIn *plug_in,
 
       g_hash_table_insert (plug_in->priv->images,
                            GINT_TO_POINTER (image_id),
-                           image);
+                           g_object_ref (image) /* add debug ref */);
     }
 
   return image;
@@ -1390,16 +1345,76 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
       if (item)
         g_hash_table_insert (plug_in->priv->items,
                              GINT_TO_POINTER (item_id),
-                             item);
+                             g_object_ref (item) /* add debug ref */);
     }
 
   return item;
 }
 
 static void
-gimp_plug_in_destroy_proxies (GimpPlugIn *plug_in)
+gimp_plug_in_destroy_hashes (GimpPlugIn *plug_in)
 {
   g_clear_pointer (&plug_in->priv->displays, g_hash_table_unref);
   g_clear_pointer (&plug_in->priv->images,   g_hash_table_unref);
   g_clear_pointer (&plug_in->priv->items,    g_hash_table_unref);
+}
+
+static void
+gimp_plug_in_destroy_proxies (GHashTable *hash_table,
+                              gboolean    finalize)
+{
+  GHashTableIter iter;
+  gpointer       key, value;
+
+  if (! hash_table)
+    return;
+
+  g_hash_table_iter_init (&iter, hash_table);
+
+  while (g_hash_table_iter_next (&iter, &key, &value))
+    {
+      GObject *object = value;
+
+      if (object->ref_count == 2)
+        {
+          /* this is the normal case for an unused proxy */
+
+          g_object_unref (object);
+          g_hash_table_iter_remove (&iter);
+        }
+      else if (object->ref_count == 1)
+        {
+          /* this is debug code, a plug-in MUST NOT unref a proxy, we
+           * only catch one unref here, more then one will crash right
+           * in this function
+           */
+
+          gint id;
+
+          g_object_get (object, "id", &id, NULL);
+
+          g_printerr ("%s: ERROR: %s proxy with ID %d was unrefed "
+                      "by plug-in, it MUST NOT do that!\n",
+                      G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
+
+          g_hash_table_iter_remove (&iter);
+        }
+      else if (finalize)
+        {
+          /* this is debug code, a plug-in MUST NOT ref a proxy */
+
+          gint id;
+
+          g_object_get (object, "id", &id, NULL);
+
+          g_printerr ("%s: ERROR: %s proxy with ID %d was refed "
+                      "by plug-in, it MUST NOT do that!\n",
+                      G_STRFUNC, G_OBJECT_TYPE_NAME (object), id);
+
+          while (object->ref_count > 1)
+            g_object_unref (object);
+
+          g_hash_table_iter_remove (&iter);
+        }
+    }
 }
