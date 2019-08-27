@@ -392,57 +392,6 @@ gimp_plugin_menu_register (const gchar *procedure_name,
   return _gimp_plugin_menu_register (procedure_name, menu_path);
 }
 
-/**
- * gimp_register_save_handler:
- * @procedure_name: The name of the procedure to be used for saving.
- * @extensions: comma separated list of extensions this handler can save (i.e. "jpg,jpeg").
- * @prefixes: comma separated list of prefixes this handler can save (i.e. "http:,ftp:").
- *
- * Registers a file save handler procedure.
- *
- * Registers a procedural database procedure to be called to save files
- * in a particular file format.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_register_save_handler (const gchar *procedure_name,
-                            const gchar *extensions,
-                            const gchar *prefixes)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_register_save_handler (procedure_name,
-                                      extensions, prefixes);
-}
-
-/**
- * gimp_register_file_handler_mime:
- * @procedure_name: The name of the procedure to associate a MIME type with.
- * @mime_types: A comma-separated list of MIME types, such as \"image/jpeg\".
- *
- * Associates MIME types with a file handler procedure.
- *
- * Registers MIME types for a file handler procedure. This allows GIMP
- * to determine the MIME type of the file opened or saved using this
- * procedure. It is recommended that only one MIME type is registered
- * per file procedure; when registering more than one MIME type, GIMP
- * will associate the first one with files opened or saved with this
- * procedure.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.2
- **/
-gboolean
-gimp_register_file_handler_mime (const gchar *procedure_name,
-                                 const gchar *mime_types)
-{
-  ASSERT_NO_PLUG_IN_EXISTS (G_STRFUNC);
-
-  return _gimp_register_file_handler_mime (procedure_name, mime_types);
-}
-
 
 /*  private functions  */
 

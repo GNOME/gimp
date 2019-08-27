@@ -748,8 +748,6 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
-	gimp_register_file_handler_mime
-	gimp_register_save_handler
 	gimp_run_procedure_array
 	gimp_save_procedure_get_type
 	gimp_save_procedure_new

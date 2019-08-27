@@ -265,16 +265,6 @@ GimpValueArray * gimp_run_procedure_array (const gchar          *name,
 gboolean   gimp_plugin_menu_register        (const gchar   *procedure_name,
                                              const gchar   *menu_path);
 
-/* gimp_fileops API that should now be done by using GimpFileProcedure
- */
-
-gboolean   gimp_register_save_handler          (const gchar *procedure_name,
-                                                const gchar *extensions,
-                                                const gchar *prefixes);
-gboolean   gimp_register_file_handler_mime     (const gchar *procedure_name,
-                                                const gchar *mime_types);
-
-
 #endif /* GIMP_DISABLE_COMPAT_CRUFT */
 
 G_END_DECLS
