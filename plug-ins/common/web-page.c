@@ -30,22 +30,21 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* Defines */
+
 #define PLUG_IN_PROC   "plug-in-web-page"
 #define PLUG_IN_BINARY "web-page"
 #define PLUG_IN_ROLE   "gimp-web-page"
 #define MAX_URL_LEN    2048
+
 
 typedef struct
 {
   char      *url;
   gint32     width;
   gint       font_size;
-  gint32     image;
+  GimpImage *image;
   GError    *error;
 } WebpageVals;
-
-static WebpageVals webpagevals;
 
 typedef struct
 {
@@ -54,157 +53,201 @@ typedef struct
   gint   font_size;
 } WebpageSaveVals;
 
-static void     query           (void);
-static void     run             (const gchar      *name,
-                                 gint              nparams,
-                                 const GimpParam  *param,
-                                 gint             *nreturn_vals,
-                                 GimpParam       **return_vals);
-static gboolean webpage_dialog  (void);
-static gint32   webpage_capture (void);
 
+typedef struct _Webpage      Webpage;
+typedef struct _WebpageClass WebpageClass;
 
-/* Global Variables */
-const GimpPlugInInfo PLUG_IN_INFO =
+struct _Webpage
 {
-  NULL,  /* init_proc  */
-  NULL,  /* quit_proc  */
-  query, /* query_proc */
-  run    /* run_proc   */
+  GimpPlugIn parent_instance;
+};
+
+struct _WebpageClass
+{
+  GimpPlugInClass parent_class;
 };
 
 
-/* Functions */
+#define WEBPAGE_TYPE  (webpage_get_type ())
+#define WEBPAGE (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBPAGE_TYPE, Webpage))
 
-MAIN ()
+GType                   webpage_get_type         (void) G_GNUC_CONST;
+
+static GList          * webpage_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * webpage_create_procedure (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray * webpage_run              (GimpProcedure        *procedure,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
+
+static gboolean         webpage_dialog           (void);
+static GimpImage      * webpage_capture          (void);
+
+
+G_DEFINE_TYPE (Webpage, webpage, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (WEBPAGE_TYPE)
+
+
+static WebpageVals webpagevals;
+
 
 static void
-query (void)
+webpage_class_init (WebpageClass *klass)
 {
-  static const GimpParamDef args[] =
-  {
-    { GIMP_PDB_INT32,  "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "url",       "URL of the webpage to screenshot"                             },
-    { GIMP_PDB_INT32,  "width",     "The width of the screenshot (in pixels)"                      },
-    { GIMP_PDB_INT32,  "font-size", "The font size to use in the page (in pt)"                     }
-  };
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
-  static const GimpParamDef return_vals[] =
-  {
-    { GIMP_PDB_IMAGE, "image", "Output image" }
-  };
-
-  gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Create an image of a webpage"),
-                          "The plug-in allows you to take a screenshot "
-                          "of a webpage.",
-                          "Mukund Sivaraman <muks@banu.com>",
-                          "2011",
-                          "2011",
-                          N_("From _Webpage..."),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (args),
-                          G_N_ELEMENTS (return_vals),
-                          args, return_vals);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Create/Acquire");
+  plug_in_class->query_procedures = webpage_query_procedures;
+  plug_in_class->create_procedure = webpage_create_procedure;
 }
 
 static void
-run (const gchar      *name,
-     gint             nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
+webpage_init (Webpage *webpage)
 {
-  GimpRunMode        run_mode = param[0].data.d_int32;
-  GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
-  static GimpParam   values[2];
-  gint32             image_id;
-  WebpageSaveVals    save = {"https://www.gimp.org/", 1024, 12};
+}
+
+static GList *
+webpage_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
+}
+
+static GimpProcedure *
+webpage_create_procedure (GimpPlugIn  *plug_in,
+                          const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, PLUG_IN_PROC))
+    {
+      procedure = gimp_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                      webpage_run, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("From _Webpage..."));
+      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
+
+      gimp_procedure_set_documentation (procedure,
+                                        N_("Create an image of a webpage"),
+                                        "The plug-in allows you to take a "
+                                        "screenshot of a webpage.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Mukund Sivaraman <muks@banu.com>",
+                                      "2011",
+                                      "2011");
+
+      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+                          "Run mode",
+                          "The run mode",
+                          GIMP_TYPE_RUN_MODE,
+                          GIMP_RUN_INTERACTIVE,
+                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "url",
+                            "URL",
+                            "URL of the webpage to screenshot",
+                            "http://www.gimp.org/",
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "width",
+                         "Width",
+                         "The width of the screenshot (in pixels)",
+                         100, GIMP_MAX_IMAGE_SIZE, 1024,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "font-size",
+                         "Font size",
+                         "The font size to use in the page (in pt)",
+                         1, 1000, 12,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_VAL_IMAGE (procedure, "image",
+                           "Image",
+                           "The output image",
+                           G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+webpage_run (GimpProcedure        *procedure,
+             const GimpValueArray *args,
+             gpointer              run_data)
+{
+  GimpValueArray  *return_vals;
+  GimpRunMode      run_mode;
+  GimpImage       *image;
+  WebpageSaveVals  save = { "https://www.gimp.org/", 1024, 12 };
 
   INIT_I18N ();
 
-  /* initialize the return of the status */
-  *nreturn_vals = 1;
-  *return_vals  = values;
-  values[0].type = GIMP_PDB_STATUS;
-
   gimp_get_data (PLUG_IN_PROC, &save);
 
-  webpagevals.url = g_strdup (save.url);
-  webpagevals.width = save.width;
+  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+
+  webpagevals.url       = g_strdup (save.url);
+  webpagevals.width     = save.width;
   webpagevals.font_size = save.font_size;
 
   /* how are we running today? */
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      if (webpage_dialog ())
-        status = GIMP_PDB_SUCCESS;
-      else
-        status = GIMP_PDB_CANCEL;
+      if (! webpage_dialog ())
+        return gimp_procedure_new_return_values (procedure,
+                                                 GIMP_PDB_CANCEL,
+                                                 NULL);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      /* This is currently not supported. */
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_CALLING_ERROR,
+                                               NULL);
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      webpagevals.url = param[1].data.d_string;
-      webpagevals.width = param[2].data.d_int32;
-      webpagevals.font_size = param[3].data.d_int32;
-      status = GIMP_PDB_SUCCESS;
+      webpagevals.url       = (gchar *) GIMP_VALUES_GET_STRING (args, 1);
+      webpagevals.width     = GIMP_VALUES_GET_INT              (args, 2);
+      webpagevals.font_size = GIMP_VALUES_GET_INT              (args, 3);
       break;
 
     default:
       break;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  image = webpage_capture ();
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             webpagevals.error);
+
+  save.width     = webpagevals.width;
+  save.font_size = webpagevals.font_size;
+
+  if (strlen (webpagevals.url) < MAX_URL_LEN)
     {
-      image_id = webpage_capture ();
-
-      if (image_id == -1)
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-
-          if (webpagevals.error)
-            {
-              *nreturn_vals = 2;
-
-              values[1].type = GIMP_PDB_STRING;
-              values[1].data.d_string = webpagevals.error->message;
-            }
-        }
-      else
-        {
-          save.width = webpagevals.width;
-          save.font_size = webpagevals.font_size;
-
-          if (strlen (webpagevals.url) < MAX_URL_LEN)
-            {
-              g_strlcpy (save.url, webpagevals.url, MAX_URL_LEN);
-            }
-          else
-            {
-              memset (save.url, 0, MAX_URL_LEN);
-            }
-
-          gimp_set_data (PLUG_IN_PROC, &save, sizeof save);
-
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_display_new (image_id);
-
-          *nreturn_vals = 2;
-
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image_id;
-        }
+      g_strlcpy (save.url, webpagevals.url, MAX_URL_LEN);
+    }
+  else
+    {
+      memset (save.url, 0, MAX_URL_LEN);
     }
 
-  values[0].data.d_status = status;
+  gimp_set_data (PLUG_IN_PROC, &save, sizeof save);
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_display_new (image);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
 }
 
 static gboolean
@@ -398,9 +441,9 @@ snapshot_ready (GObject      *source_object,
 
   if (surface)
     {
-      gint   width;
-      gint   height;
-      gint32 layer;
+      gint       width;
+      gint       height;
+      GimpLayer *layer;
 
       width  = cairo_image_surface_get_width (surface);
       height = cairo_image_surface_get_height (surface);
@@ -411,7 +454,7 @@ snapshot_ready (GObject      *source_object,
       layer = gimp_layer_new_from_surface (webpagevals.image, _("Webpage"),
                                            surface,
                                            0.25, 1.0);
-      gimp_image_insert_layer (webpagevals.image, layer, -1, 0);
+      gimp_image_insert_layer (webpagevals.image, layer, NULL, 0);
       gimp_image_undo_enable (webpagevals.image);
 
       cairo_surface_destroy (surface);
@@ -467,24 +510,23 @@ load_changed_cb (WebKitWebView   *view,
     }
 }
 
-static gint32
+static GimpImage *
 webpage_capture (void)
 {
-  gchar *scheme;
-  GtkWidget *window;
-  GtkWidget *view;
+  gchar          *scheme;
+  GtkWidget      *window;
+  GtkWidget      *view;
   WebKitSettings *settings;
-  char *ua;
+  char           *ua;
 
-  if ((!webpagevals.url) ||
-      (strlen (webpagevals.url) == 0))
+  if (! webpagevals.url || strlen (webpagevals.url) == 0)
     {
       g_set_error (&webpagevals.error, 0, 0, _("No URL was specified"));
-      return -1;
+      return NULL;
     }
 
   scheme = g_uri_parse_scheme (webpagevals.url);
-  if (!scheme)
+  if (! scheme)
     {
       char *url;
 

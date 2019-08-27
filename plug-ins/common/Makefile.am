@@ -1619,8 +1619,6 @@ web_browser_LDADD = \
 
 web_page_CFLAGS = $(WEBKIT_CFLAGS)
 
-web_page_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 web_page_SOURCES = \
 	web-page.c
 

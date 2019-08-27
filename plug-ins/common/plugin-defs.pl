@@ -73,5 +73,5 @@
     'warp' => { ui => 1, gegl => 1, old_api => 1 },
     'wavelet-decompose' => { ui => 1, gegl => 1, old_api => 1 },
     'web-browser' => { ui => 1, ldflags => '$(framework_cocoa)', cppflags => '$(AM_CPPFLAGS) $(xobjective_c)', old_api => 1 },
-    'web-page' => { ui => 1, optional => 1, libs => 'WEBKIT_LIBS', cflags => 'WEBKIT_CFLAGS', old_api => 1 }
+    'web-page' => { ui => 1, optional => 1, libs => 'WEBKIT_LIBS', cflags => 'WEBKIT_CFLAGS' }
 );
