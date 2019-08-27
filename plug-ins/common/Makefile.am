@@ -841,8 +841,6 @@ file_jp2_load_LDADD = \
 
 file_mng_CFLAGS = $(MNG_CFLAGS)
 
-file_mng_CPPFLAGS = $(AM_CPPFLAGS) -DGIMP_DEPRECATED_REPLACE_NEW_API
-
 file_mng_SOURCES = \
 	file-mng.c
 

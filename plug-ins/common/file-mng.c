@@ -136,29 +136,6 @@ struct mng_data_t
   gint32 default_dispose;
 };
 
-/* Values of the instance of the above struct when the plug-in is
- * first invoked. */
-
-static struct mng_data_t mng_data =
-{
-  FALSE,                        /* interlaced */
-  FALSE,                        /* bkgd */
-  FALSE,                        /* gama */
-  TRUE,                         /* phys */
-  TRUE,                         /* time */
-  CHUNKS_PNG_D,                 /* default_chunks */
-
-  0.75,                         /* quality */
-  0.0,                          /* smoothing */
-
-  9,                            /* compression_level */
-
-  TRUE,                         /* loop */
-  100,                          /* default_delay */
-  DISPOSE_COMBINE               /* default_dispose */
-};
-
-
 /* These are not saved or restored. */
 
 struct mng_globals_t
@@ -171,9 +148,6 @@ struct mng_globals_t
   int        num_palette;
 };
 
-static struct mng_globals_t mngg;
-
-
 /* The output FILE pointer which is used by libmng;
  * passed around as user data. */
 struct mnglib_userdata_t
@@ -182,9 +156,36 @@ struct mnglib_userdata_t
 };
 
 
-/*
- * Function prototypes
- */
+typedef struct _Mng      Mng;
+typedef struct _MngClass MngClass;
+
+struct _Mng
+{
+  GimpPlugIn      parent_instance;
+};
+
+struct _MngClass
+{
+  GimpPlugInClass parent_class;
+};
+
+
+#define MNG_TYPE  (mng_get_type ())
+#define MNG (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MNG_TYPE, Mng))
+
+GType                   mng_get_type             (void) G_GNUC_CONST;
+
+static GList          * mng_query_procedures     (GimpPlugIn           *plug_in);
+static GimpProcedure  * mng_create_procedure     (GimpPlugIn           *plug_in,
+                                                  const gchar          *name);
+
+static GimpValueArray * mng_save                 (GimpProcedure        *procedure,
+                                                  GimpRunMode           run_mode,
+                                                  GimpImage            *image,
+                                                  GimpDrawable         *drawable,
+                                                  GFile                *file,
+                                                  const GimpValueArray *args,
+                                                  gpointer              run_data);
 
 static mng_ptr  MNG_DECL  myalloc       (mng_size_t  size);
 static void     MNG_DECL  myfree        (mng_ptr     ptr,
@@ -209,23 +210,263 @@ static gboolean  ia_has_transparent_pixels           (guchar      *pixels,
 static gboolean  respin_cmap     (png_structp       png_ptr,
                                   png_infop         png_info_ptr,
                                   guchar           *remap,
-                                  gint32            image_id,
+                                  GimpImage        *image,
                                   GeglBuffer       *buffer,
                                   int              *bit_depth);
 
 static gboolean  mng_save_image  (const gchar      *filename,
-                                  gint32            image_id,
-                                  gint32            drawable_id,
-                                  gint32            original_image_id,
+                                  GimpImage        *image,
+                                  GimpDrawable     *drawabl,
+                                  GimpImage        *original_image,
                                   GError          **error);
-static gboolean  mng_save_dialog (gint32            image_id);
+static gboolean  mng_save_dialog (GimpImage        *image);
 
-static void      query           (void);
-static void      run             (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *param,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
+
+G_DEFINE_TYPE (Mng, mng, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (MNG_TYPE)
+
+
+/* Values of the instance of the above struct when the plug-in is
+ * first invoked. */
+
+static struct mng_data_t mng_data =
+{
+  FALSE,                        /* interlaced */
+  FALSE,                        /* bkgd */
+  FALSE,                        /* gama */
+  TRUE,                         /* phys */
+  TRUE,                         /* time */
+  CHUNKS_PNG_D,                 /* default_chunks */
+
+  0.75,                         /* quality */
+  0.0,                          /* smoothing */
+
+  9,                            /* compression_level */
+
+  TRUE,                         /* loop */
+  100,                          /* default_delay */
+  DISPOSE_COMBINE               /* default_dispose */
+};
+
+static struct mng_globals_t mngg;
+
+
+static void
+mng_class_init (MngClass *klass)
+{
+  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+
+  plug_in_class->query_procedures = mng_query_procedures;
+  plug_in_class->create_procedure = mng_create_procedure;
+}
+
+static void
+mng_init (Mng *mng)
+{
+}
+
+static GList *
+mng_query_procedures (GimpPlugIn *plug_in)
+{
+  return g_list_append (NULL, g_strdup (SAVE_PROC));
+}
+
+static GimpProcedure *
+mng_create_procedure (GimpPlugIn  *plug_in,
+                        const gchar *name)
+{
+  GimpProcedure *procedure = NULL;
+
+  if (! strcmp (name, SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name, GIMP_PLUGIN,
+                                           mng_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("MNG animation"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Saves images in the MNG file format",
+                                        "This plug-in saves images in the "
+                                        "Multiple-image Network Graphics (MNG) "
+                                        "format which can be used as a "
+                                        "replacement for animated GIFs, and "
+                                        "more.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Mukund Sivaraman <muks@mukund.org>",
+                                      "Mukund Sivaraman <muks@mukund.org>",
+                                      "November 19, 2002");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-mng");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "mng");
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "interlace",
+                             "Interlace",
+                             "Use interlacing",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "compression",
+                         "Compression",
+                         "PNG deflate compression level",
+                         0, 9, 9,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "quality",
+                            "Quality",
+                            "JPEG quality factor",
+                            0, 1, 0.75,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "smoothing",
+                            "Smoothing",
+                            "JPEG smoothing factor",
+                            0, 1, 0,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
+                             "Loop",
+                             "(ANIMATED MNG) Loop infinitely",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "default-delay",
+                         "Default delay",
+                         "(ANIMATED MNG) Default delay between frames in "
+                         "milliseconds",
+                         1, G_MAXINT, 100,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "default-chunks",
+                         "Default chunks",
+                         "(ANIMATED MNG) Default chunks type "
+                         "(0 = PNG + Delta PNG; 1 = JNG + Delta PNG; "
+                         "2 = All PNG; 3 = All JNG)",
+                         0, 3, CHUNKS_PNG_D,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "default-dispose",
+                         "Default dispose",
+                         "(ANIMATED MNG) Default dispose type "
+                         "(0 = combine; 1 = replace)",
+                         0, 1, DISPOSE_COMBINE,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
+                             "bKGD",
+                             "Write bKGD (background color) chunk",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "gama",
+                             "gAMA",
+                             "Write gAMA (gamma) chunk",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "pHYs",
+                             "gHYs",
+                             "Write pHYs (image resolution) chunk",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "time",
+                             "tIME",
+                             "Write tIME (creation time) chunk",
+                             TRUE,
+                             G_PARAM_READWRITE);
+    }
+
+  return procedure;
+}
+
+static GimpValueArray *
+mng_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          GimpDrawable         *drawable,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export = GIMP_EXPORT_IGNORE;
+  GimpImage         *original_image;
+  GError            *error  = NULL;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  original_image = image;
+
+  if (run_mode == GIMP_RUN_INTERACTIVE ||
+      run_mode == GIMP_RUN_WITH_LAST_VALS)
+    {
+      gimp_get_data (SAVE_PROC, &mng_data);
+
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
+      export = gimp_export_image (&image, &drawable, "MNG",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
+
+      if (export == GIMP_EXPORT_CANCEL)
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
+    }
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      if (! mng_save_dialog (image))
+        {
+          return gimp_procedure_new_return_values (procedure,
+                                                   GIMP_PDB_CANCEL,
+                                                   NULL);
+        }
+    }
+  else if (run_mode == GIMP_RUN_NONINTERACTIVE)
+    {
+      mng_data.interlaced        = GIMP_VALUES_GET_BOOLEAN (args, 0);
+      mng_data.compression_level = GIMP_VALUES_GET_INT     (args, 1);
+      mng_data.quality           = GIMP_VALUES_GET_DOUBLE  (args, 2);
+      mng_data.smoothing         = GIMP_VALUES_GET_DOUBLE  (args, 3);
+      mng_data.loop              = GIMP_VALUES_GET_BOOLEAN (args, 4);
+      mng_data.default_delay     = GIMP_VALUES_GET_INT     (args, 5);
+      mng_data.default_chunks    = GIMP_VALUES_GET_INT     (args, 6);
+      mng_data.default_dispose   = GIMP_VALUES_GET_INT     (args, 7);
+      mng_data.bkgd              = GIMP_VALUES_GET_BOOLEAN (args, 8);
+      mng_data.gama              = GIMP_VALUES_GET_BOOLEAN (args, 9);
+      mng_data.phys              = GIMP_VALUES_GET_BOOLEAN (args, 10);
+      mng_data.time              = GIMP_VALUES_GET_BOOLEAN (args, 11);
+    }
+
+  if (mng_save_image (g_file_get_path (file),
+                      image, drawable,
+                      original_image, &error))
+    {
+      gimp_set_data (SAVE_PROC, &mng_data, sizeof (mng_data));
+    }
+  else
+    {
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
 
 
 /*
@@ -452,7 +693,7 @@ static gboolean
 respin_cmap (png_structp  pp,
              png_infop    info,
              guchar      *remap,
-             gint32       image_id,
+             GimpImage   *image,
              GeglBuffer  *buffer,
              int         *bit_depth)
 {
@@ -464,7 +705,7 @@ respin_cmap (png_structp  pp,
   gint           transparent;
   gint           cols, rows;
 
-  before = gimp_image_get_colormap (image_id, &colors);
+  before = gimp_image_get_colormap (image, &colors);
 
   /* Make sure there is something in the colormap */
   if (colors == 0)
@@ -581,9 +822,9 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 
 static gboolean
 mng_save_image (const gchar  *filename,
-                gint32        image_id,
-                gint32        drawable_id,
-                gint32        original_image_id,
+                GimpImage    *image,
+                GimpDrawable *drawable,
+                GimpImage    *original_image,
                 GError      **error)
 {
   gboolean        ret = FALSE;
@@ -593,14 +834,14 @@ mng_save_image (const gchar  *filename,
   struct tm      *gmt;
 
   gint            num_layers;
-  gint32         *layers;
+  GimpLayer     **layers;
 
   struct mnglib_userdata_t *userdata;
   mng_handle      handle;
   guint32         mng_ticks_per_second;
   guint32         mng_simplicity_profile;
 
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  layers = gimp_image_get_layers (image, &num_layers);
 
   if (num_layers < 1)
     return FALSE;
@@ -610,8 +851,8 @@ mng_save_image (const gchar  *filename,
   else
     mng_ticks_per_second = 0;
 
-  rows = gimp_image_height (image_id);
-  cols = gimp_image_width (image_id);
+  rows = gimp_image_height (image);
+  cols = gimp_image_width  (image);
 
   mng_simplicity_profile = (MNG_SIMPLICITY_VALID |
                             MNG_SIMPLICITY_SIMPLEFEATURES |
@@ -622,22 +863,24 @@ mng_save_image (const gchar  *filename,
                              MNG_SIMPLICITY_DELTAPNG);
 
   for (i = 0; i < num_layers; i++)
-    if (gimp_drawable_has_alpha (layers[i]))
-      {
-        /* internal transparency exists */
-        mng_simplicity_profile |= MNG_SIMPLICITY_TRANSPARENCY;
+    {
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[i])))
+        {
+          /* internal transparency exists */
+          mng_simplicity_profile |= MNG_SIMPLICITY_TRANSPARENCY;
 
-        /* validity of following flags */
-        mng_simplicity_profile |= 0x00000040;
+          /* validity of following flags */
+          mng_simplicity_profile |= 0x00000040;
 
-        /* semi-transparency exists */
-        mng_simplicity_profile |= 0x00000100;
+          /* semi-transparency exists */
+          mng_simplicity_profile |= 0x00000100;
 
-        /* background transparency should happen */
-        mng_simplicity_profile |= 0x00000080;
+          /* background transparency should happen */
+          mng_simplicity_profile |= 0x00000080;
 
-        break;
-      }
+          break;
+        }
+    }
 
   userdata = g_new0 (struct mnglib_userdata_t, 1);
   userdata->fp = g_fopen (filename, "wb");
@@ -682,7 +925,7 @@ mng_save_image (const gchar  *filename,
   if ((num_layers > 1) && (mng_data.loop))
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_item_get_name (layers[0]));
+        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])));
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
                              MNG_ITERACTION_LASTFRAME,
@@ -695,7 +938,7 @@ mng_save_image (const gchar  *filename,
   else
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_item_get_name (layers[0]));
+        parse_ms_tag_from_layer_name (gimp_item_get_name (GIMP_ITEM (layers[0])));
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
                              MNG_ITERACTION_LASTFRAME,
@@ -762,7 +1005,7 @@ mng_save_image (const gchar  *filename,
   /* how do we get this to work? */
   if (mng_data.phys)
     {
-      gimp_image_get_resolution(original_image_id, &xres, &yres);
+      gimp_image_get_resolution (original_image, &xres, &yres);
 
       if (mng_putchunk_phyg (handle, MNG_FALSE,
                              (mng_uint32) (xres * 39.37),
@@ -797,12 +1040,12 @@ mng_save_image (const gchar  *filename,
         }
     }
 
-  if (gimp_image_base_type (image_id) == GIMP_INDEXED)
+  if (gimp_image_base_type (image) == GIMP_INDEXED)
     {
       guchar *palette;
       gint    numcolors;
 
-      palette = gimp_image_get_colormap (image_id, &numcolors);
+      palette = gimp_image_get_colormap (image, &numcolors);
 
       if ((numcolors != 0) &&
           (mng_putchunk_plte_wrapper (handle, numcolors,
@@ -844,15 +1087,16 @@ mng_save_image (const gchar  *filename,
       int             color_type;
       int             bit_depth;
 
-      layer_name          = gimp_item_get_name (layers[i]);
+      layer_name          = gimp_item_get_name (GIMP_ITEM (layers[i]));
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
-      layer_drawable_type = gimp_drawable_type (layers[i]);
+      layer_drawable_type = gimp_drawable_type (GIMP_DRAWABLE (layers[i]));
 
-      layer_buffer        = gimp_drawable_get_buffer (layers[i]);
+      layer_buffer        = gimp_drawable_get_buffer (GIMP_DRAWABLE (layers[i]));
       layer_cols          = gegl_buffer_get_width  (layer_buffer);
       layer_rows          = gegl_buffer_get_height (layer_buffer);
 
-      gimp_drawable_offsets (layers[i], &layer_offset_x, &layer_offset_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layers[i]),
+                             &layer_offset_x, &layer_offset_y);
       layer_has_unique_palette = TRUE;
 
       for (j = 0; j < 256; j++)
@@ -1041,14 +1285,14 @@ mng_save_image (const gchar  *filename,
           color_type = PNG_COLOR_TYPE_PALETTE;
           mngg.has_plte = TRUE;
           mngg.palette = (png_colorp)
-            gimp_image_get_colormap (image_id, &mngg.num_palette);
+            gimp_image_get_colormap (image, &mngg.num_palette);
           bit_depth = get_bit_depth_for_palette (mngg.num_palette);
           break;
         case GIMP_INDEXEDA_IMAGE:
           color_type = PNG_COLOR_TYPE_PALETTE;
           layer_has_unique_palette =
             respin_cmap (pp, info, layer_remap,
-                         image_id, layer_buffer,
+                         image, layer_buffer,
                          &bit_depth);
           break;
         default:
@@ -1316,7 +1560,7 @@ mng_save_image (const gchar  *filename,
 /* The interactive dialog. */
 
 static gboolean
-mng_save_dialog (gint32 image_id)
+mng_save_dialog (GimpImage *image)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -1407,7 +1651,7 @@ mng_save_dialog (gint32 image_id)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  gimp_image_get_layers (image_id, &num_layers);
+  g_free (gimp_image_get_layers (image, &num_layers));
 
   if (num_layers == 1)
     combo = gimp_int_combo_box_new (_("PNG"), CHUNKS_PNG_D,
@@ -1567,218 +1811,4 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-
-/* GIMP calls these methods. */
-
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,
-  NULL,
-  query,
-  run
-};
-
-MAIN ()
-
-static void
-query (void)
-{
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",           "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename",    "The name of the file to save the image in" },
-
-    { GIMP_PDB_INT32,    "interlace",       "Use interlacing" },
-    { GIMP_PDB_INT32,    "compression",     "PNG deflate compression level (0 - 9)" },
-    { GIMP_PDB_FLOAT,    "quality",         "JPEG quality factor (0.00 - 1.00)" },
-    { GIMP_PDB_FLOAT,    "smoothing",       "JPEG smoothing factor (0.00 - 1.00)" },
-    { GIMP_PDB_INT32,    "loop",            "(ANIMATED MNG) Loop infinitely" },
-    { GIMP_PDB_INT32,    "default-delay",   "(ANIMATED MNG) Default delay between frames in milliseconds" },
-    { GIMP_PDB_INT32,    "default-chunks",  "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta PNG; 2 = All PNG; 3 = All JNG)" },
-    { GIMP_PDB_INT32,    "default-dispose", "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)" },
-    { GIMP_PDB_INT32,    "bkgd",            "Write bKGD (background color) chunk" },
-    { GIMP_PDB_INT32,    "gama",            "Write gAMA (gamma) chunk"},
-    { GIMP_PDB_INT32,    "phys",            "Write pHYs (image resolution) chunk" },
-    { GIMP_PDB_INT32,    "time",            "Write tIME (creation time) chunk" }
-  };
-
-  gimp_install_procedure (SAVE_PROC,
-                          "Saves images in the MNG file format",
-                          "This plug-in saves images in the Multiple-image "
-                          "Network Graphics (MNG) format which can be used as "
-                          "a replacement for animated GIFs, and more.",
-                          "Mukund Sivaraman <muks@mukund.org>",
-                          "Mukund Sivaraman <muks@mukund.org>",
-                          "November 19, 2002",
-                          N_("MNG animation"),
-                          "RGB*,GRAY*,INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-mng");
-  gimp_register_save_handler (SAVE_PROC, "mng", "");
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  static GimpParam values[2];
-
-  INIT_I18N ();
-  gegl_init (NULL, NULL);
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_SUCCESS;
-
-  if (strcmp (name, SAVE_PROC) == 0)
-    {
-      GimpRunMode      run_mode          = param[0].data.d_int32;
-      gint32           image_id          = param[1].data.d_int32;
-      gint32           original_image_id = image_id;
-      gint32           drawable_id       = param[2].data.d_int32;
-      GimpExportReturn export            = GIMP_EXPORT_IGNORE;
-
-      if (run_mode == GIMP_RUN_INTERACTIVE ||
-          run_mode == GIMP_RUN_WITH_LAST_VALS)
-        {
-          gimp_get_data (SAVE_PROC, &mng_data);
-
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-          export = gimp_export_image (&image_id, &drawable_id, "MNG",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
-        }
-
-      if (export == GIMP_EXPORT_CANCEL)
-        {
-          values[0].data.d_status = GIMP_PDB_CANCEL;
-        }
-      else if (export == GIMP_EXPORT_IGNORE || export == GIMP_EXPORT_EXPORT)
-        {
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            {
-              if (mng_save_dialog (image_id) == 0)
-                values[0].data.d_status = GIMP_PDB_CANCEL;
-            }
-          else if (run_mode == GIMP_RUN_NONINTERACTIVE)
-            {
-              if (nparams != 17)
-                {
-                  g_message ("Incorrect number of parameters "
-                             "passed to file-mng-save()");
-                  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-                }
-              else
-                {
-                  mng_data.interlaced = param[5].data.d_int32;
-                  mng_data.compression_level = param[6].data.d_int32;
-                  mng_data.quality = param[7].data.d_float;
-                  mng_data.smoothing = param[8].data.d_float;
-                  mng_data.loop = param[9].data.d_int32;
-                  mng_data.default_delay = param[10].data.d_int32;
-                  mng_data.default_chunks = param[11].data.d_int32;
-                  mng_data.default_dispose = param[12].data.d_int32;
-                  mng_data.bkgd = param[13].data.d_int32;
-                  mng_data.gama = param[14].data.d_int32;
-                  mng_data.phys = param[15].data.d_int32;
-                  mng_data.time = param[16].data.d_int32;
-
-                  if ((mng_data.compression_level < 0)
-                      || (mng_data.compression_level > 9))
-                    {
-                      g_warning ("Parameter 'compression_level' passed to "
-                                 "file-mng-save() must be in the range 0 - 9; "
-                                 "Clamping it to the default value of 6.");
-                      mng_data.compression_level = 6;
-                    }
-
-                  if ((mng_data.quality < ((float) 0))
-                      || (mng_data.quality > ((float) 1)))
-                    {
-                      g_warning ("Parameter 'quality' passed to "
-                                 "file-mng-save() must be in the range "
-                                 "0.00 - 1.00; Clamping it to the "
-                                 "default value of 0.75.");
-                      mng_data.quality = 0.75;
-                    }
-
-                  if ((mng_data.smoothing < ((float) 0))
-                      || (mng_data.smoothing > ((float) 1)))
-                    {
-                      g_warning ("Parameter 'smoothing' passed to "
-                                 "file-mng-save() must be in the "
-                                 "range 0.00 - 1.00; Clamping it to "
-                                 "the default value of 0.00.");
-                      mng_data.smoothing = 0.0;
-                    }
-
-                  if ((mng_data.default_chunks < 0)
-                      || (mng_data.default_chunks > 3))
-                    {
-                      g_warning ("Parameter 'default_chunks' passed to "
-                                 "file-mng-save() must be in the range 0 - 2.");
-                      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-                    }
-
-                  if ((mng_data.default_dispose < 0)
-                      || (mng_data.default_dispose > 1))
-                    {
-                      g_warning ("Parameter 'default_dispose' passed to "
-                                 "file-mng-save() must be in the range 0 - 1.");
-                      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-                    }
-                }
-            }
-
-          if (values[0].data.d_status == GIMP_PDB_SUCCESS)
-            {
-              GFile *file = g_file_new_for_uri (param[3].data.d_string);
-
-              GError *error = NULL;
-
-              if (mng_save_image (g_file_get_path (file),
-                                  image_id, drawable_id,
-                                  original_image_id, &error))
-                {
-                  gimp_set_data (SAVE_PROC, &mng_data, sizeof (mng_data));
-                }
-              else
-                {
-                  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-                  if (error)
-                    {
-                      *nreturn_vals = 2;
-                      values[1].type          = GIMP_PDB_STRING;
-                      values[1].data.d_string = error->message;
-                    }
-                }
-            }
-
-          if (export == GIMP_EXPORT_EXPORT)
-            gimp_image_delete (image_id);
-        }
-
-    }
-  else
-    {
-      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-    }
 }
