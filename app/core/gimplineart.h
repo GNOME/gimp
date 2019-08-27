@@ -65,6 +65,7 @@ void                 gimp_line_art_set_input        (GimpLineArt  *line_art,
 GimpPickable       * gimp_line_art_get_input        (GimpLineArt  *line_art);
 void                 gimp_line_art_freeze           (GimpLineArt  *line_art);
 void                 gimp_line_art_thaw             (GimpLineArt  *line_art);
+gboolean             gimp_line_art_is_frozen        (GimpLineArt  *line_art);
 
 GeglBuffer         * gimp_line_art_get              (GimpLineArt  *line_art,
                                                      gfloat      **distmap);
