@@ -536,6 +536,12 @@ gimp_line_art_thaw (GimpLineArt *line_art)
     }
 }
 
+gboolean
+gimp_line_art_is_frozen (GimpLineArt *line_art)
+{
+  return line_art->priv->frozen;
+}
+
 GeglBuffer *
 gimp_line_art_get (GimpLineArt  *line_art,
                    gfloat      **distmap)

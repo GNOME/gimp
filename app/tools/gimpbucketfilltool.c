@@ -420,7 +420,8 @@ gimp_bucket_fill_tool_halt (GimpBucketFillTool *tool)
 
   g_clear_object (&tool->priv->fill_mask);
 
-  gimp_line_art_thaw (tool->priv->line_art);
+  if (gimp_line_art_is_frozen (tool->priv->line_art))
+    gimp_line_art_thaw (tool->priv->line_art);
 
   GIMP_TOOL (tool)->display  = NULL;
   GIMP_TOOL (tool)->drawable = NULL;
