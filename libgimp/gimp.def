@@ -403,7 +403,6 @@ EXPORTS
 	gimp_image_get_layers
 	gimp_image_get_layers_deprecated
 	gimp_image_get_metadata
-	gimp_image_get_metadata_deprecated
 	gimp_image_get_name
 	gimp_image_get_parasite
 	gimp_image_get_parasite_list
@@ -479,7 +478,6 @@ EXPORTS
 	gimp_image_set_component_visible
 	gimp_image_set_filename
 	gimp_image_set_metadata
-	gimp_image_set_metadata_deprecated
 	gimp_image_set_resolution
 	gimp_image_set_tattoo_state
 	gimp_image_set_unit

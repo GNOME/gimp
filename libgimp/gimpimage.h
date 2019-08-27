@@ -109,11 +109,8 @@ gboolean       gimp_image_set_metadata       (GimpImage    *image,
 #define gimp_image_get_layers         gimp_image_get_layers_deprecated
 #define gimp_image_get_colormap       gimp_image_get_colormap_deprecated
 #define gimp_image_set_colormap       gimp_image_set_colormap_deprecated
-#define gimp_image_get_metadata       gimp_image_get_metadata_deprecated
-#define gimp_image_set_metadata       gimp_image_set_metadata_deprecated
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
 
 gint         * gimp_image_get_layers_deprecated         (gint32         image_id,
                                                          gint          *num_layers);
@@ -122,10 +119,6 @@ guchar       * gimp_image_get_colormap_deprecated       (gint32        image_id,
 gboolean       gimp_image_set_colormap_deprecated       (gint32        image_id,
                                                          const guchar *colormap,
                                                          gint          num_colors);
-
-GimpMetadata * gimp_image_get_metadata_deprecated       (gint32        image_id);
-gboolean       gimp_image_set_metadata_deprecated       (gint32        image_id,
-                                                         GimpMetadata *metadata);
 
 
 G_END_DECLS
