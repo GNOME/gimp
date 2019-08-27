@@ -27,6 +27,7 @@
 
 G_BEGIN_DECLS
 
+
 /* For information look into the C source or the html documentation */
 
 #define GIMP_TYPE_IMAGE            (gimp_image_get_type ())
@@ -60,8 +61,8 @@ struct _GimpImageClass
   void (*_gimp_reserved6) (void);
   void (*_gimp_reserved7) (void);
   void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
 };
+
 
 GType          gimp_image_get_type           (void) G_GNUC_CONST;
 

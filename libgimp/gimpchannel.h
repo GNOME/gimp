@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 
 #include <libgimp/gimpdrawable.h>
 
+
 #define GIMP_TYPE_CHANNEL            (gimp_channel_get_type ())
 #define GIMP_CHANNEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
 #define GIMP_CHANNEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
@@ -40,10 +41,13 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpChannelClass   GimpChannelClass;
+typedef struct _GimpChannelPrivate GimpChannelPrivate;
 
 struct _GimpChannel
 {
-  GimpDrawable      parent_instance;
+  GimpDrawable        parent_instance;
+
+  GimpChannelPrivate *priv;
 };
 
 struct _GimpChannelClass
@@ -59,7 +63,6 @@ struct _GimpChannelClass
   void (*_gimp_reserved6) (void);
   void (*_gimp_reserved7) (void);
   void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
 };
 
 
@@ -71,6 +74,7 @@ GimpChannel * gimp_channel_new      (GimpImage     *image,
                                      guint          height,
                                      gdouble        opacity,
                                      const GimpRGB *color);
+
 
 G_END_DECLS
 

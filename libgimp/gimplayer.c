@@ -25,7 +25,13 @@
 #include "gimp.h"
 
 
-G_DEFINE_TYPE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE)
+struct _GimpLayerPrivate
+{
+  gpointer unused;
+};
+
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE)
 
 #define parent_class gimp_layer_parent_class
 
@@ -38,11 +44,11 @@ gimp_layer_class_init (GimpLayerClass *klass)
 static void
 gimp_layer_init (GimpLayer *layer)
 {
+  layer->priv = gimp_layer_get_instance_private (layer);
 }
 
 
 /* Public API. */
-
 
 /**
  * gimp_layer_new:

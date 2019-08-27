@@ -39,10 +39,13 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpSelectionClass   GimpSelectionClass;
+typedef struct _GimpSelectionPrivate GimpSelectionPrivate;
 
 struct _GimpSelection
 {
-  GimpChannel      parent_instance;
+  GimpChannel           parent_instance;
+
+  GimpSelectionPrivate *priv;
 };
 
 struct _GimpSelectionClass
@@ -58,7 +61,6 @@ struct _GimpSelectionClass
   void (*_gimp_reserved6) (void);
   void (*_gimp_reserved7) (void);
   void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
 };
 
 

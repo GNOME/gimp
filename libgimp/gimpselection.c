@@ -23,9 +23,16 @@
 #include "gimp.h"
 
 
-G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
+struct _GimpSelectionPrivate
+{
+  gpointer unused;
+};
+
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
 
 #define parent_class gimp_selection_parent_class
+
 
 static void
 gimp_selection_class_init (GimpSelectionClass *klass)
@@ -35,14 +42,15 @@ gimp_selection_class_init (GimpSelectionClass *klass)
 static void
 gimp_selection_init (GimpSelection *selection)
 {
+  selection->priv = gimp_selection_get_instance_private (selection);
 }
 
 /**
  * gimp_selection_float:
- * @image: ignored
+ * @image:    ignored
  * @drawable: The drawable from which to float selection.
- * @offx: x offset for translation.
- * @offy: y offset for translation.
+ * @offx:     x offset for translation.
+ * @offy:     y offset for translation.
  *
  * Float the selection from the specified drawable with initial offsets
  * as specified.
@@ -53,7 +61,7 @@ gimp_selection_init (GimpSelection *selection)
  * instantiated as a floating selection. The offsets allow initial
  * positioning of the new floating selection.
  *
- * Returns: (transfer full): The floated layer.
+ * Returns: (transfer none): The floated layer.
  */
 GimpLayer *
 gimp_selection_float (GimpImage    *image,

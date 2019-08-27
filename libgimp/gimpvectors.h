@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+
 #define GIMP_TYPE_VECTORS            (gimp_vectors_get_type ())
 #define GIMP_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS, GimpVectors))
 #define GIMP_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS, GimpVectorsClass))
@@ -43,7 +44,9 @@ typedef struct _GimpVectorsPrivate GimpVectorsPrivate;
 
 struct _GimpVectors
 {
-  GimpItem      parent_instance;
+  GimpItem            parent_instance;
+
+  GimpVectorsPrivate *priv;
 };
 
 struct _GimpVectorsClass
@@ -59,10 +62,11 @@ struct _GimpVectorsClass
   void (*_gimp_reserved6) (void);
   void (*_gimp_reserved7) (void);
   void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
 };
 
+
 GType   gimp_vectors_get_type (void) G_GNUC_CONST;
+
 
 G_END_DECLS
 

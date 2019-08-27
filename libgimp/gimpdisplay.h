@@ -28,6 +28,7 @@
 
 G_BEGIN_DECLS
 
+
 /* For information look into the C source or the html documentation */
 
 #define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
@@ -43,7 +44,7 @@ typedef struct _GimpDisplayPrivate GimpDisplayPrivate;
 
 struct _GimpDisplay
 {
-  GObject      parent_instance;
+  GObject             parent_instance;
 
   GimpDisplayPrivate *priv;
 };
@@ -61,8 +62,8 @@ struct _GimpDisplayClass
   void (*_gimp_reserved6) (void);
   void (*_gimp_reserved7) (void);
   void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
 };
+
 
 GType         gimp_display_get_type     (void) G_GNUC_CONST;
 

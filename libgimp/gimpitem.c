@@ -43,14 +43,14 @@ struct _GimpItemPrivate
 };
 
 
-static void       gimp_item_set_property  (GObject      *object,
-                                            guint         property_id,
-                                            const GValue *value,
-                                            GParamSpec   *pspec);
-static void       gimp_item_get_property  (GObject      *object,
-                                            guint         property_id,
-                                            GValue       *value,
-                                            GParamSpec   *pspec);
+static void   gimp_item_set_property  (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec);
+static void   gimp_item_get_property  (GObject      *object,
+                                       guint         property_id,
+                                       GValue       *value,
+                                       GParamSpec   *pspec);
 
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpItem, gimp_item, G_TYPE_OBJECT)

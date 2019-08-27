@@ -24,9 +24,16 @@
 #include "gimp.h"
 
 
-G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
+struct _GimpLayerMaskPrivate
+{
+  gpointer unused;
+};
+
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
 
 #define parent_class gimp_layer_mask_parent_class
+
 
 static void
 gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
@@ -36,4 +43,5 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 static void
 gimp_layer_mask_init (GimpLayerMask *layer_mask)
 {
+  layer_mask->priv = gimp_layer_mask_get_instance_private (layer_mask);
 }

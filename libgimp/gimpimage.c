@@ -43,14 +43,14 @@ struct _GimpImagePrivate
 };
 
 
-static void       gimp_image_set_property  (GObject      *object,
-                                            guint         property_id,
-                                            const GValue *value,
-                                            GParamSpec   *pspec);
-static void       gimp_image_get_property  (GObject      *object,
-                                            guint         property_id,
-                                            GValue       *value,
-                                            GParamSpec   *pspec);
+static void   gimp_image_set_property  (GObject      *object,
+                                        guint         property_id,
+                                        const GValue *value,
+                                        GParamSpec   *pspec);
+static void   gimp_image_get_property  (GObject      *object,
+                                        guint         property_id,
+                                        GValue       *value,
+                                        GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpImage, gimp_image, G_TYPE_OBJECT)

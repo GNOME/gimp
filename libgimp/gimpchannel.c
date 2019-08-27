@@ -23,9 +23,16 @@
 #include "gimp.h"
 
 
-G_DEFINE_TYPE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE)
+struct _GimpChannelPrivate
+{
+  gpointer unused;
+};
+
+
+G_DEFINE_TYPE_WITH_PRIVATE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE)
 
 #define parent_class gimp_drawable_parent_class
+
 
 static void
 gimp_channel_class_init (GimpChannelClass *klass)
@@ -35,6 +42,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 static void
 gimp_channel_init (GimpChannel *channel)
 {
+  channel->priv = gimp_channel_get_instance_private (channel);
 }
 
 /**

@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+
 #include <libgimp/gimpitem.h>
 
 #define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
@@ -40,10 +41,13 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpDrawableClass   GimpDrawableClass;
+typedef struct _GimpDrawablePrivate GimpDrawablePrivate;
 
 struct _GimpDrawable
 {
-  GimpItem      parent_instance;
+  GimpItem             parent_instance;
+
+  GimpDrawablePrivate *priv;
 };
 
 struct _GimpDrawableClass
@@ -61,6 +65,7 @@ struct _GimpDrawableClass
   void (*_gimp_reserved8) (void);
   void (*_gimp_reserved9) (void);
 };
+
 
 GType        gimp_drawable_get_type               (void) G_GNUC_CONST;
 

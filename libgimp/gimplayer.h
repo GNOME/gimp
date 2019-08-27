@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+
 #define GIMP_TYPE_LAYER            (gimp_layer_get_type ())
 #define GIMP_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
 #define GIMP_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
@@ -43,6 +44,8 @@ typedef struct _GimpLayerPrivate GimpLayerPrivate;
 struct _GimpLayer
 {
   GimpDrawable      parent_instance;
+
+  GimpLayerPrivate *priv;
 };
 
 struct _GimpLayerClass
@@ -58,7 +61,6 @@ struct _GimpLayerClass
   void (*_gimp_reserved6) (void);
   void (*_gimp_reserved7) (void);
   void (*_gimp_reserved8) (void);
-  void (*_gimp_reserved9) (void);
 };
 
 
@@ -96,7 +98,6 @@ GimpLayer * gimp_layer_copy               (GimpLayer       *layer);
 #define gimp_layer_copy             gimp_layer_copy_deprecated
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
 
 gint32   gimp_layer_new_deprecated              (gint32           image_id,
                                                  const gchar     *name,

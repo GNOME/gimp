@@ -43,14 +43,14 @@ struct _GimpDisplayPrivate
 };
 
 
-static void       gimp_display_set_property  (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void       gimp_display_get_property  (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+static void   gimp_display_set_property  (GObject      *object,
+                                          guint         property_id,
+                                          const GValue *value,
+                                          GParamSpec   *pspec);
+static void   gimp_display_get_property  (GObject      *object,
+                                          guint         property_id,
+                                          GValue       *value,
+                                          GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDisplay, gimp_display, G_TYPE_OBJECT)
