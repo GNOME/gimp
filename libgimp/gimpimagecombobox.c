@@ -57,8 +57,6 @@ struct _GimpImageComboBox
   GimpImageConstraintFunc  constraint;
   gpointer                 data;
   GDestroyNotify           data_destroy;
-
-  GimpImageConstraintDeprecatedFunc  constraint_d;
 };
 
 struct _GimpImageComboBoxClass
@@ -73,8 +71,6 @@ static void  gimp_image_combo_box_populate  (GimpImageComboBox       *combo_box)
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
                                              GList                   *images,
                                              GimpImageConstraintFunc  constraint,
-                                             GimpImageConstraintDeprecatedFunc
-                                                                      constraint_d,
                                              gpointer                 data);
 
 static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
@@ -188,7 +184,6 @@ gimp_image_combo_box_populate (GimpImageComboBox *combo_box)
 
   gimp_image_combo_box_model_add (GTK_LIST_STORE (model), images,
                                   combo_box->constraint,
-                                  combo_box->constraint_d,
                                   combo_box->data);
 
   g_list_free (images);
@@ -201,8 +196,6 @@ static void
 gimp_image_combo_box_model_add (GtkListStore            *store,
                                 GList                   *images,
                                 GimpImageConstraintFunc  constraint,
-                                GimpImageConstraintDeprecatedFunc
-                                                         constraint_d,
                                 gpointer                 data)
 {
   GtkTreeIter  iter;
@@ -213,9 +206,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
       GimpImage *image    = list->data;
       gint32     image_id = gimp_image_get_id (image);
 
-      if ((! constraint && ! constraint_d)             ||
-          (constraint && (* constraint) (image, data)) ||
-          (constraint_d && (* constraint_d) (image_id, data)))
+      if (! constraint || constraint (image, data))
         {
           gchar     *image_name = gimp_image_get_name (image);
           gchar     *label;
@@ -300,53 +291,4 @@ gimp_image_combo_box_changed (GimpImageComboBox *combo_box)
           gimp_image_combo_box_populate (combo_box);
         }
     }
-}
-
-
-/* Deprecated API. */
-
-
-/**
- * gimp_image_combo_box_new_deprecated: (skip)
- * @constraint:   a #GimpImageConstraintDeprecatedFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data.
- *
- * Creates a new #GimpIntComboBox filled with all currently opened
- * images. If a @constraint function is specified, it is called for
- * each image and only if the function returns %TRUE, the image is
- * added to the combobox.
- *
- * You should use gimp_int_combo_box_connect() to initialize and
- * connect the combo. Use gimp_int_combo_box_set_active() to get the
- * active image ID and gimp_int_combo_box_get_active() to retrieve the
- * ID of the selected image.
- *
- * Returns: a new #GimpIntComboBox.
- *
- * Since: 2.2
- **/
-GtkWidget *
-gimp_image_combo_box_new_deprecated (GimpImageConstraintDeprecatedFunc constraint,
-                                     gpointer                          data,
-                                     GDestroyNotify                    data_destroy)
-{
-  GimpImageComboBox *combo_box;
-
-  combo_box = g_object_new (GIMP_TYPE_IMAGE_COMBO_BOX,
-                            "width-request", WIDTH_REQUEST,
-                            "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
-                            NULL);
-
-  combo_box->constraint_d = constraint;
-  combo_box->data         = data;
-  combo_box->data_destroy = data_destroy;
-
-  gimp_image_combo_box_populate (combo_box);
-
-  g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_image_combo_box_changed),
-                    NULL);
-
-  return GTK_WIDGET (combo_box);
 }

@@ -44,6 +44,19 @@ gimp_drawable_init (GimpDrawable *drawable)
 /* Public API. */
 
 
+/**
+ * gimp_drawable_get_thumbnail_data:
+ * @drawable: the drawable
+ * @width:    (inout): the requested thumbnail width  (<= 1024 pixels)
+ * @height:   (inout): the requested thumbnail height (<= 1024 pixels)
+ * @bpp:      (out):   the bytes per pixel of the returned thubmnail data
+ *
+ * Retrieves thumbnail data for the drawable identified by @drawable.
+ * The thumbnail will be not larger than the requested size.
+ *
+ * Returns: (transfer full) (nullable): thumbnail data or %NULL if
+ *          @drawable is invalid.
+ **/
 guchar *
 gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
                                   gint         *width,
@@ -72,7 +85,7 @@ gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
 
 /**
  * gimp_drawable_get_thumbnail:
- * @drawable: the drawable ID
+ * @drawable: the drawable
  * @width:    the requested thumbnail width  (<= 1024 pixels)
  * @height:   the requested thumbnail height (<= 1024 pixels)
  * @alpha:    how to handle an alpha channel
@@ -405,83 +418,6 @@ gimp_drawable_get_thumbnail_data_deprecated (gint32  drawable_ID,
 }
 
 /**
- * gimp_drawable_get_thumbnail_deprecated: (skip)
- * @drawable_ID: the drawable ID
- * @width:       the requested thumbnail width  (<= 1024 pixels)
- * @height:      the requested thumbnail height (<= 1024 pixels)
- * @alpha:       how to handle an alpha channel
- *
- * Retrieves a thumbnail pixbuf for the drawable identified by
- * @drawable_ID. The thumbnail will be not larger than the requested
- * size.
- *
- * Returns: (transfer full) (nullable): a new #GdkPixbuf or %NULL if
- *          @drawable_ID is invalid.
- *
- * Since: 2.2
- **/
-GdkPixbuf *
-gimp_drawable_get_thumbnail_deprecated (gint32                  drawable_ID,
-                                        gint                    width,
-                                        gint                    height,
-                                        GimpPixbufTransparency  alpha)
-{
-  return gimp_drawable_get_thumbnail (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
-                                      width, height, alpha);
-}
-
-guchar *
-gimp_drawable_get_sub_thumbnail_data_deprecated (gint32  drawable_ID,
-                                                 gint    src_x,
-                                                 gint    src_y,
-                                                 gint    src_width,
-                                                 gint    src_height,
-                                                 gint   *dest_width,
-                                                 gint   *dest_height,
-                                                 gint   *bpp)
-{
-  return gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
-                                               src_x, src_y,
-                                               src_width, src_height,
-                                               dest_width, dest_height, bpp);
-}
-
-/**
- * gimp_drawable_get_sub_thumbnail_deprecated: (skip)
- * @drawable_ID: the drawable ID
- * @src_x:       the x coordinate of the area
- * @src_y:       the y coordinate of the area
- * @src_width:   the width of the area
- * @src_height:  the height of the area
- * @dest_width:  the requested thumbnail width  (<= 1024 pixels)
- * @dest_height: the requested thumbnail height (<= 1024 pixels)
- * @alpha:       how to handle an alpha channel
- *
- * Retrieves a thumbnail pixbuf for the drawable identified by
- * @drawable_ID. The thumbnail will be not larger than the requested
- * size.
- *
- * Returns: (transfer full): a new #GdkPixbuf
- *
- * Since: 2.2
- **/
-GdkPixbuf *
-gimp_drawable_get_sub_thumbnail_deprecated (gint32                  drawable_ID,
-                                            gint                    src_x,
-                                            gint                    src_y,
-                                            gint                    src_width,
-                                            gint                    src_height,
-                                            gint                    dest_width,
-                                            gint                    dest_height,
-                                            GimpPixbufTransparency  alpha)
-{
-  return gimp_drawable_get_sub_thumbnail (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)),
-                                          src_x, src_y,
-                                          src_width, src_height,
-                                          dest_width, dest_height, alpha);
-}
-
-/**
  * gimp_drawable_get_buffer_deprecated: (skip)
  * @drawable_ID: the ID of the #GimpDrawable to get the buffer for.
  *
@@ -537,19 +473,4 @@ const Babl *
 gimp_drawable_get_format_deprecated (gint32 drawable_ID)
 {
   return gimp_drawable_get_format (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
-}
-/**
- * gimp_drawable_get_thumbnail_format_deprecated: (skip)
- * @drawable_ID: the ID of the #GimpDrawable to get the thumbnail format for.
- *
- * Returns the #Babl thumbnail format of the drawable.
- *
- * Returns: The #Babl thumbnail format.
- *
- * Since: 2.10.14
- */
-const Babl *
-gimp_drawable_get_thumbnail_format_deprecated (gint32 drawable_ID)
-{
-  return gimp_drawable_get_thumbnail_format (GIMP_DRAWABLE (gimp_item_get_by_id (drawable_ID)));
 }

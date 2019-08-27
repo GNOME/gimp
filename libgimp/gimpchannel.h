@@ -62,32 +62,15 @@ struct _GimpChannelClass
   void (*_gimp_reserved9) (void);
 };
 
-GType    gimp_channel_get_type           (void) G_GNUC_CONST;
 
+GType         gimp_channel_get_type (void) G_GNUC_CONST;
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
-GimpChannel *  gimp_channel_new (GimpImage     *image,
-                                 const gchar   *name,
-                                 guint          width,
-                                 guint          height,
-                                 gdouble        opacity,
-                                 const GimpRGB *color);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_channel_new gimp_channel_new_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-gint32  gimp_channel_new_deprecated (gint32         image_ID,
+GimpChannel * gimp_channel_new      (GimpImage     *image,
                                      const gchar   *name,
                                      guint          width,
                                      guint          height,
                                      gdouble        opacity,
                                      const GimpRGB *color);
-
 
 G_END_DECLS
 

@@ -80,23 +80,8 @@ GtkWidget        * gimp_export_dialog_new              (const gchar            *
                                                         const gchar            *help_id);
 GtkWidget        * gimp_export_dialog_get_content_area (GtkWidget              *dialog);
 
-
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 GimpExportReturn   gimp_export_image                   (GimpImage             **image,
                                                         GimpDrawable          **drawable,
-                                                        const gchar            *format_name,
-                                                        GimpExportCapabilities  capabilities);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_export_image gimp_export_image_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-GimpExportReturn   gimp_export_image_deprecated        (gint32                 *image_id,
-                                                        gint32                 *drawable_ID,
                                                         const gchar            *format_name,
                                                         GimpExportCapabilities  capabilities);
 

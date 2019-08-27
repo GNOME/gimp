@@ -649,24 +649,6 @@ gimp_image_set_metadata (GimpImage    *image,
 
 
 /**
- * gimp_image_list_deprecated: (skip)
- * @num_images: (out): The number of images currently open.
- *
- * Returns the list of images currently open.
- *
- * This procedure returns the list of images currently open in GIMP.
- *
- * Returns: (array length=num_images) (element-type gint32) (transfer full):
- *          The list of images currently open.
- *          The returned value must be freed with g_free().
- **/
-gint *
-gimp_image_list_deprecated (gint *num_images)
-{
-  return _gimp_image_list (num_images);
-}
-
-/**
  * gimp_image_get_layers_deprecated: (skip)
  * @image_id: The image id.
  * @num_layers: (out): The number of layers contained in the image.
@@ -686,55 +668,6 @@ gimp_image_get_layers_deprecated (gint32  image_id,
 {
   return _gimp_image_get_layers (gimp_image_get_by_id (image_id),
                                    num_layers);
-}
-
-/**
- * gimp_image_get_channels_deprecated: (skip)
- * @image_id: The image.
- * @num_channels: (out): The number of channels contained in the image.
- *
- * Returns the list of channels contained in the specified image.
- *
- * This procedure returns the list of channels contained in the
- * specified image. This does not include the selection mask, or layer
- * masks. The order is from topmost to bottommost. Note that
- * "channels" are custom channels and do not include the image's
- * color components.
- *
- * Returns: (array length=num_channels):
- *          The list of channels contained in the image.
- *          The returned value must be freed with g_free().
- **/
-gint *
-gimp_image_get_channels_deprecated (gint32  image_id,
-                                    gint   *num_channels)
-{
-  return _gimp_image_get_layers (gimp_image_get_by_id (image_id),
-                                 num_channels);
-}
-
-/**
- * gimp_image_get_vectors_deprecated: (skip)
- * @image_id: The image.
- * @num_vectors: (out): The number of vectors contained in the image.
- *
- * Returns the list of vectors contained in the specified image.
- *
- * This procedure returns the list of vectors contained in the
- * specified image.
- *
- * Returns: (array length=num_vectors) (element-type gint32) (transfer full):
- *          The list of vectors contained in the image.
- *          The returned value must be freed with g_free().
- *
- * Since: 2.4
- **/
-gint *
-gimp_image_get_vectors_deprecated (gint32  image_id,
-                                   gint   *num_vectors)
-{
-  return _gimp_image_get_vectors (gimp_image_get_by_id (image_id),
-                                  num_vectors);
 }
 
 /**
@@ -780,56 +713,6 @@ gimp_image_set_colormap_deprecated (gint32        image_id,
 {
   return gimp_image_set_colormap (gimp_image_get_by_id (image_id),
                                   colormap, num_colors);
-}
-
-/**
- * gimp_image_get_thumbnail_data_deprecated: (skip)
- * @image_id: The image.
- * @width:   (inout): The requested thumbnail width.
- * @height:  (inout): The requested thumbnail height.
- * @bpp:     (out): The previews bpp.
- *
- * Get a thumbnail of an image.
- *
- * This function gets data from which a thumbnail of an image preview
- * can be created. Maximum x or y dimension is 1024 pixels. The pixels
- * are returned in RGB[A] or GRAY[A] format. The bpp return value
- * gives the number of bytes per pixel in the image.
- *
- * Returns: (transfer full): the thumbnail data.
- **/
-guchar *
-gimp_image_get_thumbnail_data_deprecated (gint32  image_id,
-                                          gint   *width,
-                                          gint   *height,
-                                          gint   *bpp)
-{
-  return gimp_image_get_thumbnail_data (gimp_image_get_by_id (image_id),
-                                        width, height, bpp);
-}
-
-/**
- * gimp_image_get_thumbnail_deprecated: (skip)
- * @image_id: the image ID
- * @width:    the requested thumbnail width  (<= 1024 pixels)
- * @height:   the requested thumbnail height (<= 1024 pixels)
- * @alpha:    how to handle an alpha channel
- *
- * Retrieves a thumbnail pixbuf for the image identified by @image->priv->id.
- * The thumbnail will be not larger than the requested size.
- *
- * Returns: (transfer full): a new #GdkPixbuf
- *
- * Since: 2.2
- **/
-GdkPixbuf *
-gimp_image_get_thumbnail_deprecated (gint32                 image_id,
-                                     gint                   width,
-                                     gint                   height,
-                                     GimpPixbufTransparency alpha)
-{
-  return gimp_image_get_thumbnail (gimp_image_get_by_id (image_id),
-                                   width, height, alpha);
 }
 
 /**

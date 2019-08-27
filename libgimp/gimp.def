@@ -47,7 +47,6 @@ EXPORTS
 	gimp_channel_get_type
 	gimp_channel_id_get_type
 	gimp_channel_new
-	gimp_channel_new_deprecated
 	gimp_channel_new_from_component
 	gimp_channel_set_color
 	gimp_channel_set_opacity
@@ -215,14 +214,10 @@ EXPORTS
 	gimp_drawable_get_shadow_buffer_deprecated
 	gimp_drawable_get_sub_thumbnail
 	gimp_drawable_get_sub_thumbnail_data
-	gimp_drawable_get_sub_thumbnail_data_deprecated
-	gimp_drawable_get_sub_thumbnail_deprecated
 	gimp_drawable_get_thumbnail
 	gimp_drawable_get_thumbnail_data
 	gimp_drawable_get_thumbnail_data_deprecated
-	gimp_drawable_get_thumbnail_deprecated
 	gimp_drawable_get_thumbnail_format
-	gimp_drawable_get_thumbnail_format_deprecated
 	gimp_drawable_get_type
 	gimp_drawable_has_alpha
 	gimp_drawable_height
@@ -360,7 +355,6 @@ EXPORTS
 	gimp_image_base_type
 	gimp_image_clean_all
 	gimp_image_convert_color_profile
-	gimp_image_convert_color_profile_deprecated
 	gimp_image_convert_color_profile_from_file
 	gimp_image_convert_grayscale
 	gimp_image_convert_indexed
@@ -389,16 +383,13 @@ EXPORTS
 	gimp_image_get_channel_by_name
 	gimp_image_get_channel_by_tattoo
 	gimp_image_get_channels
-	gimp_image_get_channels_deprecated
 	gimp_image_get_color_profile
-	gimp_image_get_color_profile_deprecated
 	gimp_image_get_colormap
 	gimp_image_get_colormap_deprecated
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
 	gimp_image_get_default_new_layer_mode
 	gimp_image_get_effective_color_profile
-	gimp_image_get_effective_color_profile_deprecated
 	gimp_image_get_exported_uri
 	gimp_image_get_filename
 	gimp_image_get_floating_sel
@@ -423,15 +414,12 @@ EXPORTS
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail
 	gimp_image_get_thumbnail_data
-	gimp_image_get_thumbnail_data_deprecated
-	gimp_image_get_thumbnail_deprecated
 	gimp_image_get_type
 	gimp_image_get_unit
 	gimp_image_get_uri
 	gimp_image_get_vectors
 	gimp_image_get_vectors_by_name
 	gimp_image_get_vectors_by_tattoo
-	gimp_image_get_vectors_deprecated
 	gimp_image_get_xcf_uri
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
@@ -451,7 +439,6 @@ EXPORTS
 	gimp_image_is_dirty
 	gimp_image_is_valid
 	gimp_image_list_channels
-	gimp_image_list_deprecated
 	gimp_image_list_layers
 	gimp_image_list_vectors
 	gimp_image_lower_item
@@ -485,7 +472,6 @@ EXPORTS
 	gimp_image_set_active_layer
 	gimp_image_set_active_vectors
 	gimp_image_set_color_profile
-	gimp_image_set_color_profile_deprecated
 	gimp_image_set_color_profile_from_file
 	gimp_image_set_colormap
 	gimp_image_set_colormap_deprecated
@@ -589,7 +575,6 @@ EXPORTS
 	gimp_layer_new_deprecated
 	gimp_layer_new_from_drawable
 	gimp_layer_new_from_pixbuf
-	gimp_layer_new_from_pixbuf_deprecated
 	gimp_layer_new_from_surface
 	gimp_layer_new_from_surface_deprecated
 	gimp_layer_new_from_visible
@@ -756,7 +741,6 @@ EXPORTS
 	gimp_selection_bounds
 	gimp_selection_feather
 	gimp_selection_float
-	gimp_selection_float_deprecated
 	gimp_selection_flood
 	gimp_selection_get_type
 	gimp_selection_grow

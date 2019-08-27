@@ -78,9 +78,7 @@ GtkWidget * gimp_vectors_combo_box_new  (GimpItemConstraintFunc constraint,
 
 #define GimpItemConstraintFunc      GimpItemConstraintDeprecatedFunc
 #define gimp_drawable_combo_box_new gimp_drawable_combo_box_new_deprecated
-#define gimp_channel_combo_box_new  gimp_channel_combo_box_new_deprecated
 #define gimp_layer_combo_box_new    gimp_layer_combo_box_new_deprecated
-#define gimp_vectors_combo_box_new  gimp_vectors_combo_box_new_deprecated
 
 #endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
 
@@ -93,13 +91,7 @@ typedef gboolean (* GimpItemConstraintDeprecatedFunc) (gint     image_id,
 GtkWidget * gimp_drawable_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
                                                     gpointer                         data,
                                                     GDestroyNotify                   data_destroy);
-GtkWidget * gimp_channel_combo_box_new_deprecated  (GimpItemConstraintDeprecatedFunc constraint,
-                                                    gpointer                         data,
-                                                    GDestroyNotify                   data_destroy);
 GtkWidget * gimp_layer_combo_box_new_deprecated    (GimpItemConstraintDeprecatedFunc constraint,
-                                                    gpointer                         data,
-                                                    GDestroyNotify                   data_destroy);
-GtkWidget * gimp_vectors_combo_box_new_deprecated  (GimpItemConstraintDeprecatedFunc constraint,
                                                     gpointer                         data,
                                                     GDestroyNotify                   data_destroy);
 

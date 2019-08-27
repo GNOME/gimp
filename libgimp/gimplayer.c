@@ -130,7 +130,7 @@ gimp_layer_copy (GimpLayer *layer)
  * Returns: (transfer none): The newly created layer.
  *          The object belongs to libgimp and you should not free it.
  *
- * Since: 3.0
+ * Since: 2.2
  */
 GimpLayer *
 gimp_layer_new_from_pixbuf (GimpImage     *image,
@@ -209,7 +209,7 @@ gimp_layer_new_from_pixbuf (GimpImage     *image,
  * Returns: (transfer none): The newly created layer.
  *          The object belongs to libgimp and you should not free it.
  *
- * Since: 3.0
+ * Since: 2.8
  */
 GimpLayer *
 gimp_layer_new_from_surface (GimpImage            *image,
@@ -310,48 +310,6 @@ gimp_layer_new_deprecated (gint32         image_id,
   layer = gimp_layer_new (gimp_image_get_by_id (image_id),
                           name, width, height,
                           type, opacity, mode);
-
-  return gimp_item_get_id (GIMP_ITEM (layer));
-}
-
-/**
- * gimp_layer_new_from_pixbuf_deprecated: (skip)
- * @image_id:       The RGB image to which to add the layer.
- * @name:           The layer name.
- * @pixbuf:         A GdkPixbuf.
- * @opacity:        The layer opacity.
- * @mode:           The layer combination mode.
- * @progress_start: start of progress
- * @progress_end:   end of progress
- *
- * Create a new layer from a %GdkPixbuf.
- *
- * This procedure creates a new layer from the given %GdkPixbuf.  The
- * image has to be an RGB image and just like with gimp_layer_new()
- * you will still need to add the layer to it.
- *
- * If you pass @progress_end > @progress_start to this function,
- * gimp_progress_update() will be called for. You have to call
- * gimp_progress_init() beforehand then.
- *
- * Returns: The newly created layer ID.
- *
- * Since: 2.4
- */
-gint32
-gimp_layer_new_from_pixbuf_deprecated (gint32         image_id,
-                                       const gchar   *name,
-                                       GdkPixbuf     *pixbuf,
-                                       gdouble        opacity,
-                                       GimpLayerMode  mode,
-                                       gdouble        progress_start,
-                                       gdouble        progress_end)
-{
-  GimpLayer *layer;
-
-  layer = gimp_layer_new_from_pixbuf (gimp_image_get_by_id (image_id),
-                                      name, pixbuf, opacity, mode,
-                                      progress_start, progress_end);
 
   return gimp_item_get_id (GIMP_ITEM (layer));
 }

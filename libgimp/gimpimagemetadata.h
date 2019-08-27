@@ -30,69 +30,28 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+GimpMetadata * gimp_image_metadata_load_prepare   (GimpImage             *image,
+                                                   const gchar           *mime_type,
+                                                   GFile                 *file,
+                                                   GError               **error);
+void           gimp_image_metadata_load_finish    (GimpImage             *image,
+                                                   const gchar           *mime_type,
+                                                   GimpMetadata          *metadata,
+                                                   GimpMetadataLoadFlags  flags,
+                                                   gboolean               interactive);
 
-GimpMetadata * gimp_image_metadata_load_prepare (GimpImage             *image,
-                                                 const gchar           *mime_type,
-                                                 GFile                 *file,
-                                                 GError               **error);
-void           gimp_image_metadata_load_finish  (GimpImage             *image,
-                                                 const gchar           *mime_type,
-                                                 GimpMetadata          *metadata,
-                                                 GimpMetadataLoadFlags  flags,
-                                                 gboolean               interactive);
-
-GimpMetadata * gimp_image_metadata_save_prepare (GimpImage             *image,
-                                                 const gchar           *mime_type,
-                                                 GimpMetadataSaveFlags *suggested_flags);
-gboolean       gimp_image_metadata_save_finish  (GimpImage             *image,
-                                                 const gchar           *mime_type,
-                                                 GimpMetadata          *metadata,
-                                                 GimpMetadataSaveFlags  flags,
-                                                 GFile                 *file,
-                                                 GError               **error);
-
-
-/* this is experimental API, to be finished for 2.10 */
+GimpMetadata * gimp_image_metadata_save_prepare   (GimpImage             *image,
+                                                   const gchar           *mime_type,
+                                                   GimpMetadataSaveFlags *suggested_flags);
+gboolean       gimp_image_metadata_save_finish    (GimpImage             *image,
+                                                   const gchar           *mime_type,
+                                                   GimpMetadata          *metadata,
+                                                   GimpMetadataSaveFlags  flags,
+                                                   GFile                 *file,
+                                                   GError               **error);
 
 GimpImage    * gimp_image_metadata_load_thumbnail (GFile                 *file,
                                                    GError               **error);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_metadata_load_prepare   gimp_image_metadata_load_prepare_deprecated
-#define gimp_image_metadata_load_finish    gimp_image_metadata_load_finish_deprecated
-#define gimp_image_metadata_save_prepare   gimp_image_metadata_save_prepare_deprecated
-#define gimp_image_metadata_save_finish    gimp_image_metadata_save_finish_deprecated
-#define gimp_image_metadata_load_thumbnail gimp_image_metadata_load_thumbnail_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-GimpMetadata * gimp_image_metadata_load_prepare_deprecated (gint32                 image_id,
-                                                            const gchar           *mime_type,
-                                                            GFile                 *file,
-                                                            GError               **error);
-void           gimp_image_metadata_load_finish_deprecated  (gint32                 image_id,
-                                                            const gchar           *mime_type,
-                                                            GimpMetadata          *metadata,
-                                                            GimpMetadataLoadFlags  flags,
-                                                            gboolean               interactive);
-
-GimpMetadata * gimp_image_metadata_save_prepare_deprecated (gint32                 image_id,
-                                                            const gchar           *mime_type,
-                                                            GimpMetadataSaveFlags *suggested_flags);
-gboolean       gimp_image_metadata_save_finish_deprecated  (gint32                 image_id,
-                                                            const gchar           *mime_type,
-                                                            GimpMetadata          *metadata,
-                                                            GimpMetadataSaveFlags  flags,
-                                                            GFile                 *file,
-                                                            GError               **error);
-
-/* this is experimental API, to be finished for 2.10 */
-
-gint32         gimp_image_metadata_load_thumbnail_deprecated (GFile                 *file,
-                                                              GError               **error);
 
 
 G_END_DECLS

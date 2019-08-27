@@ -30,8 +30,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
-
 GimpColorProfile * gimp_image_get_color_profile           (GimpImage                 *image);
 gboolean           gimp_image_set_color_profile           (GimpImage                 *image,
                                                            GimpColorProfile          *profile);
@@ -42,27 +40,6 @@ gboolean           gimp_image_convert_color_profile       (GimpImage            
                                                            GimpColorProfile          *profile,
                                                            GimpColorRenderingIntent   intent,
                                                            gboolean                   bpc);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_image_get_color_profile           gimp_image_get_color_profile_deprecated
-#define gimp_image_set_color_profile           gimp_image_set_color_profile_deprecated
-#define gimp_image_get_effective_color_profile gimp_image_get_effective_color_profile_deprecated
-#define gimp_image_convert_color_profile       gimp_image_convert_color_profile_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-GimpColorProfile * gimp_image_get_color_profile_deprecated           (gint32                     image_id);
-gboolean           gimp_image_set_color_profile_deprecated           (gint32                     image_id,
-                                                                      GimpColorProfile          *profile);
-
-GimpColorProfile * gimp_image_get_effective_color_profile_deprecated (gint32                     image_id);
-
-gboolean           gimp_image_convert_color_profile_deprecated       (gint32                     image_id,
-                                                                      GimpColorProfile          *profile,
-                                                                      GimpColorRenderingIntent   intent,
-                                                                      gboolean                   bpc);
 
 
 G_END_DECLS

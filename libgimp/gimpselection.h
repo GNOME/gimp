@@ -61,26 +61,13 @@ struct _GimpSelectionClass
   void (*_gimp_reserved9) (void);
 };
 
-GType       gimp_selection_get_type     (void) G_GNUC_CONST;
 
-#ifndef GIMP_DEPRECATED_REPLACE_NEW_API
+GType       gimp_selection_get_type (void) G_GNUC_CONST;
 
-GimpLayer * gimp_selection_float (GimpImage    *image,
-                                  GimpDrawable *drawable,
-                                  gint          offx,
-                                  gint          offy);
-
-#else /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-#define gimp_selection_float gimp_selection_float_deprecated
-
-#endif /* GIMP_DEPRECATED_REPLACE_NEW_API */
-
-
-gint32   gimp_selection_float_deprecated (gint32 image_ID,
-                                          gint32 drawable_ID,
-                                          gint   offx,
-                                          gint   offy);
+GimpLayer * gimp_selection_float    (GimpImage    *image,
+                                     GimpDrawable *drawable,
+                                     gint          offx,
+                                     gint          offy);
 
 
 G_END_DECLS

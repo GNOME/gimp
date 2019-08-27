@@ -639,28 +639,6 @@ gimp_drawable_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constra
 }
 
 /**
- * gimp_channel_combo_box_new_deprecated: (skip)
- * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
- *
- * Creates a new #GimpIntComboBox filled with all currently opened
- * channels. See gimp_drawable_combo_box_new() for more information.
- *
- * Returns: a new #GimpIntComboBox.
- *
- * Since: 2.2
- **/
-GtkWidget *
-gimp_channel_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
-                                       gpointer                         data,
-                                       GDestroyNotify                   data_destroy)
-{
-  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_CHANNEL_COMBO_BOX,
-                                             constraint, data, data_destroy);
-}
-
-/**
  * gimp_layer_combo_box_new_deprecated: (skip)
  * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
  * @data:         a pointer that is passed to @constraint
@@ -679,35 +657,6 @@ gimp_layer_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint
                                      GDestroyNotify                   data_destroy)
 {
   return gimp_item_combo_box_new_deprecated (GIMP_TYPE_LAYER_COMBO_BOX,
-                                             constraint, data, data_destroy);
-}
-
-/**
- * gimp_vectors_combo_box_new_deprecated: (skip)
- * @constraint:   a #GimpItemConstraintDeprecatedFunc or %NULL
- * @data:         a pointer that is passed to @constraint
- * @data_destroy: Destroy function for @data
- *
- * Creates a new #GimpIntComboBox filled with all currently opened
- * vectors objects. If a @constraint function is specified, it is called for
- * each vectors object and only if the function returns %TRUE, the vectors
- * object is added to the combobox.
- *
- * You should use gimp_int_combo_box_connect() to initialize and connect
- * the combo.  Use gimp_int_combo_box_set_active() to set the active
- * vectors ID and gimp_int_combo_box_get_active() to retrieve the ID
- * of the selected vectors object.
- *
- * Returns: a new #GimpIntComboBox.
- *
- * Since: 2.4
- **/
-GtkWidget *
-gimp_vectors_combo_box_new_deprecated (GimpItemConstraintDeprecatedFunc constraint,
-                                       gpointer                         data,
-                                       GDestroyNotify                   data_destroy)
-{
-  return gimp_item_combo_box_new_deprecated (GIMP_TYPE_VECTORS_COMBO_BOX,
                                              constraint, data, data_destroy);
 }
 
