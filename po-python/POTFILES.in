@@ -9,12 +9,12 @@ plug-ins/pygimp/gimpui.py
 plug-ins/pygimp/plug-ins/colorxhtml.py
 plug-ins/pygimp/plug-ins/gradients-save-as-css.py
 plug-ins/pygimp/plug-ins/histogram-export.py
-plug-ins/pygimp/plug-ins/foggify.py
 plug-ins/pygimp/plug-ins/palette-sort.py
-plug-ins/pygimp/plug-ins/py-slice.py
 plug-ins/pygimp/plug-ins/shadow_bevel.py
 plug-ins/pygimp/plug-ins/spyro_plus.py
 
+plug-ins/python/foggify.py
 plug-ins/python/palette-offset.py
 plug-ins/python/palette-to-gradient.py
+plug-ins/python/py-slice.py
 plug-ins/python/python-console/python-console.py
