@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #Copyright (c) Manish Singh
@@ -25,16 +25,31 @@
 # (based on perlotine by Seth Burgess)",
 # Modified by João S. O. Bueno Calligaris to allow  dhtml animations (2005)
 
+import gi
+gi.require_version('Gimp', '3.0')
+from gi.repository import Gimp
+from gi.repository import GObject
+from gi.repository import GLib
+from gi.repository import Gio
+
+import gettext
+_ = gettext.gettext
+def N_(message): return message
+
 import os
-
-from gimpfu import *
 import os.path
+import sys
 
-gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
-
-def pyslice(image, drawable, save_path, html_filename,
-            image_basename, image_extension, separate,
-            image_path, cellspacing, animate, skip_caps):
+def pyslice(procedure, run_mode, image, drawable, args, data):
+    save_path       = args.index(0)
+    html_filename   = args.index(1)
+    image_basename  = args.index(2)
+    image_extension = args.index(3)
+    separate        = args.index(4)
+    image_path      = args.index(5)
+    cellspacing     = args.index(6)
+    animate         = args.index(7)
+    skip_caps       = args.index(8)
 
     cellspacing = int (cellspacing)
 
@@ -56,7 +71,7 @@ def pyslice(image, drawable, save_path, html_filename,
     if len(vert) == 0 and len(horz) == 0:
         return
 
-    gimp.progress_init(_("Slice"))
+    Gimp.progress_init(_("Slice"))
     progress_increment = 1 / ((len(horz) + 1) * (len(vert) + 1))
     progress = 0.0
 
@@ -89,7 +104,7 @@ def pyslice(image, drawable, save_path, html_filename,
 
     for i in range(0, len(horz) + 1):
         if i == len(horz):
-            bottom = image.height
+            bottom = image.height()
         else:
             bottom = image.get_guide_position(horz[i])
 
@@ -99,7 +114,7 @@ def pyslice(image, drawable, save_path, html_filename,
 
         for j in range(0, len(vert) + 1):
             if j == len(vert):
-                right = image.width
+                right = image.width()
             else:
                 right = image.get_guide_position(vert[j])
             if (skip_caps   and
@@ -130,13 +145,14 @@ def pyslice(image, drawable, save_path, html_filename,
             left = right + cellspacing
 
             progress += progress_increment
-            gimp.progress_update(progress)
+            Gimp.progress_update(progress)
 
         tw.row_end()
 
         top = bottom + cellspacing
 
     tw.close()
+    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
 def slice(image, drawable, image_path, image_basename, image_extension,
           left, right, top, bottom, i, j, postfix):
@@ -147,41 +163,42 @@ def slice(image, drawable, image_path, image_basename, image_extension,
 
     if not drawable:
         temp_image = image.duplicate()
-        temp_drawable = temp_image.active_layer
+        temp_drawable = temp_image.get_active_layer()
     else:
-        if image.base_type == INDEXED:
+        if image.base_type() == Gimp.ImageBaseType.INDEXED:
             #gimp_layer_new_from_drawable doesn't work for indexed images.
             #(no colormap on new images)
-            original_active = image.active_layer
+            original_active = image.get_active_layer()
             image.active_layer = drawable
             temp_image = image.duplicate()
-            temp_drawable = temp_image.active_layer
+            temp_drawable = temp_image.get_active_layer()
             image.active_layer = original_active
-            temp_image.disable_undo()
+            temp_image.undo_disable()
             #remove all layers but the intended one
             while len (temp_image.layers) > 1:
                 if temp_image.layers[0] != temp_drawable:
-                    pdb.gimp_image_remove_layer (temp_image, temp_image.layers[0])
+                    temp_image.remove_layer (temp_image.layers[0])
                 else:
-                    pdb.gimp_image_remove_layer (temp_image, temp_image.layers[1])
+                    temp_image.remove_layer (temp_image.layers[1])
         else:
-            temp_image = pdb.gimp_image_new (drawable.width, drawable.height,
-                                         image.base_type)
-            temp_drawable = pdb.gimp_layer_new_from_drawable (drawable, temp_image)
+            temp_image = Gimp.image_new (drawable.width(),
+                                         drawable.height(),
+                                         image.base_type())
+            temp_drawable = Gimp.layer_new_from_drawable (drawable, temp_image)
             temp_image.insert_layer (temp_drawable)
 
-    temp_image.disable_undo()
+    temp_image.undo_disable()
     temp_image.crop(right - left, bottom - top, left, top)
-    if image_extension == "gif" and image.base_type == RGB:
-        pdb.gimp_image_convert_indexed (temp_image, CONVERT_DITHER_NONE,
-                                        CONVERT_PALETTE_GENERATE, 255,
-                                        True, False, False)
-    if image_extension == "jpg" and image.base_type == INDEXED:
-        pdb.gimp_image_convert_rgb (temp_image)
+    if image_extension == "gif" and image.base_type() == Gimp.ImageBaseType.RGB:
+        temp_image.convert_indexed (Gimp.ConvertDitherType.NONE,
+                                    Gimp.ConvertPaletteType.GENERATE, 255,
+                                    True, False, "")
+    if image_extension == "jpg" and image.base_type() == Gimp.ImageBaseType.INDEXED:
+        temp_image.convert_rgb ()
 
-    pdb.gimp_file_save(temp_image, temp_drawable, filename, filename)
+    Gimp.file_save(Gimp.RunMode.NONINTERACTIVE, temp_image, temp_drawable, filename, filename)
 
-    gimp.delete(temp_image)
+    temp_image.delete()
     return src
 
 class GuideIter:
@@ -206,18 +223,18 @@ def get_guides(image):
         guide_position = image.get_guide_position(guide)
 
         if guide_position > 0:
-            if orientation == ORIENTATION_VERTICAL:
-                if guide_position < image.width:
+            if orientation == Gimp.OrientationType.VERTICAL:
+                if guide_position < image.width():
                     vguides.append((guide_position, guide))
-            elif orientation == ORIENTATION_HORIZONTAL:
-                if guide_position < image.height:
+            elif orientation == Gimp.OrientationType.HORIZONTAL:
+                if guide_position < image.height():
                     hguides.append((guide_position, guide))
 
-    def position_sort(x, y):
-        return cmp(x[0], y[0])
+    def position_sort_key(x):
+        return x[0]
 
-    vguides.sort(position_sort)
-    hguides.sort(position_sort)
+    vguides.sort(key = position_sort_key)
+    hguides.sort(key = position_sort_key)
 
     vguides = [g[1] for g in vguides]
     hguides = [g[1] for g in hguides]
@@ -287,7 +304,7 @@ as a menu.
  -->\n'''
         out += '<table'
 
-        for attr, value in self.table_attrs.iteritems():
+        for attr, value in self.table_attrs.items():
             out += ' %s="%s"' % (attr, value)
 
         out += '>'
@@ -414,44 +431,96 @@ End of the part generated by GIMP
 
         return url_list
 
-
-register(
-    "python-fu-slice",
-    # table snippet means a small piece of HTML code here
-    N_("Cuts an image along its guides, creates images and a HTML table snippet"),
-    """Add guides to an image. Then run this. It will cut along the guides,
-    and give you the html to reassemble the resulting images. If you
-    choose to generate javascript for onmouseover and clicked events, it
-    will use the lower three visible layers on the image for normal,
-    onmouseover and clicked states, in that order. If skip caps is
-    enabled, table cells on the edge of the table won't become animated,
-    and its images will be taken from the active layer.""",
-    "Manish Singh",
-    "Manish Singh",
-    "2003",
-    _("_Slice..."),
-    "*",
-    [
-        (PF_IMAGE, "image", "Input image", None),
-        (PF_DRAWABLE, "drawable", "Input drawable", None),
-        (PF_DIRNAME, "save-path",     _("Path for HTML export"), os.getcwd()),
-        (PF_STRING, "html-filename",  _("Filename for export"),  "slice.html"),
-        (PF_STRING, "image-basename", _("Image name prefix"),    "slice"),
-        (PF_RADIO, "image-extension", _("Image format"),         "gif", (("gif", "gif"), ("jpg", "jpg"), ("png", "png"))),
-        (PF_TOGGLE, "separate-image-dir",  _("Separate image folder"),
-         False),
-        (PF_STRING, "relative-image-path", _("Folder for image export"), "images"),
-        (PF_SPINNER, "cellspacing", _("Space between table elements"), 0,
-        (0,15,1)),
-        (PF_TOGGLE, "animate",      _("Javascript for onmouseover and clicked"),
-         False),
+class PySlice (Gimp.PlugIn):
+    ## Parameters ##
+    __gproperties__ = {
+        "save-path": (str,
+                      _("Path for HTML export"),
+                      _("Path for HTML export"),
+                      os.getcwd(),
+                      GObject.ParamFlags.READWRITE),
+        "html-filename": (str,
+                          _("Filename for export"),
+                          _("Filename for export"),
+                          "slice.html",
+                          GObject.ParamFlags.READWRITE),
+        "image-basename": (str,
+                           _("Image name prefix"),
+                           _("Image name prefix"),
+                           "slice",
+                           GObject.ParamFlags.READWRITE),
+        "image-extension": (str,
+                             _("Image format (gif, jpg, png)"),
+                             _("Image format (gif, jpg, png)"),
+                             "gif",
+                           GObject.ParamFlags.READWRITE),
+        "separate-image-dir": (bool,
+                               _("Separate image folder"),
+                               _("Separate image folder"),
+                               False,
+                               GObject.ParamFlags.READWRITE),
+        "relative-image-path": (str,
+                                _("Folder for image export"),
+                                _("Folder for image export"),
+                                "images",
+                                GObject.ParamFlags.READWRITE),
+        "cellspacing": (int,
+                        _("Space between table elements"),
+                        _("Space between table elements"),
+                        0, 15, 0,
+                        GObject.ParamFlags.READWRITE),
+        "animate": (bool,
+                    _("Javascript for onmouseover and clicked"),
+                    _("Javascript for onmouseover and clicked"),
+                    False,
+                    GObject.ParamFlags.READWRITE),
         # table caps are table cells on the edge of the table
-        (PF_TOGGLE, "skip-caps",    _("Skip animation for table caps"), True)
-    ],
-    [],
-    pyslice,
-    menu="<Image>/Filters/Web",
-    domain=("gimp20-python", gimp.locale_directory)
-    )
+        "skip-caps": (bool,
+                      _("Skip animation for table caps"),
+                      _("Skip animation for table caps"),
+                      True,
+                    GObject.ParamFlags.READWRITE),
+    }
 
-main()
+    ## GimpPlugIn virtual methods ##
+    def do_query_procedures(self):
+        self.set_translation_domain("gimp30-python",
+                                    Gio.file_new_for_path(Gimp.locale_directory()))
+
+        return [ 'python-fu-slice' ]
+
+    def do_create_procedure(self, name):
+        procedure = None
+        if name == 'python-fu-slice':
+            procedure = Gimp.ImageProcedure.new(self, name,
+                                                Gimp.PDBProcType.PLUGIN,
+                                                pyslice, None)
+            procedure.set_image_types("*");
+            # table snippet means a small piece of HTML code here
+            procedure.set_documentation (N_("Cuts an image along its guides, creates images and a HTML table snippet"),
+                                         """Add guides to an image. Then run this. It will cut along the guides,
+                                         and give you the html to reassemble the resulting images. If you
+                                         choose to generate javascript for onmouseover and clicked events, it
+                                         will use the lower three visible layers on the image for normal,
+                                         onmouseover and clicked states, in that order. If skip caps is
+                                         enabled, table cells on the edge of the table won't become animated,
+                                         and its images will be taken from the active layer.""",
+                                         name)
+            procedure.set_menu_label(_("_Slice..."))
+            procedure.set_attribution("Manish Singh",
+                                      "Manish Singh",
+                                      "2003")
+            procedure.add_menu_path ("<Image>/Filters/Web")
+
+            procedure.add_argument_from_property(self, "save-path")
+            procedure.add_argument_from_property(self, "html-filename")
+            procedure.add_argument_from_property(self, "image-basename")
+            procedure.add_argument_from_property(self, "image-extension")
+            procedure.add_argument_from_property(self, "separate-image-dir")
+            procedure.add_argument_from_property(self, "relative-image-path")
+            procedure.add_argument_from_property(self, "cellspacing")
+            procedure.add_argument_from_property(self, "animate")
+            procedure.add_argument_from_property(self, "skip-caps")
+        return procedure
+
+Gimp.main(PySlice.__gtype__, sys.argv)

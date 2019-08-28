@@ -15,12 +15,14 @@ palette_offset_SCRIPTS = palette-offset.py
 palette_to_gradientdir = $(gimpplugindir)/plug-ins/palette-to-gradient
 palette_to_gradient_SCRIPTS = palette-to-gradient.py
 
+py_slicedir = $(gimpplugindir)/plug-ins/py-slice
+py_slice_SCRIPTS = py-slice.py
+
 # TODO: to be ported:
 ##	colorxhtml.py
 ##	gradients-save-as-css.py
 ##	histogram-export.py
 ##	palette-sort.py
-##	py-slice.py
 ##	python-eval.py
 ##	spyro_plus.py
 
@@ -36,7 +38,8 @@ EXTRA_DIST = \
 	file-openraster.py		\
 	foggify.py			\
 	palette-offset.py		\
-	palette-to-gradient.py
+	palette-to-gradient.py		\
+	py-slice.py
 
 # Python interpreter file.
 
